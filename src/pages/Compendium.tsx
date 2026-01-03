@@ -25,7 +25,7 @@ import { supabase } from '@/integrations/supabase/client';
 interface CompendiumEntry {
   id: string;
   name: string;
-  type: 'jobs' | 'paths' | 'powers' | 'relics' | 'monsters' | 'backgrounds' | 'conditions' | 'monarchs' | 'feats';
+  type: 'jobs' | 'paths' | 'powers' | 'relics' | 'monsters' | 'backgrounds' | 'conditions' | 'monarchs' | 'feats' | 'skills' | 'equipment';
   rarity?: string;
   description: string;
   level?: number;
@@ -33,6 +33,8 @@ interface CompendiumEntry {
   gate_rank?: string;
   title?: string;
   prerequisites?: string;
+  equipment_type?: string;
+  ability?: string;
 }
 
 const categories = [
@@ -257,6 +259,44 @@ const Compendium = () => {
           })));
         }
         newCounts.conditions = count || 0;
+      }
+
+      // Fetch Skills
+      if (selectedCategory === 'all' || selectedCategory === 'skills') {
+        const { data: skills, count } = await supabase
+          .from('compendium_skills')
+          .select('id, name, description, ability', { count: 'exact' })
+          .ilike('name', `%${searchQuery}%`);
+        
+        if (skills) {
+          allEntries.push(...skills.map(s => ({
+            id: s.id,
+            name: s.name,
+            type: 'skills' as const,
+            description: s.description,
+            ability: s.ability,
+          })));
+        }
+        newCounts.skills = count || 0;
+      }
+
+      // Fetch Equipment
+      if (selectedCategory === 'all' || selectedCategory === 'equipment') {
+        const { data: equipment, count } = await supabase
+          .from('compendium_equipment')
+          .select('id, name, description, equipment_type, damage, armor_class', { count: 'exact' })
+          .ilike('name', `%${searchQuery}%`);
+        
+        if (equipment) {
+          allEntries.push(...equipment.map(e => ({
+            id: e.id,
+            name: e.name,
+            type: 'equipment' as const,
+            description: e.description || '',
+            equipment_type: e.equipment_type,
+          })));
+        }
+        newCounts.equipment = count || 0;
       }
 
       setEntries(allEntries);
