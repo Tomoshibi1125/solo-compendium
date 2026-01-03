@@ -46,6 +46,8 @@ const categories = [
   { id: 'monsters', name: 'Monsters', icon: Skull },
   { id: 'backgrounds', name: 'Backgrounds', icon: Users },
   { id: 'conditions', name: 'Conditions', icon: ScrollText },
+  { id: 'skills', name: 'Skills', icon: Users },
+  { id: 'equipment', name: 'Equipment', icon: Gem },
 ];
 
 const rarityColors: Record<string, string> = {
