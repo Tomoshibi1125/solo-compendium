@@ -438,6 +438,39 @@ export type Database = {
         }
         Relationships: []
       }
+      compendium_feats: {
+        Row: {
+          benefits: string[] | null
+          created_at: string
+          description: string
+          id: string
+          name: string
+          prerequisites: string | null
+          source_book: string | null
+          tags: string[] | null
+        }
+        Insert: {
+          benefits?: string[] | null
+          created_at?: string
+          description: string
+          id?: string
+          name: string
+          prerequisites?: string | null
+          source_book?: string | null
+          tags?: string[] | null
+        }
+        Update: {
+          benefits?: string[] | null
+          created_at?: string
+          description?: string
+          id?: string
+          name?: string
+          prerequisites?: string | null
+          source_book?: string | null
+          tags?: string[] | null
+        }
+        Relationships: []
+      }
       compendium_job_features: {
         Row: {
           action_type: string | null

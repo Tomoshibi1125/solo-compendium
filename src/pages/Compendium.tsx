@@ -11,7 +11,9 @@ import {
   Grid3X3,
   List,
   Users,
-  Loader2
+  Loader2,
+  Sparkles,
+  GitBranch
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Input } from '@/components/ui/input';
@@ -23,21 +25,24 @@ import { supabase } from '@/integrations/supabase/client';
 interface CompendiumEntry {
   id: string;
   name: string;
-  type: 'jobs' | 'powers' | 'relics' | 'monsters' | 'backgrounds' | 'conditions' | 'monarchs';
+  type: 'jobs' | 'paths' | 'powers' | 'relics' | 'monsters' | 'backgrounds' | 'conditions' | 'monarchs' | 'feats';
   rarity?: string;
   description: string;
   level?: number;
   cr?: string;
   gate_rank?: string;
-  title?: string; // For Monarchs
+  title?: string;
+  prerequisites?: string;
 }
 
 const categories = [
   { id: 'all', name: 'All', icon: Grid3X3 },
   { id: 'jobs', name: 'Jobs', icon: Swords },
+  { id: 'paths', name: 'Paths', icon: GitBranch },
   { id: 'monarchs', name: 'Monarchs', icon: Crown },
   { id: 'powers', name: 'Powers', icon: Wand2 },
   { id: 'relics', name: 'Relics', icon: Gem },
+  { id: 'feats', name: 'Feats', icon: Sparkles },
   { id: 'monsters', name: 'Monsters', icon: Skull },
   { id: 'backgrounds', name: 'Backgrounds', icon: Users },
   { id: 'conditions', name: 'Conditions', icon: ScrollText },
@@ -92,10 +97,29 @@ const Compendium = () => {
             name: j.name,
             type: 'jobs' as const,
             description: j.description,
-            rarity: 'legendary', // Jobs are special
+            rarity: 'legendary',
           })));
         }
         newCounts.jobs = count || 0;
+      }
+
+      // Fetch Paths
+      if (selectedCategory === 'all' || selectedCategory === 'paths') {
+        const { data: paths, count } = await supabase
+          .from('compendium_job_paths')
+          .select('id, name, description', { count: 'exact' })
+          .ilike('name', `%${searchQuery}%`);
+        
+        if (paths) {
+          allEntries.push(...paths.map(p => ({
+            id: p.id,
+            name: p.name,
+            type: 'paths' as const,
+            description: p.description,
+            rarity: 'rare',
+          })));
+        }
+        newCounts.paths = count || 0;
       }
 
       // Fetch Monarchs
@@ -112,7 +136,7 @@ const Compendium = () => {
             type: 'monarchs' as const,
             description: m.description,
             title: m.title,
-            rarity: 'legendary', // Monarchs are special overlays
+            rarity: 'legendary',
           })));
         }
         newCounts.monarchs = count || 0;
@@ -155,6 +179,26 @@ const Compendium = () => {
           })));
         }
         newCounts.relics = count || 0;
+      }
+
+      // Fetch Feats
+      if (selectedCategory === 'all' || selectedCategory === 'feats') {
+        const { data: feats, count } = await supabase
+          .from('compendium_feats')
+          .select('id, name, description, prerequisites', { count: 'exact' })
+          .ilike('name', `%${searchQuery}%`);
+        
+        if (feats) {
+          allEntries.push(...feats.map(f => ({
+            id: f.id,
+            name: f.name,
+            type: 'feats' as const,
+            description: f.description,
+            prerequisites: f.prerequisites,
+            rarity: 'uncommon',
+          })));
+        }
+        newCounts.feats = count || 0;
       }
 
       // Fetch Monsters
