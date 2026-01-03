@@ -7,8 +7,7 @@ import {
   Gem, 
   Skull, 
   ScrollText,
-  Flame,
-  Filter,
+  Crown,
   Grid3X3,
   List,
   Users,
@@ -24,17 +23,19 @@ import { supabase } from '@/integrations/supabase/client';
 interface CompendiumEntry {
   id: string;
   name: string;
-  type: 'jobs' | 'powers' | 'relics' | 'monsters' | 'backgrounds' | 'conditions';
+  type: 'jobs' | 'powers' | 'relics' | 'monsters' | 'backgrounds' | 'conditions' | 'monarchs';
   rarity?: string;
   description: string;
   level?: number;
   cr?: string;
   gate_rank?: string;
+  title?: string; // For Monarchs
 }
 
 const categories = [
   { id: 'all', name: 'All', icon: Grid3X3 },
   { id: 'jobs', name: 'Jobs', icon: Swords },
+  { id: 'monarchs', name: 'Monarchs', icon: Crown },
   { id: 'powers', name: 'Powers', icon: Wand2 },
   { id: 'relics', name: 'Relics', icon: Gem },
   { id: 'monsters', name: 'Monsters', icon: Skull },
@@ -95,6 +96,26 @@ const Compendium = () => {
           })));
         }
         newCounts.jobs = count || 0;
+      }
+
+      // Fetch Monarchs
+      if (selectedCategory === 'all' || selectedCategory === 'monarchs') {
+        const { data: monarchs, count } = await supabase
+          .from('compendium_monarchs')
+          .select('id, name, title, description, theme', { count: 'exact' })
+          .ilike('name', `%${searchQuery}%`);
+        
+        if (monarchs) {
+          allEntries.push(...monarchs.map(m => ({
+            id: m.id,
+            name: m.name,
+            type: 'monarchs' as const,
+            description: m.description,
+            title: m.title,
+            rarity: 'legendary', // Monarchs are special overlays
+          })));
+        }
+        newCounts.monarchs = count || 0;
       }
 
       // Fetch Powers
