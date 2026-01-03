@@ -438,6 +438,51 @@ export type Database = {
         }
         Relationships: []
       }
+      compendium_equipment: {
+        Row: {
+          armor_class: number | null
+          cost_credits: number | null
+          created_at: string
+          damage: string | null
+          damage_type: string | null
+          description: string | null
+          equipment_type: string
+          id: string
+          name: string
+          properties: string[] | null
+          source_book: string | null
+          weight: number | null
+        }
+        Insert: {
+          armor_class?: number | null
+          cost_credits?: number | null
+          created_at?: string
+          damage?: string | null
+          damage_type?: string | null
+          description?: string | null
+          equipment_type: string
+          id?: string
+          name: string
+          properties?: string[] | null
+          source_book?: string | null
+          weight?: number | null
+        }
+        Update: {
+          armor_class?: number | null
+          cost_credits?: number | null
+          created_at?: string
+          damage?: string | null
+          damage_type?: string | null
+          description?: string | null
+          equipment_type?: string
+          id?: string
+          name?: string
+          properties?: string[] | null
+          source_book?: string | null
+          weight?: number | null
+        }
+        Relationships: []
+      }
       compendium_feats: {
         Row: {
           benefits: string[] | null
@@ -1067,6 +1112,36 @@ export type Database = {
           source_book?: string | null
           tags?: string[] | null
           value_credits?: number | null
+        }
+        Relationships: []
+      }
+      compendium_skills: {
+        Row: {
+          ability: string
+          created_at: string
+          description: string
+          examples: string[] | null
+          id: string
+          name: string
+          source_book: string | null
+        }
+        Insert: {
+          ability: string
+          created_at?: string
+          description: string
+          examples?: string[] | null
+          id?: string
+          name: string
+          source_book?: string | null
+        }
+        Update: {
+          ability?: string
+          created_at?: string
+          description?: string
+          examples?: string[] | null
+          id?: string
+          name?: string
+          source_book?: string | null
         }
         Relationships: []
       }
