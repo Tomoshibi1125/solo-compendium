@@ -6,9 +6,10 @@ interface SystemWindowProps {
   title?: string;
   className?: string;
   variant?: 'default' | 'alert' | 'quest';
+  compact?: boolean;
 }
 
-export function SystemWindow({ children, title, className, variant = 'default' }: SystemWindowProps) {
+export function SystemWindow({ children, title, className, variant = 'default', compact = false }: SystemWindowProps) {
   const variantStyles = {
     default: 'border-primary/30 from-primary/10 to-primary/5',
     alert: 'border-destructive/30 from-destructive/10 to-destructive/5',
@@ -42,7 +43,7 @@ export function SystemWindow({ children, title, className, variant = 'default' }
           {title}
         </div>
       )}
-      <div className="p-4">
+      <div className={compact ? "p-3" : "p-4"}>
         {children}
       </div>
       
