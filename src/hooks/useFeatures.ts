@@ -34,7 +34,7 @@ export const useFeatures = (characterId: string) => {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['features', characterId]);
+      queryClient.invalidateQueries({ queryKey: ['features', characterId] });
     },
   });
 

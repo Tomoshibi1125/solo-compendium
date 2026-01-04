@@ -51,15 +51,12 @@ export function AddEquipmentDialog({
   const handleAdd = async (item: typeof equipment[0]) => {
     try {
       await addEquipment({
+        character_id: characterId,
         name: item.name,
         item_type: item.equipment_type || 'gear',
-        rarity: item.rarity || null,
-        relic_tier: item.relic_tier || null,
-        requires_attunement: item.requires_attunement || false,
         description: item.description || null,
         properties: item.properties || [],
         weight: item.weight || null,
-        value_credits: item.value_credits || null,
         quantity: 1,
       });
 
@@ -119,11 +116,9 @@ export function AddEquipmentDialog({
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <span className="font-heading font-semibold">{item.name}</span>
-                        {item.rarity && (
-                          <Badge variant="secondary" className="text-xs">
-                            {item.rarity}
-                          </Badge>
-                        )}
+                        <Badge variant="secondary" className="text-xs">
+                          {item.equipment_type}
+                        </Badge>
                       </div>
                       {item.description && (
                         <p className="text-xs text-muted-foreground line-clamp-2">

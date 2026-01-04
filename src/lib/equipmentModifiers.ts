@@ -54,7 +54,7 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
     }
 
     // Ability score modifiers: "+2 Strength", "+1 to STR"
-    const abilityMap: Record<string, keyof EquipmentModifiers> = {
+    const abilityMap: Record<string, 'str' | 'agi' | 'vit' | 'int' | 'sense' | 'pre'> = {
       'strength': 'str',
       'str': 'str',
       'dexterity': 'agi',
@@ -80,7 +80,7 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
       const abilityMatch = lowerProp.match(new RegExp(`(\\+?\\d+)\\s+(?:to\\s+)?${key}`, 'i'));
       if (abilityMatch) {
         const value = parseInt(abilityMatch[1] || '0');
-        modifiers[ability] = (modifiers[ability] as number || 0) + value;
+        modifiers[ability] = ((modifiers[ability] as number | undefined) || 0) + value;
       }
     }
 
@@ -134,9 +134,9 @@ export function combineModifiers(...modifierSets: EquipmentModifiers[]): Equipme
           (combined[key] as Record<string, number>)[subKey] = 
             ((combined[key] as Record<string, number>)[subKey] || 0) + subValue;
         });
-      } else {
-        combined[key as keyof EquipmentModifiers] = 
-          ((combined[key as keyof EquipmentModifiers] as number) || 0) + (value as number);
+      } else if (typeof value === 'number') {
+        (combined as Record<string, number | Record<string, number> | undefined>)[key] = 
+          ((combined as Record<string, number | undefined>)[key] || 0) + value;
       }
     });
   });
@@ -178,7 +178,7 @@ export function applyEquipmentModifiers(
   // Apply ability modifiers
   const abilityModifiers: Record<string, number> = {};
   ['str', 'agi', 'vit', 'int', 'sense', 'pre'].forEach(ability => {
-    abilityModifiers[ability] = (allModifiers[ability as keyof EquipmentModifiers] as number) || 0;
+    abilityModifiers[ability] = (allModifiers[ability as keyof EquipmentModifiers] as number | undefined) || 0;
   });
 
   return {
@@ -189,5 +189,3 @@ export function applyEquipmentModifiers(
     damageBonus: allModifiers.damage || 0,
   };
 }
-
-

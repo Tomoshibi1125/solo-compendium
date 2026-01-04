@@ -8,7 +8,6 @@ import type { Database } from '@/integrations/supabase/types';
 
 type Job = Database['public']['Tables']['compendium_jobs']['Row'];
 type Background = Database['public']['Tables']['compendium_backgrounds']['Row'];
-type JobFeature = Database['public']['Tables']['compendium_job_features']['Row'];
 
 /**
  * Add level 1 features from job to character
@@ -97,15 +96,6 @@ export async function addBackgroundFeatures(
   characterId: string,
   background: Background
 ): Promise<void> {
-  // Add skill proficiencies from background
-  if (background.skill_proficiencies && background.skill_proficiencies.length > 0) {
-    // This would need to update character.skill_proficiencies array
-    // For now, we'll add them as features
-    for (const skill of background.skill_proficiencies) {
-      // Skills are handled separately, but we can note them
-    }
-  }
-
   // Add background feature if any
   if (background.feature_name) {
     await supabase.from('character_features').insert({
@@ -127,45 +117,8 @@ export async function addStartingEquipment(
   job: Job,
   background?: Background
 ): Promise<void> {
-  // Add job starting equipment
-  if (job.starting_equipment) {
-    // Parse starting equipment string (e.g., "Longsword, Shield, Leather Armor")
-    const equipmentItems = job.starting_equipment.split(',').map(e => e.trim());
-    
-    for (const itemName of equipmentItems) {
-      // Try to find in compendium_equipment
-      const { data: equipment } = await supabase
-        .from('compendium_equipment')
-        .select('*')
-        .ilike('name', `%${itemName}%`)
-        .limit(1)
-        .maybeSingle();
-
-      if (equipment) {
-        await supabase.from('character_equipment').insert({
-          character_id: characterId,
-          name: equipment.name,
-          item_type: equipment.equipment_type || 'gear',
-          rarity: equipment.rarity || null,
-          description: equipment.description || null,
-          properties: equipment.properties || [],
-          weight: equipment.weight || null,
-          value_credits: equipment.value_credits || null,
-          quantity: 1,
-          is_equipped: false,
-        });
-      } else {
-        // Add as generic equipment if not found in compendium
-        await supabase.from('character_equipment').insert({
-          character_id: characterId,
-          name: itemName,
-          item_type: 'gear',
-          quantity: 1,
-          is_equipped: false,
-        });
-      }
-    }
-  }
+  // Jobs don't have starting_equipment column - skip job equipment for now
+  // In a full implementation, job starting equipment would be defined elsewhere
 
   // Add background starting equipment
   if (background?.starting_equipment) {
@@ -184,11 +137,9 @@ export async function addStartingEquipment(
           character_id: characterId,
           name: equipment.name,
           item_type: equipment.equipment_type || 'gear',
-          rarity: equipment.rarity || null,
           description: equipment.description || null,
           properties: equipment.properties || [],
           weight: equipment.weight || null,
-          value_credits: equipment.value_credits || null,
           quantity: 1,
           is_equipped: false,
         });
@@ -238,4 +189,3 @@ export async function addStartingPowers(
     }
   }
 }
-

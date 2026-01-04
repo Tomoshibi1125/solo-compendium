@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import { 
   ArrowLeft, 
   Heart, 
@@ -31,6 +32,7 @@ import { PowersList } from '@/components/character/PowersList';
 import { ActionsList } from '@/components/character/ActionsList';
 import { FeaturesList } from '@/components/character/FeaturesList';
 import { ExportDialog } from '@/components/character/ExportDialog';
+import { PortraitUpload } from '@/components/character/PortraitUpload';
 import { ABILITY_NAMES, type AbilityScore } from '@/types/solo-leveling';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';

@@ -3,11 +3,11 @@ import { cn } from '@/lib/utils';
 interface SkeletonLoaderProps {
   className?: string;
   count?: number;
-  variant?: 'card' | 'list' | 'text';
+  variant?: 'card' | 'list' | 'text' | 'grid';
 }
 
 export function SkeletonLoader({ className, count = 1, variant = 'card' }: SkeletonLoaderProps) {
-  if (variant === 'card') {
+  if (variant === 'card' || variant === 'grid') {
     return (
       <>
         {Array.from({ length: count }).map((_, i) => (

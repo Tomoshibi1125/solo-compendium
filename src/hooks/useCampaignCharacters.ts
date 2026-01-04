@@ -18,22 +18,15 @@ export interface CampaignCharacterShare {
 }
 
 // Fetch shared characters in campaign
+// Note: This hook requires the campaign_character_shares table to exist in Supabase
+// For now, we return an empty array until the table is created
 export const useCampaignSharedCharacters = (campaignId: string) => {
   return useQuery({
     queryKey: ['campaigns', campaignId, 'shared-characters'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('campaign_character_shares')
-        .select(`
-          *,
-          characters (id, name, level, job)
-        `)
-        .eq('campaign_id', campaignId)
-        .eq('is_visible', true)
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      return (data || []) as CampaignCharacterShare[];
+    queryFn: async (): Promise<CampaignCharacterShare[]> => {
+      // Campaign character sharing feature not yet implemented in database
+      // Return empty array until migration is applied
+      return [];
     },
     enabled: !!campaignId,
   });
@@ -49,34 +42,8 @@ export const useShareCharacter = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase
-        .from('campaign_character_shares')
-        .insert({
-          campaign_id: campaignId,
-          character_id: characterId,
-          shared_by: user.id,
-          is_visible: true,
-        })
-        .select()
-        .single();
-
-      if (error) {
-        // If already shared, update visibility
-        if (error.code === '23505') {
-          const { data: updated, error: updateError } = await supabase
-            .from('campaign_character_shares')
-            .update({ is_visible: true })
-            .eq('campaign_id', campaignId)
-            .eq('character_id', characterId)
-            .select()
-            .single();
-          
-          if (updateError) throw updateError;
-          return updated as CampaignCharacterShare;
-        }
-        throw error;
-      }
-      return data as CampaignCharacterShare;
+      // Campaign character sharing feature not yet implemented
+      throw new Error('Campaign character sharing is not yet available');
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['campaigns', variables.campaignId, 'shared-characters'] });
@@ -102,13 +69,8 @@ export const useUnshareCharacter = () => {
 
   return useMutation({
     mutationFn: async ({ campaignId, characterId }: { campaignId: string; characterId: string }) => {
-      const { error } = await supabase
-        .from('campaign_character_shares')
-        .update({ is_visible: false })
-        .eq('campaign_id', campaignId)
-        .eq('character_id', characterId);
-
-      if (error) throw error;
+      // Campaign character sharing feature not yet implemented
+      throw new Error('Campaign character sharing is not yet available');
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['campaigns', variables.campaignId, 'shared-characters'] });
@@ -126,4 +88,3 @@ export const useUnshareCharacter = () => {
     },
   });
 };
-

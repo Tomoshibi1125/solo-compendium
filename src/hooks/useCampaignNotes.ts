@@ -15,18 +15,13 @@ export interface CampaignNote {
 }
 
 // Fetch campaign notes
+// Note: Campaign notes feature requires campaign_notes table
 export const useCampaignNotes = (campaignId: string) => {
   return useQuery({
     queryKey: ['campaigns', campaignId, 'notes'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('campaign_notes')
-        .select('*')
-        .eq('campaign_id', campaignId)
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      return (data || []) as CampaignNote[];
+    queryFn: async (): Promise<CampaignNote[]> => {
+      // Campaign notes feature not yet implemented in database
+      return [];
     },
     enabled: !!campaignId,
   });
@@ -54,21 +49,8 @@ export const useCreateCampaignNote = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase
-        .from('campaign_notes')
-        .insert({
-          campaign_id: campaignId,
-          user_id: user.id,
-          title: title.trim(),
-          content: content.trim(),
-          note_type: noteType,
-          session_date: sessionDate || null,
-        })
-        .select()
-        .single();
-
-      if (error) throw error;
-      return data as CampaignNote;
+      // Campaign notes feature not yet implemented
+      throw new Error('Campaign notes feature is not yet available');
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['campaigns', variables.campaignId, 'notes'] });
@@ -108,17 +90,8 @@ export const useUpdateCampaignNote = () => {
       noteType: 'session' | 'note' | 'recap';
       sessionDate?: string;
     }) => {
-      const { error } = await supabase
-        .from('campaign_notes')
-        .update({
-          title: title.trim(),
-          content: content.trim(),
-          note_type: noteType,
-          session_date: sessionDate || null,
-        })
-        .eq('id', noteId);
-
-      if (error) throw error;
+      // Campaign notes feature not yet implemented
+      throw new Error('Campaign notes feature is not yet available');
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['campaigns', variables.campaignId, 'notes'] });
@@ -144,12 +117,8 @@ export const useDeleteCampaignNote = () => {
 
   return useMutation({
     mutationFn: async ({ noteId, campaignId }: { noteId: string; campaignId: string }) => {
-      const { error } = await supabase
-        .from('campaign_notes')
-        .delete()
-        .eq('id', noteId);
-
-      if (error) throw error;
+      // Campaign notes feature not yet implemented
+      throw new Error('Campaign notes feature is not yet available');
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['campaigns', variables.campaignId, 'notes'] });
@@ -166,4 +135,3 @@ export const useDeleteCampaignNote = () => {
     },
   });
 };
-

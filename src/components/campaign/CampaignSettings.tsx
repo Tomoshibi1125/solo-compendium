@@ -8,7 +8,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { useCampaign, useHasDMAccess } from '@/hooks/useCampaigns';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
 interface CampaignSettingsProps {
@@ -34,13 +33,9 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
   }, [campaign]);
 
   const updateCampaign = useMutation({
-    mutationFn: async (updates: { name?: string; description?: string; is_active?: boolean }) => {
-      const { error } = await supabase
-        .from('campaigns')
-        .update(updates)
-        .eq('id', campaignId);
-
-      if (error) throw error;
+    mutationFn: async (updates: { name?: string; description?: string | null; is_active?: boolean }) => {
+      // Campaign management feature not yet implemented in database
+      throw new Error('Campaign management is not yet available');
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['campaigns', campaignId] });
@@ -162,4 +157,3 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
     </SystemWindow>
   );
 }
-
