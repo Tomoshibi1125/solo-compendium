@@ -18,7 +18,8 @@ import {
   GitBranch,
   Sparkles,
   Users,
-  Package
+  Package,
+  Dna
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Input } from '@/components/ui/input';
@@ -30,6 +31,7 @@ import { Pagination } from '@/components/ui/pagination';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
@@ -44,6 +46,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useToastAction } from '@/hooks/useToastAction';
 import { AnimatedList } from '@/components/ui/AnimatedList';
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import { GeminiProtocolGenerator } from '@/components/compendium/GeminiProtocolGenerator';
 
 interface CompendiumEntry {
   id: string;
@@ -136,6 +139,7 @@ const Compendium = () => {
   const [showMiniBossOnly, setShowMiniBossOnly] = useState(false);
   const [minCR, setMinCR] = useState<number | ''>('');
   const [maxCR, setMaxCR] = useState<number | ''>('');
+  const [showGeminiProtocol, setShowGeminiProtocol] = useState(false);
   const itemsPerPage = 24;
   
   const { favorites, toggleFavorite } = useFavorites();
@@ -929,6 +933,21 @@ const Compendium = () => {
                 Showing {paginatedEntries.length} of {filteredAndSortedEntries.length} {filteredAndSortedEntries.length === 1 ? 'result' : 'results'}
               </p>
               <div className="flex gap-2">
+                <Dialog open={showGeminiProtocol} onOpenChange={setShowGeminiProtocol}>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="gap-2 border-primary/50 hover:border-primary hover:bg-primary/10"
+                    >
+                      <Dna className="w-4 h-4 text-primary" />
+                      Gemini Protocol
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                    <GeminiProtocolGenerator />
+                  </DialogContent>
+                </Dialog>
                 <Button
                   variant="outline"
                   size="sm"
