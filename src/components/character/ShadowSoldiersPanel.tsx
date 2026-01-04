@@ -6,6 +6,7 @@ import { Progress } from '@/components/ui/progress';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
+import { SystemWindow } from '@/components/ui/SystemWindow';
 import { 
   useCharacterShadowSoldiers, 
   useCompendiumShadowSoldiers, 
@@ -15,26 +16,42 @@ import {
   type ShadowSoldier 
 } from '@/hooks/useShadowSoldiers';
 import { useCharacterMonarchUnlocks } from '@/hooks/useMonarchUnlocks';
-import { Ghost, Sword, Shield, Heart, Zap, Plus, Minus, Crown } from 'lucide-react';
+import { Ghost, Sword, Shield, Heart, Zap, Plus, Minus, Crown, Skull, Flame, Wind, Bird, Dog, Mountain, Crosshair } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface ShadowSoldiersPanelProps {
   characterId: string;
   characterLevel: number;
 }
 
+// Enhanced rank colors with Solo Leveling theme
 const rankColors: Record<string, string> = {
-  'Marshal Grade': 'bg-purple-500/20 text-purple-400 border-purple-500/30',
-  'Elite Knight Grade': 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-  'Knight Grade': 'bg-green-500/20 text-green-400 border-green-500/30',
-  'Soldier Grade': 'bg-gray-500/20 text-gray-400 border-gray-500/30',
+  'General Grade': 'bg-arise-violet/20 text-arise-violet border-arise-violet/40 shadow-[0_0_10px_hsl(var(--arise-violet)/0.3)]',
+  'Marshal Grade': 'bg-shadow-purple/20 text-shadow-purple border-shadow-purple/40 shadow-[0_0_8px_hsl(var(--shadow-purple)/0.3)]',
+  'Elite Knight Grade': 'bg-shadow-blue/20 text-shadow-blue border-shadow-blue/40 shadow-[0_0_6px_hsl(var(--shadow-blue)/0.3)]',
+  'Knight Grade': 'bg-primary/20 text-primary border-primary/40',
+  'Soldier Grade': 'bg-muted text-muted-foreground border-muted',
 };
 
-const typeIcons: Record<string, React.ReactNode> = {
-  knight: <Sword className="h-4 w-4" />,
-  insect: <Zap className="h-4 w-4" />,
-  tank: <Shield className="h-4 w-4" />,
-  berserker: <Sword className="h-4 w-4" />,
-  beast: <Ghost className="h-4 w-4" />,
+const rankGlow: Record<string, string> = {
+  'General Grade': 'shadow-general animate-pulse-2s',
+  'Marshal Grade': 'shadow-marshal',
+  'Elite Knight Grade': 'shadow-soldier',
+  'Knight Grade': '',
+  'Soldier Grade': '',
+};
+
+// Type icons with thematic styling
+const typeIcons: Record<string, { icon: React.ReactNode; color: string }> = {
+  knight: { icon: <Sword className="h-4 w-4" />, color: 'text-igris-crimson' },
+  insect: { icon: <Zap className="h-4 w-4" />, color: 'text-beru-gold' },
+  tank: { icon: <Shield className="h-4 w-4" />, color: 'text-bellion-silver' },
+  berserker: { icon: <Sword className="h-4 w-4" />, color: 'text-gate-a' },
+  beast: { icon: <Dog className="h-4 w-4" />, color: 'text-shadow-purple' },
+  mage: { icon: <Flame className="h-4 w-4" />, color: 'text-gate-a' },
+  assassin: { icon: <Crosshair className="h-4 w-4" />, color: 'text-shadow-blue' },
+  dragon: { icon: <Bird className="h-4 w-4" />, color: 'text-arise-violet' },
+  giant: { icon: <Mountain className="h-4 w-4" />, color: 'text-monarch-gold' },
 };
 
 export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldiersPanelProps) {
@@ -71,59 +88,85 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
 
   if (!hasShadowMonarch) {
     return (
-      <Card className="border-muted">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-muted-foreground">
-            <Ghost className="h-5 w-5" />
-            Shadow Army
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-muted-foreground text-center py-4">
-            Unlock the Shadow Monarch through a quest to command Shadow Soldiers.
+      <SystemWindow title="SHADOW ARMY" variant="monarch">
+        <div className="text-center py-8">
+          <Ghost className="h-12 w-12 text-shadow-purple/40 mx-auto mb-4" />
+          <p className="text-muted-foreground font-heading mb-2">
+            The Shadow Army awaits a worthy commander
           </p>
-        </CardContent>
-      </Card>
+          <p className="text-sm text-muted-foreground">
+            Unlock the <span className="text-shadow-purple">Shadow Monarch</span> through a quest to command Shadow Soldiers.
+          </p>
+        </div>
+      </SystemWindow>
     );
   }
 
   return (
-    <Card className="border-primary/30">
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <span className="flex items-center gap-2">
-            <Ghost className="h-5 w-5 text-primary" />
-            Shadow Army
-          </span>
-          <Badge variant="outline">{summonedCount} Summoned</Badge>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <SystemWindow title="SHADOW ARMY — ARISE" variant="arise" className="border-shadow-purple/40">
+      <div className="space-y-4">
+        {/* Army Status Header */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-shadow-purple/20 flex items-center justify-center">
+              <Skull className="h-5 w-5 text-shadow-purple" />
+            </div>
+            <div>
+              <p className="font-heading text-sm text-muted-foreground">Army Strength</p>
+              <p className="font-display text-lg text-shadow-purple">{mySoldiers.length} Soldiers</p>
+            </div>
+          </div>
+          <Badge 
+            variant="outline" 
+            className="bg-arise-violet/10 text-arise-violet border-arise-violet/40 font-display"
+          >
+            {summonedCount} Summoned
+          </Badge>
+        </div>
+
+        <Separator className="bg-shadow-purple/20" />
+
         {/* Summoned Soldiers */}
         {mySoldiers.length > 0 ? (
           <div className="space-y-3">
-            {mySoldiers.map((css) => {
+            {mySoldiers.map((css, index) => {
               const soldier = css.soldier;
               if (!soldier) return null;
               
               const hpPercent = (css.current_hp / soldier.hit_points) * 100;
+              const typeData = typeIcons[soldier.shadow_type] || { icon: <Ghost className="h-4 w-4" />, color: 'text-shadow-purple' };
               
               return (
                 <div
                   key={css.id}
-                  className={`p-3 rounded-lg border ${
-                    css.is_summoned ? 'border-primary bg-primary/5' : 'border-border'
-                  }`}
+                  className={cn(
+                    "p-4 rounded-lg border transition-all duration-300",
+                    css.is_summoned 
+                      ? "border-shadow-purple/50 bg-shadow-purple/5 shadow-[0_0_15px_hsl(var(--shadow-purple)/0.15)]" 
+                      : "border-border bg-background/50 hover:border-shadow-purple/30",
+                    index < 3 && "animate-arise"
+                  )}
+                  style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      {typeIcons[soldier.shadow_type] || <Ghost className="h-4 w-4" />}
-                      <span className="font-medium">
-                        {css.nickname || soldier.name}
-                      </span>
-                      <Badge variant="outline" className={rankColors[soldier.rank] || ''}>
-                        {soldier.rank}
-                      </Badge>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className={cn("p-2 rounded-lg bg-card", typeData.color)}>
+                        {typeData.icon}
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className={cn("font-heading font-semibold", css.is_summoned && "text-shadow-purple")}>
+                            {css.nickname || soldier.name}
+                          </span>
+                          <Badge 
+                            variant="outline" 
+                            className={cn("text-xs", rankColors[soldier.rank] || '')}
+                          >
+                            {soldier.rank}
+                          </Badge>
+                        </div>
+                        <p className="text-xs text-muted-foreground italic">{soldier.title}</p>
+                      </div>
                     </div>
                     <Button
                       size="sm"
@@ -133,32 +176,50 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                         shadowSoldierId: css.id,
                         summon: !css.is_summoned,
                       })}
+                      className={cn(
+                        "font-arise tracking-wider",
+                        css.is_summoned 
+                          ? "bg-shadow-purple hover:bg-shadow-purple/80 shadow-[0_0_10px_hsl(var(--shadow-purple)/0.4)]" 
+                          : "border-shadow-purple/40 hover:border-shadow-purple hover:bg-shadow-purple/10"
+                      )}
                     >
-                      {css.is_summoned ? 'Dismiss' : 'Arise!'}
+                      {css.is_summoned ? 'Dismiss' : 'ARISE'}
                     </Button>
                   </div>
                   
                   {css.is_summoned && (
                     <>
-                      <div className="flex items-center gap-2 mb-2">
-                        <Heart className="h-4 w-4 text-red-500" />
-                        <Progress value={hpPercent} className="flex-1" />
+                      <div className="flex items-center gap-3 mb-3">
+                        <Heart className="h-4 w-4 text-gate-a shrink-0" />
+                        <div className="flex-1 relative">
+                          <Progress 
+                            value={hpPercent} 
+                            className="h-2 bg-muted"
+                          />
+                          <div 
+                            className="absolute inset-0 rounded-full opacity-30"
+                            style={{
+                              background: `linear-gradient(90deg, hsl(var(--gate-a)) 0%, hsl(var(--shadow-purple)) ${hpPercent}%, transparent ${hpPercent}%)`,
+                              filter: 'blur(4px)'
+                            }}
+                          />
+                        </div>
                         <div className="flex items-center gap-1">
                           <Button
                             size="icon"
                             variant="ghost"
-                            className="h-6 w-6"
+                            className="h-6 w-6 hover:bg-gate-a/20"
                             onClick={() => handleHPChange(css.id, css.current_hp, soldier.hit_points, -10)}
                           >
                             <Minus className="h-3 w-3" />
                           </Button>
-                          <span className="text-sm w-16 text-center">
+                          <span className="text-sm font-display w-20 text-center text-gate-a">
                             {css.current_hp}/{soldier.hit_points}
                           </span>
                           <Button
                             size="icon"
                             variant="ghost"
-                            className="h-6 w-6"
+                            className="h-6 w-6 hover:bg-accent/20"
                             onClick={() => handleHPChange(css.id, css.current_hp, soldier.hit_points, 10)}
                           >
                             <Plus className="h-3 w-3" />
@@ -166,10 +227,18 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                         </div>
                       </div>
                       
-                      <div className="flex gap-4 text-xs text-muted-foreground">
-                        <span>AC {soldier.armor_class}</span>
-                        <span>Speed {soldier.speed} ft</span>
-                        <span>Bond Lv.{css.bond_level}</span>
+                      <div className="flex gap-4 text-xs font-heading">
+                        <span className="text-shadow-blue">
+                          <Shield className="h-3 w-3 inline mr-1" />
+                          AC {soldier.armor_class}
+                        </span>
+                        <span className="text-accent">
+                          Speed {soldier.speed} ft
+                        </span>
+                        <span className="text-monarch-gold">
+                          <Crown className="h-3 w-3 inline mr-1" />
+                          Bond Lv.{css.bond_level}
+                        </span>
                       </div>
                     </>
                   )}
@@ -178,95 +247,115 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
             })}
           </div>
         ) : (
-          <p className="text-sm text-muted-foreground text-center py-2">
-            No shadow soldiers extracted yet.
-          </p>
+          <div className="text-center py-6">
+            <Ghost className="h-10 w-10 text-shadow-purple/30 mx-auto mb-3" />
+            <p className="text-sm text-muted-foreground font-heading">
+              No shadow soldiers extracted yet
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              Extract fallen foes to build your shadow army
+            </p>
+          </div>
         )}
 
         {/* Extract New Soldier */}
         {availableSoldiers.length > 0 && (
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline" className="w-full">
-                <Crown className="h-4 w-4 mr-2" />
-                Extract Shadow Soldier
+              <Button 
+                variant="outline" 
+                className="w-full border-arise-violet/40 hover:border-arise-violet hover:bg-arise-violet/10 font-arise tracking-wider"
+              >
+                <Skull className="h-4 w-4 mr-2 text-arise-violet" />
+                EXTRACT SHADOW SOLDIER
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-2xl">
+            <DialogContent className="max-w-2xl bg-card border-shadow-purple/40">
               <DialogHeader>
-                <DialogTitle>Available Shadow Soldiers</DialogTitle>
+                <DialogTitle className="font-arise text-xl gradient-text-arise">
+                  Available Shadows
+                </DialogTitle>
               </DialogHeader>
               <ScrollArea className="max-h-[60vh]">
                 <div className="space-y-4 p-1">
-                  {availableSoldiers.map((soldier) => (
-                    <Card
-                      key={soldier.id}
-                      className={`cursor-pointer transition-colors hover:border-primary ${
-                        selectedSoldier?.id === soldier.id ? 'border-primary' : ''
-                      }`}
-                      onClick={() => setSelectedSoldier(soldier)}
-                    >
-                      <CardHeader className="pb-2">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            {typeIcons[soldier.shadow_type] || <Ghost className="h-5 w-5" />}
-                            <CardTitle className="text-lg">{soldier.name}</CardTitle>
-                          </div>
-                          <Badge className={rankColors[soldier.rank] || ''}>
-                            {soldier.rank}
-                          </Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground italic">{soldier.title}</p>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-sm mb-3">{soldier.description}</p>
-                        
-                        <div className="flex gap-4 text-xs text-muted-foreground mb-3">
-                          <span>HP {soldier.hit_points}</span>
-                          <span>AC {soldier.armor_class}</span>
-                          <span>Speed {soldier.speed} ft</span>
-                        </div>
-                        
-                        <Separator className="my-2" />
-                        
-                        <div className="space-y-2">
-                          <p className="text-xs font-medium">Abilities:</p>
-                          {soldier.abilities.map((ability, i) => (
-                            <div key={i} className="text-xs">
-                              <span className="font-medium">{ability.name}</span>
-                              <span className="text-muted-foreground ml-1">
-                                ({ability.action_type})
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                        
-                        {selectedSoldier?.id === soldier.id && (
-                          <Button
-                            className="w-full mt-4"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              extractSoldier.mutate({
-                                characterId,
-                                soldierId: soldier.id,
-                              });
-                              setSelectedSoldier(null);
-                            }}
-                            disabled={extractSoldier.isPending}
-                          >
-                            <Ghost className="h-4 w-4 mr-2" />
-                            Extract {soldier.name}
-                          </Button>
+                  {availableSoldiers.map((soldier) => {
+                    const typeData = typeIcons[soldier.shadow_type] || { icon: <Ghost className="h-5 w-5" />, color: 'text-shadow-purple' };
+                    
+                    return (
+                      <Card
+                        key={soldier.id}
+                        className={cn(
+                          "cursor-pointer transition-all duration-300 border-border hover:border-shadow-purple/50",
+                          selectedSoldier?.id === soldier.id && "border-arise-violet shadow-[0_0_20px_hsl(var(--arise-violet)/0.2)]"
                         )}
-                      </CardContent>
-                    </Card>
-                  ))}
+                        onClick={() => setSelectedSoldier(soldier)}
+                      >
+                        <CardHeader className="pb-2">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div className={cn("p-2 rounded-lg bg-card border border-border", typeData.color)}>
+                                {typeData.icon}
+                              </div>
+                              <div>
+                                <CardTitle className="text-lg font-heading">{soldier.name}</CardTitle>
+                                <p className="text-sm text-muted-foreground italic">{soldier.title}</p>
+                              </div>
+                            </div>
+                            <Badge className={cn("font-display", rankColors[soldier.rank] || '')}>
+                              {soldier.rank}
+                            </Badge>
+                          </div>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-sm text-muted-foreground mb-4">{soldier.description}</p>
+                          
+                          <div className="flex gap-4 text-xs font-heading mb-4">
+                            <span className="text-gate-a">HP {soldier.hit_points}</span>
+                            <span className="text-shadow-blue">AC {soldier.armor_class}</span>
+                            <span className="text-accent">Speed {soldier.speed} ft</span>
+                          </div>
+                          
+                          <Separator className="my-3 bg-shadow-purple/20" />
+                          
+                          <div className="space-y-2">
+                            <p className="text-xs font-display text-shadow-purple tracking-wider">ABILITIES:</p>
+                            {soldier.abilities.map((ability, i) => (
+                              <div key={i} className="text-xs p-2 rounded bg-muted/50">
+                                <span className="font-heading font-semibold text-foreground">{ability.name}</span>
+                                <Badge variant="outline" className="ml-2 text-[10px] h-4">
+                                  {ability.action_type}
+                                </Badge>
+                              </div>
+                            ))}
+                          </div>
+                          
+                          {selectedSoldier?.id === soldier.id && (
+                            <Button
+                              className="w-full mt-4 font-arise tracking-wider bg-arise-violet hover:bg-arise-violet/80 shadow-[0_0_15px_hsl(var(--arise-violet)/0.4)]"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                extractSoldier.mutate({
+                                  characterId,
+                                  soldierId: soldier.id,
+                                });
+                                setSelectedSoldier(null);
+                              }}
+                              disabled={extractSoldier.isPending}
+                            >
+                              <Skull className="h-4 w-4 mr-2" />
+                              ARISE — {soldier.name}
+                            </Button>
+                          )}
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
                 </div>
               </ScrollArea>
             </DialogContent>
           </Dialog>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </SystemWindow>
   );
 }

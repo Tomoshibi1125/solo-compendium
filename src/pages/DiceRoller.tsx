@@ -131,11 +131,11 @@ const DiceRoller = () => {
     <Layout>
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="font-display text-4xl font-bold mb-2 gradient-text-system">
+          <h1 className="font-arise text-4xl font-black mb-2 gradient-text-system text-glow">
             DICE ROLLER
           </h1>
           <p className="text-muted-foreground font-heading">
-            Roll dice with the System's guidance
+            Roll dice with the <span className="text-primary">System's</span> guidance — may the Shadow Monarch's favor be with you
           </p>
         </div>
 
@@ -143,7 +143,7 @@ const DiceRoller = () => {
           {/* Dice Selection */}
           <div className="lg:col-span-2 space-y-6">
             {/* Quick Rolls */}
-            <SystemWindow title="QUICK ROLLS">
+            <SystemWindow title="SYSTEM QUICK ROLLS" variant="default">
               <div className="flex flex-wrap gap-2">
                 {['1d20', '1d20+5', '2d6', '1d8+3', '1d4', '1d12'].map(notation => (
                   <Button
@@ -260,22 +260,24 @@ const DiceRoller = () => {
 
             {/* Last Roll Result */}
             {lastRoll && (
-              <SystemWindow title="RESULT" variant="quest" className="animate-slide-up">
-                <div className="text-center py-4">
-                  <div className="text-6xl font-display font-bold gradient-text-gold text-glow-gold mb-2">
+              <SystemWindow title="SYSTEM RESULT" variant="arise" className="animate-arise">
+                <div className="text-center py-6">
+                  <div className="text-7xl font-arise font-black gradient-text-monarch text-glow-gold mb-3 drop-shadow-lg">
                     {lastRoll.total}
                   </div>
-                  <p className="text-muted-foreground font-heading">
+                  <p className="text-muted-foreground font-heading text-lg">
                     {lastRoll.dice}
                   </p>
-                  <p className="text-sm text-muted-foreground mt-2">
-                    Rolls: [{lastRoll.rolls.join(', ')}]
+                  <p className="text-sm text-muted-foreground mt-3 font-display tracking-wide">
+                    ROLLS: [{lastRoll.rolls.join(', ')}]
                     {lastRoll.modifier !== 0 && ` ${lastRoll.modifier >= 0 ? '+' : ''}${lastRoll.modifier}`}
                   </p>
                   {lastRoll.type && lastRoll.type !== 'normal' && (
                     <span className={cn(
-                      "inline-block mt-2 px-2 py-1 rounded text-xs font-display uppercase",
-                      lastRoll.type === 'advantage' ? 'bg-success/20 text-success' : 'bg-destructive/20 text-destructive'
+                      "inline-block mt-3 px-3 py-1 rounded-lg text-xs font-arise uppercase tracking-widest",
+                      lastRoll.type === 'advantage' 
+                        ? 'bg-accent/20 text-accent border border-accent/40 shadow-[0_0_10px_hsl(var(--accent)/0.3)]' 
+                        : 'bg-gate-a/20 text-gate-a border border-gate-a/40 shadow-[0_0_10px_hsl(var(--gate-a)/0.3)]'
                     )}>
                       {lastRoll.type}
                     </span>
@@ -287,7 +289,7 @@ const DiceRoller = () => {
 
           {/* Roll History */}
           <div>
-            <SystemWindow title="ROLL HISTORY" className="sticky top-24">
+            <SystemWindow title="ROLL HISTORY" variant="monarch" className="sticky top-24">
               <div className="space-y-2 max-h-[60vh] overflow-y-auto">
                 {rollHistory.length === 0 ? (
                   <p className="text-center text-muted-foreground py-8 font-heading">
