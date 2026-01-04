@@ -18,7 +18,7 @@ export const useCharacters = () => {
     queryKey: ['characters'],
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      if (!user) return []; // Return empty array if not authenticated
 
       const { data: characters, error } = await supabase
         .from('characters')
@@ -29,6 +29,7 @@ export const useCharacters = () => {
       if (error) throw error;
       return characters || [];
     },
+    retry: false, // Don't retry if not authenticated
   });
 };
 

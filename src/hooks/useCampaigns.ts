@@ -50,7 +50,7 @@ export const useJoinedCampaigns = () => {
     queryKey: ['campaigns', 'joined'],
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      if (!user) return []; // Return empty array if not authenticated
 
       const { data, error } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -68,6 +68,7 @@ export const useJoinedCampaigns = () => {
         member_role: member.role,
       })) as (Campaign & { member_role: string })[];
     },
+    retry: false, // Don't retry if not authenticated
   });
 };
 
