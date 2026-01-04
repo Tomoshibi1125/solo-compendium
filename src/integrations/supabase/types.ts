@@ -14,6 +14,211 @@ export type Database = {
   }
   public: {
     Tables: {
+      campaign_character_shares: {
+        Row: {
+          campaign_id: string
+          character_id: string
+          id: string
+          permissions: string
+          shared_at: string
+          shared_by: string
+        }
+        Insert: {
+          campaign_id: string
+          character_id: string
+          id?: string
+          permissions?: string
+          shared_at?: string
+          shared_by: string
+        }
+        Update: {
+          campaign_id?: string
+          character_id?: string
+          id?: string
+          permissions?: string
+          shared_at?: string
+          shared_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_character_shares_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_character_shares_character_id_fkey"
+            columns: ["character_id"]
+            isOneToOne: false
+            referencedRelation: "characters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaign_members: {
+        Row: {
+          campaign_id: string
+          character_id: string | null
+          id: string
+          joined_at: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          campaign_id: string
+          character_id?: string | null
+          id?: string
+          joined_at?: string
+          role?: string
+          user_id: string
+        }
+        Update: {
+          campaign_id?: string
+          character_id?: string | null
+          id?: string
+          joined_at?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_members_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_members_character_id_fkey"
+            columns: ["character_id"]
+            isOneToOne: false
+            referencedRelation: "characters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaign_messages: {
+        Row: {
+          campaign_id: string
+          character_name: string | null
+          content: string
+          created_at: string
+          id: string
+          message_type: string
+          metadata: Json | null
+          user_id: string
+        }
+        Insert: {
+          campaign_id: string
+          character_name?: string | null
+          content: string
+          created_at?: string
+          id?: string
+          message_type?: string
+          metadata?: Json | null
+          user_id: string
+        }
+        Update: {
+          campaign_id?: string
+          character_name?: string | null
+          content?: string
+          created_at?: string
+          id?: string
+          message_type?: string
+          metadata?: Json | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_messages_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaign_notes: {
+        Row: {
+          campaign_id: string
+          category: string | null
+          content: string | null
+          created_at: string
+          id: string
+          is_shared: boolean
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          campaign_id: string
+          category?: string | null
+          content?: string | null
+          created_at?: string
+          id?: string
+          is_shared?: boolean
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          campaign_id?: string
+          category?: string | null
+          content?: string | null
+          created_at?: string
+          id?: string
+          is_shared?: boolean
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_notes_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaigns: {
+        Row: {
+          created_at: string
+          description: string | null
+          dm_id: string
+          id: string
+          is_active: boolean
+          name: string
+          settings: Json
+          share_code: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          dm_id: string
+          id?: string
+          is_active?: boolean
+          name: string
+          settings?: Json
+          share_code: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          dm_id?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          settings?: Json
+          share_code?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       character_abilities: {
         Row: {
           ability: Database["public"]["Enums"]["ability_score"]
@@ -157,6 +362,47 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "character_features_character_id_fkey"
+            columns: ["character_id"]
+            isOneToOne: false
+            referencedRelation: "characters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      character_journal: {
+        Row: {
+          character_id: string
+          content: string | null
+          created_at: string
+          id: string
+          session_date: string | null
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          character_id: string
+          content?: string | null
+          created_at?: string
+          id?: string
+          session_date?: string | null
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          character_id?: string
+          content?: string | null
+          created_at?: string
+          id?: string
+          session_date?: string | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "character_journal_character_id_fkey"
             columns: ["character_id"]
             isOneToOne: false
             referencedRelation: "characters"
@@ -1449,6 +1695,87 @@ export type Database = {
           },
         ]
       }
+      roll_history: {
+        Row: {
+          campaign_id: string | null
+          character_id: string | null
+          context: string | null
+          created_at: string
+          dice_formula: string
+          id: string
+          modifiers: Json | null
+          result: number
+          roll_type: string
+          rolls: number[]
+          user_id: string
+        }
+        Insert: {
+          campaign_id?: string | null
+          character_id?: string | null
+          context?: string | null
+          created_at?: string
+          dice_formula: string
+          id?: string
+          modifiers?: Json | null
+          result: number
+          roll_type: string
+          rolls: number[]
+          user_id: string
+        }
+        Update: {
+          campaign_id?: string | null
+          character_id?: string | null
+          context?: string | null
+          created_at?: string
+          dice_formula?: string
+          id?: string
+          modifiers?: Json | null
+          result?: number
+          roll_type?: string
+          rolls?: number[]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "roll_history_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "roll_history_character_id_fkey"
+            columns: ["character_id"]
+            isOneToOne: false
+            referencedRelation: "characters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      saved_searches: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          search_params: Json
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          search_params?: Json
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          search_params?: Json
+          user_id?: string
+        }
+        Relationships: []
+      }
       saved_sovereigns: {
         Row: {
           abilities: Json
@@ -1541,12 +1868,40 @@ export type Database = {
           },
         ]
       }
+      user_favorites: {
+        Row: {
+          created_at: string
+          entry_id: string
+          entry_type: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          entry_id: string
+          entry_type: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          entry_id?: string
+          entry_type?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      create_campaign_with_code: {
+        Args: { p_description: string; p_dm_id: string; p_name: string }
+        Returns: string
+      }
+      generate_share_code: { Args: never; Returns: string }
     }
     Enums: {
       ability_score: "STR" | "AGI" | "VIT" | "INT" | "SENSE" | "PRE"

@@ -57,7 +57,7 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
     e.preventDefault();
     if (!message.trim() || sendMessage.isPending) return;
 
-    await sendMessage.mutateAsync({ campaignId, message });
+    await sendMessage.mutateAsync({ campaignId, content: message });
     setMessage('');
   };
 
@@ -98,7 +98,7 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
                         : "bg-muted"
                     )}
                   >
-                    <p className="text-sm whitespace-pre-wrap break-words">{msg.message}</p>
+                    <p className="text-sm whitespace-pre-wrap break-words">{msg.content}</p>
                     <div className="flex items-center justify-between mt-1 gap-2">
                       <span className={cn(
                         "text-xs",

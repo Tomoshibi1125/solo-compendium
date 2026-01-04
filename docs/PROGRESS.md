@@ -111,15 +111,23 @@ Last Updated: 2025-01-05
 ## 📋 Remaining Enhancements (Optional)
 
 ### Future Improvements
-- [ ] Skills calculation engine (full implementation)
-- [ ] Equipment modifiers system (apply to stats)
-- [ ] Action cards with roll buttons
 - [ ] PDF export for character sheets
 - [ ] Real-time collaboration
 - [ ] Mobile app (React Native)
 - [ ] Advanced search (full-text PostgreSQL)
 - [ ] Content versioning system
 - [ ] Admin role-based access control
+
+### ✅ Recently Implemented
+- [x] Campaign Management System (campaigns, members, messages, notes, character sharing)
+- [x] User Favorites System (compendium favorites)
+- [x] Character Journal System (session logs, notes)
+- [x] Roll History Tracking (persistent roll records)
+- [x] Condition Effects Engine (mechanical effects)
+- [x] Experience & Leveling Calculations
+- [x] Compendium Quick Stats Dashboard
+- [x] Skip to Content Accessibility Link
+- [x] Advanced Roll Engine with attack/damage automation
 
 ---
 

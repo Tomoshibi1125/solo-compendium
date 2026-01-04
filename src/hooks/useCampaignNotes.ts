@@ -7,21 +7,27 @@ export interface CampaignNote {
   campaign_id: string;
   user_id: string;
   title: string;
-  content: string;
-  note_type: 'session' | 'note' | 'recap';
-  session_date: string | null;
+  content: string | null;
+  is_shared: boolean;
+  category: string;
   created_at: string;
   updated_at: string;
 }
 
 // Fetch campaign notes
-// Note: Campaign notes feature requires campaign_notes table
 export const useCampaignNotes = (campaignId: string) => {
   return useQuery({
     queryKey: ['campaigns', campaignId, 'notes'],
     queryFn: async (): Promise<CampaignNote[]> => {
-      // Campaign notes feature not yet implemented in database
-      return [];
+      const { data, error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .from('campaign_notes' as any)
+        .select('*')
+        .eq('campaign_id', campaignId)
+        .order('updated_at', { ascending: false });
+
+      if (error) throw error;
+      return (data || []) as unknown as CampaignNote[];
     },
     enabled: !!campaignId,
   });
@@ -37,20 +43,35 @@ export const useCreateCampaignNote = () => {
       campaignId,
       title,
       content,
-      noteType,
-      sessionDate,
+      isShared = false,
+      category = 'general',
     }: {
       campaignId: string;
       title: string;
-      content: string;
-      noteType: 'session' | 'note' | 'recap';
-      sessionDate?: string;
+      content?: string;
+      isShared?: boolean;
+      category?: string;
     }) => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      // Campaign notes feature not yet implemented
-      throw new Error('Campaign notes feature is not yet available');
+      const { data, error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .from('campaign_notes' as any)
+        .insert({
+          campaign_id: campaignId,
+          user_id: user.id,
+          title,
+          content: content || null,
+          is_shared: isShared,
+          category,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any)
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data as unknown as CampaignNote;
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['campaigns', variables.campaignId, 'notes'] });
@@ -80,18 +101,34 @@ export const useUpdateCampaignNote = () => {
       campaignId,
       title,
       content,
-      noteType,
-      sessionDate,
+      isShared,
+      category,
     }: {
       noteId: string;
       campaignId: string;
-      title: string;
-      content: string;
-      noteType: 'session' | 'note' | 'recap';
-      sessionDate?: string;
+      title?: string;
+      content?: string;
+      isShared?: boolean;
+      category?: string;
     }) => {
-      // Campaign notes feature not yet implemented
-      throw new Error('Campaign notes feature is not yet available');
+      const updates: Record<string, unknown> = {
+        updated_at: new Date().toISOString(),
+      };
+      if (title !== undefined) updates.title = title;
+      if (content !== undefined) updates.content = content;
+      if (isShared !== undefined) updates.is_shared = isShared;
+      if (category !== undefined) updates.category = category;
+
+      const { data, error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .from('campaign_notes' as any)
+        .update(updates)
+        .eq('id', noteId)
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data as unknown as CampaignNote;
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['campaigns', variables.campaignId, 'notes'] });
@@ -117,8 +154,13 @@ export const useDeleteCampaignNote = () => {
 
   return useMutation({
     mutationFn: async ({ noteId, campaignId }: { noteId: string; campaignId: string }) => {
-      // Campaign notes feature not yet implemented
-      throw new Error('Campaign notes feature is not yet available');
+      const { error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .from('campaign_notes' as any)
+        .delete()
+        .eq('id', noteId);
+
+      if (error) throw error;
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['campaigns', variables.campaignId, 'notes'] });
