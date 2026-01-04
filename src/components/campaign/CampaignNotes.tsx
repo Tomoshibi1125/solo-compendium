@@ -15,6 +15,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { useCampaignNotes, useCreateCampaignNote, useUpdateCampaignNote, useDeleteCampaignNote } from '@/hooks/useCampaignNotes';
+import { useHasDMAccess } from '@/hooks/useCampaigns';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 
@@ -31,6 +32,7 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
   const [sessionDate, setSessionDate] = useState('');
 
   const { data: notes = [], isLoading } = useCampaignNotes(campaignId);
+  const { data: hasDMAccess = false } = useHasDMAccess(campaignId);
   const createNote = useCreateCampaignNote();
   const updateNote = useUpdateCampaignNote();
   const deleteNote = useDeleteCampaignNote();
@@ -114,10 +116,12 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
           <p className="text-sm text-muted-foreground">
             Session logs, notes, and recaps for this campaign
           </p>
-          <Button size="sm" onClick={() => handleOpenDialog()}>
-            <Plus className="w-4 h-4 mr-2" />
-            New Note
-          </Button>
+          {hasDMAccess && (
+            <Button size="sm" onClick={() => handleOpenDialog()}>
+              <Plus className="w-4 h-4 mr-2" />
+              New Note
+            </Button>
+          )}
         </div>
         <div className="flex-1 overflow-y-auto space-y-3">
           {isLoading ? (
@@ -142,24 +146,26 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
                       {note.note_type}
                     </span>
                   </div>
-                  <div className="flex gap-1">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-7 w-7"
-                      onClick={() => handleOpenDialog(note.id)}
-                    >
-                      <Edit className="w-3 h-3" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-7 w-7"
-                      onClick={() => handleDelete(note.id)}
-                    >
-                      <Trash2 className="w-3 h-3" />
-                    </Button>
-                  </div>
+                  {hasDMAccess && (
+                    <div className="flex gap-1">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7"
+                        onClick={() => handleOpenDialog(note.id)}
+                      >
+                        <Edit className="w-3 h-3" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7"
+                        onClick={() => handleDelete(note.id)}
+                      >
+                        <Trash2 className="w-3 h-3" />
+                      </Button>
+                    </div>
+                  )}
                 </div>
                 {note.session_date && (
                   <p className="text-xs text-muted-foreground mb-2">

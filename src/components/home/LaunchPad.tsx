@@ -1,0 +1,398 @@
+import { Link } from 'react-router-dom';
+import { 
+  Users, 
+  BookOpen, 
+  Sword, 
+  Plus, 
+  ArrowRight, 
+  Crown,
+  UserPlus,
+  Dice1,
+  Settings,
+  Sparkles
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { SystemWindow } from '@/components/ui/SystemWindow';
+import { useCharacters } from '@/hooks/useCharacters';
+import { useMyCampaigns, useJoinedCampaigns } from '@/hooks/useCampaigns';
+import { Skeleton } from '@/components/ui/skeleton';
+import { cn } from '@/lib/utils';
+
+export function LaunchPad() {
+  const { data: characters, isLoading: charactersLoading } = useCharacters();
+  const { data: myCampaigns, isLoading: myCampaignsLoading } = useMyCampaigns();
+  const { data: joinedCampaigns, isLoading: joinedCampaignsLoading } = useJoinedCampaigns();
+
+  const recentCharacters = characters?.slice(0, 3) || [];
+  const recentMyCampaigns = myCampaigns?.slice(0, 2) || [];
+  const recentJoinedCampaigns = joinedCampaigns?.slice(0, 2) || [];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5">
+      {/* Background effects */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse-glow" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/5 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: '1s' }} />
+      </div>
+
+      <div className="container mx-auto px-4 py-12 relative z-10">
+        {/* Header */}
+        <div className="text-center mb-12 animate-slide-up">
+          <div className="inline-block mb-6">
+            <SystemWindow variant="quest" className="px-6 py-2">
+              <div className="flex items-center gap-2 text-accent font-heading">
+                <Sparkles className="w-4 h-4" />
+                <span className="text-sm">Shadow Monarch's Domain</span>
+              </div>
+            </SystemWindow>
+          </div>
+          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
+            <span className="gradient-text-shadow text-glow-purple">LAUNCH PAD</span>
+          </h1>
+          <p className="text-muted-foreground font-heading max-w-2xl mx-auto">
+            Your gateway to the System. Manage your Hunters, join Campaigns, and explore the Compendium.
+          </p>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+          <QuickActionCard
+            icon={Plus}
+            title="Create Hunter"
+            description="Awaken a new Hunter"
+            href="/characters/new"
+            variant="primary"
+          />
+          <QuickActionCard
+            icon={BookOpen}
+            title="Compendium"
+            description="Browse knowledge"
+            href="/compendium"
+            variant="default"
+          />
+          <QuickActionCard
+            icon={Crown}
+            title="Create Campaign"
+            description="Start a new campaign"
+            href="/campaigns"
+            variant="default"
+          />
+          <QuickActionCard
+            icon={UserPlus}
+            title="Join Campaign"
+            description="Enter with share code"
+            href="/campaigns/join"
+            variant="default"
+          />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Recent Hunters */}
+          <div className="lg:col-span-2">
+            <SystemWindow title="RECENT HUNTERS" className="h-full">
+              {charactersLoading ? (
+                <div className="space-y-4">
+                  <Skeleton className="h-20 w-full" />
+                  <Skeleton className="h-20 w-full" />
+                  <Skeleton className="h-20 w-full" />
+                </div>
+              ) : recentCharacters.length > 0 ? (
+                <div className="space-y-3">
+                  {recentCharacters.map((character) => (
+                    <Link
+                      key={character.id}
+                      to={`/characters/${character.id}`}
+                      className="block p-4 rounded-lg border border-border bg-background/50 hover:bg-muted/50 hover:border-primary/30 transition-all group card-shadow-energy"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-2">
+                            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                              <Sword className="w-5 h-5 text-primary" />
+                            </div>
+                            <div>
+                              <h3 className="font-heading font-semibold group-hover:text-primary transition-colors">
+                                {character.name}
+                              </h3>
+                              <p className="text-sm text-muted-foreground">
+                                {character.job_name || 'Unknown Job'} • Level {character.level}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                      </div>
+                    </Link>
+                  ))}
+                  <Link
+                    to="/characters"
+                    className="block mt-4 text-center text-sm text-primary font-heading hover:underline"
+                  >
+                    View all Hunters →
+                  </Link>
+                </div>
+              ) : (
+                <div className="text-center py-12">
+                  <Sword className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
+                  <p className="text-muted-foreground font-heading mb-4">
+                    No Hunters yet. Create your first one!
+                  </p>
+                  <Link to="/characters/new">
+                    <Button size="sm">
+                      <Plus className="w-4 h-4 mr-2" />
+                      Create Hunter
+                    </Button>
+                  </Link>
+                </div>
+              )}
+            </SystemWindow>
+          </div>
+
+          {/* Campaigns & Stats */}
+          <div className="space-y-6">
+            {/* My Campaigns */}
+            <SystemWindow title="MY CAMPAIGNS" variant="alert">
+              {myCampaignsLoading ? (
+                <div className="space-y-3">
+                  <Skeleton className="h-16 w-full" />
+                  <Skeleton className="h-16 w-full" />
+                </div>
+              ) : recentMyCampaigns.length > 0 ? (
+                <div className="space-y-3">
+                  {recentMyCampaigns.map((campaign) => (
+                    <Link
+                      key={campaign.id}
+                      to={`/campaigns/${campaign.id}`}
+                      className="block p-3 rounded-lg border border-border bg-background/50 hover:bg-muted/50 hover:border-primary/30 transition-all group"
+                    >
+                      <div className="flex items-center gap-2 mb-1">
+                        <Crown className="w-4 h-4 text-primary" />
+                        <h4 className="font-heading font-semibold text-sm group-hover:text-primary transition-colors">
+                          {campaign.name}
+                        </h4>
+                      </div>
+                      <p className="text-xs text-muted-foreground line-clamp-1">
+                        {campaign.description || 'No description'}
+                      </p>
+                    </Link>
+                  ))}
+                  <Link
+                    to="/campaigns"
+                    className="block mt-2 text-center text-xs text-primary font-heading hover:underline"
+                  >
+                    View all →
+                  </Link>
+                </div>
+              ) : (
+                <div className="text-center py-6">
+                  <Crown className="w-8 h-8 text-muted-foreground mx-auto mb-2 opacity-50" />
+                  <p className="text-xs text-muted-foreground font-heading mb-3">
+                    No campaigns yet
+                  </p>
+                  <Link to="/campaigns">
+                    <Button size="sm" variant="outline" className="text-xs">
+                      Create Campaign
+                    </Button>
+                  </Link>
+                </div>
+              )}
+            </SystemWindow>
+
+            {/* Joined Campaigns */}
+            <SystemWindow title="JOINED CAMPAIGNS" variant="default">
+              {joinedCampaignsLoading ? (
+                <div className="space-y-3">
+                  <Skeleton className="h-16 w-full" />
+                  <Skeleton className="h-16 w-full" />
+                </div>
+              ) : recentJoinedCampaigns.length > 0 ? (
+                <div className="space-y-3">
+                  {recentJoinedCampaigns.map((campaign) => (
+                    <Link
+                      key={campaign.id}
+                      to={`/campaigns/${campaign.id}`}
+                      className="block p-3 rounded-lg border border-border bg-background/50 hover:bg-muted/50 hover:border-primary/30 transition-all group"
+                    >
+                      <div className="flex items-center gap-2 mb-1">
+                        <Users className="w-4 h-4 text-primary" />
+                        <h4 className="font-heading font-semibold text-sm group-hover:text-primary transition-colors">
+                          {campaign.name}
+                        </h4>
+                      </div>
+                      <p className="text-xs text-muted-foreground line-clamp-1">
+                        {campaign.description || 'No description'}
+                      </p>
+                    </Link>
+                  ))}
+                  <Link
+                    to="/campaigns"
+                    className="block mt-2 text-center text-xs text-primary font-heading hover:underline"
+                  >
+                    View all →
+                  </Link>
+                </div>
+              ) : (
+                <div className="text-center py-6">
+                  <Users className="w-8 h-8 text-muted-foreground mx-auto mb-2 opacity-50" />
+                  <p className="text-xs text-muted-foreground font-heading mb-3">
+                    Not in any campaigns
+                  </p>
+                  <Link to="/campaigns/join">
+                    <Button size="sm" variant="outline" className="text-xs">
+                      Join Campaign
+                    </Button>
+                  </Link>
+                </div>
+              )}
+            </SystemWindow>
+
+            {/* Quick Stats */}
+            <SystemWindow title="QUICK STATS" variant="quest">
+              <div className="space-y-4">
+                <StatItem
+                  icon={Sword}
+                  label="Total Hunters"
+                  value={characters?.length || 0}
+                />
+                <StatItem
+                  icon={Crown}
+                  label="Campaigns DM'd"
+                  value={myCampaigns?.length || 0}
+                />
+                <StatItem
+                  icon={Users}
+                  label="Joined Campaigns"
+                  value={joinedCampaigns?.length || 0}
+                />
+              </div>
+            </SystemWindow>
+          </div>
+        </div>
+
+        {/* Additional Quick Links */}
+        <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <Link
+            to="/dice"
+            className="glass-card card-shadow-energy p-6 hover:border-primary/30 transition-all group"
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                <Dice1 className="w-6 h-6 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-heading font-semibold mb-1 group-hover:text-primary transition-colors">
+                  Dice Roller
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Roll dice for your Hunter
+                </p>
+              </div>
+            </div>
+          </Link>
+
+          <Link
+            to="/dm-tools"
+            className="glass-card card-shadow-energy p-6 hover:border-primary/30 transition-all group"
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                <Settings className="w-6 h-6 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-heading font-semibold mb-1 group-hover:text-primary transition-colors">
+                  DM Tools
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Shadow Monarch's domain
+                </p>
+              </div>
+            </div>
+          </Link>
+
+          <Link
+            to="/compendium"
+            className="glass-card card-shadow-energy p-6 hover:border-primary/30 transition-all group"
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                <BookOpen className="w-6 h-6 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-heading font-semibold mb-1 group-hover:text-primary transition-colors">
+                  Browse Compendium
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Explore all knowledge
+                </p>
+              </div>
+            </div>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+interface QuickActionCardProps {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  description: string;
+  href: string;
+  variant?: 'primary' | 'default';
+}
+
+function QuickActionCard({ icon: Icon, title, description, href, variant = 'default' }: QuickActionCardProps) {
+  return (
+          <Link
+            to={href}
+            className={cn(
+              "glass-card card-shadow-energy p-6 hover:border-primary/30 transition-all group",
+              variant === 'primary' && "border-primary/20 bg-primary/5 shadow-monarch-glow"
+            )}
+          >
+      <div className="flex items-start gap-4">
+        <div className={cn(
+          "w-12 h-12 rounded-lg flex items-center justify-center transition-colors",
+          variant === 'primary' 
+            ? "bg-primary/20 group-hover:bg-primary/30" 
+            : "bg-primary/10 group-hover:bg-primary/20"
+        )}>
+          <Icon className={cn(
+            "w-6 h-6 transition-colors",
+            variant === 'primary' ? "text-primary" : "text-primary"
+          )} />
+        </div>
+        <div className="flex-1">
+          <h3 className="font-heading font-semibold mb-1 group-hover:text-primary transition-colors">
+            {title}
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            {description}
+          </p>
+        </div>
+        <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+      </div>
+    </Link>
+  );
+}
+
+interface StatItemProps {
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  value: number;
+}
+
+function StatItem({ icon: Icon, label, value }: StatItemProps) {
+  return (
+    <div className="flex items-center justify-between p-3 rounded-lg bg-background/50 border border-border">
+      <div className="flex items-center gap-3">
+        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+          <Icon className="w-4 h-4 text-primary" />
+        </div>
+        <span className="text-sm font-heading text-muted-foreground">{label}</span>
+      </div>
+      <span className="text-lg font-display font-bold text-primary">{value}</span>
+    </div>
+  );
+}
+

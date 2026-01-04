@@ -23,15 +23,15 @@ export function Header() {
         <nav className="container mx-auto px-4 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-3 group">
-              <div className="relative">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg group-hover:shadow-primary/50 transition-shadow">
-                  <Sword className="w-5 h-5 text-primary-foreground" />
+            <Link to="/" className="flex items-center gap-3 group monarch-presence">
+              <div className="relative monarch-seal">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg group-hover:shadow-[0_0_20px_hsl(var(--primary)/0.6)] transition-all duration-300 group-hover:scale-110">
+                  <Sword className="w-5 h-5 text-primary-foreground relative z-10" />
                 </div>
                 <div className="absolute -inset-1 bg-primary/20 rounded-lg blur-md opacity-0 group-hover:opacity-100 transition-opacity -z-10" />
               </div>
               <div className="hidden sm:block">
-                <span className="font-display text-lg font-bold gradient-text-system">
+                <span className="font-display text-lg font-bold gradient-text-system text-glow">
                   SOLO LEVELING
                 </span>
                 <span className="block text-xs text-muted-foreground font-heading -mt-1">
@@ -51,16 +51,22 @@ export function Header() {
                     className={cn(
                       "relative px-4 py-2 rounded-lg font-heading text-sm font-medium transition-all duration-200",
                       isActive
-                        ? "text-primary"
-                        : "text-muted-foreground hover:text-foreground"
+                        ? "text-primary text-glow"
+                        : "text-muted-foreground hover:text-foreground hover:text-primary/80"
                     )}
                   >
-                    <span className="flex items-center gap-2">
-                      <item.icon className="w-4 h-4" />
+                    <span className="flex items-center gap-2 relative z-10">
+                      <item.icon className={cn(
+                        "w-4 h-4 transition-all",
+                        isActive && "drop-shadow-[0_0_4px_hsl(var(--primary)/0.6)]"
+                      )} />
                       {item.name}
                     </span>
                     {isActive && (
-                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-primary rounded-full" />
+                      <>
+                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-primary rounded-full shadow-[0_0_8px_hsl(var(--primary)/0.6)]" />
+                        <div className="absolute inset-0 bg-primary/5 rounded-lg -z-10" />
+                      </>
                     )}
                   </Link>
                 );
@@ -69,10 +75,12 @@ export function Header() {
 
             {/* Actions */}
             <div className="flex items-center gap-3">
-              <Button variant="outline" size="sm" className="hidden sm:flex gap-2">
-                <Shield className="w-4 h-4" />
-                <span className="font-heading">New Character</span>
-              </Button>
+              <Link to="/characters/new">
+                <Button variant="outline" size="sm" className="hidden sm:flex gap-2 btn-shadow-monarch">
+                  <Shield className="w-4 h-4" />
+                  <span className="font-heading">New Hunter</span>
+                </Button>
+              </Link>
 
               {/* Mobile menu button */}
               <Button
@@ -114,10 +122,12 @@ export function Header() {
                   );
                 })}
                 <div className="pt-2 mt-2 border-t border-border/50">
-                  <Button className="w-full gap-2">
-                    <Shield className="w-4 h-4" />
-                    New Character
-                  </Button>
+                  <Link to="/characters/new" className="block">
+                    <Button className="w-full gap-2 btn-shadow-monarch">
+                      <Shield className="w-4 h-4" />
+                      New Hunter
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>

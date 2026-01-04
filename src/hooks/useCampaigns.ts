@@ -240,3 +240,98 @@ export const useLeaveCampaign = () => {
   });
 };
 
+// Check if current user is the DM of a campaign
+export const useIsCampaignDM = (campaignId: string) => {
+  return useQuery({
+    queryKey: ['campaigns', campaignId, 'is-dm'],
+    queryFn: async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return false;
+
+      const { data: campaign, error } = await supabase
+        .from('campaigns')
+        .select('dm_id')
+        .eq('id', campaignId)
+        .single();
+
+      if (error || !campaign) return false;
+      return campaign.dm_id === user.id;
+    },
+    enabled: !!campaignId,
+  });
+};
+
+// Check if current user has DM access (is DM or co-DM)
+export const useHasDMAccess = (campaignId: string) => {
+  return useQuery({
+    queryKey: ['campaigns', campaignId, 'has-dm-access'],
+    queryFn: async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return false;
+
+      // Check if user is the DM
+      const { data: campaign, error: campaignError } = await supabase
+        .from('campaigns')
+        .select('dm_id')
+        .eq('id', campaignId)
+        .single();
+
+      if (!campaignError && campaign && campaign.dm_id === user.id) {
+        return true;
+      }
+
+      // Check if user is a co-DM
+      const { data: member, error: memberError } = await supabase
+        .from('campaign_members')
+        .select('role')
+        .eq('campaign_id', campaignId)
+        .eq('user_id', user.id)
+        .single();
+
+      if (!memberError && member && member.role === 'co-dm') {
+        return true;
+      }
+
+      return false;
+    },
+    enabled: !!campaignId,
+  });
+};
+
+// Get current user's role in a campaign
+export const useCampaignRole = (campaignId: string) => {
+  return useQuery({
+    queryKey: ['campaigns', campaignId, 'role'],
+    queryFn: async (): Promise<'dm' | 'co-dm' | 'player' | null> => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return null;
+
+      // Check if user is the DM
+      const { data: campaign, error: campaignError } = await supabase
+        .from('campaigns')
+        .select('dm_id')
+        .eq('id', campaignId)
+        .single();
+
+      if (!campaignError && campaign && campaign.dm_id === user.id) {
+        return 'dm';
+      }
+
+      // Check member role
+      const { data: member, error: memberError } = await supabase
+        .from('campaign_members')
+        .select('role')
+        .eq('campaign_id', campaignId)
+        .eq('user_id', user.id)
+        .single();
+
+      if (!memberError && member) {
+        return member.role === 'co-dm' ? 'co-dm' : 'player';
+      }
+
+      return null;
+    },
+    enabled: !!campaignId,
+  });
+};
+

@@ -151,9 +151,39 @@
   body {
     @apply bg-background text-foreground font-body antialiased;
     background-image: 
-      radial-gradient(ellipse at 50% 0%, hsl(265 60% 15% / 0.3) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 80%, hsl(200 80% 20% / 0.15) 0%, transparent 40%);
+      radial-gradient(ellipse at 50% 0%, hsl(265 60% 15% / 0.4) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, hsl(200 80% 20% / 0.2) 0%, transparent 40%),
+      radial-gradient(ellipse at 20% 50%, hsl(265 85% 25% / 0.15) 0%, transparent 60%);
     background-attachment: fixed;
+    position: relative;
+  }
+
+  /* Animated background particles */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(2px 2px at 20% 30%, hsl(var(--secondary) / 0.3), transparent),
+      radial-gradient(2px 2px at 60% 70%, hsl(var(--primary) / 0.2), transparent),
+      radial-gradient(1px 1px at 50% 50%, hsl(var(--secondary) / 0.2), transparent),
+      radial-gradient(1px 1px at 80% 10%, hsl(var(--primary) / 0.15), transparent),
+      radial-gradient(2px 2px at 90% 40%, hsl(var(--secondary) / 0.25), transparent);
+    background-size: 200% 200%;
+    background-position: 0% 0%;
+    animation: background-drift 20s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes background-drift {
+    0%, 100% { background-position: 0% 0%; }
+    25% { background-position: 100% 50%; }
+    50% { background-position: 50% 100%; }
+    75% { background-position: 0% 50%; }
   }
 
   /* Custom scrollbar */
@@ -344,6 +374,339 @@
   .animate-pulse-glow {
     animation: pulse-glow 4s ease-in-out infinite;
   }
+
+  /* Gate Break effect - red destructive glow */
+  .gate-break {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gate-break::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, 
+      hsl(var(--destructive)) 0%, 
+      hsl(var(--gate-red)) 50%, 
+      hsl(var(--destructive)) 100%);
+    opacity: 0.4;
+    filter: blur(8px);
+    z-index: -1;
+    animation: gate-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes gate-pulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.02); }
+  }
+
+  /* Shadow Extraction effect */
+  .shadow-extraction {
+    position: relative;
+  }
+
+  .shadow-extraction::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: inherit;
+    background: conic-gradient(
+      from 0deg,
+      hsl(var(--secondary)) 0deg,
+      transparent 60deg,
+      hsl(var(--shadow-purple)) 120deg,
+      transparent 180deg,
+      hsl(var(--secondary)) 240deg,
+      transparent 300deg,
+      hsl(var(--secondary)) 360deg
+    );
+    opacity: 0.3;
+    filter: blur(12px);
+    z-index: -1;
+    animation: shadow-rotate 3s linear infinite;
+  }
+
+  @keyframes shadow-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* System notification popup style */
+  .system-notification {
+    @apply glass-card border-primary/50;
+    box-shadow: 
+      0 0 20px hsl(var(--primary) / 0.4),
+      inset 0 1px 0 hsl(var(--primary) / 0.3);
+    animation: notification-appear 0.4s ease-out;
+  }
+
+  @keyframes notification-appear {
+    from {
+      opacity: 0;
+      transform: translateY(-10px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* Hunter rank badge glow */
+  .rank-badge {
+    position: relative;
+    @apply inline-flex items-center justify-center;
+  }
+
+  .rank-badge::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: radial-gradient(circle, hsl(var(--accent) / 0.4), transparent 70%);
+    filter: blur(8px);
+    z-index: -1;
+    animation: rank-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes rank-glow {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.1); }
+  }
+
+  /* Portal/Gate entrance effect */
+  .gate-portal {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gate-portal::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at center,
+      transparent 30%,
+      hsl(var(--destructive) / 0.2) 50%,
+      transparent 70%
+    );
+    animation: portal-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes portal-pulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.1); }
+  }
+
+  /* Shadow energy trail */
+  .shadow-trail {
+    position: relative;
+  }
+
+  .shadow-trail::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: linear-gradient(
+      45deg,
+      transparent 30%,
+      hsl(var(--secondary) / 0.3) 50%,
+      transparent 70%
+    );
+    filter: blur(6px);
+    z-index: -1;
+    animation: trail-move 2s ease-in-out infinite;
+  }
+
+  @keyframes trail-move {
+    0%, 100% { transform: translateX(-100%) translateY(-100%); opacity: 0; }
+    50% { transform: translateX(0) translateY(0); opacity: 0.5; }
+  }
+
+  /* System scan line effect */
+  .system-scan {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .system-scan::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--primary) / 0.3) 50%,
+      transparent
+    );
+    animation: scan-line 3s linear infinite;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  @keyframes scan-line {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  /* Enhanced button hover effects */
+  .btn-shadow-monarch {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .btn-shadow-monarch::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--secondary) / 0.2) 0%,
+      hsl(var(--primary) / 0.2) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .btn-shadow-monarch:hover::before {
+    opacity: 1;
+  }
+
+  .btn-shadow-monarch:hover {
+    box-shadow: 
+      0 0 20px hsl(var(--secondary) / 0.4),
+      0 0 40px hsl(var(--primary) / 0.2);
+    transform: translateY(-2px);
+  }
+
+  /* Card hover with shadow energy */
+  .card-shadow-energy {
+    transition: all 0.3s ease;
+  }
+
+  .card-shadow-energy:hover {
+    border-color: hsl(var(--secondary) / 0.5);
+    box-shadow: 
+      0 8px 32px hsl(var(--secondary) / 0.2),
+      0 0 20px hsl(var(--secondary) / 0.1);
+    transform: translateY(-4px);
+  }
+
+  /* Level up flash effect */
+  .level-up-flash {
+    animation: level-up 0.6s ease-out;
+  }
+
+  @keyframes level-up {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+      filter: brightness(1);
+    }
+    50% {
+      opacity: 0.9;
+      transform: scale(1.05);
+      filter: brightness(1.5);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+      filter: brightness(1);
+    }
+  }
+
+  /* Stat increase glow */
+  .stat-increase {
+    animation: stat-pulse 1s ease-out;
+  }
+
+  @keyframes stat-pulse {
+    0% {
+      color: hsl(var(--foreground));
+      text-shadow: none;
+    }
+    50% {
+      color: hsl(var(--accent));
+      text-shadow: 0 0 10px hsl(var(--accent) / 0.8);
+    }
+    100% {
+      color: hsl(var(--foreground));
+      text-shadow: none;
+    }
+  }
+
+  /* Gate break warning */
+  .gate-break-warning {
+    @apply border-destructive/50 bg-destructive/10;
+    animation: warning-pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes warning-pulse {
+    0%, 100% {
+      border-color: hsl(var(--destructive) / 0.5);
+      box-shadow: 0 0 10px hsl(var(--destructive) / 0.3);
+    }
+    50% {
+      border-color: hsl(var(--destructive) / 0.8);
+      box-shadow: 0 0 20px hsl(var(--destructive) / 0.6);
+    }
+  }
+
+  /* Shadow Monarch's presence indicator */
+  .monarch-presence {
+    position: relative;
+  }
+
+  .monarch-presence::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: inherit;
+    background: conic-gradient(
+      from 180deg,
+      hsl(var(--secondary) / 0.3),
+      transparent 30%,
+      hsl(var(--shadow-purple) / 0.3),
+      transparent 60%,
+      hsl(var(--secondary) / 0.3)
+    );
+    filter: blur(10px);
+    z-index: -1;
+    animation: presence-rotate 4s linear infinite;
+  }
+
+  @keyframes presence-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Enhanced input focus with System glow */
+  .input-system-focus:focus {
+    border-color: hsl(var(--primary) / 0.6);
+    box-shadow: 
+      0 0 0 2px hsl(var(--primary) / 0.2),
+      0 0 20px hsl(var(--primary) / 0.3);
+    outline: none;
+  }
+
+  /* Quest/Notification badge */
+  .quest-badge {
+    @apply relative inline-flex items-center justify-center;
+    animation: quest-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes quest-pulse {
+    0%, 100% {
+      box-shadow: 0 0 10px hsl(var(--accent) / 0.5);
+    }
+    50% {
+      box-shadow: 0 0 20px hsl(var(--accent) / 0.8);
+    }
+  }
 }
 
 @layer utilities {
@@ -373,5 +736,137 @@
   .gradient-text-gold {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(35 90% 60%) 100%);
+  }
+
+  /* Radial gradient background utility */
+  .bg-gradient-radial {
+    background-image: radial-gradient(circle, var(--tw-gradient-stops));
+  }
+
+  /* Shadow energy text */
+  .text-shadow-energy {
+    text-shadow: 
+      0 0 10px hsl(var(--secondary) / 0.8),
+      0 0 20px hsl(var(--secondary) / 0.6),
+      0 0 30px hsl(var(--secondary) / 0.4);
+  }
+
+  /* System blue text */
+  .text-system-blue {
+    color: hsl(var(--primary));
+    text-shadow: 0 0 10px hsl(var(--primary) / 0.6);
+  }
+
+  /* Gate red text */
+  .text-gate-red {
+    color: hsl(var(--destructive));
+    text-shadow: 0 0 10px hsl(var(--destructive) / 0.6);
+  }
+
+  /* Hunter gold text */
+  .text-hunter-gold {
+    color: hsl(var(--accent));
+    text-shadow: 0 0 10px hsl(var(--accent) / 0.6);
+  }
+
+  /* Animated gradient border */
+  .border-gradient-animated {
+    position: relative;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  .border-gradient-animated::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--primary)),
+      hsl(var(--secondary)),
+      hsl(var(--primary))
+    );
+    background-size: 200% 200%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: gradient-shift 3s ease infinite;
+    z-index: -1;
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  /* Shadow extraction particle */
+  .shadow-particle-extract {
+    @apply absolute w-1 h-1 rounded-full pointer-events-none;
+    background: hsl(var(--secondary));
+    box-shadow: 0 0 6px hsl(var(--secondary) / 0.8);
+    animation: extract-float 2s ease-out forwards;
+  }
+
+  @keyframes extract-float {
+    0% {
+      opacity: 1;
+      transform: translate(0, 0) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(var(--tx, 0), var(--ty, -50px)) scale(0);
+    }
+  }
+
+  /* System loading spinner */
+  .spinner-system {
+    border: 3px solid hsl(var(--muted));
+    border-top-color: hsl(var(--primary));
+    border-right-color: hsl(var(--secondary));
+    animation: system-spin 1s linear infinite;
+  }
+
+  @keyframes system-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Enhanced glass effect with System glow */
+  .glass-system {
+    @apply bg-card/60 backdrop-blur-2xl border border-primary/20;
+    box-shadow: 
+      0 8px 32px hsl(var(--card) / 0.5),
+      inset 0 1px 0 hsl(var(--primary) / 0.1),
+      0 0 20px hsl(var(--primary) / 0.1);
+  }
+
+  /* Shadow Monarch's seal */
+  .monarch-seal {
+    position: relative;
+    @apply inline-flex items-center justify-center;
+  }
+
+  .monarch-seal::before,
+  .monarch-seal::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid hsl(var(--secondary) / 0.5);
+  }
+
+  .monarch-seal::before {
+    inset: -8px;
+    animation: seal-rotate 10s linear infinite;
+  }
+
+  .monarch-seal::after {
+    inset: -12px;
+    animation: seal-rotate 15s linear infinite reverse;
+  }
+
+  @keyframes seal-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
 }

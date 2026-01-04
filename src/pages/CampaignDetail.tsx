@@ -1,11 +1,11 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Users, Copy, Loader2, Crown, MessageSquare, FileText, Share2, Settings } from 'lucide-react';
+import { ArrowLeft, Users, Copy, Loader2, Crown, MessageSquare, FileText, Share2, Settings, Shield } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useCampaign, useCampaignMembers } from '@/hooks/useCampaigns';
+import { useCampaign, useCampaignMembers, useHasDMAccess, useCampaignRole } from '@/hooks/useCampaigns';
 import { useToast } from '@/hooks/use-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -17,13 +17,14 @@ import { CampaignSettings } from '@/components/campaign/CampaignSettings';
 
 const CampaignDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [activeTab, setActiveTab] = useState('overview');
 
   const { data: campaign, isLoading: loadingCampaign } = useCampaign(id || '');
   const { data: members = [], isLoading: loadingMembers } = useCampaignMembers(id || '');
+  const { data: hasDMAccess = false, isLoading: loadingDMAccess } = useHasDMAccess(id || '');
+  const { data: userRole, isLoading: loadingRole } = useCampaignRole(id || '');
 
   // Real-time updates for campaign members
   useEffect(() => {
@@ -98,16 +99,40 @@ const CampaignDetail = () => {
         </Link>
 
         <div className="mb-8">
-          <h1 className="font-display text-4xl font-bold mb-2 gradient-text-shadow">
-            {campaign.name.toUpperCase()}
-          </h1>
+          <div className="flex items-center gap-4 mb-2">
+            <h1 className="font-display text-4xl font-bold gradient-text-shadow">
+              {campaign.name.toUpperCase()}
+            </h1>
+            {!loadingRole && userRole && (
+              <div className="flex items-center gap-2">
+                {userRole === 'dm' && (
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-lg bg-primary/10 border border-primary/30">
+                    <Crown className="w-4 h-4 text-primary" />
+                    <span className="text-xs font-display text-primary font-semibold">SHADOW MONARCH (DM)</span>
+                  </div>
+                )}
+                {userRole === 'co-dm' && (
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-lg bg-accent/10 border border-accent/30">
+                    <Crown className="w-4 h-4 text-accent" />
+                    <span className="text-xs font-display text-accent font-semibold">CO-DM</span>
+                  </div>
+                )}
+                {userRole === 'player' && (
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-lg bg-muted border border-border">
+                    <Shield className="w-4 h-4 text-muted-foreground" />
+                    <span className="text-xs font-display text-muted-foreground font-semibold">HUNTER</span>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
           {campaign.description && (
             <p className="text-muted-foreground font-heading">{campaign.description}</p>
           )}
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className={hasDMAccess ? "grid w-full grid-cols-5" : "grid w-full grid-cols-4"}>
             <TabsTrigger value="overview" className="gap-2">
               <Users className="w-4 h-4" />
               Overview
@@ -124,10 +149,12 @@ const CampaignDetail = () => {
               <Share2 className="w-4 h-4" />
               Characters
             </TabsTrigger>
-            <TabsTrigger value="settings" className="gap-2">
-              <Settings className="w-4 h-4" />
-              Settings
-            </TabsTrigger>
+            {hasDMAccess && (
+              <TabsTrigger value="settings" className="gap-2">
+                <Settings className="w-4 h-4" />
+                Settings
+              </TabsTrigger>
+            )}
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
@@ -135,24 +162,37 @@ const CampaignDetail = () => {
               {/* Campaign Info */}
               <SystemWindow title="CAMPAIGN INFO">
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between p-2 bg-muted/50 rounded">
-                    <span className="text-xs font-display text-muted-foreground">SHARE CODE</span>
-                    <span className="font-mono font-bold text-lg text-primary">{campaign.share_code}</span>
-                  </div>
-                  <Button
-                    variant="outline"
-                    className="w-full gap-2"
-                    onClick={handleCopyShareLink}
-                  >
-                    <Copy className="w-4 h-4" />
-                    Copy Share Link
-                  </Button>
-                  <div className="pt-4 border-t border-border">
-                    <p className="text-xs text-muted-foreground mb-2">Share this link with players:</p>
-                    <p className="text-sm font-mono bg-muted p-2 rounded break-all">
-                      {window.location.origin}/campaigns/join/{campaign.share_code}
-                    </p>
-                  </div>
+                  {hasDMAccess ? (
+                    <>
+                      <div className="flex items-center justify-between p-2 bg-muted/50 rounded">
+                        <span className="text-xs font-display text-muted-foreground">SHARE CODE</span>
+                        <span className="font-mono font-bold text-lg text-primary">{campaign.share_code}</span>
+                      </div>
+                      <Button
+                        variant="outline"
+                        className="w-full gap-2"
+                        onClick={handleCopyShareLink}
+                      >
+                        <Copy className="w-4 h-4" />
+                        Copy Share Link
+                      </Button>
+                      <div className="pt-4 border-t border-border">
+                        <p className="text-xs text-muted-foreground mb-2">Share this link with players:</p>
+                        <p className="text-sm font-mono bg-muted p-2 rounded break-all">
+                          {window.location.origin}/campaigns/join/{campaign.share_code}
+                        </p>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="text-center py-6">
+                      <p className="text-sm text-muted-foreground font-heading mb-2">
+                        Share code and invite links are only visible to the Shadow Monarch (DM).
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Ask your DM for the share code to invite others.
+                      </p>
+                    </div>
+                  )}
                 </div>
               </SystemWindow>
 
@@ -166,31 +206,38 @@ const CampaignDetail = () => {
                   <p className="text-muted-foreground text-center py-8">No members yet</p>
                 ) : (
                   <div className="space-y-2">
-                    {members.map((member) => (
-                      <div
-                        key={member.id}
-                        className="flex items-center justify-between p-3 bg-muted/50 rounded"
-                      >
-                        <div className="flex items-center gap-3">
-                          {member.role === 'co-dm' && (
-                            <Crown className="w-4 h-4 text-accent" />
-                          )}
-                          <div>
-                            <p className="font-heading font-semibold">
-                              {member.characters?.name || 'No character linked'}
-                            </p>
-                            {member.characters && (
-                              <p className="text-xs text-muted-foreground">
-                                Level {member.characters.level} {member.characters.job}
-                              </p>
+                    {members.map((member) => {
+                      // Check if this member is the DM
+                      const isDM = campaign.dm_id === member.user_id;
+                      return (
+                        <div
+                          key={member.id}
+                          className="flex items-center justify-between p-3 bg-muted/50 rounded"
+                        >
+                          <div className="flex items-center gap-3">
+                            {isDM && (
+                              <Crown className="w-4 h-4 text-primary" />
                             )}
+                            {member.role === 'co-dm' && !isDM && (
+                              <Crown className="w-4 h-4 text-accent" />
+                            )}
+                            <div>
+                              <p className="font-heading font-semibold">
+                                {member.characters?.name || 'No character linked'}
+                              </p>
+                              {member.characters && (
+                                <p className="text-xs text-muted-foreground">
+                                  Level {member.characters.level} {member.characters.job}
+                                </p>
+                              )}
+                            </div>
                           </div>
+                          <span className="text-xs font-display text-muted-foreground">
+                            {isDM ? 'DM' : member.role === 'co-dm' ? 'Co-DM' : 'Player'}
+                          </span>
                         </div>
-                        <span className="text-xs font-display text-muted-foreground">
-                          {member.role === 'co-dm' ? 'Co-DM' : 'Player'}
-                        </span>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 )}
               </SystemWindow>
@@ -209,9 +256,11 @@ const CampaignDetail = () => {
             <CampaignCharacters campaignId={id || ''} />
           </TabsContent>
 
-          <TabsContent value="settings">
-            <CampaignSettings campaignId={id || ''} />
-          </TabsContent>
+          {hasDMAccess && (
+            <TabsContent value="settings">
+              <CampaignSettings campaignId={id || ''} />
+            </TabsContent>
+          )}
         </Tabs>
       </div>
     </Layout>

@@ -57,11 +57,13 @@ export function HeroSection() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-slide-up" style={{ animationDelay: '0.3s' }}>
-            <Button size="lg" className="gap-2 text-lg px-8 font-heading">
-              <Users className="w-5 h-5" />
-              Create a Hunter
-              <ArrowRight className="w-4 h-4" />
-            </Button>
+            <Link to="/characters/new">
+              <Button size="lg" className="gap-2 text-lg px-8 font-heading">
+                <Users className="w-5 h-5" />
+                Create a Hunter
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+            </Link>
             <Link to="/compendium">
               <Button variant="outline" size="lg" className="gap-2 text-lg px-8 font-heading">
                 <BookOpen className="w-5 h-5" />
