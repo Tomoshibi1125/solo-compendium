@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, BookOpen, Users, Sword, Shield, Dice6, Map, Settings } from 'lucide-react';
+import { Menu, X, BookOpen, Users, Sword, Shield, Dice6, Map, Settings, UsersRound } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 const navigation = [
   { name: 'Compendium', href: '/compendium', icon: BookOpen },
   { name: 'Characters', href: '/characters', icon: Users },
+  { name: 'Campaigns', href: '/campaigns', icon: UsersRound },
   { name: 'DM Tools', href: '/dm-tools', icon: Map },
   { name: 'Dice', href: '/dice', icon: Dice6 },
   { name: 'Admin', href: '/admin', icon: Settings },

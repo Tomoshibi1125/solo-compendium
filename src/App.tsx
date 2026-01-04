@@ -18,6 +18,9 @@ const CharacterLevelUp = lazy(() => import("./pages/CharacterLevelUp"));
 const Admin = lazy(() => import("./pages/Admin"));
 const DMTools = lazy(() => import("./pages/DMTools"));
 const DiceRoller = lazy(() => import("./pages/DiceRoller"));
+const Campaigns = lazy(() => import("./pages/Campaigns"));
+const CampaignDetail = lazy(() => import("./pages/CampaignDetail"));
+const CampaignJoin = lazy(() => import("./pages/CampaignJoin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Configure React Query with better caching
@@ -117,6 +120,38 @@ const App = () => (
             element={
               <Suspense fallback={<PageLoader />}>
                 <DiceRoller />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/campaigns"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <Campaigns />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/campaigns/join"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <CampaignJoin />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/campaigns/join/:shareCode"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <CampaignJoin />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/campaigns/:id"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <CampaignDetail />
               </Suspense>
             }
           />
