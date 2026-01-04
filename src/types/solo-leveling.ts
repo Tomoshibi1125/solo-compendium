@@ -118,7 +118,7 @@ export interface Power {
   tags: string[];
 }
 
-// Relic (magic item)
+// Relic (System-granted item)
 export interface Relic {
   id: string;
   name: string;

@@ -188,7 +188,7 @@ const Campaigns = () => {
                     <div className="flex items-center justify-between p-2 bg-muted/50 rounded">
                       <span className="text-xs font-display text-muted-foreground">ROLE</span>
                       <span className="font-heading font-semibold text-accent">
-                        {campaign.member_role === 'co-dm' ? 'Co-DM' : 'Hunter'}
+                        {campaign.member_role === 'co-system' ? 'Co-System' : 'Hunter'}
                       </span>
                     </div>
                     <div className="flex gap-2">

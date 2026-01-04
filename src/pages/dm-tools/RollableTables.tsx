@@ -154,7 +154,7 @@ const TREASURE_TIERS = {
     'Sovereign relic (resonant)',
     'Sovereign materials',
     'Incredible credit sum',
-    'Divine consumables',
+    'System-granted consumables',
     'Sovereign equipment',
   ],
 };

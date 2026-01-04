@@ -186,10 +186,10 @@ const CampaignDetail = () => {
                   ) : (
                     <div className="text-center py-6">
                       <p className="text-sm text-muted-foreground font-heading mb-2">
-                        Share code and invite links are only visible to the Shadow Monarch (DM).
+                        Share code and invite links are only visible to the Gate Master (System).
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        Ask your DM for the share code to invite others.
+                        Ask your Gate Master (System) for the share code to invite others.
                       </p>
                     </div>
                   )}
@@ -207,7 +207,7 @@ const CampaignDetail = () => {
                 ) : (
                   <div className="space-y-2">
                     {members.map((member) => {
-                      // Check if this member is the DM
+                      // Check if this member is the System (Gate Master)
                       const isDM = campaign.dm_id === member.user_id;
                       return (
                         <div
@@ -218,7 +218,7 @@ const CampaignDetail = () => {
                             {isDM && (
                               <Crown className="w-4 h-4 text-primary" />
                             )}
-                            {member.role === 'co-dm' && !isDM && (
+                            {member.role === 'co-system' && !isDM && (
                               <Crown className="w-4 h-4 text-accent" />
                             )}
                             <div>
@@ -233,7 +233,7 @@ const CampaignDetail = () => {
                             </div>
                           </div>
                           <span className="text-xs font-display text-muted-foreground">
-                            {isDM ? 'DM' : member.role === 'co-dm' ? 'Co-DM' : 'Hunter'}
+                            {isDM ? 'System' : member.role === 'co-system' ? 'Co-System' : 'Hunter'}
                           </span>
                         </div>
                       );
