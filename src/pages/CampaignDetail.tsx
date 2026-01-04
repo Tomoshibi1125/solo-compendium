@@ -1,19 +1,54 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Users, Copy, Loader2, Crown } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ArrowLeft, Users, Copy, Loader2, Crown, MessageSquare, FileText, Share2, Settings } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useCampaign, useCampaignMembers } from '@/hooks/useCampaigns';
 import { useToast } from '@/hooks/use-toast';
+import { useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import { Link } from 'react-router-dom';
+import { CampaignChat } from '@/components/campaign/CampaignChat';
+import { CampaignNotes } from '@/components/campaign/CampaignNotes';
+import { CampaignCharacters } from '@/components/campaign/CampaignCharacters';
+import { CampaignSettings } from '@/components/campaign/CampaignSettings';
 
 const CampaignDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const [activeTab, setActiveTab] = useState('overview');
 
   const { data: campaign, isLoading: loadingCampaign } = useCampaign(id || '');
   const { data: members = [], isLoading: loadingMembers } = useCampaignMembers(id || '');
+
+  // Real-time updates for campaign members
+  useEffect(() => {
+    if (!id) return;
+
+    const channel = supabase
+      .channel(`campaign:${id}:members`)
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'campaign_members',
+          filter: `campaign_id=eq.${id}`,
+        },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ['campaigns', id, 'members'] });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [id, queryClient]);
 
   const handleCopyShareLink = () => {
     if (!campaign) return;
@@ -71,70 +106,113 @@ const CampaignDetail = () => {
           )}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Campaign Info */}
-          <SystemWindow title="CAMPAIGN INFO">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-2 bg-muted/50 rounded">
-                <span className="text-xs font-display text-muted-foreground">SHARE CODE</span>
-                <span className="font-mono font-bold text-lg text-primary">{campaign.share_code}</span>
-              </div>
-              <Button
-                variant="outline"
-                className="w-full gap-2"
-                onClick={handleCopyShareLink}
-              >
-                <Copy className="w-4 h-4" />
-                Copy Share Link
-              </Button>
-              <div className="pt-4 border-t border-border">
-                <p className="text-xs text-muted-foreground mb-2">Share this link with players:</p>
-                <p className="text-sm font-mono bg-muted p-2 rounded break-all">
-                  {window.location.origin}/campaigns/join/{campaign.share_code}
-                </p>
-              </div>
-            </div>
-          </SystemWindow>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <TabsList className="grid w-full grid-cols-5">
+            <TabsTrigger value="overview" className="gap-2">
+              <Users className="w-4 h-4" />
+              Overview
+            </TabsTrigger>
+            <TabsTrigger value="chat" className="gap-2">
+              <MessageSquare className="w-4 h-4" />
+              Chat
+            </TabsTrigger>
+            <TabsTrigger value="notes" className="gap-2">
+              <FileText className="w-4 h-4" />
+              Notes
+            </TabsTrigger>
+            <TabsTrigger value="characters" className="gap-2">
+              <Share2 className="w-4 h-4" />
+              Characters
+            </TabsTrigger>
+            <TabsTrigger value="settings" className="gap-2">
+              <Settings className="w-4 h-4" />
+              Settings
+            </TabsTrigger>
+          </TabsList>
 
-          {/* Campaign Members */}
-          <SystemWindow title="MEMBERS">
-            {loadingMembers ? (
-              <div className="flex items-center justify-center py-8">
-                <Loader2 className="w-6 h-6 animate-spin text-primary" />
-              </div>
-            ) : members.length === 0 ? (
-              <p className="text-muted-foreground text-center py-8">No members yet</p>
-            ) : (
-              <div className="space-y-2">
-                {members.map((member) => (
-                  <div
-                    key={member.id}
-                    className="flex items-center justify-between p-3 bg-muted/50 rounded"
-                  >
-                    <div className="flex items-center gap-3">
-                      {member.role === 'co-dm' && (
-                        <Crown className="w-4 h-4 text-accent" />
-                      )}
-                      <div>
-                        <p className="font-heading font-semibold">
-                          {member.characters?.name || 'No character linked'}
-                        </p>
-                        {member.characters && (
-                          <p className="text-xs text-muted-foreground">
-                            Level {member.characters.level} {member.characters.job}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    <span className="text-xs font-display text-muted-foreground">
-                      {member.role === 'co-dm' ? 'Co-DM' : 'Player'}
-                    </span>
+          <TabsContent value="overview" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Campaign Info */}
+              <SystemWindow title="CAMPAIGN INFO">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-2 bg-muted/50 rounded">
+                    <span className="text-xs font-display text-muted-foreground">SHARE CODE</span>
+                    <span className="font-mono font-bold text-lg text-primary">{campaign.share_code}</span>
                   </div>
-                ))}
-              </div>
-            )}
-          </SystemWindow>
-        </div>
+                  <Button
+                    variant="outline"
+                    className="w-full gap-2"
+                    onClick={handleCopyShareLink}
+                  >
+                    <Copy className="w-4 h-4" />
+                    Copy Share Link
+                  </Button>
+                  <div className="pt-4 border-t border-border">
+                    <p className="text-xs text-muted-foreground mb-2">Share this link with players:</p>
+                    <p className="text-sm font-mono bg-muted p-2 rounded break-all">
+                      {window.location.origin}/campaigns/join/{campaign.share_code}
+                    </p>
+                  </div>
+                </div>
+              </SystemWindow>
+
+              {/* Campaign Members */}
+              <SystemWindow title="MEMBERS">
+                {loadingMembers ? (
+                  <div className="flex items-center justify-center py-8">
+                    <Loader2 className="w-6 h-6 animate-spin text-primary" />
+                  </div>
+                ) : members.length === 0 ? (
+                  <p className="text-muted-foreground text-center py-8">No members yet</p>
+                ) : (
+                  <div className="space-y-2">
+                    {members.map((member) => (
+                      <div
+                        key={member.id}
+                        className="flex items-center justify-between p-3 bg-muted/50 rounded"
+                      >
+                        <div className="flex items-center gap-3">
+                          {member.role === 'co-dm' && (
+                            <Crown className="w-4 h-4 text-accent" />
+                          )}
+                          <div>
+                            <p className="font-heading font-semibold">
+                              {member.characters?.name || 'No character linked'}
+                            </p>
+                            {member.characters && (
+                              <p className="text-xs text-muted-foreground">
+                                Level {member.characters.level} {member.characters.job}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                        <span className="text-xs font-display text-muted-foreground">
+                          {member.role === 'co-dm' ? 'Co-DM' : 'Player'}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </SystemWindow>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="chat">
+            <CampaignChat campaignId={id || ''} />
+          </TabsContent>
+
+          <TabsContent value="notes">
+            <CampaignNotes campaignId={id || ''} />
+          </TabsContent>
+
+          <TabsContent value="characters">
+            <CampaignCharacters campaignId={id || ''} />
+          </TabsContent>
+
+          <TabsContent value="settings">
+            <CampaignSettings campaignId={id || ''} />
+          </TabsContent>
+        </Tabs>
       </div>
     </Layout>
   );
