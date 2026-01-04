@@ -3,7 +3,8 @@ import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { supabase } from '@/integrations/supabase/client';
-import { Heart, Shield, Footprints, Skull, Swords } from 'lucide-react';
+import { Heart, Shield, Footprints, Skull, Swords, Crown, Zap, Flame } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface MonsterData {
   id: string;
@@ -61,13 +62,15 @@ interface MonsterTrait {
   description: string;
 }
 
-const gateRankColors: Record<string, string> = {
-  'E': 'bg-gray-500',
-  'D': 'bg-green-500',
-  'C': 'bg-blue-500',
-  'B': 'bg-purple-500',
-  'A': 'bg-orange-500',
-  'S': 'bg-red-500',
+// Enhanced gate rank colors with Solo Leveling theme
+const gateRankColors: Record<string, { bg: string; text: string; glow: string }> = {
+  'E': { bg: 'bg-gate-e/20', text: 'text-gate-e', glow: '' },
+  'D': { bg: 'bg-gate-d/20', text: 'text-gate-d', glow: '' },
+  'C': { bg: 'bg-gate-c/20', text: 'text-gate-c', glow: '' },
+  'B': { bg: 'bg-gate-b/20', text: 'text-gate-b', glow: 'shadow-[0_0_8px_hsl(var(--gate-b)/0.4)]' },
+  'A': { bg: 'bg-gate-a/20', text: 'text-gate-a', glow: 'shadow-[0_0_10px_hsl(var(--gate-a)/0.5)]' },
+  'S': { bg: 'bg-gate-s/20', text: 'text-gate-s', glow: 'shadow-[0_0_15px_hsl(var(--gate-s)/0.6)]' },
+  'SS': { bg: 'bg-gate-ss/20', text: 'text-gate-ss', glow: 'shadow-[0_0_20px_hsl(var(--gate-ss)/0.7)]' },
 };
 
 const getModifier = (score: number) => {
@@ -106,32 +109,63 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
   const reactions = actions.filter(a => a.action_type === 'reaction');
   const legendaryActions = actions.filter(a => a.action_type === 'legendary');
 
+  const gateStyle = data.gate_rank ? gateRankColors[data.gate_rank] : null;
+  const isBossOrNamedNPC = data.is_boss || data.tags?.includes('named-npc') || data.tags?.includes('named-boss') || data.tags?.includes('monarch');
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <SystemWindow 
         title={data.name.toUpperCase()} 
-        className={data.is_boss ? 'border-red-500/50 border-2' : ''}
+        variant={data.is_boss ? 'alert' : data.tags?.includes('monarch') ? 'arise' : 'default'}
+        className={cn(
+          data.is_boss && 'border-gate-a/50 border-2',
+          data.tags?.includes('monarch') && 'border-arise-violet/50 border-2',
+          gateStyle?.glow
+        )}
       >
-        <div className="space-y-2">
+        <div className="space-y-3">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-muted-foreground capitalize">
+            <span className="text-muted-foreground capitalize font-heading">
               {data.size} {data.creature_type}
               {data.alignment && `, ${data.alignment}`}
             </span>
-            {data.gate_rank && (
-              <Badge className={`${gateRankColors[data.gate_rank]} text-white`}>
-                {data.gate_rank}-Rank
+            {data.gate_rank && gateStyle && (
+              <Badge className={cn(gateStyle.bg, gateStyle.text, 'font-display tracking-wider', gateStyle.glow)}>
+                {data.gate_rank}-Rank Gate
               </Badge>
             )}
-            {data.is_boss && <Badge variant="destructive">Boss</Badge>}
-            {data.tags?.includes('named-npc') && <Badge variant="outline" className="border-purple-500/50 text-purple-400">Named NPC</Badge>}
-            {data.tags?.includes('named-boss') && <Badge variant="outline" className="border-amber-500/50 text-amber-400">Named Boss</Badge>}
-            {data.tags?.includes('monarch') && <Badge variant="outline" className="border-red-500/50 text-red-400">Monarch</Badge>}
-            {data.tags?.includes('guild-master') && <Badge variant="outline" className="border-blue-500/50 text-blue-400">Guild Master</Badge>}
+            {data.is_boss && (
+              <Badge variant="destructive" className="font-display tracking-wider shadow-[0_0_10px_hsl(var(--destructive)/0.5)]">
+                <Skull className="h-3 w-3 mr-1" />
+                BOSS
+              </Badge>
+            )}
+            {data.tags?.includes('named-npc') && (
+              <Badge variant="outline" className="border-shadow-purple/50 text-shadow-purple font-heading">
+                Named NPC
+              </Badge>
+            )}
+            {data.tags?.includes('named-boss') && (
+              <Badge variant="outline" className="border-monarch-gold/50 text-monarch-gold font-heading">
+                <Crown className="h-3 w-3 mr-1" />
+                Named Boss
+              </Badge>
+            )}
+            {data.tags?.includes('monarch') && (
+              <Badge variant="outline" className="border-arise-violet/50 text-arise-violet font-heading shadow-[0_0_10px_hsl(var(--arise-violet)/0.4)]">
+                <Zap className="h-3 w-3 mr-1" />
+                Monarch
+              </Badge>
+            )}
+            {data.tags?.includes('guild-master') && (
+              <Badge variant="outline" className="border-shadow-blue/50 text-shadow-blue font-heading">
+                Guild Master
+              </Badge>
+            )}
           </div>
           {data.lore && (
-            <p className="text-muted-foreground italic border-l-2 border-primary/30 pl-4 mt-4">
+            <p className="text-muted-foreground italic border-l-2 border-shadow-purple/40 pl-4 mt-4 leading-relaxed">
               {data.lore}
             </p>
           )}

@@ -88,21 +88,24 @@ const categories = [
   { id: 'equipment', name: 'Equipment', icon: Package },
 ];
 
+// Enhanced rarity colors with Solo Leveling theme
 const rarityColors: Record<string, string> = {
   'common': 'text-muted-foreground border-muted',
-  'uncommon': 'text-green-400 border-green-500/30',
-  'rare': 'text-blue-400 border-blue-500/30',
-  'very_rare': 'text-purple-400 border-purple-500/30',
-  'legendary': 'text-amber-400 border-amber-500/30',
+  'uncommon': 'text-accent border-accent/40',
+  'rare': 'text-shadow-blue border-shadow-blue/40',
+  'very_rare': 'text-shadow-purple border-shadow-purple/40',
+  'legendary': 'text-monarch-gold border-monarch-gold/40 shadow-[0_0_8px_hsl(var(--monarch-gold)/0.3)]',
 };
 
+// Enhanced gate rank colors with Solo Leveling theme
 const gateRankColors: Record<string, string> = {
-  'E': 'text-gray-400 border-gray-500/30',
-  'D': 'text-green-400 border-green-500/30',
-  'C': 'text-blue-400 border-blue-500/30',
-  'B': 'text-purple-400 border-purple-500/30',
-  'A': 'text-orange-400 border-orange-500/30',
-  'S': 'text-red-400 border-red-500/30',
+  'E': 'text-gate-e border-gate-e/40',
+  'D': 'text-gate-d border-gate-d/40',
+  'C': 'text-gate-c border-gate-c/40',
+  'B': 'text-gate-b border-gate-b/40 shadow-[0_0_6px_hsl(var(--gate-b)/0.3)]',
+  'A': 'text-gate-a border-gate-a/40 shadow-[0_0_8px_hsl(var(--gate-a)/0.4)]',
+  'S': 'text-gate-s border-gate-s/40 shadow-[0_0_10px_hsl(var(--gate-s)/0.5)]',
+  'SS': 'text-gate-ss border-gate-ss/40 shadow-[0_0_12px_hsl(var(--gate-ss)/0.6)]',
 };
 
 const rarityOrder: Record<string, number> = {
@@ -118,7 +121,7 @@ const powerSchools = [
   'Evocation', 'Illusion', 'Necromancy', 'Transmutation'
 ];
 
-const gateRanks = ['E', 'D', 'C', 'B', 'A', 'S'];
+const gateRanks = ['E', 'D', 'C', 'B', 'A', 'S', 'SS'];
 
 const Compendium = () => {
   const [searchQuery, setSearchQuery] = useState('');
