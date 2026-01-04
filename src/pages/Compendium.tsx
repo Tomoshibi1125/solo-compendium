@@ -143,6 +143,11 @@ const Compendium = () => {
     queryFn: async () => {
       const allEntries: CompendiumEntry[] = [];
 
+      // Check if Supabase is configured
+      if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY) {
+        throw new Error('Supabase configuration is missing. Please set VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY environment variables.');
+      }
+
       try {
         // Fetch Jobs
         if (selectedCategory === 'all' || selectedCategory === 'jobs') {
