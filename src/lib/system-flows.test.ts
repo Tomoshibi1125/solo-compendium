@@ -3,7 +3,7 @@
  * Tests all major user flows and automation systems
  */
 
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { 
   calculateCharacterStats, 
   calculateHPMax,
@@ -14,18 +14,7 @@ import {
   combineModifiers, 
   applyEquipmentModifiers 
 } from './equipmentModifiers';
-import { 
-  executeShortRest, 
-  executeLongRest 
-} from './restSystem';
-import { 
-  addLevel1Features,
-  addBackgroundFeatures,
-  addStartingEquipment,
-  addStartingPowers
-} from './characterCreation';
 import { getAbilityModifier, getProficiencyBonus, getSystemFavorDie } from '../types/solo-leveling';
-import { supabase } from '@/integrations/supabase/client';
 
 // Mock Supabase
 vi.mock('@/integrations/supabase/client', () => ({
