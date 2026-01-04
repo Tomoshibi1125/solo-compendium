@@ -18,7 +18,8 @@ const Index = () => {
               <span className="gradient-text-gold text-glow-gold">SYSTEM FEATURES</span>
             </h2>
             <p className="text-muted-foreground font-heading max-w-xl mx-auto">
-              Embrace your awakening with tools designed for the Solo Leveling experience.
+              In this world reset by the Shadow Monarch, embrace your awakening with tools 
+              blessed by the System and guided by Jinwoo's will.
             </p>
           </div>
 
@@ -43,7 +44,7 @@ const Index = () => {
                   <div>
                     <h4 className="font-heading font-semibold mb-1">System Favor</h4>
                     <p className="text-sm text-muted-foreground">
-                      Track your Reawakened Hunter's special resource with automatic die scaling.
+                      Track your Hunter's connection to the System, a resource granted by the Shadow Monarch's domain.
                     </p>
                   </div>
                 </div>
@@ -84,12 +85,13 @@ const Index = () => {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="glass-card-glow max-w-3xl mx-auto p-8 sm:p-12 text-center">
-            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-4 gradient-text-system">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-4 gradient-text-shadow">
               READY TO AWAKEN?
             </h2>
             <p className="text-muted-foreground font-heading mb-6 max-w-lg mx-auto">
-              Start building your Hunter character or explore the compendium to learn more about 
-              the Solo Leveling 5e system.
+              In this world reborn under the Shadow Monarch's watch, begin your journey as a Hunter. 
+              Explore the compendium of knowledge preserved by the System, or forge your path 
+              through the Gates that scar this new reality.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a 

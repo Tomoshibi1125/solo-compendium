@@ -72,10 +72,11 @@ const DMTools = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="font-display text-4xl font-bold mb-2 gradient-text-shadow">
-            DM TOOLS
+            SHADOW MONARCH'S DOMAIN
           </h1>
           <p className="text-muted-foreground font-heading">
-            Everything you need to run Solo Leveling 5e sessions
+            Tools granted by the Supreme Deity to guide Hunters through the Gates. 
+            In this post-reset world, Jinwoo's will shapes reality itself.
           </p>
         </div>
 
@@ -98,7 +99,8 @@ const DMTools = () => {
             </div>
           </div>
           <p className="text-sm text-muted-foreground mt-4">
-            This is the core session structure from the Gate Master's Guide. Use the tools below to support each phase.
+            This is the core session structure from the Gate Master's Guide. In the world reset by the Shadow Monarch, 
+            Hunters navigate Contracts, Gates, and their Aftermath under the System's watchful gaze.
           </p>
         </SystemWindow>
 
@@ -155,7 +157,7 @@ const DMTools = () => {
             QUICK REFERENCE
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <SystemWindow title="DC LADDER">
+            <SystemWindow title="SYSTEM DIFFICULTY LADDER">
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between"><span>Very Easy</span><span className="font-display">DC 5</span></div>
                 <div className="flex justify-between"><span>Easy</span><span className="font-display">DC 10</span></div>

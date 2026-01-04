@@ -138,7 +138,7 @@ const CharacterNew = () => {
     if (!name.trim()) {
       toast({
         title: 'Name required',
-        description: 'Please enter a character name.',
+        description: 'Please enter your Hunter\'s name.',
         variant: 'destructive',
       });
       return;
@@ -233,16 +233,16 @@ const CharacterNew = () => {
       await addStartingPowers(character.id, job);
 
       toast({
-        title: 'Character created!',
-        description: `${name} has been created successfully. Features and equipment added.`,
+        title: 'Hunter Awakened!',
+        description: `${name} has awakened successfully. The System has granted features and equipment.`,
       });
 
       navigate(`/characters/${character.id}`);
     } catch (error) {
       console.error('Error creating character:', error);
       toast({
-        title: 'Failed to create character',
-        description: 'Could not create character. Please try again.',
+        title: 'Awakening Failed',
+        description: 'The System could not awaken your Hunter. Please try again.',
         variant: 'destructive',
       });
     } finally {

@@ -70,8 +70,8 @@ export function QuickAccessSection() {
             <span className="gradient-text-shadow">COMPENDIUM</span>
           </h2>
           <p className="text-muted-foreground font-heading max-w-xl mx-auto">
-            Browse the complete Solo Leveling 5e ruleset. All content is searchable, 
-            cross-linked, and ready for your campaign.
+            Knowledge preserved by the System in this post-reset world. All content is searchable, 
+            cross-linked, and blessed by the Shadow Monarch's domain.
           </p>
         </div>
 

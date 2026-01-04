@@ -47,11 +47,31 @@ export function SystemWindow({ children, title, className, variant = 'default', 
         {children}
       </div>
       
-      {/* Corner decorations */}
-      <div className="absolute top-0 left-0 w-3 h-3 border-l-2 border-t-2 border-primary/30 rounded-tl" />
-      <div className="absolute top-0 right-0 w-3 h-3 border-r-2 border-t-2 border-primary/30 rounded-tr" />
-      <div className="absolute bottom-0 left-0 w-3 h-3 border-l-2 border-b-2 border-primary/30 rounded-bl" />
-      <div className="absolute bottom-0 right-0 w-3 h-3 border-r-2 border-b-2 border-primary/30 rounded-br" />
+      {/* Corner decorations with glow */}
+      <div className={cn(
+        "absolute top-0 left-0 w-3 h-3 border-l-2 border-t-2 rounded-tl",
+        variant === 'default' && "border-primary/30 shadow-[0_0_4px_hsl(var(--primary)/0.5)]",
+        variant === 'alert' && "border-destructive/30 shadow-[0_0_4px_hsl(var(--destructive)/0.5)]",
+        variant === 'quest' && "border-accent/30 shadow-[0_0_4px_hsl(var(--accent)/0.5)]"
+      )} />
+      <div className={cn(
+        "absolute top-0 right-0 w-3 h-3 border-r-2 border-t-2 rounded-tr",
+        variant === 'default' && "border-primary/30 shadow-[0_0_4px_hsl(var(--primary)/0.5)]",
+        variant === 'alert' && "border-destructive/30 shadow-[0_0_4px_hsl(var(--destructive)/0.5)]",
+        variant === 'quest' && "border-accent/30 shadow-[0_0_4px_hsl(var(--accent)/0.5)]"
+      )} />
+      <div className={cn(
+        "absolute bottom-0 left-0 w-3 h-3 border-l-2 border-b-2 rounded-bl",
+        variant === 'default' && "border-primary/30 shadow-[0_0_4px_hsl(var(--primary)/0.5)]",
+        variant === 'alert' && "border-destructive/30 shadow-[0_0_4px_hsl(var(--destructive)/0.5)]",
+        variant === 'quest' && "border-accent/30 shadow-[0_0_4px_hsl(var(--accent)/0.5)]"
+      )} />
+      <div className={cn(
+        "absolute bottom-0 right-0 w-3 h-3 border-r-2 border-b-2 rounded-br",
+        variant === 'default' && "border-primary/30 shadow-[0_0_4px_hsl(var(--primary)/0.5)]",
+        variant === 'alert' && "border-destructive/30 shadow-[0_0_4px_hsl(var(--destructive)/0.5)]",
+        variant === 'quest' && "border-accent/30 shadow-[0_0_4px_hsl(var(--accent)/0.5)]"
+      )} />
     </div>
   );
 }

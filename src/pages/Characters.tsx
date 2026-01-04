@@ -49,11 +49,11 @@ const Characters = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="font-display text-4xl font-bold mb-2 gradient-text-system">
+            <h1 className="font-display text-4xl font-bold mb-2 gradient-text-shadow">
               MY HUNTERS
             </h1>
             <p className="text-muted-foreground font-heading">
-              Create and manage your Solo Leveling 5e characters
+              Awaken and manage your Reawakened Hunters in this world reset by the Shadow Monarch
             </p>
           </div>
           <Link to="/characters/new">

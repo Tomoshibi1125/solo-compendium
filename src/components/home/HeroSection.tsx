@@ -35,22 +35,24 @@ export function HeroSection() {
             <SystemWindow variant="quest" className="px-6 py-2">
               <div className="flex items-center gap-2 text-accent font-heading">
                 <Sparkles className="w-4 h-4" />
-                <span className="text-sm">A new System has awakened</span>
+                <span className="text-sm">The Shadow Monarch watches over this world</span>
               </div>
             </SystemWindow>
           </div>
 
           {/* Main heading */}
           <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 animate-slide-up" style={{ animationDelay: '0.1s' }}>
+            <span className="gradient-text-shadow text-glow-purple">SHADOW MONARCH</span>
+            <br />
             <span className="gradient-text-system text-glow">SOLO LEVELING</span>
             <br />
-            <span className="text-foreground">5e Companion</span>
+            <span className="text-foreground text-2xl sm:text-3xl lg:text-4xl">5e Compendium</span>
           </h1>
 
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 font-heading animate-slide-up" style={{ animationDelay: '0.2s' }}>
-            Your complete digital toolkit for Solo Leveling 5e campaigns. 
-            Character management, compendium, dice rolling, and DM tools — 
-            all powered by the System.
+            In the post-reset timeline, where Jinwoo reigns as the Supreme Deity, 
+            awaken your Hunter and navigate the Gates. This System serves as your guide 
+            through a world reborn under the Shadow Monarch's watchful gaze.
           </p>
 
           {/* CTA Buttons */}
@@ -72,18 +74,18 @@ export function HeroSection() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 animate-slide-up" style={{ animationDelay: '0.4s' }}>
             <FeatureCard
               icon={BookOpen}
-              title="Full Compendium"
-              description="Jobs, spells, relics, monsters — all searchable and cross-linked"
+              title="Shadow Compendium"
+              description="Jobs, Powers, Relics, Monsters, and Monarchs — all knowledge preserved by the System"
             />
             <FeatureCard
               icon={Users}
-              title="Character Builder"
-              description="Step-by-step creation with automated stat calculation"
+              title="Hunter Awakening"
+              description="Forge your Reawakened Hunter with the System's guidance"
             />
             <FeatureCard
               icon={Sword}
-              title="DM Tools"
-              description="Encounter builder, Gate generator, initiative tracker"
+              title="Shadow Monarch's Tools"
+              description="Gate generation, encounter building, and combat tracking under the Monarch's domain"
             />
           </div>
         </div>

@@ -37,9 +37,10 @@ export class ErrorBoundary extends Component<Props, State> {
         <div className="container mx-auto px-4 py-8 max-w-2xl">
           <SystemWindow title="ERROR" variant="alert" className="text-center">
             <AlertTriangle className="w-12 h-12 text-destructive mx-auto mb-4" />
-            <h2 className="font-display text-2xl font-bold mb-2">Something went wrong</h2>
+            <h2 className="font-display text-2xl font-bold mb-2 gradient-text-shadow">SYSTEM ERROR</h2>
             <p className="text-muted-foreground mb-4">
-              An unexpected error occurred. Please try refreshing the page.
+              The System has encountered an anomaly. Even under the Shadow Monarch's watch, 
+              reality sometimes glitches. Please try refreshing the page.
             </p>
             {this.state.error && (
               <details className="text-left mb-4">

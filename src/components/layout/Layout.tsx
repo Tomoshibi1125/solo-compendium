@@ -16,10 +16,10 @@ export function Layout({ children }: LayoutProps) {
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-sm text-muted-foreground font-heading">
-              Solo Leveling 5e Companion — Fan-made, not affiliated with any publisher
+              Shadow Monarch's Compendium — In the post-reset world, knowledge is preserved by the System
             </p>
             <p className="text-xs text-muted-foreground">
-              Built with the System's blessing
+              Blessed by the Shadow Monarch's domain
             </p>
           </div>
         </div>
