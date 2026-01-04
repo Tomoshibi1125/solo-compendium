@@ -267,7 +267,7 @@ export function LaunchPad() {
                 />
                 <StatItem
                   icon={Crown}
-                  label="Campaigns DM'd"
+                  label="Gate Master Campaigns"
                   value={myCampaigns?.length || 0}
                 />
                 <StatItem
@@ -311,7 +311,7 @@ export function LaunchPad() {
               </div>
               <div>
                 <h3 className="font-heading font-semibold mb-1 group-hover:text-primary transition-colors">
-                  DM Tools
+                  System Tools
                 </h3>
                 <p className="text-sm text-muted-foreground">
                   Shadow Monarch's domain

@@ -100,7 +100,7 @@ const Campaigns = () => {
           </Button>
         </div>
 
-        {/* My Campaigns (DM) */}
+        {/* My Campaigns (Gate Master) */}
         <div className="mb-8">
           <h2 className="font-display text-2xl font-bold mb-4 gradient-text-gold flex items-center gap-2">
             <Crown className="w-5 h-5" />
@@ -168,7 +168,7 @@ const Campaigns = () => {
           ) : joinedCampaigns.length === 0 ? (
             <SystemWindow title="NO JOINED CAMPAIGNS" className="text-center py-8">
               <p className="text-muted-foreground mb-4">
-                You haven't joined any campaigns yet. Ask your Shadow Monarch (DM) for a share code or link.
+                You haven't joined any campaigns yet. Ask your Gate Master (System) for a share code or link.
               </p>
               <Link to="/campaigns/join">
                 <Button>

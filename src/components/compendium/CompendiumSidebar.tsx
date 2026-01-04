@@ -150,7 +150,7 @@ export function CompendiumSidebar({
 
       {/* Power Schools (for Powers) */}
       {schools.length > 0 && onSchoolToggle && (
-        <SystemWindow title="SPELL SCHOOLS" className="p-4">
+        <SystemWindow title="POWER SCHOOLS" className="p-4">
           <ScrollArea className="h-[200px]">
             <div className="space-y-2">
               {schools.map((school) => {

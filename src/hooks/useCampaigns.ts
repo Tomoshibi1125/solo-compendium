@@ -19,11 +19,11 @@ export interface CampaignMember {
   campaign_id: string;
   user_id: string;
   character_id: string | null;
-  role: 'player' | 'co-dm';
+  role: 'hunter' | 'co-system';
   joined_at: string;
 }
 
-// Fetch campaigns where user is DM
+// Fetch campaigns where user is System (Gate Master)
 export const useMyCampaigns = () => {
   return useQuery({
     queryKey: ['campaigns', 'my'],
@@ -190,7 +190,7 @@ export const useJoinCampaign = () => {
           campaign_id: campaignId,
           user_id: user.id,
           character_id: characterId || null,
-          role: 'player',
+          role: 'hunter',
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any);
 
@@ -249,10 +249,10 @@ export const useLeaveCampaign = () => {
   });
 };
 
-// Check if current user is the DM of a campaign
+// Check if current user is the System (Gate Master) of a campaign
 export const useIsCampaignDM = (campaignId: string) => {
   return useQuery({
-    queryKey: ['campaigns', campaignId, 'is-dm'],
+    queryKey: ['campaigns', campaignId, 'is-system'],
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return false;
@@ -271,15 +271,15 @@ export const useIsCampaignDM = (campaignId: string) => {
   });
 };
 
-// Check if current user has DM access (is DM or co-DM)
+// Check if current user has System access (is System/Gate Master or co-System)
 export const useHasDMAccess = (campaignId: string) => {
   return useQuery({
-    queryKey: ['campaigns', campaignId, 'has-dm-access'],
+    queryKey: ['campaigns', campaignId, 'has-system-access'],
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return false;
 
-      // Check if user is the DM
+      // Check if user is the System (Gate Master)
       const { data: campaign, error: campaignError } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaigns' as any)
@@ -291,7 +291,7 @@ export const useHasDMAccess = (campaignId: string) => {
         return true;
       }
 
-      // Check if user is a co-DM
+      // Check if user is a co-System
       const { data: member, error: memberError } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaign_members' as any)
@@ -300,7 +300,7 @@ export const useHasDMAccess = (campaignId: string) => {
         .eq('user_id', user.id)
         .single();
 
-      if (!memberError && member && (member as { role: string }).role === 'co-dm') {
+      if (!memberError && member && (member as { role: string }).role === 'co-system') {
         return true;
       }
 
@@ -314,11 +314,11 @@ export const useHasDMAccess = (campaignId: string) => {
 export const useCampaignRole = (campaignId: string) => {
   return useQuery({
     queryKey: ['campaigns', campaignId, 'role'],
-    queryFn: async (): Promise<'dm' | 'co-dm' | 'player' | null> => {
+    queryFn: async (): Promise<'system' | 'co-system' | 'hunter' | null> => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return null;
 
-      // Check if user is the DM
+      // Check if user is the System (Gate Master)
       const { data: campaign, error: campaignError } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaigns' as any)
@@ -327,7 +327,7 @@ export const useCampaignRole = (campaignId: string) => {
         .single();
 
       if (!campaignError && campaign && (campaign as { dm_id: string }).dm_id === user.id) {
-        return 'dm';
+        return 'system';
       }
 
       // Check member role
@@ -340,7 +340,7 @@ export const useCampaignRole = (campaignId: string) => {
         .single();
 
       if (!memberError && member) {
-        return (member as { role: string }).role === 'co-dm' ? 'co-dm' : 'player';
+        return (member as { role: string }).role === 'co-system' ? 'co-system' : 'hunter';
       }
 
       return null;

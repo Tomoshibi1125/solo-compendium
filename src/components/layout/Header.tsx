@@ -9,7 +9,7 @@ const navigation = [
   { name: 'Compendium', href: '/compendium', icon: BookOpen },
   { name: 'Characters', href: '/characters', icon: Users },
   { name: 'Campaigns', href: '/campaigns', icon: UsersRound },
-  { name: 'DM Tools', href: '/dm-tools', icon: Map },
+  { name: 'System Tools', href: '/dm-tools', icon: Map },
   { name: 'Dice', href: '/dice', icon: Dice6 },
   { name: 'Admin', href: '/admin', icon: Settings },
 ];

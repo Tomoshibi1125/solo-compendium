@@ -59,7 +59,7 @@ const CampaignJoin = () => {
           JOIN CAMPAIGN
         </h1>
         <p className="text-muted-foreground font-heading mb-8">
-          Enter the share code provided by your Shadow Monarch (DM) to join their campaign
+          Enter the share code provided by your Gate Master (System) to join their campaign
         </p>
 
         {/* Share Code Input */}
@@ -77,7 +77,7 @@ const CampaignJoin = () => {
                   maxLength={6}
                 />
                 <p className="text-xs text-muted-foreground mt-2">
-                  Enter the 6-character code your Shadow Monarch (DM) provided
+                  Enter the 6-character code your Gate Master (System) provided
                 </p>
               </div>
               <Button type="submit" className="w-full" disabled={shareCode.length !== 6}>

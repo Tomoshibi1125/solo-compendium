@@ -76,7 +76,7 @@ const NPC_SECRETS = [
   'Knows about the reset',
   'Is actually a monster',
   'Has System favor debt',
-  'Betrayed their party',
+  'Betrayed their Hunter team',
   'Seeking forbidden knowledge',
   'Has a hidden Gate',
   'Is being hunted',
@@ -186,7 +186,7 @@ const RollableTables = () => {
             className="mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to DM Tools
+            Back to System Tools
           </Button>
           <h1 className="font-display text-4xl font-bold mb-2 gradient-text-shadow">
             GATE MASTER'S TABLES

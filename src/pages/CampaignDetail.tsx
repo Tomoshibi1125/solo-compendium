@@ -105,19 +105,19 @@ const CampaignDetail = () => {
             </h1>
             {!loadingRole && userRole && (
               <div className="flex items-center gap-2">
-                {userRole === 'dm' && (
+                {userRole === 'system' && (
                   <div className="flex items-center gap-2 px-3 py-1 rounded-lg bg-primary/10 border border-primary/30">
                     <Crown className="w-4 h-4 text-primary" />
-                    <span className="text-xs font-display text-primary font-semibold">SHADOW MONARCH (DM)</span>
+                    <span className="text-xs font-display text-primary font-semibold">GATE MASTER (SYSTEM)</span>
                   </div>
                 )}
-                {userRole === 'co-dm' && (
+                {userRole === 'co-system' && (
                   <div className="flex items-center gap-2 px-3 py-1 rounded-lg bg-accent/10 border border-accent/30">
                     <Crown className="w-4 h-4 text-accent" />
-                    <span className="text-xs font-display text-accent font-semibold">CO-DM</span>
+                    <span className="text-xs font-display text-accent font-semibold">CO-SYSTEM</span>
                   </div>
                 )}
-                {userRole === 'player' && (
+                {userRole === 'hunter' && (
                   <div className="flex items-center gap-2 px-3 py-1 rounded-lg bg-muted border border-border">
                     <Shield className="w-4 h-4 text-muted-foreground" />
                     <span className="text-xs font-display text-muted-foreground font-semibold">HUNTER</span>
