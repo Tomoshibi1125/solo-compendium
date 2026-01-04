@@ -7,7 +7,6 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { X, Users, Swords, Sparkles, Crown } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import React from 'react';
 
 interface ComparisonItem {
   id: string;
@@ -164,58 +163,65 @@ export function ComparisonTool({ type, className }: ComparisonToolProps) {
             </thead>
             <tbody>
               {/* Common stats comparison */}
-              {type === 'characters' && selectedItems.map((item, idx) => {
-                if (idx > 0) return null; // Only show once
-                return (
-                  <React.Fragment key="stats">
-                    <tr className="border-b">
-                      <td className="p-2 font-heading text-sm">Level</td>
-                      {selectedItems.map(sel => (
-                        <td key={sel.id} className="p-2 text-center">{sel.data.level}</td>
-                      ))}
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 font-heading text-sm">HP</td>
-                      {selectedItems.map(sel => (
+              {type === 'characters' && selectedItems.length > 0 && (
+                <>
+                  <tr className="border-b">
+                    <td className="p-2 font-heading text-sm">Level</td>
+                    {selectedItems.map(sel => (
+                      <td key={sel.id} className="p-2 text-center">
+                        {(sel.data as { level?: number }).level ?? 'N/A'}
+                      </td>
+                    ))}
+                  </tr>
+                  <tr className="border-b">
+                    <td className="p-2 font-heading text-sm">HP</td>
+                    {selectedItems.map(sel => {
+                      const data = sel.data as { hp_current?: number; hp_max?: number };
+                      return (
                         <td key={sel.id} className="p-2 text-center">
-                          {sel.data.hp_current}/{sel.data.hp_max}
+                          {data.hp_current ?? 'N/A'}/{data.hp_max ?? 'N/A'}
                         </td>
-                      ))}
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 font-heading text-sm">AC</td>
-                      {selectedItems.map(sel => (
-                        <td key={sel.id} className="p-2 text-center">{sel.data.armor_class}</td>
-                      ))}
-                    </tr>
-                  </React.Fragment>
-                );
-              })}
-              {type === 'monsters' && selectedItems.map((item, idx) => {
-                if (idx > 0) return null;
-                return (
-                  <React.Fragment key="stats">
-                    <tr className="border-b">
-                      <td className="p-2 font-heading text-sm">CR</td>
-                      {selectedItems.map(sel => (
-                        <td key={sel.id} className="p-2 text-center">{sel.data.cr}</td>
-                      ))}
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 font-heading text-sm">HP</td>
-                      {selectedItems.map(sel => (
-                        <td key={sel.id} className="p-2 text-center">{sel.data.hit_points_average}</td>
-                      ))}
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 font-heading text-sm">AC</td>
-                      {selectedItems.map(sel => (
-                        <td key={sel.id} className="p-2 text-center">{sel.data.armor_class}</td>
-                      ))}
-                    </tr>
-                  </React.Fragment>
-                );
-              })}
+                      );
+                    })}
+                  </tr>
+                  <tr className="border-b">
+                    <td className="p-2 font-heading text-sm">AC</td>
+                    {selectedItems.map(sel => (
+                      <td key={sel.id} className="p-2 text-center">
+                        {(sel.data as { armor_class?: number }).armor_class ?? 'N/A'}
+                      </td>
+                    ))}
+                  </tr>
+                </>
+              )}
+              {type === 'monsters' && selectedItems.length > 0 && (
+                <>
+                  <tr className="border-b">
+                    <td className="p-2 font-heading text-sm">CR</td>
+                    {selectedItems.map(sel => (
+                      <td key={sel.id} className="p-2 text-center">
+                        {(sel.data as { cr?: string }).cr ?? 'N/A'}
+                      </td>
+                    ))}
+                  </tr>
+                  <tr className="border-b">
+                    <td className="p-2 font-heading text-sm">HP</td>
+                    {selectedItems.map(sel => (
+                      <td key={sel.id} className="p-2 text-center">
+                        {(sel.data as { hit_points_average?: number }).hit_points_average ?? 'N/A'}
+                      </td>
+                    ))}
+                  </tr>
+                  <tr className="border-b">
+                    <td className="p-2 font-heading text-sm">AC</td>
+                    {selectedItems.map(sel => (
+                      <td key={sel.id} className="p-2 text-center">
+                        {(sel.data as { armor_class?: number }).armor_class ?? 'N/A'}
+                      </td>
+                    ))}
+                  </tr>
+                </>
+              )}
             </tbody>
           </table>
         </div>
