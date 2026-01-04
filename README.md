@@ -1,73 +1,177 @@
-# Welcome to your Lovable project
+# Solo Compendium
 
-## Project info
+A professional-grade compendium and character tool web app for Solo Leveling 5e, built with React, TypeScript, and Supabase.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## ✨ Features
 
-## How can I edit this code?
+- **📚 Compendium**: Browse and search jobs, powers, relics, monsters, backgrounds, and more
+- **👤 Character Builder**: Step-by-step character creation with rules automation
+- **📊 Character Sheet**: Automated stat calculations, inventory tracking, and condition management
+- **⚙️ Rules Engine**: Automatic proficiency, saves, skills, AC, HP, and more
+- **💤 Rest System**: Short and long rest resource management
+- **🎲 Dice Roller**: Integrated dice rolling with action cards
+- **📤 Export**: JSON and PDF character export
+- **⭐ Favorites**: Save favorite compendium items
+- **📱 PWA**: Progressive Web App support
 
-There are several ways of editing your application.
+## 🛠️ Tech Stack
 
-**Use Lovable**
+- **Frontend**: React 18 + TypeScript + Vite
+- **UI**: shadcn/ui (Radix UI) + Tailwind CSS
+- **Backend**: Supabase (PostgreSQL + Auth + Storage)
+- **State**: TanStack Query
+- **Forms**: React Hook Form + Zod
+- **Testing**: Vitest + Playwright
+- **CI/CD**: GitHub Actions
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## 🚀 Quick Start
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js 20+ and npm
+- Supabase account and project
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+### Installation
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Clone the repository
+git clone https://github.com/Tomoshibi1125/solo-compendium.git
+cd solo-compendium
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Install dependencies
+npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+# Set up environment variables
+# Create .env.local with:
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_anon_key
 ```
 
-**Edit a file directly in GitHub**
+### Development
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```sh
+# Start development server
+npm run dev
 
-**Use GitHub Codespaces**
+# Run linting
+npm run lint
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# Run type checking
+npm run typecheck
 
-## What technologies are used for this project?
+# Run tests
+npm run test
 
-This project is built with:
+# Run E2E tests
+npm run test:e2e
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+# Build for production
+npm run build
 
-## How can I deploy this project?
+# Preview production build
+npm run preview
+```
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## 📋 Deployment
 
-## Can I connect a custom domain to my Lovable project?
+### Quick Deploy
 
-Yes, you can!
+See `DEPLOY.md` for detailed deployment instructions.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+**Vercel** (Recommended):
+```bash
+vercel
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+**Netlify**:
+```bash
+netlify deploy --prod
+```
+
+**Pre-deployment Check**:
+```bash
+# Windows
+.\scripts\deploy-check.ps1
+
+# Linux/Mac
+./scripts/deploy-check.sh
+```
+
+### Pre-Deployment Checklist
+
+1. **Database Setup**
+   - Apply migrations: `supabase migration up`
+   - Verify SRD content migration applied
+
+2. **Environment Variables**
+   - Set `VITE_SUPABASE_URL`
+   - Set `VITE_SUPABASE_PUBLISHABLE_KEY`
+
+3. **Supabase Storage**
+   - Create `character-portraits` bucket
+   - Set up storage policies (see `docs/DEPLOYMENT_READINESS.md`)
+
+## 📚 Documentation
+
+- **[Deployment Guide](docs/DEPLOYMENT_READINESS.md)** - Complete deployment instructions
+- **[Architecture](docs/ARCHITECTURE.md)** - System architecture overview
+- **[Systems Integration](docs/SYSTEMS_INTEGRATION.md)** - Integration verification
+- **[SRD Coverage](docs/SRD_COVERAGE.md)** - SRD content coverage report
+- **[Progress](docs/PROGRESS.md)** - Feature completion status
+
+## 🎯 Project Status
+
+**✅ PRODUCTION READY**
+
+- ✅ All features complete
+- ✅ All tests passing
+- ✅ Build optimized
+- ✅ Documentation complete
+- ✅ Ready for deployment
+
+## 📦 Project Structure
+
+```
+solo-compendium/
+├── src/
+│   ├── components/     # React components
+│   ├── hooks/          # Custom React hooks
+│   ├── lib/            # Utility functions
+│   ├── pages/          # Page components
+│   └── types/          # TypeScript types
+├── supabase/
+│   └── migrations/     # Database migrations
+├── docs/               # Documentation
+├── scripts/            # Build/deploy scripts
+└── public/             # Static assets
+```
+
+## 🔒 Security
+
+- Row Level Security (RLS) enabled on all tables
+- Input sanitization implemented
+- Environment variables for sensitive data
+- Supabase authentication integrated
+
+## 📄 License
+
+This project uses:
+- **Homebrew Content**: Original Solo Leveling themed content
+- **SRD Content**: 5e SRD content (Open Game License)
+- **Generated Content**: AI-generated gap-fill content
+
+All SRD content is properly attributed with `source_kind='srd'` and `license_note='Open Game License content'`.
+
+## 🤝 Contributing
+
+This is a private project. For questions or issues, please contact the repository owner.
+
+## 📞 Support
+
+For deployment help, see:
+- `docs/DEPLOYMENT_READINESS.md` - Complete deployment guide
+- `DEPLOY.md` - Quick deployment guide
+
+---
+
+**Built with ❤️ for Solo Leveling 5e**

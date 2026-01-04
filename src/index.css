@@ -4,6 +4,36 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobile optimizations */
+@layer base {
+  .touch-device {
+    /* Increase touch target sizes */
+    --touch-target-min: 44px;
+  }
+
+  .touch-device button,
+  .touch-device a,
+  .touch-device [role="button"] {
+    min-height: var(--touch-target-min, 44px);
+    min-width: var(--touch-target-min, 44px);
+  }
+
+  /* Prevent text selection on buttons (mobile) */
+  .touch-device button {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+
+  /* Smooth scrolling on mobile */
+  @media (max-width: 768px) {
+    html {
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+}
+
 /* Solo Leveling 5e Design System
    Inspired by Shadow Monarch aesthetics - dark, mystical, with glowing System UI */
 

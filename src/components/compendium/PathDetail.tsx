@@ -34,26 +34,26 @@ export const PathDetail = ({ data }: { data: PathData }) => {
   const [job, setJob] = useState<Job | null>(null);
 
   useEffect(() => {
+    const fetchRelatedData = async () => {
+      const [featuresRes, jobRes] = await Promise.all([
+        supabase
+          .from('compendium_job_features')
+          .select('*')
+          .eq('path_id', data.id)
+          .order('level'),
+        supabase
+          .from('compendium_jobs')
+          .select('id, name')
+          .eq('id', data.job_id)
+          .maybeSingle(),
+      ]);
+
+      if (featuresRes.data) setFeatures(featuresRes.data);
+      if (jobRes.data) setJob(jobRes.data);
+    };
+
     fetchRelatedData();
   }, [data.id, data.job_id]);
-
-  const fetchRelatedData = async () => {
-    const [featuresRes, jobRes] = await Promise.all([
-      supabase
-        .from('compendium_job_features')
-        .select('*')
-        .eq('path_id', data.id)
-        .order('level'),
-      supabase
-        .from('compendium_jobs')
-        .select('id, name')
-        .eq('id', data.job_id)
-        .maybeSingle(),
-    ]);
-
-    if (featuresRes.data) setFeatures(featuresRes.data);
-    if (jobRes.data) setJob(jobRes.data);
-  };
 
   return (
     <div className="space-y-6">

@@ -36,18 +36,18 @@ export const MonarchDetail = ({ data }: { data: MonarchData }) => {
   const [features, setFeatures] = useState<MonarchFeature[]>([]);
 
   useEffect(() => {
+    const fetchFeatures = async () => {
+      const { data: featureData } = await supabase
+        .from('compendium_monarch_features')
+        .select('*')
+        .eq('monarch_id', data.id)
+        .order('level');
+      
+      if (featureData) setFeatures(featureData);
+    };
+
     fetchFeatures();
   }, [data.id]);
-
-  const fetchFeatures = async () => {
-    const { data: featureData } = await supabase
-      .from('compendium_monarch_features')
-      .select('*')
-      .eq('monarch_id', data.id)
-      .order('level');
-    
-    if (featureData) setFeatures(featureData);
-  };
 
   const signatureFeatures = features.filter(f => f.is_signature);
   const regularFeatures = features.filter(f => !f.is_signature);

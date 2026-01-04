@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { supabase } from '@/integrations/supabase/client';
-import { Swords, Shield, Heart, Zap } from 'lucide-react';
+import { Swords, Shield, Heart, Zap, Wand2 } from 'lucide-react';
+import { DetailHeader } from './DetailHeader';
 
 interface JobData {
   id: string;
@@ -42,13 +44,11 @@ interface JobPath {
 export const JobDetail = ({ data }: { data: JobData }) => {
   const [features, setFeatures] = useState<JobFeature[]>([]);
   const [paths, setPaths] = useState<JobPath[]>([]);
+  const [relatedPowers, setRelatedPowers] = useState<Array<{ id: string; name: string; power_level: number }>>([]);
 
   useEffect(() => {
-    fetchRelatedData();
-  }, [data.id]);
-
-  const fetchRelatedData = async () => {
-    const [featuresRes, pathsRes] = await Promise.all([
+    const fetchRelatedData = async () => {
+    const [featuresRes, pathsRes, powersRes] = await Promise.all([
       supabase
         .from('compendium_job_features')
         .select('*')
@@ -60,15 +60,30 @@ export const JobDetail = ({ data }: { data: JobData }) => {
         .select('*')
         .eq('job_id', data.id)
         .order('name'),
+      supabase
+        .from('compendium_powers')
+        .select('id, name, power_level')
+        .contains('job_names', [data.name])
+        .limit(10),
     ]);
 
-    if (featuresRes.data) setFeatures(featuresRes.data);
-    if (pathsRes.data) setPaths(pathsRes.data);
-  };
+      if (featuresRes.data) setFeatures(featuresRes.data);
+      if (pathsRes.data) setPaths(pathsRes.data);
+      if (powersRes.data) setRelatedPowers(powersRes.data);
+    };
+
+    fetchRelatedData();
+  }, [data.id, data.name]);
 
   return (
     <div className="space-y-6">
       {/* Header */}
+      <DetailHeader
+        entryType="jobs"
+        entryId={data.id}
+        title={data.name}
+        subtitle={data.source_book ? `Source: ${data.source_book}` : undefined}
+      />
       <SystemWindow title={data.name.toUpperCase()} className="border-primary/50">
         <div className="space-y-4">
           {data.flavor_text && (
@@ -148,13 +163,48 @@ export const JobDetail = ({ data }: { data: JobData }) => {
         <SystemWindow title="PATHS">
           <div className="grid md:grid-cols-2 gap-4">
             {paths.map((path) => (
-              <div key={path.id} className="glass-card p-4 border border-border hover:border-primary/30 transition-colors">
-                <h4 className="font-heading text-lg font-semibold text-primary mb-2">{path.name}</h4>
+              <Link
+                key={path.id}
+                to={`/compendium/paths/${path.id}`}
+                className="glass-card p-4 border border-border hover:border-primary/30 transition-colors"
+              >
+                <h4 className="font-heading text-lg font-semibold text-primary mb-2 hover:underline">{path.name}</h4>
                 <p className="text-sm text-muted-foreground line-clamp-3">{path.description}</p>
                 <p className="text-xs text-muted-foreground mt-2">Available at level {path.path_level}</p>
-              </div>
+              </Link>
             ))}
           </div>
+        </SystemWindow>
+      )}
+
+      {/* Related Powers */}
+      {relatedPowers.length > 0 && (
+        <SystemWindow title="RELATED POWERS">
+          <div className="grid md:grid-cols-2 gap-3">
+            {relatedPowers.map((power) => (
+              <Link
+                key={power.id}
+                to={`/compendium/powers/${power.id}`}
+                className="flex items-center gap-3 p-3 rounded-lg border border-border hover:border-primary/30 transition-colors group"
+              >
+                <Wand2 className="w-5 h-5 text-primary flex-shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-heading font-semibold group-hover:text-primary transition-colors truncate">
+                    {power.name}
+                  </h4>
+                  <p className="text-xs text-muted-foreground">
+                    {power.power_level === 0 ? 'Cantrip' : `Tier ${power.power_level}`}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+          <Link
+            to={`/compendium?category=powers&search=${encodeURIComponent(data.name)}`}
+            className="block mt-4 text-sm text-primary hover:underline text-center"
+          >
+            View all powers for {data.name} →
+          </Link>
         </SystemWindow>
       )}
 

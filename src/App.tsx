@@ -1,36 +1,138 @@
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Loader2 } from "lucide-react";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
-import Compendium from "./pages/Compendium";
-import CompendiumDetail from "./pages/compendium/CompendiumDetail";
-import Characters from "./pages/Characters";
-import DMTools from "./pages/DMTools";
-import DiceRoller from "./pages/DiceRoller";
-import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
+// Lazy load routes for code splitting
+const Compendium = lazy(() => import("./pages/Compendium"));
+const CompendiumDetail = lazy(() => import("./pages/compendium/CompendiumDetail"));
+const Characters = lazy(() => import("./pages/Characters"));
+const CharacterSheet = lazy(() => import("./pages/CharacterSheet"));
+const CharacterNew = lazy(() => import("./pages/CharacterNew"));
+const CharacterLevelUp = lazy(() => import("./pages/CharacterLevelUp"));
+const Admin = lazy(() => import("./pages/Admin"));
+const DMTools = lazy(() => import("./pages/DMTools"));
+const DiceRoller = lazy(() => import("./pages/DiceRoller"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+
+// Configure React Query with better caching
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+});
+
+// Loading fallback component
+const PageLoader = () => (
+  <div className="flex items-center justify-center min-h-screen">
+    <Loader2 className="w-8 h-8 animate-spin text-primary" />
+  </div>
+);
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
+  <ErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/compendium" element={<Compendium />} />
-          <Route path="/compendium/:type/:id" element={<CompendiumDetail />} />
-          <Route path="/characters/*" element={<Characters />} />
-          <Route path="/dm-tools/*" element={<DMTools />} />
-          <Route path="/dice" element={<DiceRoller />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+          <Route
+            path="/compendium"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <Compendium />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/compendium/:type/:id"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <CompendiumDetail />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/characters"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <Characters />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/characters/new"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <CharacterNew />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/characters/:id"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <CharacterSheet />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/characters/:id/level-up"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <CharacterLevelUp />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <Admin />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/dm-tools/*"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <DMTools />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/dice"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <DiceRoller />
+              </Suspense>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <NotFound />
+              </Suspense>
+            }
+          />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </ErrorBoundary>
 );
 
 export default App;

@@ -80,18 +80,18 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
   const [traits, setTraits] = useState<MonsterTrait[]>([]);
 
   useEffect(() => {
+    const fetchRelatedData = async () => {
+      const [actionsRes, traitsRes] = await Promise.all([
+        supabase.from('compendium_monster_actions').select('*').eq('monster_id', data.id),
+        supabase.from('compendium_monster_traits').select('*').eq('monster_id', data.id),
+      ]);
+
+      if (actionsRes.data) setActions(actionsRes.data);
+      if (traitsRes.data) setTraits(traitsRes.data);
+    };
+
     fetchRelatedData();
   }, [data.id]);
-
-  const fetchRelatedData = async () => {
-    const [actionsRes, traitsRes] = await Promise.all([
-      supabase.from('compendium_monster_actions').select('*').eq('monster_id', data.id),
-      supabase.from('compendium_monster_traits').select('*').eq('monster_id', data.id),
-    ]);
-
-    if (actionsRes.data) setActions(actionsRes.data);
-    if (traitsRes.data) setTraits(traitsRes.data);
-  };
 
   const speeds = [
     data.speed_walk && `${data.speed_walk} ft.`,

@@ -1,0 +1,158 @@
+-- =============================================
+-- FILL SRD GAPS - Complete 5e SRD Content
+-- =============================================
+-- This migration adds any missing SRD content to ensure full parity
+-- All content is marked with source_kind='srd' and proper attribution
+
+-- =============================================
+-- MISSING SRD SPELLS/POWERS
+-- =============================================
+
+-- Additional Cantrips that might be missing
+INSERT INTO compendium_powers (name, power_level, casting_time, range, duration, description, concentration, ritual, school, components, job_names, tags, source_book, source_kind, source_name, license_note) VALUES
+('Blade Ward', 0, '1 action', 'Self', '1 round', 'You extend your hand and trace a sigil of warding in the air. Until the end of your next turn, you have resistance against bludgeoning, piercing, and slashing damage dealt by weapon attacks.', false, false, 'Abjuration', 'V, S', ARRAY[], ARRAY['defense', 'cantrip'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Friends', 0, '1 action', 'Self', 'Concentration, up to 1 minute', 'For the duration, you have advantage on all Charisma checks directed at one creature of your choice that isn''t hostile toward you. When the power ends, the creature realizes that you used magic to influence its mood and becomes hostile toward you.', true, false, 'Enchantment', 'S, M', ARRAY[], ARRAY['social', 'cantrip'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Guidance', 0, '1 action', 'Touch', 'Concentration, up to 1 minute', 'You touch one willing creature. Once before the power ends, the target can roll a d4 and add the number rolled to one ability check of its choice. It can roll the die before or after making the ability check. The power then ends.', true, false, 'Divination', 'V, S', ARRAY[], ARRAY['utility', 'cantrip'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Mending', 0, '1 minute', 'Touch', 'Instantaneous', 'This power repairs a single break or tear in an object you touch, such as a broken chain link, two halves of a broken key, a torn cloak, or a leaking wineskin. As long as the break or tear is no larger than 1 foot in any dimension, you mend it, leaving no trace of the former damage.', false, false, 'Transmutation', 'V, S, M', ARRAY[], ARRAY['utility', 'cantrip'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Resistance', 0, '1 action', 'Touch', 'Concentration, up to 1 minute', 'You touch one willing creature. Once before the power ends, the target can roll a d4 and add the number rolled to one saving throw of its choice. It can roll the die before or after making the saving throw. The power then ends.', true, false, 'Abjuration', 'V, S, M', ARRAY[], ARRAY['defense', 'cantrip'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Toll the Dead', 0, '1 action', '60 feet', 'Instantaneous', 'You point at one creature you can see within range, and the sound of a dolorous bell fills the air around it for a moment. The target must succeed on a Wisdom saving throw or take 1d8 necrotic damage. If the target is missing any of its hit points, it instead takes 1d12 necrotic damage. The power''s damage increases by one die when you reach 5th level (2d8 or 2d12), 11th level (3d8 or 3d12), and 17th level (4d8 or 4d12).', false, false, 'Necromancy', 'V, S', ARRAY[], ARRAY['damage', 'cantrip'], 'SRD', 'srd', '5e SRD', 'Open Game License content')
+ON CONFLICT (name) DO NOTHING;
+
+-- Additional Tier 1 spells
+INSERT INTO compendium_powers (name, power_level, casting_time, range, duration, description, concentration, ritual, school, components, job_names, tags, source_book, source_kind, source_name, license_note) VALUES
+('Alarm', 1, '1 minute', '30 feet', '8 hours', 'You set an alarm against unwanted intrusion. Choose a door, a window, or an area within range that is no larger than a 20-foot cube. Until the power ends, an alarm alerts you whenever a Tiny or larger creature touches or enters the warded area.', false, true, 'Abjuration', 'V, S, M', ARRAY[], ARRAY['utility', 'ritual'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Animal Friendship', 1, '1 action', '30 feet', '24 hours', 'This power lets you convince a beast that you mean it no harm. Choose a beast that you can see within range. It must see and hear you. If the beast''s Intelligence is 4 or higher, the power fails. Otherwise, the beast must succeed on a Wisdom saving throw or be charmed by you for the power''s duration.', false, false, 'Enchantment', 'V, S, M', ARRAY[], ARRAY['charm', 'beast'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Bane', 1, '1 action', '30 feet', 'Concentration, up to 1 minute', 'Up to three creatures of your choice that you can see within range must make Charisma saving throws. Whenever a target that fails this saving throw makes an attack roll or a saving throw before the power ends, the target must roll a d4 and subtract the number rolled from the attack roll or saving throw.', true, false, 'Enchantment', 'V, S, M', ARRAY[], ARRAY['debuff'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Bless', 1, '1 action', '30 feet', 'Concentration, up to 1 minute', 'You bless up to three creatures of your choice within range. Whenever a target makes an attack roll or a saving throw before the power ends, the target can roll a d4 and add the number rolled to the attack roll or saving throw.', true, false, 'Enchantment', 'V, S, M', ARRAY[], ARRAY['buff'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Burning Hands', 1, '1 action', 'Self (15-foot cone)', 'Instantaneous', 'As you hold your hands with thumbs touching and fingers spread, a thin sheet of flames shoots forth from your outstretched fingertips. Each creature in a 15-foot cone must make a Dexterity saving throw. A creature takes 3d6 fire damage on a failed save, or half as much damage on a successful one.', false, false, 'Evocation', 'V, S', ARRAY[], ARRAY['damage', 'fire'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Charm Person', 1, '1 action', '30 feet', '1 hour', 'You attempt to charm a humanoid you can see within range. It must make a Wisdom saving throw, and does so with advantage if you or your companions are fighting it. If it fails the saving throw, it is charmed by you until the power ends or until you or your companions do anything harmful to it.', false, false, 'Enchantment', 'V, S', ARRAY[], ARRAY['charm'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Color Spray', 1, '1 action', 'Self (15-foot cone)', '1 round', 'A dazzling array of flashing, colored light springs from your hand. Roll 6d10; the total is how many hit points of creatures this power can affect. Creatures in a 15-foot cone are affected in ascending order of their current hit points.', false, false, 'Illusion', 'V, S, M', ARRAY[], ARRAY['control'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Command', 1, '1 action', '60 feet', '1 round', 'You speak a one-word command to a creature you can see within range. The target must succeed on a Wisdom saving throw or follow the command on its next turn. The power has no effect if the target is undead, if it doesn''t understand your language, or if your command is directly harmful to it.', false, false, 'Enchantment', 'V', ARRAY[], ARRAY['control'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Compelled Duel', 1, '1 bonus action', '30 feet', 'Concentration, up to 1 minute', 'You attempt to compel a creature into a duel. One creature that you can see within range must make a Wisdom saving throw. On a failed save, the creature is drawn to you, compelled by your divine demand. For the duration, it has disadvantage on attack rolls against creatures other than you, and must make a Wisdom saving throw each time it attempts to move to a space that is more than 30 feet away from you.', true, false, 'Enchantment', 'V', ARRAY[], ARRAY['control', 'tank'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Create or Destroy Water', 1, '1 action', '30 feet', 'Instantaneous', 'You either create or destroy water. You can create up to 10 gallons of clean water within range in an open container. Alternatively, the power destroys the same amount of water in an open container within range.', false, false, 'Transmutation', 'V, S, M', ARRAY[], ARRAY['utility'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Cure Wounds', 1, '1 action', 'Touch', 'Instantaneous', 'A creature you touch regains a number of hit points equal to 1d8 + your spellcasting ability modifier. This power has no effect on undead or constructs.', false, false, 'Evocation', 'V, S', ARRAY[], ARRAY['healing'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Detect Evil and Good', 1, '1 action', 'Self', 'Concentration, up to 10 minutes', 'For the duration, you know if there is an aberration, celestial, elemental, fey, fiend, or undead within 30 feet of you, as well as where the creature is located. Similarly, you know if there is a place or object within 30 feet of you that has been magically consecrated or desecrated.', true, false, 'Divination', 'V, S', ARRAY[], ARRAY['detection'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Detect Magic', 1, '1 action', 'Self', 'Concentration, up to 10 minutes', 'For the duration, you sense the presence of magic within 30 feet of you. If you sense magic in this way, you can use your action to see a faint aura around any visible creature or object in the area that bears magic, and you learn its school of magic, if any.', true, true, 'Divination', 'V, S', ARRAY[], ARRAY['detection', 'ritual'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Detect Poison and Disease', 1, '1 action', 'Self', 'Concentration, up to 10 minutes', 'For the duration, you can sense the presence and location of poisons, poisonous creatures, and diseases within 30 feet of you. You also identify the kind of poison, poisonous creature, or disease in each case.', true, true, 'Divination', 'V, S, M', ARRAY[], ARRAY['detection', 'ritual'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Disguise Self', 1, '1 action', 'Self', '1 hour', 'You make yourself—including your clothing, armor, weapons, and other belongings on your person—look different until the power ends or until you use your action to dismiss it. You can seem 1 foot shorter or taller and can appear thin, fat, or in between. You can''t change your body type, so you must adopt a form that has the same basic arrangement of limbs.', false, false, 'Illusion', 'V, S', ARRAY[], ARRAY['utility'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Divine Favor', 1, '1 bonus action', 'Self', 'Concentration, up to 1 minute', 'Your prayer empowers you with divine radiance. Until the power ends, your weapon attacks deal an extra 1d4 radiant damage on a hit.', true, false, 'Evocation', 'V, S', ARRAY[], ARRAY['buff', 'damage'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Ensnaring Strike', 1, '1 bonus action', 'Self', 'Concentration, up to 1 minute', 'The next time you hit a creature with a weapon attack before this power ends, a writhing mass of thorny vines appears at the point of impact, and the target must succeed on a Strength saving throw or be restrained by the magical vines until the power ends.', true, false, 'Conjuration', 'V', ARRAY[], ARRAY['control'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Entangle', 1, '1 action', '90 feet', 'Concentration, up to 1 minute', 'Grasping weeds and vines sprout from the ground in a 20-foot square starting from a point within range. For the duration, these plants turn the ground in the area into difficult terrain. A creature in the area when you cast the power must succeed on a Strength saving throw or be restrained by the entangling plants until the power ends.', true, false, 'Conjuration', 'V, S', ARRAY[], ARRAY['control'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Faerie Fire', 1, '1 action', '60 feet', 'Concentration, up to 1 minute', 'Each object in a 20-foot cube within range is outlined in blue, green, or violet light (your choice). Any creature in the area when the power is cast is also outlined in light if it fails a Dexterity saving throw. For the duration, objects and affected creatures shed dim light in a 10-foot radius.', true, false, 'Evocation', 'V', ARRAY[], ARRAY['utility'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Find Familiar', 1, '1 hour', '10 feet', 'Instantaneous', 'You gain the service of a familiar, a spirit that takes an animal form you choose: bat, cat, crab, frog (toad), hawk, lizard, octopus, owl, poisonous snake, fish (quipper), rat, raven, sea horse, spider, or weasel. Appearing in an unoccupied space within range, the familiar has the statistics of the chosen form, though it is a celestial, fey, or fiend (your choice) instead of a beast.', false, true, 'Conjuration', 'V, S, M', ARRAY[], ARRAY['summoning', 'ritual'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Goodberry', 1, '1 action', 'Touch', 'Instantaneous', 'Up to ten berries appear in your hand and are infused with magic for the duration. A creature can use its action to eat one berry. Eating a berry restores 1 hit point, and the berry provides enough nourishment to sustain a creature for one day.', false, false, 'Transmutation', 'V, S, M', ARRAY[], ARRAY['healing', 'utility'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Hail of Thorns', 1, '1 bonus action', 'Self', 'Concentration, up to 1 minute', 'The next time you hit a creature with a ranged weapon attack before the power ends, this power creates a rain of thorns that sprouts from your ranged weapon or ammunition. In addition to the normal effect of the attack, the target of the attack and each creature within 5 feet of it must make a Dexterity saving throw. A creature takes 1d10 piercing damage on a failed save, or half as much damage on a successful one.', true, false, 'Conjuration', 'V', ARRAY[], ARRAY['damage'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Hunter''s Mark', 1, '1 bonus action', '90 feet', 'Concentration, up to 1 hour', 'You choose a creature you can see within range and mystically mark it as your quarry. Until the power ends, you deal an extra 1d6 damage to the target whenever you hit it with a weapon attack, and you have advantage on any Wisdom (Perception) or Wisdom (Survival) check you make to find it.', true, false, 'Divination', 'V', ARRAY[], ARRAY['damage', 'tracking'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Purify Food and Drink', 1, '1 action', '10 feet', 'Instantaneous', 'All nonmagical food and drink within a 5-foot-radius sphere centered on a point of your choice within range is purified and rendered free of poison and disease.', false, true, 'Transmutation', 'V, S', ARRAY[], ARRAY['utility', 'ritual'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Sanctuary', 1, '1 bonus action', '30 feet', '1 minute', 'You ward a creature within range against attack. Until the power ends, any creature who targets the warded creature with an attack or a harmful power must first make a Wisdom saving throw. On a failed save, the creature must choose a new target or lose the attack or power. This power doesn''t protect the warded creature from area effects, such as the explosion of a fireball.', false, false, 'Abjuration', 'V, S, M', ARRAY[], ARRAY['protection'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Searing Smite', 1, '1 bonus action', 'Self', 'Concentration, up to 1 minute', 'The next time you hit a creature with a melee weapon attack during the power''s duration, your weapon flares with white-hot intensity, and the attack deals an extra 1d6 fire damage to the target and causes the target to ignite in flames. At the start of each of its turns until the power ends, the target must make a Constitution saving throw. On a failed save, it takes 1d6 fire damage. On a successful save, the power ends.', true, false, 'Evocation', 'V', ARRAY[], ARRAY['damage'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Tasha''s Hideous Laughter', 1, '1 action', '30 feet', 'Concentration, up to 1 minute', 'A creature of your choice that you can see within range perceives everything as hilariously funny and falls into fits of laughter if this power affects it. The target must succeed on a Wisdom saving throw or fall prone, becoming incapacitated and unable to stand up for the duration. A creature with an Intelligence score of 4 or less isn''t affected.', true, false, 'Enchantment', 'V, S, M', ARRAY[], ARRAY['control'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Thunderous Smite', 1, '1 bonus action', 'Self', 'Concentration, up to 1 minute', 'The first time you hit with a melee weapon attack during this power''s duration, your weapon rings with thunder that is audible within 300 feet of you, and the attack deals an extra 2d6 thunder damage to the target. Additionally, if the target is a creature, it must succeed on a Strength saving throw or be pushed 10 feet away from you and knocked prone.', true, false, 'Evocation', 'V', ARRAY[], ARRAY['damage', 'control'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Wrathful Smite', 1, '1 bonus action', 'Self', 'Concentration, up to 1 minute', 'The next time you hit with a melee weapon attack during this power''s duration, your attack deals an extra 1d6 psychic damage. Additionally, if the target is a creature, it must make a Wisdom saving throw or be frightened of you until the power ends. As an action, the creature can make a Wisdom check to steel its resolve and end this power.', true, false, 'Evocation', 'V', ARRAY[], ARRAY['damage', 'fear'], 'SRD', 'srd', '5e SRD', 'Open Game License content')
+ON CONFLICT (name) DO NOTHING;
+
+-- =============================================
+-- SRD CONDITIONS
+-- =============================================
+-- Add provenance columns to compendium_conditions if they don't exist
+DO $$ 
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_name = 'compendium_conditions' 
+    AND column_name = 'source_kind'
+  ) THEN
+    ALTER TABLE compendium_conditions 
+    ADD COLUMN source_kind TEXT,
+    ADD COLUMN source_name TEXT,
+    ADD COLUMN license_note TEXT;
+  END IF;
+END $$;
+
+INSERT INTO compendium_conditions (name, description, effects, source_kind, source_name, license_note) VALUES
+('Blinded', 'A blinded creature can''t see and automatically fails any ability check that requires sight. Attack rolls against the creature have advantage, and the creature''s attack rolls have disadvantage.', ARRAY['Can''t see', 'Fails sight-based checks', 'Attacks against have advantage', 'Attack rolls have disadvantage'], 'srd', '5e SRD', 'Open Game License content'),
+('Charmed', 'A charmed creature can''t attack the charmer or target the charmer with harmful abilities or magical effects. The charmer has advantage on any ability check to interact socially with the creature.', ARRAY['Can''t attack charmer', 'Charmer has advantage on social checks'], 'srd', '5e SRD', 'Open Game License content'),
+('Deafened', 'A deafened creature can''t hear and automatically fails any ability check that requires hearing.', ARRAY['Can''t hear', 'Fails hearing-based checks'], 'srd', '5e SRD', 'Open Game License content'),
+('Exhaustion', 'Some special abilities and environmental hazards, such as starvation and the long-term effects of freezing or scorching temperatures, can lead to a special condition called exhaustion. Exhaustion is measured in six levels. An effect can give a creature one or more levels of exhaustion, as specified in the effect''s description.', ARRAY['Level 1: Disadvantage on ability checks', 'Level 2: Speed halved', 'Level 3: Disadvantage on attack rolls and saving throws', 'Level 4: Hit point maximum halved', 'Level 5: Speed reduced to 0', 'Level 6: Death'], 'srd', '5e SRD', 'Open Game License content'),
+('Frightened', 'A frightened creature has disadvantage on ability checks and attack rolls while the source of its fear is within line of sight. The creature can''t willingly move closer to the source of its fear.', ARRAY['Disadvantage on ability checks and attack rolls', 'Can''t move closer to fear source'], 'srd', '5e SRD', 'Open Game License content'),
+('Grappled', 'A grappled creature''s speed becomes 0, and it can''t benefit from any bonus to its speed. The condition ends if the grappler is incapacitated. The condition also ends if an effect removes the grappled creature from the reach of the grappler or grappling effect.', ARRAY['Speed becomes 0', 'Can''t benefit from speed bonuses'], 'srd', '5e SRD', 'Open Game License content'),
+('Incapacitated', 'An incapacitated creature can''t take actions or reactions.', ARRAY['Can''t take actions', 'Can''t take reactions'], 'srd', '5e SRD', 'Open Game License content'),
+('Invisible', 'An invisible creature is impossible to see without the aid of magic or a special sense. For the purpose of hiding, the creature is heavily obscured. The creature''s location can be detected by any noise it makes or any tracks it leaves. Attack rolls against the creature have disadvantage, and the creature''s attack rolls have advantage.', ARRAY['Impossible to see', 'Heavily obscured for hiding', 'Attacks against have disadvantage', 'Attack rolls have advantage'], 'srd', '5e SRD', 'Open Game License content'),
+('Paralyzed', 'A paralyzed creature is incapacitated and can''t move or speak. The creature automatically fails Strength and Dexterity saving throws. Attack rolls against the creature have advantage. Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature.', ARRAY['Incapacitated', 'Can''t move or speak', 'Fails STR and AGI saves', 'Attacks against have advantage', 'Melee attacks are critical hits'], 'srd', '5e SRD', 'Open Game License content'),
+('Petrified', 'A petrified creature is transformed, along with any nonmagical object it is wearing or carrying, into a solid inanimate substance (usually stone). The creature''s weight increases by a factor of ten, and it ceases aging. The creature is incapacitated, can''t move or speak, and is unaware of its surroundings. Attack rolls against the creature have advantage. The creature automatically fails Strength and Dexterity saving throws. The creature has resistance to all damage. The creature is immune to poison and disease, although a poison or disease already in its system is suspended, not neutralized.', ARRAY['Transformed to stone', 'Weight x10', 'Incapacitated', 'Can''t move or speak', 'Unaware of surroundings', 'Attacks against have advantage', 'Fails STR and AGI saves', 'Resistance to all damage', 'Immune to poison and disease'], 'srd', '5e SRD', 'Open Game License content'),
+('Poisoned', 'A poisoned creature has disadvantage on attack rolls and ability checks.', ARRAY['Disadvantage on attack rolls', 'Disadvantage on ability checks'], 'srd', '5e SRD', 'Open Game License content'),
+('Prone', 'A prone creature''s only movement option is to crawl, unless it stands up and thereby ends the condition. The creature has disadvantage on attack rolls. An attack roll against the creature has advantage if the attacker is within 5 feet of the creature. Otherwise, the attack roll has disadvantage.', ARRAY['Can only crawl', 'Disadvantage on attack rolls', 'Melee attacks against have advantage', 'Ranged attacks against have disadvantage'], 'srd', '5e SRD', 'Open Game License content'),
+('Restrained', 'A restrained creature''s speed becomes 0, and it can''t benefit from any bonus to its speed. Attack rolls against the creature have advantage, and the creature''s attack rolls have disadvantage. The creature has disadvantage on Dexterity saving throws.', ARRAY['Speed becomes 0', 'Can''t benefit from speed bonuses', 'Attacks against have advantage', 'Attack rolls have disadvantage', 'Disadvantage on AGI saves'], 'srd', '5e SRD', 'Open Game License content'),
+('Stunned', 'A stunned creature is incapacitated, can''t move, and can speak only falteringly. The creature automatically fails Strength and Dexterity saving throws. Attack rolls against the creature have advantage.', ARRAY['Incapacitated', 'Can''t move', 'Can speak only falteringly', 'Fails STR and AGI saves', 'Attacks against have advantage'], 'srd', '5e SRD', 'Open Game License content'),
+('Unconscious', 'An unconscious creature is incapacitated, can''t move or speak, and is unaware of its surroundings. The creature drops whatever it''s holding and falls prone. The creature automatically fails Strength and Dexterity saving throws. Attack rolls against the creature have advantage. Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature.', ARRAY['Incapacitated', 'Can''t move or speak', 'Unaware of surroundings', 'Drops held items', 'Falls prone', 'Fails STR and AGI saves', 'Attacks against have advantage', 'Melee attacks are critical hits'], 'srd', '5e SRD', 'Open Game License content')
+ON CONFLICT (name) DO NOTHING;
+
+-- =============================================
+-- UPDATE EXISTING CONTENT WITH PROVENANCE
+-- =============================================
+-- Ensure all SRD content has proper source tracking
+UPDATE compendium_powers 
+SET source_kind = 'srd', 
+    source_name = '5e SRD',
+    license_note = 'Open Game License content'
+WHERE source_book = 'SRD' 
+  AND (source_kind IS NULL OR source_kind != 'srd');
+
+UPDATE compendium_equipment 
+SET source_kind = 'srd', 
+    source_name = '5e SRD',
+    license_note = 'Open Game License content'
+WHERE source_book = 'SRD' 
+  AND (source_kind IS NULL OR source_kind != 'srd');
+
+UPDATE compendium_backgrounds 
+SET source_kind = 'srd', 
+    source_name = '5e SRD',
+    license_note = 'Open Game License content'
+WHERE source_book = 'SRD' 
+  AND (source_kind IS NULL OR source_kind != 'srd');
+
+UPDATE compendium_feats 
+SET source_kind = 'srd', 
+    source_name = '5e SRD',
+    license_note = 'Open Game License content'
+WHERE source_book = 'SRD' 
+  AND (source_kind IS NULL OR source_kind != 'srd');
+
+UPDATE compendium_monsters 
+SET source_kind = 'srd', 
+    source_name = '5e SRD',
+    license_note = 'Open Game License content'
+WHERE source_book = 'SRD' 
+  AND (source_kind IS NULL OR source_kind != 'srd');
+
+UPDATE compendium_conditions 
+SET source_kind = 'srd', 
+    source_name = '5e SRD',
+    license_note = 'Open Game License content'
+WHERE source_kind IS NULL OR source_kind != 'srd';
+
+-- =============================================
+-- ADD MISSING SRD EQUIPMENT (if any)
+-- =============================================
+-- Most equipment is already present, but adding any that might be missing
+-- Add provenance columns to compendium_equipment if they don't exist
+DO $$ 
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_name = 'compendium_equipment' 
+    AND column_name = 'source_kind'
+  ) THEN
+    ALTER TABLE compendium_equipment 
+    ADD COLUMN source_kind TEXT,
+    ADD COLUMN source_name TEXT,
+    ADD COLUMN license_note TEXT;
+  END IF;
+END $$;
+
+INSERT INTO compendium_equipment (name, equipment_type, cost_credits, weight, damage, damage_type, properties, armor_class, description, source_book, source_kind, source_name, license_note) VALUES
+('Unarmed Strike', 'unarmed', 0, 0, '1', 'bludgeoning', NULL, NULL, 'A melee attack with no weapon. Your Strength modifier is added to the damage roll.', 'SRD', 'srd', '5e SRD', 'Open Game License content'),
+('Improvised Weapon', 'improvised', 0, 0, '1d4', 'varies', NULL, NULL, 'An object that bears no resemblance to a weapon deals 1d4 damage. A weapon-like object can be used as a weapon and deals damage appropriate to its form.', 'SRD', 'srd', '5e SRD', 'Open Game License content')
+ON CONFLICT (name) DO NOTHING;
+

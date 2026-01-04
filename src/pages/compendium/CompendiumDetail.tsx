@@ -36,50 +36,50 @@ const tableMap: Record<EntryType, string> = {
 const CompendiumDetail = () => {
   const { type, id } = useParams<{ type: EntryType; id: string }>();
   const navigate = useNavigate();
-  const [entry, setEntry] = useState<any>(null);
+  const [entry, setEntry] = useState<Record<string, unknown> | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const fetchEntry = async () => {
+      if (!type || !id) return;
+      
+      setLoading(true);
+      setError(null);
+      
+      const tableName = tableMap[type as EntryType];
+      if (!tableName) {
+        setError('Invalid entry type');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        // Use type assertion to handle dynamic table names
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { data, error: fetchError } = await (supabase.from(tableName as any) as ReturnType<typeof supabase.from>)
+          .select('*')
+          .eq('id', id)
+          .maybeSingle();
+
+        if (fetchError) throw fetchError;
+        if (!data) {
+          setError('Entry not found');
+        } else {
+          setEntry(data);
+        }
+      } catch (err) {
+        console.error('Error fetching entry:', err);
+        setError('Failed to load entry');
+      } finally {
+        setLoading(false);
+      }
+    };
+
     if (type && id) {
       fetchEntry();
     }
   }, [type, id]);
-
-  const fetchEntry = async () => {
-    if (!type || !id) return;
-    
-    setLoading(true);
-    setError(null);
-    
-    const tableName = tableMap[type as EntryType];
-    if (!tableName) {
-      setError('Invalid entry type');
-      setLoading(false);
-      return;
-    }
-
-    try {
-      // Use type assertion to handle dynamic table names
-      const { data, error: fetchError } = await supabase
-        .from(tableName as any)
-        .select('*')
-        .eq('id', id)
-        .maybeSingle();
-
-      if (fetchError) throw fetchError;
-      if (!data) {
-        setError('Entry not found');
-      } else {
-        setEntry(data);
-      }
-    } catch (err) {
-      console.error('Error fetching entry:', err);
-      setError('Failed to load entry');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const renderDetail = () => {
     if (!entry || !type) return null;
