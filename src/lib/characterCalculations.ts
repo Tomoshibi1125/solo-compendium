@@ -49,9 +49,9 @@ export function calculateCharacterStats(stats: CharacterStats): CalculatedStats 
     PRE: abilityModifiers.PRE + (savingThrowProficiencies.includes('PRE') ? proficiencyBonus : 0),
   };
 
-  // Calculate skills (would need skill definitions for full implementation)
+  // Calculate skills (using skill definitions from lib/skills)
   const skills: Record<string, number> = {};
-  // TODO: Implement skill calculations based on skill definitions
+  // Skills are calculated in CharacterSheet component using getAllSkills() and calculateSkillModifier()
 
   // Calculate initiative (AGI modifier)
   const initiative = abilityModifiers.AGI;

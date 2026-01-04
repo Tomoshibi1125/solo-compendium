@@ -91,7 +91,7 @@ const GATE_THEMES = [
   'Construct Forge (construct focus)',
   'Abyssal Depths (fiend focus)',
   'Celestial Spire (celestial focus)',
-  'Dragon Lair (dragon focus)',
+  'Shadow Monarch\'s Domain (shadow focus)',
   'Necromantic Lab (undead + construct)',
   'Mana Nexus (elemental + aberration)',
   'Shadow Monarch\'s Memory',

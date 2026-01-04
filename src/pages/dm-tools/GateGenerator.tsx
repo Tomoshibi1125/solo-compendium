@@ -13,7 +13,7 @@ import { cn } from '@/lib/utils';
 const GATE_RANKS = ['E', 'D', 'C', 'B', 'A', 'S'];
 const GATE_THEMES = [
   'Shadow Realm', 'Elemental Chaos', 'Beast Domain', 'Construct Forge',
-  'Abyssal Depths', 'Celestial Spire', 'Dragon Lair', 'Necromantic Lab',
+  'Abyssal Depths', 'Celestial Spire', 'Shadow Monarch\'s Domain', 'Necromantic Lab',
   'Mana Nexus', 'Shadow Monarch\'s Memory', 'System Testing Ground', 'Post-Reset Fragment'
 ];
 const GATE_BIOMES = [
@@ -22,7 +22,7 @@ const GATE_BIOMES = [
   'Volcanic depths', 'Sky fortress', 'Underwater ruins', 'Dimensional pocket'
 ];
 const BOSS_TYPES = [
-  'Shadow Monarch Fragment', 'System Guardian', 'Corrupted Hunter', 'Ancient Dragon',
+  'Shadow Monarch Fragment', 'System Guardian', 'Corrupted Hunter', 'Ancient Gate Beast',
   'Monarch\'s Shadow', 'Gate Core Manifestation', 'Time-Lost Entity', 'Dimensional Breach'
 ];
 const COMPLICATIONS = [

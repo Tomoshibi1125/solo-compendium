@@ -21,7 +21,7 @@ const compendiumCategories = [
   },
   {
     name: 'Powers',
-    description: 'Techniques, spells, and abilities',
+    description: 'Techniques, powers, and abilities granted by the System',
     icon: Wand2,
     href: '/compendium/powers',
     color: 'from-purple-500/20 to-purple-600/10 border-purple-500/30 hover:border-purple-400/50',
@@ -29,7 +29,7 @@ const compendiumCategories = [
   },
   {
     name: 'Relics',
-    description: 'Magical items and equipment',
+    description: 'System-granted items and equipment',
     icon: Gem,
     href: '/compendium/relics',
     color: 'from-amber-500/20 to-amber-600/10 border-amber-500/30 hover:border-amber-400/50',

@@ -26,7 +26,7 @@ export const SKILLS: Skill[] = [
   { id: 'acrobatics', name: 'Acrobatics', defaultAbility: 'AGI', description: 'Grappling, balancing, tumbling, avoiding falls' },
   { id: 'sleight-of-hand', name: 'Sleight of Hand', defaultAbility: 'AGI', description: 'Palming items, quick draws, subtle relic use' },
   { id: 'stealth', name: 'Stealth', defaultAbility: 'AGI', description: 'Moving quietly, hiding from sensors or monsters' },
-  { id: 'arcana', name: 'Arcana', defaultAbility: 'INT', description: 'Understanding Gates, system anomalies, magical theory' },
+  { id: 'arcana', name: 'Arcana', defaultAbility: 'INT', description: 'Understanding Gates, System anomalies, and power theory in the post-reset world' },
   { id: 'history', name: 'History', defaultAbility: 'INT', description: 'Recalling past events, notable Hunters, major incidents' },
   { id: 'investigation', name: 'Investigation', defaultAbility: 'INT', description: 'Reconstructing events, searching for clues, analyzing scenes' },
   { id: 'nature', name: 'Nature', defaultAbility: 'INT', description: 'Knowing wild ecosystems, beasts, natural hazards' },

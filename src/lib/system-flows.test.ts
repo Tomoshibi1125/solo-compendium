@@ -607,5 +607,5 @@ describe('Validation and Error Handling', () => {
   });
 });
 
-console.log('✅ All system flow tests completed!');
+// All system flow tests completed
 
