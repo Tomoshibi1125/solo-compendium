@@ -1,56 +1,52 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { useState, useCallback } from 'react';
 
+// Favorites feature - uses local storage until user_favorites table is created
 export const useFavorites = () => {
   const queryClient = useQueryClient();
 
   const { data: favorites = new Set<string>(), isLoading } = useQuery({
     queryKey: ['favorites'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return new Set<string>();
-
-      const { data } = await supabase
-        .from('user_favorites')
-        .select('entry_type, entry_id');
-
-      if (!data) return new Set<string>();
-      
-      return new Set(data.map(f => `${f.entry_type}:${f.entry_id}`));
+      // Use localStorage for favorites until database table exists
+      try {
+        const stored = localStorage.getItem('solo-compendium-favorites');
+        if (stored) {
+          const parsed = JSON.parse(stored) as string[];
+          return new Set(parsed);
+        }
+      } catch (e) {
+        console.warn('Failed to load favorites from localStorage');
+      }
+      return new Set<string>();
     },
     staleTime: 30000,
   });
 
   const toggleFavorite = useMutation({
     mutationFn: async ({ entryType, entryId, isFavorite }: { entryType: string; entryId: string; isFavorite: boolean }) => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
-
+      const key = `${entryType}:${entryId}`;
+      const currentFavorites = new Set(favorites);
+      
       if (isFavorite) {
-        await supabase
-          .from('user_favorites')
-          .delete()
-          .eq('user_id', user.id)
-          .eq('entry_type', entryType)
-          .eq('entry_id', entryId);
+        currentFavorites.delete(key);
       } else {
-        await supabase
-          .from('user_favorites')
-          .insert({
-            user_id: user.id,
-            entry_type: entryType,
-            entry_id: entryId,
-          });
+        currentFavorites.add(key);
       }
+      
+      // Save to localStorage
+      localStorage.setItem('solo-compendium-favorites', JSON.stringify(Array.from(currentFavorites)));
+      
+      return currentFavorites;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['favorites'] });
     },
   });
 
-  const isFavorite = (entryType: string, entryId: string): boolean => {
+  const isFavorite = useCallback((entryType: string, entryId: string): boolean => {
     return favorites.has(`${entryType}:${entryId}`);
-  };
+  }, [favorites]);
 
   return {
     favorites,
@@ -65,4 +61,3 @@ export const useFavorites = () => {
     },
   };
 };
-

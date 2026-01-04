@@ -33,7 +33,7 @@ export const usePowers = (characterId: string) => {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['powers', characterId]);
+      queryClient.invalidateQueries({ queryKey: ['powers', characterId] });
     },
   });
 
@@ -47,7 +47,7 @@ export const usePowers = (characterId: string) => {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['powers', characterId]);
+      queryClient.invalidateQueries({ queryKey: ['powers', characterId] });
     },
   });
 
@@ -60,7 +60,7 @@ export const usePowers = (characterId: string) => {
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['powers', characterId]);
+      queryClient.invalidateQueries({ queryKey: ['powers', characterId] });
     },
   });
 

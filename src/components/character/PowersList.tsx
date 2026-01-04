@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Wand2, Plus, Trash2, Filter } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
@@ -11,6 +12,14 @@ import { usePowers } from '@/hooks/usePowers';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { AddPowerDialog } from './AddPowerDialog';
+
+function CompendiumLink({ type, id, name, className }: { type: string; id: string; name: string; className?: string }) {
+  return (
+    <Link to={`/compendium/${type}/${id}`} className={className}>
+      {name}
+    </Link>
+  );
+}
 
 export function PowersList({ characterId }: { characterId: string }) {
   const { powers, updatePower, removePower, concentrationPower } = usePowers(characterId);

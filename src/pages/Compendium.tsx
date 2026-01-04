@@ -43,7 +43,7 @@ import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { useToast } from '@/hooks/use-toast';
 import { useToastAction } from '@/hooks/useToastAction';
 import { AnimatedList } from '@/components/ui/AnimatedList';
-import { TooltipProvider, TooltipRoot, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 
 interface CompendiumEntry {
   id: string;
@@ -155,7 +155,7 @@ const Compendium = () => {
       if (selectedCategory === 'all' || selectedCategory === 'jobs') {
           let query = supabase
             .from('compendium_jobs')
-            .select('id, name, description, created_at, tags, source_book, source_kind');
+            .select('id, name, description, created_at, tags, source_book');
           
           if (debouncedSearchQuery.trim()) {
             query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
@@ -172,7 +172,6 @@ const Compendium = () => {
               tags: j.tags || [],
               created_at: j.created_at,
               source_book: j.source_book,
-              source_kind: j.source_kind,
               isFavorite: favorites.has(`jobs:${j.id}`) || false,
             })));
           }
@@ -182,7 +181,7 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'paths') {
           let query = supabase
             .from('compendium_job_paths')
-            .select('id, name, description, created_at, tags, source_book, source_kind');
+            .select('id, name, description, created_at, tags, source_book');
           
           if (debouncedSearchQuery.trim()) {
             query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
@@ -199,7 +198,6 @@ const Compendium = () => {
               tags: p.tags || [],
               created_at: p.created_at,
               source_book: p.source_book,
-              source_kind: p.source_kind,
               isFavorite: favorites.has(`paths:${p.id}`) || false,
             })));
           }
@@ -209,7 +207,7 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'monarchs') {
           let query = supabase
             .from('compendium_monarchs')
-            .select('id, name, title, description, theme, created_at, tags, source_book, source_kind');
+            .select('id, name, title, description, theme, created_at, tags, source_book');
           
           if (debouncedSearchQuery.trim()) {
             query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
@@ -227,7 +225,6 @@ const Compendium = () => {
               tags: m.tags || [],
               created_at: m.created_at,
               source_book: m.source_book,
-              source_kind: m.source_kind,
               isFavorite: favorites.has(`monarchs:${m.id}`) || false,
             })));
           }
@@ -237,7 +234,7 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'powers') {
           let query = supabase
             .from('compendium_powers')
-            .select('id, name, description, power_level, school, created_at, tags, source_book, source_kind');
+            .select('id, name, description, power_level, school, created_at, tags, source_book');
           
           if (debouncedSearchQuery.trim()) {
             query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
@@ -256,7 +253,6 @@ const Compendium = () => {
               tags: p.tags || [],
               created_at: p.created_at,
               source_book: p.source_book,
-              source_kind: p.source_kind,
               isFavorite: favorites.has(`powers:${p.id}`) || false,
             })));
           }
@@ -266,7 +262,7 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'relics') {
           let query = supabase
             .from('compendium_relics')
-            .select('id, name, description, rarity, item_type, created_at, tags, source_book, source_kind');
+            .select('id, name, description, rarity, item_type, created_at, tags, source_book');
           
           if (debouncedSearchQuery.trim()) {
             query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
@@ -283,7 +279,6 @@ const Compendium = () => {
               tags: r.tags || [],
               created_at: r.created_at,
               source_book: r.source_book,
-              source_kind: r.source_kind,
               isFavorite: favorites.has(`relics:${r.id}`) || false,
             })));
           }
@@ -293,7 +288,7 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'feats') {
           let query = supabase
             .from('compendium_feats')
-            .select('id, name, description, prerequisites, created_at, tags, source_book, source_kind');
+            .select('id, name, description, prerequisites, created_at, tags, source_book');
           
           if (debouncedSearchQuery.trim()) {
             query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
@@ -311,7 +306,6 @@ const Compendium = () => {
               tags: f.tags || [],
               created_at: f.created_at,
               source_book: f.source_book,
-              source_kind: f.source_kind,
               isFavorite: favorites.has(`feats:${f.id}`) || false,
             })));
           }
@@ -321,7 +315,7 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'monsters') {
           let query = supabase
             .from('compendium_monsters')
-            .select('id, name, description, cr, gate_rank, is_boss, created_at, tags, source_book, source_kind');
+            .select('id, name, description, cr, gate_rank, is_boss, created_at, tags, source_book');
           
           if (debouncedSearchQuery.trim()) {
             query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
@@ -340,7 +334,6 @@ const Compendium = () => {
               tags: m.tags || [],
               created_at: m.created_at,
               source_book: m.source_book,
-              source_kind: m.source_kind,
               isFavorite: favorites.has(`monsters:${m.id}`) || false,
             })));
           }
@@ -350,7 +343,7 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'backgrounds') {
           let query = supabase
             .from('compendium_backgrounds')
-            .select('id, name, description, created_at, tags, source_book, source_kind');
+            .select('id, name, description, created_at, tags, source_book');
           
           if (debouncedSearchQuery.trim()) {
             query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
@@ -366,7 +359,6 @@ const Compendium = () => {
               tags: b.tags || [],
               created_at: b.created_at,
               source_book: b.source_book,
-              source_kind: b.source_kind,
               isFavorite: favorites.has(`backgrounds:${b.id}`) || false,
             })));
           }
@@ -376,7 +368,7 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'conditions') {
           let query = supabase
             .from('compendium_conditions')
-            .select('id, name, description, created_at, source_book, source_kind');
+            .select('id, name, description, created_at');
           
           if (debouncedSearchQuery.trim()) {
             query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
@@ -390,8 +382,6 @@ const Compendium = () => {
               type: 'conditions' as const,
               description: c.description,
               created_at: c.created_at,
-              source_book: c.source_book,
-              source_kind: c.source_kind,
               isFavorite: favorites.has(`conditions:${c.id}`) || false,
             })));
           }
@@ -401,7 +391,7 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'skills') {
           let query = supabase
             .from('compendium_skills')
-            .select('id, name, description, ability, created_at, source_book, source_kind');
+            .select('id, name, description, ability, created_at, source_book');
           
           if (debouncedSearchQuery.trim()) {
             query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
@@ -417,7 +407,6 @@ const Compendium = () => {
               ability: s.ability,
               created_at: s.created_at,
               source_book: s.source_book,
-              source_kind: s.source_kind,
               isFavorite: favorites.has(`skills:${s.id}`) || false,
             })));
           }
@@ -427,7 +416,7 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'equipment') {
           let query = supabase
             .from('compendium_equipment')
-            .select('id, name, description, equipment_type, damage, armor_class, created_at, source_book, source_kind');
+            .select('id, name, description, equipment_type, damage, armor_class, created_at, source_book');
           
           if (debouncedSearchQuery.trim()) {
             query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
@@ -443,7 +432,6 @@ const Compendium = () => {
               equipment_type: e.equipment_type,
               created_at: e.created_at,
               source_book: e.source_book,
-              source_kind: e.source_kind,
               isFavorite: favorites.has(`equipment:${e.id}`) || false,
             })));
           }
@@ -737,9 +725,9 @@ const Compendium = () => {
     toggleFavorite(entry.type, entry.id);
     
     if (wasFavorite) {
-      showSuccess('Removed from favorites', `${entry.name} has been removed from your favorites`);
+      toast({ title: 'Removed from favorites', description: `${entry.name} has been removed from your favorites` });
     } else {
-      showSuccess('Added to favorites', `${entry.name} has been added to your favorites`);
+      toast({ title: 'Added to favorites', description: `${entry.name} has been added to your favorites` });
     }
   };
 

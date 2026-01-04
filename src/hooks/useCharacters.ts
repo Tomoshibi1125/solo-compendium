@@ -87,7 +87,7 @@ export const useCreateCharacter = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (data: CharacterInsert) => {
+    mutationFn: async (data: Omit<CharacterInsert, 'user_id'>) => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 

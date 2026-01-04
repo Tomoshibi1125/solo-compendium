@@ -14,23 +14,17 @@ export interface CampaignMessage {
 }
 
 // Fetch campaign messages
+// Note: Campaign messaging feature requires campaign_messages table
 export const useCampaignMessages = (campaignId: string) => {
   return useQuery({
     queryKey: ['campaigns', campaignId, 'messages'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('campaign_messages')
-        .select('*')
-        .eq('campaign_id', campaignId)
-        .order('created_at', { ascending: true })
-        .limit(100); // Limit to last 100 messages
-
-      if (error) throw error;
-      return (data || []) as CampaignMessage[];
+    queryFn: async (): Promise<CampaignMessage[]> => {
+      // Campaign messaging feature not yet implemented in database
+      return [];
     },
     enabled: !!campaignId,
-    staleTime: 10000, // Cache for 10 seconds
-    refetchInterval: 30000, // Poll every 30 seconds as fallback (real-time handles most updates)
+    staleTime: 10000,
+    refetchInterval: 30000,
   });
 };
 
@@ -42,39 +36,20 @@ export const useCampaignMessagesRealtime = (
   const channelRef = useRef<RealtimeChannel | null>(null);
   const onNewMessageRef = useRef(onNewMessage);
 
-  // Keep callback ref up to date
   useEffect(() => {
     onNewMessageRef.current = onNewMessage;
   }, [onNewMessage]);
 
   useEffect(() => {
-    if (!campaignId) return;
-
-    const channel = supabase
-      .channel(`campaign:${campaignId}:messages`)
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'campaign_messages',
-          filter: `campaign_id=eq.${campaignId}`,
-        },
-        (payload) => {
-          onNewMessageRef.current(payload.new as CampaignMessage);
-        }
-      )
-      .subscribe();
-
-    channelRef.current = channel;
-
+    // Campaign messaging feature not yet implemented
+    // Real-time subscription disabled until table exists
     return () => {
       if (channelRef.current) {
         supabase.removeChannel(channelRef.current);
         channelRef.current = null;
       }
     };
-  }, [campaignId]); // Removed onNewMessage from deps to prevent re-subscription
+  }, [campaignId]);
 };
 
 // Send message mutation
@@ -87,18 +62,8 @@ export const useSendCampaignMessage = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase
-        .from('campaign_messages')
-        .insert({
-          campaign_id: campaignId,
-          user_id: user.id,
-          message: message.trim(),
-        })
-        .select()
-        .single();
-
-      if (error) throw error;
-      return data as CampaignMessage;
+      // Campaign messaging feature not yet implemented
+      throw new Error('Campaign messaging is not yet available');
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['campaigns', variables.campaignId, 'messages'] });
@@ -120,12 +85,8 @@ export const useDeleteCampaignMessage = () => {
 
   return useMutation({
     mutationFn: async ({ messageId, campaignId }: { messageId: string; campaignId: string }) => {
-      const { error } = await supabase
-        .from('campaign_messages')
-        .delete()
-        .eq('id', messageId);
-
-      if (error) throw error;
+      // Campaign messaging feature not yet implemented
+      throw new Error('Campaign messaging is not yet available');
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['campaigns', variables.campaignId, 'messages'] });
@@ -142,4 +103,3 @@ export const useDeleteCampaignMessage = () => {
     },
   });
 };
-

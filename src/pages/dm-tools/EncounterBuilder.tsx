@@ -198,7 +198,7 @@ const EncounterBuilder = () => {
                         <div className="flex-1">
                           <div className="font-heading text-sm">{em.monster.name}</div>
                           <div className="text-xs text-muted-foreground">
-                            CR {em.monster.challenge_rating || '—'} • {calculateXP(em.monster, em.quantity)} XP
+                            CR {em.monster.cr || '—'} • {calculateXP(em.monster, em.quantity)} XP
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
@@ -270,7 +270,7 @@ const EncounterBuilder = () => {
                         <div className="flex-1">
                           <div className="font-heading font-semibold">{monster.name}</div>
                           <div className="text-xs text-muted-foreground">
-                            CR {monster.challenge_rating || '—'} • {monster.xp || 0} XP
+                            CR {monster.cr || '—'} • {monster.xp || 0} XP
                           </div>
                         </div>
                         <Button
@@ -285,9 +285,9 @@ const EncounterBuilder = () => {
                           <Plus className="w-3 h-3" />
                         </Button>
                       </div>
-                      {monster.type && (
+                      {monster.creature_type && (
                         <Badge variant="outline" className="text-xs">
-                          {monster.type}
+                          {monster.creature_type}
                         </Badge>
                       )}
                     </div>

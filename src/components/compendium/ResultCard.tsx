@@ -15,6 +15,8 @@ interface ResultCardEntry {
   school?: string;
   source_book?: string;
   isFavorite?: boolean;
+  is_boss?: boolean;
+  tags?: string[];
 }
 
 interface ResultCardProps {

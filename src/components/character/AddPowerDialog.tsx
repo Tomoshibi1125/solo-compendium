@@ -50,6 +50,7 @@ export function AddPowerDialog({
   const handleAdd = async (power: typeof powers[0]) => {
     try {
       await addPower({
+        character_id: characterId,
         name: power.name,
         power_level: power.power_level,
         source: 'Compendium',

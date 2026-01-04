@@ -49,6 +49,7 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
         });
       } else {
         await addEquipment({
+          character_id: characterId,
           name: currencyType.name,
           item_type: 'currency',
           quantity: amount,
@@ -82,6 +83,7 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
         });
       } else {
         await addEquipment({
+          character_id: characterId,
           name: currencyType.name,
           item_type: 'currency',
           quantity: amount,

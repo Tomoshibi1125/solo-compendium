@@ -22,6 +22,7 @@ export const useEquipment = (characterId: string) => {
       if (error) throw error;
       return data as Equipment[];
     },
+    enabled: !!characterId,
   });
 
   const addEquipment = useMutation({
@@ -33,7 +34,7 @@ export const useEquipment = (characterId: string) => {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['equipment', characterId]);
+      queryClient.invalidateQueries({ queryKey: ['equipment', characterId] });
     },
   });
 
@@ -47,8 +48,8 @@ export const useEquipment = (characterId: string) => {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['equipment', characterId]);
-      queryClient.invalidateQueries(['character', characterId]);
+      queryClient.invalidateQueries({ queryKey: ['equipment', characterId] });
+      queryClient.invalidateQueries({ queryKey: ['character', characterId] });
     },
   });
 
@@ -61,8 +62,8 @@ export const useEquipment = (characterId: string) => {
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['equipment', characterId]);
-      queryClient.invalidateQueries(['character', characterId]);
+      queryClient.invalidateQueries({ queryKey: ['equipment', characterId] });
+      queryClient.invalidateQueries({ queryKey: ['character', characterId] });
     },
   });
 
@@ -80,5 +81,3 @@ export const useEquipment = (characterId: string) => {
     canAttune,
   };
 };
-
-

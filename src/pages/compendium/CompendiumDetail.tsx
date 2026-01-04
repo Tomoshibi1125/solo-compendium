@@ -84,29 +84,32 @@ const CompendiumDetail = () => {
   const renderDetail = () => {
     if (!entry || !type) return null;
 
+    // Cast entry to any to avoid strict type checking for dynamic data
+    const data = entry as Record<string, unknown>;
+
     switch (type) {
       case 'jobs':
-        return <JobDetail data={entry} />;
+        return <JobDetail data={data as any} />;
       case 'paths':
-        return <PathDetail data={entry} />;
+        return <PathDetail data={data as any} />;
       case 'powers':
-        return <PowerDetail data={entry} />;
+        return <PowerDetail data={data as any} />;
       case 'relics':
-        return <RelicDetail data={entry} />;
+        return <RelicDetail data={data as any} />;
       case 'monsters':
-        return <MonsterDetail data={entry} />;
+        return <MonsterDetail data={data as any} />;
       case 'backgrounds':
-        return <BackgroundDetail data={entry} />;
+        return <BackgroundDetail data={data as any} />;
       case 'conditions':
-        return <ConditionDetail data={entry} />;
+        return <ConditionDetail data={data as any} />;
       case 'monarchs':
-        return <MonarchDetail data={entry} />;
+        return <MonarchDetail data={data as any} />;
       case 'feats':
-        return <FeatDetail data={entry} />;
+        return <FeatDetail data={data as any} />;
       case 'skills':
-        return <SkillDetail data={entry} />;
+        return <SkillDetail data={data as any} />;
       case 'equipment':
-        return <EquipmentDetail data={entry} />;
+        return <EquipmentDetail data={data as any} />;
       default:
         return <div>Unknown entry type</div>;
     }
