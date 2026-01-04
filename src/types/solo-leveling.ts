@@ -180,7 +180,7 @@ export interface MonsterAction {
 export interface Character {
   id: string;
   name: string;
-  player?: string;
+  // Note: player field removed - characters belong to authenticated users via user_id
   level: number;
   job: string;
   path?: string;
