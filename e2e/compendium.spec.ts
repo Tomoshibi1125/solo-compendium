@@ -3,8 +3,8 @@ import { test, expect, type Page } from '@playwright/test';
 // Helper function to check if error boundary is shown
 async function checkForErrorBoundary(page: Page): Promise<boolean> {
   try {
-    const errorHeading = page.getByRole('heading', { name: /something went wrong/i });
-    const errorText = page.getByText(/an unexpected error occurred/i);
+    const errorHeading = page.getByRole('heading', { name: /system error|something went wrong/i });
+    const errorText = page.getByText(/system has encountered|an unexpected error occurred|shadow monarch/i);
     const errorWindow = page.locator('[class*="SystemWindow"]').filter({ hasText: /ERROR/i });
     
     // Check if any error indicator is visible
