@@ -40,6 +40,12 @@ export const useCampaignMessagesRealtime = (
   onNewMessage: (message: CampaignMessage) => void
 ) => {
   const channelRef = useRef<RealtimeChannel | null>(null);
+  const onNewMessageRef = useRef(onNewMessage);
+
+  // Keep callback ref up to date
+  useEffect(() => {
+    onNewMessageRef.current = onNewMessage;
+  }, [onNewMessage]);
 
   useEffect(() => {
     if (!campaignId) return;
@@ -55,23 +61,20 @@ export const useCampaignMessagesRealtime = (
           filter: `campaign_id=eq.${campaignId}`,
         },
         (payload) => {
-          onNewMessage(payload.new as CampaignMessage);
+          onNewMessageRef.current(payload.new as CampaignMessage);
         }
       )
-      .subscribe((status) => {
-        if (status === 'SUBSCRIBED') {
-          console.log('Subscribed to campaign messages');
-        }
-      });
+      .subscribe();
 
     channelRef.current = channel;
 
     return () => {
       if (channelRef.current) {
         supabase.removeChannel(channelRef.current);
+        channelRef.current = null;
       }
     };
-  }, [campaignId, onNewMessage]);
+  }, [campaignId]); // Removed onNewMessage from deps to prevent re-subscription
 };
 
 // Send message mutation

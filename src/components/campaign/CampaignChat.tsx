@@ -32,15 +32,21 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
     });
   }, []);
 
-  // Real-time updates
-  useCampaignMessagesRealtime(campaignId, (newMessage) => {
-    queryClient.setQueryData(['campaigns', campaignId, 'messages'], (old: CampaignMessage[] | undefined) => {
-      if (!old) return [newMessage];
-      // Check if message already exists
-      if (old.some(m => m.id === newMessage.id)) return old;
-      return [...old, newMessage];
-    });
-  });
+  // Real-time updates handler
+  const handleNewMessage = useRef<(message: CampaignMessage) => void>(() => {});
+
+  useEffect(() => {
+    handleNewMessage.current = (newMessage: CampaignMessage) => {
+      queryClient.setQueryData(['campaigns', campaignId, 'messages'], (old: CampaignMessage[] | undefined) => {
+        if (!old) return [newMessage];
+        // Check if message already exists
+        if (old.some(m => m.id === newMessage.id)) return old;
+        return [...old, newMessage];
+      });
+    };
+  }, [campaignId, queryClient]);
+
+  useCampaignMessagesRealtime(campaignId, (msg) => handleNewMessage.current(msg));
 
   // Auto-scroll to bottom
   useEffect(() => {

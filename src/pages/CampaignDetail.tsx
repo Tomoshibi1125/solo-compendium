@@ -48,7 +48,7 @@ const CampaignDetail = () => {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [id, queryClient]);
+  }, [id, queryClient]);  
 
   const handleCopyShareLink = () => {
     if (!campaign) return;
