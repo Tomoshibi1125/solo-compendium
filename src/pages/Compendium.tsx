@@ -26,7 +26,7 @@ import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Pagination } from '@/components/ui/Pagination';
+import { Pagination } from '@/components/ui/pagination';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
@@ -43,7 +43,7 @@ import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { useToast } from '@/hooks/use-toast';
 import { useToastAction } from '@/hooks/useToastAction';
 import { AnimatedList } from '@/components/ui/AnimatedList';
-import { TooltipProvider, TooltipRoot, TooltipTrigger, TooltipContent } from '@/components/ui/Tooltip';
+import { TooltipProvider, TooltipRoot, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 
 interface CompendiumEntry {
   id: string;
