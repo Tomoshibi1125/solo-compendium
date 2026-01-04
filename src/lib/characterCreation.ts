@@ -106,18 +106,16 @@ export async function addBackgroundFeatures(
     }
   }
 
-  // Add background features if any
-  if (background.features && background.features.length > 0) {
-    for (const featureName of background.features) {
-      await supabase.from('character_features').insert({
-        character_id: characterId,
-        name: featureName,
-        source: `Background: ${background.name}`,
-        level_acquired: 1,
-        description: `Background feature: ${featureName}`,
-        is_active: true,
-      });
-    }
+  // Add background feature if any
+  if (background.feature_name) {
+    await supabase.from('character_features').insert({
+      character_id: characterId,
+      name: background.feature_name,
+      source: `Background: ${background.name}`,
+      level_acquired: 1,
+      description: background.feature_description || `Background feature: ${background.feature_name}`,
+      is_active: true,
+    });
   }
 }
 
