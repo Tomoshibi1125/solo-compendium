@@ -169,54 +169,5 @@ export const useDeleteCharacter = () => {
   });
 };
 
-// Calculate derived stats (using characterCalculations instead)
-// This function is kept for backwards compatibility but should use calculateCharacterStats from lib/characterCalculations
-export const calculateDerivedStats = (character: CharacterWithAbilities) => {
-  const level = character.level;
-  // Import from characterCalculations or use inline
-  const proficiencyBonus = Math.ceil(level / 4) + 1;
-  const systemFavorDie = level <= 4 ? 4 : level <= 10 ? 6 : level <= 16 ? 8 : 10;
-
-  // Calculate ability modifiers
-  const getAbilityModifier = (score: number) => Math.floor((score - 10) / 2);
-  const abilityModifiers: Record<AbilityScore, number> = {
-    STR: getAbilityModifier(character.abilities.STR),
-    AGI: getAbilityModifier(character.abilities.AGI),
-    VIT: getAbilityModifier(character.abilities.VIT),
-    INT: getAbilityModifier(character.abilities.INT),
-    SENSE: getAbilityModifier(character.abilities.SENSE),
-    PRE: getAbilityModifier(character.abilities.PRE),
-  };
-
-  // Calculate saving throws
-  const savingThrows: Record<AbilityScore, number> = {
-    STR: abilityModifiers.STR + (character.saving_throw_proficiencies?.includes('STR') ? proficiencyBonus : 0),
-    AGI: abilityModifiers.AGI + (character.saving_throw_proficiencies?.includes('AGI') ? proficiencyBonus : 0),
-    VIT: abilityModifiers.VIT + (character.saving_throw_proficiencies?.includes('VIT') ? proficiencyBonus : 0),
-    INT: abilityModifiers.INT + (character.saving_throw_proficiencies?.includes('INT') ? proficiencyBonus : 0),
-    SENSE: abilityModifiers.SENSE + (character.saving_throw_proficiencies?.includes('SENSE') ? proficiencyBonus : 0),
-    PRE: abilityModifiers.PRE + (character.saving_throw_proficiencies?.includes('PRE') ? proficiencyBonus : 0),
-  };
-
-  // Calculate skills (simplified - would need skill definitions)
-  const skills: Record<string, number> = {};
-  // This would be expanded based on skill definitions
-
-  // Calculate initiative (AGI modifier)
-  const initiative = abilityModifiers.AGI;
-
-  // AC calculation (base 10 + AGI mod, can be modified by armor)
-  const baseAC = 10 + abilityModifiers.AGI;
-  // Armor would modify this, but for now use stored AC
-
-  return {
-    proficiencyBonus,
-    systemFavorDie,
-    abilityModifiers,
-    savingThrows,
-    skills,
-    initiative,
-    baseAC,
-  };
-};
+// Note: calculateDerivedStats was removed - use calculateCharacterStats from lib/characterCalculations instead
 

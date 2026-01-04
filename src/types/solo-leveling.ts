@@ -239,9 +239,7 @@ export function getAbilityModifier(score: number): number {
   return Math.floor((score - 10) / 2);
 }
 
-export function formatModifier(modifier: number): string {
-  return modifier >= 0 ? `+${modifier}` : `${modifier}`;
-}
+// formatModifier moved to lib/characterCalculations.ts to avoid duplication
 
 export function getProficiencyBonus(level: number): number {
   return Math.ceil(level / 4) + 1;
