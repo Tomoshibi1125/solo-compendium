@@ -8,7 +8,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Crown, Swords, Shield, Zap, Sparkles, RefreshCw, Dna, Atom, Flame, Link2, CircleDot } from 'lucide-react';
+import { Crown, Swords, Shield, Zap, Sparkles, RefreshCw, Dna, Atom, Flame, Link2, CircleDot, Save, Loader2 } from 'lucide-react';
+import { useSaveSovereign } from '@/hooks/useSavedSovereigns';
 
 const fusionTypeIcons = {
   potara: <CircleDot className="h-4 w-4 text-yellow-500" />,
@@ -30,6 +31,8 @@ export function GeminiProtocolGenerator() {
   const [selectedMonarchA, setSelectedMonarchA] = useState<string>('');
   const [selectedMonarchB, setSelectedMonarchB] = useState<string>('');
   const [generatedSovereign, setGeneratedSovereign] = useState<GeneratedSovereign | null>(null);
+  
+  const saveSovereign = useSaveSovereign();
 
   // Fetch all jobs
   const { data: jobs = [] } = useQuery({
@@ -252,9 +255,24 @@ export function GeminiProtocolGenerator() {
         <Card className="border-primary/50">
           <CardHeader className="bg-primary/5">
             <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <Crown className="h-6 w-6 text-primary" />
-                <CardTitle className="text-xl">{generatedSovereign.name}</CardTitle>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Crown className="h-6 w-6 text-primary" />
+                  <CardTitle className="text-xl">{generatedSovereign.name}</CardTitle>
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => saveSovereign.mutate(generatedSovereign)}
+                  disabled={saveSovereign.isPending}
+                >
+                  {saveSovereign.isPending ? (
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  ) : (
+                    <Save className="h-4 w-4 mr-2" />
+                  )}
+                  Save to Archive
+                </Button>
               </div>
               <p className="text-lg text-muted-foreground italic">{generatedSovereign.title}</p>
               

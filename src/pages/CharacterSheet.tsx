@@ -33,6 +33,8 @@ import { ActionsList } from '@/components/character/ActionsList';
 import { FeaturesList } from '@/components/character/FeaturesList';
 import { ExportDialog } from '@/components/character/ExportDialog';
 import { PortraitUpload } from '@/components/character/PortraitUpload';
+import { MonarchUnlocksPanel } from '@/components/character/MonarchUnlocksPanel';
+import { ShadowSoldiersPanel } from '@/components/character/ShadowSoldiersPanel';
 import { ABILITY_NAMES, type AbilityScore } from '@/types/solo-leveling';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
@@ -571,6 +573,12 @@ const CharacterSheet = () => {
 
             {/* Powers */}
             <PowersList characterId={character.id} />
+
+            {/* Monarch Unlocks */}
+            <MonarchUnlocksPanel characterId={character.id} />
+
+            {/* Shadow Soldiers */}
+            <ShadowSoldiersPanel characterId={character.id} characterLevel={character.level} />
 
             {/* Portrait Upload */}
             <SystemWindow title="PORTRAIT">
