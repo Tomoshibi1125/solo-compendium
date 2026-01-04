@@ -154,6 +154,30 @@ export function downloadFile(content: string, filename: string, mimeType: string
 }
 
 /**
+ * Download character as JSON
+ */
+export async function downloadCharacterJSON(character: Character): Promise<void> {
+  const json = await exportCharacter(character.id, {
+    includeEquipment: true,
+    includeFeatures: true,
+    includePowers: true,
+    includeNotes: true,
+  });
+  downloadFile(json, `${character.name.replace(/[^a-z0-9]/gi, '_')}_character.json`, 'application/json');
+}
+
+/**
+ * Export character as PDF (using markdown for now, can be enhanced with PDF library)
+ */
+export function exportCharacterPDF(character: Character): void {
+  const markdown = exportCharacterToMarkdown(character);
+  downloadFile(markdown, `${character.name.replace(/[^a-z0-9]/gi, '_')}_character.md`, 'text/markdown');
+  
+  // For actual PDF, you would use a library like jsPDF or pdfkit
+  // For now, we export as markdown which can be converted to PDF
+}
+
+/**
  * Print character sheet
  */
 export function printCharacterSheet(characterId: string): void {
