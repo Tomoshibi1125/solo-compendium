@@ -16,8 +16,12 @@
    Or connect your GitHub repo at [vercel.com](https://vercel.com)
 
 3. **Set Environment Variables** in Vercel Dashboard:
-   - `VITE_SUPABASE_URL`
-   - `VITE_SUPABASE_PUBLISHABLE_KEY`
+   - Go to: Project Settings → Environment Variables
+   - Add the following variables (get values from your local `.env` file or Supabase dashboard):
+     - `VITE_SUPABASE_URL` (your Supabase project URL)
+     - `VITE_SUPABASE_PUBLISHABLE_KEY` (your Supabase anon/public key)
+   - **Important**: Vercel ignores `.env` files. Variables must be set in the dashboard.
+   - After adding variables, trigger a new deployment for them to take effect.
 
 4. **Done!** Your app will be live at `your-app.vercel.app`
 
