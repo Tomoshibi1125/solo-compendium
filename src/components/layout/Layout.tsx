@@ -8,6 +8,14 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen flex flex-col relative">
+      {/* Skip to main content link - Accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:font-semibold focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+      >
+        Skip to main content
+      </a>
+
       {/* Supreme Deity's Domain - Background ambient effects */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         {/* Primary shadow orbs */}
@@ -26,7 +34,7 @@ export function Layout({ children }: LayoutProps) {
       </div>
       
       <Header />
-      <main className="flex-1 pt-16 relative z-10">
+      <main id="main-content" className="flex-1 pt-16 relative z-10" tabIndex={-1}>
         {children}
       </main>
       

@@ -7,8 +7,8 @@ export interface CampaignCharacterShare {
   campaign_id: string;
   character_id: string;
   shared_by: string;
-  is_visible: boolean;
-  created_at: string;
+  permissions: 'view' | 'edit';
+  shared_at: string;
   characters?: {
     id: string;
     name: string;
@@ -18,15 +18,21 @@ export interface CampaignCharacterShare {
 }
 
 // Fetch shared characters in campaign
-// Note: This hook requires the campaign_character_shares table to exist in Supabase
-// For now, we return an empty array until the table is created
 export const useCampaignSharedCharacters = (campaignId: string) => {
   return useQuery({
     queryKey: ['campaigns', campaignId, 'shared-characters'],
     queryFn: async (): Promise<CampaignCharacterShare[]> => {
-      // Campaign character sharing feature not yet implemented in database
-      // Return empty array until migration is applied
-      return [];
+      const { data, error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .from('campaign_character_shares' as any)
+        .select(`
+          *,
+          characters:character_id (id, name, level, job)
+        `)
+        .eq('campaign_id', campaignId);
+
+      if (error) throw error;
+      return (data || []) as unknown as CampaignCharacterShare[];
     },
     enabled: !!campaignId,
   });
@@ -38,23 +44,44 @@ export const useShareCharacter = () => {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ campaignId, characterId }: { campaignId: string; characterId: string }) => {
+    mutationFn: async ({ 
+      campaignId, 
+      characterId,
+      permissions = 'view'
+    }: { 
+      campaignId: string; 
+      characterId: string;
+      permissions?: 'view' | 'edit';
+    }) => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      // Campaign character sharing feature not yet implemented
-      throw new Error('Campaign character sharing is not yet available');
+      const { data, error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .from('campaign_character_shares' as any)
+        .insert({
+          campaign_id: campaignId,
+          character_id: characterId,
+          shared_by: user.id,
+          permissions,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any)
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data as unknown as CampaignCharacterShare;
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['campaigns', variables.campaignId, 'shared-characters'] });
       toast({
-        title: 'Character shared',
-        description: 'Your character is now visible to campaign members.',
+        title: 'Hunter shared',
+        description: 'Your hunter is now visible to campaign members.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: 'Failed to share character',
+        title: 'Failed to share hunter',
         description: error.message,
         variant: 'destructive',
       });
@@ -69,19 +96,67 @@ export const useUnshareCharacter = () => {
 
   return useMutation({
     mutationFn: async ({ campaignId, characterId }: { campaignId: string; characterId: string }) => {
-      // Campaign character sharing feature not yet implemented
-      throw new Error('Campaign character sharing is not yet available');
+      const { error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .from('campaign_character_shares' as any)
+        .delete()
+        .eq('campaign_id', campaignId)
+        .eq('character_id', characterId);
+
+      if (error) throw error;
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['campaigns', variables.campaignId, 'shared-characters'] });
       toast({
-        title: 'Character unshared',
-        description: 'Your character is no longer visible to campaign members.',
+        title: 'Hunter unshared',
+        description: 'Your hunter is no longer visible to campaign members.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: 'Failed to unshare character',
+        title: 'Failed to unshare hunter',
+        description: error.message,
+        variant: 'destructive',
+      });
+    },
+  });
+};
+
+// Update share permissions
+export const useUpdateSharePermissions = () => {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: async ({ 
+      shareId, 
+      campaignId,
+      permissions 
+    }: { 
+      shareId: string; 
+      campaignId: string;
+      permissions: 'view' | 'edit';
+    }) => {
+      const { data, error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .from('campaign_character_shares' as any)
+        .update({ permissions })
+        .eq('id', shareId)
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data as unknown as CampaignCharacterShare;
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['campaigns', variables.campaignId, 'shared-characters'] });
+      toast({
+        title: 'Permissions updated',
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: 'Failed to update permissions',
         description: error.message,
         variant: 'destructive',
       });

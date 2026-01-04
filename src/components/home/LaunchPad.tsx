@@ -19,6 +19,7 @@ import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
 import { GatePortal } from '@/components/ui/GatePortal';
 import { SystemInterface } from '@/components/ui/SystemInterface';
 import { HunterBadge } from '@/components/ui/HunterBadge';
+import { CompendiumQuickStats } from '@/components/compendium/CompendiumQuickStats';
 import { useCharacters } from '@/hooks/useCharacters';
 import { useMyCampaigns, useJoinedCampaigns } from '@/hooks/useCampaigns';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -291,6 +292,14 @@ export function LaunchPad() {
               </div>
             </SystemWindow>
           </div>
+        </div>
+
+        {/* Compendium Quick Stats */}
+        <div className="mt-12 mb-8">
+          <h2 className="font-heading text-lg font-semibold text-muted-foreground mb-4">
+            📚 Compendium Overview
+          </h2>
+          <CompendiumQuickStats />
         </div>
 
         {/* Additional Quick Links */}
