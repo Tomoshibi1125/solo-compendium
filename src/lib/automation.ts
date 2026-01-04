@@ -39,13 +39,15 @@ export async function autoCalculateCharacterStats(characterId: string): Promise<
   updates.system_favor_max = getSystemFavorMax(character.level);
 
   // Auto-calculate shadow energy max (if applicable)
-  if (character.shadow_energy_max !== null && character.shadow_energy_max !== undefined) {
-    const shadowEnergyMax = calculateShadowEnergyMax(character.level);
-    if (character.shadow_energy_max !== shadowEnergyMax) {
-      updates.shadow_energy_max = shadowEnergyMax;
+  const shadowEnergyMax = (character as Character & { shadow_energy_max?: number | null }).shadow_energy_max;
+  if (shadowEnergyMax !== null && shadowEnergyMax !== undefined) {
+    const calculatedMax = calculateShadowEnergyMax(character.level);
+    if (shadowEnergyMax !== calculatedMax) {
+      (updates as Partial<Character & { shadow_energy_max?: number; shadow_energy_current?: number }>).shadow_energy_max = calculatedMax;
       // If current is higher than new max, cap it
-      if ((character.shadow_energy_current ?? 0) > shadowEnergyMax) {
-        updates.shadow_energy_current = shadowEnergyMax;
+      const shadowEnergyCurrent = (character as Character & { shadow_energy_current?: number | null }).shadow_energy_current;
+      if ((shadowEnergyCurrent ?? 0) > calculatedMax) {
+        (updates as Partial<Character & { shadow_energy_current?: number }>).shadow_energy_current = calculatedMax;
       }
     }
   }
@@ -164,9 +166,10 @@ export async function autoUpdateFeatureUses(characterId: string): Promise<void> 
   if (!features) return;
 
   for (const feature of features) {
-    if (feature.uses_formula) {
+    const usesFormula = (feature as Feature & { uses_formula?: string | null }).uses_formula;
+    if (usesFormula) {
       const newMax = calculateFeatureUses(
-        feature.uses_formula,
+        usesFormula,
         character.level,
         proficiencyBonus
       );
@@ -195,18 +198,23 @@ export async function autoApplyEquipmentModifiers(characterId: string): Promise<
 
 /**
  * Auto-save character data with debouncing
+ * Uses a Map to track timeouts per character to avoid conflicts
  */
-let saveTimeout: NodeJS.Timeout | null = null;
+const saveTimeouts = new Map<string, NodeJS.Timeout>();
+
 export function autoSaveCharacter(
   characterId: string,
   updates: Partial<Character>,
   delay: number = 1000
 ): void {
-  if (saveTimeout) {
-    clearTimeout(saveTimeout);
+  // Clear existing timeout for this character
+  const existingTimeout = saveTimeouts.get(characterId);
+  if (existingTimeout) {
+    clearTimeout(existingTimeout);
   }
 
-  saveTimeout = setTimeout(async () => {
+  // Set new timeout for this character
+  const timeout = setTimeout(async () => {
     try {
       await supabase
         .from('characters')
@@ -214,8 +222,24 @@ export function autoSaveCharacter(
         .eq('id', characterId);
     } catch (error) {
       console.error('Auto-save failed:', error);
+    } finally {
+      // Clean up timeout from map
+      saveTimeouts.delete(characterId);
     }
   }, delay);
+
+  saveTimeouts.set(characterId, timeout);
+}
+
+/**
+ * Cancel auto-save for a specific character
+ */
+export function cancelAutoSave(characterId: string): void {
+  const timeout = saveTimeouts.get(characterId);
+  if (timeout) {
+    clearTimeout(timeout);
+    saveTimeouts.delete(characterId);
+  }
 }
 
 /**

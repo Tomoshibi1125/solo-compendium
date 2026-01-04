@@ -522,6 +522,105 @@
 .animate-arise-delay-2 { animation: shadow-arise 1s ease-out 0.2s forwards; opacity: 0; }
 .animate-arise-delay-3 { animation: shadow-arise 1s ease-out 0.3s forwards; opacity: 0; }
 
+/* ARISE Animation Container and Elements */
+.arise-animation-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes arise-text {
+  0% { 
+    opacity: 0; 
+    transform: scale(0.5) translateY(50px); 
+    filter: blur(10px); 
+  }
+  20% { 
+    opacity: 1; 
+    transform: scale(1.2) translateY(-20px); 
+    filter: blur(0px); 
+  }
+  40% { 
+    transform: scale(1) translateY(0); 
+  }
+  60% { 
+    transform: scale(1.05); 
+  }
+  80% { 
+    transform: scale(1); 
+  }
+  100% { 
+    opacity: 0; 
+    transform: scale(0.8) translateY(-50px); 
+    filter: blur(5px); 
+  }
+}
+
+.arise-text {
+  font-family: var(--font-display, 'Inter', sans-serif);
+  font-size: 8rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  background: linear-gradient(135deg, hsl(var(--shadow-blue)), hsl(var(--shadow-purple)), hsl(var(--arise-violet)));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 
+    0 0 30px hsl(var(--shadow-blue) / 0.8),
+    0 0 60px hsl(var(--shadow-purple) / 0.6),
+    0 0 90px hsl(var(--arise-violet) / 0.4);
+  animation: arise-text 3s ease-out forwards;
+  z-index: 1;
+}
+
+@keyframes arise-shadow-effect {
+  0% { 
+    opacity: 0; 
+    transform: scale(0); 
+    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); 
+  }
+  30% { 
+    opacity: 1; 
+    transform: scale(1.5); 
+    box-shadow: 
+      0 0 100px 50px hsl(var(--shadow-purple) / 0.8), 
+      0 0 200px 100px hsl(var(--shadow-blue) / 0.6), 
+      0 0 300px 150px hsl(var(--arise-violet) / 0.4); 
+  }
+  70% { 
+    transform: scale(2); 
+    box-shadow: 
+      0 0 150px 75px hsl(var(--shadow-purple) / 0.6), 
+      0 0 300px 150px hsl(var(--shadow-blue) / 0.4), 
+      0 0 450px 225px hsl(var(--arise-violet) / 0.2); 
+  }
+  100% { 
+    opacity: 0; 
+    transform: scale(3); 
+  }
+}
+
+.arise-shadow-effect {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, hsl(var(--shadow-purple) / 0.3), transparent);
+  animation: arise-shadow-effect 3s ease-out forwards;
+  z-index: 0;
+}
+
+@media (max-width: 768px) {
+  .arise-text {
+    font-size: 4rem;
+  }
+}
+
 /* Level Up Flash - System Reward */
 @keyframes level-up-flash {
   0%, 100% { background: transparent; }

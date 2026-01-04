@@ -135,11 +135,19 @@ export const ShadowSoldiersDetail = ({ data }: { data: ShadowSoldierData }) => {
   const reactions = actions.filter(a => a.action_type === 'reaction');
   const legendaryActions = actions.filter(a => a.action_type === 'legendary');
 
-  const handleAriseClick = () => {
-    setShowAriseAnimation(true);
-    setTimeout(() => {
+  // Clean up animation timeout
+  useEffect(() => {
+    if (!showAriseAnimation) return;
+    
+    const timeout = setTimeout(() => {
       setShowAriseAnimation(false);
     }, 3000);
+    
+    return () => clearTimeout(timeout);
+  }, [showAriseAnimation]);
+
+  const handleAriseClick = () => {
+    setShowAriseAnimation(true);
   };
 
   return (
