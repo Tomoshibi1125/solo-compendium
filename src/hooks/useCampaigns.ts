@@ -52,8 +52,8 @@ export const useJoinedCampaigns = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data, error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaign_members' as any)
         .select(`
           *,
@@ -76,8 +76,8 @@ export const useCampaign = (campaignId: string) => {
   return useQuery({
     queryKey: ['campaigns', campaignId],
     queryFn: async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data, error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaigns' as any)
         .select('*')
         .eq('id', campaignId)
@@ -95,8 +95,8 @@ export const useCampaignByShareCode = (shareCode: string) => {
   return useQuery({
     queryKey: ['campaigns', 'share-code', shareCode],
     queryFn: async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data, error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaigns' as any)
         .select('*')
         .eq('share_code', shareCode.toUpperCase())
@@ -115,8 +115,8 @@ export const useCampaignMembers = (campaignId: string) => {
   return useQuery({
     queryKey: ['campaigns', campaignId, 'members'],
     queryFn: async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data, error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaign_members' as any)
         .select(`
           *,
@@ -221,8 +221,8 @@ export const useLeaveCampaign = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaign_members' as any)
         .delete()
         .eq('campaign_id', campaignId)
@@ -255,8 +255,8 @@ export const useIsCampaignDM = (campaignId: string) => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return false;
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data: campaign, error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaigns' as any)
         .select('dm_id')
         .eq('id', campaignId)
@@ -278,8 +278,8 @@ export const useHasDMAccess = (campaignId: string) => {
       if (!user) return false;
 
       // Check if user is the DM
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data: campaign, error: campaignError } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaigns' as any)
         .select('dm_id')
         .eq('id', campaignId)
@@ -290,8 +290,8 @@ export const useHasDMAccess = (campaignId: string) => {
       }
 
       // Check if user is a co-DM
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data: member, error: memberError } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaign_members' as any)
         .select('role')
         .eq('campaign_id', campaignId)
@@ -317,8 +317,8 @@ export const useCampaignRole = (campaignId: string) => {
       if (!user) return null;
 
       // Check if user is the DM
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data: campaign, error: campaignError } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaigns' as any)
         .select('dm_id')
         .eq('id', campaignId)
@@ -329,8 +329,8 @@ export const useCampaignRole = (campaignId: string) => {
       }
 
       // Check member role
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data: member, error: memberError } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaign_members' as any)
         .select('role')
         .eq('campaign_id', campaignId)
