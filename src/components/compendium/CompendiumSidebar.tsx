@@ -28,6 +28,10 @@ interface CompendiumSidebarProps {
   showFavoritesOnly: boolean;
   onToggleFavorites: () => void;
   favoriteCount: number;
+  showBossOnly?: boolean;
+  onToggleBossOnly?: () => void;
+  showMiniBossOnly?: boolean;
+  onToggleMiniBossOnly?: () => void;
 }
 
 export function CompendiumSidebar({
@@ -46,12 +50,18 @@ export function CompendiumSidebar({
   showFavoritesOnly,
   onToggleFavorites,
   favoriteCount,
+  showBossOnly = false,
+  onToggleBossOnly,
+  showMiniBossOnly = false,
+  onToggleMiniBossOnly,
 }: CompendiumSidebarProps) {
   const activeFiltersCount = 
     selectedSourceBooks.length + 
     (selectedSchools?.length || 0) + 
     (selectedGateRanks?.length || 0) + 
-    (showFavoritesOnly ? 1 : 0);
+    (showFavoritesOnly ? 1 : 0) +
+    (showBossOnly ? 1 : 0) +
+    (showMiniBossOnly ? 1 : 0);
 
   return (
     <aside className="w-64 shrink-0 space-y-4">
@@ -138,7 +148,7 @@ export function CompendiumSidebar({
         </SystemWindow>
       )}
 
-      {/* Spell Schools (for Powers) */}
+      {/* Power Schools (for Powers) */}
       {schools.length > 0 && onSchoolToggle && (
         <SystemWindow title="SPELL SCHOOLS" className="p-4">
           <ScrollArea className="h-[200px]">
@@ -192,6 +202,48 @@ export function CompendiumSidebar({
                 </div>
               );
             })}
+          </div>
+        </SystemWindow>
+      )}
+
+      {/* Boss Filters (for Monsters) */}
+      {(onToggleBossOnly || onToggleMiniBossOnly) && (
+        <SystemWindow title="BOSS FILTERS" className="p-4">
+          <div className="space-y-2">
+            {onToggleBossOnly && (
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="boss-only"
+                  checked={showBossOnly}
+                  onChange={onToggleBossOnly}
+                  className="rounded border-border"
+                />
+                <label
+                  htmlFor="boss-only"
+                  className="text-sm cursor-pointer flex-1"
+                >
+                  Boss Only
+                </label>
+              </div>
+            )}
+            {onToggleMiniBossOnly && (
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="miniboss-only"
+                  checked={showMiniBossOnly}
+                  onChange={onToggleMiniBossOnly}
+                  className="rounded border-border"
+                />
+                <label
+                  htmlFor="miniboss-only"
+                  className="text-sm cursor-pointer flex-1"
+                >
+                  Mini-Boss Only
+                </label>
+              </div>
+            )}
           </div>
         </SystemWindow>
       )}

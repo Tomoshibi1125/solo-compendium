@@ -49,7 +49,7 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 
   return (
     <>
-      <SystemWindow title="SHARED CHARACTERS" className="h-[400px] flex flex-col">
+      <SystemWindow title="SHARED HUNTERS" className="h-[400px] flex flex-col">
         <div className="flex justify-between items-center mb-4">
           <p className="text-sm text-muted-foreground">
             Characters visible to all campaign members
@@ -113,15 +113,15 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
       <Dialog open={shareDialogOpen} onOpenChange={setShareDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Share Character</DialogTitle>
+            <DialogTitle>Share Hunter</DialogTitle>
             <DialogDescription>
-              Select a character to share with all campaign members. They'll be able to view the character sheet.
+              Select a Hunter to share with all campaign members. They'll be able to view the Hunter's sheet.
             </DialogDescription>
           </DialogHeader>
           <div className="py-4">
             <Select value={selectedCharacter} onValueChange={setSelectedCharacter}>
               <SelectTrigger>
-                <SelectValue placeholder="Select a character" />
+                <SelectValue placeholder="Select a Hunter" />
               </SelectTrigger>
               <SelectContent>
                 {availableCharacters.map((char) => (

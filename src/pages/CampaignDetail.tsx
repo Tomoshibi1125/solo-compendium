@@ -57,7 +57,7 @@ const CampaignDetail = () => {
     navigator.clipboard.writeText(shareUrl);
     toast({
       title: 'Share link copied!',
-      description: 'Players can use this link to join your campaign.',
+      description: 'Hunters can use this link to join your campaign.',
     });
   };
 
@@ -177,7 +177,7 @@ const CampaignDetail = () => {
                         Copy Share Link
                       </Button>
                       <div className="pt-4 border-t border-border">
-                        <p className="text-xs text-muted-foreground mb-2">Share this link with players:</p>
+                        <p className="text-xs text-muted-foreground mb-2">Share this link with Hunters:</p>
                         <p className="text-sm font-mono bg-muted p-2 rounded break-all">
                           {window.location.origin}/campaigns/join/{campaign.share_code}
                         </p>
@@ -223,7 +223,7 @@ const CampaignDetail = () => {
                             )}
                             <div>
                               <p className="font-heading font-semibold">
-                                {member.characters?.name || 'No character linked'}
+                                {member.characters?.name || 'No Hunter linked'}
                               </p>
                               {member.characters && (
                                 <p className="text-xs text-muted-foreground">
@@ -233,7 +233,7 @@ const CampaignDetail = () => {
                             </div>
                           </div>
                           <span className="text-xs font-display text-muted-foreground">
-                            {isDM ? 'DM' : member.role === 'co-dm' ? 'Co-DM' : 'Player'}
+                            {isDM ? 'DM' : member.role === 'co-dm' ? 'Co-DM' : 'Hunter'}
                           </span>
                         </div>
                       );

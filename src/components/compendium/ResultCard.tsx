@@ -85,13 +85,30 @@ export function ResultCard({
         <p className="text-sm text-muted-foreground line-clamp-2">
           {highlightText(entry.description, searchQuery)}
         </p>
-        <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
-          {entry.cr && (
-            <span>CR {entry.cr}</span>
+        <div className="flex items-center gap-2 mt-2 flex-wrap">
+          {entry.is_boss && (
+            <Badge variant="destructive" className="text-xs">Boss</Badge>
           )}
-          {entry.school && (
-            <span>• {entry.school}</span>
+          {entry.tags?.includes('mini-boss') && (
+            <Badge variant="outline" className="text-xs border-orange-500/50 text-orange-400">Mini-Boss</Badge>
           )}
+          {entry.tags?.includes('named-npc') && (
+            <Badge variant="outline" className="text-xs border-purple-500/50 text-purple-400">Named NPC</Badge>
+          )}
+          {entry.tags?.includes('named-boss') && (
+            <Badge variant="outline" className="text-xs border-amber-500/50 text-amber-400">Named Boss</Badge>
+          )}
+          {entry.tags?.includes('monarch') && (
+            <Badge variant="outline" className="text-xs border-red-500/50 text-red-400">Monarch</Badge>
+          )}
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            {entry.cr && (
+              <span>CR {entry.cr}</span>
+            )}
+            {entry.school && (
+              <span>• {entry.school}</span>
+            )}
+          </div>
         </div>
       </Link>
     );

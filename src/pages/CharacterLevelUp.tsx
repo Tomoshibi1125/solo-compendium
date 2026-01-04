@@ -260,7 +260,7 @@ const CharacterLevelUp = () => {
 
       navigate(`/characters/${character.id}`);
     } catch (error) {
-      console.error('Error leveling up:', error);
+      // Error is handled by React Query's error state
       toast({
         title: 'Failed to level up',
         description: 'Could not complete level up. Please try again.',

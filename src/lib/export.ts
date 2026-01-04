@@ -81,7 +81,7 @@ export function generateCharacterSheetHTML(character: CharacterWithAbilities): s
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>${character.name} - Character Sheet</title>
+  <title>${character.name} - Hunter Sheet</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

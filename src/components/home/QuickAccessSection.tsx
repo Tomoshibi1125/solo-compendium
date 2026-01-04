@@ -53,7 +53,7 @@ const compendiumCategories = [
   },
   {
     name: 'Gates',
-    description: 'Dungeon types and generation',
+    description: 'Gate types and generation',
     icon: Flame,
     href: '/compendium/gates',
     color: 'from-orange-500/20 to-orange-600/10 border-orange-500/30 hover:border-orange-400/50',

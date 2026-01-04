@@ -5,6 +5,8 @@ import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import { usePowers } from '@/hooks/usePowers';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';

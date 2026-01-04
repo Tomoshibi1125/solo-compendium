@@ -52,7 +52,7 @@ export const useJoinedCampaigns = () => {
       if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from('campaign_members')
+        .from('campaign_members' as any)
         .select(`
           *,
           campaigns (*)
@@ -61,7 +61,7 @@ export const useJoinedCampaigns = () => {
         .order('joined_at', { ascending: false });
 
       if (error) throw error;
-      return (data || []).map((member: { campaigns: Campaign; role: string }) => ({
+      return ((data || []) as Array<{ campaigns: Campaign; role: string }>).map((member) => ({
         ...member.campaigns,
         member_role: member.role,
       })) as (Campaign & { member_role: string })[];
@@ -75,13 +75,13 @@ export const useCampaign = (campaignId: string) => {
     queryKey: ['campaigns', campaignId],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('campaigns')
+        .from('campaigns' as any)
         .select('*')
         .eq('id', campaignId)
         .single();
 
       if (error) throw error;
-      return data as Campaign;
+      return (data || null) as Campaign;
     },
     enabled: !!campaignId,
   });
@@ -93,14 +93,14 @@ export const useCampaignByShareCode = (shareCode: string) => {
     queryKey: ['campaigns', 'share-code', shareCode],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('campaigns')
+        .from('campaigns' as any)
         .select('*')
         .eq('share_code', shareCode.toUpperCase())
         .eq('is_active', true)
         .single();
 
       if (error) throw error;
-      return data as Campaign;
+      return (data || null) as Campaign;
     },
     enabled: !!shareCode && shareCode.length === 6,
   });
@@ -112,7 +112,7 @@ export const useCampaignMembers = (campaignId: string) => {
     queryKey: ['campaigns', campaignId, 'members'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('campaign_members')
+        .from('campaign_members' as any)
         .select(`
           *,
           characters (id, name, level, job)
@@ -138,14 +138,14 @@ export const useCreateCampaign = () => {
       if (!user) throw new Error('Not authenticated');
 
       // Call the database function to create campaign with share code
-      const { data, error } = await supabase.rpc('create_campaign_with_code', {
+      const { data, error } = await supabase.rpc('create_campaign_with_code' as any, {
         p_name: name,
         p_description: description || null,
         p_dm_id: user.id,
       });
 
       if (error) {
-        console.error('RPC error:', error);
+        // Error is handled by React Query's error state
         throw error;
       }
       return data as string; // Returns campaign ID
@@ -178,13 +178,13 @@ export const useJoinCampaign = () => {
       if (!user) throw new Error('Not authenticated');
 
       const { error } = await supabase
-        .from('campaign_members')
+        .from('campaign_members' as any)
         .insert({
           campaign_id: campaignId,
           user_id: user.id,
           character_id: characterId || null,
           role: 'player',
-        });
+        } as any);
 
       if (error) throw error;
     },
@@ -216,7 +216,7 @@ export const useLeaveCampaign = () => {
       if (!user) throw new Error('Not authenticated');
 
       const { error } = await supabase
-        .from('campaign_members')
+        .from('campaign_members' as any)
         .delete()
         .eq('campaign_id', campaignId)
         .eq('user_id', user.id);
@@ -249,13 +249,13 @@ export const useIsCampaignDM = (campaignId: string) => {
       if (!user) return false;
 
       const { data: campaign, error } = await supabase
-        .from('campaigns')
+        .from('campaigns' as any)
         .select('dm_id')
         .eq('id', campaignId)
         .single();
 
       if (error || !campaign) return false;
-      return campaign.dm_id === user.id;
+      return (campaign as { dm_id: string }).dm_id === user.id;
     },
     enabled: !!campaignId,
   });
@@ -271,24 +271,24 @@ export const useHasDMAccess = (campaignId: string) => {
 
       // Check if user is the DM
       const { data: campaign, error: campaignError } = await supabase
-        .from('campaigns')
+        .from('campaigns' as any)
         .select('dm_id')
         .eq('id', campaignId)
         .single();
 
-      if (!campaignError && campaign && campaign.dm_id === user.id) {
+      if (!campaignError && campaign && (campaign as { dm_id: string }).dm_id === user.id) {
         return true;
       }
 
       // Check if user is a co-DM
       const { data: member, error: memberError } = await supabase
-        .from('campaign_members')
+        .from('campaign_members' as any)
         .select('role')
         .eq('campaign_id', campaignId)
         .eq('user_id', user.id)
         .single();
 
-      if (!memberError && member && member.role === 'co-dm') {
+      if (!memberError && member && (member as { role: string }).role === 'co-dm') {
         return true;
       }
 
@@ -308,25 +308,25 @@ export const useCampaignRole = (campaignId: string) => {
 
       // Check if user is the DM
       const { data: campaign, error: campaignError } = await supabase
-        .from('campaigns')
+        .from('campaigns' as any)
         .select('dm_id')
         .eq('id', campaignId)
         .single();
 
-      if (!campaignError && campaign && campaign.dm_id === user.id) {
+      if (!campaignError && campaign && (campaign as { dm_id: string }).dm_id === user.id) {
         return 'dm';
       }
 
       // Check member role
       const { data: member, error: memberError } = await supabase
-        .from('campaign_members')
+        .from('campaign_members' as any)
         .select('role')
         .eq('campaign_id', campaignId)
         .eq('user_id', user.id)
         .single();
 
       if (!memberError && member) {
-        return member.role === 'co-dm' ? 'co-dm' : 'player';
+        return (member as { role: string }).role === 'co-dm' ? 'co-dm' : 'player';
       }
 
       return null;

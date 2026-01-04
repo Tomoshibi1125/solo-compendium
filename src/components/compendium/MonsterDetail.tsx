@@ -125,6 +125,10 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
               </Badge>
             )}
             {data.is_boss && <Badge variant="destructive">Boss</Badge>}
+            {data.tags?.includes('named-npc') && <Badge variant="outline" className="border-purple-500/50 text-purple-400">Named NPC</Badge>}
+            {data.tags?.includes('named-boss') && <Badge variant="outline" className="border-amber-500/50 text-amber-400">Named Boss</Badge>}
+            {data.tags?.includes('monarch') && <Badge variant="outline" className="border-red-500/50 text-red-400">Monarch</Badge>}
+            {data.tags?.includes('guild-master') && <Badge variant="outline" className="border-blue-500/50 text-blue-400">Guild Master</Badge>}
           </div>
           {data.lore && (
             <p className="text-muted-foreground italic border-l-2 border-primary/30 pl-4 mt-4">

@@ -59,7 +59,7 @@ const CampaignJoin = () => {
           JOIN CAMPAIGN
         </h1>
         <p className="text-muted-foreground font-heading mb-8">
-          Enter the share code provided by your DM to join their campaign
+          Enter the share code provided by your Shadow Monarch (DM) to join their campaign
         </p>
 
         {/* Share Code Input */}
@@ -77,7 +77,7 @@ const CampaignJoin = () => {
                   maxLength={6}
                 />
                 <p className="text-xs text-muted-foreground mt-2">
-                  Enter the 6-character code your DM provided
+                  Enter the 6-character code your Shadow Monarch (DM) provided
                 </p>
               </div>
               <Button type="submit" className="w-full" disabled={shareCode.length !== 6}>
@@ -117,17 +117,17 @@ const CampaignJoin = () => {
 
         {/* Character Selection */}
         {campaign && characters.length > 0 && (
-          <SystemWindow title="SELECT CHARACTER (OPTIONAL)" className="mb-6">
+          <SystemWindow title="SELECT HUNTER (OPTIONAL)" className="mb-6">
             <div className="space-y-4">
               <p className="text-sm text-muted-foreground">
                 Optionally link one of your Hunters to this campaign. You can change this later.
               </p>
               <Select value={selectedCharacter} onValueChange={setSelectedCharacter}>
                 <SelectTrigger>
-                  <SelectValue placeholder="No character linked" />
+                  <SelectValue placeholder="No Hunter linked" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">No character linked</SelectItem>
+                  <SelectItem value="">No Hunter linked</SelectItem>
                   {characters.map((char) => (
                     <SelectItem key={char.id} value={char.id}>
                       {char.name} - Level {char.level} {char.job}

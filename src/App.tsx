@@ -17,6 +17,11 @@ const CharacterNew = lazy(() => import("./pages/CharacterNew"));
 const CharacterLevelUp = lazy(() => import("./pages/CharacterLevelUp"));
 const Admin = lazy(() => import("./pages/Admin"));
 const DMTools = lazy(() => import("./pages/DMTools"));
+const EncounterBuilder = lazy(() => import("./pages/dm-tools/EncounterBuilder"));
+const InitiativeTracker = lazy(() => import("./pages/dm-tools/InitiativeTracker"));
+const RollableTables = lazy(() => import("./pages/dm-tools/RollableTables"));
+const GateGenerator = lazy(() => import("./pages/dm-tools/GateGenerator"));
+const NPCGenerator = lazy(() => import("./pages/dm-tools/NPCGenerator"));
 const DiceRoller = lazy(() => import("./pages/DiceRoller"));
 const Campaigns = lazy(() => import("./pages/Campaigns"));
 const CampaignDetail = lazy(() => import("./pages/CampaignDetail"));
@@ -108,10 +113,50 @@ const App = () => (
             }
           />
           <Route
-            path="/dm-tools/*"
+            path="/dm-tools"
             element={
               <Suspense fallback={<PageLoader />}>
                 <DMTools />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/dm-tools/encounter-builder"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <EncounterBuilder />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/dm-tools/initiative-tracker"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <InitiativeTracker />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/dm-tools/rollable-tables"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <RollableTables />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/dm-tools/gate-generator"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <GateGenerator />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/dm-tools/npc-generator"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <NPCGenerator />
               </Suspense>
             }
           />

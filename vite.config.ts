@@ -33,5 +33,12 @@ export default defineConfig(({ mode }) => ({
       },
     },
     chunkSizeWarningLimit: 1000,
+    // Optimize for production
+    minify: 'esbuild',
+    sourcemap: false,
+    // Tree shaking optimization
+    treeshake: {
+      moduleSideEffects: false,
+    },
   },
 }));

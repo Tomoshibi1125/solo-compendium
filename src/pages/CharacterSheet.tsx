@@ -26,6 +26,7 @@ import { calculateCharacterStats, formatModifier } from '@/lib/characterCalculat
 import { applyEquipmentModifiers } from '@/lib/equipmentModifiers';
 import { getAllSkills, calculateSkillModifier, calculatePassiveSkill } from '@/lib/skills';
 import { EquipmentList } from '@/components/character/EquipmentList';
+import { CurrencyManager } from '@/components/character/CurrencyManager';
 import { PowersList } from '@/components/character/PowersList';
 import { ActionsList } from '@/components/character/ActionsList';
 import { FeaturesList } from '@/components/character/FeaturesList';
@@ -50,6 +51,7 @@ const CharacterSheet = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   const { data: character, isLoading } = useCharacter(id || '');
   const updateCharacter = useUpdateCharacter();
   const { equipment } = useEquipment(id || '');
@@ -73,9 +75,9 @@ const CharacterSheet = () => {
     return (
       <Layout>
         <div className="container mx-auto px-4 py-8">
-          <SystemWindow title="CHARACTER NOT FOUND" className="max-w-lg mx-auto">
-            <p className="text-muted-foreground mb-4">The character you're looking for doesn't exist or you don't have access to it.</p>
-            <Button onClick={() => navigate('/characters')}>Back to Characters</Button>
+          <SystemWindow title="HUNTER NOT FOUND" className="max-w-lg mx-auto">
+            <p className="text-muted-foreground mb-4">The Hunter you're looking for doesn't exist or you don't have access to it.</p>
+            <Button onClick={() => navigate('/characters')}>Back to Hunters</Button>
           </SystemWindow>
         </div>
       </Layout>
@@ -142,11 +144,9 @@ const CharacterSheet = () => {
       const { executeShortRest } = await import('@/lib/restSystem');
       await executeShortRest(character.id);
 
-      // Refresh character data
-      await updateCharacter.mutateAsync({
-        id: character.id,
-        data: { updated_at: new Date().toISOString() },
-      });
+      // Invalidate queries to refresh data
+      queryClient.invalidateQueries({ queryKey: ['character', character.id] });
+      queryClient.invalidateQueries({ queryKey: ['features', character.id] });
 
       toast({
         title: 'Short rest completed',
@@ -166,11 +166,9 @@ const CharacterSheet = () => {
       const { executeLongRest } = await import('@/lib/restSystem');
       await executeLongRest(character.id);
 
-      // Refresh character data
-      await updateCharacter.mutateAsync({
-        id: character.id,
-        data: { updated_at: new Date().toISOString() },
-      });
+      // Invalidate queries to refresh data
+      queryClient.invalidateQueries({ queryKey: ['character', character.id] });
+      queryClient.invalidateQueries({ queryKey: ['features', character.id] });
 
       toast({
         title: 'Long rest completed',
@@ -238,7 +236,14 @@ const CharacterSheet = () => {
             </Button>
             <Button
               variant="outline"
-              onClick={() => navigate(`/characters/${character.id}/edit`)}
+              onClick={() => {
+                // Inline edit mode - open dialog for editing character name/notes
+                // For now, just show a toast that full edit is coming
+                toast({
+                  title: 'Edit Mode',
+                  description: 'Full character editing coming soon. Use individual sections to modify equipment, powers, and features.',
+                });
+              }}
               className="gap-2"
             >
               <Edit className="w-4 h-4" />
@@ -559,6 +564,9 @@ const CharacterSheet = () => {
             {/* Equipment */}
             <EquipmentList characterId={character.id} />
 
+            {/* Currency */}
+            <CurrencyManager characterId={character.id} />
+
             {/* Powers */}
             <PowersList characterId={character.id} />
 
@@ -578,7 +586,7 @@ const CharacterSheet = () => {
             <SystemWindow title="NOTES">
               <Textarea
                 className="min-h-[100px] resize-y"
-                placeholder="Add notes about your character..."
+                placeholder="Add notes about your Hunter..."
                 value={character.notes || ''}
                 onChange={async (e) => {
                   try {

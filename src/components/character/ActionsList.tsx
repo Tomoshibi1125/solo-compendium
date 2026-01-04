@@ -8,7 +8,7 @@ import { usePowers } from '@/hooks/usePowers';
 import { useFeatures } from '@/hooks/useFeatures';
 import { useCharacter } from '@/hooks/useCharacters';
 import { getAbilityModifier, getProficiencyBonus } from '@/types/solo-leveling';
-import { parseModifiers } from '@/lib/equipmentModifiers';
+import { parseModifiers, applyEquipmentModifiers } from '@/lib/equipmentModifiers';
 import type { AbilityScore } from '@/types/solo-leveling';
 
 export function ActionsList({ characterId }: { characterId: string }) {

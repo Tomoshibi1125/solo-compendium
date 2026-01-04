@@ -12,6 +12,9 @@ import {
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
+import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
+import { GatePortal } from '@/components/ui/GatePortal';
+import { SystemInterface } from '@/components/ui/SystemInterface';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -37,7 +40,7 @@ const tools = [
     name: 'Gate Generator',
     description: 'Generate random Gates with themes, biomes, bosses, and complications.',
     icon: Flame,
-    status: 'coming-soon',
+    status: 'available',
     color: 'from-orange-500/20 to-orange-600/10 border-orange-500/30',
   },
   {
@@ -45,15 +48,15 @@ const tools = [
     name: 'NPC Generator',
     description: 'Create NPCs with mannerisms, secrets, and motivations.',
     icon: Users,
-    status: 'coming-soon',
+    status: 'available',
     color: 'from-purple-500/20 to-purple-600/10 border-purple-500/30',
   },
   {
     id: 'rollable-tables',
     name: 'Rollable Tables',
-    description: 'Access all DMG tables for hazards, complications, rewards, and more.',
+    description: 'Access all Gate Master\'s Guide tables for hazards, complications, rewards, and more.',
     icon: Dice6,
-    status: 'coming-soon',
+    status: 'available',
     color: 'from-green-500/20 to-green-600/10 border-green-500/30',
   },
   {
@@ -71,13 +74,18 @@ const DMTools = () => {
     <Layout>
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="font-display text-4xl font-bold mb-2 gradient-text-shadow">
-            SHADOW MONARCH'S DOMAIN
-          </h1>
-          <p className="text-muted-foreground font-heading">
-            Tools granted by the Supreme Deity to guide Hunters through the Gates. 
-            In this post-reset world, Jinwoo's will shapes reality itself.
-          </p>
+          <div className="flex items-center gap-4 mb-4">
+            <ShadowMonarchLogo size="md" />
+            <div>
+              <h1 className="font-display text-4xl font-bold mb-2 gradient-text-shadow">
+                SHADOW MONARCH'S DOMAIN
+              </h1>
+              <p className="text-muted-foreground font-heading">
+                Tools granted by the Supreme Deity to guide Hunters through the Gates. 
+                In this post-reset world, Jinwoo's will shapes reality itself.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Default Loop Reminder */}
@@ -119,18 +127,32 @@ const DMTools = () => {
                 tool.color
               )}
             >
+              {/* Background graphic */}
+              {tool.id === 'gate-generator' && (
+                <div className="absolute top-0 right-0 opacity-5 group-hover:opacity-10 transition-opacity">
+                  <GatePortal rank="A" className="w-32 h-32" animated={false} />
+                </div>
+              )}
+              {tool.id === 'encounter-builder' && (
+                <div className="absolute top-0 right-0 opacity-5 group-hover:opacity-10 transition-opacity">
+                  <ShadowMonarchLogo size="md" className="opacity-50" />
+                </div>
+              )}
+              
               {/* Icon */}
-              <div className="w-12 h-12 rounded-lg bg-background/50 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-lg bg-background/50 flex items-center justify-center mb-4 relative z-10">
                 <tool.icon className="w-6 h-6 text-foreground" />
               </div>
 
               {/* Content */}
-              <h3 className="font-heading text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
-                {tool.name}
-              </h3>
-              <p className="text-sm text-muted-foreground mb-4">
-                {tool.description}
-              </p>
+              <div className="relative z-10">
+                <h3 className="font-heading text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
+                  {tool.name}
+                </h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  {tool.description}
+                </p>
+              </div>
 
               {/* Status */}
               {tool.status === 'coming-soon' && (

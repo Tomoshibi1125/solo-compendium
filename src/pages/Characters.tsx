@@ -31,14 +31,14 @@ const Characters = () => {
     try {
       await deleteCharacter.mutateAsync(deleteTarget);
       toast({
-        title: 'Character deleted',
-        description: 'The character has been removed.',
+        title: 'Hunter removed',
+        description: 'The Hunter has been removed from your roster.',
       });
       setDeleteTarget(null);
     } catch (error) {
       toast({
-        title: 'Failed to delete',
-        description: 'Could not delete the character.',
+        title: 'Failed to remove',
+        description: 'Could not remove the Hunter.',
         variant: 'destructive',
       });
     }
@@ -69,9 +69,9 @@ const Characters = () => {
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
           </div>
         ) : characters.length === 0 ? (
-          <SystemWindow title="NO CHARACTERS" className="max-w-lg mx-auto text-center py-12">
+          <SystemWindow title="NO HUNTERS" className="max-w-lg mx-auto text-center py-12">
             <p className="text-muted-foreground mb-6">
-              You haven't created any characters yet. Start building your first Hunter!
+              You haven't awakened any Hunters yet. Begin your journey in the post-reset world!
             </p>
             <Link to="/characters/new">
               <Button className="gap-2 font-heading">
@@ -99,7 +99,7 @@ const Characters = () => {
                         size="icon"
                         onClick={(e) => {
                           e.preventDefault();
-                          navigate(`/characters/${character.id}/edit`);
+                          navigate(`/characters/${character.id}`);
                         }}
                       >
                         <Settings className="w-4 h-4" />

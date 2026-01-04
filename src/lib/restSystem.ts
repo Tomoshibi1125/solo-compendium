@@ -21,7 +21,7 @@ export async function executeShortRest(characterId: string): Promise<void> {
     .eq('id', characterId)
     .single();
 
-  if (!character) throw new Error('Character not found');
+  if (!character) throw new Error('Hunter not found');
 
   // Restore hit dice (up to half of max, rounded up)
   const hitDiceToRestore = Math.ceil(character.hit_dice_max / 2);
@@ -71,7 +71,7 @@ export async function executeLongRest(characterId: string): Promise<void> {
     .eq('id', characterId)
     .single();
 
-  if (!character) throw new Error('Character not found');
+  if (!character) throw new Error('Hunter not found');
 
   // Update character
   await supabase

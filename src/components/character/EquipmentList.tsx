@@ -1,14 +1,16 @@
 import { useState } from 'react';
-import { Package, Plus, Trash2, Shield, Zap, Gem, Heart, Coins } from 'lucide-react';
+import { Package, Plus, Trash2, Shield, Zap, Gem, Heart, Coins, Weight, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useEquipment } from '@/hooks/useEquipment';
+import { useCharacter } from '@/hooks/useCharacters';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { AddEquipmentDialog } from './AddEquipmentDialog';
 import { CompendiumLink } from './CompendiumLink';
+import { calculateTotalWeight, calculateEncumbrance, calculateCarryingCapacity } from '@/lib/encumbrance';
 import type { Database } from '@/integrations/supabase/types';
 
 type Equipment = Database['public']['Tables']['character_equipment']['Row'];
@@ -33,8 +35,15 @@ const ITEM_TYPE_LABELS: Record<string, string> = {
 
 export function EquipmentList({ characterId }: { characterId: string }) {
   const { equipment, removeEquipment, updateEquipment, attunedCount, canAttune } = useEquipment(characterId);
+  const { data: character } = useCharacter(characterId);
   const { toast } = useToast();
   const [addDialogOpen, setAddDialogOpen] = useState(false);
+
+  // Calculate weight and encumbrance
+  const strScore = character?.abilities?.STR || 10;
+  const totalWeight = calculateTotalWeight(equipment);
+  const carryingCapacity = calculateCarryingCapacity(strScore);
+  const encumbrance = calculateEncumbrance(totalWeight, carryingCapacity);
 
   const groupedEquipment = equipment.reduce((acc, item) => {
     const type = item.item_type || 'gear';
@@ -111,6 +120,54 @@ export function EquipmentList({ characterId }: { characterId: string }) {
   return (
     <SystemWindow title="EQUIPMENT">
       <div className="space-y-4">
+        {/* Weight & Encumbrance Display */}
+        <div className="p-3 rounded-lg border border-border bg-muted/30">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-2">
+              <Weight className="w-4 h-4 text-muted-foreground" />
+              <span className="text-xs font-display text-muted-foreground">CARRYING CAPACITY</span>
+            </div>
+            <span className={cn("text-xs font-display font-semibold", encumbrance.statusColor)}>
+              {encumbrance.statusMessage}
+            </span>
+          </div>
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              <div className="h-2 bg-muted rounded-full overflow-hidden">
+                <div
+                  className={cn(
+                    "h-full transition-all",
+                    encumbrance.status === 'unencumbered' && "bg-green-500",
+                    encumbrance.status === 'light' && "bg-blue-500",
+                    encumbrance.status === 'medium' && "bg-yellow-500",
+                    encumbrance.status === 'heavy' && "bg-orange-500",
+                    encumbrance.status === 'overloaded' && "bg-red-500"
+                  )}
+                  style={{
+                    width: `${Math.min((totalWeight / carryingCapacity) * 100, 100)}%`,
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center justify-between mt-2 text-xs">
+            <span className="text-muted-foreground">
+              {totalWeight.toFixed(1)} / {carryingCapacity} lbs
+            </span>
+            {encumbrance.status === 'overloaded' && (
+              <div className="flex items-center gap-1 text-red-400">
+                <AlertTriangle className="w-3 h-3" />
+                <span>Overloaded!</span>
+              </div>
+            )}
+          </div>
+          {encumbrance.status === 'heavy' || encumbrance.status === 'overloaded' ? (
+            <p className="text-xs text-muted-foreground mt-1">
+              Speed penalty: {encumbrance.status === 'heavy' ? '-10 ft' : '-20 ft'}
+            </p>
+          ) : null}
+        </div>
+
         <div className="flex items-center justify-between">
           <div className="text-sm text-muted-foreground">
             Attuned: {attunedCount}/3

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, BookOpen, Users, Sword, Shield, Dice6, Map, Settings, UsersRound } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
 import { cn } from '@/lib/utils';
 
 const navigation = [
@@ -24,11 +25,8 @@ export function Header() {
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 group monarch-presence">
-              <div className="relative monarch-seal">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg group-hover:shadow-[0_0_20px_hsl(var(--primary)/0.6)] transition-all duration-300 group-hover:scale-110">
-                  <Sword className="w-5 h-5 text-primary-foreground relative z-10" />
-                </div>
-                <div className="absolute -inset-1 bg-primary/20 rounded-lg blur-md opacity-0 group-hover:opacity-100 transition-opacity -z-10" />
+              <div className="relative">
+                <ShadowMonarchLogo size="sm" className="group-hover:scale-110 transition-transform duration-300" />
               </div>
               <div className="hidden sm:block">
                 <span className="font-display text-lg font-bold gradient-text-system text-glow">

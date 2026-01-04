@@ -64,6 +64,7 @@ interface CompendiumEntry {
   source_book?: string;
   source_kind?: string;
   school?: string;
+  is_boss?: boolean;
 }
 
 type SortOption = 'name-asc' | 'name-desc' | 'level-asc' | 'level-desc' | 'rarity-asc' | 'rarity-desc' | 'date-desc';
@@ -108,7 +109,7 @@ const rarityOrder: Record<string, number> = {
   'legendary': 5,
 };
 
-const spellSchools = [
+const powerSchools = [
   'Abjuration', 'Conjuration', 'Divination', 'Enchantment',
   'Evocation', 'Illusion', 'Necromancy', 'Transmutation'
 ];
@@ -130,6 +131,8 @@ const Compendium = () => {
   const [selectedSourceBooks, setSelectedSourceBooks] = useState<string[]>([]);
   const [selectedSchools, setSelectedSchools] = useState<string[]>([]);
   const [selectedGateRanks, setSelectedGateRanks] = useState<string[]>([]);
+  const [showBossOnly, setShowBossOnly] = useState(false);
+  const [showMiniBossOnly, setShowMiniBossOnly] = useState(false);
   const [minCR, setMinCR] = useState<number | ''>('');
   const [maxCR, setMaxCR] = useState<number | ''>('');
   const itemsPerPage = 24;
@@ -148,9 +151,8 @@ const Compendium = () => {
         throw new Error('Supabase configuration is missing. Please set VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY environment variables.');
       }
 
-      try {
-        // Fetch Jobs
-        if (selectedCategory === 'all' || selectedCategory === 'jobs') {
+      // Fetch Jobs
+      if (selectedCategory === 'all' || selectedCategory === 'jobs') {
           let query = supabase
             .from('compendium_jobs')
             .select('id, name, description, created_at, tags, source_book, source_kind');
@@ -334,6 +336,7 @@ const Compendium = () => {
               description: m.description || '',
               cr: m.cr,
               gate_rank: m.gate_rank,
+              is_boss: m.is_boss,
               tags: m.tags || [],
               created_at: m.created_at,
               source_book: m.source_book,
@@ -446,11 +449,7 @@ const Compendium = () => {
           }
         }
 
-        return allEntries;
-      } catch (err) {
-        console.error('Error fetching compendium data:', err);
-        throw err;
-      }
+      return allEntries;
     },
     enabled: true,
   });
@@ -478,7 +477,7 @@ const Compendium = () => {
       filtered = filtered.filter(e => e.source_book && selectedSourceBooks.includes(e.source_book));
     }
 
-    // Filter by spell schools (for powers)
+    // Filter by power schools (for powers)
     if (selectedSchools.length > 0) {
       filtered = filtered.filter(e => e.school && selectedSchools.includes(e.school));
     }
@@ -517,6 +516,17 @@ const Compendium = () => {
       });
     }
 
+    // Filter by boss/mini-boss
+    if (showBossOnly) {
+      filtered = filtered.filter(e => e.is_boss === true);
+    }
+    if (showMiniBossOnly) {
+      filtered = filtered.filter(e => e.tags?.includes('mini-boss') === true);
+    }
+
+    // Filter by named NPCs/bosses (if tag exists)
+    // Named NPCs have 'named-npc' or 'named-boss' tags
+
     // Sort
     filtered.sort((a, b) => {
       switch (sortBy) {
@@ -540,7 +550,7 @@ const Compendium = () => {
     });
 
     return filtered;
-  }, [entries, showFavoritesOnly, selectedSourceBooks, selectedSchools, selectedGateRanks, selectedRarities, minLevel, maxLevel, minCR, maxCR, sortBy]);
+  }, [entries, showFavoritesOnly, selectedSourceBooks, selectedSchools, selectedGateRanks, selectedRarities, minLevel, maxLevel, minCR, maxCR, showBossOnly, showMiniBossOnly, sortBy]);
 
   // Paginate results
   const paginatedEntries = useMemo(() => {
@@ -733,6 +743,44 @@ const Compendium = () => {
     }
   };
 
+  const handleExport = () => {
+    const dataStr = JSON.stringify(filteredAndSortedEntries, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `compendium-export-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    toast({
+      title: 'Export complete',
+      description: `Exported ${filteredAndSortedEntries.length} entries.`,
+    });
+  };
+
+  const handleShare = () => {
+    const params = new URLSearchParams();
+    if (selectedCategory !== 'all') params.set('category', selectedCategory);
+    if (searchQuery) params.set('search', searchQuery);
+    if (showFavoritesOnly) params.set('favorites', 'true');
+    if (selectedSourceBooks.length > 0) params.set('sources', selectedSourceBooks.join(','));
+    const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+    navigator.clipboard.writeText(url).then(() => {
+      toast({
+        title: 'Link copied',
+        description: 'Shareable link copied to clipboard.',
+      });
+    }).catch(() => {
+      toast({
+        title: 'Failed to copy',
+        description: 'Could not copy link to clipboard.',
+        variant: 'destructive',
+      });
+    });
+  };
+
   // Highlight search terms in text (sanitized)
   const highlightText = (text: string, query: string) => {
     if (!query.trim()) return text;
@@ -852,6 +900,10 @@ const Compendium = () => {
             showFavoritesOnly={showFavoritesOnly}
             onToggleFavorites={() => setShowFavoritesOnly(!showFavoritesOnly)}
             favoriteCount={favoriteCount}
+            showBossOnly={showBossOnly}
+            onToggleBossOnly={() => setShowBossOnly(!showBossOnly)}
+            showMiniBossOnly={showMiniBossOnly}
+            onToggleMiniBossOnly={() => setShowMiniBossOnly(!showMiniBossOnly)}
           />
 
           {/* Results Grid */}

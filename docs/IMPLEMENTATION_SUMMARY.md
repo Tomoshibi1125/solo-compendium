@@ -125,9 +125,13 @@
 | Action Cards | ✅ | ✅ | Complete |
 | Attack Calculations | ✅ | ✅ | Complete |
 | Roll Integration | ✅ | ✅ | Complete (via navigation) |
-| Character Export | ✅ | ❌ | Not implemented |
-| Portrait Upload | ✅ | ❌ | Not implemented |
-| Campaign Management | ✅ | ❌ | Out of scope |
+| Character Export | ✅ | ✅ | Complete (PDF/JSON) |
+| Portrait Upload | ✅ | ✅ | Complete (Supabase Storage) |
+| Campaign Management | ✅ | ✅ | Complete (with DM tools) |
+| Weight/Encumbrance | ✅ | ⚠️ | Partial (DB field exists, no UI) |
+| Currency Management | ✅ | ⚠️ | Partial (type exists, basic UI) |
+| Character Sharing Links | ✅ | ❌ | Not implemented |
+| Print-Friendly View | ✅ | ❌ | Not implemented |
 
 ---
 

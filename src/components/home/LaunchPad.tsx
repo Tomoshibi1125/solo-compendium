@@ -13,6 +13,10 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
+import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
+import { GatePortal } from '@/components/ui/GatePortal';
+import { SystemInterface } from '@/components/ui/SystemInterface';
+import { HunterBadge } from '@/components/ui/HunterBadge';
 import { useCharacters } from '@/hooks/useCharacters';
 import { useMyCampaigns, useJoinedCampaigns } from '@/hooks/useCampaigns';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -32,7 +36,7 @@ export function LaunchPad() {
       {/* Background effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse-glow" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/5 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: '1s' }} />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/5 rounded-full blur-3xl animate-pulse-glow-delay-1s" />
       </div>
 
       <div className="container mx-auto px-4 py-12 relative z-10">
@@ -46,6 +50,12 @@ export function LaunchPad() {
               </div>
             </SystemWindow>
           </div>
+          
+          {/* Shadow Monarch Logo */}
+          <div className="flex justify-center mb-6">
+            <ShadowMonarchLogo size="lg" className="drop-shadow-2xl" />
+          </div>
+          
           <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
             <span className="gradient-text-shadow text-glow-purple">LAUNCH PAD</span>
           </h1>
@@ -69,6 +79,7 @@ export function LaunchPad() {
             description="Browse knowledge"
             href="/compendium"
             variant="default"
+            graphic={<GatePortal rank="C" className="w-16 h-16 opacity-60" />}
           />
           <QuickActionCard
             icon={Crown}
@@ -107,15 +118,13 @@ export function LaunchPad() {
                       <div className="flex items-center justify-between">
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2">
-                            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                              <Sword className="w-5 h-5 text-primary" />
-                            </div>
+                            <HunterBadge rank="C" size="sm" />
                             <div>
                               <h3 className="font-heading font-semibold group-hover:text-primary transition-colors">
                                 {character.name}
                               </h3>
                               <p className="text-sm text-muted-foreground">
-                                {character.job_name || 'Unknown Job'} • Level {character.level}
+                                {character.job || 'Unknown Job'} • Level {character.level}
                               </p>
                             </div>
                           </div>
@@ -133,7 +142,9 @@ export function LaunchPad() {
                 </div>
               ) : (
                 <div className="text-center py-12">
-                  <Sword className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
+                  <div className="flex justify-center mb-4">
+                    <HunterBadge rank="E" size="md" className="opacity-50" />
+                  </div>
                   <p className="text-muted-foreground font-heading mb-4">
                     No Hunters yet. Create your first one!
                   </p>
@@ -339,18 +350,26 @@ interface QuickActionCardProps {
   description: string;
   href: string;
   variant?: 'primary' | 'default';
+  graphic?: React.ReactNode;
 }
 
-function QuickActionCard({ icon: Icon, title, description, href, variant = 'default' }: QuickActionCardProps) {
+function QuickActionCard({ icon: Icon, title, description, href, variant = 'default', graphic }: QuickActionCardProps) {
   return (
-          <Link
-            to={href}
-            className={cn(
-              "glass-card card-shadow-energy p-6 hover:border-primary/30 transition-all group",
-              variant === 'primary' && "border-primary/20 bg-primary/5 shadow-monarch-glow"
-            )}
-          >
-      <div className="flex items-start gap-4">
+    <Link
+      to={href}
+      className={cn(
+        "glass-card card-shadow-energy p-6 hover:border-primary/30 transition-all group relative overflow-hidden",
+        variant === 'primary' && "border-primary/20 bg-primary/5 shadow-monarch-glow"
+      )}
+    >
+      {/* Background graphic */}
+      {graphic && (
+        <div className="absolute top-0 right-0 opacity-10 group-hover:opacity-20 transition-opacity">
+          {graphic}
+        </div>
+      )}
+      
+      <div className="flex items-start gap-4 relative z-10">
         <div className={cn(
           "w-12 h-12 rounded-lg flex items-center justify-center transition-colors",
           variant === 'primary' 

@@ -239,7 +239,7 @@ const CharacterNew = () => {
 
       navigate(`/characters/${character.id}`);
     } catch (error) {
-      console.error('Error creating character:', error);
+      // Error is handled by React Query's error state
       toast({
         title: 'Awakening Failed',
         description: 'The System could not awaken your Hunter. Please try again.',
@@ -334,7 +334,7 @@ const CharacterNew = () => {
                   id="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Enter character name"
+                  placeholder="Enter Hunter name"
                   className="mt-1"
                 />
               </div>
@@ -354,7 +354,7 @@ const CharacterNew = () => {
                   id="backstory"
                   value={backstory}
                   onChange={(e) => setBackstory(e.target.value)}
-                  placeholder="Character background and history"
+                  placeholder="Hunter background and history in the post-reset world"
                   className="mt-1"
                 />
               </div>

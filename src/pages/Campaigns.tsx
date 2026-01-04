@@ -69,7 +69,7 @@ const Campaigns = () => {
     navigator.clipboard.writeText(shareUrl);
     toast({
       title: 'Share link copied!',
-      description: 'Players can use this link to join your campaign.',
+      description: 'Hunters can use this link to join your campaign.',
     });
   };
 
@@ -155,7 +155,7 @@ const Campaigns = () => {
           )}
         </div>
 
-        {/* Joined Campaigns (Player) */}
+        {/* Joined Campaigns (Hunter) */}
         <div>
           <h2 className="font-display text-2xl font-bold mb-4 gradient-text-system flex items-center gap-2">
             <Users className="w-5 h-5" />
@@ -168,7 +168,7 @@ const Campaigns = () => {
           ) : joinedCampaigns.length === 0 ? (
             <SystemWindow title="NO JOINED CAMPAIGNS" className="text-center py-8">
               <p className="text-muted-foreground mb-4">
-                You haven't joined any campaigns yet. Ask your DM for a share code or link.
+                You haven't joined any campaigns yet. Ask your Shadow Monarch (DM) for a share code or link.
               </p>
               <Link to="/campaigns/join">
                 <Button>
@@ -188,7 +188,7 @@ const Campaigns = () => {
                     <div className="flex items-center justify-between p-2 bg-muted/50 rounded">
                       <span className="text-xs font-display text-muted-foreground">ROLE</span>
                       <span className="font-heading font-semibold text-accent">
-                        {campaign.member_role === 'co-dm' ? 'Co-DM' : 'Player'}
+                        {campaign.member_role === 'co-dm' ? 'Co-DM' : 'Hunter'}
                       </span>
                     </div>
                     <div className="flex gap-2">
@@ -221,7 +221,7 @@ const Campaigns = () => {
             <DialogHeader>
               <DialogTitle>Create New Campaign</DialogTitle>
               <DialogDescription>
-                Create a campaign and share the code with your players. They can join from anywhere.
+                Create a campaign and share the code with your Hunters. They can join from anywhere.
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4 py-4">

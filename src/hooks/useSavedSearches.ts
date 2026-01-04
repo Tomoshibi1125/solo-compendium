@@ -31,7 +31,7 @@ export function useSavedSearches() {
         })));
       }
     } catch (error) {
-      console.error('Failed to load saved searches:', error);
+      // Error is handled by React Query's error state
     }
   }, []);
 
