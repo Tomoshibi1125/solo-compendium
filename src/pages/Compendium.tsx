@@ -48,7 +48,7 @@ import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/comp
 interface CompendiumEntry {
   id: string;
   name: string;
-  type: 'jobs' | 'paths' | 'powers' | 'relics' | 'monsters' | 'backgrounds' | 'conditions' | 'monarchs' | 'feats' | 'skills' | 'equipment';
+  type: 'jobs' | 'paths' | 'powers' | 'relics' | 'monsters' | 'backgrounds' | 'conditions' | 'monarchs' | 'feats' | 'skills' | 'equipment' | 'sovereigns';
   rarity?: string;
   description: string;
   level?: number;
@@ -74,6 +74,7 @@ const categories = [
   { id: 'jobs', name: 'Jobs', icon: Swords },
   { id: 'paths', name: 'Paths', icon: GitBranch },
   { id: 'monarchs', name: 'Monarchs', icon: Crown },
+  { id: 'sovereigns', name: 'Sovereigns', icon: Sparkles },
   { id: 'powers', name: 'Powers', icon: Wand2 },
   { id: 'relics', name: 'Relics', icon: Gem },
   { id: 'feats', name: 'Feats', icon: Sparkles },
@@ -226,6 +227,34 @@ const Compendium = () => {
               created_at: m.created_at,
               source_book: m.source_book,
               isFavorite: favorites.has(`monarchs:${m.id}`) || false,
+            })));
+          }
+        }
+
+        // Fetch Sovereigns
+        if (selectedCategory === 'all' || selectedCategory === 'sovereigns') {
+          let query = supabase
+            .from('compendium_sovereigns')
+            .select('id, name, description, unlock_level, prerequisites, created_at, tags, source_book');
+          
+          if (debouncedSearchQuery.trim()) {
+            query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
+          }
+          
+          const { data: sovereigns } = await query;
+          if (sovereigns) {
+            allEntries.push(...sovereigns.map(s => ({
+              id: s.id,
+              name: s.name,
+              type: 'sovereigns' as const,
+              description: s.description,
+              level: s.unlock_level,
+              prerequisites: s.prerequisites,
+              rarity: 'legendary',
+              tags: s.tags || [],
+              created_at: s.created_at,
+              source_book: s.source_book,
+              isFavorite: favorites.has(`sovereigns:${s.id}`) || false,
             })));
           }
         }
