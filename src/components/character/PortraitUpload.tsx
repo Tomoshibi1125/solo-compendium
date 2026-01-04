@@ -93,7 +93,7 @@ export function PortraitUpload({
 
       onUploadComplete?.(publicUrl);
     } catch (error) {
-      console.error('Upload error:', error);
+      // Error is handled by toast notification
       toast({
         title: 'Upload failed',
         description: 'Could not upload portrait. Please try again.',
@@ -132,7 +132,7 @@ export function PortraitUpload({
 
       onUploadComplete?.('');
     } catch (error) {
-      console.error('Remove error:', error);
+      // Error is handled by toast notification
       toast({
         title: 'Remove failed',
         description: 'Could not remove portrait.',

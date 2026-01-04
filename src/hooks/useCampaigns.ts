@@ -39,7 +39,7 @@ export const useMyCampaigns = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      return (data || []) as Campaign[];
+      return (data || []) as unknown as Campaign[];
     },
   });
 };
@@ -63,7 +63,7 @@ export const useJoinedCampaigns = () => {
         .order('joined_at', { ascending: false });
 
       if (error) throw error;
-      return ((data || []) as Array<{ campaigns: Campaign; role: string }>).map((member) => ({
+      return ((data || []) as unknown as Array<{ campaigns: Campaign; role: string }>).map((member) => ({
         ...member.campaigns,
         member_role: member.role,
       })) as (Campaign & { member_role: string })[];
@@ -84,7 +84,7 @@ export const useCampaign = (campaignId: string) => {
         .single();
 
       if (error) throw error;
-      return (data || null) as Campaign;
+      return (data || null) as unknown as Campaign;
     },
     enabled: !!campaignId,
   });
@@ -104,7 +104,7 @@ export const useCampaignByShareCode = (shareCode: string) => {
         .single();
 
       if (error) throw error;
-      return (data || null) as Campaign;
+      return (data || null) as unknown as Campaign;
     },
     enabled: !!shareCode && shareCode.length === 6,
   });
@@ -126,7 +126,7 @@ export const useCampaignMembers = (campaignId: string) => {
         .order('joined_at', { ascending: true });
 
       if (error) throw error;
-      return (data || []) as (CampaignMember & { characters: { id: string; name: string; level: number; job: string } | null })[];
+      return (data || []) as unknown as (CampaignMember & { characters: { id: string; name: string; level: number; job: string } | null })[];
     },
     enabled: !!campaignId,
   });
@@ -144,7 +144,7 @@ export const useCreateCampaign = () => {
 
       // Call the database function to create campaign with share code
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data, error } = await supabase.rpc('create_campaign_with_code' as any, {
+      const { data, error } = await (supabase.rpc as any)('create_campaign_with_code', {
         p_name: name,
         p_description: description || null,
         p_dm_id: user.id,
@@ -265,7 +265,7 @@ export const useIsCampaignDM = (campaignId: string) => {
         .single();
 
       if (error || !campaign) return false;
-      return (campaign as { dm_id: string }).dm_id === user.id;
+      return ((campaign as unknown) as { dm_id: string }).dm_id === user.id;
     },
     enabled: !!campaignId,
   });
@@ -287,7 +287,7 @@ export const useHasDMAccess = (campaignId: string) => {
         .eq('id', campaignId)
         .single();
 
-      if (!campaignError && campaign && (campaign as { dm_id: string }).dm_id === user.id) {
+      if (!campaignError && campaign && ((campaign as unknown) as { dm_id: string }).dm_id === user.id) {
         return true;
       }
 
@@ -300,7 +300,7 @@ export const useHasDMAccess = (campaignId: string) => {
         .eq('user_id', user.id)
         .single();
 
-      if (!memberError && member && (member as { role: string }).role === 'co-system') {
+      if (!memberError && member && ((member as unknown) as { role: string }).role === 'co-system') {
         return true;
       }
 
@@ -326,7 +326,7 @@ export const useCampaignRole = (campaignId: string) => {
         .eq('id', campaignId)
         .single();
 
-      if (!campaignError && campaign && (campaign as { dm_id: string }).dm_id === user.id) {
+      if (!campaignError && campaign && ((campaign as unknown) as { dm_id: string }).dm_id === user.id) {
         return 'system';
       }
 
@@ -340,7 +340,7 @@ export const useCampaignRole = (campaignId: string) => {
         .single();
 
       if (!memberError && member) {
-        return (member as { role: string }).role === 'co-system' ? 'co-system' : 'hunter';
+        return (((member as unknown) as { role: string }).role === 'co-system' ? 'co-system' : 'hunter');
       }
 
       return null;

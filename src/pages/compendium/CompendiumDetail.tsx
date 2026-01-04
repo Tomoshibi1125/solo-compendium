@@ -69,7 +69,7 @@ const CompendiumDetail = () => {
           setEntry(data);
         }
       } catch (err) {
-        console.error('Error fetching entry:', err);
+        // Error is handled by React Query's error state
         setError('Failed to load entry');
       } finally {
         setLoading(false);
