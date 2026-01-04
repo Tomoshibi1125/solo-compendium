@@ -9,7 +9,9 @@ import {
   UserPlus,
   Dice1,
   Settings,
-  Sparkles
+  Sparkles,
+  Zap,
+  Skull
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
@@ -33,42 +35,49 @@ export function LaunchPad() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5">
-      {/* Background effects */}
+      {/* Supreme Deity's Domain - Background effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse-glow" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/5 rounded-full blur-3xl animate-pulse-glow-delay-1s" />
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-gradient-radial from-shadow-blue/8 via-shadow-purple/4 to-transparent rounded-full blur-3xl animate-pulse-glow" />
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-gradient-radial from-arise-violet/6 via-shadow-purple/3 to-transparent rounded-full blur-3xl animate-pulse-glow-delay-1s" />
+        
+        {/* Subtle grid overlay - System interface */}
+        <div className="absolute inset-0 opacity-[0.015]" style={{
+          backgroundImage: `linear-gradient(hsl(var(--shadow-blue)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--shadow-blue)) 1px, transparent 1px)`,
+          backgroundSize: '60px 60px'
+        }} />
       </div>
 
       <div className="container mx-auto px-4 py-12 relative z-10">
-        {/* Header */}
+        {/* Header - Shadow Monarch's Domain */}
         <div className="text-center mb-12 animate-slide-up">
           <div className="inline-block mb-6">
-            <SystemWindow variant="quest" className="px-6 py-2">
-              <div className="flex items-center gap-2 text-accent font-heading">
-                <Sparkles className="w-4 h-4" />
-                <span className="text-sm">Shadow Monarch's Domain</span>
+            <SystemWindow variant="arise" className="px-6 py-2" animated>
+              <div className="flex items-center gap-2 font-heading">
+                <Skull className="w-4 h-4 text-arise-violet" />
+                <span className="text-sm gradient-text-arise font-semibold tracking-wide">Shadow Monarch's Domain</span>
+                <Sparkles className="w-4 h-4 text-shadow-purple" />
               </div>
             </SystemWindow>
           </div>
           
-          {/* Shadow Monarch Logo */}
+          {/* Shadow Monarch Logo - Supreme variant */}
           <div className="flex justify-center mb-6">
-            <ShadowMonarchLogo size="lg" className="drop-shadow-2xl" />
+            <ShadowMonarchLogo size="lg" variant="supreme" className="drop-shadow-2xl" />
           </div>
           
-          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
-            <span className="gradient-text-shadow text-glow-purple">LAUNCH PAD</span>
+          <h1 className="font-arise text-4xl sm:text-5xl lg:text-6xl font-black mb-4">
+            <span className="gradient-text-arise text-glow-arise">LAUNCH PAD</span>
           </h1>
-          <p className="text-muted-foreground font-heading max-w-2xl mx-auto">
-            Your gateway to the System. Manage your Hunters, join Campaigns, and explore the Compendium.
+          <p className="text-muted-foreground font-heading max-w-2xl mx-auto leading-relaxed">
+            Your gateway to the System. Manage your <span className="text-primary">Hunters</span>, join <span className="text-shadow-purple">Campaigns</span>, and explore the <span className="text-accent">Compendium</span>.
           </p>
         </div>
 
-        {/* Quick Actions */}
+        {/* Quick Actions - The System's Commands */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
           <QuickActionCard
-            icon={Plus}
-            title="Create Hunter"
+            icon={Zap}
+            title="Awaken Hunter"
             description="Awaken a new Hunter"
             href="/characters/new"
             variant="primary"
@@ -79,7 +88,7 @@ export function LaunchPad() {
             description="Browse knowledge"
             href="/compendium"
             variant="default"
-            graphic={<GatePortal rank="C" className="w-16 h-16 opacity-60" />}
+            graphic={<GatePortal rank="S" className="w-16 h-16 opacity-60" />}
           />
           <QuickActionCard
             icon={Crown}
@@ -98,9 +107,9 @@ export function LaunchPad() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Recent Hunters */}
+          {/* Recent Hunters - Shadow Army */}
           <div className="lg:col-span-2">
-            <SystemWindow title="RECENT HUNTERS" className="h-full">
+            <SystemWindow title="SHADOW ARMY — HUNTERS" variant="monarch" className="h-full">
               {charactersLoading ? (
                 <div className="space-y-4">
                   <Skeleton className="h-20 w-full" />
@@ -109,16 +118,20 @@ export function LaunchPad() {
                 </div>
               ) : recentCharacters.length > 0 ? (
                 <div className="space-y-3">
-                  {recentCharacters.map((character) => (
+                  {recentCharacters.map((character, index) => (
                     <Link
                       key={character.id}
                       to={`/characters/${character.id}`}
-                      className="block p-4 rounded-lg border border-border bg-background/50 hover:bg-muted/50 hover:border-primary/30 transition-all group card-shadow-energy"
+                      className={cn(
+                        "block p-4 rounded-lg border border-border bg-background/50 hover:bg-muted/50 hover:border-shadow-purple/40 transition-all group card-shadow-energy",
+                        index === 0 && "animate-arise"
+                      )}
+                      style={{ animationDelay: `${index * 0.1}s` }}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2">
-                            <HunterBadge rank="C" size="sm" />
+                            <HunterBadge rank="B" size="sm" />
                             <div>
                               <h3 className="font-heading font-semibold group-hover:text-primary transition-colors">
                                 {character.name}
@@ -135,7 +148,7 @@ export function LaunchPad() {
                   ))}
                   <Link
                     to="/characters"
-                    className="block mt-4 text-center text-sm text-primary font-heading hover:underline"
+                    className="block mt-4 text-center text-sm text-primary font-heading hover:underline hover:text-shadow-purple transition-colors"
                   >
                     View all Hunters →
                   </Link>
@@ -146,12 +159,12 @@ export function LaunchPad() {
                     <HunterBadge rank="E" size="md" className="opacity-50" />
                   </div>
                   <p className="text-muted-foreground font-heading mb-4">
-                    No Hunters yet. Create your first one!
+                    No Hunters awakened yet. Create your first one!
                   </p>
                   <Link to="/characters/new">
-                    <Button size="sm">
-                      <Plus className="w-4 h-4 mr-2" />
-                      Create Hunter
+                    <Button size="sm" className="btn-shadow-monarch">
+                      <Zap className="w-4 h-4 mr-2" />
+                      Awaken Hunter
                     </Button>
                   </Link>
                 </div>
