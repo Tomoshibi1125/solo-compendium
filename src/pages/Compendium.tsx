@@ -231,14 +231,14 @@ const Compendium = () => {
           }
         }
 
-        // Fetch Sovereigns
+        // Fetch Sovereigns (Gemini Protocol fusions - no unlock level requirement)
         if (selectedCategory === 'all' || selectedCategory === 'sovereigns') {
           let query = supabase
             .from('compendium_sovereigns')
-            .select('id, name, description, unlock_level, prerequisites, created_at, tags, source_book');
+            .select('id, name, description, fusion_theme, prerequisites, created_at, tags, source_book');
           
           if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
+            query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%,fusion_theme.ilike.%${debouncedSearchQuery}%`);
           }
           
           const { data: sovereigns } = await query;
@@ -248,12 +248,11 @@ const Compendium = () => {
               name: s.name,
               type: 'sovereigns' as const,
               description: s.description,
-              level: s.unlock_level,
               prerequisites: s.prerequisites,
               rarity: 'legendary',
-              tags: s.tags || [],
+              tags: [...(s.tags || []), 'gemini-protocol'],
               created_at: s.created_at,
-              source_book: s.source_book,
+              source_book: s.source_book || 'Gemini Protocol',
               isFavorite: favorites.has(`sovereigns:${s.id}`) || false,
             })));
           }

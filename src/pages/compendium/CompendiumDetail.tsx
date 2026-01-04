@@ -16,8 +16,9 @@ import { BackgroundDetail } from '@/components/compendium/BackgroundDetail';
 import { ConditionDetail } from '@/components/compendium/ConditionDetail';
 import { MonarchDetail } from '@/components/compendium/MonarchDetail';
 import { PathDetail } from '@/components/compendium/PathDetail';
+import { SovereignDetail } from '@/components/compendium/SovereignDetail';
 
-type EntryType = 'jobs' | 'paths' | 'powers' | 'relics' | 'monsters' | 'backgrounds' | 'conditions' | 'monarchs' | 'feats' | 'skills' | 'equipment';
+type EntryType = 'jobs' | 'paths' | 'powers' | 'relics' | 'monsters' | 'backgrounds' | 'conditions' | 'monarchs' | 'feats' | 'skills' | 'equipment' | 'sovereigns';
 
 const tableMap: Record<EntryType, string> = {
   jobs: 'compendium_jobs',
@@ -31,6 +32,7 @@ const tableMap: Record<EntryType, string> = {
   feats: 'compendium_feats',
   skills: 'compendium_skills',
   equipment: 'compendium_equipment',
+  sovereigns: 'compendium_sovereigns',
 };
 
 const CompendiumDetail = () => {
@@ -110,6 +112,8 @@ const CompendiumDetail = () => {
         return <SkillDetail data={data as any} />;
       case 'equipment':
         return <EquipmentDetail data={data as any} />;
+      case 'sovereigns':
+        return <SovereignDetail data={data as any} />;
       default:
         return <div>Unknown entry type</div>;
     }
