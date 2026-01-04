@@ -18,13 +18,13 @@ import { getAbilityModifier, getProficiencyBonus, getSystemFavorDie } from '../t
 
 describe('Character Stat Calculations Automation', () => {
   it('calculates proficiency bonus correctly', () => {
-    expect(getProficiencyBonus(1)).toBe(2);
-    expect(getProficiencyBonus(4)).toBe(2);
-    expect(getProficiencyBonus(5)).toBe(3);
+    expect(getProficiencyBonus(1)).toBe(2); // Math.ceil(1/4) + 1 = 1 + 1 = 2
+    expect(getProficiencyBonus(4)).toBe(2); // Math.ceil(4/4) + 1 = 1 + 1 = 2
+    expect(getProficiencyBonus(5)).toBe(3); // Math.ceil(5/4) + 1 = 2 + 1 = 3
     expect(getProficiencyBonus(9)).toBe(4); // Math.ceil(9/4) + 1 = 3 + 1 = 4
     expect(getProficiencyBonus(13)).toBe(5); // Math.ceil(13/4) + 1 = 4 + 1 = 5
     expect(getProficiencyBonus(17)).toBe(6); // Math.ceil(17/4) + 1 = 5 + 1 = 6
-    expect(getProficiencyBonus(20)).toBe(5);
+    expect(getProficiencyBonus(20)).toBe(6); // Math.ceil(20/4) + 1 = 5 + 1 = 6
   });
 
   it('calculates ability modifiers correctly', () => {
