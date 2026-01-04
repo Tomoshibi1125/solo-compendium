@@ -89,30 +89,43 @@ const CompendiumDetail = () => {
     // Cast entry to any to avoid strict type checking for dynamic data
     const data = entry as Record<string, unknown>;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     switch (type) {
       case 'jobs':
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return <JobDetail data={data as any} />;
       case 'paths':
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return <PathDetail data={data as any} />;
       case 'powers':
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return <PowerDetail data={data as any} />;
       case 'relics':
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return <RelicDetail data={data as any} />;
       case 'monsters':
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return <MonsterDetail data={data as any} />;
       case 'backgrounds':
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return <BackgroundDetail data={data as any} />;
       case 'conditions':
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return <ConditionDetail data={data as any} />;
       case 'monarchs':
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return <MonarchDetail data={data as any} />;
       case 'feats':
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return <FeatDetail data={data as any} />;
       case 'skills':
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return <SkillDetail data={data as any} />;
       case 'equipment':
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return <EquipmentDetail data={data as any} />;
       case 'sovereigns':
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return <SovereignDetail data={data as any} />;
       default:
         return <div>Unknown entry type</div>;
