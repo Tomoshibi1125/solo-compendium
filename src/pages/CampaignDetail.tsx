@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { ArrowLeft, Users, Copy, Loader2, Crown, MessageSquare, FileText, Share2, Settings } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
