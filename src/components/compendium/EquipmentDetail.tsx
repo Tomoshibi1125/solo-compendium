@@ -1,6 +1,7 @@
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Coins, Weight, Sword, Shield } from 'lucide-react';
+import { CompendiumImage } from '@/components/compendium/CompendiumImage';
 
 interface EquipmentData {
   id: string;
@@ -14,6 +15,7 @@ interface EquipmentData {
   properties?: string[];
   armor_class?: number;
   source_book?: string;
+  image_url?: string | null;
 }
 
 const typeLabels: Record<string, string> = {
@@ -36,6 +38,20 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 
   return (
     <div className="space-y-6">
+      {/* Item Illustration */}
+      {data.image_url && (
+        <div className="w-full flex justify-center">
+          <CompendiumImage
+            src={data.image_url}
+            alt={data.name}
+            size="large"
+            aspectRatio="square"
+            className="max-w-md"
+            fallbackIcon={<Sword className="w-32 h-32 text-muted-foreground" />}
+          />
+        </div>
+      )}
+      
       {/* Header */}
       <SystemWindow title={data.name.toUpperCase()}>
         <div className="space-y-4">
@@ -44,7 +60,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
             {data.source_book && <Badge variant="outline">{data.source_book}</Badge>}
           </div>
           {data.description && (
-            <p className="text-muted-foreground">{data.description}</p>
+            <p className="text-muted-foreground leading-relaxed text-base">{data.description}</p>
           )}
         </div>
       </SystemWindow>

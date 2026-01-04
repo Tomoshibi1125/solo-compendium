@@ -160,6 +160,7 @@ const Characters = () => {
                             e.preventDefault();
                             navigate(`/characters/${character.id}`);
                           }}
+                          aria-label={`Edit ${character.name}`}
                         >
                           <Settings className="w-4 h-4" />
                         </Button>
@@ -171,6 +172,7 @@ const Characters = () => {
                             setDeleteTarget(character.id);
                           }}
                           className="text-destructive hover:text-destructive hover:bg-destructive/20"
+                          aria-label={`Delete ${character.name}`}
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>

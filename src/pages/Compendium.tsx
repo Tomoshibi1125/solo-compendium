@@ -47,6 +47,8 @@ import { useToastAction } from '@/hooks/useToastAction';
 import { AnimatedList } from '@/components/ui/AnimatedList';
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { GeminiProtocolGenerator } from '@/components/compendium/GeminiProtocolGenerator';
+import { CompendiumImage } from '@/components/compendium/CompendiumImage';
+import { Swords, Wand2, Gem, Skull, Package } from 'lucide-react';
 
 interface CompendiumEntry {
   id: string;
@@ -68,6 +70,7 @@ interface CompendiumEntry {
   source_kind?: string;
   school?: string;
   is_boss?: boolean;
+  image_url?: string | null;
 }
 
 type SortOption = 'name-asc' | 'name-desc' | 'level-asc' | 'level-desc' | 'rarity-asc' | 'rarity-desc' | 'date-desc';
@@ -163,7 +166,7 @@ const Compendium = () => {
       if (selectedCategory === 'all' || selectedCategory === 'jobs') {
           let query = supabase
             .from('compendium_jobs')
-            .select('id, name, description, created_at, tags, source_book');
+            .select('id, name, description, created_at, tags, source_book, image_url');
           
           if (debouncedSearchQuery.trim()) {
             query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
@@ -180,6 +183,7 @@ const Compendium = () => {
               tags: j.tags || [],
               created_at: j.created_at,
               source_book: j.source_book,
+              image_url: j.image_url,
               isFavorite: favorites.has(`jobs:${j.id}`) || false,
             })));
           }
@@ -297,7 +301,7 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'relics') {
           let query = supabase
             .from('compendium_relics')
-            .select('id, name, description, rarity, item_type, created_at, tags, source_book');
+            .select('id, name, description, rarity, item_type, created_at, tags, source_book, image_url');
           
           if (debouncedSearchQuery.trim()) {
             query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
@@ -314,6 +318,7 @@ const Compendium = () => {
               tags: r.tags || [],
               created_at: r.created_at,
               source_book: r.source_book,
+              image_url: r.image_url,
               isFavorite: favorites.has(`relics:${r.id}`) || false,
             })));
           }
@@ -350,7 +355,7 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'monsters') {
           let query = supabase
             .from('compendium_monsters')
-            .select('id, name, description, cr, gate_rank, is_boss, created_at, tags, source_book');
+            .select('id, name, description, cr, gate_rank, is_boss, created_at, tags, source_book, image_url');
           
           if (debouncedSearchQuery.trim()) {
             query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
@@ -369,6 +374,7 @@ const Compendium = () => {
               tags: m.tags || [],
               created_at: m.created_at,
               source_book: m.source_book,
+              image_url: m.image_url,
               isFavorite: favorites.has(`monsters:${m.id}`) || false,
             })));
           }
@@ -451,7 +457,7 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'equipment') {
           let query = supabase
             .from('compendium_equipment')
-            .select('id, name, description, equipment_type, damage, armor_class, created_at, source_book');
+            .select('id, name, description, equipment_type, damage, armor_class, created_at, source_book, image_url');
           
           if (debouncedSearchQuery.trim()) {
             query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
@@ -467,6 +473,7 @@ const Compendium = () => {
               equipment_type: e.equipment_type,
               created_at: e.created_at,
               source_book: e.source_book,
+              image_url: e.image_url,
               isFavorite: favorites.has(`equipment:${e.id}`) || false,
             })));
           }
@@ -827,7 +834,7 @@ const Compendium = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
         {/* Header */}
         <div className="mb-8">
           <h1 className="font-display text-4xl font-bold mb-2 gradient-text-system">
@@ -853,9 +860,9 @@ const Compendium = () => {
                 spellCheck="false"
               />
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap sm:flex-nowrap">
               <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
-                <SelectTrigger className="w-[180px]" aria-label="Sort by">
+                <SelectTrigger className="w-full sm:w-[180px] min-h-[44px]" aria-label="Sort by">
                   <ArrowUpDown className="w-4 h-4 mr-2" aria-hidden="true" />
                   <SelectValue />
                 </SelectTrigger>
@@ -947,7 +954,7 @@ const Compendium = () => {
                       Gemini Protocol
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                  <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto w-[calc(100%-2rem)]">
                     <GeminiProtocolGenerator />
                   </DialogContent>
                 </Dialog>
@@ -1031,6 +1038,26 @@ const Compendium = () => {
 
                     {viewMode === 'grid' ? (
                       <>
+                        <div className="mb-3">
+                          <CompendiumImage
+                            src={entry.image_url}
+                            alt={entry.name}
+                            size="thumbnail"
+                            aspectRatio="square"
+                            className="w-full"
+                            fallbackIcon={(() => {
+                              const IconMap: Record<string, typeof Swords> = {
+                                jobs: Swords,
+                                powers: Wand2,
+                                relics: Gem,
+                                monsters: Skull,
+                                equipment: Package,
+                              };
+                              const Icon = IconMap[entry.type] || Package;
+                              return <Icon className="w-8 h-8 text-muted-foreground" />;
+                            })()}
+                          />
+                        </div>
                         <div className="flex items-start justify-between mb-2">
                           <span className={cn(
                             "text-xs font-display uppercase",
@@ -1066,6 +1093,24 @@ const Compendium = () => {
                       </>
                     ) : (
                       <>
+                        <CompendiumImage
+                          src={entry.image_url}
+                          alt={entry.name}
+                          size="thumbnail"
+                          aspectRatio="square"
+                          className="flex-shrink-0"
+                          fallbackIcon={(() => {
+                            const IconMap: Record<string, typeof Swords> = {
+                              jobs: Swords,
+                              powers: Wand2,
+                              relics: Gem,
+                              monsters: Skull,
+                              equipment: Package,
+                            };
+                            const Icon = IconMap[entry.type] || Package;
+                            return <Icon className="w-8 h-8 text-muted-foreground" />;
+                          })()}
+                        />
                         <span className={cn(
                           "text-xs font-display uppercase w-24 flex-shrink-0",
                           getRarityOrRankColor(entry)
@@ -1073,10 +1118,10 @@ const Compendium = () => {
                           {getRarityOrRankLabel(entry)}
                         </span>
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-heading font-semibold group-hover:text-primary transition-colors">
+                          <h3 className="font-heading font-semibold group-hover:text-primary transition-colors leading-tight">
                             {highlightText(entry.name, searchQuery)}
                           </h3>
-                          <p className="text-sm text-muted-foreground line-clamp-1 mt-1">
+                          <p className="text-sm text-muted-foreground line-clamp-1 mt-1 leading-relaxed">
                             {highlightText(entry.description, searchQuery)}
                           </p>
                         </div>

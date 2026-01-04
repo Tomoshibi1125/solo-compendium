@@ -123,6 +123,7 @@ export function GlobalSearch({ className }: { className?: string }) {
               setQuery('');
               setIsOpen(false);
             }}
+            aria-label="Clear search"
           >
             <X className="w-3 h-3" />
           </Button>

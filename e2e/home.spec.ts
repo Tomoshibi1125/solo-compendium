@@ -20,7 +20,7 @@ test.describe('Home Page', () => {
 
   test('should navigate to characters from home', async ({ page }) => {
     await page.goto('/');
-    await page.getByRole('link', { name: /characters/i }).click();
+    await page.getByRole('link', { name: /hunters/i }).click();
     await expect(page).toHaveURL(/\/characters/);
   });
 
@@ -30,4 +30,3 @@ test.describe('Home Page', () => {
     await expect(main.first()).toBeVisible();
   });
 });
-

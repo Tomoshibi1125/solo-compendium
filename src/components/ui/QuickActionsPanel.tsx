@@ -122,6 +122,7 @@ export function QuickActionsPanel({ className, variant = 'floating' }: QuickActi
                   className="rounded-full w-14 h-14 shadow-lg hover:scale-110 transition-transform"
                   onClick={() => handleAction(action)}
                   title={action.label}
+                  aria-label={action.label}
                 >
                   <Icon className="w-6 h-6" />
                 </Button>
@@ -133,6 +134,7 @@ export function QuickActionsPanel({ className, variant = 'floating' }: QuickActi
               className="rounded-full w-14 h-14 shadow-lg hover:scale-110 transition-transform"
               onClick={() => setShowShortcuts(true)}
               title="Keyboard Shortcuts"
+              aria-label="Show keyboard shortcuts"
             >
               <HelpCircle className="w-6 h-6" />
             </Button>

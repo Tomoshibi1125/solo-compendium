@@ -787,6 +787,8 @@ export type Database = {
           description: string | null
           equipment_type: string
           id: string
+          image_generated_at: string | null
+          image_url: string | null
           name: string
           properties: string[] | null
           source_book: string | null
@@ -801,6 +803,8 @@ export type Database = {
           description?: string | null
           equipment_type: string
           id?: string
+          image_generated_at?: string | null
+          image_url?: string | null
           name: string
           properties?: string[] | null
           source_book?: string | null
@@ -815,6 +819,8 @@ export type Database = {
           description?: string | null
           equipment_type?: string
           id?: string
+          image_generated_at?: string | null
+          image_url?: string | null
           name?: string
           properties?: string[] | null
           source_book?: string | null
@@ -921,6 +927,8 @@ export type Database = {
           description: string
           flavor_text: string | null
           id: string
+          image_generated_at: string | null
+          image_url: string | null
           job_id: string
           name: string
           path_level: number
@@ -943,6 +951,8 @@ export type Database = {
           description?: string
           flavor_text?: string | null
           id?: string
+          image_generated_at?: string | null
+          image_url?: string | null
           job_id?: string
           name?: string
           path_level?: number
@@ -988,6 +998,8 @@ export type Database = {
           flavor_text?: string | null
           hit_die?: number
           id?: string
+          image_generated_at?: string | null
+          image_url?: string | null
           name: string
           primary_abilities?: Database["public"]["Enums"]["ability_score"][]
           saving_throw_proficiencies?: Database["public"]["Enums"]["ability_score"][]
@@ -1009,6 +1021,8 @@ export type Database = {
           flavor_text?: string | null
           hit_die?: number
           id?: string
+          image_generated_at?: string | null
+          image_url?: string | null
           name?: string
           primary_abilities?: Database["public"]["Enums"]["ability_score"][]
           saving_throw_proficiencies?: Database["public"]["Enums"]["ability_score"][]
@@ -1241,6 +1255,8 @@ export type Database = {
           hit_points_average: number
           hit_points_formula: string
           id: string
+          image_generated_at: string | null
+          image_url: string | null
           int: number
           is_boss: boolean
           languages: string[] | null
@@ -1280,6 +1296,8 @@ export type Database = {
           hit_points_average: number
           hit_points_formula: string
           id?: string
+          image_generated_at?: string | null
+          image_url?: string | null
           int?: number
           is_boss?: boolean
           languages?: string[] | null
@@ -1319,6 +1337,8 @@ export type Database = {
           hit_points_average?: number
           hit_points_formula?: string
           id?: string
+          image_generated_at?: string | null
+          image_url?: string | null
           int?: number
           is_boss?: boolean
           languages?: string[] | null

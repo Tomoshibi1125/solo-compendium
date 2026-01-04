@@ -4,6 +4,8 @@ import { Menu, X, BookOpen, Users, Sword, Shield, Dice6, Map, Settings, UsersRou
 import { Button } from '@/components/ui/button';
 import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
 import { GlobalSearch } from '@/components/ui/GlobalSearch';
+import { RoleBadge } from '@/components/ui/RoleBadge';
+import { useIsDM } from '@/hooks/useCampaigns';
 import { cn } from '@/lib/utils';
 
 const navigation = [
@@ -18,11 +20,12 @@ const navigation = [
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { data: isDM = false } = useIsDM();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full">
       <div className="glass-card border-t-0 rounded-t-none border-b-shadow-blue/20">
-        <nav className="container mx-auto px-4 lg:px-8">
+            <nav className="container mx-auto px-4 lg:px-8 max-w-full overflow-x-hidden">
           <div className="flex h-16 items-center justify-between">
             {/* Logo - Shadow Monarch's Seal */}
             <Link to="/" className="flex items-center gap-3 group">
@@ -81,6 +84,13 @@ export function Header() {
 
             {/* Actions */}
             <div className="flex items-center gap-3">
+              {/* Role Indicator */}
+              {isDM && (
+                <div className="hidden md:flex">
+                  <RoleBadge role="system" variant="compact" />
+                </div>
+              )}
+              
               <Link to="/characters/new">
                 <Button variant="outline" size="sm" className="hidden sm:flex gap-2 btn-shadow-monarch border-shadow-purple/40 hover:border-shadow-purple hover:bg-shadow-purple/10">
                   <Zap className="w-4 h-4" />
@@ -94,6 +104,7 @@ export function Header() {
                 size="icon"
                 className="md:hidden"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               >
                 {mobileMenuOpen ? (
                   <X className="w-5 h-5" />
@@ -111,17 +122,17 @@ export function Header() {
                 {navigation.map((item) => {
                   const isActive = location.pathname.startsWith(item.href);
                   return (
-                    <Link
-                      key={item.name}
-                      to={item.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={cn(
-                        "flex items-center gap-3 px-4 py-3 rounded-lg font-heading transition-colors",
-                        isActive
-                          ? "bg-primary/10 text-primary shadow-[inset_0_0_10px_hsl(var(--primary)/0.1)]"
-                          : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                      )}
-                    >
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={cn(
+                      "flex items-center gap-3 px-4 py-3 rounded-lg font-heading transition-colors min-h-[44px]",
+                      isActive
+                        ? "bg-primary/10 text-primary shadow-[inset_0_0_10px_hsl(var(--primary)/0.1)]"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    )}
+                  >
                       <item.icon className={cn(
                         "w-5 h-5",
                         isActive && "drop-shadow-[0_0_6px_hsl(var(--primary)/0.6)]"
@@ -130,6 +141,15 @@ export function Header() {
                     </Link>
                   );
                 })}
+                {/* Mobile Role Indicator */}
+                {isDM && (
+                  <div className="pt-2 mt-2 border-t border-shadow-blue/20 px-4 py-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-muted-foreground font-heading">YOUR ROLE</span>
+                      <RoleBadge role="system" variant="compact" />
+                    </div>
+                  </div>
+                )}
                 <div className="pt-2 mt-2 border-t border-shadow-blue/20">
                   <Link to="/characters/new" className="block">
                     <Button className="w-full gap-2 btn-shadow-monarch shadow-monarch">

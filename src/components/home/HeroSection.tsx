@@ -11,11 +11,11 @@ export function HeroSection() {
       {/* Supreme Deity's Domain - Background effects */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Primary shadow energy orbs */}
-        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-gradient-radial from-shadow-blue/15 via-shadow-purple/8 to-transparent rounded-full blur-3xl animate-pulse-glow" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-gradient-radial from-arise-violet/12 via-shadow-purple/6 to-transparent rounded-full blur-3xl animate-pulse-glow-delay-1s" />
+        <div className="absolute top-1/4 left-1/4 w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] bg-gradient-radial from-shadow-blue/15 via-shadow-purple/8 to-transparent rounded-full blur-3xl animate-pulse-glow" />
+        <div className="absolute bottom-1/4 right-1/4 w-[150px] h-[150px] sm:w-[250px] sm:h-[250px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px] bg-gradient-radial from-arise-violet/12 via-shadow-purple/6 to-transparent rounded-full blur-3xl animate-pulse-glow-delay-1s" />
         
         {/* Central divine presence */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-primary/8 via-shadow-purple/4 to-transparent rounded-full" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[600px] md:h-[600px] lg:w-[800px] lg:h-[800px] bg-gradient-radial from-primary/8 via-shadow-purple/4 to-transparent rounded-full" />
         
         {/* Subtle grid overlay - System interface */}
         <div className="absolute inset-0 opacity-[0.02]" style={{

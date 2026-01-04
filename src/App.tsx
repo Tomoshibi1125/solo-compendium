@@ -45,15 +45,6 @@ const queryClient = new QueryClient({
         return failureCount < 2;
       },
       retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
-      onError: (error) => {
-        // Log errors but don't break the app
-        console.warn('Query error:', error);
-      },
-    },
-    mutations: {
-      onError: (error) => {
-        console.warn('Mutation error:', error);
-      },
     },
   },
 });
@@ -65,10 +56,178 @@ const PageLoader = () => (
   </div>
 );
 
-const App = () => {
-  // Enable global keyboard shortcuts
+// Inner component that uses router hooks - must be inside BrowserRouter
+const AppContent = () => {
+  // Enable global keyboard shortcuts (must be inside Router context)
   useGlobalShortcuts(true);
+  
+  return (
+    <Routes>
+      <Route 
+        path="/" 
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <Index />
+          </Suspense>
+        } 
+      />
+      <Route
+        path="/compendium"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <Compendium />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/compendium/:type/:id"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <CompendiumDetail />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/characters"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <Characters />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/characters/new"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <CharacterNew />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/characters/:id"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <CharacterSheet />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/characters/:id/level-up"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <CharacterLevelUp />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/admin"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <Admin />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/dm-tools"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <DMTools />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/dm-tools/encounter-builder"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <EncounterBuilder />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/dm-tools/initiative-tracker"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <InitiativeTracker />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/dm-tools/rollable-tables"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <RollableTables />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/dm-tools/gate-generator"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <GateGenerator />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/dm-tools/npc-generator"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <NPCGenerator />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/dice"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <DiceRoller />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/campaigns"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <Campaigns />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/campaigns/join"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <CampaignJoin />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/campaigns/join/:shareCode"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <CampaignJoin />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/campaigns/:id"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <CampaignDetail />
+          </Suspense>
+        }
+      />
+      <Route
+        path="*"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <NotFound />
+          </Suspense>
+        }
+      />
+    </Routes>
+  );
+};
 
+const App = () => {
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
@@ -76,165 +235,11 @@ const App = () => {
           <Toaster />
           <Sonner />
           <BrowserRouter>
-          <Routes>
-          <Route path="/" element={<Index />} />
-          <Route
-            path="/compendium"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <Compendium />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/compendium/:type/:id"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <CompendiumDetail />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/characters"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <Characters />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/characters/new"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <CharacterNew />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/characters/:id"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <CharacterSheet />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/characters/:id/level-up"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <CharacterLevelUp />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/admin"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <Admin />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/dm-tools"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <DMTools />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/dm-tools/encounter-builder"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <EncounterBuilder />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/dm-tools/initiative-tracker"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <InitiativeTracker />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/dm-tools/rollable-tables"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <RollableTables />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/dm-tools/gate-generator"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <GateGenerator />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/dm-tools/npc-generator"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <NPCGenerator />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/dice"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <DiceRoller />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/campaigns"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <Campaigns />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/campaigns/join"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <CampaignJoin />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/campaigns/join/:shareCode"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <CampaignJoin />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/campaigns/:id"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <CampaignDetail />
-              </Suspense>
-            }
-          />
-          <Route
-            path="*"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <NotFound />
-              </Suspense>
-            }
-          />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </ErrorBoundary>
+            <AppContent />
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 };
 

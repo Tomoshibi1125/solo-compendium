@@ -5,6 +5,9 @@ import { Separator } from '@/components/ui/separator';
 import { supabase } from '@/integrations/supabase/client';
 import { Heart, Shield, Footprints, Skull, Swords, Crown, Zap, Flame } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CompendiumImage } from '@/components/compendium/CompendiumImage';
+import { StatBlock, StatRow, StatSection } from '@/components/compendium/StatBlock';
+import { TableOfContents } from '@/components/compendium/TableOfContents';
 
 interface MonsterData {
   id: string;
@@ -42,6 +45,7 @@ interface MonsterData {
   gate_rank?: string;
   is_boss: boolean;
   tags?: string[];
+  image_url?: string | null;
 }
 
 interface MonsterAction {
@@ -112,8 +116,34 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
   const gateStyle = data.gate_rank ? gateRankColors[data.gate_rank] : null;
   const isBossOrNamedNPC = data.is_boss || data.tags?.includes('named-npc') || data.tags?.includes('named-boss') || data.tags?.includes('monarch');
 
+  // Generate TOC items for long pages
+  const tocItems = [
+    { id: 'monster-header', title: data.name, level: 1 },
+    { id: 'monster-stats', title: 'Core Stats', level: 2 },
+    { id: 'monster-abilities', title: 'Ability Scores', level: 2 },
+  ];
+  
+  if (traits.length > 0) tocItems.push({ id: 'monster-traits', title: 'Traits', level: 2 });
+  if (regularActions.length > 0) tocItems.push({ id: 'monster-actions', title: 'Actions', level: 2 });
+  if (legendaryActions.length > 0) tocItems.push({ id: 'monster-legendary', title: 'Legendary Actions', level: 2 });
+  if (data.description) tocItems.push({ id: 'monster-description', title: 'Description', level: 2 });
+
   return (
     <div className="space-y-6">
+      {/* Hero Image */}
+      {data.image_url && (
+        <div className="w-full">
+          <CompendiumImage
+            src={data.image_url}
+            alt={data.name}
+            size="hero"
+            aspectRatio="landscape"
+            className="w-full rounded-lg"
+            fallbackIcon={<Skull className="w-32 h-32 text-muted-foreground" />}
+          />
+        </div>
+      )}
+      
       {/* Header */}
       <SystemWindow 
         title={data.name.toUpperCase()} 
@@ -173,7 +203,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
       </SystemWindow>
 
       {/* Core Stats */}
-      <div className="grid grid-cols-3 md:grid-cols-5 gap-4">
+      <div className="grid grid-cols-3 md:grid-cols-5 gap-4" id="monster-stats">
         <SystemWindow title="ARMOR CLASS" compact>
           <div className="flex items-center gap-2">
             <Shield className="w-5 h-5 text-blue-400" />
@@ -216,8 +246,13 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
       </div>
 
       {/* Ability Scores */}
-      <SystemWindow title="ABILITY SCORES">
-        <div className="grid grid-cols-6 gap-4 text-center">
+      <StatBlock 
+        title="ABILITY SCORES" 
+        copyable 
+        copyContent={`${data.name} - Ability Scores: STR ${data.str} (${getModifier(data.str)}), AGI ${data.agi} (${getModifier(data.agi)}), VIT ${data.vit} (${getModifier(data.vit)}), INT ${data.int} (${getModifier(data.int)}), SENSE ${data.sense} (${getModifier(data.sense)}), PRE ${data.pre} (${getModifier(data.pre)})`}
+        id="monster-abilities"
+      >
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-4 text-center">
           {[
             { name: 'STR', value: data.str },
             { name: 'AGI', value: data.agi },
@@ -227,13 +262,13 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
             { name: 'PRE', value: data.pre },
           ].map((stat) => (
             <div key={stat.name} className="glass-card p-3">
-              <div className="font-display text-xs text-muted-foreground">{stat.name}</div>
-              <div className="font-display text-xl">{stat.value}</div>
-              <div className="text-sm text-primary">{getModifier(stat.value)}</div>
+              <div className="font-display text-xs text-muted-foreground mb-1">{stat.name}</div>
+              <div className="font-display text-2xl font-bold mb-1">{stat.value}</div>
+              <div className="text-sm font-semibold text-primary">{getModifier(stat.value)}</div>
             </div>
           ))}
         </div>
-      </SystemWindow>
+      </StatBlock>
 
       {/* Defenses */}
       <div className="grid md:grid-cols-2 gap-4">
@@ -275,67 +310,69 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 
       {/* Traits */}
       {traits.length > 0 && (
-        <SystemWindow title="TRAITS">
-          <div className="space-y-4">
+        <StatBlock title="TRAITS" id="monster-traits">
+          <StatSection title="">
             {traits.map((trait) => (
-              <div key={trait.id}>
-                <h4 className="font-heading font-semibold text-primary">{trait.name}</h4>
-                <p className="text-sm text-muted-foreground">{trait.description}</p>
+              <div key={trait.id} className="mb-4 last:mb-0">
+                <h4 className="font-heading font-semibold text-primary mb-1 text-base">{trait.name}</h4>
+                <p className="text-sm text-foreground leading-relaxed">{trait.description}</p>
               </div>
             ))}
-          </div>
-        </SystemWindow>
+          </StatSection>
+        </StatBlock>
       )}
 
       {/* Actions */}
       {regularActions.length > 0 && (
-        <SystemWindow title="ACTIONS">
-          <div className="space-y-4">
+        <StatBlock title="ACTIONS" id="monster-actions">
+          <StatSection title="">
             {regularActions.map((action) => (
-              <div key={action.id}>
-                <div className="flex items-center gap-2 mb-1">
-                  <h4 className="font-heading font-semibold text-primary">{action.name}</h4>
-                  {action.recharge && <Badge variant="secondary">{action.recharge}</Badge>}
+              <div key={action.id} className="mb-4 last:mb-0 pb-4 last:pb-0 border-b border-border/30 last:border-b-0">
+                <div className="flex items-center gap-2 mb-2">
+                  <h4 className="font-heading font-semibold text-primary text-base">{action.name}</h4>
+                  {action.recharge && <Badge variant="secondary" className="text-xs">{action.recharge}</Badge>}
                 </div>
-                <p className="text-sm text-muted-foreground">{action.description}</p>
+                <p className="text-sm text-foreground leading-relaxed mb-1">{action.description}</p>
                 {action.damage && (
-                  <p className="text-sm text-foreground mt-1">
-                    <strong>Damage:</strong> {action.damage} {action.damage_type}
-                    {action.attack_bonus !== null && ` (${action.attack_bonus >= 0 ? '+' : ''}${action.attack_bonus} to hit)`}
+                  <p className="text-sm text-foreground font-medium mt-2">
+                    <span className="font-semibold">Damage:</span> {action.damage} {action.damage_type}
+                    {action.attack_bonus !== null && action.attack_bonus !== undefined && (
+                      <span className="ml-2 text-muted-foreground">({action.attack_bonus >= 0 ? '+' : ''}{action.attack_bonus} to hit)</span>
+                    )}
                   </p>
                 )}
               </div>
             ))}
-          </div>
-        </SystemWindow>
+          </StatSection>
+        </StatBlock>
       )}
 
       {/* Legendary Actions */}
       {legendaryActions.length > 0 && (
-        <SystemWindow title="LEGENDARY ACTIONS" className="border-amber-500/30">
-          <p className="text-sm text-muted-foreground mb-4">
+        <StatBlock title="LEGENDARY ACTIONS" className="border-amber-500/30 border-2" id="monster-legendary">
+          <p className="text-sm text-foreground mb-4 font-medium leading-relaxed">
             The creature can take 3 legendary actions, choosing from the options below.
           </p>
-          <div className="space-y-4">
+          <StatSection title="">
             {legendaryActions.map((action) => (
-              <div key={action.id}>
-                <div className="flex items-center gap-2 mb-1">
-                  <h4 className="font-heading font-semibold text-amber-400">{action.name}</h4>
+              <div key={action.id} className="mb-4 last:mb-0 pb-4 last:pb-0 border-b border-border/30 last:border-b-0">
+                <div className="flex items-center gap-2 mb-2">
+                  <h4 className="font-heading font-semibold text-amber-400 text-base">{action.name}</h4>
                   {action.legendary_cost && action.legendary_cost > 1 && (
-                    <Badge variant="outline">Costs {action.legendary_cost}</Badge>
+                    <Badge variant="outline" className="text-xs">Costs {action.legendary_cost}</Badge>
                   )}
                 </div>
-                <p className="text-sm text-muted-foreground">{action.description}</p>
+                <p className="text-sm text-foreground leading-relaxed">{action.description}</p>
               </div>
             ))}
-          </div>
-        </SystemWindow>
+          </StatSection>
+        </StatBlock>
       )}
 
       {data.description && (
-        <SystemWindow title="DESCRIPTION">
-          <p className="text-foreground">{data.description}</p>
-        </SystemWindow>
+        <StatBlock title="DESCRIPTION" id="monster-description">
+          <p className="text-foreground leading-relaxed text-base">{data.description}</p>
+        </StatBlock>
       )}
     </div>
   );

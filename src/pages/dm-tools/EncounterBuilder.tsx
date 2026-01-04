@@ -207,6 +207,7 @@ const EncounterBuilder = () => {
                             variant="ghost"
                             className="h-6 w-6"
                             onClick={() => updateQuantity(em.id, em.quantity - 1)}
+                            aria-label={`Decrease quantity of ${em.monster.name}`}
                           >
                             <Trash2 className="w-3 h-3" />
                           </Button>
@@ -222,6 +223,7 @@ const EncounterBuilder = () => {
                             variant="ghost"
                             className="h-6 w-6"
                             onClick={() => updateQuantity(em.id, em.quantity + 1)}
+                            aria-label={`Increase quantity of ${em.monster.name}`}
                           >
                             <Plus className="w-3 h-3" />
                           </Button>
@@ -281,6 +283,7 @@ const EncounterBuilder = () => {
                             e.stopPropagation();
                             addMonster(monster);
                           }}
+                          aria-label={`Add ${monster.name} to encounter`}
                         >
                           <Plus className="w-3 h-3" />
                         </Button>

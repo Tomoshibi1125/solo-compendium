@@ -1,6 +1,7 @@
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Gem, Sparkles, AlertTriangle, Coins } from 'lucide-react';
+import { CompendiumImage } from '@/components/compendium/CompendiumImage';
 
 interface RelicData {
   id: string;
@@ -17,6 +18,7 @@ interface RelicData {
   value_credits?: number;
   tags?: string[];
   source_book?: string;
+  image_url?: string | null;
 }
 
 const rarityColors: Record<string, string> = {
@@ -36,6 +38,20 @@ const tierColors: Record<string, string> = {
 export const RelicDetail = ({ data }: { data: RelicData }) => {
   return (
     <div className="space-y-6">
+      {/* Relic Artwork */}
+      {data.image_url && (
+        <div className="w-full flex justify-center">
+          <CompendiumImage
+            src={data.image_url}
+            alt={data.name}
+            size="large"
+            aspectRatio="square"
+            className="max-w-md"
+            fallbackIcon={<Gem className="w-32 h-32 text-muted-foreground" />}
+          />
+        </div>
+      )}
+      
       {/* Header */}
       <SystemWindow 
         title={data.name.toUpperCase()} 
@@ -96,7 +112,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 
       {/* Description */}
       <SystemWindow title="DESCRIPTION">
-        <p className="text-foreground whitespace-pre-wrap">{data.description}</p>
+        <p className="text-foreground whitespace-pre-wrap leading-relaxed text-base">{data.description}</p>
       </SystemWindow>
 
       {/* Properties */}

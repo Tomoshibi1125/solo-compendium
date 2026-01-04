@@ -1,11 +1,12 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Users, Copy, Loader2, Crown, MessageSquare, FileText, Share2, Settings, Shield } from 'lucide-react';
+import { ArrowLeft, Users, Copy, Loader2, Crown, MessageSquare, FileText, Share2, Settings } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useCampaign, useCampaignMembers, useHasDMAccess, useCampaignRole } from '@/hooks/useCampaigns';
+import { RoleBadge } from '@/components/ui/RoleBadge';
 import { useToast } from '@/hooks/use-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -104,26 +105,7 @@ const CampaignDetail = () => {
               {campaign.name.toUpperCase()}
             </h1>
             {!loadingRole && userRole && (
-              <div className="flex items-center gap-2">
-                {userRole === 'system' && (
-                  <div className="flex items-center gap-2 px-3 py-1 rounded-lg bg-primary/10 border border-primary/30">
-                    <Crown className="w-4 h-4 text-primary" />
-                    <span className="text-xs font-display text-primary font-semibold">GATE MASTER (SYSTEM)</span>
-                  </div>
-                )}
-                {userRole === 'co-system' && (
-                  <div className="flex items-center gap-2 px-3 py-1 rounded-lg bg-accent/10 border border-accent/30">
-                    <Crown className="w-4 h-4 text-accent" />
-                    <span className="text-xs font-display text-accent font-semibold">CO-SYSTEM</span>
-                  </div>
-                )}
-                {userRole === 'hunter' && (
-                  <div className="flex items-center gap-2 px-3 py-1 rounded-lg bg-muted border border-border">
-                    <Shield className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-xs font-display text-muted-foreground font-semibold">HUNTER</span>
-                  </div>
-                )}
-              </div>
+              <RoleBadge role={userRole} />
             )}
           </div>
           {campaign.description && (

@@ -218,7 +218,7 @@ const CharacterSheet = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-8 max-w-7xl">
+        <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 max-w-7xl">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <Button
@@ -308,6 +308,7 @@ const CharacterSheet = () => {
                       setHpEditValue(character.hp_current.toString());
                       setHpEditOpen(true);
                     }}
+                    aria-label="Edit hit points"
                   >
                     <Edit className="w-3 h-3" />
                   </Button>

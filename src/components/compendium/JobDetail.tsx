@@ -6,6 +6,7 @@ import { Separator } from '@/components/ui/separator';
 import { supabase } from '@/integrations/supabase/client';
 import { Swords, Shield, Heart, Zap, Wand2 } from 'lucide-react';
 import { DetailHeader } from './DetailHeader';
+import { CompendiumImage } from '@/components/compendium/CompendiumImage';
 
 interface JobData {
   id: string;
@@ -23,6 +24,7 @@ interface JobData {
   skill_choice_count: number;
   tags?: string[];
   source_book?: string;
+  image_url?: string | null;
 }
 
 interface JobFeature {
@@ -77,6 +79,20 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 
   return (
     <div className="space-y-6">
+      {/* Class Concept Art */}
+      {data.image_url && (
+        <div className="w-full flex justify-center">
+          <CompendiumImage
+            src={data.image_url}
+            alt={data.name}
+            size="hero"
+            aspectRatio="landscape"
+            className="max-w-2xl w-full rounded-lg"
+            fallbackIcon={<Swords className="w-32 h-32 text-muted-foreground" />}
+          />
+        </div>
+      )}
+      
       {/* Header */}
       <DetailHeader
         entryType="jobs"

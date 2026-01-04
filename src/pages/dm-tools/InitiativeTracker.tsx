@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Plus, Trash2, ArrowUp, ArrowDown, RotateCcw, Play, Pause } from 'lucide-react';
+import { ArrowLeft, Plus, Trash2, ArrowUp, ArrowDown, RotateCcw } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
@@ -192,6 +192,7 @@ const InitiativeTracker = () => {
                     variant="outline"
                     onClick={previousTurn}
                     disabled={sortedCombatants.length === 0}
+                    aria-label="Previous turn"
                   >
                     <ArrowUp className="w-4 h-4" />
                   </Button>
@@ -200,6 +201,7 @@ const InitiativeTracker = () => {
                     variant="outline"
                     onClick={nextTurn}
                     disabled={sortedCombatants.length === 0}
+                    aria-label="Next turn"
                   >
                     <ArrowDown className="w-4 h-4" />
                   </Button>
@@ -264,6 +266,7 @@ const InitiativeTracker = () => {
                           variant="ghost"
                           className="h-6 w-6"
                           onClick={() => removeCombatant(combatant.id)}
+                          aria-label={`Remove ${combatant.name} from initiative`}
                         >
                           <Trash2 className="w-3 h-3" />
                         </Button>

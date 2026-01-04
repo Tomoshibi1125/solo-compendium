@@ -29,7 +29,7 @@ export const useMyCampaigns = () => {
     queryKey: ['campaigns', 'my'],
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      if (!user) return []; // Return empty array if not authenticated (consistent with other hooks)
 
       const { data, error } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,6 +41,7 @@ export const useMyCampaigns = () => {
       if (error) throw error;
       return (data || []) as unknown as Campaign[];
     },
+    retry: false, // Don't retry if not authenticated
   });
 };
 
@@ -347,6 +348,28 @@ export const useCampaignRole = (campaignId: string) => {
       return null;
     },
     enabled: !!campaignId,
+  });
+};
+
+// Check if user is a DM (System/Gate Master) in any campaign
+export const useIsDM = () => {
+  return useQuery({
+    queryKey: ['user', 'is-dm'],
+    queryFn: async (): Promise<boolean> => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return false;
+
+      const { data: campaigns, error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .from('campaigns' as any)
+        .select('id')
+        .eq('dm_id', user.id)
+        .limit(1);
+
+      if (error || !campaigns || campaigns.length === 0) return false;
+      return true;
+    },
+    retry: false,
   });
 };
 

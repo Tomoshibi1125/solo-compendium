@@ -90,6 +90,7 @@ export function RecentItemsPanel({ className, maxItems = 10 }: RecentItemsPanelP
                   e.preventDefault();
                   removeRecentItem(item.id, item.type);
                 }}
+                aria-label={`Remove ${item.name} from recent items`}
               >
                 <X className="w-3 h-3" />
               </Button>

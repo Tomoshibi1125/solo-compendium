@@ -8,9 +8,10 @@ interface SystemWindowProps {
   variant?: 'default' | 'alert' | 'quest' | 'monarch' | 'arise';
   compact?: boolean;
   animated?: boolean;
+  id?: string;
 }
 
-export function SystemWindow({ children, title, className, variant = 'default', compact = false, animated = false }: SystemWindowProps) {
+export function SystemWindow({ children, title, className, variant = 'default', compact = false, animated = false, id }: SystemWindowProps) {
   const variantStyles = {
     default: 'border-primary/30 from-primary/8 via-card to-void-black/80',
     alert: 'border-destructive/30 from-destructive/8 via-card to-void-black/80',
@@ -29,10 +30,12 @@ export function SystemWindow({ children, title, className, variant = 'default', 
 
   return (
     <div
+      id={id}
       className={cn(
-        "relative bg-gradient-to-br border rounded-lg backdrop-blur-xl overflow-hidden transition-all duration-300",
+        "relative bg-gradient-to-br border rounded-lg backdrop-blur-xl overflow-hidden transition-all duration-300 w-full max-w-full",
         variantStyles[variant],
         animated && "animate-shadow-pulse",
+        id && "scroll-mt-4",
         className
       )}
     >

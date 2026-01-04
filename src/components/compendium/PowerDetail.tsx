@@ -1,6 +1,7 @@
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Clock, Target, Timer, Zap, BookOpen } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface PowerData {
   id: string;
@@ -40,7 +41,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <SystemWindow title={data.name.toUpperCase()} className={`border-2 ${tierColor}`}>
+      <SystemWindow title={data.name.toUpperCase()} className={cn("border-2", tierColor)}>
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-2">
             <Badge className={tierColor}>{tierLabel}</Badge>
@@ -93,7 +94,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 
       {/* Description */}
       <SystemWindow title="DESCRIPTION">
-        <p className="text-foreground whitespace-pre-wrap">{data.description}</p>
+        <p className="text-foreground whitespace-pre-wrap leading-relaxed text-base">{data.description}</p>
       </SystemWindow>
 
       {/* At Higher Levels */}
@@ -101,7 +102,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
         <SystemWindow title="AT HIGHER TIERS">
           <div className="flex items-start gap-3">
             <BookOpen className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-            <p className="text-foreground">{data.higher_levels}</p>
+            <p className="text-foreground leading-relaxed text-base">{data.higher_levels}</p>
           </div>
         </SystemWindow>
       )}

@@ -22,8 +22,6 @@ function initApp() {
   }
 
   try {
-    console.log('Initializing app...');
-    
     // Enable mobile optimizations after DOM is ready (non-blocking)
     try {
       enableTouchOptimizations();
@@ -35,7 +33,6 @@ function initApp() {
     // Render the app
     const root = createRoot(rootElement);
     root.render(<App />);
-    console.log('App rendered successfully');
   } catch (error) {
     console.error("Failed to initialize app:", error);
     rootElement.innerHTML = `

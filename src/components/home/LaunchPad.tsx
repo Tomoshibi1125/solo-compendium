@@ -3,7 +3,6 @@ import {
   Users, 
   BookOpen, 
   Sword, 
-  Plus, 
   ArrowRight, 
   Crown,
   UserPlus,
@@ -11,35 +10,66 @@ import {
   Settings,
   Sparkles,
   Zap,
-  Skull
+  Skull,
+  UsersRound,
+  Map
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
 import { GatePortal } from '@/components/ui/GatePortal';
-import { SystemInterface } from '@/components/ui/SystemInterface';
 import { HunterBadge } from '@/components/ui/HunterBadge';
 import { CompendiumQuickStats } from '@/components/compendium/CompendiumQuickStats';
 import { useCharacters } from '@/hooks/useCharacters';
-import { useMyCampaigns, useJoinedCampaigns } from '@/hooks/useCampaigns';
+import { useMyCampaigns, useJoinedCampaigns, useIsDM } from '@/hooks/useCampaigns';
+import { RoleBadge } from '@/components/ui/RoleBadge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 
 export function LaunchPad() {
-  const { data: characters, isLoading: charactersLoading } = useCharacters();
-  const { data: myCampaigns, isLoading: myCampaignsLoading } = useMyCampaigns();
-  const { data: joinedCampaigns, isLoading: joinedCampaignsLoading } = useJoinedCampaigns();
+  const { data: characters, isLoading: charactersLoading, error: charactersError } = useCharacters();
+  const { data: myCampaigns, isLoading: myCampaignsLoading, error: myCampaignsError } = useMyCampaigns();
+  const { data: joinedCampaigns, isLoading: joinedCampaignsLoading, error: joinedCampaignsError } = useJoinedCampaigns();
+  const { data: isDM = false } = useIsDM();
 
   const recentCharacters = characters?.slice(0, 3) || [];
   const recentMyCampaigns = myCampaigns?.slice(0, 2) || [];
   const recentJoinedCampaigns = joinedCampaigns?.slice(0, 2) || [];
 
+  // Check if any queries have errors
+  const hasError = !!charactersError || !!myCampaignsError || !!joinedCampaignsError;
+  
+  // Check if all data is loaded (not loading)
+  const allLoaded = !charactersLoading && !myCampaignsLoading && !joinedCampaignsLoading;
+  
+  // Check if user has any data (authenticated)
+  const hasData = (characters?.length ?? 0) > 0 || (myCampaigns?.length ?? 0) > 0 || (joinedCampaigns?.length ?? 0) > 0;
+  
+  // Check if all data is loaded and empty (unauthenticated user)
+  const isUnauthenticated = allLoaded && !hasData && !hasError;
+
+  // Show loading state while queries are loading
+  if (!allLoaded && !hasError) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isUnauthenticated) {
+    return <UnauthenticatedWelcomeScreen />;
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5">
       {/* Supreme Deity's Domain - Background effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-gradient-radial from-shadow-blue/8 via-shadow-purple/4 to-transparent rounded-full blur-3xl animate-pulse-glow" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-gradient-radial from-arise-violet/6 via-shadow-purple/3 to-transparent rounded-full blur-3xl animate-pulse-glow-delay-1s" />
+        <div className="absolute top-1/4 left-1/4 w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] bg-gradient-radial from-shadow-blue/8 via-shadow-purple/4 to-transparent rounded-full blur-3xl animate-pulse-glow" />
+        <div className="absolute bottom-1/4 right-1/4 w-[150px] h-[150px] sm:w-[250px] sm:h-[250px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px] bg-gradient-radial from-arise-violet/6 via-shadow-purple/3 to-transparent rounded-full blur-3xl animate-pulse-glow-delay-1s" />
         
         {/* Subtle grid overlay - System interface */}
         <div className="absolute inset-0 opacity-[0.015]" style={{
@@ -48,7 +78,7 @@ export function LaunchPad() {
         }} />
       </div>
 
-      <div className="container mx-auto px-4 py-12 relative z-10">
+      <div className="container mx-auto px-4 py-12 relative z-10 max-w-full overflow-x-hidden">
         {/* Header - Shadow Monarch's Domain */}
         <div className="text-center mb-12 animate-slide-up">
           <div className="inline-block mb-6">
@@ -69,19 +99,46 @@ export function LaunchPad() {
           <h1 className="font-arise text-4xl sm:text-5xl lg:text-6xl font-black mb-4">
             <span className="gradient-text-arise text-glow-arise">LAUNCH PAD</span>
           </h1>
+          {/* Role Badge */}
+          <div className="flex justify-center mb-4">
+            {isDM ? (
+              <RoleBadge role="system" />
+            ) : (
+              <RoleBadge role="hunter" />
+            )}
+          </div>
           <p className="text-muted-foreground font-heading max-w-2xl mx-auto leading-relaxed">
-            Your gateway to the System. Manage your <span className="text-primary">Hunters</span>, join <span className="text-shadow-purple">Campaigns</span>, and explore the <span className="text-accent">Compendium</span>.
+            {isDM ? (
+              <>
+                <span className="text-primary font-semibold">Gate Master (System)</span> — You have access to System Tools to manage your campaigns. Manage your <span className="text-primary">Hunters</span>, create <span className="text-shadow-purple">Campaigns</span>, and explore the <span className="text-accent">Compendium</span>.
+              </>
+            ) : (
+              <>
+                Your gateway to the System. Manage your <span className="text-primary">Hunters</span>, join <span className="text-shadow-purple">Campaigns</span>, and explore the <span className="text-accent">Compendium</span>.
+              </>
+            )}
           </p>
         </div>
 
         {/* Quick Actions - The System's Commands */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+          {/* DM Tools - Prominent for DMs */}
+          {isDM && (
+            <QuickActionCard
+              icon={Map}
+              title="System Tools"
+              description="Gate Master tools for campaigns"
+              href="/dm-tools"
+              variant="primary"
+              graphic={<Crown className="w-16 h-16 opacity-60 text-primary" />}
+            />
+          )}
           <QuickActionCard
             icon={Zap}
             title="Awaken Hunter"
             description="Awaken a new Hunter"
             href="/characters/new"
-            variant="primary"
+            variant={isDM ? "default" : "primary"}
           />
           <QuickActionCard
             icon={BookOpen}
@@ -98,13 +155,15 @@ export function LaunchPad() {
             href="/campaigns"
             variant="default"
           />
-          <QuickActionCard
-            icon={UserPlus}
-            title="Join Campaign"
-            description="Enter with share code"
-            href="/campaigns/join"
-            variant="default"
-          />
+          {!isDM && (
+            <QuickActionCard
+              icon={UserPlus}
+              title="Join Campaign"
+              description="Enter with share code"
+              href="/campaigns/join"
+              variant="default"
+            />
+          )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -437,3 +496,190 @@ function StatItem({ icon: Icon, label, value }: StatItemProps) {
   );
 }
 
+// Unauthenticated Welcome Screen - For new users
+function UnauthenticatedWelcomeScreen() {
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5">
+      {/* Supreme Deity's Domain - Background effects */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] bg-gradient-radial from-shadow-blue/8 via-shadow-purple/4 to-transparent rounded-full blur-3xl animate-pulse-glow" />
+        <div className="absolute bottom-1/4 right-1/4 w-[150px] h-[150px] sm:w-[250px] sm:h-[250px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px] bg-gradient-radial from-arise-violet/6 via-shadow-purple/3 to-transparent rounded-full blur-3xl animate-pulse-glow-delay-1s" />
+
+        {/* Subtle grid overlay - System interface */}
+        <div className="absolute inset-0 opacity-[0.015]" style={{
+          backgroundImage: `linear-gradient(hsl(var(--shadow-blue)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--shadow-blue)) 1px, transparent 1px)`,
+          backgroundSize: '60px 60px'
+        }} />
+      </div>
+
+      <div className="container mx-auto px-4 py-12 relative z-10 max-w-full overflow-x-hidden">
+        {/* Header - Shadow Monarch's Domain */}
+        <div className="text-center mb-12 animate-slide-up">
+          <div className="inline-block mb-6">
+            <SystemWindow variant="arise" className="px-6 py-2" animated>
+              <div className="flex items-center gap-2 font-heading">
+                <Skull className="w-4 h-4 text-arise-violet" />
+                <span className="text-sm gradient-text-arise font-semibold tracking-wide">Shadow Monarch's Domain</span>
+                <Sparkles className="w-4 h-4 text-shadow-purple" />
+              </div>
+            </SystemWindow>
+          </div>
+
+          {/* Shadow Monarch Logo - Supreme variant */}
+          <div className="flex justify-center mb-6">
+            <ShadowMonarchLogo size="lg" variant="supreme" className="drop-shadow-2xl" />
+          </div>
+
+          <h1 className="font-arise text-4xl sm:text-5xl lg:text-6xl font-black mb-4">
+            <span className="gradient-text-arise text-glow-arise">WELCOME, HUNTER</span>
+          </h1>
+          <p className="text-muted-foreground font-heading max-w-2xl mx-auto leading-relaxed mb-8">
+            The System awaits your awakening. In the world reset by Shadow Monarch Sung Jinwoo,
+            your journey as a Hunter begins here.
+          </p>
+        </div>
+
+        {/* Welcome Message */}
+        <div className="max-w-3xl mx-auto mb-12">
+          <SystemWindow title="SHADOW MONARCH'S WELCOME" variant="monarch" className="text-center">
+            <div className="space-y-6">
+              <p className="text-muted-foreground font-heading leading-relaxed">
+                <span className="gradient-text-shadow font-semibold">Greetings, potential Hunter.</span>
+                The System has detected your presence in the post-reset timeline.
+                To begin your journey and access the full power of the Shadow Monarch's Compendium,
+                you must first awaken as a Hunter.
+              </p>
+
+              <p className="text-muted-foreground font-heading leading-relaxed">
+                Once awakened, you'll gain access to:
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0 mt-1">
+                    <BookOpen className="w-4 h-4 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-heading font-semibold text-primary mb-1">Complete Compendium</h4>
+                    <p className="text-sm text-muted-foreground">All knowledge of the Solo Leveling universe</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0 mt-1">
+                    <Users className="w-4 h-4 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-heading font-semibold text-primary mb-1">Character Management</h4>
+                    <p className="text-sm text-muted-foreground">Create and track your Hunters</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0 mt-1">
+                    <UsersRound className="w-4 h-4 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-heading font-semibold text-primary mb-1">Campaign System</h4>
+                    <p className="text-sm text-muted-foreground">Join or create campaigns with other Hunters</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SystemWindow>
+        </div>
+
+        {/* Main Action - Awaken Hunter */}
+        <div className="max-w-2xl mx-auto mb-12">
+          <SystemWindow title="BEGIN YOUR JOURNEY" variant="quest" className="text-center">
+            <div className="space-y-6">
+              <p className="text-muted-foreground font-heading">
+                Ready to step into the world of Gates, Shadows, and Monarchs?
+              </p>
+
+              <Link to="/characters/new">
+                <Button size="lg" className="btn-shadow-monarch shadow-monarch-glow w-full max-w-sm mx-auto">
+                  <Zap className="w-5 h-5 mr-3" />
+                  <span className="font-heading font-semibold">AWAKEN AS HUNTER</span>
+                </Button>
+              </Link>
+
+              <p className="text-xs text-muted-foreground font-heading">
+                Already have an account? The System will recognize your return.
+              </p>
+            </div>
+          </SystemWindow>
+        </div>
+
+        {/* Quick Access - For exploration */}
+        <div className="max-w-4xl mx-auto">
+          <h3 className="font-heading text-lg font-semibold text-muted-foreground mb-4 text-center">
+            Explore the System (No Awakening Required)
+          </h3>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <Link
+              to="/compendium"
+              className="glass-card card-shadow-energy p-6 hover:border-primary/30 transition-all group"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <BookOpen className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-heading font-semibold mb-1 group-hover:text-primary transition-colors">
+                    Browse Compendium
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    Explore all knowledge of the Solo Leveling universe
+                  </p>
+                </div>
+              </div>
+              <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all mt-2" />
+            </Link>
+
+            <Link
+              to="/dice"
+              className="glass-card card-shadow-energy p-6 hover:border-primary/30 transition-all group"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <Dice1 className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-heading font-semibold mb-1 group-hover:text-primary transition-colors">
+                    Dice Roller
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    Roll virtual dice for your tabletop games
+                  </p>
+                </div>
+              </div>
+              <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all mt-2" />
+            </Link>
+
+            <Link
+              to="/dm-tools"
+              className="glass-card card-shadow-energy p-6 hover:border-primary/30 transition-all group"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <Settings className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-heading font-semibold mb-1 group-hover:text-primary transition-colors">
+                    DM Tools
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    Tools for Game Masters and Shadow Monarchs
+                  </p>
+                </div>
+              </div>
+              <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all mt-2" />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

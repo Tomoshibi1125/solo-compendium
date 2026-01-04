@@ -135,8 +135,9 @@ export function ComparisonTool({ type, className }: ComparisonToolProps) {
         </div>
 
         {/* Comparison Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
+        <div className="overflow-x-auto -mx-4 sm:mx-0">
+          <div className="inline-block min-w-full align-middle sm:px-0 px-4">
+            <table className="w-full border-collapse">
             <thead>
               <tr className="border-b">
                 <th className="text-left p-2">Stat</th>
@@ -150,8 +151,9 @@ export function ComparisonTool({ type, className }: ComparisonToolProps) {
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-5 w-5"
+                          className="h-8 w-8 sm:h-5 sm:w-5 min-h-[32px] min-w-[32px]"
                           onClick={() => removeItem(item.id)}
+                          aria-label={`Remove ${item.name} from comparison`}
                         >
                           <X className="w-3 h-3" />
                         </Button>
@@ -224,6 +226,7 @@ export function ComparisonTool({ type, className }: ComparisonToolProps) {
               )}
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </SystemWindow>
