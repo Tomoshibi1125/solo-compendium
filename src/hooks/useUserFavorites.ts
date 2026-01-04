@@ -14,7 +14,7 @@ export const useUserFavorites = (entryType?: string) => {
     queryKey: ['user-favorites', entryType],
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return [];
+      if (!user) return []; // Return empty array if not authenticated
 
       let query = supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -31,6 +31,7 @@ export const useUserFavorites = (entryType?: string) => {
       if (error) throw error;
       return (data || []) as unknown as UserFavorite[];
     },
+    retry: false, // Don't retry if not authenticated
   });
 };
 
@@ -54,6 +55,7 @@ export const useIsFavorite = (entryType: string, entryId: string) => {
       return !!data;
     },
     enabled: !!entryType && !!entryId,
+    retry: false, // Don't retry if not authenticated
   });
 };
 

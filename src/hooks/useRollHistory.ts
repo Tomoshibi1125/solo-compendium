@@ -20,7 +20,7 @@ export const useRollHistory = (characterId?: string, limit = 50) => {
     queryKey: ['roll-history', characterId, limit],
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      if (!user) return []; // Return empty array if not authenticated
 
       let query = supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -38,6 +38,7 @@ export const useRollHistory = (characterId?: string, limit = 50) => {
       if (error) throw error;
       return (data || []) as unknown as RollRecord[];
     },
+    retry: false, // Don't retry if not authenticated
   });
 };
 

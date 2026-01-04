@@ -39,7 +39,7 @@ export const useCharacter = (characterId: string) => {
     queryKey: ['character', characterId],
     queryFn: async (): Promise<CharacterWithAbilities | null> => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      if (!user) return null; // Return null if not authenticated
 
       // Fetch character
       const { data: character, error: charError } = await supabase
@@ -80,6 +80,7 @@ export const useCharacter = (characterId: string) => {
       };
     },
     enabled: !!characterId,
+    retry: false, // Don't retry if not authenticated
   });
 };
 

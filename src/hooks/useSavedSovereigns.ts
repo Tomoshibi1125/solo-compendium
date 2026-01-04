@@ -49,7 +49,7 @@ export function useMySovereigns() {
     queryKey: ['my-sovereigns'],
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return [];
+      if (!user) return []; // Return empty array if not authenticated
       
       const { data, error } = await supabase
         .from('saved_sovereigns')
