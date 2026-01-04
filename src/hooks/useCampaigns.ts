@@ -31,8 +31,8 @@ export const useMyCampaigns = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data, error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaigns' as any)
         .select('*')
         .eq('dm_id', user.id)
@@ -184,12 +184,14 @@ export const useJoinCampaign = () => {
       if (!user) throw new Error('Not authenticated');
 
       const { error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaign_members' as any)
         .insert({
           campaign_id: campaignId,
           user_id: user.id,
           character_id: characterId || null,
           role: 'player',
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any);
 
       if (error) throw error;
