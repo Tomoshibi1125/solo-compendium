@@ -39,8 +39,9 @@ export function useSavedSovereigns() {
         `)
         .order('created_at', { ascending: false });
       if (error) throw error;
-      return data;
+      return data || [];
     },
+    retry: false, // Don't retry on errors
   });
 }
 
