@@ -53,6 +53,27 @@ export function preventDoubleTapZoom() {
  * Add touch-friendly class to body
  */
 export function enableTouchOptimizations() {
+  // Ensure DOM is ready
+  if (typeof document === 'undefined' || !document.body) {
+    // If DOM not ready, wait for it
+    if (typeof window !== 'undefined') {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          applyTouchOptimizations();
+        });
+      } else {
+        applyTouchOptimizations();
+      }
+    }
+    return;
+  }
+  
+  applyTouchOptimizations();
+}
+
+function applyTouchOptimizations() {
+  if (typeof document === 'undefined' || !document.body) return;
+  
   if (isTouchDevice()) {
     document.body.classList.add('touch-device');
   }

@@ -107,14 +107,28 @@
     @apply border-border;
   }
   
+  html {
+    height: 100%;
+    width: 100%;
+  }
+  
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    min-height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
     /* Supreme Deity's presence - subtle shadow particles */
     background-image: 
       radial-gradient(ellipse at 15% 25%, hsl(220 100% 60% / 0.04) 0%, transparent 45%),
       radial-gradient(ellipse at 85% 75%, hsl(265 75% 55% / 0.04) 0%, transparent 45%),
       radial-gradient(ellipse at 50% 50%, hsl(280 85% 65% / 0.02) 0%, transparent 60%);
+  }
+  
+  #root {
+    min-height: 100vh;
+    width: 100%;
   }
   
   /* Scrollbar - Shadow Monarch's aesthetic */
