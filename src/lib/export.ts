@@ -1,268 +1,169 @@
 /**
- * Character export utilities
- * Supports JSON and PDF export
+ * Enhanced export system
+ * Export characters, compendium entries, campaigns, etc.
  */
 
 import type { Database } from '@/integrations/supabase/types';
 
 type Character = Database['public']['Tables']['characters']['Row'];
-type CharacterWithAbilities = Character & {
-  abilities: Record<string, number>;
-};
+
+export interface ExportOptions {
+  includeEquipment?: boolean;
+  includeFeatures?: boolean;
+  includePowers?: boolean;
+  includeNotes?: boolean;
+  format?: 'json' | 'pdf' | 'markdown' | 'html';
+}
 
 /**
- * Export character as JSON
+ * Export character to JSON
  */
-export function exportCharacterJSON(character: CharacterWithAbilities): string {
-  const exportData = {
+export async function exportCharacter(
+  characterId: string,
+  options: ExportOptions = {}
+): Promise<string> {
+  const { supabase } = await import('@/integrations/supabase/client');
+  
+  const { data: character } = await supabase
+    .from('characters')
+    .select('*')
+    .eq('id', characterId)
+    .single();
+
+  if (!character) throw new Error('Character not found');
+
+  const exportData: Record<string, unknown> = {
     name: character.name,
     level: character.level,
     job: character.job,
     path: character.path,
     background: character.background,
-    abilities: character.abilities,
-    hitPoints: {
-      current: character.hp_current,
-      max: character.hp_max,
-      temp: character.hp_temp || 0,
-    },
-    hitDice: {
-      current: character.hit_dice_current,
-      max: character.hit_dice_max,
-      size: character.hit_dice_size,
-    },
-    systemFavor: {
-      current: character.system_favor_current,
-      max: character.system_favor_max,
-      die: character.system_favor_die,
-    },
-    proficiencies: {
-      savingThrows: character.saving_throw_proficiencies || [],
-      skills: character.skill_proficiencies || [],
-      expertise: character.skill_expertise || [],
-      armor: character.armor_proficiencies || [],
-      weapons: character.weapon_proficiencies || [],
-      tools: character.tool_proficiencies || [],
+    stats: {
+      hp: { current: character.hp_current, max: character.hp_max, temp: character.hp_temp },
+      hitDice: { current: character.hit_dice_current, max: character.hit_dice_max, size: character.hit_dice_size },
+      systemFavor: { current: character.system_favor_current, max: character.system_favor_max, die: character.system_favor_die },
+      armorClass: character.armor_class,
+      speed: character.speed,
+      initiative: character.initiative,
+      proficiencyBonus: character.proficiency_bonus,
     },
     conditions: character.conditions || [],
-    exhaustion: character.exhaustion_level,
-    notes: character.notes,
-    appearance: character.appearance,
-    backstory: character.backstory,
-    exportedAt: new Date().toISOString(),
-    version: '1.0',
+    exhaustionLevel: character.exhaustion_level,
   };
+
+  if (options.includeNotes) {
+    exportData.notes = character.notes;
+    exportData.appearance = character.appearance;
+    exportData.backstory = character.backstory;
+  }
+
+  if (options.includeEquipment) {
+    const { data: equipment } = await supabase
+      .from('character_equipment')
+      .select('*, equipment:compendium_equipment(*)')
+      .eq('character_id', characterId);
+    exportData.equipment = equipment || [];
+  }
+
+  if (options.includeFeatures) {
+    const { data: features } = await supabase
+      .from('character_features')
+      .select('*')
+      .eq('character_id', characterId);
+    exportData.features = features || [];
+  }
+
+  if (options.includePowers) {
+    const { data: powers } = await supabase
+      .from('character_powers')
+      .select('*, power:compendium_powers(*)')
+      .eq('character_id', characterId);
+    exportData.powers = powers || [];
+  }
 
   return JSON.stringify(exportData, null, 2);
 }
 
 /**
- * Download character as JSON file
+ * Export character to PDF (markdown format for now)
  */
-export function downloadCharacterJSON(character: CharacterWithAbilities, filename?: string): void {
-  const json = exportCharacterJSON(character);
-  const blob = new Blob([json], { type: 'application/json' });
+export function exportCharacterToMarkdown(character: Character): string {
+  return `# ${character.name}
+
+**Level ${character.level}** ${character.job}${character.path ? ` (${character.path})` : ''}
+
+## Stats
+- **HP**: ${character.hp_current}/${character.hp_max}${character.hp_temp > 0 ? ` (+${character.hp_temp} temp)` : ''}
+- **Hit Dice**: ${character.hit_dice_current}/${character.hit_dice_max}d${character.hit_dice_size}
+- **System Favor**: ${character.system_favor_current}/${character.system_favor_max} (d${character.system_favor_die})
+- **AC**: ${character.armor_class}
+- **Speed**: ${character.speed} ft.
+- **Initiative**: ${character.initiative >= 0 ? '+' : ''}${character.initiative}
+
+## Conditions
+${character.conditions && character.conditions.length > 0 
+  ? character.conditions.map(c => `- ${c}`).join('\n')
+  : 'None'}
+
+${character.notes ? `## Notes\n${character.notes}` : ''}
+`;
+}
+
+/**
+ * Export compendium entries
+ */
+export async function exportCompendiumEntries(
+  entryIds: string[],
+  entryType: string
+): Promise<string> {
+  const { supabase } = await import('@/integrations/supabase/client');
+  
+  const tableMap: Record<string, string> = {
+    'jobs': 'compendium_jobs',
+    'paths': 'compendium_job_paths',
+    'powers': 'compendium_powers',
+    'relics': 'compendium_relics',
+    'monsters': 'compendium_monsters',
+    'shadow-soldiers': 'compendium_shadow_soldiers',
+  };
+
+  const tableName = tableMap[entryType];
+  if (!tableName) throw new Error(`Unknown entry type: ${entryType}`);
+
+  const { data: entries } = await supabase
+    .from(tableName)
+    .select('*')
+    .in('id', entryIds);
+
+  return JSON.stringify(entries || [], null, 2);
+}
+
+/**
+ * Download file
+ */
+export function downloadFile(content: string, filename: string, mimeType: string = 'application/json'): void {
+  const blob = new Blob([content], { type: mimeType });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename || `${character.name.replace(/\s+/g, '_')}_export.json`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
   URL.revokeObjectURL(url);
 }
 
 /**
- * Generate character sheet HTML for PDF export
+ * Print character sheet
  */
-export function generateCharacterSheetHTML(character: CharacterWithAbilities): string {
-  return `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>${character.name} - Hunter Sheet</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-      color: #333;
-    }
-    .header {
-      text-align: center;
-      border-bottom: 3px solid #000;
-      padding-bottom: 10px;
-      margin-bottom: 20px;
-    }
-    .header h1 {
-      margin: 0;
-      font-size: 28px;
-    }
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-    .info-item {
-      text-align: center;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .info-label {
-      font-size: 11px;
-      color: #666;
-      text-transform: uppercase;
-      margin-bottom: 5px;
-    }
-    .info-value {
-      font-size: 18px;
-      font-weight: bold;
-    }
-    .abilities {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .ability {
-      text-align: center;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .ability-name {
-      font-size: 11px;
-      color: #666;
-      text-transform: uppercase;
-      margin-bottom: 5px;
-    }
-    .ability-score {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-    .ability-modifier {
-      font-size: 14px;
-      color: #666;
-    }
-    .section {
-      margin-bottom: 20px;
-      page-break-inside: avoid;
-    }
-    .section-title {
-      font-size: 16px;
-      font-weight: bold;
-      border-bottom: 2px solid #000;
-      padding-bottom: 5px;
-      margin-bottom: 10px;
-    }
-    .two-column {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-    @media print {
-      body {
-        padding: 10px;
-      }
-      .section {
-        page-break-inside: avoid;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="header">
-    <h1>${character.name}</h1>
-  </div>
-
-  <div class="info-grid">
-    <div class="info-item">
-      <div class="info-label">Level</div>
-      <div class="info-value">${character.level}</div>
-    </div>
-    <div class="info-item">
-      <div class="info-label">Job</div>
-      <div class="info-value">${character.job || '—'}</div>
-    </div>
-    <div class="info-item">
-      <div class="info-label">Path</div>
-      <div class="info-value">${character.path || '—'}</div>
-    </div>
-    <div class="info-item">
-      <div class="info-label">Background</div>
-      <div class="info-value">${character.background || '—'}</div>
-    </div>
-  </div>
-
-  <div class="abilities">
-    ${Object.entries(character.abilities || {}).map(([ability, score]) => {
-      const modifier = Math.floor((score - 10) / 2);
-      return `
-        <div class="ability">
-          <div class="ability-name">${ability}</div>
-          <div class="ability-score">${score}</div>
-          <div class="ability-modifier">${modifier >= 0 ? '+' : ''}${modifier}</div>
-        </div>
-      `;
-    }).join('')}
-  </div>
-
-  <div class="two-column">
-    <div class="section">
-      <div class="section-title">Hit Points</div>
-      <p><strong>Current:</strong> ${character.hp_current} / <strong>Max:</strong> ${character.hp_max}</p>
-      <p><strong>Temp:</strong> ${character.hp_temp || 0}</p>
-      <p><strong>Hit Dice:</strong> ${character.hit_dice_current}/${character.hit_dice_max}d${character.hit_dice_size}</p>
-    </div>
-
-    <div class="section">
-      <div class="section-title">System Favor</div>
-      <p><strong>Current:</strong> ${character.system_favor_current} / <strong>Max:</strong> ${character.system_favor_max}</p>
-      <p><strong>Die Size:</strong> d${character.system_favor_die}</p>
-    </div>
-  </div>
-
-  ${character.notes ? `
-    <div class="section">
-      <div class="section-title">Notes</div>
-      <p style="white-space: pre-wrap;">${character.notes}</p>
-    </div>
-  ` : ''}
-
-  ${character.backstory ? `
-    <div class="section">
-      <div class="section-title">Backstory</div>
-      <p style="white-space: pre-wrap;">${character.backstory}</p>
-    </div>
-  ` : ''}
-
-  <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc; font-size: 11px; color: #666; text-align: center;">
-    Exported on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}
-  </div>
-</body>
-</html>
-  `;
-}
-
-/**
- * Export character as PDF (opens print dialog)
- */
-export function exportCharacterPDF(character: CharacterWithAbilities): void {
-  const html = generateCharacterSheetHTML(character);
-  const printWindow = window.open('', '_blank');
-  if (!printWindow) {
-    alert('Please allow popups to export as PDF');
-    return;
+export function printCharacterSheet(characterId: string): void {
+  // Open character sheet in new window for printing
+  const printWindow = window.open(`/characters/${characterId}?print=true`, '_blank');
+  if (printWindow) {
+    printWindow.onload = () => {
+      setTimeout(() => {
+        printWindow.print();
+      }, 500);
+    };
   }
-  printWindow.document.write(html);
-  printWindow.document.close();
-  setTimeout(() => {
-    printWindow.print();
-  }, 250);
 }
-

@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, BookOpen, Users, Sword, Shield, Dice6, Map, Settings, UsersRound, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
+import { GlobalSearch } from '@/components/ui/GlobalSearch';
 import { cn } from '@/lib/utils';
 
 const navigation = [
@@ -39,8 +40,14 @@ export function Header() {
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-1">
-              {navigation.map((item) => {
+            <div className="hidden md:flex items-center gap-4 flex-1 max-w-2xl mx-4">
+              {/* Global Search */}
+              <div className="flex-1 max-w-md">
+                <GlobalSearch />
+              </div>
+              
+              <div className="flex items-center gap-1">
+                {navigation.map((item) => {
                 const isActive = location.pathname.startsWith(item.href);
                 return (
                   <Link
@@ -69,6 +76,7 @@ export function Header() {
                   </Link>
                 );
               })}
+              </div>
             </div>
 
             {/* Actions */}
