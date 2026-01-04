@@ -22,12 +22,20 @@ function initApp() {
   }
 
   try {
-    // Enable mobile optimizations after DOM is ready
-    enableTouchOptimizations();
+    console.log('Initializing app...');
+    
+    // Enable mobile optimizations after DOM is ready (non-blocking)
+    try {
+      enableTouchOptimizations();
+    } catch (mobileError) {
+      console.warn('Mobile optimizations failed:', mobileError);
+      // Continue anyway - mobile optimizations are not critical
+    }
 
     // Render the app
     const root = createRoot(rootElement);
     root.render(<App />);
+    console.log('App rendered successfully');
   } catch (error) {
     console.error("Failed to initialize app:", error);
     rootElement.innerHTML = `

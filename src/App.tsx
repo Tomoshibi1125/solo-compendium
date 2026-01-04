@@ -29,14 +29,31 @@ const CampaignDetail = lazy(() => import("./pages/CampaignDetail"));
 const CampaignJoin = lazy(() => import("./pages/CampaignJoin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
-// Configure React Query with better caching
+// Configure React Query with better caching and error handling
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 5 * 60 * 1000, // 5 minutes
       gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
       refetchOnWindowFocus: false,
-      retry: 1,
+      retry: (failureCount, error) => {
+        // Don't retry on authentication errors
+        if (error instanceof Error && error.message.includes('Not authenticated')) {
+          return false;
+        }
+        // Retry network errors up to 2 times
+        return failureCount < 2;
+      },
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+      onError: (error) => {
+        // Log errors but don't break the app
+        console.warn('Query error:', error);
+      },
+    },
+    mutations: {
+      onError: (error) => {
+        console.warn('Mutation error:', error);
+      },
     },
   },
 });
