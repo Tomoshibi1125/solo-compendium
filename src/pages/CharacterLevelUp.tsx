@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Check, Loader2, Zap, Heart } from 'lucide-react';
+import { ArrowLeft, Check, Loader2, Zap, Heart, TrendingUp, Crown, Sparkles, Star } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
@@ -28,6 +28,7 @@ const CharacterLevelUp = () => {
   const [hpIncrease, setHpIncrease] = useState<number | null>(null);
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [isRolling, setIsRolling] = useState(false);
 
   // Fetch features for the new level
   const { data: newFeatures = [] } = useQuery({
@@ -91,8 +92,12 @@ const CharacterLevelUp = () => {
     return (
       <Layout>
         <div className="container mx-auto px-4 py-8">
-          <div className="flex items-center justify-center py-12">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          <div className="flex flex-col items-center justify-center py-12 gap-4">
+            <div className="relative">
+              <div className="w-16 h-16 border-4 border-arise/20 rounded-full" />
+              <div className="absolute inset-0 w-16 h-16 border-4 border-t-arise rounded-full animate-spin" />
+            </div>
+            <p className="text-muted-foreground font-heading animate-pulse">Accessing Hunter Data...</p>
           </div>
         </div>
       </Layout>
@@ -109,11 +114,15 @@ const CharacterLevelUp = () => {
             className="mb-6"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Character
+            Back to Hunter
           </Button>
-          <SystemWindow title="MAX LEVEL" className="text-center py-12">
+          <SystemWindow title="MAXIMUM LEVEL REACHED" variant="alert" className="text-center py-12">
+            <Crown className="w-16 h-16 mx-auto text-amber-400 mb-4" />
+            <p className="text-lg font-arise text-amber-400 mb-2">
+              {character.name} has reached the pinnacle of power.
+            </p>
             <p className="text-muted-foreground">
-              {character.name} is already at maximum level (20).
+              Level 20 - The System has no further tests for this Hunter.
             </p>
           </SystemWindow>
         </div>
@@ -162,12 +171,12 @@ const CharacterLevelUp = () => {
           level: newLevel,
           proficiency_bonus: newProficiencyBonus,
           hp_max: newHP,
-          hp_current: character.hp_current + hpIncrease, // Add HP increase to current
+          hp_current: character.hp_current + hpIncrease,
           hit_dice_max: newHitDiceMax,
-          hit_dice_current: newHitDiceMax, // Restore on level up
+          hit_dice_current: newHitDiceMax,
           system_favor_die: newSystemFavorDie,
           system_favor_max: newSystemFavorMax,
-          system_favor_current: newSystemFavorMax, // Restore on level up
+          system_favor_current: newSystemFavorMax,
         },
       });
 
@@ -175,10 +184,8 @@ const CharacterLevelUp = () => {
       for (const featureId of selectedFeatures) {
         const feature = newFeatures.find(f => f.id === featureId);
         if (feature) {
-          // Calculate uses if formula exists
           let usesMax: number | null = null;
           if (feature.uses_formula) {
-            // Parse formula like "proficiency bonus" or "level"
             if (feature.uses_formula.includes('proficiency')) {
               usesMax = newProficiencyBonus;
             } else if (feature.uses_formula.includes('level')) {
@@ -205,7 +212,7 @@ const CharacterLevelUp = () => {
         }
       }
 
-      // Check for new powers available at this level
+      // Check for new powers
       if (character.job) {
         const { data: job } = await supabase
           .from('compendium_jobs')
@@ -214,14 +221,12 @@ const CharacterLevelUp = () => {
           .maybeSingle();
 
         if (job) {
-          // Get powers available to this job at or below new level
           const { data: availablePowers } = await supabase
             .from('compendium_powers')
             .select('*')
             .contains('job_names', [character.job])
-            .lte('power_level', Math.floor(newLevel / 2)); // Powers scale with level
+            .lte('power_level', Math.floor(newLevel / 2));
 
-          // Check which powers character already has
           const { data: existingPowers } = await supabase
             .from('character_powers')
             .select('name')
@@ -229,7 +234,6 @@ const CharacterLevelUp = () => {
 
           const existingPowerNames = new Set(existingPowers?.map(p => p.name) || []);
 
-          // Add new powers that character doesn't have yet
           if (availablePowers) {
             for (const power of availablePowers) {
               if (!existingPowerNames.has(power.name)) {
@@ -244,7 +248,7 @@ const CharacterLevelUp = () => {
                   concentration: power.concentration || false,
                   description: power.description || null,
                   higher_levels: power.higher_levels || null,
-                  is_prepared: false, // Don't auto-prepare
+                  is_prepared: false,
                   is_known: true,
                 });
               }
@@ -254,13 +258,12 @@ const CharacterLevelUp = () => {
       }
 
       toast({
-        title: 'Level up complete!',
-        description: `${character.name} is now level ${newLevel}!`,
+        title: 'Level Up Complete!',
+        description: `${character.name} has grown stronger! Now Level ${newLevel}!`,
       });
 
       navigate(`/characters/${character.id}`);
     } catch (error) {
-      // Error is handled by React Query's error state
       toast({
         title: 'Failed to level up',
         description: 'Could not complete level up. Please try again.',
@@ -272,9 +275,32 @@ const CharacterLevelUp = () => {
   };
 
   const rollHP = () => {
-    const roll = Math.floor(Math.random() * hitDieSize) + 1;
-    setHpIncrease(roll + vitModifier);
+    setIsRolling(true);
+    // Animate through random numbers
+    let count = 0;
+    const interval = setInterval(() => {
+      const randomRoll = Math.floor(Math.random() * hitDieSize) + 1;
+      setHpIncrease(randomRoll + vitModifier);
+      count++;
+      if (count >= 10) {
+        clearInterval(interval);
+        const finalRoll = Math.floor(Math.random() * hitDieSize) + 1;
+        setHpIncrease(finalRoll + vitModifier);
+        setIsRolling(false);
+      }
+    }, 80);
   };
+
+  // Get rank for display
+  const getNewRank = () => {
+    if (newLevel >= 17) return { rank: 'S', color: 'text-amber-400' };
+    if (newLevel >= 13) return { rank: 'A', color: 'text-red-400' };
+    if (newLevel >= 9) return { rank: 'B', color: 'text-orange-400' };
+    if (newLevel >= 5) return { rank: 'C', color: 'text-blue-400' };
+    return { rank: 'D', color: 'text-green-400' };
+  };
+
+  const rankInfo = getNewRank();
 
   return (
     <Layout>
@@ -285,75 +311,120 @@ const CharacterLevelUp = () => {
           className="mb-6"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Character
+          Back to Hunter
         </Button>
 
-        <SystemWindow title={`LEVEL UP: ${character.name.toUpperCase()}`} className="border-primary/50">
+        {/* Level Up Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-arise/10 rounded-full border border-arise/30 mb-4">
+            <TrendingUp className="w-5 h-5 text-arise" />
+            <span className="font-arise text-arise tracking-wide">LEVEL UP PROTOCOL</span>
+          </div>
+          <h1 className="font-arise text-3xl font-bold gradient-text-shadow tracking-wider mb-2">
+            {character.name.toUpperCase()}
+          </h1>
+          <div className="flex items-center justify-center gap-4 text-2xl font-arise">
+            <span className="text-muted-foreground">LV. {character.level}</span>
+            <span className="text-arise animate-pulse">→</span>
+            <span className={cn("font-bold", rankInfo.color)}>LV. {newLevel}</span>
+            <Badge className={cn("ml-2 font-arise", rankInfo.color, "bg-transparent border-current")}>
+              {rankInfo.rank}-RANK
+            </Badge>
+          </div>
+        </div>
+
+        <SystemWindow title="SYSTEM ENHANCEMENT" className="border-arise/50 mb-6">
           <div className="space-y-6">
             {/* Level Selection */}
-            <div>
-              <Label>New Level</Label>
-              <div className="flex items-center gap-4 mt-2">
-                <span className="text-sm text-muted-foreground">Current: {character.level}</span>
-                <span className="text-lg font-display">→</span>
+            <div className="p-4 rounded-lg bg-gradient-to-r from-arise/10 to-transparent border border-arise/20">
+              <Label className="font-arise text-arise tracking-wide flex items-center gap-2">
+                <Star className="w-4 h-4" />
+                TARGET LEVEL
+              </Label>
+              <div className="flex items-center gap-4 mt-3">
+                <span className="text-lg text-muted-foreground font-heading">Current: {character.level}</span>
+                <span className="text-2xl font-arise text-arise">→</span>
                 <Input
                   type="number"
                   min={character.level + 1}
                   max={20}
                   value={newLevel}
                   onChange={(e) => setNewLevel(Math.min(20, Math.max(character.level + 1, parseInt(e.target.value) || character.level + 1)))}
-                  className="w-20"
+                  className="w-24 text-center font-arise text-xl border-arise/30 focus:border-arise"
                 />
               </div>
             </div>
 
             {/* HP Increase */}
-            <div>
-              <Label>Hit Point Increase</Label>
-              <div className="flex items-center gap-4 mt-2">
+            <div className="p-4 rounded-lg bg-gradient-to-r from-red-500/10 to-transparent border border-red-500/20">
+              <Label className="font-arise text-red-400 tracking-wide flex items-center gap-2">
+                <Heart className="w-4 h-4" />
+                VITALITY INCREASE
+              </Label>
+              <div className="flex items-center gap-4 mt-3">
                 <div className="flex-1">
-                  <Input
-                    type="number"
-                    min={1}
-                    max={maxHP}
-                    value={hpIncrease || ''}
-                    onChange={(e) => setHpIncrease(parseInt(e.target.value) || null)}
-                    placeholder={`Average: ${averageHP}`}
-                  />
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Roll d{hitDieSize} + {vitModifier >= 0 ? '+' : ''}{vitModifier} (VIT modifier)
-                    {' '}|
-                    {' '}Range: {1 + vitModifier} - {maxHP} | Average: {averageHP}
+                  <div className="relative">
+                    <Input
+                      type="number"
+                      min={1}
+                      max={maxHP}
+                      value={hpIncrease || ''}
+                      onChange={(e) => setHpIncrease(parseInt(e.target.value) || null)}
+                      placeholder={`Average: ${averageHP}`}
+                      className={cn(
+                        "text-center font-arise text-xl border-red-500/30 focus:border-red-500",
+                        isRolling && "animate-pulse text-red-400"
+                      )}
+                    />
+                    {hpIncrease && (
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-red-400 font-heading">
+                        HP
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2 font-heading">
+                    Roll d{hitDieSize} {vitModifier >= 0 ? '+' : ''}{vitModifier} (VIT) | Range: {Math.max(1, 1 + vitModifier)} - {maxHP}
                   </p>
                 </div>
-                <Button variant="outline" onClick={rollHP} className="gap-2">
-                  <Zap className="w-4 h-4" />
-                  Roll
+                <Button 
+                  variant="outline" 
+                  onClick={rollHP} 
+                  disabled={isRolling}
+                  className={cn(
+                    "gap-2 border-arise/30 hover:bg-arise/10 hover:border-arise",
+                    isRolling && "animate-pulse"
+                  )}
+                >
+                  <Zap className={cn("w-4 h-4", isRolling && "animate-spin")} />
+                  {isRolling ? 'Rolling...' : 'Roll'}
                 </Button>
                 <Button
                   variant="outline"
                   onClick={() => setHpIncrease(averageHP)}
-                  className="gap-2"
+                  className="gap-2 border-red-500/30 hover:bg-red-500/10 hover:border-red-500"
                 >
                   <Heart className="w-4 h-4" />
-                  Average
+                  Average ({averageHP})
                 </Button>
               </div>
             </div>
 
             {/* New Features */}
             {newFeatures.length > 0 && (
-              <div>
-                <Label>New Features at Level {newLevel}</Label>
-                <div className="space-y-3 mt-2">
+              <div className="p-4 rounded-lg bg-gradient-to-r from-amber-500/10 to-transparent border border-amber-500/20">
+                <Label className="font-arise text-amber-400 tracking-wide flex items-center gap-2 mb-4">
+                  <Sparkles className="w-4 h-4" />
+                  NEW ABILITIES UNLOCKED
+                </Label>
+                <div className="space-y-3">
                   {newFeatures.map((feature) => (
                     <div
                       key={feature.id}
                       className={cn(
-                        "p-4 rounded-lg border transition-colors",
+                        "p-4 rounded-lg border transition-all duration-300",
                         selectedFeatures.includes(feature.id)
-                          ? "border-primary bg-primary/10"
-                          : "border-border bg-muted/30"
+                          ? "border-amber-500/50 bg-amber-500/10 shadow-lg shadow-amber-500/10"
+                          : "border-border bg-muted/30 hover:border-amber-500/30"
                       )}
                     >
                       <div className="flex items-start gap-3">
@@ -367,29 +438,30 @@ const CharacterLevelUp = () => {
                               setSelectedFeatures(selectedFeatures.filter(id => id !== feature.id));
                             }
                           }}
+                          className="mt-1 border-amber-500/50 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
                         />
                         <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
+                          <div className="flex items-center gap-2 mb-1 flex-wrap">
                             <Label
                               htmlFor={`feature-${feature.id}`}
-                              className="font-heading font-semibold cursor-pointer"
+                              className="font-arise font-semibold cursor-pointer text-amber-400 tracking-wide"
                             >
                               {feature.name}
                             </Label>
                             {feature.action_type && (
-                              <Badge variant="secondary" className="text-xs">
+                              <Badge variant="secondary" className="text-xs font-heading">
                                 {feature.action_type}
                               </Badge>
                             )}
                             {feature.uses_formula && (
-                              <Badge variant="outline" className="text-xs">
+                              <Badge variant="outline" className="text-xs font-heading border-amber-500/30 text-amber-400">
                                 {feature.uses_formula}
                               </Badge>
                             )}
                           </div>
-                          <p className="text-sm text-muted-foreground">{feature.description}</p>
+                          <p className="text-sm text-muted-foreground font-heading">{feature.description}</p>
                           {feature.prerequisites && (
-                            <p className="text-xs text-muted-foreground mt-1">
+                            <p className="text-xs text-muted-foreground mt-1 italic">
                               Prerequisites: {feature.prerequisites}
                             </p>
                           )}
@@ -402,31 +474,34 @@ const CharacterLevelUp = () => {
             )}
 
             {/* Stat Changes Preview */}
-            <div className="p-4 rounded-lg bg-muted/30">
-              <h4 className="font-heading font-semibold mb-3">Stat Changes</h4>
-              <div className="grid grid-cols-2 gap-2 text-sm">
-                <div>
-                  <span className="text-muted-foreground">Proficiency Bonus:</span>
-                  <span className="ml-2 font-display">
-                    +{Math.ceil(character.level / 4) + 1} → +{Math.ceil(newLevel / 4) + 1}
+            <div className="p-4 rounded-lg bg-gradient-to-r from-arise/5 to-shadow-purple/5 border border-arise/20">
+              <h4 className="font-arise font-semibold mb-4 text-arise tracking-wide flex items-center gap-2">
+                <TrendingUp className="w-4 h-4" />
+                STAT MODIFICATIONS
+              </h4>
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
+                  <span className="text-muted-foreground font-heading">Proficiency Bonus</span>
+                  <span className="font-arise text-lg">
+                    +{Math.ceil(character.level / 4) + 1} → <span className="text-arise">+{Math.ceil(newLevel / 4) + 1}</span>
                   </span>
                 </div>
-                <div>
-                  <span className="text-muted-foreground">System Favor Die:</span>
-                  <span className="ml-2 font-display">
-                    d{character.system_favor_die} → d{newLevel <= 4 ? 4 : newLevel <= 10 ? 6 : newLevel <= 16 ? 8 : 10}
+                <div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
+                  <span className="text-muted-foreground font-heading">System Favor Die</span>
+                  <span className="font-arise text-lg">
+                    d{character.system_favor_die} → <span className="text-arise">d{newLevel <= 4 ? 4 : newLevel <= 10 ? 6 : newLevel <= 16 ? 8 : 10}</span>
                   </span>
                 </div>
-                <div>
-                  <span className="text-muted-foreground">Max HP:</span>
-                  <span className="ml-2 font-display">
-                    {character.hp_max} → {character.hp_max + (hpIncrease || 0)}
+                <div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
+                  <span className="text-muted-foreground font-heading">Max HP</span>
+                  <span className="font-arise text-lg">
+                    {character.hp_max} → <span className="text-red-400">{character.hp_max + (hpIncrease || 0)}</span>
                   </span>
                 </div>
-                <div>
-                  <span className="text-muted-foreground">Hit Dice:</span>
-                  <span className="ml-2 font-display">
-                    {character.hit_dice_max} → {newLevel}
+                <div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
+                  <span className="text-muted-foreground font-heading">Hit Dice</span>
+                  <span className="font-arise text-lg">
+                    {character.hit_dice_max} → <span className="text-arise">{newLevel}</span>
                   </span>
                 </div>
               </div>
@@ -434,26 +509,27 @@ const CharacterLevelUp = () => {
           </div>
         </SystemWindow>
 
-        <div className="flex justify-end gap-4 mt-6">
+        <div className="flex justify-end gap-4">
           <Button
             variant="outline"
             onClick={() => navigate(`/characters/${character.id}`)}
+            className="font-heading"
           >
             Cancel
           </Button>
           <Button
             onClick={handleLevelUp}
             disabled={loading || hpIncrease === null || newLevel <= character.level}
-            className="gap-2"
+            className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple hover:shadow-arise/30 hover:shadow-lg transition-all"
           >
             {loading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                Leveling Up...
+                Processing...
               </>
             ) : (
               <>
-                <Check className="w-4 h-4" />
+                <TrendingUp className="w-4 h-4" />
                 Complete Level Up
               </>
             )}
@@ -465,4 +541,3 @@ const CharacterLevelUp = () => {
 };
 
 export default CharacterLevelUp;
-

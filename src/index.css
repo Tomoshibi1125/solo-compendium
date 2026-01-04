@@ -202,6 +202,13 @@
     background-clip: text;
   }
   
+  .gradient-text-gold {
+    background: linear-gradient(135deg, hsl(var(--monarch-gold)) 0%, hsl(42 90% 65%) 50%, hsl(var(--monarch-gold)) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
   .gradient-text-supreme {
     background: linear-gradient(135deg, hsl(var(--monarch-silver)) 0%, hsl(var(--monarch-gold)) 25%, hsl(var(--shadow-blue)) 50%, hsl(var(--arise-violet)) 75%, hsl(var(--monarch-gold)) 100%);
     -webkit-background-clip: text;

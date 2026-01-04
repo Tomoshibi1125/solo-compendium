@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Upload, FileText, CheckCircle, AlertCircle, Loader2, Download } from 'lucide-react';
+import { Upload, FileText, CheckCircle, AlertCircle, Loader2, Download, Shield, Database, Sparkles } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
@@ -110,21 +110,31 @@ const Admin = () => {
     <Layout>
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         <div className="mb-8">
-          <h1 className="font-display text-4xl font-bold mb-2 gradient-text-system">
-            CONTENT ADMIN
-          </h1>
-          <p className="text-muted-foreground font-heading">
-            Import and validate homebrew content for the compendium
-          </p>
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-arise/20 to-shadow-purple/20 border border-arise/30 flex items-center justify-center">
+              <Database className="w-6 h-6 text-arise" />
+            </div>
+            <div>
+              <h1 className="font-arise text-4xl font-bold gradient-text-system tracking-wider">
+                SYSTEM ADMIN
+              </h1>
+              <p className="text-muted-foreground font-heading">
+                Import and validate homebrew content for the compendium
+              </p>
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Input Section */}
           <div className="space-y-6">
-            <SystemWindow title="IMPORT CONTENT">
+            <SystemWindow title="IMPORT CONTENT" className="border-arise/30">
               <div className="space-y-4">
                 <div>
-                  <Label htmlFor="file-upload">Upload JSON File</Label>
+                  <Label htmlFor="file-upload" className="font-heading flex items-center gap-2">
+                    <Upload className="w-4 h-4 text-arise" />
+                    Upload JSON File
+                  </Label>
                   <div className="mt-2">
                     <input
                       id="file-upload"
@@ -136,7 +146,7 @@ const Admin = () => {
                     <Button
                       variant="outline"
                       onClick={() => document.getElementById('file-upload')?.click()}
-                      className="w-full gap-2"
+                      className="w-full gap-2 border-arise/30 hover:bg-arise/10 hover:border-arise/50"
                     >
                       <Upload className="w-4 h-4" />
                       Choose File
@@ -145,7 +155,10 @@ const Admin = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="content">Or Paste JSON Content</Label>
+                  <Label htmlFor="content" className="font-heading flex items-center gap-2">
+                    <FileText className="w-4 h-4 text-arise" />
+                    Or Paste JSON Content
+                  </Label>
                   <Textarea
                     id="content"
                     value={content}
@@ -155,45 +168,49 @@ const Admin = () => {
                       setImportResult(null);
                     }}
                     placeholder='{"jobs": [...], "powers": [...], ...}'
-                    className="mt-2 font-mono text-sm min-h-[300px]"
+                    className="mt-2 font-mono text-sm min-h-[300px] border-arise/20 focus:border-arise/50"
                   />
                 </div>
 
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="dry-run"
-                    checked={dryRun}
-                    onCheckedChange={(checked) => setDryRun(checked === true)}
-                  />
-                  <Label htmlFor="dry-run" className="cursor-pointer">
-                    Dry run (validate only, don't import)
-                  </Label>
-                </div>
+                <div className="p-3 rounded-lg bg-arise/5 border border-arise/20 space-y-3">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="dry-run"
+                      checked={dryRun}
+                      onCheckedChange={(checked) => setDryRun(checked === true)}
+                      className="border-arise/50 data-[state=checked]:bg-arise data-[state=checked]:border-arise"
+                    />
+                    <Label htmlFor="dry-run" className="cursor-pointer font-heading">
+                      Dry run (validate only, don't import)
+                    </Label>
+                  </div>
 
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="overwrite"
-                    checked={overwrite}
-                    onCheckedChange={(checked) => setOverwrite(checked === true)}
-                  />
-                  <Label htmlFor="overwrite" className="cursor-pointer">
-                    Overwrite existing entries
-                  </Label>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="overwrite"
+                      checked={overwrite}
+                      onCheckedChange={(checked) => setOverwrite(checked === true)}
+                      className="border-arise/50 data-[state=checked]:bg-arise data-[state=checked]:border-arise"
+                    />
+                    <Label htmlFor="overwrite" className="cursor-pointer font-heading">
+                      Overwrite existing entries
+                    </Label>
+                  </div>
                 </div>
 
                 <div className="flex gap-2">
                   <Button
                     onClick={handleValidate}
                     variant="outline"
-                    className="flex-1 gap-2"
+                    className="flex-1 gap-2 border-arise/30 hover:bg-arise/10 hover:border-arise/50"
                     disabled={!content.trim()}
                   >
-                    <FileText className="w-4 h-4" />
+                    <Shield className="w-4 h-4" />
                     Validate
                   </Button>
                   <Button
                     onClick={handleImport}
-                    className="flex-1 gap-2"
+                    className="flex-1 gap-2 bg-gradient-to-r from-arise to-shadow-purple hover:shadow-arise/30 hover:shadow-lg transition-all"
                     disabled={!content.trim() || loading || (validationResult && !validationResult.valid)}
                   >
                     {loading ? (
@@ -203,7 +220,7 @@ const Admin = () => {
                       </>
                     ) : (
                       <>
-                        <Upload className="w-4 h-4" />
+                        <Sparkles className="w-4 h-4" />
                         {dryRun ? 'Dry Run' : 'Import'}
                       </>
                     )}
@@ -213,7 +230,10 @@ const Admin = () => {
             </SystemWindow>
 
             {/* Example Template */}
-            <SystemWindow title="EXAMPLE TEMPLATE" variant="quest">
+            <SystemWindow title="EXAMPLE TEMPLATE" variant="quest" className="border-amber-500/30">
+              <p className="text-sm text-muted-foreground mb-4 font-heading">
+                Load a sample JSON template to get started with custom content creation.
+              </p>
               <Button
                 variant="outline"
                 onClick={() => {
@@ -233,7 +253,7 @@ const Admin = () => {
                   };
                   setContent(JSON.stringify(example, null, 2));
                 }}
-                className="w-full gap-2"
+                className="w-full gap-2 border-amber-500/30 hover:bg-amber-500/10 hover:border-amber-500/50"
               >
                 <Download className="w-4 h-4" />
                 Load Example Template
@@ -252,30 +272,39 @@ const Admin = () => {
                 )}
               >
                 <div className="space-y-4">
-                  <div className="flex items-center gap-2">
+                  <div className={cn(
+                    "flex items-center gap-3 p-3 rounded-lg",
+                    validationResult.valid ? "bg-green-500/10" : "bg-destructive/10"
+                  )}>
                     {validationResult.valid ? (
                       <>
-                        <CheckCircle className="w-5 h-5 text-green-400" />
-                        <span className="font-heading font-semibold text-green-400">Valid</span>
+                        <CheckCircle className="w-6 h-6 text-green-400" />
+                        <div>
+                          <span className="font-arise font-semibold text-green-400 tracking-wide">VALID</span>
+                          <p className="text-xs text-muted-foreground">Content bundle is ready for import</p>
+                        </div>
                       </>
                     ) : (
                       <>
-                        <AlertCircle className="w-5 h-5 text-destructive" />
-                        <span className="font-heading font-semibold text-destructive">Invalid</span>
+                        <AlertCircle className="w-6 h-6 text-destructive" />
+                        <div>
+                          <span className="font-arise font-semibold text-destructive tracking-wide">INVALID</span>
+                          <p className="text-xs text-muted-foreground">Please fix errors before importing</p>
+                        </div>
                       </>
                     )}
                   </div>
 
                   {validationResult.errors.length > 0 && (
                     <div>
-                      <h4 className="font-heading font-semibold text-destructive mb-2">
-                        Errors ({validationResult.errors.length})
+                      <h4 className="font-arise font-semibold text-destructive mb-2 tracking-wide">
+                        ERRORS ({validationResult.errors.length})
                       </h4>
                       <div className="space-y-1 max-h-48 overflow-y-auto">
                         {validationResult.errors.map((error, i) => (
                           <div key={i} className="text-sm p-2 rounded bg-destructive/10 border border-destructive/20">
                             <div className="font-mono text-xs text-muted-foreground">{error.path}</div>
-                            <div>{error.message}</div>
+                            <div className="font-heading">{error.message}</div>
                           </div>
                         ))}
                       </div>
@@ -284,14 +313,14 @@ const Admin = () => {
 
                   {validationResult.warnings.length > 0 && (
                     <div>
-                      <h4 className="font-heading font-semibold text-amber-400 mb-2">
-                        Warnings ({validationResult.warnings.length})
+                      <h4 className="font-arise font-semibold text-amber-400 mb-2 tracking-wide">
+                        WARNINGS ({validationResult.warnings.length})
                       </h4>
                       <div className="space-y-1 max-h-48 overflow-y-auto">
                         {validationResult.warnings.map((warning, i) => (
                           <div key={i} className="text-sm p-2 rounded bg-amber-500/10 border border-amber-500/20">
                             <div className="font-mono text-xs text-muted-foreground">{warning.path}</div>
-                            <div>{warning.message}</div>
+                            <div className="font-heading">{warning.message}</div>
                           </div>
                         ))}
                       </div>
@@ -310,64 +339,64 @@ const Admin = () => {
                 )}
               >
                 <div className="space-y-4">
-                  <div className="flex items-center gap-2">
+                  <div className={cn(
+                    "flex items-center gap-3 p-3 rounded-lg",
+                    importResult.success ? "bg-green-500/10" : "bg-destructive/10"
+                  )}>
                     {importResult.success ? (
                       <>
-                        <CheckCircle className="w-5 h-5 text-green-400" />
-                        <span className="font-heading font-semibold text-green-400">
-                          {dryRun ? 'Dry Run Complete' : 'Import Successful'}
-                        </span>
+                        <CheckCircle className="w-6 h-6 text-green-400" />
+                        <div>
+                          <span className="font-arise font-semibold text-green-400 tracking-wide">
+                            {dryRun ? 'DRY RUN COMPLETE' : 'IMPORT SUCCESSFUL'}
+                          </span>
+                          <p className="text-xs text-muted-foreground">Content has been processed</p>
+                        </div>
                       </>
                     ) : (
                       <>
-                        <AlertCircle className="w-5 h-5 text-destructive" />
-                        <span className="font-heading font-semibold text-destructive">Import Failed</span>
+                        <AlertCircle className="w-6 h-6 text-destructive" />
+                        <div>
+                          <span className="font-arise font-semibold text-destructive tracking-wide">IMPORT FAILED</span>
+                          <p className="text-xs text-muted-foreground">Check errors below</p>
+                        </div>
                       </>
                     )}
                   </div>
 
                   <div>
-                    <h4 className="font-heading font-semibold mb-2">Imported Items</h4>
+                    <h4 className="font-arise font-semibold mb-3 text-arise tracking-wide">IMPORTED ITEMS</h4>
                     <div className="grid grid-cols-2 gap-2">
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Jobs:</span>
-                        <Badge>{importResult.imported.jobs}</Badge>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Paths:</span>
-                        <Badge>{importResult.imported.job_paths}</Badge>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Features:</span>
-                        <Badge>{importResult.imported.job_features}</Badge>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Powers:</span>
-                        <Badge>{importResult.imported.powers}</Badge>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Relics:</span>
-                        <Badge>{importResult.imported.relics}</Badge>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Monsters:</span>
-                        <Badge>{importResult.imported.monsters}</Badge>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Backgrounds:</span>
-                        <Badge>{importResult.imported.backgrounds}</Badge>
-                      </div>
+                      {[
+                        { label: 'Jobs', value: importResult.imported.jobs },
+                        { label: 'Paths', value: importResult.imported.job_paths },
+                        { label: 'Features', value: importResult.imported.job_features },
+                        { label: 'Powers', value: importResult.imported.powers },
+                        { label: 'Relics', value: importResult.imported.relics },
+                        { label: 'Monsters', value: importResult.imported.monsters },
+                        { label: 'Backgrounds', value: importResult.imported.backgrounds },
+                      ].map((item) => (
+                        <div key={item.label} className="flex justify-between items-center p-2 rounded bg-arise/5 border border-arise/20">
+                          <span className="text-sm text-muted-foreground font-heading">{item.label}</span>
+                          <Badge className={cn(
+                            "font-arise",
+                            item.value > 0 ? "bg-arise/20 text-arise border-arise/30" : "bg-muted"
+                          )}>
+                            {item.value}
+                          </Badge>
+                        </div>
+                      ))}
                     </div>
                   </div>
 
                   {importResult.errors.length > 0 && (
                     <div>
-                      <h4 className="font-heading font-semibold text-destructive mb-2">
-                        Errors ({importResult.errors.length})
+                      <h4 className="font-arise font-semibold text-destructive mb-2 tracking-wide">
+                        ERRORS ({importResult.errors.length})
                       </h4>
                       <div className="space-y-1 max-h-48 overflow-y-auto">
                         {importResult.errors.map((error, i) => (
-                          <div key={i} className="text-sm p-2 rounded bg-destructive/10 border border-destructive/20">
+                          <div key={i} className="text-sm p-2 rounded bg-destructive/10 border border-destructive/20 font-heading">
                             {error}
                           </div>
                         ))}
@@ -377,18 +406,30 @@ const Admin = () => {
 
                   {importResult.warnings.length > 0 && (
                     <div>
-                      <h4 className="font-heading font-semibold text-amber-400 mb-2">
-                        Warnings ({importResult.warnings.length})
+                      <h4 className="font-arise font-semibold text-amber-400 mb-2 tracking-wide">
+                        WARNINGS ({importResult.warnings.length})
                       </h4>
                       <div className="space-y-1 max-h-48 overflow-y-auto">
                         {importResult.warnings.map((warning, i) => (
-                          <div key={i} className="text-sm p-2 rounded bg-amber-500/10 border border-amber-500/20">
+                          <div key={i} className="text-sm p-2 rounded bg-amber-500/10 border border-amber-500/20 font-heading">
                             {warning}
                           </div>
                         ))}
                       </div>
                     </div>
                   )}
+                </div>
+              </SystemWindow>
+            )}
+
+            {/* Empty State */}
+            {!validationResult && !importResult && (
+              <SystemWindow title="AWAITING INPUT" className="border-muted-foreground/20">
+                <div className="text-center py-12">
+                  <Database className="w-16 h-16 mx-auto text-muted-foreground/30 mb-4" />
+                  <p className="text-muted-foreground font-heading">
+                    Upload or paste JSON content to begin validation
+                  </p>
                 </div>
               </SystemWindow>
             )}
@@ -400,4 +441,3 @@ const Admin = () => {
 };
 
 export default Admin;
-
