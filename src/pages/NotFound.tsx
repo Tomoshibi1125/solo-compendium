@@ -52,7 +52,7 @@ const NotFound = () => {
           </h2>
           <p className="mb-8 text-lg text-muted-foreground font-heading leading-relaxed">
             This path does not exist in the System's records. 
-            Perhaps the <span className="text-arise font-semibold">Shadow Monarch</span> has sealed this route, 
+            Perhaps the <span className="text-arise font-semibold">Supreme Deity</span> has sealed this route, 
             or it was lost during the reset.
           </p>
           

@@ -25,10 +25,13 @@ import { Separator } from '@/components/ui/separator';
 import { useCharacter, useUpdateCharacter } from '@/hooks/useCharacters';
 import { calculateCharacterStats, formatModifier } from '@/lib/characterCalculations';
 import { applyEquipmentModifiers } from '@/lib/equipmentModifiers';
+import { applyRuneBonuses } from '@/lib/runeAutomation';
+import { useCharacterRuneInscriptions } from '@/hooks/useRunes';
 import { getAllSkills, calculateSkillModifier, calculatePassiveSkill } from '@/lib/skills';
 import { EquipmentList } from '@/components/character/EquipmentList';
 import { CurrencyManager } from '@/components/character/CurrencyManager';
 import { PowersList } from '@/components/character/PowersList';
+import { RunesList } from '@/components/character/RunesList';
 import { ActionsList } from '@/components/character/ActionsList';
 import { FeaturesList } from '@/components/character/FeaturesList';
 import { ExportDialog } from '@/components/character/ExportDialog';
@@ -106,26 +109,88 @@ const CharacterSheet = () => {
     equipment
   );
 
-  const calculatedStats = {
-    ...baseStats,
-    armorClass: equipmentMods.armorClass,
-    speed: equipmentMods.speed,
+  // Combine ability modifiers from equipment
+  const equipmentModifiedAbilities = { ...character.abilities };
+  Object.entries(equipmentMods.abilityModifiers || {}).forEach(([key, value]) => {
+    if (value !== 0) {
+      const ability = key.toUpperCase() as keyof typeof equipmentModifiedAbilities;
+      if (ability in equipmentModifiedAbilities) {
+        equipmentModifiedAbilities[ability] = (equipmentModifiedAbilities[ability] || 0) + value;
+      }
+    }
+  });
+
+  // Apply rune bonuses from equipped items
+  const { data: activeRunes = [] } = useCharacterRuneInscriptions(character.id);
+  const equippedActiveRunes = activeRunes.filter(ri => 
+    ri.equipment?.is_equipped && 
+    (!ri.equipment.requires_attunement || ri.equipment.is_attuned) &&
+    ri.is_active
+  );
+  
+  const runeBonuses = applyRuneBonuses(
+    {
+      ac: equipmentMods.armorClass,
+      speed: equipmentMods.speed,
+      abilities: equipmentModifiedAbilities,
+      attackBonus: equipmentMods.attackBonus,
+      damageBonus: typeof equipmentMods.damageBonus === 'number' 
+        ? (equipmentMods.damageBonus > 0 ? `+${equipmentMods.damageBonus}` : '') 
+        : (equipmentMods.damageBonus || ''),
+    },
+    equippedActiveRunes.map(ri => ({ rune: ri.rune, is_active: ri.is_active }))
+  );
+
+  // Final abilities with all modifiers
+  const finalAbilities = { ...equipmentModifiedAbilities };
+  Object.entries(runeBonuses.abilities).forEach(([ability, value]) => {
+    if (ability in finalAbilities && value > (equipmentModifiedAbilities[ability as keyof typeof equipmentModifiedAbilities] || 0)) {
+      finalAbilities[ability as keyof typeof finalAbilities] = value;
+    }
+  });
+
+  // Recalculate base stats with modified abilities
+  const modifiedBaseStats = calculateCharacterStats({
+    level: character.level,
+    abilities: finalAbilities,
+    savingThrowProficiencies: character.saving_throw_proficiencies || [],
+    skillProficiencies: character.skill_proficiencies || [],
+    skillExpertise: character.skill_expertise || [],
+    armorClass: character.armor_class,
+    speed: character.speed,
+  });
+
+  // Recalculate saving throws with modified abilities
+  const finalSavingThrows: Record<AbilityScore, number> = {
+    STR: getAbilityModifier(finalAbilities.STR) + (character.saving_throw_proficiencies?.includes('STR') ? modifiedBaseStats.proficiencyBonus : 0),
+    AGI: getAbilityModifier(finalAbilities.AGI) + (character.saving_throw_proficiencies?.includes('AGI') ? modifiedBaseStats.proficiencyBonus : 0),
+    VIT: getAbilityModifier(finalAbilities.VIT) + (character.saving_throw_proficiencies?.includes('VIT') ? modifiedBaseStats.proficiencyBonus : 0),
+    INT: getAbilityModifier(finalAbilities.INT) + (character.saving_throw_proficiencies?.includes('INT') ? modifiedBaseStats.proficiencyBonus : 0),
+    SENSE: getAbilityModifier(finalAbilities.SENSE) + (character.saving_throw_proficiencies?.includes('SENSE') ? modifiedBaseStats.proficiencyBonus : 0),
+    PRE: getAbilityModifier(finalAbilities.PRE) + (character.saving_throw_proficiencies?.includes('PRE') ? modifiedBaseStats.proficiencyBonus : 0),
   };
 
-  // Calculate skills
+  const calculatedStats = {
+    ...modifiedBaseStats,
+    savingThrows: finalSavingThrows,
+    armorClass: runeBonuses.ac,
+    speed: runeBonuses.speed,
+  };
+
+  // Calculate skills with modified abilities
   const allSkills = getAllSkills();
   const skills = allSkills.reduce((acc, skill) => {
     acc[skill.name] = {
       modifier: calculateSkillModifier(
         skill.name,
-        character.abilities,
+        finalAbilities,
         character.skill_proficiencies || [],
         character.skill_expertise || [],
         calculatedStats.proficiencyBonus
       ),
       passive: calculatePassiveSkill(
         skill.name,
-        character.abilities,
+        finalAbilities,
         character.skill_proficiencies || [],
         character.skill_expertise || [],
         calculatedStats.proficiencyBonus
@@ -574,6 +639,9 @@ const CharacterSheet = () => {
 
             {/* Powers */}
             <PowersList characterId={character.id} />
+
+            {/* Runes */}
+            <RunesList characterId={character.id} />
 
             {/* Monarch Unlocks */}
             <MonarchUnlocksPanel characterId={character.id} />

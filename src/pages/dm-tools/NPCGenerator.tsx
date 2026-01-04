@@ -29,7 +29,7 @@ const SECRETS = [
   'Former S-Rank hunter (lost power)', 'Working for a Monarch', 'Has a cursed relic',
   'Knows about the reset', 'Is actually a monster', 'Has System favor debt',
   'Betrayed their hunter team', 'Seeking forbidden knowledge', 'Has a hidden Gate',
-  'Is being hunted', 'Knows Jinwoo personally', 'Has a duplicate identity'
+  'Is being hunted', 'Knows the Supreme Deity personally', 'Has a duplicate identity'
 ];
 const QUIRKS = [
   'Always checks for traps', 'Collects monster cores obsessively', 'Speaks in riddles',

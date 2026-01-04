@@ -45,10 +45,10 @@ export function Layout({ children }: LayoutProps) {
         <div className="container mx-auto px-4 py-6 max-w-full">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-sm text-muted-foreground font-heading">
-              <span className="text-shadow-purple">Shadow Monarch's Compendium</span> — In the post-reset world, knowledge is preserved by the <span className="text-primary">System</span>
+              <span className="text-shadow-purple">The System's Compendium</span> — In the post-reset world, knowledge is preserved by the <span className="text-primary">System</span>
             </p>
             <p className="text-xs text-muted-foreground font-display tracking-widest">
-              BLESSED BY THE <span className="gradient-text-monarch">SHADOW MONARCH'S</span> DOMAIN
+              BLESSED BY THE <span className="gradient-text-monarch">SUPREME DEITY'S</span> DOMAIN
             </p>
           </div>
         </div>

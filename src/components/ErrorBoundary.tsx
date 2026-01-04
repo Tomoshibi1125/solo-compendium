@@ -2,6 +2,7 @@ import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { AlertTriangle } from 'lucide-react';
 import { Button } from './ui/button';
 import { SystemWindow } from './ui/SystemWindow';
+import { error as logError } from '@/lib/logger';
 
 interface Props {
   children: ReactNode;
@@ -25,7 +26,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     // Log error for debugging
-    console.error('ErrorBoundary caught an error:', error, errorInfo);
+    logError('ErrorBoundary caught an error:', error, errorInfo);
   }
 
   render() {
@@ -40,7 +41,7 @@ export class ErrorBoundary extends Component<Props, State> {
             <AlertTriangle className="w-12 h-12 text-destructive mx-auto mb-4" />
             <h2 className="font-display text-2xl font-bold mb-2 gradient-text-shadow">SYSTEM ERROR</h2>
             <p className="text-muted-foreground mb-4">
-              The System has encountered an anomaly. Even under the Shadow Monarch's watch, 
+              The System has encountered an anomaly. Even under the Supreme Deity's watch, 
               reality sometimes glitches. Please try refreshing the page.
             </p>
             {this.state.error && (

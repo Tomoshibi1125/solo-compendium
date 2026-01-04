@@ -13,7 +13,7 @@ import { cn } from '@/lib/utils';
 const GATE_RANKS = ['E', 'D', 'C', 'B', 'A', 'S'];
 const GATE_THEMES = [
   'Shadow Realm', 'Elemental Chaos', 'Beast Domain', 'Construct Forge',
-  'Abyssal Depths', 'Celestial Spire', 'Shadow Monarch\'s Domain', 'Necromantic Lab',
+  'Abyssal Depths', 'Celestial Spire', 'Supreme Deity\'s Domain', 'Necromantic Lab',
   'Mana Nexus', 'Shadow Monarch\'s Memory', 'System Testing Ground', 'Post-Reset Fragment'
 ];
 const GATE_BIOMES = [

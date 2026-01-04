@@ -90,7 +90,7 @@ const Campaigns = () => {
               GUILD REGISTRY
             </h1>
             <p className="text-muted-foreground font-heading">
-              Create or join guilds to hunt with others across the Shadow Monarch's domain
+              Create or join guilds to hunt with others across the System's domain
             </p>
           </div>
           <Button 

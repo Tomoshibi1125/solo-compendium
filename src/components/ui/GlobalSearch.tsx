@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useRecentItems } from '@/hooks/useRecentItems';
 import { cn } from '@/lib/utils';
+import { error as logError } from '@/lib/logger';
 
 interface SearchResult {
   id: string;
@@ -63,7 +64,7 @@ export function GlobalSearch({ className }: { className?: string }) {
             })));
           }
         } catch (error) {
-          console.error(`Error searching ${table}:`, error);
+          logError(`Error searching ${table}:`, error);
         }
       }
 
@@ -84,7 +85,7 @@ export function GlobalSearch({ className }: { className?: string }) {
           })));
         }
       } catch (error) {
-        console.error('Error searching characters:', error);
+        logError('Error searching characters:', error);
       }
 
       return allResults.slice(0, 10);

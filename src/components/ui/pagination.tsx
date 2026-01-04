@@ -78,7 +78,7 @@ export function Pagination({
           {getPageNumbers().map((page, index) => {
             if (page === '...') {
               return (
-                <span key={`ellipsis-${index}`} className="px-2 text-muted-foreground">
+                <span key={`ellipsis-${currentPage}-${index}`} className="px-2 text-muted-foreground">
                   ...
                 </span>
               );

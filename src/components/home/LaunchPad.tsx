@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { 
   Users, 
   BookOpen, 
@@ -25,12 +26,18 @@ import { useMyCampaigns, useJoinedCampaigns, useIsDM } from '@/hooks/useCampaign
 import { RoleBadge } from '@/components/ui/RoleBadge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+type ViewMode = 'dm' | 'player';
 
 export function LaunchPad() {
   const { data: characters, isLoading: charactersLoading, error: charactersError } = useCharacters();
   const { data: myCampaigns, isLoading: myCampaignsLoading, error: myCampaignsError } = useMyCampaigns();
   const { data: joinedCampaigns, isLoading: joinedCampaignsLoading, error: joinedCampaignsError } = useJoinedCampaigns();
   const { data: isDM = false } = useIsDM();
+  
+  // DM/Player mode selector - default to DM mode if user is a DM
+  const [viewMode, setViewMode] = useState<ViewMode>(isDM ? 'dm' : 'player');
 
   const recentCharacters = characters?.slice(0, 3) || [];
   const recentMyCampaigns = myCampaigns?.slice(0, 2) || [];
@@ -79,19 +86,19 @@ export function LaunchPad() {
       </div>
 
       <div className="container mx-auto px-4 py-12 relative z-10 max-w-full overflow-x-hidden">
-        {/* Header - Shadow Monarch's Domain */}
+        {/* Header - The System's Domain */}
         <div className="text-center mb-12 animate-slide-up">
           <div className="inline-block mb-6">
             <SystemWindow variant="arise" className="px-6 py-2" animated>
               <div className="flex items-center gap-2 font-heading">
                 <Skull className="w-4 h-4 text-arise-violet" />
-                <span className="text-sm gradient-text-arise font-semibold tracking-wide">Shadow Monarch's Domain</span>
+                <span className="text-sm gradient-text-arise font-semibold tracking-wide">The System's Domain</span>
                 <Sparkles className="w-4 h-4 text-shadow-purple" />
               </div>
             </SystemWindow>
           </div>
           
-          {/* Shadow Monarch Logo - Supreme variant */}
+          {/* Supreme Deity Logo - Supreme variant */}
           <div className="flex justify-center mb-6">
             <ShadowMonarchLogo size="lg" variant="supreme" className="drop-shadow-2xl" />
           </div>
@@ -107,7 +114,7 @@ export function LaunchPad() {
               <RoleBadge role="hunter" />
             )}
           </div>
-          <p className="text-muted-foreground font-heading max-w-2xl mx-auto leading-relaxed">
+          <p className="text-muted-foreground font-heading max-w-2xl mx-auto leading-relaxed mb-6">
             {isDM ? (
               <>
                 <span className="text-primary font-semibold">Gate Master (System)</span> — You have access to System Tools to manage your campaigns. Manage your <span className="text-primary">Hunters</span>, create <span className="text-shadow-purple">Campaigns</span>, and explore the <span className="text-accent">Compendium</span>.
@@ -118,58 +125,115 @@ export function LaunchPad() {
               </>
             )}
           </p>
+
+          {/* Mode Selector - Only show for DMs */}
+          {isDM && (
+            <div className="flex justify-center mb-6">
+              <Tabs value={viewMode} onValueChange={(value) => setViewMode(value as ViewMode)} className="w-auto">
+                <TabsList className="glass-card border border-primary/20 bg-background/50">
+                  <TabsTrigger 
+                    value="dm" 
+                    className={cn(
+                      "data-[state=active]:bg-primary/20 data-[state=active]:text-primary",
+                      "px-6 py-2"
+                    )}
+                  >
+                    <Crown className="w-4 h-4 mr-2" />
+                    Gate Master Mode
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="player"
+                    className={cn(
+                      "data-[state=active]:bg-primary/20 data-[state=active]:text-primary",
+                      "px-6 py-2"
+                    )}
+                  >
+                    <Sword className="w-4 h-4 mr-2" />
+                    Hunter Mode
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </div>
+          )}
         </div>
 
         {/* Quick Actions - The System's Commands */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
-          {/* DM Tools - Prominent for DMs */}
-          {isDM && (
-            <QuickActionCard
-              icon={Map}
-              title="System Tools"
-              description="Gate Master tools for campaigns"
-              href="/dm-tools"
-              variant="primary"
-              graphic={<Crown className="w-16 h-16 opacity-60 text-primary" />}
-            />
-          )}
-          <QuickActionCard
-            icon={Zap}
-            title="Awaken Hunter"
-            description="Awaken a new Hunter"
-            href="/characters/new"
-            variant={isDM ? "default" : "primary"}
-          />
-          <QuickActionCard
-            icon={BookOpen}
-            title="Compendium"
-            description="Browse knowledge"
-            href="/compendium"
-            variant="default"
-            graphic={<GatePortal rank="S" className="w-16 h-16 opacity-60" />}
-          />
-          <QuickActionCard
-            icon={Crown}
-            title="Create Campaign"
-            description="Start a new campaign"
-            href="/campaigns"
-            variant="default"
-          />
-          {!isDM && (
-            <QuickActionCard
-              icon={UserPlus}
-              title="Join Campaign"
-              description="Enter with share code"
-              href="/campaigns/join"
-              variant="default"
-            />
+          {viewMode === 'dm' && isDM ? (
+            <>
+              {/* DM Mode Actions */}
+              <QuickActionCard
+                icon={Map}
+                title="System Tools"
+                description="Gate Master tools for campaigns"
+                href="/dm-tools"
+                variant="primary"
+                graphic={<Crown className="w-16 h-16 opacity-60 text-primary" />}
+              />
+              <QuickActionCard
+                icon={Crown}
+                title="My Campaigns"
+                description="Manage your campaigns"
+                href="/campaigns"
+                variant="primary"
+              />
+              <QuickActionCard
+                icon={Users}
+                title="Campaign Management"
+                description="Create or join campaigns"
+                href="/campaigns"
+                variant="default"
+              />
+              <QuickActionCard
+                icon={BookOpen}
+                title="Compendium"
+                description="Browse knowledge"
+                href="/compendium"
+                variant="default"
+                graphic={<GatePortal rank="S" className="w-16 h-16 opacity-60" />}
+              />
+            </>
+          ) : (
+            <>
+              {/* Player Mode Actions */}
+              <QuickActionCard
+                icon={Zap}
+                title="Awaken Hunter"
+                description="Awaken a new Hunter"
+                href="/characters/new"
+                variant="primary"
+              />
+              <QuickActionCard
+                icon={BookOpen}
+                title="Compendium"
+                description="Browse knowledge"
+                href="/compendium"
+                variant="default"
+                graphic={<GatePortal rank="S" className="w-16 h-16 opacity-60" />}
+              />
+              <QuickActionCard
+                icon={Crown}
+                title="Create Campaign"
+                description="Start a new campaign"
+                href="/campaigns"
+                variant="default"
+              />
+              <QuickActionCard
+                icon={UserPlus}
+                title="Join Campaign"
+                description="Enter with share code"
+                href="/campaigns/join"
+                variant="default"
+              />
+            </>
           )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Recent Hunters - Shadow Army */}
-          <div className="lg:col-span-2">
-            <SystemWindow title="SHADOW ARMY — HUNTERS" variant="monarch" className="h-full">
+          {/* Recent Hunters - Shadow Army - Only show in Player Mode or if not DM */}
+          {(viewMode === 'player' || !isDM) && (
+            <div className="lg:col-span-2">
+              <SystemWindow title="SHADOW ARMY — HUNTERS" variant="monarch" className="h-full">
               {charactersLoading ? (
                 <div className="space-y-4">
                   <Skeleton className="h-20 w-full" />
@@ -230,7 +294,75 @@ export function LaunchPad() {
                 </div>
               )}
             </SystemWindow>
-          </div>
+            </div>
+          )}
+
+          {/* DM Campaign View - Show when in DM Mode */}
+          {viewMode === 'dm' && isDM && (
+            <div className="lg:col-span-2">
+              <SystemWindow title="GATE MASTER'S CAMPAIGNS" variant="monarch" className="h-full">
+                {myCampaignsLoading ? (
+                  <div className="space-y-4">
+                    <Skeleton className="h-20 w-full" />
+                    <Skeleton className="h-20 w-full" />
+                    <Skeleton className="h-20 w-full" />
+                  </div>
+                ) : recentMyCampaigns.length > 0 ? (
+                  <div className="space-y-3">
+                    {recentMyCampaigns.map((campaign, index) => (
+                      <Link
+                        key={campaign.id}
+                        to={`/campaigns/${campaign.id}`}
+                        className={cn(
+                          "block p-4 rounded-lg border border-border bg-background/50 hover:bg-muted/50 hover:border-primary/40 transition-all group card-shadow-energy",
+                          index === 0 && "animate-arise"
+                        )}
+                        style={{ animationDelay: `${index * 0.1}s` }}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-2">
+                              <Crown className="w-5 h-5 text-primary" />
+                              <div>
+                                <h3 className="font-heading font-semibold group-hover:text-primary transition-colors">
+                                  {campaign.name}
+                                </h3>
+                                <p className="text-sm text-muted-foreground">
+                                  {campaign.description || 'No description'}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                          <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                        </div>
+                      </Link>
+                    ))}
+                    <Link
+                      to="/campaigns"
+                      className="block mt-4 text-center text-sm text-primary font-heading hover:underline hover:text-shadow-purple transition-colors"
+                    >
+                      Manage all Campaigns →
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="text-center py-12">
+                    <div className="flex justify-center mb-4">
+                      <Crown className="w-12 h-12 text-muted-foreground opacity-50" />
+                    </div>
+                    <p className="text-muted-foreground font-heading mb-4">
+                      No campaigns created yet. Start your first one!
+                    </p>
+                    <Link to="/campaigns">
+                      <Button size="sm" className="btn-shadow-monarch">
+                        <Crown className="w-4 h-4 mr-2" />
+                        Create Campaign
+                      </Button>
+                    </Link>
+                  </div>
+                )}
+              </SystemWindow>
+            </div>
+          )}
 
           {/* Campaigns & Stats */}
           <div className="space-y-6">
@@ -395,7 +527,7 @@ export function LaunchPad() {
                   System Tools
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  Shadow Monarch's domain
+                  The System's domain
                 </p>
               </div>
             </div>
@@ -513,19 +645,19 @@ function UnauthenticatedWelcomeScreen() {
       </div>
 
       <div className="container mx-auto px-4 py-12 relative z-10 max-w-full overflow-x-hidden">
-        {/* Header - Shadow Monarch's Domain */}
+        {/* Header - The System's Domain */}
         <div className="text-center mb-12 animate-slide-up">
           <div className="inline-block mb-6">
             <SystemWindow variant="arise" className="px-6 py-2" animated>
               <div className="flex items-center gap-2 font-heading">
                 <Skull className="w-4 h-4 text-arise-violet" />
-                <span className="text-sm gradient-text-arise font-semibold tracking-wide">Shadow Monarch's Domain</span>
+                <span className="text-sm gradient-text-arise font-semibold tracking-wide">The System's Domain</span>
                 <Sparkles className="w-4 h-4 text-shadow-purple" />
               </div>
             </SystemWindow>
           </div>
 
-          {/* Shadow Monarch Logo - Supreme variant */}
+          {/* Supreme Deity Logo - Supreme variant */}
           <div className="flex justify-center mb-6">
             <ShadowMonarchLogo size="lg" variant="supreme" className="drop-shadow-2xl" />
           </div>
@@ -534,19 +666,19 @@ function UnauthenticatedWelcomeScreen() {
             <span className="gradient-text-arise text-glow-arise">WELCOME, HUNTER</span>
           </h1>
           <p className="text-muted-foreground font-heading max-w-2xl mx-auto leading-relaxed mb-8">
-            The System awaits your awakening. In the world reset by Shadow Monarch Sung Jinwoo,
+            The System awaits your awakening. In the world reset by the Supreme Deity,
             your journey as a Hunter begins here.
           </p>
         </div>
 
         {/* Welcome Message */}
         <div className="max-w-3xl mx-auto mb-12">
-          <SystemWindow title="SHADOW MONARCH'S WELCOME" variant="monarch" className="text-center">
+          <SystemWindow title="THE SYSTEM'S WELCOME" variant="monarch" className="text-center">
             <div className="space-y-6">
               <p className="text-muted-foreground font-heading leading-relaxed">
                 <span className="gradient-text-shadow font-semibold">Greetings, potential Hunter.</span>
                 The System has detected your presence in the post-reset timeline.
-                To begin your journey and access the full power of the Shadow Monarch's Compendium,
+                To begin your journey and access the full power of the System's Compendium,
                 you must first awaken as a Hunter.
               </p>
 
@@ -671,7 +803,7 @@ function UnauthenticatedWelcomeScreen() {
                     DM Tools
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    Tools for Game Masters and Shadow Monarchs
+                    Tools for Game Masters and Supreme Deities
                   </p>
                 </div>
               </div>

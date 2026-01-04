@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Users, Copy, Loader2, Crown, MessageSquare, FileText, Share2, Settings } from 'lucide-react';
+import { ArrowLeft, Users, Copy, Loader2, Crown, MessageSquare, FileText, Share2, Settings, Layers } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
@@ -114,10 +114,14 @@ const CampaignDetail = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className={hasDMAccess ? "grid w-full grid-cols-5" : "grid w-full grid-cols-4"}>
+          <TabsList className={hasDMAccess ? "grid w-full grid-cols-6" : "grid w-full grid-cols-5"}>
             <TabsTrigger value="overview" className="gap-2">
               <Users className="w-4 h-4" />
               Overview
+            </TabsTrigger>
+            <TabsTrigger value="vtt" className="gap-2">
+              <Layers className="w-4 h-4" />
+              VTT
             </TabsTrigger>
             <TabsTrigger value="chat" className="gap-2">
               <MessageSquare className="w-4 h-4" />
@@ -138,6 +142,45 @@ const CampaignDetail = () => {
               </TabsTrigger>
             )}
           </TabsList>
+
+          <TabsContent value="vtt">
+            <SystemWindow title="VIRTUAL TABLETOP" variant="quest">
+              <div className="space-y-6 text-center py-12">
+                <Layers className="w-16 h-16 text-primary mx-auto mb-4 opacity-50" />
+                <h2 className="font-arise text-2xl font-bold mb-4">Full-Featured VTT System</h2>
+                <p className="text-muted-foreground font-heading max-w-2xl mx-auto mb-6">
+                  Access the complete Virtual Tabletop system with maps, tokens, initiative tracking, 
+                  dice rolling, chat, fog of war, and more. Everything you need for running sessions online.
+                </p>
+                <Link to={`/campaigns/${id}/vtt`}>
+                  <Button className="btn-shadow-monarch" size="lg">
+                    <Layers className="w-5 h-5 mr-2" />
+                    Launch VTT
+                  </Button>
+                </Link>
+                <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-left max-w-3xl mx-auto">
+                  <div className="p-4 rounded-lg border border-border bg-muted/30">
+                    <h3 className="font-heading font-semibold mb-2">🎯 Token Management</h3>
+                    <p className="text-xs text-muted-foreground">
+                      Place character tokens, monsters, and NPCs. Drag, rotate, and manage HP directly on tokens.
+                    </p>
+                  </div>
+                  <div className="p-4 rounded-lg border border-border bg-muted/30">
+                    <h3 className="font-heading font-semibold mb-2">⚔️ Initiative Tracking</h3>
+                    <p className="text-xs text-muted-foreground">
+                      Track combat initiative with automatic sorting. Manage turn order and combat flow.
+                    </p>
+                  </div>
+                  <div className="p-4 rounded-lg border border-border bg-muted/30">
+                    <h3 className="font-heading font-semibold mb-2">🎲 Dice & Chat</h3>
+                    <p className="text-xs text-muted-foreground">
+                      Roll dice with full notation support. Chat with party members in real-time.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </SystemWindow>
+          </TabsContent>
 
           <TabsContent value="overview" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

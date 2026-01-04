@@ -27,7 +27,7 @@ export function Header() {
       <div className="glass-card border-t-0 rounded-t-none border-b-shadow-blue/20">
             <nav className="container mx-auto px-4 lg:px-8 max-w-full overflow-x-hidden">
           <div className="flex h-16 items-center justify-between">
-            {/* Logo - Shadow Monarch's Seal */}
+            {/* Logo - The System's Seal */}
             <Link to="/" className="flex items-center gap-3 group">
               <div className="relative monarch-presence">
                 <ShadowMonarchLogo size="sm" variant="arise" className="group-hover:scale-110 transition-transform duration-300" />
@@ -37,7 +37,7 @@ export function Header() {
                   SOLO LEVELING
                 </span>
                 <span className="block text-xs text-muted-foreground font-heading -mt-1 tracking-wide">
-                  Shadow Monarch's Domain
+                  The System's Domain
                 </span>
               </div>
             </Link>

@@ -5,9 +5,14 @@
 
 import type { Database } from '@/integrations/supabase/types';
 import { supabase } from '@/integrations/supabase/client';
+import { logger } from './logger';
+import { calculateRuneMaxUses } from './runeAutomation';
+import { getProficiencyBonus } from '@/types/solo-leveling';
 
 type Character = Database['public']['Tables']['characters']['Row'];
 type Feature = Database['public']['Tables']['character_features']['Row'];
+type Rune = Database['public']['Tables']['compendium_runes']['Row'];
+type RuneInscription = Database['public']['Tables']['character_rune_inscriptions']['Row'];
 
 /**
  * Execute short rest
@@ -52,6 +57,14 @@ export async function executeShortRest(characterId: string): Promise<void> {
           .eq('id', feature.id);
       }
     }
+  }
+
+  // Reset rune uses if applicable
+  try {
+    await resetRuneUses(characterId, 'short');
+  } catch (error) {
+    logger.error('Failed to reset rune uses:', error);
+    // Continue even if rune reset fails
   }
 }
 
@@ -119,6 +132,83 @@ export async function executeLongRest(characterId: string): Promise<void> {
           .eq('id', feature.id);
       }
     }
+  }
+
+  // Reset rune uses if applicable
+  try {
+    await resetRuneUses(characterId, 'long');
+  } catch (error) {
+    logger.error('Failed to reset rune uses:', error);
+    // Continue even if rune reset fails
+  }
+}
+
+/**
+ * Reset rune uses on rest
+ * Runes with uses_per_rest recharge based on their recharge type
+ */
+async function resetRuneUses(characterId: string, restType: 'short' | 'long'): Promise<void> {
+  // Get character for level/proficiency bonus
+  const { data: character } = await supabase
+    .from('characters')
+    .select('level')
+    .eq('id', characterId)
+    .single();
+
+  if (!character) return;
+
+  const proficiencyBonus = getProficiencyBonus(character.level);
+
+  // Get all character's rune inscriptions
+  const { data: inscriptions } = await supabase
+    .from('character_rune_inscriptions')
+    .select(`
+      *,
+      rune:compendium_runes(*)
+    `)
+    .eq('character_id', characterId)
+    .eq('is_active', true);
+
+  if (!inscriptions || inscriptions.length === 0) return;
+
+  // Process each inscription
+  for (const inscription of inscriptions) {
+    const rune = inscription.rune as Rune;
+    
+    // Skip if no uses_per_rest (at-will or passive)
+    if (!rune.uses_per_rest || rune.uses_per_rest === 'at-will') {
+      continue;
+    }
+
+    // Check if this rune recharges on this rest type
+    const shouldRecharge = 
+      rune.recharge === restType || 
+      (restType === 'long' && rune.recharge === 'short-rest');
+
+    if (!shouldRecharge) {
+      continue;
+    }
+
+    // Calculate max uses
+    const maxUses = calculateRuneMaxUses(
+      rune.uses_per_rest,
+      character.level,
+      proficiencyBonus
+    );
+
+    // Skip unlimited uses (-1)
+    if (maxUses === -1) {
+      continue;
+    }
+
+    // Update inscription with new uses
+    await supabase
+      .from('character_rune_inscriptions')
+      .update({
+        uses_max: maxUses,
+        uses_current: maxUses,
+      })
+      .eq('id', inscription.id);
   }
 }
 

@@ -126,6 +126,16 @@ export function ActionCard({
               Uses: {uses.current}/{uses.max}
             </Badge>
           )}
+          {inscriptionId && uses && uses.current > 0 && onUse && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onUse}
+              className="h-6 text-xs"
+            >
+              Use
+            </Button>
+          )}
           {recharge && (
             <Badge variant="outline" className="text-xs">
               Recharge: {recharge}

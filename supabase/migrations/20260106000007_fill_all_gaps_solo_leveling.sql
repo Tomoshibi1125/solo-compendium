@@ -3,7 +3,7 @@
 -- =============================================
 -- This migration ensures all tables, mechanics, rules, and content
 -- are complete and fully aligned with Solo Leveling manhwa post-reset
--- timeline with Jinwoo as Supreme Deity setting/theme/tone/aesthetic
+-- timeline with Supreme Deity (post-reset world) setting/theme/tone/aesthetic
 
 -- =============================================
 -- UPDATE ANY REMAINING D&D TERMINOLOGY
@@ -307,5 +307,5 @@ CREATE INDEX IF NOT EXISTS idx_compendium_skills_ability ON compendium_skills(ab
 -- 2. All tables have complete content
 -- 3. All mechanics/rules are documented
 -- 4. All descriptions reference the post-reset timeline
--- 5. All content aligns with Jinwoo as Supreme Deity setting
+-- 5. All content aligns with Supreme Deity (post-reset world) setting
 

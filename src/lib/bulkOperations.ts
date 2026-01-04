@@ -5,6 +5,7 @@
 
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
+import { error as logError } from '@/lib/logger';
 
 type Character = Database['public']['Tables']['characters']['Row'];
 
@@ -28,7 +29,7 @@ export async function bulkUpdateCharacters(
       if (error) throw error;
       success++;
     } catch (error) {
-      console.error(`Failed to update character ${id}:`, error);
+      logError(`Failed to update character ${id}:`, error);
       failed++;
     }
   }
@@ -55,7 +56,7 @@ export async function bulkDeleteCharacters(
       if (error) throw error;
       success++;
     } catch (error) {
-      console.error(`Failed to delete character ${id}:`, error);
+      logError(`Failed to delete character ${id}:`, error);
       failed++;
     }
   }
@@ -107,7 +108,7 @@ export async function bulkAddEquipment(
 
       success++;
     } catch (error) {
-      console.error(`Failed to add equipment to character ${characterId}:`, error);
+      logError(`Failed to add equipment to character ${characterId}:`, error);
       failed++;
     }
   }
@@ -151,7 +152,7 @@ export async function bulkLevelUp(
       if (error) throw error;
       success++;
     } catch (error) {
-      console.error(`Failed to level up character ${id}:`, error);
+      logError(`Failed to level up character ${id}:`, error);
       failed++;
     }
   }
@@ -205,7 +206,7 @@ export async function bulkRest(
 
       success++;
     } catch (error) {
-      console.error(`Failed to rest character ${id}:`, error);
+      logError(`Failed to rest character ${id}:`, error);
       failed++;
     }
   }

@@ -80,7 +80,7 @@ const NPC_SECRETS = [
   'Seeking forbidden knowledge',
   'Has a hidden Gate',
   'Is being hunted',
-  'Knows Jinwoo personally',
+  'Knows the Supreme Deity personally',
   'Has a duplicate identity',
 ];
 
@@ -91,7 +91,7 @@ const GATE_THEMES = [
   'Construct Forge (construct focus)',
   'Abyssal Depths (fiend focus)',
   'Celestial Spire (celestial focus)',
-  'Shadow Monarch\'s Domain (shadow focus)',
+  'Supreme Deity\'s Domain (shadow focus)',
   'Necromantic Lab (undead + construct)',
   'Mana Nexus (elemental + aberration)',
   'Shadow Monarch\'s Memory',

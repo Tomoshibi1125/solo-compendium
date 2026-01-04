@@ -1,5 +1,5 @@
 // Gemini Protocol - Procedural Sovereign Fusion Generator
-// Solo Leveling Post-Reset Timeline - Supreme Deity Jinwoo Setting
+// Solo Leveling Post-Reset Timeline - Supreme Deity Setting
 // DBZ/Super-Style + Dual Class LitRPG Series Fusion Mechanics
 
 import type { Tables } from '@/integrations/supabase/types';
@@ -341,7 +341,7 @@ const abilityTemplates = {
   sovereignTranscendence: [
     {
       name: 'Sovereign Transcendence: {fusionName}',
-      desc: '[BEYOND FUSION] Under Supreme Deity Jinwoo\'s blessing, transcend the Gemini Protocol itself. You have become something neither {monarchA} nor {monarchB} could comprehend—a true Sovereign of {fusionTheme}. Permanent benefits: +4 to all ability scores, resistance to all damage, and once per day you may automatically succeed on any roll. When you die, you may choose to reform after 1d4 days at full power. The fusion is complete. The Sovereign is eternal.',
+      desc: '[BEYOND FUSION] Under the Supreme Deity\'s blessing, transcend the Gemini Protocol itself. You have become something neither {monarchA} nor {monarchB} could comprehend—a true Sovereign of {fusionTheme}. Permanent benefits: +4 to all ability scores, resistance to all damage, and once per day you may automatically succeed on any roll. When you die, you may choose to reform after 1d4 days at full power. The fusion is complete. The Sovereign is eternal.',
       action: 'Passive',
       isCapstone: true,
       type: 'dual_class' as const
@@ -393,7 +393,7 @@ function generateAbilityFromTemplate(
 
 // Determine fusion method based on combination
 function determineFusionMethod(job: Job, monarchA: Monarch, monarchB: Monarch): 'potara' | 'dance' | 'dual_class' | 'absorbed' {
-  // Shadow Monarch combinations use Potara (permanent, supreme power like Jinwoo)
+  // Shadow Monarch combinations use Potara (permanent, supreme power like the Supreme Deity)
   if (monarchA.theme === 'Shadow' || monarchB.theme === 'Shadow') {
     return 'potara';
   }
@@ -557,7 +557,7 @@ export function generateSovereign(
     title: `The ${fusionThemeData.theme} ${job.name}`,
     description: `[GEMINI PROTOCOL: ${fusionMethod.toUpperCase()} FUSION]
     
-A transcendent fusion of ${job.name} (${pathShortName}) with the merged essence of ${monarchA.title} and ${monarchB.title}. Through the Gemini Protocol—blessed by Supreme Deity Sung Jinwoo in the post-reset timeline—this Sovereign embodies ${fusionThemeData.concept}.
+A transcendent fusion of ${job.name} (${pathShortName}) with the merged essence of ${monarchA.title} and ${monarchB.title}. Through the Gemini Protocol—blessed by the Supreme Deity in the post-reset timeline—this Sovereign embodies ${fusionThemeData.concept}.
 
 Unlike simple power combinations, this is TRUE FUSION in the style of the Potara earrings and Fusion Dance. The four components (Job, Path, Monarch A, Monarch B) do not merely cooperate—they have become ONE BEING that transcends all original limitations.
 

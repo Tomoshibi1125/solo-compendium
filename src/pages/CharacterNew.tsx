@@ -456,7 +456,7 @@ const CharacterNew = () => {
                   </div>
                   <div className="grid grid-cols-3 gap-2">
                     {[0, 1, 2, 3, 4, 5].map((index) => (
-                      <div key={index}>
+                      <div key={`stat-input-${index}`}>
                         <Label>Stat {index + 1}</Label>
                         <Input
                           type="number"
@@ -488,7 +488,7 @@ const CharacterNew = () => {
                       <div className="flex gap-1 mb-1">
                         {rolledStats.map((stat, index) => (
                           <Button
-                            key={index}
+                            key={`stat-option-${stat}-${index}`}
                             variant="outline"
                             size="sm"
                             className="text-xs h-6 px-2"

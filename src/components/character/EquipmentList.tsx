@@ -1,14 +1,17 @@
 import { useState } from 'react';
-import { Package, Plus, Trash2, Shield, Zap, Gem, Heart, Coins, Weight, AlertTriangle } from 'lucide-react';
+import { Package, Plus, Trash2, Shield, Zap, Gem, Heart, Coins, Weight, AlertTriangle, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useEquipment } from '@/hooks/useEquipment';
 import { useCharacter } from '@/hooks/useCharacters';
+import { useEquipmentRunes, useInscribeRune } from '@/hooks/useRunes';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { AddEquipmentDialog } from './AddEquipmentDialog';
+import { InscribeRuneDialog } from './InscribeRuneDialog';
+import { EquipmentItem } from './EquipmentItem';
 import { CompendiumLink } from './CompendiumLink';
 import { calculateTotalWeight, calculateEncumbrance, calculateCarryingCapacity } from '@/lib/encumbrance';
 import type { Database } from '@/integrations/supabase/types';
@@ -38,6 +41,8 @@ export function EquipmentList({ characterId }: { characterId: string }) {
   const { data: character } = useCharacter(characterId);
   const { toast } = useToast();
   const [addDialogOpen, setAddDialogOpen] = useState(false);
+  const [inscribeDialogOpen, setInscribeDialogOpen] = useState(false);
+  const [selectedEquipmentId, setSelectedEquipmentId] = useState<string | null>(null);
 
   // Calculate weight and encumbrance
   const strScore = character?.abilities?.STR || 10;
@@ -202,87 +207,18 @@ export function EquipmentList({ characterId }: { characterId: string }) {
                 </div>
                 <div className="space-y-2">
                   {items.map((item) => (
-                    <div
+                    <EquipmentItem
                       key={item.id}
-                      className={cn(
-                        "p-3 rounded-lg border bg-muted/30",
-                        item.is_equipped && "border-primary/50 bg-primary/5"
-                      )}
-                    >
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="font-heading font-semibold">{item.name}</span>
-                            {item.rarity && (
-                              <Badge variant="secondary" className="text-xs">
-                                {item.rarity}
-                              </Badge>
-                            )}
-                            {item.is_equipped && (
-                              <Badge variant="default" className="text-xs">Equipped</Badge>
-                            )}
-                            {item.is_attuned && (
-                              <Badge variant="destructive" className="text-xs">Attuned</Badge>
-                            )}
-                          </div>
-                          {item.description && (
-                            <p className="text-xs text-muted-foreground line-clamp-2">
-                              {item.description}
-                            </p>
-                          )}
-                          {item.properties && item.properties.length > 0 && (
-                            <div className="flex flex-wrap gap-1 mt-1">
-                              {item.properties.slice(0, 3).map((prop, i) => (
-                                <Badge key={i} variant="outline" className="text-xs">
-                                  {prop}
-                                </Badge>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="flex flex-col gap-1">
-                            <div className="flex items-center gap-2">
-                              <Checkbox
-                                id={`equipped-${item.id}`}
-                                checked={item.is_equipped}
-                                onCheckedChange={() => handleToggleEquipped(item)}
-                              />
-                              <label
-                                htmlFor={`equipped-${item.id}`}
-                                className="text-xs cursor-pointer"
-                              >
-                                Equip
-                              </label>
-                            </div>
-                            {item.requires_attunement && (
-                              <div className="flex items-center gap-2">
-                                <Checkbox
-                                  id={`attuned-${item.id}`}
-                                  checked={item.is_attuned}
-                                  onCheckedChange={() => handleToggleAttuned(item)}
-                                  disabled={!item.is_attuned && !canAttune}
-                                />
-                                <label
-                                  htmlFor={`attuned-${item.id}`}
-                                  className="text-xs cursor-pointer"
-                                >
-                                  Attune
-                                </label>
-                              </div>
-                            )}
-                          </div>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8"
-                            onClick={() => handleRemove(item)}
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
+                      item={item}
+                      onToggleEquipped={() => handleToggleEquipped(item)}
+                      onToggleAttuned={() => handleToggleAttuned(item)}
+                      onRemove={() => handleRemove(item)}
+                      onInscribeRune={() => {
+                        setSelectedEquipmentId(item.id);
+                        setInscribeDialogOpen(true);
+                      }}
+                      canAttune={canAttune}
+                    />
                   ))}
                 </div>
               </div>
@@ -296,6 +232,19 @@ export function EquipmentList({ characterId }: { characterId: string }) {
         onOpenChange={setAddDialogOpen}
         characterId={characterId}
       />
+
+      {inscribeDialogOpen && selectedEquipmentId && (
+        <InscribeRuneDialog
+          characterId={characterId}
+          equipmentId={selectedEquipmentId}
+          open={inscribeDialogOpen}
+          onOpenChange={setInscribeDialogOpen}
+          onSuccess={() => {
+            setInscribeDialogOpen(false);
+            setSelectedEquipmentId(null);
+          }}
+        />
+      )}
     </SystemWindow>
   );
 }

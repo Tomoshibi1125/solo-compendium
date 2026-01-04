@@ -71,7 +71,7 @@ export function QuickAccessSection() {
           </h2>
           <p className="text-muted-foreground font-heading max-w-xl mx-auto">
             Knowledge preserved by the System in this post-reset world. All content is searchable, 
-            cross-linked, and blessed by the Shadow Monarch's domain.
+            cross-linked, and blessed by the System's domain.
           </p>
         </div>
 

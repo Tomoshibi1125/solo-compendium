@@ -29,9 +29,11 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
       
       {items.map((item, index) => {
         const isLast = index === items.length - 1;
+        // Use composite key: label + index since breadcrumbs are stable and don't reorder
+        const key = `${item.label}-${index}`;
         
         return (
-          <div key={index} className="flex items-center gap-2">
+          <div key={key} className="flex items-center gap-2">
             <ChevronRight className="w-4 h-4 text-muted-foreground/50" />
             {isLast || !item.href ? (
               <span className={cn(

@@ -82,6 +82,7 @@ const categories = [
   { id: 'monarchs', name: 'Monarchs', icon: Crown },
   { id: 'sovereigns', name: 'Sovereigns', icon: Sparkles },
   { id: 'powers', name: 'Powers', icon: Wand2 },
+  { id: 'runes', name: 'Runes', icon: Sparkles },
   { id: 'relics', name: 'Relics', icon: Gem },
   { id: 'feats', name: 'Feats', icon: Sparkles },
   { id: 'monsters', name: 'Monsters', icon: Skull },
@@ -293,6 +294,35 @@ const Compendium = () => {
               created_at: p.created_at,
               source_book: p.source_book,
               isFavorite: favorites.has(`powers:${p.id}`) || false,
+            })));
+          }
+        }
+
+        // Fetch Runes
+        if (selectedCategory === 'all' || selectedCategory === 'runes') {
+          let query = supabase
+            .from('compendium_runes')
+            .select('id, name, description, rune_level, rune_type, rune_category, rarity, created_at, tags, source_book');
+          
+          if (debouncedSearchQuery.trim()) {
+            query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
+          }
+          
+          const { data: runes } = await query;
+          if (runes) {
+            allEntries.push(...runes.map(r => ({
+              id: r.id,
+              name: r.name,
+              type: 'runes' as const,
+              description: r.description,
+              level: r.rune_level,
+              rarity: r.rarity || 'common',
+              rune_type: r.rune_type,
+              rune_category: r.rune_category,
+              tags: r.tags || [],
+              created_at: r.created_at,
+              source_book: r.source_book || 'SL',
+              isFavorite: favorites.has(`runes:${r.id}`) || false,
             })));
           }
         }
@@ -802,7 +832,8 @@ const Compendium = () => {
         title: 'Link copied',
         description: 'Shareable link copied to clipboard.',
       });
-    }).catch(() => {
+    }).catch((err) => {
+      // Error handling already present
       toast({
         title: 'Failed to copy',
         description: 'Could not copy link to clipboard.',

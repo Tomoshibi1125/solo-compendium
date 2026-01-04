@@ -23,6 +23,17 @@ const InitiativeTracker = lazy(() => import("./pages/dm-tools/InitiativeTracker"
 const RollableTables = lazy(() => import("./pages/dm-tools/RollableTables"));
 const GateGenerator = lazy(() => import("./pages/dm-tools/GateGenerator"));
 const NPCGenerator = lazy(() => import("./pages/dm-tools/NPCGenerator"));
+const TreasureGenerator = lazy(() => import("./pages/dm-tools/TreasureGenerator"));
+const QuestGenerator = lazy(() => import("./pages/dm-tools/QuestGenerator"));
+const SessionPlanner = lazy(() => import("./pages/dm-tools/SessionPlanner"));
+const RandomEventGenerator = lazy(() => import("./pages/dm-tools/RandomEventGenerator"));
+const RelicWorkshop = lazy(() => import("./pages/dm-tools/RelicWorkshop"));
+const PartyTracker = lazy(() => import("./pages/dm-tools/PartyTracker"));
+const DungeonMapGenerator = lazy(() => import("./pages/dm-tools/DungeonMapGenerator"));
+const TokenLibrary = lazy(() => import("./pages/dm-tools/TokenLibrary"));
+const VTTMap = lazy(() => import("./pages/dm-tools/VTTMap"));
+const VTTEnhanced = lazy(() => import("./pages/dm-tools/VTTEnhanced"));
+const VTTJournal = lazy(() => import("./pages/dm-tools/VTTJournal"));
 const DiceRoller = lazy(() => import("./pages/DiceRoller"));
 const Campaigns = lazy(() => import("./pages/Campaigns"));
 const CampaignDetail = lazy(() => import("./pages/CampaignDetail"));
@@ -172,6 +183,94 @@ const AppContent = () => {
         element={
           <Suspense fallback={<PageLoader />}>
             <NPCGenerator />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/dm-tools/treasure-generator"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <TreasureGenerator />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/dm-tools/quest-generator"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <QuestGenerator />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/dm-tools/session-planner"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <SessionPlanner />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/dm-tools/random-event-generator"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <RandomEventGenerator />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/dm-tools/relic-workshop"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <RelicWorkshop />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/dm-tools/party-tracker"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <PartyTracker />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/dm-tools/dungeon-map-generator"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <DungeonMapGenerator />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/dm-tools/token-library"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <TokenLibrary />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/dm-tools/vtt-map"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <VTTMap />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/campaigns/:campaignId/vtt"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <VTTEnhanced />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/campaigns/:campaignId/journal"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <VTTJournal />
           </Suspense>
         }
       />

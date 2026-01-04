@@ -1,7 +1,7 @@
 -- =============================================
 -- NAMED NPCS AND BOSSES FROM SOLO LEVELING UNIVERSE
 -- =============================================
--- Post-reset timeline with Jinwoo as Supreme Deity
+-- Post-reset timeline with Supreme Deity (post-reset world)
 -- Includes major characters, guild masters, and named bosses
 
 -- =============================================

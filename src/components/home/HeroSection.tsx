@@ -8,8 +8,19 @@ import { GatePortal } from '@/components/ui/GatePortal';
 export function HeroSection() {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-      {/* Supreme Deity's Domain - Background effects */}
+      {/* High Detail Painterly Solo Leveling Background Image */}
       <div className="absolute inset-0 overflow-hidden">
+        {/* Background image with painterly Solo Leveling style */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
+          style={{
+            backgroundImage: `url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=1920&q=80')`,
+            filter: 'brightness(0.3) saturate(1.2) contrast(1.1)',
+          }}
+        />
+        {/* Overlay gradient for Solo Leveling dark fantasy aesthetic */}
+        <div className="absolute inset-0 bg-gradient-to-b from-void-black/90 via-shadow-deep/80 to-void-black/90" />
+        
         {/* Primary shadow energy orbs */}
         <div className="absolute top-1/4 left-1/4 w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] bg-gradient-radial from-shadow-blue/15 via-shadow-purple/8 to-transparent rounded-full blur-3xl animate-pulse-glow" />
         <div className="absolute bottom-1/4 right-1/4 w-[150px] h-[150px] sm:w-[250px] sm:h-[250px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px] bg-gradient-radial from-arise-violet/12 via-shadow-purple/6 to-transparent rounded-full blur-3xl animate-pulse-glow-delay-1s" />
@@ -56,13 +67,13 @@ export function HeroSection() {
             <SystemWindow variant="quest" className="px-6 py-2">
               <div className="flex items-center gap-2 text-accent font-heading">
                 <Crown className="w-4 h-4" />
-                <span className="text-sm tracking-wide">The Shadow Monarch reigns as Supreme Deity</span>
+                <span className="text-sm tracking-wide">The Supreme Deity reigns</span>
                 <Sparkles className="w-4 h-4" />
               </div>
             </SystemWindow>
           </div>
 
-          {/* Shadow Monarch Logo - Supreme variant */}
+          {/* Supreme Deity Logo - Supreme variant */}
           <div className="flex justify-center mb-8 animate-slide-up-delay-05s">
             <ShadowMonarchLogo size="xl" variant="supreme" className="drop-shadow-2xl" />
           </div>
@@ -80,9 +91,9 @@ export function HeroSection() {
           </h1>
 
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 font-heading animate-slide-up-delay-2s leading-relaxed">
-            In the post-reset timeline, where <span className="text-primary font-semibold">Sung Jinwoo</span> reigns as the Supreme Deity, 
+            In the post-reset timeline, where <span className="text-primary font-semibold">the Supreme Deity</span> reigns, 
             awaken your Hunter and navigate the Gates. This System serves as your guide 
-            through a world reborn under the <span className="text-shadow-purple font-semibold">Shadow Monarch's</span> eternal watchful gaze.
+            through a world reborn under the <span className="text-shadow-purple font-semibold">Supreme Deity's</span> eternal watchful gaze.
           </p>
 
           {/* CTA Buttons */}
@@ -102,7 +113,7 @@ export function HeroSection() {
             </Link>
           </div>
 
-          {/* Feature cards - Shadow Monarch's Domain */}
+          {/* Feature cards - The System's Domain */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 animate-slide-up-delay-4s">
             <FeatureCard
               icon={BookOpen}
@@ -120,8 +131,8 @@ export function HeroSection() {
             />
             <FeatureCard
               icon={Sword}
-              title="Shadow Monarch's Tools"
-              description="Gate generation, encounter building, and combat tracking under the Monarch's domain"
+              title="The System's Tools"
+              description="Gate generation, encounter building, and combat tracking under the System's domain"
               graphic={<GatePortal rank="SS" className="w-20 h-20 opacity-30" animated={false} />}
               accentColor="monarch-gold"
             />

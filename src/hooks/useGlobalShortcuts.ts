@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GLOBAL_SHORTCUTS, type GlobalShortcut } from '@/lib/globalShortcuts';
+import { error as logError } from '@/lib/logger';
 
 /**
  * Hook to enable global keyboard shortcuts
@@ -55,7 +56,7 @@ export function useGlobalShortcuts(enabled: boolean = true) {
           try {
             matchingShortcut.action();
           } catch (error) {
-            console.error('Shortcut action error:', error);
+            logError('Shortcut action error:', error);
           }
         } else {
           matchingShortcut.action();

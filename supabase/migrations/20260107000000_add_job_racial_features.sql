@@ -3,7 +3,7 @@
 -- =============================================
 -- Jobs function as both race and class in Solo Leveling 5e
 -- This migration adds racial features (ability score increases) to all jobs at level 1
--- All aligned with Solo Leveling manhwa post-reset timeline with Jinwoo as Supreme Deity
+-- All aligned with Solo Leveling manhwa post-reset timeline with Supreme Deity
 
 -- =============================================
 -- ABILITY SCORE INCREASES (Racial Feature)

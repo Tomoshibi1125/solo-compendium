@@ -4,7 +4,7 @@
 
 /* ═══════════════════════════════════════════════════════════════════════════
    SOLO LEVELING: ARISE — POST-RESET TIMELINE
-   The Shadow Monarch Sung Jinwoo reigns as Supreme Deity
+   The Supreme Deity reigns over all
    "I am the Monarch of Shadows. All who dwell in darkness... arise."
    ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -21,7 +21,7 @@
     --popover: 228 35% 7%;
     --popover-foreground: 220 25% 95%;
     
-    /* Primary - Jinwoo's Shadow Blue (Ruler's Authority) */
+    /* Primary - Supreme Deity's Shadow Blue (Ruler's Authority) */
     --primary: 220 100% 60%;
     --primary-foreground: 228 50% 10%;
     
@@ -581,7 +581,7 @@
 
 /* ═══════════════════════════════════════════════════════════════════════════
    ANIMATIONS — The System's Commands
-   "Arise." - Sung Jinwoo, Shadow Monarch
+   "Arise." - The Supreme Deity
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* Core Shadow Monarch Glow */
@@ -854,7 +854,7 @@
   }
 }
 
-/* Supreme Shimmer - Jinwoo's Divine Form */
+/* Supreme Shimmer - The Supreme Deity's Divine Form */
 @keyframes supreme-shimmer {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }

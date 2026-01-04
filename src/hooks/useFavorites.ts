@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState, useCallback } from 'react';
+import { warn as logWarn } from '@/lib/logger';
 
 // Favorites feature - uses local storage until user_favorites table is created
 export const useFavorites = () => {
@@ -16,7 +17,7 @@ export const useFavorites = () => {
           return new Set(parsed);
         }
       } catch (e) {
-        console.warn('Failed to load favorites from localStorage');
+        logWarn('Failed to load favorites from localStorage');
       }
       return new Set<string>();
     },

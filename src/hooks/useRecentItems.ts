@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { error as logError } from '@/lib/logger';
 
 export interface RecentItem {
   id: string;
@@ -25,7 +26,7 @@ export function useRecentItems() {
         setRecentItems(JSON.parse(stored));
       }
     } catch (error) {
-      console.error('Failed to load recent items:', error);
+      logError('Failed to load recent items:', error);
     }
   }, []);
 
@@ -44,7 +45,7 @@ export function useRecentItems() {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
       } catch (error) {
-        console.error('Failed to save recent items:', error);
+        logError('Failed to save recent items:', error);
       }
 
       return updated;
@@ -56,7 +57,7 @@ export function useRecentItems() {
     try {
       localStorage.removeItem(STORAGE_KEY);
     } catch (error) {
-      console.error('Failed to clear recent items:', error);
+      logError('Failed to clear recent items:', error);
     }
   };
 
@@ -66,7 +67,7 @@ export function useRecentItems() {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
       } catch (error) {
-        console.error('Failed to update recent items:', error);
+        logError('Failed to update recent items:', error);
       }
       return updated;
     });

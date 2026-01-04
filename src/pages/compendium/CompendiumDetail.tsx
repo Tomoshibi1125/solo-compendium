@@ -11,8 +11,12 @@ import { QuickReference } from '@/components/compendium/QuickReference';
 import { RelatedContent } from '@/components/compendium/RelatedContent';
 import { useFavorites } from '@/hooks/useFavorites';
 import { useToast } from '@/hooks/use-toast';
+import { error as logError } from '@/lib/logger';
+import { useQuery } from '@tanstack/react-query';
+import { TableOfContents } from '@/components/compendium/TableOfContents';
 import { JobDetail } from '@/components/compendium/JobDetail';
 import { PowerDetail } from '@/components/compendium/PowerDetail';
+import { RuneDetail } from '@/components/compendium/RuneDetail';
 import { MonsterDetail } from '@/components/compendium/MonsterDetail';
 import { EquipmentDetail } from '@/components/compendium/EquipmentDetail';
 import { RelicDetail } from '@/components/compendium/RelicDetail';
@@ -24,12 +28,13 @@ import { MonarchDetail } from '@/components/compendium/MonarchDetail';
 import { PathDetail } from '@/components/compendium/PathDetail';
 import { SovereignDetail } from '@/components/compendium/SovereignDetail';
 
-type EntryType = 'jobs' | 'paths' | 'powers' | 'relics' | 'monsters' | 'backgrounds' | 'conditions' | 'monarchs' | 'feats' | 'skills' | 'equipment' | 'sovereigns';
+type EntryType = 'jobs' | 'paths' | 'powers' | 'runes' | 'relics' | 'monsters' | 'backgrounds' | 'conditions' | 'monarchs' | 'feats' | 'skills' | 'equipment' | 'sovereigns';
 
 const tableMap: Record<EntryType, string> = {
   jobs: 'compendium_jobs',
   paths: 'compendium_job_paths',
   powers: 'compendium_powers',
+  runes: 'compendium_runes',
   relics: 'compendium_relics',
   monsters: 'compendium_monsters',
   backgrounds: 'compendium_backgrounds',
@@ -49,6 +54,63 @@ const CompendiumDetail = () => {
   const [error, setError] = useState<string | null>(null);
   const { favorites, toggleFavorite } = useFavorites();
   const { toast } = useToast();
+
+  // Fetch related content (must be before early returns per React hooks rules)
+  const { data: relatedEntries = [] } = useQuery({
+    queryKey: ['related-content', type, id, entry],
+    queryFn: async () => {
+      if (!type || !id || !entry) return [];
+      
+      // Fetch entries with similar tags
+      const entryTags = ((entry as { tags?: string[] }).tags || []) as string[];
+      if (entryTags.length === 0) return [];
+
+      const related: Array<{ id: string; name: string; type: string; description?: string }> = [];
+      
+      // Query different tables based on type
+      const tablesToQuery = ['monsters', 'equipment', 'relics', 'jobs', 'powers', 'runes'].filter(t => t !== type);
+      
+      for (const tableType of tablesToQuery.slice(0, 2)) {
+        try {
+          const tableName = tableMap[tableType as EntryType];
+          if (!tableName) continue;
+          
+          // Type assertion needed for dynamic table access
+          const { data, error: queryError } = await supabase
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            .from(tableName as any)
+            .select('id, name, description')
+            .overlaps('tags', entryTags)
+            .neq('id', id)
+            .limit(3);
+          
+          if (!queryError && data && Array.isArray(data)) {
+            // Type guard to ensure data is valid
+            const validData = data.filter((item): item is { id: string; name: string; description?: string } => 
+              typeof item === 'object' && 
+              item !== null && 
+              'id' in item && 
+              'name' in item &&
+              typeof (item as { id: unknown }).id === 'string' &&
+              typeof (item as { name: unknown }).name === 'string'
+            );
+            
+            related.push(...validData.map((item) => ({
+              id: item.id,
+              name: item.name,
+              type: tableType,
+              description: item.description || undefined,
+            })));
+          }
+        } catch (err) {
+          // Continue to next table on error
+        }
+      }
+      
+      return related.slice(0, 6);
+    },
+    enabled: !!type && !!id && !!entry,
+  });
 
   useEffect(() => {
     const fetchEntry = async () => {
@@ -120,6 +182,12 @@ const CompendiumDetail = () => {
         { id: 'power-properties', title: 'Casting Properties', level: 2 },
         { id: 'power-description', title: 'Description', level: 2 }
       );
+    } else if (type === 'runes') {
+      items.push(
+        { id: 'rune-requirements', title: 'Requirements', level: 2 },
+        { id: 'rune-effect', title: 'Effect', level: 2 },
+        { id: 'rune-inscription', title: 'Inscription', level: 2 }
+      );
     }
     
     return items;
@@ -141,6 +209,9 @@ const CompendiumDetail = () => {
       case 'powers':
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return <PowerDetail data={data as any} />;
+      case 'runes':
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return <RuneDetail data={data as any} />;
       case 'relics':
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return <RelicDetail data={data as any} />;
@@ -234,6 +305,13 @@ const CompendiumDetail = () => {
         title: 'Link copied',
         description: 'Shareable link copied to clipboard.',
       });
+    }).catch((err) => {
+      logError('Failed to copy to clipboard:', err);
+      toast({
+        title: 'Failed to copy',
+        description: 'Could not copy link to clipboard.',
+        variant: 'destructive',
+      });
     });
   };
 
@@ -254,50 +332,12 @@ const CompendiumDetail = () => {
     });
   };
 
-  // Fetch related content
-  const { data: relatedEntries = [] } = useQuery({
-    queryKey: ['related-content', type, id],
-    queryFn: async () => {
-      if (!type || !id) return [];
-      
-      // Fetch entries with similar tags
-      const entryTags = (entryData.tags || []) as string[];
-      if (entryTags.length === 0) return [];
-
-      const related: Array<{ id: string; name: string; type: string; description?: string }> = [];
-      
-      // Query different tables based on type
-      const tablesToQuery = ['monsters', 'equipment', 'relics', 'jobs', 'powers'].filter(t => t !== type);
-      
-      for (const tableType of tablesToQuery.slice(0, 2)) {
-        try {
-          const tableName = tableMap[tableType as EntryType];
-          if (!tableName) continue;
-          
-          const { data } = await supabase
-            .from(tableName as any)
-            .select('id, name, description')
-            .overlaps('tags', entryTags)
-            .neq('id', id)
-            .limit(3);
-          
-          if (data) {
-            related.push(...data.map(item => ({ ...item, type: tableType })));
-          }
-        } catch (e) {
-          // Ignore errors
-        }
-      }
-      
-      return related.slice(0, 5);
-    },
-    enabled: !!type && !!id && !!entry,
-  });
 
   const categoryLabels: Record<string, string> = {
     jobs: 'Jobs',
     paths: 'Paths',
     powers: 'Powers',
+    runes: 'Runes',
     relics: 'Relics',
     monsters: 'Monsters',
     backgrounds: 'Backgrounds',

@@ -24,6 +24,20 @@ except ImportError as e:
     print("Install with: pip install pillow requests python-dotenv")
     sys.exit(1)
 
+# Try to import Hugging Face Inference SDK
+try:
+    from huggingface_hub import InferenceClient
+    HAS_HF_SDK = True
+except ImportError:
+    HAS_HF_SDK = False
+
+# Try to import OpenAI for DALL-E
+try:
+    from openai import OpenAI
+    HAS_OPENAI = True
+except ImportError:
+    HAS_OPENAI = False
+
 # Load environment variables from multiple locations
 # Try .env.local first (if exists), then .env
 load_dotenv('.env.local', override=False)
@@ -41,6 +55,8 @@ STABLE_DIFFUSION_MODEL = os.getenv("STABLE_DIFFUSION_MODEL", "stable-diffusion-x
 # Hugging Face Inference API
 HUGGINGFACE_TOKEN = os.getenv("HUGGINGFACE_API_TOKEN")
 HUGGINGFACE_MODEL = os.getenv("HUGGINGFACE_MODEL", "stabilityai/stable-diffusion-xl-base-1.0")
+# OpenAI DALL-E (fallback)
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") or os.getenv("CHATGPT_API_KEY")
 
 # Load config
 try:
@@ -165,8 +181,49 @@ class ImageGenerator:
             return None
         
         try:
-            # Hugging Face Inference API endpoint
             model = HUGGINGFACE_MODEL
+            
+            # Use Hugging Face Inference SDK if available (preferred method)
+            if HAS_HF_SDK:
+                print(f"Using Hugging Face Inference SDK: {model}")
+                try:
+                    client = InferenceClient(
+                        model=model,
+                        token=HUGGINGFACE_TOKEN
+                    )
+                    
+                    # Build parameters for text-to-image
+                    parameters = {
+                        "negative_prompt": self.config["negative_prompt"],
+                        "width": width,
+                        "height": height,
+                        "num_inference_steps": self.config["generation"]["steps"],
+                        "guidance_scale": self.config["generation"]["guidance_scale"],
+                    }
+                    
+                    # Generate image using SDK
+                    print(f"Generating image with prompt: {prompt[:80]}...")
+                    image = client.text_to_image(
+                        prompt=prompt,
+                        **parameters
+                    )
+                    
+                    # Convert PIL Image to bytes
+                    img_bytes = io.BytesIO()
+                    image.save(img_bytes, format='PNG')
+                    image_data = img_bytes.getvalue()
+                    print(f"Generated image: {len(image_data)} bytes")
+                    return image_data
+                    
+                except Exception as e:
+                    print(f"Hugging Face SDK error: {e}")
+                    print("Falling back to REST API...")
+                    # Fall through to REST API method
+            
+            # Fallback to REST API if SDK fails or is not available
+            print(f"Using Hugging Face REST API: {model}")
+            
+            # Use the correct inference API endpoint
             url = f"https://api-inference.huggingface.co/models/{model}"
             
             headers = {
@@ -203,6 +260,8 @@ class ImageGenerator:
                     return image_data
                 else:
                     print(f"Hugging Face API error after retry: {response.status_code}")
+                    error_text = response.text[:200] if hasattr(response, 'text') else str(response.content[:200])
+                    print(f"Error: {error_text}")
                     return None
             else:
                 error_text = response.text[:200] if hasattr(response, 'text') else str(response.content[:200])
@@ -210,23 +269,138 @@ class ImageGenerator:
                 return None
                 
         except Exception as e:
-            print(f"Error calling Hugging Face API: {e}")
+            error_msg = str(e)
+            # Check for credit/quota errors specifically
+            if "quota" in error_msg.lower() or "credit" in error_msg.lower() or "limit" in error_msg.lower():
+                print(f"Hugging Face credit/quota issue detected: {error_msg[:100]}")
+            else:
+                print(f"Error calling Hugging Face API: {e}")
+            return None
+    
+    def generate_image_dalle(self, prompt: str, width: int = 1024, height: int = 1024) -> Optional[bytes]:
+        """Generate image using OpenAI DALL-E 3"""
+        if not OPENAI_API_KEY or not HAS_OPENAI:
+            return None
+        
+        try:
+            print(f"Using OpenAI DALL-E 3")
+            
+            client = OpenAI(api_key=OPENAI_API_KEY)
+            
+            # DALL-E 3 size options: "1024x1024", "1792x1024", "1024x1792"
+            # Map our width/height to DALL-E sizes
+            if width == 1024 and height == 1024:
+                size = "1024x1024"
+            elif width >= height:
+                size = "1792x1024"  # Landscape
+            else:
+                size = "1024x1792"  # Portrait
+            
+            # DALL-E 3 quality options: "standard" or "hd"
+            quality = "hd"  # High quality for better results
+            
+            # Optimize prompt for DALL-E while maintaining Solo Leveling style
+            # DALL-E works best with clear, concise prompts but we want to keep the style
+            simplified_prompt = prompt
+            
+            # Ensure Solo Leveling style is prominent
+            if "Solo Leveling" not in prompt:
+                # Add Solo Leveling style prefix
+                simplified_prompt = f"Solo Leveling manhwa style, {prompt}"
+            
+            # Keep the full prompt but trim if too long (DALL-E limit is 4000 chars, but 1000 is optimal)
+            if len(simplified_prompt) > 1000:
+                # Try to keep the important parts: style, name, description, tags
+                # Split and take first part with important keywords
+                parts = simplified_prompt.split(',')
+                important = []
+                keywords = ['Solo Leveling', 'manhwa', 'painterly', 'dark fantasy']
+                
+                # Always keep parts with keywords
+                for part in parts:
+                    if any(kw.lower() in part.lower() for kw in keywords):
+                        important.append(part.strip())
+                
+                # Add remaining parts until we hit limit
+                for part in parts:
+                    if part.strip() not in important and len(', '.join(important + [part.strip()])) < 1000:
+                        important.append(part.strip())
+                
+                simplified_prompt = ', '.join(important)
+                if len(simplified_prompt) > 1000:
+                    simplified_prompt = simplified_prompt[:1000]
+            
+            # Ensure painterly style is mentioned
+            if "painterly" not in simplified_prompt.lower():
+                simplified_prompt = f"painterly artwork, {simplified_prompt}"
+            
+            print(f"Generating image with DALL-E 3: {simplified_prompt[:80]}...")
+            
+            response = client.images.generate(
+                model="dall-e-3",
+                prompt=simplified_prompt,
+                size=size,
+                quality=quality,
+                n=1,  # DALL-E 3 only supports 1 image at a time
+            )
+            
+            # Get image URL
+            image_url = response.data[0].url
+            
+            # Download image
+            print(f"Downloading image from DALL-E...")
+            img_response = requests.get(image_url, timeout=60)
+            if img_response.status_code == 200:
+                image_data = img_response.content
+                print(f"Generated image: {len(image_data)} bytes")
+                return image_data
+            else:
+                print(f"Failed to download image: {img_response.status_code}")
+                return None
+                
+        except Exception as e:
+            error_msg = str(e)
+            # Check for credit/quota errors
+            if "insufficient_quota" in error_msg.lower() or "quota" in error_msg.lower():
+                print(f"DALL-E quota/credit error: {error_msg[:100]}")
+            elif "rate_limit" in error_msg.lower() or "rate" in error_msg.lower():
+                print(f"DALL-E rate limit error: {error_msg[:100]}")
+                print("Waiting 60 seconds before retry...")
+                time.sleep(60)
+                # Retry once after waiting
+                try:
+                    response = client.images.generate(
+                        model="dall-e-3",
+                        prompt=simplified_prompt,
+                        size=size,
+                        quality=quality,
+                        n=1,
+                    )
+                    image_url = response.data[0].url
+                    img_response = requests.get(image_url, timeout=60)
+                    if img_response.status_code == 200:
+                        image_data = img_response.content
+                        print(f"Generated image: {len(image_data)} bytes")
+                        return image_data
+                except Exception as retry_e:
+                    print(f"Retry also failed: {str(retry_e)[:100]}")
+            else:
+                print(f"Error calling DALL-E API: {error_msg[:200]}")
             return None
     
     def generate_image(self, prompt: str, width: int = 1024, height: int = 1024) -> Optional[bytes]:
-        """Generate image using available method (prefer Hugging Face, then local API, then CLI)"""
-        if HUGGINGFACE_TOKEN:
-            result = self.generate_image_huggingface(prompt, width, height)
-            if result:
-                return result
-        
-        if STABLE_DIFFUSION_API_URL:
-            return self.generate_image_api(prompt, width, height)
-        elif STABLE_DIFFUSION_CLI_PATH:
-            return self.generate_image_cli(prompt, width, height)
-        else:
-            print("Error: No Stable Diffusion method configured")
+        """Generate image using DALL-E only"""
+        # Use DALL-E only
+        if not OPENAI_API_KEY:
+            print("Error: OPENAI_API_KEY not configured. DALL-E requires an API key.")
             return None
+        
+        result = self.generate_image_dalle(prompt, width, height)
+        if result:
+            return result
+        
+        print("Error: DALL-E image generation failed")
+        return None
     
     def optimize_image(self, image_data: bytes, quality: int = 95) -> bytes:
         """Optimize image for web"""

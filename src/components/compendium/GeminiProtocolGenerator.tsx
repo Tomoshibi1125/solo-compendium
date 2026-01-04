@@ -146,7 +146,7 @@ export function GeminiProtocolGenerator() {
           DBZ/Super × Dual Class LitRPG Fusion System • {totalCombinations.toLocaleString()}+ Combinations
         </p>
         <p className="text-sm text-muted-foreground italic">
-          By the blessing of Supreme Deity Jinwoo, fuse Job + Path + Monarch A + Monarch B into a unique Sovereign
+          By the blessing of the Supreme Deity, fuse Job + Path + Monarch A + Monarch B into a unique Sovereign
         </p>
         <div className="flex flex-wrap justify-center gap-2 pt-2">
           <Badge variant="outline" className={fusionTypeBadgeStyles.potara}>
@@ -330,7 +330,7 @@ export function GeminiProtocolGenerator() {
                 <div className="space-y-3">
                   {generatedSovereign.abilities.map((ability, index) => (
                     <div
-                      key={index}
+                      key={ability.name || `ability-${index}`}
                       className={`p-3 rounded-lg border ${
                         ability.is_capstone 
                           ? 'border-primary bg-primary/5' 

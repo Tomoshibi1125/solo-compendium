@@ -11,7 +11,15 @@ import {
   ChevronRight,
   Crown,
   Sparkles,
-  Zap
+  Zap,
+  Gem,
+  Target,
+  Calendar,
+  AlertTriangle,
+  UsersRound,
+  Grid,
+  Image as ImageIcon,
+  Layers,
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
@@ -76,10 +84,110 @@ const tools = [
     name: 'Relic Workshop',
     description: 'Design custom relics balanced within the system guidelines.',
     icon: Settings2,
-    status: 'coming-soon',
-    color: 'from-amber-500/20 to-amber-600/10 border-amber-500/30',
+    status: 'available',
+    color: 'from-amber-500/20 to-amber-600/10 border-amber-500/30 hover:border-amber-500/60',
     iconColor: 'text-amber-400',
-    glow: '',
+    glow: 'group-hover:shadow-amber-500/20',
+  },
+  {
+    id: 'treasure-generator',
+    name: 'Treasure Generator',
+    description: 'Generate treasure hoards by Gate Rank with gold, items, materials, and relics.',
+    icon: Gem,
+    status: 'available',
+    color: 'from-yellow-500/20 to-yellow-600/10 border-yellow-500/30 hover:border-yellow-500/60',
+    iconColor: 'text-yellow-400',
+    glow: 'group-hover:shadow-yellow-500/20',
+  },
+  {
+    id: 'quest-generator',
+    name: 'Quest Generator',
+    description: 'Generate missions and contracts with objectives, complications, and rewards.',
+    icon: Target,
+    status: 'available',
+    color: 'from-indigo-500/20 to-indigo-600/10 border-indigo-500/30 hover:border-indigo-500/60',
+    iconColor: 'text-indigo-400',
+    glow: 'group-hover:shadow-indigo-500/20',
+  },
+  {
+    id: 'session-planner',
+    name: 'Session Planner',
+    description: 'Plan and organize sessions with notes, encounters, NPCs, and plot points.',
+    icon: Calendar,
+    status: 'available',
+    color: 'from-pink-500/20 to-pink-600/10 border-pink-500/30 hover:border-pink-500/60',
+    iconColor: 'text-pink-400',
+    glow: 'group-hover:shadow-pink-500/20',
+  },
+  {
+    id: 'random-event-generator',
+    name: 'Random Event Generator',
+    description: 'Generate random world events, NPC encounters, and complications.',
+    icon: AlertTriangle,
+    status: 'available',
+    color: 'from-cyan-500/20 to-cyan-600/10 border-cyan-500/30 hover:border-cyan-500/60',
+    iconColor: 'text-cyan-400',
+    glow: 'group-hover:shadow-cyan-500/20',
+  },
+  {
+    id: 'party-tracker',
+    name: 'Party Tracker',
+    description: 'Track party members\' HP, conditions, AC, and status during sessions.',
+    icon: UsersRound,
+    status: 'available',
+    color: 'from-emerald-500/20 to-emerald-600/10 border-emerald-500/30 hover:border-emerald-500/60',
+    iconColor: 'text-emerald-400',
+    glow: 'group-hover:shadow-emerald-500/20',
+  },
+  {
+    id: 'dungeon-map-generator',
+    name: 'Dungeon Map Generator',
+    description: 'Generate full Gate/dungeon maps with rooms, corridors, and special chambers for VTT-style gameplay.',
+    icon: Grid,
+    status: 'available',
+    color: 'from-violet-500/20 to-violet-600/10 border-violet-500/30 hover:border-violet-500/60',
+    iconColor: 'text-violet-400',
+    glow: 'group-hover:shadow-violet-500/20',
+  },
+  {
+    id: 'token-library',
+    name: 'Token Library',
+    description: 'Manage tokens and assets for VTT sessions. Create custom tokens, organize by category.',
+    icon: ImageIcon,
+    status: 'available',
+    color: 'from-teal-500/20 to-teal-600/10 border-teal-500/30 hover:border-teal-500/60',
+    iconColor: 'text-teal-400',
+    glow: 'group-hover:shadow-teal-500/20',
+  },
+  {
+    id: 'vtt-map',
+    name: 'VTT Map Viewer',
+    description: 'Place tokens on maps for virtual tabletop gameplay. Drag tokens, rotate, and organize by layers.',
+    icon: Layers,
+    status: 'available',
+    color: 'from-rose-500/20 to-rose-600/10 border-rose-500/30 hover:border-rose-500/60',
+    iconColor: 'text-rose-400',
+    glow: 'group-hover:shadow-rose-500/20',
+  },
+  {
+    id: 'vtt-enhanced',
+    name: 'Enhanced VTT',
+    description: 'Full-featured virtual tabletop with scenes, fog of war, initiative tracking, dice, and chat.',
+    icon: Layers,
+    status: 'campaign-only',
+    color: 'from-purple-500/20 to-purple-600/10 border-purple-500/30 hover:border-purple-500/60',
+    iconColor: 'text-purple-400',
+    glow: 'group-hover:shadow-purple-500/20',
+  },
+  {
+    id: 'vtt-journal',
+    name: 'VTT Journal',
+    description: 'Campaign journal entries, session logs, lore, and handouts for your virtual tabletop sessions.',
+    icon: BookOpen,
+    status: 'campaign-only',
+    color: 'from-indigo-500/20 to-indigo-600/10 border-indigo-500/30 hover:border-indigo-500/60',
+    iconColor: 'text-indigo-400',
+    glow: 'group-hover:shadow-indigo-500/20',
   },
 ];
 
@@ -141,7 +249,7 @@ const DMTools = () => {
         </SystemWindow>
 
         {/* Tools Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {tools.map((tool) => (
             <Link
               key={tool.id}
@@ -175,7 +283,15 @@ const DMTools = () => {
                 tool.id === 'gate-generator' && "bg-orange-500/30",
                 tool.id === 'npc-generator' && "bg-arise/30",
                 tool.id === 'rollable-tables' && "bg-green-500/30",
-                tool.id === 'relic-workshop' && "bg-amber-500/30"
+                tool.id === 'relic-workshop' && "bg-amber-500/30",
+                tool.id === 'treasure-generator' && "bg-yellow-500/30",
+                tool.id === 'quest-generator' && "bg-indigo-500/30",
+                tool.id === 'session-planner' && "bg-pink-500/30",
+                tool.id === 'random-event-generator' && "bg-cyan-500/30",
+                tool.id === 'party-tracker' && "bg-emerald-500/30",
+                tool.id === 'dungeon-map-generator' && "bg-violet-500/30",
+                tool.id === 'token-library' && "bg-teal-500/30",
+                tool.id === 'vtt-map' && "bg-rose-500/30"
               )} />
               
               {/* Icon */}
@@ -210,6 +326,13 @@ const DMTools = () => {
                   <Sparkles className="w-3 h-3" />
                   Coming Soon
                 </span>
+              )}
+              {tool.status === 'campaign-only' && (
+                <div className={cn("flex items-center text-sm font-heading", tool.iconColor)}>
+                  <Crown className="w-4 h-4 mr-1" />
+                  <span>Requires Campaign</span>
+                  <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                </div>
               )}
               {tool.status === 'available' && (
                 <div className={cn("flex items-center text-sm font-heading", tool.iconColor)}>

@@ -7,17 +7,33 @@ import { useEquipment } from '@/hooks/useEquipment';
 import { usePowers } from '@/hooks/usePowers';
 import { useFeatures } from '@/hooks/useFeatures';
 import { useCharacter } from '@/hooks/useCharacters';
+import { useCharacterRuneInscriptions } from '@/hooks/useRunes';
 import { getAbilityModifier, getProficiencyBonus } from '@/types/solo-leveling';
 import { parseModifiers, applyEquipmentModifiers } from '@/lib/equipmentModifiers';
+import { applyRuneBonuses } from '@/lib/runeAutomation';
 import type { AbilityScore } from '@/types/solo-leveling';
+import type { Database } from '@/integrations/supabase/types';
+
+type Rune = Database['public']['Tables']['compendium_runes']['Row'];
 
 export function ActionsList({ characterId }: { characterId: string }) {
   const { data: character } = useCharacter(characterId);
   const { equipment } = useEquipment(characterId);
   const { powers } = usePowers(characterId);
   const { features } = useFeatures(characterId);
+  const { data: activeRunes = [] } = useCharacterRuneInscriptions(characterId);
+  const useRune = useUseRune();
 
   if (!character) return null;
+
+  const handleUseRune = async (inscriptionId: string) => {
+    try {
+      await useRune.mutateAsync({ inscriptionId });
+    } catch (error) {
+      // Error handling is done by the mutation
+      console.error('Failed to use rune:', error);
+    }
+  };
 
   // Get equipment modifiers for abilities
   const equipmentMods = applyEquipmentModifiers(
@@ -27,24 +43,81 @@ export function ActionsList({ characterId }: { characterId: string }) {
     equipment
   );
 
+  // Combine ability modifiers from equipment
+  const equipmentModifiedAbilities = { ...character.abilities };
+  Object.entries(equipmentMods.abilityModifiers || {}).forEach(([key, value]) => {
+    if (value !== 0) {
+      const ability = key.toUpperCase() as keyof typeof equipmentModifiedAbilities;
+      if (ability in equipmentModifiedAbilities) {
+        equipmentModifiedAbilities[ability] = (equipmentModifiedAbilities[ability] || 0) + value;
+      }
+    }
+  });
+
+  // Apply rune bonuses
+  const equippedActiveRunes = activeRunes.filter(ri => 
+    ri.equipment?.is_equipped && 
+    (!ri.equipment.requires_attunement || ri.equipment.is_attuned) &&
+    ri.is_active
+  );
+
+  const runeBonuses = applyRuneBonuses(
+    {
+      ac: equipmentMods.armorClass,
+      speed: equipmentMods.speed,
+      abilities: equipmentModifiedAbilities,
+      attackBonus: equipmentMods.attackBonus,
+      damageBonus: typeof equipmentMods.damageBonus === 'number' 
+        ? (equipmentMods.damageBonus > 0 ? `+${equipmentMods.damageBonus}` : '') 
+        : (equipmentMods.damageBonus || ''),
+    },
+    equippedActiveRunes.map(ri => ({ rune: ri.rune, is_active: ri.is_active }))
+  );
+
+  // Final abilities with all modifiers
+  const finalAbilities = { ...equipmentModifiedAbilities };
+  Object.entries(runeBonuses.abilities).forEach(([ability, value]) => {
+    if (ability in finalAbilities && value > (equipmentModifiedAbilities[ability as keyof typeof equipmentModifiedAbilities] || 0)) {
+      finalAbilities[ability as keyof typeof finalAbilities] = value;
+    }
+  });
+
   const proficiencyBonus = getProficiencyBonus(character.level);
-  const strMod = getAbilityModifier(character.abilities.STR + (equipmentMods.abilityModifiers.str || 0));
-  const agiMod = getAbilityModifier(character.abilities.AGI + (equipmentMods.abilityModifiers.agi || 0));
+  const strMod = getAbilityModifier(finalAbilities.STR);
+  const agiMod = getAbilityModifier(finalAbilities.AGI);
 
   // Get equipped weapons
   const weapons = equipment.filter(
     e => e.is_equipped && (e.item_type === 'weapon' || e.item_type?.includes('weapon'))
   );
 
-  // Calculate attack bonuses for weapons
+  // Get rune attack and damage bonuses for each weapon
+  const weaponRuneAttackBonuses = new Map<string, number>();
+  const weaponRuneDamageBonuses = new Map<string, string>();
+  equippedActiveRunes.forEach(ri => {
+    if (ri.equipment?.is_equipped && ri.rune.passive_bonuses) {
+      const bonuses = ri.rune.passive_bonuses as Record<string, unknown>;
+      const weaponName = ri.equipment.name;
+      if (bonuses.attack_bonus && typeof bonuses.attack_bonus === 'number') {
+        weaponRuneAttackBonuses.set(weaponName, (weaponRuneAttackBonuses.get(weaponName) || 0) + bonuses.attack_bonus);
+      }
+      if (bonuses.damage_bonus && typeof bonuses.damage_bonus === 'string') {
+        const existing = weaponRuneDamageBonuses.get(weaponName) || '';
+        weaponRuneDamageBonuses.set(weaponName, existing ? `${existing} + ${bonuses.damage_bonus}` : bonuses.damage_bonus);
+      }
+    }
+  });
+
+  // Calculate attack bonuses for weapons (with rune bonuses)
   const weaponActions = weapons.map(weapon => {
     const modifiers = parseModifiers(weapon.properties || []);
     const attackMod = modifiers.attack || 0;
+    const runeAttackBonus = weaponRuneAttackBonuses.get(weapon.name) || 0;
     
     // Determine if weapon uses STR or AGI (default to STR for melee, AGI for ranged)
     const isRanged = weapon.item_type?.includes('ranged') || weapon.name.toLowerCase().includes('bow');
     const abilityMod = isRanged ? agiMod : strMod;
-    const attackBonus = abilityMod + proficiencyBonus + attackMod;
+    const attackBonus = abilityMod + proficiencyBonus + attackMod + runeAttackBonus;
 
     // Parse damage from properties or use default
     let damage = '1d8';
@@ -60,6 +133,12 @@ export function ActionsList({ characterId }: { characterId: string }) {
       } else if (abilityMod !== 0) {
         damage += abilityMod >= 0 ? `+${abilityMod}` : `${abilityMod}`;
       }
+    }
+    
+    // Add rune damage bonuses
+    const runeDamageBonus = weaponRuneDamageBonuses.get(weapon.name);
+    if (runeDamageBonus) {
+      damage += ` + ${runeDamageBonus}`;
     }
 
     return {
@@ -97,10 +176,30 @@ export function ActionsList({ characterId }: { characterId: string }) {
       recharge: feature.recharge || undefined,
     }));
 
+  // Get rune active abilities (runes with activation_action)
+  const runeActions = equippedActiveRunes
+    .filter(ri => ri.rune.effect_type === 'active' || ri.rune.effect_type === 'both')
+    .filter(ri => ri.rune.activation_action && ri.rune.activation_action !== 'passive')
+    .map(ri => ({
+      name: `${ri.rune.name} (${ri.equipment?.name || 'Rune'})`,
+      type: (ri.rune.activation_action || 'action') as 'action' | 'bonus-action' | 'reaction',
+      description: ri.rune.effect_description || ri.rune.description || '',
+      range: ri.rune.range || undefined,
+      uses: ri.rune.uses_per_rest && ri.rune.uses_per_rest !== 'at-will' ? {
+        current: ri.uses_current ?? 0,
+        max: ri.uses_max ?? (ri.rune.uses_per_rest.includes('proficiency') ? proficiencyBonus : 
+             ri.rune.uses_per_rest.includes('level') ? character.level :
+             parseInt(ri.rune.uses_per_rest) || 1),
+      } : undefined,
+      recharge: ri.rune.recharge || undefined,
+      activationCost: ri.rune.activation_cost ? `${ri.rune.activation_cost_amount || 0} ${ri.rune.activation_cost}` : undefined,
+      inscriptionId: ri.id, // Store inscription ID for use tracking
+    }));
+
   return (
     <SystemWindow title="ACTIONS">
       <Tabs defaultValue="weapons" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="weapons" className="gap-2">
             <Swords className="w-4 h-4" />
             Attacks ({weaponActions.length})
@@ -112,6 +211,10 @@ export function ActionsList({ characterId }: { characterId: string }) {
           <TabsTrigger value="features" className="gap-2">
             <Star className="w-4 h-4" />
             Features ({featureActions.length})
+          </TabsTrigger>
+          <TabsTrigger value="runes" className="gap-2">
+            <Sparkles className="w-4 h-4" />
+            Runes ({runeActions.length})
           </TabsTrigger>
         </TabsList>
 
@@ -173,6 +276,30 @@ export function ActionsList({ characterId }: { characterId: string }) {
                 description={action.description}
                 uses={action.uses}
                 recharge={action.recharge}
+              />
+            ))
+          )}
+        </TabsContent>
+
+        <TabsContent value="runes" className="space-y-3 mt-4">
+          {runeActions.length === 0 ? (
+            <div className="text-center py-8 text-muted-foreground">
+              <Sparkles className="w-12 h-12 mx-auto mb-2 opacity-50" />
+              <p>No active rune abilities</p>
+              <p className="text-xs mt-1">Inscribe runes with active abilities on equipped items to use them</p>
+            </div>
+          ) : (
+            runeActions.map((action, i) => (
+              <ActionCard
+                key={i}
+                name={action.name}
+                type={action.type}
+                description={action.description}
+                range={action.range}
+                uses={action.uses}
+                recharge={action.recharge}
+                inscriptionId={action.inscriptionId}
+                onUse={action.inscriptionId ? () => handleUseRune(action.inscriptionId!) : undefined}
               />
             ))
           )}

@@ -13,7 +13,7 @@ export function AnimatedList({ children, className, staggerDelay = 30 }: Animate
     <div className={cn("space-y-2", className)}>
       {children.map((child, index) => (
         <div
-          key={index}
+          key={`animated-item-${index}-${String(child)}`}
           className="animate-in fade-in slide-in-from-bottom-4"
           style={{
             animationDelay: `${getStaggerDelay(index, staggerDelay)}ms`,
