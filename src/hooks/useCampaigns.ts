@@ -61,7 +61,7 @@ export const useJoinedCampaigns = () => {
         .order('joined_at', { ascending: false });
 
       if (error) throw error;
-      return (data || []).map((member: any) => ({
+      return (data || []).map((member: { campaigns: Campaign; role: string }) => ({
         ...member.campaigns,
         member_role: member.role,
       })) as (Campaign & { member_role: string })[];
