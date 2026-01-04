@@ -38,7 +38,8 @@ const CharacterNew = () => {
   const [name, setName] = useState('');
   const [appearance, setAppearance] = useState('');
   const [backstory, setBackstory] = useState('');
-  const [abilityMethod, setAbilityMethod] = useState<'standard' | 'point-buy'>('standard');
+  const [abilityMethod, setAbilityMethod] = useState<'standard' | 'point-buy' | 'manual'>('standard');
+  const [rolledStats, setRolledStats] = useState<number[]>([]);
   const [abilities, setAbilities] = useState<Record<AbilityScore, number>>({
     STR: 10,
     AGI: 10,
@@ -128,6 +129,40 @@ const CharacterNew = () => {
     setAbilities(newAbilities);
   };
 
+  const handleRollStats = () => {
+    // Roll 4d6, drop lowest, repeat 6 times
+    const roll4d6 = () => {
+      const rolls = [Math.floor(Math.random() * 6) + 1, Math.floor(Math.random() * 6) + 1, Math.floor(Math.random() * 6) + 1, Math.floor(Math.random() * 6) + 1];
+      rolls.sort((a, b) => b - a);
+      return rolls[0] + rolls[1] + rolls[2]; // Sum of top 3
+    };
+    const newRolledStats = Array.from({ length: 6 }, () => roll4d6()).sort((a, b) => b - a);
+    setRolledStats(newRolledStats);
+    const abilityKeys: AbilityScore[] = ['STR', 'AGI', 'VIT', 'INT', 'SENSE', 'PRE'];
+    const newAbilities: Record<AbilityScore, number> = {
+      STR: newRolledStats[0] || 10,
+      AGI: newRolledStats[1] || 10,
+      VIT: newRolledStats[2] || 10,
+      INT: newRolledStats[3] || 10,
+      SENSE: newRolledStats[4] || 10,
+      PRE: newRolledStats[5] || 10,
+    };
+    setAbilities(newAbilities);
+  };
+
+  const handleManualStats = (stats: number[]) => {
+    if (stats.length !== 6) return;
+    // Don't auto-assign, let user assign manually
+    // Just store the rolled stats for display
+    setRolledStats(stats);
+  };
+
+  const assignRolledStat = (ability: AbilityScore, statIndex: number) => {
+    if (rolledStats[statIndex] === undefined) return;
+    const newAbilities = { ...abilities, [ability]: rolledStats[statIndex] };
+    setAbilities(newAbilities);
+  };
+
   const handleNext = () => {
     if (currentStepIndex < steps.length - 1) {
       setCurrentStep(steps[currentStepIndex + 1].id);
@@ -154,6 +189,15 @@ const CharacterNew = () => {
       toast({
         title: 'Job required',
         description: 'Please select a job.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    if (!selectedBackground) {
+      toast({
+        title: 'Background required',
+        description: 'Please select a background.',
         variant: 'destructive',
       });
       return;
@@ -224,13 +268,11 @@ const CharacterNew = () => {
       const { addLevel1Features, addBackgroundFeatures, addStartingEquipment, addStartingPowers } = await import('@/lib/characterCreation');
       await addLevel1Features(character.id, job.id, selectedPath ? paths.find(p => p.id === selectedPath)?.id : undefined);
       
-      // Add background features and equipment
-      if (selectedBackground) {
-        const background = backgrounds.find(b => b.id === selectedBackground);
-        if (background) {
-          await addBackgroundFeatures(character.id, background);
-          await addStartingEquipment(character.id, job, background);
-        }
+      // Add background features and equipment (background is required)
+      const background = backgrounds.find(b => b.id === selectedBackground);
+      if (background) {
+        await addBackgroundFeatures(character.id, background);
+        await addStartingEquipment(character.id, job, background);
       } else {
         await addStartingEquipment(character.id, job);
       }
@@ -272,7 +314,7 @@ const CharacterNew = () => {
       case 'path':
         return paths.length === 0 || selectedPath.length > 0; // Optional if no paths
       case 'background':
-        return true; // Optional
+        return selectedBackground.length > 0; // Required
       case 'review':
         return true;
       default:
@@ -369,7 +411,7 @@ const CharacterNew = () => {
 
           {currentStep === 'abilities' && (
             <div className="space-y-6">
-              <div className="flex gap-4">
+              <div className="flex gap-4 flex-wrap">
                 <Button
                   variant={abilityMethod === 'standard' ? 'default' : 'outline'}
                   onClick={() => {
@@ -385,19 +427,91 @@ const CharacterNew = () => {
                 >
                   Point Buy (27 points)
                 </Button>
+                <Button
+                  variant={abilityMethod === 'manual' ? 'default' : 'outline'}
+                  onClick={() => {
+                    setAbilityMethod('manual');
+                    setRolledStats([]);
+                  }}
+                >
+                  Manual/Rolled
+                </Button>
               </div>
 
+              {abilityMethod === 'manual' && (
+                <div className="space-y-4">
+                  <div className="flex gap-4 items-center">
+                    <Button
+                      variant="outline"
+                      onClick={handleRollStats}
+                    >
+                      Roll 4d6 (Drop Lowest)
+                    </Button>
+                    {rolledStats.length > 0 && (
+                      <div className="text-sm font-heading">
+                        Rolled: {rolledStats.join(', ')} - Assign these to abilities below
+                      </div>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[0, 1, 2, 3, 4, 5].map((index) => (
+                      <div key={index}>
+                        <Label>Stat {index + 1}</Label>
+                        <Input
+                          type="number"
+                          min={3}
+                          max={18}
+                          value={rolledStats[index] || ''}
+                          onChange={(e) => {
+                            const value = parseInt(e.target.value) || 0;
+                            const newStats = [...rolledStats];
+                            newStats[index] = value;
+                            setRolledStats(newStats);
+                          }}
+                          className="mt-1"
+                          placeholder="Enter or roll"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Enter 6 ability scores manually, or roll 4d6 (drop lowest) for each stat. Then assign them to abilities below.
+                  </p>
+                </div>
+              )}
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {(Object.keys(ABILITY_NAMES) as AbilityScore[]).map((ability) => (
                   <div key={ability}>
                     <Label>{ABILITY_NAMES[ability]}</Label>
+                    {abilityMethod === 'manual' && rolledStats.length > 0 && (
+                      <div className="flex gap-1 mb-1">
+                        {rolledStats.map((stat, index) => (
+                          <Button
+                            key={index}
+                            variant="outline"
+                            size="sm"
+                            className="text-xs h-6 px-2"
+                            onClick={() => {
+                              const newAbilities = { ...abilities, [ability]: stat };
+                              setAbilities(newAbilities);
+                              // Remove used stat
+                              const newStats = rolledStats.filter((_, i) => i !== index);
+                              setRolledStats(newStats);
+                            }}
+                            disabled={Object.values(abilities).includes(stat)}
+                          >
+                            {stat}
+                          </Button>
+                        ))}
+                      </div>
+                    )}
                     <Input
                       type="number"
-                      min={abilityMethod === 'point-buy' ? 8 : undefined}
-                      max={abilityMethod === 'point-buy' ? 15 : undefined}
+                      min={abilityMethod === 'point-buy' ? 8 : abilityMethod === 'manual' ? 3 : undefined}
+                      max={abilityMethod === 'point-buy' ? 15 : abilityMethod === 'manual' ? 18 : undefined}
                       value={abilities[ability]}
                       onChange={(e) => {
-                        const value = parseInt(e.target.value) || 8;
+                        const value = parseInt(e.target.value) || (abilityMethod === 'manual' ? 3 : 8);
                         const newAbilities = { ...abilities, [ability]: value };
                         setAbilities(newAbilities);
                       }}
@@ -445,12 +559,11 @@ const CharacterNew = () => {
                   <div className="grid grid-cols-2 gap-2">
                     {jobData.skill_choices.map((skill) => (
                       <div key={skill} className="flex items-center space-x-2">
-                        <input
-                          type="checkbox"
+                        <Checkbox
                           id={`skill-${skill}`}
                           checked={selectedSkills.includes(skill)}
-                          onChange={(e) => {
-                            if (e.target.checked) {
+                          onCheckedChange={(checked) => {
+                            if (checked) {
                               if (selectedSkills.length < jobData.skill_choice_count) {
                                 setSelectedSkills([...selectedSkills, skill]);
                               }
@@ -459,7 +572,6 @@ const CharacterNew = () => {
                             }
                           }}
                           disabled={!selectedSkills.includes(skill) && selectedSkills.length >= jobData.skill_choice_count}
-                          className="rounded border-border"
                         />
                         <label htmlFor={`skill-${skill}`} className="text-sm font-heading cursor-pointer">
                           {skill}
@@ -479,48 +591,56 @@ const CharacterNew = () => {
 
           {currentStep === 'path' && (
             <div className="space-y-4">
-              <Label>Select Path {paths.length === 0 && '(Optional - No paths available for this job)'}</Label>
-              {paths.length === 0 ? (
+              {!selectedJob ? (
                 <p className="text-sm text-muted-foreground">
-                  This job doesn't have any paths available yet. You can select a path later when leveling up.
+                  Please select a job first to see available paths.
                 </p>
-              ) : (
-                <Select value={selectedPath} onValueChange={setSelectedPath}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Choose a path..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="">None (Select later)</SelectItem>
-                    {paths.map((path) => (
-                      <SelectItem key={path.id} value={path.id}>
-                        {path.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              )}
-              {selectedPath && (
-                <div className="mt-4 p-4 rounded-lg bg-muted/30">
-                  <h4 className="font-heading font-semibold mb-2">
-                    {paths.find(p => p.id === selectedPath)?.name}
-                  </h4>
+              ) : paths.length === 0 ? (
+                <>
+                  <Label>Select Path (Optional - No paths available for this job)</Label>
                   <p className="text-sm text-muted-foreground">
-                    {paths.find(p => p.id === selectedPath)?.description}
+                    This job doesn't have any paths available yet. You can select a path later when leveling up.
                   </p>
-                </div>
+                </>
+              ) : (
+                <>
+                  <Label>Select Path (Optional - Choose at level 3)</Label>
+                  <Select value={selectedPath} onValueChange={setSelectedPath}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Choose a path..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="">None (Select later at level 3)</SelectItem>
+                      {paths.map((path) => (
+                        <SelectItem key={path.id} value={path.id}>
+                          {path.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {selectedPath && (
+                    <div className="mt-4 p-4 rounded-lg bg-muted/30">
+                      <h4 className="font-heading font-semibold mb-2">
+                        {paths.find(p => p.id === selectedPath)?.name}
+                      </h4>
+                      <p className="text-sm text-muted-foreground">
+                        {paths.find(p => p.id === selectedPath)?.description}
+                      </p>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           )}
 
           {currentStep === 'background' && (
             <div className="space-y-4">
-              <Label>Select Background (Optional)</Label>
+              <Label>Select Background *</Label>
               <Select value={selectedBackground} onValueChange={setSelectedBackground}>
                 <SelectTrigger>
                   <SelectValue placeholder="Choose a background..." />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">None</SelectItem>
                   {backgrounds.map((bg) => (
                     <SelectItem key={bg.id} value={bg.id}>
                       {bg.name}
@@ -529,13 +649,52 @@ const CharacterNew = () => {
                 </SelectContent>
               </Select>
               {selectedBackground && (
-                <div className="mt-4 p-4 rounded-lg bg-muted/30">
-                  <h4 className="font-heading font-semibold mb-2">
-                    {backgrounds.find(b => b.id === selectedBackground)?.name}
-                  </h4>
-                  <p className="text-sm text-muted-foreground">
-                    {backgrounds.find(b => b.id === selectedBackground)?.description}
-                  </p>
+                <div className="mt-4 p-4 rounded-lg bg-muted/30 space-y-3">
+                  <div>
+                    <h4 className="font-heading font-semibold mb-2">
+                      {backgrounds.find(b => b.id === selectedBackground)?.name}
+                    </h4>
+                    <p className="text-sm text-muted-foreground">
+                      {backgrounds.find(b => b.id === selectedBackground)?.description}
+                    </p>
+                  </div>
+                  {backgrounds.find(b => b.id === selectedBackground)?.skill_proficiencies && backgrounds.find(b => b.id === selectedBackground)!.skill_proficiencies.length > 0 && (
+                    <div className="text-xs text-muted-foreground">
+                      <strong>Skill Proficiencies:</strong> {backgrounds.find(b => b.id === selectedBackground)!.skill_proficiencies.join(', ')}
+                    </div>
+                  )}
+                  {backgrounds.find(b => b.id === selectedBackground)?.tool_proficiencies && backgrounds.find(b => b.id === selectedBackground)!.tool_proficiencies.length > 0 && (
+                    <div className="text-xs text-muted-foreground">
+                      <strong>Tool Proficiencies:</strong> {backgrounds.find(b => b.id === selectedBackground)!.tool_proficiencies.join(', ')}
+                    </div>
+                  )}
+                  {backgrounds.find(b => b.id === selectedBackground)?.language_count && backgrounds.find(b => b.id === selectedBackground)!.language_count! > 0 && (
+                    <div className="text-xs text-muted-foreground">
+                      <strong>Languages:</strong> {backgrounds.find(b => b.id === selectedBackground)!.language_count} additional language{backgrounds.find(b => b.id === selectedBackground)!.language_count! > 1 ? 's' : ''}
+                    </div>
+                  )}
+                  {backgrounds.find(b => b.id === selectedBackground)?.starting_equipment && (
+                    <div className="text-xs text-muted-foreground">
+                      <strong>Starting Equipment:</strong> {backgrounds.find(b => b.id === selectedBackground)!.starting_equipment}
+                    </div>
+                  )}
+                  {backgrounds.find(b => b.id === selectedBackground)?.starting_credits && (
+                    <div className="text-xs text-muted-foreground">
+                      <strong>Starting Credits:</strong> {backgrounds.find(b => b.id === selectedBackground)!.starting_credits}
+                    </div>
+                  )}
+                  {backgrounds.find(b => b.id === selectedBackground)?.feature_name && (
+                    <div className="mt-3 pt-3 border-t border-border">
+                      <div className="text-xs font-heading font-semibold mb-1">
+                        {backgrounds.find(b => b.id === selectedBackground)!.feature_name}
+                      </div>
+                      {backgrounds.find(b => b.id === selectedBackground)?.feature_description && (
+                        <div className="text-xs text-muted-foreground">
+                          {backgrounds.find(b => b.id === selectedBackground)!.feature_description}
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
