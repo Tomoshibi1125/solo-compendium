@@ -164,6 +164,51 @@ export type Database = {
           },
         ]
       }
+      character_monarch_unlocks: {
+        Row: {
+          character_id: string
+          dm_notes: string | null
+          id: string
+          is_primary: boolean
+          monarch_id: string
+          quest_name: string
+          unlocked_at: string
+        }
+        Insert: {
+          character_id: string
+          dm_notes?: string | null
+          id?: string
+          is_primary?: boolean
+          monarch_id: string
+          quest_name: string
+          unlocked_at?: string
+        }
+        Update: {
+          character_id?: string
+          dm_notes?: string | null
+          id?: string
+          is_primary?: boolean
+          monarch_id?: string
+          quest_name?: string
+          unlocked_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "character_monarch_unlocks_character_id_fkey"
+            columns: ["character_id"]
+            isOneToOne: false
+            referencedRelation: "characters"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "character_monarch_unlocks_monarch_id_fkey"
+            columns: ["monarch_id"]
+            isOneToOne: false
+            referencedRelation: "compendium_monarchs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       character_powers: {
         Row: {
           casting_time: string | null
@@ -219,6 +264,54 @@ export type Database = {
             columns: ["character_id"]
             isOneToOne: false
             referencedRelation: "characters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      character_shadow_soldiers: {
+        Row: {
+          bond_level: number
+          character_id: string
+          created_at: string
+          current_hp: number
+          id: string
+          is_summoned: boolean
+          nickname: string | null
+          soldier_id: string
+        }
+        Insert: {
+          bond_level?: number
+          character_id: string
+          created_at?: string
+          current_hp: number
+          id?: string
+          is_summoned?: boolean
+          nickname?: string | null
+          soldier_id: string
+        }
+        Update: {
+          bond_level?: number
+          character_id?: string
+          created_at?: string
+          current_hp?: number
+          id?: string
+          is_summoned?: boolean
+          nickname?: string | null
+          soldier_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "character_shadow_soldiers_character_id_fkey"
+            columns: ["character_id"]
+            isOneToOne: false
+            referencedRelation: "characters"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "character_shadow_soldiers_soldier_id_fkey"
+            columns: ["soldier_id"]
+            isOneToOne: false
+            referencedRelation: "compendium_shadow_soldiers"
             referencedColumns: ["id"]
           },
         ]
@@ -1115,6 +1208,78 @@ export type Database = {
         }
         Relationships: []
       }
+      compendium_shadow_soldiers: {
+        Row: {
+          abilities: Json
+          agi: number
+          armor_class: number
+          condition_immunities: string[] | null
+          created_at: string
+          damage_immunities: string[] | null
+          description: string
+          hit_points: number
+          id: string
+          int: number
+          lore: string | null
+          name: string
+          pre: number
+          rank: string
+          sense: number
+          shadow_type: string
+          speed: number
+          str: number
+          summon_requirements: string | null
+          title: string
+          vit: number
+        }
+        Insert: {
+          abilities?: Json
+          agi?: number
+          armor_class?: number
+          condition_immunities?: string[] | null
+          created_at?: string
+          damage_immunities?: string[] | null
+          description: string
+          hit_points?: number
+          id?: string
+          int?: number
+          lore?: string | null
+          name: string
+          pre?: number
+          rank: string
+          sense?: number
+          shadow_type?: string
+          speed?: number
+          str?: number
+          summon_requirements?: string | null
+          title: string
+          vit?: number
+        }
+        Update: {
+          abilities?: Json
+          agi?: number
+          armor_class?: number
+          condition_immunities?: string[] | null
+          created_at?: string
+          damage_immunities?: string[] | null
+          description?: string
+          hit_points?: number
+          id?: string
+          int?: number
+          lore?: string | null
+          name?: string
+          pre?: number
+          rank?: string
+          sense?: number
+          shadow_type?: string
+          speed?: number
+          str?: number
+          summon_requirements?: string | null
+          title?: string
+          vit?: number
+        }
+        Relationships: []
+      }
       compendium_skills: {
         Row: {
           ability: string
@@ -1277,6 +1442,98 @@ export type Database = {
           },
           {
             foreignKeyName: "compendium_sovereigns_path_id_fkey"
+            columns: ["path_id"]
+            isOneToOne: false
+            referencedRelation: "compendium_job_paths"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      saved_sovereigns: {
+        Row: {
+          abilities: Json
+          created_at: string
+          created_by: string
+          description: string
+          fusion_description: string
+          fusion_method: string
+          fusion_stability: string
+          fusion_theme: string
+          id: string
+          is_public: boolean
+          job_id: string
+          likes_count: number
+          monarch_a_id: string
+          monarch_b_id: string
+          name: string
+          path_id: string
+          power_multiplier: string
+          title: string
+        }
+        Insert: {
+          abilities?: Json
+          created_at?: string
+          created_by: string
+          description: string
+          fusion_description: string
+          fusion_method: string
+          fusion_stability: string
+          fusion_theme: string
+          id?: string
+          is_public?: boolean
+          job_id: string
+          likes_count?: number
+          monarch_a_id: string
+          monarch_b_id: string
+          name: string
+          path_id: string
+          power_multiplier: string
+          title: string
+        }
+        Update: {
+          abilities?: Json
+          created_at?: string
+          created_by?: string
+          description?: string
+          fusion_description?: string
+          fusion_method?: string
+          fusion_stability?: string
+          fusion_theme?: string
+          id?: string
+          is_public?: boolean
+          job_id?: string
+          likes_count?: number
+          monarch_a_id?: string
+          monarch_b_id?: string
+          name?: string
+          path_id?: string
+          power_multiplier?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "saved_sovereigns_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "compendium_jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "saved_sovereigns_monarch_a_id_fkey"
+            columns: ["monarch_a_id"]
+            isOneToOne: false
+            referencedRelation: "compendium_monarchs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "saved_sovereigns_monarch_b_id_fkey"
+            columns: ["monarch_b_id"]
+            isOneToOne: false
+            referencedRelation: "compendium_monarchs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "saved_sovereigns_path_id_fkey"
             columns: ["path_id"]
             isOneToOne: false
             referencedRelation: "compendium_job_paths"
