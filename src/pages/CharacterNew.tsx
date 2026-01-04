@@ -52,6 +52,12 @@ const CharacterNew = () => {
   const [selectedBackground, setSelectedBackground] = useState<string>('');
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
 
+  // Reset skills when job changes
+  const handleJobChange = (jobId: string) => {
+    setSelectedJob(jobId);
+    setSelectedSkills([]); // Reset skills when job changes
+  };
+
   // Fetch jobs
   const { data: jobs = [] } = useQuery({
     queryKey: ['jobs'],
@@ -410,7 +416,7 @@ const CharacterNew = () => {
           {currentStep === 'job' && (
             <div className="space-y-4">
               <Label>Select Job *</Label>
-              <Select value={selectedJob} onValueChange={setSelectedJob}>
+              <Select value={selectedJob} onValueChange={handleJobChange}>
                 <SelectTrigger>
                   <SelectValue placeholder="Choose a job..." />
                 </SelectTrigger>
@@ -429,6 +435,43 @@ const CharacterNew = () => {
                   <div className="mt-2 text-xs text-muted-foreground">
                     Hit Die: d{jobData.hit_die} | Primary: {jobData.primary_abilities.join(', ')}
                   </div>
+                </div>
+              )}
+              {jobData && jobData.skill_choices && jobData.skill_choices.length > 0 && (
+                <div className="mt-4 space-y-2">
+                  <Label>
+                    Select {jobData.skill_choice_count} Skill{jobData.skill_choice_count > 1 ? 's' : ''} *
+                  </Label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {jobData.skill_choices.map((skill) => (
+                      <div key={skill} className="flex items-center space-x-2">
+                        <input
+                          type="checkbox"
+                          id={`skill-${skill}`}
+                          checked={selectedSkills.includes(skill)}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              if (selectedSkills.length < jobData.skill_choice_count) {
+                                setSelectedSkills([...selectedSkills, skill]);
+                              }
+                            } else {
+                              setSelectedSkills(selectedSkills.filter(s => s !== skill));
+                            }
+                          }}
+                          disabled={!selectedSkills.includes(skill) && selectedSkills.length >= jobData.skill_choice_count}
+                          className="rounded border-border"
+                        />
+                        <label htmlFor={`skill-${skill}`} className="text-sm font-heading cursor-pointer">
+                          {skill}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                  {selectedSkills.length > 0 && (
+                    <p className="text-xs text-muted-foreground mt-2">
+                      Selected: {selectedSkills.join(', ')} ({selectedSkills.length}/{jobData.skill_choice_count})
+                    </p>
+                  )}
                 </div>
               )}
             </div>
