@@ -35,8 +35,8 @@ test.describe('Compendium Detail Pages', () => {
       return;
     }
     
-    // Wait for search input to ensure page is loaded
-    await page.getByPlaceholder(/search/i).waitFor({ state: 'visible', timeout: 10000 });
+    // Wait for compendium search input to ensure page is loaded (avoid global header search)
+    await page.getByRole('textbox', { name: 'Search compendium' }).waitFor({ state: 'visible', timeout: 10000 });
     
     // Wait for content to load - either results or empty state
     await page.waitForTimeout(2000);
@@ -77,8 +77,8 @@ test.describe('Compendium Detail Pages', () => {
       return;
     }
     
-    // Wait for search input
-    await page.getByPlaceholder(/search/i).waitFor({ state: 'visible', timeout: 10000 });
+    // Wait for compendium search input
+    await page.getByRole('textbox', { name: 'Search compendium' }).waitFor({ state: 'visible', timeout: 10000 });
     await page.waitForTimeout(2000); // Wait for content to load
     
     const firstEntry = page.locator('a[href*="/compendium/"]').first();

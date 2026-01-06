@@ -35,12 +35,12 @@ test.describe('Search Functionality', () => {
       return;
     }
     
-    // Wait for search input to be visible
-    await page.getByPlaceholder(/search/i).waitFor({ state: 'visible', timeout: 10000 });
+    // Wait for compendium search input to be visible (avoid global header search)
+    await page.getByRole('textbox', { name: 'Search compendium' }).waitFor({ state: 'visible', timeout: 10000 });
   });
 
   test('should search for content', async ({ page }) => {
-    const searchInput = page.getByPlaceholder(/search/i);
+    const searchInput = page.getByRole('textbox', { name: 'Search compendium' });
     await expect(searchInput).toBeVisible({ timeout: 10000 });
     await searchInput.fill('striker');
     
@@ -49,7 +49,7 @@ test.describe('Search Functionality', () => {
     
     // Should show results or "no results" message
     const results = page.locator('a[href*="/compendium/"]');
-    const noResults = page.getByText(/no results found|no entries found/i);
+    const noResults = page.getByText(/no results found|no entries found/i).first();
     
     // Either we have results or a no results message
     await expect(results.first().or(noResults)).toBeVisible({ timeout: 10000 });
@@ -57,21 +57,21 @@ test.describe('Search Functionality', () => {
 
   test('should filter by category', async ({ page }) => {
     // Wait for sidebar to load, then click on a category button in the sidebar
-    const jobsButton = page.locator('aside button').filter({ hasText: /^Jobs$/i });
+    const jobsButton = page.locator('aside').getByRole('button', { name: /jobs/i });
     await expect(jobsButton).toBeVisible({ timeout: 10000 });
     await jobsButton.click();
     
     // Wait for category filter to apply and loading to complete
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(1500);
     
-    // Results should be filtered (or show no results)
-    const results = page.locator('a[href*="/compendium/"]');
-    const noResults = page.getByText(/no results found|no entries found/i);
-    await expect(results.first().or(noResults)).toBeVisible({ timeout: 10000 });
+    // Results should be filtered to jobs, or show an empty-state message
+    const results = page.locator('a[href*="/compendium/jobs/"]');
+    const emptyState = page.getByText(/no results found|no entries found|no entries/i).first();
+    await expect(results.first().or(emptyState)).toBeVisible({ timeout: 10000 });
   });
 
   test('should have accessible search input', async ({ page }) => {
-    const searchInput = page.getByPlaceholder(/search/i);
+    const searchInput = page.getByRole('textbox', { name: 'Search compendium' });
     await expect(searchInput).toBeVisible({ timeout: 10000 });
     await expect(searchInput).toHaveAttribute('aria-label', /search/i, { timeout: 5000 });
   });

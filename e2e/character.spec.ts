@@ -6,9 +6,9 @@ test.describe('Character Management', () => {
   });
 
   test('should navigate to characters page', async ({ page }) => {
-    await page.getByRole('link', { name: /characters/i }).click();
+    await page.getByRole('link', { name: /hunters/i }).click();
     await expect(page).toHaveURL(/\/characters/);
-    await expect(page.getByRole('heading', { name: /my hunters/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /hunter registry/i })).toBeVisible();
   });
 
   test('should show character creation page', async ({ page }) => {

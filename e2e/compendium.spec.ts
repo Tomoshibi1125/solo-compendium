@@ -35,8 +35,8 @@ test.describe('Compendium', () => {
       return;
     }
     
-    // Expect the heading to be visible
-    const heading = page.getByRole('heading', { name: /compendium/i });
+    // Expect the main heading to be visible (avoid strict-mode matches on other headings)
+    const heading = page.getByRole('heading', { name: 'COMPENDIUM', exact: true });
     await expect(heading).toBeVisible({ timeout: 10000 });
   });
 
@@ -54,8 +54,8 @@ test.describe('Compendium', () => {
       return;
     }
     
-    // Wait for search input to be visible
-    const searchInput = page.getByPlaceholder(/search/i);
+    // Wait for compendium search input to be visible (avoid global search input in header)
+    const searchInput = page.getByRole('textbox', { name: 'Search compendium' });
     await expect(searchInput).toBeVisible({ timeout: 10000 });
   });
 
@@ -73,10 +73,9 @@ test.describe('Compendium', () => {
       return;
     }
     
-    // Wait for the sidebar to load - categories are in the sidebar
-    // Look for category buttons in the sidebar (they contain category names like "Jobs", "Powers", etc.)
-    const categories = page.locator('aside button').filter({ hasText: /^(All|Jobs|Paths|Monarchs|Powers|Relics|Feats|Monsters|Backgrounds|Conditions|Skills|Equipment)$/i });
-    await expect(categories.first()).toBeVisible({ timeout: 10000 });
+    // Wait for the sidebar to load - category buttons may include counts, so don't use anchored regex
+    const jobsCategory = page.locator('aside').getByRole('button', { name: /jobs/i });
+    await expect(jobsCategory).toBeVisible({ timeout: 10000 });
   });
 });
 
