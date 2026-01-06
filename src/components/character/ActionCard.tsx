@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Zap, Sword, Wand2, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
@@ -153,6 +154,7 @@ export function ActionCard({
                 size="sm"
                 onClick={() => handleRoll('attack')}
                 className="flex-1 gap-2"
+                aria-label={`Roll attack for ${name}`}
               >
                 <Sword className="w-4 h-4" />
                 Attack: {formatModifier(attackBonus)}
@@ -164,6 +166,7 @@ export function ActionCard({
                 size="sm"
                 onClick={() => handleRoll('damage')}
                 className="flex-1 gap-2"
+                aria-label={`Roll damage for ${name}`}
               >
                 <Zap className="w-4 h-4" />
                 Damage: {damage}
@@ -176,4 +179,17 @@ export function ActionCard({
   );
 }
 
+export const ActionCard = memo(ActionCardComponent, (prevProps, nextProps) => {
+  // Custom comparison - only re-render if props actually change
+  return (
+    prevProps.name === nextProps.name &&
+    prevProps.type === nextProps.type &&
+    prevProps.attackBonus === nextProps.attackBonus &&
+    prevProps.damage === nextProps.damage &&
+    prevProps.range === nextProps.range &&
+    prevProps.uses?.current === nextProps.uses?.current &&
+    prevProps.uses?.max === nextProps.uses?.max &&
+    prevProps.recharge === nextProps.recharge
+  );
+});
 

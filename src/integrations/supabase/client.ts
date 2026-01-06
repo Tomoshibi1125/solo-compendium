@@ -16,8 +16,20 @@ if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
 // import { supabase } from "@/integrations/supabase/client";
 
 export const supabase = createClient<Database>(
-  SUPABASE_URL || 'https://placeholder.supabase.co',
-  SUPABASE_PUBLISHABLE_KEY || 'placeholder-key',
+  (() => {
+    const url = SUPABASE_URL;
+    if (!url) {
+      throw new Error('Missing SUPABASE_URL environment variable. Please set it in your .env file.');
+    }
+    return url;
+  })(),
+  (() => {
+    const key = SUPABASE_PUBLISHABLE_KEY;
+    if (!key) {
+      throw new Error('Missing SUPABASE_PUBLISHABLE_KEY environment variable. Please set it in your .env file.');
+    }
+    return key;
+  })(),
   {
     auth: {
       storage: typeof window !== 'undefined' ? localStorage : undefined,

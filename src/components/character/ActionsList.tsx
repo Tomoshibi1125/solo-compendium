@@ -11,6 +11,7 @@ import { useCharacterRuneInscriptions } from '@/hooks/useRunes';
 import { getAbilityModifier, getProficiencyBonus } from '@/types/solo-leveling';
 import { parseModifiers, applyEquipmentModifiers } from '@/lib/equipmentModifiers';
 import { applyRuneBonuses } from '@/lib/runeAutomation';
+import { logger } from '@/lib/logger';
 import type { AbilityScore } from '@/types/solo-leveling';
 import type { Database } from '@/integrations/supabase/types';
 
@@ -31,7 +32,7 @@ export function ActionsList({ characterId }: { characterId: string }) {
       await useRune.mutateAsync({ inscriptionId });
     } catch (error) {
       // Error handling is done by the mutation
-      console.error('Failed to use rune:', error);
+      logger.error('Failed to use rune:', error);
     }
   };
 

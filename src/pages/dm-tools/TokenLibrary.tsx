@@ -156,12 +156,29 @@ const TokenLibrary = () => {
       return;
     }
 
-    // Create preview
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      setImagePreview(e.target?.result as string);
-    };
-    reader.readAsDataURL(file);
+    // Compress image for preview
+    try {
+      const { compressImage } = await import('@/lib/imageOptimization');
+      const compressedBlob = await compressImage(file, {
+        maxWidth: 512,
+        maxHeight: 512,
+        quality: 0.85,
+        format: 'webp',
+      });
+      
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImagePreview(e.target?.result as string);
+      };
+      reader.readAsDataURL(compressedBlob);
+    } catch (error) {
+      // Fallback to original file if compression fails
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImagePreview(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleUploadImage = async () => {
@@ -171,17 +188,26 @@ const TokenLibrary = () => {
     setUploading(true);
 
     try {
-      // Generate unique filename
-      const fileExt = file.name.split('.').pop();
-      const fileName = `token-${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+      // Compress image before uploading
+      const { compressImage } = await import('@/lib/imageOptimization');
+      const compressedBlob = await compressImage(file, {
+        maxWidth: 512,
+        maxHeight: 512,
+        quality: 0.85,
+        format: 'webp',
+      });
+
+      // Generate unique filename with .webp extension
+      const fileName = `token-${Date.now()}-${Math.random().toString(36).substring(7)}.webp`;
       const filePath = `tokens/${fileName}`;
 
-      // Upload to Supabase Storage
+      // Upload compressed image to Supabase Storage
       const { error: uploadError } = await supabase.storage
         .from('custom-tokens')
-        .upload(filePath, file, {
+        .upload(filePath, compressedBlob, {
           cacheControl: '3600',
           upsert: false,
+          contentType: 'image/webp',
         });
 
       if (uploadError) throw uploadError;

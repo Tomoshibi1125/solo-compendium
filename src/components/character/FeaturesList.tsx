@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Star, Filter, Minus, Plus } from 'lucide-react';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
+import { SortableList } from '@/components/ui/SortableList';
 import { useFeatures } from '@/hooks/useFeatures';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -11,7 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 export function FeaturesList({ characterId }: { characterId: string }) {
-  const { features, updateFeature } = useFeatures(characterId);
+  const { features, updateFeature, reorderFeatures } = useFeatures(characterId);
   const { toast } = useToast();
   const [filterSource, setFilterSource] = useState<string>('all');
   const [filterLevel, setFilterLevel] = useState<string>('all');
@@ -28,6 +29,18 @@ export function FeaturesList({ characterId }: { characterId: string }) {
     acc[source].push(feature);
     return acc;
   }, {} as Record<string, typeof features>);
+
+  const handleReorderGroup = useCallback(async (source: string, newOrder: typeof features) => {
+    try {
+      const updates = newOrder.map((feature, index) => ({
+        id: feature.id,
+        display_order: index,
+      }));
+      await reorderFeatures(updates);
+    } catch (error) {
+      // Error handled by hook
+    }
+  }, [reorderFeatures]);
 
   const handleUseFeature = async (feature: typeof features[0], delta: number) => {
     if (feature.uses_max === null) return;
@@ -109,8 +122,10 @@ export function FeaturesList({ characterId }: { characterId: string }) {
               <div className="text-sm font-heading text-muted-foreground">
                 {source}
               </div>
-              <div className="space-y-2">
-                {sourceFeatures.map((feature) => (
+              <SortableList
+                items={sourceFeatures}
+                onReorder={(newOrder) => handleReorderGroup(source, newOrder)}
+                renderItem={(feature) => (
                   <div
                     key={feature.id}
                     className={cn(
@@ -185,8 +200,9 @@ export function FeaturesList({ characterId }: { characterId: string }) {
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
+                )}
+                itemClassName="mb-2"
+              />
             </div>
           ))
         )}

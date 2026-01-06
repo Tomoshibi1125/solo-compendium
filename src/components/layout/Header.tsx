@@ -1,11 +1,22 @@
-import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, BookOpen, Users, Sword, Shield, Dice6, Map, Settings, UsersRound, Zap } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, X, BookOpen, Users, Sword, Shield, Dice6, Map, Settings, UsersRound, Zap, LogOut, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
 import { GlobalSearch } from '@/components/ui/GlobalSearch';
 import { RoleBadge } from '@/components/ui/RoleBadge';
+import { NotificationCenter } from '@/components/ui/NotificationCenter';
 import { useIsDM } from '@/hooks/useCampaigns';
+import { useProfile } from '@/hooks/useProfile';
+import { supabase } from '@/integrations/supabase/client';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 
 const navigation = [
@@ -19,8 +30,30 @@ const navigation = [
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
   const location = useLocation();
+  const navigate = useNavigate();
   const { data: isDM = false } = useIsDM();
+  const { data: profile } = useProfile();
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user: currentUser } } = await supabase.auth.getUser();
+      setUser(currentUser);
+    };
+    getUser();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate('/');
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full">
@@ -50,7 +83,7 @@ export function Header() {
               </div>
               
               <div className="flex items-center gap-1">
-                {navigation.map((item) => {
+                {navigation.filter(item => item.name === 'System Tools' ? isDM : true).map((item) => {
                 const isActive = location.pathname.startsWith(item.href);
                 return (
                   <Link
@@ -91,6 +124,53 @@ export function Header() {
                 </div>
               )}
               
+              {/* Notification Center */}
+              {user && <NotificationCenter />}
+              
+              {user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm" className="hidden sm:flex gap-2">
+                      <User className="w-4 h-4" />
+                      <span className="font-heading text-sm max-w-[120px] truncate">
+                        {user.email?.split('@')[0] || 'User'}
+                      </span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56">
+                    <DropdownMenuLabel>
+                      <div className="flex flex-col space-y-1">
+                        <p className="text-sm font-medium">{user.email}</p>
+                        {profile && (
+                          <p className="text-xs text-muted-foreground">
+                            {profile.role === 'dm' ? 'Gate Master' : 'Hunter'}
+                          </p>
+                        )}
+                      </div>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link to="/auth?changeRole=true" className="flex items-center">
+                        <User className="w-4 h-4 mr-2" />
+                        Change Role
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleLogout} className="text-red-600 focus:text-red-600">
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Sign Out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Link to="/auth">
+                  <Button variant="outline" size="sm" className="hidden sm:flex gap-2">
+                    <User className="w-4 h-4" />
+                    <span className="font-heading">Sign In</span>
+                  </Button>
+                </Link>
+              )}
+              
               <Link to="/characters/new">
                 <Button variant="outline" size="sm" className="hidden sm:flex gap-2 btn-shadow-monarch border-shadow-purple/40 hover:border-shadow-purple hover:bg-shadow-purple/10">
                   <Zap className="w-4 h-4" />
@@ -119,7 +199,7 @@ export function Header() {
           {mobileMenuOpen && (
             <div className="md:hidden py-4 border-t border-shadow-blue/20 animate-slide-up">
               <div className="flex flex-col gap-1">
-                {navigation.map((item) => {
+                {navigation.filter(item => item.name === 'System Tools' ? isDM : true).map((item) => {
                   const isActive = location.pathname.startsWith(item.href);
                   return (
                   <Link
@@ -148,6 +228,38 @@ export function Header() {
                       <span className="text-xs text-muted-foreground font-heading">YOUR ROLE</span>
                       <RoleBadge role="system" variant="compact" />
                     </div>
+                  </div>
+                )}
+                {/* Mobile User Menu */}
+                {user ? (
+                  <div className="pt-2 mt-2 border-t border-shadow-blue/20 px-4 py-2">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex flex-col">
+                        <span className="text-sm font-heading font-medium">{user.email?.split('@')[0] || 'User'}</span>
+                        {profile && (
+                          <span className="text-xs text-muted-foreground">
+                            {profile.role === 'dm' ? 'Gate Master' : 'Hunter'}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <Button 
+                      variant="outline" 
+                      className="w-full gap-2 text-red-600 border-red-600/20 hover:bg-red-600/10"
+                      onClick={handleLogout}
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Sign Out
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="pt-2 mt-2 border-t border-shadow-blue/20 px-4 py-2">
+                    <Link to="/auth" className="block">
+                      <Button variant="outline" className="w-full gap-2">
+                        <User className="w-4 h-4" />
+                        Sign In
+                      </Button>
+                    </Link>
                   </div>
                 )}
                 <div className="pt-2 mt-2 border-t border-shadow-blue/20">

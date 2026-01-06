@@ -9,6 +9,8 @@ import { Switch } from '@/components/ui/switch';
 import { useCampaign, useHasDMAccess } from '@/hooks/useCampaigns';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { logger } from '@/lib/logger';
 
 interface CampaignSettingsProps {
   campaignId: string;
@@ -34,8 +36,45 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 
   const updateCampaign = useMutation({
     mutationFn: async (updates: { name?: string; description?: string | null; is_active?: boolean }) => {
-      // Campaign management feature not yet implemented in database
-      throw new Error('Campaign management is not yet available');
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        throw new Error('You must be logged in to update campaigns');
+      }
+
+      // Verify user has DM access (RLS will also enforce this)
+      const { data: campaign, error: fetchError } = await supabase
+        .from('campaigns')
+        .select('dm_id')
+        .eq('id', campaignId)
+        .single();
+
+      if (fetchError) {
+        logger.error('Failed to fetch campaign for update:', fetchError);
+        throw new Error('Failed to verify campaign access');
+      }
+
+      if (!campaign || campaign.dm_id !== user.id) {
+        throw new Error('Only the campaign DM can update settings');
+      }
+
+      // Perform the update
+      const { data, error } = await supabase
+        .from('campaigns')
+        .update({
+          name: updates.name,
+          description: updates.description,
+          is_active: updates.is_active,
+        })
+        .eq('id', campaignId)
+        .select()
+        .single();
+
+      if (error) {
+        logger.error('Failed to update campaign:', error);
+        throw new Error(error.message || 'Failed to update campaign');
+      }
+
+      return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['campaigns', campaignId] });

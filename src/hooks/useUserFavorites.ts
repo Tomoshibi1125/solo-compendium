@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 
 export interface UserFavorite {
   id: string;
@@ -17,8 +18,7 @@ export const useUserFavorites = (entryType?: string) => {
       if (!user) return []; // Return empty array if not authenticated
 
       let query = supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('user_favorites' as any)
+        .from('user_favorites')
         .select('*')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false });
@@ -29,7 +29,7 @@ export const useUserFavorites = (entryType?: string) => {
 
       const { data, error } = await query;
       if (error) throw error;
-      return (data || []) as unknown as UserFavorite[];
+      return (data || []) as UserFavorite[];
     },
     retry: false, // Don't retry if not authenticated
   });
@@ -43,8 +43,7 @@ export const useIsFavorite = (entryType: string, entryId: string) => {
       if (!user) return false;
 
       const { data, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('user_favorites' as any)
+        .from('user_favorites')
         .select('id')
         .eq('user_id', user.id)
         .eq('entry_type', entryType)
@@ -69,8 +68,7 @@ export const useToggleFavorite = () => {
 
       // Check if already favorited
       const { data: existing } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('user_favorites' as any)
+        .from('user_favorites')
         .select('id')
         .eq('user_id', user.id)
         .eq('entry_type', entryType)
@@ -79,24 +77,21 @@ export const useToggleFavorite = () => {
 
       if (existing) {
         // Remove favorite
-        const existingRecord = existing as unknown as { id: string };
+        const existingRecord = existing as Database['public']['Tables']['user_favorites']['Row'];
         await supabase
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          .from('user_favorites' as any)
+          .from('user_favorites')
           .delete()
           .eq('id', existingRecord.id);
         return { favorited: false };
       } else {
         // Add favorite
         await supabase
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          .from('user_favorites' as any)
+          .from('user_favorites')
           .insert({
             user_id: user.id,
             entry_type: entryType,
             entry_id: entryId,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } as any);
+          } as Database['public']['Tables']['user_favorites']['Insert']);
         return { favorited: true };
       }
     },

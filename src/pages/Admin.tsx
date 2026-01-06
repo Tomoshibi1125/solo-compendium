@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Upload, FileText, CheckCircle, AlertCircle, Loader2, Download, Shield, Database, Sparkles } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Upload, FileText, CheckCircle, AlertCircle, Loader2, Download, Shield, Database, Sparkles, BarChart3 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
@@ -114,7 +115,7 @@ const Admin = () => {
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-arise/20 to-shadow-purple/20 border border-arise/30 flex items-center justify-center">
               <Database className="w-6 h-6 text-arise" />
             </div>
-            <div>
+            <div className="flex-1">
               <h1 className="font-arise text-4xl font-bold gradient-text-system tracking-wider">
                 SYSTEM ADMIN
               </h1>
@@ -122,6 +123,12 @@ const Admin = () => {
                 Import and validate homebrew content for the compendium
               </p>
             </div>
+            <Link to="/admin/audit">
+              <Button variant="outline" className="gap-2 border-arise/30 hover:bg-arise/10 hover:border-arise/50">
+                <BarChart3 className="w-4 h-4" />
+                Content Audit
+              </Button>
+            </Link>
           </div>
         </div>
 

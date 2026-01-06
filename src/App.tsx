@@ -1,12 +1,22 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { useGlobalShortcuts } from "@/hooks/useGlobalShortcuts";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import { CommandPalette } from "@/components/ui/CommandPalette";
+import { ServiceWorkerUpdatePrompt } from "@/components/ui/ServiceWorkerUpdatePrompt";
+import { OfflineIndicator } from "@/components/ui/OfflineIndicator";
+import { AnalyticsConsentBanner } from "@/components/ui/AnalyticsConsentBanner";
+import { PageViewTracker } from "@/components/analytics/PageViewTracker";
+import { setCommandPaletteOpener } from "@/lib/globalShortcuts";
+import { setSentryUser } from "@/lib/sentry";
+import { trackEvent, identifyUser, resetUser, AnalyticsEvents } from "@/lib/analytics";
+import { supabase } from "@/integrations/supabase/client";
 import Index from "./pages/Index";
 
 // Lazy load routes for code splitting
@@ -17,6 +27,7 @@ const CharacterSheet = lazy(() => import("./pages/CharacterSheet"));
 const CharacterNew = lazy(() => import("./pages/CharacterNew"));
 const CharacterLevelUp = lazy(() => import("./pages/CharacterLevelUp"));
 const Admin = lazy(() => import("./pages/Admin"));
+const ContentAudit = lazy(() => import("./pages/admin/ContentAudit"));
 const DMTools = lazy(() => import("./pages/DMTools"));
 const EncounterBuilder = lazy(() => import("./pages/dm-tools/EncounterBuilder"));
 const InitiativeTracker = lazy(() => import("./pages/dm-tools/InitiativeTracker"));
@@ -38,6 +49,8 @@ const DiceRoller = lazy(() => import("./pages/DiceRoller"));
 const Campaigns = lazy(() => import("./pages/Campaigns"));
 const CampaignDetail = lazy(() => import("./pages/CampaignDetail"));
 const CampaignJoin = lazy(() => import("./pages/CampaignJoin"));
+const CharacterCompare = lazy(() => import("./pages/CharacterCompare"));
+const Auth = lazy(() => import("./pages/Auth"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Configure React Query with better caching and error handling
@@ -69,11 +82,20 @@ const PageLoader = () => (
 
 // Inner component that uses router hooks - must be inside BrowserRouter
 const AppContent = () => {
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+  
   // Enable global keyboard shortcuts (must be inside Router context)
   useGlobalShortcuts(true);
   
+  // Register command palette opener
+  useEffect(() => {
+    setCommandPaletteOpener(() => setCommandPaletteOpen(true));
+  }, []);
+  
   return (
-    <Routes>
+    <>
+      <CommandPalette open={commandPaletteOpen} onOpenChange={setCommandPaletteOpen} />
+      <Routes>
       <Route 
         path="/" 
         element={
@@ -131,6 +153,14 @@ const AppContent = () => {
         }
       />
       <Route
+        path="/characters/compare"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <CharacterCompare />
+          </Suspense>
+        }
+      />
+      <Route
         path="/admin"
         element={
           <Suspense fallback={<PageLoader />}>
@@ -141,121 +171,151 @@ const AppContent = () => {
       <Route
         path="/dm-tools"
         element={
+          <ProtectedRoute requireDM>
           <Suspense fallback={<PageLoader />}>
             <DMTools />
           </Suspense>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/dm-tools/encounter-builder"
         element={
+          <ProtectedRoute requireDM>
           <Suspense fallback={<PageLoader />}>
             <EncounterBuilder />
           </Suspense>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/dm-tools/initiative-tracker"
         element={
+          <ProtectedRoute requireDM>
           <Suspense fallback={<PageLoader />}>
             <InitiativeTracker />
           </Suspense>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/dm-tools/rollable-tables"
         element={
+          <ProtectedRoute requireDM>
           <Suspense fallback={<PageLoader />}>
             <RollableTables />
           </Suspense>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/dm-tools/gate-generator"
         element={
+          <ProtectedRoute requireDM>
           <Suspense fallback={<PageLoader />}>
             <GateGenerator />
           </Suspense>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/dm-tools/npc-generator"
         element={
+          <ProtectedRoute requireDM>
           <Suspense fallback={<PageLoader />}>
             <NPCGenerator />
           </Suspense>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/dm-tools/treasure-generator"
         element={
+          <ProtectedRoute requireDM>
           <Suspense fallback={<PageLoader />}>
             <TreasureGenerator />
           </Suspense>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/dm-tools/quest-generator"
         element={
+          <ProtectedRoute requireDM>
           <Suspense fallback={<PageLoader />}>
             <QuestGenerator />
           </Suspense>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/dm-tools/session-planner"
         element={
+          <ProtectedRoute requireDM>
           <Suspense fallback={<PageLoader />}>
             <SessionPlanner />
           </Suspense>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/dm-tools/random-event-generator"
         element={
+          <ProtectedRoute requireDM>
           <Suspense fallback={<PageLoader />}>
             <RandomEventGenerator />
           </Suspense>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/dm-tools/relic-workshop"
         element={
+          <ProtectedRoute requireDM>
           <Suspense fallback={<PageLoader />}>
             <RelicWorkshop />
           </Suspense>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/dm-tools/party-tracker"
         element={
+          <ProtectedRoute requireDM>
           <Suspense fallback={<PageLoader />}>
             <PartyTracker />
           </Suspense>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/dm-tools/dungeon-map-generator"
         element={
+          <ProtectedRoute requireDM>
           <Suspense fallback={<PageLoader />}>
             <DungeonMapGenerator />
           </Suspense>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/dm-tools/token-library"
         element={
+          <ProtectedRoute requireDM>
           <Suspense fallback={<PageLoader />}>
             <TokenLibrary />
           </Suspense>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/dm-tools/vtt-map"
         element={
+          <ProtectedRoute requireDM>
           <Suspense fallback={<PageLoader />}>
             <VTTMap />
           </Suspense>
+          </ProtectedRoute>
         }
       />
       <Route
@@ -315,6 +375,14 @@ const AppContent = () => {
         }
       />
       <Route
+        path="/auth"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <Auth />
+          </Suspense>
+        }
+      />
+      <Route
         path="*"
         element={
           <Suspense fallback={<PageLoader />}>
@@ -323,10 +391,70 @@ const AppContent = () => {
         }
       />
     </Routes>
+    </>
   );
 };
 
 const App = () => {
+  // Set Sentry user context and track auth events when auth state changes
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session?.user) {
+        setSentryUser({
+          id: session.user.id,
+          email: session.user.email,
+          username: session.user.user_metadata?.username,
+        });
+        
+        // Track analytics events
+        if (event === 'SIGNED_IN') {
+          trackEvent({
+            name: AnalyticsEvents.USER_SIGNED_IN,
+            userId: session.user.id,
+          });
+          identifyUser(session.user.id, {
+            email: session.user.email,
+            username: session.user.user_metadata?.username,
+          });
+        } else if (event === 'SIGNED_UP') {
+          trackEvent({
+            name: AnalyticsEvents.USER_SIGNED_UP,
+            userId: session.user.id,
+          });
+          identifyUser(session.user.id, {
+            email: session.user.email,
+            username: session.user.user_metadata?.username,
+          });
+        }
+      } else {
+        setSentryUser(null);
+        
+        // Reset analytics user on sign out
+        if (event === 'SIGNED_OUT') {
+          trackEvent({
+            name: AnalyticsEvents.USER_SIGNED_OUT,
+          });
+          resetUser();
+        }
+      }
+    });
+
+    // Set initial user if already authenticated
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
+        setSentryUser({
+          id: user.id,
+          email: user.email,
+          username: user.user_metadata?.username,
+        });
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
@@ -334,8 +462,12 @@ const App = () => {
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <PageViewTracker />
             <AppContent />
           </BrowserRouter>
+          <ServiceWorkerUpdatePrompt />
+          <OfflineIndicator />
+          <AnalyticsConsentBanner />
         </TooltipProvider>
       </QueryClientProvider>
     </ErrorBoundary>

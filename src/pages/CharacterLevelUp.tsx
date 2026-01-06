@@ -14,6 +14,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { calculateHPMax } from '@/lib/characterCalculations';
+import { useInitializeSpellSlots } from '@/hooks/useSpellSlots';
+import { logger } from '@/lib/logger';
 import type { Database } from '@/integrations/supabase/types';
 
 type JobFeature = Database['public']['Tables']['compendium_job_features']['Row'];
@@ -179,6 +181,18 @@ const CharacterLevelUp = () => {
           system_favor_current: newSystemFavorMax,
         },
       });
+
+      // Initialize/update spell slots for new level
+      try {
+        await initializeSpellSlots.mutateAsync({
+          characterId: character.id,
+          job: character.job,
+          level: newLevel,
+        });
+      } catch (error) {
+        // Log but don't fail level up if spell slots fail
+        logger.error('Failed to initialize spell slots:', error);
+      }
 
       // Add new features
       for (const featureId of selectedFeatures) {

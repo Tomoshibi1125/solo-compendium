@@ -46,13 +46,44 @@ export function GlobalSearch({ className }: { className?: string }) {
         { table: 'compendium_skills', type: 'skills' },
       ];
 
+      // Use full-text search RPC functions when available, fallback to ILIKE
+      const searchFunctions: Record<string, 'jobs' | 'powers' | 'relics' | 'monsters' | 'paths' | 'monarchs'> = {
+        'compendium_jobs': 'jobs',
+        'compendium_job_paths': 'paths',
+        'compendium_powers': 'powers',
+        'compendium_relics': 'relics',
+        'compendium_monsters': 'monsters',
+        'compendium_monarchs': 'monarchs',
+      };
+
       for (const { table, type } of tables) {
         try {
-          const { data } = await supabase
-            .from(table)
-            .select('id, name, description')
-            .or(`name.ilike.%${debouncedQuery}%,description.ilike.%${debouncedQuery}%`)
-            .limit(5);
+          // Try full-text search via RPC if available
+          const rpcType = searchFunctions[table];
+          let data: any[] | null = null;
+
+          if (rpcType && debouncedQuery.length > 2) {
+            try {
+              const { data: rpcData } = await supabase.rpc(`search_compendium_${rpcType}`, {
+                search_text: debouncedQuery.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').trim(),
+              });
+              if (rpcData) {
+                data = rpcData.slice(0, 5);
+              }
+            } catch (rpcError) {
+              // Fallback to ILIKE if RPC fails
+            }
+          }
+
+          // Fallback to ILIKE if RPC not available or failed
+          if (!data) {
+            const { data: ilikeData } = await supabase
+              .from(table)
+              .select('id, name, description')
+              .or(`name.ilike.%${debouncedQuery}%,description.ilike.%${debouncedQuery}%`)
+              .limit(5);
+            data = ilikeData;
+          }
 
           if (data) {
             allResults.push(...data.map((item: { id: string; name: string; description?: string }) => ({

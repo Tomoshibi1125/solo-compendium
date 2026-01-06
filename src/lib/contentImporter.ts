@@ -500,11 +500,14 @@ export function parseJSONContent(jsonString: string): ContentBundle {
   return JSON.parse(jsonString);
 }
 
-// Parse YAML content (would need yaml library)
+// Parse YAML content
 export async function parseYAMLContent(yamlString: string): Promise<ContentBundle> {
-  // For now, return empty bundle - would need to install yaml parser
-  // import { parse } from 'yaml';
-  // return parse(yamlString);
-  throw new Error('YAML parsing not yet implemented. Please use JSON format.');
+  try {
+    const { parse } = await import('yaml');
+    const parsed = parse(yamlString);
+    return parsed as ContentBundle;
+  } catch (error) {
+    throw new Error(`Failed to parse YAML content: ${error instanceof Error ? error.message : 'Unknown error'}`);
+  }
 }
 

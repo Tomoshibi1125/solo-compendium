@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import type { Database } from '@/integrations/supabase/types';
 
 export interface Campaign {
   id: string;
@@ -32,14 +33,13 @@ export const useMyCampaigns = () => {
       if (!user) return []; // Return empty array if not authenticated (consistent with other hooks)
 
       const { data, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaigns' as any)
+        .from('campaigns')
         .select('*')
         .eq('dm_id', user.id)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      return (data || []) as unknown as Campaign[];
+      return (data || []) as Campaign[];
     },
     retry: false, // Don't retry if not authenticated
   });
@@ -54,8 +54,7 @@ export const useJoinedCampaigns = () => {
       if (!user) return []; // Return empty array if not authenticated
 
       const { data, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaign_members' as any)
+        .from('campaign_members')
         .select(`
           *,
           campaigns (*)
@@ -64,7 +63,7 @@ export const useJoinedCampaigns = () => {
         .order('joined_at', { ascending: false });
 
       if (error) throw error;
-      return ((data || []) as unknown as Array<{ campaigns: Campaign; role: string }>).map((member) => ({
+      return ((data || []) as Array<{ campaigns: Database['public']['Tables']['campaigns']['Row']; role: string }>).map((member) => ({
         ...member.campaigns,
         member_role: member.role,
       })) as (Campaign & { member_role: string })[];
@@ -79,14 +78,13 @@ export const useCampaign = (campaignId: string) => {
     queryKey: ['campaigns', campaignId],
     queryFn: async () => {
       const { data, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaigns' as any)
+        .from('campaigns')
         .select('*')
         .eq('id', campaignId)
         .single();
 
       if (error) throw error;
-      return (data || null) as unknown as Campaign;
+      return (data || null) as Campaign;
     },
     enabled: !!campaignId,
   });
@@ -98,15 +96,14 @@ export const useCampaignByShareCode = (shareCode: string) => {
     queryKey: ['campaigns', 'share-code', shareCode],
     queryFn: async () => {
       const { data, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaigns' as any)
+        .from('campaigns')
         .select('*')
         .eq('share_code', shareCode.toUpperCase())
         .eq('is_active', true)
         .single();
 
       if (error) throw error;
-      return (data || null) as unknown as Campaign;
+      return (data || null) as Campaign;
     },
     enabled: !!shareCode && shareCode.length === 6,
   });
@@ -118,8 +115,7 @@ export const useCampaignMembers = (campaignId: string) => {
     queryKey: ['campaigns', campaignId, 'members'],
     queryFn: async () => {
       const { data, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaign_members' as any)
+        .from('campaign_members')
         .select(`
           *,
           characters (id, name, level, job)
@@ -128,7 +124,7 @@ export const useCampaignMembers = (campaignId: string) => {
         .order('joined_at', { ascending: true });
 
       if (error) throw error;
-      return (data || []) as unknown as (CampaignMember & { characters: { id: string; name: string; level: number; job: string } | null })[];
+      return (data || []) as (CampaignMember & { characters: { id: string; name: string; level: number; job: string } | null })[];
     },
     enabled: !!campaignId,
   });
@@ -260,14 +256,13 @@ export const useIsCampaignDM = (campaignId: string) => {
       if (!user) return false;
 
       const { data: campaign, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaigns' as any)
+        .from('campaigns')
         .select('dm_id')
         .eq('id', campaignId)
         .single();
 
       if (error || !campaign) return false;
-      return ((campaign as unknown) as { dm_id: string }).dm_id === user.id;
+      return (campaign as Database['public']['Tables']['campaigns']['Row']).dm_id === user.id;
     },
     enabled: !!campaignId,
   });
@@ -283,26 +278,24 @@ export const useHasDMAccess = (campaignId: string) => {
 
       // Check if user is the System (Gate Master)
       const { data: campaign, error: campaignError } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaigns' as any)
+        .from('campaigns')
         .select('dm_id')
         .eq('id', campaignId)
         .single();
 
-      if (!campaignError && campaign && ((campaign as unknown) as { dm_id: string }).dm_id === user.id) {
+      if (!campaignError && campaign && (campaign as Database['public']['Tables']['campaigns']['Row']).dm_id === user.id) {
         return true;
       }
 
       // Check if user is a co-System
       const { data: member, error: memberError } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaign_members' as any)
+        .from('campaign_members')
         .select('role')
         .eq('campaign_id', campaignId)
         .eq('user_id', user.id)
         .single();
 
-      if (!memberError && member && ((member as unknown) as { role: string }).role === 'co-system') {
+      if (!memberError && member && (member as Database['public']['Tables']['campaign_members']['Row']).role === 'co-system') {
         return true;
       }
 
@@ -322,27 +315,25 @@ export const useCampaignRole = (campaignId: string) => {
 
       // Check if user is the System (Gate Master)
       const { data: campaign, error: campaignError } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaigns' as any)
+        .from('campaigns')
         .select('dm_id')
         .eq('id', campaignId)
         .single();
 
-      if (!campaignError && campaign && ((campaign as unknown) as { dm_id: string }).dm_id === user.id) {
+      if (!campaignError && campaign && (campaign as Database['public']['Tables']['campaigns']['Row']).dm_id === user.id) {
         return 'system';
       }
 
       // Check member role
       const { data: member, error: memberError } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaign_members' as any)
+        .from('campaign_members')
         .select('role')
         .eq('campaign_id', campaignId)
         .eq('user_id', user.id)
         .single();
 
       if (!memberError && member) {
-        return (((member as unknown) as { role: string }).role === 'co-system' ? 'co-system' : 'hunter');
+        return ((member as Database['public']['Tables']['campaign_members']['Row']).role === 'co-system' ? 'co-system' : 'hunter');
       }
 
       return null;
@@ -351,7 +342,7 @@ export const useCampaignRole = (campaignId: string) => {
   });
 };
 
-// Check if user is a DM (System/Gate Master) in any campaign
+// Check if user is a DM (System/Gate Master) - now uses profiles table
 export const useIsDM = () => {
   return useQuery({
     queryKey: ['user', 'is-dm'],
@@ -359,15 +350,14 @@ export const useIsDM = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return false;
 
-      const { data: campaigns, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaigns' as any)
-        .select('id')
-        .eq('dm_id', user.id)
-        .limit(1);
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', user.id)
+        .single();
 
-      if (error || !campaigns || campaigns.length === 0) return false;
-      return true;
+      if (error || !data) return false;
+      return (data as Database['public']['Tables']['profiles']['Row']).role === 'dm';
     },
     retry: false,
   });

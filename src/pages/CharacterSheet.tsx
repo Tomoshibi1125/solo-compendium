@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { useParams, useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { 
   ArrowLeft, 
@@ -15,29 +15,42 @@ import {
   Loader2,
   Edit,
   Plus,
-  Download
+  Download,
+  Dice6,
+  Share2,
+  Copy,
+  Check,
+  Undo2,
+  Redo2
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { useCharacter, useUpdateCharacter } from '@/hooks/useCharacters';
+import { useCharacter, useUpdateCharacter, useGenerateShareToken } from '@/hooks/useCharacters';
 import { calculateCharacterStats, formatModifier } from '@/lib/characterCalculations';
 import { applyEquipmentModifiers } from '@/lib/equipmentModifiers';
 import { applyRuneBonuses } from '@/lib/runeAutomation';
+import { calculateEncumbrance, calculateTotalWeight, calculateCarryingCapacity } from '@/lib/encumbrance';
 import { useCharacterRuneInscriptions } from '@/hooks/useRunes';
 import { getAllSkills, calculateSkillModifier, calculatePassiveSkill } from '@/lib/skills';
+import { rollDiceString, formatRollResult } from '@/lib/diceRoller';
 import { EquipmentList } from '@/components/character/EquipmentList';
 import { CurrencyManager } from '@/components/character/CurrencyManager';
 import { PowersList } from '@/components/character/PowersList';
 import { RunesList } from '@/components/character/RunesList';
+import { SpellSlotsDisplay } from '@/components/character/SpellSlotsDisplay';
 import { ActionsList } from '@/components/character/ActionsList';
 import { FeaturesList } from '@/components/character/FeaturesList';
 import { ExportDialog } from '@/components/character/ExportDialog';
 import { PortraitUpload } from '@/components/character/PortraitUpload';
 import { MonarchUnlocksPanel } from '@/components/character/MonarchUnlocksPanel';
 import { ShadowSoldiersPanel } from '@/components/character/ShadowSoldiersPanel';
+import { JournalPanel } from '@/components/character/JournalPanel';
+import { CharacterEditDialog } from '@/components/character/CharacterEditDialog';
+import { useCharacterUndoRedo } from '@/hooks/useCharacterUndoRedo';
 import { ABILITY_NAMES, type AbilityScore } from '@/types/solo-leveling';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
@@ -53,25 +66,88 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { RichTextNotes } from '@/components/character/RichTextNotes';
 
 const CharacterSheet = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { toast } = useToast();
   const queryClient = useQueryClient();
-  const { data: character, isLoading } = useCharacter(id || '');
+  const { toast } = useToast();
+  const [searchParams] = useSearchParams();
+  const isPrintMode = searchParams.get('print') === 'true';
+  const shareToken = searchParams.get('token') || undefined;
+  const isReadOnly = !!shareToken;
+  const { data: character, isLoading } = useCharacter(id || '', shareToken);
   const updateCharacter = useUpdateCharacter();
+  const generateShareToken = useGenerateShareToken();
   const { equipment } = useEquipment(id || '');
   const [hpEditOpen, setHpEditOpen] = useState(false);
   const [hpEditValue, setHpEditValue] = useState('');
   const [exportDialogOpen, setExportDialogOpen] = useState(false);
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [shareLinkCopied, setShareLinkCopied] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const undoRedo = useCharacterUndoRedo(character);
+
+  const shareLink = character?.share_token 
+    ? `${window.location.origin}/characters/${character.id}?token=${character.share_token}`
+    : null;
+
+  const handleGenerateShareLink = async () => {
+    if (!character) return;
+    try {
+      await generateShareToken.mutateAsync(character.id);
+    } catch (error) {
+      // Error handled by mutation
+    }
+  };
+
+  const handleCopyShareLink = async () => {
+    if (!shareLink) return;
+    try {
+      await navigator.clipboard.writeText(shareLink);
+      setShareLinkCopied(true);
+      toast({
+        title: 'Link copied',
+        description: 'Share link copied to clipboard.',
+      });
+      setTimeout(() => setShareLinkCopied(false), 2000);
+    } catch (error) {
+      toast({
+        title: 'Failed to copy',
+        description: 'Could not copy link to clipboard.',
+        variant: 'destructive',
+      });
+    }
+  };
 
   if (isLoading) {
     return (
       <Layout>
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex items-center justify-center py-12">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        <div className="container mx-auto px-4 py-8 max-w-7xl">
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <Skeleton className="h-8 w-48" />
+              <div className="flex gap-2">
+                <Skeleton className="h-10 w-24" />
+                <Skeleton className="h-10 w-24" />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2 space-y-6">
+                <Skeleton className="h-32 w-full" />
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {Array.from({ length: 4 }).map((_, i) => (
+                    <Skeleton key={i} className="h-24 w-full" />
+                  ))}
+                </div>
+                <Skeleton className="h-64 w-full" />
+              </div>
+              <div className="space-y-6">
+                <Skeleton className="h-48 w-full" />
+                <Skeleton className="h-48 w-full" />
+              </div>
+            </div>
           </div>
         </div>
       </Layout>
@@ -170,11 +246,25 @@ const CharacterSheet = () => {
     PRE: getAbilityModifier(finalAbilities.PRE) + (character.saving_throw_proficiencies?.includes('PRE') ? modifiedBaseStats.proficiencyBonus : 0),
   };
 
+  // Calculate encumbrance
+  const totalWeight = calculateTotalWeight(equipment);
+  const carryingCapacity = calculateCarryingCapacity(finalAbilities.STR);
+  const encumbrance = calculateEncumbrance(totalWeight, carryingCapacity);
+  
+  // Apply speed penalty from encumbrance
+  let finalSpeed = runeBonuses.speed;
+  if (encumbrance.status === 'heavy') {
+    finalSpeed = Math.max(0, finalSpeed - 10);
+  } else if (encumbrance.status === 'overloaded') {
+    finalSpeed = Math.max(0, finalSpeed - 20);
+  }
+
   const calculatedStats = {
     ...modifiedBaseStats,
     savingThrows: finalSavingThrows,
     armorClass: runeBonuses.ac,
-    speed: runeBonuses.speed,
+    speed: finalSpeed,
+    encumbrance,
   };
 
   // Calculate skills with modified abilities
@@ -281,8 +371,24 @@ const CharacterSheet = () => {
     }
   };
 
+  // Apply print mode styling
+  useEffect(() => {
+    if (isPrintMode) {
+      document.body.classList.add('print-mode');
+      // Trigger print dialog after a short delay
+      setTimeout(() => {
+        window.print();
+      }, 500);
+    } else {
+      document.body.classList.remove('print-mode');
+    }
+    return () => {
+      document.body.classList.remove('print-mode');
+    };
+  }, [isPrintMode]);
+
   return (
-    <Layout>
+    <Layout className={isPrintMode ? 'print-mode' : ''}>
         <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 max-w-7xl">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
@@ -294,31 +400,99 @@ const CharacterSheet = () => {
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Characters
           </Button>
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              onClick={() => setExportDialogOpen(true)}
-              className="gap-2"
-            >
-              <Download className="w-4 h-4" />
-              Export
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => {
-                // Inline edit mode - open dialog for editing character name/notes
-                // For now, just show a toast that full edit is coming
-                toast({
-                  title: 'Edit Mode',
-                  description: 'Full character editing coming soon. Use individual sections to modify equipment, powers, and features.',
-                });
-              }}
-              className="gap-2"
-            >
-              <Edit className="w-4 h-4" />
-              Edit
-            </Button>
-          </div>
+          {!isReadOnly && (
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => {
+                  const previousState = undoRedo.undo();
+                  if (previousState && character) {
+                    updateCharacter.mutate({
+                      id: character.id,
+                      data: {
+                        name: previousState.name,
+                        appearance: previousState.appearance,
+                        backstory: previousState.backstory,
+                        notes: previousState.notes,
+                      },
+                    });
+                    toast({
+                      title: 'Undone',
+                      description: 'Previous change restored.',
+                    });
+                  }
+                }}
+                disabled={!undoRedo.canUndo()}
+                className="gap-2"
+                aria-label="Undo"
+                title="Undo (Ctrl+Z)"
+              >
+                <Undo2 className="w-4 h-4" />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => {
+                  const nextState = undoRedo.redo();
+                  if (nextState && character) {
+                    updateCharacter.mutate({
+                      id: character.id,
+                      data: {
+                        name: nextState.name,
+                        appearance: nextState.appearance,
+                        backstory: nextState.backstory,
+                        notes: nextState.notes,
+                      },
+                    });
+                    toast({
+                      title: 'Redone',
+                      description: 'Change restored.',
+                    });
+                  }
+                }}
+                disabled={!undoRedo.canRedo()}
+                className="gap-2"
+                aria-label="Redo"
+                title="Redo (Ctrl+Y)"
+              >
+                <Redo2 className="w-4 h-4" />
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => setShareDialogOpen(true)}
+                className="gap-2"
+                aria-label="Share character"
+              >
+                <Share2 className="w-4 h-4" />
+                Share
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => setExportDialogOpen(true)}
+                className="gap-2"
+                aria-label="Export character"
+              >
+                <Download className="w-4 h-4" />
+                Export
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => setEditDialogOpen(true)}
+                className="gap-2"
+                aria-label="Edit character"
+              >
+                <Edit className="w-4 h-4" />
+                Edit
+              </Button>
+            </div>
+          )}
+          {isReadOnly && (
+            <Badge variant="secondary" className="gap-2">
+              <Share2 className="w-3 h-3" />
+              Read-Only View
+            </Badge>
+          )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -412,13 +586,71 @@ const CharacterSheet = () => {
               <SystemWindow title="SPEED" compact>
                 <Swords className="w-6 h-6 text-green-400 mb-2" />
                 <div className="font-display text-3xl font-bold text-center">{calculatedStats.speed} ft</div>
-                {equipmentMods.speed !== character.speed && (
+                {calculatedStats.encumbrance && calculatedStats.encumbrance.status !== 'unencumbered' && (
+                  <div className={cn(
+                    "text-xs",
+                    calculatedStats.encumbrance.status === 'overloaded' ? "text-destructive" :
+                    calculatedStats.encumbrance.status === 'heavy' ? "text-orange-400" :
+                    "text-muted-foreground"
+                  )}>
+                    {calculatedStats.encumbrance.status === 'heavy' && '-10 ft (Heavy Load)'}
+                    {calculatedStats.encumbrance.status === 'overloaded' && '-20 ft (Overloaded)'}
+                  </div>
+                )}
+                {equipmentMods.speed !== character.speed && !calculatedStats.encumbrance && (
                   <div className="text-xs text-muted-foreground">
                     Base: {character.speed} + {equipmentMods.speed - character.speed}
                   </div>
                 )}
               </SystemWindow>
             </div>
+
+            {/* Encumbrance Status */}
+            {calculatedStats.encumbrance && (
+              <SystemWindow title="CARRYING CAPACITY">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">Status</span>
+                    <Badge 
+                      variant={
+                        calculatedStats.encumbrance.status === 'overloaded' ? 'destructive' :
+                        calculatedStats.encumbrance.status === 'heavy' ? 'destructive' :
+                        calculatedStats.encumbrance.status === 'medium' ? 'secondary' :
+                        'default'
+                      }
+                    >
+                      {calculatedStats.encumbrance.statusMessage}
+                    </Badge>
+                  </div>
+                  <div className="h-2 bg-muted rounded-full overflow-hidden">
+                    <div
+                      className={cn(
+                        "h-full transition-all",
+                        calculatedStats.encumbrance.status === 'unencumbered' && "bg-green-500",
+                        calculatedStats.encumbrance.status === 'light' && "bg-blue-500",
+                        calculatedStats.encumbrance.status === 'medium' && "bg-yellow-500",
+                        calculatedStats.encumbrance.status === 'heavy' && "bg-orange-500",
+                        calculatedStats.encumbrance.status === 'overloaded' && "bg-red-500"
+                      )}
+                      style={{
+                        width: `${Math.min((calculatedStats.encumbrance.totalWeight / calculatedStats.encumbrance.carryingCapacity) * 100, 100)}%`,
+                      }}
+                    />
+                  </div>
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span>
+                      {calculatedStats.encumbrance.totalWeight.toFixed(1)} / {calculatedStats.encumbrance.carryingCapacity} lbs
+                    </span>
+                    {calculatedStats.encumbrance.status === 'heavy' && (
+                      <span className="text-orange-400">Speed -10 ft</span>
+                    )}
+                    {calculatedStats.encumbrance.status === 'overloaded' && (
+                      <span className="text-destructive">Speed -20 ft</span>
+                    )}
+                  </div>
+                </div>
+              </SystemWindow>
+            )}
 
             {/* Ability Scores */}
             <SystemWindow title="ABILITY SCORES">
@@ -600,28 +832,48 @@ const CharacterSheet = () => {
             {/* Skills */}
             <SystemWindow title="SKILLS">
               <div className="space-y-1 max-h-[400px] overflow-y-auto">
-                {Object.entries(skills).map(([skillName, skill]) => (
-                  <div
-                    key={skillName}
-                    className="flex items-center justify-between p-2 rounded bg-muted/30 text-sm"
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="font-heading">{skillName}</span>
-                      <span className="text-xs text-muted-foreground">({ABILITY_NAMES[skill.ability]})</span>
-                      {skill.expertise && <Badge variant="default" className="text-xs">E</Badge>}
-                      {skill.proficient && !skill.expertise && <Badge variant="secondary" className="text-xs">P</Badge>}
+                {Object.entries(skills).map(([skillName, skill]) => {
+                  const handleSkillRoll = () => {
+                    const roll = rollDiceString(`1d20${skill.modifier >= 0 ? '+' : ''}${skill.modifier}`);
+                    const message = `${skillName} Check: ${formatRollResult(roll)}`;
+                    toast({
+                      title: 'Skill Check',
+                      description: message,
+                    });
+                  };
+
+                  return (
+                    <div
+                      key={skillName}
+                      className="flex items-center justify-between p-2 rounded bg-muted/30 text-sm hover:bg-muted/50 transition-colors group"
+                    >
+                      <div className="flex items-center gap-2 flex-1">
+                        <span className="font-heading">{skillName}</span>
+                        <span className="text-xs text-muted-foreground">({ABILITY_NAMES[skill.ability]})</span>
+                        {skill.expertise && <Badge variant="default" className="text-xs">E</Badge>}
+                        {skill.proficient && !skill.expertise && <Badge variant="secondary" className="text-xs">P</Badge>}
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs text-muted-foreground">Passive: {skill.passive}</span>
+                        <span className={cn(
+                          "font-display font-bold min-w-[3rem] text-right",
+                          skill.modifier >= 0 ? "text-green-400" : "text-red-400"
+                        )}>
+                          {formatModifier(skill.modifier)}
+                        </span>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={handleSkillRoll}
+                          className="h-7 w-7 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                          title={`Roll ${skillName} check`}
+                        >
+                          <Dice6 className="w-4 h-4" />
+                        </Button>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <span className="text-xs text-muted-foreground">Passive: {skill.passive}</span>
-                      <span className={cn(
-                        "font-display font-bold min-w-[3rem] text-right",
-                        skill.modifier >= 0 ? "text-green-400" : "text-red-400"
-                      )}>
-                        {formatModifier(skill.modifier)}
-                      </span>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </SystemWindow>
 
@@ -636,6 +888,13 @@ const CharacterSheet = () => {
 
             {/* Currency */}
             <CurrencyManager characterId={character.id} />
+
+            {/* Spell Slots */}
+            <SpellSlotsDisplay 
+              characterId={character.id} 
+              job={character.job}
+              level={character.level}
+            />
 
             {/* Powers */}
             <PowersList characterId={character.id} />
@@ -663,25 +922,36 @@ const CharacterSheet = () => {
 
             {/* Notes */}
             <SystemWindow title="NOTES">
-              <Textarea
-                className="min-h-[100px] resize-y"
-                placeholder="Add notes about your Hunter..."
-                value={character.notes || ''}
-                onChange={async (e) => {
-                  try {
-                    await updateCharacter.mutateAsync({
-                      id: character.id,
-                      data: { notes: e.target.value },
-                    });
-                  } catch (error) {
-                    toast({
-                      title: 'Failed to save',
-                      description: 'Could not update notes.',
-                      variant: 'destructive',
-                    });
-                  }
-                }}
-              />
+              <div className="space-y-2">
+                <RichTextNotes
+                  value={character.notes || ''}
+                  onChange={async (newValue) => {
+                    // Auto-save with debounce
+                    if (notesSaveTimeoutRef.current) {
+                      clearTimeout(notesSaveTimeoutRef.current);
+                    }
+                    notesSaveTimeoutRef.current = setTimeout(async () => {
+                      try {
+                        await updateCharacter.mutateAsync({
+                          id: character.id,
+                          data: { notes: newValue },
+                        });
+                      } catch (error) {
+                        toast({
+                          title: 'Failed to save',
+                          description: 'Could not update notes.',
+                          variant: 'destructive',
+                        });
+                      }
+                    }, 1000);
+                  }}
+                  disabled={isReadOnly}
+                />
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <span>Auto-saves after 1 second of inactivity</span>
+                  <span>{(character.notes || '').length} characters</span>
+                </div>
+              </div>
             </SystemWindow>
           </div>
         </div>
@@ -721,6 +991,97 @@ const CharacterSheet = () => {
         open={exportDialogOpen}
         onOpenChange={setExportDialogOpen}
         character={character}
+      />
+
+      {/* Share Dialog */}
+      <Dialog open={shareDialogOpen} onOpenChange={setShareDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Share Character</DialogTitle>
+            <DialogDescription>
+              Generate a shareable link to let others view your character (read-only).
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            {!shareLink ? (
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">
+                  No share link generated yet. Click the button below to create one.
+                </p>
+                <Button
+                  onClick={handleGenerateShareLink}
+                  disabled={generateShareToken.isPending}
+                  className="w-full"
+                >
+                  {generateShareToken.isPending ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Generating...
+                    </>
+                  ) : (
+                    <>
+                      <Share2 className="w-4 h-4 mr-2" />
+                      Generate Share Link
+                    </>
+                  )}
+                </Button>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <Label>Share Link</Label>
+                <div className="flex gap-2">
+                  <Input
+                    value={shareLink}
+                    readOnly
+                    className="font-mono text-sm"
+                  />
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={handleCopyShareLink}
+                    aria-label="Copy share link"
+                  >
+                    {shareLinkCopied ? (
+                      <Check className="w-4 h-4 text-green-500" />
+                    ) : (
+                      <Copy className="w-4 h-4" />
+                    )}
+                  </Button>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Anyone with this link can view your character in read-only mode.
+                </p>
+                <Button
+                  variant="outline"
+                  onClick={handleGenerateShareLink}
+                  disabled={generateShareToken.isPending}
+                  className="w-full"
+                >
+                  {generateShareToken.isPending ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Regenerating...
+                    </>
+                  ) : (
+                    'Regenerate Link'
+                  )}
+                </Button>
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Character Edit Dialog */}
+      <CharacterEditDialog
+        character={character}
+        open={editDialogOpen}
+        onOpenChange={setEditDialogOpen}
+        onStateChange={(updatedState) => {
+          if (character) {
+            undoRedo.pushState(updatedState, 'Character edited');
+          }
+        }}
       />
     </Layout>
   );

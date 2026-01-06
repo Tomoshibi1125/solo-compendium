@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { Trash2, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -18,7 +18,7 @@ interface EquipmentItemProps {
   canAttune: boolean;
 }
 
-export function EquipmentItem({
+function EquipmentItemComponent({
   item,
   onToggleEquipped,
   onToggleAttuned,
@@ -122,6 +122,7 @@ export function EquipmentItem({
               size="sm"
               className="h-6 text-xs gap-1"
               onClick={onInscribeRune}
+              aria-label={`Inscribe rune on ${item.name}`}
             >
               <Sparkles className="w-3 h-3" />
               Rune
@@ -132,6 +133,7 @@ export function EquipmentItem({
             size="icon"
             className="h-8 w-8"
             onClick={onRemove}
+            aria-label={`Remove ${item.name}`}
           >
             <Trash2 className="w-4 h-4" />
           </Button>
@@ -141,3 +143,13 @@ export function EquipmentItem({
   );
 }
 
+export const EquipmentItem = memo(EquipmentItemComponent, (prevProps, nextProps) => {
+  // Custom comparison function for better performance
+  return (
+    prevProps.item.id === nextProps.item.id &&
+    prevProps.item.is_equipped === nextProps.item.is_equipped &&
+    prevProps.item.is_attuned === nextProps.item.is_attuned &&
+    prevProps.canAttune === nextProps.canAttune &&
+    prevProps.item.properties?.length === nextProps.item.properties?.length
+  );
+});

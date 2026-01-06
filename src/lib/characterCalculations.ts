@@ -96,6 +96,160 @@ export function formatModifier(modifier: number): string {
   return modifier >= 0 ? `+${modifier}` : `${modifier}`;
 }
 
+// Spell slot tables for different caster types
+// Based on D&D 5e spell slot progression
+
+export type CasterType = 'full' | 'half' | 'third' | 'none';
+
+/**
+ * Determine caster type based on job name
+ */
+export function getCasterType(job: string | null | undefined): CasterType {
+  if (!job) return 'none';
+  
+  const fullCasters = ['Mage', 'Healer', 'Warden', 'Esper'];
+  const halfCasters = ['Herald', 'Ranger', 'Techsmith', 'Holy Knight'];
+  const thirdCasters = ['Ranger']; // Some ranger subclasses are third casters
+  
+  if (fullCasters.includes(job)) return 'full';
+  if (halfCasters.includes(job)) return 'half';
+  return 'none';
+}
+
+/**
+ * Get spell slots per level for a given caster type and character level
+ * Returns an object with spell level (1-9) as keys and slot count as values
+ */
+export function getSpellSlotsPerLevel(casterType: CasterType, level: number): Record<number, number> {
+  const slots: Record<number, number> = {
+    1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0
+  };
+
+  if (casterType === 'none' || level === 0) {
+    return slots;
+  }
+
+  // Full caster progression (Wizard, Cleric, Druid, Sorcerer)
+  if (casterType === 'full') {
+    const fullCasterTable: Record<number, number[]> = {
+      1: [2, 0, 0, 0, 0, 0, 0, 0, 0],
+      2: [3, 0, 0, 0, 0, 0, 0, 0, 0],
+      3: [4, 2, 0, 0, 0, 0, 0, 0, 0],
+      4: [4, 3, 0, 0, 0, 0, 0, 0, 0],
+      5: [4, 3, 2, 0, 0, 0, 0, 0, 0],
+      6: [4, 3, 3, 0, 0, 0, 0, 0, 0],
+      7: [4, 3, 3, 1, 0, 0, 0, 0, 0],
+      8: [4, 3, 3, 2, 0, 0, 0, 0, 0],
+      9: [4, 3, 3, 3, 1, 0, 0, 0, 0],
+      10: [4, 3, 3, 3, 2, 0, 0, 0, 0],
+      11: [4, 3, 3, 3, 2, 1, 0, 0, 0],
+      12: [4, 3, 3, 3, 2, 1, 0, 0, 0],
+      13: [4, 3, 3, 3, 2, 1, 1, 0, 0],
+      14: [4, 3, 3, 3, 2, 1, 1, 0, 0],
+      15: [4, 3, 3, 3, 2, 1, 1, 1, 0],
+      16: [4, 3, 3, 3, 2, 1, 1, 1, 0],
+      17: [4, 3, 3, 3, 2, 1, 1, 1, 1],
+      18: [4, 3, 3, 3, 3, 1, 1, 1, 1],
+      19: [4, 3, 3, 3, 3, 2, 1, 1, 1],
+      20: [4, 3, 3, 3, 3, 2, 2, 1, 1],
+    };
+    
+    const levelSlots = fullCasterTable[Math.min(level, 20)] || fullCasterTable[20];
+    for (let i = 0; i < 9; i++) {
+      slots[i + 1] = levelSlots[i];
+    }
+  }
+
+  // Half caster progression (Paladin, Ranger, Artificer)
+  if (casterType === 'half') {
+    const halfCasterTable: Record<number, number[]> = {
+      1: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      2: [2, 0, 0, 0, 0, 0, 0, 0, 0],
+      3: [3, 0, 0, 0, 0, 0, 0, 0, 0],
+      4: [3, 0, 0, 0, 0, 0, 0, 0, 0],
+      5: [4, 2, 0, 0, 0, 0, 0, 0, 0],
+      6: [4, 2, 0, 0, 0, 0, 0, 0, 0],
+      7: [4, 3, 0, 0, 0, 0, 0, 0, 0],
+      8: [4, 3, 0, 0, 0, 0, 0, 0, 0],
+      9: [4, 3, 2, 0, 0, 0, 0, 0, 0],
+      10: [4, 3, 2, 0, 0, 0, 0, 0, 0],
+      11: [4, 3, 3, 0, 0, 0, 0, 0, 0],
+      12: [4, 3, 3, 0, 0, 0, 0, 0, 0],
+      13: [4, 3, 3, 1, 0, 0, 0, 0, 0],
+      14: [4, 3, 3, 1, 0, 0, 0, 0, 0],
+      15: [4, 3, 3, 2, 0, 0, 0, 0, 0],
+      16: [4, 3, 3, 2, 0, 0, 0, 0, 0],
+      17: [4, 3, 3, 3, 1, 0, 0, 0, 0],
+      18: [4, 3, 3, 3, 1, 0, 0, 0, 0],
+      19: [4, 3, 3, 3, 2, 0, 0, 0, 0],
+      20: [4, 3, 3, 3, 2, 0, 0, 0, 0],
+    };
+    
+    const levelSlots = halfCasterTable[Math.min(level, 20)] || halfCasterTable[20];
+    for (let i = 0; i < 9; i++) {
+      slots[i + 1] = levelSlots[i];
+    }
+  }
+
+  return slots;
+}
+
+/**
+ * Get spellcasting ability modifier for a job
+ */
+export function getSpellcastingAbility(job: string | null | undefined): AbilityScore | null {
+  if (!job) return null;
+  
+  // INT casters
+  if (['Mage', 'Esper', 'Techsmith'].includes(job)) return 'INT';
+  
+  // SENSE casters
+  if (['Healer', 'Warden', 'Ranger'].includes(job)) return 'SENSE';
+  
+  // PRE casters
+  if (['Herald', 'Holy Knight'].includes(job)) return 'PRE';
+  
+  return null;
+}
+
+/**
+ * Calculate spells known limit for a job and level
+ */
+export function getSpellsKnownLimit(job: string | null | undefined, level: number): number | null {
+  if (!job) return null;
+  
+  // Prepared casters don't have a "known" limit, they prepare from their list
+  // Known casters (Sorcerer, Warlock, etc.) have limits
+  if (job === 'Esper') {
+    // Sorcerer: level + 1
+    return level + 1;
+  }
+  
+  // Other classes are prepared casters
+  return null;
+}
+
+/**
+ * Calculate spells prepared limit for a job and level
+ */
+export function getSpellsPreparedLimit(
+  job: string | null | undefined,
+  level: number,
+  abilityModifier: number
+): number | null {
+  if (!job) return null;
+  
+  const spellcastingAbility = getSpellcastingAbility(job);
+  if (!spellcastingAbility) return null;
+  
+  // Prepared casters: ability modifier + level (minimum 1)
+  if (['Mage', 'Healer', 'Warden', 'Herald', 'Holy Knight', 'Ranger', 'Techsmith'].includes(job)) {
+    return Math.max(1, abilityModifier + level);
+  }
+  
+  return null;
+}
+
 // Re-export utility functions for convenience
 export { getAbilityModifier, getProficiencyBonus, getSystemFavorDie } from '@/types/solo-leveling';
 

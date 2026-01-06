@@ -1,15 +1,19 @@
-import { useState } from 'react';
-import { Wand2, Plus, Trash2, Filter } from 'lucide-react';
+import { useState, useCallback } from 'react';
+import { Wand2, Plus, Trash2, Filter, AlertTriangle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { SortableList } from '@/components/ui/SortableList';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { usePowers } from '@/hooks/usePowers';
 import { useToast } from '@/hooks/use-toast';
+import { useCharacter } from '@/hooks/useCharacters';
+import { useSpellSlots, useUpdateSpellSlot } from '@/hooks/useSpellSlots';
+import { getSpellcastingAbility, getSpellsKnownLimit, getSpellsPreparedLimit, getAbilityModifier } from '@/lib/characterCalculations';
 import { cn } from '@/lib/utils';
 import { AddPowerDialog } from './AddPowerDialog';
 
@@ -22,7 +26,14 @@ function CompendiumLink({ type, id, name, className }: { type: string; id: strin
 }
 
 export function PowersList({ characterId }: { characterId: string }) {
-  const { powers, updatePower, removePower, concentrationPower } = usePowers(characterId);
+  const { powers, updatePower, removePower, reorderPowers, concentrationPower } = usePowers(characterId);
+  const { data: character } = useCharacter(characterId);
+  const { data: spellSlots = [] } = useSpellSlots(
+    characterId,
+    character?.job || null,
+    character?.level || 1
+  );
+  const updateSpellSlot = useUpdateSpellSlot();
   const { toast } = useToast();
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [filterLevel, setFilterLevel] = useState<string>('all');
@@ -57,7 +68,43 @@ export function PowersList({ characterId }: { characterId: string }) {
     return acc;
   }, {} as Record<string, typeof powers>);
 
+  // Calculate spell limits
+  const spellcastingAbility = character ? getSpellcastingAbility(character.job) : null;
+  const abilityModifier = character && spellcastingAbility
+    ? getAbilityModifier(character.abilities?.[spellcastingAbility] || 10)
+    : 0;
+  const spellsPreparedLimit = character ? getSpellsPreparedLimit(character.job, character.level, abilityModifier) : null;
+  const spellsKnownLimit = character ? getSpellsKnownLimit(character.job, character.level) : null;
+  const preparedCount = powers.filter(p => p.is_prepared).length;
+  const knownCount = powers.length;
+  const isOverPreparedLimit = spellsPreparedLimit !== null && preparedCount > spellsPreparedLimit;
+  const isOverKnownLimit = spellsKnownLimit !== null && knownCount > spellsKnownLimit;
+
+  const handleReorderGroup = useCallback(async (level: string, newOrder: typeof powers) => {
+    try {
+      const updates = newOrder.map((power, index) => ({
+        id: power.id,
+        display_order: index,
+      }));
+      await reorderPowers(updates);
+    } catch (error) {
+      // Error handled by hook
+    }
+  }, [reorderPowers]);
+
   const handleTogglePrepared = async (power: typeof powers[0]) => {
+    // Check if preparing would exceed limit
+    if (!power.is_prepared && spellsPreparedLimit !== null) {
+      if (preparedCount >= spellsPreparedLimit) {
+        toast({
+          title: 'Prepared Limit Reached',
+          description: `You can only prepare ${spellsPreparedLimit} spells. Unprepare another spell first.`,
+          variant: 'destructive',
+        });
+        return;
+      }
+    }
+
     try {
       await updatePower({
         id: power.id,
@@ -71,6 +118,47 @@ export function PowersList({ characterId }: { characterId: string }) {
       toast({
         title: 'Error',
         description: 'Failed to update power.',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleCastSpell = async (power: typeof powers[0]) => {
+    // Cantrips don't use spell slots
+    if (power.power_level === 0) {
+      toast({
+        title: 'Cantrip Cast',
+        description: `${power.name} is cast without using a spell slot.`,
+      });
+      return;
+    }
+
+    // Find available spell slot
+    const slot = spellSlots.find(s => s.level === power.power_level && s.current > 0);
+    
+    if (!slot) {
+      toast({
+        title: 'No Spell Slots Available',
+        description: `You don't have any Tier ${power.power_level} spell slots available.`,
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    try {
+      await updateSpellSlot.mutateAsync({
+        characterId,
+        spellLevel: power.power_level,
+        current: slot.current - 1,
+      });
+      toast({
+        title: 'Spell Cast',
+        description: `${power.name} cast! Used 1 Tier ${power.power_level} spell slot.`,
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to use spell slot.',
         variant: 'destructive',
       });
     }
@@ -97,6 +185,47 @@ export function PowersList({ characterId }: { characterId: string }) {
   return (
     <SystemWindow title="POWERS">
       <div className="space-y-4">
+        {/* Spell Limits Display */}
+        {(spellsPreparedLimit !== null || spellsKnownLimit !== null) && (
+          <div className="p-2 rounded-lg border bg-muted/30">
+            <div className="flex items-center justify-between text-sm">
+              {spellsPreparedLimit !== null && (
+                <div className={cn(
+                  "flex items-center gap-2",
+                  isOverPreparedLimit && "text-destructive"
+                )}>
+                  <span className="text-muted-foreground">Prepared:</span>
+                  <span className={cn("font-semibold", isOverPreparedLimit && "text-destructive")}>
+                    {preparedCount} / {spellsPreparedLimit}
+                  </span>
+                  {isOverPreparedLimit && (
+                    <AlertTriangle className="w-4 h-4 text-destructive" />
+                  )}
+                </div>
+              )}
+              {spellsKnownLimit !== null && (
+                <div className={cn(
+                  "flex items-center gap-2",
+                  isOverKnownLimit && "text-destructive"
+                )}>
+                  <span className="text-muted-foreground">Known:</span>
+                  <span className={cn("font-semibold", isOverKnownLimit && "text-destructive")}>
+                    {knownCount} / {spellsKnownLimit}
+                  </span>
+                  {isOverKnownLimit && (
+                    <AlertTriangle className="w-4 h-4 text-destructive" />
+                  )}
+                </div>
+              )}
+            </div>
+            {(isOverPreparedLimit || isOverKnownLimit) && (
+              <div className="mt-2 text-xs text-destructive">
+                Warning: You exceed the limit for {isOverPreparedLimit ? 'prepared' : ''} {isOverPreparedLimit && isOverKnownLimit ? 'and ' : ''} {isOverKnownLimit ? 'known' : ''} spells.
+              </div>
+            )}
+          </div>
+        )}
+
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <Select value={filterLevel} onValueChange={setFilterLevel}>
@@ -162,8 +291,10 @@ export function PowersList({ characterId }: { characterId: string }) {
               <div className="text-sm font-heading text-muted-foreground">
                 {level}
               </div>
-              <div className="space-y-2">
-                {levelPowers.map((power) => (
+              <SortableList
+                items={levelPowers}
+                onReorder={(newOrder) => handleReorderGroup(level, newOrder)}
+                renderItem={(power) => (
                   <div
                     key={power.id}
                     className={cn(
@@ -216,6 +347,7 @@ export function PowersList({ characterId }: { characterId: string }) {
                             id={`prepared-${power.id}`}
                             checked={power.is_prepared}
                             onCheckedChange={() => handleTogglePrepared(power)}
+                            disabled={!power.is_prepared && isOverPreparedLimit}
                           />
                           <label
                             htmlFor={`prepared-${power.id}`}
@@ -224,6 +356,17 @@ export function PowersList({ characterId }: { characterId: string }) {
                             Prep
                           </label>
                         </div>
+                        {power.power_level > 0 && power.is_prepared && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleCastSpell(power)}
+                            disabled={!spellSlots.find(s => s.level === power.power_level && s.current > 0)}
+                            className="text-xs"
+                          >
+                            Cast
+                          </Button>
+                        )}
                         <Button
                           variant="ghost"
                           size="icon"
@@ -235,8 +378,9 @@ export function PowersList({ characterId }: { characterId: string }) {
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
+                )}
+                itemClassName="mb-2"
+              />
             </div>
           ))
         )}

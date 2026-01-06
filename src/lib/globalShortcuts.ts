@@ -15,19 +15,32 @@ export interface GlobalShortcut {
   global?: boolean; // If true, works everywhere; if false, context-specific
 }
 
+// Command palette state - will be set by App component
+let openCommandPalette: (() => void) | null = null;
+
+export function setCommandPaletteOpener(opener: () => void) {
+  openCommandPalette = opener;
+}
+
 export const GLOBAL_SHORTCUTS: GlobalShortcut[] = [
   // Navigation
   {
     key: 'k',
     ctrl: true,
     action: () => {
+      // Try to open command palette first
+      if (openCommandPalette) {
+        openCommandPalette();
+        return;
+      }
+      // Fallback to focusing search input
       const searchInput = document.querySelector('input[type="search"], input[placeholder*="Search"]') as HTMLInputElement;
       if (searchInput) {
         searchInput.focus();
         searchInput.select();
       }
     },
-    description: 'Focus search',
+    description: 'Open command palette',
     category: 'navigation',
     global: true,
   },
@@ -105,6 +118,35 @@ export const GLOBAL_SHORTCUTS: GlobalShortcut[] = [
       }
     },
     description: 'Save character',
+    category: 'character',
+    global: false,
+  },
+  {
+    key: 'z',
+    ctrl: true,
+    shift: false,
+    action: () => {
+      // Undo on character sheet
+      const undoButton = document.querySelector('button[aria-label="Undo"]') as HTMLButtonElement;
+      if (undoButton && !undoButton.disabled) {
+        undoButton.click();
+      }
+    },
+    description: 'Undo',
+    category: 'character',
+    global: false,
+  },
+  {
+    key: 'y',
+    ctrl: true,
+    action: () => {
+      // Redo on character sheet
+      const redoButton = document.querySelector('button[aria-label="Redo"]') as HTMLButtonElement;
+      if (redoButton && !redoButton.disabled) {
+        redoButton.click();
+      }
+    },
+    description: 'Redo',
     category: 'character',
     global: false,
   },

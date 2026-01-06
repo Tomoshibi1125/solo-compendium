@@ -22,6 +22,31 @@
     }
   ],
   "categories": ["games", "entertainment"],
-  "screenshots": []
+  "screenshots": [],
+  "share_target": {
+    "action": "/",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "shortcuts": [
+    {
+      "name": "Compendium",
+      "short_name": "Compendium",
+      "description": "Browse the compendium",
+      "url": "/compendium",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Characters",
+      "short_name": "Characters",
+      "description": "View your characters",
+      "url": "/characters",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
 }
 

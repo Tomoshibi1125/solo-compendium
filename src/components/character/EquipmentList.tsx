@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Package, Plus, Trash2, Shield, Zap, Gem, Heart, Coins, Weight, AlertTriangle, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
+import { VirtualList } from '@/components/ui/VirtualList';
+import { SortableList } from '@/components/ui/SortableList';
 import { useEquipment } from '@/hooks/useEquipment';
 import { useCharacter } from '@/hooks/useCharacters';
 import { useEquipmentRunes, useInscribeRune } from '@/hooks/useRunes';
@@ -37,7 +39,7 @@ const ITEM_TYPE_LABELS: Record<string, string> = {
 };
 
 export function EquipmentList({ characterId }: { characterId: string }) {
-  const { equipment, removeEquipment, updateEquipment, attunedCount, canAttune } = useEquipment(characterId);
+  const { equipment, removeEquipment, updateEquipment, reorderEquipment, attunedCount, canAttune } = useEquipment(characterId);
   const { data: character } = useCharacter(characterId);
   const { toast } = useToast();
   const [addDialogOpen, setAddDialogOpen] = useState(false);
@@ -56,6 +58,19 @@ export function EquipmentList({ characterId }: { characterId: string }) {
     acc[type].push(item);
     return acc;
   }, {} as Record<string, Equipment[]>);
+
+  const handleReorderGroup = useCallback(async (type: string, newOrder: Equipment[]) => {
+    try {
+      // Update display_order for all items in this group
+      const updates = newOrder.map((item, index) => ({
+        id: item.id,
+        display_order: index,
+      }));
+      await reorderEquipment(updates);
+    } catch (error) {
+      // Error handled by hook
+    }
+  }, [reorderEquipment]);
 
   const handleToggleEquipped = async (item: Equipment) => {
     try {
@@ -205,8 +220,10 @@ export function EquipmentList({ characterId }: { characterId: string }) {
                   <Icon className="w-4 h-4" />
                   {ITEM_TYPE_LABELS[type] || type}
                 </div>
-                <div className="space-y-2">
-                  {items.map((item) => (
+                <SortableList
+                  items={items}
+                  onReorder={(newOrder) => handleReorderGroup(type, newOrder)}
+                  renderItem={(item) => (
                     <EquipmentItem
                       key={item.id}
                       item={item}
@@ -219,8 +236,9 @@ export function EquipmentList({ characterId }: { characterId: string }) {
                       }}
                       canAttune={canAttune}
                     />
-                  ))}
-                </div>
+                  )}
+                  itemClassName="mb-2"
+                />
               </div>
             );
           })

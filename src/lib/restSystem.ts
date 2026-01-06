@@ -66,6 +66,27 @@ export async function executeShortRest(characterId: string): Promise<void> {
     logger.error('Failed to reset rune uses:', error);
     // Continue even if rune reset fails
   }
+
+  // Recover spell slots on short rest (only for slots marked for short rest recovery)
+  try {
+    const { data: slots } = await supabase
+      .from('character_spell_slots')
+      .select('*')
+      .eq('character_id', characterId)
+      .eq('slots_recovered_on_short_rest', 1);
+
+    if (slots && slots.length > 0) {
+      for (const slot of slots) {
+        await supabase
+          .from('character_spell_slots')
+          .update({ slots_current: slot.slots_max })
+          .eq('id', slot.id);
+      }
+    }
+  } catch (error) {
+    logger.error('Failed to recover spell slots:', error);
+    // Continue even if spell slot recovery fails
+  }
 }
 
 /**
@@ -140,6 +161,26 @@ export async function executeLongRest(characterId: string): Promise<void> {
   } catch (error) {
     logger.error('Failed to reset rune uses:', error);
     // Continue even if rune reset fails
+  }
+
+  // Recover all spell slots on long rest
+  try {
+    const { data: slots } = await supabase
+      .from('character_spell_slots')
+      .select('*')
+      .eq('character_id', characterId);
+
+    if (slots && slots.length > 0) {
+      for (const slot of slots) {
+        await supabase
+          .from('character_spell_slots')
+          .update({ slots_current: slot.slots_max })
+          .eq('id', slot.id);
+      }
+    }
+  } catch (error) {
+    logger.error('Failed to recover spell slots:', error);
+    // Continue even if spell slot recovery fails
   }
 }
 

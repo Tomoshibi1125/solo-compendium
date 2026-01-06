@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Plus, User, Settings, Trash2, Loader2, Crown, Skull, Shield, Zap, Heart } from 'lucide-react';
+import { Plus, User, Settings, Trash2, Loader2, Crown, Skull, Shield, Zap, Heart, Users } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
+import { Checkbox } from '@/components/ui/checkbox';
+import { BulkActionsBar } from '@/components/character/BulkActionsBar';
+import { VirtualGrid } from '@/components/ui/VirtualList';
 import { cn } from '@/lib/utils';
 import { useCharacters, useDeleteCharacter } from '@/hooks/useCharacters';
 import {
@@ -24,6 +27,7 @@ const Characters = () => {
   const { data: characters = [], isLoading } = useCharacters();
   const deleteCharacter = useDeleteCharacter();
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
   const handleDelete = async () => {
     if (!deleteTarget) return;
@@ -65,12 +69,20 @@ const Characters = () => {
               Awaken and manage your Hunters in the Supreme Deity's domain
             </p>
           </div>
-          <Link to="/characters/new">
-            <Button className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple hover:shadow-arise/30 hover:shadow-lg transition-all">
-              <Plus className="w-4 h-4" />
-              Awaken New Hunter
-            </Button>
-          </Link>
+          <div className="flex gap-2">
+            <Link to="/characters/compare">
+              <Button variant="outline" className="gap-2">
+                <Users className="w-4 h-4" />
+                Compare Hunters
+              </Button>
+            </Link>
+            <Link to="/characters/new">
+              <Button className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple hover:shadow-arise/30 hover:shadow-lg transition-all">
+                <Plus className="w-4 h-4" />
+                Awaken New Hunter
+              </Button>
+            </Link>
+          </div>
         </div>
 
         {isLoading ? (
@@ -104,6 +116,8 @@ const Characters = () => {
                 const rankInfo = getHunterRank(character.level);
                 const hpPercent = (character.hp_current / character.hp_max) * 100;
                 
+                const isSelected = selectedIds.has(character.id);
+                
                 return (
                   <div
                     key={character.id}
@@ -111,9 +125,26 @@ const Characters = () => {
                       "glass-card p-6 transition-all duration-300 group relative overflow-hidden",
                       "hover:border-arise/50 hover:shadow-xl hover:shadow-arise/10",
                       "border-l-4",
+                      isSelected && "ring-2 ring-primary ring-offset-2",
                       rankInfo.border
                     )}
                   >
+                    {/* Selection Checkbox */}
+                    <div className="absolute top-3 left-3 z-10">
+                      <Checkbox
+                        checked={isSelected}
+                        onCheckedChange={(checked) => {
+                          const newSet = new Set(selectedIds);
+                          if (checked) {
+                            newSet.add(character.id);
+                          } else {
+                            newSet.delete(character.id);
+                          }
+                          setSelectedIds(newSet);
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                      />
+                    </div>
                     {/* Rank badge */}
                     <div className={cn(
                       "absolute top-3 right-3 w-10 h-10 rounded-full flex items-center justify-center font-arise text-lg font-bold",
@@ -234,8 +265,167 @@ const Characters = () => {
                       </div>
                     </Link>
                   </div>
-                );
-              })}
+                  );
+                  }}
+                />
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {characters.map((character) => {
+                  const rankInfo = getHunterRank(character.level);
+                  const hpPercent = (character.hp_current / character.hp_max) * 100;
+                  
+                  const isSelected = selectedIds.has(character.id);
+                  
+                  return (
+                    <div
+                      key={character.id}
+                      className={cn(
+                        "glass-card p-6 transition-all duration-300 group relative overflow-hidden",
+                        "hover:border-arise/50 hover:shadow-xl hover:shadow-arise/10",
+                        "border-l-4",
+                        isSelected && "ring-2 ring-primary ring-offset-2",
+                        rankInfo.border
+                      )}
+                    >
+                      {/* Selection Checkbox */}
+                      <div className="absolute top-3 left-3 z-10">
+                        <Checkbox
+                          checked={isSelected}
+                          onCheckedChange={(checked) => {
+                            const newSet = new Set(selectedIds);
+                            if (checked) {
+                              newSet.add(character.id);
+                            } else {
+                              newSet.delete(character.id);
+                            }
+                            setSelectedIds(newSet);
+                          }}
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                      </div>
+                      {/* Rank badge */}
+                      <div className={cn(
+                        "absolute top-3 right-3 w-10 h-10 rounded-full flex items-center justify-center font-arise text-lg font-bold",
+                        rankInfo.bg,
+                        rankInfo.color,
+                        "ring-2 ring-offset-2 ring-offset-background",
+                        rankInfo.border
+                      )}>
+                        {rankInfo.rank}
+                      </div>
+
+                      {/* Background glow effect */}
+                      <div className={cn(
+                        "absolute -bottom-10 -right-10 w-32 h-32 rounded-full blur-3xl opacity-0 group-hover:opacity-30 transition-opacity duration-500",
+                        rankInfo.bg
+                      )} />
+
+                      <div className="flex items-start justify-between mb-4">
+                        <div className={cn(
+                          "w-14 h-14 rounded-xl flex items-center justify-center relative",
+                          "bg-gradient-to-br from-arise/20 to-shadow-purple/20",
+                          "border border-arise/30"
+                        )}>
+                          {character.portrait_url ? (
+                            <img
+                              src={character.portrait_url}
+                              alt={character.name}
+                              className="w-full h-full object-cover rounded-xl"
+                            />
+                          ) : (
+                            <User className="w-7 h-7 text-arise" />
+                          )}
+                          {/* Level indicator */}
+                          <div className="absolute -bottom-2 -right-2 w-6 h-6 rounded-full bg-background border border-arise/50 flex items-center justify-center">
+                            <span className="text-xs font-arise font-bold text-arise">{character.level}</span>
+                          </div>
+                        </div>
+                        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="hover:bg-arise/20 hover:text-arise"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              navigate(`/characters/${character.id}`);
+                            }}
+                            aria-label={`Edit ${character.name}`}
+                          >
+                            <Settings className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setDeleteTarget(character.id);
+                            }}
+                            className="text-destructive hover:text-destructive hover:bg-destructive/20"
+                            aria-label={`Delete ${character.name}`}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+
+                      <Link to={`/characters/${character.id}`} className="block">
+                        <h3 className="font-arise text-xl font-semibold mb-1 group-hover:text-arise transition-colors tracking-wide">
+                          {character.name}
+                        </h3>
+                        <p className="text-sm text-muted-foreground mb-4 font-heading">
+                          {character.job || 'Unawakened'} {character.path && `• ${character.path}`}
+                        </p>
+
+                        {/* HP Bar */}
+                        <div className="mb-4">
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="text-xs text-muted-foreground flex items-center gap-1">
+                              <Heart className="w-3 h-3" /> HP
+                            </span>
+                            <span className={cn(
+                              "text-xs font-arise",
+                              hpPercent < 25 ? "text-destructive" :
+                              hpPercent < 50 ? "text-orange-400" : "text-green-400"
+                            )}>
+                              {character.hp_current}/{character.hp_max}
+                            </span>
+                          </div>
+                          <div className="h-2 bg-muted rounded-full overflow-hidden">
+                            <div 
+                              className={cn(
+                                "h-full transition-all duration-300 rounded-full",
+                                hpPercent < 25 ? "bg-gradient-to-r from-destructive to-red-600" :
+                                hpPercent < 50 ? "bg-gradient-to-r from-orange-500 to-amber-500" :
+                                "bg-gradient-to-r from-green-500 to-emerald-400"
+                              )}
+                              style={{ width: `${hpPercent}%` }}
+                            />
+                          </div>
+                        </div>
+
+                        {/* Quick Stats */}
+                        <div className="grid grid-cols-3 gap-2">
+                          <div className="text-center p-2 rounded bg-arise/5 border border-arise/20">
+                            <Shield className="w-3 h-3 mx-auto mb-1 text-blue-400" />
+                            <span className="font-arise font-bold text-lg">{character.armor_class}</span>
+                            <span className="text-[10px] text-muted-foreground block">AC</span>
+                          </div>
+                          <div className="text-center p-2 rounded bg-arise/5 border border-arise/20">
+                            <Zap className="w-3 h-3 mx-auto mb-1 text-yellow-400" />
+                            <span className="font-arise font-bold text-lg">+{character.initiative}</span>
+                            <span className="text-[10px] text-muted-foreground block">INIT</span>
+                          </div>
+                          <div className="text-center p-2 rounded bg-arise/5 border border-arise/20">
+                            <Crown className="w-3 h-3 mx-auto mb-1 text-arise" />
+                            <span className="font-arise font-bold text-lg">{character.proficiency_bonus}</span>
+                            <span className="text-[10px] text-muted-foreground block">PROF</span>
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                  );
+                })}
 
               {/* New Character Card */}
               <Link
@@ -297,6 +487,12 @@ const Characters = () => {
             </div>
           </>
         )}
+
+        {/* Bulk Actions Bar */}
+        <BulkActionsBar
+          selectedIds={Array.from(selectedIds)}
+          onClearSelection={() => setSelectedIds(new Set())}
+        />
 
         {/* Delete Confirmation Dialog */}
         <AlertDialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>

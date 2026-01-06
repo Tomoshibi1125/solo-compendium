@@ -3,6 +3,7 @@ import { AlertTriangle } from 'lucide-react';
 import { Button } from './ui/button';
 import { SystemWindow } from './ui/SystemWindow';
 import { error as logError } from '@/lib/logger';
+import { captureException } from '@/lib/sentry';
 
 interface Props {
   children: ReactNode;
@@ -27,7 +28,18 @@ export class ErrorBoundary extends Component<Props, State> {
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     // Log error for debugging
     logError('ErrorBoundary caught an error:', error, errorInfo);
+    
+    // Report to Sentry
+    captureException(error, {
+      react: {
+        componentStack: errorInfo.componentStack,
+      },
+    });
   }
+
+  handleReset = () => {
+    this.setState({ hasError: false, error: null });
+  };
 
   render() {
     if (this.state.hasError) {
@@ -54,10 +66,16 @@ export class ErrorBoundary extends Component<Props, State> {
                 </pre>
               </details>
             )}
-            <div className="flex gap-4 justify-center">
+            <div className="flex gap-4 justify-center flex-wrap">
+              <Button
+                onClick={this.handleReset}
+                variant="default"
+              >
+                Try Again
+              </Button>
               <Button
                 onClick={() => window.location.reload()}
-                variant="default"
+                variant="outline"
               >
                 Refresh Page
               </Button>

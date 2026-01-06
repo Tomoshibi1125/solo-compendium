@@ -38,7 +38,11 @@ import { useQuery } from '@tanstack/react-query';
 import { useFavorites } from '@/hooks/useFavorites';
 import { CompendiumSidebar } from '@/components/compendium/CompendiumSidebar';
 import { FilterChips } from '@/components/compendium/FilterChips';
+import { SearchHistoryDropdown } from '@/components/compendium/SearchHistoryDropdown';
 import { useDebounce } from '@/hooks/useDebounce';
+import { useSearchHistory } from '@/hooks/useSearchHistory';
+import { useFilterPersistence } from '@/hooks/useFilterPersistence';
+import { parseSearchQuery, applySearchOperators } from '@/lib/searchOperators';
 import { SkeletonLoader } from '@/components/compendium/SkeletonLoader';
 import { EmptyState } from '@/components/compendium/EmptyState';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
@@ -154,7 +158,7 @@ const Compendium = () => {
 
   // Fetch compendium data (using debounced search)
   const { data: entries = [], isLoading, error } = useQuery({
-    queryKey: ['compendium', selectedCategory, debouncedSearchQuery],
+    queryKey: ['compendium', selectedCategory, parsedQuery.text, parsedQuery.operators],
     queryFn: async () => {
       const allEntries: CompendiumEntry[] = [];
 
@@ -165,15 +169,33 @@ const Compendium = () => {
 
       // Fetch Jobs
       if (selectedCategory === 'all' || selectedCategory === 'jobs') {
-          let query = supabase
-            .from('compendium_jobs')
-            .select('id, name, description, created_at, tags, source_book, image_url');
+          let jobs: any[] | null = null;
           
-          if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
+          // Use full-text search RPC if query is long enough
+          if (debouncedSearchQuery.trim() && debouncedSearchQuery.length > 2) {
+            try {
+              const { data: rpcData } = await supabase.rpc('search_compendium_jobs', {
+                search_text: debouncedSearchQuery.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').trim(),
+              });
+              jobs = rpcData;
+            } catch (error) {
+              // Fallback to regular query
+            }
           }
           
-          const { data: jobs } = await query;
+          // Fallback to regular query if RPC not used or failed
+          if (!jobs) {
+            let query = supabase
+              .from('compendium_jobs')
+              .select('id, name, description, created_at, tags, source_book, image_url');
+            
+            if (debouncedSearchQuery.trim()) {
+              query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
+            }
+            
+            const { data } = await query;
+            jobs = data;
+          }
           if (jobs) {
             allEntries.push(...jobs.map(j => ({
               id: j.id,
@@ -272,15 +294,31 @@ const Compendium = () => {
 
         // Fetch Powers
         if (selectedCategory === 'all' || selectedCategory === 'powers') {
-          let query = supabase
-            .from('compendium_powers')
-            .select('id, name, description, power_level, school, created_at, tags, source_book');
+          let powers: any[] | null = null;
           
-          if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
+          if (debouncedSearchQuery.trim() && debouncedSearchQuery.length > 2) {
+            try {
+              const { data: rpcData } = await supabase.rpc('search_compendium_powers', {
+                search_text: debouncedSearchQuery.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').trim(),
+              });
+              powers = rpcData;
+            } catch (error) {
+              // Fallback
+            }
           }
           
-          const { data: powers } = await query;
+          if (!powers) {
+            let query = supabase
+              .from('compendium_powers')
+              .select('id, name, description, power_level, school, created_at, tags, source_book');
+            
+            if (debouncedSearchQuery.trim()) {
+              query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
+            }
+            
+            const { data } = await query;
+            powers = data;
+          }
           if (powers) {
             allEntries.push(...powers.map(p => ({
               id: p.id,
@@ -513,6 +551,78 @@ const Compendium = () => {
     },
     enabled: true,
   });
+
+  // Track search history
+  const { addToHistory } = useSearchHistory();
+  useEffect(() => {
+    if (debouncedSearchQuery.trim() && entries.length > 0) {
+      addToHistory(debouncedSearchQuery, {
+        category: selectedCategory,
+        rarities: selectedRarities,
+        schools: selectedSchools,
+      }, entries.length);
+    }
+  }, [debouncedSearchQuery, entries.length, selectedCategory, selectedRarities, selectedSchools, addToHistory]);
+
+  // Persist filters
+  const [filters, setFilters] = useFilterPersistence('compendium', {
+    selectedCategory: 'all',
+    viewMode: 'grid' as 'grid' | 'list',
+    sortBy: 'name-asc' as SortOption,
+    selectedRarities: [] as string[],
+    minLevel: '' as number | '',
+    maxLevel: '' as number | '',
+    showFavoritesOnly: false,
+    selectedSourceBooks: [] as string[],
+    selectedSchools: [] as string[],
+    selectedGateRanks: [] as string[],
+    showBossOnly: false,
+    showMiniBossOnly: false,
+    minCR: '' as number | '',
+    maxCR: '' as number | '',
+  });
+
+  // Load persisted filters on mount
+  useEffect(() => {
+    setSelectedCategory(filters.selectedCategory);
+    setViewMode(filters.viewMode);
+    setSortBy(filters.sortBy);
+    setSelectedRarities(filters.selectedRarities);
+    setMinLevel(filters.minLevel);
+    setMaxLevel(filters.maxLevel);
+    setShowFavoritesOnly(filters.showFavoritesOnly);
+    setSelectedSourceBooks(filters.selectedSourceBooks);
+    setSelectedSchools(filters.selectedSchools);
+    setSelectedGateRanks(filters.selectedGateRanks);
+    setShowBossOnly(filters.showBossOnly);
+    setShowMiniBossOnly(filters.showMiniBossOnly);
+    setMinCR(filters.minCR);
+    setMaxCR(filters.maxCR);
+  }, []); // Only on mount
+
+  // Save filters when they change
+  useEffect(() => {
+    setFilters({
+      selectedCategory,
+      viewMode,
+      sortBy,
+      selectedRarities,
+      minLevel,
+      maxLevel,
+      showFavoritesOnly,
+      selectedSourceBooks,
+      selectedSchools,
+      selectedGateRanks,
+      showBossOnly,
+      showMiniBossOnly,
+      minCR,
+      maxCR,
+    });
+  }, [
+    selectedCategory, viewMode, sortBy, selectedRarities, minLevel, maxLevel,
+    showFavoritesOnly, selectedSourceBooks, selectedSchools, selectedGateRanks,
+    showBossOnly, showMiniBossOnly, minCR, maxCR, setFilters
+  ]);
 
   // Extract unique source books
   const sourceBooks = useMemo(() => {
@@ -879,16 +989,22 @@ const Compendium = () => {
         {/* Search and Controls */}
         <div className="flex flex-col gap-4 mb-6">
           <div className="flex flex-col sm:flex-row gap-4">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-              <Input
-                placeholder="Search jobs, powers, relics, monsters... (Ctrl+K)"
-                aria-label="Search compendium"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 bg-card border-border focus:ring-2 focus:ring-primary"
-                autoComplete="off"
-                spellCheck="false"
+            <div className="relative flex-1 flex items-center gap-2">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Input
+                  placeholder="Search... (e.g., fire damage, type:power, level:>3)"
+                  aria-label="Search compendium"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 bg-card border-border focus:ring-2 focus:ring-primary"
+                  autoComplete="off"
+                  spellCheck="false"
+                  title="Advanced search: type:jobs, level:>3, rarity:rare, school:evocation, cr:>5, tag:boss, source:core"
+                />
+              </div>
+              <SearchHistoryDropdown
+                onSelect={(query) => setSearchQuery(query)}
               />
             </div>
             <div className="flex gap-2 flex-wrap sm:flex-nowrap">

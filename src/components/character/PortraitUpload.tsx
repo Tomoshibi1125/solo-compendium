@@ -3,6 +3,7 @@ import { Upload, X, Image as ImageIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { compressImage } from '@/lib/imageOptimization';
 import { cn } from '@/lib/utils';
 
 export function PortraitUpload({
@@ -58,17 +59,25 @@ export function PortraitUpload({
     setUploading(true);
 
     try {
-      // Generate unique filename
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${characterId}-${Date.now()}.${fileExt}`;
+      // Compress image before uploading
+      const compressedBlob = await compressImage(file, {
+        maxWidth: 512,
+        maxHeight: 512,
+        quality: 0.85,
+        format: 'webp',
+      });
+
+      // Generate unique filename with .webp extension
+      const fileName = `${characterId}-${Date.now()}.webp`;
       const filePath = `portraits/${fileName}`;
 
-      // Upload to Supabase Storage
+      // Upload compressed image to Supabase Storage
       const { error: uploadError } = await supabase.storage
         .from('character-portraits')
-        .upload(filePath, file, {
+        .upload(filePath, compressedBlob, {
           cacheControl: '3600',
           upsert: false,
+          contentType: 'image/webp',
         });
 
       if (uploadError) throw uploadError;

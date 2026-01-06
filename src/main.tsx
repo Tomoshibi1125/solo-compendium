@@ -3,6 +3,10 @@ import App from "./App.tsx";
 import "./index.css";
 import { enableTouchOptimizations } from "./lib/mobile";
 import { error as logError, warn as logWarn } from "./lib/logger";
+import { initSentry } from "./lib/sentry";
+
+// Initialize Sentry before anything else
+initSentry();
 
 // Wait for DOM to be ready
 function initApp() {

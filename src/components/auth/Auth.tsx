@@ -1,0 +1,262 @@
+import { useState, useEffect } from 'react';
+import { Auth as SupabaseAuth } from '@supabase/auth-ui-react';
+import { ThemeSupa } from '@supabase/auth-ui-shared';
+import { supabase } from '@/integrations/supabase/client';
+import { SystemWindow } from '@/components/ui/SystemWindow';
+import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
+import { Button } from '@/components/ui/button';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
+import { Crown, Sword, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useUpdateProfile, useProfile } from '@/hooks/useProfile';
+import { cn } from '@/lib/utils';
+import { logger } from '@/lib/logger';
+
+export function Auth() {
+  const navigate = useNavigate();
+  const [authView, setAuthView] = useState<'sign_up' | 'sign_in'>('sign_in');
+  const [showRoleSelection, setShowRoleSelection] = useState(false);
+  const [selectedRole, setSelectedRole] = useState<'dm' | 'player' | null>(null);
+  const [isSignup, setIsSignup] = useState(false);
+  const updateProfile = useUpdateProfile();
+  const { data: profile, isLoading: profileLoading } = useProfile();
+
+  // Check auth state and profile
+  useEffect(() => {
+    const checkAuthState = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        if (!profileLoading) {
+          if (!profile) {
+            // User is authenticated but has no profile - show role selection
+            // This can happen for existing users before the migration
+            setShowRoleSelection(true);
+            setIsSignup(false); // Not a new signup, just missing profile
+          } else {
+            // Check if user came here to change role (via query param or direct navigation)
+            const urlParams = new URLSearchParams(window.location.search);
+            const changeRole = urlParams.get('changeRole') === 'true';
+            
+            if (changeRole) {
+              // User wants to change role - show role selection with current role pre-selected
+              setShowRoleSelection(true);
+              setSelectedRole(profile.role);
+              setIsSignup(false);
+            } else {
+              // User has profile and doesn't want to change - redirect to home
+              navigate('/');
+            }
+          }
+        }
+      }
+    };
+
+    checkAuthState();
+
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_UP' && session?.user) {
+        // New signup - show role selection after profile is created
+        setIsSignup(true);
+        // Wait a moment for the trigger to create the profile, then check
+        setTimeout(async () => {
+          const { data: { user: currentUser } } = await supabase.auth.getUser();
+          if (currentUser) {
+            // Check if profile exists (trigger should have created it)
+            const { data: profileData } = await supabase
+              .from('profiles')
+              .select('role')
+              .eq('id', currentUser.id)
+              .single();
+            
+            if (profileData) {
+              // Profile exists, but allow user to change from default 'player' to 'dm'
+              setShowRoleSelection(true);
+            } else {
+              // Profile doesn't exist yet, show role selection
+              setShowRoleSelection(true);
+            }
+          }
+        }, 500);
+      } else if (event === 'SIGNED_IN' && session?.user) {
+        // Existing user signing in - check if they have a profile
+        const { data: profileData } = await supabase
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          .from('profiles' as any)
+          .select('role')
+          .eq('id', session.user.id)
+          .single();
+        
+        if (!profileData) {
+          // No profile exists - show role selection
+          setShowRoleSelection(true);
+          setIsSignup(false);
+        } else {
+          // Has profile - redirect to home (don't show role selection for existing users)
+          navigate('/');
+        }
+      } else if (event === 'SIGNED_OUT') {
+        setShowRoleSelection(false);
+        setSelectedRole(null);
+        setIsSignup(false);
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [profile, profileLoading, navigate]);
+
+  // Handle role selection
+  const handleRoleSelect = async () => {
+    if (!selectedRole) return;
+
+    try {
+      await updateProfile.mutateAsync({ role: selectedRole });
+      // Navigation will happen automatically via the useEffect when profile updates
+    } catch (error) {
+      // Error is already handled by useUpdateProfile toast
+      logger.error('Error setting role:', error);
+    }
+  };
+
+  // Role selection view
+  if (showRoleSelection) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5 flex items-center justify-center p-4">
+        <div className="w-full max-w-md">
+          <SystemWindow variant="arise" className="text-center">
+            <div className="p-8 space-y-6">
+              <div className="flex justify-center mb-4">
+                <ShadowMonarchLogo size="md" variant="supreme" />
+              </div>
+              <h2 className="font-arise text-2xl font-bold gradient-text-arise mb-2">
+                {isSignup ? 'Choose Your Role' : profile ? 'Change Your Role' : 'Select Your Role'}
+              </h2>
+              <p className="text-muted-foreground font-heading text-sm mb-6">
+                {isSignup 
+                  ? 'Select your role to continue. You can change this later in your profile.'
+                  : profile
+                  ? 'Select a new role. This will update your account permissions.'
+                  : 'Choose which role you want to use for this session.'}
+              </p>
+
+              <RadioGroup
+                value={selectedRole || undefined}
+                onValueChange={(value) => setSelectedRole(value as 'dm' | 'player')}
+                className="space-y-4"
+              >
+                <Label
+                  htmlFor="role-player"
+                  className={cn(
+                    "flex items-center gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all",
+                    selectedRole === 'player'
+                      ? "border-primary bg-primary/10"
+                      : "border-border hover:border-primary/50"
+                  )}
+                >
+                  <RadioGroupItem value="player" id="role-player" className="mt-0" />
+                  <div className="flex items-center gap-3 flex-1">
+                    <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+                      <Sword className="w-5 h-5 text-primary" />
+                    </div>
+                    <div className="text-left">
+                      <div className="font-heading font-semibold">Hunter (Player)</div>
+                      <div className="text-sm text-muted-foreground">
+                        Join campaigns and create characters
+                      </div>
+                    </div>
+                  </div>
+                </Label>
+
+                <Label
+                  htmlFor="role-dm"
+                  className={cn(
+                    "flex items-center gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all",
+                    selectedRole === 'dm'
+                      ? "border-primary bg-primary/10"
+                      : "border-border hover:border-primary/50"
+                  )}
+                >
+                  <RadioGroupItem value="dm" id="role-dm" className="mt-0" />
+                  <div className="flex items-center gap-3 flex-1">
+                    <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+                      <Crown className="w-5 h-5 text-primary" />
+                    </div>
+                    <div className="text-left">
+                      <div className="font-heading font-semibold">Gate Master (DM)</div>
+                      <div className="text-sm text-muted-foreground">
+                        Create campaigns and access DM tools
+                      </div>
+                    </div>
+                  </div>
+                </Label>
+              </RadioGroup>
+
+              <Button
+                onClick={handleRoleSelect}
+                disabled={!selectedRole || updateProfile.isPending}
+                className="w-full"
+                size="lg"
+              >
+                {updateProfile.isPending ? 'Setting up...' : 'Continue'}
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
+          </SystemWindow>
+        </div>
+      </div>
+    );
+  }
+
+  // Auth UI view
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5 flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        <SystemWindow variant="arise">
+          <div className="p-6">
+            <div className="flex justify-center mb-6">
+              <ShadowMonarchLogo size="md" variant="supreme" />
+            </div>
+            <SupabaseAuth
+              supabaseClient={supabase}
+              appearance={{
+                theme: ThemeSupa,
+                variables: {
+                  default: {
+                    colors: {
+                      brand: 'hsl(var(--primary))',
+                      brandAccent: 'hsl(var(--primary))',
+                    },
+                  },
+                },
+                className: {
+                  anchor: 'text-primary hover:text-primary/80',
+                  button: 'bg-primary hover:bg-primary/90',
+                  input: 'bg-background border-border',
+                  label: 'text-foreground',
+                  message: 'text-muted-foreground',
+                },
+              }}
+              providers={[]}
+              view={authView}
+              redirectTo={window.location.origin}
+            />
+            <div className="mt-4 text-center">
+              <button
+                onClick={() => setAuthView(authView === 'sign_in' ? 'sign_up' : 'sign_in')}
+                className="text-sm text-primary hover:underline font-heading"
+              >
+                {authView === 'sign_in'
+                  ? "Don't have an account? Sign up"
+                  : 'Already have an account? Sign in'}
+              </button>
+            </div>
+          </div>
+        </SystemWindow>
+      </div>
+    </div>
+  );
+}
+

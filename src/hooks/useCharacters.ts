@@ -1,6 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
+import { useToast } from '@/hooks/use-toast';
+import { getErrorMessage, logErrorWithContext, isNotFoundError } from '@/lib/errorHandling';
 // Note: These functions are defined in solo-leveling.ts but we'll use the ones from characterCalculations
 
 type Character = Database['public']['Tables']['characters']['Row'];
@@ -26,18 +28,64 @@ export const useCharacters = () => {
         .eq('user_id', user.id)
         .order('updated_at', { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        logErrorWithContext(error, 'useCharacters');
+        throw error;
+      }
       return characters || [];
     },
     retry: false, // Don't retry if not authenticated
+    onError: (error) => {
+      logErrorWithContext(error, 'useCharacters');
+    },
   });
 };
 
 // Fetch single character with abilities
-export const useCharacter = (characterId: string) => {
+export const useCharacter = (characterId: string, shareToken?: string) => {
   return useQuery({
-    queryKey: ['character', characterId],
+    queryKey: ['character', characterId, shareToken],
     queryFn: async (): Promise<CharacterWithAbilities | null> => {
+      // If share token provided, use it for read-only access
+      if (shareToken) {
+        const { data: characters, error: charError } = await supabase
+          .rpc('get_character_by_share_token', {
+            p_character_id: characterId,
+            p_share_token: shareToken,
+          });
+
+      if (charError) {
+        logErrorWithContext(charError, 'useCharacter (share token)');
+        if (isNotFoundError(charError)) return null;
+        throw charError;
+      }
+      if (!characters || characters.length === 0) return null;
+        
+        const char = characters[0] as Character;
+
+        // Fetch abilities for shared character
+        const { data: abilities, error: abilitiesError } = await supabase
+          .from('character_abilities')
+          .select('ability, score')
+          .eq('character_id', characterId);
+
+        if (abilitiesError) throw abilitiesError;
+
+        const abilitiesObj: Record<AbilityScore, number> = {
+          STR: 10, AGI: 10, VIT: 10, INT: 10, SENSE: 10, PRE: 10,
+        };
+
+        abilities?.forEach(({ ability, score }) => {
+          abilitiesObj[ability] = score;
+        });
+
+        return {
+          ...char,
+          abilities: abilitiesObj,
+        };
+      }
+
+      // Normal authenticated access
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return null; // Return null if not authenticated
 
@@ -49,7 +97,11 @@ export const useCharacter = (characterId: string) => {
         .eq('user_id', user.id)
         .maybeSingle();
 
-      if (charError) throw charError;
+      if (charError) {
+        logErrorWithContext(charError, 'useCharacter');
+        if (isNotFoundError(charError)) return null;
+        throw charError;
+      }
       if (!character) return null;
 
       // Fetch abilities
@@ -58,7 +110,10 @@ export const useCharacter = (characterId: string) => {
         .select('ability, score')
         .eq('character_id', characterId);
 
-      if (abilitiesError) throw abilitiesError;
+      if (abilitiesError) {
+        logErrorWithContext(abilitiesError, 'useCharacter (abilities fetch)');
+        throw abilitiesError;
+      }
 
       // Build abilities object
       const abilitiesObj: Record<AbilityScore, number> = {
@@ -87,6 +142,7 @@ export const useCharacter = (characterId: string) => {
 // Create character
 export const useCreateCharacter = () => {
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   return useMutation({
     mutationFn: async (data: Omit<CharacterInsert, 'user_id'>) => {
@@ -99,7 +155,10 @@ export const useCreateCharacter = () => {
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        logErrorWithContext(error, 'useCreateCharacter');
+        throw error;
+      }
 
       // Create default ability scores
       const defaultAbilities: AbilityScore[] = ['STR', 'AGI', 'VIT', 'INT', 'SENSE', 'PRE'];
@@ -109,14 +168,31 @@ export const useCreateCharacter = () => {
         score: 10,
       }));
 
-      await supabase
+      const { error: abilitiesError } = await supabase
         .from('character_abilities')
         .insert(abilityInserts);
+
+      if (abilitiesError) {
+        logErrorWithContext(abilitiesError, 'useCreateCharacter (abilities)');
+        // Don't throw - character was created, abilities can be fixed later
+      }
 
       return character;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['characters'] });
+      toast({
+        title: 'Hunter created',
+        description: 'Your Hunter has been awakened.',
+      });
+    },
+    onError: (error) => {
+      logErrorWithContext(error, 'useCreateCharacter');
+      toast({
+        title: 'Failed to create Hunter',
+        description: getErrorMessage(error),
+        variant: 'destructive',
+      });
     },
   });
 };
@@ -124,6 +200,7 @@ export const useCreateCharacter = () => {
 // Update character
 export const useUpdateCharacter = () => {
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   return useMutation({
     mutationFn: async ({ id, data }: { id: string; data: CharacterUpdate }) => {
@@ -138,12 +215,23 @@ export const useUpdateCharacter = () => {
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        logErrorWithContext(error, 'useUpdateCharacter');
+        throw error;
+      }
       return character;
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['characters'] });
       queryClient.invalidateQueries({ queryKey: ['character', variables.id] });
+    },
+    onError: (error) => {
+      logErrorWithContext(error, 'useUpdateCharacter');
+      toast({
+        title: 'Failed to update Hunter',
+        description: getErrorMessage(error),
+        variant: 'destructive',
+      });
     },
   });
 };
@@ -151,6 +239,7 @@ export const useUpdateCharacter = () => {
 // Delete character
 export const useDeleteCharacter = () => {
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   return useMutation({
     mutationFn: async (id: string) => {
@@ -163,10 +252,53 @@ export const useDeleteCharacter = () => {
         .eq('id', id)
         .eq('user_id', user.id);
 
-      if (error) throw error;
+      if (error) {
+        logErrorWithContext(error, 'useDeleteCharacter');
+        throw error;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['characters'] });
+    },
+    onError: (error) => {
+      logErrorWithContext(error, 'useDeleteCharacter');
+      toast({
+        title: 'Failed to delete Hunter',
+        description: getErrorMessage(error),
+        variant: 'destructive',
+      });
+    },
+  });
+};
+
+// Generate share token for character
+export const useGenerateShareToken = () => {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: async (characterId: string): Promise<string> => {
+      const { data, error } = await supabase.rpc('generate_character_share_token_for_character', {
+        p_character_id: characterId,
+      });
+
+      if (error) throw error;
+      return data as string;
+    },
+    onSuccess: (_, characterId) => {
+      queryClient.invalidateQueries({ queryKey: ['character', characterId] });
+      queryClient.invalidateQueries({ queryKey: ['characters'] });
+      toast({
+        title: 'Share link generated',
+        description: 'Your character can now be shared via the link.',
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: 'Failed to generate share link',
+        description: error.message,
+        variant: 'destructive',
+      });
     },
   });
 };

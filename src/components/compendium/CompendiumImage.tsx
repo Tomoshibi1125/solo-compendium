@@ -1,6 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ImageIcon, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import {
+  optimizeImageUrl,
+  generateSrcSet,
+  generateSizes,
+  getBestImageFormat,
+  type ImageSize,
+} from '@/lib/imageOptimization';
 
 interface CompendiumImageProps {
   src?: string | null;
@@ -36,6 +43,45 @@ export function CompendiumImage({
 }: CompendiumImageProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [optimizedSrc, setOptimizedSrc] = useState<string | null>(null);
+  const [srcSet, setSrcSet] = useState<string>('');
+  const [bestFormat, setBestFormat] = useState<'avif' | 'webp' | 'original'>('original');
+
+  // Optimize image on mount
+  useEffect(() => {
+    if (!src) {
+      setOptimizedSrc(null);
+      setSrcSet('');
+      return;
+    }
+
+    // Get best format for browser
+    const format = getBestImageFormat();
+    setBestFormat(format);
+
+    // Generate optimized URL
+    const optimized = optimizeImageUrl(src, {
+      width: size === 'hero' ? 1920 : size === 'large' ? 512 : size === 'medium' ? 256 : 128,
+      quality: 80,
+      format: format === 'original' ? undefined : format,
+    });
+    setOptimizedSrc(optimized);
+
+    // Generate srcset for responsive images
+    const sizes: ImageSize[] = 
+      size === 'hero' 
+        ? ['medium', 'large', 'xlarge', 'hero']
+        : size === 'large'
+        ? ['small', 'medium', 'large']
+        : ['thumbnail', 'small', 'medium'];
+    
+    const webpSrcSet = generateSrcSet(src, sizes, 'webp');
+    const avifSrcSet = format === 'avif' ? generateSrcSet(src, sizes, 'avif') : '';
+    
+    // Combine srcsets
+    const combinedSrcSet = [avifSrcSet, webpSrcSet].filter(Boolean).join(', ');
+    setSrcSet(combinedSrcSet);
+  }, [src, size]);
 
   const handleLoad = () => {
     setLoading(false);
@@ -75,20 +121,55 @@ export function CompendiumImage({
           <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
         </div>
       )}
-      <img
-        src={src}
-        alt={alt}
-        className={cn(
-          'object-cover transition-opacity duration-300',
-          sizeClasses[size],
-          aspectRatio === 'auto' ? '' : aspectRatioClasses[aspectRatio],
-          loading ? 'opacity-0' : 'opacity-100'
+      <picture>
+        {/* AVIF source (best compression) */}
+        {bestFormat === 'avif' && srcSet && (
+          <source
+            srcSet={generateSrcSet(src || '', 
+              size === 'hero' 
+                ? ['medium', 'large', 'xlarge', 'hero']
+                : size === 'large'
+                ? ['small', 'medium', 'large']
+                : ['thumbnail', 'small', 'medium'],
+              'avif'
+            )}
+            sizes={generateSizes(size)}
+            type="image/avif"
+          />
         )}
-        onLoad={handleLoad}
-        onError={handleError}
-        loading="lazy"
-        decoding="async"
-      />
+        {/* WebP source (good compression, wider support) */}
+        {srcSet && (
+          <source
+            srcSet={generateSrcSet(src || '', 
+              size === 'hero' 
+                ? ['medium', 'large', 'xlarge', 'hero']
+                : size === 'large'
+                ? ['small', 'medium', 'large']
+                : ['thumbnail', 'small', 'medium'],
+              'webp'
+            )}
+            sizes={generateSizes(size)}
+            type="image/webp"
+          />
+        )}
+        {/* Fallback image */}
+        <img
+          src={optimizedSrc || src || undefined}
+          srcSet={srcSet || undefined}
+          sizes={generateSizes(size)}
+          alt={alt}
+          className={cn(
+            'object-cover transition-opacity duration-300',
+            sizeClasses[size],
+            aspectRatio === 'auto' ? '' : aspectRatioClasses[aspectRatio],
+            loading ? 'opacity-0' : 'opacity-100'
+          )}
+          onLoad={handleLoad}
+          onError={handleError}
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
     </div>
   );
 }

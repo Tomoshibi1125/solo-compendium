@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -29,7 +30,7 @@ interface ResultCardProps {
   onToggleFavorite: (e: React.MouseEvent, entry: ResultCardEntry) => void;
 }
 
-export function ResultCard({
+function ResultCardComponent({
   entry,
   viewMode,
   searchQuery,
@@ -168,3 +169,12 @@ export function ResultCard({
   );
 }
 
+export const ResultCard = memo(ResultCardComponent, (prevProps, nextProps) => {
+  // Custom comparison - only re-render if entry or key props change
+  return (
+    prevProps.entry.id === nextProps.entry.id &&
+    prevProps.entry.isFavorite === nextProps.entry.isFavorite &&
+    prevProps.viewMode === nextProps.viewMode &&
+    prevProps.searchQuery === nextProps.searchQuery
+  );
+});

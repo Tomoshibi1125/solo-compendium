@@ -721,7 +721,7 @@ function UnauthenticatedWelcomeScreen() {
           </SystemWindow>
         </div>
 
-        {/* Main Action - Awaken Hunter */}
+        {/* Main Action - Login/Signup */}
         <div className="max-w-2xl mx-auto mb-12">
           <SystemWindow title="BEGIN YOUR JOURNEY" variant="quest" className="text-center">
             <div className="space-y-6">
@@ -729,15 +729,23 @@ function UnauthenticatedWelcomeScreen() {
                 Ready to step into the world of Gates, Shadows, and Monarchs?
               </p>
 
-              <Link to="/characters/new">
-                <Button size="lg" className="btn-shadow-monarch shadow-monarch-glow w-full max-w-sm mx-auto">
-                  <Zap className="w-5 h-5 mr-3" />
-                  <span className="font-heading font-semibold">AWAKEN AS HUNTER</span>
-                </Button>
-              </Link>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to="/auth">
+                  <Button size="lg" className="btn-shadow-monarch shadow-monarch-glow w-full sm:w-auto">
+                    <Zap className="w-5 h-5 mr-3" />
+                    <span className="font-heading font-semibold">LOG IN</span>
+                  </Button>
+                </Link>
+                <Link to="/auth">
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto">
+                    <UserPlus className="w-5 h-5 mr-3" />
+                    <span className="font-heading font-semibold">SIGN UP</span>
+                  </Button>
+                </Link>
+              </div>
 
               <p className="text-xs text-muted-foreground font-heading">
-                Already have an account? The System will recognize your return.
+                Choose your role (Gate Master or Hunter) when you log in or sign up.
               </p>
             </div>
           </SystemWindow>
