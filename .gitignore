@@ -13,6 +13,11 @@ dist-ssr
 *.local
 .env
 
+# Test output
+playwright-report/
+test-results/
+coverage/
+
 # Python
 __pycache__/
 *.py[cod]
