@@ -5,7 +5,7 @@
 ### ✅ Configured
 - [x] Hugging Face API Token: `your_huggingface_api_token_here`
 - [x] Hugging Face Model: `stabilityai/stable-diffusion-xl-base-1.0`
-- [x] Supabase Access Token: `sbp_5675a595e1ff34dc345f404e06055bf41c5af289`
+- [ ] Supabase secrets configured locally (do **not** commit tokens/keys to git)
 - [x] All Python scripts ready
 - [x] All UI components integrated
 - [x] All documentation complete

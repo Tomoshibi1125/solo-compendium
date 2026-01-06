@@ -2,12 +2,11 @@
 
 ## ✅ Token Added
 
-Your Supabase access token has been added to `.env.local`:
-- **Token**: `sbp_5675a595e1ff34dc345f404e06055bf41c5af289`
+For security, **do not commit any tokens or keys** to this repository. Store secrets only in your local `.env.local` (gitignored) or your deployment platform’s environment variables.
 
 ## ⚠️ Important: Token Type
 
-The token you provided (`sbp_` prefix) is a **Supabase Access Token**, which may work for some operations, but for full admin access (like uploading images to storage), you'll need a **Service Role Key**.
+Supabase tokens/keys come in different forms. For admin operations (like uploading images to Storage from scripts), you typically need a **Service Role Key** (secret).
 
 ### Token Types:
 
