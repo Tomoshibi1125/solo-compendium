@@ -6,31 +6,54 @@ import { error as logError, warn as logWarn, log } from '@/lib/logger';
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-// Validate environment variables
-if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
-  logError('Missing Supabase environment variables. Please check your .env file.');
-  logError('Required: VITE_SUPABASE_URL, VITE_SUPABASE_PUBLISHABLE_KEY');
+export const isSupabaseConfigured = Boolean(SUPABASE_URL) && Boolean(SUPABASE_PUBLISHABLE_KEY);
+
+// Validate environment variables (non-fatal; app can run in setup/guest mode)
+if (!isSupabaseConfigured) {
+  logWarn('Supabase is not configured. Running in setup/guest mode.');
+  logWarn('Required: VITE_SUPABASE_URL, VITE_SUPABASE_PUBLISHABLE_KEY');
 }
+
+// Use safe fallbacks so module imports never throw. All network calls are blocked when unconfigured.
+const SUPABASE_URL_FALLBACK = 'http://localhost:54321';
+const SUPABASE_KEY_FALLBACK = 'public-anon-key';
+
+const baseFetch: typeof fetch | undefined =
+  typeof globalThis !== 'undefined'
+    ? (globalThis.fetch as typeof fetch | undefined)
+    : undefined;
+
+const guardedFetch: typeof fetch = async (input, init) => {
+  if (!isSupabaseConfigured) {
+    return new Response(
+      JSON.stringify({
+        error: 'Supabase is not configured',
+        hint: 'Set VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY',
+      }),
+      {
+        status: 503,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+  }
+
+  if (!baseFetch) {
+    throw new Error('Global fetch is not available');
+  }
+
+  return baseFetch(input, init);
+};
 
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
 
 export const supabase = createClient<Database>(
-  (() => {
-    const url = SUPABASE_URL;
-    if (!url) {
-      throw new Error('Missing SUPABASE_URL environment variable. Please set it in your .env file.');
-    }
-    return url;
-  })(),
-  (() => {
-    const key = SUPABASE_PUBLISHABLE_KEY;
-    if (!key) {
-      throw new Error('Missing SUPABASE_PUBLISHABLE_KEY environment variable. Please set it in your .env file.');
-    }
-    return key;
-  })(),
+  isSupabaseConfigured ? SUPABASE_URL! : SUPABASE_URL_FALLBACK,
+  isSupabaseConfigured ? SUPABASE_PUBLISHABLE_KEY! : SUPABASE_KEY_FALLBACK,
   {
+    global: {
+      fetch: guardedFetch,
+    },
     auth: {
       storage: typeof window !== 'undefined' ? localStorage : undefined,
       persistSession: true,
@@ -50,8 +73,7 @@ const shouldTestConnection =
   import.meta.env.DEV &&
   import.meta.env.MODE !== 'test' &&
   typeof window !== 'undefined' &&
-  Boolean(SUPABASE_URL) &&
-  Boolean(SUPABASE_PUBLISHABLE_KEY);
+  isSupabaseConfigured;
 
 if (shouldTestConnection) {
   void (async () => {

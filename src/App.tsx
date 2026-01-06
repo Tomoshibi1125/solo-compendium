@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { useGlobalShortcuts } from "@/hooks/useGlobalShortcuts";
@@ -16,22 +16,22 @@ import { PageViewTracker } from "@/components/analytics/PageViewTracker";
 import { setCommandPaletteOpener } from "@/lib/globalShortcuts";
 import { setSentryUser } from "@/lib/sentry";
 import { trackEvent, identifyUser, resetUser, AnalyticsEvents } from "@/lib/analytics";
-import { validateEnvOrThrow } from "@/lib/envValidation";
-import { supabase } from "@/integrations/supabase/client";
-import { error as logError } from "@/lib/logger";
+import { validateEnv } from "@/lib/envValidation";
+import { supabase, isSupabaseConfigured } from "@/integrations/supabase/client";
+import { error as logError, warn as logWarn } from "@/lib/logger";
 import Index from "./pages/Index";
 
-// Validate environment variables on app startup
-try {
-  validateEnvOrThrow();
-} catch (error) {
-  // In development, show error but don't crash
-  if (import.meta.env.MODE === 'development') {
-    logError('Environment validation failed:', error);
-  } else {
-    // In production, throw to prevent app from running with invalid config
-    throw error;
-  }
+// Validate environment variables on app startup (non-blocking; setup mode is supported)
+const envResult = validateEnv();
+if (!envResult.valid) {
+  logWarn(
+    `Missing required environment variables:\n${envResult.missing
+      .map((v) => `  - ${v}`)
+      .join("\n")}\n\nThe app will run in setup/guest mode until configured.`
+  );
+}
+if (envResult.warnings.length > 0) {
+  envResult.warnings.forEach((w) => logWarn(w));
 }
 
 // Lazy load routes for code splitting
@@ -67,6 +67,7 @@ const CampaignJoin = lazy(() => import("./pages/CampaignJoin"));
 const CharacterCompare = lazy(() => import("./pages/CharacterCompare"));
 const Auth = lazy(() => import("./pages/Auth"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const Setup = lazy(() => import("./pages/Setup"));
 
 // Configure React Query with better caching and error handling
 const queryClient = new QueryClient({
@@ -109,8 +110,24 @@ const AppContent = () => {
   
   return (
     <>
-      <CommandPalette open={commandPaletteOpen} onOpenChange={setCommandPaletteOpen} />
+      {isSupabaseConfigured && (
+        <CommandPalette open={commandPaletteOpen} onOpenChange={setCommandPaletteOpen} />
+      )}
       <Routes>
+      {!isSupabaseConfigured ? (
+        <>
+          <Route
+            path="/setup"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <Setup />
+              </Suspense>
+            }
+          />
+          <Route path="*" element={<Navigate to="/setup" replace />} />
+        </>
+      ) : (
+        <>
       <Route 
         path="/" 
         element={
@@ -398,6 +415,14 @@ const AppContent = () => {
         }
       />
       <Route
+        path="/setup"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <Setup />
+          </Suspense>
+        }
+      />
+      <Route
         path="*"
         element={
           <Suspense fallback={<PageLoader />}>
@@ -405,6 +430,8 @@ const AppContent = () => {
           </Suspense>
         }
       />
+        </>
+      )}
     </Routes>
     </>
   );
@@ -413,6 +440,8 @@ const AppContent = () => {
 const App = () => {
   // Set Sentry user context and track auth events when auth state changes
   useEffect(() => {
+    if (!isSupabaseConfigured) return;
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (session?.user) {
         setSentryUser({

@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useIsDM } from '@/hooks/useCampaigns';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useState, useEffect } from 'react';
 
 interface ProtectedRouteProps {
@@ -14,6 +14,11 @@ export function ProtectedRoute({ children, requireDM = false }: ProtectedRoutePr
   const { data: isDM = false, isLoading: dmLoading } = useIsDM();
 
   useEffect(() => {
+    if (!isSupabaseConfigured) {
+      // Setup/guest mode: don't run auth checks.
+      return;
+    }
+
     const checkAuth = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       setIsAuthenticated(!!user);
@@ -29,6 +34,12 @@ export function ProtectedRoute({ children, requireDM = false }: ProtectedRoutePr
       subscription.unsubscribe();
     };
   }, []);
+
+  // If Supabase isn't configured, the app is running in setup mode.
+  // Redirect to setup instead of looping auth checks.
+  if (!isSupabaseConfigured) {
+    return <Navigate to="/setup" replace />;
+  }
 
   // Show loading state
   if (isAuthenticated === null || (requireDM && dmLoading)) {
