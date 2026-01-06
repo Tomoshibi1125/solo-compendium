@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 import { calculateRuneMaxUses } from '@/lib/runeAutomation';
 import { getProficiencyBonus } from '@/types/solo-leveling';
+import { isLocalCharacterId } from '@/lib/guestStore';
 
 type Rune = Database['public']['Tables']['compendium_runes']['Row'];
 type RuneInscription = Database['public']['Tables']['character_rune_inscriptions']['Row'];
@@ -32,6 +33,7 @@ export function useCharacterRuneKnowledge(characterId: string | undefined) {
     queryKey: ['character-rune-knowledge', characterId],
     queryFn: async () => {
       if (!characterId) return [];
+      if (isLocalCharacterId(characterId)) return [];
 
       const { data, error } = await supabase
         .from('character_rune_knowledge')
@@ -57,6 +59,7 @@ export function useCharacterRuneInscriptions(characterId: string | undefined) {
     queryKey: ['character-rune-inscriptions', characterId],
     queryFn: async () => {
       if (!characterId) return [];
+      if (isLocalCharacterId(characterId)) return [];
 
       const { data, error } = await supabase
         .from('character_rune_inscriptions')
@@ -85,6 +88,7 @@ export function useEquipmentRunes(equipmentId: string | undefined) {
     queryKey: ['equipment-runes', equipmentId],
     queryFn: async () => {
       if (!equipmentId) return [];
+      if (equipmentId.startsWith('local_')) return [];
 
       const { data, error } = await supabase
         .from('character_rune_inscriptions')
@@ -123,6 +127,10 @@ export function useInscribeRune() {
       inscribedBy?: string;
       characterLevel: number;
     }) => {
+      if (isLocalCharacterId(characterId)) {
+        throw new Error('Sign in required to inscribe runes');
+      }
+
       // Get rune to check inscription difficulty
       const { data: rune, error: runeError } = await supabase
         .from('compendium_runes')
@@ -185,6 +193,10 @@ export function useRemoveRuneInscription() {
 
   return useMutation({
     mutationFn: async ({ inscriptionId }: { inscriptionId: string }) => {
+      if (inscriptionId.startsWith('local_')) {
+        throw new Error('Sign in required to remove rune inscriptions');
+      }
+
       const { error } = await supabase
         .from('character_rune_inscriptions')
         .delete()
@@ -205,6 +217,10 @@ export function useToggleRuneActive() {
 
   return useMutation({
     mutationFn: async ({ inscriptionId, isActive }: { inscriptionId: string; isActive: boolean }) => {
+      if (inscriptionId.startsWith('local_')) {
+        throw new Error('Sign in required to toggle rune inscriptions');
+      }
+
       const { error } = await supabase
         .from('character_rune_inscriptions')
         .update({ is_active: isActive })
@@ -225,6 +241,10 @@ export function useUseRune() {
 
   return useMutation({
     mutationFn: async ({ inscriptionId }: { inscriptionId: string }) => {
+      if (inscriptionId.startsWith('local_')) {
+        throw new Error('Sign in required to use rune inscriptions');
+      }
+
       const { data: inscription, error } = await supabase
         .from('character_rune_inscriptions')
         .select('id, character_id, uses_current, uses_max, times_used')

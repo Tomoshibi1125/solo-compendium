@@ -17,9 +17,11 @@ import { cn } from '@/lib/utils';
 import { calculateHPMax } from '@/lib/characterCalculations';
 import { ABILITY_NAMES, type AbilityScore } from '@/types/solo-leveling';
 import type { Database } from '@/integrations/supabase/types';
+import { isLocalCharacterId, setLocalAbilities } from '@/lib/guestStore';
 
 type Job = Database['public']['Tables']['compendium_jobs']['Row'];
 type Background = Database['public']['Tables']['compendium_backgrounds']['Row'];
+type DbAbilityScore = Database['public']['Enums']['ability_score'];
 
 type Step = 'concept' | 'abilities' | 'job' | 'path' | 'background' | 'review';
 
@@ -255,14 +257,18 @@ const CharacterNew = () => {
       });
 
       // Update abilities
-      for (const [ability, score] of Object.entries(abilities)) {
-        await supabase
-          .from('character_abilities')
-          .upsert({
-            character_id: character.id,
-            ability: ability as AbilityScore,
-            score: score,
-          });
+      if (isLocalCharacterId(character.id)) {
+        setLocalAbilities(character.id, abilities as unknown as Record<DbAbilityScore, number>);
+      } else {
+        for (const [ability, score] of Object.entries(abilities)) {
+          await supabase
+            .from('character_abilities')
+            .upsert({
+              character_id: character.id,
+              ability: ability as AbilityScore,
+              score: score,
+            });
+        }
       }
 
       // Add level 1 features from compendium

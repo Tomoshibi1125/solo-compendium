@@ -50,13 +50,13 @@ import { ExportDialog } from '@/components/character/ExportDialog';
 import { PortraitUpload } from '@/components/character/PortraitUpload';
 import { MonarchUnlocksPanel } from '@/components/character/MonarchUnlocksPanel';
 import { ShadowSoldiersPanel } from '@/components/character/ShadowSoldiersPanel';
-import { JournalPanel } from '@/components/character/JournalPanel';
 import { CharacterEditDialog } from '@/components/character/CharacterEditDialog';
 import { useCharacterUndoRedo } from '@/hooks/useCharacterUndoRedo';
 import { ABILITY_NAMES, type AbilityScore } from '@/types/solo-leveling';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { useEquipment } from '@/hooks/useEquipment';
+import { isLocalCharacterId } from '@/lib/guestStore';
 import {
   Dialog,
   DialogContent,
@@ -80,6 +80,7 @@ const CharacterSheet = () => {
   const shareToken = searchParams.get('token') || undefined;
   const isReadOnly = !!shareToken;
   const { data: character, isLoading } = useCharacter(id || '', shareToken);
+  const isLocal = !!character && isLocalCharacterId(character.id);
   const updateCharacter = useUpdateCharacter();
   const generateShareToken = useGenerateShareToken();
   const { equipment } = useEquipment(id || '');
@@ -522,6 +523,21 @@ const CharacterSheet = () => {
           )}
         </div>
 
+        {isLocal && (
+          <SystemWindow title="GUEST MODE" variant="alert" className="mb-6">
+            <div className="space-y-2">
+              <p className="text-sm text-muted-foreground">
+                This Hunter is stored locally on this device. Sign in to sync across devices and unlock online features like rune inscription, portraits, and Shadow Army persistence.
+              </p>
+              <div className="flex gap-2">
+                <Link to="/auth">
+                  <Button variant="outline" size="sm">Sign In to Sync</Button>
+                </Link>
+              </div>
+            </div>
+          </SystemWindow>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Column - Main Stats */}
           <div className="lg:col-span-2 space-y-6">
@@ -927,24 +943,54 @@ const CharacterSheet = () => {
             <PowersList characterId={character.id} />
 
             {/* Runes */}
-            <RunesList characterId={character.id} />
+            {isLocal ? (
+              <SystemWindow title="RUNES" variant="alert">
+                <p className="text-sm text-muted-foreground">
+                  Sign in to inscribe and manage runes. Your guest Hunter can still use equipment, powers, and core automation.
+                </p>
+              </SystemWindow>
+            ) : (
+              <RunesList characterId={character.id} />
+            )}
 
             {/* Monarch Unlocks */}
-            <MonarchUnlocksPanel characterId={character.id} />
+            {isLocal ? (
+              <SystemWindow title="MONARCH UNLOCKS" variant="alert">
+                <p className="text-sm text-muted-foreground">
+                  Sign in to access Monarch progression and unlock tracking.
+                </p>
+              </SystemWindow>
+            ) : (
+              <MonarchUnlocksPanel characterId={character.id} />
+            )}
 
             {/* Shadow Soldiers */}
-            <ShadowSoldiersPanel characterId={character.id} characterLevel={character.level} />
+            {isLocal ? (
+              <SystemWindow title="SHADOW SOLDIERS" variant="alert">
+                <p className="text-sm text-muted-foreground">
+                  Sign in to manage Shadow Army progression and persistence.
+                </p>
+              </SystemWindow>
+            ) : (
+              <ShadowSoldiersPanel characterId={character.id} characterLevel={character.level} />
+            )}
 
             {/* Portrait Upload */}
-            <SystemWindow title="PORTRAIT">
-              <PortraitUpload
-                characterId={character.id}
-                currentPortraitUrl={character.portrait_url}
-                onUploadComplete={() => {
-                  // Refresh character data
-                  window.location.reload();
-                }}
-              />
+            <SystemWindow title="PORTRAIT" variant={isLocal ? 'alert' : 'default'}>
+              {isLocal ? (
+                <p className="text-sm text-muted-foreground">
+                  Sign in to upload and sync portraits.
+                </p>
+              ) : (
+                <PortraitUpload
+                  characterId={character.id}
+                  currentPortraitUrl={character.portrait_url}
+                  onUploadComplete={() => {
+                    // Refresh character data
+                    window.location.reload();
+                  }}
+                />
+              )}
             </SystemWindow>
 
             {/* Notes */}

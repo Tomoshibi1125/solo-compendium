@@ -3,6 +3,13 @@ import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 import { useToast } from '@/hooks/use-toast';
 import { getErrorMessage, logErrorWithContext } from '@/lib/errorHandling';
+import {
+  addLocalEquipment,
+  isLocalCharacterId,
+  listLocalEquipment,
+  removeLocalEquipment,
+  updateLocalEquipment,
+} from '@/lib/guestStore';
 
 type Equipment = Database['public']['Tables']['character_equipment']['Row'];
 type EquipmentInsert = Database['public']['Tables']['character_equipment']['Insert'];
@@ -15,6 +22,10 @@ export const useEquipment = (characterId: string) => {
   const { data: equipment = [], isLoading } = useQuery({
     queryKey: ['equipment', characterId],
     queryFn: async () => {
+      if (isLocalCharacterId(characterId)) {
+        return listLocalEquipment(characterId) as Equipment[];
+      }
+
       const { data, error } = await supabase
         .from('character_equipment')
         .select('*')
@@ -34,6 +45,11 @@ export const useEquipment = (characterId: string) => {
 
   const addEquipment = useMutation({
     mutationFn: async (item: EquipmentInsert) => {
+      if (isLocalCharacterId(characterId)) {
+        addLocalEquipment(characterId, item as unknown as Omit<EquipmentInsert, 'character_id'>);
+        return null;
+      }
+
       const { data, error } = await supabase
         .from('character_equipment')
         .insert({ ...item, character_id: characterId });
@@ -58,6 +74,11 @@ export const useEquipment = (characterId: string) => {
 
   const updateEquipment = useMutation({
     mutationFn: async ({ id, updates }: { id: string; updates: EquipmentUpdate }) => {
+      if (isLocalCharacterId(characterId)) {
+        updateLocalEquipment(id, updates);
+        return null;
+      }
+
       const { data, error } = await supabase
         .from('character_equipment')
         .update(updates)
@@ -84,6 +105,11 @@ export const useEquipment = (characterId: string) => {
 
   const removeEquipment = useMutation({
     mutationFn: async (id: string) => {
+      if (isLocalCharacterId(characterId)) {
+        removeLocalEquipment(id);
+        return;
+      }
+
       const { error } = await supabase
         .from('character_equipment')
         .delete()
@@ -109,6 +135,13 @@ export const useEquipment = (characterId: string) => {
 
   const reorderEquipment = useMutation({
     mutationFn: async (newOrder: { id: string; display_order: number }[]) => {
+      if (isLocalCharacterId(characterId)) {
+        for (const { id, display_order } of newOrder) {
+          updateLocalEquipment(id, { display_order });
+        }
+        return;
+      }
+
       // Batch update all items with their new order
       const updates = newOrder.map(({ id, display_order }) =>
         supabase

@@ -2,6 +2,13 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 import { getSpellSlotsPerLevel, getCasterType } from '@/lib/characterCalculations';
+import {
+  getLocalCharacterState,
+  isLocalCharacterId,
+  listLocalSpellSlots,
+  updateLocalSpellSlotRow,
+  upsertLocalSpellSlot,
+} from '@/lib/guestStore';
 
 type SpellSlot = Database['public']['Tables']['character_spell_slots']['Row'];
 type SpellSlotInsert = Database['public']['Tables']['character_spell_slots']['Insert'];
@@ -22,6 +29,49 @@ export const useSpellSlots = (characterId: string, job: string | null, character
   return useQuery({
     queryKey: ['spell-slots', characterId],
     queryFn: async (): Promise<SpellSlotData[]> => {
+      if (isLocalCharacterId(characterId)) {
+        // Local: ensure slots exist based on derived caster progression.
+        const casterType = getCasterType(job);
+        const expectedSlots = getSpellSlotsPerLevel(casterType, characterLevel);
+
+        const existing = listLocalSpellSlots(characterId);
+        const byLevel = new Map(existing.map((s) => [s.spell_level, s]));
+
+        for (let spellLevel = 1; spellLevel <= 9; spellLevel++) {
+          const maxSlots = expectedSlots[spellLevel];
+          if (maxSlots <= 0) continue;
+          if (byLevel.has(spellLevel)) continue;
+
+          const row = upsertLocalSpellSlot(characterId, {
+            spell_level: spellLevel,
+            slots_max: maxSlots,
+            slots_current: maxSlots,
+            slots_recovered_on_short_rest: 0,
+            slots_recovered_on_long_rest: 1,
+          });
+          byLevel.set(spellLevel, row);
+        }
+
+        const slots: SpellSlotData[] = [];
+        for (let spellLevel = 1; spellLevel <= 9; spellLevel++) {
+          const maxSlots = expectedSlots[spellLevel];
+          if (maxSlots <= 0) continue;
+
+          const row = byLevel.get(spellLevel);
+          if (!row) continue;
+
+          slots.push({
+            level: spellLevel,
+            max: row.slots_max ?? maxSlots,
+            current: row.slots_current ?? maxSlots,
+            recoveredOnShortRest: row.slots_recovered_on_short_rest === 1,
+            recoveredOnLongRest: row.slots_recovered_on_long_rest === 1,
+          });
+        }
+
+        return slots;
+      }
+
       const { data, error } = await supabase
         .from('character_spell_slots')
         .select('*')
@@ -76,6 +126,30 @@ export const useUpdateSpellSlot = () => {
       spellLevel: number;
       current: number;
     }) => {
+      if (isLocalCharacterId(characterId)) {
+        const entry = getLocalCharacterState(characterId);
+        if (!entry) throw new Error('Hunter not found');
+
+        const casterType = getCasterType(entry.character.job);
+        const expectedSlots = getSpellSlotsPerLevel(casterType, entry.character.level);
+        const maxSlots = expectedSlots[spellLevel];
+        if (maxSlots <= 0) return;
+
+        const existing = listLocalSpellSlots(characterId).find((s) => s.spell_level === spellLevel);
+        if (existing) {
+          updateLocalSpellSlotRow(existing.id, { slots_current: Math.max(0, current) });
+        } else {
+          upsertLocalSpellSlot(characterId, {
+            spell_level: spellLevel,
+            slots_max: maxSlots,
+            slots_current: Math.max(0, current),
+            slots_recovered_on_short_rest: 0,
+            slots_recovered_on_long_rest: 1,
+          });
+        }
+        return;
+      }
+
       // Check if slot exists
       const { data: existing } = await supabase
         .from('character_spell_slots')
@@ -144,6 +218,30 @@ export const useInitializeSpellSlots = () => {
       job: string | null;
       level: number;
     }) => {
+      if (isLocalCharacterId(characterId)) {
+        const casterType = getCasterType(job);
+        const expectedSlots = getSpellSlotsPerLevel(casterType, level);
+
+        const existing = listLocalSpellSlots(characterId);
+        for (let spellLevel = 1; spellLevel <= 9; spellLevel++) {
+          const maxSlots = expectedSlots[spellLevel];
+          if (maxSlots <= 0) continue;
+
+          const existingSlot = existing.find((s) => s.spell_level === spellLevel);
+          const newCurrent = existingSlot ? Math.min(existingSlot.slots_current, maxSlots) : maxSlots;
+
+          upsertLocalSpellSlot(characterId, {
+            spell_level: spellLevel,
+            slots_max: maxSlots,
+            slots_current: newCurrent,
+            slots_recovered_on_short_rest: existingSlot?.slots_recovered_on_short_rest ?? 0,
+            slots_recovered_on_long_rest: existingSlot?.slots_recovered_on_long_rest ?? 1,
+          });
+        }
+
+        return;
+      }
+
       const casterType = getCasterType(job);
       const expectedSlots = getSpellSlotsPerLevel(casterType, level);
 
@@ -221,6 +319,20 @@ export const useRecoverSpellSlots = () => {
       characterId: string;
       restType: 'short' | 'long';
     }) => {
+      if (isLocalCharacterId(characterId)) {
+        const slots = listLocalSpellSlots(characterId);
+        for (const slot of slots) {
+          if (restType === 'long') {
+            updateLocalSpellSlotRow(slot.id, { slots_current: slot.slots_max });
+          } else {
+            if (slot.slots_recovered_on_short_rest === 1) {
+              updateLocalSpellSlotRow(slot.id, { slots_current: slot.slots_max });
+            }
+          }
+        }
+        return;
+      }
+
       const { data: slots } = await supabase
         .from('character_spell_slots')
         .select('*')

@@ -5,6 +5,12 @@
 
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
+import {
+  addLocalEquipment,
+  addLocalFeature,
+  addLocalPower,
+  isLocalCharacterId,
+} from '@/lib/guestStore';
 
 type Job = Database['public']['Tables']['compendium_jobs']['Row'];
 type Background = Database['public']['Tables']['compendium_backgrounds']['Row'];
@@ -37,18 +43,32 @@ export async function addLevel1Features(
         }
       }
 
-      await supabase.from('character_features').insert({
-        character_id: characterId,
-        name: feature.name,
-        source: 'Job: Level 1',
-        level_acquired: 1,
-        description: feature.description,
-        action_type: feature.action_type || null,
-        uses_max: usesMax,
-        uses_current: usesMax,
-        recharge: feature.recharge || null,
-        is_active: true,
-      });
+      if (isLocalCharacterId(characterId)) {
+        addLocalFeature(characterId, {
+          name: feature.name,
+          source: 'Job: Level 1',
+          level_acquired: 1,
+          description: feature.description,
+          action_type: feature.action_type || null,
+          uses_max: usesMax,
+          uses_current: usesMax,
+          recharge: feature.recharge || null,
+          is_active: true,
+        });
+      } else {
+        await supabase.from('character_features').insert({
+          character_id: characterId,
+          name: feature.name,
+          source: 'Job: Level 1',
+          level_acquired: 1,
+          description: feature.description,
+          action_type: feature.action_type || null,
+          uses_max: usesMax,
+          uses_current: usesMax,
+          recharge: feature.recharge || null,
+          is_active: true,
+        });
+      }
     }
   }
 
@@ -72,18 +92,32 @@ export async function addLevel1Features(
           }
         }
 
-        await supabase.from('character_features').insert({
-          character_id: characterId,
-          name: feature.name,
-          source: 'Path: Level 1',
-          level_acquired: 1,
-          description: feature.description,
-          action_type: feature.action_type || null,
-          uses_max: usesMax,
-          uses_current: usesMax,
-          recharge: feature.recharge || null,
-          is_active: true,
-        });
+        if (isLocalCharacterId(characterId)) {
+          addLocalFeature(characterId, {
+            name: feature.name,
+            source: 'Path: Level 1',
+            level_acquired: 1,
+            description: feature.description,
+            action_type: feature.action_type || null,
+            uses_max: usesMax,
+            uses_current: usesMax,
+            recharge: feature.recharge || null,
+            is_active: true,
+          });
+        } else {
+          await supabase.from('character_features').insert({
+            character_id: characterId,
+            name: feature.name,
+            source: 'Path: Level 1',
+            level_acquired: 1,
+            description: feature.description,
+            action_type: feature.action_type || null,
+            uses_max: usesMax,
+            uses_current: usesMax,
+            recharge: feature.recharge || null,
+            is_active: true,
+          });
+        }
       }
     }
   }
@@ -98,14 +132,24 @@ export async function addBackgroundFeatures(
 ): Promise<void> {
   // Add background feature if any
   if (background.feature_name) {
-    await supabase.from('character_features').insert({
-      character_id: characterId,
-      name: background.feature_name,
-      source: `Background: ${background.name}`,
-      level_acquired: 1,
-      description: background.feature_description || `Background feature: ${background.feature_name}`,
-      is_active: true,
-    });
+    if (isLocalCharacterId(characterId)) {
+      addLocalFeature(characterId, {
+        name: background.feature_name,
+        source: `Background: ${background.name}`,
+        level_acquired: 1,
+        description: background.feature_description || `Background feature: ${background.feature_name}`,
+        is_active: true,
+      });
+    } else {
+      await supabase.from('character_features').insert({
+        character_id: characterId,
+        name: background.feature_name,
+        source: `Background: ${background.name}`,
+        level_acquired: 1,
+        description: background.feature_description || `Background feature: ${background.feature_name}`,
+        is_active: true,
+      });
+    }
   }
 }
 
@@ -133,24 +177,45 @@ export async function addStartingEquipment(
         .maybeSingle();
 
       if (equipment) {
-        await supabase.from('character_equipment').insert({
-          character_id: characterId,
-          name: equipment.name,
-          item_type: equipment.equipment_type || 'gear',
-          description: equipment.description || null,
-          properties: equipment.properties || [],
-          weight: equipment.weight || null,
-          quantity: 1,
-          is_equipped: false,
-        });
+        if (isLocalCharacterId(characterId)) {
+          addLocalEquipment(characterId, {
+            name: equipment.name,
+            item_type: equipment.equipment_type || 'gear',
+            description: equipment.description || null,
+            properties: equipment.properties || [],
+            weight: equipment.weight || null,
+            quantity: 1,
+            is_equipped: false,
+          });
+        } else {
+          await supabase.from('character_equipment').insert({
+            character_id: characterId,
+            name: equipment.name,
+            item_type: equipment.equipment_type || 'gear',
+            description: equipment.description || null,
+            properties: equipment.properties || [],
+            weight: equipment.weight || null,
+            quantity: 1,
+            is_equipped: false,
+          });
+        }
       } else {
-        await supabase.from('character_equipment').insert({
-          character_id: characterId,
-          name: itemName,
-          item_type: 'gear',
-          quantity: 1,
-          is_equipped: false,
-        });
+        if (isLocalCharacterId(characterId)) {
+          addLocalEquipment(characterId, {
+            name: itemName,
+            item_type: 'gear',
+            quantity: 1,
+            is_equipped: false,
+          });
+        } else {
+          await supabase.from('character_equipment').insert({
+            character_id: characterId,
+            name: itemName,
+            item_type: 'gear',
+            quantity: 1,
+            is_equipped: false,
+          });
+        }
       }
     }
   }
@@ -172,20 +237,36 @@ export async function addStartingPowers(
 
   if (powers) {
     for (const power of powers) {
-      await supabase.from('character_powers').insert({
-        character_id: characterId,
-        name: power.name,
-        power_level: power.power_level,
-        source: `Job: ${job.name}`,
-        casting_time: power.casting_time || null,
-        range: power.range || null,
-        duration: power.duration || null,
-        concentration: power.concentration || false,
-        description: power.description || null,
-        higher_levels: power.higher_levels || null,
-        is_prepared: power.power_level === 0, // Auto-prepare cantrips
-        is_known: true,
-      });
+      if (isLocalCharacterId(characterId)) {
+        addLocalPower(characterId, {
+          name: power.name,
+          power_level: power.power_level,
+          source: `Job: ${job.name}`,
+          casting_time: power.casting_time || null,
+          range: power.range || null,
+          duration: power.duration || null,
+          concentration: power.concentration || false,
+          description: power.description || null,
+          higher_levels: power.higher_levels || null,
+          is_prepared: power.power_level === 0, // Auto-prepare cantrips
+          is_known: true,
+        });
+      } else {
+        await supabase.from('character_powers').insert({
+          character_id: characterId,
+          name: power.name,
+          power_level: power.power_level,
+          source: `Job: ${job.name}`,
+          casting_time: power.casting_time || null,
+          range: power.range || null,
+          duration: power.duration || null,
+          concentration: power.concentration || false,
+          description: power.description || null,
+          higher_levels: power.higher_levels || null,
+          is_prepared: power.power_level === 0, // Auto-prepare cantrips
+          is_known: true,
+        });
+      }
     }
   }
 }

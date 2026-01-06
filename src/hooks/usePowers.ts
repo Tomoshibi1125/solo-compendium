@@ -3,6 +3,13 @@ import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 import { useToast } from '@/hooks/use-toast';
 import { getErrorMessage, logErrorWithContext } from '@/lib/errorHandling';
+import {
+  addLocalPower,
+  isLocalCharacterId,
+  listLocalPowers,
+  removeLocalPower,
+  updateLocalPower,
+} from '@/lib/guestStore';
 
 type Power = Database['public']['Tables']['character_powers']['Row'];
 type PowerInsert = Database['public']['Tables']['character_powers']['Insert'];
@@ -15,6 +22,10 @@ export const usePowers = (characterId: string) => {
   const { data: powers = [], isLoading } = useQuery({
     queryKey: ['powers', characterId],
     queryFn: async () => {
+      if (isLocalCharacterId(characterId)) {
+        return listLocalPowers(characterId) as Power[];
+      }
+
       const { data, error } = await supabase
         .from('character_powers')
         .select('*')
@@ -34,6 +45,11 @@ export const usePowers = (characterId: string) => {
 
   const addPower = useMutation({
     mutationFn: async (power: PowerInsert) => {
+      if (isLocalCharacterId(characterId)) {
+        addLocalPower(characterId, power as unknown as Omit<PowerInsert, 'character_id'>);
+        return null;
+      }
+
       const { data, error } = await supabase
         .from('character_powers')
         .insert({ ...power, character_id: characterId });
@@ -58,6 +74,11 @@ export const usePowers = (characterId: string) => {
 
   const updatePower = useMutation({
     mutationFn: async ({ id, updates }: { id: string; updates: PowerUpdate }) => {
+      if (isLocalCharacterId(characterId)) {
+        updateLocalPower(id, updates);
+        return null;
+      }
+
       const { data, error } = await supabase
         .from('character_powers')
         .update(updates)
@@ -83,6 +104,11 @@ export const usePowers = (characterId: string) => {
 
   const removePower = useMutation({
     mutationFn: async (id: string) => {
+      if (isLocalCharacterId(characterId)) {
+        removeLocalPower(id);
+        return;
+      }
+
       const { error } = await supabase
         .from('character_powers')
         .delete()
@@ -107,6 +133,13 @@ export const usePowers = (characterId: string) => {
 
   const reorderPowers = useMutation({
     mutationFn: async (newOrder: { id: string; display_order: number }[]) => {
+      if (isLocalCharacterId(characterId)) {
+        for (const { id, display_order } of newOrder) {
+          updateLocalPower(id, { display_order });
+        }
+        return;
+      }
+
       const updates = newOrder.map(({ id, display_order }) =>
         supabase
           .from('character_powers')

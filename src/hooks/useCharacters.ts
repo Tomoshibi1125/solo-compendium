@@ -3,6 +3,14 @@ import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 import { useToast } from '@/hooks/use-toast';
 import { getErrorMessage, logErrorWithContext, isNotFoundError } from '@/lib/errorHandling';
+import {
+  createLocalCharacter,
+  deleteLocalCharacter,
+  getLocalCharacterWithAbilities,
+  isLocalCharacterId,
+  listLocalCharacters,
+  updateLocalCharacter,
+} from '@/lib/guestStore';
 // Note: These functions are defined in solo-leveling.ts but we'll use the ones from characterCalculations
 
 type Character = Database['public']['Tables']['characters']['Row'];
@@ -20,7 +28,7 @@ export const useCharacters = () => {
     queryKey: ['characters'],
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return []; // Return empty array if not authenticated
+      if (!user) return listLocalCharacters(); // Guest-lite: local character(s)
 
       const { data: characters, error } = await supabase
         .from('characters')
@@ -43,6 +51,11 @@ export const useCharacter = (characterId: string, shareToken?: string) => {
   return useQuery({
     queryKey: ['character', characterId, shareToken],
     queryFn: async (): Promise<CharacterWithAbilities | null> => {
+      // Guest-lite local character
+      if (isLocalCharacterId(characterId)) {
+        return getLocalCharacterWithAbilities(characterId) as CharacterWithAbilities | null;
+      }
+
       // If share token provided, use it for read-only access
       if (shareToken) {
         const { data: characters, error: charError } = await supabase
@@ -144,7 +157,9 @@ export const useCreateCharacter = () => {
   return useMutation({
     mutationFn: async (data: Omit<CharacterInsert, 'user_id'>) => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      if (!user) {
+        return createLocalCharacter(data);
+      }
 
       const { data: character, error } = await supabase
         .from('characters')
@@ -201,6 +216,12 @@ export const useUpdateCharacter = () => {
 
   return useMutation({
     mutationFn: async ({ id, data }: { id: string; data: CharacterUpdate }) => {
+      if (isLocalCharacterId(id)) {
+        const updated = updateLocalCharacter(id, data);
+        if (!updated) throw new Error('Hunter not found');
+        return updated;
+      }
+
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
@@ -240,6 +261,11 @@ export const useDeleteCharacter = () => {
 
   return useMutation({
     mutationFn: async (id: string) => {
+      if (isLocalCharacterId(id)) {
+        deleteLocalCharacter(id);
+        return;
+      }
+
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
@@ -275,6 +301,10 @@ export const useGenerateShareToken = () => {
 
   return useMutation({
     mutationFn: async (characterId: string): Promise<string> => {
+      if (isLocalCharacterId(characterId)) {
+        throw new Error('Sharing requires a signed-in account');
+      }
+
       const { data, error } = await supabase.rpc('generate_character_share_token_for_character', {
         p_character_id: characterId,
       });

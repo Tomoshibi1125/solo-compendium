@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 import { useToast } from '@/hooks/use-toast';
 import { getErrorMessage, logErrorWithContext } from '@/lib/errorHandling';
+import { isLocalCharacterId, listLocalFeatures, updateLocalFeature } from '@/lib/guestStore';
 
 type Feature = Database['public']['Tables']['character_features']['Row'];
 type FeatureInsert = Database['public']['Tables']['character_features']['Insert'];
@@ -15,6 +16,10 @@ export const useFeatures = (characterId: string) => {
   const { data: features = [], isLoading } = useQuery({
     queryKey: ['features', characterId],
     queryFn: async () => {
+      if (isLocalCharacterId(characterId)) {
+        return listLocalFeatures(characterId) as Feature[];
+      }
+
       const { data, error } = await supabase
         .from('character_features')
         .select('*')
@@ -33,6 +38,11 @@ export const useFeatures = (characterId: string) => {
 
   const updateFeature = useMutation({
     mutationFn: async ({ id, updates }: { id: string; updates: FeatureUpdate }) => {
+      if (isLocalCharacterId(characterId)) {
+        updateLocalFeature(id, updates);
+        return null;
+      }
+
       const { data, error } = await supabase
         .from('character_features')
         .update(updates)
@@ -58,6 +68,13 @@ export const useFeatures = (characterId: string) => {
 
   const reorderFeatures = useMutation({
     mutationFn: async (newOrder: { id: string; display_order: number }[]) => {
+      if (isLocalCharacterId(characterId)) {
+        for (const { id, display_order } of newOrder) {
+          updateLocalFeature(id, { display_order });
+        }
+        return;
+      }
+
       const updates = newOrder.map(({ id, display_order }) =>
         supabase
           .from('character_features')

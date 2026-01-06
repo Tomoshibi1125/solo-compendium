@@ -24,6 +24,7 @@ const Characters = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { data: characters = [], isLoading } = useCharacters();
+  const isGuestMode = useMemo(() => characters.some((c) => c.user_id === 'guest'), [characters]);
   const deleteCharacter = useDeleteCharacter();
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
@@ -83,6 +84,14 @@ const Characters = () => {
             </Link>
           </div>
         </div>
+
+        {isGuestMode && (
+          <SystemWindow title="GUEST MODE" variant="alert" className="mb-6">
+            <p className="text-sm text-muted-foreground">
+              You are playing in guest mode. Hunters are stored locally on this device only. Sign in to sync across devices and enable all online features.
+            </p>
+          </SystemWindow>
+        )}
 
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-12 gap-4">
