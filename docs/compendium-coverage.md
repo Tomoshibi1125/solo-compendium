@@ -75,6 +75,18 @@ Recommended minimum fields:
 
 ## How to Generate Counts + Gaps (Repo-Truth)
 
+### JSON source-of-truth (bundles)
+
+Homebrew bundles live in:
+- `data/compendium/base/`
+- `data/compendium/generated/`
+
+Validate:
+
+```bash
+npm run compendium:validate
+```
+
 ### In-app audit (recommended)
 
 If Supabase is configured and populated:

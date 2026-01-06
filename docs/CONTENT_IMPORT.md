@@ -2,6 +2,29 @@
 
 This guide explains how to import homebrew content into the Solo Compendium database.
 
+## Recommended Workflow (Repo-First)
+
+1. Store bundles in:
+   - `data/compendium/base/` (hand-authored)
+   - `data/compendium/generated/` (gap-fill; must include provenance)
+2. Validate:
+
+```bash
+npm run compendium:validate
+```
+
+3. Dry-run import (no DB writes):
+
+```bash
+npm run import:content
+```
+
+4. Apply import (requires Supabase env + service role key):
+
+```bash
+npm run compendium:import
+```
+
 ## Import Format
 
 Content is imported as JSON bundles with the following structure:

@@ -1,0 +1,50 @@
+{
+  "version": "1.0.0",
+  "jobs": [
+    {
+      "name": "Example Job",
+      "description": "An example job used to validate the compendium JSON pipeline.",
+      "primary_abilities": ["STR", "AGI"],
+      "saving_throw_proficiencies": ["STR", "AGI"],
+      "hit_die": 10,
+      "source_kind": "homebrew",
+      "source_name": "Solo Compendium Homebrew"
+    }
+  ],
+  "job_paths": [
+    {
+      "job_name": "Example Job",
+      "name": "Path of the Example",
+      "description": "An example path used to validate the compendium JSON pipeline.",
+      "path_level": 3,
+      "source_kind": "homebrew",
+      "source_name": "Solo Compendium Homebrew"
+    }
+  ],
+  "job_features": [
+    {
+      "job_name": "Example Job",
+      "name": "Example Feature",
+      "level": 1,
+      "description": "An example feature used to validate the compendium JSON pipeline.",
+      "action_type": "passive",
+      "is_path_feature": false
+    }
+  ],
+  "powers": [
+    {
+      "name": "Example Power",
+      "power_level": 0,
+      "casting_time": "1 action",
+      "range": "Self",
+      "duration": "Instantaneous",
+      "concentration": false,
+      "ritual": false,
+      "description": "An example power used to validate the compendium JSON pipeline.",
+      "source_kind": "homebrew",
+      "source_name": "Solo Compendium Homebrew"
+    }
+  ]
+}
+
+

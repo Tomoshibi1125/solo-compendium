@@ -20,6 +20,8 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "import:content": "node scripts/import-content.js",
+    "compendium:validate": "node scripts/compendium/validate.js",
+    "compendium:import": "node scripts/import-content.js --apply",
     "deploy:check": "node -e \"console.log('Running deployment checks...'); require('child_process').execSync('npm run lint && npm run typecheck && npm run test -- --run && npm run build', {stdio: 'inherit'})\""
   },
   "dependencies": {
