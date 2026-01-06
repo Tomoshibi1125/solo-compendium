@@ -3,6 +3,7 @@ import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
 import { GitBranch, Swords } from 'lucide-react';
+import { resolveRef } from '@/lib/compendiumResolver';
 
 interface PathData {
   id: string;
@@ -35,21 +36,17 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 
   useEffect(() => {
     const fetchRelatedData = async () => {
-      const [featuresRes, jobRes] = await Promise.all([
+      const [featuresRes, jobEntity] = await Promise.all([
         supabase
           .from('compendium_job_features')
           .select('*')
           .eq('path_id', data.id)
           .order('level'),
-        supabase
-          .from('compendium_jobs')
-          .select('id, name')
-          .eq('id', data.job_id)
-          .maybeSingle(),
+        resolveRef('jobs', data.job_id),
       ]);
 
       if (featuresRes.data) setFeatures(featuresRes.data);
-      if (jobRes.data) setJob(jobRes.data);
+      if (jobEntity) setJob({ id: jobEntity.id, name: jobEntity.name });
     };
 
     fetchRelatedData();

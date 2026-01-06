@@ -6,7 +6,7 @@
  */
 
 import * as Sentry from '@sentry/react';
-import { BrowserTracing } from '@sentry/react';
+import { logger } from './logger';
 
 const SENTRY_DSN = import.meta.env.VITE_SENTRY_DSN;
 const ENVIRONMENT = import.meta.env.MODE || 'development';
@@ -18,7 +18,9 @@ const VERSION = import.meta.env.VITE_APP_VERSION || '0.0.0';
 export function initSentry() {
   if (!SENTRY_DSN) {
     // Sentry is optional - only initialize if DSN is provided
-    console.log('[Sentry] DSN not provided, error tracking disabled');
+    if (import.meta.env.DEV) {
+      logger.debug('[Sentry] DSN not provided, error tracking disabled');
+    }
     return;
   }
 
@@ -30,13 +32,13 @@ export function initSentry() {
       
       // Performance Monitoring
       integrations: [
-        new BrowserTracing({
-          // Set tracing origins to track performance
-          tracePropagationTargets: [
-            'localhost',
-            /^https:\/\/.*\.supabase\.co/,
-          ],
-        }),
+        Sentry.browserTracingIntegration(),
+      ],
+
+      // Attach tracing headers only to allowed targets (avoid CORS issues)
+      tracePropagationTargets: [
+        'localhost',
+        /^https:\/\/.*\.supabase\.co/,
       ],
 
       // Performance Monitoring
@@ -98,9 +100,11 @@ export function initSentry() {
       },
     });
 
-    console.log('[Sentry] Initialized successfully');
+    if (import.meta.env.DEV) {
+      logger.log('[Sentry] Initialized successfully');
+    }
   } catch (error) {
-    console.error('[Sentry] Failed to initialize:', error);
+    logger.error('[Sentry] Failed to initialize:', error);
   }
 }
 

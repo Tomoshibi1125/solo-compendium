@@ -99,7 +99,7 @@ export function RunesList({ characterId }: { characterId: string }) {
                   >
                     <Icon className="w-3 h-3" />
                     {rk.rune.name}
-                    {rk.is_mastered && (
+                    {rk.mastery_level && rk.mastery_level >= 3 && (
                       <CheckCircle className="w-3 h-3 text-amber-400" />
                     )}
                   </Badge>

@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 import { useToast } from '@/hooks/use-toast';
 import { getErrorMessage, logErrorWithContext } from '@/lib/errorHandling';
 import type { CharacterWithAbilities } from './useCharacters';
@@ -28,7 +29,8 @@ export const useSavedTemplates = () => {
       if (!user) return [];
 
       const { data, error } = await supabase
-        .from('character_templates')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .from('character_templates' as any)
         .select('*')
         .eq('user_id', user.id)
         .order('updated_at', { ascending: false });
@@ -37,7 +39,8 @@ export const useSavedTemplates = () => {
         logErrorWithContext(error, 'useSavedTemplates');
         throw error;
       }
-      return (data || []) as SavedCharacterTemplate[];
+      // Use double assertion to bypass deep type instantiation issues
+      return ((data || []) as unknown) as SavedCharacterTemplate[];
     },
     retry: false,
   });
@@ -51,7 +54,8 @@ export const usePublicTemplates = () => {
     queryKey: ['character-templates', 'public'],
     queryFn: async (): Promise<SavedCharacterTemplate[]> => {
       const { data, error } = await supabase
-        .from('character_templates')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .from('character_templates' as any)
         .select('*')
         .eq('is_public', true)
         .order('created_at', { ascending: false })
@@ -61,7 +65,8 @@ export const usePublicTemplates = () => {
         logErrorWithContext(error, 'usePublicTemplates');
         throw error;
       }
-      return (data || []) as SavedCharacterTemplate[];
+      // Use double assertion to bypass deep type instantiation issues
+      return ((data || []) as unknown) as SavedCharacterTemplate[];
     },
   });
 };
@@ -76,7 +81,8 @@ export const useTemplateByShareCode = (shareCode: string | null) => {
       if (!shareCode) return null;
 
       const { data, error } = await supabase
-        .from('character_templates')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .from('character_templates' as any)
         .select('*')
         .eq('share_code', shareCode.toUpperCase())
         .maybeSingle();
@@ -86,7 +92,7 @@ export const useTemplateByShareCode = (shareCode: string | null) => {
         if (error.code === 'PGRST116') return null; // Not found
         throw error;
       }
-      return (data || null) as SavedCharacterTemplate | null;
+      return (data || null) as unknown as SavedCharacterTemplate | null;
     },
     enabled: !!shareCode,
   });
@@ -141,11 +147,12 @@ export const useSaveTemplate = () => {
       if (isPublic) {
         const { data: codeData } = await supabase.rpc('generate_share_code');
         shareCode = codeData as string;
-        templateData.share_code = shareCode;
+        (templateData as Record<string, unknown>).share_code = shareCode;
       }
 
       const { data, error } = await supabase
-        .from('character_templates')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .from('character_templates' as any)
         .insert(templateData)
         .select()
         .single();
@@ -155,7 +162,7 @@ export const useSaveTemplate = () => {
         throw error;
       }
 
-      return { ...data, share_code: shareCode } as SavedCharacterTemplate;
+      return { ...(data as unknown as SavedCharacterTemplate), share_code: shareCode };
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['character-templates'] });
@@ -193,7 +200,8 @@ export const useDeleteTemplate = () => {
       if (!user) throw new Error('Not authenticated');
 
       const { error } = await supabase
-        .from('character_templates')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .from('character_templates' as any)
         .delete()
         .eq('id', templateId)
         .eq('user_id', user.id);
@@ -265,7 +273,8 @@ export const useUpdateTemplate = () => {
       if (tags !== undefined) updates.tags = tags.length > 0 ? tags : null;
 
       const { data, error } = await supabase
-        .from('character_templates')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .from('character_templates' as any)
         .update(updates)
         .eq('id', id)
         .eq('user_id', user.id)
@@ -277,7 +286,8 @@ export const useUpdateTemplate = () => {
         throw error;
       }
 
-      return data as SavedCharacterTemplate;
+      // Use double assertion to bypass deep type instantiation issues
+      return (data as unknown) as SavedCharacterTemplate;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['character-templates'] });

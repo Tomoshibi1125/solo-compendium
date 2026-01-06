@@ -1,3 +1,4 @@
+import React from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -38,7 +39,7 @@ export function createLocalBackup(character: CharacterWithAbilities, backupName?
     const updated = [backup, ...existing].slice(0, MAX_LOCAL_BACKUPS);
     
     localStorage.setItem(key, JSON.stringify(updated));
-    logger.info(`Backup created for character ${character.id}`);
+    logger.log(`Backup created for character ${character.id}`);
     return backup.id;
   } catch (error) {
     logErrorWithContext(error, 'createLocalBackup');

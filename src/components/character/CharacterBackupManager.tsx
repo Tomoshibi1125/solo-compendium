@@ -25,6 +25,7 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 import { useCharacterBackups, type CharacterBackup, importBackupFromFile, restoreFromBackup } from '@/hooks/useCharacterBackup';
+import type { CharacterWithAbilities } from '@/hooks/useCharacters';
 import { useUpdateCharacter } from '@/hooks/useCharacters';
 import { useToast } from '@/hooks/use-toast';
 import { formatDistanceToNow } from 'date-fns';
@@ -32,7 +33,7 @@ import { cn } from '@/lib/utils';
 
 interface CharacterBackupManagerProps {
   characterId: string;
-  character: any; // CharacterWithAbilities
+  character: CharacterWithAbilities | null;
 }
 
 export function CharacterBackupManager({ characterId, character }: CharacterBackupManagerProps) {

@@ -32,11 +32,16 @@ const VTTJournal = () => {
   const [entries, setEntries] = useState<JournalEntry[]>([]);
   const [selectedEntry, setSelectedEntry] = useState<JournalEntry | null>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [newEntry, setNewEntry] = useState({
+  const [newEntry, setNewEntry] = useState<{
+    title: string;
+    content: string;
+    visibleToPlayers: boolean;
+    category: JournalEntry['category'];
+  }>({
     title: '',
     content: '',
     visibleToPlayers: false,
-    category: 'note' as const,
+    category: 'note',
   });
 
   const loadEntries = useCallback(() => {

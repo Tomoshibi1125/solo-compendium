@@ -47,8 +47,24 @@ const CharacterCompare = () => {
   const isLoading = charactersLoading || loading1 || loading2;
   const hasBoth = char1 && char2;
 
-  const stats1 = char1 ? calculateCharacterStats(char1) : null;
-  const stats2 = char2 ? calculateCharacterStats(char2) : null;
+  const stats1 = char1 ? calculateCharacterStats({
+    level: char1.level,
+    abilities: char1.abilities,
+    savingThrowProficiencies: char1.saving_throw_proficiencies || [],
+    skillProficiencies: char1.skill_proficiencies || [],
+    skillExpertise: char1.skill_expertise || [],
+    armorClass: char1.armor_class,
+    speed: char1.speed,
+  }) : null;
+  const stats2 = char2 ? calculateCharacterStats({
+    level: char2.level,
+    abilities: char2.abilities,
+    savingThrowProficiencies: char2.saving_throw_proficiencies || [],
+    skillProficiencies: char2.skill_proficiencies || [],
+    skillExpertise: char2.skill_expertise || [],
+    armorClass: char2.armor_class,
+    speed: char2.speed,
+  }) : null;
 
   const StatRow = ({ label, value1, value2, higherIsBetter = true }: {
     label: string;
@@ -198,7 +214,7 @@ const CharacterCompare = () => {
               <div className="space-y-2">
                 <StatRow label="Hit Points" value1={char1.hp_current} value2={char2.hp_current} />
                 <StatRow label="Max HP" value1={char1.hp_max} value2={char2.hp_max} />
-                <StatRow label="Armor Class" value1={stats1.ac} value2={stats2.ac} />
+                <StatRow label="Armor Class" value1={stats1.armorClass} value2={stats2.armorClass} />
                 <StatRow label="Speed" value1={char1.speed} value2={char2.speed} />
                 <StatRow label="Proficiency Bonus" value1={`+${stats1.proficiencyBonus}`} value2={`+${stats2.proficiencyBonus}`} />
               </div>

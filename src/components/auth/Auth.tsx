@@ -56,34 +56,24 @@ export function Auth() {
 
     // Listen for auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'SIGNED_UP' && session?.user) {
-        // New signup - show role selection after profile is created
-        setIsSignup(true);
-        // Wait a moment for the trigger to create the profile, then check
-        setTimeout(async () => {
-          const { data: { user: currentUser } } = await supabase.auth.getUser();
-          if (currentUser) {
-            // Check if profile exists (trigger should have created it)
-            const { data: profileData } = await supabase
-              .from('profiles')
-              .select('role')
-              .eq('id', currentUser.id)
-              .single();
-            
-            if (profileData) {
-              // Profile exists, but allow user to change from default 'player' to 'dm'
-              setShowRoleSelection(true);
-            } else {
-              // Profile doesn't exist yet, show role selection
-              setShowRoleSelection(true);
-            }
-          }
-        }, 500);
-      } else if (event === 'SIGNED_IN' && session?.user) {
+      if (event === 'SIGNED_IN' && session?.user) {
+        // Supabase JS v2 AuthChangeEvent does not include SIGNED_UP.
+        // Detect sign-up via the current auth view + a "first sign-in" heuristic.
+        const createdAt = session.user.created_at ? new Date(session.user.created_at).getTime() : null;
+        const lastSignInAt = session.user.last_sign_in_at ? new Date(session.user.last_sign_in_at).getTime() : null;
+        const isNewSignup =
+          authView === 'sign_up' ||
+          (createdAt && lastSignInAt && Math.abs(createdAt - lastSignInAt) < 60_000);
+
+        if (isNewSignup) {
+          setIsSignup(true);
+          setShowRoleSelection(true);
+          return;
+        }
+
         // Existing user signing in - check if they have a profile
         const { data: profileData } = await supabase
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          .from('profiles' as any)
+          .from('profiles')
           .select('role')
           .eq('id', session.user.id)
           .single();
@@ -106,7 +96,7 @@ export function Auth() {
     return () => {
       subscription.unsubscribe();
     };
-  }, [profile, profileLoading, navigate]);
+  }, [profile, profileLoading, navigate, authView]);
 
   // Handle role selection
   const handleRoleSelect = async () => {

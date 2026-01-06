@@ -255,6 +255,7 @@ export type Database = {
           charges_max: number | null
           created_at: string
           description: string | null
+          display_order: number
           id: string
           is_attuned: boolean
           is_equipped: boolean
@@ -274,6 +275,7 @@ export type Database = {
           charges_max?: number | null
           created_at?: string
           description?: string | null
+          display_order?: number
           id?: string
           is_attuned?: boolean
           is_equipped?: boolean
@@ -293,6 +295,7 @@ export type Database = {
           charges_max?: number | null
           created_at?: string
           description?: string | null
+          display_order?: number
           id?: string
           is_attuned?: boolean
           is_equipped?: boolean
@@ -322,6 +325,7 @@ export type Database = {
           character_id: string
           created_at: string
           description: string | null
+          display_order: number
           id: string
           is_active: boolean
           level_acquired: number
@@ -336,6 +340,7 @@ export type Database = {
           character_id: string
           created_at?: string
           description?: string | null
+          display_order?: number
           id?: string
           is_active?: boolean
           level_acquired?: number
@@ -350,6 +355,7 @@ export type Database = {
           character_id?: string
           created_at?: string
           description?: string | null
+          display_order?: number
           id?: string
           is_active?: boolean
           level_acquired?: number
@@ -462,6 +468,7 @@ export type Database = {
           concentration: boolean
           created_at: string
           description: string | null
+          display_order: number
           duration: string | null
           higher_levels: string | null
           id: string
@@ -478,6 +485,7 @@ export type Database = {
           concentration?: boolean
           created_at?: string
           description?: string | null
+          display_order?: number
           duration?: string | null
           higher_levels?: string | null
           id?: string
@@ -494,6 +502,7 @@ export type Database = {
           concentration?: boolean
           created_at?: string
           description?: string | null
+          display_order?: number
           duration?: string | null
           higher_levels?: string | null
           id?: string
@@ -591,6 +600,7 @@ export type Database = {
           saving_throw_proficiencies:
             | Database["public"]["Enums"]["ability_score"][]
             | null
+          share_token: string | null
           skill_expertise: string[] | null
           skill_proficiencies: string[] | null
           sovereign_id: string | null
@@ -631,6 +641,7 @@ export type Database = {
           saving_throw_proficiencies?:
             | Database["public"]["Enums"]["ability_score"][]
             | null
+          share_token?: string | null
           skill_expertise?: string[] | null
           skill_proficiencies?: string[] | null
           sovereign_id?: string | null
@@ -671,6 +682,7 @@ export type Database = {
           saving_throw_proficiencies?:
             | Database["public"]["Enums"]["ability_score"][]
             | null
+          share_token?: string | null
           skill_expertise?: string[] | null
           skill_proficiencies?: string[] | null
           sovereign_id?: string | null
@@ -977,6 +989,8 @@ export type Database = {
           flavor_text: string | null
           hit_die: number
           id: string
+          image_generated_at: string | null
+          image_url: string | null
           name: string
           primary_abilities: Database["public"]["Enums"]["ability_score"][]
           saving_throw_proficiencies: Database["public"]["Enums"]["ability_score"][]
@@ -1373,6 +1387,8 @@ export type Database = {
           duration: string
           higher_levels: string | null
           id: string
+          image_generated_at: string | null
+          image_url: string | null
           job_names: string[] | null
           name: string
           power_level: number
@@ -1391,6 +1407,8 @@ export type Database = {
           duration: string
           higher_levels?: string | null
           id?: string
+          image_generated_at?: string | null
+          image_url?: string | null
           job_names?: string[] | null
           name: string
           power_level?: number
@@ -1409,6 +1427,8 @@ export type Database = {
           duration?: string
           higher_levels?: string | null
           id?: string
+          image_generated_at?: string | null
+          image_url?: string | null
           job_names?: string[] | null
           name?: string
           power_level?: number
@@ -1427,6 +1447,8 @@ export type Database = {
           created_at: string
           description: string
           id: string
+          image_generated_at: string | null
+          image_url: string | null
           item_type: string
           name: string
           properties: string[] | null
@@ -1444,6 +1466,8 @@ export type Database = {
           created_at?: string
           description: string
           id?: string
+          image_generated_at?: string | null
+          image_url?: string | null
           item_type: string
           name: string
           properties?: string[] | null
@@ -1461,6 +1485,8 @@ export type Database = {
           created_at?: string
           description?: string
           id?: string
+          image_generated_at?: string | null
+          image_url?: string | null
           item_type?: string
           name?: string
           properties?: string[] | null
@@ -1888,6 +1914,328 @@ export type Database = {
           },
         ]
       }
+      profiles: {
+        Row: {
+          created_at: string
+          id: string
+          role: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id: string
+          role?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      compendium_runes: {
+        Row: {
+          activation_action: string | null
+          activation_cost: string | null
+          activation_cost_amount: number | null
+          can_inscribe_on: string[] | null
+          caster_penalty: string | null
+          caster_requirement_multiplier: string | null
+          concentration: boolean | null
+          created_at: string
+          description: string
+          discovery_lore: string | null
+          duration: string | null
+          effect_description: string
+          effect_type: string
+          higher_levels: string | null
+          id: string
+          inscription_difficulty: number | null
+          lore: string | null
+          martial_penalty: string | null
+          martial_requirement_multiplier: string | null
+          name: string
+          passive_bonuses: Json | null
+          range: string | null
+          rarity: Database["public"]["Enums"]["rarity"]
+          recharge: string | null
+          requirement_agi: number | null
+          requirement_int: number | null
+          requirement_pre: number | null
+          requirement_sense: number | null
+          requirement_str: number | null
+          requirement_vit: number | null
+          requires_job: string[] | null
+          requires_level: number | null
+          rune_category: string
+          rune_level: number
+          rune_type: string
+          source_book: string | null
+          tags: string[] | null
+          updated_at: string
+          uses_per_rest: string | null
+        }
+        Insert: {
+          activation_action?: string | null
+          activation_cost?: string | null
+          activation_cost_amount?: number | null
+          can_inscribe_on?: string[] | null
+          caster_penalty?: string | null
+          caster_requirement_multiplier?: string | null
+          concentration?: boolean | null
+          created_at?: string
+          description: string
+          discovery_lore?: string | null
+          duration?: string | null
+          effect_description: string
+          effect_type: string
+          higher_levels?: string | null
+          id?: string
+          inscription_difficulty?: number | null
+          lore?: string | null
+          martial_penalty?: string | null
+          martial_requirement_multiplier?: string | null
+          name: string
+          passive_bonuses?: Json | null
+          range?: string | null
+          rarity?: Database["public"]["Enums"]["rarity"]
+          recharge?: string | null
+          requirement_agi?: number | null
+          requirement_int?: number | null
+          requirement_pre?: number | null
+          requirement_sense?: number | null
+          requirement_str?: number | null
+          requirement_vit?: number | null
+          requires_job?: string[] | null
+          requires_level?: number | null
+          rune_category: string
+          rune_level?: number
+          rune_type: string
+          source_book?: string | null
+          tags?: string[] | null
+          updated_at?: string
+          uses_per_rest?: string | null
+        }
+        Update: {
+          activation_action?: string | null
+          activation_cost?: string | null
+          activation_cost_amount?: number | null
+          can_inscribe_on?: string[] | null
+          caster_penalty?: string | null
+          caster_requirement_multiplier?: string | null
+          concentration?: boolean | null
+          created_at?: string
+          description?: string
+          discovery_lore?: string | null
+          duration?: string | null
+          effect_description?: string
+          effect_type?: string
+          higher_levels?: string | null
+          id?: string
+          inscription_difficulty?: number | null
+          lore?: string | null
+          martial_penalty?: string | null
+          martial_requirement_multiplier?: string | null
+          name?: string
+          passive_bonuses?: Json | null
+          range?: string | null
+          rarity?: Database["public"]["Enums"]["rarity"]
+          recharge?: string | null
+          requirement_agi?: number | null
+          requirement_int?: number | null
+          requirement_pre?: number | null
+          requirement_sense?: number | null
+          requirement_str?: number | null
+          requirement_vit?: number | null
+          requires_job?: string[] | null
+          requires_level?: number | null
+          rune_category?: string
+          rune_level?: number
+          rune_type?: string
+          source_book?: string | null
+          tags?: string[] | null
+          updated_at?: string
+          uses_per_rest?: string | null
+        }
+        Relationships: []
+      }
+      character_rune_inscriptions: {
+        Row: {
+          applied_cross_penalty: string | null
+          character_id: string
+          created_at: string
+          effective_requirement_multiplier: string | null
+          equipment_id: string
+          id: string
+          inscription_date: string
+          inscription_quality: number | null
+          inscribed_by: string | null
+          is_active: boolean
+          rune_id: string
+          times_used: number | null
+          uses_current: number | null
+          uses_max: number | null
+        }
+        Insert: {
+          applied_cross_penalty?: string | null
+          character_id: string
+          created_at?: string
+          effective_requirement_multiplier?: string | null
+          equipment_id: string
+          id?: string
+          inscription_date?: string
+          inscription_quality?: number | null
+          inscribed_by?: string | null
+          is_active?: boolean
+          rune_id: string
+          times_used?: number | null
+          uses_current?: number | null
+          uses_max?: number | null
+        }
+        Update: {
+          applied_cross_penalty?: string | null
+          character_id?: string
+          created_at?: string
+          effective_requirement_multiplier?: string | null
+          equipment_id?: string
+          id?: string
+          inscription_date?: string
+          inscription_quality?: number | null
+          inscribed_by?: string | null
+          is_active?: boolean
+          rune_id?: string
+          times_used?: number | null
+          uses_current?: number | null
+          uses_max?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "character_rune_inscriptions_character_id_fkey"
+            columns: ["character_id"]
+            isOneToOne: false
+            referencedRelation: "characters"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "character_rune_inscriptions_equipment_id_fkey"
+            columns: ["equipment_id"]
+            isOneToOne: false
+            referencedRelation: "character_equipment"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "character_rune_inscriptions_rune_id_fkey"
+            columns: ["rune_id"]
+            isOneToOne: false
+            referencedRelation: "compendium_runes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      character_rune_knowledge: {
+        Row: {
+          can_teach: boolean | null
+          character_id: string
+          created_at: string
+          id: string
+          learned_date: string
+          learned_from: string | null
+          learned_from_character_id: string | null
+          mastery_level: number | null
+          rune_id: string
+        }
+        Insert: {
+          can_teach?: boolean | null
+          character_id: string
+          created_at?: string
+          id?: string
+          learned_date?: string
+          learned_from?: string | null
+          learned_from_character_id?: string | null
+          mastery_level?: number | null
+          rune_id: string
+        }
+        Update: {
+          can_teach?: boolean | null
+          character_id?: string
+          created_at?: string
+          id?: string
+          learned_date?: string
+          learned_from?: string | null
+          learned_from_character_id?: string | null
+          mastery_level?: number | null
+          rune_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "character_rune_knowledge_character_id_fkey"
+            columns: ["character_id"]
+            isOneToOne: false
+            referencedRelation: "characters"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "character_rune_knowledge_rune_id_fkey"
+            columns: ["rune_id"]
+            isOneToOne: false
+            referencedRelation: "compendium_runes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "character_rune_knowledge_learned_from_character_id_fkey"
+            columns: ["learned_from_character_id"]
+            isOneToOne: false
+            referencedRelation: "characters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      character_spell_slots: {
+        Row: {
+          character_id: string
+          created_at: string
+          id: string
+          slots_current: number
+          slots_max: number
+          slots_recovered_on_long_rest: number
+          slots_recovered_on_short_rest: number
+          spell_level: number
+          updated_at: string
+        }
+        Insert: {
+          character_id: string
+          created_at?: string
+          id?: string
+          slots_current?: number
+          slots_max?: number
+          slots_recovered_on_long_rest?: number
+          slots_recovered_on_short_rest?: number
+          spell_level: number
+          updated_at?: string
+        }
+        Update: {
+          character_id?: string
+          created_at?: string
+          id?: string
+          slots_current?: number
+          slots_max?: number
+          slots_recovered_on_long_rest?: number
+          slots_recovered_on_short_rest?: number
+          spell_level?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "character_spell_slots_character_id_fkey"
+            columns: ["character_id"]
+            isOneToOne: false
+            referencedRelation: "characters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_favorites: {
         Row: {
           created_at: string
@@ -1922,6 +2270,113 @@ export type Database = {
         Returns: string
       }
       generate_share_code: { Args: never; Returns: string }
+      generate_character_share_token_for_character: {
+        Args: { p_character_id: string }
+        Returns: string
+      }
+      get_character_by_share_token: {
+        Args: { p_character_id: string; p_share_token: string }
+        Returns: {
+          armor_class: number
+          background: string | null
+          created_at: string
+          hp_current: number
+          hp_max: number
+          hp_temp: number
+          id: string
+          job: string | null
+          level: number
+          name: string
+          notes: string | null
+          path: string | null
+          portrait_url: string | null
+          share_token: string | null
+          speed: number
+          updated_at: string
+          user_id: string
+        }[]
+      }
+      prepare_search_text: { Args: { input_text: string }; Returns: string }
+      search_compendium_jobs: {
+        Args: { search_text: string }
+        Returns: {
+          created_at: string
+          description: string
+          id: string
+          image_url: string | null
+          name: string
+          rank: number
+          source_book: string | null
+          tags: string[] | null
+        }[]
+      }
+      search_compendium_monarchs: {
+        Args: { search_text: string }
+        Returns: {
+          created_at: string
+          description: string
+          id: string
+          name: string
+          rank: number
+          source_book: string | null
+          tags: string[] | null
+          theme: string
+          title: string
+        }[]
+      }
+      search_compendium_monsters: {
+        Args: { search_text: string }
+        Returns: {
+          cr: string
+          created_at: string
+          creature_type: string
+          description: string
+          id: string
+          name: string
+          rank: number
+          source_book: string | null
+          tags: string[] | null
+        }[]
+      }
+      search_compendium_paths: {
+        Args: { search_text: string }
+        Returns: {
+          created_at: string
+          description: string
+          id: string
+          name: string
+          rank: number
+          source_book: string | null
+          tags: string[] | null
+        }[]
+      }
+      search_compendium_powers: {
+        Args: { search_text: string }
+        Returns: {
+          created_at: string
+          description: string
+          id: string
+          name: string
+          power_level: number
+          rank: number
+          school: string
+          source_book: string | null
+          tags: string[] | null
+        }[]
+      }
+      search_compendium_relics: {
+        Args: { search_text: string }
+        Returns: {
+          created_at: string
+          description: string
+          id: string
+          name: string
+          rank: number
+          rarity: string
+          source_book: string | null
+          tags: string[] | null
+        }[]
+      }
     }
     Enums: {
       ability_score: "STR" | "AGI" | "VIT" | "INT" | "SENSE" | "PRE"

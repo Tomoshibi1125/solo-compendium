@@ -5,6 +5,7 @@
  * Shows statistics, completeness metrics, and recommendations.
  */
 
+import { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
@@ -21,9 +22,12 @@ import {
   RefreshCw,
   Download,
   BarChart3,
+  Link2,
+  Loader2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient, useQuery } from '@tanstack/react-query';
+import { checkAllLinkIntegrity, type BrokenLink } from '@/lib/linkIntegrity';
 
 function AuditTable({ report }: { report: ContentAuditReport }) {
   const getCompletenessColor = (completeness: number) => {
@@ -261,6 +265,9 @@ export function ContentAudit() {
             <AuditTable report={report} />
           </SystemWindow>
 
+          {/* Link Integrity Check */}
+          <LinkIntegritySection />
+
           {/* Empty Tables */}
           {report.tables.filter(t => t.totalCount === 0).length > 0 && (
             <SystemWindow title="EMPTY TABLES" variant="alert">
@@ -285,4 +292,136 @@ export function ContentAudit() {
     </Layout>
   );
 }
+
+function LinkIntegritySection() {
+  const [isChecking, setIsChecking] = useState(false);
+  const { data: integrityReport, refetch } = useQuery({
+    queryKey: ['link-integrity'],
+    queryFn: checkAllLinkIntegrity,
+    enabled: false, // Don't run automatically
+  });
+
+  const handleCheck = async () => {
+    setIsChecking(true);
+    try {
+      await refetch();
+    } finally {
+      setIsChecking(false);
+    }
+  };
+
+  if (!integrityReport) {
+    return (
+      <SystemWindow title="LINK INTEGRITY CHECK">
+        <div className="space-y-4">
+          <p className="text-sm text-muted-foreground">
+            Check for broken compendium references in character data (job, path, background, runes).
+          </p>
+          <Button onClick={handleCheck} disabled={isChecking}>
+            {isChecking ? (
+              <>
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                Checking...
+              </>
+            ) : (
+              <>
+                <Link2 className="w-4 h-4 mr-2" />
+                Check Link Integrity
+              </>
+            )}
+          </Button>
+        </div>
+      </SystemWindow>
+    );
+  }
+
+  const hasBrokenLinks = integrityReport.totalBrokenLinks > 0;
+
+  return (
+    <SystemWindow 
+      title="LINK INTEGRITY CHECK" 
+      variant={hasBrokenLinks ? 'alert' : 'default'}
+    >
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            {hasBrokenLinks ? (
+              <AlertTriangle className="w-5 h-5 text-destructive" />
+            ) : (
+              <CheckCircle2 className="w-5 h-5 text-green-400" />
+            )}
+            <span className="font-semibold">
+              {hasBrokenLinks ? 'Broken Links Found' : 'All Links Valid'}
+            </span>
+          </div>
+          <Button onClick={handleCheck} variant="outline" size="sm" disabled={isChecking}>
+            <RefreshCw className="w-4 h-4 mr-2" />
+            Recheck
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div>
+            <div className="text-xs text-muted-foreground">Total Characters</div>
+            <div className="text-lg font-bold">{integrityReport.totalCharacters}</div>
+          </div>
+          <div>
+            <div className="text-xs text-muted-foreground">With Broken Links</div>
+            <div className={cn(
+              "text-lg font-bold",
+              integrityReport.charactersWithBrokenLinks > 0 ? "text-destructive" : "text-green-400"
+            )}>
+              {integrityReport.charactersWithBrokenLinks}
+            </div>
+          </div>
+          <div>
+            <div className="text-xs text-muted-foreground">Total Broken Links</div>
+            <div className={cn(
+              "text-lg font-bold",
+              integrityReport.totalBrokenLinks > 0 ? "text-destructive" : "text-green-400"
+            )}>
+              {integrityReport.totalBrokenLinks}
+            </div>
+          </div>
+          <div>
+            <div className="text-xs text-muted-foreground">Last Checked</div>
+            <div className="text-sm">{new Date().toLocaleTimeString()}</div>
+          </div>
+        </div>
+
+        {hasBrokenLinks && (
+          <div className="space-y-2">
+            <div className="text-sm font-semibold">Broken Links by Type:</div>
+            <div className="flex flex-wrap gap-2">
+              {Object.entries(integrityReport.brokenLinksByType).map(([type, count]) => (
+                <Badge key={type} variant="destructive">
+                  {type}: {count}
+                </Badge>
+              ))}
+            </div>
+
+            <div className="text-sm font-semibold mt-4">Broken Links Details:</div>
+            <div className="max-h-64 overflow-y-auto space-y-2">
+              {integrityReport.brokenLinks.slice(0, 20).map((link, index) => (
+                <div key={index} className="p-2 bg-muted rounded text-xs">
+                  <div className="font-medium">{link.characterName}</div>
+                  <div className="text-muted-foreground">
+                    {link.location}: {link.message}
+                  </div>
+                </div>
+              ))}
+              {integrityReport.brokenLinks.length > 20 && (
+                <div className="text-xs text-muted-foreground text-center">
+                  ... and {integrityReport.brokenLinks.length - 20} more
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </SystemWindow>
+  );
+}
+
+export default ContentAudit;
 

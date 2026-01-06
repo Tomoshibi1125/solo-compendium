@@ -47,7 +47,9 @@ export function rollDie(sides: number): number {
  * Execute a dice roll
  */
 export function roll(diceRoll: DiceRoll): RollResult {
-  const { dice, sides, modifier, advantage } = diceRoll;
+  const { dice, sides, modifier } = diceRoll;
+  // Treat missing advantage/disadvantage as normal
+  const advantage = diceRoll.advantage ?? 'normal';
   const rolls: number[] = [];
   let droppedRolls: number[] | undefined;
 
@@ -95,7 +97,7 @@ export function roll(diceRoll: DiceRoll): RollResult {
  */
 export function quickRoll(formula: string, advantage?: 'advantage' | 'disadvantage' | 'normal'): RollResult {
   const parsed = parseFormula(formula);
-  parsed.advantage = advantage;
+  parsed.advantage = advantage ?? 'normal';
   return roll(parsed);
 }
 
@@ -110,7 +112,7 @@ export function rollCheck(
     dice: 1,
     sides: 20,
     modifier,
-    advantage,
+    advantage: advantage ?? 'normal',
   });
 }
 

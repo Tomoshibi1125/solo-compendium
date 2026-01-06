@@ -288,9 +288,10 @@ const VTTEnhanced = () => {
         const hpMax = typeof character.hp_max === 'number' ? character.hp_max : 0;
         const ac = typeof character.ac === 'number' ? character.ac : 10;
         const portraitUrl = typeof character.portrait_url === 'string' ? character.portrait_url : undefined;
+        const characterId = typeof character.id === 'string' ? character.id : '';
         const placed: PlacedToken = {
           id: `token-${Date.now()}`,
-          characterId: character.id,
+          characterId: characterId,
           name: characterName,
           emoji: '⚔️',
           imageUrl: portraitUrl,

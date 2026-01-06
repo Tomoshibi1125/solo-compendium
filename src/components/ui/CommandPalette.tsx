@@ -13,6 +13,7 @@ import {
 import { supabase } from '@/integrations/supabase/client';
 import { useCharacters } from '@/hooks/useCharacters';
 import { FileText, User, BookOpen, Dice6, Settings, Home, Search } from 'lucide-react';
+import { getTableName, type EntryType } from '@/lib/compendiumResolver';
 
 interface CommandPaletteProps {
   open: boolean;
@@ -32,40 +33,44 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
       
       const results: Array<{ id: string; name: string; type: string; href: string }> = [];
       
-      // Search jobs
-      const { data: jobs } = await supabase
-        .from('compendium_jobs')
-        .select('id, name')
-        .ilike('name', `%${search}%`)
-        .limit(5);
-      if (jobs) {
-        jobs.forEach(job => {
-          results.push({ id: job.id, name: job.name, type: 'Job', href: `/compendium/jobs/${job.id}` });
-        });
-      }
-
-      // Search powers
-      const { data: powers } = await supabase
-        .from('compendium_powers')
-        .select('id, name')
-        .ilike('name', `%${search}%`)
-        .limit(5);
-      if (powers) {
-        powers.forEach(power => {
-          results.push({ id: power.id, name: power.name, type: 'Power', href: `/compendium/powers/${power.id}` });
-        });
-      }
-
-      // Search equipment
-      const { data: equipment } = await supabase
-        .from('compendium_equipment')
-        .select('id, name')
-        .ilike('name', `%${search}%`)
-        .limit(5);
-      if (equipment) {
-        equipment.forEach(item => {
-          results.push({ id: item.id, name: item.name, type: 'Equipment', href: `/compendium/equipment/${item.id}` });
-        });
+      // Search common compendium types using resolver table names
+      const searchTypes: Array<{ type: EntryType; label: string; route: string }> = [
+        { type: 'jobs', label: 'Job', route: 'jobs' },
+        { type: 'powers', label: 'Power', route: 'powers' },
+        { type: 'equipment', label: 'Equipment', route: 'equipment' },
+      ];
+      
+      for (const { type, label, route } of searchTypes) {
+        try {
+          const tableName = getTableName(type);
+          const { data } = await supabase
+            .from(tableName)
+            .select('id, name')
+            .ilike('name', `%${search}%`)
+            .limit(5);
+          
+          if (data && Array.isArray(data)) {
+            // Type guard to filter out error objects
+            const items = data as unknown[];
+            const validItems = items.filter((item): item is { id: string; name: string } => {
+              if (typeof item !== 'object' || item === null) return false;
+              if ('error' in item) return false; // Filter out error objects
+              const obj = item as Record<string, unknown>;
+              return typeof obj.id === 'string' && typeof obj.name === 'string';
+            });
+            
+            validItems.forEach((item) => {
+              results.push({ 
+                id: item.id, 
+                name: item.name, 
+                type: label, 
+                href: `/compendium/${route}/${item.id}` 
+              });
+            });
+          }
+        } catch (err) {
+          // Continue to next type on error
+        }
       }
 
       return results;

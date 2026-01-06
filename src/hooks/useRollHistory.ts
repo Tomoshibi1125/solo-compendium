@@ -1,19 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 
-export interface RollRecord {
-  id: string;
-  user_id: string;
-  character_id: string | null;
-  campaign_id: string | null;
-  roll_type: string;
-  dice_formula: string;
-  result: number;
-  rolls: number[];
-  modifiers: Record<string, unknown>;
-  context: string | null;
-  created_at: string;
-}
+export type RollRecord = Database['public']['Tables']['roll_history']['Row'];
+type RollRecordInsert = Database['public']['Tables']['roll_history']['Insert'];
+type RollRecordInsertClient = Omit<RollRecordInsert, 'id' | 'user_id' | 'created_at'>;
 
 export const useRollHistory = (characterId?: string, limit = 50) => {
   return useQuery({
@@ -23,8 +14,7 @@ export const useRollHistory = (characterId?: string, limit = 50) => {
       if (!user) return []; // Return empty array if not authenticated
 
       let query = supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('roll_history' as any)
+        .from('roll_history')
         .select('*')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false })
@@ -36,7 +26,7 @@ export const useRollHistory = (characterId?: string, limit = 50) => {
 
       const { data, error } = await query;
       if (error) throw error;
-      return (data || []) as unknown as RollRecord[];
+      return data || [];
     },
     retry: false, // Don't retry if not authenticated
   });
@@ -46,23 +36,21 @@ export const useRecordRoll = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (roll: Omit<RollRecord, 'id' | 'user_id' | 'created_at'>) => {
+    mutationFn: async (roll: RollRecordInsertClient) => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('roll_history' as any)
+        .from('roll_history')
         .insert({
           ...roll,
           user_id: user.id,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any)
+        })
         .select()
         .single();
 
       if (error) throw error;
-      return data as unknown as RollRecord;
+      return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['roll-history'] });

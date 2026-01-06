@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 interface SystemWindowProps {
   children: ReactNode;
   title?: string;
+  actions?: ReactNode;
   className?: string;
   variant?: 'default' | 'alert' | 'quest' | 'monarch' | 'arise';
   compact?: boolean;
@@ -11,7 +12,7 @@ interface SystemWindowProps {
   id?: string;
 }
 
-export function SystemWindow({ children, title, className, variant = 'default', compact = false, animated = false, id }: SystemWindowProps) {
+export function SystemWindow({ children, title, actions, className, variant = 'default', compact = false, animated = false, id }: SystemWindowProps) {
   const variantStyles = {
     default: 'border-primary/30 from-primary/8 via-card to-void-black/80',
     alert: 'border-destructive/30 from-destructive/8 via-card to-void-black/80',
@@ -79,7 +80,12 @@ export function SystemWindow({ children, title, className, variant = 'default', 
             variant === 'monarch' && "bg-shadow-purple shadow-[0_0_6px_hsl(var(--shadow-purple))]",
             variant === 'arise' && "bg-arise-violet shadow-[0_0_6px_hsl(var(--arise-violet))]"
           )} />
-          {title}
+          <span className="truncate">{title}</span>
+          {actions && (
+            <div className="ml-auto flex items-center gap-2">
+              {actions}
+            </div>
+          )}
         </div>
       )}
       <div className={compact ? "p-3" : "p-4"}>

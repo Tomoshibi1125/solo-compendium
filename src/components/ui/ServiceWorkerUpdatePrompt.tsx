@@ -16,6 +16,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { RefreshCw, X } from 'lucide-react';
+import { logger } from '@/lib/logger';
 
 export function ServiceWorkerUpdatePrompt() {
   const [updateAvailable, setUpdateAvailable] = useState(false);
@@ -46,12 +47,14 @@ export function ServiceWorkerUpdatePrompt() {
       // Register the service worker
       wb.register()
         .then(() => {
-          console.log('[SW] Service worker registered');
+          if (import.meta.env.DEV) {
+            logger.debug('[SW] Service worker registered');
+          }
           // Check for updates immediately
           wb.update();
         })
         .catch((error) => {
-          console.error('[SW] Service worker registration failed:', error);
+          logger.warn('[SW] Service worker registration failed:', error);
         });
 
       // Check for updates periodically (every hour)

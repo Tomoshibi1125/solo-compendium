@@ -61,39 +61,26 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
       // Fetch fusion components
       const components: FusionComponent[] = [];
       
+      // Use centralized resolver for all component lookups
+      const { resolveRef } = await import('@/lib/compendiumResolver');
+      
       if (data.job_id) {
-        const { data: job } = await supabase
-          .from('compendium_jobs')
-          .select('id, name')
-          .eq('id', data.job_id)
-          .single();
+        const job = await resolveRef('jobs', data.job_id);
         if (job) components.push({ type: 'job', id: job.id, name: job.name });
       }
       
       if (data.path_id) {
-        const { data: path } = await supabase
-          .from('compendium_job_paths')
-          .select('id, name')
-          .eq('id', data.path_id)
-          .single();
+        const path = await resolveRef('paths', data.path_id);
         if (path) components.push({ type: 'path', id: path.id, name: path.name });
       }
       
       if (data.monarch_a_id) {
-        const { data: monarch } = await supabase
-          .from('compendium_monarchs')
-          .select('id, name')
-          .eq('id', data.monarch_a_id)
-          .single();
+        const monarch = await resolveRef('monarchs', data.monarch_a_id);
         if (monarch) components.push({ type: 'monarch', id: monarch.id, name: monarch.name });
       }
       
       if (data.monarch_b_id) {
-        const { data: monarch } = await supabase
-          .from('compendium_monarchs')
-          .select('id, name')
-          .eq('id', data.monarch_b_id)
-          .single();
+        const monarch = await resolveRef('monarchs', data.monarch_b_id);
         if (monarch) components.push({ type: 'monarch', id: monarch.id, name: monarch.name });
       }
       

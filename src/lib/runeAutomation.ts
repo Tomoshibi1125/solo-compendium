@@ -204,7 +204,7 @@ export function applyRuneBonuses(
   attackBonus: number;
   damageBonus: string;
 } {
-  let modifiedStats = { ...baseStats };
+  const modifiedStats = { ...baseStats };
 
   for (const { rune, is_active } of activeRunes) {
     if (!is_active || !rune.passive_bonuses) continue;
@@ -233,7 +233,7 @@ export function applyRuneBonuses(
 
     for (const [key, ability] of Object.entries(abilityMap)) {
       if (bonuses[`${key}_bonus`] && typeof bonuses[`${key}_bonus`] === 'number') {
-        modifiedStats.abilities[ability] = (modifiedStats.abilities[ability] || 0) + bonuses[`${key}_bonus`] as number;
+        modifiedStats.abilities[ability] = (modifiedStats.abilities[ability] || 0) + (bonuses[`${key}_bonus`] as number);
       }
     }
 

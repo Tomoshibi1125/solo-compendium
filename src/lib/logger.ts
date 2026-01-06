@@ -41,7 +41,10 @@ const prodLogger: Logger = {
  */
 const criticalErrors: string[] = [
   'Missing Supabase',
+  'Missing required environment variables',
   'Supabase connection',
+  '[Sentry]',
+  '[SW]',
   'ErrorBoundary',
   'Root element not found',
 ];

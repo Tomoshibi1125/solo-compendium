@@ -31,8 +31,10 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { useCharacter, useUpdateCharacter, useGenerateShareToken } from '@/hooks/useCharacters';
 import { calculateCharacterStats, formatModifier } from '@/lib/characterCalculations';
+import { getAbilityModifier } from '@/types/solo-leveling';
 import { applyEquipmentModifiers } from '@/lib/equipmentModifiers';
 import { applyRuneBonuses } from '@/lib/runeAutomation';
+import { getActiveConditionEffects } from '@/lib/conditions';
 import { calculateEncumbrance, calculateTotalWeight, calculateCarryingCapacity } from '@/lib/encumbrance';
 import { useCharacterRuneInscriptions } from '@/hooks/useRunes';
 import { getAllSkills, calculateSkillModifier, calculatePassiveSkill } from '@/lib/skills';
@@ -88,6 +90,40 @@ const CharacterSheet = () => {
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const undoRedo = useCharacterUndoRedo(character);
+  const { data: activeRunes = [] } = useCharacterRuneInscriptions(id);
+  const hasTriggeredPrintRef = useRef(false);
+  const notesSaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Apply print mode styling
+  useEffect(() => {
+    if (isPrintMode) {
+      document.body.classList.add('print-mode');
+      return () => {
+        document.body.classList.remove('print-mode');
+      };
+    }
+
+    document.body.classList.remove('print-mode');
+    hasTriggeredPrintRef.current = false;
+    return;
+  }, [isPrintMode]);
+
+  // Trigger print only once, after data has loaded
+  useEffect(() => {
+    if (!isPrintMode) return;
+    if (isLoading) return;
+    if (!character?.id) return;
+    if (hasTriggeredPrintRef.current) return;
+
+    hasTriggeredPrintRef.current = true;
+    const timer = window.setTimeout(() => {
+      window.print();
+    }, 500);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, [isPrintMode, isLoading, character?.id]);
 
   const shareLink = character?.share_token 
     ? `${window.location.origin}/characters/${character.id}?token=${character.share_token}`
@@ -197,7 +233,6 @@ const CharacterSheet = () => {
   });
 
   // Apply rune bonuses from equipped items
-  const { data: activeRunes = [] } = useCharacterRuneInscriptions(character.id);
   const equippedActiveRunes = activeRunes.filter(ri => 
     ri.equipment?.is_equipped && 
     (!ri.equipment.requires_attunement || ri.equipment.is_attuned) &&
@@ -257,6 +292,14 @@ const CharacterSheet = () => {
     finalSpeed = Math.max(0, finalSpeed - 10);
   } else if (encumbrance.status === 'overloaded') {
     finalSpeed = Math.max(0, finalSpeed - 20);
+  }
+
+  // Apply condition-based speed modifiers (e.g., grappled/restrained → 0)
+  const conditionEffects = getActiveConditionEffects(character.conditions || []);
+  if (conditionEffects.speedModifier === 'zero') {
+    finalSpeed = 0;
+  } else if (typeof conditionEffects.speedModifier === 'number') {
+    finalSpeed = Math.max(0, finalSpeed + conditionEffects.speedModifier);
   }
 
   const calculatedStats = {
@@ -370,22 +413,6 @@ const CharacterSheet = () => {
       });
     }
   };
-
-  // Apply print mode styling
-  useEffect(() => {
-    if (isPrintMode) {
-      document.body.classList.add('print-mode');
-      // Trigger print dialog after a short delay
-      setTimeout(() => {
-        window.print();
-      }, 500);
-    } else {
-      document.body.classList.remove('print-mode');
-    }
-    return () => {
-      document.body.classList.remove('print-mode');
-    };
-  }, [isPrintMode]);
 
   return (
     <Layout className={isPrintMode ? 'print-mode' : ''}>

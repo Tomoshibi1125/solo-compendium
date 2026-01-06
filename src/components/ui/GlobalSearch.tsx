@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Search, Loader2, Clock, X } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -19,6 +20,12 @@ interface SearchResult {
   description?: string;
   href: string;
 }
+
+type SearchRow = {
+  id: string;
+  name: string;
+  description?: string | null;
+};
 
 export function GlobalSearch({ className }: { className?: string }) {
   const navigate = useNavigate();
@@ -39,8 +46,14 @@ export function GlobalSearch({ className }: { className?: string }) {
         { table: 'compendium_jobs', type: 'jobs' },
         { table: 'compendium_job_paths', type: 'paths' },
         { table: 'compendium_powers', type: 'powers' },
+        { table: 'compendium_runes', type: 'runes' },
         { table: 'compendium_relics', type: 'relics' },
+        { table: 'compendium_equipment', type: 'equipment' },
         { table: 'compendium_monsters', type: 'monsters' },
+        { table: 'compendium_monarchs', type: 'monarchs' },
+        { table: 'compendium_sovereigns', type: 'sovereigns' },
+        { table: 'compendium_backgrounds', type: 'backgrounds' },
+        { table: 'compendium_conditions', type: 'conditions' },
         { table: 'compendium_shadow_soldiers', type: 'shadow-soldiers' },
         { table: 'compendium_feats', type: 'feats' },
         { table: 'compendium_skills', type: 'skills' },
@@ -60,7 +73,7 @@ export function GlobalSearch({ className }: { className?: string }) {
         try {
           // Try full-text search via RPC if available
           const rpcType = searchFunctions[table];
-          let data: any[] | null = null;
+          let data: SearchRow[] | null = null;
 
           if (rpcType && debouncedQuery.length > 2) {
             try {
@@ -78,19 +91,30 @@ export function GlobalSearch({ className }: { className?: string }) {
           // Fallback to ILIKE if RPC not available or failed
           if (!data) {
             const { data: ilikeData } = await supabase
-              .from(table)
+              .from(table as keyof Database['public']['Tables'])
               .select('id, name, description')
               .or(`name.ilike.%${debouncedQuery}%,description.ilike.%${debouncedQuery}%`)
               .limit(5);
-            data = ilikeData;
+            // Type guard to filter out error objects
+            if (ilikeData && Array.isArray(ilikeData)) {
+              const items = ilikeData as unknown[];
+              const validItems = items.filter((item): item is SearchRow => {
+                if (typeof item !== 'object' || item === null) return false;
+                const obj = item as Record<string, unknown>;
+                if (!('id' in obj) || !('name' in obj)) return false;
+                if (typeof obj.id !== 'string' || typeof obj.name !== 'string') return false;
+                return true;
+              });
+              data = validItems.length > 0 ? validItems : null;
+            }
           }
 
-          if (data) {
-            allResults.push(...data.map((item: { id: string; name: string; description?: string }) => ({
+          if (data && Array.isArray(data)) {
+            allResults.push(...data.map((item: SearchRow) => ({
               id: item.id,
               name: item.name,
               type,
-              description: item.description,
+              description: item.description || undefined,
               href: `/compendium/${type}/${item.id}`,
             })));
           }

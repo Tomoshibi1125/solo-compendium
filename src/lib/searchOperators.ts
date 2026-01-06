@@ -99,11 +99,21 @@ export function parseSearchQuery(query: string): ParsedSearchQuery {
 /**
  * Apply parsed query operators to a Supabase query
  */
-export function applySearchOperators(
-  baseQuery: any,
+type FilterableQuery<T> = {
+  gt: (column: string, value: unknown) => T;
+  lt: (column: string, value: unknown) => T;
+  gte: (column: string, value: unknown) => T;
+  lte: (column: string, value: unknown) => T;
+  eq: (column: string, value: unknown) => T;
+  in: (column: string, values: unknown[]) => T;
+  contains: (column: string, value: unknown) => T;
+};
+
+export function applySearchOperators<T extends FilterableQuery<T>>(
+  baseQuery: T,
   parsed: ParsedSearchQuery,
   tableName: string
-) {
+): T {
   let query = baseQuery;
 
   // Apply type filter (if applicable)

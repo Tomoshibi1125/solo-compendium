@@ -19,6 +19,8 @@ interface ActionCardProps {
   uses?: { current: number; max: number };
   recharge?: string;
   onRoll?: (rollType: 'attack' | 'damage' | 'check') => void;
+  inscriptionId?: string;
+  onUse?: () => void;
   className?: string;
 }
 
@@ -36,7 +38,7 @@ const TYPE_LABELS = {
   'passive': 'Passive',
 };
 
-export function ActionCard({
+function ActionCardComponent({
   name,
   type,
   description,
@@ -46,6 +48,8 @@ export function ActionCard({
   uses,
   recharge,
   onRoll,
+  inscriptionId,
+  onUse,
   className,
 }: ActionCardProps) {
   const navigate = useNavigate();
@@ -189,7 +193,8 @@ export const ActionCard = memo(ActionCardComponent, (prevProps, nextProps) => {
     prevProps.range === nextProps.range &&
     prevProps.uses?.current === nextProps.uses?.current &&
     prevProps.uses?.max === nextProps.uses?.max &&
-    prevProps.recharge === nextProps.recharge
+    prevProps.recharge === nextProps.recharge &&
+    prevProps.inscriptionId === nextProps.inscriptionId
   );
 });
 

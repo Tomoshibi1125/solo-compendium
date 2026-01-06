@@ -30,9 +30,6 @@ export const usePowers = (characterId: string) => {
       return data as Power[];
     },
     enabled: !!characterId,
-    onError: (error) => {
-      logErrorWithContext(error, 'usePowers');
-    },
   });
 
   const addPower = useMutation({

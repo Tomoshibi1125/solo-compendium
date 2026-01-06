@@ -132,7 +132,7 @@ const TokenLibrary = () => {
     localStorage.setItem('vtt-tokens', JSON.stringify(updatedTokens));
   };
 
-  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 

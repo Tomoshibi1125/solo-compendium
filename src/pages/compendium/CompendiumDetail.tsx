@@ -27,24 +27,7 @@ import { ConditionDetail } from '@/components/compendium/ConditionDetail';
 import { MonarchDetail } from '@/components/compendium/MonarchDetail';
 import { PathDetail } from '@/components/compendium/PathDetail';
 import { SovereignDetail } from '@/components/compendium/SovereignDetail';
-
-type EntryType = 'jobs' | 'paths' | 'powers' | 'runes' | 'relics' | 'monsters' | 'backgrounds' | 'conditions' | 'monarchs' | 'feats' | 'skills' | 'equipment' | 'sovereigns';
-
-const tableMap: Record<EntryType, string> = {
-  jobs: 'compendium_jobs',
-  paths: 'compendium_job_paths',
-  powers: 'compendium_powers',
-  runes: 'compendium_runes',
-  relics: 'compendium_relics',
-  monsters: 'compendium_monsters',
-  backgrounds: 'compendium_backgrounds',
-  conditions: 'compendium_conditions',
-  monarchs: 'compendium_monarchs',
-  feats: 'compendium_feats',
-  skills: 'compendium_skills',
-  equipment: 'compendium_equipment',
-  sovereigns: 'compendium_sovereigns',
-};
+import { resolveRef, type EntryType, isValidEntryType, getTableName } from '@/lib/compendiumResolver';
 
 const CompendiumDetail = () => {
   const { type, id } = useParams<{ type: EntryType; id: string }>();
@@ -68,32 +51,33 @@ const CompendiumDetail = () => {
       const related: Array<{ id: string; name: string; type: string; description?: string }> = [];
       
       // Query different tables based on type
-      const tablesToQuery = ['monsters', 'equipment', 'relics', 'jobs', 'powers', 'runes'].filter(t => t !== type);
+      const tablesToQuery: EntryType[] = ['monsters', 'equipment', 'relics', 'jobs', 'powers', 'runes'].filter(
+        (t): t is EntryType => t !== type && isValidEntryType(t)
+      );
       
       for (const tableType of tablesToQuery.slice(0, 2)) {
         try {
-          const tableName = tableMap[tableType as EntryType];
-          if (!tableName) continue;
+          const tableName = getTableName(tableType);
           
-          // Type assertion needed for dynamic table access
           const { data, error: queryError } = await supabase
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            .from(tableName as any)
+            .from(tableName)
             .select('id, name, description')
             .overlaps('tags', entryTags)
             .neq('id', id)
             .limit(3);
           
           if (!queryError && data && Array.isArray(data)) {
-            // Type guard to ensure data is valid
-            const validData = data.filter((item): item is { id: string; name: string; description?: string } => 
-              typeof item === 'object' && 
-              item !== null && 
-              'id' in item && 
-              'name' in item &&
-              typeof (item as { id: unknown }).id === 'string' &&
-              typeof (item as { name: unknown }).name === 'string'
-            );
+            // Type guard to ensure data is valid and not an error
+            // First cast to unknown to bypass union type issues, then validate
+            const items = data as unknown[];
+            const validData = items.filter((item): item is { id: string; name: string; description?: string } => {
+              if (typeof item !== 'object' || item === null) return false;
+              if ('error' in item) return false; // Filter out error objects
+              const obj = item as Record<string, unknown>;
+              if (!('id' in obj) || !('name' in obj)) return false;
+              if (typeof obj.id !== 'string' || typeof obj.name !== 'string') return false;
+              return true;
+            });
             
             related.push(...validData.map((item) => ({
               id: item.id,
@@ -119,29 +103,24 @@ const CompendiumDetail = () => {
       setLoading(true);
       setError(null);
       
-      const tableName = tableMap[type as EntryType];
-      if (!tableName) {
+      // Validate entry type
+      if (!isValidEntryType(type)) {
         setError('Invalid entry type');
         setLoading(false);
         return;
       }
 
       try {
-        // Use type assertion to handle dynamic table names
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { data, error: fetchError } = await (supabase.from(tableName as any) as ReturnType<typeof supabase.from>)
-          .select('*')
-          .eq('id', id)
-          .maybeSingle();
+        // Use centralized resolver
+        const entity = await resolveRef(type, id);
 
-        if (fetchError) throw fetchError;
-        if (!data) {
+        if (!entity) {
           setError('Entry not found');
         } else {
-          setEntry(data);
+          setEntry(entity);
         }
       } catch (err) {
-        // Error is handled by React Query's error state
+        logError('Failed to load entry:', err);
         setError('Failed to load entry');
       } finally {
         setLoading(false);

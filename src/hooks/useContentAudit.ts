@@ -10,6 +10,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 import { logErrorWithContext } from '@/lib/errorHandling';
 
 export interface TableAudit {
@@ -44,41 +45,46 @@ export interface ContentAuditReport {
  */
 async function auditTable(tableName: string): Promise<TableAudit> {
   try {
+    const table = tableName as keyof Database['public']['Tables'];
+    
     // Get total count
     const { count: totalCount } = await supabase
-      .from(tableName)
+      .from(table)
       .select('*', { count: 'exact', head: true });
 
     // Get entries with descriptions
     const { count: withDescription } = await supabase
-      .from(tableName)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .from(table as any)
       .select('id', { count: 'exact', head: true })
       .not('description', 'is', null)
       .neq('description', '');
 
     // Get entries with images
     const { count: withImage } = await supabase
-      .from(tableName)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .from(table as any)
       .select('id', { count: 'exact', head: true })
       .not('image_url', 'is', null)
       .neq('image_url', '');
 
     // Get entries with source_book
     const { count: withSourceBook } = await supabase
-      .from(tableName)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .from(table as any)
       .select('id', { count: 'exact', head: true })
       .not('source_book', 'is', null)
       .neq('source_book', '');
 
     // Get entries with tags
     const { count: withTags } = await supabase
-      .from(tableName)
+      .from(table as keyof Database['public']['Tables'])
       .select('id', { count: 'exact', head: true })
       .not('tags', 'is', null);
 
     // Get sample entries
     const { data: samples } = await supabase
-      .from(tableName)
+      .from(table as keyof Database['public']['Tables'])
       .select('id, name')
       .limit(5);
 
@@ -108,7 +114,13 @@ async function auditTable(tableName: string): Promise<TableAudit> {
       missingImage,
       missingSourceBook,
       completeness,
-      sampleEntries: (samples || []) as Array<{ id: string; name: string }>,
+      sampleEntries: (samples ? (samples as unknown[]).filter((item): item is { id: string; name: string } => {
+        if (typeof item !== 'object' || item === null) return false;
+        const obj = item as Record<string, unknown>;
+        if (!('id' in obj) || !('name' in obj)) return false;
+        if (typeof obj.id !== 'string' || typeof obj.name !== 'string') return false;
+        return true;
+      }) : []),
     };
   } catch (error) {
     logErrorWithContext(error, `auditTable:${tableName}`);

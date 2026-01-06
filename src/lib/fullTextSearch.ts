@@ -3,6 +3,8 @@
  * Converts search queries to PostgreSQL full-text search format
  */
 
+import type { SupabaseClient } from '@supabase/supabase-js';
+
 /**
  * Prepare search text for PostgreSQL tsquery
  * Sanitizes input and converts to safe format
@@ -43,7 +45,7 @@ export function toTsQuery(searchQuery: string): string {
  * This is the recommended approach with Supabase
  */
 export async function searchWithRPC(
-  supabase: any,
+  supabase: Pick<SupabaseClient, 'rpc'>,
   table: 'jobs' | 'powers' | 'relics' | 'monsters' | 'paths' | 'monarchs',
   searchQuery: string,
   limit: number = 50
@@ -71,12 +73,16 @@ export async function searchWithRPC(
  * Hybrid search: Use full-text search when available, fallback to ILIKE
  * This provides the best of both worlds
  */
-export function hybridSearchQuery(
-  baseQuery: any,
+interface OrCapableQuery<T> {
+  or: (filters: string) => T;
+}
+
+export function hybridSearchQuery<T extends OrCapableQuery<T>>(
+  baseQuery: T,
   searchQuery: string,
   searchFields: string[] = ['name', 'description'],
   useFullText: boolean = true
-) {
+): T {
   if (!searchQuery.trim()) {
     return baseQuery;
   }
@@ -94,12 +100,5 @@ export function hybridSearchQuery(
   return baseQuery.or(
     searchFields.map(field => `${field}.ilike.%${searchQuery}%`).join(',')
   );
-}
-
-/**
- * Convert a search query to PostgreSQL tsquery format (alias for prepareSearchText)
- */
-export function toTsQuery(searchQuery: string): string {
-  return prepareSearchText(searchQuery);
 }
 

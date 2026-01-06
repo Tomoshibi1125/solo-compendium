@@ -3,6 +3,7 @@
  * Export characters, compendium entries, campaigns, etc.
  */
 
+import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 
 type Character = Database['public']['Tables']['characters']['Row'];
@@ -117,21 +118,17 @@ export async function exportCompendiumEntries(
   entryType: string
 ): Promise<string> {
   const { supabase } = await import('@/integrations/supabase/client');
+  const { getTableName, isValidEntryType } = await import('@/lib/compendiumResolver');
   
-  const tableMap: Record<string, string> = {
-    'jobs': 'compendium_jobs',
-    'paths': 'compendium_job_paths',
-    'powers': 'compendium_powers',
-    'relics': 'compendium_relics',
-    'monsters': 'compendium_monsters',
-    'shadow-soldiers': 'compendium_shadow_soldiers',
-  };
+  // Validate entry type
+  if (!isValidEntryType(entryType)) {
+    throw new Error(`Unknown entry type: ${entryType}`);
+  }
 
-  const tableName = tableMap[entryType];
-  if (!tableName) throw new Error(`Unknown entry type: ${entryType}`);
+  const tableName = getTableName(entryType);
 
   const { data: entries } = await supabase
-    .from(tableName)
+    .from(tableName as keyof Database['public']['Tables'])
     .select('*')
     .in('id', entryIds);
 

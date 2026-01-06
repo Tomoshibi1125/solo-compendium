@@ -16,8 +16,23 @@ import { PageViewTracker } from "@/components/analytics/PageViewTracker";
 import { setCommandPaletteOpener } from "@/lib/globalShortcuts";
 import { setSentryUser } from "@/lib/sentry";
 import { trackEvent, identifyUser, resetUser, AnalyticsEvents } from "@/lib/analytics";
+import { validateEnvOrThrow } from "@/lib/envValidation";
 import { supabase } from "@/integrations/supabase/client";
+import { error as logError } from "@/lib/logger";
 import Index from "./pages/Index";
+
+// Validate environment variables on app startup
+try {
+  validateEnvOrThrow();
+} catch (error) {
+  // In development, show error but don't crash
+  if (import.meta.env.MODE === 'development') {
+    logError('Environment validation failed:', error);
+  } else {
+    // In production, throw to prevent app from running with invalid config
+    throw error;
+  }
+}
 
 // Lazy load routes for code splitting
 const Compendium = lazy(() => import("./pages/Compendium"));
@@ -416,15 +431,17 @@ const App = () => {
             email: session.user.email,
             username: session.user.user_metadata?.username,
           });
-        } else if (event === 'SIGNED_UP') {
-          trackEvent({
-            name: AnalyticsEvents.USER_SIGNED_UP,
-            userId: session.user.id,
-          });
-          identifyUser(session.user.id, {
-            email: session.user.email,
-            username: session.user.user_metadata?.username,
-          });
+          
+          // Supabase JS v2 AuthChangeEvent no longer includes SIGNED_UP.
+          // Heuristic: treat first sign-in as sign-up when created_at ~= last_sign_in_at.
+          const createdAt = session.user.created_at ? new Date(session.user.created_at).getTime() : null;
+          const lastSignInAt = session.user.last_sign_in_at ? new Date(session.user.last_sign_in_at).getTime() : null;
+          if (createdAt && lastSignInAt && Math.abs(createdAt - lastSignInAt) < 60_000) {
+            trackEvent({
+              name: AnalyticsEvents.USER_SIGNED_UP,
+              userId: session.user.id,
+            });
+          }
         }
       } else {
         setSentryUser(null);

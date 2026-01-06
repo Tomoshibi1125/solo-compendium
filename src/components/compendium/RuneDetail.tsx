@@ -104,7 +104,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
                   <h4 className="font-heading font-semibold text-sm">Casters Using Martial Runes</h4>
                 </div>
                 <p className="text-sm text-muted-foreground ml-6">{data.caster_penalty}</p>
-                {data.caster_requirement_multiplier && data.caster_requirement_multiplier !== 1.0 && (
+                {data.caster_requirement_multiplier && parseFloat(data.caster_requirement_multiplier) !== 1.0 && (
                   <p className="text-xs text-muted-foreground ml-6 mt-1">
                     Requirement multiplier: {data.caster_requirement_multiplier}x
                   </p>
@@ -118,7 +118,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
                   <h4 className="font-heading font-semibold text-sm">Martials Using Caster Runes</h4>
                 </div>
                 <p className="text-sm text-muted-foreground ml-6">{data.martial_penalty}</p>
-                {data.martial_requirement_multiplier && data.martial_requirement_multiplier !== 1.0 && (
+                {data.martial_requirement_multiplier && parseFloat(data.martial_requirement_multiplier) !== 1.0 && (
                   <p className="text-xs text-muted-foreground ml-6 mt-1">
                     Requirement multiplier: {data.martial_requirement_multiplier}x
                   </p>

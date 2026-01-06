@@ -35,9 +35,6 @@ export const useCharacters = () => {
       return characters || [];
     },
     retry: false, // Don't retry if not authenticated
-    onError: (error) => {
-      logErrorWithContext(error, 'useCharacters');
-    },
   });
 };
 

@@ -7,11 +7,12 @@ import { useEquipment } from '@/hooks/useEquipment';
 import { usePowers } from '@/hooks/usePowers';
 import { useFeatures } from '@/hooks/useFeatures';
 import { useCharacter } from '@/hooks/useCharacters';
-import { useCharacterRuneInscriptions } from '@/hooks/useRunes';
+import { useCharacterRuneInscriptions, useUseRune } from '@/hooks/useRunes';
 import { getAbilityModifier, getProficiencyBonus } from '@/types/solo-leveling';
 import { parseModifiers, applyEquipmentModifiers } from '@/lib/equipmentModifiers';
 import { applyRuneBonuses } from '@/lib/runeAutomation';
 import { logger } from '@/lib/logger';
+import { useToast } from '@/hooks/use-toast';
 import type { AbilityScore } from '@/types/solo-leveling';
 import type { Database } from '@/integrations/supabase/types';
 
@@ -24,15 +25,27 @@ export function ActionsList({ characterId }: { characterId: string }) {
   const { features } = useFeatures(characterId);
   const { data: activeRunes = [] } = useCharacterRuneInscriptions(characterId);
   const useRune = useUseRune();
+  const { toast } = useToast();
 
   if (!character) return null;
 
   const handleUseRune = async (inscriptionId: string) => {
     try {
       await useRune.mutateAsync({ inscriptionId });
+      const inscription = activeRunes.find((ri) => ri.id === inscriptionId);
+      const runeName = inscription?.rune?.name || 'Rune';
+      toast({
+        title: 'Rune used',
+        description: `${runeName} consumed 1 use.`,
+      });
     } catch (error) {
-      // Error handling is done by the mutation
       logger.error('Failed to use rune:', error);
+      const message = error instanceof Error ? error.message : 'Failed to use rune.';
+      toast({
+        title: 'Rune use failed',
+        description: message,
+        variant: 'destructive',
+      });
     }
   };
 

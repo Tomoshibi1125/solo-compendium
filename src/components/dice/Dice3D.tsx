@@ -115,7 +115,6 @@ function StylizedNumber({ value, position, size = 0.3, theme = 'shadow-monarch' 
         anchorY="middle"
         outlineWidth={0.08}
         outlineColor="#000000"
-        opacity={0.9}
         fontWeight="900"
       >
         {value}
@@ -128,7 +127,6 @@ function StylizedNumber({ value, position, size = 0.3, theme = 'shadow-monarch' 
         anchorX="center"
         anchorY="middle"
         outlineWidth={0}
-        opacity={0.5}
       >
         {value}
       </Text>
@@ -155,7 +153,6 @@ function StylizedNumber({ value, position, size = 0.3, theme = 'shadow-monarch' 
           anchorY="middle"
           outlineWidth={0.03}
           outlineColor={glowColor}
-          opacity={0.7}
           fontWeight="900"
         >
           {value}
@@ -467,4 +464,3 @@ export function Dice3DRoller({ dice, isRolling, onRollComplete, theme = 'shadow-
 }
 
 export { DICE_THEMES };
-export type { DiceTheme };

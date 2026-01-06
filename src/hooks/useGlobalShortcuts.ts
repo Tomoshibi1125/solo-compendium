@@ -19,7 +19,7 @@ export function useGlobalShortcuts(enabled: boolean = true) {
         target.tagName === 'INPUT' ||
         target.tagName === 'TEXTAREA' ||
         target.isContentEditable ||
-        (target.tagName === 'BUTTON' && target.type === 'submit')
+        (target.tagName === 'BUTTON' && (target as HTMLButtonElement).type === 'submit')
       ) {
         return;
       }

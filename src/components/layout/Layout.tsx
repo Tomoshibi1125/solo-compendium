@@ -1,13 +1,15 @@
 import { ReactNode } from 'react';
 import { Header } from './Header';
+import { cn } from '@/lib/utils';
 
 interface LayoutProps {
   children: ReactNode;
+  className?: string;
 }
 
-export function Layout({ children }: LayoutProps) {
+export function Layout({ children, className }: LayoutProps) {
   return (
-    <div className="min-h-screen flex flex-col relative overflow-x-hidden">
+    <div className={cn("min-h-screen flex flex-col relative overflow-x-hidden", className)}>
       {/* Skip to main content link - Accessibility */}
       <a
         href="#main-content"

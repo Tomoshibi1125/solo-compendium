@@ -26,6 +26,7 @@ const CharacterLevelUp = () => {
   const { toast } = useToast();
   const { data: character, isLoading } = useCharacter(id || '');
   const updateCharacter = useUpdateCharacter();
+  const initializeSpellSlots = useInitializeSpellSlots();
   const [newLevel, setNewLevel] = useState(1);
   const [hpIncrease, setHpIncrease] = useState<number | null>(null);
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);

@@ -12,6 +12,7 @@
  */
 
 import { getConsentStatus } from '@/hooks/useAnalyticsConsent';
+import { logger } from '@/lib/logger';
 
 type AnalyticsEvent = {
   name: string;
@@ -51,19 +52,19 @@ export function trackEvent(event: AnalyticsEvent): void {
   try {
     // Log event (can be extended to send to your backend)
     if (import.meta.env.DEV) {
-      console.log('[Analytics] Event:', event);
+      logger.debug('[Analytics] Event:', event);
     }
 
     // Plausible Analytics
-    if (PLAUSIBLE_DOMAIN && typeof window !== 'undefined' && (window as any).plausible) {
-      (window as any).plausible(event.name, {
+    if (PLAUSIBLE_DOMAIN && typeof window !== 'undefined' && window.plausible) {
+      window.plausible(event.name, {
         props: event.properties,
       });
     }
 
     // PostHog
-    if (POSTHOG_KEY && typeof window !== 'undefined' && (window as any).posthog) {
-      (window as any).posthog.capture(event.name, event.properties);
+    if (POSTHOG_KEY && typeof window !== 'undefined' && window.posthog) {
+      window.posthog.capture(event.name, event.properties);
     }
 
     // Custom analytics endpoint (if you have one)
@@ -76,7 +77,7 @@ export function trackEvent(event: AnalyticsEvent): void {
     // }).catch(() => {}); // Fail silently
   } catch (error) {
     // Fail silently - analytics should never break the app
-    console.error('[Analytics] Failed to track event:', error);
+    logger.warn('[Analytics] Failed to track event:', error);
   }
 }
 
@@ -88,12 +89,12 @@ export function trackPageView(page: AnalyticsPageView): void {
 
   try {
     if (import.meta.env.DEV) {
-      console.log('[Analytics] Page view:', page);
+      logger.debug('[Analytics] Page view:', page);
     }
 
     // Plausible Analytics
-    if (PLAUSIBLE_DOMAIN && typeof window !== 'undefined' && (window as any).plausible) {
-      (window as any).plausible('pageview', {
+    if (PLAUSIBLE_DOMAIN && typeof window !== 'undefined' && window.plausible) {
+      window.plausible('pageview', {
         props: {
           path: page.path,
           title: page.title,
@@ -102,15 +103,15 @@ export function trackPageView(page: AnalyticsPageView): void {
     }
 
     // PostHog
-    if (POSTHOG_KEY && typeof window !== 'undefined' && (window as any).posthog) {
-      (window as any).posthog.capture('$pageview', {
+    if (POSTHOG_KEY && typeof window !== 'undefined' && window.posthog) {
+      window.posthog.capture('$pageview', {
         $current_url: window.location.href,
         path: page.path,
         title: page.title,
       });
     }
   } catch (error) {
-    console.error('[Analytics] Failed to track page view:', error);
+    logger.warn('[Analytics] Failed to track page view:', error);
   }
 }
 
@@ -122,14 +123,14 @@ export function identifyUser(userId: string, traits?: Record<string, unknown>): 
 
   try {
     // PostHog
-    if (POSTHOG_KEY && typeof window !== 'undefined' && (window as any).posthog) {
-      (window as any).posthog.identify(userId, traits);
+    if (POSTHOG_KEY && typeof window !== 'undefined' && window.posthog) {
+      window.posthog.identify(userId, traits);
     }
 
     // Custom analytics
     // You can send user identification to your backend here
   } catch (error) {
-    console.error('[Analytics] Failed to identify user:', error);
+    logger.warn('[Analytics] Failed to identify user:', error);
   }
 }
 
@@ -141,11 +142,11 @@ export function resetUser(): void {
 
   try {
     // PostHog
-    if (POSTHOG_KEY && typeof window !== 'undefined' && (window as any).posthog) {
-      (window as any).posthog.reset();
+    if (POSTHOG_KEY && typeof window !== 'undefined' && window.posthog) {
+      window.posthog.reset();
     }
   } catch (error) {
-    console.error('[Analytics] Failed to reset user:', error);
+    logger.warn('[Analytics] Failed to reset user:', error);
   }
 }
 
@@ -175,7 +176,7 @@ export function initAnalytics(): void {
           }
         },
       });
-      (window as any).posthog = posthog.default;
+      window.posthog = posthog.default as unknown as Window['posthog'];
     });
   }
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -40,20 +41,20 @@ export function ComparisonTool({ type, className }: ComparisonToolProps) {
       if (!tableName) return [];
 
       const { data, error } = await supabase
-        .from(tableName)
+        .from(tableName as keyof Database['public']['Tables'])
         .select('*')
         .limit(100);
 
       if (error) throw error;
-      return data || [];
+      return (data || []) as Array<{ id: string; name?: string; [key: string]: unknown }>;
     },
   });
 
   const addItem = () => {
     if (!selectedId) return;
 
-    const item = items.find((i: { id: string }) => i.id === selectedId);
-    if (!item) return;
+    const item = items.find((i: { id: string; name?: string }) => i.id === selectedId);
+    if (!item || !item.name) return;
 
     if (selectedItems.find(si => si.id === item.id)) return; // Already added
 
@@ -92,7 +93,7 @@ export function ComparisonTool({ type, className }: ComparisonToolProps) {
                 <SelectValue placeholder={`Select ${type.slice(0, -1)} to compare...`} />
               </SelectTrigger>
               <SelectContent>
-                {items.map((item: { id: string; name: string }) => (
+                {items.filter((item: { id: string; name?: string }) => item.name).map((item: { id: string; name: string }) => (
                   <SelectItem key={item.id} value={item.id}>
                     {item.name}
                   </SelectItem>
@@ -121,7 +122,7 @@ export function ComparisonTool({ type, className }: ComparisonToolProps) {
             </SelectTrigger>
             <SelectContent>
               {items
-                .filter((item: { id: string }) => !selectedItems.find(si => si.id === item.id))
+                .filter((item: { id: string; name?: string }) => item.name && !selectedItems.find(si => si.id === item.id))
                 .map((item: { id: string; name: string }) => (
                   <SelectItem key={item.id} value={item.id}>
                     {item.name}

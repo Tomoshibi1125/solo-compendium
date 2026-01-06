@@ -52,12 +52,11 @@ import { AnimatedList } from '@/components/ui/AnimatedList';
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { GeminiProtocolGenerator } from '@/components/compendium/GeminiProtocolGenerator';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
-import { Swords, Wand2, Gem, Skull, Package } from 'lucide-react';
 
 interface CompendiumEntry {
   id: string;
   name: string;
-  type: 'jobs' | 'paths' | 'powers' | 'relics' | 'monsters' | 'backgrounds' | 'conditions' | 'monarchs' | 'feats' | 'skills' | 'equipment' | 'sovereigns';
+  type: 'jobs' | 'paths' | 'powers' | 'runes' | 'relics' | 'monsters' | 'backgrounds' | 'conditions' | 'monarchs' | 'feats' | 'skills' | 'equipment' | 'sovereigns';
   rarity?: string;
   description: string;
   level?: number;
@@ -67,6 +66,8 @@ interface CompendiumEntry {
   prerequisites?: string;
   equipment_type?: string;
   ability?: string;
+  rune_type?: string;
+  rune_category?: string;
   tags?: string[];
   created_at?: string;
   isFavorite?: boolean;
@@ -76,6 +77,27 @@ interface CompendiumEntry {
   is_boss?: boolean;
   image_url?: string | null;
 }
+
+type JobSearchRow = {
+  id: string;
+  name: string;
+  description?: string | null;
+  created_at?: string;
+  tags?: string[] | null;
+  source_book?: string | null;
+  image_url?: string | null;
+};
+
+type PowerSearchRow = {
+  id: string;
+  name: string;
+  description?: string | null;
+  power_level?: number | null;
+  school?: string | null;
+  created_at?: string;
+  tags?: string[] | null;
+  source_book?: string | null;
+};
 
 type SortOption = 'name-asc' | 'name-desc' | 'level-asc' | 'level-desc' | 'rarity-asc' | 'rarity-desc' | 'date-desc';
 
@@ -134,6 +156,7 @@ const gateRanks = ['E', 'D', 'C', 'B', 'A', 'S', 'SS'];
 const Compendium = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
+  const parsedQuery = useMemo(() => parseSearchQuery(debouncedSearchQuery), [debouncedSearchQuery]);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState<SortOption>('name-asc');
@@ -169,7 +192,7 @@ const Compendium = () => {
 
       // Fetch Jobs
       if (selectedCategory === 'all' || selectedCategory === 'jobs') {
-          let jobs: any[] | null = null;
+          let jobs: JobSearchRow[] | null = null;
           
           // Use full-text search RPC if query is long enough
           if (debouncedSearchQuery.trim() && debouncedSearchQuery.length > 2) {
@@ -294,7 +317,7 @@ const Compendium = () => {
 
         // Fetch Powers
         if (selectedCategory === 'all' || selectedCategory === 'powers') {
-          let powers: any[] | null = null;
+          let powers: PowerSearchRow[] | null = null;
           
           if (debouncedSearchQuery.trim() && debouncedSearchQuery.length > 2) {
             try {
@@ -598,7 +621,7 @@ const Compendium = () => {
     setShowMiniBossOnly(filters.showMiniBossOnly);
     setMinCR(filters.minCR);
     setMaxCR(filters.maxCR);
-  }, []); // Only on mount
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps -- Intentional one-time hydration from localStorage-backed state.
 
   // Save filters when they change
   useEffect(() => {

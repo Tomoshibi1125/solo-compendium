@@ -356,12 +356,17 @@ export function PowersList({ characterId }: { characterId: string }) {
                             Prep
                           </label>
                         </div>
-                        {power.power_level > 0 && power.is_prepared && (
+                        {power.is_prepared && (
                           <Button
                             variant="outline"
                             size="sm"
                             onClick={() => handleCastSpell(power)}
-                            disabled={!spellSlots.find(s => s.level === power.power_level && s.current > 0)}
+                            disabled={
+                              power.power_level > 0 &&
+                              !spellSlots.find(
+                                (s) => s.level === power.power_level && s.current > 0
+                              )
+                            }
                             className="text-xs"
                           >
                             Cast

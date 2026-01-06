@@ -153,7 +153,7 @@ export const useInitializeSpellSlots = () => {
         .select('*')
         .eq('character_id', characterId);
 
-      const operations: Promise<any>[] = [];
+      const operations: Array<PromiseLike<unknown>> = [];
 
       for (let spellLevel = 1; spellLevel <= 9; spellLevel++) {
         const maxSlots = expectedSlots[spellLevel];

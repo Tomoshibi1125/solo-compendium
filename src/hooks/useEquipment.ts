@@ -30,9 +30,6 @@ export const useEquipment = (characterId: string) => {
       return data as Equipment[];
     },
     enabled: !!characterId,
-    onError: (error) => {
-      logErrorWithContext(error, 'useEquipment');
-    },
   });
 
   const addEquipment = useMutation({

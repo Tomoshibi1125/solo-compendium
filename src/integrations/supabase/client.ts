@@ -45,16 +45,23 @@ export const supabase = createClient<Database>(
 );
 
 // Test connection on initialization (non-blocking)
-if (typeof window !== 'undefined' && SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY) {
-  supabase
-    .from('characters')
-    .select('id')
-    .limit(1)
-    .then(() => {
+// Only run in development, and never during Vitest (happy-dom teardown aborts in-flight fetches).
+const shouldTestConnection =
+  import.meta.env.DEV &&
+  import.meta.env.MODE !== 'test' &&
+  typeof window !== 'undefined' &&
+  Boolean(SUPABASE_URL) &&
+  Boolean(SUPABASE_PUBLISHABLE_KEY);
+
+if (shouldTestConnection) {
+  void (async () => {
+    try {
+      await supabase.from('characters').select('id').limit(1);
       log('✅ Supabase connection successful');
-    })
-    .catch((error) => {
-      logWarn('⚠️ Supabase connection test failed:', error.message);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      logWarn('⚠️ Supabase connection test failed:', message);
       logWarn('The app will continue to work, but database features may be limited.');
-    });
+    }
+  })();
 }

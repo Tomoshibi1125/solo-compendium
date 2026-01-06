@@ -219,6 +219,58 @@ export function useToggleRuneActive() {
   });
 }
 
+// Use a rune (consume one use on a rune inscription, if tracked)
+export function useUseRune() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ inscriptionId }: { inscriptionId: string }) => {
+      const { data: inscription, error } = await supabase
+        .from('character_rune_inscriptions')
+        .select('id, character_id, uses_current, uses_max, times_used')
+        .eq('id', inscriptionId)
+        .single();
+
+      if (error) throw error;
+      if (!inscription) throw new Error('Rune inscription not found');
+
+      const timesUsed = (inscription.times_used || 0) + 1;
+
+      // If uses are not tracked (null max), treat as unlimited and just increment times_used
+      if (inscription.uses_max === null) {
+        const { error: updateError } = await supabase
+          .from('character_rune_inscriptions')
+          .update({ times_used: timesUsed })
+          .eq('id', inscriptionId);
+
+        if (updateError) throw updateError;
+        return { characterId: inscription.character_id, usesCurrent: inscription.uses_current, usesMax: inscription.uses_max };
+      }
+
+      const currentUses = inscription.uses_current ?? inscription.uses_max ?? 0;
+      if (currentUses <= 0) {
+        throw new Error('No uses remaining');
+      }
+
+      const newUses = Math.max(0, currentUses - 1);
+
+      const { error: updateError } = await supabase
+        .from('character_rune_inscriptions')
+        .update({ uses_current: newUses, times_used: timesUsed })
+        .eq('id', inscriptionId);
+
+      if (updateError) throw updateError;
+      return { characterId: inscription.character_id, usesCurrent: newUses, usesMax: inscription.uses_max };
+    },
+    onSuccess: (_data, variables) => {
+      // Invalidate broad queries (we don't always have equipmentId available here)
+      queryClient.invalidateQueries({ queryKey: ['character-rune-inscriptions'] });
+      queryClient.invalidateQueries({ queryKey: ['equipment-runes'] });
+      // Note: characterId-scoped invalidation is handled by the broad invalidation above.
+    },
+  });
+}
+
 // Learn a rune (add to knowledge)
 export function useLearnRune() {
   const queryClient = useQueryClient();

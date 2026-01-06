@@ -39,7 +39,7 @@ const SessionPlanner = () => {
     prepNotes: '',
     postSessionNotes: '',
   });
-  const [newNote, setNewNote] = useState({ title: '', content: '', type: 'other' as const });
+  const [newNote, setNewNote] = useState<{ title: string; content: string; type: SessionNote['type'] }>({ title: '', content: '', type: 'other' });
 
   const saveSession = () => {
     const updated = sessions.filter(s => s.id !== currentSession.id);
