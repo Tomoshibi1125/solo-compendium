@@ -30,8 +30,8 @@ tsc -p tsconfig.node.json --noEmit
 
 **test**
 ```text
-Test Files  9 passed (9)
-Tests       112 passed (112)
+Test Files  10 passed (10)
+Tests       115 passed (115)
 ```
 
 **build**
