@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
@@ -6,16 +6,12 @@ import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
-  server: {
-    host: "::",
-    port: 8080,
-  },
-  plugins: [
+export default defineConfig(({ mode }) => {
+  const plugins: (Plugin | Plugin[])[] = [
     react(),
-    mode === "development" && componentTagger(),
+    ...(mode === "development" ? [componentTagger()] : []),
     // Sentry plugin for source maps (only in production builds)
-    mode === "production" && process.env.SENTRY_AUTH_TOKEN && sentryVitePlugin({
+    ...(mode === "production" && process.env.SENTRY_AUTH_TOKEN ? [sentryVitePlugin({
       org: process.env.SENTRY_ORG,
       project: process.env.SENTRY_PROJECT,
       authToken: process.env.SENTRY_AUTH_TOKEN,
@@ -23,7 +19,7 @@ export default defineConfig(({ mode }) => ({
         assets: "./dist/**",
         ignore: ["node_modules"],
       },
-    }),
+    })] : []),
     // PWA plugin for service worker and offline support
     VitePWA({
       registerType: 'prompt',
@@ -101,36 +97,44 @@ export default defineConfig(({ mode }) => ({
         enabled: false, // Disable in dev to avoid conflicts
       },
     }),
-  ].filter(Boolean),
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
+  ];
+
+  return {
+    server: {
+      host: "::",
+      port: 8080,
     },
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'ui-vendor': [
-            '@radix-ui/react-accordion',
-            '@radix-ui/react-dialog',
-            '@radix-ui/react-dropdown-menu',
-            '@radix-ui/react-select',
-            '@radix-ui/react-tabs',
-          ],
-          'query-vendor': ['@tanstack/react-query'],
-          'supabase-vendor': ['@supabase/supabase-js'],
-        },
+    plugins,
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
       },
     },
-    chunkSizeWarningLimit: 1000,
-    // Optimize for production
-    minify: 'esbuild',
-    sourcemap: mode === "production" && process.env.SENTRY_AUTH_TOKEN ? true : false, // Enable sourcemaps for Sentry
-    // Tree shaking optimization
-    treeshake: {
-      moduleSideEffects: false,
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+            'ui-vendor': [
+              '@radix-ui/react-accordion',
+              '@radix-ui/react-dialog',
+              '@radix-ui/react-dropdown-menu',
+              '@radix-ui/react-select',
+              '@radix-ui/react-tabs',
+            ],
+            'query-vendor': ['@tanstack/react-query'],
+            'supabase-vendor': ['@supabase/supabase-js'],
+          },
+        },
+      },
+      chunkSizeWarningLimit: 1000,
+      // Optimize for production
+      minify: 'esbuild',
+      sourcemap: mode === "production" && process.env.SENTRY_AUTH_TOKEN ? true : false, // Enable sourcemaps for Sentry
+      // Tree shaking optimization
+      treeshake: {
+        moduleSideEffects: false,
+      },
     },
-  },
-}));
+  };
+});
