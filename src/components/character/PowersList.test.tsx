@@ -96,7 +96,7 @@ describe('PowersList spell slot consumption', () => {
     const user = userEvent.setup();
 
     render(
-      <MemoryRouter>
+      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <PowersList characterId="char-1" />
       </MemoryRouter>
     );
@@ -123,7 +123,7 @@ describe('PowersList spell slot consumption', () => {
     ];
 
     render(
-      <MemoryRouter>
+      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <PowersList characterId="char-1" />
       </MemoryRouter>
     );
