@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { calculateDifficulty, calculateXP } from './EncounterBuilder';
+import { calculateDifficulty, calculateXP } from '@/lib/encounterMath';
 
 describe('EncounterBuilder helpers', () => {
   it('calculateXP multiplies monster XP by quantity', () => {
