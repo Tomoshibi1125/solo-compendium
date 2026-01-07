@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Plus, Trash2, Search, Sword } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -27,12 +27,15 @@ const DIFFICULTY_THRESHOLDS = {
   deadly: { 1: 100, 2: 200, 3: 300, 4: 450, 5: 550, 6: 600, 7: 750, 8: 900, 9: 1100, 10: 1200 },
 };
 
-function calculateXP(monster: Monster, quantity: number): number {
+const ENCOUNTER_STORAGE_KEY = 'solo-compendium.dm-tools.encounter-builder.v1';
+const INITIATIVE_STORAGE_KEY = 'solo-compendium.dm-tools.initiative.v1';
+
+export function calculateXP(monster: Monster, quantity: number): number {
   const xp = monster.xp || 0;
   return xp * quantity;
 }
 
-function calculateDifficulty(totalXP: number, hunterLevel: number, hunterCount: number): string {
+export function calculateDifficulty(totalXP: number, hunterLevel: number, hunterCount: number): string {
   const multiplier = hunterCount === 1 ? 1 : hunterCount <= 2 ? 1.5 : hunterCount <= 6 ? 2 : 2.5;
   const adjustedXP = totalXP * multiplier;
   const thresholds = DIFFICULTY_THRESHOLDS;
@@ -55,6 +58,43 @@ const EncounterBuilder = () => {
   const [hunterLevel, setHunterLevel] = useState(1);
   const [hunterCount, setHunterCount] = useState(4);
   const [encounterMonsters, setEncounterMonsters] = useState<EncounterMonster[]>([]);
+
+  // Load persisted encounter (best-effort)
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(ENCOUNTER_STORAGE_KEY);
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as Partial<{
+        hunterLevel: number;
+        hunterCount: number;
+        encounterMonsters: EncounterMonster[];
+      }>;
+
+      if (typeof parsed.hunterLevel === 'number') setHunterLevel(parsed.hunterLevel);
+      if (typeof parsed.hunterCount === 'number') setHunterCount(parsed.hunterCount);
+      if (Array.isArray(parsed.encounterMonsters)) setEncounterMonsters(parsed.encounterMonsters);
+    } catch {
+      // ignore corrupted storage
+    }
+  }, []);
+
+  // Persist encounter (best-effort)
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        ENCOUNTER_STORAGE_KEY,
+        JSON.stringify({
+          version: 1,
+          savedAt: new Date().toISOString(),
+          hunterLevel,
+          hunterCount,
+          encounterMonsters,
+        })
+      );
+    } catch {
+      // ignore quota errors
+    }
+  }, [hunterLevel, hunterCount, encounterMonsters]);
 
   const { data: monsters = [], isLoading } = useQuery({
     queryKey: ['monsters', searchQuery],
@@ -108,6 +148,58 @@ const EncounterBuilder = () => {
     setEncounterMonsters(encounterMonsters.map(em =>
       em.id === id ? { ...em, quantity } : em
     ));
+  };
+
+  const clearEncounter = () => {
+    setEncounterMonsters([]);
+    try {
+      localStorage.removeItem(ENCOUNTER_STORAGE_KEY);
+    } catch {
+      // ignore
+    }
+    toast({
+      title: 'Encounter cleared',
+      description: 'Encounter builder state cleared.',
+    });
+  };
+
+  const sendToInitiativeTracker = () => {
+    if (encounterMonsters.length === 0) return;
+
+    const combatants = encounterMonsters.flatMap((em) => {
+      const qty = Math.max(1, em.quantity || 1);
+      return Array.from({ length: qty }, (_, i) => ({
+        id: `${em.monster.id}-${Date.now()}-${Math.random()}-${i}`,
+        name: qty > 1 ? `${em.monster.name} #${i + 1}` : em.monster.name,
+        initiative: 0,
+        hp: em.monster.hit_points_average || undefined,
+        maxHp: em.monster.hit_points_average || undefined,
+        ac: em.monster.armor_class || undefined,
+        conditions: [] as string[],
+        isHunter: false,
+      }));
+    });
+
+    try {
+      localStorage.setItem(
+        INITIATIVE_STORAGE_KEY,
+        JSON.stringify({
+          version: 1,
+          savedAt: new Date().toISOString(),
+          combatants,
+          currentTurn: 0,
+          round: 1,
+        })
+      );
+    } catch {
+      // ignore
+    }
+
+    toast({
+      title: 'Sent to tracker',
+      description: 'Encounter monsters loaded into the initiative tracker.',
+    });
+    navigate('/dm-tools/initiative-tracker');
   };
 
   const difficultyColors = {
@@ -232,6 +324,25 @@ const EncounterBuilder = () => {
                     ))}
                   </div>
                 )}
+
+                <div className="pt-4 border-t border-border space-y-2">
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    onClick={sendToInitiativeTracker}
+                    disabled={encounterMonsters.length === 0}
+                  >
+                    Send to Initiative Tracker
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    className="w-full"
+                    onClick={clearEncounter}
+                    disabled={encounterMonsters.length === 0}
+                  >
+                    Clear Encounter
+                  </Button>
+                </div>
               </div>
             </SystemWindow>
           </div>

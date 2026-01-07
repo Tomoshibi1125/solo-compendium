@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Plus, Trash2, ArrowUp, ArrowDown, RotateCcw } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -20,13 +20,14 @@ interface Combatant {
   isHunter: boolean;
 }
 
+const STORAGE_KEY = 'solo-compendium.dm-tools.initiative.v1';
+
 const InitiativeTracker = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [combatants, setCombatants] = useState<Combatant[]>([]);
   const [currentTurn, setCurrentTurn] = useState(0);
   const [round, setRound] = useState(1);
-  const [isActive, setIsActive] = useState(false);
   const [newCombatant, setNewCombatant] = useState({
     name: '',
     initiative: 0,
@@ -35,6 +36,49 @@ const InitiativeTracker = () => {
     ac: 0,
     isHunter: true,
   });
+
+  // Load persisted state (best-effort)
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as Partial<{
+        combatants: Combatant[];
+        currentTurn: number;
+        round: number;
+      }>;
+
+      if (Array.isArray(parsed.combatants)) {
+        setCombatants(parsed.combatants);
+      }
+      if (typeof parsed.currentTurn === 'number') {
+        setCurrentTurn(parsed.currentTurn);
+      }
+      if (typeof parsed.round === 'number') {
+        setRound(parsed.round);
+      }
+    } catch {
+      // ignore corrupted storage
+    }
+  }, []);
+
+  // Persist state (best-effort)
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          version: 1,
+          savedAt: new Date().toISOString(),
+          combatants,
+          currentTurn,
+          round,
+        })
+      );
+    } catch {
+      // ignore quota errors
+    }
+  }, [combatants, currentTurn, round]);
 
   const sortedCombatants = [...combatants].sort((a, b) => {
     if (b.initiative !== a.initiative) {
@@ -140,7 +184,11 @@ const InitiativeTracker = () => {
     setCombatants([]);
     setCurrentTurn(0);
     setRound(1);
-    setIsActive(false);
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // ignore
+    }
     toast({
       title: 'Combat reset',
       description: 'All combatants cleared from the tracker.',
