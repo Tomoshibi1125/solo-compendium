@@ -6,6 +6,7 @@ import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 
@@ -21,6 +22,24 @@ interface Combatant {
 }
 
 const STORAGE_KEY = 'solo-compendium.dm-tools.initiative.v1';
+
+const CONDITION_OPTIONS = [
+  'Blinded',
+  'Charmed',
+  'Deafened',
+  'Exhaustion',
+  'Frightened',
+  'Grappled',
+  'Incapacitated',
+  'Invisible',
+  'Paralyzed',
+  'Petrified',
+  'Poisoned',
+  'Prone',
+  'Restrained',
+  'Stunned',
+  'Unconscious',
+];
 
 const InitiativeTracker = () => {
   const navigate = useNavigate();
@@ -141,9 +160,35 @@ const InitiativeTracker = () => {
   };
 
   const updateHP = (id: string, hp: number) => {
-    setCombatants(combatants.map(c =>
-      c.id === id ? { ...c, hp: Math.max(0, hp) } : c
-    ));
+    setCombatants(combatants.map(c => {
+      if (c.id !== id) return c;
+      const maxHp = typeof c.maxHp === 'number' && c.maxHp > 0 ? c.maxHp : undefined;
+      const nextHp = maxHp !== undefined ? Math.min(Math.max(0, hp), maxHp) : Math.max(0, hp);
+      return { ...c, hp: nextHp };
+    }));
+  };
+
+  const updateMaxHP = (id: string, maxHp: number) => {
+    setCombatants(combatants.map(c => {
+      if (c.id !== id) return c;
+      const nextMax = Math.max(0, maxHp);
+      const nextHp = typeof c.hp === 'number'
+        ? Math.min(Math.max(0, c.hp), nextMax > 0 ? nextMax : c.hp)
+        : c.hp;
+      return { ...c, maxHp: nextMax, hp: nextHp };
+    }));
+  };
+
+  const adjustHP = (id: string, delta: number) => {
+    setCombatants(combatants.map(c => {
+      if (c.id !== id) return c;
+      const base = typeof c.hp === 'number' ? c.hp : 0;
+      const maxHp = typeof c.maxHp === 'number' && c.maxHp > 0 ? c.maxHp : undefined;
+      const nextHp = maxHp !== undefined
+        ? Math.min(Math.max(0, base + delta), maxHp)
+        : Math.max(0, base + delta);
+      return { ...c, hp: nextHp };
+    }));
   };
 
   const addCondition = (id: string, condition: string) => {
@@ -280,6 +325,8 @@ const InitiativeTracker = () => {
                           ? "border-primary bg-primary/10 shadow-lg"
                           : "bg-muted/30 border-border"
                       )}
+                      data-combatant-card
+                      data-combatant-name={combatant.name}
                     >
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center gap-3">
@@ -302,9 +349,9 @@ const InitiativeTracker = () => {
                             </div>
                             <div className="text-xs text-muted-foreground">
                               Initiative: {combatant.initiative}
-                              {combatant.ac && ` • AC: ${combatant.ac}`}
-                              {combatant.hp !== undefined && combatant.maxHp && (
-                                ` • HP: ${combatant.hp}/${combatant.maxHp}`
+                              {combatant.ac !== undefined && ` | AC: ${combatant.ac}`}
+                              {combatant.hp !== undefined && combatant.maxHp !== undefined && (
+                                ` | HP: ${combatant.hp}/${combatant.maxHp}`
                               )}
                             </div>
                           </div>
@@ -319,6 +366,73 @@ const InitiativeTracker = () => {
                           <Trash2 className="w-3 h-3" />
                         </Button>
                       </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        <div>
+                          <Label htmlFor={`combatant-${combatant.id}-hp`} className="text-xs text-muted-foreground">HP</Label>
+                          <Input
+                            id={`combatant-${combatant.id}-hp`}
+                            type="number"
+                            min={0}
+                            value={combatant.hp ?? ''}
+                            onChange={(e) => updateHP(combatant.id, parseInt(e.target.value) || 0)}
+                            aria-label={`HP for ${combatant.name}`}
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor={`combatant-${combatant.id}-max-hp`} className="text-xs text-muted-foreground">Max HP</Label>
+                          <Input
+                            id={`combatant-${combatant.id}-max-hp`}
+                            type="number"
+                            min={0}
+                            value={combatant.maxHp ?? ''}
+                            onChange={(e) => updateMaxHP(combatant.id, parseInt(e.target.value) || 0)}
+                            aria-label={`Max HP for ${combatant.name}`}
+                          />
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => adjustHP(combatant.id, -1)}
+                          aria-label={`Damage ${combatant.name} by 1`}
+                        >
+                          -1
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => adjustHP(combatant.id, -5)}
+                          aria-label={`Damage ${combatant.name} by 5`}
+                        >
+                          -5
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => adjustHP(combatant.id, 5)}
+                          aria-label={`Heal ${combatant.name} by 5`}
+                        >
+                          +5
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => adjustHP(combatant.id, 1)}
+                          aria-label={`Heal ${combatant.name} by 1`}
+                        >
+                          +1
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => updateHP(combatant.id, combatant.maxHp ?? combatant.hp ?? 0)}
+                          disabled={!(typeof combatant.maxHp === 'number' && combatant.maxHp > 0)}
+                          aria-label={`Set ${combatant.name} to full HP`}
+                        >
+                          Full
+                        </Button>
+                      </div>
                       {combatant.conditions.length > 0 && (
                         <div className="flex flex-wrap gap-1 mt-2">
                           {combatant.conditions.map((condition) => (
@@ -328,11 +442,28 @@ const InitiativeTracker = () => {
                               className="text-xs cursor-pointer"
                               onClick={() => removeCondition(combatant.id, condition)}
                             >
-                              {condition} ×
+                              {condition} x
                             </Badge>
                           ))}
                         </div>
                       )}
+                      <div className="mt-2">
+                        <div className="text-xs text-muted-foreground mb-1">Add Condition</div>
+                        <div className="flex flex-wrap gap-1">
+                          {CONDITION_OPTIONS.filter((condition) => !combatant.conditions.includes(condition))
+                            .map((condition) => (
+                              <Badge
+                                key={condition}
+                                variant="outline"
+                                className="text-xs cursor-pointer"
+                                onClick={() => addCondition(combatant.id, condition)}
+                                aria-label={`Add ${condition} to ${combatant.name}`}
+                              >
+                                + {condition}
+                              </Badge>
+                            ))}
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -345,10 +476,11 @@ const InitiativeTracker = () => {
             <SystemWindow title="ADD COMBATANT">
               <div className="space-y-3">
                 <div>
-                  <label className="text-xs font-display text-muted-foreground mb-1 block">
+                  <Label htmlFor="combatant-name" className="text-xs font-display text-muted-foreground mb-1 block">
                     NAME
-                  </label>
+                  </Label>
                   <Input
+                    id="combatant-name"
                     value={newCombatant.name}
                     onChange={(e) => setNewCombatant({ ...newCombatant, name: e.target.value })}
                     placeholder="Hunter or Gate creature name"
@@ -356,10 +488,11 @@ const InitiativeTracker = () => {
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-display text-muted-foreground mb-1 block">
+                  <Label htmlFor="combatant-initiative" className="text-xs font-display text-muted-foreground mb-1 block">
                     INITIATIVE
-                  </label>
+                  </Label>
                   <Input
+                    id="combatant-initiative"
                     type="number"
                     value={newCombatant.initiative}
                     onChange={(e) => setNewCombatant({ ...newCombatant, initiative: parseInt(e.target.value) || 0 })}
@@ -368,10 +501,11 @@ const InitiativeTracker = () => {
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className="text-xs font-display text-muted-foreground mb-1 block">
+                    <Label htmlFor="combatant-hp" className="text-xs font-display text-muted-foreground mb-1 block">
                       HP
-                    </label>
+                    </Label>
                     <Input
+                      id="combatant-hp"
                       type="number"
                       value={newCombatant.hp}
                       onChange={(e) => setNewCombatant({ ...newCombatant, hp: parseInt(e.target.value) || 0 })}
@@ -379,10 +513,11 @@ const InitiativeTracker = () => {
                     />
                   </div>
                   <div>
-                    <label className="text-xs font-display text-muted-foreground mb-1 block">
+                    <Label htmlFor="combatant-max-hp" className="text-xs font-display text-muted-foreground mb-1 block">
                       MAX HP
-                    </label>
+                    </Label>
                     <Input
+                      id="combatant-max-hp"
                       type="number"
                       value={newCombatant.maxHp}
                       onChange={(e) => setNewCombatant({ ...newCombatant, maxHp: parseInt(e.target.value) || 0 })}
@@ -391,10 +526,11 @@ const InitiativeTracker = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="text-xs font-display text-muted-foreground mb-1 block">
+                  <Label htmlFor="combatant-ac" className="text-xs font-display text-muted-foreground mb-1 block">
                     AC
-                  </label>
+                  </Label>
                   <Input
+                    id="combatant-ac"
                     type="number"
                     value={newCombatant.ac}
                     onChange={(e) => setNewCombatant({ ...newCombatant, ac: parseInt(e.target.value) || 0 })}
