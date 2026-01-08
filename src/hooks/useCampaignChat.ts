@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { AppError } from '@/lib/appError';
 import type { RealtimeChannel } from '@supabase/supabase-js';
 
 export interface CampaignMessage {
@@ -99,7 +100,7 @@ export const useSendCampaignMessage = () => {
       metadata?: Record<string, unknown>;
     }) => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
       const { data, error } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

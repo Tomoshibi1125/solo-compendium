@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import type { GeneratedSovereign, FusionAbility } from '@/lib/geminiProtocol';
+import { AppError } from '@/lib/appError';
 
 export interface SavedSovereign {
   id: string;
@@ -76,7 +77,7 @@ export function useSaveSovereign() {
   return useMutation({
     mutationFn: async (sovereign: GeneratedSovereign) => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Must be logged in to save Sovereigns');
+      if (!user) throw new AppError('Must be logged in to save Sovereigns', 'AUTH_REQUIRED');
 
       const insertData = {
         name: sovereign.name,

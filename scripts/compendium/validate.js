@@ -3,6 +3,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validateContentBundle } from './schema.js';
 
+class ScriptError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ScriptError';
+  }
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -29,7 +36,7 @@ async function readJson(filePath) {
   try {
     return JSON.parse(text);
   } catch (err) {
-    throw new Error(`Invalid JSON: ${filePath}`);
+    throw new ScriptError(`Invalid JSON: ${filePath}`);
   }
 }
 

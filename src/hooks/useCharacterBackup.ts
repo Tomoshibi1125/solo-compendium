@@ -4,6 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { getErrorMessage, logErrorWithContext } from '@/lib/errorHandling';
 import { logger } from '@/lib/logger';
+import { AppError } from '@/lib/appError';
 import type { CharacterWithAbilities } from './useCharacters';
 
 export interface CharacterBackup {
@@ -111,7 +112,7 @@ export function importBackupFromFile(file: File): Promise<CharacterBackup> {
         const backup = JSON.parse(e.target?.result as string) as CharacterBackup;
         // Validate backup structure
         if (!backup.character_id || !backup.backup_data) {
-          throw new Error('Invalid backup file format');
+          throw new AppError('Invalid backup file format', 'INVALID_INPUT');
         }
         resolve(backup);
       } catch (error) {

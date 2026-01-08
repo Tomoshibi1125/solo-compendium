@@ -2,6 +2,13 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+class ScriptError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ScriptError';
+  }
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, '..');
@@ -56,7 +63,7 @@ function parseArgs(argv) {
     const a = args[i];
     if (a === '--out') {
       const val = args[i + 1];
-      if (!val) throw new Error('--out requires a value');
+      if (!val) throw new ScriptError('--out requires a value');
       out.outPath = path.resolve(repoRoot, val);
       i++;
       continue;
@@ -74,7 +81,7 @@ function parseArgs(argv) {
       console.log(`Usage: node scripts/placeholder-scan.js [--out <path>] [--check] [--no-write]\n`);
       process.exit(0);
     }
-    throw new Error(`Unknown arg: ${a}`);
+    throw new ScriptError(`Unknown arg: ${a}`);
   }
 
   return out;

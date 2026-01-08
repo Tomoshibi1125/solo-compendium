@@ -4,6 +4,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { Controller, ControllerProps, FieldPath, FieldValues, FormProvider, useFormContext } from "react-hook-form";
 
 import { cn } from "@/lib/utils";
+import { AppError } from "@/lib/appError";
 import { Label } from "@/components/ui/label";
 
 const Form = FormProvider;
@@ -38,7 +39,7 @@ const useFormField = () => {
   const fieldState = getFieldState(fieldContext.name, formState);
 
   if (!fieldContext) {
-    throw new Error("useFormField should be used within <FormField>");
+    throw new AppError("useFormField should be used within <FormField>", "INVALID_INPUT");
   }
 
   const { id } = itemContext;

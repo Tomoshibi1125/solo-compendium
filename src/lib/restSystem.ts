@@ -8,6 +8,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { logger } from './logger';
 import { calculateRuneMaxUses } from './runeAutomation';
 import { getProficiencyBonus } from '@/types/solo-leveling';
+import { AppError } from './appError';
 
 type Character = Database['public']['Tables']['characters']['Row'];
 type Feature = Database['public']['Tables']['character_features']['Row'];
@@ -26,7 +27,7 @@ export async function executeShortRest(characterId: string): Promise<void> {
     .eq('id', characterId)
     .single();
 
-  if (!character) throw new Error('Hunter not found');
+  if (!character) throw new AppError('Hunter not found', 'NOT_FOUND');
 
   // Restore hit dice (up to half of max, rounded up)
   const hitDiceToRestore = Math.ceil(character.hit_dice_max / 2);
@@ -105,7 +106,7 @@ export async function executeLongRest(characterId: string): Promise<void> {
     .eq('id', characterId)
     .single();
 
-  if (!character) throw new Error('Hunter not found');
+  if (!character) throw new AppError('Hunter not found', 'NOT_FOUND');
 
   // Update character
   await supabase

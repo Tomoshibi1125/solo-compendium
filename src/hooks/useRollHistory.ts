@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
+import { AppError } from '@/lib/appError';
 
 export type RollRecord = Database['public']['Tables']['roll_history']['Row'];
 type RollRecordInsert = Database['public']['Tables']['roll_history']['Insert'];
@@ -38,7 +39,7 @@ export const useRecordRoll = () => {
   return useMutation({
     mutationFn: async (roll: RollRecordInsertClient) => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
       const { data, error } = await supabase
         .from('roll_history')

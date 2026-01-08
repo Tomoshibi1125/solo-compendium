@@ -5,6 +5,7 @@
  */
 
 import { logger } from './logger';
+import { AppError } from './appError';
 
 const REQUIRED_ENV_VARS = [
   'VITE_SUPABASE_URL',
@@ -67,7 +68,7 @@ export function validateEnvOrThrow(): void {
     const errorMessage = `Missing required environment variables:\n${result.missing.map(v => `  - ${v}`).join('\n')}\n\nPlease check your .env file or environment configuration.`;
     // Critical config issue: always surface in logs (logger allows critical errors in production)
     logger.error(errorMessage);
-    throw new Error(errorMessage);
+    throw new AppError(errorMessage, 'CONFIG');
   }
 
   if (result.warnings.length > 0) {
@@ -85,7 +86,7 @@ export function getEnvVar(name: string, fallback?: string): string {
     if (fallback !== undefined) {
       return fallback;
     }
-    throw new Error(`Environment variable ${name} is not set and no fallback provided`);
+    throw new AppError(`Environment variable ${name} is not set and no fallback provided`, 'CONFIG');
   }
   return value;
 }

@@ -209,7 +209,14 @@ const CharacterNew = () => {
     setLoading(true);
     try {
       const job = jobs.find(j => j.id === selectedJob);
-      if (!job) throw new Error('Job not found');
+      if (!job) {
+        toast({
+          title: 'Job not found',
+          description: 'Please re-select your job before continuing.',
+          variant: 'destructive',
+        });
+        return;
+      }
 
       // Calculate initial stats
       const level = 1;

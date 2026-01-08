@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 import { useToast } from '@/hooks/use-toast';
+import { AppError } from '@/lib/appError';
 import { getErrorMessage, logErrorWithContext } from '@/lib/errorHandling';
 import type { CharacterWithAbilities } from './useCharacters';
 
@@ -120,7 +121,7 @@ export const useSaveTemplate = () => {
       tags?: string[];
     }) => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
       // Extract template data (exclude user-specific fields)
       const templateData = {
@@ -197,7 +198,7 @@ export const useDeleteTemplate = () => {
   return useMutation({
     mutationFn: async (templateId: string) => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
       const { error } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -252,7 +253,7 @@ export const useUpdateTemplate = () => {
       tags?: string[];
     }) => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
       const updates: Record<string, unknown> = {
         updated_at: new Date().toISOString(),

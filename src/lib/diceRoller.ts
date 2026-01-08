@@ -3,6 +3,8 @@
  * Supports direct roll execution from action cards
  */
 
+import { AppError } from '@/lib/appError';
+
 export interface DiceRoll {
   dice: string; // e.g., "1d20", "2d6+3"
   rolls: number[];
@@ -17,7 +19,7 @@ export interface DiceRoll {
 function parseDiceString(diceStr: string): { count: number; sides: number; modifier: number } {
   const match = diceStr.match(/(\d+)d(\d+)([+-]\d+)?/);
   if (!match) {
-    throw new Error(`Invalid dice string: ${diceStr}`);
+    throw new AppError(`Invalid dice string: ${diceStr}`, 'INVALID_INPUT');
   }
 
   const count = parseInt(match[1], 10);

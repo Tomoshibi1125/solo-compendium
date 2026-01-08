@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 import { useToast } from '@/hooks/use-toast';
 import { getErrorMessage, logErrorWithContext, isNotFoundError } from '@/lib/errorHandling';
+import { AppError } from '@/lib/appError';
 import {
   createLocalCharacter,
   deleteLocalCharacter,
@@ -218,12 +219,12 @@ export const useUpdateCharacter = () => {
     mutationFn: async ({ id, data }: { id: string; data: CharacterUpdate }) => {
       if (isLocalCharacterId(id)) {
         const updated = updateLocalCharacter(id, data);
-        if (!updated) throw new Error('Hunter not found');
+        if (!updated) throw new AppError('Hunter not found', 'NOT_FOUND');
         return updated;
       }
 
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
       const { data: character, error } = await supabase
         .from('characters')
@@ -267,7 +268,7 @@ export const useDeleteCharacter = () => {
       }
 
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
       const { error } = await supabase
         .from('characters')
@@ -302,7 +303,7 @@ export const useGenerateShareToken = () => {
   return useMutation({
     mutationFn: async (characterId: string): Promise<string> => {
       if (isLocalCharacterId(characterId)) {
-        throw new Error('Sharing requires a signed-in account');
+        throw new AppError('Sharing requires a signed-in account', 'AUTH_REQUIRED');
       }
 
       const { data, error } = await supabase.rpc('generate_character_share_token_for_character', {
@@ -331,4 +332,3 @@ export const useGenerateShareToken = () => {
 };
 
 // Note: calculateDerivedStats was removed - use calculateCharacterStats from lib/characterCalculations instead
-

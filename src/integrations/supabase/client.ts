@@ -2,6 +2,7 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 import { error as logError, warn as logWarn, log } from '@/lib/logger';
+import { AppError } from '@/lib/appError';
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
@@ -38,7 +39,7 @@ const guardedFetch: typeof fetch = async (input, init) => {
   }
 
   if (!baseFetch) {
-    throw new Error('Global fetch is not available');
+    throw new AppError('Global fetch is not available', 'CONFIG');
   }
 
   return baseFetch(input, init);

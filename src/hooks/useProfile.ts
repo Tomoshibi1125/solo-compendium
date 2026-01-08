@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { AppError } from '@/lib/appError';
 import type { Database } from '@/integrations/supabase/types';
 
 export interface Profile {
@@ -45,7 +46,7 @@ export const useUpdateProfile = () => {
   return useMutation({
     mutationFn: async ({ role }: { role: 'dm' | 'player' }) => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
       // Check if profile exists
       const { data: existingProfile } = await supabase

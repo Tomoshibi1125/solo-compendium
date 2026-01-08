@@ -4,6 +4,13 @@ import { fileURLToPath } from 'node:url';
 import { createClient } from '@supabase/supabase-js';
 import { validateContentBundle } from './compendium/schema.js';
 
+class ScriptError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ScriptError';
+  }
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, '..');
@@ -21,14 +28,14 @@ function parseArgs(argv) {
     const a = args[i];
     if (a === '--dir') {
       const val = args[i + 1];
-      if (!val) throw new Error('--dir requires a value');
+      if (!val) throw new ScriptError('--dir requires a value');
       out.dirs.push(val);
       i++;
       continue;
     }
     if (a === '--file') {
       const val = args[i + 1];
-      if (!val) throw new Error('--file requires a value');
+      if (!val) throw new ScriptError('--file requires a value');
       out.files.push(val);
       i++;
       continue;
@@ -48,7 +55,7 @@ function parseArgs(argv) {
     if (a === '--help' || a === '-h') {
       printHelpAndExit(0);
     }
-    throw new Error(`Unknown arg: ${a}`);
+    throw new ScriptError(`Unknown arg: ${a}`);
   }
 
   if (out.dirs.length === 0 && out.files.length === 0) {
@@ -162,7 +169,7 @@ async function importBundleToSupabase(bundle, { overwrite }) {
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
 
   if (!supabaseUrl || !serviceKey) {
-    throw new Error('Missing env: VITE_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required for --apply');
+    throw new ScriptError('Missing env: VITE_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required for --apply');
   }
 
   const supabase = createClient(supabaseUrl, serviceKey, {
@@ -228,7 +235,7 @@ async function importBundleToSupabase(bundle, { overwrite }) {
   // Job Paths
   for (const p of bundle.job_paths || []) {
     const jobId = jobIdByName.get(p.job_name);
-    if (!jobId) throw new Error(`Job not found for path: ${p.job_name}`);
+    if (!jobId) throw new ScriptError(`Job not found for path: ${p.job_name}`);
 
     const { data: existing } = await supabase
       .from('compendium_job_paths')
@@ -273,7 +280,7 @@ async function importBundleToSupabase(bundle, { overwrite }) {
   // Job Features
   for (const f of bundle.job_features || []) {
     const jobId = jobIdByName.get(f.job_name);
-    if (!jobId) throw new Error(`Job not found for feature: ${f.job_name}`);
+    if (!jobId) throw new ScriptError(`Job not found for feature: ${f.job_name}`);
 
     const pathId = f.path_name ? pathIdByJobAndName.get(`${jobId}:${f.path_name}`) : null;
 
@@ -515,7 +522,7 @@ async function main() {
 
   // De-dupe + stable order
   const uniqueFiles = Array.from(new Set(bundleFiles)).sort();
-  if (uniqueFiles.length === 0) throw new Error('No bundle files found');
+  if (uniqueFiles.length === 0) throw new ScriptError('No bundle files found');
 
   const bundles = [];
   const allErrors = [];

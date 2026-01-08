@@ -8,6 +8,7 @@
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 import { logger } from '@/lib/logger';
+import { AppError } from '@/lib/appError';
 
 export type EntryType = 
   | 'jobs' 
@@ -63,7 +64,7 @@ export async function resolveRef(
 ): Promise<CompendiumEntity | null> {
   const tableName = tableMap[type];
   if (!tableName) {
-    throw new Error(`Unknown entry type: ${type}`);
+    throw new AppError(`Unknown entry type: ${type}`, 'INVALID_INPUT');
   }
 
   try {
@@ -147,7 +148,7 @@ export async function resolveRefs(
 export function getTableName(type: EntryType): keyof Database['public']['Tables'] {
   const tableName = tableMap[type];
   if (!tableName) {
-    throw new Error(`Unknown entry type: ${type}`);
+    throw new AppError(`Unknown entry type: ${type}`, 'INVALID_INPUT');
   }
   return tableName;
 }

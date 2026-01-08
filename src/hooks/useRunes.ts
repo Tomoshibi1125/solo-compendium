@@ -4,6 +4,7 @@ import type { Database } from '@/integrations/supabase/types';
 import { calculateRuneMaxUses } from '@/lib/runeAutomation';
 import { getProficiencyBonus } from '@/types/solo-leveling';
 import { isLocalCharacterId } from '@/lib/guestStore';
+import { AppError } from '@/lib/appError';
 
 type Rune = Database['public']['Tables']['compendium_runes']['Row'];
 type RuneInscription = Database['public']['Tables']['character_rune_inscriptions']['Row'];
@@ -128,7 +129,7 @@ export function useInscribeRune() {
       characterLevel: number;
     }) => {
       if (isLocalCharacterId(characterId)) {
-        throw new Error('Sign in required to inscribe runes');
+        throw new AppError('Sign in required to inscribe runes', 'AUTH_REQUIRED');
       }
 
       // Get rune to check inscription difficulty
@@ -138,7 +139,7 @@ export function useInscribeRune() {
         .eq('id', runeId)
         .single();
 
-      if (runeError || !rune) throw new Error('Rune not found');
+      if (runeError || !rune) throw new AppError('Rune not found', 'NOT_FOUND', runeError);
 
       // Calculate max uses
       const proficiencyBonus = getProficiencyBonus(characterLevel);
@@ -194,7 +195,7 @@ export function useRemoveRuneInscription() {
   return useMutation({
     mutationFn: async ({ inscriptionId }: { inscriptionId: string }) => {
       if (inscriptionId.startsWith('local_')) {
-        throw new Error('Sign in required to remove rune inscriptions');
+        throw new AppError('Sign in required to remove rune inscriptions', 'AUTH_REQUIRED');
       }
 
       const { error } = await supabase
@@ -218,7 +219,7 @@ export function useToggleRuneActive() {
   return useMutation({
     mutationFn: async ({ inscriptionId, isActive }: { inscriptionId: string; isActive: boolean }) => {
       if (inscriptionId.startsWith('local_')) {
-        throw new Error('Sign in required to toggle rune inscriptions');
+        throw new AppError('Sign in required to toggle rune inscriptions', 'AUTH_REQUIRED');
       }
 
       const { error } = await supabase
@@ -242,7 +243,7 @@ export function useUseRune() {
   return useMutation({
     mutationFn: async ({ inscriptionId }: { inscriptionId: string }) => {
       if (inscriptionId.startsWith('local_')) {
-        throw new Error('Sign in required to use rune inscriptions');
+        throw new AppError('Sign in required to use rune inscriptions', 'AUTH_REQUIRED');
       }
 
       const { data: inscription, error } = await supabase
@@ -252,7 +253,7 @@ export function useUseRune() {
         .single();
 
       if (error) throw error;
-      if (!inscription) throw new Error('Rune inscription not found');
+      if (!inscription) throw new AppError('Rune inscription not found', 'NOT_FOUND');
 
       const timesUsed = (inscription.times_used || 0) + 1;
 
@@ -269,7 +270,7 @@ export function useUseRune() {
 
       const currentUses = inscription.uses_current ?? inscription.uses_max ?? 0;
       if (currentUses <= 0) {
-        throw new Error('No uses remaining');
+        throw new AppError('No uses remaining', 'INVALID_INPUT');
       }
 
       const newUses = Math.max(0, currentUses - 1);

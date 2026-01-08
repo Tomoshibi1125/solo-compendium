@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { AppError } from '@/lib/appError';
 import type { Database } from '@/integrations/supabase/types';
 
 export interface Campaign {
@@ -138,7 +139,7 @@ export const useCreateCampaign = () => {
   return useMutation({
     mutationFn: async ({ name, description }: { name: string; description?: string }) => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
       // Call the database function to create campaign with share code
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -179,7 +180,7 @@ export const useJoinCampaign = () => {
   return useMutation({
     mutationFn: async ({ campaignId, characterId }: { campaignId: string; characterId?: string }) => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
       const { error } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -219,7 +220,7 @@ export const useLeaveCampaign = () => {
   return useMutation({
     mutationFn: async (campaignId: string) => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
       const { error } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -362,4 +363,3 @@ export const useIsDM = () => {
     retry: false,
   });
 };
-

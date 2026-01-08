@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { AppError } from '@/lib/appError';
 
 export interface ShadowSoldierAbility {
   name: string;
@@ -104,7 +105,7 @@ export function useExtractShadowSoldier() {
         .eq('id', params.soldierId)
         .single();
 
-      if (!soldier) throw new Error('Soldier not found');
+      if (!soldier) throw new AppError('Soldier not found', 'NOT_FOUND');
 
       const { data, error } = await supabase
         .from('character_shadow_soldiers')
@@ -216,7 +217,7 @@ export function useIncreaseBondLevel() {
         .eq('id', params.shadowSoldierId)
         .single();
 
-      if (!current) throw new Error('Not found');
+      if (!current) throw new AppError('Not found', 'NOT_FOUND');
 
       const { data, error } = await supabase
         .from('character_shadow_soldiers')

@@ -2,6 +2,8 @@
  * Advanced dice rolling engine with history tracking
  */
 
+import { AppError } from '@/lib/appError';
+
 export interface DiceRoll {
   dice: number;
   sides: number;
@@ -25,7 +27,7 @@ export interface RollResult {
 export function parseFormula(formula: string): DiceRoll {
   const match = formula.match(/^(\d+)?d(\d+)([+-]\d+)?$/i);
   if (!match) {
-    throw new Error(`Invalid dice formula: ${formula}`);
+    throw new AppError(`Invalid dice formula: ${formula}`, 'INVALID_INPUT');
   }
 
   return {

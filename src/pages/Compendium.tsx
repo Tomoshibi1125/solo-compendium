@@ -33,7 +33,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { useFavorites } from '@/hooks/useFavorites';
 import { CompendiumSidebar } from '@/components/compendium/CompendiumSidebar';
@@ -178,6 +178,7 @@ const Compendium = () => {
   
   const { favorites, toggleFavorite } = useFavorites();
   const { toast } = useToast();
+  const showSetup = !isSupabaseConfigured;
 
   // Fetch compendium data (using debounced search)
   const { data: entries = [], isLoading, error } = useQuery({
@@ -186,8 +187,8 @@ const Compendium = () => {
       const allEntries: CompendiumEntry[] = [];
 
       // Check if Supabase is configured
-      if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY) {
-        throw new Error('Supabase configuration is missing. Please set VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY environment variables.');
+      if (!isSupabaseConfigured) {
+        return allEntries;
       }
 
       // Fetch Jobs
@@ -572,7 +573,7 @@ const Compendium = () => {
 
       return allEntries;
     },
-    enabled: true,
+    enabled: isSupabaseConfigured,
   });
 
   // Track search history
@@ -1151,7 +1152,24 @@ const Compendium = () => {
               </div>
             </div>
 
-            {isLoading ? (
+            {showSetup ? (
+              <SystemWindow title="SETUP REQUIRED" className="max-w-lg mx-auto">
+                <div className="p-4 space-y-2">
+                  <p className="text-destructive font-heading">Compendium data is unavailable</p>
+                  <p className="text-sm text-muted-foreground">
+                    Configure Supabase to load compendium content.
+                  </p>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => window.location.assign('/setup')}
+                    className="mt-4"
+                  >
+                    Go to Setup
+                  </Button>
+                </div>
+              </SystemWindow>
+            ) : isLoading ? (
               <div className={cn(
                 viewMode === 'grid' 
                   ? "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4"

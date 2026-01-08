@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
+import { AppError } from '@/lib/appError';
 
 export interface UserFavorite {
   id: string;
@@ -64,7 +65,7 @@ export const useToggleFavorite = () => {
   return useMutation({
     mutationFn: async ({ entryType, entryId }: { entryType: string; entryId: string }) => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
       // Check if already favorited
       const { data: existing } = await supabase

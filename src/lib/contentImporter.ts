@@ -1,6 +1,7 @@
 import { supabase } from '@/integrations/supabase/client';
 import { validateContentBundle, type ContentBundle, type ValidationResult } from './contentValidator';
 import type { Database } from '@/integrations/supabase/types';
+import { AppError } from '@/lib/appError';
 
 type Job = Database['public']['Tables']['compendium_jobs']['Row'];
 type JobPath = Database['public']['Tables']['compendium_job_paths']['Row'];
@@ -507,7 +508,11 @@ export async function parseYAMLContent(yamlString: string): Promise<ContentBundl
     const parsed = parse(yamlString);
     return parsed as ContentBundle;
   } catch (error) {
-    throw new Error(`Failed to parse YAML content: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    throw new AppError(
+      `Failed to parse YAML content: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      'INVALID_INPUT',
+      error
+    );
   }
 }
 

@@ -6,6 +6,7 @@
  */
 
 import type { Database } from '@/integrations/supabase/types';
+import { AppError } from '@/lib/appError';
 
 type AbilityScore = Database['public']['Enums']['ability_score'];
 type CharacterRow = Database['public']['Tables']['characters']['Row'];
@@ -254,7 +255,7 @@ export function listLocalEquipment(characterId: string): EquipmentRow[] {
 
 export function addLocalEquipment(characterId: string, item: Omit<EquipmentInsert, 'character_id'>): EquipmentRow {
   const entry = getLocalCharacterState(characterId);
-  if (!entry) throw new Error('Local character not found');
+  if (!entry) throw new AppError('Local character not found', 'NOT_FOUND');
 
   const now = nowIso();
   const next: EquipmentRow = {
@@ -313,7 +314,7 @@ export function updateLocalEquipment(equipmentId: string, updates: EquipmentUpda
     return;
   }
 
-  throw new Error('Equipment not found');
+  throw new AppError('Equipment not found', 'NOT_FOUND');
 }
 
 export function removeLocalEquipment(equipmentId: string): void {
@@ -338,7 +339,7 @@ export function removeLocalEquipment(equipmentId: string): void {
     return;
   }
 
-  throw new Error('Equipment not found');
+  throw new AppError('Equipment not found', 'NOT_FOUND');
 }
 
 // Powers helpers
@@ -349,7 +350,7 @@ export function listLocalPowers(characterId: string): PowerRow[] {
 
 export function addLocalPower(characterId: string, power: Omit<PowerInsert, 'character_id'>): PowerRow {
   const entry = getLocalCharacterState(characterId);
-  if (!entry) throw new Error('Local character not found');
+  if (!entry) throw new AppError('Local character not found', 'NOT_FOUND');
 
   const now = nowIso();
   const next: PowerRow = {
@@ -404,7 +405,7 @@ export function updateLocalPower(powerId: string, updates: PowerUpdate): void {
     return;
   }
 
-  throw new Error('Power not found');
+  throw new AppError('Power not found', 'NOT_FOUND');
 }
 
 export function removeLocalPower(powerId: string): void {
@@ -429,7 +430,7 @@ export function removeLocalPower(powerId: string): void {
     return;
   }
 
-  throw new Error('Power not found');
+  throw new AppError('Power not found', 'NOT_FOUND');
 }
 
 // Features helpers (needed for builder automation)
@@ -440,7 +441,7 @@ export function listLocalFeatures(characterId: string): FeatureRow[] {
 
 export function addLocalFeature(characterId: string, feature: Omit<FeatureInsert, 'character_id'>): FeatureRow {
   const entry = getLocalCharacterState(characterId);
-  if (!entry) throw new Error('Local character not found');
+  if (!entry) throw new AppError('Local character not found', 'NOT_FOUND');
 
   const now = nowIso();
   const next: FeatureRow = {
@@ -494,7 +495,7 @@ export function updateLocalFeature(featureId: string, updates: FeatureUpdate): v
     return;
   }
 
-  throw new Error('Feature not found');
+  throw new AppError('Feature not found', 'NOT_FOUND');
 }
 
 // Spell slots helpers (used by spellcasting)
@@ -508,7 +509,7 @@ export function upsertLocalSpellSlot(
   insert: Omit<SpellSlotInsert, 'character_id'>
 ): SpellSlotRow {
   const entry = getLocalCharacterState(characterId);
-  if (!entry) throw new Error('Local character not found');
+  if (!entry) throw new AppError('Local character not found', 'NOT_FOUND');
 
   const now = nowIso();
   const existing = entry.spellSlots.find((s) => s.spell_level === insert.spell_level);
@@ -570,7 +571,7 @@ export function updateLocalSpellSlotRow(slotId: string, updates: SpellSlotUpdate
     return;
   }
 
-  throw new Error('Spell slot not found');
+  throw new AppError('Spell slot not found', 'NOT_FOUND');
 }
 
 // Roll history (optional in guest mode)

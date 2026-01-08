@@ -6,8 +6,10 @@
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 import { error as logError } from '@/lib/logger';
+import { AppError } from '@/lib/appError';
 
 type Character = Database['public']['Tables']['characters']['Row'];
+type CompendiumEquipment = Database['public']['Tables']['compendium_equipment']['Row'];
 
 /**
  * Bulk update characters
@@ -75,16 +77,44 @@ export async function bulkAddEquipment(
   let success = 0;
   let failed = 0;
 
+  const resolveEquipment = async (): Promise<CompendiumEquipment | null> => {
+    const { data: byId, error: byIdError } = await supabase
+      .from('compendium_equipment')
+      .select('*')
+      .eq('id', equipmentId)
+      .maybeSingle();
+
+    if (byIdError) {
+      logError('Failed to resolve equipment by ID:', byIdError);
+    }
+
+    if (byId) return byId as CompendiumEquipment;
+
+    const { data: byName, error: byNameError } = await supabase
+      .from('compendium_equipment')
+      .select('*')
+      .ilike('name', equipmentId)
+      .limit(1)
+      .maybeSingle();
+
+    if (byNameError) {
+      logError('Failed to resolve equipment by name:', byNameError);
+    }
+
+    return (byName ?? null) as CompendiumEquipment | null;
+  };
+
+  const equipment = await resolveEquipment();
+  const equipmentName = equipment?.name || equipmentId;
+  const itemType = equipment?.equipment_type || 'gear';
+
   for (const characterId of characterIds) {
     try {
-      // Note: character_equipment table doesn't have equipment_id field
-      // Equipment is stored directly. This function needs refactoring.
-      // For now, we'll use a type assertion to bypass the type check.
       const { data: existing } = await supabase
         .from('character_equipment')
         .select('id, quantity, name')
         .eq('character_id', characterId)
-        .eq('name', equipmentId as string) // Workaround: using name as identifier
+        .eq('name', equipmentName)
         .maybeSingle();
 
       if (existing) {
@@ -96,11 +126,27 @@ export async function bulkAddEquipment(
 
         if (error) throw error;
       } else {
-        // Insert new - Note: character_equipment doesn't have equipment_id,
-        // equipment is stored directly. This function may need refactoring.
-        // For now, we'll skip the insert as the schema doesn't support this pattern.
-        // TODO: Refactor to match actual schema (equipment stored directly, not referenced)
-        throw new Error('Bulk equipment add not supported - equipment must be added individually');
+        const { error } = await supabase
+          .from('character_equipment')
+          .insert({
+            character_id: characterId,
+            name: equipmentName,
+            item_type: itemType,
+            description: equipment?.description || null,
+            properties: equipment?.properties || [],
+            weight: equipment?.weight || null,
+            value_credits: equipment?.cost_credits || null,
+            quantity,
+            is_equipped: false,
+            is_attuned: false,
+            requires_attunement: false,
+            charges_current: null,
+            charges_max: null,
+            rarity: null,
+            relic_tier: null,
+          });
+
+        if (error) throw error;
       }
 
       success++;
@@ -130,7 +176,7 @@ export async function bulkLevelUp(
         .eq('id', id)
         .single();
 
-      if (!character) throw new Error('Character not found');
+      if (!character) throw new AppError('Character not found', 'NOT_FOUND');
 
       const newLevel = character.level + 1;
       const hpIncrease = Math.floor((character.hp_max / character.level) || 5);
@@ -175,7 +221,7 @@ export async function bulkRest(
         .eq('id', id)
         .single();
 
-      if (!character) throw new Error('Character not found');
+      if (!character) throw new AppError('Character not found', 'NOT_FOUND');
 
       if (restType === 'short') {
         const hitDiceToRestore = Math.ceil(character.hit_dice_max / 2);

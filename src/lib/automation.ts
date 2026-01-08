@@ -28,7 +28,10 @@ export async function autoCalculateCharacterStats(characterId: string): Promise<
     .eq('id', characterId)
     .single();
 
-  if (!character) throw new Error('Character not found');
+  if (!character) {
+    logError('Character not found for auto-calc:', characterId);
+    return;
+  }
 
   const updates: Partial<Character> = {};
 
@@ -85,7 +88,10 @@ export async function autoApplyCondition(
     .eq('id', characterId)
     .single();
 
-  if (!character) throw new Error('Character not found');
+  if (!character) {
+    logError('Character not found for condition application:', characterId);
+    return;
+  }
 
   const conditions = character.conditions || [];
   if (!conditions.includes(condition)) {

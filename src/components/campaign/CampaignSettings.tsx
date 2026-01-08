@@ -11,6 +11,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
+import { AppError } from '@/lib/appError';
 
 interface CampaignSettingsProps {
   campaignId: string;
@@ -38,7 +39,7 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
     mutationFn: async (updates: { name?: string; description?: string | null; is_active?: boolean }) => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        throw new Error('You must be logged in to update campaigns');
+        throw new AppError('You must be logged in to update campaigns', 'AUTH_REQUIRED');
       }
 
       // Verify user has DM access (RLS will also enforce this)
@@ -50,11 +51,11 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 
       if (fetchError) {
         logger.error('Failed to fetch campaign for update:', fetchError);
-        throw new Error('Failed to verify campaign access');
+        throw new AppError('Failed to verify campaign access', 'UNKNOWN', fetchError);
       }
 
       if (!campaign || campaign.dm_id !== user.id) {
-        throw new Error('Only the campaign DM can update settings');
+        throw new AppError('Only the campaign DM can update settings', 'AUTH_REQUIRED');
       }
 
       // Perform the update
@@ -71,7 +72,7 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 
       if (error) {
         logger.error('Failed to update campaign:', error);
-        throw new Error(error.message || 'Failed to update campaign');
+        throw new AppError(error.message || 'Failed to update campaign', 'UNKNOWN', error);
       }
 
       return data;

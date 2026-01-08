@@ -5,6 +5,7 @@
 
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
+import { AppError } from '@/lib/appError';
 
 type Character = Database['public']['Tables']['characters']['Row'];
 
@@ -31,7 +32,7 @@ export async function exportCharacter(
     .eq('id', characterId)
     .single();
 
-  if (!character) throw new Error('Character not found');
+  if (!character) throw new AppError('Character not found', 'NOT_FOUND');
 
   const exportData: Record<string, unknown> = {
     name: character.name,
@@ -122,7 +123,7 @@ export async function exportCompendiumEntries(
   
   // Validate entry type
   if (!isValidEntryType(entryType)) {
-    throw new Error(`Unknown entry type: ${entryType}`);
+    throw new AppError(`Unknown entry type: ${entryType}`, 'INVALID_INPUT');
   }
 
   const tableName = getTableName(entryType);
