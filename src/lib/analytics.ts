@@ -26,18 +26,47 @@ type AnalyticsPageView = {
   userId?: string;
 };
 
-// Analytics provider configuration
-const ANALYTICS_ENABLED = import.meta.env.VITE_ANALYTICS_ENABLED === 'true';
-const PLAUSIBLE_DOMAIN = import.meta.env.VITE_PLAUSIBLE_DOMAIN;
-const POSTHOG_KEY = import.meta.env.VITE_POSTHOG_KEY;
-const POSTHOG_HOST = import.meta.env.VITE_POSTHOG_HOST || 'https://app.posthog.com';
+type AnalyticsConfig = {
+  enabled: boolean;
+  plausibleDomain?: string;
+  posthogKey?: string;
+  posthogHost: string;
+};
+
+let analyticsConfigOverride: Partial<AnalyticsConfig> | null = null;
+
+export function setAnalyticsConfigOverride(override: Partial<AnalyticsConfig> | null): void {
+  analyticsConfigOverride = override;
+}
+
+function getAnalyticsConfig(): AnalyticsConfig {
+  const base: AnalyticsConfig = {
+    enabled: import.meta.env.VITE_ANALYTICS_ENABLED === 'true',
+    plausibleDomain: import.meta.env.VITE_PLAUSIBLE_DOMAIN,
+    posthogKey: import.meta.env.VITE_POSTHOG_KEY,
+    posthogHost: import.meta.env.VITE_POSTHOG_HOST || 'https://app.posthog.com',
+  };
+
+  return analyticsConfigOverride ? { ...base, ...analyticsConfigOverride } : base;
+}
+
+function isDoNotTrackEnabled(): boolean {
+  if (typeof navigator === 'undefined') return false;
+  return navigator.doNotTrack === '1' || navigator.doNotTrack === 'yes';
+}
+
+function isTestEnv(): boolean {
+  return import.meta.env.MODE === 'test' || Boolean(import.meta.env.VITEST);
+}
 
 /**
  * Check if analytics should be tracked
  */
-function shouldTrack(): boolean {
-  if (!ANALYTICS_ENABLED) return false;
-  
+function shouldTrack(config: AnalyticsConfig): boolean {
+  if (!config.enabled) return false;
+  if (isDoNotTrackEnabled()) return false;
+  if (typeof window === 'undefined') return false;
+
   // Only track if user has consented
   const consent = getConsentStatus();
   return consent === 'accepted';
@@ -47,7 +76,8 @@ function shouldTrack(): boolean {
  * Track a custom event
  */
 export function trackEvent(event: AnalyticsEvent): void {
-  if (!shouldTrack()) return;
+  const config = getAnalyticsConfig();
+  if (!shouldTrack(config)) return;
 
   try {
     // Log event (can be extended to send to your backend)
@@ -56,14 +86,14 @@ export function trackEvent(event: AnalyticsEvent): void {
     }
 
     // Plausible Analytics
-    if (PLAUSIBLE_DOMAIN && typeof window !== 'undefined' && window.plausible) {
+    if (config.plausibleDomain && typeof window !== 'undefined' && window.plausible) {
       window.plausible(event.name, {
         props: event.properties,
       });
     }
 
     // PostHog
-    if (POSTHOG_KEY && typeof window !== 'undefined' && window.posthog) {
+    if (config.posthogKey && typeof window !== 'undefined' && window.posthog) {
       window.posthog.capture(event.name, event.properties);
     }
 
@@ -85,7 +115,8 @@ export function trackEvent(event: AnalyticsEvent): void {
  * Track a page view
  */
 export function trackPageView(page: AnalyticsPageView): void {
-  if (!shouldTrack()) return;
+  const config = getAnalyticsConfig();
+  if (!shouldTrack(config)) return;
 
   try {
     if (import.meta.env.DEV) {
@@ -93,7 +124,7 @@ export function trackPageView(page: AnalyticsPageView): void {
     }
 
     // Plausible Analytics
-    if (PLAUSIBLE_DOMAIN && typeof window !== 'undefined' && window.plausible) {
+    if (config.plausibleDomain && typeof window !== 'undefined' && window.plausible) {
       window.plausible('pageview', {
         props: {
           path: page.path,
@@ -103,7 +134,7 @@ export function trackPageView(page: AnalyticsPageView): void {
     }
 
     // PostHog
-    if (POSTHOG_KEY && typeof window !== 'undefined' && window.posthog) {
+    if (config.posthogKey && typeof window !== 'undefined' && window.posthog) {
       window.posthog.capture('$pageview', {
         $current_url: window.location.href,
         path: page.path,
@@ -119,11 +150,12 @@ export function trackPageView(page: AnalyticsPageView): void {
  * Identify a user (only when consented)
  */
 export function identifyUser(userId: string, traits?: Record<string, unknown>): void {
-  if (!shouldTrack()) return;
+  const config = getAnalyticsConfig();
+  if (!shouldTrack(config)) return;
 
   try {
     // PostHog
-    if (POSTHOG_KEY && typeof window !== 'undefined' && window.posthog) {
+    if (config.posthogKey && typeof window !== 'undefined' && window.posthog) {
       window.posthog.identify(userId, traits);
     }
 
@@ -138,11 +170,12 @@ export function identifyUser(userId: string, traits?: Record<string, unknown>): 
  * Reset user identification (on logout)
  */
 export function resetUser(): void {
-  if (!shouldTrack()) return;
+  const config = getAnalyticsConfig();
+  if (!shouldTrack(config)) return;
 
   try {
     // PostHog
-    if (POSTHOG_KEY && typeof window !== 'undefined' && window.posthog) {
+    if (config.posthogKey && typeof window !== 'undefined' && window.posthog) {
       window.posthog.reset();
     }
   } catch (error) {
@@ -154,22 +187,31 @@ export function resetUser(): void {
  * Initialize analytics providers (only if consented)
  */
 export function initAnalytics(): void {
-  if (!shouldTrack()) return;
+  const config = getAnalyticsConfig();
+  if (!shouldTrack(config)) return;
 
   // Initialize Plausible
-  if (PLAUSIBLE_DOMAIN && typeof window !== 'undefined') {
-    const script = document.createElement('script');
-    script.defer = true;
-    script.dataset.domain = PLAUSIBLE_DOMAIN;
-    script.src = 'https://plausible.io/js/script.js';
-    document.head.appendChild(script);
+  if (config.plausibleDomain && typeof document !== 'undefined') {
+    const existing = document.querySelector('script[data-analytics="plausible"]');
+    if (!existing) {
+      const script = document.createElement('script');
+      script.defer = true;
+      script.dataset.domain = config.plausibleDomain;
+      script.dataset.analytics = 'plausible';
+      if (isTestEnv()) {
+        script.dataset.src = 'https://plausible.io/js/script.js';
+      } else {
+        script.src = 'https://plausible.io/js/script.js';
+      }
+      document.head.appendChild(script);
+    }
   }
 
   // Initialize PostHog
-  if (POSTHOG_KEY && typeof window !== 'undefined') {
+  if (config.posthogKey && typeof window !== 'undefined' && !window.posthog) {
     import('posthog-js').then((posthog) => {
-      posthog.default.init(POSTHOG_KEY, {
-        api_host: POSTHOG_HOST,
+      posthog.default.init(config.posthogKey, {
+        api_host: config.posthogHost,
         loaded: (ph) => {
           if (import.meta.env.DEV) {
             ph.debug(); // Enable debug mode in development
