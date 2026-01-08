@@ -246,7 +246,7 @@ WHERE description LIKE '%spell%'
 CREATE TABLE IF NOT EXISTS compendium_skills (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL UNIQUE,
-  ability_score ability_score NOT NULL,
+  ability TEXT NOT NULL,
   description TEXT NOT NULL,
   examples TEXT[] DEFAULT '{}',
   source_kind TEXT DEFAULT 'srd',
@@ -256,7 +256,7 @@ CREATE TABLE IF NOT EXISTS compendium_skills (
 );
 
 -- Insert all 18 skills with Solo Leveling themed descriptions
-INSERT INTO compendium_skills (name, ability_score, description, examples, source_kind, source_name, license_note) VALUES
+INSERT INTO compendium_skills (name, ability, description, examples, source_kind, source_name, license_note) VALUES
 ('Athletics', 'STR', 'Your Athletics check covers difficult situations you encounter while climbing, jumping, or swimming. Examples include the following activities: Attempting to climb a Gate wall, jumping across a chasm, swimming through a Gate''s flooded chamber, grabbing onto a ledge while falling, running up a steep slope, or hanging onto a moving Gate creature.', ARRAY['Climbing a Gate wall', 'Jumping across a chasm', 'Swimming through a flooded Gate chamber'], 'srd', '5e SRD', 'Open Game License content'),
 ('Acrobatics', 'AGI', 'Your Acrobatics check covers your attempt to stay on your feet in a tricky situation, such as when you''re trying to run across a Gate floor covered in ice, balance on a tightrope, or stay upright on a Gate creature that''s trying to knock you off. The System might also call for a Dexterity (Acrobatics) check to see if you can perform acrobatic stunts, including dives, rolls, somersaults, and flips.', ARRAY['Balancing on a narrow ledge in a Gate', 'Performing acrobatic stunts', 'Staying upright on a moving Gate creature'], 'srd', '5e SRD', 'Open Game License content'),
 ('Sleight of Hand', 'AGI', 'Whenever you attempt an act of legerdemain or manual trickery, such as planting something on someone else or concealing an object on your person, make a Dexterity (Sleight of Hand) check. The System might also call for a Dexterity (Sleight of Hand) check to determine whether you can lift a coin purse off another person or slip something out of another person''s pocket.', ARRAY['Picking a pocket', 'Planting evidence', 'Concealing an object'], 'srd', '5e SRD', 'Open Game License content'),
@@ -290,7 +290,7 @@ CREATE POLICY "Skills are publicly readable"
 
 -- Add indexes for performance if they don't exist
 CREATE INDEX IF NOT EXISTS idx_compendium_rules_category ON compendium_rules(category);
-CREATE INDEX IF NOT EXISTS idx_compendium_skills_ability ON compendium_skills(ability_score);
+CREATE INDEX IF NOT EXISTS idx_compendium_skills_ability ON compendium_skills(ability);
 
 -- =============================================
 -- VERIFY ALL CONTENT HAS PROVENANCE TRACKING

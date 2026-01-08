@@ -305,6 +305,7 @@ INSERT INTO public.compendium_runes (
   requirement_sense, requirement_int,
   requires_job, requires_level,
   effect_type,
+  effect_description,
   passive_bonuses,
   can_inscribe_on, inscription_difficulty,
   description, lore, tags
@@ -319,6 +320,7 @@ INSERT INTO public.compendium_runes (
   ARRAY[]::TEXT[], -- Works equally for all jobs
   3,
   'passive',
+  'You gain enhanced system awareness, granting darkvision out to 60 feet and allowing you to sense active Gate energy or magical effects within 30 feet.',
   '{"darkvision": 60, "detect_magic": true, "detect_gates": true}'::JSONB,
   ARRAY['accessory'],
   12,

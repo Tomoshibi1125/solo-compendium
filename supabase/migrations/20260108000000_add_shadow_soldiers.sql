@@ -1,72 +1,29 @@
 -- Create Shadow Soldiers compendium tables
 -- Shadow Soldiers are the Shadow Monarch's summoned army
 
--- Shadow Soldiers main table
+-- Shadow Soldiers main table (aligned with character sheet usage)
 CREATE TABLE IF NOT EXISTS public.compendium_shadow_soldiers (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
-  name TEXT NOT NULL UNIQUE,
-  rank TEXT NOT NULL, -- e.g., "Elite Shadow", "Shadow Knight", "Shadow Marshal"
-  tier INTEGER NOT NULL DEFAULT 1, -- 1-5, representing power level
-  size TEXT NOT NULL DEFAULT 'medium',
-  creature_type TEXT NOT NULL DEFAULT 'undead',
-  alignment TEXT DEFAULT 'neutral',
-  
-  -- Combat stats
-  cr TEXT NOT NULL,
-  xp INTEGER,
-  armor_class INTEGER NOT NULL,
-  armor_type TEXT,
-  hit_points_average INTEGER NOT NULL,
-  hit_points_formula TEXT NOT NULL,
-  
-  -- Movement
-  speed_walk INTEGER DEFAULT 30,
-  speed_fly INTEGER,
-  speed_swim INTEGER,
-  speed_climb INTEGER,
-  speed_burrow INTEGER,
-  
-  -- Ability scores
+  name TEXT NOT NULL,
+  title TEXT NOT NULL,
+  rank TEXT NOT NULL,
+  description TEXT NOT NULL,
+  lore TEXT,
   str INTEGER NOT NULL DEFAULT 10,
   agi INTEGER NOT NULL DEFAULT 10,
   vit INTEGER NOT NULL DEFAULT 10,
   int INTEGER NOT NULL DEFAULT 10,
   sense INTEGER NOT NULL DEFAULT 10,
   pre INTEGER NOT NULL DEFAULT 10,
-  
-  -- Proficiencies
-  saving_throws JSONB DEFAULT '{}',
-  skills JSONB DEFAULT '{}',
-  
-  -- Defenses
-  damage_resistances TEXT[] DEFAULT '{}',
+  armor_class INTEGER NOT NULL DEFAULT 14,
+  hit_points INTEGER NOT NULL DEFAULT 50,
+  speed INTEGER NOT NULL DEFAULT 30,
   damage_immunities TEXT[] DEFAULT '{}',
-  damage_vulnerabilities TEXT[] DEFAULT '{}',
   condition_immunities TEXT[] DEFAULT '{}',
-  
-  -- Senses and communication
-  senses JSONB DEFAULT '{}',
-  languages TEXT[] DEFAULT '{}',
-  
-  -- Description and lore
-  description TEXT,
-  lore TEXT,
-  summoning_lore TEXT, -- Special lore about how they're summoned
-  
-  -- Shadow-specific properties
-  shadow_energy INTEGER, -- Shadow energy cost to summon
-  max_summoned INTEGER DEFAULT 1, -- Maximum that can be summoned at once
-  summoning_requirement TEXT, -- Prerequisites for summoning
-  
-  -- Metadata
-  gate_rank TEXT,
-  is_elite BOOLEAN NOT NULL DEFAULT false,
-  is_named BOOLEAN NOT NULL DEFAULT false, -- Named shadows like Igris, Beru, etc.
-  source_book TEXT DEFAULT 'SL',
-  tags TEXT[] DEFAULT '{}',
-  
-  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-  updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+  abilities JSONB NOT NULL DEFAULT '[]'::jsonb,
+  summon_requirements TEXT,
+  shadow_type TEXT NOT NULL DEFAULT 'soldier',
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 
 -- Shadow Soldier Traits
@@ -118,242 +75,76 @@ CREATE POLICY "Shadow soldier actions are publicly readable" ON public.compendiu
 CREATE POLICY "Shadow soldier abilities are publicly readable" ON public.compendium_shadow_soldier_abilities FOR SELECT USING (true);
 
 -- Indexes
-CREATE INDEX idx_shadow_soldiers_tier ON public.compendium_shadow_soldiers(tier);
 CREATE INDEX idx_shadow_soldiers_rank ON public.compendium_shadow_soldiers(rank);
-CREATE INDEX idx_shadow_soldiers_cr ON public.compendium_shadow_soldiers(cr);
-CREATE INDEX idx_shadow_soldiers_is_named ON public.compendium_shadow_soldiers(is_named);
+CREATE INDEX idx_shadow_soldiers_type ON public.compendium_shadow_soldiers(shadow_type);
+CREATE INDEX idx_shadow_soldiers_name ON public.compendium_shadow_soldiers(name);
 CREATE INDEX idx_shadow_soldiers_search ON public.compendium_shadow_soldiers USING GIN (to_tsvector('english', name || ' ' || COALESCE(description, '') || ' ' || COALESCE(lore, '')));
 
 -- Insert Shadow Army Roster
 -- Based on Solo Leveling's Shadow Monarch's army
 
--- Tier 1: Basic Shadows
+-- Shadow Soldier roster (schema aligned with compendium_shadow_soldiers)
 INSERT INTO public.compendium_shadow_soldiers (
-  name, rank, tier, size, creature_type, cr, armor_class, hit_points_average, hit_points_formula,
-  speed_walk, str, agi, vit, int, sense, pre,
-  description, lore, summoning_lore, shadow_energy, max_summoned,
-  gate_rank, is_elite, is_named, tags
+  name, title, rank, description, lore, str, agi, vit, int, sense, pre,
+  armor_class, hit_points, speed, damage_immunities, condition_immunities,
+  abilities, shadow_type, summon_requirements
 ) VALUES
 (
   'Shadow Soldier',
   'Basic Shadow',
-  1,
-  'medium',
-  'undead',
-  '1/4',
-  13,
-  7,
-  '1d8 + 3',
-  30,
-  12,
-  14,
-  13,
-  6,
-  10,
-  8,
+  'Soldier Grade',
   'A basic shadow soldier summoned from the Shadow Monarch''s domain. These are the most common soldiers in the Shadow Army, serving as the backbone of the undead forces.',
   'Shadow Soldiers are the first shadows that the Shadow Monarch can summon. They are created from the souls of defeated enemies, bound to serve their master for eternity. Though individually weak, they fight with unwavering loyalty and can overwhelm enemies through sheer numbers.',
-  'The Shadow Monarch raises a hand, and dark energy coalesces into a humanoid form. The shadow materializes from the ground, rising like smoke given form. "ARISE," the command echoes, and the shadow soldier stands ready.',
-  10,
-  10,
-  'E',
-  false,
-  false,
-  ARRAY['shadow', 'undead', 'summoned', 'tier-1']
+  12, 14, 13, 6, 10, 8,
+  13, 7, 30,
+  ARRAY['necrotic', 'poison'],
+  ARRAY['charmed', 'frightened'],
+  '[{"name":"Shadow Strike","description":"Melee Weapon Attack: +4 to hit, reach 5 ft. Hit: 1d6+2 slashing damage plus 1d4 necrotic damage.","action_type":"action"},{"name":"Unyielding Obedience","description":"The shadow soldier has advantage on saving throws against being turned or banished.","action_type":"passive"}]'::jsonb,
+  'soldier',
+  'Shadow Monarch unlock + Shadow-themed Sovereign + Level 1+'
 ),
 (
   'Shadow Knight',
-  'Elite Shadow',
-  2,
-  'medium',
-  'undead',
-  '3',
-  16,
-  45,
-  '6d8 + 18',
-  30,
-  16,
-  14,
-  16,
-  10,
-  12,
-  14,
+  'Shadow Knight',
+  'Knight Grade',
   'A more powerful shadow soldier, clad in dark armor and wielding shadow-forged weapons. Shadow Knights serve as commanders among the basic shadows.',
   'Shadow Knights are the elite warriors of the Shadow Army. They retain more of their combat prowess from life, making them formidable fighters. Their armor is forged from shadow energy itself, providing superior protection.',
-  'Dark energy swirls more intensely as the Shadow Monarch commands, "ARISE." A larger, more imposing figure emerges, clad in shadow armor that seems to drink the light around it.',
-  50,
-  5,
-  'D',
-  true,
-  false,
-  ARRAY['shadow', 'undead', 'summoned', 'tier-2', 'elite']
+  16, 14, 16, 10, 12, 14,
+  16, 45, 30,
+  ARRAY['necrotic', 'poison'],
+  ARRAY['charmed', 'frightened'],
+  '[{"name":"Shadow Blade","description":"Melee Weapon Attack: +6 to hit, reach 10 ft. Hit: 2d8+4 slashing damage plus 1d6 necrotic damage.","action_type":"action"},{"name":"Command Presence","description":"Allied shadow soldiers within 30 feet gain +2 to attack rolls.","action_type":"passive"}]'::jsonb,
+  'knight',
+  'Shadow Monarch unlock + Shadow-themed Sovereign + Level 3+'
 ),
 (
   'Shadow Marshal',
-  'High Shadow',
-  3,
-  'medium',
-  'undead',
-  '5',
-  17,
-  78,
-  '12d8 + 24',
-  30,
-  18,
-  16,
-  18,
-  12,
-  14,
-  16,
+  'Shadow Marshal',
+  'Elite Knight Grade',
   'A high-ranking shadow officer capable of commanding other shadows. Shadow Marshals are powerful enough to lead entire battalions of shadow soldiers.',
   'Shadow Marshals are the generals of the Shadow Army. They possess tactical knowledge and can coordinate multiple shadow units in battle. Their presence on the battlefield significantly increases the effectiveness of nearby shadows.',
-  'The ground cracks with dark energy as the Shadow Monarch''s power intensifies. "ARISE," the command booms, and a figure of authority emerges, its presence commanding respect even among the undead.',
-  100,
-  3,
-  'C',
-  true,
-  false,
-  ARRAY['shadow', 'undead', 'summoned', 'tier-3', 'commander']
-);
-
--- Named Shadows (Tier 4-5)
-INSERT INTO public.compendium_shadow_soldiers (
-  name, rank, tier, size, creature_type, cr, armor_class, hit_points_average, hit_points_formula,
-  speed_walk, speed_fly, str, agi, vit, int, sense, pre,
-  description, lore, summoning_lore, shadow_energy, max_summoned,
-  gate_rank, is_elite, is_named, tags
-) VALUES
-(
-  'Igris',
-  'Shadow Marshal',
-  4,
-  'medium',
-  'undead',
-  '8',
-  19,
-  136,
-  '16d8 + 64',
-  40,
-  0,
-  20,
-  18,
-  20,
-  14,
-  16,
-  18,
-  'The first and most loyal of the Shadow Monarch''s named shadows. Igris is a master swordsman who wields a massive greatsword forged from shadow energy. He serves as the Shadow Monarch''s right hand and primary commander.',
-  'Igris was once a powerful warrior in life, and his combat prowess has only increased in undeath. He is the Shadow Monarch''s most trusted lieutenant, having been with him since the earliest days. Igris fights with a combination of raw power and refined technique, making him a deadly opponent.',
-  'The air itself seems to darken as the Shadow Monarch calls upon his most trusted servant. "ARISE, IGRIS." The ground trembles, and a figure clad in dark armor materializes, a massive shadow blade already in hand. The very presence of this shadow marshal causes lesser shadows to bow in respect.',
-  200,
-  1,
-  'B',
-  true,
-  true,
-  ARRAY['shadow', 'undead', 'summoned', 'tier-4', 'named', 'commander', 'igris']
-),
-(
-  'Beru',
-  'Shadow Marshal',
-  4,
-  'large',
-  'undead',
-  '9',
-  18,
-  153,
-  '18d8 + 72',
-  40,
-  60,
-  22,
-  16,
-  22,
-  10,
-  14,
-  16,
-  'A massive ant-like shadow creature, one of the Shadow Monarch''s most powerful named shadows. Beru combines incredible physical strength with the ability to fly, making him a versatile and devastating combatant.',
-  'Beru was once a powerful ant-type monster, and his transformation into a shadow has only amplified his natural abilities. His exoskeleton provides natural armor, and his massive mandibles can crush even the strongest defenses. Beru''s loyalty to the Shadow Monarch is absolute.',
-  'The ground erupts as a massive form begins to emerge. "ARISE, BERU." The command echoes with power, and a colossal ant-like shadow rises, its dark carapace gleaming. Wings of shadow energy unfurl, and the creature lets out a roar that shakes the very foundations.',
-  250,
-  1,
-  'A',
-  true,
-  true,
-  ARRAY['shadow', 'undead', 'summoned', 'tier-4', 'named', 'beru', 'flying']
-),
-(
-  'Tank',
-  'Shadow Marshal',
-  4,
-  'large',
-  'undead',
-  '8',
-  20,
-  170,
-  '20d8 + 80',
-  30,
-  0,
-  24,
-  12,
-  24,
-  8,
-  12,
-  14,
-  'A massive defensive shadow, designed to absorb damage and protect the Shadow Monarch. Tank is nearly indestructible, with incredible vitality and natural armor.',
-  'Tank was created specifically to serve as an unbreakable shield. His massive frame and incredible durability make him the perfect guardian. Tank can withstand attacks that would destroy lesser shadows, and his presence on the battlefield provides a mobile fortress.',
-  'The earth itself seems to groan as something massive begins to rise. "ARISE, TANK." A colossal figure emerges, its form so large it blocks out the light. This shadow was built for one purpose: to be an unbreakable wall.',
-  200,
-  1,
-  'B',
-  true,
-  true,
-  ARRAY['shadow', 'undead', 'summoned', 'tier-4', 'named', 'tank', 'defensive']
+  18, 16, 18, 12, 14, 16,
+  17, 78, 30,
+  ARRAY['necrotic', 'poison'],
+  ARRAY['charmed', 'frightened'],
+  '[{"name":"Tactical Command","description":"As a bonus action, the shadow marshal can command up to three shadow soldiers within 60 feet to immediately make one attack.","action_type":"bonus-action"},{"name":"Shadow Aura","description":"Allied shadows within 30 feet gain resistance to radiant damage.","action_type":"passive"}]'::jsonb,
+  'knight',
+  'Shadow Monarch unlock + Shadow-themed Sovereign + Level 7+'
 ),
 (
   'Kaisel',
-  'Shadow Marshal',
-  5,
-  'huge',
-  'undead',
-  '12',
-  19,
-  200,
-  '24d8 + 96',
-  40,
-  80,
-  22,
-  18,
-  22,
-  14,
-  16,
-  18,
+  'Shadow Dragon',
+  'General Grade',
   'A dragon-like shadow, one of the Shadow Monarch''s most powerful named shadows. Kaisel combines the power of a dragon with shadow energy, capable of devastating area attacks and aerial dominance.',
   'Kaisel represents the pinnacle of shadow summoning. This dragon shadow retains the majesty and power of its draconic nature while gaining the benefits of shadow transformation. Kaisel can rain down shadow fire and dominate the skies, making it a force of destruction on the battlefield.',
-  'The sky darkens as shadow clouds gather. "ARISE, KAISEL." The command echoes across the battlefield, and a massive shadow dragon materializes, its wingspan blocking out the sun. Shadow fire burns in its eyes, and its roar is a promise of destruction.',
-  500,
-  1,
-  'S',
-  true,
-  true,
-  ARRAY['shadow', 'undead', 'summoned', 'tier-5', 'named', 'kaisel', 'dragon', 'flying']
+  22, 18, 22, 14, 16, 18,
+  19, 200, 80,
+  ARRAY['necrotic', 'poison'],
+  ARRAY['charmed', 'frightened', 'exhaustion'],
+  '[{"name":"Shadow Flame","description":"Kaisel exhales shadow fire in a 60-foot cone. Creatures in the area make a DC 18 Agility save, taking 6d10 fire damage plus 3d10 necrotic damage on a failure, or half on a success.","action_type":"action"},{"name":"Aerial Dominance","description":"Kaisel has advantage on attack rolls against creatures that cannot fly.","action_type":"passive"}]'::jsonb,
+  'dragon',
+  'Shadow Monarch unlock + Shadow-themed Sovereign + Level 15+'
 );
-
--- Add XP values
-UPDATE public.compendium_shadow_soldiers SET xp = CASE cr
-  WHEN '1/4' THEN 50
-  WHEN '1/2' THEN 100
-  WHEN '1' THEN 200
-  WHEN '2' THEN 450
-  WHEN '3' THEN 700
-  WHEN '4' THEN 1100
-  WHEN '5' THEN 1800
-  WHEN '6' THEN 2300
-  WHEN '7' THEN 2900
-  WHEN '8' THEN 3900
-  WHEN '9' THEN 5000
-  WHEN '10' THEN 5900
-  WHEN '11' THEN 7200
-  WHEN '12' THEN 8400
-  ELSE 0
-END;
 
 -- Add traits for each shadow soldier
 -- Shadow Soldier traits
