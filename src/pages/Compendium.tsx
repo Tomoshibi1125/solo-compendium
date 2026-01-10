@@ -81,6 +81,7 @@ interface CompendiumEntry {
 type JobSearchRow = {
   id: string;
   name: string;
+  display_name?: string | null;
   description?: string | null;
   created_at?: string;
   tags?: string[] | null;
@@ -91,6 +92,7 @@ type JobSearchRow = {
 type PowerSearchRow = {
   id: string;
   name: string;
+  display_name?: string | null;
   description?: string | null;
   power_level?: number | null;
   school?: string | null;
@@ -211,10 +213,10 @@ const Compendium = () => {
           if (!jobs) {
             let query = supabase
               .from('compendium_jobs')
-              .select('id, name, description, created_at, tags, source_book, image_url');
+              .select('id, name, display_name, description, created_at, tags, source_book, image_url');
             
             if (debouncedSearchQuery.trim()) {
-              query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
+              query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
             }
             
             const { data } = await query;
@@ -223,7 +225,7 @@ const Compendium = () => {
           if (jobs) {
             allEntries.push(...jobs.map(j => ({
               id: j.id,
-              name: j.name,
+              name: (j.display_name || j.name),
               type: 'jobs' as const,
               description: j.description,
               rarity: 'legendary',
@@ -240,17 +242,17 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'paths') {
           let query = supabase
             .from('compendium_job_paths')
-            .select('id, name, description, created_at, tags, source_book');
+            .select('id, name, display_name, description, created_at, tags, source_book');
           
           if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
+            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
           }
           
           const { data: paths } = await query;
           if (paths) {
             allEntries.push(...paths.map(p => ({
               id: p.id,
-              name: p.name,
+              name: ((p as { display_name?: string | null }).display_name || p.name),
               type: 'paths' as const,
               description: p.description,
               rarity: 'rare',
@@ -266,17 +268,17 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'monarchs') {
           let query = supabase
             .from('compendium_monarchs')
-            .select('id, name, title, description, theme, created_at, tags, source_book');
+            .select('id, name, display_name, title, description, theme, created_at, tags, source_book');
           
           if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
+            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
           }
           
           const { data: monarchs } = await query;
           if (monarchs) {
             allEntries.push(...monarchs.map(m => ({
               id: m.id,
-              name: m.name,
+              name: ((m as { display_name?: string | null }).display_name || m.name),
               type: 'monarchs' as const,
               description: m.description,
               title: m.title,
@@ -293,17 +295,17 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'sovereigns') {
           let query = supabase
             .from('compendium_sovereigns')
-            .select('id, name, description, fusion_theme, prerequisites, created_at, tags, source_book');
+            .select('id, name, display_name, description, fusion_theme, prerequisites, created_at, tags, source_book');
           
           if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%,fusion_theme.ilike.%${debouncedSearchQuery}%`);
+            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%,fusion_theme.ilike.%${debouncedSearchQuery}%`);
           }
           
           const { data: sovereigns } = await query;
           if (sovereigns) {
             allEntries.push(...sovereigns.map(s => ({
               id: s.id,
-              name: s.name,
+              name: ((s as { display_name?: string | null }).display_name || s.name),
               type: 'sovereigns' as const,
               description: s.description,
               prerequisites: s.prerequisites,
@@ -334,10 +336,10 @@ const Compendium = () => {
           if (!powers) {
             let query = supabase
               .from('compendium_powers')
-              .select('id, name, description, power_level, school, created_at, tags, source_book');
+              .select('id, name, display_name, description, power_level, school, created_at, tags, source_book');
             
             if (debouncedSearchQuery.trim()) {
-              query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
+              query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
             }
             
             const { data } = await query;
@@ -346,12 +348,11 @@ const Compendium = () => {
           if (powers) {
             allEntries.push(...powers.map(p => ({
               id: p.id,
-              name: p.name,
+              name: (p.display_name || p.name),
               type: 'powers' as const,
               description: p.description,
-              level: p.power_level,
-              school: p.school,
-              rarity: p.power_level === 0 ? 'common' : p.power_level <= 2 ? 'uncommon' : p.power_level <= 4 ? 'rare' : p.power_level <= 6 ? 'very_rare' : 'legendary',
+              level: p.power_level || 0,
+              rarity: p.power_level ? `tier-${p.power_level}` : 'common',
               tags: p.tags || [],
               created_at: p.created_at,
               source_book: p.source_book,
@@ -364,23 +365,21 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'runes') {
           let query = supabase
             .from('compendium_runes')
-            .select('id, name, description, rune_level, rune_type, rune_category, rarity, created_at, tags, source_book');
+            .select('id, name, display_name, description, rune_level, rune_type, rune_category, rarity, created_at, tags, source_book');
           
           if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
+            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
           }
           
           const { data: runes } = await query;
           if (runes) {
             allEntries.push(...runes.map(r => ({
               id: r.id,
-              name: r.name,
+              name: ((r as { display_name?: string | null }).display_name || r.name),
               type: 'runes' as const,
               description: r.description,
               level: r.rune_level,
-              rarity: r.rarity || 'common',
-              rune_type: r.rune_type,
-              rune_category: r.rune_category,
+              rarity: r.rarity,
               tags: r.tags || [],
               created_at: r.created_at,
               source_book: r.source_book || 'SL',
@@ -393,17 +392,17 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'relics') {
           let query = supabase
             .from('compendium_relics')
-            .select('id, name, description, rarity, item_type, created_at, tags, source_book, image_url');
+            .select('id, name, display_name, description, rarity, item_type, created_at, tags, source_book, image_url');
           
           if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
+            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
           }
           
           const { data: relics } = await query;
           if (relics) {
             allEntries.push(...relics.map(r => ({
               id: r.id,
-              name: r.name,
+              name: ((r as { display_name?: string | null }).display_name || r.name),
               type: 'relics' as const,
               description: r.description,
               rarity: r.rarity,
@@ -420,17 +419,17 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'feats') {
           let query = supabase
             .from('compendium_feats')
-            .select('id, name, description, prerequisites, created_at, tags, source_book');
+            .select('id, name, display_name, description, prerequisites, created_at, tags, source_book');
           
           if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
+            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
           }
           
           const { data: feats } = await query;
           if (feats) {
             allEntries.push(...feats.map(f => ({
               id: f.id,
-              name: f.name,
+              name: ((f as { display_name?: string | null }).display_name || f.name),
               type: 'feats' as const,
               description: f.description,
               prerequisites: f.prerequisites,
@@ -447,22 +446,22 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'monsters') {
           let query = supabase
             .from('compendium_monsters')
-            .select('id, name, description, cr, gate_rank, is_boss, created_at, tags, source_book, image_url');
+            .select('id, name, display_name, description, cr, gate_rank, is_boss, created_at, tags, source_book, image_url');
           
           if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
+            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
           }
           
           const { data: monsters } = await query;
           if (monsters) {
             allEntries.push(...monsters.map(m => ({
               id: m.id,
-              name: m.name,
+              name: ((m as { display_name?: string | null }).display_name || m.name),
               type: 'monsters' as const,
-              description: m.description || '',
+              description: m.description,
               cr: m.cr,
               gate_rank: m.gate_rank,
-              is_boss: m.is_boss,
+              rarity: m.gate_rank || 'common',
               tags: m.tags || [],
               created_at: m.created_at,
               source_book: m.source_book,
@@ -476,19 +475,20 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'backgrounds') {
           let query = supabase
             .from('compendium_backgrounds')
-            .select('id, name, description, created_at, tags, source_book');
+            .select('id, name, display_name, description, created_at, tags, source_book');
           
           if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
+            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
           }
           
           const { data: backgrounds } = await query;
           if (backgrounds) {
             allEntries.push(...backgrounds.map(b => ({
               id: b.id,
-              name: b.name,
+              name: ((b as { display_name?: string | null }).display_name || b.name),
               type: 'backgrounds' as const,
               description: b.description,
+              rarity: 'common',
               tags: b.tags || [],
               created_at: b.created_at,
               source_book: b.source_book,
@@ -501,19 +501,20 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'conditions') {
           let query = supabase
             .from('compendium_conditions')
-            .select('id, name, description, created_at');
+            .select('id, name, display_name, description, created_at');
           
           if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
+            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
           }
           
           const { data: conditions } = await query;
           if (conditions) {
             allEntries.push(...conditions.map(c => ({
               id: c.id,
-              name: c.name,
+              name: ((c as { display_name?: string | null }).display_name || c.name),
               type: 'conditions' as const,
               description: c.description,
+              rarity: 'common',
               created_at: c.created_at,
               isFavorite: favorites.has(`conditions:${c.id}`) || false,
             })));
@@ -524,19 +525,20 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'skills') {
           let query = supabase
             .from('compendium_skills')
-            .select('id, name, description, ability, created_at, source_book');
+            .select('id, name, display_name, description, ability, created_at, source_book');
           
           if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
+            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
           }
           
           const { data: skills } = await query;
           if (skills) {
             allEntries.push(...skills.map(s => ({
               id: s.id,
-              name: s.name,
+              name: ((s as { display_name?: string | null }).display_name || s.name),
               type: 'skills' as const,
               description: s.description,
+              rarity: 'common',
               ability: s.ability,
               created_at: s.created_at,
               source_book: s.source_book,
@@ -549,19 +551,20 @@ const Compendium = () => {
         if (selectedCategory === 'all' || selectedCategory === 'equipment') {
           let query = supabase
             .from('compendium_equipment')
-            .select('id, name, description, equipment_type, damage, armor_class, created_at, source_book, image_url');
+            .select('id, name, display_name, description, equipment_type, damage, armor_class, created_at, source_book, image_url');
           
           if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
+            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
           }
           
           const { data: equipment } = await query;
           if (equipment) {
             allEntries.push(...equipment.map(e => ({
               id: e.id,
-              name: e.name,
+              name: ((e as { display_name?: string | null }).display_name || e.name),
               type: 'equipment' as const,
-              description: e.description || '',
+              description: e.description,
+              rarity: 'common',
               equipment_type: e.equipment_type,
               created_at: e.created_at,
               source_book: e.source_book,

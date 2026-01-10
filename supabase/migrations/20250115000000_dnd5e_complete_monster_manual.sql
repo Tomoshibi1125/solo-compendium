@@ -39,7 +39,8 @@ INSERT INTO compendium_monsters (name, size, creature_type, alignment, cr, xp, a
 ('Shrieker', 'Medium', 'Plant', 'Unaligned', '0', 0, 5, NULL, 13, '3d8', 0, 1, 1, 10, 1, 3, 1, '{}', '{}', '{}', '{}', '{"blindsight": 30}', '{}', 'Fungus that emits loud shrieks when light or movement is detected. Alerts other monsters.', 'These fungi are cultivated by intelligent monsters to serve as alarm systems.', 'E', false, 'MM', '{"plant", "fungus"}'),
 ('Spider', 'Tiny', 'Beast', 'Unaligned', '0', 0, 12, NULL, 1, '1d4-1', 20, 2, 14, 8, 1, 10, 3, '{}', '{}', '{}', '{}', '{"darkvision": 30}', '{}', 'Small arachnids that spin webs in Gate corners. Weak venom causes mild irritation.', NULL, 'E', false, 'MM', '{"beast"}'),
 ('Vulture', 'Medium', 'Beast', 'Unaligned', '0', 0, 10, NULL, 5, '2d4', 10, 7, 10, 12, 2, 13, 3, '{}', '{}', '{}', '{}', '{}', '{}', 'Carrion birds that scavenge Gate battlefields. Circle overhead when death is near.', NULL, 'E', false, 'MM', '{"beast", "flying"}'),
-('Weasel', 'Tiny', 'Beast', 'Unaligned', '0', 0, 13, NULL, 1, '1d4-1', 30, 3, 16, 8, 3, 12, 4, '{}', '{}', '{}', '{}', '{"passive Perception": 12}', '{}', 'Small, agile mammals. Known for their tenacity in battle.', NULL, 'E', false, 'MM', '{"beast"}');
+('Weasel', 'Tiny', 'Beast', 'Unaligned', '0', 0, 13, NULL, 1, '1d4-1', 30, 3, 16, 8, 3, 12, 4, '{}', '{}', '{}', '{}', '{"passive Perception": 12}', '{}', 'Small, agile mammals. Known for their tenacity in battle.', NULL, 'E', false, 'MM', '{"beast"}')
+ON CONFLICT (name) DO NOTHING;
 
 -- Continue with CR 1/8, 1/4, 1/2 monsters...
 -- This is a massive migration, so I'll create it in parts

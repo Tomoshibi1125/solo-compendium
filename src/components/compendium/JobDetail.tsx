@@ -11,6 +11,7 @@ import { CompendiumImage } from '@/components/compendium/CompendiumImage';
 interface JobData {
   id: string;
   name: string;
+  display_name?: string | null;
   description: string;
   flavor_text?: string;
   hit_die: number;
@@ -30,6 +31,7 @@ interface JobData {
 interface JobFeature {
   id: string;
   name: string;
+  display_name?: string | null;
   description: string;
   level: number;
   action_type?: string;
@@ -39,6 +41,7 @@ interface JobFeature {
 interface JobPath {
   id: string;
   name: string;
+  display_name?: string | null;
   description: string;
   path_level: number;
 }
@@ -46,7 +49,9 @@ interface JobPath {
 export const JobDetail = ({ data }: { data: JobData }) => {
   const [features, setFeatures] = useState<JobFeature[]>([]);
   const [paths, setPaths] = useState<JobPath[]>([]);
-  const [relatedPowers, setRelatedPowers] = useState<Array<{ id: string; name: string; power_level: number }>>([]);
+  const [relatedPowers, setRelatedPowers] = useState<Array<{ id: string; name: string; display_name?: string | null; power_level: number }>>([]);
+
+  const displayName = data.display_name || data.name;
 
   useEffect(() => {
     const fetchRelatedData = async () => {
@@ -64,7 +69,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
         .order('name'),
       supabase
         .from('compendium_powers')
-        .select('id, name, power_level')
+        .select('id, name, display_name, power_level')
         .contains('job_names', [data.name])
         .limit(10),
     ]);
@@ -84,7 +89,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
         <div className="w-full flex justify-center">
           <CompendiumImage
             src={data.image_url}
-            alt={data.name}
+            alt={displayName}
             size="hero"
             aspectRatio="landscape"
             className="max-w-2xl w-full rounded-lg"
@@ -97,10 +102,10 @@ export const JobDetail = ({ data }: { data: JobData }) => {
       <DetailHeader
         entryType="jobs"
         entryId={data.id}
-        title={data.name}
+        title={displayName}
         subtitle={data.source_book ? `Source: ${data.source_book}` : undefined}
       />
-      <SystemWindow title={data.name.toUpperCase()} className="border-primary/50">
+      <SystemWindow title={displayName.toUpperCase()} className="border-primary/50">
         <div className="space-y-4">
           {data.flavor_text && (
             <p className="text-muted-foreground italic border-l-2 border-primary/30 pl-4">
@@ -184,7 +189,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
                 to={`/compendium/paths/${path.id}`}
                 className="glass-card p-4 border border-border hover:border-primary/30 transition-colors"
               >
-                <h4 className="font-heading text-lg font-semibold text-primary mb-2 hover:underline">{path.name}</h4>
+                <h4 className="font-heading text-lg font-semibold text-primary mb-2 hover:underline">{path.display_name || path.name}</h4>
                 <p className="text-sm text-muted-foreground line-clamp-3">{path.description}</p>
                 <p className="text-xs text-muted-foreground mt-2">Available at level {path.path_level}</p>
               </Link>
@@ -206,7 +211,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
                 <Wand2 className="w-5 h-5 text-primary flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <h4 className="font-heading font-semibold group-hover:text-primary transition-colors truncate">
-                    {power.name}
+                    {power.display_name || power.name}
                   </h4>
                   <p className="text-xs text-muted-foreground">
                     {power.power_level === 0 ? 'Cantrip' : `Tier ${power.power_level}`}
@@ -219,7 +224,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
             to={`/compendium?category=powers&search=${encodeURIComponent(data.name)}`}
             className="block mt-4 text-sm text-primary hover:underline text-center"
           >
-            View all powers for {data.name} →
+            View all powers for {displayName} →
           </Link>
         </SystemWindow>
       )}
@@ -231,7 +236,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
             {features.map((feature) => (
               <div key={feature.id} className="border-l-2 border-primary/30 pl-4">
                 <div className="flex items-center gap-2 mb-1">
-                  <h4 className="font-heading font-semibold">{feature.name}</h4>
+                  <h4 className="font-heading font-semibold">{feature.display_name || feature.name}</h4>
                   <Badge variant="outline" className="text-xs">Level {feature.level}</Badge>
                   {feature.action_type && (
                     <Badge variant="secondary" className="text-xs">{feature.action_type}</Badge>

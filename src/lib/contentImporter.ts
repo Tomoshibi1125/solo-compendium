@@ -6,6 +6,13 @@ import { AppError } from '@/lib/appError';
 type Job = Database['public']['Tables']['compendium_jobs']['Row'];
 type JobPath = Database['public']['Tables']['compendium_job_paths']['Row'];
 type JobFeature = Database['public']['Tables']['compendium_job_features']['Row'];
+type JobInsert = Database['public']['Tables']['compendium_jobs']['Insert'];
+type JobPathInsert = Database['public']['Tables']['compendium_job_paths']['Insert'];
+type JobFeatureInsert = Database['public']['Tables']['compendium_job_features']['Insert'];
+type PowerInsert = Database['public']['Tables']['compendium_powers']['Insert'];
+type RelicInsert = Database['public']['Tables']['compendium_relics']['Insert'];
+type MonsterInsert = Database['public']['Tables']['compendium_monsters']['Insert'];
+type BackgroundInsert = Database['public']['Tables']['compendium_backgrounds']['Insert'];
 
 export interface ImportResult {
   success: boolean;
@@ -79,8 +86,10 @@ export async function importContentBundle(
             continue;
           }
 
-          const jobInsert = {
+          const jobInsert: JobInsert = {
             name: jobData.name,
+            display_name: jobData.display_name,
+            aliases: jobData.aliases || [],
             description: jobData.description,
             flavor_text: jobData.flavor_text,
             primary_abilities: jobData.primary_abilities,
@@ -148,9 +157,11 @@ export async function importContentBundle(
             continue;
           }
 
-          const pathInsert = {
+          const pathInsert: JobPathInsert = {
             job_id: job.id,
             name: pathData.name,
+            display_name: pathData.display_name,
+            aliases: pathData.aliases || [],
             description: pathData.description,
             flavor_text: pathData.flavor_text,
             path_level: pathData.path_level,
@@ -180,22 +191,26 @@ export async function importContentBundle(
               const pathFeatures = bundle.job_features.filter(
                 f => f.job_name === pathData.job_name && f.path_name === pathData.name
               );
-              
+
               for (const featureData of pathFeatures) {
-                await supabase
-                  .from('compendium_job_features')
-                  .insert({
+                const featureInsert: JobFeatureInsert = {
                     job_id: job.id,
                     path_id: newPath.id,
                     name: featureData.name,
+                    display_name: featureData.display_name,
+                    aliases: featureData.aliases || [],
                     level: featureData.level,
                     description: featureData.description,
-                    action_type: featureData.action_type,
-                    uses_formula: featureData.uses_formula,
-                    recharge: featureData.recharge,
-                    prerequisites: featureData.prerequisites,
+                    action_type: featureData.action_type ?? null,
+                    uses_formula: featureData.uses_formula ?? null,
+                    recharge: featureData.recharge ?? null,
+                    prerequisites: featureData.prerequisites ?? null,
                     is_path_feature: true,
-                  });
+                  };
+
+                await supabase
+                  .from('compendium_job_features')
+                  .insert(featureInsert);
                 result.imported.job_features++;
               }
             }
@@ -226,19 +241,23 @@ export async function importContentBundle(
             continue;
           }
 
-          await supabase
-            .from('compendium_job_features')
-            .insert({
+          const featureInsert: JobFeatureInsert = {
               job_id: job.id,
               name: featureData.name,
+              display_name: featureData.display_name,
+              aliases: featureData.aliases || [],
               level: featureData.level,
               description: featureData.description,
-              action_type: featureData.action_type,
-              uses_formula: featureData.uses_formula,
-              recharge: featureData.recharge,
-              prerequisites: featureData.prerequisites,
+              action_type: featureData.action_type ?? null,
+              uses_formula: featureData.uses_formula ?? null,
+              recharge: featureData.recharge ?? null,
+              prerequisites: featureData.prerequisites ?? null,
               is_path_feature: false,
-            });
+            };
+
+          await supabase
+            .from('compendium_job_features')
+            .insert(featureInsert);
           result.imported.job_features++;
         } catch (error) {
           result.errors.push(`Failed to import feature "${featureData.name}": ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -262,8 +281,10 @@ export async function importContentBundle(
             continue;
           }
 
-          const powerInsert = {
+          const powerInsert: PowerInsert = {
             name: powerData.name,
+            display_name: powerData.display_name,
+            aliases: powerData.aliases || [],
             power_level: powerData.power_level,
             school: powerData.school,
             casting_time: powerData.casting_time,
@@ -317,8 +338,10 @@ export async function importContentBundle(
             continue;
           }
 
-          const relicInsert = {
+          const relicInsert: RelicInsert = {
             name: relicData.name,
+            display_name: relicData.display_name,
+            aliases: relicData.aliases || [],
             rarity: relicData.rarity,
             relic_tier: relicData.relic_tier,
             item_type: relicData.item_type,
@@ -371,8 +394,10 @@ export async function importContentBundle(
             continue;
           }
 
-          const monsterInsert = {
+          const monsterInsert: MonsterInsert = {
             name: monsterData.name,
+            display_name: monsterData.display_name,
+            aliases: monsterData.aliases || [],
             size: monsterData.size,
             creature_type: monsterData.creature_type,
             alignment: monsterData.alignment,
@@ -447,8 +472,10 @@ export async function importContentBundle(
             continue;
           }
 
-          const backgroundInsert = {
+          const backgroundInsert: BackgroundInsert = {
             name: backgroundData.name,
+            display_name: backgroundData.display_name,
+            aliases: backgroundData.aliases || [],
             description: backgroundData.description,
             feature_name: backgroundData.feature_name,
             feature_description: backgroundData.feature_description,

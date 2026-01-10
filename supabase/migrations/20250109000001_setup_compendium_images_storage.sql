@@ -14,31 +14,115 @@ ON CONFLICT (id) DO NOTHING;
 
 -- Storage Policies
 -- Allow public read access to all images
-CREATE POLICY "Public read access for compendium images"
-ON storage.objects FOR SELECT
-USING (bucket_id = 'compendium-images');
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_policies
+    WHERE schemaname = 'storage'
+      AND tablename = 'objects'
+      AND policyname = 'Public read access for compendium images'
+  ) THEN
+    IF EXISTS (
+      SELECT 1
+      FROM pg_class c
+      JOIN pg_namespace n ON n.oid = c.relnamespace
+      JOIN pg_roles r ON r.oid = c.relowner
+      WHERE n.nspname = 'storage'
+        AND c.relname = 'objects'
+        AND r.rolname = current_user
+    ) THEN
+      EXECUTE 'CREATE POLICY "Public read access for compendium images"\n'
+        || 'ON storage.objects FOR SELECT\n'
+        || 'USING (bucket_id = ''compendium-images'');';
+    END IF;
+  END IF;
+END $$;
 
 -- Allow authenticated users to upload (for admin/image generation)
-CREATE POLICY "Authenticated users can upload compendium images"
-ON storage.objects FOR INSERT
-WITH CHECK (
-  bucket_id = 'compendium-images' AND
-  auth.role() = 'authenticated'
-);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_policies
+    WHERE schemaname = 'storage'
+      AND tablename = 'objects'
+      AND policyname = 'Authenticated users can upload compendium images'
+  ) THEN
+    IF EXISTS (
+      SELECT 1
+      FROM pg_class c
+      JOIN pg_namespace n ON n.oid = c.relnamespace
+      JOIN pg_roles r ON r.oid = c.relowner
+      WHERE n.nspname = 'storage'
+        AND c.relname = 'objects'
+        AND r.rolname = current_user
+    ) THEN
+      EXECUTE 'CREATE POLICY "Authenticated users can upload compendium images"\n'
+        || 'ON storage.objects FOR INSERT\n'
+        || 'WITH CHECK (\n'
+        || '  bucket_id = ''compendium-images'' AND\n'
+        || '  auth.role() = ''authenticated''\n'
+        || ');';
+    END IF;
+  END IF;
+END $$;
 
 -- Allow authenticated users to update their uploads
-CREATE POLICY "Authenticated users can update compendium images"
-ON storage.objects FOR UPDATE
-USING (
-  bucket_id = 'compendium-images' AND
-  auth.role() = 'authenticated'
-);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_policies
+    WHERE schemaname = 'storage'
+      AND tablename = 'objects'
+      AND policyname = 'Authenticated users can update compendium images'
+  ) THEN
+    IF EXISTS (
+      SELECT 1
+      FROM pg_class c
+      JOIN pg_namespace n ON n.oid = c.relnamespace
+      JOIN pg_roles r ON r.oid = c.relowner
+      WHERE n.nspname = 'storage'
+        AND c.relname = 'objects'
+        AND r.rolname = current_user
+    ) THEN
+      EXECUTE 'CREATE POLICY "Authenticated users can update compendium images"\n'
+        || 'ON storage.objects FOR UPDATE\n'
+        || 'USING (\n'
+        || '  bucket_id = ''compendium-images'' AND\n'
+        || '  auth.role() = ''authenticated''\n'
+        || ');';
+    END IF;
+  END IF;
+END $$;
 
 -- Allow authenticated users to delete (for admin/image regeneration)
-CREATE POLICY "Authenticated users can delete compendium images"
-ON storage.objects FOR DELETE
-USING (
-  bucket_id = 'compendium-images' AND
-  auth.role() = 'authenticated'
-);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_policies
+    WHERE schemaname = 'storage'
+      AND tablename = 'objects'
+      AND policyname = 'Authenticated users can delete compendium images'
+  ) THEN
+    IF EXISTS (
+      SELECT 1
+      FROM pg_class c
+      JOIN pg_namespace n ON n.oid = c.relnamespace
+      JOIN pg_roles r ON r.oid = c.relowner
+      WHERE n.nspname = 'storage'
+        AND c.relname = 'objects'
+        AND r.rolname = current_user
+    ) THEN
+      EXECUTE 'CREATE POLICY "Authenticated users can delete compendium images"\n'
+        || 'ON storage.objects FOR DELETE\n'
+        || 'USING (\n'
+        || '  bucket_id = ''compendium-images'' AND\n'
+        || '  auth.role() = ''authenticated''\n'
+        || ');';
+    END IF;
+  END IF;
+END $$;
 

@@ -5,15 +5,18 @@ import { AlertTriangle } from 'lucide-react';
 interface ConditionData {
   id: string;
   name: string;
+  display_name?: string | null;
   description: string;
   effects?: string[];
 }
 
 export const ConditionDetail = ({ data }: { data: ConditionData }) => {
+  const displayName = data.display_name || data.name;
+
   return (
     <div className="space-y-6">
       {/* Header */}
-      <SystemWindow title={data.name.toUpperCase()} className="border-yellow-500/30">
+      <SystemWindow title={displayName.toUpperCase()} className="border-yellow-500/30">
         <div className="flex items-start gap-3">
           <AlertTriangle className="w-6 h-6 text-yellow-400 flex-shrink-0" />
           <p className="text-foreground">{data.description}</p>

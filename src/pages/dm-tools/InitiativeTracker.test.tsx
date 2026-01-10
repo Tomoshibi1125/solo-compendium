@@ -95,11 +95,8 @@ describe('InitiativeTracker', () => {
       .map((node) => node.closest('[data-combatant-card]'))
       .find((node): node is HTMLElement => node instanceof HTMLElement);
     expect(card).toBeDefined();
-    if (!card) {
-      throw new Error('Expected combatant card element');
-    }
 
-    const cardScope = within(card);
+    const cardScope = within(card!);
     const cardHp = cardScope.getByLabelText('HP for Goblin') as HTMLInputElement;
     expect(cardHp.value).toBe('12');
 

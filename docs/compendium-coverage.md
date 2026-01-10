@@ -1,6 +1,6 @@
 # Compendium Coverage (Schema + Automation Readiness)
 
-Generated: `2026-01-08T17:23:50.253Z`
+Generated: `2026-01-09T08:19:32.632Z`
 
 Source: `supabase/migrations`
 
@@ -42,3 +42,15 @@ Source: `supabase/migrations`
 - SELECT-based inserts are counted as one row per SELECT or UNION ALL clause.
 - Required fields are derived from app automation usage and table schemas.
 - Automation readiness is the percent of entries with all required fields present.
+
+## Integrity Checks
+
+- Mode: `migrations`
+- Result: ✅ PASS
+- Issues: 0
+
+### Integrity Notes
+
+- Integrity checks for migrations are best-effort and focused on name-based references in VALUES inserts and simple SELECT/JOIN patterns.
+- SELECT-based inserts (CTEs, bulk inserts) are not fully evaluated in migration parsing mode.
+- Jobs referenced by migrations but not inserted by migrations: 8.

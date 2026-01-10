@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, Link, useSearchParams } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { 
   ArrowLeft, 
   Heart, 
@@ -57,6 +57,7 @@ import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { useEquipment } from '@/hooks/useEquipment';
 import { isLocalCharacterId } from '@/lib/guestStore';
+import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import {
   Dialog,
   DialogContent,
@@ -81,6 +82,52 @@ const CharacterSheet = () => {
   const isReadOnly = !!shareToken;
   const { data: character, isLoading } = useCharacter(id || '', shareToken);
   const isLocal = !!character && isLocalCharacterId(character.id);
+
+  const { data: jobDisplayRow } = useQuery({
+    queryKey: ['compendium-display-job', character?.job],
+    queryFn: async () => {
+      if (!character?.job) return null;
+      const { data } = await supabase
+        .from('compendium_jobs')
+        .select('name, display_name')
+        .eq('name', character.job)
+        .maybeSingle();
+      return data as { name: string; display_name?: string | null } | null;
+    },
+    enabled: isSupabaseConfigured && Boolean(character?.job) && !isLocal,
+  });
+
+  const { data: pathDisplayRow } = useQuery({
+    queryKey: ['compendium-display-path', character?.path],
+    queryFn: async () => {
+      if (!character?.path) return null;
+      const { data } = await supabase
+        .from('compendium_job_paths')
+        .select('name, display_name')
+        .eq('name', character.path)
+        .maybeSingle();
+      return data as { name: string; display_name?: string | null } | null;
+    },
+    enabled: isSupabaseConfigured && Boolean(character?.path) && !isLocal,
+  });
+
+  const { data: backgroundDisplayRow } = useQuery({
+    queryKey: ['compendium-display-background', character?.background],
+    queryFn: async () => {
+      if (!character?.background) return null;
+      const { data } = await supabase
+        .from('compendium_backgrounds')
+        .select('name, display_name')
+        .eq('name', character.background)
+        .maybeSingle();
+      return data as { name: string; display_name?: string | null } | null;
+    },
+    enabled: isSupabaseConfigured && Boolean(character?.background) && !isLocal,
+  });
+
+  const jobDisplayName = jobDisplayRow?.display_name || character?.job;
+  const pathDisplayName = pathDisplayRow?.display_name || character?.path;
+  const backgroundDisplayName = backgroundDisplayRow?.display_name || character?.background;
   const updateCharacter = useUpdateCharacter();
   const generateShareToken = useGenerateShareToken();
   const { equipment } = useEquipment(id || '');
@@ -559,15 +606,15 @@ const CharacterSheet = () => {
                 </div>
                 <div>
                   <span className="text-xs text-muted-foreground block">Job</span>
-                  <span className="font-heading">{character.job || 'Unassigned'}</span>
+                  <span className="font-heading">{jobDisplayName || 'Unassigned'}</span>
                 </div>
                 <div>
                   <span className="text-xs text-muted-foreground block">Path</span>
-                  <span className="font-heading">{character.path || 'None'}</span>
+                  <span className="font-heading">{pathDisplayName || 'None'}</span>
                 </div>
                 <div>
                   <span className="text-xs text-muted-foreground block">Background</span>
-                  <span className="font-heading">{character.background || 'None'}</span>
+                  <span className="font-heading">{backgroundDisplayName || 'None'}</span>
                 </div>
               </div>
             </SystemWindow>

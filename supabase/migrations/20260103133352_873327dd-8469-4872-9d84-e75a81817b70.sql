@@ -13,10 +13,20 @@ CREATE TABLE IF NOT EXISTS public.compendium_skills (
 
 ALTER TABLE public.compendium_skills ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Compendium skills are publicly readable" 
-ON public.compendium_skills 
-FOR SELECT 
-USING (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'compendium_skills'
+      AND policyname = 'Compendium skills are publicly readable'
+  ) THEN
+    CREATE POLICY "Compendium skills are publicly readable"
+    ON public.compendium_skills
+    FOR SELECT
+    USING (true);
+  END IF;
+END $$;
 
 -- Insert all 18 skills adapted to Solo Leveling
 INSERT INTO compendium_skills (name, ability, description, examples, source_book) VALUES
@@ -35,7 +45,7 @@ INSERT INTO compendium_skills (name, ability, description, examples, source_book
 ('Nature', 'INT', 'Your Intellect (Nature) check measures your ability to recall lore about terrain, plants, animals, and weather. In Gates, this extends to understanding the ecosystem of Gate realms.', ARRAY['Identifying Gate flora and fauna', 'Predicting weather patterns', 'Understanding animal behavior', 'Recognizing natural hazards'], 'SRD'),
 ('Religion', 'INT', 'Your Intellect (Religion) check measures your ability to recall lore about deities, rites and prayers, religious hierarchies, holy symbols, and the practices of secret cults.', ARRAY['Understanding Monarch worship', 'Recognizing cult symbols', 'Knowing about divine entities', 'Identifying religious artifacts'], 'SRD'),
 
--- Sense Skills  
+-- Sense Skills
 ('Animal Handling', 'SENSE', 'When there is any question whether you can calm down a domesticated animal, keep a mount from getting spooked, or intuit an animal''s intentions, the DM might call for a Sense (Animal Handling) check.', ARRAY['Calming a frightened mount', 'Training a beast companion', 'Reading animal body language', 'Controlling summoned creatures'], 'SRD'),
 ('Insight', 'SENSE', 'Your Sense (Insight) check decides whether you can determine the true intentions of a creature, such as when searching out a lie or predicting someone''s next move.', ARRAY['Detecting lies', 'Reading body language', 'Anticipating enemy tactics', 'Understanding hidden motives'], 'SRD'),
 ('Medicine', 'SENSE', 'A Sense (Medicine) check lets you try to stabilize a dying companion or diagnose an illness. In Solo Leveling, this also covers treating mana-related conditions.', ARRAY['Stabilizing a dying hunter', 'Diagnosing mana poisoning', 'Treating Gate-inflicted wounds', 'Identifying diseases'], 'SRD'),
@@ -69,10 +79,20 @@ CREATE TABLE IF NOT EXISTS public.compendium_equipment (
 
 ALTER TABLE public.compendium_equipment ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Compendium equipment is publicly readable" 
-ON public.compendium_equipment 
-FOR SELECT 
-USING (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'compendium_equipment'
+      AND policyname = 'Compendium equipment is publicly readable'
+  ) THEN
+    CREATE POLICY "Compendium equipment is publicly readable"
+    ON public.compendium_equipment
+    FOR SELECT
+    USING (true);
+  END IF;
+END $$;
 
 -- Insert weapons
 INSERT INTO compendium_equipment (name, equipment_type, cost_credits, weight, properties, damage, damage_type, description, source_book) VALUES

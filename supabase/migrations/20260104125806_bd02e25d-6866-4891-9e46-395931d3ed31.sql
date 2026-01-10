@@ -290,17 +290,71 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.campaign_messages;
 -- Update triggers
 -- =============================================
 
-CREATE TRIGGER update_campaigns_updated_at
-BEFORE UPDATE ON public.campaigns
-FOR EACH ROW
-EXECUTE FUNCTION public.update_updated_at_column();
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1
+    FROM pg_class c
+    JOIN pg_namespace n ON n.oid = c.relnamespace
+    WHERE n.nspname = 'public'
+      AND c.relname = 'campaigns'
+  ) AND NOT EXISTS (
+    SELECT 1
+    FROM pg_trigger t
+    JOIN pg_class c ON c.oid = t.tgrelid
+    JOIN pg_namespace n ON n.oid = c.relnamespace
+    WHERE n.nspname = 'public'
+      AND c.relname = 'campaigns'
+      AND t.tgname = 'update_campaigns_updated_at'
+      AND NOT t.tgisinternal
+  ) THEN
+    EXECUTE 'CREATE TRIGGER update_campaigns_updated_at\n'
+      || 'BEFORE UPDATE ON public.campaigns\n'
+      || 'FOR EACH ROW\n'
+      || 'EXECUTE FUNCTION public.update_updated_at_column();';
+  END IF;
 
-CREATE TRIGGER update_campaign_notes_updated_at
-BEFORE UPDATE ON public.campaign_notes
-FOR EACH ROW
-EXECUTE FUNCTION public.update_updated_at_column();
+  IF EXISTS (
+    SELECT 1
+    FROM pg_class c
+    JOIN pg_namespace n ON n.oid = c.relnamespace
+    WHERE n.nspname = 'public'
+      AND c.relname = 'campaign_notes'
+  ) AND NOT EXISTS (
+    SELECT 1
+    FROM pg_trigger t
+    JOIN pg_class c ON c.oid = t.tgrelid
+    JOIN pg_namespace n ON n.oid = c.relnamespace
+    WHERE n.nspname = 'public'
+      AND c.relname = 'campaign_notes'
+      AND t.tgname = 'update_campaign_notes_updated_at'
+      AND NOT t.tgisinternal
+  ) THEN
+    EXECUTE 'CREATE TRIGGER update_campaign_notes_updated_at\n'
+      || 'BEFORE UPDATE ON public.campaign_notes\n'
+      || 'FOR EACH ROW\n'
+      || 'EXECUTE FUNCTION public.update_updated_at_column();';
+  END IF;
 
-CREATE TRIGGER update_character_journal_updated_at
-BEFORE UPDATE ON public.character_journal
-FOR EACH ROW
-EXECUTE FUNCTION public.update_updated_at_column();
+  IF EXISTS (
+    SELECT 1
+    FROM pg_class c
+    JOIN pg_namespace n ON n.oid = c.relnamespace
+    WHERE n.nspname = 'public'
+      AND c.relname = 'character_journal'
+  ) AND NOT EXISTS (
+    SELECT 1
+    FROM pg_trigger t
+    JOIN pg_class c ON c.oid = t.tgrelid
+    JOIN pg_namespace n ON n.oid = c.relnamespace
+    WHERE n.nspname = 'public'
+      AND c.relname = 'character_journal'
+      AND t.tgname = 'update_character_journal_updated_at'
+      AND NOT t.tgisinternal
+  ) THEN
+    EXECUTE 'CREATE TRIGGER update_character_journal_updated_at\n'
+      || 'BEFORE UPDATE ON public.character_journal\n'
+      || 'FOR EACH ROW\n'
+      || 'EXECUTE FUNCTION public.update_updated_at_column();';
+  END IF;
+END $$;

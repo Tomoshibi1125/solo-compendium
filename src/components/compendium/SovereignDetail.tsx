@@ -8,6 +8,7 @@ import { supabase } from '@/integrations/supabase/client';
 interface SovereignData {
   id: string;
   name: string;
+  display_name?: string | null;
   description: string;
   job_id?: string;
   path_id?: string;
@@ -25,6 +26,7 @@ interface SovereignData {
 interface SovereignFeature {
   id: string;
   name: string;
+  display_name?: string | null;
   description: string;
   level: number;
   action_type?: string;
@@ -43,6 +45,8 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
   const [features, setFeatures] = useState<SovereignFeature[]>([]);
   const [fusionComponents, setFusionComponents] = useState<FusionComponent[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const displayName = data.display_name || data.name;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,22 +70,22 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
       
       if (data.job_id) {
         const job = await resolveRef('jobs', data.job_id);
-        if (job) components.push({ type: 'job', id: job.id, name: job.name });
+        if (job) components.push({ type: 'job', id: job.id, name: ((job as { display_name?: string | null }).display_name || job.name) });
       }
       
       if (data.path_id) {
         const path = await resolveRef('paths', data.path_id);
-        if (path) components.push({ type: 'path', id: path.id, name: path.name });
+        if (path) components.push({ type: 'path', id: path.id, name: ((path as { display_name?: string | null }).display_name || path.name) });
       }
       
       if (data.monarch_a_id) {
         const monarch = await resolveRef('monarchs', data.monarch_a_id);
-        if (monarch) components.push({ type: 'monarch', id: monarch.id, name: monarch.name });
+        if (monarch) components.push({ type: 'monarch', id: monarch.id, name: ((monarch as { display_name?: string | null }).display_name || monarch.name) });
       }
       
       if (data.monarch_b_id) {
         const monarch = await resolveRef('monarchs', data.monarch_b_id);
-        if (monarch) components.push({ type: 'monarch', id: monarch.id, name: monarch.name });
+        if (monarch) components.push({ type: 'monarch', id: monarch.id, name: ((monarch as { display_name?: string | null }).display_name || monarch.name) });
       }
       
       setFusionComponents(components);
@@ -125,7 +129,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
             </div>
             <div>
               <h2 className="font-display text-2xl md:text-3xl bg-gradient-to-r from-violet-400 via-purple-400 to-amber-400 bg-clip-text text-transparent">
-                {data.name}
+                {displayName}
               </h2>
               {data.fusion_theme && (
                 <p className="text-muted-foreground font-heading">{data.fusion_theme}</p>
@@ -218,7 +222,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
               <div key={feature.id} className="border-l-2 border-primary/50 pl-4 space-y-2">
                 <div className="flex flex-wrap items-center gap-2">
                   <Zap className="w-4 h-4 text-primary" />
-                  <h4 className="font-heading font-semibold text-primary">{feature.name}</h4>
+                  <h4 className="font-heading font-semibold text-primary">{feature.display_name || feature.name}</h4>
                   {feature.action_type && (
                     <Badge variant="secondary" className="text-xs">{feature.action_type}</Badge>
                   )}
@@ -254,7 +258,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
               <div key={feature.id} className="border-l-2 border-amber-500/50 pl-4 space-y-2 bg-amber-500/5 -ml-4 p-4 rounded-r-lg">
                 <div className="flex flex-wrap items-center gap-2">
                   <Flame className="w-5 h-5 text-amber-400" />
-                  <h4 className="font-heading font-semibold text-amber-400">{feature.name}</h4>
+                  <h4 className="font-heading font-semibold text-amber-400">{feature.display_name || feature.name}</h4>
                   {feature.action_type && (
                     <Badge className="bg-amber-500/20 text-amber-300 text-xs">{feature.action_type}</Badge>
                   )}

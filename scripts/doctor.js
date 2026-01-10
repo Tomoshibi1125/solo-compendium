@@ -17,6 +17,7 @@ function parseArgs(argv) {
   return {
     e2e: args.has('--e2e'),
     skipBuild: args.has('--skip-build'),
+    skipCompendiumCoverage: args.has('--skip-compendium-coverage'),
     skipCompendiumValidate: args.has('--skip-compendium-validate'),
   };
 }
@@ -30,6 +31,10 @@ try {
 
   if (!opts.skipCompendiumValidate) {
     runStep('Compendium validation', 'npm run compendium:validate');
+  }
+
+  if (!opts.skipCompendiumCoverage) {
+    runStep('Compendium coverage + integrity', 'npm run compendium:coverage -- --check');
   }
 
   if (!opts.skipBuild) {

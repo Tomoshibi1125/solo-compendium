@@ -6,6 +6,7 @@ import { CompendiumImage } from '@/components/compendium/CompendiumImage';
 interface EquipmentData {
   id: string;
   name: string;
+  display_name?: string | null;
   description?: string;
   equipment_type: string;
   cost_credits?: number;
@@ -35,6 +36,7 @@ const typeLabels: Record<string, string> = {
 export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
   const isWeapon = data.equipment_type.includes('melee') || data.equipment_type.includes('ranged');
   const isArmor = data.equipment_type.includes('armor') || data.equipment_type === 'shield';
+  const displayName = data.display_name || data.name;
 
   return (
     <div className="space-y-6">
@@ -43,7 +45,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
         <div className="w-full flex justify-center">
           <CompendiumImage
             src={data.image_url}
-            alt={data.name}
+            alt={displayName}
             size="large"
             aspectRatio="square"
             className="max-w-md"
@@ -53,7 +55,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
       )}
       
       {/* Header */}
-      <SystemWindow title={data.name.toUpperCase()}>
+      <SystemWindow title={displayName.toUpperCase()}>
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant="secondary">{typeLabels[data.equipment_type] || data.equipment_type}</Badge>

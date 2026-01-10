@@ -30,41 +30,41 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
     queryKey: ['command-palette-compendium', search],
     queryFn: async () => {
       if (!search || search.length < 2) return [];
-      
+
       const results: Array<{ id: string; name: string; type: string; href: string }> = [];
-      
+
       // Search common compendium types using resolver table names
       const searchTypes: Array<{ type: EntryType; label: string; route: string }> = [
         { type: 'jobs', label: 'Job', route: 'jobs' },
         { type: 'powers', label: 'Power', route: 'powers' },
         { type: 'equipment', label: 'Equipment', route: 'equipment' },
       ];
-      
+
       for (const { type, label, route } of searchTypes) {
         try {
           const tableName = getTableName(type);
           const { data } = await supabase
             .from(tableName)
-            .select('id, name')
-            .ilike('name', `%${search}%`)
+            .select('id, name, display_name')
+            .or(`name.ilike.%${search}%,display_name.ilike.%${search}%`)
             .limit(5);
-          
+
           if (data && Array.isArray(data)) {
             // Type guard to filter out error objects
             const items = data as unknown[];
-            const validItems = items.filter((item): item is { id: string; name: string } => {
+            const validItems = items.filter((item): item is { id: string; name: string; display_name?: string | null } => {
               if (typeof item !== 'object' || item === null) return false;
               if ('error' in item) return false; // Filter out error objects
               const obj = item as Record<string, unknown>;
               return typeof obj.id === 'string' && typeof obj.name === 'string';
             });
-            
+
             validItems.forEach((item) => {
-              results.push({ 
-                id: item.id, 
-                name: item.name, 
-                type: label, 
-                href: `/compendium/${route}/${item.id}` 
+              results.push({
+                id: item.id,
+                name: item.display_name || item.name,
+                type: label,
+                href: `/compendium/${route}/${item.id}`
               });
             });
           }
@@ -95,8 +95,8 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
 
   return (
     <CommandDialog open={open} onOpenChange={onOpenChange}>
-      <CommandInput 
-        placeholder="Search characters, compendium, or navigate..." 
+      <CommandInput
+        placeholder="Search characters, compendium, or navigate..."
         value={search}
         onValueChange={setSearch}
       />

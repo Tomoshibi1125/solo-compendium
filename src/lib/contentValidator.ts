@@ -4,6 +4,8 @@ import type { Database } from '@/integrations/supabase/types';
 // Zod schemas for content validation
 export const JobSchema = z.object({
   name: z.string().min(1),
+  display_name: z.string().optional(),
+  aliases: z.array(z.string()).optional(),
   description: z.string().min(1),
   flavor_text: z.string().optional(),
   primary_abilities: z.array(z.enum(['STR', 'AGI', 'VIT', 'INT', 'SENSE', 'PRE'])).min(1),
@@ -27,6 +29,8 @@ export const JobSchema = z.object({
 
 export const JobPathSchema = z.object({
   name: z.string().min(1),
+  display_name: z.string().optional(),
+  aliases: z.array(z.string()).optional(),
   description: z.string().min(1),
   flavor_text: z.string().optional(),
   path_level: z.number().int().min(1).max(20).default(3),
@@ -41,6 +45,8 @@ export const JobPathSchema = z.object({
 
 export const JobFeatureSchema = z.object({
   name: z.string().min(1),
+  display_name: z.string().optional(),
+  aliases: z.array(z.string()).optional(),
   level: z.number().int().min(1).max(20),
   description: z.string().min(1),
   action_type: z.enum(['action', 'bonus-action', 'reaction', 'passive']).optional(),
@@ -52,6 +58,8 @@ export const JobFeatureSchema = z.object({
 
 export const PowerSchema = z.object({
   name: z.string().min(1),
+  display_name: z.string().optional(),
+  aliases: z.array(z.string()).optional(),
   power_level: z.number().int().min(0).max(9),
   school: z.string().optional(),
   casting_time: z.string().min(1),
@@ -74,8 +82,10 @@ export const PowerSchema = z.object({
 
 export const RelicSchema = z.object({
   name: z.string().min(1),
+  display_name: z.string().optional(),
+  aliases: z.array(z.string()).optional(),
   rarity: z.enum(['common', 'uncommon', 'rare', 'very_rare', 'legendary']),
-  relic_tier: z.enum(['dormant', 'awakened', 'resonant']).optional(),
+  relic_tier: z.enum(['E', 'D', 'C', 'B', 'A', 'S', 'SS']).optional(),
   item_type: z.string().min(1),
   requires_attunement: z.boolean().default(false),
   attunement_requirements: z.string().optional(),
@@ -95,6 +105,8 @@ export const RelicSchema = z.object({
 
 export const MonsterSchema = z.object({
   name: z.string().min(1),
+  display_name: z.string().optional(),
+  aliases: z.array(z.string()).optional(),
   size: z.enum(['tiny', 'small', 'medium', 'large', 'huge', 'gargantuan']),
   creature_type: z.string().min(1),
   alignment: z.string().optional(),
@@ -138,6 +150,8 @@ export const MonsterSchema = z.object({
 
 export const BackgroundSchema = z.object({
   name: z.string().min(1),
+  display_name: z.string().optional(),
+  aliases: z.array(z.string()).optional(),
   description: z.string().min(1),
   feature_name: z.string().optional(),
   feature_description: z.string().optional(),
@@ -190,7 +204,7 @@ export function validateContentBundle(data: unknown): ValidationResult {
 
   try {
     const parsed = ContentBundleSchema.safeParse(data);
-    
+
     if (!parsed.success) {
       result.valid = false;
       result.errors = parsed.error.errors.map(err => ({
@@ -234,7 +248,7 @@ export function validateContentBundle(data: unknown): ValidationResult {
     if (bundle.job_features && bundle.jobs) {
       const jobNames = new Set(bundle.jobs.map(j => j.name));
       const pathNames = new Set(bundle.job_paths?.map(p => p.name) || []);
-      
+
       bundle.job_features.forEach((feature, index) => {
         if (!jobNames.has(feature.job_name)) {
           result.errors.push({

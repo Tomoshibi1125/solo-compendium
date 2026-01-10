@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import type { Json } from '@/integrations/supabase/types';
 import { useToast } from '@/hooks/use-toast';
 import { AppError } from '@/lib/appError';
 import type { RealtimeChannel } from '@supabase/supabase-js';
@@ -12,7 +13,7 @@ export interface CampaignMessage {
   character_name: string | null;
   message_type: 'chat' | 'roll' | 'system' | 'whisper';
   content: string;
-  metadata: Record<string, unknown>;
+  metadata: Json | null;
   created_at: string;
 }
 
@@ -23,7 +24,7 @@ export const useCampaignMessages = (campaignId: string) => {
     queryFn: async (): Promise<CampaignMessage[]> => {
       const { data, error } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaign_messages' as any)
+        .from('campaign_messages')
         .select('*')
         .eq('campaign_id', campaignId)
         .order('created_at', { ascending: true })
@@ -97,14 +98,14 @@ export const useSendCampaignMessage = () => {
       content: string;
       characterName?: string;
       messageType?: 'chat' | 'roll' | 'system' | 'whisper';
-      metadata?: Record<string, unknown>;
+      metadata?: Json;
     }) => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
       const { data, error } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaign_messages' as any)
+        .from('campaign_messages')
         .insert({
           campaign_id: campaignId,
           user_id: user.id,
@@ -113,7 +114,7 @@ export const useSendCampaignMessage = () => {
           message_type: messageType,
           metadata,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any)
+        })
         .select()
         .single();
 
@@ -142,7 +143,7 @@ export const useDeleteCampaignMessage = () => {
     mutationFn: async ({ messageId, campaignId }: { messageId: string; campaignId: string }) => {
       const { error } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaign_messages' as any)
+        .from('campaign_messages')
         .delete()
         .eq('id', messageId);
 

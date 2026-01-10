@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 import { useToast } from '@/hooks/use-toast';
 import { AppError } from '@/lib/appError';
 
@@ -22,7 +23,7 @@ export const useCampaignNotes = (campaignId: string) => {
     queryFn: async (): Promise<CampaignNote[]> => {
       const { data, error } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaign_notes' as any)
+        .from('campaign_notes')
         .select('*')
         .eq('campaign_id', campaignId)
         .order('updated_at', { ascending: false });
@@ -58,7 +59,7 @@ export const useCreateCampaignNote = () => {
 
       const { data, error } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaign_notes' as any)
+        .from('campaign_notes')
         .insert({
           campaign_id: campaignId,
           user_id: user.id,
@@ -67,7 +68,7 @@ export const useCreateCampaignNote = () => {
           is_shared: isShared,
           category,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any)
+        })
         .select()
         .single();
 
@@ -112,7 +113,7 @@ export const useUpdateCampaignNote = () => {
       isShared?: boolean;
       category?: string;
     }) => {
-      const updates: Record<string, unknown> = {
+      const updates: Database['public']['Tables']['campaign_notes']['Update'] = {
         updated_at: new Date().toISOString(),
       };
       if (title !== undefined) updates.title = title;
@@ -122,7 +123,7 @@ export const useUpdateCampaignNote = () => {
 
       const { data, error } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaign_notes' as any)
+        .from('campaign_notes')
         .update(updates)
         .eq('id', noteId)
         .select()
@@ -157,7 +158,7 @@ export const useDeleteCampaignNote = () => {
     mutationFn: async ({ noteId, campaignId }: { noteId: string; campaignId: string }) => {
       const { error } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaign_notes' as any)
+        .from('campaign_notes')
         .delete()
         .eq('id', noteId);
 

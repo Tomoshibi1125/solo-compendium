@@ -5,6 +5,7 @@ import { Coins, BookOpen, Users, Wrench } from 'lucide-react';
 interface BackgroundData {
   id: string;
   name: string;
+  display_name?: string | null;
   description: string;
   skill_proficiencies?: string[];
   tool_proficiencies?: string[];
@@ -22,10 +23,12 @@ interface BackgroundData {
 }
 
 export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
+  const displayName = data.display_name || data.name;
+
   return (
     <div className="space-y-6">
       {/* Header */}
-      <SystemWindow title={data.name.toUpperCase()}>
+      <SystemWindow title={displayName.toUpperCase()}>
         <div className="space-y-4">
           <p className="text-foreground">{data.description}</p>
           {data.tags && data.tags.length > 0 && (

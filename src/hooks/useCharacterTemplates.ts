@@ -30,8 +30,7 @@ export const useSavedTemplates = () => {
       if (!user) return [];
 
       const { data, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('character_templates' as any)
+        .from('character_templates')
         .select('*')
         .eq('user_id', user.id)
         .order('updated_at', { ascending: false });
@@ -55,8 +54,7 @@ export const usePublicTemplates = () => {
     queryKey: ['character-templates', 'public'],
     queryFn: async (): Promise<SavedCharacterTemplate[]> => {
       const { data, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('character_templates' as any)
+        .from('character_templates')
         .select('*')
         .eq('is_public', true)
         .order('created_at', { ascending: false })
@@ -82,8 +80,7 @@ export const useTemplateByShareCode = (shareCode: string | null) => {
       if (!shareCode) return null;
 
       const { data, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('character_templates' as any)
+        .from('character_templates')
         .select('*')
         .eq('share_code', shareCode.toUpperCase())
         .maybeSingle();
@@ -124,7 +121,7 @@ export const useSaveTemplate = () => {
       if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
       // Extract template data (exclude user-specific fields)
-      const templateData = {
+      const templateData: Database['public']['Tables']['character_templates']['Insert'] = {
         name,
         description: description || null,
         character_data: {
@@ -152,8 +149,7 @@ export const useSaveTemplate = () => {
       }
 
       const { data, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('character_templates' as any)
+        .from('character_templates')
         .insert(templateData)
         .select()
         .single();
@@ -201,8 +197,7 @@ export const useDeleteTemplate = () => {
       if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
       const { error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('character_templates' as any)
+        .from('character_templates')
         .delete()
         .eq('id', templateId)
         .eq('user_id', user.id);
@@ -255,7 +250,7 @@ export const useUpdateTemplate = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
-      const updates: Record<string, unknown> = {
+      const updates: Database['public']['Tables']['character_templates']['Update'] = {
         updated_at: new Date().toISOString(),
       };
 
@@ -274,8 +269,7 @@ export const useUpdateTemplate = () => {
       if (tags !== undefined) updates.tags = tags.length > 0 ? tags : null;
 
       const { data, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('character_templates' as any)
+        .from('character_templates')
         .update(updates)
         .eq('id', id)
         .eq('user_id', user.id)

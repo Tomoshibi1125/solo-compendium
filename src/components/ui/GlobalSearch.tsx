@@ -24,6 +24,7 @@ interface SearchResult {
 type SearchRow = {
   id: string;
   name: string;
+  display_name?: string | null;
   description?: string | null;
 };
 
@@ -57,7 +58,10 @@ export function GlobalSearch({ className }: { className?: string }) {
         { table: 'compendium_shadow_soldiers', type: 'shadow-soldiers' },
         { table: 'compendium_feats', type: 'feats' },
         { table: 'compendium_skills', type: 'skills' },
-      ];
+      ] as const satisfies ReadonlyArray<{
+        table: keyof Database['public']['Tables'];
+        type: string;
+      }>;
 
       // Use full-text search RPC functions when available, fallback to ILIKE
       const searchFunctions: Record<string, 'jobs' | 'powers' | 'relics' | 'monsters' | 'paths' | 'monarchs'> = {
@@ -91,9 +95,9 @@ export function GlobalSearch({ className }: { className?: string }) {
           // Fallback to ILIKE if RPC not available or failed
           if (!data) {
             const { data: ilikeData } = await supabase
-              .from(table as keyof Database['public']['Tables'])
-              .select('id, name, description')
-              .or(`name.ilike.%${debouncedQuery}%,description.ilike.%${debouncedQuery}%`)
+              .from(table)
+              .select('id, name, display_name, description')
+              .or(`name.ilike.%${debouncedQuery}%,display_name.ilike.%${debouncedQuery}%,description.ilike.%${debouncedQuery}%`)
               .limit(5);
             // Type guard to filter out error objects
             if (ilikeData && Array.isArray(ilikeData)) {
@@ -112,7 +116,7 @@ export function GlobalSearch({ className }: { className?: string }) {
           if (data && Array.isArray(data)) {
             allResults.push(...data.map((item: SearchRow) => ({
               id: item.id,
-              name: item.name,
+              name: item.display_name || item.name,
               type,
               description: item.description || undefined,
               href: `/compendium/${type}/${item.id}`,

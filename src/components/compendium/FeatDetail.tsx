@@ -5,6 +5,7 @@ import { CheckCircle, AlertCircle } from 'lucide-react';
 interface FeatData {
   id: string;
   name: string;
+  display_name?: string | null;
   description: string;
   prerequisites?: string;
   benefits?: string[];
@@ -13,10 +14,12 @@ interface FeatData {
 }
 
 export const FeatDetail = ({ data }: { data: FeatData }) => {
+  const displayName = data.display_name || data.name;
+
   return (
     <div className="space-y-6">
       {/* Header */}
-      <SystemWindow title={data.name.toUpperCase()}>
+      <SystemWindow title={displayName.toUpperCase()}>
         <div className="space-y-4">
           <p className="text-foreground">{data.description}</p>
           

@@ -31,6 +31,7 @@ const RUNE_TYPE_COLORS: Record<string, string> = {
 export const RuneDetail = ({ data }: RuneDetailProps) => {
   const Icon = RUNE_TYPE_ICONS[data.rune_type] || Sparkles;
   const typeColor = RUNE_TYPE_COLORS[data.rune_type] || '';
+  const displayName = (data as { display_name?: string | null }).display_name || data.name;
 
   // Format requirements
   const requirements: string[] = [];
@@ -45,12 +46,12 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <SystemWindow title={data.name.toUpperCase()} className={typeColor ? `border-2 ${typeColor.split(' ')[2]}` : ''}>
+      <SystemWindow title={displayName.toUpperCase()} className={typeColor ? `border-2 ${typeColor.split(' ')[2]}` : ''}>
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <Icon className="w-8 h-8 text-primary" />
             <div>
-              <h2 className="font-display text-2xl gradient-text-system">{data.name}</h2>
+              <h2 className="font-display text-2xl gradient-text-system">{displayName}</h2>
               <div className="flex items-center gap-2 mt-1">
                 <Badge className={typeColor || 'bg-primary/20 text-primary border-primary/30'}>
                   {data.rune_type}
@@ -61,9 +62,9 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
               </div>
             </div>
           </div>
-          
+
           <p className="text-foreground">{data.description}</p>
-          
+
           {data.lore && (
             <div className="border-l-2 border-primary/30 pl-4">
               <p className="text-muted-foreground italic">{data.lore}</p>
@@ -104,7 +105,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
                   <h4 className="font-heading font-semibold text-sm">Casters Using Martial Runes</h4>
                 </div>
                 <p className="text-sm text-muted-foreground ml-6">{data.caster_penalty}</p>
-                {data.caster_requirement_multiplier && parseFloat(data.caster_requirement_multiplier) !== 1.0 && (
+                {data.caster_requirement_multiplier && data.caster_requirement_multiplier !== 1.0 && (
                   <p className="text-xs text-muted-foreground ml-6 mt-1">
                     Requirement multiplier: {data.caster_requirement_multiplier}x
                   </p>
@@ -118,7 +119,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
                   <h4 className="font-heading font-semibold text-sm">Martials Using Caster Runes</h4>
                 </div>
                 <p className="text-sm text-muted-foreground ml-6">{data.martial_penalty}</p>
-                {data.martial_requirement_multiplier && parseFloat(data.martial_requirement_multiplier) !== 1.0 && (
+                {data.martial_requirement_multiplier && data.martial_requirement_multiplier !== 1.0 && (
                   <p className="text-xs text-muted-foreground ml-6 mt-1">
                     Requirement multiplier: {data.martial_requirement_multiplier}x
                   </p>

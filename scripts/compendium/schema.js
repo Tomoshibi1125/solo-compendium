@@ -13,6 +13,8 @@ const Provenance = z.object({
 
 export const JobSchema = z.object({
   name: z.string().min(1),
+  display_name: z.string().optional(),
+  aliases: z.array(z.string()).optional(),
   description: z.string().min(1),
   flavor_text: z.string().optional(),
   primary_abilities: z.array(AbilityScore).min(1),
@@ -31,6 +33,8 @@ export const JobSchema = z.object({
 export const JobPathSchema = z.object({
   job_name: z.string().min(1),
   name: z.string().min(1),
+  display_name: z.string().optional(),
+  aliases: z.array(z.string()).optional(),
   description: z.string().min(1),
   flavor_text: z.string().optional(),
   path_level: z.number().int().min(1).max(20).optional(),
@@ -42,6 +46,8 @@ export const JobFeatureSchema = z.object({
   job_name: z.string().min(1),
   path_name: z.string().optional(),
   name: z.string().min(1),
+  display_name: z.string().optional(),
+  aliases: z.array(z.string()).optional(),
   level: z.number().int().min(1).max(20),
   description: z.string().min(1),
   action_type: z.enum(['action', 'bonus-action', 'reaction', 'passive']).optional(),
@@ -53,6 +59,8 @@ export const JobFeatureSchema = z.object({
 
 export const PowerSchema = z.object({
   name: z.string().min(1),
+  display_name: z.string().optional(),
+  aliases: z.array(z.string()).optional(),
   power_level: z.number().int().min(0).max(9),
   school: z.string().optional(),
   casting_time: z.string().min(1),
@@ -70,6 +78,8 @@ export const PowerSchema = z.object({
 
 export const RelicSchema = z.object({
   name: z.string().min(1),
+  display_name: z.string().optional(),
+  aliases: z.array(z.string()).optional(),
   rarity: z.enum(['common', 'uncommon', 'rare', 'very_rare', 'legendary']),
   relic_tier: z.enum(['dormant', 'awakened', 'resonant']).optional(),
   item_type: z.string().min(1),
@@ -86,6 +96,8 @@ export const RelicSchema = z.object({
 
 export const MonsterSchema = z.object({
   name: z.string().min(1),
+  display_name: z.string().optional(),
+  aliases: z.array(z.string()).optional(),
   size: z.enum(['tiny', 'small', 'medium', 'large', 'huge', 'gargantuan']),
   creature_type: z.string().min(1),
   alignment: z.string().optional(),
@@ -124,6 +136,8 @@ export const MonsterSchema = z.object({
 
 export const BackgroundSchema = z.object({
   name: z.string().min(1),
+  display_name: z.string().optional(),
+  aliases: z.array(z.string()).optional(),
   description: z.string().min(1),
   feature_name: z.string().optional(),
   feature_description: z.string().optional(),
@@ -151,32 +165,136 @@ export const ContentBundleSchema = z.object({
   backgrounds: z.array(BackgroundSchema).optional(),
 }).passthrough();
 
-export function validateContentBundle(bundle, filenameForMessages = 'bundle') {
-  const parsed = ContentBundleSchema.safeParse(bundle);
+function formatDuplicateLocations(locations, currentFile) {
+  const otherFiles = locations.filter((f) => f !== currentFile);
+  if (otherFiles.length === 0) return null;
+  return otherFiles.join(', ');
+}
+
+export function validateParsedContentBundle(
+  data,
+  filenameForMessages = 'bundle',
+  ctx = null
+) {
   const result = {
-    valid: parsed.success,
+    valid: true,
     errors: [],
     warnings: [],
   };
 
-  if (!parsed.success) {
-    result.errors = parsed.error.errors.map((e) => ({
-      path: `${filenameForMessages}:${e.path.join('.')}`,
-      message: e.message,
-    }));
-    return result;
+  const localJobNames = new Set((data.jobs || []).map((j) => j.name));
+  const localPathsByJobName = new Map();
+  for (const p of data.job_paths || []) {
+    const set = localPathsByJobName.get(p.job_name) || new Set();
+    set.add(p.name);
+    localPathsByJobName.set(p.job_name, set);
   }
 
-  const data = parsed.data;
+  const globalJobNames = ctx?.jobNames || localJobNames;
+  const globalPathsByJobName = ctx?.pathsByJobName || localPathsByJobName;
 
-  // Cross-reference checks (best-effort; only within the same bundle).
-  const jobNames = new Set((data.jobs || []).map((j) => j.name));
-  const pathNames = new Set((data.job_paths || []).map((p) => p.name));
+  const duplicateMaps = ctx?.duplicates || null;
+  if (duplicateMaps?.jobs) {
+    for (const [idx, j] of (data.jobs || []).entries()) {
+      const locations = duplicateMaps.jobs.get(j.name);
+      if (locations && locations.length > 1) {
+        const other = formatDuplicateLocations(locations, filenameForMessages);
+        if (other) {
+          result.errors.push({
+            path: `${filenameForMessages}:jobs[${idx}].name`,
+            message: `Duplicate job name "${j.name}" also defined in: ${other}`,
+          });
+          result.valid = false;
+        }
+      }
+    }
+  }
 
-  for (const p of data.job_paths || []) {
-    if (jobNames.size > 0 && !jobNames.has(p.job_name)) {
+  if (duplicateMaps?.powers) {
+    for (const [idx, p] of (data.powers || []).entries()) {
+      const locations = duplicateMaps.powers.get(p.name);
+      if (locations && locations.length > 1) {
+        const other = formatDuplicateLocations(locations, filenameForMessages);
+        if (other) {
+          result.errors.push({
+            path: `${filenameForMessages}:powers[${idx}].name`,
+            message: `Duplicate power name "${p.name}" also defined in: ${other}`,
+          });
+          result.valid = false;
+        }
+      }
+    }
+  }
+
+  if (duplicateMaps?.relics) {
+    for (const [idx, r] of (data.relics || []).entries()) {
+      const locations = duplicateMaps.relics.get(r.name);
+      if (locations && locations.length > 1) {
+        const other = formatDuplicateLocations(locations, filenameForMessages);
+        if (other) {
+          result.errors.push({
+            path: `${filenameForMessages}:relics[${idx}].name`,
+            message: `Duplicate relic name "${r.name}" also defined in: ${other}`,
+          });
+          result.valid = false;
+        }
+      }
+    }
+  }
+
+  if (duplicateMaps?.monsters) {
+    for (const [idx, m] of (data.monsters || []).entries()) {
+      const locations = duplicateMaps.monsters.get(m.name);
+      if (locations && locations.length > 1) {
+        const other = formatDuplicateLocations(locations, filenameForMessages);
+        if (other) {
+          result.errors.push({
+            path: `${filenameForMessages}:monsters[${idx}].name`,
+            message: `Duplicate monster name "${m.name}" also defined in: ${other}`,
+          });
+          result.valid = false;
+        }
+      }
+    }
+  }
+
+  if (duplicateMaps?.backgrounds) {
+    for (const [idx, b] of (data.backgrounds || []).entries()) {
+      const locations = duplicateMaps.backgrounds.get(b.name);
+      if (locations && locations.length > 1) {
+        const other = formatDuplicateLocations(locations, filenameForMessages);
+        if (other) {
+          result.errors.push({
+            path: `${filenameForMessages}:backgrounds[${idx}].name`,
+            message: `Duplicate background name "${b.name}" also defined in: ${other}`,
+          });
+          result.valid = false;
+        }
+      }
+    }
+  }
+
+  if (duplicateMaps?.job_paths) {
+    for (const [idx, p] of (data.job_paths || []).entries()) {
+      const key = `${p.job_name}:${p.name}`;
+      const locations = duplicateMaps.job_paths.get(key);
+      if (locations && locations.length > 1) {
+        const other = formatDuplicateLocations(locations, filenameForMessages);
+        if (other) {
+          result.errors.push({
+            path: `${filenameForMessages}:job_paths[${idx}].name`,
+            message: `Duplicate job path "${p.name}" for job "${p.job_name}" also defined in: ${other}`,
+          });
+          result.valid = false;
+        }
+      }
+    }
+  }
+
+  for (const [idx, p] of (data.job_paths || []).entries()) {
+    if (globalJobNames.size > 0 && !globalJobNames.has(p.job_name)) {
       result.errors.push({
-        path: `${filenameForMessages}:job_paths`,
+        path: `${filenameForMessages}:job_paths[${idx}].job_name`,
         message: `Path "${p.name}" references missing job "${p.job_name}"`,
       });
       result.valid = false;
@@ -184,23 +302,38 @@ export function validateContentBundle(bundle, filenameForMessages = 'bundle') {
   }
 
   for (const [idx, f] of (data.job_features || []).entries()) {
-    if (jobNames.size > 0 && !jobNames.has(f.job_name)) {
+    if (globalJobNames.size > 0 && !globalJobNames.has(f.job_name)) {
       result.errors.push({
         path: `${filenameForMessages}:job_features[${idx}].job_name`,
         message: `Feature "${f.name}" references missing job "${f.job_name}"`,
       });
       result.valid = false;
     }
-    if (f.path_name && pathNames.size > 0 && !pathNames.has(f.path_name)) {
-      result.errors.push({
-        path: `${filenameForMessages}:job_features[${idx}].path_name`,
-        message: `Feature "${f.name}" references missing path "${f.path_name}"`,
-      });
-      result.valid = false;
+
+    if (f.path_name) {
+      const pathsForJob = globalPathsByJobName.get(f.job_name) || new Set();
+      if (pathsForJob.size > 0 && !pathsForJob.has(f.path_name)) {
+        result.errors.push({
+          path: `${filenameForMessages}:job_features[${idx}].path_name`,
+          message: `Feature "${f.name}" references missing path "${f.path_name}" for job "${f.job_name}"`,
+        });
+        result.valid = false;
+      }
     }
   }
 
-  // Generated content must carry a reason.
+  for (const [idx, p] of (data.powers || []).entries()) {
+    for (const [jdx, jobName] of (p.job_names || []).entries()) {
+      if (globalJobNames.size > 0 && !globalJobNames.has(jobName)) {
+        result.errors.push({
+          path: `${filenameForMessages}:powers[${idx}].job_names[${jdx}]`,
+          message: `Power "${p.name}" references missing job "${jobName}"`,
+        });
+        result.valid = false;
+      }
+    }
+  }
+
   const provenanceCheck = (arr, label) => {
     for (const [idx, item] of arr.entries()) {
       if (item?.source_kind === 'generated' && !item.generated_reason) {
@@ -221,6 +354,25 @@ export function validateContentBundle(bundle, filenameForMessages = 'bundle') {
   provenanceCheck(data.backgrounds || [], 'backgrounds');
 
   return result;
+}
+
+export function validateContentBundle(bundle, filenameForMessages = 'bundle', ctx = null) {
+  const parsed = ContentBundleSchema.safeParse(bundle);
+  const result = {
+    valid: parsed.success,
+    errors: [],
+    warnings: [],
+  };
+
+  if (!parsed.success) {
+    result.errors = parsed.error.errors.map((e) => ({
+      path: `${filenameForMessages}:${e.path.join('.')}`,
+      message: e.message,
+    }));
+    return result;
+  }
+
+  return validateParsedContentBundle(parsed.data, filenameForMessages, ctx);
 }
 
 

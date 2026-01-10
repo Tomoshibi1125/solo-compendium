@@ -8,6 +8,7 @@ import { resolveRef } from '@/lib/compendiumResolver';
 interface PathData {
   id: string;
   name: string;
+  display_name?: string | null;
   description: string;
   flavor_text?: string;
   job_id: string;
@@ -19,6 +20,7 @@ interface PathData {
 interface PathFeature {
   id: string;
   name: string;
+  display_name?: string | null;
   description: string;
   level: number;
   action_type?: string;
@@ -34,6 +36,8 @@ export const PathDetail = ({ data }: { data: PathData }) => {
   const [features, setFeatures] = useState<PathFeature[]>([]);
   const [job, setJob] = useState<Job | null>(null);
 
+  const displayName = data.display_name || data.name;
+
   useEffect(() => {
     const fetchRelatedData = async () => {
       const [featuresRes, jobEntity] = await Promise.all([
@@ -46,7 +50,7 @@ export const PathDetail = ({ data }: { data: PathData }) => {
       ]);
 
       if (featuresRes.data) setFeatures(featuresRes.data);
-      if (jobEntity) setJob({ id: jobEntity.id, name: jobEntity.name });
+      if (jobEntity) setJob({ id: jobEntity.id, name: ((jobEntity as { display_name?: string | null }).display_name || jobEntity.name) });
     };
 
     fetchRelatedData();
@@ -55,7 +59,7 @@ export const PathDetail = ({ data }: { data: PathData }) => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <SystemWindow title={data.name.toUpperCase()} className="border-blue-500/50">
+      <SystemWindow title={displayName.toUpperCase()} className="border-blue-500/50">
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <GitBranch className="w-6 h-6 text-blue-400" />
@@ -93,7 +97,7 @@ export const PathDetail = ({ data }: { data: PathData }) => {
             {features.map((feature) => (
               <div key={feature.id} className="border-l-2 border-blue-500/30 pl-4">
                 <div className="flex items-center gap-2 mb-1">
-                  <h4 className="font-heading font-semibold text-blue-400">{feature.name}</h4>
+                  <h4 className="font-heading font-semibold text-blue-400">{feature.display_name || feature.name}</h4>
                   <Badge variant="outline" className="text-xs">Level {feature.level}</Badge>
                   {feature.action_type && (
                     <Badge variant="secondary" className="text-xs">{feature.action_type}</Badge>

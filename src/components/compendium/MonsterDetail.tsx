@@ -12,6 +12,7 @@ import { TableOfContents } from '@/components/compendium/TableOfContents';
 interface MonsterData {
   id: string;
   name: string;
+  display_name?: string | null;
   description?: string;
   lore?: string;
   size: string;
@@ -115,14 +116,15 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 
   const gateStyle = data.gate_rank ? gateRankColors[data.gate_rank] : null;
   const isBossOrNamedNPC = data.is_boss || data.tags?.includes('named-npc') || data.tags?.includes('named-boss') || data.tags?.includes('monarch');
+  const displayName = data.display_name || data.name;
 
   // Generate TOC items for long pages
   const tocItems = [
-    { id: 'monster-header', title: data.name, level: 1 },
+    { id: 'monster-header', title: displayName, level: 1 },
     { id: 'monster-stats', title: 'Core Stats', level: 2 },
     { id: 'monster-abilities', title: 'Ability Scores', level: 2 },
   ];
-  
+
   if (traits.length > 0) tocItems.push({ id: 'monster-traits', title: 'Traits', level: 2 });
   if (regularActions.length > 0) tocItems.push({ id: 'monster-actions', title: 'Actions', level: 2 });
   if (legendaryActions.length > 0) tocItems.push({ id: 'monster-legendary', title: 'Legendary Actions', level: 2 });
@@ -135,7 +137,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
         <div className="w-full">
           <CompendiumImage
             src={data.image_url}
-            alt={data.name}
+            alt={displayName}
             size="hero"
             aspectRatio="landscape"
             className="w-full rounded-lg"
@@ -143,10 +145,10 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
           />
         </div>
       )}
-      
+
       {/* Header */}
-      <SystemWindow 
-        title={data.name.toUpperCase()} 
+      <SystemWindow
+        title={displayName.toUpperCase()}
         variant={data.is_boss ? 'alert' : data.tags?.includes('monarch') ? 'arise' : 'default'}
         className={cn(
           data.is_boss && 'border-gate-a/50 border-2',
@@ -213,7 +215,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
             <span className="text-xs text-muted-foreground">{data.armor_type}</span>
           )}
         </SystemWindow>
-        
+
         <SystemWindow title="HIT POINTS" compact>
           <div className="flex items-center gap-2">
             <Heart className="w-5 h-5 text-red-400" />
@@ -221,14 +223,14 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
           </div>
           <span className="text-xs text-muted-foreground">{data.hit_points_formula}</span>
         </SystemWindow>
-        
+
         <SystemWindow title="SPEED" compact>
           <div className="flex items-center gap-2">
             <Footprints className="w-5 h-5 text-green-400" />
             <span className="font-heading text-sm">{speeds}</span>
           </div>
         </SystemWindow>
-        
+
         <SystemWindow title="CR" compact>
           <div className="flex items-center gap-2">
             <Skull className="w-5 h-5 text-purple-400" />
@@ -236,7 +238,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
           </div>
           {data.xp && <span className="text-xs text-muted-foreground">{data.xp} XP</span>}
         </SystemWindow>
-        
+
         <SystemWindow title="GATE RANK" compact>
           <div className="flex items-center gap-2">
             <Swords className="w-5 h-5 text-orange-400" />
@@ -246,10 +248,10 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
       </div>
 
       {/* Ability Scores */}
-      <StatBlock 
-        title="ABILITY SCORES" 
-        copyable 
-        copyContent={`${data.name} - Ability Scores: STR ${data.str} (${getModifier(data.str)}), AGI ${data.agi} (${getModifier(data.agi)}), VIT ${data.vit} (${getModifier(data.vit)}), INT ${data.int} (${getModifier(data.int)}), SENSE ${data.sense} (${getModifier(data.sense)}), PRE ${data.pre} (${getModifier(data.pre)})`}
+      <StatBlock
+        title="ABILITY SCORES"
+        copyable
+        copyContent={`${displayName} - Ability Scores: STR ${data.str} (${getModifier(data.str)}), AGI ${data.agi} (${getModifier(data.agi)}), VIT ${data.vit} (${getModifier(data.vit)}), INT ${data.int} (${getModifier(data.int)}), SENSE ${data.sense} (${getModifier(data.sense)}), PRE ${data.pre} (${getModifier(data.pre)})`}
         id="monster-abilities"
       >
         <div className="grid grid-cols-3 md:grid-cols-6 gap-4 text-center">

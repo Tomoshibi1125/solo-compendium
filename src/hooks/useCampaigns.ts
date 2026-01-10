@@ -143,7 +143,7 @@ export const useCreateCampaign = () => {
 
       // Call the database function to create campaign with share code
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data, error } = await (supabase.rpc as any)('create_campaign_with_code', {
+      const { data, error } = await supabase.rpc('create_campaign_with_code', {
         p_name: name,
         p_description: description || null,
         p_dm_id: user.id,
@@ -184,14 +184,14 @@ export const useJoinCampaign = () => {
 
       const { error } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaign_members' as any)
+        .from('campaign_members')
         .insert({
           campaign_id: campaignId,
           user_id: user.id,
           character_id: characterId || null,
           role: 'hunter',
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any);
+        });
 
       if (error) throw error;
     },
@@ -224,7 +224,7 @@ export const useLeaveCampaign = () => {
 
       const { error } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaign_members' as any)
+        .from('campaign_members')
         .delete()
         .eq('campaign_id', campaignId)
         .eq('user_id', user.id);

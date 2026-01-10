@@ -25,7 +25,7 @@ export const useCampaignSharedCharacters = (campaignId: string) => {
     queryFn: async (): Promise<CampaignCharacterShare[]> => {
       const { data, error } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaign_character_shares' as any)
+        .from('campaign_character_shares')
         .select(`
           *,
           characters:character_id (id, name, level, job)
@@ -59,14 +59,14 @@ export const useShareCharacter = () => {
 
       const { data, error } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaign_character_shares' as any)
+        .from('campaign_character_shares')
         .insert({
           campaign_id: campaignId,
           character_id: characterId,
           shared_by: user.id,
           permissions,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any)
+        })
         .select()
         .single();
 
@@ -99,7 +99,7 @@ export const useUnshareCharacter = () => {
     mutationFn: async ({ campaignId, characterId }: { campaignId: string; characterId: string }) => {
       const { error } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaign_character_shares' as any)
+        .from('campaign_character_shares')
         .delete()
         .eq('campaign_id', campaignId)
         .eq('character_id', characterId);
@@ -140,7 +140,7 @@ export const useUpdateSharePermissions = () => {
     }) => {
       const { data, error } = await supabase
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .from('campaign_character_shares' as any)
+        .from('campaign_character_shares')
         .update({ permissions })
         .eq('id', shareId)
         .select()

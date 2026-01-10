@@ -7,6 +7,7 @@ import { Crown, Flame, Skull, Sparkles, AlertTriangle } from 'lucide-react';
 interface MonarchData {
   id: string;
   name: string;
+  display_name?: string | null;
   title: string;
   description: string;
   flavor_text?: string;
@@ -25,6 +26,7 @@ interface MonarchData {
 interface MonarchFeature {
   id: string;
   name: string;
+  display_name?: string | null;
   description: string;
   level: number;
   is_signature: boolean;
@@ -34,6 +36,8 @@ interface MonarchFeature {
 
 export const MonarchDetail = ({ data }: { data: MonarchData }) => {
   const [features, setFeatures] = useState<MonarchFeature[]>([]);
+
+  const displayName = data.display_name || data.name;
 
   useEffect(() => {
     const fetchFeatures = async () => {
@@ -55,7 +59,7 @@ export const MonarchDetail = ({ data }: { data: MonarchData }) => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <SystemWindow title={data.name.toUpperCase()} className="border-amber-500/50 border-2">
+      <SystemWindow title={displayName.toUpperCase()} className="border-amber-500/50 border-2">
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <Crown className="w-8 h-8 text-amber-400" />
@@ -108,7 +112,7 @@ export const MonarchDetail = ({ data }: { data: MonarchData }) => {
               <div key={feature.id} className="border-l-2 border-amber-500/50 pl-4">
                 <div className="flex items-center gap-2 mb-1">
                   <Flame className="w-4 h-4 text-amber-400" />
-                  <h4 className="font-heading font-semibold text-amber-400">{feature.name}</h4>
+                  <h4 className="font-heading font-semibold text-amber-400">{feature.display_name || feature.name}</h4>
                   {feature.action_type && (
                     <Badge variant="secondary" className="text-xs">{feature.action_type}</Badge>
                   )}
@@ -130,7 +134,7 @@ export const MonarchDetail = ({ data }: { data: MonarchData }) => {
             {regularFeatures.map((feature) => (
               <div key={feature.id} className="border-l-2 border-primary/30 pl-4">
                 <div className="flex items-center gap-2 mb-1">
-                  <h4 className="font-heading font-semibold">{feature.name}</h4>
+                  <h4 className="font-heading font-semibold">{feature.display_name || feature.name}</h4>
                   <Badge variant="outline" className="text-xs">Level {feature.level}</Badge>
                   {feature.action_type && (
                     <Badge variant="secondary" className="text-xs">{feature.action_type}</Badge>

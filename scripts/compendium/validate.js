@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { validateContentBundle } from './schema.js';
+import { ContentBundleSchema, validateContentBundle, validateParsedContentBundle } from './schema.js';
 
 class ScriptError extends Error {
   constructor(message) {
@@ -40,25 +40,92 @@ async function readJson(filePath) {
   }
 }
 
-async function validateDir(dirLabel, dirPath) {
+function addLocation(map, key, file) {
+  const existing = map.get(key) || [];
+  if (!existing.includes(file)) existing.push(file);
+  map.set(key, existing);
+}
+
+function buildValidationContext(entries) {
+  const jobNames = new Set();
+  const pathsByJobName = new Map();
+
+  const duplicates = {
+    jobs: new Map(),
+    job_paths: new Map(),
+    powers: new Map(),
+    relics: new Map(),
+    monsters: new Map(),
+    backgrounds: new Map(),
+  };
+
+  for (const entry of entries) {
+    const data = entry.data;
+    for (const j of data.jobs || []) {
+      jobNames.add(j.name);
+      addLocation(duplicates.jobs, j.name, entry.file);
+    }
+    for (const p of data.job_paths || []) {
+      const set = pathsByJobName.get(p.job_name) || new Set();
+      set.add(p.name);
+      pathsByJobName.set(p.job_name, set);
+      addLocation(duplicates.job_paths, `${p.job_name}:${p.name}`, entry.file);
+    }
+    for (const p of data.powers || []) {
+      addLocation(duplicates.powers, p.name, entry.file);
+    }
+    for (const r of data.relics || []) {
+      addLocation(duplicates.relics, r.name, entry.file);
+    }
+    for (const m of data.monsters || []) {
+      addLocation(duplicates.monsters, m.name, entry.file);
+    }
+    for (const b of data.backgrounds || []) {
+      addLocation(duplicates.backgrounds, b.name, entry.file);
+    }
+  }
+
+  return { jobNames, pathsByJobName, duplicates };
+}
+
+async function loadDir(dirLabel, dirPath) {
   const jsonFiles = await listJsonFiles(dirPath).catch(() => []);
-  const results = [];
+  const entries = [];
 
   for (const file of jsonFiles) {
     const rel = path.relative(repoRoot, file);
-    const bundle = await readJson(file);
-    const result = validateContentBundle(bundle, rel);
-    results.push({ file: rel, ...result });
+    const raw = await readJson(file);
+    const parsed = ContentBundleSchema.safeParse(raw);
+    entries.push({ dirLabel, file: rel, raw, parsed });
   }
 
-  return { dirLabel, dirPath, results };
+  return entries;
 }
 
 async function main() {
-  const reports = await Promise.all([
-    validateDir('base', baseDir),
-    validateDir('generated', generatedDir),
-  ]);
+  const allEntries = (await Promise.all([
+    loadDir('base', baseDir),
+    loadDir('generated', generatedDir),
+  ])).flat();
+
+  const context = buildValidationContext(
+    allEntries
+      .filter((e) => e.parsed.success)
+      .map((e) => ({ file: e.file, data: e.parsed.data }))
+  );
+
+  const reports = [
+    { dirLabel: 'base', dirPath: baseDir, results: [] },
+    { dirLabel: 'generated', dirPath: generatedDir, results: [] },
+  ];
+
+  for (const entry of allEntries) {
+    const result = entry.parsed.success
+      ? validateParsedContentBundle(entry.parsed.data, entry.file, context)
+      : validateContentBundle(entry.raw, entry.file, context);
+    const report = reports.find((r) => r.dirLabel === entry.dirLabel);
+    if (report) report.results.push({ file: entry.file, ...result });
+  }
 
   let errorCount = 0;
   let warningCount = 0;

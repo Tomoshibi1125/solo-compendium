@@ -5,6 +5,7 @@ import { Zap, BookOpen } from 'lucide-react';
 interface SkillData {
   id: string;
   name: string;
+  display_name?: string | null;
   description: string;
   ability: string;
   examples?: string[];
@@ -21,10 +22,12 @@ const abilityColors: Record<string, string> = {
 };
 
 export const SkillDetail = ({ data }: { data: SkillData }) => {
+  const displayName = data.display_name || data.name;
+
   return (
     <div className="space-y-6">
       {/* Header */}
-      <SystemWindow title={data.name.toUpperCase()} className={abilityColors[data.ability]}>
+      <SystemWindow title={displayName.toUpperCase()} className={abilityColors[data.ability]}>
         <div className="space-y-4">
           <div className="flex items-center gap-2">
             <Zap className="w-5 h-5" />

@@ -61,27 +61,27 @@ DECLARE
 BEGIN
   LOOP
     v_share_code := generate_share_code();
-    
+
     -- Check if code already exists
     IF NOT EXISTS (SELECT 1 FROM campaigns WHERE share_code = v_share_code) THEN
       EXIT;
     END IF;
-    
+
     attempts := attempts + 1;
     IF attempts >= max_attempts THEN
       RAISE EXCEPTION 'Failed to generate unique share code after % attempts', max_attempts;
     END IF;
   END LOOP;
-  
+
   -- Create campaign
   INSERT INTO campaigns (name, description, dm_id, share_code)
   VALUES (p_name, p_description, p_dm_id, v_share_code)
   RETURNING id INTO v_campaign_id;
-  
+
   -- Add DM as member
   INSERT INTO campaign_members (campaign_id, user_id, role)
   VALUES (v_campaign_id, p_dm_id, 'co-dm');
-  
+
   RETURN v_campaign_id;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
@@ -167,8 +167,27 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER update_campaigns_updated_at
-  BEFORE UPDATE ON campaigns
-  FOR EACH ROW
-  EXECUTE FUNCTION update_updated_at_column();
-
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1
+    FROM pg_class c
+    JOIN pg_namespace n ON n.oid = c.relnamespace
+    WHERE n.nspname = 'public'
+      AND c.relname = 'campaigns'
+  ) AND NOT EXISTS (
+    SELECT 1
+    FROM pg_trigger t
+    JOIN pg_class c ON c.oid = t.tgrelid
+    JOIN pg_namespace n ON n.oid = c.relnamespace
+    WHERE n.nspname = 'public'
+      AND c.relname = 'campaigns'
+      AND t.tgname = 'update_campaigns_updated_at'
+      AND NOT t.tgisinternal
+  ) THEN
+    EXECUTE 'CREATE TRIGGER update_campaigns_updated_at\n'
+      || '  BEFORE UPDATE ON public.campaigns\n'
+      || '  FOR EACH ROW\n'
+      || '  EXECUTE FUNCTION public.update_updated_at_column();';
+  END IF;
+END $$;

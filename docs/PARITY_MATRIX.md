@@ -14,23 +14,23 @@ This document tracks the implementation status of all core systems required for 
 ## A) Compendium & Navigation
 
 | Feature/System | Status | Where (Files/Modules) | Data Deps | Tests | Gaps | Fix Plan |
-|----------------|--------|----------------------|-----------|-------|------|----------|
-| **Global Search** | ✅ | `src/components/ui/GlobalSearch.tsx`, `src/pages/Compendium.tsx` | Supabase RPCs (`search_compendium_*`) | ❌ | None | Add e2e test |
-| **Deep Links** | ✅ | `src/components/character/CompendiumLink.tsx` | Route params | ❌ | None | Add e2e test |
-| **Reference Resolver** | ❌ | N/A (ad-hoc queries) | Supabase tables | ❌ | No centralized `resolveRef(type, id)` | **Phase 2.1**: Create `src/lib/compendiumResolver.ts` |
-| **Link Integrity** | ❌ | N/A | Character data + compendium | ❌ | No dead reference detection | **Phase 2.3**: Create `src/lib/linkIntegrity.ts` |
+| ---------------- | -------- | ---------------------- | ----------- | ------- | ------ | ---------- |
+| **Global Search** | ✅ | `src/components/ui/GlobalSearch.tsx`, `src/pages/Compendium.tsx` | Supabase RPCs (`search_compendium_*`) | ✅ | None | None |
+| **Deep Links** | ✅ | `src/components/character/CompendiumLink.tsx` | Route params | ✅ | None | None |
+| **Reference Resolver** | ✅ | `src/lib/compendiumResolver.ts` | Supabase tables | ✅ | None | None |
+| **Link Integrity** | ✅ | `src/lib/linkIntegrity.ts` | Character data + compendium | ✅ | None | None |
 | **Related Content** | ⚠️ | `src/components/compendium/RelatedContent.tsx` | Tags-based queries | ❌ | Uses ad-hoc queries, not resolver | **Phase 2.2**: Update to use resolver |
 | **Command Palette** | ⚠️ | `src/components/ui/CommandPalette.tsx` | Direct Supabase queries | ❌ | Uses ad-hoc queries, not resolver | **Phase 2.2**: Update to use resolver |
 | **Breadcrumbs** | ✅ | `src/components/compendium/Breadcrumbs.tsx` | Route params | ❌ | None | Add unit test |
 
-**Summary**: Core search/navigation exists but lacks centralized resolver and link integrity checking.
+**Summary**: Core search/navigation exists, with centralized resolver + link integrity checks in place.
 
 ---
 
 ## B) Character Builder
 
 | Feature/System | Status | Where (Files/Modules) | Data Deps | Tests | Gaps | Fix Plan |
-|----------------|--------|----------------------|-----------|-------|------|----------|
+| ---------------- | -------- | ---------------------- | ----------- | ------- | ------ | ---------- |
 | **Step-by-Step Wizard** | ✅ | `src/pages/CharacterNew.tsx` | Compendium queries | ❌ | None | Add e2e test |
 | **Ability Score Methods** | ✅ | `src/pages/CharacterNew.tsx` | Local state | ❌ | Standard array, point buy, manual | Add unit test |
 | **Job Selection** | ✅ | `src/pages/CharacterNew.tsx` | `compendium_jobs` | ❌ | None | Add e2e test |
@@ -50,7 +50,7 @@ This document tracks the implementation status of all core systems required for 
 ## C) Character Sheet Automations
 
 | Feature/System | Status | Where (Files/Modules) | Data Deps | Tests | Gaps | Fix Plan |
-|----------------|--------|----------------------|-----------|-------|------|----------|
+| ---------------- | -------- | ---------------------- | ----------- | ------- | ------ | ---------- |
 | **Derived Stats** | ✅ | `src/lib/characterCalculations.ts` | Character data | ✅ | Basic tests exist | Expand test coverage |
 | **Proficiency Bonus** | ✅ | `src/lib/characterCalculations.ts` | Level | ✅ | Tested | None |
 | **Ability Modifiers** | ✅ | `src/lib/characterCalculations.ts` | Abilities | ✅ | Tested | None |
@@ -86,7 +86,7 @@ This document tracks the implementation status of all core systems required for 
 ## D) Dice + Game Log
 
 | Feature/System | Status | Where (Files/Modules) | Data Deps | Tests | Gaps | Fix Plan |
-|----------------|--------|----------------------|-----------|-------|------|----------|
+| ---------------- | -------- | ---------------------- | ----------- | ------- | ------ | ---------- |
 | **Dice Rolling** | ✅ | `src/lib/diceRoller.ts` | Dice string parsing | ⚠️ | Basic tests | Add edge case tests |
 | **Roll Engine** | ✅ | `src/lib/rollEngine.ts` | Advantage/disadvantage logic | ❌ | None | **Phase 4**: Add roll engine tests |
 | **Roll Display** | ✅ | `src/components/character/ActionsList.tsx` | Toast notifications | ❌ | None | Add e2e test |
@@ -102,7 +102,7 @@ This document tracks the implementation status of all core systems required for 
 ## E) Encounters/Combat
 
 | Feature/System | Status | Where (Files/Modules) | Data Deps | Tests | Gaps | Fix Plan |
-|----------------|--------|----------------------|-----------|-------|------|----------|
+| ---------------- | -------- | ---------------------- | ----------- | ------- | ------ | ---------- |
 | **Initiative Tracker** | ✅ | `src/pages/dm-tools/InitiativeTracker.tsx` | Local state | ❌ | None | Add e2e test |
 | **Encounter Builder** | ✅ | `src/pages/dm-tools/EncounterBuilder.tsx` | Compendium monsters | ❌ | None | Add e2e test |
 | **Monster Addition** | ✅ | `src/pages/dm-tools/EncounterBuilder.tsx` | `compendium_monsters` | ❌ | None | Add e2e test |
@@ -118,7 +118,7 @@ This document tracks the implementation status of all core systems required for 
 ## F) Additional Systems
 
 | Feature/System | Status | Where (Files/Modules) | Data Deps | Tests | Gaps | Fix Plan |
-|----------------|--------|----------------------|-----------|-------|------|----------|
+| ---------------- | -------- | ---------------------- | ----------- | ------- | ------ | ---------- |
 | **Character Templates** | ✅ | `src/hooks/useCharacterTemplates.ts` | `character_templates` table | ❌ | None | Add integration test |
 | **Character Sharing** | ✅ | `src/hooks/useCharacters.ts` | `share_token` field | ❌ | None | Add e2e test |
 | **Character Export** | ✅ | `src/lib/export.ts` | Character data | ❌ | None | Add unit test |
@@ -135,28 +135,32 @@ This document tracks the implementation status of all core systems required for 
 ## Critical Gaps Summary
 
 ### High Priority (Phase 2)
-1. ❌ **No centralized reference resolver** - All components query Supabase directly
-2. ❌ **No link integrity checker** - Dead references not detected
+
+1. ⚠️ **Related Content uses ad-hoc queries** - Should use the centralized resolver
+2. ⚠️ **Command Palette uses ad-hoc queries** - Should use the centralized resolver
 
 ### Medium Priority (Phase 3)
-3. ⚠️ **Scattered automation** - No unified effects engine
-4. ⚠️ **Hardcoded logic** - Some automation uses ad-hoc calculations
+
+1. ⚠️ **Scattered automation** - No unified effects engine
+2. ⚠️ **Hardcoded logic** - Some automation uses ad-hoc calculations
 
 ### Testing Gaps (Phase 4)
-5. ❌ **Limited test coverage** - Most features lack tests
-6. ❌ **No builder→sheet consistency tests** - No verification that builder output matches sheet
-7. ❌ **No automation edge case tests** - Equip/unequip, condition stacking, rest resets
+
+1. ❌ **Limited test coverage** - Most features lack tests
+2. ❌ **No builder→sheet consistency tests** - No verification that builder output matches sheet
+3. ❌ **No automation edge case tests** - Equip/unequip, condition stacking, rest resets
 
 ### UX Gaps (Phase 5)
-8. ⚠️ **Inconsistent error handling** - Some async operations lack error handling
-9. ⚠️ **Missing loading states** - Some data-fetching components lack loading indicators
-10. ⚠️ **Missing empty states** - Some lists don't show empty state
+
+1. ⚠️ **Inconsistent error handling** - Some async operations lack error handling
+2. ⚠️ **Missing loading states** - Some data-fetching components lack loading indicators
+3. ⚠️ **Missing empty states** - Some lists don't show empty state
 
 ---
 
 ## Fix Priority Order
 
-1. **Phase 2**: Create resolver and link integrity checker (foundation)
+1. **Phase 2**: Migrate remaining ad-hoc queries to the resolver (Related Content, Command Palette)
 2. **Phase 3**: Create unified effects engine (automation hardening)
 3. **Phase 4**: Add comprehensive test suite (verification)
 4. **Phase 5**: Polish UX (user experience)
@@ -175,4 +179,3 @@ This document tracks the implementation status of all core systems required for 
 - ✅ No console noise
 - ✅ Consistent UX patterns
 - ✅ Deploy checklist complete
-

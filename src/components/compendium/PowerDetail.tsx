@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 interface PowerData {
   id: string;
   name: string;
+  display_name?: string | null;
   description: string;
   power_level: number;
   school?: string;
@@ -37,11 +38,12 @@ const tierColors: Record<number, string> = {
 export const PowerDetail = ({ data }: { data: PowerData }) => {
   const tierLabel = data.power_level === 0 ? 'Cantrip' : `Tier ${data.power_level}`;
   const tierColor = tierColors[data.power_level] || 'text-foreground';
+  const displayName = data.display_name || data.name;
 
   return (
     <div className="space-y-6">
       {/* Header */}
-      <SystemWindow title={data.name.toUpperCase()} className={cn("border-2", tierColor)}>
+      <SystemWindow title={displayName.toUpperCase()} className={cn("border-2", tierColor)}>
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-2">
             <Badge className={tierColor}>{tierLabel}</Badge>

@@ -69,16 +69,71 @@ ALTER TABLE public.compendium_shadow_soldier_actions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.compendium_shadow_soldier_abilities ENABLE ROW LEVEL SECURITY;
 
 -- Public read access
-CREATE POLICY "Shadow soldiers are publicly readable" ON public.compendium_shadow_soldiers FOR SELECT USING (true);
-CREATE POLICY "Shadow soldier traits are publicly readable" ON public.compendium_shadow_soldier_traits FOR SELECT USING (true);
-CREATE POLICY "Shadow soldier actions are publicly readable" ON public.compendium_shadow_soldier_actions FOR SELECT USING (true);
-CREATE POLICY "Shadow soldier abilities are publicly readable" ON public.compendium_shadow_soldier_abilities FOR SELECT USING (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'compendium_shadow_soldiers'
+      AND policyname = 'Shadow soldiers are publicly readable'
+  ) THEN
+    CREATE POLICY "Shadow soldiers are publicly readable"
+      ON public.compendium_shadow_soldiers
+      FOR SELECT
+      USING (true);
+  END IF;
+END $$;
+
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'compendium_shadow_soldier_traits'
+      AND policyname = 'Shadow soldier traits are publicly readable'
+  ) THEN
+    CREATE POLICY "Shadow soldier traits are publicly readable"
+      ON public.compendium_shadow_soldier_traits
+      FOR SELECT
+      USING (true);
+  END IF;
+END $$;
+
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'compendium_shadow_soldier_actions'
+      AND policyname = 'Shadow soldier actions are publicly readable'
+  ) THEN
+    CREATE POLICY "Shadow soldier actions are publicly readable"
+      ON public.compendium_shadow_soldier_actions
+      FOR SELECT
+      USING (true);
+  END IF;
+END $$;
+
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'compendium_shadow_soldier_abilities'
+      AND policyname = 'Shadow soldier abilities are publicly readable'
+  ) THEN
+    CREATE POLICY "Shadow soldier abilities are publicly readable"
+      ON public.compendium_shadow_soldier_abilities
+      FOR SELECT
+      USING (true);
+  END IF;
+END $$;
 
 -- Indexes
-CREATE INDEX idx_shadow_soldiers_rank ON public.compendium_shadow_soldiers(rank);
-CREATE INDEX idx_shadow_soldiers_type ON public.compendium_shadow_soldiers(shadow_type);
-CREATE INDEX idx_shadow_soldiers_name ON public.compendium_shadow_soldiers(name);
-CREATE INDEX idx_shadow_soldiers_search ON public.compendium_shadow_soldiers USING GIN (to_tsvector('english', name || ' ' || COALESCE(description, '') || ' ' || COALESCE(lore, '')));
+CREATE INDEX IF NOT EXISTS idx_shadow_soldiers_rank ON public.compendium_shadow_soldiers(rank);
+CREATE INDEX IF NOT EXISTS idx_shadow_soldiers_type ON public.compendium_shadow_soldiers(shadow_type);
+CREATE INDEX IF NOT EXISTS idx_shadow_soldiers_name ON public.compendium_shadow_soldiers(name);
+CREATE INDEX IF NOT EXISTS idx_shadow_soldiers_search ON public.compendium_shadow_soldiers USING GIN (to_tsvector('english', name || ' ' || COALESCE(description, '') || ' ' || COALESCE(lore, '')));
 
 -- Insert Shadow Army Roster
 -- Based on Solo Leveling's Shadow Monarch's army

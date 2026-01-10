@@ -6,6 +6,7 @@ import { CompendiumImage } from '@/components/compendium/CompendiumImage';
 interface RelicData {
   id: string;
   name: string;
+  display_name?: string | null;
   description: string;
   rarity: string;
   item_type: string;
@@ -33,9 +34,18 @@ const tierColors: Record<string, string> = {
   dormant: 'text-gray-400 border-gray-500/30',
   awakened: 'text-blue-400 border-blue-500/30',
   resonant: 'text-purple-400 border-purple-500/30',
+  E: 'text-gray-400 border-gray-500/30',
+  D: 'text-gray-300 border-gray-400/30',
+  C: 'text-green-400 border-green-500/30',
+  B: 'text-blue-400 border-blue-500/30',
+  A: 'text-purple-400 border-purple-500/30',
+  S: 'text-amber-400 border-amber-500/30',
+  SS: 'text-red-400 border-red-500/30',
 };
 
 export const RelicDetail = ({ data }: { data: RelicData }) => {
+  const displayName = data.display_name || data.name;
+
   return (
     <div className="space-y-6">
       {/* Relic Artwork */}
@@ -43,7 +53,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
         <div className="w-full flex justify-center">
           <CompendiumImage
             src={data.image_url}
-            alt={data.name}
+            alt={displayName}
             size="large"
             aspectRatio="square"
             className="max-w-md"
@@ -51,10 +61,10 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
           />
         </div>
       )}
-      
+
       {/* Header */}
-      <SystemWindow 
-        title={data.name.toUpperCase()} 
+      <SystemWindow
+        title={displayName.toUpperCase()}
         className={`border-2 ${tierColors[data.relic_tier || ''] || 'border-primary/50'}`}
       >
         <div className="space-y-4">
@@ -72,7 +82,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
               <Badge variant="destructive">Requires Attunement</Badge>
             )}
           </div>
-          
+
           {data.attunement_requirements && (
             <p className="text-sm text-muted-foreground">
               <em>Attunement: {data.attunement_requirements}</em>
@@ -85,12 +95,12 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         <SystemWindow title="RARITY" compact>
           <div className="flex items-center gap-2">
-            <Gem className={`w-5 h-5 ${rarityColors[data.rarity] ? 'text-white' : ''}`} 
+            <Gem className={`w-5 h-5 ${rarityColors[data.rarity] ? 'text-white' : ''}`}
                  style={{ color: data.rarity === 'legendary' ? '#f59e0b' : undefined }} />
             <span className="font-heading capitalize">{data.rarity.replace('_', ' ')}</span>
           </div>
         </SystemWindow>
-        
+
         {data.relic_tier && (
           <SystemWindow title="TIER" compact>
             <div className="flex items-center gap-2">
@@ -99,7 +109,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
             </div>
           </SystemWindow>
         )}
-        
+
         {data.value_credits && (
           <SystemWindow title="VALUE" compact>
             <div className="flex items-center gap-2">

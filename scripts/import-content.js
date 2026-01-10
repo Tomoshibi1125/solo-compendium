@@ -198,6 +198,8 @@ async function importBundleToSupabase(bundle, { overwrite }) {
 
     const payload = {
       name: job.name,
+      display_name: job.display_name ?? null,
+      aliases: job.aliases ?? [],
       description: job.description,
       flavor_text: job.flavor_text ?? null,
       primary_abilities: job.primary_abilities,
@@ -249,6 +251,8 @@ async function importBundleToSupabase(bundle, { overwrite }) {
     const payload = {
       job_id: jobId,
       name: p.name,
+      display_name: p.display_name ?? null,
+      aliases: p.aliases ?? [],
       description: p.description,
       flavor_text: p.flavor_text ?? null,
       path_level: p.path_level ?? null,
@@ -302,6 +306,8 @@ async function importBundleToSupabase(bundle, { overwrite }) {
       job_id: jobId,
       path_id: pathId,
       name: f.name,
+      display_name: f.display_name ?? null,
+      aliases: f.aliases ?? [],
       level: f.level,
       description: f.description,
       action_type: f.action_type ?? null,
@@ -333,6 +339,8 @@ async function importBundleToSupabase(bundle, { overwrite }) {
 
     const payload = {
       name: p.name,
+      display_name: p.display_name ?? null,
+      aliases: p.aliases ?? [],
       power_level: p.power_level,
       school: p.school ?? null,
       casting_time: p.casting_time,
@@ -375,6 +383,8 @@ async function importBundleToSupabase(bundle, { overwrite }) {
 
     const payload = {
       name: r.name,
+      display_name: r.display_name ?? null,
+      aliases: r.aliases ?? [],
       rarity: r.rarity,
       relic_tier: r.relic_tier ?? null,
       item_type: r.item_type,
@@ -416,6 +426,8 @@ async function importBundleToSupabase(bundle, { overwrite }) {
 
     const payload = {
       name: m.name,
+      display_name: m.display_name ?? null,
+      aliases: m.aliases ?? [],
       size: m.size,
       creature_type: m.creature_type,
       alignment: m.alignment ?? null,
@@ -479,6 +491,8 @@ async function importBundleToSupabase(bundle, { overwrite }) {
 
     const payload = {
       name: b.name,
+      display_name: b.display_name ?? null,
+      aliases: b.aliases ?? [],
       description: b.description,
       feature_name: b.feature_name ?? null,
       feature_description: b.feature_description ?? null,

@@ -177,15 +177,52 @@ CREATE POLICY "Users can delete their own shares"
   USING (shared_by = auth.uid());
 
 -- Updated_at triggers
-CREATE TRIGGER update_campaign_messages_updated_at
-  BEFORE UPDATE ON campaign_messages
-  FOR EACH ROW
-  EXECUTE FUNCTION update_updated_at_column();
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1
+    FROM pg_class c
+    JOIN pg_namespace n ON n.oid = c.relnamespace
+    WHERE n.nspname = 'public'
+      AND c.relname = 'campaign_messages'
+  ) AND NOT EXISTS (
+    SELECT 1
+    FROM pg_trigger t
+    JOIN pg_class c ON c.oid = t.tgrelid
+    JOIN pg_namespace n ON n.oid = c.relnamespace
+    WHERE n.nspname = 'public'
+      AND c.relname = 'campaign_messages'
+      AND t.tgname = 'update_campaign_messages_updated_at'
+      AND NOT t.tgisinternal
+  ) THEN
+    EXECUTE 'CREATE TRIGGER update_campaign_messages_updated_at
+      BEFORE UPDATE ON public.campaign_messages
+      FOR EACH ROW
+      EXECUTE FUNCTION public.update_updated_at_column();';
+  END IF;
 
-CREATE TRIGGER update_campaign_notes_updated_at
-  BEFORE UPDATE ON campaign_notes
-  FOR EACH ROW
-  EXECUTE FUNCTION update_updated_at_column();
+  IF EXISTS (
+    SELECT 1
+    FROM pg_class c
+    JOIN pg_namespace n ON n.oid = c.relnamespace
+    WHERE n.nspname = 'public'
+      AND c.relname = 'campaign_notes'
+  ) AND NOT EXISTS (
+    SELECT 1
+    FROM pg_trigger t
+    JOIN pg_class c ON c.oid = t.tgrelid
+    JOIN pg_namespace n ON n.oid = c.relnamespace
+    WHERE n.nspname = 'public'
+      AND c.relname = 'campaign_notes'
+      AND t.tgname = 'update_campaign_notes_updated_at'
+      AND NOT t.tgisinternal
+  ) THEN
+    EXECUTE 'CREATE TRIGGER update_campaign_notes_updated_at
+      BEFORE UPDATE ON public.campaign_notes
+      FOR EACH ROW
+      EXECUTE FUNCTION public.update_updated_at_column();';
+  END IF;
+END $$;
 
 -- Function to get campaign member count
 CREATE OR REPLACE FUNCTION get_campaign_member_count(p_campaign_id UUID)

@@ -1,6 +1,6 @@
 /**
  * Content Audit Hook
- * 
+ *
  * Performs comprehensive audit of database content:
  * - Counts entries per table
  * - Checks data completeness
@@ -43,44 +43,97 @@ export interface ContentAuditReport {
 /**
  * Audit a single compendium table
  */
-async function auditTable(tableName: string): Promise<TableAudit> {
+const tablesToAudit = [
+  'compendium_jobs',
+  'compendium_job_paths',
+  'compendium_job_features',
+  'compendium_powers',
+  'compendium_relics',
+  'compendium_equipment',
+  'compendium_monsters',
+  'compendium_backgrounds',
+  'compendium_conditions',
+  'compendium_feats',
+  'compendium_skills',
+  'compendium_monarchs',
+  'compendium_monarch_features',
+  'compendium_sovereigns',
+  'compendium_sovereign_features',
+  'compendium_runes',
+  'compendium_shadow_soldiers',
+] as const satisfies ReadonlyArray<keyof Database['public']['Tables']>;
+
+type AuditedTableName = (typeof tablesToAudit)[number];
+
+const tableCapabilities: Record<AuditedTableName, { hasDescription: boolean; hasImageUrl: boolean; hasSourceBook: boolean; hasTags: boolean }> = {
+  compendium_jobs: { hasDescription: true, hasImageUrl: true, hasSourceBook: true, hasTags: true },
+  compendium_job_paths: { hasDescription: true, hasImageUrl: true, hasSourceBook: true, hasTags: true },
+  compendium_job_features: { hasDescription: true, hasImageUrl: false, hasSourceBook: false, hasTags: false },
+  compendium_powers: { hasDescription: true, hasImageUrl: true, hasSourceBook: true, hasTags: true },
+  compendium_relics: { hasDescription: true, hasImageUrl: true, hasSourceBook: true, hasTags: true },
+  compendium_equipment: { hasDescription: true, hasImageUrl: true, hasSourceBook: true, hasTags: true },
+  compendium_monsters: { hasDescription: true, hasImageUrl: true, hasSourceBook: true, hasTags: true },
+  compendium_backgrounds: { hasDescription: true, hasImageUrl: false, hasSourceBook: true, hasTags: true },
+  compendium_conditions: { hasDescription: true, hasImageUrl: false, hasSourceBook: false, hasTags: false },
+  compendium_feats: { hasDescription: true, hasImageUrl: false, hasSourceBook: true, hasTags: true },
+  compendium_skills: { hasDescription: true, hasImageUrl: false, hasSourceBook: true, hasTags: false },
+  compendium_monarchs: { hasDescription: true, hasImageUrl: false, hasSourceBook: true, hasTags: true },
+  compendium_monarch_features: { hasDescription: true, hasImageUrl: false, hasSourceBook: false, hasTags: false },
+  compendium_sovereigns: { hasDescription: true, hasImageUrl: false, hasSourceBook: true, hasTags: true },
+  compendium_sovereign_features: { hasDescription: true, hasImageUrl: false, hasSourceBook: false, hasTags: false },
+  compendium_runes: { hasDescription: true, hasImageUrl: true, hasSourceBook: true, hasTags: true },
+  compendium_shadow_soldiers: { hasDescription: true, hasImageUrl: false, hasSourceBook: true, hasTags: true },
+};
+
+async function auditTable(tableName: AuditedTableName): Promise<TableAudit> {
   try {
-    const table = tableName as keyof Database['public']['Tables'];
-    
+    const table = tableName;
+    const capabilities = tableCapabilities[tableName];
+    const untypedFrom = (relation: string) => (supabase as unknown as { from: (r: string) => any }).from(relation);
+
     // Get total count
     const { count: totalCount } = await supabase
       .from(table)
       .select('*', { count: 'exact', head: true });
 
     // Get entries with descriptions
-    const { count: withDescription } = await supabase
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .from(table as any)
-      .select('id', { count: 'exact', head: true })
-      .not('description', 'is', null)
-      .neq('description', '');
+    const withDescription = capabilities.hasDescription
+      ? (
+          await untypedFrom(table)
+            .select('id', { count: 'exact', head: true })
+            .not('description', 'is', null)
+            .neq('description', '')
+        ).count
+      : 0;
 
     // Get entries with images
-    const { count: withImage } = await supabase
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .from(table as any)
-      .select('id', { count: 'exact', head: true })
-      .not('image_url', 'is', null)
-      .neq('image_url', '');
+    const withImage = capabilities.hasImageUrl
+      ? (
+          await untypedFrom(table)
+            .select('id', { count: 'exact', head: true })
+            .not('image_url', 'is', null)
+            .neq('image_url', '')
+        ).count
+      : 0;
 
     // Get entries with source_book
-    const { count: withSourceBook } = await supabase
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .from(table as any)
-      .select('id', { count: 'exact', head: true })
-      .not('source_book', 'is', null)
-      .neq('source_book', '');
+    const withSourceBook = capabilities.hasSourceBook
+      ? (
+          await untypedFrom(table)
+            .select('id', { count: 'exact', head: true })
+            .not('source_book', 'is', null)
+            .neq('source_book', '')
+        ).count
+      : 0;
 
     // Get entries with tags
-    const { count: withTags } = await supabase
-      .from(table as keyof Database['public']['Tables'])
-      .select('id', { count: 'exact', head: true })
-      .not('tags', 'is', null);
+    const withTags = capabilities.hasTags
+      ? (
+          await untypedFrom(table)
+            .select('id', { count: 'exact', head: true })
+            .not('tags', 'is', null)
+        ).count
+      : 0;
 
     // Get sample entries
     const { data: samples } = await supabase
@@ -191,27 +244,6 @@ export function useContentAudit() {
   return useQuery({
     queryKey: ['content-audit'],
     queryFn: async (): Promise<ContentAuditReport> => {
-      // List of compendium tables to audit
-      const tablesToAudit = [
-        'compendium_jobs',
-        'compendium_job_paths',
-        'compendium_job_features',
-        'compendium_powers',
-        'compendium_relics',
-        'compendium_equipment',
-        'compendium_monsters',
-        'compendium_backgrounds',
-        'compendium_conditions',
-        'compendium_feats',
-        'compendium_skills',
-        'compendium_monarchs',
-        'compendium_monarch_features',
-        'compendium_sovereigns',
-        'compendium_sovereign_features',
-        'compendium_runes',
-        'compendium_shadow_soldiers',
-      ];
-
       // Audit all tables in parallel
       const tableAudits = await Promise.all(
         tablesToAudit.map(table => auditTable(table))

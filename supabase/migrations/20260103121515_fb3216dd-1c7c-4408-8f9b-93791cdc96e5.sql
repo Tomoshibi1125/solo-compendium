@@ -1,7 +1,42 @@
 -- Create enum types for Solo Leveling 5e
-CREATE TYPE public.ability_score AS ENUM ('STR', 'AGI', 'VIT', 'INT', 'SENSE', 'PRE');
-CREATE TYPE public.rarity AS ENUM ('common', 'uncommon', 'rare', 'very_rare', 'legendary');
-CREATE TYPE public.relic_tier AS ENUM ('dormant', 'awakened', 'resonant');
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_type t
+    JOIN pg_namespace n ON n.oid = t.typnamespace
+    WHERE n.nspname = 'public'
+      AND t.typname = 'ability_score'
+  ) THEN
+    CREATE TYPE public.ability_score AS ENUM ('STR', 'AGI', 'VIT', 'INT', 'SENSE', 'PRE');
+  END IF;
+END $$;
+
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_type t
+    JOIN pg_namespace n ON n.oid = t.typnamespace
+    WHERE n.nspname = 'public'
+      AND t.typname = 'rarity'
+  ) THEN
+    CREATE TYPE public.rarity AS ENUM ('common', 'uncommon', 'rare', 'very_rare', 'legendary');
+  END IF;
+END $$;
+
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_type t
+    JOIN pg_namespace n ON n.oid = t.typnamespace
+    WHERE n.nspname = 'public'
+      AND t.typname = 'relic_tier'
+  ) THEN
+    CREATE TYPE public.relic_tier AS ENUM ('dormant', 'awakened', 'resonant');
+  END IF;
+END $$;
 
 -- Create characters table
 CREATE TABLE public.characters (

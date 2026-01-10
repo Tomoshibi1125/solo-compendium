@@ -83,91 +83,73 @@ WITH monarchs AS (
     (SELECT id FROM compendium_monarchs WHERE name = 'Plague Monarch') AS plague_id,
     (SELECT id FROM compendium_monarchs WHERE name = 'Transfiguration Monarch') AS trans_id,
     (SELECT id FROM compendium_monarchs WHERE name = 'Destruction Monarch') AS destruction_id
-)
-INSERT INTO compendium_sovereigns (
-  name,
-  description,
-  monarch_a_id,
-  monarch_b_id,
-  fusion_theme,
-  fusion_description,
-  unlock_level,
-  prerequisites,
-  is_template,
-  source_book,
-  tags
-)
-SELECT
-  'Eclipse Sovereign',
-  'A fusion of shadow and white flame, channeling twilight energy that burns both body and soul.',
-  shadow_id,
-  flame_id,
-  'Eclipse',
-  'Shadowfire coils around the sovereign, alternating between freezing darkness and searing white flame.',
-  17,
-  'Requires Shadow Monarch and White Flames Monarch overlays.',
-  true,
-  'SL',
-  ARRAY['gemini-protocol', 'shadow', 'fire']
-FROM monarchs
-WHERE shadow_id IS NOT NULL AND flame_id IS NOT NULL;
+), sovereign_rows AS (
+  SELECT
+    'Eclipse Sovereign'::text AS name,
+    'A fusion of shadow and white flame, channeling twilight energy that burns both body and soul.'::text AS description,
+    shadow_id AS monarch_a_id,
+    flame_id AS monarch_b_id,
+    'Eclipse'::text AS fusion_theme,
+    'Shadowfire coils around the sovereign, alternating between freezing darkness and searing white flame.'::text AS fusion_description,
+    17::integer AS unlock_level,
+    'Requires Shadow Monarch and White Flames Monarch overlays.'::text AS prerequisites,
+    true AS is_template,
+    'SL'::text AS source_book,
+    ARRAY['gemini-protocol', 'shadow', 'fire']::text[] AS tags
+  FROM monarchs
+  WHERE shadow_id IS NOT NULL AND flame_id IS NOT NULL
 
-INSERT INTO compendium_sovereigns (
-  name,
-  description,
-  monarch_a_id,
-  monarch_b_id,
-  fusion_theme,
-  fusion_description,
-  unlock_level,
-  prerequisites,
-  is_template,
-  source_book,
-  tags
-)
-SELECT
-  'Frostfang Sovereign',
-  'A predatory fusion that combines ruthless pack instincts with glacial control.',
-  frost_id,
-  beast_id,
-  'Frostfang',
-  'Icy mana hardens into spectral claws and fangs, turning every hunt into a blizzard.',
-  17,
-  'Requires Frost Monarch and Beast Monarch overlays.',
-  true,
-  'SL',
-  ARRAY['gemini-protocol', 'frost', 'beast']
-FROM monarchs
-WHERE frost_id IS NOT NULL AND beast_id IS NOT NULL;
+  UNION ALL
 
-INSERT INTO compendium_sovereigns (
-  name,
-  description,
-  monarch_a_id,
-  monarch_b_id,
-  fusion_theme,
-  fusion_description,
-  unlock_level,
-  prerequisites,
-  is_template,
-  source_book,
-  tags
-)
-SELECT
-  'Gravestone Sovereign',
-  'A fusion of stone and plague, turning the battlefield into a crumbling mausoleum of decay.',
-  stone_id,
-  plague_id,
-  'Gravestone',
-  'Stone plates fracture and ooze with corrosive mana, spreading decay with every impact.',
-  17,
-  'Requires Stone Monarch and Plague Monarch overlays.',
-  true,
-  'SL',
-  ARRAY['gemini-protocol', 'stone', 'decay']
-FROM monarchs
-WHERE stone_id IS NOT NULL AND plague_id IS NOT NULL;
+  SELECT
+    'Frostfang Sovereign'::text,
+    'A predatory fusion that combines ruthless pack instincts with glacial control.'::text,
+    frost_id,
+    beast_id,
+    'Frostfang'::text,
+    'Icy mana hardens into spectral claws and fangs, turning every hunt into a blizzard.'::text,
+    17::integer,
+    'Requires Frost Monarch and Beast Monarch overlays.'::text,
+    true,
+    'SL'::text,
+    ARRAY['gemini-protocol', 'frost', 'beast']::text[]
+  FROM monarchs
+  WHERE frost_id IS NOT NULL AND beast_id IS NOT NULL
 
+  UNION ALL
+
+  SELECT
+    'Gravestone Sovereign'::text,
+    'A fusion of stone and plague, turning the battlefield into a crumbling mausoleum of decay.'::text,
+    stone_id,
+    plague_id,
+    'Gravestone'::text,
+    'Stone plates fracture and ooze with corrosive mana, spreading decay with every impact.'::text,
+    17::integer,
+    'Requires Stone Monarch and Plague Monarch overlays.'::text,
+    true,
+    'SL'::text,
+    ARRAY['gemini-protocol', 'stone', 'decay']::text[]
+  FROM monarchs
+  WHERE stone_id IS NOT NULL AND plague_id IS NOT NULL
+
+  UNION ALL
+
+  SELECT
+    'Mirrorbreak Sovereign'::text,
+    'A volatile fusion of transformation and destruction, able to shatter forms and rebuild them anew.'::text,
+    trans_id,
+    destruction_id,
+    'Mirrorbreak'::text,
+    'Reality fractures like glass, letting the sovereign rewrite matter in the space between shards.'::text,
+    17::integer,
+    'Requires Transfiguration Monarch and Destruction Monarch overlays.'::text,
+    true,
+    'SL'::text,
+    ARRAY['gemini-protocol', 'transformation', 'destruction']::text[]
+  FROM monarchs
+  WHERE trans_id IS NOT NULL AND destruction_id IS NOT NULL
+)
 INSERT INTO compendium_sovereigns (
   name,
   description,
@@ -182,19 +164,19 @@ INSERT INTO compendium_sovereigns (
   tags
 )
 SELECT
-  'Mirrorbreak Sovereign',
-  'A volatile fusion of transformation and destruction, able to shatter forms and rebuild them anew.',
-  trans_id,
-  destruction_id,
-  'Mirrorbreak',
-  'Reality fractures like glass, letting the sovereign rewrite matter in the space between shards.',
-  17,
-  'Requires Transfiguration Monarch and Destruction Monarch overlays.',
-  true,
-  'SL',
-  ARRAY['gemini-protocol', 'transformation', 'destruction']
-FROM monarchs
-WHERE trans_id IS NOT NULL AND destruction_id IS NOT NULL;
+  name,
+  description,
+  monarch_a_id,
+  monarch_b_id,
+  fusion_theme,
+  fusion_description,
+  unlock_level,
+  prerequisites,
+  is_template,
+  source_book,
+  tags
+FROM sovereign_rows
+ON CONFLICT (name) DO NOTHING;
 
 -- ---------------------------------------------
 -- Sovereign features

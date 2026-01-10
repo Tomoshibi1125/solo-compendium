@@ -61,6 +61,8 @@ function parseArgs(argv) {
   const opts = {
     showMissing: false,
     debugTable: null,
+    check: false,
+    checkIntegrityMigrations: false,
   };
   const args = argv.slice(2);
   for (let i = 0; i < args.length; i++) {
@@ -72,6 +74,15 @@ function parseArgs(argv) {
     if (arg === '--debug-table') {
       opts.debugTable = args[i + 1] || null;
       i += 1;
+      continue;
+    }
+    if (arg === '--check') {
+      opts.check = true;
+      continue;
+    }
+    if (arg === '--check-integrity-migrations') {
+      opts.checkIntegrityMigrations = true;
+      continue;
     }
   }
   return opts;
@@ -236,7 +247,7 @@ async function fetchAllRows(supabase, table, columns) {
   return all;
 }
 
-function buildMarkdown({ generatedAt, sourceLabel, rows, notes }) {
+function buildMarkdown({ generatedAt, sourceLabel, rows, notes, integrity }) {
   const lines = [];
   lines.push('# Compendium Coverage (Schema + Automation Readiness)');
   lines.push('');
@@ -274,6 +285,40 @@ function buildMarkdown({ generatedAt, sourceLabel, rows, notes }) {
   lines.push('- Required fields are derived from app automation usage and table schemas.');
   lines.push('- Automation readiness is the percent of entries with all required fields present.');
   lines.push('');
+
+  if (integrity) {
+    lines.push('## Integrity Checks');
+    lines.push('');
+    if (integrity.mode) {
+      lines.push(`- Mode: \`${integrity.mode}\``);
+    }
+    lines.push(`- Result: ${integrity.passed ? '✅ PASS' : '❌ FAIL'}`);
+    lines.push(`- Issues: ${integrity.issues.length}`);
+    lines.push('');
+
+    if (integrity.notes?.length) {
+      lines.push('### Integrity Notes');
+      lines.push('');
+      for (const note of integrity.notes) {
+        lines.push(`- ${note}`);
+      }
+      lines.push('');
+    }
+
+    if (integrity.issues.length) {
+      lines.push('### Integrity Issues (sample)');
+      lines.push('');
+      const max = 50;
+      for (const issue of integrity.issues.slice(0, max)) {
+        const table = issue.table ? ` (${issue.table})` : '';
+        lines.push(`- ${issue.message}${table}`);
+      }
+      if (integrity.issues.length > max) {
+        lines.push(`- ...and ${integrity.issues.length - max} more`);
+      }
+      lines.push('');
+    }
+  }
 
   return lines.join('\n');
 }
@@ -767,9 +812,111 @@ function parseSelectRows(text) {
 
 function parseStringLiteral(value) {
   const trimmed = value.trim();
-  const match = trimmed.match(/^'(.*)'(?:\s*::[a-z0-9_]+)?$/is);
+  const match = trimmed.match(/^(?:e)?'(.*)'(?:\s*::[a-z0-9_]+)?$/is);
+  if (match) return match[1].replace(/''/g, "'");
+
+  const dollar = trimmed.match(/^\$([a-z0-9_]*)\$(.*)\$\1\$(?:\s*::[a-z0-9_]+)?$/is);
+  if (dollar) return dollar[2];
+
+  return null;
+}
+
+function parseSqlArrayOfStrings(value) {
+  const trimmed = (value ?? '').trim();
+  if (/^null$/i.test(trimmed)) return [];
+
+  const match = trimmed.match(/^array\s*\[(.*?)\]\s*(?:::([a-z0-9_\[\]]+))?$/is);
   if (!match) return null;
-  return match[1].replace(/''/g, "'");
+  const inner = match[1].trim();
+  if (!inner) return [];
+  const parts = splitTopLevel(inner, ',');
+  const out = [];
+  for (const part of parts) {
+    const literal = parseStringLiteral(part);
+    if (literal === null) return null;
+    out.push(literal);
+  }
+  return out;
+}
+
+function parseBraceArrayOfStrings(value) {
+  const trimmed = (value ?? '').trim();
+  const match = trimmed.match(/^'(.*)'\s*::\s*[a-z0-9_]+\[\]\s*$/is);
+  if (!match) return null;
+  const inner = match[1];
+  const brace = inner.match(/^\{(.*)\}$/s);
+  if (!brace) return null;
+  const content = brace[1];
+  if (!content) return [];
+
+  const parts = splitTopLevel(content, ',');
+  const out = [];
+  for (const part of parts) {
+    const p = String(part).trim();
+    if (!p) continue;
+    if (p.startsWith('"') && p.endsWith('"')) {
+      out.push(p.slice(1, -1).replace(/\\"/g, '"'));
+    } else {
+      out.push(p);
+    }
+  }
+  return out;
+}
+
+function extractNameEqualsLiteral(expr) {
+  const text = String(expr ?? '');
+  const match = text.match(/where\s+(?:"?name"?)\s*=\s*((?:e)?'(?:[^']|'')*')/i);
+  if (!match) return null;
+  return parseStringLiteral(match[1]);
+}
+
+function escapeRegex(text) {
+  return String(text).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function extractTableAlias(selectText, tableName) {
+  const table = escapeRegex(tableName);
+  const match = String(selectText).match(new RegExp(`(?:\\b[a-z0-9_]+\\.)?${table}\\s+([a-z_][a-z0-9_]*)`, 'i'));
+  return match?.[1] ?? null;
+}
+
+function extractNameForAlias(selectText, alias) {
+  if (!alias) return null;
+  const a = escapeRegex(alias);
+  const match = String(selectText).match(new RegExp(`\\b${a}\\s*\\.\\s*\\"?name\\"?\\s*=\\s*((?:e)?'(?:[^']|'')*')`, 'i'));
+  if (!match) return null;
+  return parseStringLiteral(match[1]);
+}
+
+function extractBareWhereName(selectText) {
+  const match = String(selectText).match(/where\s+(?:\"?name\"?)\s*=\s*((?:e)?'(?:[^']|'')*')/i);
+  if (!match) return null;
+  return parseStringLiteral(match[1]);
+}
+
+function isAliasIdExpression(expr, alias) {
+  if (!expr || !alias) return false;
+  const a = escapeRegex(alias);
+  return new RegExp(`^\\s*${a}\\s*\\.\\s*\\"?id\\"?\\s*(?:\\:\\:[a-z0-9_]+)?\\s*$`, 'i').test(String(expr));
+}
+
+function inferJobAndPathFromSelect(selectText) {
+  const jobAlias = extractTableAlias(selectText, 'compendium_jobs');
+  const pathAlias = extractTableAlias(selectText, 'compendium_job_paths');
+  const jobName = extractNameForAlias(selectText, jobAlias) || (pathAlias ? null : extractBareWhereName(selectText));
+  const pathName = extractNameForAlias(selectText, pathAlias);
+  return {
+    jobAlias,
+    pathAlias,
+    jobName,
+    pathName,
+  };
+}
+
+function isConflictNameRow(row) {
+  if (!Array.isArray(row) || row.length !== 1) return false;
+  const first = row[0];
+  return typeof first === 'string' && first.trim().toLowerCase() === 'name';
 }
 
 function isPresentSqlValue(value) {
@@ -823,8 +970,9 @@ function parseInsertStatement(statement, tableName) {
   }
 
   if (selectIndex !== -1) {
-    const rows = parseSelectRows(remainder.slice(selectIndex));
-    return { table, columns, rows, mode: 'select' };
+    const selectText = remainder.slice(selectIndex);
+    const rows = parseSelectRows(selectText);
+    return { table, columns, rows, mode: 'select', selectText };
   }
 
   return null;
@@ -832,12 +980,18 @@ function parseInsertStatement(statement, tableName) {
 
 function extractInsertStatements(sql) {
   const statements = [];
-  const lower = sql.toLowerCase();
   let index = 0;
 
-  while (index < lower.length) {
-    const found = lower.indexOf('insert into', index);
+  while (index < sql.length) {
+    const found = findKeywordOutside(sql, 'insert', index);
     if (found === -1) break;
+
+    let j = found + 'insert'.length;
+    while (j < sql.length && /\s/.test(sql[j])) j++;
+    if (!sql.slice(j, j + 4).toLowerCase().startsWith('into')) {
+      index = found + 1;
+      continue;
+    }
 
     const end = findStatementEnd(sql, found);
     if (end === -1) break;
@@ -983,6 +1137,294 @@ function collectCoverageFromMigrations({ includeMissing, debugTable } = {}) {
   return { rows, sourceLabel: 'supabase/migrations', notes, missingByTable };
 }
 
+function collectIntegrityFromMigrations() {
+  if (!fs.existsSync(migrationsDir)) {
+    throw new ScriptError('Supabase migrations directory not found.');
+  }
+
+  const files = fs
+    .readdirSync(migrationsDir)
+    .filter((file) => file.endsWith('.sql'))
+    .sort();
+
+  const jobNames = new Set();
+  const pathKeys = new Set();
+  const monarchNames = new Set();
+
+  const jobPathRefs = [];
+  const jobFeatureRefs = [];
+  const powerJobRefs = [];
+
+  for (const file of files) {
+    const raw = fs.readFileSync(path.join(migrationsDir, file), 'utf8');
+    const cleaned = stripSqlComments(raw);
+    const statements = extractInsertStatements(cleaned);
+
+    for (const statement of statements) {
+      const tableName = extractTableName(statement);
+      if (!tableName) continue;
+
+      const parsed = parseInsertStatement(statement, tableName);
+      if (!parsed || parsed.rows.length === 0) continue;
+
+      const lowerColumns = parsed.columns.map((c) => c.toLowerCase());
+      const nameIdx = lowerColumns.indexOf('name');
+
+      if (tableName === 'compendium_jobs') {
+        if (nameIdx === -1) continue;
+        for (const row of parsed.rows) {
+          if (isConflictNameRow(row)) continue;
+          const name = parseStringLiteral(row[nameIdx] ?? '');
+          if (name) jobNames.add(name);
+        }
+        continue;
+      }
+
+      if (tableName === 'compendium_monarchs') {
+        if (nameIdx === -1) continue;
+        for (const row of parsed.rows) {
+          if (isConflictNameRow(row)) continue;
+          const name = parseStringLiteral(row[nameIdx] ?? '');
+          if (name) monarchNames.add(name);
+        }
+        continue;
+      }
+
+      if (tableName === 'compendium_job_paths') {
+        const jobIdIdx = lowerColumns.indexOf('job_id');
+        if (nameIdx === -1 || jobIdIdx === -1) continue;
+
+        for (const row of parsed.rows) {
+          if (isConflictNameRow(row)) continue;
+          const pathName = parseStringLiteral(row[nameIdx] ?? '');
+          const jobName = extractNameEqualsLiteral(row[jobIdIdx]);
+          if (pathName && jobName) {
+            pathKeys.add(`${jobName}:${pathName}`);
+          }
+          jobPathRefs.push({ file, pathName: pathName || null, jobName: jobName || null });
+        }
+        continue;
+      }
+
+      if (tableName === 'compendium_job_features') {
+        const jobIdIdx = lowerColumns.indexOf('job_id');
+        const pathIdIdx = lowerColumns.indexOf('path_id');
+        if (nameIdx === -1 || jobIdIdx === -1) continue;
+
+        const inferred = parsed.mode === 'select' && parsed.selectText ? inferJobAndPathFromSelect(parsed.selectText) : null;
+
+        for (const row of parsed.rows) {
+          if (isConflictNameRow(row)) continue;
+          const featureName = parseStringLiteral(row[nameIdx] ?? '');
+          let jobName = extractNameEqualsLiteral(row[jobIdIdx]);
+          if (!jobName && inferred?.jobAlias && isAliasIdExpression(row[jobIdIdx], inferred.jobAlias)) {
+            jobName = inferred.jobName ?? '__ALL_JOBS__';
+          }
+
+          let pathName = pathIdIdx === -1 ? null : extractNameEqualsLiteral(row[pathIdIdx]);
+          if (!pathName && inferred?.pathAlias && isAliasIdExpression(row[pathIdIdx], inferred.pathAlias)) {
+            pathName = inferred.pathName;
+          }
+
+          jobFeatureRefs.push({ file, featureName: featureName || null, jobName: jobName || null, pathName });
+        }
+        continue;
+      }
+
+      if (tableName === 'compendium_powers') {
+        const jobNamesIdx = lowerColumns.indexOf('job_names');
+        if (nameIdx === -1 || jobNamesIdx === -1) continue;
+
+        for (const row of parsed.rows) {
+          if (isConflictNameRow(row)) continue;
+          const powerName = parseStringLiteral(row[nameIdx] ?? '');
+          const jobs = parseSqlArrayOfStrings(row[jobNamesIdx]) ?? parseBraceArrayOfStrings(row[jobNamesIdx]);
+          powerJobRefs.push({ file, powerName: powerName || null, jobs });
+        }
+        continue;
+      }
+    }
+  }
+
+  const structuralJobNames = new Set(jobNames);
+  for (const ref of jobPathRefs) {
+    if (ref.jobName) structuralJobNames.add(ref.jobName);
+  }
+  for (const ref of jobFeatureRefs) {
+    if (ref.jobName && ref.jobName !== '__ALL_JOBS__') structuralJobNames.add(ref.jobName);
+  }
+
+  const allowedPowerNames = new Set(structuralJobNames);
+  for (const name of monarchNames) allowedPowerNames.add(name);
+
+  const jobsReferencedButNotInserted = Array.from(structuralJobNames)
+    .filter((name) => !jobNames.has(name))
+    .sort((a, b) => a.localeCompare(b));
+
+  const issues = [];
+
+  for (const ref of jobPathRefs) {
+    if (!ref.jobName) {
+      issues.push({ table: 'compendium_job_paths', message: `Unparseable job reference for job_paths row in ${ref.file}` });
+      continue;
+    }
+    if (!structuralJobNames.has(ref.jobName)) {
+      const suffix = ref.pathName ? ` (path: ${ref.pathName})` : '';
+      issues.push({ table: 'compendium_job_paths', message: `Unknown job for job_paths: ${ref.jobName}${suffix} in ${ref.file}` });
+    }
+  }
+
+  for (const ref of jobFeatureRefs) {
+    if (!ref.jobName) {
+      const suffix = ref.featureName ? ` (feature: ${ref.featureName})` : '';
+      issues.push({ table: 'compendium_job_features', message: `Unparseable job reference for job_features${suffix} in ${ref.file}` });
+      continue;
+    }
+    if (ref.jobName === '__ALL_JOBS__') {
+      continue;
+    }
+    if (!structuralJobNames.has(ref.jobName)) {
+      const suffix = ref.featureName ? ` (feature: ${ref.featureName})` : '';
+      issues.push({ table: 'compendium_job_features', message: `Unknown job for job_features: ${ref.jobName}${suffix} in ${ref.file}` });
+      continue;
+    }
+    if (ref.pathName) {
+      const key = `${ref.jobName}:${ref.pathName}`;
+      if (!pathKeys.has(key)) {
+        const suffix = ref.featureName ? ` (feature: ${ref.featureName})` : '';
+        issues.push({ table: 'compendium_job_features', message: `Missing job_path for job_features: ${key}${suffix} in ${ref.file}` });
+      }
+    }
+  }
+
+  for (const ref of powerJobRefs) {
+    if (ref.jobs === null) {
+      const suffix = ref.powerName ? ` (power: ${ref.powerName})` : '';
+      issues.push({ table: 'compendium_powers', message: `Unparseable job_names array for compendium_powers${suffix} in ${ref.file}` });
+      continue;
+    }
+    for (const jobName of ref.jobs) {
+      if (!allowedPowerNames.has(jobName)) {
+        const suffix = ref.powerName ? ` (power: ${ref.powerName})` : '';
+        issues.push({ table: 'compendium_powers', message: `Unknown job name in powers.job_names: ${jobName}${suffix} in ${ref.file}` });
+      }
+    }
+  }
+
+  const notes = [
+    'Integrity checks for migrations are best-effort and focused on name-based references in VALUES inserts and simple SELECT/JOIN patterns.',
+    'SELECT-based inserts (CTEs, bulk inserts) are not fully evaluated in migration parsing mode.',
+    `Jobs referenced by migrations but not inserted by migrations: ${jobsReferencedButNotInserted.length}.`,
+  ];
+
+  return {
+    mode: 'migrations',
+    passed: issues.length === 0,
+    issues,
+    notes,
+  };
+}
+
+async function collectIntegrityFromSupabase(supabaseUrl, supabaseKey) {
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  const jobs = await fetchAllRows(supabase, 'compendium_jobs', ['id', 'name']);
+  const jobIds = new Set(jobs.map((j) => j.id));
+  const jobNames = new Set(jobs.map((j) => j.name));
+
+  const jobPaths = await fetchAllRows(supabase, 'compendium_job_paths', ['id', 'job_id', 'name']);
+  const jobPathIds = new Set(jobPaths.map((p) => p.id));
+
+  const jobFeatures = await fetchAllRows(supabase, 'compendium_job_features', ['id', 'job_id', 'path_id', 'name']);
+
+  const monsters = await fetchAllRows(supabase, 'compendium_monsters', ['id', 'name']);
+  const monsterIds = new Set(monsters.map((m) => m.id));
+  const monsterActions = await fetchAllRows(supabase, 'compendium_monster_actions', ['id', 'monster_id', 'name']);
+  const monsterTraits = await fetchAllRows(supabase, 'compendium_monster_traits', ['id', 'monster_id', 'name']);
+
+  const monarchs = await fetchAllRows(supabase, 'compendium_monarchs', ['id', 'name']);
+  const monarchIds = new Set(monarchs.map((m) => m.id));
+  const monarchFeatures = await fetchAllRows(supabase, 'compendium_monarch_features', ['id', 'monarch_id', 'name']);
+
+  const sovereigns = await fetchAllRows(supabase, 'compendium_sovereigns', ['id', 'name', 'monarch_a_id', 'monarch_b_id']);
+  const sovereignIds = new Set(sovereigns.map((s) => s.id));
+  const sovereignFeatures = await fetchAllRows(supabase, 'compendium_sovereign_features', ['id', 'sovereign_id', 'name']);
+
+  const powers = await fetchAllRows(supabase, 'compendium_powers', ['id', 'name', 'job_names']);
+
+  const issues = [];
+
+  for (const row of jobPaths) {
+    if (!row.job_id || !jobIds.has(row.job_id)) {
+      issues.push({ table: 'compendium_job_paths', message: `job_paths.job_id missing job for path: ${row.name}` });
+    }
+  }
+
+  for (const row of jobFeatures) {
+    if (!row.job_id || !jobIds.has(row.job_id)) {
+      issues.push({ table: 'compendium_job_features', message: `job_features.job_id missing job for feature: ${row.name}` });
+    }
+    if (row.path_id && !jobPathIds.has(row.path_id)) {
+      issues.push({ table: 'compendium_job_features', message: `job_features.path_id missing job_path for feature: ${row.name}` });
+    }
+  }
+
+  for (const row of monsterActions) {
+    if (!row.monster_id || !monsterIds.has(row.monster_id)) {
+      issues.push({ table: 'compendium_monster_actions', message: `monster_actions.monster_id missing monster for action: ${row.name}` });
+    }
+  }
+
+  for (const row of monsterTraits) {
+    if (!row.monster_id || !monsterIds.has(row.monster_id)) {
+      issues.push({ table: 'compendium_monster_traits', message: `monster_traits.monster_id missing monster for trait: ${row.name}` });
+    }
+  }
+
+  for (const row of monarchFeatures) {
+    if (!row.monarch_id || !monarchIds.has(row.monarch_id)) {
+      issues.push({ table: 'compendium_monarch_features', message: `monarch_features.monarch_id missing monarch for feature: ${row.name}` });
+    }
+  }
+
+  for (const row of sovereigns) {
+    if (row.monarch_a_id && !monarchIds.has(row.monarch_a_id)) {
+      issues.push({ table: 'compendium_sovereigns', message: `sovereigns.monarch_a_id missing monarch for sovereign: ${row.name}` });
+    }
+    if (row.monarch_b_id && !monarchIds.has(row.monarch_b_id)) {
+      issues.push({ table: 'compendium_sovereigns', message: `sovereigns.monarch_b_id missing monarch for sovereign: ${row.name}` });
+    }
+  }
+
+  for (const row of sovereignFeatures) {
+    if (!row.sovereign_id || !sovereignIds.has(row.sovereign_id)) {
+      issues.push({ table: 'compendium_sovereign_features', message: `sovereign_features.sovereign_id missing sovereign for feature: ${row.name}` });
+    }
+  }
+
+  for (const row of powers) {
+    const list = Array.isArray(row.job_names) ? row.job_names : [];
+    for (const jobName of list) {
+      if (typeof jobName === 'string' && jobName.trim()) {
+        if (!jobNames.has(jobName)) {
+          issues.push({ table: 'compendium_powers', message: `powers.job_names unknown job '${jobName}' for power: ${row.name}` });
+        }
+      }
+    }
+  }
+
+  return {
+    mode: 'supabase',
+    passed: issues.length === 0,
+    issues,
+    notes: ['Integrity checks executed against live Supabase tables.'],
+  };
+}
+
+function getCoverageFailures(rows) {
+  return (rows || []).filter((r) => r.total > 0 && r.percent < 100);
+}
+
 async function collectCoverageFromSupabase(supabaseUrl, supabaseKey) {
   const supabase = createClient(supabaseUrl, supabaseKey);
   const results = [];
@@ -1020,11 +1462,13 @@ async function main() {
   let rows = null;
   let sourceLabel = 'unknown';
   const notes = [];
+  let integrity = null;
 
   if (supabaseUrl && supabaseKey) {
     try {
       rows = await collectCoverageFromSupabase(supabaseUrl, supabaseKey);
       sourceLabel = supabaseUrl;
+      integrity = await collectIntegrityFromSupabase(supabaseUrl, supabaseKey);
     } catch (error) {
       notes.push(`Supabase fetch failed: ${error.message}`);
     }
@@ -1040,6 +1484,7 @@ async function main() {
     rows = migrationResult.rows;
     sourceLabel = migrationResult.sourceLabel;
     notes.push(...migrationResult.notes);
+    integrity = collectIntegrityFromMigrations();
     if (opts.showMissing && migrationResult.missingByTable.size > 0) {
       console.log('\nMissing required fields (migration scan):');
       for (const [table, entries] of migrationResult.missingByTable.entries()) {
@@ -1056,11 +1501,59 @@ async function main() {
   }
 
   const generatedAt = new Date().toISOString();
-  const markdown = buildMarkdown({ generatedAt, sourceLabel, rows, notes });
+  const markdown = buildMarkdown({ generatedAt, sourceLabel, rows, notes, integrity });
   const outPath = path.join(repoRoot, 'docs', 'compendium-coverage.md');
 
   fs.writeFileSync(outPath, markdown, 'utf8');
   console.log(`Wrote ${path.relative(repoRoot, outPath)}`);
+
+  const coverageFailures = getCoverageFailures(rows);
+  const integrityIssues = integrity?.issues?.length ? integrity.issues : [];
+  const shouldEnforceIntegrity = integrity?.mode === 'supabase';
+  const shouldEnforceIntegrityInMigrations = Boolean(opts.checkIntegrityMigrations) && integrity?.mode === 'migrations';
+  const shouldEnforceIntegrityOverall = shouldEnforceIntegrity || shouldEnforceIntegrityInMigrations;
+
+  if (opts.check && (coverageFailures.length > 0 || (shouldEnforceIntegrityOverall && integrityIssues.length > 0))) {
+    if (coverageFailures.length > 0) {
+      console.error('\nCoverage check failed (required-field completeness < 100%):');
+      for (const fail of coverageFailures) {
+        console.error(`- ${fail.table}: ${fail.percent}% (${fail.complete}/${fail.total})`);
+      }
+      console.error('Run `npm run compendium:coverage -- --missing` for migration-mode row samples.');
+    }
+    if (shouldEnforceIntegrityOverall && integrityIssues.length > 0) {
+      console.error(`\nIntegrity check failed: ${integrityIssues.length} issue(s)`);
+      for (const issue of integrityIssues.slice(0, 50)) {
+        const table = issue.table ? ` (${issue.table})` : '';
+        console.error(`- ${issue.message}${table}`);
+      }
+      if (integrityIssues.length > 50) {
+        console.error(`- ...and ${integrityIssues.length - 50} more`);
+      }
+    }
+    process.exit(1);
+  }
+
+  if (opts.check && !shouldEnforceIntegrity && integrityIssues.length > 0) {
+    console.warn(`\n⚠️ Integrity issues detected in migrations parsing mode: ${integrityIssues.length} issue(s)`);
+    console.warn('These are not enforced by --check because SQL parsing mode cannot fully emulate migrations execution.');
+    console.warn('To strictly enforce integrity, configure Supabase env vars so the script can validate live tables.');
+  }
 }
 
-await main();
+export {
+  extractInsertStatements,
+  extractNameEqualsLiteral,
+  inferJobAndPathFromSelect,
+  isConflictNameRow,
+  parseBraceArrayOfStrings,
+  parseInsertStatement,
+  parseSqlArrayOfStrings,
+  parseStringLiteral,
+  splitTopLevel,
+  stripSqlComments,
+};
+
+if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
+  await main();
+}

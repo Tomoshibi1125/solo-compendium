@@ -19,8 +19,12 @@ import { ABILITY_NAMES, type AbilityScore } from '@/types/solo-leveling';
 import type { Database } from '@/integrations/supabase/types';
 import { isLocalCharacterId, setLocalAbilities } from '@/lib/guestStore';
 
-type Job = Database['public']['Tables']['compendium_jobs']['Row'];
-type Background = Database['public']['Tables']['compendium_backgrounds']['Row'];
+type Job = Database['public']['Tables']['compendium_jobs']['Row'] & {
+  display_name?: string | null;
+};
+type Background = Database['public']['Tables']['compendium_backgrounds']['Row'] & {
+  display_name?: string | null;
+};
 type DbAbilityScore = Database['public']['Enums']['ability_score'];
 
 type Step = 'concept' | 'abilities' | 'job' | 'path' | 'background' | 'review';
@@ -281,7 +285,7 @@ const CharacterNew = () => {
       // Add level 1 features from compendium
       const { addLevel1Features, addBackgroundFeatures, addStartingEquipment, addStartingPowers } = await import('@/lib/characterCreation');
       await addLevel1Features(character.id, job.id, selectedPath ? paths.find(p => p.id === selectedPath)?.id : undefined);
-      
+
       // Add background features and equipment (background is required)
       const background = backgrounds.find(b => b.id === selectedBackground);
       if (background) {
@@ -551,14 +555,14 @@ const CharacterNew = () => {
                 <SelectContent>
                   {jobs.map((job) => (
                     <SelectItem key={job.id} value={job.id}>
-                      {job.name}
+                      {job.display_name || job.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
               {jobData && (
                 <div className="mt-4 p-4 rounded-lg bg-muted/30">
-                  <h4 className="font-heading font-semibold mb-2">{jobData.name}</h4>
+                  <h4 className="font-heading font-semibold mb-2">{jobData.display_name || jobData.name}</h4>
                   <p className="text-sm text-muted-foreground">{jobData.description}</p>
                   <div className="mt-2 text-xs text-muted-foreground">
                     Hit Die: d{jobData.hit_die} | Primary: {jobData.primary_abilities.join(', ')}
@@ -627,7 +631,7 @@ const CharacterNew = () => {
                       <SelectItem value="">None (Select later at level 3)</SelectItem>
                       {paths.map((path) => (
                         <SelectItem key={path.id} value={path.id}>
-                          {path.name}
+                          {(path as { display_name?: string | null }).display_name || path.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -635,7 +639,7 @@ const CharacterNew = () => {
                   {selectedPath && (
                     <div className="mt-4 p-4 rounded-lg bg-muted/30">
                       <h4 className="font-heading font-semibold mb-2">
-                        {paths.find(p => p.id === selectedPath)?.name}
+                        {(paths.find(p => p.id === selectedPath) as { name?: string; display_name?: string | null } | undefined)?.display_name || paths.find(p => p.id === selectedPath)?.name}
                       </h4>
                       <p className="text-sm text-muted-foreground">
                         {paths.find(p => p.id === selectedPath)?.description}
@@ -657,7 +661,7 @@ const CharacterNew = () => {
                 <SelectContent>
                   {backgrounds.map((bg) => (
                     <SelectItem key={bg.id} value={bg.id}>
-                      {bg.name}
+                      {bg.display_name || bg.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -666,7 +670,7 @@ const CharacterNew = () => {
                 <div className="mt-4 p-4 rounded-lg bg-muted/30 space-y-3">
                   <div>
                     <h4 className="font-heading font-semibold mb-2">
-                      {backgrounds.find(b => b.id === selectedBackground)?.name}
+                      {(backgrounds.find(b => b.id === selectedBackground) as { name?: string; display_name?: string | null } | undefined)?.display_name || backgrounds.find(b => b.id === selectedBackground)?.name}
                     </h4>
                     <p className="text-sm text-muted-foreground">
                       {backgrounds.find(b => b.id === selectedBackground)?.description}
@@ -720,9 +724,9 @@ const CharacterNew = () => {
                 <h3 className="font-heading font-semibold mb-2">Character Summary</h3>
                 <div className="space-y-2 text-sm">
                   <div><strong>Name:</strong> {name || 'Unnamed'}</div>
-                  <div><strong>Job:</strong> {jobData?.name || 'None'}</div>
-                  <div><strong>Path:</strong> {paths.find(p => p.id === selectedPath)?.name || 'None'}</div>
-                  <div><strong>Background:</strong> {backgrounds.find(b => b.id === selectedBackground)?.name || 'None'}</div>
+                  <div><strong>Job:</strong> {jobData ? (jobData.display_name || jobData.name) : 'None'}</div>
+                  <div><strong>Path:</strong> {(paths.find(p => p.id === selectedPath) as { name?: string; display_name?: string | null } | undefined)?.display_name || paths.find(p => p.id === selectedPath)?.name || 'None'}</div>
+                  <div><strong>Background:</strong> {(backgrounds.find(b => b.id === selectedBackground) as { name?: string; display_name?: string | null } | undefined)?.display_name || backgrounds.find(b => b.id === selectedBackground)?.name || 'None'}</div>
                 </div>
               </div>
               <div>

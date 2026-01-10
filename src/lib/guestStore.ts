@@ -201,6 +201,9 @@ export function createLocalCharacter(data: Omit<CharacterInsert, 'user_id'>): Ch
     system_favor_max: data.system_favor_max ?? 0,
     system_favor_die: data.system_favor_die ?? 4,
 
+    shadow_energy_current: data.shadow_energy_current ?? 0,
+    shadow_energy_max: data.shadow_energy_max ?? 0,
+
     saving_throw_proficiencies: data.saving_throw_proficiencies ?? null,
     skill_proficiencies: data.skill_proficiencies ?? null,
     skill_expertise: data.skill_expertise ?? null,

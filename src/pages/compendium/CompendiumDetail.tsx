@@ -61,7 +61,7 @@ const CompendiumDetail = () => {
           
           const { data, error: queryError } = await supabase
             .from(tableName)
-            .select('id, name, description')
+            .select('id, name, display_name, description')
             .overlaps('tags', entryTags)
             .neq('id', id)
             .limit(3);
@@ -70,7 +70,7 @@ const CompendiumDetail = () => {
             // Type guard to ensure data is valid and not an error
             // First cast to unknown to bypass union type issues, then validate
             const items = data as unknown[];
-            const validData = items.filter((item): item is { id: string; name: string; description?: string } => {
+            const validData = items.filter((item): item is { id: string; name: string; display_name?: string | null; description?: string } => {
               if (typeof item !== 'object' || item === null) return false;
               if ('error' in item) return false; // Filter out error objects
               const obj = item as Record<string, unknown>;
@@ -81,7 +81,7 @@ const CompendiumDetail = () => {
             
             related.push(...validData.map((item) => ({
               id: item.id,
-              name: item.name,
+              name: item.display_name || item.name,
               type: tableType,
               description: item.description || undefined,
             })));
@@ -136,7 +136,7 @@ const CompendiumDetail = () => {
   const getTocItems = () => {
     if (!entry || !type) return [];
     
-    const entryName = (entry as { name?: string }).name || '';
+    const entryName = (entry as { display_name?: string | null; name?: string }).display_name || (entry as { name?: string }).name || '';
     const items: Array<{ id: string; title: string; level: number }> = [
       { id: 'entry-header', title: entryName, level: 1 },
     ];
@@ -256,6 +256,7 @@ const CompendiumDetail = () => {
 
   const entryData = entry as Record<string, unknown> & {
     name: string;
+    display_name?: string | null;
     type: string;
     source_book?: string | null;
     tags?: string[] | null;
@@ -266,6 +267,7 @@ const CompendiumDetail = () => {
   };
 
   const isFavorite = favorites.has(`${type}:${id || ''}`);
+  const entryDisplayName = entryData.display_name || entryData.name;
   
   const handleToggleFavorite = () => {
     if (!id) return;
@@ -273,7 +275,7 @@ const CompendiumDetail = () => {
     toggleFavorite(type, id);
     toast({
       title: wasFavorite ? 'Removed from favorites' : 'Added to favorites',
-      description: `${entryData.name} has been ${wasFavorite ? 'removed from' : 'added to'} your favorites`,
+      description: `${entryDisplayName} has been ${wasFavorite ? 'removed from' : 'added to'} your favorites`,
     });
   };
 
@@ -300,14 +302,14 @@ const CompendiumDetail = () => {
     const url = URL.createObjectURL(dataBlob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `${entryData.name}-${type}-${id}.json`;
+    link.download = `${entryDisplayName}-${type}-${id}.json`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
     toast({
       title: 'Export complete',
-      description: `${entryData.name} exported successfully.`,
+      description: `${entryDisplayName} exported successfully.`,
     });
   };
 
@@ -336,7 +338,7 @@ const CompendiumDetail = () => {
           items={[
             { label: 'Compendium', href: '/compendium' },
             { label: categoryLabels[type] || type, href: `/compendium?category=${type}` },
-            { label: entryData.name },
+            { label: entryDisplayName },
           ]}
         />
 
@@ -345,7 +347,7 @@ const CompendiumDetail = () => {
           sidebar={
             <>
               <QuickReference
-                entry={entryData}
+                entry={{ ...entryData, name: entryDisplayName }}
                 isFavorite={isFavorite}
                 onToggleFavorite={handleToggleFavorite}
                 onShare={handleShare}
