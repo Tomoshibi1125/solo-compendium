@@ -17,7 +17,6 @@ export const useCharacterJournal = (characterId: string) => {
     queryKey: ['character-journal', characterId],
     queryFn: async () => {
       const { data, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('character_journal')
         .select('*')
         .eq('character_id', characterId)
@@ -36,9 +35,7 @@ export const useCreateJournalEntry = () => {
   return useMutation({
     mutationFn: async (entry: Omit<JournalEntry, 'id' | 'created_at' | 'updated_at'>) => {
       const { data, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('character_journal')
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .insert(entry)
         .select()
         .single();
@@ -58,7 +55,6 @@ export const useUpdateJournalEntry = () => {
   return useMutation({
     mutationFn: async ({ id, characterId, ...updates }: { id: string; characterId: string } & Partial<JournalEntry>) => {
       const { data, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('character_journal')
         .update({ ...updates, updated_at: new Date().toISOString() })
         .eq('id', id)
@@ -80,7 +76,6 @@ export const useDeleteJournalEntry = () => {
   return useMutation({
     mutationFn: async ({ id, characterId }: { id: string; characterId: string }) => {
       const { error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('character_journal')
         .delete()
         .eq('id', id);

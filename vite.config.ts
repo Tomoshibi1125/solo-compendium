@@ -120,6 +120,7 @@ export default defineConfig(({ mode }) => {
               '@radix-ui/react-select',
               '@radix-ui/react-tabs',
             ],
+            'dice-3d-vendor': ['three', '@react-three/fiber', '@react-three/drei'],
             'query-vendor': ['@tanstack/react-query'],
             'supabase-vendor': ['@supabase/supabase-js'],
           },

@@ -22,7 +22,6 @@ export const useCampaignNotes = (campaignId: string) => {
     queryKey: ['campaigns', campaignId, 'notes'],
     queryFn: async (): Promise<CampaignNote[]> => {
       const { data, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaign_notes')
         .select('*')
         .eq('campaign_id', campaignId)
@@ -58,7 +57,6 @@ export const useCreateCampaignNote = () => {
       if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
       const { data, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaign_notes')
         .insert({
           campaign_id: campaignId,
@@ -67,7 +65,6 @@ export const useCreateCampaignNote = () => {
           content: content || null,
           is_shared: isShared,
           category,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         })
         .select()
         .single();
@@ -122,7 +119,6 @@ export const useUpdateCampaignNote = () => {
       if (category !== undefined) updates.category = category;
 
       const { data, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaign_notes')
         .update(updates)
         .eq('id', noteId)
@@ -157,7 +153,6 @@ export const useDeleteCampaignNote = () => {
   return useMutation({
     mutationFn: async ({ noteId, campaignId }: { noteId: string; campaignId: string }) => {
       const { error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaign_notes')
         .delete()
         .eq('id', noteId);

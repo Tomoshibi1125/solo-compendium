@@ -142,7 +142,6 @@ export const useCreateCampaign = () => {
       if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
       // Call the database function to create campaign with share code
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data, error } = await supabase.rpc('create_campaign_with_code', {
         p_name: name,
         p_description: description || null,
@@ -183,14 +182,12 @@ export const useJoinCampaign = () => {
       if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
       const { error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaign_members')
         .insert({
           campaign_id: campaignId,
           user_id: user.id,
           character_id: characterId || null,
           role: 'hunter',
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         });
 
       if (error) throw error;
@@ -223,7 +220,6 @@ export const useLeaveCampaign = () => {
       if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
       const { error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaign_members')
         .delete()
         .eq('campaign_id', campaignId)

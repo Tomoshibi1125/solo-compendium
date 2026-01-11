@@ -85,7 +85,7 @@ The failing tests are all related to the `/compendium` page. The tests cannot fi
    - Dev server running on port 8080
 
 3. **Recommended Actions**:
-   - Verify `.env` file contains valid Supabase credentials
+   - Verify `.env.local` file contains valid Supabase credentials
    - Check browser console for JavaScript errors during test execution
    - Ensure Supabase database is accessible and contains test data
    - Review Playwright test reports for detailed error context
@@ -114,9 +114,14 @@ The failing tests are all related to the `/compendium` page. The tests cannot fi
 
 1. **Verify Environment Configuration**:
    ```bash
-   # Check if .env file exists and contains:
-   VITE_SUPABASE_URL=your_supabase_url
-   VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_key
+   # Check if .env.local file exists and contains:
+   # Local development
+   VITE_SUPABASE_URL=https://your-project.supabase.co
+   VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-key
+
+   # Optional
+   # VITE_SENTRY_DSN=
+   # VITE_ANALYTICS_ENABLED=false
    ```
 
 2. **Run E2E Tests with Debugging**:

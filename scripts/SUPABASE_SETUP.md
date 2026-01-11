@@ -37,9 +37,15 @@ Supabase tokens/keys come in different forms. For admin operations (like uploadi
 Your `.env.local` should have:
 
 ```env
-# Supabase Configuration
+# Local development
 VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_PUBLISHABLE_KEY=your_anon_key
+VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-key
+
+# Optional
+# VITE_SENTRY_DSN=
+# VITE_ANALYTICS_ENABLED=false
+
+# Supabase service role key
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key_here
 
 # Hugging Face (already configured ✅)

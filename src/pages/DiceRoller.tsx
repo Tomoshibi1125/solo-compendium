@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { lazy, Suspense, useState, useEffect } from 'react';
 import { Dice1, Dice2, Dice3, Dice4, Dice5, Dice6, RotateCcw, Plus, Minus, History, Sparkles, Zap, Palette, Crown, Flame, Zap as ZapIcon, Gem } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { cn } from '@/lib/utils';
-import { Dice3DRoller, DICE_THEMES, type DiceTheme } from '@/components/dice/Dice3D';
+import { DICE_THEMES, type DiceTheme } from '@/components/dice/diceThemes';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 
@@ -27,6 +27,12 @@ const diceTypes = [
   { sides: 20, label: 'd20' },
   { sides: 100, label: 'd100' },
 ];
+
+const Dice3DRoller = lazy(() =>
+  import('@/components/dice/Dice3D').then((module) => ({
+    default: module.Dice3DRoller,
+  }))
+);
 
 const DiceRoller = () => {
   const [selectedDice, setSelectedDice] = useState<{ sides: number; count: number }[]>([]);
@@ -217,14 +223,22 @@ const DiceRoller = () => {
             {/* 3D Dice Roller */}
             {show3D && dice3D.length > 0 && (
               <SystemWindow title={`SYSTEM DICE CHAMBER - ${DICE_THEMES[diceTheme].name.toUpperCase()}`} variant="arise" className="overflow-hidden">
-                <Dice3DRoller
-                  dice={dice3D}
-                  isRolling={isRolling}
-                  theme={diceTheme}
-                  onRollComplete={(index, value) => {
-                    // Handle individual die completion if needed
-                  }}
-                />
+                <Suspense
+                  fallback={(
+                    <div className="flex h-[400px] items-center justify-center text-sm text-muted-foreground">
+                      Loading 3D dice...
+                    </div>
+                  )}
+                >
+                  <Dice3DRoller
+                    dice={dice3D}
+                    isRolling={isRolling}
+                    theme={diceTheme}
+                    onRollComplete={(index, value) => {
+                      // Handle individual die completion if needed
+                    }}
+                  />
+                </Suspense>
               </SystemWindow>
             )}
             

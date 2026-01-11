@@ -23,7 +23,6 @@ export const useCampaignMessages = (campaignId: string) => {
     queryKey: ['campaigns', campaignId, 'messages'],
     queryFn: async (): Promise<CampaignMessage[]> => {
       const { data, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaign_messages')
         .select('*')
         .eq('campaign_id', campaignId)
@@ -104,7 +103,6 @@ export const useSendCampaignMessage = () => {
       if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
       const { data, error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaign_messages')
         .insert({
           campaign_id: campaignId,
@@ -113,7 +111,6 @@ export const useSendCampaignMessage = () => {
           character_name: characterName || null,
           message_type: messageType,
           metadata,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         })
         .select()
         .single();
@@ -142,7 +139,6 @@ export const useDeleteCampaignMessage = () => {
   return useMutation({
     mutationFn: async ({ messageId, campaignId }: { messageId: string; campaignId: string }) => {
       const { error } = await supabase
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('campaign_messages')
         .delete()
         .eq('id', messageId);

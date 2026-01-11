@@ -12,20 +12,28 @@
 
 ### ⚠️ Needs Action
 - [ ] **VITE_SUPABASE_URL** - Add your actual Supabase project URL
+- [ ] **VITE_SUPABASE_PUBLISHABLE_KEY** - Add your Supabase anon/public key
 - [ ] **Database Migrations** - Apply via Supabase Dashboard
 - [ ] **Optional: Service Role Key** - If access token doesn't work for storage
 
 ## 🔧 Step-by-Step Completion
 
-### Step 1: Get Your Supabase Project URL
+### Step 1: Get Your Supabase Project URL and Anon Key
 
 1. Go to [Supabase Dashboard](https://app.supabase.com)
 2. Select your project
 3. Go to **Settings** → **API**
 4. Copy the **Project URL** (looks like: `https://xxxxx.supabase.co`)
-5. Update `.env.local`:
+5. Copy the **anon/public key**
+6. Update `.env.local`:
    ```env
-   VITE_SUPABASE_URL=https://your-project-id.supabase.co
+   # Local development
+   VITE_SUPABASE_URL=https://your-project.supabase.co
+   VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-key
+
+   # Optional
+   # VITE_SENTRY_DSN=
+   # VITE_ANALYTICS_ENABLED=false
    ```
 
 ### Step 2: Apply Database Migrations
@@ -70,8 +78,15 @@ This will:
 
 ### Configuration File: `.env.local`
 ```env
+# Local development
 VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_PUBLISHABLE_KEY=your_anon_key
+VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-key
+
+# Optional
+# VITE_SENTRY_DSN=
+# VITE_ANALYTICS_ENABLED=false
+
+# Supabase service role key
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key_here
 HUGGINGFACE_API_TOKEN=your_huggingface_api_token_here
 HUGGINGFACE_MODEL=stabilityai/stable-diffusion-xl-base-1.0
@@ -116,10 +131,10 @@ python scripts/generate-compendium-images.py jobs 5
 ## ✅ Completion Status
 
 **Implementation**: 100% Complete  
-**Configuration**: 95% Complete (just needs Supabase URL)  
+**Configuration**: 95% Complete (just needs Supabase URL and anon key)  
 **Ready**: ⏳ After Supabase URL + Migrations
 
 ---
 
-**You're almost there!** Just add your Supabase project URL and apply migrations, then you're ready to generate beautiful Solo Leveling artwork! 🎨
+**You're almost there!** Just add your Supabase project URL and anon key, apply migrations, then you're ready to generate beautiful Solo Leveling artwork! 🎨
 

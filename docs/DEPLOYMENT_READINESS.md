@@ -82,8 +82,13 @@ supabase migration up
 Create `.env.local` (or `.env.production` for production):
 
 ```env
-VITE_SUPABASE_URL=your_supabase_project_url
-VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_anon_key
+# Local development
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-key
+
+# Optional
+# VITE_SENTRY_DSN=
+# VITE_ANALYTICS_ENABLED=false
 ```
 
 **Required**:

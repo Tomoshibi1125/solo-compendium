@@ -58,10 +58,13 @@ Set these in your deployment platform (Vercel, Netlify, etc.):
 
 Create a `.env.local` file with:
 ```env
+# Local development
 VITE_SUPABASE_URL=https://your-project.supabase.co
 VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-key
-VITE_SENTRY_DSN=https://your-sentry-dsn (optional)
-VITE_ANALYTICS_ENABLED=false (optional)
+
+# Optional
+# VITE_SENTRY_DSN=
+# VITE_ANALYTICS_ENABLED=false
 ```
 
 ## Database Migration Steps

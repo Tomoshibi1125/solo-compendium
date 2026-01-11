@@ -65,6 +65,13 @@ const tablesToAudit = [
 
 type AuditedTableName = (typeof tablesToAudit)[number];
 
+type CountQueryResult = { count: number | null };
+type CountQueryBuilder = {
+  select: (columns: string, options?: { count?: 'exact'; head?: boolean }) => CountQueryBuilder;
+  not: (column: string, operator: string, value: unknown) => CountQueryBuilder;
+  neq: (column: string, value: unknown) => CountQueryBuilder;
+} & PromiseLike<CountQueryResult>;
+
 const tableCapabilities: Record<AuditedTableName, { hasDescription: boolean; hasImageUrl: boolean; hasSourceBook: boolean; hasTags: boolean }> = {
   compendium_jobs: { hasDescription: true, hasImageUrl: true, hasSourceBook: true, hasTags: true },
   compendium_job_paths: { hasDescription: true, hasImageUrl: true, hasSourceBook: true, hasTags: true },
@@ -89,7 +96,8 @@ async function auditTable(tableName: AuditedTableName): Promise<TableAudit> {
   try {
     const table = tableName;
     const capabilities = tableCapabilities[tableName];
-    const untypedFrom = (relation: string) => (supabase as unknown as { from: (r: string) => any }).from(relation);
+    const untypedFrom = (relation: AuditedTableName): CountQueryBuilder =>
+      supabase.from(relation as keyof Database['public']['Tables']) as unknown as CountQueryBuilder;
 
     // Get total count
     const { count: totalCount } = await supabase

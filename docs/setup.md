@@ -29,13 +29,19 @@ npm install
 Create `.env.local` (gitignored) with:
 
 ```env
-VITE_SUPABASE_URL=https://<project>.supabase.co
-VITE_SUPABASE_PUBLISHABLE_KEY=<anon_public_key>
+# Local development
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-key
+
+# Optional
+# VITE_SENTRY_DSN=
+# VITE_ANALYTICS_ENABLED=false
 ```
 
 Optional (all safe to omit):
 
 - `VITE_SENTRY_DSN`
+- `VITE_ANALYTICS_ENABLED`
 - `VITE_PLAUSIBLE_DOMAIN`
 - `VITE_POSTHOG_KEY`
 - `VITE_POSTHOG_HOST`

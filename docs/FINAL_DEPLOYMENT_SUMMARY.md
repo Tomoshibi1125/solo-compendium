@@ -107,8 +107,13 @@ The Solo Compendium application is **fully complete and ready for deployment**. 
 
 2. **Set Environment Variables**
    ```env
-   VITE_SUPABASE_URL=your_url
-   VITE_SUPABASE_PUBLISHABLE_KEY=your_key
+   # Local development
+   VITE_SUPABASE_URL=https://your-project.supabase.co
+   VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-key
+
+   # Optional
+   # VITE_SENTRY_DSN=
+   # VITE_ANALYTICS_ENABLED=false
    ```
 
 3. **Configure Supabase Storage**

@@ -11,6 +11,25 @@ interface RichTextNotesProps {
   disabled?: boolean;
 }
 
+const QUILL_MODULES = {
+  toolbar: [
+    [{ header: [1, 2, 3, false] }],
+    ['bold', 'italic', 'underline', 'strike'],
+    [{ list: 'ordered' }, { list: 'bullet' }],
+    [{ color: [] }, { background: [] }],
+    ['link', 'blockquote', 'code-block'],
+    ['clean'],
+  ],
+};
+
+const QUILL_FORMATS = [
+  'header',
+  'bold', 'italic', 'underline', 'strike',
+  'list', 'bullet',
+  'color', 'background',
+  'link', 'blockquote', 'code-block',
+];
+
 export function RichTextNotes({
   value,
   onChange,
@@ -22,25 +41,6 @@ export function RichTextNotes({
   const quillRef = useRef<Quill | null>(null);
   const lastValueRef = useRef<string>('');
 
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, 3, false] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ list: 'ordered' }, { list: 'bullet' }],
-      [{ color: [] }, { background: [] }],
-      ['link', 'blockquote', 'code-block'],
-      ['clean'],
-    ],
-  };
-
-  const formats = [
-    'header',
-    'bold', 'italic', 'underline', 'strike',
-    'list', 'bullet',
-    'color', 'background',
-    'link', 'blockquote', 'code-block'
-  ];
-
   useEffect(() => {
     if (!containerRef.current || quillRef.current) return;
 
@@ -48,8 +48,8 @@ export function RichTextNotes({
       theme: 'snow',
       readOnly: disabled,
       placeholder: placeholderText,
-      modules,
-      formats,
+      modules: QUILL_MODULES,
+      formats: QUILL_FORMATS,
     });
 
     quill.on('text-change', () => {
@@ -67,7 +67,7 @@ export function RichTextNotes({
       quill.clipboard.dangerouslyPasteHTML(value);
       lastValueRef.current = quill.root.innerHTML;
     }
-  }, [disabled, formats, modules, onChange, placeholderText, value]);
+  }, [disabled, onChange, placeholderText, value]);
 
   useEffect(() => {
     const quill = quillRef.current;
@@ -118,4 +118,3 @@ export function RichTextNotes({
     </div>
   );
 }
-
