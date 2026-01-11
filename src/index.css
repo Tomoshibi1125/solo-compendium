@@ -166,8 +166,9 @@
   /* Mobile Optimizations */
   @media (max-width: 768px) {
     html {
-      -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
     }
 
     body {
@@ -204,7 +205,6 @@
     a,
     button {
       -webkit-tap-highlight-color: hsl(var(--primary) / 0.2);
-      tap-highlight-color: hsl(var(--primary) / 0.2);
     }
 
   /* Prevent horizontal scroll */
@@ -480,6 +480,7 @@
      ═══════════════════════════════════════════════════════════════════════════ */
   .glass-card {
     background: linear-gradient(135deg, hsl(var(--card) / 0.85) 0%, hsl(var(--void-black) / 0.7) 100%);
+    -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
     border: 1px solid hsl(var(--border) / 0.6);
     box-shadow: 
@@ -793,8 +794,8 @@
   text-transform: uppercase;
   letter-spacing: 0.2em;
   background: linear-gradient(135deg, hsl(var(--shadow-blue)), hsl(var(--shadow-purple)), hsl(var(--arise-violet)));
-  background-clip: text;
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 
     0 0 30px hsl(var(--shadow-blue) / 0.8),

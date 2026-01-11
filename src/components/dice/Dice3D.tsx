@@ -3,6 +3,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Text, OrbitControls, PerspectiveCamera, Sparkles } from '@react-three/drei';
 import * as THREE from 'three';
 import { cn } from '@/lib/utils';
+import './Dice3D.css';
 import { DICE_THEMES, type DiceTheme } from '@/components/dice/diceThemes';
 
 interface Dice3DProps {
@@ -361,22 +362,11 @@ export function Dice3DRoller({ dice, isRolling, onRollComplete, theme = 'shadow-
   const themeConfig = DICE_THEMES[theme];
   
   return (
-    <div className={cn("w-full h-[400px] rounded-lg overflow-hidden border border-border/50 bg-gradient-to-b from-void-black via-shadow-deep to-void-black relative", className)}>
+    <div className={cn("dice-3d-roller", `dice-theme-${theme}`, className)}>
       {/* Solo Leveling glow effects */}
       <div className="absolute inset-0 pointer-events-none">
-        <div 
-          className="absolute top-0 left-1/4 w-32 h-32 rounded-full blur-2xl animate-pulse" 
-          style={{ 
-            backgroundColor: `${themeConfig.baseColor}20`,
-          }} 
-        />
-        <div 
-          className="absolute bottom-0 right-1/4 w-40 h-40 rounded-full blur-2xl animate-pulse" 
-          style={{ 
-            animationDelay: '0.5s',
-            backgroundColor: `${themeConfig.emissiveColor}20`,
-          }} 
-        />
+        <div className="dice-glow-effect top-left" />
+        <div className="dice-glow-effect bottom-right" />
       </div>
       
       <Canvas shadows className="relative z-10">
@@ -384,8 +374,8 @@ export function Dice3DRoller({ dice, isRolling, onRollComplete, theme = 'shadow-
       </Canvas>
       
       {/* Overlay UI */}
-      <div className="absolute bottom-4 left-4 right-4 pointer-events-none">
-        <div className="bg-black/60 backdrop-blur-sm rounded-lg p-3 border" style={{ borderColor: `${themeConfig.emissiveColor}30` }}>
+      <div className="dice-overlay-ui">
+        <div className="dice-overlay-panel">
           <p className="text-xs text-muted-foreground text-center font-heading">
             {isRolling ? 'The System is calculating your fate...' : 'Click and drag to rotate • Scroll to zoom'}
           </p>
