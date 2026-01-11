@@ -229,7 +229,8 @@
     /* Better scrolling on iOS */
     .overflow-y-auto,
     [data-scroll] {
-      -webkit-overflow-scrolling: touch;
+      /* -webkit-overflow-scrolling: touch; Deprecated in iOS 13+ */
+      overscroll-behavior: contain;
     }
   }
 
@@ -277,7 +278,8 @@
   /* Better mobile scrolling */
   @media (hover: none) and (pointer: coarse) {
     * {
-      -webkit-overflow-scrolling: touch;
+      /* -webkit-overflow-scrolling: touch; Deprecated in iOS 13+ */
+      overscroll-behavior: contain;
     }
   }
 
