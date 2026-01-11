@@ -3,6 +3,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
+import type { Mock } from 'vitest';
 
 vi.mock('@/components/layout/Layout', () => ({
   Layout: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
@@ -45,7 +46,7 @@ describe('InitiativeTracker', () => {
       round: 1,
     };
     
-    (window.localStorage.getItem as vi.Mock).mockReturnValue(JSON.stringify(mockData));
+    (window.localStorage.getItem as Mock).mockReturnValue(JSON.stringify(mockData));
 
     render(
       <MemoryRouter>
@@ -132,7 +133,7 @@ describe('InitiativeTracker', () => {
       currentTurn: 0,
       round: 1,
     };
-    (window.localStorage.getItem as vi.Mock).mockReturnValue(JSON.stringify(storedData));
+    (window.localStorage.getItem as Mock).mockReturnValue(JSON.stringify(storedData));
 
     const stored = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || '{}');
     expect(stored.combatants?.[0]?.hp).toBe(7);
