@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Save, Plus, Trash2, Calendar, Clock, FileText, Users } from 'lucide-react';
@@ -32,8 +32,11 @@ const SessionPlanner = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [sessions, setSessions] = useState<SessionPlan[]>([]);
+  
+  const initialSessionId = useRef(Date.now().toString()).current;
+  
   const [currentSession, setCurrentSession] = useState<SessionPlan>({
-    id: Date.now().toString(),
+    id: initialSessionId,
     title: 'New Session',
     notes: [],
     prepNotes: '',

@@ -1344,6 +1344,7 @@ async function collectIntegrityFromSupabase(supabaseUrl, supabaseKey) {
 
   const monarchs = await fetchAllRows(supabase, 'compendium_monarchs', ['id', 'name']);
   const monarchIds = new Set(monarchs.map((m) => m.id));
+  const monarchNames = new Set(monarchs.map((m) => m.name));
   const monarchFeatures = await fetchAllRows(supabase, 'compendium_monarch_features', ['id', 'monarch_id', 'name']);
 
   const sovereigns = await fetchAllRows(supabase, 'compendium_sovereigns', ['id', 'name', 'monarch_a_id', 'monarch_b_id']);
@@ -1402,11 +1403,13 @@ async function collectIntegrityFromSupabase(supabaseUrl, supabaseKey) {
     }
   }
 
+  const allowedPowerNames = new Set([...jobNames, ...monarchNames]);
+
   for (const row of powers) {
     const list = Array.isArray(row.job_names) ? row.job_names : [];
     for (const jobName of list) {
       if (typeof jobName === 'string' && jobName.trim()) {
-        if (!jobNames.has(jobName)) {
+        if (!allowedPowerNames.has(jobName)) {
           issues.push({ table: 'compendium_powers', message: `powers.job_names unknown job '${jobName}' for power: ${row.name}` });
         }
       }

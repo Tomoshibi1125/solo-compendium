@@ -31,7 +31,7 @@ describe('InitiativeTracker', () => {
     );
 
     render(
-      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <MemoryRouter>
         <InitiativeTracker />
       </MemoryRouter>
     );
@@ -43,7 +43,7 @@ describe('InitiativeTracker', () => {
     const user = userEvent.setup();
 
     render(
-      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <MemoryRouter>
         <InitiativeTracker />
       </MemoryRouter>
     );
@@ -73,7 +73,7 @@ describe('InitiativeTracker', () => {
     const user = userEvent.setup();
 
     render(
-      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <MemoryRouter>
         <InitiativeTracker />
       </MemoryRouter>
     );

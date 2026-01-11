@@ -149,6 +149,13 @@ function Die({ sides, value, isRolling, onRollComplete, position, rotation = [0,
     }
   }, [isRolling, isAnimating]);
 
+  // Get rotation for a specific value (simplified - would need proper mapping for each die type)
+  const getRotationForValue = (sides: number, val: number): [number, number, number] => {
+    // Simplified rotation mapping - in production, you'd want proper face mapping
+    const angle = (val / sides) * Math.PI * 2;
+    return [angle * 0.3, angle * 0.5, angle * 0.2];
+  };
+
   useFrame((state, delta) => {
     if (!meshRef.current) return;
     timeRef.current += delta;
@@ -200,13 +207,6 @@ function Die({ sides, value, isRolling, onRollComplete, position, rotation = [0,
       }
     }
   });
-
-  // Get rotation for a specific value (simplified - would need proper mapping for each die type)
-  const getRotationForValue = (sides: number, val: number): [number, number, number] => {
-    // Simplified rotation mapping - in production, you'd want proper face mapping
-    const angle = (val / sides) * Math.PI * 2;
-    return [angle * 0.3, angle * 0.5, angle * 0.2];
-  };
 
   // Create geometry based on sides
   const getGeometry = () => {

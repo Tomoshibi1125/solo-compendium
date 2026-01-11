@@ -250,14 +250,22 @@ const DMTools = () => {
 
         {/* Tools Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {tools.map((tool) => (
+          {tools.map((tool) => {
+            const isAvailable = tool.status === 'available';
+            const isCampaignOnly = tool.status === 'campaign-only';
+            const isDisabled = tool.status === 'coming-soon';
+            const toolHref = isCampaignOnly ? '/campaigns' : isAvailable ? `/dm-tools/${tool.id}` : '#';
+            const isInteractive = isAvailable || isCampaignOnly;
+
+            return (
             <Link
               key={tool.id}
-              to={tool.status === 'available' ? `/dm-tools/${tool.id}` : '#'}
+              to={toolHref}
+              aria-disabled={isDisabled}
               className={cn(
                 "group relative overflow-hidden rounded-xl border p-6 transition-all duration-300",
                 "bg-gradient-to-br backdrop-blur-sm",
-                tool.status === 'available' 
+                isInteractive
                   ? cn("hover:scale-[1.02] hover:shadow-xl cursor-pointer", tool.glow)
                   : "opacity-60 cursor-not-allowed",
                 tool.color
@@ -342,7 +350,8 @@ const DMTools = () => {
                 </div>
               )}
             </Link>
-          ))}
+          );
+          })}
         </div>
 
         {/* Quick Reference */}

@@ -83,7 +83,6 @@ const VTTEnhanced = () => {
   const [gridSize] = useState(50);
   const [showGrid, setShowGrid] = useState(true);
   const [fogOfWar, setFogOfWar] = useState(false);
-  const [isGM, setIsGM] = useState(false);
   const [selectedToken, setSelectedToken] = useState<string | null>(null);
   const [currentScene, setCurrentScene] = useState<Scene | null>(null);
   const [scenes, setScenes] = useState<Scene[]>([]);
@@ -100,6 +99,7 @@ const VTTEnhanced = () => {
 
   const { data: members } = useCampaignMembers(campaignId || '');
   const { data: role } = useCampaignRole(campaignId || '');
+  const isGM = role === 'system' || role === 'co-system';
 
   // Load campaign characters via members
   const { data: campaignCharacters } = useQuery({
@@ -150,11 +150,38 @@ const VTTEnhanced = () => {
   }, [campaignId, createNewScene]);
 
   useEffect(() => {
-    if (role === 'system' || role === 'co-system') {
-      setIsGM(true);
+    if (!campaignId) return;
+    const saved = localStorage.getItem(`vtt-scenes-${campaignId}`);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        setScenes(parsed.scenes || []);
+        setCurrentScene(parsed.currentScene || parsed.scenes?.[0] || null);
+      } catch (e) {
+        const scene: Scene = {
+          id: `scene-${Date.now()}`,
+          name: `Scene 1`,
+          width: 20,
+          height: 20,
+          tokens: [],
+          fogOfWar: false,
+        };
+        setScenes([scene]);
+        setCurrentScene(scene);
+      }
+    } else {
+      const scene: Scene = {
+        id: `scene-${Date.now()}`,
+        name: `Scene 1`,
+        width: 20,
+        height: 20,
+        tokens: [],
+        fogOfWar: false,
+      };
+      setScenes([scene]);
+      setCurrentScene(scene);
     }
-    loadScenes();
-  }, [role, campaignId, loadScenes]);
+  }, [campaignId]);
 
   // Real-time sync for scenes (would use Supabase Realtime in production)
   useEffect(() => {
@@ -193,17 +220,21 @@ const VTTEnhanced = () => {
     });
   };
 
-  const rollDice = (dice: string) => {
-    // Parse dice notation (e.g., "1d20+5", "2d6", etc.)
-    const match = dice.match(/(\d+)d(\d+)([+-]\d+)?/);
-    if (!match) {
-      toast({
-        title: 'Invalid dice',
-        description: 'Use format like 1d20+5 or 2d6',
-        variant: 'destructive',
-      });
-      return;
-    }
+  const addChatMessage = useCallback((type: 'chat' | 'dice' | 'system', message: string, diceResult?: DiceRoll) => {
+    const chatMsg: ChatMessage = {
+      id: `msg-${Date.now()}-${Math.random()}`,
+      player: 'You',
+      message,
+      timestamp: new Date(),
+      type,
+      diceResult,
+    };
+    setChatMessages(prev => [chatMsg, ...prev].slice(0, 100));
+  }, []);
+
+  const rollDice = useCallback((dice: string): number => {
+    const match = dice.match(/^(\d+)d(\d+)(?:([+-]\d+))?/);
+    if (!match) return 0;
 
     const count = parseInt(match[1]);
     const sides = parseInt(match[2]);
@@ -221,7 +252,7 @@ const VTTEnhanced = () => {
     const fumble = count === 1 && rolls[0] === 1;
 
     const diceRoll: DiceRoll = {
-      id: `roll-${Date.now()}`,
+      id: `roll-${Date.now()}-${Math.random()}`,
       player: 'You',
       result: total,
       dice,
@@ -229,23 +260,11 @@ const VTTEnhanced = () => {
       critical,
     };
 
-    setDiceRolls([diceRoll, ...diceRolls].slice(0, 50));
+    setDiceRolls(prevDiceRolls => [...prevDiceRolls, diceRoll].slice(0, 50));
     addChatMessage('system', `${dice} = ${total}${critical ? ' (CRITICAL!)' : fumble ? ' (FUMBLE!)' : ''}`, diceRoll);
 
     return total;
-  };
-
-  const addChatMessage = (type: 'chat' | 'dice' | 'system', message: string, diceResult?: DiceRoll) => {
-    const chatMsg: ChatMessage = {
-      id: `msg-${Date.now()}`,
-      player: 'You',
-      message,
-      timestamp: new Date(),
-      type,
-      diceResult,
-    };
-    setChatMessages([chatMsg, ...chatMessages].slice(0, 100));
-  };
+  }, [addChatMessage]);
 
   const handleMapClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!mapRef.current || !currentScene) return;
@@ -259,23 +278,24 @@ const VTTEnhanced = () => {
 
     // Handle fog of war reveal
     if (selectedTool === 'fog' && fogOfWar && isGM) {
-      if (!currentScene.fogData) {
-        currentScene.fogData = Array(currentScene.height)
+      const updatedScene = { ...currentScene };
+      if (!updatedScene.fogData) {
+        updatedScene.fogData = Array(updatedScene.height)
           .fill(null)
-          .map(() => Array(currentScene.width).fill(false));
+          .map(() => Array(updatedScene.width).fill(false));
       }
       // Reveal area (3x3 grid)
       for (let dy = -1; dy <= 1; dy++) {
         for (let dx = -1; dx <= 1; dx++) {
           const fx = gridX + dx;
           const fy = gridY + dy;
-          if (fx >= 0 && fx < currentScene.width && fy >= 0 && fy < currentScene.height) {
-            currentScene.fogData[fy][fx] = true;
+          if (fx >= 0 && fx < updatedScene.width && fy >= 0 && fy < updatedScene.height) {
+            updatedScene.fogData[fy][fx] = true;
           }
         }
       }
-      setCurrentScene({ ...currentScene });
-      setScenes(scenes.map(s => s.id === currentScene.id ? currentScene : s));
+      setCurrentScene(updatedScene);
+      setScenes(scenes.map(s => s.id === updatedScene.id ? updatedScene : s));
       return;
     }
 

@@ -333,6 +333,12 @@ const CompendiumDetail = () => {
   return (
     <Layout>
       <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
+        <div className="mb-4">
+          <Button variant="ghost" onClick={() => navigate('/compendium')}>
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Compendium
+          </Button>
+        </div>
         {/* Breadcrumbs */}
         <Breadcrumbs
           items={[

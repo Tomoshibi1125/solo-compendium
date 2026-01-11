@@ -70,6 +70,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { RichTextNotes } from '@/components/character/RichTextNotes';
+import './CharacterSheet.css';
 
 const CharacterSheet = () => {
   const { id } = useParams<{ id: string }>();
@@ -357,6 +358,16 @@ const CharacterSheet = () => {
     speed: finalSpeed,
     encumbrance,
   };
+
+  const encumbranceMax = Math.max(calculatedStats.encumbrance.carryingCapacity, 1);
+  const encumbranceValue = Math.min(calculatedStats.encumbrance.totalWeight, encumbranceMax);
+  const encumbranceBarClass = {
+    unencumbered: 'character-sheet-encumbrance--unencumbered',
+    light: 'character-sheet-encumbrance--light',
+    medium: 'character-sheet-encumbrance--medium',
+    heavy: 'character-sheet-encumbrance--heavy',
+    overloaded: 'character-sheet-encumbrance--overloaded',
+  }[calculatedStats.encumbrance.status];
 
   // Calculate skills with modified abilities
   const allSkills = getAllSkills();
@@ -712,21 +723,11 @@ const CharacterSheet = () => {
                       {calculatedStats.encumbrance.statusMessage}
                     </Badge>
                   </div>
-                  <div className="h-2 bg-muted rounded-full overflow-hidden">
-                    <div
-                      className={cn(
-                        "h-full transition-all",
-                        calculatedStats.encumbrance.status === 'unencumbered' && "bg-green-500",
-                        calculatedStats.encumbrance.status === 'light' && "bg-blue-500",
-                        calculatedStats.encumbrance.status === 'medium' && "bg-yellow-500",
-                        calculatedStats.encumbrance.status === 'heavy' && "bg-orange-500",
-                        calculatedStats.encumbrance.status === 'overloaded' && "bg-red-500"
-                      )}
-                      style={{
-                        width: `${Math.min((calculatedStats.encumbrance.totalWeight / calculatedStats.encumbrance.carryingCapacity) * 100, 100)}%`,
-                      }}
-                    />
-                  </div>
+                  <progress
+                    className={cn('character-sheet-encumbrance', encumbranceBarClass)}
+                    value={encumbranceValue}
+                    max={encumbranceMax}
+                  />
                   <div className="flex items-center justify-between text-xs text-muted-foreground">
                     <span>
                       {calculatedStats.encumbrance.totalWeight.toFixed(1)} / {calculatedStats.encumbrance.carryingCapacity} lbs
@@ -1208,4 +1209,3 @@ const CharacterSheet = () => {
 };
 
 export default CharacterSheet;
-

@@ -15,14 +15,14 @@ const fusionTypeIcons = {
   potara: <CircleDot className="h-4 w-4 text-yellow-500" />,
   dance: <Atom className="h-4 w-4 text-blue-500" />,
   dual_class: <Link2 className="h-4 w-4 text-green-500" />,
-  metamor: <Flame className="h-4 w-4 text-orange-500" />,
+  absorbed: <Flame className="h-4 w-4 text-orange-500" />,
 };
 
 const fusionTypeBadgeStyles = {
   potara: 'bg-yellow-500/20 text-yellow-600 border-yellow-500/30',
   dance: 'bg-blue-500/20 text-blue-600 border-blue-500/30',
   dual_class: 'bg-green-500/20 text-green-600 border-green-500/30',
-  metamor: 'bg-orange-500/20 text-orange-600 border-orange-500/30',
+  absorbed: 'bg-orange-500/20 text-orange-600 border-orange-500/30',
 };
 
 export function GeminiProtocolGenerator() {
@@ -127,10 +127,10 @@ export function GeminiProtocolGenerator() {
     return <Swords className="h-4 w-4" />;
   };
 
-  const getFusionMethodFromSovereign = (sovereign: GeneratedSovereign): 'potara' | 'dance' | 'dual_class' | 'metamor' => {
+  const getFusionMethodFromSovereign = (sovereign: GeneratedSovereign): 'potara' | 'dance' | 'dual_class' | 'absorbed' => {
     if (sovereign.fusion_method.includes('Potara')) return 'potara';
     if (sovereign.fusion_method.includes('Metamoran')) return 'dance';
-    if (sovereign.fusion_method.includes('Absorption')) return 'metamor';
+    if (sovereign.fusion_method.includes('Absorption')) return 'absorbed';
     return 'dual_class';
   };
 
@@ -143,7 +143,7 @@ export function GeminiProtocolGenerator() {
           <h2 className="text-2xl font-bold">Gemini Protocol</h2>
         </div>
         <p className="text-muted-foreground">
-          DBZ/Super × Dual Class LitRPG Fusion System • {totalCombinations.toLocaleString()}+ Combinations
+          DBZ/Super + Dual Class LitRPG Fusion System - {totalCombinations.toLocaleString()}+ Combinations
         </p>
         <p className="text-sm text-muted-foreground italic">
           By the blessing of the Supreme Deity, fuse Job + Path + Monarch A + Monarch B into a unique Sovereign
@@ -157,6 +157,9 @@ export function GeminiProtocolGenerator() {
           </Badge>
           <Badge variant="outline" className={fusionTypeBadgeStyles.dual_class}>
             {fusionTypeIcons.dual_class} Dual Class Merge
+          </Badge>
+          <Badge variant="outline" className={fusionTypeBadgeStyles.absorbed}>
+            {fusionTypeIcons.absorbed} Absorption Fusion
           </Badge>
         </div>
       </div>

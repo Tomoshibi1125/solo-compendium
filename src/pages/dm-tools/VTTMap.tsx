@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Save, Download, Upload, Grid, Plus, Minus, Move, RotateCw, Trash2, Layers } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -55,15 +55,11 @@ const VTTMap = () => {
   const [currentLayer, setCurrentLayer] = useState(0);
 
   useEffect(() => {
-    loadTokens();
-    loadMapState();
-  }, []);
-
-  const loadTokens = () => {
-    const saved = localStorage.getItem('vtt-tokens');
-    if (saved) {
+    // Load tokens
+    const savedTokens = localStorage.getItem('vtt-tokens');
+    if (savedTokens) {
       try {
-        const parsed = JSON.parse(saved);
+        const parsed = JSON.parse(savedTokens);
         const tokens: MapToken[] = parsed.map((t: { id: string; name: string; emoji?: string; color?: string; size: 'small' | 'medium' | 'large' | 'huge'; category: string }) => ({
           id: t.id,
           name: t.name,
@@ -77,20 +73,19 @@ const VTTMap = () => {
         // No tokens available
       }
     }
-  };
 
-  const loadMapState = () => {
-    const saved = localStorage.getItem('vtt-map-state');
-    if (saved) {
+    // Load map state
+    const savedState = localStorage.getItem('vtt-map-state');
+    if (savedState) {
       try {
-        const parsed = JSON.parse(saved);
+        const parsed = JSON.parse(savedState);
         setPlacedTokens(parsed.tokens || []);
         setCurrentLayer(parsed.currentLayer || 0);
       } catch (e) {
         // Invalid state
       }
     }
-  };
+  }, []);
 
   const saveMapState = () => {
     const state = {

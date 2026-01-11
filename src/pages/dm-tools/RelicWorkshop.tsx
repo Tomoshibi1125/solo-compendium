@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Save, Plus, Trash2, Sparkles, Shield, Sword, Wand2 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -66,8 +66,11 @@ const RelicWorkshop = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [relics, setRelics] = useState<Relic[]>([]);
+  
+  const initialRelicId = useRef(Date.now().toString()).current;
+  
   const [currentRelic, setCurrentRelic] = useState<Relic>({
-    id: Date.now().toString(),
+    id: initialRelicId,
     name: '',
     type: 'weapon',
     rank: 'C',
@@ -86,7 +89,7 @@ const RelicWorkshop = () => {
     if (!newProperty.name) return;
     
     const property: RelicProperty = {
-      id: Date.now().toString(),
+      id: `${Date.now()}-${Math.random()}`,
       ...newProperty,
     };
     

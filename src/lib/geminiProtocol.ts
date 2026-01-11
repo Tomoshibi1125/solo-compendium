@@ -7,6 +7,7 @@ import type { Tables } from '@/integrations/supabase/types';
 type Job = Tables<'compendium_jobs'>;
 type Path = Tables<'compendium_job_paths'>;
 type Monarch = Tables<'compendium_monarchs'>;
+type FusionMethod = 'potara' | 'dance' | 'dual_class' | 'absorbed';
 
 export interface FusionAbility {
   name: string;
@@ -16,7 +17,7 @@ export interface FusionAbility {
   recharge: string | null;
   is_capstone: boolean;
   origin_sources: string[];
-  fusion_type: 'potara' | 'dance' | 'dual_class' | 'metamor';
+  fusion_type: FusionMethod;
 }
 
 export interface GeneratedSovereign {
@@ -61,7 +62,7 @@ const absorbedFusion = (dominant: string, absorbed: string): string => {
 };
 
 // Generate fusion name based on fusion method
-function generateFusionName(monarchA: Monarch, monarchB: Monarch, method: 'potara' | 'dance' | 'dual_class' | 'absorbed'): string {
+function generateFusionName(monarchA: Monarch, monarchB: Monarch, method: FusionMethod): string {
   const nameA = monarchA.name.replace(/\s*Monarch\s*/gi, '').trim();
   const nameB = monarchB.name.replace(/\s*Monarch\s*/gi, '').trim();
   
@@ -197,164 +198,285 @@ function getFusionTheme(monarchA: Monarch, monarchB: Monarch): { theme: string; 
 }
 
 // DBZ/Super Power Multiplier based on fusion method
-function getPowerMultiplier(method: 'potara' | 'dance' | 'dual_class' | 'absorbed'): string {
+function getPowerMultiplier(method: FusionMethod): string {
   switch (method) {
     case 'potara':
-      return 'Base Power × Tens of Thousands (Potara Fusion - Permanent, Ultimate Power)';
+      return 'Base Power x Tens of Thousands (Potara Fusion - Permanent, Ultimate Power)';
     case 'dance':
-      return 'Base Power × Thousands (Metamoran Fusion - 30-minute Time Limit)';
+      return 'Base Power x Thousands (Metamoran Fusion - Sovereign-Stabilized, Permanent)';
     case 'dual_class':
-      return 'Base Power × Hundreds (Dual Class Merge - Permanent Integration)';
+      return 'Base Power x Hundreds (Dual Class Merge - Permanent Integration)';
     case 'absorbed':
-      return 'Base Power + Absorbed Power (Absorption - Permanent Dominant)';
+      return 'Base Power + Absorbed Power (Absorption - Permanent, Dominant Will)';
     default:
-      return 'Base Power × Combined';
+      return 'Base Power x Combined';
   }
 }
 
 // Dual Class LitRPG style ability templates with proper fusion mechanics
-const abilityTemplates = {
+type AbilityTemplate = {
+  name: string;
+  desc: string;
+  action: string;
+  recharge?: string;
+  isCapstone?: boolean;
+  type: FusionMethod;
+};
+
+type AbilityTemplateGroup = Record<FusionMethod, AbilityTemplate>;
+
+// Dual Class LitRPG style ability templates with proper fusion mechanics
+const abilityTemplates: Record<string, AbilityTemplateGroup> = {
   // LEVEL 1: Fusion Awakening - First taste of combined power
-  fusionAwakening: [
-    { 
+  fusionAwakening: {
+    dual_class: {
       name: '{fusionName} Strike',
-      desc: '[DUAL-WIELD TECHNIQUE] Channel the merged essence of {monarchA} and {monarchB}. Your attacks manifest as {element} energy, dealing [{damageA}+{damageB}] damage. This strike exists in two states simultaneously—like the fusion itself, it is both and neither, transcending the original powers.',
+      desc: '[DUAL-WIELD TECHNIQUE] Channel the merged essence of {monarchA} and {monarchB}. Your attacks manifest as {element} energy, dealing [{damageA}+{damageB}] damage. This strike exists in two states simultaneously--like the fusion itself, it is both and neither.',
       action: '1 action',
-      type: 'dual_class' as const
+      type: 'dual_class',
     },
-    {
+    potara: {
       name: 'Potara Pulse: {theme}',
-      desc: '[POTARA SYNERGY] The earrings of the Supreme Kai resonate within you. Release a wave of {fusionTheme} energy in a 15-foot cone. Creatures must save or take [{damageA}] damage and be marked with {damageB} vulnerability for 1 minute. Your fusion is eternal—so is this curse.',
+      desc: '[POTARA SYNERGY] The earrings of the Supreme Kai resonate within you. Release a wave of {fusionTheme} energy in a 15-foot cone. Creatures must save or take [{damageA}] damage and be marked with {damageB} vulnerability for 1 minute. Your fusion is eternal--so is this curse.',
       action: '1 action',
-      type: 'potara' as const
+      type: 'potara',
     },
-  ],
-  
+    dance: {
+      name: 'Metamoran Strike: {fusionName}',
+      desc: '[DANCE SYNC] Your synchronized stance channels {fusionTheme}. Deal [{damageA}+{damageB}] damage and gain +10 feet movement until your next turn. The Sovereign fusion is permanent even if the technique is danced.',
+      action: '1 action',
+      type: 'dance',
+    },
+    absorbed: {
+      name: 'Absorption Brand: {fusionName}',
+      desc: '[ASSIMILATION] Mark a target with {fusionTheme}. When you deal {damageA} or {damageB} damage, gain temporary HP equal to your proficiency bonus. The absorbed essence anchors a permanent fusion.',
+      action: '1 action',
+      type: 'absorbed',
+    },
+  },
+
   // LEVEL 3: Class Integration - Job synergizes with fusion
-  classIntegration: [
-    {
+  classIntegration: {
+    dual_class: {
       name: '{job} Fusion Art: {fusionName}',
-      desc: '[CLASS MERGE] Your {job} training has been permanently altered by the Gemini Protocol. When using {job} class features, they manifest with {fusionTheme} enhancement. Damage becomes [{damageA}+{damageB}], skills gain +{profMod} bonus. This is not two classes—it is one new class that never existed before.',
+      desc: '[CLASS MERGE] Your {job} training has been permanently altered by the Gemini Protocol. When using {job} class features, they manifest with {fusionTheme} enhancement. Damage becomes [{damageA}+{damageB}], skills gain +{profMod} bonus. This is not two classes--it is one new class that never existed before.',
       action: 'Passive',
-      type: 'dual_class' as const
+      type: 'dual_class',
     },
-    {
+    potara: {
+      name: 'Potara {job} Ascension',
+      desc: '[ETERNAL MERGE] Your {job} features fuse with {fusionTheme}. Once per turn, when you use a {job} feature, add {damageA} or {damageB} damage. The Sovereign fusion cannot be split.',
+      action: 'Passive',
+      type: 'potara',
+    },
+    dance: {
       name: 'Metamoran {job} Stance',
-      desc: '[DANCE FUSION] Enter the unified stance of the Fusion Dance. For 1 minute, your {job} abilities cost half resources and deal additional {damageB} damage. However, if your fusion destabilizes (take critical hit), this stance ends early.',
+      desc: '[DANCE FUSION] Enter the unified stance of the Fusion Dance. For 1 minute, your {job} abilities cost half resources and deal additional {damageB} damage. The stance ends; the fusion does not.',
       action: '1 bonus action',
       recharge: 'Short Rest',
-      type: 'dance' as const
+      type: 'dance',
     },
-  ],
-  
+    absorbed: {
+      name: 'Absorbed {job} Core',
+      desc: '[ASSIMILATED CLASS] You absorb {job} doctrine into the fusion. Once per short rest, when you use a {job} feature, regain a spent resource or gain temporary HP.',
+      action: 'Passive',
+      type: 'absorbed',
+    },
+  },
+
   // LEVEL 5: Defensive Resonance
-  defensiveResonance: [
-    {
+  defensiveResonance: {
+    dual_class: {
       name: '{fusionName} Aegis',
       desc: '[BARRIER FUSION] Create a defensive matrix combining {themeA} and {themeB} energies. Gain resistance to both {damageA} and {damageB} damage. Additionally, when you take damage of either type, the barrier absorbs half and converts it to temporary HP. The two powers protect what neither could alone.',
       action: '1 bonus action',
       recharge: 'Long Rest',
-      type: 'dual_class' as const
+      type: 'dual_class',
     },
-    {
+    potara: {
       name: 'Potara Shell: {theme}',
-      desc: '[ETERNAL GUARD] The permanence of Potara fusion grants unbreakable defense. Once per long rest, when you would be reduced to 0 HP, instead remain at 1 HP and gain immunity to all damage for 1 round. Your fusion cannot be undone—neither can your existence.',
+      desc: '[ETERNAL GUARD] The permanence of Potara fusion grants unbreakable defense. Once per long rest, when you would be reduced to 0 HP, instead remain at 1 HP and gain immunity to all damage for 1 round.',
       action: 'Reaction',
       recharge: 'Long Rest',
-      type: 'potara' as const
+      type: 'potara',
     },
-  ],
-  
+    dance: {
+      name: 'Metamoran Guard: {fusionName}',
+      desc: '[DANCE DEFENSE] For 1 minute, you gain resistance to {damageA} and {damageB}. When you take either type, you can move 10 feet without provoking opportunity attacks.',
+      action: '1 bonus action',
+      recharge: 'Long Rest',
+      type: 'dance',
+    },
+    absorbed: {
+      name: 'Assimilation Ward',
+      desc: '[ABSORPTION ARMOR] When you take {damageA} or {damageB} damage, reduce it by your proficiency bonus and store the reduction. On your next hit, release the stored energy as bonus damage.',
+      action: 'Reaction',
+      recharge: 'Short Rest',
+      type: 'absorbed',
+    },
+  },
+
   // LEVEL 7: Domain Overlap - Territories merge
-  domainOverlap: [
-    {
+  domainOverlap: {
+    dual_class: {
       name: 'Dual Domain: {fusionTheme}',
-      desc: '[TERRITORY FUSION] Manifest the overlapping domains of both Monarchs. Create a 30-foot radius zone where {themeA} and {themeB} rules apply simultaneously. Allies gain advantage on attacks; enemies suffer disadvantage on saves against {element} effects. The domains do not share space—they become one new space.',
+      desc: '[TERRITORY FUSION] Manifest the overlapping domains of both Monarchs. Create a 30-foot radius zone where {themeA} and {themeB} rules apply simultaneously. Allies gain advantage on attacks; enemies suffer disadvantage on saves against {element} effects.',
       action: '1 action',
       recharge: 'Long Rest',
-      type: 'dual_class' as const
+      type: 'dual_class',
     },
-    {
+    potara: {
       name: '{fusionName} Sense',
-      desc: '[MERGED PERCEPTION] Your senses have fused like your power. Detect all creatures and magic related to {themeA} or {themeB} within 120 feet. You can communicate telepathically with creatures of either domain. Neither Monarch\'s awareness—both. Beyond both.',
+      desc: '[MERGED PERCEPTION] Your senses have fused like your power. Detect all creatures and magic related to {themeA} or {themeB} within 120 feet. You can communicate telepathically with creatures of either domain.',
       action: 'Passive',
-      type: 'potara' as const
+      type: 'potara',
     },
-  ],
-  
+    dance: {
+      name: 'Metamoran Domain: {fusionTheme}',
+      desc: '[DANCE TERRITORY] Create a 20-foot radius zone for 1 minute. Allies gain advantage on attacks and enemies have disadvantage on saves against {element} effects.',
+      action: '1 action',
+      recharge: 'Long Rest',
+      type: 'dance',
+    },
+    absorbed: {
+      name: 'Devouring Domain',
+      desc: '[ASSIMILATION FIELD] Create a 20-foot radius zone for 1 minute. Enemies inside have reduced speed and you gain temporary HP when they take {damageA} or {damageB} damage.',
+      action: '1 action',
+      recharge: 'Long Rest',
+      type: 'absorbed',
+    },
+  },
+
   // LEVEL 10: Path Synthesis
-  pathSynthesis: [
-    {
+  pathSynthesis: {
+    dual_class: {
       name: '{path}: {fusionName} Form',
-      desc: '[PATH FUSION] Your {path} techniques have been rewritten by the Gemini Protocol. When you use Path features, they manifest as {fusionTheme} techniques. Gain a unique combo: use any Path ability followed by a Monarch ability as a single action. The path and the power are one road now.',
+      desc: '[PATH FUSION] Your {path} techniques have been rewritten by the Gemini Protocol. When you use Path features, they manifest as {fusionTheme} techniques. Gain a unique combo: use any Path ability followed by a Monarch ability as a single action.',
       action: '1 bonus action',
-      type: 'dual_class' as const
+      type: 'dual_class',
     },
-    {
+    potara: {
+      name: 'Potara {path} Imprint',
+      desc: '[ETERNAL PATH] Your {path} is permanently imprinted with {fusionTheme}. When you use a Path feature, you can add {damageA} or {damageB} damage once per turn.',
+      action: 'Passive',
+      type: 'potara',
+    },
+    dance: {
       name: 'Fusion Dance: {path} Kata',
-      desc: '[METAMORAN ART] Perform the sacred movements of the Fusion Dance imbued with {path} precision. For the next minute, your {path} abilities deal additional {damageA} + {damageB} damage and can target one additional creature. Timing is everything—perfect fusion, perfect technique.',
+      desc: '[METAMORAN ART] Perform the sacred movements of the Fusion Dance imbued with {path} precision. For the next minute, your {path} abilities deal additional {damageA} + {damageB} damage and can target one additional creature.',
       action: '1 action',
       recharge: 'Short Rest',
-      type: 'dance' as const
+      type: 'dance',
     },
-  ],
-  
+    absorbed: {
+      name: 'Assimilated {path} Technique',
+      desc: '[PATH ABSORPTION] When you use a {path} ability, you may immediately use a Monarch ability as a bonus action.',
+      action: '1 bonus action',
+      recharge: 'Short Rest',
+      type: 'absorbed',
+    },
+  },
+
   // LEVEL 14: Resonant Burst - Major power spike
-  resonantBurst: [
-    {
+  resonantBurst: {
+    dual_class: {
       name: '{fusionName} Burst',
       desc: '[FUSION EXPLOSION] Release the full combined power of both Monarchs simultaneously. Create a 30-foot radius explosion of {element} energy. All creatures take [8d10 {damageA} + 8d10 {damageB}] damage (save for half). The explosion leaves behind a zone of {fusionTheme} for 1 minute.',
       action: '1 action',
       recharge: 'Long Rest',
-      type: 'dual_class' as const
+      type: 'dual_class',
     },
-    {
+    potara: {
       name: 'Potara Radiance: {theme}',
-      desc: '[SUPREME LIGHT] Channel the divine power of Potara fusion. For 1 minute, you emanate {fusionTheme} aura. All allies within 30 feet deal additional {damageA} damage; all enemies take {damageB} damage at start of their turns. The earrings were made for gods—now you wear their power.',
+      desc: '[SUPREME LIGHT] Channel the divine power of Potara fusion. For 1 minute, you emanate {fusionTheme} aura. All allies within 30 feet deal additional {damageA} damage; all enemies take {damageB} damage at start of their turns.',
       action: '1 action',
       recharge: 'Long Rest',
-      type: 'potara' as const
+      type: 'potara',
     },
-  ],
-  
+    dance: {
+      name: 'Metamoran Burst: {fusionName}',
+      desc: '[DANCE SURGE] Release a focused burst of {element} energy in a 20-foot radius. Creatures take [6d10 {damageA} + 6d10 {damageB}] damage (save for half).',
+      action: '1 action',
+      recharge: 'Long Rest',
+      type: 'dance',
+    },
+    absorbed: {
+      name: 'Assimilation Detonation',
+      desc: '[DEVOURING SURGE] Release stored essence in a 30-foot radius. Creatures take [6d10 {damageA} + 6d10 {damageB}] damage (save for half), and you gain temporary HP equal to your proficiency bonus per target hit.',
+      action: '1 action',
+      recharge: 'Long Rest',
+      type: 'absorbed',
+    },
+  },
+
   // LEVEL 17: Perfect Fusion - Capstone ability
-  perfectFusion: [
-    {
+  perfectFusion: {
+    dual_class: {
       name: 'Perfect Fusion: {fusionName}',
-      desc: '[ULTIMATE DUAL CLASS] Achieve what should be impossible—complete integration of {job}, {path}, {monarchA}, and {monarchB} into a single, perfect being. For 1 minute: double proficiency on all rolls, all damage becomes [{damageA}+{damageB}], immune to {damageA} and {damageB} damage, and you may use any class/path/monarch ability as a bonus action. You are not four things combined. You are one thing that never existed before.',
+      desc: '[ULTIMATE DUAL CLASS] Achieve complete integration of {job}, {path}, {monarchA}, and {monarchB} into a single being. For 1 minute: double proficiency on all rolls, all damage becomes [{damageA}+{damageB}], immune to {damageA} and {damageB} damage, and you may use any class/path/monarch ability as a bonus action.',
       action: '1 action',
       recharge: 'Long Rest',
       isCapstone: true,
-      type: 'dual_class' as const
+      type: 'dual_class',
     },
-    {
+    potara: {
       name: 'Potara Apotheosis: {fusionName}',
-      desc: '[DIVINE FUSION] The Potara earrings were never meant for mortals. Now they create something beyond mortal and divine. For 1 minute: you are immune to all damage types, your attacks automatically hit, and you can take an additional action each turn. When this ends, enemies within 60 feet take [20d10] {element} damage. Permanent. Perfect. Absolute.',
+      desc: '[DIVINE FUSION] The Potara earrings were never meant for mortals. For 1 minute: you are immune to all damage types, your attacks automatically hit, and you can take an additional action each turn. When this ends, enemies within 60 feet take [20d10] {element} damage.',
       action: '1 action',
       recharge: 'Long Rest',
       isCapstone: true,
-      type: 'potara' as const
+      type: 'potara',
     },
-  ],
-  
+    dance: {
+      name: 'Metamoran Apex: {fusionName}',
+      desc: '[FUSION PEAK] For 1 minute: advantage on attack rolls and saves, and you may use a {job} feature and a {path} feature in the same turn. The stance ends; the permanent fusion remains.',
+      action: '1 action',
+      recharge: 'Long Rest',
+      isCapstone: true,
+      type: 'dance',
+    },
+    absorbed: {
+      name: 'Absolute Assimilation: {fusionName}',
+      desc: '[TOTAL ABSORPTION] For 1 minute, when you reduce a creature to 0 HP you may absorb its essence, healing for 2d10 and gaining advantage on your next roll. This is the ultimate expression of permanent fusion.',
+      action: '1 action',
+      recharge: 'Long Rest',
+      isCapstone: true,
+      type: 'absorbed',
+    },
+  },
+
   // LEVEL 20: Sovereign Transcendence - Ultimate power
-  sovereignTranscendence: [
-    {
+  sovereignTranscendence: {
+    dual_class: {
       name: 'Sovereign Transcendence: {fusionName}',
-      desc: '[BEYOND FUSION] Under the Supreme Deity\'s blessing, transcend the Gemini Protocol itself. You have become something neither {monarchA} nor {monarchB} could comprehend—a true Sovereign of {fusionTheme}. Permanent benefits: +4 to all ability scores, resistance to all damage, and once per day you may automatically succeed on any roll. When you die, you may choose to reform after 1d4 days at full power. The fusion is complete. The Sovereign is eternal.',
+      desc: '[BEYOND FUSION] Under the Supreme Deity\'s blessing, transcend the Gemini Protocol itself. You have become a true Sovereign of {fusionTheme}. Permanent benefits: +4 to all ability scores, resistance to all damage, and once per day you may automatically succeed on any roll. When you die, you may choose to reform after 1d4 days at full power.',
       action: 'Passive',
       isCapstone: true,
-      type: 'dual_class' as const
+      type: 'dual_class',
     },
-    {
+    potara: {
+      name: 'Potara Sovereign: {fusionName}',
+      desc: '[ETERNAL POTARA] The earrings bind your essence forever. Permanent benefits: +4 to all ability scores, immunity to {damageA} and {damageB} damage, and once per day you may negate a fatal blow.',
+      action: 'Passive',
+      isCapstone: true,
+      type: 'potara',
+    },
+    dance: {
       name: 'Metamoran Godhood',
-      desc: '[DANCE OF DIVINITY] The Fusion Dance perfected beyond its creators\' imagination. Once per day, enter a state of perfect fusion for 1 hour (no time limit). During this time: fly at twice your speed, teleport 60 feet as a bonus action, all abilities recharge on hit, and your fusion cannot be dispelled or destabilized by any means. The dance is eternal when performed by a Sovereign.',
+      desc: '[DANCE OF DIVINITY] The Fusion Dance perfected beyond its creators\' imagination. Once per day, enter a state of perfect fusion for 1 hour. During this time: fly at twice your speed, teleport 60 feet as a bonus action, all abilities recharge on hit, and your fusion cannot be dispelled or destabilized.',
       action: '1 action',
       recharge: 'Long Rest',
       isCapstone: true,
-      type: 'dance' as const
+      type: 'dance',
     },
-  ],
+    absorbed: {
+      name: 'Sovereign Devourer',
+      desc: '[ABSOLUTE CONSUMPTION] You embody the final absorbed form. Permanent benefits: resistance to all damage, regain hit points equal to your proficiency bonus each turn, and once per day you may absorb a major foe to restore yourself to full health.',
+      action: 'Passive',
+      isCapstone: true,
+      type: 'absorbed',
+    },
+  },
 };
 
 function generateAbilityFromTemplate(
@@ -364,7 +486,7 @@ function generateAbilityFromTemplate(
     action: string;
     recharge?: string;
     isCapstone?: boolean;
-    type: 'potara' | 'dance' | 'dual_class' | 'metamor';
+    type: FusionMethod;
   },
   context: Record<string, string>,
   level: number,
@@ -392,7 +514,7 @@ function generateAbilityFromTemplate(
 }
 
 // Determine fusion method based on combination
-function determineFusionMethod(job: Job, monarchA: Monarch, monarchB: Monarch): 'potara' | 'dance' | 'dual_class' | 'absorbed' {
+function determineFusionMethod(job: Job, monarchA: Monarch, monarchB: Monarch): FusionMethod {
   // Shadow Monarch combinations use Potara (permanent, supreme power like the Supreme Deity)
   if (monarchA.theme === 'Shadow' || monarchB.theme === 'Shadow') {
     return 'potara';
@@ -408,7 +530,7 @@ function determineFusionMethod(job: Job, monarchA: Monarch, monarchB: Monarch): 
     return 'dual_class';
   }
   
-  // Combat-focused jobs use Dance (time-limited but extremely powerful bursts)
+  // Combat-focused jobs use Dance (sovereign-stabilized burst stance)
   const combatJobs = ['Fighter', 'Striker', 'Mage', 'Assassin', 'Ranger'];
   if (combatJobs.includes(job.name)) {
     return 'dance';
@@ -416,6 +538,21 @@ function determineFusionMethod(job: Job, monarchA: Monarch, monarchB: Monarch): 
   
   // Default to dual class for balanced permanent fusion
   return 'dual_class';
+}
+
+function mergeSources(primary: string[], required: string[]): string[] {
+  const seen = new Set<string>();
+  const result: string[] = [];
+  for (const value of [...primary, ...required]) {
+    if (!value || seen.has(value)) continue;
+    seen.add(value);
+    result.push(value);
+  }
+  return result;
+}
+
+function selectTemplate(group: AbilityTemplateGroup, method: FusionMethod): AbilityTemplate {
+  return group[method] ?? group.dual_class;
 }
 
 export function generateSovereign(
@@ -449,125 +586,109 @@ export function generateSovereign(
   };
 
   const abilities: FusionAbility[] = [];
+  const requiredSources = [job.name, path.name, monarchA.name, monarchB.name];
   
   // Level 1: Fusion Awakening
-  const awakeningTemplate = fusionMethod === 'potara' 
-    ? abilityTemplates.fusionAwakening[1] 
-    : abilityTemplates.fusionAwakening[0];
+  const awakeningTemplate = selectTemplate(abilityTemplates.fusionAwakening, fusionMethod);
   abilities.push(generateAbilityFromTemplate(
     awakeningTemplate,
     context,
     1,
-    [monarchA.name, monarchB.name]
+    mergeSources([monarchA.name, monarchB.name], requiredSources)
   ));
 
   // Level 3: Class Integration
-  const classTemplate = fusionMethod === 'dance'
-    ? abilityTemplates.classIntegration[1]
-    : abilityTemplates.classIntegration[0];
+  const classTemplate = selectTemplate(abilityTemplates.classIntegration, fusionMethod);
   abilities.push(generateAbilityFromTemplate(
     classTemplate,
     context,
     3,
-    [job.name, monarchA.name, monarchB.name]
+    mergeSources([job.name, monarchA.name, monarchB.name], requiredSources)
   ));
 
   // Level 5: Defensive Resonance
-  const defenseTemplate = fusionMethod === 'potara'
-    ? abilityTemplates.defensiveResonance[1]
-    : abilityTemplates.defensiveResonance[0];
+  const defenseTemplate = selectTemplate(abilityTemplates.defensiveResonance, fusionMethod);
   abilities.push(generateAbilityFromTemplate(
     defenseTemplate,
     context,
     5,
-    [monarchA.name, monarchB.name]
+    mergeSources([monarchA.name, monarchB.name], requiredSources)
   ));
 
   // Level 7: Domain Overlap
-  const domainTemplate = fusionMethod === 'potara'
-    ? abilityTemplates.domainOverlap[1]
-    : abilityTemplates.domainOverlap[0];
+  const domainTemplate = selectTemplate(abilityTemplates.domainOverlap, fusionMethod);
   abilities.push(generateAbilityFromTemplate(
     domainTemplate,
     context,
     7,
-    [monarchA.name, monarchB.name]
+    mergeSources([monarchA.name, monarchB.name], requiredSources)
   ));
 
   // Level 10: Path Synthesis
-  const pathTemplate = fusionMethod === 'dance'
-    ? abilityTemplates.pathSynthesis[1]
-    : abilityTemplates.pathSynthesis[0];
+  const pathTemplate = selectTemplate(abilityTemplates.pathSynthesis, fusionMethod);
   abilities.push(generateAbilityFromTemplate(
     pathTemplate,
     context,
     10,
-    [path.name, monarchA.name, monarchB.name]
+    mergeSources([path.name, monarchA.name, monarchB.name], requiredSources)
   ));
 
   // Level 14: Resonant Burst
-  const burstTemplate = fusionMethod === 'potara'
-    ? abilityTemplates.resonantBurst[1]
-    : abilityTemplates.resonantBurst[0];
+  const burstTemplate = selectTemplate(abilityTemplates.resonantBurst, fusionMethod);
   abilities.push(generateAbilityFromTemplate(
     burstTemplate,
     context,
     14,
-    [monarchA.name, monarchB.name]
+    mergeSources([monarchA.name, monarchB.name], requiredSources)
   ));
 
   // Level 17: Perfect Fusion (Capstone)
-  const perfectTemplate = fusionMethod === 'potara'
-    ? abilityTemplates.perfectFusion[1]
-    : abilityTemplates.perfectFusion[0];
+  const perfectTemplate = selectTemplate(abilityTemplates.perfectFusion, fusionMethod);
   abilities.push(generateAbilityFromTemplate(
     perfectTemplate,
     context,
     17,
-    [job.name, path.name, monarchA.name, monarchB.name]
+    mergeSources([job.name, path.name, monarchA.name, monarchB.name], requiredSources)
   ));
 
   // Level 20: Sovereign Transcendence (Ultimate Capstone)
-  const transcendTemplate = fusionMethod === 'dance'
-    ? abilityTemplates.sovereignTranscendence[1]
-    : abilityTemplates.sovereignTranscendence[0];
+  const transcendTemplate = selectTemplate(abilityTemplates.sovereignTranscendence, fusionMethod);
   abilities.push(generateAbilityFromTemplate(
     transcendTemplate,
     context,
     20,
-    [job.name, path.name, monarchA.name, monarchB.name]
+    mergeSources([job.name, path.name, monarchA.name, monarchB.name], requiredSources)
   ));
 
-  const fusionMethodDisplay = {
+  const fusionMethodDisplay: Record<FusionMethod, string> = {
     potara: 'Potara Earring Fusion (Permanent, Supreme Power)',
-    dance: 'Metamoran Fusion Dance (Time-Limited, Explosive Power)',
+    dance: 'Metamoran Fusion Dance (Permanent, Sovereign-Stabilized)',
     dual_class: 'Dual Class Integration (Permanent, Balanced)',
     absorbed: 'Absorption Fusion (Permanent, Dominant)',
   };
 
-  const fusionStability = {
+  const fusionStability: Record<FusionMethod, string> = {
     potara: 'Eternal - Cannot be undone by any force',
-    dance: 'Stable - 30 minute limit, extends with Sovereign power',
+    dance: 'Stable - Sovereign-stabilized and permanent',
     dual_class: 'Perfect - Seamlessly integrated',
-    absorbed: 'Dominant - Original personality prevails',
+    absorbed: 'Dominant - Permanent assimilation; the primary will remains in control',
   };
-
   return {
     name: `${fusionName} Sovereign`,
     title: `The ${fusionThemeData.theme} ${job.name}`,
     description: `[GEMINI PROTOCOL: ${fusionMethod.toUpperCase()} FUSION]
     
-A transcendent fusion of ${job.name} (${pathShortName}) with the merged essence of ${monarchA.title} and ${monarchB.title}. Through the Gemini Protocol—blessed by the Supreme Deity in the post-reset timeline—this Sovereign embodies ${fusionThemeData.concept}.
+A transcendent fusion of ${job.name} (${pathShortName}) with the merged essence of ${monarchA.title} and ${monarchB.title}. Through the Gemini Protocol - blessed by the Supreme Deity in the post-reset timeline - this Sovereign embodies ${fusionThemeData.concept}. The fusion is permanent and stabilized by sovereign power.
 
-Unlike simple power combinations, this is TRUE FUSION in the style of the Potara earrings and Fusion Dance. The four components (Job, Path, Monarch A, Monarch B) do not merely cooperate—they have become ONE BEING that transcends all original limitations.
+Unlike simple power combinations, this is TRUE FUSION in the style of the Potara earrings and Fusion Dance. The four components (Job, Path, Monarch A, Monarch B) do not merely cooperate - they have become ONE BEING that transcends all original limitations.
 
 This Sovereign wields ${fusionThemeData.theme} power, a force that neither ${monarchA.name} nor ${monarchB.name} could manifest alone.`,
     fusion_theme: fusionThemeData.theme,
     fusion_description: `The ${fusionThemeData.theme} fusion represents ${fusionThemeData.concept}. This combines ${monarchA.theme}'s mastery of ${monarchA.damage_type || 'necrotic'} with ${monarchB.theme}'s control over ${monarchB.damage_type || 'force'}, filtered through ${job.name} combat doctrine and ${pathShortName} techniques.
 
-In Dual Class LitRPG terms: this is not multi-classing or dual-classing—this is CLASS FUSION. A new class that has never existed and will never exist again in exactly this form.
+In Dual Class LitRPG terms: this is not multi-classing or dual-classing - this is CLASS FUSION, a permanent integration. A new class that has never existed and will never exist again in exactly this form.
 
-In DBZ/Super terms: like Vegito or Gogeta, the fusion is greater than the sum of its parts. ${fusionName} is not "${monarchA.name} + ${monarchB.name}"—${fusionName} is a NEW BEING with NEW POWER.`,
+In DBZ/Super terms: like Vegito or Gogeta, the fusion is greater than the sum of its parts. ${fusionName} is not "${monarchA.name} + ${monarchB.name}" - ${fusionName} is a NEW BEING with NEW POWER.`,
     fusion_method: fusionMethodDisplay[fusionMethod],
     abilities,
     job,
@@ -592,10 +713,10 @@ export function calculateTotalCombinations(
 }
 
 // Get fusion method description for display
-export function getFusionMethodDescription(method: 'potara' | 'dance' | 'dual_class' | 'absorbed'): string {
-  const descriptions = {
+export function getFusionMethodDescription(method: FusionMethod): string {
+  const descriptions: Record<FusionMethod, string> = {
     potara: 'Potara Fusion uses the divine earrings of the Supreme Kai. The fusion is PERMANENT and results in power multiplied tens of thousands of times. The fused being is a completely new entity with combined memories and abilities.',
-    dance: 'Metamoran Fusion Dance requires perfect synchronization between fusees. The fusion lasts 30 minutes but produces explosive power thousands of times the original. Any mistake in the dance results in a failed fusion.',
+    dance: 'Metamoran Fusion Dance requires perfect synchronization between fusees. With Sovereign stabilization, the fusion is permanent and produces explosive power. Any mistake in the dance results in a failed fusion.',
     dual_class: 'Dual Class Integration merges two class trees into one unified progression. Unlike multi-classing which splits focus, this creates synergistic abilities that scale together. The fusion is permanent and grows stronger over time.',
     absorbed: 'Absorption Fusion integrates the target\'s power while maintaining the dominant personality. Like Cell absorbing the Androids, this grants access to all absorbed abilities while the absorber remains in control.',
   };

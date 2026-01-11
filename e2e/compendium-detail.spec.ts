@@ -42,21 +42,16 @@ test.describe('Compendium Detail Pages', () => {
     await page.waitForTimeout(2000);
     
     const firstEntry = page.locator('a[href*="/compendium/"]').first();
-    const entryCount = await firstEntry.count();
-    
-    if (entryCount === 0) {
-      // Skip test if no entries available - database might be empty
-      test.skip(true, 'No compendium entries found in database');
-      return;
-    }
-    
+    await expect(firstEntry).toBeVisible({ timeout: 15000 });
+
     const href = await firstEntry.getAttribute('href');
+    if (!href) {
+      throw new Error('Compendium entry link missing href');
+    }
     await firstEntry.click();
     
     // Should be on detail page
-    if (href) {
-      await expect(page).toHaveURL(new RegExp(href.replace('/', '\\/')), { timeout: 10000 });
-    }
+    await expect(page).toHaveURL(new RegExp(href.replace('/', '\\/')), { timeout: 10000 });
     
     // Should have back button
     await expect(page.getByRole('button', { name: /back/i })).toBeVisible({ timeout: 10000 });
@@ -82,21 +77,16 @@ test.describe('Compendium Detail Pages', () => {
     await page.waitForTimeout(2000); // Wait for content to load
     
     const firstEntry = page.locator('a[href*="/compendium/"]').first();
-    const entryCount = await firstEntry.count();
-    
-    if (entryCount === 0) {
-      // Skip test if no entries available - database might be empty
-      test.skip(true, 'No compendium entries found in database');
-      return;
-    }
-    
+    await expect(firstEntry).toBeVisible({ timeout: 15000 });
+
     const href = await firstEntry.getAttribute('href');
-    
-    if (href) {
-      // Navigate directly to detail page
-      await page.goto(href);
-      await expect(page.getByRole('button', { name: /back/i })).toBeVisible({ timeout: 10000 });
+    if (!href) {
+      throw new Error('Compendium entry link missing href');
     }
+
+    // Navigate directly to detail page
+    await page.goto(href);
+    await expect(page.getByRole('button', { name: /back/i })).toBeVisible({ timeout: 10000 });
   });
 });
 

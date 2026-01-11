@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import type { ReactElement } from 'react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 
@@ -8,7 +9,7 @@ import type { Database } from '@/integrations/supabase/types';
 
 // Keep UI/component dependencies lightweight for this unit test
 vi.mock('@/components/ui/SortableList', () => ({
-  SortableList: ({ items, renderItem }: { items: Array<{ id: string }>; renderItem: (item: { id: string }, index: number) => JSX.Element }) => (
+  SortableList: ({ items, renderItem }: { items: Array<{ id: string }>; renderItem: (item: { id: string }, index: number) => ReactElement }) => (
     <div>
       {items.map((item, index) => (
         <div key={item.id}>{renderItem(item, index)}</div>
@@ -96,7 +97,7 @@ describe('PowersList spell slot consumption', () => {
     const user = userEvent.setup();
 
     render(
-      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <MemoryRouter>
         <PowersList characterId="char-1" />
       </MemoryRouter>
     );
@@ -123,7 +124,7 @@ describe('PowersList spell slot consumption', () => {
     ];
 
     render(
-      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <MemoryRouter>
         <PowersList characterId="char-1" />
       </MemoryRouter>
     );

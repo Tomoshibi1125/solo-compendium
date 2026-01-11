@@ -1,0 +1,47 @@
+.character-sheet-encumbrance {
+  width: 100%;
+  height: 0.5rem;
+  display: block;
+  border: none;
+  border-radius: 9999px;
+  overflow: hidden;
+  background-color: hsl(var(--muted));
+  appearance: none;
+}
+
+.character-sheet-encumbrance::-webkit-progress-bar {
+  background-color: hsl(var(--muted));
+  border-radius: 9999px;
+}
+
+.character-sheet-encumbrance::-webkit-progress-value {
+  background-color: var(--encumbrance-color, #22c55e);
+  border-radius: 9999px;
+  transition: width 150ms ease;
+}
+
+.character-sheet-encumbrance::-moz-progress-bar {
+  background-color: var(--encumbrance-color, #22c55e);
+  border-radius: 9999px;
+  transition: width 150ms ease;
+}
+
+.character-sheet-encumbrance--unencumbered {
+  --encumbrance-color: #22c55e;
+}
+
+.character-sheet-encumbrance--light {
+  --encumbrance-color: #3b82f6;
+}
+
+.character-sheet-encumbrance--medium {
+  --encumbrance-color: #eab308;
+}
+
+.character-sheet-encumbrance--heavy {
+  --encumbrance-color: #f97316;
+}
+
+.character-sheet-encumbrance--overloaded {
+  --encumbrance-color: #ef4444;
+}

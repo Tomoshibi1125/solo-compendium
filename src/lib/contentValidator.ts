@@ -126,13 +126,13 @@ export const MonsterSchema = z.object({
   int: z.number().int().min(1).max(30),
   sense: z.number().int().min(1).max(30),
   pre: z.number().int().min(1).max(30),
-  saving_throws: z.record(z.number()).optional(),
-  skills: z.record(z.number()).optional(),
+  saving_throws: z.record(z.string(), z.number()).optional(),
+  skills: z.record(z.string(), z.number()).optional(),
   damage_resistances: z.array(z.string()).optional(),
   damage_immunities: z.array(z.string()).optional(),
   damage_vulnerabilities: z.array(z.string()).optional(),
   condition_immunities: z.array(z.string()).optional(),
-  senses: z.record(z.union([z.number(), z.string()])).optional(),
+  senses: z.record(z.string(), z.union([z.number(), z.string()])).optional(),
   languages: z.array(z.string()).optional(),
   description: z.string().optional(),
   lore: z.string().optional(),
@@ -207,7 +207,7 @@ export function validateContentBundle(data: unknown): ValidationResult {
 
     if (!parsed.success) {
       result.valid = false;
-      result.errors = parsed.error.errors.map(err => ({
+      result.errors = parsed.error.issues.map(err => ({
         path: err.path.join('.'),
         message: err.message,
       }));

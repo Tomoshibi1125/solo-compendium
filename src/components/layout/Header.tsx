@@ -244,6 +244,12 @@ export function Header() {
                         )}
                       </div>
                     </div>
+                    <Link to="/auth?changeRole=true" className="block mb-2">
+                      <Button variant="outline" className="w-full gap-2">
+                        <User className="w-4 h-4" />
+                        Change Role
+                      </Button>
+                    </Link>
                     <Button 
                       variant="outline" 
                       className="w-full gap-2 text-red-600 border-red-600/20 hover:bg-red-600/10"
@@ -279,4 +285,3 @@ export function Header() {
     </header>
   );
 }
-

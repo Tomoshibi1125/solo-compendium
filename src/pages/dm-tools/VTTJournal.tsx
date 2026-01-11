@@ -44,7 +44,8 @@ const VTTJournal = () => {
     category: 'note',
   });
 
-  const loadEntries = useCallback(() => {
+  // Load entries when campaignId changes
+  useEffect(() => {
     if (!campaignId) return;
     const saved = localStorage.getItem(`vtt-journal-${campaignId}`);
     if (saved) {
@@ -56,10 +57,6 @@ const VTTJournal = () => {
       }
     }
   }, [campaignId]);
-
-  useEffect(() => {
-    loadEntries();
-  }, [loadEntries]);
 
   const saveEntries = () => {
     if (!campaignId) return;
