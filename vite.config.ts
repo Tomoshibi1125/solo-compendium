@@ -126,7 +126,7 @@ export default defineConfig(({ mode }) => {
           },
         },
       },
-      chunkSizeWarningLimit: 1000,
+      chunkSizeWarningLimit: 1500,
       // Optimize for production
       minify: 'esbuild',
       sourcemap: mode === "production" && process.env.SENTRY_AUTH_TOKEN ? true : false, // Enable sourcemaps for Sentry
