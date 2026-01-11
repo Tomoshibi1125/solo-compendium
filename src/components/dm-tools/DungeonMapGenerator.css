@@ -1,0 +1,65 @@
+/* Dungeon Map Generator styles */
+.dungeon-map-container {
+  transform-origin: top left;
+  overflow: auto;
+}
+
+.dungeon-map-grid {
+  display: inline-grid;
+  gap: 0;
+}
+
+.dungeon-room {
+  border: 1px solid hsl(var(--border));
+  background-color: hsl(var(--background));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dungeon-room:hover {
+  background-color: hsl(var(--muted));
+}
+
+.dungeon-room.entrance {
+  background-color: hsl(var(--primary) / 0.1);
+  border-color: hsl(var(--primary));
+}
+
+.dungeon-room.exit {
+  background-color: hsl(var(--success) / 0.1);
+  border-color: hsl(var(--success));
+}
+
+.dungeon-room.boss {
+  background-color: hsl(var(--destructive) / 0.1);
+  border-color: hsl(var(--destructive));
+}
+
+.dungeon-room.treasure {
+  background-color: hsl(var(--warning) / 0.1);
+  border-color: hsl(var(--warning));
+}
+
+.dungeon-room.trap {
+  background-color: hsl(var(--secondary) / 0.1);
+  border-color: hsl(var(--secondary));
+}
+
+.dungeon-corridor {
+  background-color: hsl(var(--muted) / 0.5);
+  border: 1px dashed hsl(var(--border));
+}
+
+.dungeon-door {
+  background-color: hsl(var(--accent));
+  border: 2px solid hsl(var(--accent-foreground));
+}
+
+.dungeon-wall {
+  background-color: hsl(var(--foreground));
+}

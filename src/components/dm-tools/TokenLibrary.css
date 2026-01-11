@@ -1,0 +1,21 @@
+/* Token Library styles */
+.token-preview {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid;
+  transition: all 0.2s ease;
+}
+
+.token-preview:hover {
+  transform: scale(1.05);
+}
+
+.token-selected {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid;
+}

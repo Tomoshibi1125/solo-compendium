@@ -3,6 +3,7 @@ import { GatePortal } from '@/components/ui/GatePortal';
 import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
 import { Skull, Home, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import './NotFound.css';
 
 const NotFound = () => {
   return (
@@ -15,10 +16,7 @@ const NotFound = () => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-arise/3 rounded-full blur-3xl" />
         
         {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-5" style={{
-          backgroundImage: `linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px)`,
-          backgroundSize: '50px 50px'
-        }} />
+        <div className="absolute inset-0 opacity-5 grid-pattern" />
       </div>
       
       <div className="text-center max-w-lg mx-auto px-4 relative z-10">

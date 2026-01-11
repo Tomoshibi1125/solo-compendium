@@ -1,6 +1,6 @@
 # Compendium Coverage (Schema + Automation Readiness)
 
-Generated: `2026-01-11T18:01:34.717Z`
+Generated: `2026-01-11T18:42:07.157Z`
 
 Source: `https://hqouinpnnmjjtvgjrnff.supabase.co`
 

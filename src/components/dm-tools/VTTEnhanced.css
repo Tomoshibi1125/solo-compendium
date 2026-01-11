@@ -1,0 +1,60 @@
+/* VTT Enhanced styles */
+.vtt-enhanced-scene {
+  position: relative;
+  min-width: 100%;
+}
+
+.vtt-enhanced-grid {
+  background-image: 
+    linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px);
+  background-size: var(--grid-size, 50px) var(--grid-size, 50px);
+}
+
+.vtt-enhanced-token {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid;
+  transition: all 0.2s ease;
+}
+
+.vtt-enhanced-token:hover {
+  transform: scale(1.1);
+}
+
+.vtt-enhanced-token-locked {
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.vtt-measurement-tool {
+  position: absolute;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.vtt-fog-of-war {
+  position: absolute;
+  background-color: rgb(0 0 0 / 0.8);
+  border: 1px solid rgb(0 0 0 / 0.5);
+}
+
+.vtt-health-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.vtt-health-fill.high {
+  background-color: rgb(34 197 94);
+}
+
+.vtt-health-fill.medium {
+  background-color: rgb(234 179 8);
+}
+
+.vtt-health-fill.low {
+  background-color: rgb(239 68 68);
+}
