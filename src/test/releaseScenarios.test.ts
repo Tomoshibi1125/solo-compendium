@@ -63,7 +63,24 @@ function createLocalTestCharacter(name: string = 'Rin') {
 
 describe('Release Scenarios', () => {
   beforeEach(() => {
-    window.localStorage.clear();
+    // Clear localStorage properly in test environment
+    if (window.localStorage && typeof window.localStorage.clear === 'function') {
+      window.localStorage.clear();
+    } else {
+      // Mock localStorage for test environment
+      const mockStorage = {
+        clear: () => {},
+        getItem: () => null,
+        setItem: () => {},
+        removeItem: () => {},
+        length: 0,
+        key: () => null,
+      };
+      Object.defineProperty(window, 'localStorage', {
+        value: mockStorage,
+        writable: true,
+      });
+    }
   });
 
   it('Scenario 1: create, save, reload, and compute sheet stats', () => {

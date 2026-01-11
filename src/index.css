@@ -166,8 +166,12 @@
   /* Mobile Optimizations */
   @media (max-width: 768px) {
     html {
+      /* Text size adjustment for mobile browsers */
+      /* Legacy IE - Microsoft browsers */
       -ms-text-size-adjust: 100%;
+      /* Safari, iOS, Chrome, Edge, Firefox - all modern browsers */
       -webkit-text-size-adjust: 100%;
+      /* Standard property - supported by Firefox, Safari, Chrome, Edge */
       text-size-adjust: 100%;
     }
 

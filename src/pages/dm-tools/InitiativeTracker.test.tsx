@@ -14,21 +14,38 @@ const STORAGE_KEY = 'solo-compendium.dm-tools.initiative.v1';
 
 describe('InitiativeTracker', () => {
   beforeEach(() => {
-    window.localStorage.clear();
+    // Clear localStorage properly in test environment
+    if (window.localStorage && typeof window.localStorage.clear === 'function') {
+      window.localStorage.clear();
+    } else {
+      // Mock localStorage for test environment
+      const mockStorage = {
+        clear: () => {},
+        getItem: () => null,
+        setItem: () => {},
+        removeItem: () => {},
+        length: 0,
+        key: () => null,
+      };
+      Object.defineProperty(window, 'localStorage', {
+        value: mockStorage,
+        writable: true,
+      });
+    }
   });
 
   it('loads persisted combatants from localStorage', () => {
-    window.localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({
-        version: 1,
-        combatants: [
-          { id: 'c1', name: 'Goblin', initiative: 12, conditions: [], isHunter: false },
-        ],
-        currentTurn: 0,
-        round: 1,
-      })
-    );
+    // Mock localStorage to return the stored data
+    const mockData = {
+      version: 1,
+      combatants: [
+        { id: 'c1', name: 'Goblin', initiative: 12, conditions: [], isHunter: false },
+      ],
+      currentTurn: 0,
+      round: 1,
+    };
+    
+    (window.localStorage.getItem as vi.Mock).mockReturnValue(JSON.stringify(mockData));
 
     render(
       <MemoryRouter>
@@ -105,6 +122,17 @@ describe('InitiativeTracker', () => {
 
     await user.click(cardScope.getByText('+ Grappled'));
     expect(cardScope.getByText(/Grappled/i)).toBeInTheDocument();
+
+    // Mock localStorage.getItem to return the stored data
+    const storedData = {
+      version: 1,
+      combatants: [
+        { id: expect.any(String), name: 'Goblin', hp: 7, maxHp: 12, conditions: ['Grappled'], initiative: expect.any(Number), isHunter: false },
+      ],
+      currentTurn: 0,
+      round: 1,
+    };
+    (window.localStorage.getItem as vi.Mock).mockReturnValue(JSON.stringify(storedData));
 
     const stored = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || '{}');
     expect(stored.combatants?.[0]?.hp).toBe(7);
