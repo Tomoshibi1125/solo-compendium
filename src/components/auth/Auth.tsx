@@ -126,19 +126,13 @@ export function Auth() {
   const handleRoleSelect = async () => {
     if (!selectedRole) return;
 
-    
-      try {
-      try {
+    try {
       await updateProfile.mutateAsync({ role: selectedRole });
     } catch (error) {
       console.error("Error setting role:", error);
       // Add user notification here if needed
     }
-    } catch (error) {
-      console.error("Error setting role:", error);
-    }
       // Navigation will happen automatically via the useEffect when profile updates
-    
   };
 
   if (isE2E) {

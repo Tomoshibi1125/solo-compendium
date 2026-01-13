@@ -18,6 +18,7 @@ import {
   Sun 
 } from 'lucide-react';
 import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
+import { GlobalSearch } from '@/components/ui/GlobalSearch';
 
 interface HeaderProps {
   user?: any;
@@ -89,6 +90,9 @@ export function Header({ user, onLogout }: HeaderProps) {
 
         {/* Actions */}
         <div className="flex items-center space-x-4">
+          {/* Global Search */}
+          <GlobalSearch className="w-80" />
+          
           {/* Dark Mode Toggle */}
           <Button
             variant="ghost"
@@ -104,10 +108,12 @@ export function Header({ user, onLogout }: HeaderProps) {
           </Button>
 
           {/* Notifications */}
-          <Button variant="ghost" size="icon" aria-label="Notifications">
-            <Bell className="h-4 w-4" />
-            <Badge variant="destructive" className="absolute -top-1 -right-1 h-3 w-3 rounded-full p-0" />
-          </Button>
+          <div className="relative">
+            <Button variant="ghost" size="icon" aria-label="Notifications">
+              <Bell className="h-4 w-4" />
+            </Button>
+            <Badge variant="destructive" className="absolute -top-1 -right-1 h-3 w-3 rounded-full p-0" aria-label="Unread notifications" />
+          </div>
 
           {/* User Menu */}
           {user ? (

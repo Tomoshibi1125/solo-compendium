@@ -10017,6 +10017,44 @@ export const spells = [
     "effect": "Deals void damage and applies additional effects.",
     "range": 47,
     "cooldown": 6
+  },
+  {
+    "id": "spell-0801",
+    "name": "Eternal Shadow Convergence",
+    "description": "The ultimate shadow spell that merges all shadow elements into one devastating attack. This S rank spell represents the pinnacle of shadow magic.",
+    "type": "Attack",
+    "rank": "S",
+    "manaCost": 150,
+    "damage": 999,
+    "image": "/generated/compendium/spells/spell-0801.jpg",
+    "effect": "Deals ultimate shadow damage and applies eternal shadow corruption to all enemies in range.",
+    "range": 100,
+    "cooldown": 10
+  },
+  {
+    "id": "spell-0802",
+    "name": "Void Reality Distortion",
+    "description": "A god-tier void spell that bends reality itself to the caster's will. This S rank spell can alter the fabric of existence.",
+    "type": "Utility",
+    "rank": "S",
+    "manaCost": 200,
+    "image": "/generated/compendium/spells/spell-0802.jpg",
+    "effect": "Distorts reality in a massive area, creating void zones that nullify all other magic.",
+    "range": 150,
+    "cooldown": 15
+  },
+  {
+    "id": "spell-0803",
+    "name": "Supreme Abyssal Ascension",
+    "description": "The final spell that grants temporary godhood to the caster. This S rank spell channels the power of the supreme abyssal deity.",
+    "type": "Healing",
+    "rank": "S",
+    "manaCost": 100,
+    "healing": 1000,
+    "image": "/generated/compendium/spells/spell-0803.jpg",
+    "effect": "Grants complete invincibility and unlimited mana for a short duration while healing all allies.",
+    "range": 200,
+    "cooldown": 20
   }
 ];
 

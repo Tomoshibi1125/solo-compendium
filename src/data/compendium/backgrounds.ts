@@ -3596,6 +3596,72 @@ export const backgrounds = [
       "Abyssal Horrors",
       "Demonic Possession"
     ]
+  },
+  {
+    "id": "background-0201",
+    "name": "Eternal Shadow Sanctuary",
+    "type": "Sanctuary",
+    "rank": "S",
+    "image": "/generated/compendium/backgrounds/background-0201.jpg",
+    "description": "A sacred sanctuary that grants ultimate shadow powers. This S rank background is the pinnacle of shadow mastery.",
+    "features": [
+      "Eternal Shadow Energy",
+      "Void Immunity",
+      "Abyssal Dominion",
+      "Demonic Command",
+      "Shadow Realm Access"
+    ],
+    "dangers": [
+      "Shadow Overlords",
+      "Void Titans",
+      "Abyssal Gods",
+      "Demonic Legions",
+      "Shadow Corruption"
+    ]
+  },
+  {
+    "id": "background-0202",
+    "name": "Celestial Shadow Convergence",
+    "type": "Convergence",
+    "rank": "S",
+    "image": "/generated/compendium/backgrounds/background-0202.jpg",
+    "description": "A divine convergence where celestial and shadow powers merge. This S rank background represents perfect balance.",
+    "features": [
+      "Celestial Shadow Harmony",
+      "Void Transcendence",
+      "Abyssal Enlightenment",
+      "Demonic Purification",
+      "Shadow Divinity"
+    ],
+    "dangers": [
+      "Celestial Shadow Wars",
+      "Void Reality Collapse",
+      "Abyssal Awakening",
+      "Demonic Ascension",
+      "Shadow Annihilation"
+    ]
+  },
+  {
+    "id": "background-0203",
+    "name": "Supreme Shadow Ascension",
+    "type": "Ascension",
+    "rank": "S",
+    "image": "/generated/compendium/backgrounds/background-0203.jpg",
+    "description": "The ultimate ascension to supreme shadow deity status. This S rank background grants godlike shadow powers.",
+    "features": [
+      "Supreme Shadow Omnipotence",
+      "Void Absolute Control",
+      "Abyssal Godhood",
+      "Demonic Supremacy",
+      "Shadow Reality Manipulation"
+    ],
+    "dangers": [
+      "Supreme Shadow Council",
+      "Void Entity Rebellion",
+      "Abyssal God Wars",
+      "Demonic Uprising",
+      "Shadow Reality Collapse"
+    ]
   }
 ];
 

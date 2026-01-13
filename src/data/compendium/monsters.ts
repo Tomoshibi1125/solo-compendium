@@ -11123,6 +11123,66 @@ export const monsters = [
       "Light",
       "Holy Damage"
     ]
+  },
+  {
+    "id": "monster-0601",
+    "name": "Eternal Shadow Overlord",
+    "type": "Demon",
+    "rank": "S",
+    "hp": 650,
+    "ac": 32,
+    "image": "/generated/compendium/monsters/monster-0601.jpg",
+    "description": "An eternal overlord of shadows that commands legions of darkness. This S rank demon possesses godlike power and threatens the very fabric of reality.",
+    "abilities": [
+      "Eternal Shadow Dominion",
+      "Void Reality Warp",
+      "Abyssal God Strike"
+    ],
+    "weaknesses": [
+      "Divine Light",
+      "Celestial Power",
+      "Holy Annihilation"
+    ]
+  },
+  {
+    "id": "monster-0602",
+    "name": "Void Titan Ascendant",
+    "type": "Titan",
+    "rank": "S",
+    "hp": 720,
+    "ac": 35,
+    "image": "/generated/compendium/monsters/monster-0602.jpg",
+    "description": "A titanic entity that has ascended beyond mortal comprehension. This S rank titan wields the power of the void itself.",
+    "abilities": [
+      "Void Titan Slam",
+      "Reality Shatter",
+      "Abyssal Devastation"
+    ],
+    "weaknesses": [
+      "Cosmic Light",
+      "Divine Intervention",
+      "Holy Transcendence"
+    ]
+  },
+  {
+    "id": "monster-0603",
+    "name": "Supreme Abyssal God",
+    "type": "God",
+    "rank": "S",
+    "hp": 888,
+    "ac": 42,
+    "image": "/generated/compendium/monsters/monster-0603.jpg",
+    "description": "The supreme god of the abyss who has achieved ultimate power. This S rank deity represents the pinnacle of shadow evolution.",
+    "abilities": [
+      "Supreme Abyssal Command",
+      "Divine Void Annihilation",
+      "Eternal Shadow Godhood"
+    ],
+    "weaknesses": [
+      "Supreme Divine Light",
+      "Cosmic Harmony",
+      "Absolute Holy Power"
+    ]
   }
 ];
 

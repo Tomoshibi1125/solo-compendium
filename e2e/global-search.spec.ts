@@ -36,7 +36,7 @@ test.describe('Global Search', () => {
     await globalSearch.fill('zzzzzzzzzzzzzz');
 
     // Debounced search: allow query to resolve and UI to update
-    await expect(page.getByText(/no results found for/i)).toBeVisible({ timeout: 15000 });
+    await expect(page.getByText('No results found for')).toBeVisible({ timeout: 15000 });
   });
 });
 

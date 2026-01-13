@@ -68,7 +68,12 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
   };
 
   const handleUpdate = async (id: string, updates: Partial<JournalEntry>) => {
-    await updateEntry.mutateAsync({ id, characterId, ...updates });
+    try {
+      await updateEntry.mutateAsync({ id, characterId, ...updates });
+    } catch (error) {
+      console.error("Failed to update journal entry:", error);
+      setHasError(true);
+    }
   };
 
   if (isLoading) {

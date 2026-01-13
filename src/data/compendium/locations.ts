@@ -7210,6 +7210,69 @@ export const locations = [
       "Ancient Artifacts",
       "Divine Relics"
     ]
+  },
+  {
+    "id": "location-0401",
+    "name": "Eternal Shadow Citadel",
+    "type": "Citadel",
+    "rank": "S",
+    "image": "/generated/compendium/locations/location-0401.jpg",
+    "description": "The eternal citadel of shadows where supreme shadow deities reside. This S rank location is the ultimate destination for shadow masters.",
+    "encounters": [
+      "Eternal Shadow Guardians",
+      "Void Sentinels",
+      "Abyssal Gods",
+      "Demonic Overlords",
+      "Shadow Deities"
+    ],
+    "treasures": [
+      "Eternal Shadow Artifacts",
+      "Divine Void Weapons",
+      "Supreme Abyssal Relics",
+      "God-Tier Shadow Crystals"
+    ]
+  },
+  {
+    "id": "location-0402",
+    "name": "Celestial Void Convergence",
+    "type": "Convergence",
+    "rank": "S",
+    "image": "/generated/compendium/locations/location-0402.jpg",
+    "description": "A sacred convergence point where celestial and void energies merge. This S rank location represents perfect cosmic balance.",
+    "encounters": [
+      "Celestial Shadow Hybrids",
+      "Void Celestials",
+      "Abyssal Angels",
+      "Demonic Light Beings",
+      "Shadow Gods"
+    ],
+    "treasures": [
+      "Celestial Void Artifacts",
+      "Hybrid Divine Weapons",
+      "Convergence Relics",
+      "Balance Crystals"
+    ]
+  },
+  {
+    "id": "location-0403",
+    "name": "Supreme Abyssal Throne Room",
+    "type": "Throne Room",
+    "rank": "S",
+    "image": "/generated/compendium/locations/location-0403.jpg",
+    "description": "The throne room of the supreme abyssal deity who rules over all shadow realms. This S rank location is the seat of ultimate power.",
+    "encounters": [
+      "Supreme Abyssal Deity",
+      "Eternal Shadow Council",
+      "Void God Generals",
+      "Abyssal Demon Lords",
+      "Shadow Titan Guards"
+    ],
+    "treasures": [
+      "Supreme Abyssal Crown",
+      "Eternal Shadow Scepter",
+      "Divine Void Throne",
+      "God-Tier Shadow Armor"
+    ]
   }
 ];
 
