@@ -11,6 +11,11 @@
   background-image: url('/generated/ui/landing-page-hero.jpg');
 }
 
+/* Login page background */
+.login-page-bg {
+  background-image: url('/generated/ui/login-page-bg.jpg');
+}
+
 @layer base {
   :root {
     /* Core Shadow Monarch palette - The Void Between Worlds */

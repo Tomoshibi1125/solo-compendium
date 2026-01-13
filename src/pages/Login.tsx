@@ -53,10 +53,7 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-4">
       {/* Background Art */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center opacity-20"
-        style={{ backgroundImage: 'url(/generated/ui/login-page-bg.jpg)' }}
-      />
+      <div className="absolute inset-0 bg-cover bg-center opacity-20 login-page-bg" />
       
       {/* Shadow Energy Effects */}
       <div className="absolute inset-0">
@@ -95,6 +92,7 @@ export default function Login() {
               <button
                 type="button"
                 onClick={() => setRole('player')}
+                aria-label="Select Player role"
                 className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
                   role === 'player'
                     ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/50'
@@ -107,6 +105,7 @@ export default function Login() {
               <button
                 type="button"
                 onClick={() => setRole('dm')}
+                aria-label="Select Dungeon Master role"
                 className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
                   role === 'dm'
                     ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/50'
@@ -119,6 +118,7 @@ export default function Login() {
               <button
                 type="button"
                 onClick={() => setRole('admin')}
+                aria-label="Select Admin role"
                 className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
                   role === 'admin'
                     ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/50'
@@ -179,6 +179,7 @@ export default function Login() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300"
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -220,6 +221,7 @@ export default function Login() {
               <button
                 type="button"
                 onClick={() => setIsSignUp(!isSignUp)}
+                aria-label={isSignUp ? 'Switch to sign in' : 'Switch to sign up'}
                 className="ml-2 text-purple-400 hover:text-purple-300 font-medium"
               >
                 {isSignUp ? 'Sign In' : 'Sign Up'}
