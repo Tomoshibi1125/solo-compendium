@@ -20,6 +20,10 @@ import type { Database } from '@/integrations/supabase/types';
 
 type JobFeature = Database['public']['Tables']['compendium_job_features']['Row'];
 
+function getExperienceForNextLevel(currentLevel: number): number {
+  return currentLevel * 1000; // Simple progression formula
+}
+
 const CharacterLevelUp = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -32,6 +36,11 @@ const CharacterLevelUp = () => {
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [isRolling, setIsRolling] = useState(false);
+
+  // Level progression logic
+  const canLevelUp = character && (character as any).experience >= getExperienceForNextLevel(character.level);
+  const experienceNeeded = character ? getExperienceForNextLevel(character.level) : 0;
+  const currentProgress = character ? ((character as any).experience / experienceNeeded) * 100 : 0;
 
   // Fetch features for the new level
   const { data: newFeatures = [] } = useQuery({

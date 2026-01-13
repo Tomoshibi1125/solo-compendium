@@ -1,61 +1,103 @@
-import { ReactNode } from 'react';
+import { useState, useEffect } from 'react';
+import { Outlet } from 'react-router-dom';
 import { Header } from './Header';
 import { cn } from '@/lib/utils';
 
 interface LayoutProps {
-  children: ReactNode;
+  children?: React.ReactNode;
   className?: string;
 }
 
 export function Layout({ children, className }: LayoutProps) {
-  return (
-    <div className={cn("min-h-screen flex flex-col relative overflow-x-hidden", className)}>
-      {/* Skip to main content link - Accessibility */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:font-semibold focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-      >
-        Skip to main content
-      </a>
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    // Simulate loading completion
+    const timer = setTimeout(() => {
+      try {
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error setting loading state:", error);
+      }
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
-      {/* Supreme Deity's Domain - Background ambient effects */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        {/* Primary shadow orbs - Responsive sizing */}
-        <div className="absolute top-1/4 left-1/5 w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] bg-gradient-radial from-shadow-blue/6 via-shadow-purple/3 to-transparent rounded-full blur-3xl animate-pulse-glow" />
-        <div className="absolute bottom-1/3 right-1/4 w-[150px] h-[150px] sm:w-[250px] sm:h-[250px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px] bg-gradient-radial from-arise-violet/5 via-shadow-purple/2 to-transparent rounded-full blur-3xl animate-pulse-glow-delay-1s" />
-        <div className="absolute top-1/2 right-1/3 w-[120px] h-[120px] sm:w-[200px] sm:h-[200px] md:w-[280px] md:h-[280px] lg:w-[350px] lg:h-[350px] bg-gradient-radial from-shadow-purple/4 via-transparent to-transparent rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: '2s' }} />
-        
-        {/* Subtle grid pattern - System interface */}
-        <div 
-          className="absolute inset-0 opacity-[0.012]" 
-          style={{
-            backgroundImage: `linear-gradient(hsl(var(--shadow-blue)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--shadow-blue)) 1px, transparent 1px)`,
-            backgroundSize: '80px 80px'
-          }} 
-        />
+  // Complete responsive design system
+  const useMediaQuery = (query: string): boolean => {
+    const [matches, setMatches] = useState(false);
+    
+    useEffect(() => {
+      const media = window.matchMedia(query);
+      setMatches(media.matches);
+      
+      const listener = (event: MediaQueryListEvent) => {
+        setMatches(event.matches);
+      };
+      
+      if (media.addEventListener) {
+        media.addEventListener('change', listener);
+      } else {
+        media.addListener(listener);
+      }
+      
+      return () => {
+        if (media.removeEventListener) {
+          media.removeEventListener('change', listener);
+        } else {
+          media.removeListener(listener);
+        }
+      };
+    }, [query]);
+    
+    return matches;
+  };
+  
+  const isMobile = useMediaQuery('(max-width: 768px)');
+  const isTablet = useMediaQuery('(max-width: 1024px)');
+  const isDesktop = !isMobile && !isTablet;
+  
+  // Responsive layout classes
+  const layoutClasses = cn(
+    'min-h-screen bg-background',
+    isMobile && 'mobile-layout',
+    isTablet && 'tablet-layout',
+    isDesktop && 'desktop-layout',
+    className
+  );
+  
+  // Accessibility features
+  const [isHighContrast, setIsHighContrast] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+  
+  useEffect(() => {
+    // Check for user preferences
+    const highContrastQuery = window.matchMedia('(prefers-contrast: high)');
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    
+    setIsHighContrast(highContrastQuery.matches);
+    setReducedMotion(motionQuery.matches);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className={layoutClasses}>
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        </div>
       </div>
-      
+    );
+  }
+
+  return (
+    <div className={layoutClasses}>
       <Header />
-      <main id="main-content" className="flex-1 pt-16 sm:pt-16 relative z-10 overflow-x-hidden" tabIndex={-1}>
-        <div className="w-full max-w-full overflow-x-hidden">
-          {children}
-        </div>
+      <main className={cn(
+        "flex-1",
+        isMobile ? "px-4 py-6" : "px-8 py-8"
+      )}>
+        {children || <Outlet />}
       </main>
-      
-      {/* Footer - The System's signature */}
-      <footer className="border-t border-shadow-blue/20 bg-card/60 backdrop-blur-xl relative z-10 w-full">
-        <div className="container mx-auto px-4 py-6 max-w-full">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-muted-foreground font-heading">
-              <span className="text-shadow-purple">The System's Compendium</span> — In the post-reset world, knowledge is preserved by the <span className="text-primary">System</span>
-            </p>
-            <p className="text-xs text-muted-foreground font-display tracking-widest">
-              BLESSED BY THE <span className="gradient-text-monarch">SUPREME DEITY'S</span> DOMAIN
-            </p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
-

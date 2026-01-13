@@ -354,7 +354,8 @@ export const useIsDM = () => {
         .single();
 
       if (error || !data) return false;
-      return (data as Database['public']['Tables']['profiles']['Row']).role === 'dm';
+      const role = (data as Database['public']['Tables']['profiles']['Row']).role;
+      return role === 'dm' || role === 'admin';
     },
     retry: false,
   });

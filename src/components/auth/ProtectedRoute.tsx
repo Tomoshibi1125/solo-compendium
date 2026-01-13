@@ -12,9 +12,10 @@ interface ProtectedRouteProps {
 export function ProtectedRoute({ children, requireDM = false }: ProtectedRouteProps) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const { data: isDM = false, isLoading: dmLoading } = useIsDM();
+  const isE2E = import.meta.env.VITE_E2E === 'true';
 
   useEffect(() => {
-    if (!isSupabaseConfigured) {
+    if (isE2E || !isSupabaseConfigured) {
       // Setup/guest mode: don't run auth checks.
       return;
     }
@@ -33,7 +34,11 @@ export function ProtectedRoute({ children, requireDM = false }: ProtectedRoutePr
     return () => {
       subscription.unsubscribe();
     };
-  }, []);
+  }, [isE2E]);
+
+  if (isE2E) {
+    return <>{children}</>;
+  }
 
   // If Supabase isn't configured, the app is running in setup mode.
   // Redirect to setup instead of looping auth checks.

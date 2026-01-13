@@ -21,6 +21,8 @@ const EXCLUDED_REL_PATHS = new Set([
 ]);
 
 const EXCLUDED_DIR_NAMES = new Set([
+  'ComfyUI',
+  'ComfyUI_repo',
   'node_modules',
   'dist',
   'playwright-report',

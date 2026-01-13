@@ -45,13 +45,12 @@ test.describe('Compendium Detail Pages', () => {
     await expect(firstEntry).toBeVisible({ timeout: 15000 });
 
     const href = await firstEntry.getAttribute('href');
-    if (!href) {
-      throw new Error('Compendium entry link missing href');
-    }
+    await expect(href, 'Compendium entry link missing href').toBeTruthy();
+    const targetHref = href ?? '';
     await firstEntry.click();
     
     // Should be on detail page
-    await expect(page).toHaveURL(new RegExp(href.replace('/', '\\/')), { timeout: 10000 });
+    await expect(page).toHaveURL(new RegExp(targetHref.replace('/', '\\/')), { timeout: 10000 });
     
     // Should have back button
     await expect(page.getByRole('button', { name: /back/i })).toBeVisible({ timeout: 10000 });
@@ -80,12 +79,11 @@ test.describe('Compendium Detail Pages', () => {
     await expect(firstEntry).toBeVisible({ timeout: 15000 });
 
     const href = await firstEntry.getAttribute('href');
-    if (!href) {
-      throw new Error('Compendium entry link missing href');
-    }
+    await expect(href, 'Compendium entry link missing href').toBeTruthy();
+    const targetHref = href ?? '';
 
     // Navigate directly to detail page
-    await page.goto(href);
+    await page.goto(targetHref);
     await expect(page.getByRole('button', { name: /back/i })).toBeVisible({ timeout: 10000 });
   });
 });

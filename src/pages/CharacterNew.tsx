@@ -59,6 +59,52 @@ const CharacterNew = () => {
   const [selectedPath, setSelectedPath] = useState<string>('');
   const [selectedBackground, setSelectedBackground] = useState<string>('');
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  // Form validation
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    
+    if (!name.trim()) {
+      newErrors.name = 'Character name is required';
+    }
+    
+    if (!selectedJob) {
+      newErrors.class = 'Character class is required';
+    }
+    
+    // Level validation would go here if we had a level state
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Form submission handler
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+    
+    try {
+      setIsSubmitting(true);
+      await createCharacter.mutateAsync({
+        name: name,
+        level: 1,
+      });
+      
+      // Redirect to character sheet
+      navigate('/characters');
+    } catch (error) {
+      console.error('Failed to create character:', error);
+      setErrors({ submit: 'Failed to create character. Please try again.' });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   // Reset skills when job changes
   const handleJobChange = (jobId: string) => {

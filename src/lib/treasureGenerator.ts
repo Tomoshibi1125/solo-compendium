@@ -1,3 +1,27 @@
+
+// Rarity system for treasure
+export const RARITY_CHANCES = {
+  common: 0.6,
+  uncommon: 0.25,
+  rare: 0.1,
+  very_rare: 0.04,
+  legendary: 0.01
+};
+
+export function generateRarity(): string {
+  const roll = Math.random();
+  let cumulative = 0;
+  
+  for (const [rarity, chance] of Object.entries(RARITY_CHANCES)) {
+    cumulative += chance;
+    if (roll <= cumulative) {
+      return rarity;
+    }
+  }
+  
+  return 'common';
+}
+
 export const GATE_RANKS = ['E', 'D', 'C', 'B', 'A', 'S'] as const;
 
 export interface TreasureResult {

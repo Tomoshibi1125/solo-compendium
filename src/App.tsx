@@ -17,9 +17,11 @@ import { setCommandPaletteOpener } from "@/lib/globalShortcuts";
 import { setSentryUser } from "@/lib/sentry";
 import { trackEvent, identifyUser, resetUser, AnalyticsEvents } from "@/lib/analytics";
 import { validateEnv } from "@/lib/envValidation";
-import { supabase, isSupabaseConfigured } from "@/integrations/supabase/client";
-import { error as logError, warn as logWarn } from "@/lib/logger";
-import Index from "./pages/Index";
+import { AuthProvider } from "@/lib/auth/authContext";
+import { warn as logWarn } from "@/lib/logger";
+import { isSupabaseConfigured } from "@/integrations/supabase/client";
+import Login from "./pages/Login";
+import PlayerTools from "./pages/PlayerTools";
 
 // Validate environment variables on app startup (non-blocking; setup mode is supported)
 const envResult = validateEnv();
@@ -43,6 +45,7 @@ const CharacterNew = lazy(() => import("./pages/CharacterNew"));
 const CharacterLevelUp = lazy(() => import("./pages/CharacterLevelUp"));
 const Admin = lazy(() => import("./pages/Admin"));
 const ContentAudit = lazy(() => import("./pages/admin/ContentAudit"));
+const ArtGeneration = lazy(() => import("./pages/admin/ArtGeneration"));
 const DMTools = lazy(() => import("./pages/DMTools"));
 const EncounterBuilder = lazy(() => import("./pages/dm-tools/EncounterBuilder"));
 const InitiativeTracker = lazy(() => import("./pages/dm-tools/InitiativeTracker"));
@@ -57,6 +60,8 @@ const RelicWorkshop = lazy(() => import("./pages/dm-tools/RelicWorkshop"));
 const PartyTracker = lazy(() => import("./pages/dm-tools/PartyTracker"));
 const DungeonMapGenerator = lazy(() => import("./pages/dm-tools/DungeonMapGenerator"));
 const TokenLibrary = lazy(() => import("./pages/dm-tools/TokenLibrary"));
+const ArtGeneratorDM = lazy(() => import("./pages/dm-tools/ArtGenerator"));
+const AudioManagerDM = lazy(() => import("./pages/dm-tools/AudioManager"));
 const VTTMap = lazy(() => import("./pages/dm-tools/VTTMap"));
 const VTTEnhanced = lazy(() => import("./pages/dm-tools/VTTEnhanced"));
 const VTTJournal = lazy(() => import("./pages/dm-tools/VTTJournal"));
@@ -66,6 +71,7 @@ const CampaignDetail = lazy(() => import("./pages/CampaignDetail"));
 const CampaignJoin = lazy(() => import("./pages/CampaignJoin"));
 const CharacterCompare = lazy(() => import("./pages/CharacterCompare"));
 const Auth = lazy(() => import("./pages/Auth"));
+const Landing = lazy(() => import("./pages/Landing"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Setup = lazy(() => import("./pages/Setup"));
 
@@ -99,6 +105,7 @@ const PageLoader = () => (
 // Inner component that uses router hooks - must be inside BrowserRouter
 const AppContent = () => {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+  const isE2E = import.meta.env.VITE_E2E === 'true';
   
   // Enable global keyboard shortcuts (must be inside Router context)
   useGlobalShortcuts(true);
@@ -114,7 +121,7 @@ const AppContent = () => {
         <CommandPalette open={commandPaletteOpen} onOpenChange={setCommandPaletteOpen} />
       )}
       <Routes>
-      {!isSupabaseConfigured ? (
+      {(!isSupabaseConfigured && !isE2E) ? (
         <>
           <Route
             path="/setup"
@@ -132,9 +139,33 @@ const AppContent = () => {
         path="/" 
         element={
           <Suspense fallback={<PageLoader />}>
-            <Index />
+            {isE2E ? <Navigate to="/compendium" replace /> : <Login />}
           </Suspense>
         } 
+      />
+      <Route
+        path="/login"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <Login />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/landing"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <Landing />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/player-tools"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <PlayerTools />
+          </Suspense>
+        }
       />
       <Route
         path="/compendium"
@@ -198,6 +229,16 @@ const AppContent = () => {
           <Suspense fallback={<PageLoader />}>
             <Admin />
           </Suspense>
+        }
+      />
+      <Route
+        path="/admin/art-generation"
+        element={
+          <ProtectedRoute requireDM>
+          <Suspense fallback={<PageLoader />}>
+            <ArtGeneration />
+          </Suspense>
+          </ProtectedRoute>
         }
       />
       <Route
@@ -341,6 +382,26 @@ const AppContent = () => {
         }
       />
       <Route
+        path="/dm-tools/art-generator"
+        element={
+          <ProtectedRoute requireDM>
+          <Suspense fallback={<PageLoader />}>
+            <ArtGeneratorDM />
+          </Suspense>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/dm-tools/audio-manager"
+        element={
+          <ProtectedRoute requireDM>
+          <Suspense fallback={<PageLoader />}>
+            <AudioManagerDM />
+          </Suspense>
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="/dm-tools/vtt-map"
         element={
           <ProtectedRoute requireDM>
@@ -438,82 +499,21 @@ const AppContent = () => {
 };
 
 const App = () => {
-  // Set Sentry user context and track auth events when auth state changes
-  useEffect(() => {
-    if (!isSupabaseConfigured) return;
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (session?.user) {
-        setSentryUser({
-          id: session.user.id,
-          email: session.user.email,
-          username: session.user.user_metadata?.username,
-        });
-        
-        // Track analytics events
-        if (event === 'SIGNED_IN') {
-          trackEvent({
-            name: AnalyticsEvents.USER_SIGNED_IN,
-            userId: session.user.id,
-          });
-          identifyUser(session.user.id, {
-            email: session.user.email,
-            username: session.user.user_metadata?.username,
-          });
-          
-          // Supabase JS v2 AuthChangeEvent no longer includes SIGNED_UP.
-          // Heuristic: treat first sign-in as sign-up when created_at ~= last_sign_in_at.
-          const createdAt = session.user.created_at ? new Date(session.user.created_at).getTime() : null;
-          const lastSignInAt = session.user.last_sign_in_at ? new Date(session.user.last_sign_in_at).getTime() : null;
-          if (createdAt && lastSignInAt && Math.abs(createdAt - lastSignInAt) < 60_000) {
-            trackEvent({
-              name: AnalyticsEvents.USER_SIGNED_UP,
-              userId: session.user.id,
-            });
-          }
-        }
-      } else {
-        setSentryUser(null);
-        
-        // Reset analytics user on sign out
-        if (event === 'SIGNED_OUT') {
-          trackEvent({
-            name: AnalyticsEvents.USER_SIGNED_OUT,
-          });
-          resetUser();
-        }
-      }
-    });
-
-    // Set initial user if already authenticated
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (user) {
-        setSentryUser({
-          id: user.id,
-          email: user.email,
-          username: user.user_metadata?.username,
-        });
-      }
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
-
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <PageViewTracker />
-            <AppContent />
-          </BrowserRouter>
-          <ServiceWorkerUpdatePrompt />
-          <OfflineIndicator />
-          <AnalyticsConsentBanner />
+          <AuthProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <PageViewTracker />
+              <AppContent />
+            </BrowserRouter>
+            <ServiceWorkerUpdatePrompt />
+            <OfflineIndicator />
+            <AnalyticsConsentBanner />
+          </AuthProvider>
         </TooltipProvider>
       </QueryClientProvider>
     </ErrorBoundary>

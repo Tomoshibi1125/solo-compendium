@@ -302,11 +302,17 @@ function LinkIntegritySection() {
   });
 
   const handleCheck = async () => {
+    try {
+
     setIsChecking(true);
     try {
       await refetch();
     } finally {
       setIsChecking(false);
+    }
+  
+    } catch (error) {
+      console.error("Failed to check links:", error);
     }
   };
 

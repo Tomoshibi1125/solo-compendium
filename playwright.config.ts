@@ -1,5 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
+process.env.VITE_E2E = 'true';
+
 export default defineConfig({
   testDir: './e2e',
   fullyParallel: true,
@@ -21,6 +23,10 @@ export default defineConfig({
     command: 'npm run dev',
     url: 'http://localhost:8080',
     reuseExistingServer: !process.env.CI,
+    env: {
+      ...process.env,
+      VITE_E2E: 'true',
+    },
   },
 });
 

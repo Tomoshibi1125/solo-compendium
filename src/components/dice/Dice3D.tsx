@@ -179,10 +179,19 @@ function Die({ sides, value, isRolling, onRollComplete, position, rotation = [0,
         angularVelocityRef.current.multiplyScalar(0.9);
       }
 
-      // Pulsing glow effect while rolling
-      const pulse = Math.sin(timeRef.current * 5) * 0.2 + 0.8;
+      // Enhanced Solo Leveling effects while rolling
+      const pulse = Math.sin(timeRef.current * 8) * 0.3 + 0.7;
+      const shadowPulse = Math.sin(timeRef.current * 4) * 0.2 + 0.8;
+      
       if (meshRef.current.material instanceof THREE.MeshStandardMaterial) {
         meshRef.current.material.emissiveIntensity = themeConfig.glowIntensity * pulse;
+        // Add shadow energy effect
+        meshRef.current.material.emissive = new THREE.Color(themeConfig.emissiveColor).multiplyScalar(shadowPulse);
+      }
+      
+      // Add shadow particle trail effect
+      if (Math.random() < 0.3) {
+        // Would spawn shadow particles here in full implementation
       }
 
       // Stop when velocity is very low

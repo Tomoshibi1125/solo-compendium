@@ -1,21 +1,24 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { AppError } from '@/lib/appError';
 import type { Database } from '@/integrations/supabase/types';
 
 export interface Profile {
   id: string;
-  role: 'dm' | 'player';
+  role: 'dm' | 'player' | 'admin';
   created_at: string;
   updated_at: string;
 }
 
 // Fetch current user's profile
 export const useProfile = () => {
+  const isE2E = import.meta.env.VITE_E2E === 'true';
+
   return useQuery({
     queryKey: ['profile'],
     queryFn: async (): Promise<Profile | null> => {
+      if (!isSupabaseConfigured || isE2E) return null;
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return null;
 
@@ -35,6 +38,8 @@ export const useProfile = () => {
       return (data || null) as Profile | null;
     },
     retry: false,
+    enabled: isSupabaseConfigured && !isE2E,
+    initialData: null,
   });
 };
 
@@ -44,7 +49,11 @@ export const useUpdateProfile = () => {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ role }: { role: 'dm' | 'player' }) => {
+    mutationFn: async ({ role }: { role: 'dm' | 'player' | 'admin' }) => {
+      const isE2E = import.meta.env.VITE_E2E === 'true';
+      if (!isSupabaseConfigured || isE2E) {
+        throw new AppError('Supabase is not configured', 'CONFIG');
+      }
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 

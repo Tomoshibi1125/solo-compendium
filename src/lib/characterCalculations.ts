@@ -251,5 +251,13 @@ export function getSpellsPreparedLimit(
 }
 
 // Re-export utility functions for convenience
+
+// Calculate character hit points
+export function calculateHitPoints(level: number, constitution: number): number {
+  const baseHP = 8 + constitution; // D&D 5e style base
+  const levelHP = (level - 1) * 5 + constitution; // 5 HP per level + CON mod
+  return Math.max(1, baseHP + levelHP);
+}
+
 export { getAbilityModifier, getProficiencyBonus, getSystemFavorDie } from '@/types/solo-leveling';
 

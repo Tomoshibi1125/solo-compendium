@@ -10,7 +10,9 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { supabase } from '@/integrations/supabase/client';
+import './TokenLibrary.css';
 
 type TokenType = 'character' | 'monster' | 'npc' | 'prop' | 'effect' | 'custom';
 type TokenCategory = 'hunter' | 'monster' | 'boss' | 'npc' | 'treasure' | 'trap' | 'effect' | 'other';
@@ -484,52 +486,52 @@ const TokenLibrary = () => {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="token-type">Type</Label>
-                      <select
-                        id="token-type"
-                        value={newToken.type}
-                        onChange={(e) => setNewToken({ ...newToken, type: e.target.value as TokenType })}
-                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                      >
-                        <option value="character">Character</option>
-                        <option value="monster">Monster</option>
-                        <option value="npc">NPC</option>
-                        <option value="prop">Prop</option>
-                        <option value="effect">Effect</option>
-                        <option value="custom">Custom</option>
-                      </select>
+                      <Select value={newToken.type} onValueChange={(value) => setNewToken({ ...newToken, type: value as TokenType })}>
+                        <SelectTrigger className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                          <SelectValue placeholder="Select type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="character">Character</SelectItem>
+                          <SelectItem value="monster">Monster</SelectItem>
+                          <SelectItem value="npc">NPC</SelectItem>
+                          <SelectItem value="prop">Prop</SelectItem>
+                          <SelectItem value="effect">Effect</SelectItem>
+                          <SelectItem value="custom">Custom</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
 
                     <div>
                       <Label htmlFor="token-category">Category</Label>
-                      <select
-                        id="token-category"
-                        value={newToken.category}
-                        onChange={(e) => setNewToken({ ...newToken, category: e.target.value as TokenCategory })}
-                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                      >
-                        {TOKEN_CATEGORIES.map((cat) => (
-                          <option key={cat.value} value={cat.value}>
-                            {cat.label}
-                          </option>
-                        ))}
-                      </select>
+                      <Select value={newToken.category} onValueChange={(value) => setNewToken({ ...newToken, category: value as TokenCategory })}>
+                        <SelectTrigger className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                          <SelectValue placeholder="Select category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {TOKEN_CATEGORIES.map((cat) => (
+                            <SelectItem key={cat.value} value={cat.value}>
+                              {cat.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="token-size">Size</Label>
-                      <select
-                        id="token-size"
-                        value={newToken.size}
-                        onChange={(e) => setNewToken({ ...newToken, size: e.target.value as Token['size'] })}
-                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                      >
-                        <option value="small">Small (32px)</option>
-                        <option value="medium">Medium (48px)</option>
-                        <option value="large">Large (64px)</option>
-                        <option value="huge">Huge (96px)</option>
-                      </select>
+                      <Select value={newToken.size} onValueChange={(value) => setNewToken({ ...newToken, size: value as Token['size'] })}>
+                        <SelectTrigger className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                          <SelectValue placeholder="Select size" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="small">Small (32px)</SelectItem>
+                          <SelectItem value="medium">Medium (48px)</SelectItem>
+                          <SelectItem value="large">Large (64px)</SelectItem>
+                          <SelectItem value="huge">Huge (96px)</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
 
                     <div>
@@ -575,6 +577,7 @@ const TokenLibrary = () => {
                           accept="image/*"
                           onChange={handleImageSelect}
                           className="hidden"
+                          aria-label="Upload token image"
                         />
                         <Button
                           variant="outline"
@@ -664,12 +667,11 @@ const TokenLibrary = () => {
                             <div className="flex flex-col items-center gap-3">
                               <div
                                 className={cn(
-                                  'rounded-full flex items-center justify-center text-2xl border-2 transition-all',
+                                  'token-display',
+                                  `token-display-${token.size}`,
                                   token.color ? `border-[${token.color}]` : 'border-border'
                                 )}
                                 style={{
-                                  width: `${size}px`,
-                                  height: `${size}px`,
                                   backgroundColor: token.color ? `${token.color}20` : undefined,
                                 }}
                               >
@@ -721,12 +723,11 @@ const TokenLibrary = () => {
                         <div className="flex items-center gap-4">
                           <div
                             className={cn(
-                              'rounded-full flex items-center justify-center text-4xl border-2',
+                              'token-detail-display',
+                              `token-detail-display-${selectedToken.size}`,
                               selectedToken.color ? `border-[${selectedToken.color}]` : 'border-border'
                             )}
                             style={{
-                              width: `${SIZE_VALUES[selectedToken.size]}px`,
-                              height: `${SIZE_VALUES[selectedToken.size]}px`,
                               backgroundColor: selectedToken.color ? `${selectedToken.color}20` : undefined,
                             }}
                           >

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Upload, FileText, CheckCircle, AlertCircle, Loader2, Download, Shield, Database, Sparkles, BarChart3 } from 'lucide-react';
+import { Upload, FileText, CheckCircle, AlertCircle, Loader2, Download, Shield, Database, Sparkles, BarChart3, Image } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
@@ -123,12 +123,20 @@ const Admin = () => {
                 Import and validate homebrew content for the compendium
               </p>
             </div>
-            <Link to="/admin/audit">
-              <Button variant="outline" className="gap-2 border-arise/30 hover:bg-arise/10 hover:border-arise/50">
-                <BarChart3 className="w-4 h-4" />
-                Content Audit
-              </Button>
-            </Link>
+            <div className="flex gap-2">
+              <Link to="/admin/audit">
+                <Button variant="outline" className="gap-2 border-arise/30 hover:bg-arise/10 hover:border-arise/50">
+                  <BarChart3 className="w-4 h-4" />
+                  Content Audit
+                </Button>
+              </Link>
+              <Link to="/admin/art-generation">
+                <Button variant="outline" className="gap-2 border-arise/30 hover:bg-arise/10 hover:border-arise/50">
+                  <Image className="w-4 h-4" />
+                  Art Generation
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
 
@@ -143,7 +151,7 @@ const Admin = () => {
                     Upload JSON File
                   </Label>
                   <div className="mt-2">
-                    <input
+                    <input aria-label="Upload JSON content file"
                       id="file-upload"
                       type="file"
                       accept=".json"

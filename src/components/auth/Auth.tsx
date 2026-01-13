@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Auth as SupabaseAuth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
-import { Crown, Sword, ArrowRight } from 'lucide-react';
+import { Crown, Shield, Sword, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useUpdateProfile, useProfile } from '@/hooks/useProfile';
 import { cn } from '@/lib/utils';
@@ -17,13 +17,37 @@ export function Auth() {
   const navigate = useNavigate();
   const [authView, setAuthView] = useState<'sign_up' | 'sign_in'>('sign_in');
   const [showRoleSelection, setShowRoleSelection] = useState(false);
-  const [selectedRole, setSelectedRole] = useState<'dm' | 'player' | null>(null);
+  const [selectedRole, setSelectedRole] = useState<'dm' | 'player' | 'admin' | null>(null);
   const [isSignup, setIsSignup] = useState(false);
   const updateProfile = useUpdateProfile();
   const { data: profile, isLoading: profileLoading } = useProfile();
+  const isConfigured = isSupabaseConfigured;
+  const isE2E = import.meta.env.VITE_E2E === 'true';
+
+  // Role hierarchy for authorization
+  const roleHierarchy = {
+    'admin': 3,
+    'dm': 2,
+    'player': 1
+  } as const;
+
+  type Role = keyof typeof roleHierarchy;
+
+  const hasPermission = (requiredRole: Role): boolean => {
+    if (!profile) return false;
+    const userRole = profile.role as Role;
+    
+    if (!roleHierarchy[userRole] || !roleHierarchy[requiredRole]) {
+      return false;
+    }
+    
+    return roleHierarchy[userRole] >= roleHierarchy[requiredRole];
+  };
 
   // Check auth state and profile
   useEffect(() => {
+    if (!isConfigured || isE2E) return;
+
     const checkAuthState = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
@@ -96,20 +120,81 @@ export function Auth() {
     return () => {
       subscription.unsubscribe();
     };
-  }, [profile, profileLoading, navigate, authView]);
+  }, [profile, profileLoading, navigate, authView, isConfigured, isE2E]);
 
   // Handle role selection
   const handleRoleSelect = async () => {
     if (!selectedRole) return;
 
-    try {
+    
+      try {
+      try {
       await updateProfile.mutateAsync({ role: selectedRole });
-      // Navigation will happen automatically via the useEffect when profile updates
     } catch (error) {
-      // Error is already handled by useUpdateProfile toast
-      logger.error('Error setting role:', error);
+      console.error("Error setting role:", error);
+      // Add user notification here if needed
     }
+    } catch (error) {
+      console.error("Error setting role:", error);
+    }
+      // Navigation will happen automatically via the useEffect when profile updates
+    
   };
+
+  if (isE2E) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5 flex items-center justify-center p-4">
+        <div className="w-full max-w-md">
+          <SystemWindow variant="arise" title="AUTH (E2E)" className="text-center">
+            <div className="p-8 space-y-4">
+              <div className="flex justify-center">
+                <ShadowMonarchLogo size="md" variant="supreme" />
+              </div>
+              <div>
+                <h2 className="font-arise text-2xl font-bold gradient-text-arise mb-2">
+                  Authentication stub enabled
+                </h2>
+                <p className="text-muted-foreground font-heading text-sm">
+                  E2E mode bypasses live auth to keep test runs deterministic.
+                </p>
+              </div>
+              <Button onClick={() => navigate('/')} className="w-full" size="lg">
+                Return Home
+              </Button>
+            </div>
+          </SystemWindow>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isConfigured) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5 flex items-center justify-center p-4">
+        <div className="w-full max-w-md">
+          <SystemWindow variant="arise" title="AUTH SETUP" className="text-center">
+            <div className="p-8 space-y-4">
+              <div className="flex justify-center">
+                <ShadowMonarchLogo size="md" variant="supreme" />
+              </div>
+              <div>
+                <h2 className="font-arise text-2xl font-bold gradient-text-arise mb-2">
+                  Supabase configuration required
+                </h2>
+                <p className="text-muted-foreground font-heading text-sm">
+                  Set <span className="font-medium">VITE_SUPABASE_URL</span> and{' '}
+                  <span className="font-medium">VITE_SUPABASE_PUBLISHABLE_KEY</span> to enable authentication.
+                </p>
+              </div>
+              <Button onClick={() => navigate('/setup')} className="w-full" size="lg">
+                Go to Setup
+              </Button>
+            </div>
+          </SystemWindow>
+        </div>
+      </div>
+    );
+  }
 
   // Role selection view
   if (showRoleSelection) {
@@ -134,7 +219,7 @@ export function Auth() {
 
               <RadioGroup
                 value={selectedRole || undefined}
-                onValueChange={(value) => setSelectedRole(value as 'dm' | 'player')}
+                onValueChange={(value) => setSelectedRole(value as 'dm' | 'player' | 'admin')}
                 className="space-y-4"
               >
                 <Label
@@ -178,6 +263,29 @@ export function Auth() {
                       <div className="font-heading font-semibold">Gate Master (DM)</div>
                       <div className="text-sm text-muted-foreground">
                         Create campaigns and access DM tools
+                      </div>
+                    </div>
+                  </div>
+                </Label>
+
+                <Label
+                  htmlFor="role-admin"
+                  className={cn(
+                    "flex items-center gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all",
+                    selectedRole === 'admin'
+                      ? "border-primary bg-primary/10"
+                      : "border-border hover:border-primary/50"
+                  )}
+                >
+                  <RadioGroupItem value="admin" id="role-admin" className="mt-0" />
+                  <div className="flex items-center gap-3 flex-1">
+                    <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+                      <Shield className="w-5 h-5 text-primary" />
+                    </div>
+                    <div className="text-left">
+                      <div className="font-heading font-semibold">System Administrator</div>
+                      <div className="text-sm text-muted-foreground">
+                        Full access to all tools and content
                       </div>
                     </div>
                   </div>

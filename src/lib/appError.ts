@@ -4,6 +4,10 @@ export type AppErrorCode =
   | 'INVALID_INPUT'
   | 'UNSUPPORTED'
   | 'CONFIG'
+  | 'FEATURE_DISABLED'
+  | 'SERVICE_UNAVAILABLE'
+  | 'GENERATION_FAILED'
+  | 'AI_ERROR'
   | 'UNKNOWN';
 
 export class AppError extends Error {

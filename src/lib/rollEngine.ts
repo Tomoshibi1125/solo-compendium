@@ -4,6 +4,16 @@
 
 import { AppError } from '@/lib/appError';
 
+
+// Validate dice string format
+export function validateDiceString(diceString: string): boolean {
+  if (!diceString || typeof diceString !== 'string') return false;
+  
+  // Basic pattern: NdS+/-M where N=dice count, S=sides, M=modifier
+  const pattern = /^\d+d\d+(?:[+-]\d+)?$/;
+  return pattern.test(diceString);
+}
+
 export interface DiceRoll {
   dice: number;
   sides: number;
