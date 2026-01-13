@@ -5,7 +5,7 @@
 
 import React, { createContext, useCallback, useContext, useEffect, useState, ReactNode } from 'react';
 import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
 import { AppError } from '@/lib/appError';
 
 export type UserRole = 'dm' | 'player' | 'admin';
