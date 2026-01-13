@@ -55,7 +55,7 @@ END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- Function to get character by share token (bypasses RLS)
-CREATE OR REPLACE FUNCTION get_character_by_share_token(
+CREATE OR REPLACE FUNCTION public.get_character_by_share_token(
   p_character_id UUID,
   p_share_token TEXT
 )
@@ -77,7 +77,10 @@ RETURNS TABLE (
   share_token TEXT,
   created_at TIMESTAMPTZ,
   updated_at TIMESTAMPTZ
-) AS $$
+)
+SET search_path = pg_catalog, public, extensions
+SECURITY DEFINER
+AS $$
 BEGIN
   RETURN QUERY
   SELECT 

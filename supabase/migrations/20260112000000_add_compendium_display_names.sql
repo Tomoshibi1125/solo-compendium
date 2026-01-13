@@ -62,7 +62,7 @@ EXCEPTION
     NULL;
 END $$;
 
-CREATE OR REPLACE FUNCTION search_compendium_jobs(search_text TEXT)
+CREATE OR REPLACE FUNCTION public.search_compendium_jobs(search_text TEXT)
 RETURNS TABLE (
   id UUID,
   name TEXT,
@@ -72,7 +72,10 @@ RETURNS TABLE (
   source_book TEXT,
   image_url TEXT,
   rank REAL
-) AS $$
+)
+SET search_path = pg_catalog, public, extensions
+SECURITY DEFINER
+AS $$
 BEGIN
   RETURN QUERY
   SELECT

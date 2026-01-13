@@ -342,7 +342,9 @@ CREATE POLICY "Users can delete powers of their own characters"
 
 -- Create function to update timestamps
 CREATE OR REPLACE FUNCTION public.update_updated_at_column()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER 
+SET search_path = pg_catalog, public, extensions
+AS $$
 BEGIN
   NEW.updated_at = now();
   RETURN NEW;

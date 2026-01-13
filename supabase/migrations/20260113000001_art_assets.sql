@@ -47,7 +47,7 @@ CREATE POLICY "Art assets manageable by authenticated users" ON art_assets
   FOR ALL USING (auth.role() = 'authenticated');
 
 -- Function to get asset paths
-CREATE OR REPLACE FUNCTION get_asset_paths(entity_uuid TEXT, entity_variant TEXT DEFAULT 'portrait')
+CREATE OR REPLACE FUNCTION public.get_asset_paths(entity_uuid TEXT, entity_variant TEXT DEFAULT 'portrait')
 RETURNS TABLE(
   original TEXT,
   thumb TEXT,
@@ -55,7 +55,8 @@ RETURNS TABLE(
   lg TEXT,
   token TEXT
 )
-LANGUAGE plpgsql
+SET search_path = pg_catalog, public, extensions
+SECURITY DEFINER
 AS $$
 BEGIN
   RETURN QUERY
@@ -73,9 +74,10 @@ END;
 $$;
 
 -- Function to check if asset exists
-CREATE OR REPLACE FUNCTION asset_exists(entity_uuid TEXT, entity_variant TEXT DEFAULT 'portrait')
+CREATE OR REPLACE FUNCTION public.asset_exists(entity_uuid TEXT, entity_variant TEXT DEFAULT 'portrait')
 RETURNS BOOLEAN
-LANGUAGE plpgsql
+SET search_path = pg_catalog, public, extensions
+SECURITY DEFINER
 AS $$
 BEGIN
   RETURN EXISTS (
@@ -87,14 +89,15 @@ END;
 $$;
 
 -- Function to get entity assets
-CREATE OR REPLACE FUNCTION get_entity_assets(entity_uuid TEXT)
+CREATE OR REPLACE FUNCTION public.get_entity_assets(entity_uuid TEXT)
 RETURNS TABLE(
   variant TEXT,
   paths JSONB,
   dimensions JSONB,
   created_at TIMESTAMPTZ
 )
-LANGUAGE plpgsql
+SET search_path = pg_catalog, public, extensions
+SECURITY DEFINER
 AS $$
 BEGIN
   RETURN QUERY

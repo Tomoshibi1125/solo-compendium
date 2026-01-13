@@ -241,9 +241,9 @@ END;
 $$;
 
 -- Trigger to automatically assign quests after long rest
-CREATE OR REPLACE FUNCTION on_long_rest_assign_quests()
+CREATE OR REPLACE FUNCTION public.on_long_rest_assign_quests()
 RETURNS TRIGGER
-LANGUAGE plpgsql
+SET search_path = pg_catalog, public, extensions
 AS $$
 BEGIN
   -- Only proceed if daily quests are enabled for this character

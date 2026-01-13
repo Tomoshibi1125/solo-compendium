@@ -79,8 +79,11 @@ CREATE POLICY "Users can delete their own shadow army" ON public.character_shado
 
 -- Function to calculate shadow energy max based on level
 -- Shadow Monarchs gain shadow energy as they level up
-CREATE OR REPLACE FUNCTION calculate_shadow_energy_max(character_level INTEGER)
-RETURNS INTEGER AS $$
+CREATE OR REPLACE FUNCTION public.calculate_shadow_energy_max(character_level INTEGER)
+RETURNS INTEGER 
+SET search_path = pg_catalog, public, extensions
+SECURITY DEFINER
+AS $$
 BEGIN
   -- Shadow energy scales with level
   -- Level 1-4: 10 max

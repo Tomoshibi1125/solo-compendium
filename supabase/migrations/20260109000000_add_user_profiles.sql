@@ -28,13 +28,16 @@ CREATE POLICY "Users can update their own profile"
 
 -- Function to automatically create profile when user signs up
 CREATE OR REPLACE FUNCTION public.handle_new_user()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER 
+SET search_path = pg_catalog, public, extensions
+SECURITY DEFINER
+AS $$
 BEGIN
   INSERT INTO public.profiles (id, role)
   VALUES (NEW.id, 'player');
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql;
 
 -- Trigger to create profile on user signup
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
