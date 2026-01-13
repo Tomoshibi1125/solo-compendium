@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS daily_quest_templates (
 -- Daily Quest Instances (per character per day)
 CREATE TABLE IF NOT EXISTS daily_quest_instances (
   id TEXT PRIMARY KEY,
-  character_id TEXT NOT NULL REFERENCES characters(id) ON DELETE CASCADE,
+  character_id UUID NOT NULL REFERENCES characters(id) ON DELETE CASCADE,
   template_id TEXT NOT NULL REFERENCES daily_quest_templates(id) ON DELETE CASCADE,
   date_key TEXT NOT NULL, -- YYYY-MM-DD format for easy querying
   assigned_at TIMESTAMPTZ DEFAULT NOW(),
@@ -39,8 +39,8 @@ CREATE TABLE IF NOT EXISTS daily_quest_instances (
 -- Daily Quest Configuration (per campaign/character)
 CREATE TABLE IF NOT EXISTS daily_quest_configs (
   id TEXT PRIMARY KEY,
-  character_id TEXT REFERENCES characters(id) ON DELETE CASCADE,
-  campaign_id TEXT REFERENCES campaigns(id) ON DELETE CASCADE,
+  character_id UUID REFERENCES characters(id) ON DELETE CASCADE,
+  campaign_id UUID REFERENCES campaigns(id) ON DELETE CASCADE,
   enabled BOOLEAN DEFAULT false,
   difficulty_mode TEXT DEFAULT 'normal' CHECK (difficulty_mode IN ('easy', 'normal', 'hard', 'extreme')),
   reward_mode TEXT DEFAULT 'standard' CHECK (reward_mode IN ('minimal', 'standard', 'generous')),
@@ -118,7 +118,7 @@ CREATE POLICY "Quest configs manageable by campaign owner" ON daily_quest_config
     EXISTS (
       SELECT 1 FROM campaigns 
       WHERE campaigns.id = daily_quest_configs.campaign_id 
-      AND campaigns.user_id = auth.uid()
+      AND campaigns.dm_id = auth.uid()
     )
   );
 
@@ -172,7 +172,7 @@ INSERT INTO daily_quest_templates (id, name, description, tags, tier, category, 
 ON CONFLICT (id) DO NOTHING;
 
 -- Functions for quest management
-CREATE OR REPLACE FUNCTION assign_daily_quests(character_uuid TEXT)
+CREATE OR REPLACE FUNCTION assign_daily_quests(character_uuid UUID)
 RETURNS TABLE(id TEXT, template_id TEXT, status TEXT)
 LANGUAGE plpgsql
 AS $$
@@ -206,10 +206,10 @@ BEGIN
   WHERE is_active = true
   AND tier IN (
     CASE 
-      WHEN (SELECT level FROM characters WHERE id = character_uuid) <= 4 THEN 'I'
-      WHEN (SELECT level FROM characters WHERE id = character_uuid) <= 10 THEN 'I','II'
-      WHEN (SELECT level FROM characters WHERE id = character_uuid) <= 16 THEN 'I','II','III'
-      ELSE 'I','II','III','IV'
+      WHEN (SELECT level FROM characters WHERE id = character_uuid) <= 4 THEN ARRAY['I']
+      WHEN (SELECT level FROM characters WHERE id = character_uuid) <= 10 THEN ARRAY['I','II']
+      WHEN (SELECT level FROM characters WHERE id = character_uuid) <= 16 THEN ARRAY['I','II','III']
+      ELSE ARRAY['I','II','III','IV']
     END
   );
   
