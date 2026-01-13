@@ -101,7 +101,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
         onValueChange={setSearch}
       />
       <CommandList>
-        <CommandEmpty>No results found.</CommandEmpty>
+        <CommandEmpty>No results found for "{search}"</CommandEmpty>
 
         {/* Navigation */}
         {(!search || search.length < 2) && (

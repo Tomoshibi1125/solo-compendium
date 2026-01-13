@@ -1,0 +1,71 @@
+/* Solo Leveling Hero Component Styles */
+
+@keyframes portalPulse {
+  0%, 100% {
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+  }
+  25% {
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+  }
+  50% {
+    background: radial-gradient(circle, rgba(239, 68, 68, 0.1) 0%, transparent 70%);
+  }
+  75% {
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+  }
+}
+
+@keyframes floatParticle {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(calc(-50% + var(--offset-x)), calc(-50% + var(--offset-y))) scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--offset-x)), calc(-50% + var(--offset-y))) scale(0);
+    opacity: 0;
+  }
+}
+
+.solo-hero-title {
+  background: linear-gradient(45deg, 
+    rgba(139, 92, 246, var(--glow-intensity)), 
+    rgba(59, 130, 246, var(--glow-intensity)), 
+    rgba(239, 68, 68, calc(var(--glow-intensity) * 0.8)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(139, 92, 246, calc(var(--glow-intensity) * 0.5));
+  filter: drop-shadow(0 0 20px rgba(139, 92, 246, calc(var(--glow-intensity) * 0.3)));
+}
+
+.solo-hero-subtitle {
+  text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+}
+
+.portal-effect {
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+  animation: portalPulse 8s ease-in-out infinite;
+}
+
+.floating-particle {
+  animation: floatParticle var(--duration) ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+
+.system-button {
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+}
+
+.system-button:hover {
+  box-shadow: 0 0 40px rgba(139, 92, 246, 0.7);
+}
+
+/* Dynamic glow intensity levels */
+.solo-hero-glow-low { --glow-intensity: 0.3; }
+.solo-hero-glow-medium { --glow-intensity: 0.5; }
+.solo-hero-glow-high { --glow-intensity: 0.7; }
+.solo-hero-glow-max { --glow-intensity: 1.0; }

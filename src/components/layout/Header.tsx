@@ -1,286 +1,156 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, BookOpen, Users, Sword, Shield, Dice6, Map, Settings, UsersRound, Zap, LogOut, User } from 'lucide-react';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
-import { GlobalSearch } from '@/components/ui/GlobalSearch';
-import { RoleBadge } from '@/components/ui/RoleBadge';
-import { NotificationCenter } from '@/components/ui/NotificationCenter';
-import { useIsDM } from '@/hooks/useCampaigns';
-import { useProfile } from '@/hooks/useProfile';
-import { supabase } from '@/integrations/supabase/client';
-import type { User as SupabaseUser } from '@supabase/supabase-js';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
-import { cn } from '@/lib/utils';
+import { 
+  Bell, 
+  Settings, 
+  LogOut, 
+  User, 
+  Moon, 
+  Sun 
+} from 'lucide-react';
+import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
 
-const navigation = [
-  { name: 'Compendium', href: '/compendium', icon: BookOpen },
-  { name: 'Hunters', href: '/characters', icon: Users },
-  { name: 'Campaigns', href: '/campaigns', icon: UsersRound },
-  { name: 'System Tools', href: '/dm-tools', icon: Map },
-  { name: 'Dice', href: '/dice', icon: Dice6 },
-  { name: 'Admin', href: '/admin', icon: Settings },
-];
+interface HeaderProps {
+  user?: any;
+  onLogout?: () => void;
+}
 
-export function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [user, setUser] = useState<SupabaseUser | null>(null);
-  const location = useLocation();
+export function Header({ user, onLogout }: HeaderProps) {
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const navigate = useNavigate();
-  const { data: isDM = false } = useIsDM();
-  const { data: profile } = useProfile();
 
-  useEffect(() => {
-    const getUser = async () => {
-      const { data: { user: currentUser } } = await supabase.auth.getUser();
-      setUser(currentUser);
-    };
-    getUser();
+  const handleLogout = () => {
+    try {
+      onLogout?.();
+      navigate('/login');
+    } catch (error) {
+      console.error('Error in navigation:', error);
+    }
+  };
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate('/');
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+    // Implement dark mode toggle logic
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full">
-      <div className="glass-card border-t-0 rounded-t-none border-b-shadow-blue/20">
-            <nav className="container mx-auto px-4 lg:px-8 max-w-full overflow-x-hidden">
-          <div className="flex h-16 items-center justify-between">
-            {/* Logo - The System's Seal */}
-            <Link to="/" className="flex items-center gap-3 group">
-              <div className="relative monarch-presence">
-                <ShadowMonarchLogo size="sm" variant="arise" className="group-hover:scale-110 transition-transform duration-300" />
-              </div>
-              <div className="hidden sm:block">
-                <span className="font-arise text-lg font-black gradient-text-supreme tracking-widest">
-                  SOLO LEVELING
-                </span>
-                <span className="block text-xs text-muted-foreground font-heading -mt-1 tracking-wide">
-                  The System's Domain
-                </span>
-              </div>
-            </Link>
+    <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-16 items-center justify-between">
+        {/* Logo */}
+        <Link to="/" className="flex items-center space-x-2">
+          <ShadowMonarchLogo className="h-8 w-8" />
+          <span className="hidden font-bold sm:inline-block">
+            Solo Compendium
+          </span>
+        </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-4 flex-1 max-w-2xl mx-4">
-              {/* Global Search */}
-              <div className="flex-1 max-w-md">
-                <GlobalSearch />
-              </div>
-              
-              <div className="flex items-center gap-1">
-                {navigation.filter(item => item.name === 'System Tools' ? isDM : true).map((item) => {
-                const isActive = location.pathname.startsWith(item.href);
-                return (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className={cn(
-                      "relative px-4 py-2 rounded-lg font-heading text-sm font-medium transition-all duration-200",
-                      isActive
-                        ? "text-primary text-glow"
-                        : "text-muted-foreground hover:text-foreground hover:text-primary/80"
-                    )}
-                  >
-                    <span className="flex items-center gap-2 relative z-10">
-                      <item.icon className={cn(
-                        "w-4 h-4 transition-all duration-200",
-                        isActive && "drop-shadow-[0_0_6px_hsl(var(--primary)/0.7)]"
-                      )} />
-                      {item.name}
-                    </span>
-                    {isActive && (
-                      <>
-                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-10 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full shadow-[0_0_10px_hsl(var(--primary)/0.6)]" />
-                        <div className="absolute inset-0 bg-primary/5 rounded-lg -z-10" />
-                      </>
-                    )}
-                  </Link>
-                );
-              })}
-              </div>
-            </div>
-
-            {/* Actions */}
-            <div className="flex items-center gap-3">
-              {/* Role Indicator */}
-              {isDM && (
-                <div className="hidden md:flex">
-                  <RoleBadge role="system" variant="compact" />
-                </div>
-              )}
-              
-              {/* Notification Center */}
-              {user && <NotificationCenter />}
-              
-              {user ? (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="sm" className="hidden sm:flex gap-2">
-                      <User className="w-4 h-4" />
-                      <span className="font-heading text-sm max-w-[120px] truncate">
-                        {user.email?.split('@')[0] || 'User'}
-                      </span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56">
-                    <DropdownMenuLabel>
-                      <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium">{user.email}</p>
-                        {profile && (
-                          <p className="text-xs text-muted-foreground">
-                            {profile.role === 'dm' ? 'Gate Master' : 'Hunter'}
-                          </p>
-                        )}
-                      </div>
-                    </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem asChild>
-                      <Link to="/auth?changeRole=true" className="flex items-center">
-                        <User className="w-4 h-4 mr-2" />
-                        Change Role
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleLogout} className="text-red-600 focus:text-red-600">
-                      <LogOut className="w-4 h-4 mr-2" />
-                      Sign Out
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              ) : (
-                <Link to="/auth">
-                  <Button variant="outline" size="sm" className="hidden sm:flex gap-2">
-                    <User className="w-4 h-4" />
-                    <span className="font-heading">Sign In</span>
-                  </Button>
-                </Link>
-              )}
-              
-              <Link to="/characters/new">
-                <Button variant="outline" size="sm" className="hidden sm:flex gap-2 btn-shadow-monarch border-shadow-purple/40 hover:border-shadow-purple hover:bg-shadow-purple/10">
-                  <Zap className="w-4 h-4" />
-                  <span className="font-heading">Awaken Hunter</span>
-                </Button>
-              </Link>
-
-              {/* Mobile menu button */}
-              <Button
-                variant="ghost"
-                size="icon"
-                className="md:hidden"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-              >
-                {mobileMenuOpen ? (
-                  <X className="w-5 h-5" />
-                ) : (
-                  <Menu className="w-5 h-5" />
-                )}
-              </Button>
-            </div>
-          </div>
-
-          {/* Mobile Navigation */}
-          {mobileMenuOpen && (
-            <div className="md:hidden py-4 border-t border-shadow-blue/20 animate-slide-up">
-              <div className="flex flex-col gap-1">
-                {navigation.filter(item => item.name === 'System Tools' ? isDM : true).map((item) => {
-                  const isActive = location.pathname.startsWith(item.href);
-                  return (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={cn(
-                      "flex items-center gap-3 px-4 py-3 rounded-lg font-heading transition-colors min-h-[44px]",
-                      isActive
-                        ? "bg-primary/10 text-primary shadow-[inset_0_0_10px_hsl(var(--primary)/0.1)]"
-                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                    )}
-                  >
-                      <item.icon className={cn(
-                        "w-5 h-5",
-                        isActive && "drop-shadow-[0_0_6px_hsl(var(--primary)/0.6)]"
-                      )} />
-                      {item.name}
-                    </Link>
-                  );
-                })}
-                {/* Mobile Role Indicator */}
-                {isDM && (
-                  <div className="pt-2 mt-2 border-t border-shadow-blue/20 px-4 py-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-muted-foreground font-heading">YOUR ROLE</span>
-                      <RoleBadge role="system" variant="compact" />
-                    </div>
-                  </div>
-                )}
-                {/* Mobile User Menu */}
-                {user ? (
-                  <div className="pt-2 mt-2 border-t border-shadow-blue/20 px-4 py-2">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex flex-col">
-                        <span className="text-sm font-heading font-medium">{user.email?.split('@')[0] || 'User'}</span>
-                        {profile && (
-                          <span className="text-xs text-muted-foreground">
-                            {profile.role === 'dm' ? 'Gate Master' : 'Hunter'}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    <Link to="/auth?changeRole=true" className="block mb-2">
-                      <Button variant="outline" className="w-full gap-2">
-                        <User className="w-4 h-4" />
-                        Change Role
-                      </Button>
-                    </Link>
-                    <Button 
-                      variant="outline" 
-                      className="w-full gap-2 text-red-600 border-red-600/20 hover:bg-red-600/10"
-                      onClick={handleLogout}
-                    >
-                      <LogOut className="w-4 h-4" />
-                      Sign Out
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="pt-2 mt-2 border-t border-shadow-blue/20 px-4 py-2">
-                    <Link to="/auth" className="block">
-                      <Button variant="outline" className="w-full gap-2">
-                        <User className="w-4 h-4" />
-                        Sign In
-                      </Button>
-                    </Link>
-                  </div>
-                )}
-                <div className="pt-2 mt-2 border-t border-shadow-blue/20">
-                  <Link to="/characters/new" className="block">
-                    <Button className="w-full gap-2 btn-shadow-monarch shadow-monarch">
-                      <Zap className="w-4 h-4" />
-                      Awaken Hunter
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          )}
+        {/* Navigation */}
+        <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
+          <Link
+            to="/dashboard"
+            className="transition-colors hover:text-foreground/80 text-foreground/60"
+          >
+            Dashboard
+          </Link>
+          <Link
+            to="/characters"
+            className="transition-colors hover:text-foreground/80 text-foreground/60"
+          >
+            Hunters
+          </Link>
+          <Link
+            to="/compendium"
+            className="transition-colors hover:text-foreground/80 text-foreground/60"
+          >
+            Compendium
+          </Link>
+          <Link
+            to="/campaigns"
+            className="transition-colors hover:text-foreground/80 text-foreground/60"
+          >
+            Campaigns
+          </Link>
+          <Link
+            to="/dm-tools"
+            className="transition-colors hover:text-foreground/80 text-foreground/60"
+          >
+            DM Tools
+          </Link>
         </nav>
+
+        {/* Actions */}
+        <div className="flex items-center space-x-4">
+          {/* Dark Mode Toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleDarkMode}
+            aria-label="Toggle dark mode"
+          >
+            {isDarkMode ? (
+              <Sun className="h-4 w-4" />
+            ) : (
+              <Moon className="h-4 w-4" />
+            )}
+          </Button>
+
+          {/* Notifications */}
+          <Button variant="ghost" size="icon" aria-label="Notifications">
+            <Bell className="h-4 w-4" />
+            <Badge variant="destructive" className="absolute -top-1 -right-1 h-3 w-3 rounded-full p-0" />
+          </Button>
+
+          {/* User Menu */}
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src={user.avatar} alt={user.name} />
+                    <AvatarFallback>
+                      {user.email?.split('@')[0] || 'User'}
+                    </AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end" forceMount>
+                <div className="flex items-center justify-start gap-2 p-2">
+                  <div className="flex flex-col space-y-1 leading-none">
+                    <p className="font-medium">{user.name || 'User'}</p>
+                    <p className="w-[200px] truncate text-sm text-muted-foreground">
+                      {user.email}
+                    </p>
+                  </div>
+                </div>
+                <DropdownMenuItem>
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Profile</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Settings</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button onClick={() => navigate('/login')}>
+              Sign In
+            </Button>
+          )}
+        </div>
       </div>
     </header>
   );

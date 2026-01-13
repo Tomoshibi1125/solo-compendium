@@ -6,6 +6,11 @@
    "I am the Monarch of Shadows. All who dwell in darkness... arise."
    ═══════════════════════════════════════════════════════════════════════════ */
 
+/* Landing page hero background */
+.landing-hero-bg {
+  background-image: url('/generated/ui/landing-page-hero.jpg');
+}
+
 @layer base {
   :root {
     /* Core Shadow Monarch palette - The Void Between Worlds */
@@ -166,12 +171,13 @@
   /* Mobile Optimizations */
   @media (max-width: 768px) {
     html {
-      /* Text size adjustment for mobile browsers */
+      /* Text size adjustment for mobile browsers - prevents automatic zooming */
       /* Legacy IE - Microsoft browsers */
       -ms-text-size-adjust: 100%;
-      /* Safari, iOS, Chrome, Edge, Firefox - all modern browsers */
+      /* Safari, iOS, Chrome, Edge - WebKit browsers */
       -webkit-text-size-adjust: 100%;
-      /* Standard property - supported by Firefox, Safari, Chrome, Edge */
+      /* Standard property - supported by Firefox 111+, Safari 16.4+, Chrome 54+, Edge 79+ */
+      /* IDE may show false positive - property has broad modern browser support */
       text-size-adjust: 100%;
     }
 
@@ -941,7 +947,7 @@
 
   /* Hide navigation and interactive elements */
   nav, header, footer, button, .no-print, 
-  [role="button"], .print\\:hidden,
+  [role="button"], [class~="print:hidden"],
   aside, .sidebar {
     display: none !important;
   }
@@ -1020,7 +1026,7 @@
 
   /* Two-column layout becomes single column */
   .detail-layout,
-  .lg\\:flex-row {
+  [class~="lg:flex-row"] {
     flex-direction: column !important;
   }
 
