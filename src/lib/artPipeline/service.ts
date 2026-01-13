@@ -225,8 +225,8 @@ export class ArtPipelineService {
    * Get cached asset
    */
   private async getCachedAsset(cacheKey: string): Promise<ArtAsset | null> {
-    // In a real implementation, you'd check the database or filesystem
-    // For now, return null to always generate
+    // For now, always return null to generate new assets
+    // Full database integration can be implemented later
     return null;
   }
 
@@ -266,7 +266,7 @@ export class ArtPipelineService {
    * Get asset by ID
    */
   async getAsset(assetId: string): Promise<ArtAsset | null> {
-    // In a real implementation, you'd query the database
+    // For now, return null - full database integration can be implemented later
     return null;
   }
 
@@ -274,7 +274,7 @@ export class ArtPipelineService {
    * Get assets for entity
    */
   async getAssetsForEntity(entityType: string, entityId: string): Promise<ArtAsset[]> {
-    // In a real implementation, you'd query the database
+    // For now, return empty array - full database integration can be implemented later
     return [];
   }
 

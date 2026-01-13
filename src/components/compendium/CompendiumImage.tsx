@@ -8,6 +8,7 @@ import {
   getBestImageFormat,
   type ImageSize,
 } from '@/lib/imageOptimization';
+import { getAssetUrl } from '@/data/compendium/assetManifest';
 
 interface CompendiumImageProps {
   src?: string | null;
@@ -16,6 +17,10 @@ interface CompendiumImageProps {
   size?: 'thumbnail' | 'small' | 'medium' | 'large' | 'hero';
   fallbackIcon?: React.ReactNode;
   aspectRatio?: 'square' | 'landscape' | 'portrait' | 'auto';
+  // New props for canonical asset mapping
+  entryId?: string;
+  entryType?: string;
+  assetType?: 'portrait' | 'thumbnail' | 'banner' | 'icon' | 'token';
 }
 
 const sizeClasses = {
@@ -40,6 +45,9 @@ export function CompendiumImage({
   size = 'medium',
   fallbackIcon,
   aspectRatio = 'auto',
+  entryId,
+  entryType,
+  assetType,
 }: CompendiumImageProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -47,9 +55,25 @@ export function CompendiumImage({
   const [srcSet, setSrcSet] = useState<string>('');
   const [bestFormat, setBestFormat] = useState<'avif' | 'webp' | 'original'>('original');
 
+  // Determine the actual image source to use
+  const getImageSource = () => {
+    // If we have entry info, try canonical asset mapping first
+    if (entryId && entryType && assetType) {
+      const canonicalUrl = getAssetUrl(entryId, entryType, assetType);
+      if (canonicalUrl && canonicalUrl !== '/placeholder.svg') {
+        return canonicalUrl;
+      }
+    }
+    
+    // Fall back to provided src
+    return src;
+  };
+
+  const imageSrc = getImageSource();
+
   // Optimize image on mount
   useEffect(() => {
-    if (!src) {
+    if (!imageSrc) {
       setOptimizedSrc(null);
       setSrcSet('');
       return;
@@ -60,7 +84,7 @@ export function CompendiumImage({
     setBestFormat(format);
 
     // Generate optimized URL
-    const optimized = optimizeImageUrl(src, {
+    const optimized = optimizeImageUrl(imageSrc, {
       width: size === 'hero' ? 1920 : size === 'large' ? 512 : size === 'medium' ? 256 : 128,
       quality: 80,
       format: format === 'original' ? undefined : format,
@@ -75,13 +99,13 @@ export function CompendiumImage({
         ? ['small', 'medium', 'large']
         : ['thumbnail', 'small', 'medium'];
     
-    const webpSrcSet = generateSrcSet(src, sizes, 'webp');
-    const avifSrcSet = format === 'avif' ? generateSrcSet(src, sizes, 'avif') : '';
+    const webpSrcSet = generateSrcSet(imageSrc, sizes, 'webp');
+    const avifSrcSet = format === 'avif' ? generateSrcSet(imageSrc, sizes, 'avif') : '';
     
     // Combine srcsets
     const combinedSrcSet = [avifSrcSet, webpSrcSet].filter(Boolean).join(', ');
     setSrcSet(combinedSrcSet);
-  }, [src, size]);
+  }, [imageSrc, size]);
 
   const handleLoad = () => {
     setLoading(false);
@@ -92,7 +116,7 @@ export function CompendiumImage({
     setError(true);
   };
 
-  if (!src || error) {
+  if (!imageSrc || error) {
     return (
       <div
         className={cn(
@@ -125,7 +149,7 @@ export function CompendiumImage({
         {/* AVIF source (best compression) */}
         {bestFormat === 'avif' && srcSet && (
           <source
-            srcSet={generateSrcSet(src || '', 
+            srcSet={generateSrcSet(imageSrc || '', 
               size === 'hero' 
                 ? ['medium', 'large', 'xlarge', 'hero']
                 : size === 'large'
@@ -140,7 +164,7 @@ export function CompendiumImage({
         {/* WebP source (good compression, wider support) */}
         {srcSet && (
           <source
-            srcSet={generateSrcSet(src || '', 
+            srcSet={generateSrcSet(imageSrc || '', 
               size === 'hero' 
                 ? ['medium', 'large', 'xlarge', 'hero']
                 : size === 'large'
@@ -154,7 +178,7 @@ export function CompendiumImage({
         )}
         {/* Fallback image */}
         <img
-          src={optimizedSrc || src || undefined}
+          src={optimizedSrc || imageSrc || undefined}
           srcSet={srcSet || undefined}
           sizes={generateSizes(size)}
           alt={alt}

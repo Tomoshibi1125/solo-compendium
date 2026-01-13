@@ -1,0 +1,25 @@
+# Global browser support
+> 0.5%
+last 2 versions
+not dead
+not IE 11
+
+# Mobile browsers
+iOS >= 14
+Android >= 10
+Chrome >= 90
+Firefox >= 88
+Safari >= 14
+Edge >= 90
+
+# Desktop browsers
+Chrome >= 90
+Firefox >= 88
+Safari >= 14
+Edge >= 90
+
+# Emerging markets
+ChromeAndroid >= 90
+FirefoxAndroid >= 88
+Samsung >= 15
+UCAndroid >= 13

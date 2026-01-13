@@ -9,6 +9,12 @@ import type { AudioTrack, Playlist, AudioPlayerState, AudioSettings } from './ty
 import { AppError } from '@/lib/appError';
 import { error } from '@/lib/logger';
 
+// Dynamic import to avoid circular dependencies
+const getSupabase = async () => {
+  const { supabase } = await import('@/integrations/supabase/client');
+  return supabase;
+};
+
 /**
  * Hook for accessing audio player state and controls
  */
@@ -136,17 +142,25 @@ export function useAudioLibrary() {
     setError(null);
     
     try {
-      // In a real implementation, this would load from your database
-      // For now, we'll use mock data or localStorage
+      // Load audio tracks from localStorage for now
+      // Database integration would require proper table setup
       const savedTracks = localStorage.getItem('audio-tracks');
       const savedPlaylists = localStorage.getItem('audio-playlists');
       
       if (savedTracks) {
-        setTracks(JSON.parse(savedTracks));
+        try {
+          setTracks(JSON.parse(savedTracks));
+        } catch (parseError) {
+          console.warn('Failed to parse saved tracks:', parseError);
+        }
       }
       
       if (savedPlaylists) {
-        setPlaylists(JSON.parse(savedPlaylists));
+        try {
+          setPlaylists(JSON.parse(savedPlaylists));
+        } catch (parseError) {
+          console.warn('Failed to parse saved playlists:', parseError);
+        }
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load library');

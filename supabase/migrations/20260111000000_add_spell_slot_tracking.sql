@@ -55,12 +55,15 @@ CREATE POLICY "Users can delete their own character spell slots"
 
 -- Function to update updated_at timestamp
 CREATE OR REPLACE FUNCTION update_character_spell_slots_updated_at()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER 
+LANGUAGE plpgsql
+SET search_path = pg_catalog, public, extensions
+AS $$
 BEGIN
   NEW.updated_at = NOW();
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
 -- Trigger to auto-update updated_at
 CREATE TRIGGER update_character_spell_slots_updated_at

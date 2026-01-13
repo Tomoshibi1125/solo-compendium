@@ -13,6 +13,7 @@ RETURNS TABLE (
   image_url TEXT,
   rank REAL
 )
+LANGUAGE plpgsql
 SET search_path = pg_catalog, public, extensions
 SECURITY DEFINER
 AS $$
@@ -35,7 +36,7 @@ BEGIN
     @@ to_tsquery('english', search_text)
   ORDER BY rank DESC, j.name ASC;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
 -- Function to search compendium powers
 CREATE OR REPLACE FUNCTION public.search_compendium_powers(search_text TEXT)
@@ -50,6 +51,7 @@ RETURNS TABLE (
   source_book TEXT,
   rank REAL
 )
+LANGUAGE plpgsql
 SET search_path = pg_catalog, public, extensions
 SECURITY DEFINER
 AS $$
@@ -73,7 +75,7 @@ BEGIN
     @@ to_tsquery('english', search_text)
   ORDER BY rank DESC, p.name ASC;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
 -- Function to search compendium relics
 CREATE OR REPLACE FUNCTION public.search_compendium_relics(search_text TEXT)
@@ -87,6 +89,7 @@ RETURNS TABLE (
   source_book TEXT,
   rank REAL
 )
+LANGUAGE plpgsql
 SET search_path = pg_catalog, public, extensions
 SECURITY DEFINER
 AS $$
@@ -109,7 +112,7 @@ BEGIN
     @@ to_tsquery('english', search_text)
   ORDER BY rank DESC, r.name ASC;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
 -- Function to search compendium monsters
 CREATE OR REPLACE FUNCTION public.search_compendium_monsters(search_text TEXT)
@@ -124,6 +127,7 @@ RETURNS TABLE (
   source_book TEXT,
   rank REAL
 )
+LANGUAGE plpgsql
 SET search_path = pg_catalog, public, extensions
 SECURITY DEFINER
 AS $$
@@ -147,7 +151,7 @@ BEGIN
     @@ to_tsquery('english', search_text)
   ORDER BY rank DESC, m.name ASC;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
 -- Function to search compendium job paths
 CREATE OR REPLACE FUNCTION public.search_compendium_paths(search_text TEXT)
@@ -160,6 +164,7 @@ RETURNS TABLE (
   source_book TEXT,
   rank REAL
 )
+LANGUAGE plpgsql
 SET search_path = pg_catalog, public, extensions
 SECURITY DEFINER
 AS $$
@@ -181,7 +186,7 @@ BEGIN
     @@ to_tsquery('english', search_text)
   ORDER BY rank DESC, p.name ASC;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
 -- Function to search compendium monarchs
 CREATE OR REPLACE FUNCTION public.search_compendium_monarchs(search_text TEXT)
@@ -196,6 +201,7 @@ RETURNS TABLE (
   source_book TEXT,
   rank REAL
 )
+LANGUAGE plpgsql
 SET search_path = pg_catalog, public, extensions
 SECURITY DEFINER
 AS $$
@@ -228,12 +234,13 @@ BEGIN
   ) @@ to_tsquery('english', search_text)
   ORDER BY rank DESC, m.name ASC;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
 -- Helper function to prepare search text for tsquery
 -- Converts user input to safe tsquery format
 CREATE OR REPLACE FUNCTION public.prepare_search_text(input_text TEXT)
 RETURNS TEXT 
+LANGUAGE plpgsql
 SET search_path = pg_catalog, public, extensions
 SECURITY DEFINER
 AS $$
@@ -265,7 +272,7 @@ BEGIN
   
   RETURN result;
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ IMMUTABLE;
 
 -- Grant execute permissions
 GRANT EXECUTE ON FUNCTION search_compendium_jobs(TEXT) TO authenticated;

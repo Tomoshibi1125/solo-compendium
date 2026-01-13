@@ -20,6 +20,7 @@ import { validateEnv } from "@/lib/envValidation";
 import { AuthProvider } from "@/lib/auth/authContext";
 import { warn as logWarn } from "@/lib/logger";
 import { isSupabaseConfigured } from "@/integrations/supabase/client";
+import GlobalEffects from "@/components/ui/GlobalEffects";
 import Login from "./pages/Login";
 import PlayerTools from "./pages/PlayerTools";
 
@@ -71,6 +72,7 @@ const CampaignDetail = lazy(() => import("./pages/CampaignDetail"));
 const CampaignJoin = lazy(() => import("./pages/CampaignJoin"));
 const CharacterCompare = lazy(() => import("./pages/CharacterCompare"));
 const Auth = lazy(() => import("./pages/Auth"));
+const AuthCallback = lazy(() => import("./pages/AuthCallback"));
 const Landing = lazy(() => import("./pages/Landing"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Setup = lazy(() => import("./pages/Setup"));
@@ -148,6 +150,14 @@ const AppContent = () => {
         element={
           <Suspense fallback={<PageLoader />}>
             <Login />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/auth/callback"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <AuthCallback />
           </Suspense>
         }
       />
@@ -504,6 +514,7 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <AuthProvider>
+            <GlobalEffects />
             <Toaster />
             <Sonner />
             <BrowserRouter>

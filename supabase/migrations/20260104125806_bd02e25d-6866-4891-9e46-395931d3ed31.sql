@@ -243,7 +243,10 @@ WITH CHECK (user_id = auth.uid());
 -- =============================================
 
 -- Function to generate unique share code
-CREATE OR REPLACE FUNCTION generate_share_code() RETURNS TEXT AS $$
+CREATE OR REPLACE FUNCTION generate_share_code() RETURNS TEXT 
+LANGUAGE plpgsql
+SET search_path = pg_catalog, public, extensions
+AS $$
 DECLARE
   chars TEXT := 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   code TEXT := '';
@@ -254,14 +257,17 @@ BEGIN
   END LOOP;
   RETURN code;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
 -- Function to create campaign with auto-generated share code
 CREATE OR REPLACE FUNCTION create_campaign_with_code(
   p_name TEXT,
   p_description TEXT,
   p_dm_id UUID
-) RETURNS UUID AS $$
+) RETURNS UUID 
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
 DECLARE
   new_code TEXT;
   new_id UUID;
@@ -278,7 +284,7 @@ BEGIN
   
   RETURN new_id;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$;
 
 -- =============================================
 -- Enable realtime for chat
@@ -308,10 +314,7 @@ BEGIN
       AND t.tgname = 'update_campaigns_updated_at'
       AND NOT t.tgisinternal
   ) THEN
-    EXECUTE 'CREATE TRIGGER update_campaigns_updated_at\n'
-      || 'BEFORE UPDATE ON public.campaigns\n'
-      || 'FOR EACH ROW\n'
-      || 'EXECUTE FUNCTION public.update_updated_at_column();';
+    EXECUTE 'CREATE TRIGGER update_campaigns_updated_at BEFORE UPDATE ON public.campaigns FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();';
   END IF;
 
   IF EXISTS (
@@ -330,10 +333,7 @@ BEGIN
       AND t.tgname = 'update_campaign_notes_updated_at'
       AND NOT t.tgisinternal
   ) THEN
-    EXECUTE 'CREATE TRIGGER update_campaign_notes_updated_at\n'
-      || 'BEFORE UPDATE ON public.campaign_notes\n'
-      || 'FOR EACH ROW\n'
-      || 'EXECUTE FUNCTION public.update_updated_at_column();';
+    EXECUTE 'CREATE TRIGGER update_campaign_notes_updated_at BEFORE UPDATE ON public.campaign_notes FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();';
   END IF;
 
   IF EXISTS (
@@ -352,9 +352,6 @@ BEGIN
       AND t.tgname = 'update_character_journal_updated_at'
       AND NOT t.tgisinternal
   ) THEN
-    EXECUTE 'CREATE TRIGGER update_character_journal_updated_at\n'
-      || 'BEFORE UPDATE ON public.character_journal\n'
-      || 'FOR EACH ROW\n'
-      || 'EXECUTE FUNCTION public.update_updated_at_column();';
+    EXECUTE 'CREATE TRIGGER update_character_journal_updated_at BEFORE UPDATE ON public.character_journal FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();';
   END IF;
 END $$;

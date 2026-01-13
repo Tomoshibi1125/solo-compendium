@@ -7,11 +7,13 @@ import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
-import { Crown, Shield, Sword, ArrowRight } from 'lucide-react';
+import { Crown, Shield, Sword, ArrowRight, Mail } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useUpdateProfile, useProfile } from '@/hooks/useProfile';
 import { cn } from '@/lib/utils';
 import { logger } from '@/lib/logger';
+import { OAuthButtons } from './OAuthButton';
+import { useOAuth } from '@/hooks/useOAuth';
 
 export function Auth() {
   const navigate = useNavigate();
@@ -23,6 +25,7 @@ export function Auth() {
   const { data: profile, isLoading: profileLoading } = useProfile();
   const isConfigured = isSupabaseConfigured;
   const isE2E = import.meta.env.VITE_E2E === 'true';
+  const { isLoading: oauthLoading, signInWithProvider } = useOAuth();
 
   // Role hierarchy for authorization
   const roleHierarchy = {
@@ -311,6 +314,25 @@ export function Auth() {
             <div className="flex justify-center mb-6">
               <ShadowMonarchLogo size="md" variant="supreme" />
             </div>
+            
+            {/* OAuth Buttons */}
+            <div className="mb-6">
+              <OAuthButtons 
+                isLoading={oauthLoading}
+                onSignIn={signInWithProvider}
+                className="mb-4"
+              />
+              
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-border"></div>
+                </div>
+                <div className="relative flex justify-center text-xs">
+                  <span className="bg-background px-2 text-muted-foreground">or continue with email</span>
+                </div>
+              </div>
+            </div>
+
             <SupabaseAuth
               supabaseClient={supabase}
               appearance={{
@@ -334,6 +356,12 @@ export function Auth() {
               providers={[]}
               view={authView}
               redirectTo={window.location.origin}
+              onlyThirdPartyProviders={false}
+              queryParams={{
+                access_type: 'offline',
+                prompt: 'consent',
+              }}
+              socialLayout="vertical"
             />
             <div className="mt-4 text-center">
               <button

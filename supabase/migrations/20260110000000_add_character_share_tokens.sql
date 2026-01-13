@@ -10,7 +10,10 @@ CREATE INDEX IF NOT EXISTS idx_characters_share_token ON public.characters(share
 
 -- Function to generate unique share token
 CREATE OR REPLACE FUNCTION generate_character_share_token()
-RETURNS TEXT AS $$
+RETURNS TEXT 
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
 DECLARE
   chars TEXT := 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   token TEXT := '';
@@ -21,11 +24,14 @@ BEGIN
   END LOOP;
   RETURN token;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
 -- Function to generate and set share token for a character
 CREATE OR REPLACE FUNCTION generate_character_share_token_for_character(p_character_id UUID)
-RETURNS TEXT AS $$
+RETURNS TEXT 
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
 DECLARE
   new_token TEXT;
   v_user_id UUID;
@@ -52,7 +58,7 @@ BEGIN
   
   RETURN new_token;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$;
 
 -- Function to get character by share token (bypasses RLS)
 CREATE OR REPLACE FUNCTION public.get_character_by_share_token(
@@ -78,6 +84,7 @@ RETURNS TABLE (
   created_at TIMESTAMPTZ,
   updated_at TIMESTAMPTZ
 )
+LANGUAGE plpgsql
 SET search_path = pg_catalog, public, extensions
 SECURITY DEFINER
 AS $$
@@ -106,7 +113,7 @@ BEGIN
     AND c.share_token = p_share_token
     AND c.share_token IS NOT NULL;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$;
 
 COMMENT ON COLUMN public.characters.share_token IS 'Unique token for public read-only sharing. When set, allows anyone with the token to view the character.';
 

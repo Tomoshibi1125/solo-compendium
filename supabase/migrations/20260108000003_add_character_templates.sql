@@ -54,12 +54,15 @@ CREATE POLICY "Users can delete own templates"
 
 -- Function to update updated_at timestamp
 CREATE OR REPLACE FUNCTION update_character_templates_updated_at()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER 
+LANGUAGE plpgsql
+SET search_path = pg_catalog, public, extensions
+AS $$
 BEGIN
   NEW.updated_at = now();
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
 -- Trigger to update updated_at
 CREATE TRIGGER update_character_templates_updated_at

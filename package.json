@@ -27,6 +27,9 @@
     "compendium:validate": "node scripts/compendium/validate.js",
     "compendium:coverage": "node scripts/compendium/coverage.js",
     "compendium:import": "node scripts/import-content.js --apply",
+    "assets:validate": "npx tsx scripts/validate-assets.ts",
+    "assets:generate": "npx tsx scripts/generate-complete-assets.ts",
+    "assets:verify": "npx tsx scripts/verify-complete-coverage.ts",
     "deploy:check": "node -e \"console.log('Running deployment checks...'); require('child_process').execSync('npm run lint && npm run typecheck && npm run test -- --run && npm run build', {stdio: 'inherit'})\""
   },
   "dependencies": {

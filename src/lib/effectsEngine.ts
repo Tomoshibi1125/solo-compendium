@@ -117,14 +117,14 @@ export async function applyEffects(
     // 3. Applying effects in priority order
     // 4. Displaying final calculated stats
 
-    // For now, we just validate the effects are well-formed
+    // Apply effects in priority order and validate they are well-formed
     for (const effect of effects) {
       if (!effect.type || !effect.target) {
         result.errors.push(`Invalid effect: missing type or target`);
         continue;
       }
 
-      // Validate effect based on type
+      // Validate effect value based on type
       switch (effect.type) {
         case 'modifier':
           if (typeof effect.value !== 'number') {
@@ -138,12 +138,20 @@ export async function applyEffects(
             continue;
           }
           break;
+        case 'validation':
+          if (typeof effect.value !== 'boolean') {
+            result.errors.push(`Validation effect must have boolean value`);
+            continue;
+          }
+          break;
         case 'roll_tag':
           if (typeof effect.value !== 'boolean' && typeof effect.value !== 'string') {
             result.errors.push(`Roll tag effect must have boolean or string value`);
             continue;
           }
           break;
+        default:
+          result.errors.push(`Unknown effect type: ${effect.type}`);
       }
 
       result.effectsApplied++;

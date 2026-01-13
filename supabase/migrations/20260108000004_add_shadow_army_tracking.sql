@@ -81,6 +81,7 @@ CREATE POLICY "Users can delete their own shadow army" ON public.character_shado
 -- Shadow Monarchs gain shadow energy as they level up
 CREATE OR REPLACE FUNCTION public.calculate_shadow_energy_max(character_level INTEGER)
 RETURNS INTEGER 
+LANGUAGE plpgsql
 SET search_path = pg_catalog, public, extensions
 SECURITY DEFINER
 AS $$
@@ -99,5 +100,5 @@ BEGIN
     ELSE 200
   END;
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ IMMUTABLE;
 

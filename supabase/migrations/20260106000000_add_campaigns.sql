@@ -33,7 +33,10 @@ CREATE INDEX IF NOT EXISTS campaign_members_user_id_idx ON campaign_members(user
 
 -- Function to generate unique share codes
 CREATE OR REPLACE FUNCTION generate_share_code()
-RETURNS TEXT AS $$
+RETURNS TEXT 
+LANGUAGE plpgsql
+SET search_path = pg_catalog, public, extensions
+AS $$
 DECLARE
   chars TEXT := 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; -- Excludes confusing chars
   result TEXT := '';
@@ -44,7 +47,7 @@ BEGIN
   END LOOP;
   RETURN result;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
 -- Function to create campaign with unique share code
 CREATE OR REPLACE FUNCTION create_campaign_with_code(
@@ -52,7 +55,10 @@ CREATE OR REPLACE FUNCTION create_campaign_with_code(
   p_description TEXT,
   p_dm_id UUID
 )
-RETURNS UUID AS $$
+RETURNS UUID 
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
 DECLARE
   v_campaign_id UUID;
   v_share_code TEXT;
@@ -84,7 +90,7 @@ BEGIN
 
   RETURN v_campaign_id;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$;
 
 -- RLS Policies
 ALTER TABLE campaigns ENABLE ROW LEVEL SECURITY;
@@ -160,12 +166,15 @@ CREATE POLICY "DMs can remove members, users can leave"
 
 -- Updated_at trigger
 CREATE OR REPLACE FUNCTION update_updated_at_column()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER 
+LANGUAGE plpgsql
+SET search_path = pg_catalog, public, extensions
+AS $$
 BEGIN
   NEW.updated_at = NOW();
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
 DO $$
 BEGIN

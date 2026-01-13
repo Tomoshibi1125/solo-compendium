@@ -240,7 +240,12 @@ serve(async (req: Request) => {
     // Log usage to Supabase
     if (response.success && response.usage) {
       const supabaseUrl = (globalThis as any).Deno?.env.get('SUPABASE_URL')
-      const supabaseKey = (globalThis as any).Deno?.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+      const supabaseKey = (globalThis as any).Deno?.env.get('SUPABASE_SERVICE_ROLE_KEY')
+
+      if (!supabaseUrl || !supabaseKey) {
+        console.error('Missing Supabase configuration for usage logging')
+        return response
+      }
 
       const supabase = createClient(supabaseUrl, supabaseKey)
 

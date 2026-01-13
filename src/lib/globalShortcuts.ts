@@ -221,8 +221,9 @@ export const GLOBAL_SHORTCUTS: GlobalShortcut[] = [
 ];
 
 function showShortcutsHelp() {
-  // This would be implemented in a component
-  // For now, do nothing - the help is shown via the QuickActionsPanel dialog
+  // Show keyboard shortcuts help dialog
+  const helpEvent = new CustomEvent('show-shortcuts-help');
+  window.dispatchEvent(helpEvent);
 }
 
 /**

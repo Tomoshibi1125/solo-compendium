@@ -175,6 +175,7 @@ ON CONFLICT (id) DO NOTHING;
 CREATE OR REPLACE FUNCTION assign_daily_quests(character_uuid UUID)
 RETURNS TABLE(id TEXT, template_id TEXT, status TEXT)
 LANGUAGE plpgsql
+SET search_path = pg_catalog, public, extensions
 AS $$
 DECLARE
   quest_config RECORD;
@@ -243,6 +244,7 @@ $$;
 -- Trigger to automatically assign quests after long rest
 CREATE OR REPLACE FUNCTION public.on_long_rest_assign_quests()
 RETURNS TRIGGER
+LANGUAGE plpgsql
 SET search_path = pg_catalog, public, extensions
 AS $$
 BEGIN
@@ -275,6 +277,7 @@ $$;
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER
 LANGUAGE plpgsql
+SET search_path = pg_catalog, public, extensions
 AS $$
 BEGIN
   NEW.updated_at = NOW();

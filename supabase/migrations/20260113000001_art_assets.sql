@@ -55,6 +55,7 @@ RETURNS TABLE(
   lg TEXT,
   token TEXT
 )
+LANGUAGE plpgsql
 SET search_path = pg_catalog, public, extensions
 SECURITY DEFINER
 AS $$
@@ -76,6 +77,7 @@ $$;
 -- Function to check if asset exists
 CREATE OR REPLACE FUNCTION public.asset_exists(entity_uuid TEXT, entity_variant TEXT DEFAULT 'portrait')
 RETURNS BOOLEAN
+LANGUAGE plpgsql
 SET search_path = pg_catalog, public, extensions
 SECURITY DEFINER
 AS $$
@@ -96,6 +98,7 @@ RETURNS TABLE(
   dimensions JSONB,
   created_at TIMESTAMPTZ
 )
+LANGUAGE plpgsql
 SET search_path = pg_catalog, public, extensions
 SECURITY DEFINER
 AS $$

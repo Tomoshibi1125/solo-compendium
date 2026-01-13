@@ -52,6 +52,7 @@ import { AnimatedList } from '@/components/ui/AnimatedList';
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { GeminiProtocolGenerator } from '@/components/compendium/GeminiProtocolGenerator';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
+import { staticDataProvider } from '@/data/compendium/staticDataProvider';
 
 interface CompendiumEntry {
   id: string;
@@ -188,8 +189,97 @@ const Compendium = () => {
     queryFn: async () => {
       const allEntries: CompendiumEntry[] = [];
 
-      // Check if Supabase is configured
+      // Check if Supabase is configured, otherwise use static data
       if (!isSupabaseConfigured) {
+        // Use static data provider
+        const staticData = await staticDataProvider.getJobs(parsedQuery.text);
+        allEntries.push(...staticData.map(j => ({
+          id: j.id,
+          name: j.display_name || j.name,
+          type: 'jobs' as const,
+          description: j.description,
+          rarity: j.rarity || 'legendary',
+          tags: j.tags || [],
+          created_at: j.created_at,
+          source_book: j.source_book,
+          image_url: j.image_url,
+          isFavorite: favorites.has(`jobs:${j.id}`) || false,
+        })));
+
+        // Add monsters from static data
+        if (selectedCategory === 'all' || selectedCategory === 'monsters') {
+          const monsterData = await staticDataProvider.getMonsters(parsedQuery.text);
+          allEntries.push(...monsterData.map(m => ({
+            id: m.id,
+            name: m.display_name || m.name,
+            type: 'monsters' as const,
+            description: m.description,
+            rarity: m.rarity || 'common',
+            tags: m.tags || [],
+            created_at: m.created_at,
+            source_book: m.source_book,
+            image_url: m.image_url,
+            cr: m.cr,
+            gate_rank: m.gate_rank,
+            is_boss: m.is_boss,
+            isFavorite: favorites.has(`monsters:${m.id}`) || false,
+          })));
+        }
+
+        // Add items from static data
+        if (selectedCategory === 'all' || selectedCategory === 'equipment') {
+          const itemData = await staticDataProvider.getItems(parsedQuery.text);
+          allEntries.push(...itemData.map(i => ({
+            id: i.id,
+            name: i.display_name || i.name,
+            type: 'equipment' as const,
+            description: i.description,
+            rarity: i.rarity || 'common',
+            tags: i.tags || [],
+            created_at: i.created_at,
+            source_book: i.source_book,
+            image_url: i.image_url,
+            equipment_type: i.equipment_type,
+            isFavorite: favorites.has(`equipment:${i.id}`) || false,
+          })));
+        }
+
+        // Add spells from static data
+        if (selectedCategory === 'all' || selectedCategory === 'powers') {
+          const spellData = await staticDataProvider.getSpells(parsedQuery.text);
+          allEntries.push(...spellData.map(s => ({
+            id: s.id,
+            name: s.display_name || s.name,
+            type: 'powers' as const,
+            description: s.description,
+            rarity: s.rarity || 'common',
+            tags: s.tags || [],
+            created_at: s.created_at,
+            source_book: s.source_book,
+            image_url: s.image_url,
+            school: s.school,
+            isFavorite: favorites.has(`powers:${s.id}`) || false,
+          })));
+        }
+
+        // Add runes from static data
+        if (selectedCategory === 'all' || selectedCategory === 'runes') {
+          const runeData = await staticDataProvider.getRunes(parsedQuery.text);
+          allEntries.push(...runeData.map(r => ({
+            id: r.id,
+            name: r.display_name || r.name,
+            type: 'runes' as const,
+            description: r.description,
+            rarity: r.rarity || 'rare',
+            tags: r.tags || [],
+            created_at: r.created_at,
+            source_book: r.source_book,
+            image_url: r.image_url,
+            rune_type: r.rune_type,
+            isFavorite: favorites.has(`runes:${r.id}`) || false,
+          })));
+        }
+
         return allEntries;
       }
 

@@ -226,7 +226,10 @@ END $$;
 
 -- Function to get campaign member count
 CREATE OR REPLACE FUNCTION get_campaign_member_count(p_campaign_id UUID)
-RETURNS INTEGER AS $$
+RETURNS INTEGER 
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
 BEGIN
   RETURN (
     SELECT COUNT(*)::INTEGER
@@ -234,5 +237,5 @@ BEGIN
     WHERE campaign_id = p_campaign_id
   );
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$;
 

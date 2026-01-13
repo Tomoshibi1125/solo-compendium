@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Play, Pause, SkipForward, SkipBack, Volume2, Music, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -66,7 +66,7 @@ export function AudioPlayer({ tracks = [] }: AudioPlayerProps) {
     }
   };
 
-  const loadTrack = (index: number) => {
+  const loadTrack = useCallback((index: number) => {
     setState(prev => ({
       ...prev,
       currentTrackIndex: index,
@@ -79,14 +79,14 @@ export function AudioPlayer({ tracks = [] }: AudioPlayerProps) {
       audioRef.current.currentTime = 0;
       audioRef.current.pause();
     }
-  };
+  }, []);
 
   // Auto-load first track if available
   useEffect(() => {
     if (tracks.length > 0 && state.currentTrackIndex === -1) {
       loadTrack(0);
     }
-  }, [tracks]);
+  }, [tracks, state.currentTrackIndex, loadTrack]);
 
   const handleTimeUpdate = () => {
     if (audioRef.current) {
