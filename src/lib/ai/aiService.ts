@@ -325,186 +325,124 @@ export class AIServiceManager {
   private async callService(service: AIService, request: AIRequest): Promise<AIResponse> {
     this.requestCount++;
 
+    // Route to appropriate service handler
     switch (service.type) {
+      case 'google':
+        return this.callGoogleGemini(service, request);
       case 'openai':
-        return this.callOpenAI(service, request);
+        return this.callSupabaseEdgeFunction(service, request);
       case 'anthropic':
-        return this.callAnthropic(service, request);
-      case 'stability':
-        return this.callStabilityAI(service, request);
-      case 'elevenlabs':
-        return this.callElevenLabs(service, request);
+        return this.callSupabaseEdgeFunction(service, request);
+      case 'huggingface':
+        return this.callSupabaseEdgeFunction(service, request);
       default:
-        throw new AppError(`Unsupported AI service: ${service.type}`, 'AI_ERROR');
+        return this.callSupabaseEdgeFunction(service, request);
     }
   }
 
-  private async callOpenAI(service: AIService, request: AIRequest): Promise<AIResponse> {
-    // Implementation for OpenAI API
+  private async callGoogleGemini(service: AIService, request: AIRequest): Promise<AIResponse> {
     try {
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${service.apiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model: service.model || 'gpt-4',
-          messages: [
-            {
-              role: 'system',
-              content: this.getSystemPrompt(request.type),
-            },
-            {
-              role: 'user',
-              content: this.formatInput(request),
-            },
-          ],
-          max_tokens: service.maxTokens,
-          temperature: service.temperature,
-        }),
-      });
-
-      const data = await response.json();
-      
-      return {
-        success: true,
-        data: data.choices[0]?.message?.content || '',
-        usage: {
-          promptTokens: data.usage?.prompt_tokens || 0,
-          completionTokens: data.usage?.completion_tokens || 0,
-          totalTokens: data.usage?.total_tokens || 0,
-        },
-      };
-    } catch (error) {
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : 'OpenAI API error',
-      };
-    }
-  }
-
-  private async callAnthropic(service: AIService, request: AIRequest): Promise<AIResponse> {
-    // Implementation for Anthropic Claude API
-    try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'x-api-key': service.apiKey!,
-          'Content-Type': 'application/json',
-          'anthropic-version': '2023-06-01',
-        },
-        body: JSON.stringify({
-          model: service.model || 'claude-3-sonnet-20240229',
-          max_tokens: service.maxTokens,
-          messages: [
-            {
-              role: 'user',
-              content: this.formatInput(request),
-            },
-          ],
-        }),
-      });
-
-      const data = await response.json();
-      
-      return {
-        success: true,
-        data: data.content[0]?.text || '',
-        usage: {
-          promptTokens: data.usage?.input_tokens || 0,
-          completionTokens: data.usage?.output_tokens || 0,
-          totalTokens: data.usage?.input_tokens + data.usage?.output_tokens || 0,
-        },
-      };
-    } catch (error) {
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : 'Anthropic API error',
-      };
-    }
-  }
-
-  private async callStabilityAI(service: AIService, request: AIRequest): Promise<AIResponse> {
-    // Implementation for Stability AI (image analysis)
-    try {
-      const formData = new FormData();
-      
-      if (request.type === 'analyze-image' && typeof request.input === 'string') {
-        // For image analysis, we'd need to fetch the image first
-        const imageResponse = await fetch(request.input);
-        const imageBlob = await imageResponse.blob();
-        formData.append('image', imageBlob);
-      } else {
-        formData.append('input', JSON.stringify(request.input));
+      const apiKey = service.apiKey || import.meta.env.GOOGLE_API_KEY;
+      if (!apiKey) {
+        throw new Error('Google Gemini API key not found');
       }
 
-      formData.append('text', this.formatInput(request));
-
-      const response = await fetch('https://api.stability.ai/v1/generate', {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/${service.model}:generateContent?key=${apiKey}`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${service.apiKey}`,
-          'Accept': 'application/json',
-        },
-        body: formData,
-      });
-
-      const data = await response.json();
-      
-      return {
-        success: true,
-        data: data.outputs?.[0] || '',
-        usage: {
-          promptTokens: 0,
-          completionTokens: 0,
-          totalTokens: 0,
-        },
-      };
-    } catch (error) {
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : 'Stability AI error',
-      };
-    }
-  }
-
-  private async callElevenLabs(service: AIService, request: AIRequest): Promise<AIResponse> {
-    // Implementation for ElevenLabs (audio generation)
-    try {
-      const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech', {
-        method: 'POST',
-        headers: {
-          'xi-api-key': service.apiKey!,
-          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          text: this.formatInput(request),
-          voice_id: 'eleven_monolingual_v2',
-          model_id: 'eleven_multilingual_v2',
-          optimize_streaming_latency: 0,
+          contents: [
+            {
+              parts: [
+                {
+                  text: `${this.getSystemPrompt(request.type)}\n\n${this.formatInput(request)}`
+                }
+              ]
+            }
+          ],
+          generationConfig: {
+            temperature: service.temperature,
+            maxOutputTokens: service.maxTokens,
+          },
         }),
       });
 
       const data = await response.json();
       
+      if (!response.ok) {
+        throw new Error(data.error?.message || 'Google Gemini API error');
+      }
+
       return {
         success: true,
-        data: data.audio_base64 || '',
+        data: data.candidates?.[0]?.content?.parts?.[0]?.text || '',
         usage: {
-          promptTokens: 0,
-          completionTokens: 0,
-          totalTokens: 0,
+          promptTokens: data.usageMetadata?.promptTokenCount || 0,
+          completionTokens: data.usageMetadata?.candidatesTokenCount || 0,
+          totalTokens: data.usageMetadata?.totalTokenCount || 0,
         },
       };
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'ElevenLabs error',
+        error: error instanceof Error ? error.message : 'Google Gemini API error',
       };
     }
   }
 
+  private async callSupabaseEdgeFunction(service: AIService, request: AIRequest): Promise<AIResponse> {
+    try {
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+      
+      if (!supabaseUrl || !supabaseAnonKey) {
+        throw new Error('Supabase configuration not found');
+      }
+
+      const edgeFunctionUrl = `${supabaseUrl}/functions/v1/ai-service`;
+      
+      const response = await fetch(edgeFunctionUrl, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${supabaseAnonKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          service: service.type,
+          type: request.type,
+          input: request.input,
+          context: request.context,
+          options: request.options,
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (!response.ok) {
+        return {
+          success: false,
+          error: data.error || `Edge function error: ${response.status}`,
+        };
+      }
+
+      // Transform edge function response to match our AI response format
+      return {
+        success: data.success,
+        data: data.data,
+        error: data.error,
+        usage: data.usage,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Supabase edge function error',
+      };
+    }
+  }
+
+  
   private getSystemPrompt(type: string): string {
     const prompts: Record<string, string> = {
       'enhance-prompt': `You are an expert D&D and AI art prompt engineer. Enhance the given prompt for Stable Diffusion generation in the style of Solo Leveling manhwa anime. Focus on dramatic lighting, high contrast, detailed character art, and dynamic poses. Add specific Solo Leveling elements like shadow energy, gates, and system interface aesthetics.`,

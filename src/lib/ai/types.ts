@@ -9,7 +9,7 @@ import { z } from 'zod';
 export const AIServiceSchema = z.object({
   id: z.string(),
   name: z.string(),
-  type: z.enum(['openai', 'anthropic', 'stability', 'elevenlabs', 'custom']),
+  type: z.enum(['openai', 'anthropic', 'stability', 'elevenlabs', 'custom', 'google', 'huggingface']),
   capabilities: z.array(z.enum([
     'enhance-prompt',
     'analyze-image',
@@ -151,8 +151,27 @@ export interface AIConfiguration {
 // Default AI services configuration
 export const DEFAULT_AI_SERVICES: AIService[] = [
   {
-    id: 'openai-gpt4',
-    name: 'OpenAI GPT-4',
+    id: 'google-gemini',
+    name: 'Google Gemini Pro (Free)',
+    type: 'google',
+    capabilities: [
+      'enhance-prompt',
+      'analyze-image',
+      'analyze-audio',
+      'generate-tags',
+      'detect-mood',
+      'suggest-style',
+      'filter-content',
+      'create-variation',
+    ],
+    model: 'gemini-1.5-flash',
+    maxTokens: 1024,
+    temperature: 0.7,
+    enabled: true,
+  },
+  {
+    id: 'openai',
+    name: 'OpenAI GPT-3.5 (Free Tier)',
     type: 'openai',
     capabilities: [
       'enhance-prompt',
@@ -164,51 +183,38 @@ export const DEFAULT_AI_SERVICES: AIService[] = [
       'filter-content',
       'create-variation',
     ],
-    model: 'gpt-4',
-    maxTokens: 2048,
-    temperature: 0.7,
-    enabled: true,
-  },
-  {
-    id: 'openai-vision',
-    name: 'OpenAI Vision',
-    type: 'openai',
-    capabilities: ['analyze-image', 'generate-tags', 'detect-mood'],
-    model: 'gpt-4-vision-preview',
+    model: 'gpt-3.5-turbo',
     maxTokens: 1024,
-    temperature: 0.5,
+    temperature: 0.7,
     enabled: true,
   },
   {
-    id: 'anthropic-claude',
-    name: 'Anthropic Claude',
-    type: 'anthropic',
-    capabilities: ['enhance-prompt', 'filter-content', 'create-variation'],
-    model: 'claude-3-sonnet',
-    maxTokens: 4096,
+    id: 'huggingface',
+    name: 'Hugging Face (Open Source)',
+    type: 'huggingface',
+    capabilities: [
+      'enhance-prompt',
+      'generate-tags',
+      'detect-mood',
+      'suggest-style',
+      'filter-content',
+      'create-variation',
+    ],
+    model: 'mistral-7b-instruct',
+    maxTokens: 1024,
     temperature: 0.7,
-    enabled: false,
-  },
-  {
-    id: 'stability-ai',
-    name: 'Stability AI',
-    type: 'stability',
-    capabilities: ['analyze-image', 'suggest-style', 'generate-tags'],
-    model: 'stable-diffusion-xl',
-    maxTokens: 512,
-    temperature: 0.5,
-    enabled: false,
+    enabled: true,
   },
 ];
 
 export const DEFAULT_AI_CONFIG: AIConfiguration = {
   services: DEFAULT_AI_SERVICES,
-  defaultService: 'openai-gpt4',
+  defaultService: 'google-gemini', // Best ethical free option
   autoEnhancePrompts: true,
   autoAnalyzeAudio: true,
   autoAnalyzeImages: true,
   contentFiltering: true,
-  maxRequestsPerHour: 100,
+  maxRequestsPerHour: 30, // Reduced for free tiers
   cacheResults: true,
 };
 
