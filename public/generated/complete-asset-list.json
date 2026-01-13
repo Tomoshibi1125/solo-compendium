@@ -1,0 +1,308 @@
+{
+  "generatedAt": "2026-01-12T08:10:15.531Z",
+  "totalAssets": 18,
+  "categories": {
+    "ui-art": [
+      {
+        "key": "shadow-soldier-emblem",
+        "filename": "shadow-soldier-emblem.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\ui-art\\shadow-soldier-emblem.jpg",
+        "size": "256x256",
+        "prompt": "Solo Leveling shadow soldier emblem, circular logo, purple energy, dark fantasy symbol, professional emblem design",
+        "category": "ui-art"
+      },
+      {
+        "key": "system-interface",
+        "filename": "system-interface.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\ui-art\\system-interface.jpg",
+        "size": "1920x1080",
+        "prompt": "Solo Leveling system interface, futuristic UI, holographic display, shadow energy effects, dark theme interface",
+        "category": "ui-art"
+      },
+      {
+        "key": "gate-portal-3d",
+        "filename": "gate-portal-3d.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\ui-art\\gate-portal-3d.jpg",
+        "size": "1920x1080",
+        "prompt": "Solo Leveling gate portal, 3D dimensional rift, purple energy swirling, dark fantasy portal, epic gateway",
+        "category": "ui-art"
+      },
+      {
+        "key": "shadow-silhouette",
+        "filename": "shadow-silhouette.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\ui-art\\shadow-silhouette.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling shadow silhouette, mysterious hunter figure, dark outline, purple energy aura, shadow warrior",
+        "category": "ui-art"
+      }
+    ],
+    "compendium/monsters": [
+      {
+        "key": "shadow-demon",
+        "filename": "shadow-demon.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\monsters\\shadow-demon.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling shadow demon, dark creature, purple glowing eyes, monstrous form, shadow energy, detailed monster",
+        "category": "compendium/monsters"
+      },
+      {
+        "key": "shadow-beast",
+        "filename": "shadow-beast.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\monsters\\shadow-beast.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling shadow beast, large dark creature, powerful build, shadow energy aura, epic fantasy monster",
+        "category": "compendium/monsters"
+      },
+      {
+        "key": "shadow-lord",
+        "filename": "shadow-lord.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\monsters\\shadow-lord.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling shadow lord, powerful dark ruler, imposing figure, shadow armor, purple energy, epic boss",
+        "category": "compendium/monsters"
+      }
+    ],
+    "compendium/spells": [
+      {
+        "key": "shadow-shield",
+        "filename": "shadow-shield.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\spells\\shadow-shield.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling shadow shield, dark energy barrier, purple glowing shield, protective magic, detailed illustration",
+        "category": "compendium/spells"
+      },
+      {
+        "key": "shadow-teleport",
+        "filename": "shadow-teleport.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\spells\\shadow-teleport.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling shadow teleport, dark energy movement, purple particles, teleportation effect, magic spell",
+        "category": "compendium/spells"
+      }
+    ],
+    "compendium/locations": [
+      {
+        "key": "shadow-dungeon",
+        "filename": "shadow-dungeon.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\locations\\shadow-dungeon.jpg",
+        "size": "1920x1080",
+        "prompt": "Solo Leveling shadow dungeon, dark underground environment, purple energy crystals, epic fantasy location",
+        "category": "compendium/locations"
+      },
+      {
+        "key": "shadow-castle",
+        "filename": "shadow-castle.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\locations\\shadow-castle.jpg",
+        "size": "1920x1080",
+        "prompt": "Solo Leveling shadow castle, dark fortress, purple energy towers, epic fantasy architecture, imposing structure",
+        "category": "compendium/locations"
+      },
+      {
+        "key": "shadow-gate",
+        "filename": "shadow-gate.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\locations\\shadow-gate.jpg",
+        "size": "1920x1080",
+        "prompt": "Solo Leveling shadow gate, massive dark gate, purple energy portal, epic fantasy entrance, dimensional gateway",
+        "category": "compendium/locations"
+      }
+    ],
+    "compendium/jobs": [
+      {
+        "key": "shadow-warrior",
+        "filename": "shadow-warrior.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\jobs\\shadow-warrior.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling shadow warrior, dark armored fighter, purple energy aura, professional warrior, detailed character",
+        "category": "compendium/jobs"
+      },
+      {
+        "key": "shadow-mage",
+        "filename": "shadow-mage.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\jobs\\shadow-mage.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling shadow mage, dark robed spellcaster, purple energy hands, magical power, detailed character",
+        "category": "compendium/jobs"
+      },
+      {
+        "key": "shadow-assassin",
+        "filename": "shadow-assassin.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\jobs\\shadow-assassin.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling shadow assassin, stealthy dark figure, purple energy daggers, mysterious character, detailed illustration",
+        "category": "compendium/jobs"
+      }
+    ],
+    "compendium/backgrounds": [
+      {
+        "key": "shadow-realm",
+        "filename": "shadow-realm.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\backgrounds\\shadow-realm.jpg",
+        "size": "1920x1080",
+        "prompt": "Solo Leveling shadow realm, dark dimension landscape, purple energy sky, epic fantasy environment, atmospheric",
+        "category": "compendium/backgrounds"
+      },
+      {
+        "key": "shadow-city",
+        "filename": "shadow-city.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\backgrounds\\shadow-city.jpg",
+        "size": "1920x1080",
+        "prompt": "Solo Leveling shadow city, dark metropolis, purple energy lights, futuristic dark city, epic urban landscape",
+        "category": "compendium/backgrounds"
+      },
+      {
+        "key": "shadow-forest",
+        "filename": "shadow-forest.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\backgrounds\\shadow-forest.jpg",
+        "size": "1920x1080",
+        "prompt": "Solo Leveling shadow forest, dark twisted trees, purple energy fog, mysterious woodland, atmospheric environment",
+        "category": "compendium/backgrounds"
+      }
+    ]
+  },
+  "assets": [
+    {
+      "key": "shadow-soldier-emblem",
+      "filename": "shadow-soldier-emblem.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\ui-art\\shadow-soldier-emblem.jpg",
+      "size": "256x256",
+      "prompt": "Solo Leveling shadow soldier emblem, circular logo, purple energy, dark fantasy symbol, professional emblem design",
+      "category": "ui-art"
+    },
+    {
+      "key": "system-interface",
+      "filename": "system-interface.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\ui-art\\system-interface.jpg",
+      "size": "1920x1080",
+      "prompt": "Solo Leveling system interface, futuristic UI, holographic display, shadow energy effects, dark theme interface",
+      "category": "ui-art"
+    },
+    {
+      "key": "gate-portal-3d",
+      "filename": "gate-portal-3d.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\ui-art\\gate-portal-3d.jpg",
+      "size": "1920x1080",
+      "prompt": "Solo Leveling gate portal, 3D dimensional rift, purple energy swirling, dark fantasy portal, epic gateway",
+      "category": "ui-art"
+    },
+    {
+      "key": "shadow-silhouette",
+      "filename": "shadow-silhouette.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\ui-art\\shadow-silhouette.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling shadow silhouette, mysterious hunter figure, dark outline, purple energy aura, shadow warrior",
+      "category": "ui-art"
+    },
+    {
+      "key": "shadow-demon",
+      "filename": "shadow-demon.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\monsters\\shadow-demon.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling shadow demon, dark creature, purple glowing eyes, monstrous form, shadow energy, detailed monster",
+      "category": "compendium/monsters"
+    },
+    {
+      "key": "shadow-beast",
+      "filename": "shadow-beast.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\monsters\\shadow-beast.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling shadow beast, large dark creature, powerful build, shadow energy aura, epic fantasy monster",
+      "category": "compendium/monsters"
+    },
+    {
+      "key": "shadow-lord",
+      "filename": "shadow-lord.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\monsters\\shadow-lord.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling shadow lord, powerful dark ruler, imposing figure, shadow armor, purple energy, epic boss",
+      "category": "compendium/monsters"
+    },
+    {
+      "key": "shadow-shield",
+      "filename": "shadow-shield.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\spells\\shadow-shield.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling shadow shield, dark energy barrier, purple glowing shield, protective magic, detailed illustration",
+      "category": "compendium/spells"
+    },
+    {
+      "key": "shadow-teleport",
+      "filename": "shadow-teleport.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\spells\\shadow-teleport.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling shadow teleport, dark energy movement, purple particles, teleportation effect, magic spell",
+      "category": "compendium/spells"
+    },
+    {
+      "key": "shadow-dungeon",
+      "filename": "shadow-dungeon.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\locations\\shadow-dungeon.jpg",
+      "size": "1920x1080",
+      "prompt": "Solo Leveling shadow dungeon, dark underground environment, purple energy crystals, epic fantasy location",
+      "category": "compendium/locations"
+    },
+    {
+      "key": "shadow-castle",
+      "filename": "shadow-castle.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\locations\\shadow-castle.jpg",
+      "size": "1920x1080",
+      "prompt": "Solo Leveling shadow castle, dark fortress, purple energy towers, epic fantasy architecture, imposing structure",
+      "category": "compendium/locations"
+    },
+    {
+      "key": "shadow-gate",
+      "filename": "shadow-gate.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\locations\\shadow-gate.jpg",
+      "size": "1920x1080",
+      "prompt": "Solo Leveling shadow gate, massive dark gate, purple energy portal, epic fantasy entrance, dimensional gateway",
+      "category": "compendium/locations"
+    },
+    {
+      "key": "shadow-warrior",
+      "filename": "shadow-warrior.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\jobs\\shadow-warrior.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling shadow warrior, dark armored fighter, purple energy aura, professional warrior, detailed character",
+      "category": "compendium/jobs"
+    },
+    {
+      "key": "shadow-mage",
+      "filename": "shadow-mage.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\jobs\\shadow-mage.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling shadow mage, dark robed spellcaster, purple energy hands, magical power, detailed character",
+      "category": "compendium/jobs"
+    },
+    {
+      "key": "shadow-assassin",
+      "filename": "shadow-assassin.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\jobs\\shadow-assassin.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling shadow assassin, stealthy dark figure, purple energy daggers, mysterious character, detailed illustration",
+      "category": "compendium/jobs"
+    },
+    {
+      "key": "shadow-realm",
+      "filename": "shadow-realm.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\backgrounds\\shadow-realm.jpg",
+      "size": "1920x1080",
+      "prompt": "Solo Leveling shadow realm, dark dimension landscape, purple energy sky, epic fantasy environment, atmospheric",
+      "category": "compendium/backgrounds"
+    },
+    {
+      "key": "shadow-city",
+      "filename": "shadow-city.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\backgrounds\\shadow-city.jpg",
+      "size": "1920x1080",
+      "prompt": "Solo Leveling shadow city, dark metropolis, purple energy lights, futuristic dark city, epic urban landscape",
+      "category": "compendium/backgrounds"
+    },
+    {
+      "key": "shadow-forest",
+      "filename": "shadow-forest.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\compendium\\backgrounds\\shadow-forest.jpg",
+      "size": "1920x1080",
+      "prompt": "Solo Leveling shadow forest, dark twisted trees, purple energy fog, mysterious woodland, atmospheric environment",
+      "category": "compendium/backgrounds"
+    }
+  ]
+}

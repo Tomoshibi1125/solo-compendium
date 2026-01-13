@@ -1,0 +1,548 @@
+{
+  "generatedAt": "2026-01-12T06:56:46.256Z",
+  "totalAssets": 33,
+  "categories": {
+    "ui": [
+      {
+        "category": "ui",
+        "key": "loginPage",
+        "filename": "login-page-bg.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\ui\\login-page-bg.jpg",
+        "size": "1920x1080",
+        "prompt": "Solo Leveling login interface, dark theme, shadow soldier emblem, glowing purple energy, futuristic UI, epic fantasy login screen"
+      },
+      {
+        "category": "ui",
+        "key": "landingPage",
+        "filename": "landing-page-hero.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\ui\\landing-page-hero.jpg",
+        "size": "1920x1080",
+        "prompt": "Solo Leveling landing page hero, shadow soldier standing before gate portal, epic fantasy landscape, dark atmosphere, glowing effects"
+      },
+      {
+        "category": "ui",
+        "key": "dashboardBg",
+        "filename": "dashboard-bg.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\ui\\dashboard-bg.jpg",
+        "size": "1920x1080",
+        "prompt": "Solo Leveling dashboard background, dark interface theme, shadow realm aesthetic, futuristic UI elements, purple energy flows"
+      }
+    ],
+    "items": [
+      {
+        "category": "items",
+        "key": "shadowBlade",
+        "filename": "shadow-blade.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\items\\shadow-blade.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style shadow blade, dark sword with purple energy, glowing runes, epic fantasy weapon, detailed illustration"
+      },
+      {
+        "category": "items",
+        "key": "shadowArmor",
+        "filename": "shadow-armor.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\items\\shadow-armor.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style shadow armor, dark plate armor with purple energy, glowing runes, epic fantasy armor, detailed illustration"
+      },
+      {
+        "category": "items",
+        "key": "shadowRing",
+        "filename": "shadow-ring.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\items\\shadow-ring.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style shadow ring, dark ring with purple gemstone, glowing energy, epic fantasy jewelry, detailed illustration"
+      },
+      {
+        "category": "items",
+        "key": "healthPotion",
+        "filename": "health-potion.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\items\\health-potion.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style health potion, glowing red potion in dark bottle, magical energy, epic fantasy item, detailed illustration"
+      },
+      {
+        "category": "items",
+        "key": "manaPotion",
+        "filename": "mana-potion.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\items\\mana-potion.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style mana potion, glowing blue potion in dark bottle, magical energy, epic fantasy item, detailed illustration"
+      },
+      {
+        "category": "items",
+        "key": "shadowScroll",
+        "filename": "shadow-scroll.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\items\\shadow-scroll.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style shadow scroll, ancient scroll with purple energy, glowing runes, epic fantasy document, detailed illustration"
+      }
+    ],
+    "runes": [
+      {
+        "category": "runes",
+        "key": "shadowRune",
+        "filename": "shadow-rune.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\runes\\shadow-rune.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style shadow rune, ancient magical symbol with purple energy, glowing rune stone, epic fantasy magic, detailed illustration"
+      },
+      {
+        "category": "runes",
+        "key": "fireRune",
+        "filename": "fire-rune.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\runes\\fire-rune.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style fire rune, ancient magical symbol with red energy, glowing rune stone, epic fantasy magic, detailed illustration"
+      },
+      {
+        "category": "runes",
+        "key": "iceRune",
+        "filename": "ice-rune.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\runes\\ice-rune.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style ice rune, ancient magical symbol with blue energy, glowing rune stone, epic fantasy magic, detailed illustration"
+      },
+      {
+        "category": "runes",
+        "key": "lightningRune",
+        "filename": "lightning-rune.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\runes\\lightning-rune.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style lightning rune, ancient magical symbol with yellow energy, glowing rune stone, epic fantasy magic, detailed illustration"
+      },
+      {
+        "category": "runes",
+        "key": "healingRune",
+        "filename": "healing-rune.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\runes\\healing-rune.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style healing rune, ancient magical symbol with green energy, glowing rune stone, epic fantasy magic, detailed illustration"
+      },
+      {
+        "category": "runes",
+        "key": "protectionRune",
+        "filename": "protection-rune.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\runes\\protection-rune.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style protection rune, ancient magical symbol with white energy, glowing rune stone, epic fantasy magic, detailed illustration"
+      }
+    ],
+    "maps": [
+      {
+        "category": "maps",
+        "key": "dungeonFloor",
+        "filename": "dungeon-floor.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\maps\\dungeon-floor.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style dungeon floor tile, dark stone floor with purple energy patterns, epic fantasy dungeon, detailed texture"
+      },
+      {
+        "category": "maps",
+        "key": "stoneWall",
+        "filename": "stone-wall.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\maps\\stone-wall.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style stone wall tile, dark stone wall with shadow energy, epic fantasy dungeon wall, detailed texture"
+      },
+      {
+        "category": "maps",
+        "key": "woodenDoor",
+        "filename": "wooden-door.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\maps\\wooden-door.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style wooden door, dark wooden door with metal fittings, epic fantasy dungeon door, detailed illustration"
+      },
+      {
+        "category": "maps",
+        "key": "ironGate",
+        "filename": "iron-gate.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\maps\\iron-gate.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style iron gate, dark metal gate with shadow energy, epic fantasy dungeon gate, detailed illustration"
+      },
+      {
+        "category": "maps",
+        "key": "treasureChest",
+        "filename": "treasure-chest.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\maps\\treasure-chest.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style treasure chest, dark chest with purple energy glow, epic fantasy treasure, detailed illustration"
+      },
+      {
+        "category": "maps",
+        "key": "throneRoom",
+        "filename": "throne-room.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\maps\\throne-room.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style throne room, dark throne with shadow energy, epic fantasy throne room, detailed illustration"
+      }
+    ],
+    "tokens": [
+      {
+        "category": "tokens",
+        "key": "playerToken",
+        "filename": "player-token.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\tokens\\player-token.jpg",
+        "size": "256x256",
+        "prompt": "Solo Leveling style player token, shadow warrior character, circular token frame, epic fantasy character portrait"
+      },
+      {
+        "category": "tokens",
+        "key": "monsterToken",
+        "filename": "monster-token.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\tokens\\monster-token.jpg",
+        "size": "256x256",
+        "prompt": "Solo Leveling style monster token, shadow demon creature, circular token frame, epic fantasy monster portrait"
+      },
+      {
+        "category": "tokens",
+        "key": "bossToken",
+        "filename": "boss-token.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\tokens\\boss-token.jpg",
+        "size": "256x256",
+        "prompt": "Solo Leveling style boss token, shadow lord character, circular token frame, epic fantasy boss portrait"
+      },
+      {
+        "category": "tokens",
+        "key": "npcToken",
+        "filename": "npc-token.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\tokens\\npc-token.jpg",
+        "size": "256x256",
+        "prompt": "Solo Leveling style NPC token, mysterious hooded figure, circular token frame, epic fantasy NPC portrait"
+      },
+      {
+        "category": "tokens",
+        "key": "merchantToken",
+        "filename": "merchant-token.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\tokens\\merchant-token.jpg",
+        "size": "256x256",
+        "prompt": "Solo Leveling style merchant token, shadow realm merchant, circular token frame, epic fantasy merchant portrait"
+      },
+      {
+        "category": "tokens",
+        "key": "guardToken",
+        "filename": "guard-token.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\tokens\\guard-token.jpg",
+        "size": "256x256",
+        "prompt": "Solo Leveling style guard token, shadow soldier guard, circular token frame, epic fantasy guard portrait"
+      }
+    ],
+    "spells": [
+      {
+        "category": "spells",
+        "key": "shadowBolt",
+        "filename": "shadow-bolt.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\spells\\shadow-bolt.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style shadow bolt spell, purple energy projectile, dark magic effect, epic fantasy spell, detailed illustration"
+      },
+      {
+        "category": "spells",
+        "key": "fireball",
+        "filename": "fireball.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\spells\\fireball.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style fireball spell, red energy projectile, fire magic effect, epic fantasy spell, detailed illustration"
+      },
+      {
+        "category": "spells",
+        "key": "iceShard",
+        "filename": "ice-shard.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\spells\\ice-shard.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style ice shard spell, blue energy projectile, ice magic effect, epic fantasy spell, detailed illustration"
+      },
+      {
+        "category": "spells",
+        "key": "lightningStrike",
+        "filename": "lightning-strike.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\spells\\lightning-strike.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style lightning strike spell, yellow energy bolt, lightning magic effect, epic fantasy spell, detailed illustration"
+      },
+      {
+        "category": "spells",
+        "key": "healingLight",
+        "filename": "healing-light.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\spells\\healing-light.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style healing light spell, green energy aura, restoration magic effect, epic fantasy spell, detailed illustration"
+      },
+      {
+        "category": "spells",
+        "key": "protectionBarrier",
+        "filename": "protection-barrier.jpg",
+        "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\spells\\protection-barrier.jpg",
+        "size": "512x512",
+        "prompt": "Solo Leveling style protection barrier spell, white energy shield, protection magic effect, epic fantasy spell, detailed illustration"
+      }
+    ]
+  },
+  "assets": [
+    {
+      "category": "ui",
+      "key": "loginPage",
+      "filename": "login-page-bg.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\ui\\login-page-bg.jpg",
+      "size": "1920x1080",
+      "prompt": "Solo Leveling login interface, dark theme, shadow soldier emblem, glowing purple energy, futuristic UI, epic fantasy login screen"
+    },
+    {
+      "category": "ui",
+      "key": "landingPage",
+      "filename": "landing-page-hero.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\ui\\landing-page-hero.jpg",
+      "size": "1920x1080",
+      "prompt": "Solo Leveling landing page hero, shadow soldier standing before gate portal, epic fantasy landscape, dark atmosphere, glowing effects"
+    },
+    {
+      "category": "ui",
+      "key": "dashboardBg",
+      "filename": "dashboard-bg.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\ui\\dashboard-bg.jpg",
+      "size": "1920x1080",
+      "prompt": "Solo Leveling dashboard background, dark interface theme, shadow realm aesthetic, futuristic UI elements, purple energy flows"
+    },
+    {
+      "category": "items",
+      "key": "shadowBlade",
+      "filename": "shadow-blade.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\items\\shadow-blade.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style shadow blade, dark sword with purple energy, glowing runes, epic fantasy weapon, detailed illustration"
+    },
+    {
+      "category": "items",
+      "key": "shadowArmor",
+      "filename": "shadow-armor.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\items\\shadow-armor.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style shadow armor, dark plate armor with purple energy, glowing runes, epic fantasy armor, detailed illustration"
+    },
+    {
+      "category": "items",
+      "key": "shadowRing",
+      "filename": "shadow-ring.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\items\\shadow-ring.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style shadow ring, dark ring with purple gemstone, glowing energy, epic fantasy jewelry, detailed illustration"
+    },
+    {
+      "category": "items",
+      "key": "healthPotion",
+      "filename": "health-potion.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\items\\health-potion.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style health potion, glowing red potion in dark bottle, magical energy, epic fantasy item, detailed illustration"
+    },
+    {
+      "category": "items",
+      "key": "manaPotion",
+      "filename": "mana-potion.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\items\\mana-potion.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style mana potion, glowing blue potion in dark bottle, magical energy, epic fantasy item, detailed illustration"
+    },
+    {
+      "category": "items",
+      "key": "shadowScroll",
+      "filename": "shadow-scroll.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\items\\shadow-scroll.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style shadow scroll, ancient scroll with purple energy, glowing runes, epic fantasy document, detailed illustration"
+    },
+    {
+      "category": "runes",
+      "key": "shadowRune",
+      "filename": "shadow-rune.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\runes\\shadow-rune.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style shadow rune, ancient magical symbol with purple energy, glowing rune stone, epic fantasy magic, detailed illustration"
+    },
+    {
+      "category": "runes",
+      "key": "fireRune",
+      "filename": "fire-rune.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\runes\\fire-rune.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style fire rune, ancient magical symbol with red energy, glowing rune stone, epic fantasy magic, detailed illustration"
+    },
+    {
+      "category": "runes",
+      "key": "iceRune",
+      "filename": "ice-rune.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\runes\\ice-rune.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style ice rune, ancient magical symbol with blue energy, glowing rune stone, epic fantasy magic, detailed illustration"
+    },
+    {
+      "category": "runes",
+      "key": "lightningRune",
+      "filename": "lightning-rune.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\runes\\lightning-rune.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style lightning rune, ancient magical symbol with yellow energy, glowing rune stone, epic fantasy magic, detailed illustration"
+    },
+    {
+      "category": "runes",
+      "key": "healingRune",
+      "filename": "healing-rune.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\runes\\healing-rune.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style healing rune, ancient magical symbol with green energy, glowing rune stone, epic fantasy magic, detailed illustration"
+    },
+    {
+      "category": "runes",
+      "key": "protectionRune",
+      "filename": "protection-rune.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\runes\\protection-rune.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style protection rune, ancient magical symbol with white energy, glowing rune stone, epic fantasy magic, detailed illustration"
+    },
+    {
+      "category": "maps",
+      "key": "dungeonFloor",
+      "filename": "dungeon-floor.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\maps\\dungeon-floor.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style dungeon floor tile, dark stone floor with purple energy patterns, epic fantasy dungeon, detailed texture"
+    },
+    {
+      "category": "maps",
+      "key": "stoneWall",
+      "filename": "stone-wall.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\maps\\stone-wall.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style stone wall tile, dark stone wall with shadow energy, epic fantasy dungeon wall, detailed texture"
+    },
+    {
+      "category": "maps",
+      "key": "woodenDoor",
+      "filename": "wooden-door.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\maps\\wooden-door.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style wooden door, dark wooden door with metal fittings, epic fantasy dungeon door, detailed illustration"
+    },
+    {
+      "category": "maps",
+      "key": "ironGate",
+      "filename": "iron-gate.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\maps\\iron-gate.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style iron gate, dark metal gate with shadow energy, epic fantasy dungeon gate, detailed illustration"
+    },
+    {
+      "category": "maps",
+      "key": "treasureChest",
+      "filename": "treasure-chest.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\maps\\treasure-chest.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style treasure chest, dark chest with purple energy glow, epic fantasy treasure, detailed illustration"
+    },
+    {
+      "category": "maps",
+      "key": "throneRoom",
+      "filename": "throne-room.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\maps\\throne-room.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style throne room, dark throne with shadow energy, epic fantasy throne room, detailed illustration"
+    },
+    {
+      "category": "tokens",
+      "key": "playerToken",
+      "filename": "player-token.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\tokens\\player-token.jpg",
+      "size": "256x256",
+      "prompt": "Solo Leveling style player token, shadow warrior character, circular token frame, epic fantasy character portrait"
+    },
+    {
+      "category": "tokens",
+      "key": "monsterToken",
+      "filename": "monster-token.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\tokens\\monster-token.jpg",
+      "size": "256x256",
+      "prompt": "Solo Leveling style monster token, shadow demon creature, circular token frame, epic fantasy monster portrait"
+    },
+    {
+      "category": "tokens",
+      "key": "bossToken",
+      "filename": "boss-token.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\tokens\\boss-token.jpg",
+      "size": "256x256",
+      "prompt": "Solo Leveling style boss token, shadow lord character, circular token frame, epic fantasy boss portrait"
+    },
+    {
+      "category": "tokens",
+      "key": "npcToken",
+      "filename": "npc-token.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\tokens\\npc-token.jpg",
+      "size": "256x256",
+      "prompt": "Solo Leveling style NPC token, mysterious hooded figure, circular token frame, epic fantasy NPC portrait"
+    },
+    {
+      "category": "tokens",
+      "key": "merchantToken",
+      "filename": "merchant-token.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\tokens\\merchant-token.jpg",
+      "size": "256x256",
+      "prompt": "Solo Leveling style merchant token, shadow realm merchant, circular token frame, epic fantasy merchant portrait"
+    },
+    {
+      "category": "tokens",
+      "key": "guardToken",
+      "filename": "guard-token.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\tokens\\guard-token.jpg",
+      "size": "256x256",
+      "prompt": "Solo Leveling style guard token, shadow soldier guard, circular token frame, epic fantasy guard portrait"
+    },
+    {
+      "category": "spells",
+      "key": "shadowBolt",
+      "filename": "shadow-bolt.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\spells\\shadow-bolt.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style shadow bolt spell, purple energy projectile, dark magic effect, epic fantasy spell, detailed illustration"
+    },
+    {
+      "category": "spells",
+      "key": "fireball",
+      "filename": "fireball.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\spells\\fireball.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style fireball spell, red energy projectile, fire magic effect, epic fantasy spell, detailed illustration"
+    },
+    {
+      "category": "spells",
+      "key": "iceShard",
+      "filename": "ice-shard.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\spells\\ice-shard.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style ice shard spell, blue energy projectile, ice magic effect, epic fantasy spell, detailed illustration"
+    },
+    {
+      "category": "spells",
+      "key": "lightningStrike",
+      "filename": "lightning-strike.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\spells\\lightning-strike.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style lightning strike spell, yellow energy bolt, lightning magic effect, epic fantasy spell, detailed illustration"
+    },
+    {
+      "category": "spells",
+      "key": "healingLight",
+      "filename": "healing-light.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\spells\\healing-light.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style healing light spell, green energy aura, restoration magic effect, epic fantasy spell, detailed illustration"
+    },
+    {
+      "category": "spells",
+      "key": "protectionBarrier",
+      "filename": "protection-barrier.jpg",
+      "path": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\spells\\protection-barrier.jpg",
+      "size": "512x512",
+      "prompt": "Solo Leveling style protection barrier spell, white energy shield, protection magic effect, epic fantasy spell, detailed illustration"
+    }
+  ]
+}

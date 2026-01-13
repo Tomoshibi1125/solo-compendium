@@ -1,0 +1,1674 @@
+{
+  "generatedAt": "2026-01-12T09:12:37.606Z",
+  "comfyui": {
+    "url": "http://localhost:8000"
+  },
+  "args": {
+    "skipExisting": true,
+    "dedupe": "report",
+    "gmTiles": 40,
+    "gmProps": 40,
+    "gmTokens": 40,
+    "gmOverlays": 20,
+    "dryRun": true,
+    "updateUrls": true,
+    "verify": false
+  },
+  "referencedImages": [
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\backgrounds.ts",
+      "webPath": "/generated/compendium/backgrounds/shadow-realm.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\backgrounds.ts",
+      "webPath": "/generated/compendium/backgrounds/shadow-city.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\backgrounds.ts",
+      "webPath": "/generated/compendium/backgrounds/shadow-forest.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\items.ts",
+      "webPath": "/generated/items/shadow-blade.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\items.ts",
+      "webPath": "/generated/items/shadow-armor.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\items.ts",
+      "webPath": "/generated/items/shadow-ring.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\items.ts",
+      "webPath": "/generated/items/health-potion.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\items.ts",
+      "webPath": "/generated/items/mana-potion.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\items.ts",
+      "webPath": "/generated/items/shadow-scroll.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\jobs.ts",
+      "webPath": "/generated/compendium/jobs/shadow-warrior.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\jobs.ts",
+      "webPath": "/generated/compendium/jobs/shadow-mage.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\jobs.ts",
+      "webPath": "/generated/compendium/jobs/shadow-assassin.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\locations.ts",
+      "webPath": "/generated/compendium/locations/shadow-dungeon.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\locations.ts",
+      "webPath": "/generated/compendium/locations/shadow-castle.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\locations.ts",
+      "webPath": "/generated/compendium/locations/shadow-gate.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\monsters.ts",
+      "webPath": "/generated/compendium/monsters/shadow-demon.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\monsters.ts",
+      "webPath": "/generated/compendium/monsters/shadow-beast.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\monsters.ts",
+      "webPath": "/generated/compendium/monsters/shadow-lord.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\runes.ts",
+      "webPath": "/generated/runes/shadow-rune.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\runes.ts",
+      "webPath": "/generated/runes/fire-rune.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\runes.ts",
+      "webPath": "/generated/runes/ice-rune.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\runes.ts",
+      "webPath": "/generated/runes/lightning-rune.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\runes.ts",
+      "webPath": "/generated/runes/healing-rune.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\runes.ts",
+      "webPath": "/generated/runes/protection-rune.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\spells.ts",
+      "webPath": "/generated/compendium/spells/shadow-bolt.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\spells.ts",
+      "webPath": "/generated/compendium/spells/shadow-shield.jpg"
+    },
+    {
+      "sourceFile": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\src\\data\\compendium\\spells.ts",
+      "webPath": "/generated/compendium/spells/shadow-teleport.jpg"
+    }
+  ],
+  "jobs": [
+    {
+      "type": "gm",
+      "category": "gm/tiles/floors",
+      "key": "floors-001",
+      "webPath": "/generated/gm/tiles/floors/floors-001.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\floors\\floors-001.jpg",
+      "size": "512x512",
+      "prompt": "dungeon floor tile, cracked stone, purple shadow energy veins, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:10:50.993Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/walls",
+      "key": "walls-002",
+      "webPath": "/generated/gm/tiles/walls/walls-002.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\walls\\walls-002.jpg",
+      "size": "512x512",
+      "prompt": "dungeon wall tile, stone bricks, shadow seepage, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:10:51.746Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/doors",
+      "key": "doors-003",
+      "webPath": "/generated/gm/tiles/doors/doors-003.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\doors\\doors-003.jpg",
+      "size": "512x512",
+      "prompt": "dungeon door tile, reinforced ancient door, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:10:52.507Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/stairs",
+      "key": "stairs-004",
+      "webPath": "/generated/gm/tiles/stairs/stairs-004.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\stairs\\stairs-004.jpg",
+      "size": "512x512",
+      "prompt": "dungeon stairs tile, descending into darkness, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:10:53.270Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/traps",
+      "key": "traps-005",
+      "webPath": "/generated/gm/tiles/traps/traps-005.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\traps\\traps-005.jpg",
+      "size": "512x512",
+      "prompt": "dungeon trap tile, ominous runes, hidden spikes, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:10:54.030Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/floors",
+      "key": "floors-006",
+      "webPath": "/generated/gm/tiles/floors/floors-006.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\floors\\floors-006.jpg",
+      "size": "512x512",
+      "prompt": "dungeon floor tile, cracked stone, purple shadow energy veins, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:10:54.781Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/walls",
+      "key": "walls-007",
+      "webPath": "/generated/gm/tiles/walls/walls-007.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\walls\\walls-007.jpg",
+      "size": "512x512",
+      "prompt": "dungeon wall tile, stone bricks, shadow seepage, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:10:55.531Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/doors",
+      "key": "doors-008",
+      "webPath": "/generated/gm/tiles/doors/doors-008.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\doors\\doors-008.jpg",
+      "size": "512x512",
+      "prompt": "dungeon door tile, reinforced ancient door, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:10:56.295Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/stairs",
+      "key": "stairs-009",
+      "webPath": "/generated/gm/tiles/stairs/stairs-009.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\stairs\\stairs-009.jpg",
+      "size": "512x512",
+      "prompt": "dungeon stairs tile, descending into darkness, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:10:57.047Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/traps",
+      "key": "traps-010",
+      "webPath": "/generated/gm/tiles/traps/traps-010.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\traps\\traps-010.jpg",
+      "size": "512x512",
+      "prompt": "dungeon trap tile, ominous runes, hidden spikes, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:10:57.799Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/floors",
+      "key": "floors-011",
+      "webPath": "/generated/gm/tiles/floors/floors-011.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\floors\\floors-011.jpg",
+      "size": "512x512",
+      "prompt": "dungeon floor tile, cracked stone, purple shadow energy veins, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:10:58.558Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/walls",
+      "key": "walls-012",
+      "webPath": "/generated/gm/tiles/walls/walls-012.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\walls\\walls-012.jpg",
+      "size": "512x512",
+      "prompt": "dungeon wall tile, stone bricks, shadow seepage, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:10:59.319Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/doors",
+      "key": "doors-013",
+      "webPath": "/generated/gm/tiles/doors/doors-013.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\doors\\doors-013.jpg",
+      "size": "512x512",
+      "prompt": "dungeon door tile, reinforced ancient door, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:00.070Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/stairs",
+      "key": "stairs-014",
+      "webPath": "/generated/gm/tiles/stairs/stairs-014.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\stairs\\stairs-014.jpg",
+      "size": "512x512",
+      "prompt": "dungeon stairs tile, descending into darkness, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:00.829Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/traps",
+      "key": "traps-015",
+      "webPath": "/generated/gm/tiles/traps/traps-015.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\traps\\traps-015.jpg",
+      "size": "512x512",
+      "prompt": "dungeon trap tile, ominous runes, hidden spikes, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:01.580Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/floors",
+      "key": "floors-016",
+      "webPath": "/generated/gm/tiles/floors/floors-016.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\floors\\floors-016.jpg",
+      "size": "512x512",
+      "prompt": "dungeon floor tile, cracked stone, purple shadow energy veins, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:02.344Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/walls",
+      "key": "walls-017",
+      "webPath": "/generated/gm/tiles/walls/walls-017.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\walls\\walls-017.jpg",
+      "size": "512x512",
+      "prompt": "dungeon wall tile, stone bricks, shadow seepage, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:03.108Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/doors",
+      "key": "doors-018",
+      "webPath": "/generated/gm/tiles/doors/doors-018.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\doors\\doors-018.jpg",
+      "size": "512x512",
+      "prompt": "dungeon door tile, reinforced ancient door, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:03.873Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/stairs",
+      "key": "stairs-019",
+      "webPath": "/generated/gm/tiles/stairs/stairs-019.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\stairs\\stairs-019.jpg",
+      "size": "512x512",
+      "prompt": "dungeon stairs tile, descending into darkness, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:04.637Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/traps",
+      "key": "traps-020",
+      "webPath": "/generated/gm/tiles/traps/traps-020.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\traps\\traps-020.jpg",
+      "size": "512x512",
+      "prompt": "dungeon trap tile, ominous runes, hidden spikes, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:05.399Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/floors",
+      "key": "floors-021",
+      "webPath": "/generated/gm/tiles/floors/floors-021.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\floors\\floors-021.jpg",
+      "size": "512x512",
+      "prompt": "dungeon floor tile, cracked stone, purple shadow energy veins, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:06.161Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/walls",
+      "key": "walls-022",
+      "webPath": "/generated/gm/tiles/walls/walls-022.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\walls\\walls-022.jpg",
+      "size": "512x512",
+      "prompt": "dungeon wall tile, stone bricks, shadow seepage, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:06.925Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/doors",
+      "key": "doors-023",
+      "webPath": "/generated/gm/tiles/doors/doors-023.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\doors\\doors-023.jpg",
+      "size": "512x512",
+      "prompt": "dungeon door tile, reinforced ancient door, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:07.690Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/stairs",
+      "key": "stairs-024",
+      "webPath": "/generated/gm/tiles/stairs/stairs-024.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\stairs\\stairs-024.jpg",
+      "size": "512x512",
+      "prompt": "dungeon stairs tile, descending into darkness, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:08.454Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/traps",
+      "key": "traps-025",
+      "webPath": "/generated/gm/tiles/traps/traps-025.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\traps\\traps-025.jpg",
+      "size": "512x512",
+      "prompt": "dungeon trap tile, ominous runes, hidden spikes, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:09.215Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/floors",
+      "key": "floors-026",
+      "webPath": "/generated/gm/tiles/floors/floors-026.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\floors\\floors-026.jpg",
+      "size": "512x512",
+      "prompt": "dungeon floor tile, cracked stone, purple shadow energy veins, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:09.978Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/walls",
+      "key": "walls-027",
+      "webPath": "/generated/gm/tiles/walls/walls-027.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\walls\\walls-027.jpg",
+      "size": "512x512",
+      "prompt": "dungeon wall tile, stone bricks, shadow seepage, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:10.743Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/doors",
+      "key": "doors-028",
+      "webPath": "/generated/gm/tiles/doors/doors-028.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\doors\\doors-028.jpg",
+      "size": "512x512",
+      "prompt": "dungeon door tile, reinforced ancient door, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:11.506Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/stairs",
+      "key": "stairs-029",
+      "webPath": "/generated/gm/tiles/stairs/stairs-029.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\stairs\\stairs-029.jpg",
+      "size": "512x512",
+      "prompt": "dungeon stairs tile, descending into darkness, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:12.266Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/traps",
+      "key": "traps-030",
+      "webPath": "/generated/gm/tiles/traps/traps-030.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\traps\\traps-030.jpg",
+      "size": "512x512",
+      "prompt": "dungeon trap tile, ominous runes, hidden spikes, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:13.027Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/floors",
+      "key": "floors-031",
+      "webPath": "/generated/gm/tiles/floors/floors-031.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\floors\\floors-031.jpg",
+      "size": "512x512",
+      "prompt": "dungeon floor tile, cracked stone, purple shadow energy veins, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:13.791Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/walls",
+      "key": "walls-032",
+      "webPath": "/generated/gm/tiles/walls/walls-032.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\walls\\walls-032.jpg",
+      "size": "512x512",
+      "prompt": "dungeon wall tile, stone bricks, shadow seepage, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:14.552Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/doors",
+      "key": "doors-033",
+      "webPath": "/generated/gm/tiles/doors/doors-033.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\doors\\doors-033.jpg",
+      "size": "512x512",
+      "prompt": "dungeon door tile, reinforced ancient door, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:15.314Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/stairs",
+      "key": "stairs-034",
+      "webPath": "/generated/gm/tiles/stairs/stairs-034.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\stairs\\stairs-034.jpg",
+      "size": "512x512",
+      "prompt": "dungeon stairs tile, descending into darkness, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:16.077Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/traps",
+      "key": "traps-035",
+      "webPath": "/generated/gm/tiles/traps/traps-035.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\traps\\traps-035.jpg",
+      "size": "512x512",
+      "prompt": "dungeon trap tile, ominous runes, hidden spikes, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:16.841Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/floors",
+      "key": "floors-036",
+      "webPath": "/generated/gm/tiles/floors/floors-036.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\floors\\floors-036.jpg",
+      "size": "512x512",
+      "prompt": "dungeon floor tile, cracked stone, purple shadow energy veins, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:17.601Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/walls",
+      "key": "walls-037",
+      "webPath": "/generated/gm/tiles/walls/walls-037.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\walls\\walls-037.jpg",
+      "size": "512x512",
+      "prompt": "dungeon wall tile, stone bricks, shadow seepage, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:18.363Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/doors",
+      "key": "doors-038",
+      "webPath": "/generated/gm/tiles/doors/doors-038.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\doors\\doors-038.jpg",
+      "size": "512x512",
+      "prompt": "dungeon door tile, reinforced ancient door, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:19.125Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/stairs",
+      "key": "stairs-039",
+      "webPath": "/generated/gm/tiles/stairs/stairs-039.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\stairs\\stairs-039.jpg",
+      "size": "512x512",
+      "prompt": "dungeon stairs tile, descending into darkness, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:19.889Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tiles/traps",
+      "key": "traps-040",
+      "webPath": "/generated/gm/tiles/traps/traps-040.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tiles\\traps\\traps-040.jpg",
+      "size": "512x512",
+      "prompt": "dungeon trap tile, ominous runes, hidden spikes, top-down, seamless texture, RPG battlemap tile",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:20.652Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/containers",
+      "key": "containers-001",
+      "webPath": "/generated/gm/props/containers/containers-001.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\containers\\containers-001.jpg",
+      "size": "512x512",
+      "prompt": "treasure chest, dark metal fittings, purple glow, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:21.418Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/furniture",
+      "key": "furniture-002",
+      "webPath": "/generated/gm/props/furniture/furniture-002.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\furniture\\furniture-002.jpg",
+      "size": "512x512",
+      "prompt": "ancient throne, broken chairs, dark gothic furniture, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:22.180Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/pillars",
+      "key": "pillars-003",
+      "webPath": "/generated/gm/props/pillars/pillars-003.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\pillars\\pillars-003.jpg",
+      "size": "512x512",
+      "prompt": "stone pillar, carved runes, shadow aura, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:22.943Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/altars",
+      "key": "altars-004",
+      "webPath": "/generated/gm/props/altars/altars-004.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\altars\\altars-004.jpg",
+      "size": "512x512",
+      "prompt": "shadow altar, ritual circle, purple energy, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:23.701Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/crystals",
+      "key": "crystals-005",
+      "webPath": "/generated/gm/props/crystals/crystals-005.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\crystals\\crystals-005.jpg",
+      "size": "512x512",
+      "prompt": "purple shadow crystal cluster, luminous, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:24.461Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/containers",
+      "key": "containers-006",
+      "webPath": "/generated/gm/props/containers/containers-006.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\containers\\containers-006.jpg",
+      "size": "512x512",
+      "prompt": "treasure chest, dark metal fittings, purple glow, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:25.212Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/furniture",
+      "key": "furniture-007",
+      "webPath": "/generated/gm/props/furniture/furniture-007.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\furniture\\furniture-007.jpg",
+      "size": "512x512",
+      "prompt": "ancient throne, broken chairs, dark gothic furniture, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:25.972Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/pillars",
+      "key": "pillars-008",
+      "webPath": "/generated/gm/props/pillars/pillars-008.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\pillars\\pillars-008.jpg",
+      "size": "512x512",
+      "prompt": "stone pillar, carved runes, shadow aura, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:26.734Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/altars",
+      "key": "altars-009",
+      "webPath": "/generated/gm/props/altars/altars-009.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\altars\\altars-009.jpg",
+      "size": "512x512",
+      "prompt": "shadow altar, ritual circle, purple energy, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:27.496Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/crystals",
+      "key": "crystals-010",
+      "webPath": "/generated/gm/props/crystals/crystals-010.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\crystals\\crystals-010.jpg",
+      "size": "512x512",
+      "prompt": "purple shadow crystal cluster, luminous, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:28.260Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/containers",
+      "key": "containers-011",
+      "webPath": "/generated/gm/props/containers/containers-011.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\containers\\containers-011.jpg",
+      "size": "512x512",
+      "prompt": "treasure chest, dark metal fittings, purple glow, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:29.010Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/furniture",
+      "key": "furniture-012",
+      "webPath": "/generated/gm/props/furniture/furniture-012.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\furniture\\furniture-012.jpg",
+      "size": "512x512",
+      "prompt": "ancient throne, broken chairs, dark gothic furniture, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:29.771Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/pillars",
+      "key": "pillars-013",
+      "webPath": "/generated/gm/props/pillars/pillars-013.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\pillars\\pillars-013.jpg",
+      "size": "512x512",
+      "prompt": "stone pillar, carved runes, shadow aura, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:30.530Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/altars",
+      "key": "altars-014",
+      "webPath": "/generated/gm/props/altars/altars-014.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\altars\\altars-014.jpg",
+      "size": "512x512",
+      "prompt": "shadow altar, ritual circle, purple energy, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:31.291Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/crystals",
+      "key": "crystals-015",
+      "webPath": "/generated/gm/props/crystals/crystals-015.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\crystals\\crystals-015.jpg",
+      "size": "512x512",
+      "prompt": "purple shadow crystal cluster, luminous, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:32.057Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/containers",
+      "key": "containers-016",
+      "webPath": "/generated/gm/props/containers/containers-016.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\containers\\containers-016.jpg",
+      "size": "512x512",
+      "prompt": "treasure chest, dark metal fittings, purple glow, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:32.822Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/furniture",
+      "key": "furniture-017",
+      "webPath": "/generated/gm/props/furniture/furniture-017.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\furniture\\furniture-017.jpg",
+      "size": "512x512",
+      "prompt": "ancient throne, broken chairs, dark gothic furniture, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:33.587Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/pillars",
+      "key": "pillars-018",
+      "webPath": "/generated/gm/props/pillars/pillars-018.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\pillars\\pillars-018.jpg",
+      "size": "512x512",
+      "prompt": "stone pillar, carved runes, shadow aura, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:34.347Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/altars",
+      "key": "altars-019",
+      "webPath": "/generated/gm/props/altars/altars-019.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\altars\\altars-019.jpg",
+      "size": "512x512",
+      "prompt": "shadow altar, ritual circle, purple energy, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:35.108Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/crystals",
+      "key": "crystals-020",
+      "webPath": "/generated/gm/props/crystals/crystals-020.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\crystals\\crystals-020.jpg",
+      "size": "512x512",
+      "prompt": "purple shadow crystal cluster, luminous, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:35.871Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/containers",
+      "key": "containers-021",
+      "webPath": "/generated/gm/props/containers/containers-021.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\containers\\containers-021.jpg",
+      "size": "512x512",
+      "prompt": "treasure chest, dark metal fittings, purple glow, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:36.636Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/furniture",
+      "key": "furniture-022",
+      "webPath": "/generated/gm/props/furniture/furniture-022.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\furniture\\furniture-022.jpg",
+      "size": "512x512",
+      "prompt": "ancient throne, broken chairs, dark gothic furniture, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:37.399Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/pillars",
+      "key": "pillars-023",
+      "webPath": "/generated/gm/props/pillars/pillars-023.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\pillars\\pillars-023.jpg",
+      "size": "512x512",
+      "prompt": "stone pillar, carved runes, shadow aura, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:38.164Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/altars",
+      "key": "altars-024",
+      "webPath": "/generated/gm/props/altars/altars-024.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\altars\\altars-024.jpg",
+      "size": "512x512",
+      "prompt": "shadow altar, ritual circle, purple energy, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:38.923Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/crystals",
+      "key": "crystals-025",
+      "webPath": "/generated/gm/props/crystals/crystals-025.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\crystals\\crystals-025.jpg",
+      "size": "512x512",
+      "prompt": "purple shadow crystal cluster, luminous, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:39.684Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/containers",
+      "key": "containers-026",
+      "webPath": "/generated/gm/props/containers/containers-026.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\containers\\containers-026.jpg",
+      "size": "512x512",
+      "prompt": "treasure chest, dark metal fittings, purple glow, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:40.445Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/furniture",
+      "key": "furniture-027",
+      "webPath": "/generated/gm/props/furniture/furniture-027.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\furniture\\furniture-027.jpg",
+      "size": "512x512",
+      "prompt": "ancient throne, broken chairs, dark gothic furniture, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:41.208Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/pillars",
+      "key": "pillars-028",
+      "webPath": "/generated/gm/props/pillars/pillars-028.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\pillars\\pillars-028.jpg",
+      "size": "512x512",
+      "prompt": "stone pillar, carved runes, shadow aura, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:41.972Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/altars",
+      "key": "altars-029",
+      "webPath": "/generated/gm/props/altars/altars-029.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\altars\\altars-029.jpg",
+      "size": "512x512",
+      "prompt": "shadow altar, ritual circle, purple energy, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:42.733Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/crystals",
+      "key": "crystals-030",
+      "webPath": "/generated/gm/props/crystals/crystals-030.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\crystals\\crystals-030.jpg",
+      "size": "512x512",
+      "prompt": "purple shadow crystal cluster, luminous, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:43.496Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/containers",
+      "key": "containers-031",
+      "webPath": "/generated/gm/props/containers/containers-031.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\containers\\containers-031.jpg",
+      "size": "512x512",
+      "prompt": "treasure chest, dark metal fittings, purple glow, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:44.257Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/furniture",
+      "key": "furniture-032",
+      "webPath": "/generated/gm/props/furniture/furniture-032.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\furniture\\furniture-032.jpg",
+      "size": "512x512",
+      "prompt": "ancient throne, broken chairs, dark gothic furniture, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:45.019Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/pillars",
+      "key": "pillars-033",
+      "webPath": "/generated/gm/props/pillars/pillars-033.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\pillars\\pillars-033.jpg",
+      "size": "512x512",
+      "prompt": "stone pillar, carved runes, shadow aura, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:45.779Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/altars",
+      "key": "altars-034",
+      "webPath": "/generated/gm/props/altars/altars-034.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\altars\\altars-034.jpg",
+      "size": "512x512",
+      "prompt": "shadow altar, ritual circle, purple energy, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:46.540Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/crystals",
+      "key": "crystals-035",
+      "webPath": "/generated/gm/props/crystals/crystals-035.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\crystals\\crystals-035.jpg",
+      "size": "512x512",
+      "prompt": "purple shadow crystal cluster, luminous, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:47.304Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/containers",
+      "key": "containers-036",
+      "webPath": "/generated/gm/props/containers/containers-036.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\containers\\containers-036.jpg",
+      "size": "512x512",
+      "prompt": "treasure chest, dark metal fittings, purple glow, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:48.066Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/furniture",
+      "key": "furniture-037",
+      "webPath": "/generated/gm/props/furniture/furniture-037.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\furniture\\furniture-037.jpg",
+      "size": "512x512",
+      "prompt": "ancient throne, broken chairs, dark gothic furniture, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:48.829Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/pillars",
+      "key": "pillars-038",
+      "webPath": "/generated/gm/props/pillars/pillars-038.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\pillars\\pillars-038.jpg",
+      "size": "512x512",
+      "prompt": "stone pillar, carved runes, shadow aura, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:49.594Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/altars",
+      "key": "altars-039",
+      "webPath": "/generated/gm/props/altars/altars-039.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\altars\\altars-039.jpg",
+      "size": "512x512",
+      "prompt": "shadow altar, ritual circle, purple energy, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:50.359Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/props/crystals",
+      "key": "crystals-040",
+      "webPath": "/generated/gm/props/crystals/crystals-040.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\props\\crystals\\crystals-040.jpg",
+      "size": "512x512",
+      "prompt": "purple shadow crystal cluster, luminous, top-down RPG map prop, isolated object, high contrast, clean silhouette",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:51.124Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/humanoids",
+      "key": "humanoids-001",
+      "webPath": "/generated/gm/tokens/humanoids/humanoids-001.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\humanoids\\humanoids-001.jpg",
+      "size": "256x256",
+      "prompt": "hunter, shadow warrior, dark armor, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:51.887Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/humanoids",
+      "key": "humanoids-002",
+      "webPath": "/generated/gm/tokens/humanoids/humanoids-002.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\humanoids\\humanoids-002.jpg",
+      "size": "256x256",
+      "prompt": "mage, purple shadow magic, hooded robe, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:52.645Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/humanoids",
+      "key": "humanoids-003",
+      "webPath": "/generated/gm/tokens/humanoids/humanoids-003.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\humanoids\\humanoids-003.jpg",
+      "size": "256x256",
+      "prompt": "assassin, dual daggers, shadow mist, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:53.408Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/monsters",
+      "key": "monsters-004",
+      "webPath": "/generated/gm/tokens/monsters/monsters-004.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\monsters\\monsters-004.jpg",
+      "size": "256x256",
+      "prompt": "shadow demon, glowing eyes, monstrous, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:54.169Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/monsters",
+      "key": "monsters-005",
+      "webPath": "/generated/gm/tokens/monsters/monsters-005.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\monsters\\monsters-005.jpg",
+      "size": "256x256",
+      "prompt": "shadow beast, massive predator, claws, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:54.920Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/bosses",
+      "key": "bosses-006",
+      "webPath": "/generated/gm/tokens/bosses/bosses-006.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\bosses\\bosses-006.jpg",
+      "size": "256x256",
+      "prompt": "shadow lord, regal armor, imposing aura, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:55.684Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/humanoids",
+      "key": "humanoids-007",
+      "webPath": "/generated/gm/tokens/humanoids/humanoids-007.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\humanoids\\humanoids-007.jpg",
+      "size": "256x256",
+      "prompt": "hunter, shadow warrior, dark armor, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:56.434Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/humanoids",
+      "key": "humanoids-008",
+      "webPath": "/generated/gm/tokens/humanoids/humanoids-008.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\humanoids\\humanoids-008.jpg",
+      "size": "256x256",
+      "prompt": "mage, purple shadow magic, hooded robe, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:57.198Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/humanoids",
+      "key": "humanoids-009",
+      "webPath": "/generated/gm/tokens/humanoids/humanoids-009.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\humanoids\\humanoids-009.jpg",
+      "size": "256x256",
+      "prompt": "assassin, dual daggers, shadow mist, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:57.960Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/monsters",
+      "key": "monsters-010",
+      "webPath": "/generated/gm/tokens/monsters/monsters-010.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\monsters\\monsters-010.jpg",
+      "size": "256x256",
+      "prompt": "shadow demon, glowing eyes, monstrous, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:58.723Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/monsters",
+      "key": "monsters-011",
+      "webPath": "/generated/gm/tokens/monsters/monsters-011.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\monsters\\monsters-011.jpg",
+      "size": "256x256",
+      "prompt": "shadow beast, massive predator, claws, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:11:59.487Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/bosses",
+      "key": "bosses-012",
+      "webPath": "/generated/gm/tokens/bosses/bosses-012.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\bosses\\bosses-012.jpg",
+      "size": "256x256",
+      "prompt": "shadow lord, regal armor, imposing aura, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:00.237Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/humanoids",
+      "key": "humanoids-013",
+      "webPath": "/generated/gm/tokens/humanoids/humanoids-013.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\humanoids\\humanoids-013.jpg",
+      "size": "256x256",
+      "prompt": "hunter, shadow warrior, dark armor, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:00.987Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/humanoids",
+      "key": "humanoids-014",
+      "webPath": "/generated/gm/tokens/humanoids/humanoids-014.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\humanoids\\humanoids-014.jpg",
+      "size": "256x256",
+      "prompt": "mage, purple shadow magic, hooded robe, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:01.750Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/humanoids",
+      "key": "humanoids-015",
+      "webPath": "/generated/gm/tokens/humanoids/humanoids-015.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\humanoids\\humanoids-015.jpg",
+      "size": "256x256",
+      "prompt": "assassin, dual daggers, shadow mist, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:02.512Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/monsters",
+      "key": "monsters-016",
+      "webPath": "/generated/gm/tokens/monsters/monsters-016.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\monsters\\monsters-016.jpg",
+      "size": "256x256",
+      "prompt": "shadow demon, glowing eyes, monstrous, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:03.277Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/monsters",
+      "key": "monsters-017",
+      "webPath": "/generated/gm/tokens/monsters/monsters-017.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\monsters\\monsters-017.jpg",
+      "size": "256x256",
+      "prompt": "shadow beast, massive predator, claws, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:04.041Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/bosses",
+      "key": "bosses-018",
+      "webPath": "/generated/gm/tokens/bosses/bosses-018.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\bosses\\bosses-018.jpg",
+      "size": "256x256",
+      "prompt": "shadow lord, regal armor, imposing aura, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:04.805Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/humanoids",
+      "key": "humanoids-019",
+      "webPath": "/generated/gm/tokens/humanoids/humanoids-019.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\humanoids\\humanoids-019.jpg",
+      "size": "256x256",
+      "prompt": "hunter, shadow warrior, dark armor, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:05.564Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/humanoids",
+      "key": "humanoids-020",
+      "webPath": "/generated/gm/tokens/humanoids/humanoids-020.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\humanoids\\humanoids-020.jpg",
+      "size": "256x256",
+      "prompt": "mage, purple shadow magic, hooded robe, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:06.323Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/humanoids",
+      "key": "humanoids-021",
+      "webPath": "/generated/gm/tokens/humanoids/humanoids-021.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\humanoids\\humanoids-021.jpg",
+      "size": "256x256",
+      "prompt": "assassin, dual daggers, shadow mist, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:07.087Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/monsters",
+      "key": "monsters-022",
+      "webPath": "/generated/gm/tokens/monsters/monsters-022.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\monsters\\monsters-022.jpg",
+      "size": "256x256",
+      "prompt": "shadow demon, glowing eyes, monstrous, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:07.851Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/monsters",
+      "key": "monsters-023",
+      "webPath": "/generated/gm/tokens/monsters/monsters-023.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\monsters\\monsters-023.jpg",
+      "size": "256x256",
+      "prompt": "shadow beast, massive predator, claws, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:08.616Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/bosses",
+      "key": "bosses-024",
+      "webPath": "/generated/gm/tokens/bosses/bosses-024.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\bosses\\bosses-024.jpg",
+      "size": "256x256",
+      "prompt": "shadow lord, regal armor, imposing aura, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:09.377Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/humanoids",
+      "key": "humanoids-025",
+      "webPath": "/generated/gm/tokens/humanoids/humanoids-025.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\humanoids\\humanoids-025.jpg",
+      "size": "256x256",
+      "prompt": "hunter, shadow warrior, dark armor, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:10.137Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/humanoids",
+      "key": "humanoids-026",
+      "webPath": "/generated/gm/tokens/humanoids/humanoids-026.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\humanoids\\humanoids-026.jpg",
+      "size": "256x256",
+      "prompt": "mage, purple shadow magic, hooded robe, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:10.901Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/humanoids",
+      "key": "humanoids-027",
+      "webPath": "/generated/gm/tokens/humanoids/humanoids-027.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\humanoids\\humanoids-027.jpg",
+      "size": "256x256",
+      "prompt": "assassin, dual daggers, shadow mist, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:11.665Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/monsters",
+      "key": "monsters-028",
+      "webPath": "/generated/gm/tokens/monsters/monsters-028.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\monsters\\monsters-028.jpg",
+      "size": "256x256",
+      "prompt": "shadow demon, glowing eyes, monstrous, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:12.427Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/monsters",
+      "key": "monsters-029",
+      "webPath": "/generated/gm/tokens/monsters/monsters-029.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\monsters\\monsters-029.jpg",
+      "size": "256x256",
+      "prompt": "shadow beast, massive predator, claws, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:13.186Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/bosses",
+      "key": "bosses-030",
+      "webPath": "/generated/gm/tokens/bosses/bosses-030.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\bosses\\bosses-030.jpg",
+      "size": "256x256",
+      "prompt": "shadow lord, regal armor, imposing aura, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:13.949Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/humanoids",
+      "key": "humanoids-031",
+      "webPath": "/generated/gm/tokens/humanoids/humanoids-031.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\humanoids\\humanoids-031.jpg",
+      "size": "256x256",
+      "prompt": "hunter, shadow warrior, dark armor, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:14.712Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/humanoids",
+      "key": "humanoids-032",
+      "webPath": "/generated/gm/tokens/humanoids/humanoids-032.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\humanoids\\humanoids-032.jpg",
+      "size": "256x256",
+      "prompt": "mage, purple shadow magic, hooded robe, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:15.476Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/humanoids",
+      "key": "humanoids-033",
+      "webPath": "/generated/gm/tokens/humanoids/humanoids-033.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\humanoids\\humanoids-033.jpg",
+      "size": "256x256",
+      "prompt": "assassin, dual daggers, shadow mist, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:16.239Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/monsters",
+      "key": "monsters-034",
+      "webPath": "/generated/gm/tokens/monsters/monsters-034.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\monsters\\monsters-034.jpg",
+      "size": "256x256",
+      "prompt": "shadow demon, glowing eyes, monstrous, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:17.004Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/monsters",
+      "key": "monsters-035",
+      "webPath": "/generated/gm/tokens/monsters/monsters-035.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\monsters\\monsters-035.jpg",
+      "size": "256x256",
+      "prompt": "shadow beast, massive predator, claws, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:17.766Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/bosses",
+      "key": "bosses-036",
+      "webPath": "/generated/gm/tokens/bosses/bosses-036.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\bosses\\bosses-036.jpg",
+      "size": "256x256",
+      "prompt": "shadow lord, regal armor, imposing aura, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:18.527Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/humanoids",
+      "key": "humanoids-037",
+      "webPath": "/generated/gm/tokens/humanoids/humanoids-037.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\humanoids\\humanoids-037.jpg",
+      "size": "256x256",
+      "prompt": "hunter, shadow warrior, dark armor, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:19.291Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/humanoids",
+      "key": "humanoids-038",
+      "webPath": "/generated/gm/tokens/humanoids/humanoids-038.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\humanoids\\humanoids-038.jpg",
+      "size": "256x256",
+      "prompt": "mage, purple shadow magic, hooded robe, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:20.056Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/humanoids",
+      "key": "humanoids-039",
+      "webPath": "/generated/gm/tokens/humanoids/humanoids-039.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\humanoids\\humanoids-039.jpg",
+      "size": "256x256",
+      "prompt": "assassin, dual daggers, shadow mist, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:20.820Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/tokens/monsters",
+      "key": "monsters-040",
+      "webPath": "/generated/gm/tokens/monsters/monsters-040.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\tokens\\monsters\\monsters-040.jpg",
+      "size": "256x256",
+      "prompt": "shadow demon, glowing eyes, monstrous, character portrait, circular token frame, centered, high readability",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:21.573Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/overlays/status",
+      "key": "status-001",
+      "webPath": "/generated/gm/overlays/status/status-001.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\overlays\\status\\status-001.jpg",
+      "size": "1024x1024",
+      "prompt": "RPG status overlay icon set style, shadow debuff aura, clean design, no text",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:22.334Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/overlays/effects",
+      "key": "effects-002",
+      "webPath": "/generated/gm/overlays/effects/effects-002.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\overlays\\effects\\effects-002.jpg",
+      "size": "1024x1024",
+      "prompt": "magic effect overlay, purple particles, smoky shadow, clean design, no text",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:23.096Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/overlays/aoe",
+      "key": "aoe-003",
+      "webPath": "/generated/gm/overlays/aoe/aoe-003.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\overlays\\aoe\\aoe-003.jpg",
+      "size": "1024x1024",
+      "prompt": "AOE template overlay, circle, cone, line, rune style, clean design, no text",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:23.859Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/overlays/ui",
+      "key": "ui-004",
+      "webPath": "/generated/gm/overlays/ui/ui-004.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\overlays\\ui\\ui-004.jpg",
+      "size": "1024x1024",
+      "prompt": "system window overlay frame, holographic purple UI, clean design, no text",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:24.617Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/overlays/status",
+      "key": "status-005",
+      "webPath": "/generated/gm/overlays/status/status-005.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\overlays\\status\\status-005.jpg",
+      "size": "1024x1024",
+      "prompt": "RPG status overlay icon set style, shadow debuff aura, clean design, no text",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:25.377Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/overlays/effects",
+      "key": "effects-006",
+      "webPath": "/generated/gm/overlays/effects/effects-006.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\overlays\\effects\\effects-006.jpg",
+      "size": "1024x1024",
+      "prompt": "magic effect overlay, purple particles, smoky shadow, clean design, no text",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:26.135Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/overlays/aoe",
+      "key": "aoe-007",
+      "webPath": "/generated/gm/overlays/aoe/aoe-007.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\overlays\\aoe\\aoe-007.jpg",
+      "size": "1024x1024",
+      "prompt": "AOE template overlay, circle, cone, line, rune style, clean design, no text",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:26.898Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/overlays/ui",
+      "key": "ui-008",
+      "webPath": "/generated/gm/overlays/ui/ui-008.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\overlays\\ui\\ui-008.jpg",
+      "size": "1024x1024",
+      "prompt": "system window overlay frame, holographic purple UI, clean design, no text",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:27.661Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/overlays/status",
+      "key": "status-009",
+      "webPath": "/generated/gm/overlays/status/status-009.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\overlays\\status\\status-009.jpg",
+      "size": "1024x1024",
+      "prompt": "RPG status overlay icon set style, shadow debuff aura, clean design, no text",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:28.426Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/overlays/effects",
+      "key": "effects-010",
+      "webPath": "/generated/gm/overlays/effects/effects-010.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\overlays\\effects\\effects-010.jpg",
+      "size": "1024x1024",
+      "prompt": "magic effect overlay, purple particles, smoky shadow, clean design, no text",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:29.177Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/overlays/aoe",
+      "key": "aoe-011",
+      "webPath": "/generated/gm/overlays/aoe/aoe-011.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\overlays\\aoe\\aoe-011.jpg",
+      "size": "1024x1024",
+      "prompt": "AOE template overlay, circle, cone, line, rune style, clean design, no text",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:29.940Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/overlays/ui",
+      "key": "ui-012",
+      "webPath": "/generated/gm/overlays/ui/ui-012.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\overlays\\ui\\ui-012.jpg",
+      "size": "1024x1024",
+      "prompt": "system window overlay frame, holographic purple UI, clean design, no text",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:30.692Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/overlays/status",
+      "key": "status-013",
+      "webPath": "/generated/gm/overlays/status/status-013.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\overlays\\status\\status-013.jpg",
+      "size": "1024x1024",
+      "prompt": "RPG status overlay icon set style, shadow debuff aura, clean design, no text",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:31.457Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/overlays/effects",
+      "key": "effects-014",
+      "webPath": "/generated/gm/overlays/effects/effects-014.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\overlays\\effects\\effects-014.jpg",
+      "size": "1024x1024",
+      "prompt": "magic effect overlay, purple particles, smoky shadow, clean design, no text",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:32.222Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/overlays/aoe",
+      "key": "aoe-015",
+      "webPath": "/generated/gm/overlays/aoe/aoe-015.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\overlays\\aoe\\aoe-015.jpg",
+      "size": "1024x1024",
+      "prompt": "AOE template overlay, circle, cone, line, rune style, clean design, no text",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:32.984Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/overlays/ui",
+      "key": "ui-016",
+      "webPath": "/generated/gm/overlays/ui/ui-016.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\overlays\\ui\\ui-016.jpg",
+      "size": "1024x1024",
+      "prompt": "system window overlay frame, holographic purple UI, clean design, no text",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:33.748Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/overlays/status",
+      "key": "status-017",
+      "webPath": "/generated/gm/overlays/status/status-017.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\overlays\\status\\status-017.jpg",
+      "size": "1024x1024",
+      "prompt": "RPG status overlay icon set style, shadow debuff aura, clean design, no text",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:34.501Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/overlays/effects",
+      "key": "effects-018",
+      "webPath": "/generated/gm/overlays/effects/effects-018.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\overlays\\effects\\effects-018.jpg",
+      "size": "1024x1024",
+      "prompt": "magic effect overlay, purple particles, smoky shadow, clean design, no text",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:35.267Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/overlays/aoe",
+      "key": "aoe-019",
+      "webPath": "/generated/gm/overlays/aoe/aoe-019.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\overlays\\aoe\\aoe-019.jpg",
+      "size": "1024x1024",
+      "prompt": "AOE template overlay, circle, cone, line, rune style, clean design, no text",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:36.029Z"
+    },
+    {
+      "type": "gm",
+      "category": "gm/overlays/ui",
+      "key": "ui-020",
+      "webPath": "/generated/gm/overlays/ui/ui-020.jpg",
+      "destPath": "C:\\Users\\jjcal\\OneDrive\\Desktop\\solo-compendium\\public\\generated\\gm\\overlays\\ui\\ui-020.jpg",
+      "size": "1024x1024",
+      "prompt": "system window overlay frame, holographic purple UI, clean design, no text",
+      "status": "dry_run",
+      "generatedAt": "2026-01-12T09:12:36.780Z"
+    }
+  ],
+  "dedupe": {
+    "mode": "report",
+    "duplicates": [],
+    "deleted": []
+  }
+}
