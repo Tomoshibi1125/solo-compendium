@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Header } from './Header';
 import { cn } from '@/lib/utils';
+import { error } from '@/lib/logger';
 
 interface LayoutProps {
   children?: React.ReactNode;
@@ -17,7 +18,7 @@ export function Layout({ children, className }: LayoutProps) {
       try {
         setIsLoading(false);
       } catch (error) {
-        console.error("Error setting loading state:", error);
+        error("Error setting loading state:", error);
       }
     }, 1000);
     return () => clearTimeout(timer);

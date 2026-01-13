@@ -4,6 +4,7 @@
  */
 
 import type { ComfyUIPrompt, ComfyUIResponse, ComfyUIHistory, QueueStatus } from './types.ts';
+import { error } from '@/lib/logger';
 
 export class ComfyUIClientError extends Error {
   constructor(message: string) {
@@ -113,7 +114,7 @@ export class ComfyUIClient {
         // Wait 2 seconds before checking again
         await new Promise(resolve => setTimeout(resolve, 2000));
       } catch (error) {
-        console.error('Error checking prompt status:', error);
+        error('Error checking prompt status:', error);
         await new Promise(resolve => setTimeout(resolve, 2000));
       }
     }
@@ -261,7 +262,7 @@ export class ComfyUIClient {
               blob,
             });
           } catch (error) {
-            console.error(`Failed to download image ${image.filename}:`, error);
+            error(`Failed to download image ${image.filename}:`, error);
           }
         });
       }

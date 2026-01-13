@@ -17,7 +17,7 @@ interface AudioPlayerProps {
 
 export function AudioPlayer({ tracks = [] }: AudioPlayerProps) {
   const [state, setState] = useState({
-    currentTrack: null as any,
+    currentTrackIndex: -1,
     isPlaying: false,
     currentTime: 0,
     duration: 0,
@@ -26,6 +26,7 @@ export function AudioPlayer({ tracks = [] }: AudioPlayerProps) {
   });
 
   const audioRef = useRef<HTMLAudioElement>(null);
+  const currentTrack = state.currentTrackIndex >= 0 ? tracks[state.currentTrackIndex] : null;
 
   const play = () => {
     if (audioRef.current) {
@@ -42,14 +43,50 @@ export function AudioPlayer({ tracks = [] }: AudioPlayerProps) {
   };
 
   const next = () => {
-    // Logic to play next track
-    console.log('Next track');
+    if (tracks.length === 0) return;
+    
+    const nextIndex = state.currentTrackIndex + 1;
+    if (nextIndex >= tracks.length) {
+      // Loop to beginning
+      loadTrack(0);
+    } else {
+      loadTrack(nextIndex);
+    }
   };
 
   const previous = () => {
-    // Logic to play previous track
-    console.log('Previous track');
+    if (tracks.length === 0) return;
+    
+    const prevIndex = state.currentTrackIndex - 1;
+    if (prevIndex < 0) {
+      // Loop to end
+      loadTrack(tracks.length - 1);
+    } else {
+      loadTrack(prevIndex);
+    }
   };
+
+  const loadTrack = (index: number) => {
+    setState(prev => ({
+      ...prev,
+      currentTrackIndex: index,
+      currentTime: 0,
+      isPlaying: false,
+    }));
+    
+    // Reset audio element
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.pause();
+    }
+  };
+
+  // Auto-load first track if available
+  useEffect(() => {
+    if (tracks.length > 0 && state.currentTrackIndex === -1) {
+      loadTrack(0);
+    }
+  }, [tracks]);
 
   const handleTimeUpdate = () => {
     if (audioRef.current) {
@@ -91,10 +128,10 @@ export function AudioPlayer({ tracks = [] }: AudioPlayerProps) {
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Current Track Info */}
-        {state.currentTrack && (
+        {currentTrack && (
           <div className="text-center">
-            <h3 className="font-semibold">{state.currentTrack.title}</h3>
-            <p className="text-sm text-muted-foreground">{state.currentTrack.artist}</p>
+            <h3 className="font-semibold">{currentTrack.title}</h3>
+            <p className="text-sm text-muted-foreground">{currentTrack.artist}</p>
           </div>
         )}
 
@@ -158,7 +195,7 @@ export function AudioPlayer({ tracks = [] }: AudioPlayerProps) {
           ref={audioRef}
           onTimeUpdate={handleTimeUpdate}
           onLoadedMetadata={handleTimeUpdate}
-          src={state.currentTrack?.url}
+          src={currentTrack?.url}
         />
       </CardContent>
     </Card>

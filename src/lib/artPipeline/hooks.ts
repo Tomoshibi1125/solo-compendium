@@ -7,6 +7,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { artPipeline } from './service';
 import type { ArtRequest, GenerationResult, ArtAsset } from './types';
 import { useFeatureFlag } from '@/lib/featureFlags';
+import { error } from '@/lib/logger';
 
 /**
  * Hook for art generation status and operations
@@ -217,7 +218,7 @@ export function useComfyUISystem() {
       const info = await (artPipeline as any).comfyClient?.getSystemInfo();
       setSystemInfo(info);
     } catch (error) {
-      console.error('Failed to load system info:', error);
+      error('Failed to load system info:', error);
     } finally {
       setLoading(false);
     }

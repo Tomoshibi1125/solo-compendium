@@ -18,6 +18,7 @@ import {
   Sun 
 } from 'lucide-react';
 import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
+import { error } from '@/lib/logger';
 import { GlobalSearch } from '@/components/ui/GlobalSearch';
 
 interface HeaderProps {
@@ -34,7 +35,7 @@ export function Header({ user, onLogout }: HeaderProps) {
       onLogout?.();
       navigate('/login');
     } catch (error) {
-      console.error('Error in navigation:', error);
+      error('Error in navigation:', error);
     }
   };
 

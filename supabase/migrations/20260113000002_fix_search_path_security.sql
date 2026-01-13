@@ -199,9 +199,27 @@ RETURNS INTEGER
 SET search_path = public
 SECURITY DEFINER
 AS $$
+DECLARE
+  character_level INTEGER;
 BEGIN
-  -- Implementation would calculate based on character level and other factors
-  RETURN 100; -- Placeholder
+  -- Get character level from database
+  SELECT level INTO character_level 
+  FROM public.characters 
+  WHERE id = p_character_id;
+  
+  -- Shadow energy scales with level
+  -- Level 1-4: 10 max
+  -- Level 5-8: 25 max
+  -- Level 9-12: 50 max
+  -- Level 13-16: 100 max
+  -- Level 17-20: 200 max
+  RETURN CASE
+    WHEN character_level <= 4 THEN 10
+    WHEN character_level <= 8 THEN 25
+    WHEN character_level <= 12 THEN 50
+    WHEN character_level <= 16 THEN 100
+    ELSE 200
+  END;
 END;
 $$ LANGUAGE plpgsql;
 

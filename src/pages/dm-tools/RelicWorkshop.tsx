@@ -199,7 +199,7 @@ const RelicWorkshop = () => {
                       id="name"
                       value={currentRelic.name}
                       onChange={(e) => setCurrentRelic({ ...currentRelic, name: e.target.value })}
-                      placeholder="Relic Name"
+                      placeholder="e.g., Shadow Monarch's Dagger"
                     />
                   </div>
                   <div>

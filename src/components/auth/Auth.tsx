@@ -129,7 +129,7 @@ export function Auth() {
     try {
       await updateProfile.mutateAsync({ role: selectedRole });
     } catch (error) {
-      console.error("Error setting role:", error);
+      logger.error("Error setting role:", error);
       // Add user notification here if needed
     }
       // Navigation will happen automatically via the useEffect when profile updates

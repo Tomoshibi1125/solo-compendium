@@ -18,6 +18,7 @@ import { calculateHPMax } from '@/lib/characterCalculations';
 import { ABILITY_NAMES, type AbilityScore } from '@/types/solo-leveling';
 import type { Database } from '@/integrations/supabase/types';
 import { isLocalCharacterId, setLocalAbilities } from '@/lib/guestStore';
+import { error } from '@/lib/logger';
 
 type Job = Database['public']['Tables']['compendium_jobs']['Row'] & {
   display_name?: string | null;
@@ -99,7 +100,7 @@ const CharacterNew = () => {
       // Redirect to character sheet
       navigate('/characters');
     } catch (error) {
-      console.error('Failed to create character:', error);
+      error('Failed to create character:', error);
       setErrors({ submit: 'Failed to create character. Please try again.' });
     } finally {
       setIsSubmitting(false);

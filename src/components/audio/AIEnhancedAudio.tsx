@@ -23,6 +23,7 @@ import {
   Play,
   Pause
 } from 'lucide-react';
+import { error } from '@/lib/logger';
 import { cn } from '@/lib/utils';
 import type { AudioAnalysis } from '@/lib/ai/types';
 
@@ -73,7 +74,7 @@ export function AIEnhancedAudio({ onAnalysisComplete, className }: AIEnhancedAud
         await detectMood(result.description, 'audio');
       }
     } catch (error) {
-      console.error('Failed to analyze audio:', error);
+      error('Failed to analyze audio:', error);
     }
   };
 

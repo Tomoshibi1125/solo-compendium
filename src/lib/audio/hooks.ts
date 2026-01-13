@@ -7,6 +7,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { audioService } from './audioService';
 import type { AudioTrack, Playlist, AudioPlayerState, AudioSettings } from './types';
 import { AppError } from '@/lib/appError';
+import { error } from '@/lib/logger';
 
 /**
  * Hook for accessing audio player state and controls
@@ -160,7 +161,7 @@ export function useAudioLibrary() {
     try {
       localStorage.setItem('audio-tracks', JSON.stringify(newTracks));
     } catch (error) {
-      console.error('Failed to save tracks:', error);
+      error('Failed to save tracks:', error);
     }
   }, []);
 
@@ -170,7 +171,7 @@ export function useAudioLibrary() {
     try {
       localStorage.setItem('audio-playlists', JSON.stringify(newPlaylists));
     } catch (error) {
-      console.error('Failed to save playlists:', error);
+      error('Failed to save playlists:', error);
     }
   }, []);
 

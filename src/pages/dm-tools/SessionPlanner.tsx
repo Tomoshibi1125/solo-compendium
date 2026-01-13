@@ -161,7 +161,7 @@ const SessionPlanner = () => {
                     id="title"
                     value={currentSession.title}
                     onChange={(e) => setCurrentSession({ ...currentSession, title: e.target.value })}
-                    placeholder="Session Title"
+                    placeholder="e.g., The Shadow Monarch's Return"
                   />
                 </div>
                 <div>
@@ -185,7 +185,7 @@ const SessionPlanner = () => {
                       id="note-title"
                       value={newNote.title}
                       onChange={(e) => setNewNote({ ...newNote, title: e.target.value })}
-                      placeholder="Note title"
+                      placeholder="e.g., Boss Battle - Igris the Blood Red"
                     />
                   </div>
                   <div>
@@ -210,7 +210,7 @@ const SessionPlanner = () => {
                     id="note-content"
                     value={newNote.content}
                     onChange={(e) => setNewNote({ ...newNote, content: e.target.value })}
-                    placeholder="Note content..."
+                    placeholder="Describe the encounter, NPC details, location description, or plot points..."
                     rows={4}
                   />
                 </div>

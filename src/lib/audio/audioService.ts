@@ -5,6 +5,7 @@
 
 import type { AudioTrack, Playlist, AudioPlayerState, AudioSettings } from './types';
 import { DEFAULT_AUDIO_SETTINGS } from './types';
+import { error } from '@/lib/logger';
 
 export class AudioService {
   private audio: HTMLAudioElement | null = null;
@@ -325,7 +326,7 @@ export class AudioService {
         this.settings = { ...DEFAULT_AUDIO_SETTINGS, ...JSON.parse(saved) };
       }
     } catch (error) {
-      console.error('Failed to load audio settings:', error);
+      error('Failed to load audio settings:', error);
     }
   }
 
@@ -335,7 +336,7 @@ export class AudioService {
     try {
       localStorage.setItem('audio-settings', JSON.stringify(this.settings));
     } catch (error) {
-      console.error('Failed to save audio settings:', error);
+      error('Failed to save audio settings:', error);
     }
   }
 

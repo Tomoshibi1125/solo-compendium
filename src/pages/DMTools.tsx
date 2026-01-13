@@ -18,6 +18,7 @@ import {
   AlertTriangle,
   UsersRound,
   Grid,
+  Globe,
   Image as ImageIcon,
   Layers,
 } from 'lucide-react';
@@ -189,6 +190,16 @@ const tools = [
     iconColor: 'text-indigo-400',
     glow: 'group-hover:shadow-indigo-500/20',
   },
+  {
+    id: 'campaign-manager',
+    name: 'Campaign Manager',
+    description: 'Comprehensive campaign management with world-building, timeline tracking, and story arcs.',
+    icon: Globe,
+    status: 'coming-soon',
+    color: 'from-slate-500/20 to-slate-600/10 border-slate-500/30 hover:border-slate-500/60',
+    iconColor: 'text-slate-400',
+    glow: 'group-hover:shadow-slate-500/20',
+  },
 ];
 
 const DMTools = () => {
@@ -329,10 +340,10 @@ const DMTools = () => {
               {tool.status === 'coming-soon' && (
                 <span className={cn(
                   "inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-arise uppercase",
-                  "bg-muted/50 text-muted-foreground border border-muted-foreground/20"
+                  "bg-blue-500/10 text-blue-400 border border-blue-500/30"
                 )}>
                   <Sparkles className="w-3 h-3" />
-                  Coming Soon
+                  In Development
                 </span>
               )}
               {tool.status === 'campaign-only' && (

@@ -7,6 +7,7 @@ import React, { createContext, useCallback, useContext, useEffect, useState, Rea
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { AppError } from '@/lib/appError';
+import { error as logError } from '@/lib/logger';
 
 export type UserRole = 'dm' | 'player' | 'admin';
 
@@ -91,7 +92,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         .single();
 
       if (error) {
-        console.error('Error fetching user profile:', error);
+        logError('Error fetching user profile:', error);
         setUser({
           id: authUser.id,
           email: authUser.email ?? '',
@@ -116,7 +117,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         });
       }
     } catch (error) {
-      console.error('Error fetching user profile:', error);
+      logError('Error fetching user profile:', error);
     } finally {
       setLoading(false);
     }

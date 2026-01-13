@@ -45,7 +45,7 @@ export const SKILLS: Skill[] = [
 export const DC_LADDER = [
   { dc: 5, difficulty: 'Very Easy', examples: 'Hop a small barrier, recall recent public news' },
   { dc: 10, difficulty: 'Easy', examples: 'Climb a chain-link fence, impress a minor official' },
-  { dc: 15, difficulty: 'Moderate', examples: 'Track a careful target, hack a low-security system' },
+  { dc: 15, difficulty: 'Moderate', examples: 'Track a careful target, bypass a magical barrier' },
   { dc: 20, difficulty: 'Hard', examples: 'Leap between moving vehicles, notice a hidden sniper' },
   { dc: 25, difficulty: 'Very Hard', examples: 'Convince a hostile guild officer to back down' },
   { dc: 30, difficulty: 'Nearly Impossible', examples: 'Legendary feats, holding a collapsing portal' },

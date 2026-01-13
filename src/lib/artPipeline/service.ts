@@ -14,6 +14,7 @@ import type {
 import { getPreset, buildPrompt, generateCacheKey } from './types.ts';
 import { getFeatureFlag } from '@/lib/featureFlags';
 import { AppError } from '@/lib/appError';
+import { supabase } from '@/integrations/supabase/client';
 
 export class ArtPipelineService {
   private cacheDir: string;
@@ -233,9 +234,32 @@ export class ArtPipelineService {
    * Save asset record to database
    */
   private async saveAssetRecord(asset: ArtAsset): Promise<void> {
-    // In a real implementation, you'd save to your database
-    // For now, just log the asset
-    console.log('Saving asset record:', asset);
+    try {
+      const { error } = await supabase
+        .from('art_assets')
+        .insert({
+          id: asset.id,
+          entity_type: asset.entityType,
+          entity_id: asset.entityId,
+          variant: asset.variant,
+          paths: asset.paths,
+          dimensions: asset.dimensions,
+          file_size: asset.fileSize,
+          mime_type: asset.mimeType,
+          metadata_path: asset.metadataPath,
+          metadata: asset.metadata,
+          hash: asset.hash,
+        });
+
+      if (error) {
+        throw new AppError(`Failed to save asset: ${error.message}`, 'UNKNOWN');
+      }
+    } catch (error) {
+      if (error instanceof AppError) {
+        throw error;
+      }
+      throw new AppError('Failed to save asset record', 'UNKNOWN');
+    }
   }
 
   /**

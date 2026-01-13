@@ -28,6 +28,7 @@ import {
 import { cn } from '@/lib/utils';
 import { useQueryClient, useQuery } from '@tanstack/react-query';
 import { checkAllLinkIntegrity, type BrokenLink } from '@/lib/linkIntegrity';
+import { error } from '@/lib/logger';
 
 function AuditTable({ report }: { report: ContentAuditReport }) {
   const getCompletenessColor = (completeness: number) => {
@@ -312,7 +313,7 @@ function LinkIntegritySection() {
     }
   
     } catch (error) {
-      console.error("Failed to check links:", error);
+      error("Failed to check links:", error);
     }
   };
 

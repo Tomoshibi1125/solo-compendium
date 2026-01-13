@@ -280,8 +280,9 @@ const VTTEnhanced = () => {
     if (selectedTool === 'fog' && fogOfWar && isGM) {
       const updatedScene = { ...currentScene };
       if (!updatedScene.fogData) {
+        // Initialize fog data with all tiles hidden (false)
         updatedScene.fogData = Array(updatedScene.height)
-          .fill(null)
+          .fill(0)
           .map(() => Array(updatedScene.width).fill(false));
       }
       // Reveal area (3x3 grid)

@@ -12,6 +12,7 @@ import { AudioLibrary } from '@/components/audio/AudioLibrary';
 import { Layout } from '@/components/layout/Layout';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Music, Volume2, Settings, PlayCircle } from 'lucide-react';
+import { error } from '@/lib/logger';
 
 export default function AudioManagerDM() {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ export default function AudioManagerDM() {
       try {
         audioRef.current.play();
       } catch (error) {
-        console.error("Error playing audio:", error);
+        error("Error playing audio:", error);
       }
       setIsPlaying(true);
     }
@@ -50,7 +51,7 @@ export default function AudioManagerDM() {
       try {
         audioRef.current.pause();
       } catch (error) {
-        console.error("Error pausing audio:", error);
+        error("Error pausing audio:", error);
       }
       setIsPlaying(false);
     }
