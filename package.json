@@ -19,7 +19,7 @@
     "typecheck:app": "tsc -p tsconfig.app.json --noEmit",
     "typecheck:node": "tsc -p tsconfig.node.json --noEmit",
     "preview": "vite preview",
-    "test": "vitest",
+    "test": "vitest --run",
     "test:ui": "vitest --ui",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
@@ -96,6 +96,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
+    "@jridgewell/sourcemap-codec": "^1.5.5",
     "@playwright/test": "^1.57.0",
     "@sentry/vite-plugin": "^4.6.1",
     "@tailwindcss/postcss": "^4.1.18",
@@ -128,6 +129,9 @@
   },
   "overrides": {
     "preact": "^10.28.2",
-    "sourcemap-codec": "npm:@jridgewell/sourcemap-codec@^1.4.14"
+    "sourcemap-codec": "npm:@jridgewell/sourcemap-codec@^1.4.14",
+    "@jridgewell/remapping": "npm:@jridgewell/remapping@^2.3.5",
+    "magic-string": "npm:magic-string@^0.30.0",
+    "@adobe/css-tools": "npm:@adobe/css-tools@^4.3.0"
   }
 }
