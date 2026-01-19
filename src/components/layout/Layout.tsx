@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { Header } from './Header';
 import { cn } from '@/lib/utils';
 import { logger } from '@/lib/logger';
+import { useAuth } from '@/lib/auth/authContext';
 
 interface LayoutProps {
   children?: React.ReactNode;
@@ -11,6 +12,7 @@ interface LayoutProps {
 
 export function Layout({ children, className }: LayoutProps) {
   const [isLoading, setIsLoading] = useState(true);
+  const { user, signOut } = useAuth();
   
   useEffect(() => {
     // Simulate loading completion
@@ -92,7 +94,20 @@ export function Layout({ children, className }: LayoutProps) {
 
   return (
     <div className={layoutClasses}>
-      <Header />
+      <Header
+        user={
+          user
+            ? {
+                email: user.email,
+                name: user.displayName ?? user.email?.split('@')[0] ?? 'User',
+                avatar: user.avatar,
+              }
+            : undefined
+        }
+        onLogout={() => {
+          void signOut();
+        }}
+      />
       <main className={cn(
         "flex-1",
         isMobile ? "px-4 py-6" : "px-8 py-8"
