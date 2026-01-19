@@ -11,6 +11,19 @@ export interface OAuthProvider {
   color: string;
 }
 
+const PROVIDER_OPTIONS: Record<OAuthProvider['id'], { queryParams?: Record<string, string>; scopes?: string }> = {
+  google: {
+    queryParams: {
+      access_type: 'offline',
+      prompt: 'consent',
+    },
+    scopes: 'email profile',
+  },
+  apple: {
+    scopes: 'name email',
+  },
+};
+
 export const OAUTH_PROVIDERS: OAuthProvider[] = [
   {
     id: 'google',
@@ -83,14 +96,13 @@ export function useOAuth(): UseOAuthReturn {
     setError(null);
 
     try {
+      const providerOptions = PROVIDER_OPTIONS[provider.id];
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: provider.id,
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
-          queryParams: {
-            access_type: 'offline',
-            prompt: 'consent',
-          },
+          ...(providerOptions?.queryParams ? { queryParams: providerOptions.queryParams } : {}),
+          ...(providerOptions?.scopes ? { scopes: providerOptions.scopes } : {}),
         },
       });
 

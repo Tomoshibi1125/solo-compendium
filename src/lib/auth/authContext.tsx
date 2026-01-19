@@ -20,12 +20,14 @@ export interface AuthUser {
   createdAt: string;
 }
 
+type AuthResult = { error?: string; success?: boolean; needsEmailConfirmation?: boolean };
+
 interface AuthContextType {
   user: AuthUser | null;
   session: Session | null;
   loading: boolean;
-  signIn: (email: string, password: string, role: UserRole) => Promise<{ error?: string; success?: boolean }>;
-  signUp: (email: string, password: string, displayName: string, role: UserRole) => Promise<{ error?: string; success?: boolean }>;
+  signIn: (email: string, password: string, role: UserRole) => Promise<AuthResult>;
+  signUp: (email: string, password: string, displayName: string, role: UserRole) => Promise<AuthResult>;
   signOut: () => Promise<void>;
   updateProfile: (updates: Partial<AuthUser>) => Promise<{ error?: string; success?: boolean }>;
   hasPermission: (permission: string) => boolean;
@@ -210,20 +212,41 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       if (data.user) {
-        // Verify role matches
-        const { data: profile, error: profileError } = await supabase
+        const expectedRole = toProfileRole(role);
+        const metadataRole =
+          typeof data.user.user_metadata?.role === 'string' ? normalizeRole(data.user.user_metadata.role) : undefined;
+
+        const { data: profileRows, error: profileError } = await supabase
           .from('profiles')
           .select('role')
           .eq('id', data.user.id)
-          .single();
+          .limit(1);
 
-        const expectedRole = toProfileRole(role);
-        const metadataRole =
-          typeof data.user.user_metadata?.role === 'string' ? data.user.user_metadata.role : undefined;
-        const actualRole = normalizeRole(profile?.role ?? metadataRole);
-        const roleMatches = actualRole === expectedRole;
+        if (profileError) {
+          await supabase.auth.signOut();
+          return { error: 'Unable to verify account role' };
+        }
 
-        if (profileError || !roleMatches) {
+        let resolvedRole = profileRows?.[0]?.role ? normalizeRole(profileRows[0].role) : undefined;
+
+        if (resolvedRole !== expectedRole && metadataRole === expectedRole) {
+          const { error: upsertError } = await supabase
+            .from('profiles')
+            .upsert(
+              {
+                id: data.user.id,
+                role: expectedRole,
+                updated_at: new Date().toISOString(),
+              },
+              { onConflict: 'id' }
+            );
+
+          if (!upsertError) {
+            resolvedRole = expectedRole;
+          }
+        }
+
+        if (resolvedRole !== expectedRole) {
           await supabase.auth.signOut();
           return { error: 'Invalid role for this account' };
         }
@@ -238,6 +261,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signUp = async (email: string, password: string, displayName: string, role: UserRole) => {
     try {
       // Create auth user
+      const redirectTo =
+        typeof window !== 'undefined' ? `${window.location.origin}/auth/callback` : undefined;
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -245,12 +270,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           data: {
             display_name: displayName,
             role: role
-          }
+          },
+          ...(redirectTo ? { emailRedirectTo: redirectTo } : {}),
         }
       });
 
       if (error) {
         return { error: error.message };
+      }
+
+      if (!data.session) {
+        return { success: true, needsEmailConfirmation: true };
       }
 
       if (data.user) {

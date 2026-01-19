@@ -85,6 +85,12 @@ export const useUpdateProfile = () => {
 
         if (error) throw error;
       }
+
+      const { error: authError } = await supabase.auth.updateUser({
+        data: { role },
+      });
+
+      if (authError) throw authError;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['profile'] });

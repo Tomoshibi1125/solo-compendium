@@ -3,11 +3,13 @@
  * Solo Leveling styled authentication page
  */
 
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/lib/auth/authContext';
 import { Eye, EyeOff, Shield, Sword, Users } from 'lucide-react';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { OAuthButtons } from '@/components/auth/OAuthButton';
+import { OAuthProvider, useOAuth } from '@/hooks/useOAuth';
 
 export default function Login() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -18,14 +20,25 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [notice, setNotice] = useState('');
   
   const { signIn, signUp } = useAuth();
+  const { isLoading: oauthLoading, signInWithProvider } = useOAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    const authError = searchParams.get('error');
+    if (authError) {
+      setError(authError);
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    setNotice('');
 
     try {
       const result = isSignUp 
@@ -34,6 +47,8 @@ export default function Login() {
 
       if (result.error) {
         setError(result.error);
+      } else if (result.needsEmailConfirmation) {
+        setNotice('Check your email to confirm your account, then sign in.');
       } else {
         // Redirect based on role
         if (role === 'dm') {
@@ -47,6 +62,15 @@ export default function Login() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleOAuthSignIn = async (provider: OAuthProvider) => {
+    setError('');
+    setNotice('');
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('pending-oauth-role', role);
+    }
+    await signInWithProvider(provider);
   };
 
   return (
@@ -86,6 +110,20 @@ export default function Login() {
 
         {/* Login Form */}
         <div className="bg-gray-800/50 backdrop-blur-lg rounded-2xl p-8 border border-gray-700 shadow-2xl">
+          <div className="mb-6 space-y-4">
+            <OAuthButtons
+              isLoading={oauthLoading}
+              onSignIn={handleOAuthSignIn}
+            />
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-700"></div>
+              </div>
+              <div className="relative flex justify-center text-xs">
+                <span className="bg-gray-800/60 px-2 text-gray-400">or continue with email</span>
+              </div>
+            </div>
+          </div>
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Role Selection */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
@@ -181,10 +219,17 @@ export default function Login() {
               </div>
             )}
 
+            {/* Notice Message */}
+            {notice && (
+              <div className="bg-green-900/40 border border-green-700 text-green-200 px-4 py-3 rounded-lg">
+                {notice}
+              </div>
+            )}
+
             {/* Submit Button */}
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || oauthLoading}
               className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-200 shadow-lg shadow-purple-600/50 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (

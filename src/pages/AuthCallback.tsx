@@ -9,6 +9,10 @@ import { logger } from '@/lib/logger';
 export default function AuthCallback() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const normalizeRole = (value: string | null): 'dm' | 'player' | null => {
+    if (value === 'dm' || value === 'player') return value;
+    return null;
+  };
 
   useEffect(() => {
     const handleAuthCallback = async () => {
@@ -22,35 +26,75 @@ export default function AuthCallback() {
         return;
       }
 
-      if (code) {
-        try {
+      try {
+        let session = (await supabase.auth.getSession()).data.session ?? null;
+        let user = session?.user ?? null;
+
+        if (!session && code) {
           const { data, error } = await supabase.auth.exchangeCodeForSession(code);
-          
           if (error) {
             throw error;
           }
-
-          if (data.session) {
-            // Successfully authenticated
-            const user = data.user;
-            const provider = user?.app_metadata?.provider;
-            
-            logger.debug('User authenticated successfully:', {
-              id: user?.id,
-              email: user?.email,
-              provider,
-            });
-
-            // Redirect to the appropriate page based on user state
-            navigate('/compendium');
-          }
-        } catch (error) {
-          logger.error('Error exchanging code for session:', error);
-          navigate('/login?error=' + encodeURIComponent('Authentication failed'));
+          session = data.session ?? null;
+          user = data.user ?? null;
         }
-      } else {
-        // No code or error, redirect to login
-        navigate('/login');
+
+        if (!user) {
+          const { data } = await supabase.auth.getUser();
+          user = data.user ?? null;
+        }
+
+        if (!user) {
+          navigate('/login?error=' + encodeURIComponent('Authentication failed'));
+          return;
+        }
+
+        const { data: profileRows, error: profileError } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', user.id)
+          .limit(1);
+
+        if (profileError) {
+          logger.error('Error loading user profile:', profileError);
+        }
+
+        let role = profileRows?.[0]?.role ? normalizeRole(profileRows[0].role) : null;
+
+        const pendingRole =
+          typeof window !== 'undefined' ? normalizeRole(localStorage.getItem('pending-oauth-role')) : null;
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('pending-oauth-role');
+        }
+
+        if (!role && pendingRole) {
+          const { error: roleError } = await supabase
+            .from('profiles')
+            .upsert(
+              {
+                id: user.id,
+                role: pendingRole,
+                updated_at: new Date().toISOString(),
+              },
+              { onConflict: 'id' }
+            );
+
+          if (roleError) {
+            logger.error('Error setting role after OAuth sign-in:', roleError);
+          } else {
+            role = pendingRole;
+          }
+        }
+
+        if (!role) {
+          navigate('/auth');
+          return;
+        }
+
+        navigate(role === 'dm' ? '/dm-tools' : '/player-tools');
+      } catch (error) {
+        logger.error('Error completing auth callback:', error);
+        navigate('/login?error=' + encodeURIComponent('Authentication failed'));
       }
     };
 

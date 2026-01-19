@@ -20,6 +20,7 @@ export function OAuthButton({
 }: OAuthButtonProps) {
   return (
     <Button
+      type="button"
       variant={variant}
       size={size}
       onClick={onClick}
