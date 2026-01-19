@@ -15,10 +15,8 @@ BEGIN
   NULL;
 END;
 $$;
-
 -- Add a comment to trigger cache refresh
 COMMENT ON FUNCTION public.on_long_rest_assign_quests(p_character_id UUID) IS 'Security Advisor cache refresh trigger';
-
 -- Verify search_path is properly set
 DO $$
 BEGIN

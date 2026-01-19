@@ -13,7 +13,6 @@ CREATE TABLE IF NOT EXISTS campaigns (
   updated_at TIMESTAMPTZ DEFAULT NOW(),
   settings JSONB DEFAULT '{}'::jsonb -- Store campaign-specific settings
 );
-
 -- Campaign members (players)
 CREATE TABLE IF NOT EXISTS campaign_members (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -24,19 +23,14 @@ CREATE TABLE IF NOT EXISTS campaign_members (
   joined_at TIMESTAMPTZ DEFAULT NOW(),
   UNIQUE(campaign_id, user_id)
 );
-
 -- Indexes for performance
 CREATE INDEX IF NOT EXISTS campaigns_dm_id_idx ON campaigns(dm_id);
 CREATE INDEX IF NOT EXISTS campaigns_share_code_idx ON campaigns(share_code);
 CREATE INDEX IF NOT EXISTS campaign_members_campaign_id_idx ON campaign_members(campaign_id);
 CREATE INDEX IF NOT EXISTS campaign_members_user_id_idx ON campaign_members(user_id);
-
 -- Function to generate unique share codes
 CREATE OR REPLACE FUNCTION generate_share_code()
-RETURNS TEXT 
-LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-AS $$
+RETURNS TEXT AS $$
 DECLARE
   chars TEXT := 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; -- Excludes confusing chars
   result TEXT := '';
@@ -47,18 +41,14 @@ BEGIN
   END LOOP;
   RETURN result;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 -- Function to create campaign with unique share code
 CREATE OR REPLACE FUNCTION create_campaign_with_code(
   p_name TEXT,
   p_description TEXT,
   p_dm_id UUID
 )
-RETURNS UUID 
-LANGUAGE plpgsql
-SECURITY DEFINER
-AS $$
+RETURNS UUID AS $$
 DECLARE
   v_campaign_id UUID;
   v_share_code TEXT;
@@ -67,35 +57,33 @@ DECLARE
 BEGIN
   LOOP
     v_share_code := generate_share_code();
-
+    
     -- Check if code already exists
     IF NOT EXISTS (SELECT 1 FROM campaigns WHERE share_code = v_share_code) THEN
       EXIT;
     END IF;
-
+    
     attempts := attempts + 1;
     IF attempts >= max_attempts THEN
       RAISE EXCEPTION 'Failed to generate unique share code after % attempts', max_attempts;
     END IF;
   END LOOP;
-
+  
   -- Create campaign
   INSERT INTO campaigns (name, description, dm_id, share_code)
   VALUES (p_name, p_description, p_dm_id, v_share_code)
   RETURNING id INTO v_campaign_id;
-
+  
   -- Add DM as member
   INSERT INTO campaign_members (campaign_id, user_id, role)
   VALUES (v_campaign_id, p_dm_id, 'co-dm');
-
+  
   RETURN v_campaign_id;
 END;
-$$;
-
+$$ LANGUAGE plpgsql SECURITY DEFINER;
 -- RLS Policies
 ALTER TABLE campaigns ENABLE ROW LEVEL SECURITY;
 ALTER TABLE campaign_members ENABLE ROW LEVEL SECURITY;
-
 -- Campaigns: DMs can manage their own campaigns, members can view
 CREATE POLICY "Users can view campaigns they DM or are members of"
   ON campaigns FOR SELECT
@@ -106,19 +94,15 @@ CREATE POLICY "Users can view campaigns they DM or are members of"
       WHERE campaign_id = campaigns.id AND user_id = auth.uid()
     )
   );
-
 CREATE POLICY "DMs can create campaigns"
   ON campaigns FOR INSERT
   WITH CHECK (dm_id = auth.uid());
-
 CREATE POLICY "DMs can update their own campaigns"
   ON campaigns FOR UPDATE
   USING (dm_id = auth.uid());
-
 CREATE POLICY "DMs can delete their own campaigns"
   ON campaigns FOR DELETE
   USING (dm_id = auth.uid());
-
 -- Campaign members: Users can view members of campaigns they're in
 CREATE POLICY "Users can view members of their campaigns"
   ON campaign_members FOR SELECT
@@ -133,7 +117,6 @@ CREATE POLICY "Users can view members of their campaigns"
       ))
     )
   );
-
 CREATE POLICY "DMs can add members to their campaigns"
   ON campaign_members FOR INSERT
   WITH CHECK (
@@ -142,7 +125,6 @@ CREATE POLICY "DMs can add members to their campaigns"
       WHERE id = campaign_members.campaign_id AND dm_id = auth.uid()
     )
   );
-
 CREATE POLICY "Users can join campaigns via share code"
   ON campaign_members FOR INSERT
   WITH CHECK (
@@ -153,7 +135,6 @@ CREATE POLICY "Users can join campaigns via share code"
       AND is_active = true
     )
   );
-
 CREATE POLICY "DMs can remove members, users can leave"
   ON campaign_members FOR DELETE
   USING (
@@ -163,19 +144,14 @@ CREATE POLICY "DMs can remove members, users can leave"
       WHERE id = campaign_members.campaign_id AND dm_id = auth.uid()
     )
   );
-
 -- Updated_at trigger
 CREATE OR REPLACE FUNCTION update_updated_at_column()
-RETURNS TRIGGER 
-LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-AS $$
+RETURNS TRIGGER AS $$
 BEGIN
   NEW.updated_at = NOW();
   RETURN NEW;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 DO $$
 BEGIN
   IF EXISTS (

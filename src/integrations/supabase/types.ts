@@ -906,6 +906,7 @@ export type Database = {
           conditions: string[] | null
           created_at: string
           exhaustion_level: number
+          experience: number
           hit_dice_current: number
           hit_dice_max: number
           hit_dice_size: number
@@ -949,6 +950,7 @@ export type Database = {
           conditions?: string[] | null
           created_at?: string
           exhaustion_level?: number
+          experience?: number
           hit_dice_current?: number
           hit_dice_max?: number
           hit_dice_size?: number
@@ -992,6 +994,7 @@ export type Database = {
           conditions?: string[] | null
           created_at?: string
           exhaustion_level?: number
+          experience?: number
           hit_dice_current?: number
           hit_dice_max?: number
           hit_dice_size?: number
@@ -3101,7 +3104,7 @@ export type Database = {
             Returns: boolean
           }
         | { Args: { p_path: string }; Returns: boolean }
-      assign_daily_quests: { Args: { p_user_id: string }; Returns: undefined }
+      assign_daily_quests: { Args: { p_character_id: string }; Returns: undefined }
       calculate_shadow_energy_max:
         | { Args: { character_level: number }; Returns: number }
         | { Args: { p_character_id: string }; Returns: number }
@@ -3115,6 +3118,20 @@ export type Database = {
         Returns: string
       }
       generate_share_code: { Args: never; Returns: string }
+      get_campaign_by_share_code: {
+        Args: { p_share_code: string }
+        Returns: {
+          created_at: string
+          description: string | null
+          dm_id: string
+          id: string
+          is_active: boolean
+          name: string
+          settings: Json
+          share_code: string
+          updated_at: string
+        }[]
+      }
       get_asset_paths:
         | {
             Args: { entity_uuid: string; entity_variant?: string }

@@ -8,6 +8,8 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import tokensCompendium from '@/data/tokens';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 interface PlacedToken {
   id: string;
@@ -60,10 +62,11 @@ const VTTMap = () => {
     if (savedTokens) {
       try {
         const parsed = JSON.parse(savedTokens);
-        const tokens: MapToken[] = parsed.map((t: { id: string; name: string; emoji?: string; color?: string; size: 'small' | 'medium' | 'large' | 'huge'; category: string }) => ({
+        const tokens: MapToken[] = parsed.map((t: { id: string; name: string; emoji?: string; imageUrl?: string; color?: string; size: 'small' | 'medium' | 'large' | 'huge'; category: string }) => ({
           id: t.id,
           name: t.name,
           emoji: t.emoji,
+          imageUrl: t.imageUrl,
           color: t.color,
           size: t.size,
           category: t.category,
@@ -72,6 +75,17 @@ const VTTMap = () => {
       } catch (e) {
         // No tokens available
       }
+    } else {
+      const fallbackTokens: MapToken[] = tokensCompendium.map((token) => ({
+        id: token.id,
+        name: token.name,
+        imageUrl: token.image,
+        size: token.type === 'boss' ? 'huge' : token.type === 'monster' ? 'large' : 'medium',
+        category: token.type,
+        color: token.friendly ? '#38bdf8' : '#f97316',
+      }));
+      setAvailableTokens(fallbackTokens);
+      localStorage.setItem('vtt-tokens', JSON.stringify(fallbackTokens));
     }
 
     // Load map state
@@ -101,7 +115,7 @@ const VTTMap = () => {
   };
 
   const handleMapClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!mapRef.current || selectedToken) return;
+    if (!mapRef.current || !selectedToken) return;
 
     const rect = mapRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -235,6 +249,8 @@ const VTTMap = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => setZoom(Math.max(0.5, zoom - 0.1))}
+                      aria-label="Zoom out"
+                      data-testid="vtt-zoom-out"
                     >
                       <Minus className="w-4 h-4" />
                     </Button>
@@ -243,6 +259,8 @@ const VTTMap = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => setZoom(Math.min(2, zoom + 0.1))}
+                      aria-label="Zoom in"
+                      data-testid="vtt-zoom-in"
                     >
                       <Plus className="w-4 h-4" />
                     </Button>
@@ -256,6 +274,8 @@ const VTTMap = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => setCurrentLayer(Math.max(0, currentLayer - 1))}
+                      aria-label="Layer down"
+                      data-testid="vtt-layer-down"
                     >
                       <Minus className="w-4 h-4" />
                     </Button>
@@ -264,6 +284,8 @@ const VTTMap = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => setCurrentLayer(currentLayer + 1)}
+                      aria-label="Layer up"
+                      data-testid="vtt-layer-up"
                     >
                       <Plus className="w-4 h-4" />
                     </Button>
@@ -277,6 +299,8 @@ const VTTMap = () => {
                     checked={showGrid}
                     onChange={(e) => setShowGrid(e.target.checked)}
                     className="w-4 h-4"
+                    aria-label="Show grid"
+                    data-testid="vtt-toggle-grid"
                   />
                   <label htmlFor="showGrid" className="text-sm cursor-pointer">Show Grid</label>
                 </div>
@@ -313,6 +337,8 @@ const VTTMap = () => {
                             ? 'bg-primary/20 border-primary'
                             : 'border-border hover:bg-muted/50'
                         )}
+                        data-testid="vtt-token-option"
+                        aria-label={`Select token ${token.name}`}
                       >
                         <div className="flex items-center gap-2">
                           <div
@@ -327,13 +353,14 @@ const VTTMap = () => {
                             }}
                           >
                             {token.imageUrl ? (
-                              <img
+                              <OptimizedImage
                                 src={token.imageUrl}
                                 alt={token.name}
                                 className="w-full h-full object-cover rounded-full"
+                                size="thumbnail"
                               />
                             ) : (
-                              token.emoji || '🎲'
+                              token.emoji || '@'
                             )}
                           </div>
                           <span className="text-xs font-heading truncate flex-1">{token.name}</span>
@@ -362,13 +389,14 @@ const VTTMap = () => {
                   >
                     <div className="flex items-center gap-2 flex-1 min-w-0">
                       {token.imageUrl ? (
-                        <img
+                        <OptimizedImage
                           src={token.imageUrl}
                           alt={token.name}
                           className="w-6 h-6 rounded-full object-cover border border-border"
+                          size="thumbnail"
                         />
                       ) : (
-                        <span>{token.emoji || '🎲'}</span>
+                        <span>{token.emoji || '@'}</span>
                       )}
                       <span className="truncate">{token.name}</span>
                     </div>
@@ -406,6 +434,7 @@ const VTTMap = () => {
                 onClick={handleMapClick}
                 onMouseMove={handleTokenDrag}
                 onMouseUp={handleTokenDragEnd}
+                data-testid="vtt-map"
                 className={cn(
                   'relative border-2 border-border rounded-lg bg-background overflow-auto',
                   selectedToken && 'cursor-crosshair',
@@ -445,6 +474,10 @@ const VTTMap = () => {
                         key={token.id}
                         draggable={!token.locked}
                         onDragStart={(e) => handleTokenDragStart(token, e)}
+                        onContextMenu={(e) => {
+                          e.preventDefault();
+                          handleRotateToken(token.id);
+                        }}
                         onClick={(e) => e.stopPropagation()}
                         className={cn(
                           'absolute cursor-move transition-all',
@@ -472,13 +505,14 @@ const VTTMap = () => {
                           title={`${token.name}${token.locked ? ' (Locked)' : ''}`}
                         >
                           {token.imageUrl ? (
-                            <img
+                            <OptimizedImage
                               src={token.imageUrl}
                               alt={token.name}
                               className="w-full h-full object-cover rounded-full"
+                              size="small"
                             />
                           ) : (
-                            token.emoji || '🎲'
+                            token.emoji || '@'
                           )}
                         </div>
                       </div>
@@ -489,7 +523,7 @@ const VTTMap = () => {
 
               <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
                 <div>
-                  Click map to place selected token • Drag tokens to move • Right-click to rotate
+                  Click map to place selected token. Drag tokens to move. Right-click to rotate.
                 </div>
                 <Badge variant="outline">
                   Layer {currentLayer} • {visibleTokens.length} tokens

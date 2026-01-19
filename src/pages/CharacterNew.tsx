@@ -18,7 +18,7 @@ import { calculateHPMax } from '@/lib/characterCalculations';
 import { ABILITY_NAMES, type AbilityScore } from '@/types/solo-leveling';
 import type { Database } from '@/integrations/supabase/types';
 import { isLocalCharacterId, setLocalAbilities } from '@/lib/guestStore';
-import { error } from '@/lib/logger';
+import { logger } from '@/lib/logger';
 
 type Job = Database['public']['Tables']['compendium_jobs']['Row'] & {
   display_name?: string | null;
@@ -100,7 +100,7 @@ const CharacterNew = () => {
       // Redirect to character sheet
       navigate('/characters');
     } catch (error) {
-      error('Failed to create character:', error);
+      logger.error('Failed to create character:', error);
       setErrors({ submit: 'Failed to create character. Please try again.' });
     } finally {
       setIsSubmitting(false);
@@ -723,19 +723,31 @@ const CharacterNew = () => {
                       {backgrounds.find(b => b.id === selectedBackground)?.description}
                     </p>
                   </div>
-                  {backgrounds.find(b => b.id === selectedBackground)?.skill_proficiencies && backgrounds.find(b => b.id === selectedBackground)!.skill_proficiencies.length > 0 && (
+                  {(() => {
+                    const bg = backgrounds.find(b => b.id === selectedBackground);
+                    return bg?.skill_proficiencies && bg.skill_proficiencies.length > 0;
+                  })() && (() => {
+                    const bg = backgrounds.find(b => b.id === selectedBackground);
+                    return (
+                      <div className="text-xs text-muted-foreground">
+                        <strong>Skill Proficiencies:</strong> {bg?.skill_proficiencies?.join(', ') || ''}
+                      </div>
+                    );
+                  })()}
+                  {(() => {
+                    const bg = backgrounds.find(b => b.id === selectedBackground);
+                    return bg?.tool_proficiencies && bg.tool_proficiencies.length > 0;
+                  })() && (() => {
+                    const bg = backgrounds.find(b => b.id === selectedBackground);
+                    return (
+                      <div className="text-xs text-muted-foreground">
+                        <strong>Tool Proficiencies:</strong> {bg?.tool_proficiencies?.join(', ') || ''}
+                      </div>
+                    );
+                  })()}
+                  {backgrounds.find(b => b.id === selectedBackground)?.language_count && (backgrounds.find(b => b.id === selectedBackground)?.language_count ?? 0) > 0 && (
                     <div className="text-xs text-muted-foreground">
-                      <strong>Skill Proficiencies:</strong> {backgrounds.find(b => b.id === selectedBackground)!.skill_proficiencies.join(', ')}
-                    </div>
-                  )}
-                  {backgrounds.find(b => b.id === selectedBackground)?.tool_proficiencies && backgrounds.find(b => b.id === selectedBackground)!.tool_proficiencies.length > 0 && (
-                    <div className="text-xs text-muted-foreground">
-                      <strong>Tool Proficiencies:</strong> {backgrounds.find(b => b.id === selectedBackground)!.tool_proficiencies.join(', ')}
-                    </div>
-                  )}
-                  {backgrounds.find(b => b.id === selectedBackground)?.language_count && backgrounds.find(b => b.id === selectedBackground)!.language_count! > 0 && (
-                    <div className="text-xs text-muted-foreground">
-                      <strong>Languages:</strong> {backgrounds.find(b => b.id === selectedBackground)!.language_count} additional language{backgrounds.find(b => b.id === selectedBackground)!.language_count! > 1 ? 's' : ''}
+                      <strong>Languages:</strong> {(backgrounds.find(b => b.id === selectedBackground)?.language_count ?? 0)} additional language{(backgrounds.find(b => b.id === selectedBackground)?.language_count ?? 0) > 1 ? 's' : ''}
                     </div>
                   )}
                   {backgrounds.find(b => b.id === selectedBackground)?.starting_equipment && (

@@ -30,7 +30,6 @@ BEGIN
   RETURN NEW;
 END;
 $$;
-
 -- Function: get_asset_paths
 CREATE OR REPLACE FUNCTION public.get_asset_paths(entity_uuid TEXT, entity_variant TEXT DEFAULT 'portrait')
 RETURNS TABLE(
@@ -58,7 +57,6 @@ BEGIN
   LIMIT 1;
 END;
 $$;
-
 -- Function: asset_exists
 CREATE OR REPLACE FUNCTION public.asset_exists(entity_uuid TEXT, entity_variant TEXT DEFAULT 'portrait')
 RETURNS BOOLEAN
@@ -74,7 +72,6 @@ BEGIN
   );
 END;
 $$;
-
 -- Function: search_compendium_jobs
 CREATE OR REPLACE FUNCTION public.search_compendium_jobs(search_text TEXT)
 RETURNS TABLE (
@@ -111,7 +108,6 @@ BEGIN
   ORDER BY rank DESC, j.name ASC;
 END;
 $$;
-
 -- Function: get_entity_assets
 CREATE OR REPLACE FUNCTION public.get_entity_assets(entity_uuid TEXT)
 RETURNS TABLE(
@@ -136,7 +132,6 @@ BEGIN
   ORDER BY variant;
 END;
 $$;
-
 -- Function: calculate_shadow_energy_max
 CREATE OR REPLACE FUNCTION public.calculate_shadow_energy_max(character_level INTEGER)
 RETURNS INTEGER 
@@ -160,7 +155,6 @@ BEGIN
   END;
 END;
 $$;
-
 -- Function: get_character_by_share_token
 CREATE OR REPLACE FUNCTION public.get_character_by_share_token(
   p_character_id UUID,
@@ -215,7 +209,6 @@ BEGIN
     AND c.share_token IS NOT NULL;
 END;
 $$;
-
 -- Function: search_compendium_relics
 CREATE OR REPLACE FUNCTION public.search_compendium_relics(search_text TEXT)
 RETURNS TABLE (
@@ -252,7 +245,6 @@ BEGIN
   ORDER BY rank DESC, r.name ASC;
 END;
 $$;
-
 -- Function: search_compendium_powers
 CREATE OR REPLACE FUNCTION public.search_compendium_powers(search_text TEXT)
 RETURNS TABLE (
@@ -291,7 +283,6 @@ BEGIN
   ORDER BY rank DESC, p.name ASC;
 END;
 $$;
-
 -- Function: search_compendium_monsters
 CREATE OR REPLACE FUNCTION public.search_compendium_monsters(search_text TEXT)
 RETURNS TABLE (
@@ -330,7 +321,6 @@ BEGIN
   ORDER BY rank DESC, m.name ASC;
 END;
 $$;
-
 -- Function: search_compendium_paths
 CREATE OR REPLACE FUNCTION public.search_compendium_paths(search_text TEXT)
 RETURNS TABLE (
@@ -365,7 +355,6 @@ BEGIN
   ORDER BY rank DESC, p.name ASC;
 END;
 $$;
-
 -- Function: search_compendium_monarchs
 CREATE OR REPLACE FUNCTION public.search_compendium_monarchs(search_text TEXT)
 RETURNS TABLE (
@@ -413,7 +402,6 @@ BEGIN
   ORDER BY rank DESC, m.name ASC;
 END;
 $$;
-
 -- Re-grant execute permissions for all functions
 GRANT EXECUTE ON FUNCTION public.search_compendium_jobs(TEXT) TO authenticated;
 GRANT EXECUTE ON FUNCTION public.search_compendium_powers(TEXT) TO authenticated;

@@ -61,8 +61,7 @@ EXCEPTION
   WHEN undefined_table THEN
     NULL;
 END $$;
-
-CREATE OR REPLACE FUNCTION public.search_compendium_jobs(search_text TEXT)
+CREATE OR REPLACE FUNCTION search_compendium_jobs(search_text TEXT)
 RETURNS TABLE (
   id UUID,
   name TEXT,
@@ -72,11 +71,7 @@ RETURNS TABLE (
   source_book TEXT,
   image_url TEXT,
   rank REAL
-)
-LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-SECURITY DEFINER
-AS $$
+) AS $$
 BEGIN
   RETURN QUERY
   SELECT
@@ -96,9 +91,8 @@ BEGIN
     @@ to_tsquery('english', search_text)
   ORDER BY rank DESC, COALESCE(j.display_name, j.name) ASC;
 END;
-$$;
-
-CREATE OR REPLACE FUNCTION public.search_compendium_powers(search_text TEXT)
+$$ LANGUAGE plpgsql;
+CREATE OR REPLACE FUNCTION search_compendium_powers(search_text TEXT)
 RETURNS TABLE (
   id UUID,
   name TEXT,
@@ -109,11 +103,7 @@ RETURNS TABLE (
   tags TEXT[],
   source_book TEXT,
   rank REAL
-)
-LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-SECURITY DEFINER
-AS $$
+) AS $$
 BEGIN
   RETURN QUERY
   SELECT
@@ -134,9 +124,8 @@ BEGIN
     @@ to_tsquery('english', search_text)
   ORDER BY rank DESC, COALESCE(p.display_name, p.name) ASC;
 END;
-$$;
-
-CREATE OR REPLACE FUNCTION public.search_compendium_relics(search_text TEXT)
+$$ LANGUAGE plpgsql;
+CREATE OR REPLACE FUNCTION search_compendium_relics(search_text TEXT)
 RETURNS TABLE (
   id UUID,
   name TEXT,
@@ -146,11 +135,7 @@ RETURNS TABLE (
   tags TEXT[],
   source_book TEXT,
   rank REAL
-)
-LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-SECURITY DEFINER
-AS $$
+) AS $$
 BEGIN
   RETURN QUERY
   SELECT
@@ -170,9 +155,8 @@ BEGIN
     @@ to_tsquery('english', search_text)
   ORDER BY rank DESC, COALESCE(r.display_name, r.name) ASC;
 END;
-$$;
-
-CREATE OR REPLACE FUNCTION public.search_compendium_monsters(search_text TEXT)
+$$ LANGUAGE plpgsql;
+CREATE OR REPLACE FUNCTION search_compendium_monsters(search_text TEXT)
 RETURNS TABLE (
   id UUID,
   name TEXT,
@@ -183,11 +167,7 @@ RETURNS TABLE (
   tags TEXT[],
   source_book TEXT,
   rank REAL
-)
-LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-SECURITY DEFINER
-AS $$
+) AS $$
 BEGIN
   RETURN QUERY
   SELECT
@@ -208,9 +188,8 @@ BEGIN
     @@ to_tsquery('english', search_text)
   ORDER BY rank DESC, COALESCE(m.display_name, m.name) ASC;
 END;
-$$;
-
-CREATE OR REPLACE FUNCTION public.search_compendium_paths(search_text TEXT)
+$$ LANGUAGE plpgsql;
+CREATE OR REPLACE FUNCTION search_compendium_paths(search_text TEXT)
 RETURNS TABLE (
   id UUID,
   name TEXT,
@@ -219,11 +198,7 @@ RETURNS TABLE (
   tags TEXT[],
   source_book TEXT,
   rank REAL
-)
-LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-SECURITY DEFINER
-AS $$
+) AS $$
 BEGIN
   RETURN QUERY
   SELECT
@@ -242,9 +217,8 @@ BEGIN
     @@ to_tsquery('english', search_text)
   ORDER BY rank DESC, COALESCE(p.display_name, p.name) ASC;
 END;
-$$;
-
-CREATE OR REPLACE FUNCTION public.search_compendium_monarchs(search_text TEXT)
+$$ LANGUAGE plpgsql;
+CREATE OR REPLACE FUNCTION search_compendium_monarchs(search_text TEXT)
 RETURNS TABLE (
   id UUID,
   name TEXT,
@@ -255,11 +229,7 @@ RETURNS TABLE (
   tags TEXT[],
   source_book TEXT,
   rank REAL
-)
-LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-SECURITY DEFINER
-AS $$
+) AS $$
 BEGIN
   RETURN QUERY
   SELECT
@@ -293,8 +263,7 @@ BEGIN
   ) @@ to_tsquery('english', search_text)
   ORDER BY rank DESC, COALESCE(m.display_name, m.name) ASC;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 GRANT EXECUTE ON FUNCTION search_compendium_jobs(TEXT) TO authenticated;
 GRANT EXECUTE ON FUNCTION search_compendium_powers(TEXT) TO authenticated;
 GRANT EXECUTE ON FUNCTION search_compendium_relics(TEXT) TO authenticated;

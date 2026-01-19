@@ -3,7 +3,7 @@
  * Integrates AI services for intelligent art generation
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -12,6 +12,8 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAIEnhancement, useAITagGeneration, useAIMoodDetection, useAIStyleSuggestions } from '@/lib/ai/hooks';
 import { useArtPipeline } from '@/lib/artPipeline/hooks';
+import { artPipeline } from '@/lib/artPipeline/service';
+import type { ArtAsset } from '@/lib/artPipeline/types';
 import { 
   Sparkles, 
   Brain, 
@@ -24,13 +26,42 @@ import {
   CheckCircle
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { logger } from '@/lib/logger';
+import { AIProviderSettings } from '@/components/ai/AIProviderSettings';
 
 interface AIEnhancedArtGeneratorProps {
-  onArtGenerated?: (assetId: string) => void;
+  entityType?: 'monster' | 'npc' | 'item' | 'location';
+  entityId?: string;
+  title?: string;
+  onArtGenerated?: (assetId: string, previewUrl?: string) => void;
+  onGenerationStart?: () => void;
+  onGenerationComplete?: (success: boolean) => void;
   className?: string;
 }
 
-export function AIEnhancedArtGenerator({ onArtGenerated, className }: AIEnhancedArtGeneratorProps) {
+const pickPreviewUrl = (paths?: unknown): string | undefined => {
+  if (!paths) return undefined;
+  if (Array.isArray(paths)) {
+    const url = paths.find((value) => typeof value === 'string' && value.startsWith('http'));
+    return url as string | undefined;
+  }
+  if (typeof paths === 'object') {
+    const values = Object.values(paths as Record<string, unknown>);
+    const url = values.find((value) => typeof value === 'string' && value.startsWith('http'));
+    return url as string | undefined;
+  }
+  return undefined;
+};
+
+export function AIEnhancedArtGenerator({
+  entityType,
+  entityId,
+  title,
+  onArtGenerated,
+  onGenerationStart,
+  onGenerationComplete,
+  className,
+}: AIEnhancedArtGeneratorProps) {
   const { generateArt, isAvailable: artAvailable } = useArtPipeline();
   const { 
     isEnhancing, 
@@ -69,21 +100,29 @@ export function AIEnhancedArtGenerator({ onArtGenerated, className }: AIEnhanced
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationResult, setGenerationResult] = useState<any>(null);
 
+  useEffect(() => {
+    if (!finalPrompt.trim() && originalPrompt.trim() && !enhancedPrompt) {
+      setFinalPrompt(originalPrompt.trim());
+    }
+  }, [enhancedPrompt, finalPrompt, originalPrompt]);
+
   const handleEnhancePrompt = async () => {
     if (!originalPrompt.trim()) return;
     
     try {
-      await enhancePrompt(originalPrompt, {
+      const result = await enhancePrompt(originalPrompt, {
         style: 'dark manhwa anime cinematic fantasy, Solo Leveling style',
         mood: 'dramatic, high contrast, detailed',
         universe: 'Solo Leveling',
       });
       
-      if (enhancedPrompt) {
-        setFinalPrompt(enhancedPrompt);
+      if (result?.enhanced) {
+        setFinalPrompt(result.enhanced);
+      } else if (!finalPrompt && originalPrompt.trim()) {
+        setFinalPrompt(originalPrompt.trim());
       }
     } catch (error) {
-      console.error('Failed to enhance prompt:', error);
+      logger.error('Failed to enhance prompt:', error);
     }
   };
 
@@ -93,7 +132,7 @@ export function AIEnhancedArtGenerator({ onArtGenerated, className }: AIEnhanced
     try {
       await generateTags(finalPrompt, 'text');
     } catch (error) {
-      console.error('Failed to generate tags:', error);
+      logger.error('Failed to generate tags:', error);
     }
   };
 
@@ -104,7 +143,7 @@ export function AIEnhancedArtGenerator({ onArtGenerated, className }: AIEnhanced
       const mood = await detectMood(finalPrompt, 'text');
       setSelectedMood(mood);
     } catch (error) {
-      console.error('Failed to detect mood:', error);
+      logger.error('Failed to detect mood:', error);
     }
   };
 
@@ -115,7 +154,7 @@ export function AIEnhancedArtGenerator({ onArtGenerated, className }: AIEnhanced
       const suggestions = await suggestStyles('dark manhwa anime cinematic fantasy, Solo Leveling');
       // Style suggestions are now available
     } catch (error) {
-      console.error('Failed to suggest styles:', error);
+      logger.error('Failed to suggest styles:', error);
     }
   };
 
@@ -124,13 +163,19 @@ export function AIEnhancedArtGenerator({ onArtGenerated, className }: AIEnhanced
     
     setIsGenerating(true);
     setGenerationResult(null);
+    onGenerationStart?.();
+    let completedSuccessfully = false;
     
     try {
+      const startedAt = Date.now();
+      const resolvedEntityType = entityType ?? 'monster';
+      const resolvedEntityId = entityId ?? `ai-enhanced-${Date.now()}`;
+      const resolvedTitle = title?.trim() || 'AI Enhanced Art';
       const request = {
-        entityType: 'monster' as const,
-        entityId: `ai-enhanced-${Date.now()}`,
+        entityType: resolvedEntityType,
+        entityId: resolvedEntityId,
         variant: 'portrait' as const,
-        title: 'AI Enhanced Art',
+        title: resolvedTitle,
         tags: selectedTags,
         description: finalPrompt,
         mood: selectedMood,
@@ -138,10 +183,74 @@ export function AIEnhancedArtGenerator({ onArtGenerated, className }: AIEnhanced
       };
       
       const result = await generateArt(request);
-      setGenerationResult(result);
-      
-      if (result.success && result.assetId) {
-        onArtGenerated?.(result.assetId);
+      let resolvedResult = result;
+
+      const needsFallback =
+        !resolvedResult ||
+        typeof resolvedResult.success !== 'boolean' ||
+        !resolvedResult.success ||
+        !resolvedResult.assetId;
+
+      if (needsFallback) {
+        let fallbackAsset: ArtAsset | null = null;
+        for (let attempt = 0; attempt < 5; attempt += 1) {
+          const fallbackAssets = await artPipeline.getAssetsForEntity(request.entityType, request.entityId);
+          if (fallbackAssets.length > 0) {
+            fallbackAsset = fallbackAssets[0];
+            break;
+          }
+          if (attempt < 4) {
+            await new Promise(resolve => setTimeout(resolve, 2000));
+          }
+        }
+
+        if (fallbackAsset) {
+          resolvedResult = {
+            success: true,
+            assetId: fallbackAsset.id,
+            paths: Object.values(fallbackAsset.paths),
+            metadata: fallbackAsset.metadata,
+            duration: Date.now() - startedAt,
+          };
+        } else if (!resolvedResult || typeof resolvedResult.success !== 'boolean') {
+          resolvedResult = {
+            success: false,
+            error: 'Art generation returned no result',
+            duration: Date.now() - startedAt,
+          };
+        } else if (!resolvedResult.success) {
+          resolvedResult = {
+            ...resolvedResult,
+            duration: resolvedResult.duration ?? Date.now() - startedAt,
+          };
+        }
+      }
+
+      let nextResult = resolvedResult;
+
+      if (!nextResult.success) {
+        const fallbackAssets = await artPipeline.getAssetsForEntity(request.entityType, request.entityId);
+        if (fallbackAssets.length > 0) {
+          const fallbackAsset = fallbackAssets[0];
+          nextResult = {
+            success: true,
+            assetId: fallbackAsset.id,
+            paths: Object.values(fallbackAsset.paths),
+            metadata: fallbackAsset.metadata,
+            duration: Date.now() - startedAt,
+          };
+        }
+      }
+
+      setGenerationResult(nextResult);
+
+      if (nextResult.success) {
+        completedSuccessfully = true;
+        const previewUrl = pickPreviewUrl(nextResult.paths);
+        const assetId = nextResult.assetId || previewUrl;
+        if (assetId) {
+          onArtGenerated?.(assetId, previewUrl);
+        }
       }
     } catch (error) {
       setGenerationResult({
@@ -150,6 +259,7 @@ export function AIEnhancedArtGenerator({ onArtGenerated, className }: AIEnhanced
       });
     } finally {
       setIsGenerating(false);
+      onGenerationComplete?.(completedSuccessfully);
     }
   };
 
@@ -163,6 +273,7 @@ export function AIEnhancedArtGenerator({ onArtGenerated, className }: AIEnhanced
 
   return (
     <div className={cn("space-y-6", className)}>
+      <AIProviderSettings />
       {/* AI Status */}
       <Card>
         <CardHeader>
@@ -223,6 +334,7 @@ export function AIEnhancedArtGenerator({ onArtGenerated, className }: AIEnhanced
               </div>
               
               <Button 
+                type="button"
                 onClick={handleEnhancePrompt}
                 disabled={!originalPrompt.trim() || isEnhancing}
                 className="w-full"
@@ -247,20 +359,24 @@ export function AIEnhancedArtGenerator({ onArtGenerated, className }: AIEnhanced
                 </Alert>
               )}
               
-              {enhancedPrompt && (
+              {(enhancedPrompt || finalPrompt || originalPrompt.trim()) && (
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Enhanced Prompt</label>
+                  <label className="text-sm font-medium">
+                    {enhancedPrompt ? 'Enhanced Prompt' : 'Final Prompt'}
+                  </label>
                   <Textarea
-                    value={enhancedPrompt}
+                    value={finalPrompt || enhancedPrompt || originalPrompt}
                     onChange={(e) => setFinalPrompt(e.target.value)}
                     rows={4}
-                    className="border-green-500/30 bg-green-50"
+                    className={cn(
+                      enhancedPrompt ? "border-green-500/30 bg-green-50" : "border-border"
+                    )}
                   />
                   {enhancement && (
                     <div className="text-xs text-muted-foreground">
-                      <p>✨ AI enhanced with Solo Leveling styling</p>
-                      <p>🎭 Added dramatic lighting and contrast</p>
-                      <p>🌟 Included manhwa anime elements</p>
+                      <p>- AI enhanced with Solo Leveling styling</p>
+                      <p>- Added dramatic lighting and contrast</p>
+                      <p>- Included manhwa anime elements</p>
                     </div>
                   )}
                 </div>
@@ -269,6 +385,7 @@ export function AIEnhancedArtGenerator({ onArtGenerated, className }: AIEnhanced
             
             <TabsContent value="tags" className="space-y-4">
               <Button 
+                type="button"
                 onClick={handleGenerateTags}
                 disabled={!finalPrompt.trim() || isGeneratingTags}
                 className="w-full"
@@ -314,6 +431,7 @@ export function AIEnhancedArtGenerator({ onArtGenerated, className }: AIEnhanced
             
             <TabsContent value="mood" className="space-y-4">
               <Button 
+                type="button"
                 onClick={handleDetectMood}
                 disabled={!finalPrompt.trim() || isDetecting}
                 className="w-full"
@@ -350,6 +468,7 @@ export function AIEnhancedArtGenerator({ onArtGenerated, className }: AIEnhanced
             
             <TabsContent value="style" className="space-y-4">
               <Button 
+                type="button"
                 onClick={handleSuggestStyles}
                 disabled={!finalPrompt.trim() || isSuggesting}
                 className="w-full"
@@ -428,6 +547,7 @@ export function AIEnhancedArtGenerator({ onArtGenerated, className }: AIEnhanced
           </div>
           
           <Button 
+            type="button"
             onClick={handleGenerateArt}
             disabled={!finalPrompt.trim() || !artAvailable || isGenerating}
             className="w-full"

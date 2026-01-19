@@ -74,7 +74,15 @@ export const JobDetail = ({ data }: { data: JobData }) => {
         .limit(10),
     ]);
 
-      if (featuresRes.data) setFeatures(featuresRes.data);
+      if (featuresRes.data) setFeatures(featuresRes.data.map(feature => ({
+        ...feature,
+        action_type: feature.action_type ?? undefined,
+        display_name: feature.display_name ?? undefined,
+        generated_reason: feature.generated_reason ?? undefined,
+        uses_formula: feature.uses_formula ?? undefined,
+        aliases: feature.aliases ?? undefined,
+        recharge: feature.recharge ?? undefined
+      })));
       if (pathsRes.data) setPaths(pathsRes.data);
       if (powersRes.data) setRelatedPowers(powersRes.data);
     };

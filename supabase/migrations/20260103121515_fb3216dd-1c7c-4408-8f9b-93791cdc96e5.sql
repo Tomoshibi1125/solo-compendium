@@ -11,7 +11,6 @@ BEGIN
     CREATE TYPE public.ability_score AS ENUM ('STR', 'AGI', 'VIT', 'INT', 'SENSE', 'PRE');
   END IF;
 END $$;
-
 DO $$
 BEGIN
   IF NOT EXISTS (
@@ -24,7 +23,6 @@ BEGIN
     CREATE TYPE public.rarity AS ENUM ('common', 'uncommon', 'rare', 'very_rare', 'legendary');
   END IF;
 END $$;
-
 DO $$
 BEGIN
   IF NOT EXISTS (
@@ -37,7 +35,6 @@ BEGIN
     CREATE TYPE public.relic_tier AS ENUM ('dormant', 'awakened', 'resonant');
   END IF;
 END $$;
-
 -- Create characters table
 CREATE TABLE public.characters (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -91,7 +88,6 @@ CREATE TABLE public.characters (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Create character_abilities table (6 ability scores per character)
 CREATE TABLE public.character_abilities (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -102,7 +98,6 @@ CREATE TABLE public.character_abilities (
   -- Ensure one entry per ability per character
   UNIQUE (character_id, ability)
 );
-
 -- Create character_features table (job/path/background features)
 CREATE TABLE public.character_features (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -125,7 +120,6 @@ CREATE TABLE public.character_features (
   
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Create character_equipment table (items, relics, gear)
 CREATE TABLE public.character_equipment (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -159,7 +153,6 @@ CREATE TABLE public.character_equipment (
   
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Create character_powers table (spells, techniques, abilities)
 CREATE TABLE public.character_powers (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -183,31 +176,25 @@ CREATE TABLE public.character_powers (
   
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Enable Row Level Security on all tables
 ALTER TABLE public.characters ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.character_abilities ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.character_features ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.character_equipment ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.character_powers ENABLE ROW LEVEL SECURITY;
-
 -- RLS Policies for characters table
 CREATE POLICY "Users can view their own characters"
   ON public.characters FOR SELECT
   USING (auth.uid() = user_id);
-
 CREATE POLICY "Users can create their own characters"
   ON public.characters FOR INSERT
   WITH CHECK (auth.uid() = user_id);
-
 CREATE POLICY "Users can update their own characters"
   ON public.characters FOR UPDATE
   USING (auth.uid() = user_id);
-
 CREATE POLICY "Users can delete their own characters"
   ON public.characters FOR DELETE
   USING (auth.uid() = user_id);
-
 -- RLS Policies for character_abilities (access via character ownership)
 CREATE POLICY "Users can view abilities of their own characters"
   ON public.character_abilities FOR SELECT
@@ -216,7 +203,6 @@ CREATE POLICY "Users can view abilities of their own characters"
     WHERE characters.id = character_abilities.character_id
     AND characters.user_id = auth.uid()
   ));
-
 CREATE POLICY "Users can create abilities for their own characters"
   ON public.character_abilities FOR INSERT
   WITH CHECK (EXISTS (
@@ -224,7 +210,6 @@ CREATE POLICY "Users can create abilities for their own characters"
     WHERE characters.id = character_abilities.character_id
     AND characters.user_id = auth.uid()
   ));
-
 CREATE POLICY "Users can update abilities of their own characters"
   ON public.character_abilities FOR UPDATE
   USING (EXISTS (
@@ -232,7 +217,6 @@ CREATE POLICY "Users can update abilities of their own characters"
     WHERE characters.id = character_abilities.character_id
     AND characters.user_id = auth.uid()
   ));
-
 CREATE POLICY "Users can delete abilities of their own characters"
   ON public.character_abilities FOR DELETE
   USING (EXISTS (
@@ -240,7 +224,6 @@ CREATE POLICY "Users can delete abilities of their own characters"
     WHERE characters.id = character_abilities.character_id
     AND characters.user_id = auth.uid()
   ));
-
 -- RLS Policies for character_features
 CREATE POLICY "Users can view features of their own characters"
   ON public.character_features FOR SELECT
@@ -249,7 +232,6 @@ CREATE POLICY "Users can view features of their own characters"
     WHERE characters.id = character_features.character_id
     AND characters.user_id = auth.uid()
   ));
-
 CREATE POLICY "Users can create features for their own characters"
   ON public.character_features FOR INSERT
   WITH CHECK (EXISTS (
@@ -257,7 +239,6 @@ CREATE POLICY "Users can create features for their own characters"
     WHERE characters.id = character_features.character_id
     AND characters.user_id = auth.uid()
   ));
-
 CREATE POLICY "Users can update features of their own characters"
   ON public.character_features FOR UPDATE
   USING (EXISTS (
@@ -265,7 +246,6 @@ CREATE POLICY "Users can update features of their own characters"
     WHERE characters.id = character_features.character_id
     AND characters.user_id = auth.uid()
   ));
-
 CREATE POLICY "Users can delete features of their own characters"
   ON public.character_features FOR DELETE
   USING (EXISTS (
@@ -273,7 +253,6 @@ CREATE POLICY "Users can delete features of their own characters"
     WHERE characters.id = character_features.character_id
     AND characters.user_id = auth.uid()
   ));
-
 -- RLS Policies for character_equipment
 CREATE POLICY "Users can view equipment of their own characters"
   ON public.character_equipment FOR SELECT
@@ -282,7 +261,6 @@ CREATE POLICY "Users can view equipment of their own characters"
     WHERE characters.id = character_equipment.character_id
     AND characters.user_id = auth.uid()
   ));
-
 CREATE POLICY "Users can create equipment for their own characters"
   ON public.character_equipment FOR INSERT
   WITH CHECK (EXISTS (
@@ -290,7 +268,6 @@ CREATE POLICY "Users can create equipment for their own characters"
     WHERE characters.id = character_equipment.character_id
     AND characters.user_id = auth.uid()
   ));
-
 CREATE POLICY "Users can update equipment of their own characters"
   ON public.character_equipment FOR UPDATE
   USING (EXISTS (
@@ -298,7 +275,6 @@ CREATE POLICY "Users can update equipment of their own characters"
     WHERE characters.id = character_equipment.character_id
     AND characters.user_id = auth.uid()
   ));
-
 CREATE POLICY "Users can delete equipment of their own characters"
   ON public.character_equipment FOR DELETE
   USING (EXISTS (
@@ -306,7 +282,6 @@ CREATE POLICY "Users can delete equipment of their own characters"
     WHERE characters.id = character_equipment.character_id
     AND characters.user_id = auth.uid()
   ));
-
 -- RLS Policies for character_powers
 CREATE POLICY "Users can view powers of their own characters"
   ON public.character_powers FOR SELECT
@@ -315,7 +290,6 @@ CREATE POLICY "Users can view powers of their own characters"
     WHERE characters.id = character_powers.character_id
     AND characters.user_id = auth.uid()
   ));
-
 CREATE POLICY "Users can create powers for their own characters"
   ON public.character_powers FOR INSERT
   WITH CHECK (EXISTS (
@@ -323,7 +297,6 @@ CREATE POLICY "Users can create powers for their own characters"
     WHERE characters.id = character_powers.character_id
     AND characters.user_id = auth.uid()
   ));
-
 CREATE POLICY "Users can update powers of their own characters"
   ON public.character_powers FOR UPDATE
   USING (EXISTS (
@@ -331,7 +304,6 @@ CREATE POLICY "Users can update powers of their own characters"
     WHERE characters.id = character_powers.character_id
     AND characters.user_id = auth.uid()
   ));
-
 CREATE POLICY "Users can delete powers of their own characters"
   ON public.character_powers FOR DELETE
   USING (EXISTS (
@@ -339,25 +311,19 @@ CREATE POLICY "Users can delete powers of their own characters"
     WHERE characters.id = character_powers.character_id
     AND characters.user_id = auth.uid()
   ));
-
 -- Create function to update timestamps
 CREATE OR REPLACE FUNCTION public.update_updated_at_column()
-RETURNS TRIGGER 
-LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-AS $$
+RETURNS TRIGGER AS $$
 BEGIN
   NEW.updated_at = now();
   RETURN NEW;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 -- Create trigger for automatic timestamp updates on characters
 CREATE TRIGGER update_characters_updated_at
   BEFORE UPDATE ON public.characters
   FOR EACH ROW
   EXECUTE FUNCTION public.update_updated_at_column();
-
 -- Create indexes for better query performance
 CREATE INDEX idx_characters_user_id ON public.characters(user_id);
 CREATE INDEX idx_character_abilities_character_id ON public.character_abilities(character_id);

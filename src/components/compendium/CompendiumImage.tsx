@@ -60,7 +60,7 @@ export function CompendiumImage({
     // If we have entry info, try canonical asset mapping first
     if (entryId && entryType && assetType) {
       const canonicalUrl = getAssetUrl(entryId, entryType, assetType);
-      if (canonicalUrl && canonicalUrl !== '/placeholder.svg') {
+      if (canonicalUrl) {
         return canonicalUrl;
       }
     }
@@ -70,6 +70,15 @@ export function CompendiumImage({
   };
 
   const imageSrc = getImageSource();
+  const responsiveSizes: ImageSize[] =
+    size === 'hero'
+      ? ['medium', 'large', 'xlarge', 'hero']
+      : size === 'large'
+      ? ['small', 'medium', 'large']
+      : ['thumbnail', 'small', 'medium'];
+  const isSupabaseUrl = Boolean(imageSrc && imageSrc.includes('supabase.co/storage'));
+  const isLocalWebp = Boolean(imageSrc && !isSupabaseUrl && imageSrc.toLowerCase().endsWith('.webp'));
+  const localAvif = isLocalWebp && imageSrc ? imageSrc.replace(/\.webp$/i, '.avif') : null;
 
   // Optimize image on mount
   useEffect(() => {
@@ -92,15 +101,8 @@ export function CompendiumImage({
     setOptimizedSrc(optimized);
 
     // Generate srcset for responsive images
-    const sizes: ImageSize[] = 
-      size === 'hero' 
-        ? ['medium', 'large', 'xlarge', 'hero']
-        : size === 'large'
-        ? ['small', 'medium', 'large']
-        : ['thumbnail', 'small', 'medium'];
-    
-    const webpSrcSet = generateSrcSet(imageSrc, sizes, 'webp');
-    const avifSrcSet = format === 'avif' ? generateSrcSet(imageSrc, sizes, 'avif') : '';
+    const webpSrcSet = generateSrcSet(imageSrc, responsiveSizes, 'webp');
+    const avifSrcSet = format === 'avif' ? generateSrcSet(imageSrc, responsiveSizes, 'avif') : '';
     
     // Combine srcsets
     const combinedSrcSet = [avifSrcSet, webpSrcSet].filter(Boolean).join(', ');
@@ -125,7 +127,7 @@ export function CompendiumImage({
           aspectRatio === 'auto' ? '' : aspectRatioClasses[aspectRatio],
           className
         )}
-        aria-label={`Image placeholder for ${alt}`}
+        aria-label={`Image unavailable for ${alt}`}
       >
         {fallbackIcon || <ImageIcon className="w-8 h-8 text-muted-foreground" />}
       </div>
@@ -147,14 +149,12 @@ export function CompendiumImage({
       )}
       <picture>
         {/* AVIF source (best compression) */}
-        {bestFormat === 'avif' && srcSet && (
+        {localAvif && <source srcSet={localAvif} type="image/avif" />}
+        {isLocalWebp && imageSrc && <source srcSet={imageSrc} type="image/webp" />}
+        {bestFormat === 'avif' && srcSet && isSupabaseUrl && (
           <source
             srcSet={generateSrcSet(imageSrc || '', 
-              size === 'hero' 
-                ? ['medium', 'large', 'xlarge', 'hero']
-                : size === 'large'
-                ? ['small', 'medium', 'large']
-                : ['thumbnail', 'small', 'medium'],
+              responsiveSizes,
               'avif'
             )}
             sizes={generateSizes(size)}
@@ -162,14 +162,10 @@ export function CompendiumImage({
           />
         )}
         {/* WebP source (good compression, wider support) */}
-        {srcSet && (
+        {srcSet && isSupabaseUrl && (
           <source
             srcSet={generateSrcSet(imageSrc || '', 
-              size === 'hero' 
-                ? ['medium', 'large', 'xlarge', 'hero']
-                : size === 'large'
-                ? ['small', 'medium', 'large']
-                : ['thumbnail', 'small', 'medium'],
+              responsiveSizes,
               'webp'
             )}
             sizes={generateSizes(size)}

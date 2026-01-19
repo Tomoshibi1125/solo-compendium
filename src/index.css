@@ -8,12 +8,20 @@
 
 /* Landing page hero background */
 .landing-hero-bg {
-  background-image: url('/generated/ui/landing-page-hero.jpg');
+  background-image: url('/ui/landing-page-hero.webp');
+  background-image: image-set(
+    url('/ui/landing-page-hero.avif') type('image/avif'),
+    url('/ui/landing-page-hero.webp') type('image/webp')
+  );
 }
 
 /* Login page background */
 .login-page-bg {
-  background-image: url('/generated/ui/login-page-bg.jpg');
+  background-image: url('/ui/login-page-bg.webp');
+  background-image: image-set(
+    url('/ui/login-page-bg.avif') type('image/avif'),
+    url('/ui/login-page-bg.webp') type('image/webp')
+  );
 }
 
 @layer base {

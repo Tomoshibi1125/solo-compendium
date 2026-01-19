@@ -9,7 +9,7 @@ import type { SupabaseClient } from '@supabase/supabase-js';
  * Prepare search text for PostgreSQL tsquery
  * Sanitizes input and converts to safe format
  */
-export function prepareSearchText(searchQuery: string): string {
+export function normalizeSearchText(searchQuery: string): string {
   if (!searchQuery.trim()) return '';
 
   // Remove special characters that could break tsquery
@@ -20,6 +20,12 @@ export function prepareSearchText(searchQuery: string): string {
     .replace(/[^a-z0-9\s]/g, ' ') // Remove special chars
     .replace(/\s+/g, ' ') // Normalize whitespace
     .trim();
+
+  return cleaned;
+}
+
+export function prepareSearchText(searchQuery: string): string {
+  const cleaned = normalizeSearchText(searchQuery);
 
   if (!cleaned) return '';
 
@@ -53,12 +59,14 @@ export async function searchWithRPC(
   if (!searchQuery.trim()) return [];
 
   const functionName = `search_compendium_${table}`;
-  const preparedQuery = prepareSearchText(searchQuery);
+  const preparedQuery = normalizeSearchText(searchQuery);
 
   if (!preparedQuery) return [];
 
   const { data, error } = await supabase.rpc(functionName, {
-    search_text: preparedQuery,
+    p_query: preparedQuery,
+    p_limit: limit,
+    p_offset: 0,
   });
 
   if (error) {

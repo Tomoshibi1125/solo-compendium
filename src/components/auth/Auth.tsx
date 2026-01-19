@@ -7,7 +7,7 @@ import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
-import { Crown, Shield, Sword, ArrowRight, Mail } from 'lucide-react';
+import { Crown, Sword, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useUpdateProfile, useProfile } from '@/hooks/useProfile';
 import { cn } from '@/lib/utils';
@@ -19,33 +19,13 @@ export function Auth() {
   const navigate = useNavigate();
   const [authView, setAuthView] = useState<'sign_up' | 'sign_in'>('sign_in');
   const [showRoleSelection, setShowRoleSelection] = useState(false);
-  const [selectedRole, setSelectedRole] = useState<'dm' | 'player' | 'admin' | null>(null);
+  const [selectedRole, setSelectedRole] = useState<'dm' | 'player' | null>(null);
   const [isSignup, setIsSignup] = useState(false);
   const updateProfile = useUpdateProfile();
   const { data: profile, isLoading: profileLoading } = useProfile();
   const isConfigured = isSupabaseConfigured;
   const isE2E = import.meta.env.VITE_E2E === 'true';
   const { isLoading: oauthLoading, signInWithProvider } = useOAuth();
-
-  // Role hierarchy for authorization
-  const roleHierarchy = {
-    'admin': 3,
-    'dm': 2,
-    'player': 1
-  } as const;
-
-  type Role = keyof typeof roleHierarchy;
-
-  const hasPermission = (requiredRole: Role): boolean => {
-    if (!profile) return false;
-    const userRole = profile.role as Role;
-    
-    if (!roleHierarchy[userRole] || !roleHierarchy[requiredRole]) {
-      return false;
-    }
-    
-    return roleHierarchy[userRole] >= roleHierarchy[requiredRole];
-  };
 
   // Check auth state and profile
   useEffect(() => {
@@ -149,7 +129,7 @@ export function Auth() {
               </div>
               <div>
                 <h2 className="font-arise text-2xl font-bold gradient-text-arise mb-2">
-                  Authentication stub enabled
+                  Authentication in test mode
                 </h2>
                 <p className="text-muted-foreground font-heading text-sm">
                   E2E mode bypasses live auth to keep test runs deterministic.
@@ -215,8 +195,8 @@ export function Auth() {
               </p>
 
               <RadioGroup
-                value={selectedRole || undefined}
-                onValueChange={(value) => setSelectedRole(value as 'dm' | 'player' | 'admin')}
+                value={selectedRole ?? ''}
+                onValueChange={(value) => setSelectedRole(value as 'dm' | 'player')}
                 className="space-y-4"
               >
                 <Label
@@ -265,28 +245,6 @@ export function Auth() {
                   </div>
                 </Label>
 
-                <Label
-                  htmlFor="role-admin"
-                  className={cn(
-                    "flex items-center gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all",
-                    selectedRole === 'admin'
-                      ? "border-primary bg-primary/10"
-                      : "border-border hover:border-primary/50"
-                  )}
-                >
-                  <RadioGroupItem value="admin" id="role-admin" className="mt-0" />
-                  <div className="flex items-center gap-3 flex-1">
-                    <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-                      <Shield className="w-5 h-5 text-primary" />
-                    </div>
-                    <div className="text-left">
-                      <div className="font-heading font-semibold">System Administrator</div>
-                      <div className="text-sm text-muted-foreground">
-                        Full access to all tools and content
-                      </div>
-                    </div>
-                  </div>
-                </Label>
               </RadioGroup>
 
               <Button

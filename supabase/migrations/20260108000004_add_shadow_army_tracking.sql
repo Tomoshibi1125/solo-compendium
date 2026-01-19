@@ -5,7 +5,6 @@
 ALTER TABLE public.characters
 ADD COLUMN IF NOT EXISTS shadow_energy_current INTEGER NOT NULL DEFAULT 0,
 ADD COLUMN IF NOT EXISTS shadow_energy_max INTEGER NOT NULL DEFAULT 0;
-
 -- Create shadow army table (tracks summoned shadows for a character)
 CREATE TABLE IF NOT EXISTS public.character_shadow_army (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -32,14 +31,11 @@ CREATE TABLE IF NOT EXISTS public.character_shadow_army (
   -- Ensure unique active shadows per character (based on max_summoned)
   UNIQUE (character_id, shadow_soldier_id, instance_name)
 );
-
 -- Create index for quick lookups
 CREATE INDEX IF NOT EXISTS idx_character_shadow_army_character ON public.character_shadow_army(character_id);
 CREATE INDEX IF NOT EXISTS idx_character_shadow_army_active ON public.character_shadow_army(character_id, is_active) WHERE is_active = true;
-
 -- Enable RLS
 ALTER TABLE public.character_shadow_army ENABLE ROW LEVEL SECURITY;
-
 -- RLS Policies
 CREATE POLICY "Users can view their own shadow army" ON public.character_shadow_army
   FOR SELECT USING (
@@ -49,7 +45,6 @@ CREATE POLICY "Users can view their own shadow army" ON public.character_shadow_
       AND characters.user_id = auth.uid()
     )
   );
-
 CREATE POLICY "Users can insert their own shadow army" ON public.character_shadow_army
   FOR INSERT WITH CHECK (
     EXISTS (
@@ -58,7 +53,6 @@ CREATE POLICY "Users can insert their own shadow army" ON public.character_shado
       AND characters.user_id = auth.uid()
     )
   );
-
 CREATE POLICY "Users can update their own shadow army" ON public.character_shadow_army
   FOR UPDATE USING (
     EXISTS (
@@ -67,7 +61,6 @@ CREATE POLICY "Users can update their own shadow army" ON public.character_shado
       AND characters.user_id = auth.uid()
     )
   );
-
 CREATE POLICY "Users can delete their own shadow army" ON public.character_shadow_army
   FOR DELETE USING (
     EXISTS (
@@ -76,15 +69,10 @@ CREATE POLICY "Users can delete their own shadow army" ON public.character_shado
       AND characters.user_id = auth.uid()
     )
   );
-
 -- Function to calculate shadow energy max based on level
 -- Shadow Monarchs gain shadow energy as they level up
-CREATE OR REPLACE FUNCTION public.calculate_shadow_energy_max(character_level INTEGER)
-RETURNS INTEGER 
-LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-SECURITY DEFINER
-AS $$
+CREATE OR REPLACE FUNCTION calculate_shadow_energy_max(character_level INTEGER)
+RETURNS INTEGER AS $$
 BEGIN
   -- Shadow energy scales with level
   -- Level 1-4: 10 max
@@ -100,5 +88,4 @@ BEGIN
     ELSE 200
   END;
 END;
-$$ IMMUTABLE;
-
+$$ LANGUAGE plpgsql IMMUTABLE;

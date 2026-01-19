@@ -13,29 +13,23 @@
 UPDATE compendium_backgrounds 
 SET description = REPLACE(description, 'player', 'Hunter')
 WHERE description LIKE '%player%';
-
 UPDATE compendium_backgrounds 
 SET description = REPLACE(description, 'Player', 'Hunter')
 WHERE description LIKE '%Player%';
-
 -- Update any remaining "party" references to "Hunter team"
 UPDATE compendium_backgrounds 
 SET description = REPLACE(description, 'party', 'Hunter team')
 WHERE description LIKE '%party%';
-
 UPDATE compendium_backgrounds 
 SET description = REPLACE(description, 'Party', 'Hunter team')
 WHERE description LIKE '%Party%';
-
 -- Update any remaining "adventure" references to "Gate raid" or "Gate exploration"
 UPDATE compendium_backgrounds 
 SET description = REPLACE(description, 'adventure', 'Gate raid')
 WHERE description LIKE '%adventure%';
-
 UPDATE compendium_backgrounds 
 SET description = REPLACE(description, 'Adventure', 'Gate raid')
 WHERE description LIKE '%Adventure%';
-
 -- =============================================
 -- ENSURE ALL MONSTER DESCRIPTIONS ARE THEMED
 -- =============================================
@@ -49,7 +43,6 @@ WHERE description NOT LIKE '%Gate%'
   AND description NOT LIKE '%System%'
   AND description NOT LIKE '%Shadow Monarch%'
   AND description NOT LIKE '%post-reset%';
-
 -- =============================================
 -- ENSURE ALL POWER DESCRIPTIONS ARE THEMED
 -- =============================================
@@ -60,17 +53,14 @@ SET description = REPLACE(description, 'magic', 'System-granted power')
 WHERE description LIKE '%magic%' 
   AND description NOT LIKE '%System%'
   AND description NOT LIKE '%System-granted%';
-
 UPDATE compendium_powers 
 SET description = REPLACE(description, 'spell', 'power')
 WHERE description LIKE '%spell%' 
   AND description NOT LIKE '%power%';
-
 UPDATE compendium_powers 
 SET description = REPLACE(description, 'Spell', 'Power')
 WHERE description LIKE '%Spell%' 
   AND description NOT LIKE '%Power%';
-
 -- =============================================
 -- ENSURE ALL EQUIPMENT DESCRIPTIONS ARE THEMED
 -- =============================================
@@ -84,7 +74,6 @@ WHERE description NOT LIKE '%Hunter%'
   AND description NOT LIKE '%System%'
   AND equipment_type IN ('weapon', 'armor')
   AND (description IS NULL OR description = '');
-
 -- =============================================
 -- ENSURE ALL BACKGROUND DESCRIPTIONS ARE THEMED
 -- =============================================
@@ -93,11 +82,9 @@ WHERE description NOT LIKE '%Hunter%'
 UPDATE compendium_backgrounds 
 SET description = REPLACE(description, 'adventurer', 'Hunter')
 WHERE description LIKE '%adventurer%';
-
 UPDATE compendium_backgrounds 
 SET description = REPLACE(description, 'Adventurer', 'Hunter')
 WHERE description LIKE '%Adventurer%';
-
 -- =============================================
 -- ENSURE ALL FEAT DESCRIPTIONS ARE THEMED
 -- =============================================
@@ -106,11 +93,9 @@ WHERE description LIKE '%Adventurer%';
 UPDATE compendium_feats 
 SET description = REPLACE(description, 'character', 'Hunter')
 WHERE description LIKE '%character%';
-
 UPDATE compendium_feats 
 SET description = REPLACE(description, 'Character', 'Hunter')
 WHERE description LIKE '%Character%';
-
 -- =============================================
 -- ENSURE ALL CONDITION DESCRIPTIONS ARE THEMED
 -- =============================================
@@ -120,7 +105,6 @@ UPDATE compendium_conditions
 SET description = REPLACE(description, 'magical', 'System-granted')
 WHERE description LIKE '%magical%' 
   AND description NOT LIKE '%System%';
-
 -- =============================================
 -- ADD MISSING MECHANICS/RULES TABLES IF NEEDED
 -- =============================================
@@ -137,7 +121,6 @@ CREATE TABLE IF NOT EXISTS compendium_rules (
   license_note TEXT DEFAULT 'Open Game License content',
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Add common rules/mechanics
 INSERT INTO compendium_rules (name, category, description, examples, source_kind, source_name, license_note) VALUES
 ('Advantage and Disadvantage', 'combat', 'If circumstances cause a roll to have both advantage and disadvantage, you are considered to have neither of them, and you roll one d20. This is true even if multiple circumstances impose disadvantage and only one grants advantage or vice versa. In such a situation, you have neither advantage nor disadvantage.', ARRAY['A Hunter with advantage rolls two d20s and takes the higher result', 'A Hunter with disadvantage rolls two d20s and takes the lower result'], 'srd', '5e SRD', 'Open Game License content'),
@@ -151,14 +134,11 @@ INSERT INTO compendium_rules (name, category, description, examples, source_kind
 ('Concentration', 'system', 'Some powers require you to maintain concentration in order to keep their magic active. If you lose concentration, such a power ends. If a power must be maintained with concentration, that fact appears in its Duration entry, and the power specifies how long you can concentrate on it. You can end concentration at any time (no action required). Normal activity, such as moving and attacking, doesn''t interfere with concentration. The following factors can break concentration: Casting another power that requires concentration. You lose concentration on a power if you cast another power that requires concentration. Taking damage. Whenever you take damage while you are concentrating on a power, you must make a Constitution saving throw to maintain your concentration. The DC equals 10 or half the damage you take, whichever number is higher. If you take damage from multiple sources, such as an arrow and a dragon''s breath, you make a separate saving throw for each source of damage. Being incapacitated or killed. You lose concentration on a power if you are incapacitated or if you die.', ARRAY['A Hunter concentrating on a power must make a Constitution save when taking damage', 'Casting another concentration power ends the previous one'], 'srd', '5e SRD', 'Open Game License content'),
 ('Cover', 'combat', 'Walls, trees, creatures, and other obstacles can provide cover during combat, making a target more difficult to harm. A target can benefit from cover only when an attack or other effect originates on the opposite side of the cover. There are three degrees of cover. If a target is behind multiple sources of cover, only the most protective degree of cover applies; the degrees aren''t added together. For example, if a target is behind a creature that gives half cover and a tree trunk that gives three-quarters cover, the target has three-quarters cover. A target with half cover has a +2 bonus to AC and Dexterity saving throws. A target can have half cover if an obstacle blocks at least half of its body. The obstacle might be a low wall, a large piece of furniture, a narrow tree trunk, or a creature, whether that creature is an enemy or a friend. A target with three-quarters cover has a +5 bonus to AC and Dexterity saving throws. A target can have three-quarters cover if an obstacle blocks at least three-quarters of its body. A target with total cover can''t be targeted directly by an attack or a power, though some powers can reach such a target by including it in an area of effect. A target has total cover if it is completely concealed by an obstacle.', ARRAY['A Hunter behind a low wall has half cover (+2 AC)', 'A Hunter behind a tree has three-quarters cover (+5 AC)'], 'srd', '5e SRD', 'Open Game License content')
 ON CONFLICT (name) DO NOTHING;
-
 -- Enable RLS for rules table
 ALTER TABLE compendium_rules ENABLE ROW LEVEL SECURITY;
-
 CREATE POLICY "Rules are publicly readable"
   ON compendium_rules FOR SELECT
   USING (true);
-
 -- =============================================
 -- ENSURE ALL JOB FEATURES USE SOLO LEVELING TERMS
 -- =============================================
@@ -168,44 +148,34 @@ UPDATE compendium_job_features
 SET description = REPLACE(description, 'spell', 'power')
 WHERE description LIKE '%spell%' 
   AND description NOT LIKE '%power%';
-
 UPDATE compendium_job_features 
 SET description = REPLACE(description, 'Spell', 'Power')
 WHERE description LIKE '%Spell%' 
   AND description NOT LIKE '%Power%';
-
 UPDATE compendium_job_features 
 SET description = REPLACE(description, 'spellcasting', 'powercasting')
 WHERE description LIKE '%spellcasting%';
-
 UPDATE compendium_job_features 
 SET description = REPLACE(description, 'Spellcasting', 'Powercasting')
 WHERE description LIKE '%Spellcasting%';
-
 UPDATE compendium_job_features 
 SET description = REPLACE(description, 'spellbook', 'powerbook')
 WHERE description LIKE '%spellbook%';
-
 UPDATE compendium_job_features 
 SET description = REPLACE(description, 'Spellbook', 'Powerbook')
 WHERE description LIKE '%Spellbook%';
-
 UPDATE compendium_job_features 
 SET description = REPLACE(description, 'spell slot', 'power slot')
 WHERE description LIKE '%spell slot%';
-
 UPDATE compendium_job_features 
 SET description = REPLACE(description, 'Spell slot', 'Power slot')
 WHERE description LIKE '%Spell slot%';
-
 UPDATE compendium_job_features 
 SET description = REPLACE(description, 'spell list', 'power list')
 WHERE description LIKE '%spell list%';
-
 UPDATE compendium_job_features 
 SET description = REPLACE(description, 'Spell list', 'Power list')
 WHERE description LIKE '%Spell list%';
-
 -- =============================================
 -- ENSURE ALL PATH FEATURES USE SOLO LEVELING TERMS
 -- =============================================
@@ -216,13 +186,11 @@ SET description = REPLACE(description, 'spell', 'power')
 WHERE is_path_feature = true 
   AND description LIKE '%spell%' 
   AND description NOT LIKE '%power%';
-
 UPDATE compendium_job_features 
 SET description = REPLACE(description, 'Spell', 'Power')
 WHERE is_path_feature = true 
   AND description LIKE '%Spell%' 
   AND description NOT LIKE '%Power%';
-
 -- =============================================
 -- ENSURE ALL MONARCH FEATURES USE SOLO LEVELING TERMS
 -- =============================================
@@ -232,12 +200,10 @@ UPDATE compendium_monarch_features
 SET description = REPLACE(description, 'magic', 'System-granted power')
 WHERE description LIKE '%magic%' 
   AND description NOT LIKE '%System%';
-
 UPDATE compendium_monarch_features 
 SET description = REPLACE(description, 'spell', 'power')
 WHERE description LIKE '%spell%' 
   AND description NOT LIKE '%power%';
-
 -- =============================================
 -- ADD MISSING SKILL DESCRIPTIONS IF NEEDED
 -- =============================================
@@ -254,7 +220,6 @@ CREATE TABLE IF NOT EXISTS compendium_skills (
   license_note TEXT DEFAULT 'Open Game License content',
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Insert all 18 skills with Solo Leveling themed descriptions
 INSERT INTO compendium_skills (name, ability, description, examples, source_kind, source_name, license_note) VALUES
 ('Athletics', 'STR', 'Your Athletics check covers difficult situations you encounter while climbing, jumping, or swimming. Examples include the following activities: Attempting to climb a Gate wall, jumping across a chasm, swimming through a Gate''s flooded chamber, grabbing onto a ledge while falling, running up a steep slope, or hanging onto a moving Gate creature.', ARRAY['Climbing a Gate wall', 'Jumping across a chasm', 'Swimming through a flooded Gate chamber'], 'srd', '5e SRD', 'Open Game License content'),
@@ -276,14 +241,11 @@ INSERT INTO compendium_skills (name, ability, description, examples, source_kind
 ('Performance', 'PRE', 'Your Charisma (Performance) check determines how well you can delight an audience with music, dance, acting, storytelling, or some other form of entertainment. The System might call for a Charisma (Performance) check to see how well you can entertain a crowd, perform a System ritual, or inspire your Hunter team with a rousing speech.', ARRAY['Entertaining a crowd', 'Performing System rituals', 'Inspiring your Hunter team'], 'srd', '5e SRD', 'Open Game License content'),
 ('Persuasion', 'PRE', 'When you attempt to influence someone or a group of people with tact, social graces, or good nature, the System might call for a Charisma (Persuasion) check. Typically, you use persuasion when acting in good faith, to foster friendships, make cordial requests, or exhibit proper etiquette. Examples of persuading others include convincing a Gate merchant to lower prices, negotiating with Gate NPCs, or rallying your Hunter team to a cause. The System might also allow you to make a Charisma (Persuasion) check to negotiate Gate contracts, convince NPCs to help, or persuade your Hunter team to follow a plan.', ARRAY['Negotiating Gate contracts', 'Convincing NPCs to help', 'Persuading your Hunter team'], 'srd', '5e SRD', 'Open Game License content')
 ON CONFLICT (name) DO NOTHING;
-
 -- Enable RLS for skills table
 ALTER TABLE compendium_skills ENABLE ROW LEVEL SECURITY;
-
 CREATE POLICY "Skills are publicly readable"
   ON compendium_skills FOR SELECT
   USING (true);
-
 -- =============================================
 -- ENSURE ALL TABLES HAVE PROPER INDEXES
 -- =============================================
@@ -291,7 +253,6 @@ CREATE POLICY "Skills are publicly readable"
 -- Add indexes for performance if they don't exist
 CREATE INDEX IF NOT EXISTS idx_compendium_rules_category ON compendium_rules(category);
 CREATE INDEX IF NOT EXISTS idx_compendium_skills_ability ON compendium_skills(ability);
-
 -- =============================================
 -- VERIFY ALL CONTENT HAS PROVENANCE TRACKING
 -- =============================================
@@ -307,5 +268,4 @@ CREATE INDEX IF NOT EXISTS idx_compendium_skills_ability ON compendium_skills(ab
 -- 2. All tables have complete content
 -- 3. All mechanics/rules are documented
 -- 4. All descriptions reference the post-reset timeline
--- 5. All content aligns with Supreme Deity (post-reset world) setting
-
+-- 5. All content aligns with Supreme Deity (post-reset world) setting;

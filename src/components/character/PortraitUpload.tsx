@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { compressImage } from '@/lib/imageOptimization';
 import { cn } from '@/lib/utils';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 export function PortraitUpload({
   characterId,
@@ -155,10 +156,11 @@ export function PortraitUpload({
       <div className="flex items-center gap-3">
         {preview ? (
           <div className="relative">
-            <img
+            <OptimizedImage
               src={preview}
               alt="Character portrait"
               className="w-24 h-24 rounded-lg object-cover border border-border"
+              size="small"
             />
             <Button
               variant="destructive"

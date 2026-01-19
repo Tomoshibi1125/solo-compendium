@@ -5,26 +5,35 @@
  * Replaces ad-hoc Supabase queries throughout the codebase.
  */
 
-import { supabase } from '@/integrations/supabase/client';
+import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 import { logger } from '@/lib/logger';
 import { AppError } from '@/lib/appError';
+import type { StaticCompendiumEntry } from '@/data/compendium/staticDataProvider';
 
-export type EntryType = 
-  | 'jobs' 
-  | 'paths' 
-  | 'powers' 
-  | 'runes' 
-  | 'relics' 
-  | 'monsters' 
-  | 'backgrounds' 
-  | 'conditions' 
-  | 'monarchs' 
-  | 'feats' 
-  | 'skills' 
-  | 'equipment' 
-  | 'sovereigns'
-  | 'shadow-soldiers';
+export const entryTypes = [
+  'jobs',
+  'paths',
+  'powers',
+  'runes',
+  'relics',
+  'monsters',
+  'backgrounds',
+  'conditions',
+  'monarchs',
+  'feats',
+  'skills',
+  'equipment',
+  'sovereigns',
+  'shadow-soldiers',
+  'items',
+  'spells',
+  'techniques',
+  'artifacts',
+  'locations',
+] as const;
+
+export type EntryType = (typeof entryTypes)[number];
 
 export interface CompendiumEntity {
   id: string;
@@ -34,7 +43,7 @@ export interface CompendiumEntity {
   [key: string]: unknown; // Allow additional properties
 }
 
-const tableMap: Record<EntryType, keyof Database['public']['Tables']> = {
+const supabaseTableMap: Partial<Record<EntryType, keyof Database['public']['Tables']>> = {
   jobs: 'compendium_jobs',
   paths: 'compendium_job_paths',
   powers: 'compendium_powers',
@@ -51,6 +60,86 @@ const tableMap: Record<EntryType, keyof Database['public']['Tables']> = {
   'shadow-soldiers': 'compendium_shadow_soldiers',
 };
 
+type StaticDataProvider = {
+  getJobs: (search?: string) => Promise<StaticCompendiumEntry[]>;
+  getPaths: (search?: string) => Promise<StaticCompendiumEntry[]>;
+  getPowers: (search?: string) => Promise<StaticCompendiumEntry[]>;
+  getRunes: (search?: string) => Promise<StaticCompendiumEntry[]>;
+  getRelics: (search?: string) => Promise<StaticCompendiumEntry[]>;
+  getMonsters: (search?: string) => Promise<StaticCompendiumEntry[]>;
+  getBackgrounds: (search?: string) => Promise<StaticCompendiumEntry[]>;
+  getConditions: (search?: string) => Promise<StaticCompendiumEntry[]>;
+  getMonarchs: (search?: string) => Promise<StaticCompendiumEntry[]>;
+  getFeats: (search?: string) => Promise<StaticCompendiumEntry[]>;
+  getSkills: (search?: string) => Promise<StaticCompendiumEntry[]>;
+  getShadowSoldiers: (search?: string) => Promise<StaticCompendiumEntry[]>;
+  getItems: (search?: string) => Promise<StaticCompendiumEntry[]>;
+  getSpells: (search?: string) => Promise<StaticCompendiumEntry[]>;
+  getTechniques: (search?: string) => Promise<StaticCompendiumEntry[]>;
+  getArtifacts: (search?: string) => Promise<StaticCompendiumEntry[]>;
+  getLocations: (search?: string) => Promise<StaticCompendiumEntry[]>;
+};
+
+let staticProviderPromise: Promise<StaticDataProvider> | null = null;
+
+const loadStaticProvider = () => {
+  if (!staticProviderPromise) {
+    staticProviderPromise = import('@/data/compendium/staticDataProvider').then(
+      (module) => module.staticDataProvider
+    );
+  }
+  return staticProviderPromise;
+};
+
+const getStaticEntries = async (
+  type: EntryType,
+  search?: string
+): Promise<StaticCompendiumEntry[] | null> => {
+  const provider = await loadStaticProvider();
+  switch (type) {
+    case 'jobs':
+      return provider.getJobs(search);
+    case 'paths':
+      return provider.getPaths(search);
+    case 'powers':
+      return provider.getPowers(search);
+    case 'runes':
+      return provider.getRunes(search);
+    case 'relics':
+      return provider.getRelics(search);
+    case 'monsters':
+      return provider.getMonsters(search);
+    case 'backgrounds':
+      return provider.getBackgrounds(search);
+    case 'conditions':
+      return provider.getConditions(search);
+    case 'monarchs':
+      return provider.getMonarchs(search);
+    case 'feats':
+      return provider.getFeats(search);
+    case 'skills':
+      return provider.getSkills(search);
+    case 'shadow-soldiers':
+      return provider.getShadowSoldiers(search);
+    case 'items':
+      return provider.getItems(search);
+    case 'spells':
+      return provider.getSpells(search);
+    case 'techniques':
+      return provider.getTechniques(search);
+    case 'artifacts':
+      return provider.getArtifacts(search);
+    case 'locations':
+      return provider.getLocations(search);
+    default:
+      return null;
+  }
+};
+
+export async function listStaticEntries(type: EntryType): Promise<StaticCompendiumEntry[] | null> {
+  return getStaticEntries(type);
+}
+
 /**
  * Resolve a compendium reference to its entity
  * 
@@ -62,61 +151,65 @@ export async function resolveRef(
   type: EntryType,
   id: string
 ): Promise<CompendiumEntity | null> {
-  const tableName = tableMap[type];
-  if (!tableName) {
-    throw new AppError(`Unknown entry type: ${type}`, 'INVALID_INPUT');
+  const tableName = supabaseTableMap[type];
+
+  if (isSupabaseConfigured && tableName) {
+    try {
+      const { data, error } = await supabase
+        .from(tableName)
+        .select('*')
+        .eq('id', id)
+        .maybeSingle();
+
+      if (error) {
+        logger.warn(`Error resolving ${type}:${id}:`, error);
+      } else if (data) {
+        if (data === null || typeof data !== 'object') {
+          return null;
+        }
+
+        const checkedData = data as Record<string, unknown>;
+        if (!('id' in checkedData) || !('name' in checkedData)) {
+          return null;
+        }
+
+        const entityData = checkedData as { id: unknown; name: unknown; description?: unknown; [key: string]: unknown };
+        if (typeof entityData.id !== 'string' || typeof entityData.name !== 'string') {
+          return null;
+        }
+
+        return {
+          ...entityData,
+          id: entityData.id,
+          name: entityData.name,
+          type,
+          description:
+            typeof entityData.description === 'string' ? entityData.description : null,
+        } as CompendiumEntity;
+      }
+    } catch (error) {
+      logger.warn(`Exception resolving ${type}:${id}:`, error);
+    }
   }
 
-  try {
-    const { data, error } = await supabase
-      .from(tableName)
-      .select('*')
-      .eq('id', id)
-      .maybeSingle();
-
-    if (error) {
-      logger.warn(`Error resolving ${type}:${id}:`, error);
-      return null;
-    }
-
-    if (!data) {
-      return null;
-    }
-
-    // Type guard: data must be an object (not null, which is typeof 'object' in JS)
-    if (data === null || typeof data !== 'object') {
-      return null;
-    }
-
-    // Type guard to ensure data has required fields
-    // At this point TypeScript knows data is not null, but we need to check properties
-    const checkedData = data as Record<string, unknown>;
-    if (!('id' in checkedData) || !('name' in checkedData)) {
-      return null;
-    }
-
-    // At this point, TypeScript should know data is an object with id and name
-    // Use checkedData which we know has id and name properties
-    const entityData = checkedData as { id: unknown; name: unknown; description?: unknown; [key: string]: unknown };
-    
-    // Validate id and name are strings
-    if (typeof entityData.id !== 'string' || typeof entityData.name !== 'string') {
-      return null;
-    }
-    
-    return {
-      // Include all other properties first, then override canonical fields
-      ...entityData,
-      id: entityData.id,
-      name: entityData.name,
-      type,
-      description:
-        typeof entityData.description === 'string' ? entityData.description : null,
-    } as CompendiumEntity;
-  } catch (error) {
-    logger.warn(`Exception resolving ${type}:${id}:`, error);
+  const staticEntries = await listStaticEntries(type);
+  if (!staticEntries) {
     return null;
   }
+
+  const entry = staticEntries.find((item) => item.id === id);
+  if (!entry) {
+    return null;
+  }
+
+  const resolvedName = entry.display_name || entry.name;
+  return {
+    ...entry,
+    id: entry.id,
+    name: resolvedName,
+    type,
+    description: typeof entry.description === 'string' ? entry.description : null,
+  } as CompendiumEntity;
 }
 
 /**
@@ -146,9 +239,9 @@ export async function resolveRefs(
  * Get the Supabase table name for an entry type
  */
 export function getTableName(type: EntryType): keyof Database['public']['Tables'] {
-  const tableName = tableMap[type];
+  const tableName = supabaseTableMap[type];
   if (!tableName) {
-    throw new AppError(`Unknown entry type: ${type}`, 'INVALID_INPUT');
+    throw new AppError(`No Supabase table for entry type: ${type}`, 'INVALID_INPUT');
   }
   return tableName;
 }
@@ -165,5 +258,5 @@ export async function validateRef(type: EntryType, id: string): Promise<boolean>
  * Check if a string is a valid EntryType
  */
 export function isValidEntryType(value: string): value is EntryType {
-  return value in tableMap;
+  return entryTypes.includes(value as EntryType);
 }

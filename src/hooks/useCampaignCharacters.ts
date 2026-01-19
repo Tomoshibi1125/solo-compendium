@@ -1,7 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { AppError } from '@/lib/appError';
+import { getLocalUserId } from '@/lib/guestStore';
 
 export interface CampaignCharacterShare {
   id: string;
@@ -18,11 +19,34 @@ export interface CampaignCharacterShare {
   };
 }
 
+const getSharesKey = (campaignId: string) => `solo-compendium.campaign.${campaignId}.shares`;
+
+const loadLocalShares = (campaignId: string): CampaignCharacterShare[] => {
+  if (typeof window === 'undefined') return [];
+  const raw = window.localStorage.getItem(getSharesKey(campaignId));
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw) as CampaignCharacterShare[];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+};
+
+const saveLocalShares = (campaignId: string, shares: CampaignCharacterShare[]) => {
+  if (typeof window === 'undefined') return;
+  window.localStorage.setItem(getSharesKey(campaignId), JSON.stringify(shares));
+};
+
 // Fetch shared characters in campaign
 export const useCampaignSharedCharacters = (campaignId: string) => {
   return useQuery({
     queryKey: ['campaigns', campaignId, 'shared-characters'],
     queryFn: async (): Promise<CampaignCharacterShare[]> => {
+      if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true') {
+        return loadLocalShares(campaignId);
+      }
+
       const { data, error } = await supabase
         .from('campaign_character_shares')
         .select(`
@@ -53,6 +77,21 @@ export const useShareCharacter = () => {
       characterId: string;
       permissions?: 'view' | 'edit';
     }) => {
+      if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true') {
+        const now = new Date().toISOString();
+        const next: CampaignCharacterShare = {
+          id: crypto.randomUUID(),
+          campaign_id: campaignId,
+          character_id: characterId,
+          shared_by: getLocalUserId(),
+          permissions,
+          shared_at: now,
+        };
+        const updated = [...loadLocalShares(campaignId), next];
+        saveLocalShares(campaignId, updated);
+        return next;
+      }
+
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
@@ -94,6 +133,13 @@ export const useUnshareCharacter = () => {
 
   return useMutation({
     mutationFn: async ({ campaignId, characterId }: { campaignId: string; characterId: string }) => {
+      if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true') {
+        const existing = loadLocalShares(campaignId);
+        const next = existing.filter((share) => share.character_id !== characterId);
+        saveLocalShares(campaignId, next);
+        return;
+      }
+
       const { error } = await supabase
         .from('campaign_character_shares')
         .delete()
@@ -134,6 +180,17 @@ export const useUpdateSharePermissions = () => {
       campaignId: string;
       permissions: 'view' | 'edit';
     }) => {
+      if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true') {
+        const existing = loadLocalShares(campaignId);
+        const next = existing.map((share) =>
+          share.id === shareId ? { ...share, permissions } : share
+        );
+        saveLocalShares(campaignId, next);
+        const updatedShare = next.find((share) => share.id === shareId);
+        if (!updatedShare) throw new AppError('Share not found', 'NOT_FOUND');
+        return updatedShare;
+      }
+
       const { data, error } = await supabase
         .from('campaign_character_shares')
         .update({ permissions })

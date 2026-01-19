@@ -99,7 +99,7 @@ export async function executeShortRest(characterId: string): Promise<void> {
  * - Reduce exhaustion by 1
  * - Clear conditions
  */
-export async function executeLongRest(characterId: string): Promise<void> {
+export async function executeLongRest(characterId: string): Promise<{ questAssignmentError?: string }> {
   const { data: character } = await supabase
     .from('characters')
     .select('*')
@@ -183,6 +183,22 @@ export async function executeLongRest(characterId: string): Promise<void> {
     logger.error('Failed to recover spell slots:', error);
     // Continue even if spell slot recovery fails
   }
+
+  // Assign daily quests after long rest (if enabled)
+  try {
+    const { error } = await supabase.rpc('on_long_rest_assign_quests', {
+      p_character_id: characterId,
+    });
+    if (error) {
+      throw error;
+    }
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Daily quests could not be assigned';
+    logger.error('Failed to assign daily quests after long rest:', error);
+    return { questAssignmentError: message };
+  }
+
+  return {};
 }
 
 /**

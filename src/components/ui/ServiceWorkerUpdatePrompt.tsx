@@ -29,7 +29,7 @@ export function ServiceWorkerUpdatePrompt() {
 
     // Import workbox-window dynamically
     import('workbox-window').then(({ Workbox }) => {
-      const wb = new Workbox('/sw.js', { type: 'module' });
+      const wb = new Workbox('/sw.js');
 
       // Listen for updates
       wb.addEventListener('waiting', () => {

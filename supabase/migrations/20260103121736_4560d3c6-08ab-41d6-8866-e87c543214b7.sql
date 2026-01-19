@@ -30,7 +30,6 @@ CREATE TABLE IF NOT EXISTS public.compendium_jobs (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Job Paths (subclasses) - must be created before job_features
 CREATE TABLE IF NOT EXISTS public.compendium_job_paths (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -50,7 +49,6 @@ CREATE TABLE IF NOT EXISTS public.compendium_job_paths (
   
   UNIQUE (job_id, name)
 );
-
 -- Job Features (features gained at each level)
 CREATE TABLE IF NOT EXISTS public.compendium_job_features (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -75,7 +73,6 @@ CREATE TABLE IF NOT EXISTS public.compendium_job_features (
   
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Powers (spells, techniques, abilities)
 CREATE TABLE IF NOT EXISTS public.compendium_powers (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -100,7 +97,6 @@ CREATE TABLE IF NOT EXISTS public.compendium_powers (
   
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Relics (magic items)
 CREATE TABLE IF NOT EXISTS public.compendium_relics (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -125,7 +121,6 @@ CREATE TABLE IF NOT EXISTS public.compendium_relics (
   
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Monsters (creatures and bosses)
 CREATE TABLE IF NOT EXISTS public.compendium_monsters (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -177,7 +172,6 @@ CREATE TABLE IF NOT EXISTS public.compendium_monsters (
   
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Monster Traits
 CREATE TABLE IF NOT EXISTS public.compendium_monster_traits (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -186,7 +180,6 @@ CREATE TABLE IF NOT EXISTS public.compendium_monster_traits (
   description TEXT NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Monster Actions
 CREATE TABLE IF NOT EXISTS public.compendium_monster_actions (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -201,7 +194,6 @@ CREATE TABLE IF NOT EXISTS public.compendium_monster_actions (
   legendary_cost INTEGER,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Backgrounds
 CREATE TABLE IF NOT EXISTS public.compendium_backgrounds (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -222,7 +214,6 @@ CREATE TABLE IF NOT EXISTS public.compendium_backgrounds (
   tags TEXT[] DEFAULT '{}',
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Conditions reference
 CREATE TABLE IF NOT EXISTS public.compendium_conditions (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -231,7 +222,6 @@ CREATE TABLE IF NOT EXISTS public.compendium_conditions (
   effects TEXT[] DEFAULT '{}',
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Enable Row Level Security
 ALTER TABLE IF EXISTS public.compendium_jobs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE IF EXISTS public.compendium_job_features ENABLE ROW LEVEL SECURITY;
@@ -243,7 +233,6 @@ ALTER TABLE IF EXISTS public.compendium_monster_traits ENABLE ROW LEVEL SECURITY
 ALTER TABLE IF EXISTS public.compendium_monster_actions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE IF EXISTS public.compendium_backgrounds ENABLE ROW LEVEL SECURITY;
 ALTER TABLE IF EXISTS public.compendium_conditions ENABLE ROW LEVEL SECURITY;
-
 -- Public read access policies
 DO $$
 BEGIN
@@ -255,7 +244,6 @@ BEGIN
     CREATE POLICY "Compendium jobs are publicly readable" ON public.compendium_jobs FOR SELECT USING (true);
   END IF;
 END $$;
-
 DO $$
 BEGIN
   IF NOT EXISTS (
@@ -266,7 +254,6 @@ BEGIN
     CREATE POLICY "Compendium job features are publicly readable" ON public.compendium_job_features FOR SELECT USING (true);
   END IF;
 END $$;
-
 DO $$
 BEGIN
   IF NOT EXISTS (
@@ -277,7 +264,6 @@ BEGIN
     CREATE POLICY "Compendium job paths are publicly readable" ON public.compendium_job_paths FOR SELECT USING (true);
   END IF;
 END $$;
-
 DO $$
 BEGIN
   IF NOT EXISTS (
@@ -288,7 +274,6 @@ BEGIN
     CREATE POLICY "Compendium powers are publicly readable" ON public.compendium_powers FOR SELECT USING (true);
   END IF;
 END $$;
-
 DO $$
 BEGIN
   IF NOT EXISTS (
@@ -299,7 +284,6 @@ BEGIN
     CREATE POLICY "Compendium relics are publicly readable" ON public.compendium_relics FOR SELECT USING (true);
   END IF;
 END $$;
-
 DO $$
 BEGIN
   IF NOT EXISTS (
@@ -310,7 +294,6 @@ BEGIN
     CREATE POLICY "Compendium monsters are publicly readable" ON public.compendium_monsters FOR SELECT USING (true);
   END IF;
 END $$;
-
 DO $$
 BEGIN
   IF NOT EXISTS (
@@ -321,7 +304,6 @@ BEGIN
     CREATE POLICY "Compendium monster traits are publicly readable" ON public.compendium_monster_traits FOR SELECT USING (true);
   END IF;
 END $$;
-
 DO $$
 BEGIN
   IF NOT EXISTS (
@@ -332,7 +314,6 @@ BEGIN
     CREATE POLICY "Compendium monster actions are publicly readable" ON public.compendium_monster_actions FOR SELECT USING (true);
   END IF;
 END $$;
-
 DO $$
 BEGIN
   IF NOT EXISTS (
@@ -343,7 +324,6 @@ BEGIN
     CREATE POLICY "Compendium backgrounds are publicly readable" ON public.compendium_backgrounds FOR SELECT USING (true);
   END IF;
 END $$;
-
 DO $$
 BEGIN
   IF NOT EXISTS (
@@ -354,7 +334,6 @@ BEGIN
     CREATE POLICY "Compendium conditions are publicly readable" ON public.compendium_conditions FOR SELECT USING (true);
   END IF;
 END $$;
-
 -- Create indexes for performance
 CREATE INDEX IF NOT EXISTS idx_compendium_job_features_job_id ON public.compendium_job_features(job_id);
 CREATE INDEX IF NOT EXISTS idx_compendium_job_features_level ON public.compendium_job_features(level);
@@ -368,7 +347,6 @@ CREATE INDEX IF NOT EXISTS idx_compendium_monsters_type ON public.compendium_mon
 CREATE INDEX IF NOT EXISTS idx_compendium_monsters_gate_rank ON public.compendium_monsters(gate_rank);
 CREATE INDEX IF NOT EXISTS idx_compendium_monster_traits_monster_id ON public.compendium_monster_traits(monster_id);
 CREATE INDEX IF NOT EXISTS idx_compendium_monster_actions_monster_id ON public.compendium_monster_actions(monster_id);
-
 -- Full-text search indexes
 CREATE INDEX IF NOT EXISTS idx_compendium_jobs_search ON public.compendium_jobs USING GIN (to_tsvector('english', name || ' ' || COALESCE(description, '')));
 CREATE INDEX IF NOT EXISTS idx_compendium_powers_search ON public.compendium_powers USING GIN (to_tsvector('english', name || ' ' || COALESCE(description, '')));

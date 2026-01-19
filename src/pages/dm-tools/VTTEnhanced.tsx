@@ -8,9 +8,11 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import '@/styles/vtt-enhanced.css';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import { useCampaignMembers, useCampaignRole } from '@/hooks/useCampaigns';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
@@ -115,7 +117,7 @@ const VTTEnhanced = () => {
       if (!membersData) return [];
       return membersData
         .filter((m: { character_id: string | null; characters: unknown | null }) => m.characters)
-        .map((m: { characters: Record<string, unknown> }) => m.characters);
+        .map((m: { characters: Record<string, unknown> | null }) => m.characters || {});
     },
     enabled: !!campaignId,
   });
@@ -307,7 +309,7 @@ const VTTEnhanced = () => {
         const characterName = typeof character.name === 'string' ? character.name : 'Unknown';
         const hpCurrent = typeof character.hp_current === 'number' ? character.hp_current : 0;
         const hpMax = typeof character.hp_max === 'number' ? character.hp_max : 0;
-        const ac = typeof character.ac === 'number' ? character.ac : 10;
+        const ac = typeof character.armor_class === 'number' ? character.armor_class : 10;
         const portraitUrl = typeof character.portrait_url === 'string' ? character.portrait_url : undefined;
         const characterId = typeof character.id === 'string' ? character.id : '';
         const placed: PlacedToken = {
@@ -571,7 +573,7 @@ const VTTEnhanced = () => {
 
             <SystemWindow title="CHARACTERS">
               <div className="space-y-2 max-h-60 overflow-y-auto">
-                {campaignCharacters?.map((char: Record<string, unknown> & { id: string; name: string; hp_current?: number; hp_max?: number; ac?: number; portrait_url?: string | null }) => {
+                {campaignCharacters?.map((char: Record<string, unknown> & { id: string; name: string; hp_current?: number; hp_max?: number; armor_class?: number; portrait_url?: string | null }) => {
                   const portraitUrl = typeof char.portrait_url === 'string' ? char.portrait_url : null;
                   return (
                     <button
@@ -585,16 +587,17 @@ const VTTEnhanced = () => {
                       )}
                     >
                       {portraitUrl && (
-                        <img
+                        <OptimizedImage
                           src={portraitUrl}
                           alt={char.name}
                           className="w-8 h-8 rounded-full object-cover border border-border"
+                          size="thumbnail"
                         />
                       )}
                       <div className="flex-1 min-w-0">
                         <div className="font-semibold truncate">{char.name}</div>
                         <div className="text-muted-foreground">
-                          {char.hp_current || 0}/{char.hp_max || 0} HP • AC {char.ac || 10}
+                          {char.hp_current || 0}/{char.hp_max || 0} HP | AC {char.armor_class || 10}
                         </div>
                       </div>
                     </button>
@@ -619,38 +622,35 @@ const VTTEnhanced = () => {
               >
                 {currentScene && (
                   <div
-                    className="relative"
+                    className="vtt-scene-container"
                     style={{
-                      width: `${currentScene.width * gridSize * zoom}px`,
-                      height: `${currentScene.height * gridSize * zoom}px`,
-                      minWidth: '100%',
-                      minHeight: '100%',
-                    }}
+                      '--scene-width': `${currentScene.width * gridSize * zoom}px`,
+                      '--scene-height': `${currentScene.height * gridSize * zoom}px`,
+                    } as React.CSSProperties}
                   >
                     {/* Grid */}
                     {showGrid && (
                       <div
-                        className="absolute inset-0 opacity-20"
+                        className="vtt-grid"
                         style={{
-                          backgroundImage: `
+                          '--grid-image': `
                             linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px),
                             linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px)
                           `,
-                          backgroundSize: `${gridSize * zoom}px ${gridSize * zoom}px`,
-                        }}
+                          '--grid-size': `${gridSize * zoom}px ${gridSize * zoom}px`,
+                        } as React.CSSProperties}
                       />
                     )}
 
                     {/* Measurement Line */}
                     {selectedTool === 'measure' && measurementStart && (
                       <div
-                        className="absolute pointer-events-none z-50"
+                        className="vtt-measurement-line"
                         style={{
-                          left: `${measurementStart.x * gridSize * zoom}px`,
-                          top: `${measurementStart.y * gridSize * zoom}px`,
-                          width: `${gridSize * zoom}px`,
-                          height: `${gridSize * zoom}px`,
-                        }}
+                          '--measure-x': `${measurementStart.x * gridSize * zoom}px`,
+                          '--measure-y': `${measurementStart.y * gridSize * zoom}px`,
+                          '--measure-size': `${gridSize * zoom}px`,
+                        } as React.CSSProperties}
                       >
                         <div className="w-full h-full border-2 border-yellow-400 rounded-full bg-yellow-400/20" />
                       </div>
@@ -658,19 +658,18 @@ const VTTEnhanced = () => {
 
                     {/* Fog of War */}
                     {fogOfWar && currentScene.fogData && (
-                      <div className="absolute inset-0 pointer-events-none">
+                      <div className="vtt-fog-of-war pointer-events-none">
                         {currentScene.fogData.map((row, y) =>
                           row.map((revealed, x) => (
                             !revealed && (
                               <div
                                 key={`${x}-${y}`}
-                                className="absolute bg-black/80 border border-black/50"
+                                className="vtt-fog-tile"
                                 style={{
-                                  left: `${x * gridSize * zoom}px`,
-                                  top: `${y * gridSize * zoom}px`,
-                                  width: `${gridSize * zoom}px`,
-                                  height: `${gridSize * zoom}px`,
-                                }}
+                                  '--tile-x': `${x * gridSize * zoom}px`,
+                                  '--tile-y': `${y * gridSize * zoom}px`,
+                                  '--tile-size': `${gridSize * zoom}px`,
+                                } as React.CSSProperties}
                               />
                             )
                           ))
@@ -701,46 +700,42 @@ const VTTEnhanced = () => {
                             }
                           }}
                           className={cn(
-                            'absolute cursor-move transition-all group',
-                            token.locked && 'cursor-not-allowed opacity-75',
-                            draggedToken?.id === token.id && 'opacity-50'
+                            'vtt-token group',
+                            token.locked && 'locked',
+                            draggedToken?.id === token.id && 'dragged'
                           )}
                           style={{
-                            left: `${token.x * gridSize * zoom}px`,
-                            top: `${token.y * gridSize * zoom}px`,
-                            width: `${size}px`,
-                            height: `${size}px`,
-                            transform: `rotate(${token.rotation}deg)`,
-                          }}
+                            '--token-x': `${token.x * gridSize * zoom}px`,
+                            '--token-y': `${token.y * gridSize * zoom}px`,
+                            '--token-size': `${size}px`,
+                            '--token-rotation': `${token.rotation}deg`,
+                          } as React.CSSProperties}
                         >
                           <div
                             className={cn(
-                              'w-full h-full rounded-full flex flex-col items-center justify-center text-2xl border-2 transition-all hover:scale-110 relative',
+                              'vtt-token-inner',
                               token.color ? `border-[${token.color}]` : 'border-border'
                             )}
                             style={{
-                              backgroundColor: token.color ? `${token.color}40` : undefined,
-                              fontSize: `${size * 0.4}px`,
-                            }}
+                              '--token-bg-color': token.color ? `${token.color}40` : 'transparent',
+                              '--token-font-size': `${size * 0.4}px`,
+                            } as React.CSSProperties}
                           >
                             {token.imageUrl ? (
-                              <img
+                              <OptimizedImage
                                 src={token.imageUrl}
                                 alt={token.name}
                                 className="w-full h-full object-cover rounded-full"
+                                size="small"
                               />
                             ) : (
-                              token.emoji || '⚔️'
+                              token.emoji || '@'
                             )}
                             {token.hp !== undefined && token.maxHp !== undefined && (
                               <div className="absolute -bottom-1 left-0 right-0 h-1 bg-black/50 rounded-full overflow-hidden">
                                 <div
-                                  className={cn(
-                                    'h-full transition-all',
-                                    hpPercentage > 0.5 ? 'bg-green-500' :
-                                    hpPercentage > 0.25 ? 'bg-yellow-500' : 'bg-red-500'
-                                  )}
-                                  style={{ width: `${hpPercentage * 100}%` }}
+                                  className="vtt-hp-bar"
+                                  style={{ '--hp-percentage': `${hpPercentage * 100}%` } as React.CSSProperties}
                                 />
                               </div>
                             )}

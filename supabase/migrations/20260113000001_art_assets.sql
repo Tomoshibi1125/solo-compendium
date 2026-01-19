@@ -28,26 +28,21 @@ CREATE TABLE IF NOT EXISTS art_assets (
   -- Constraints
   CONSTRAINT unique_entity_variant UNIQUE(entity_type, entity_id, variant)
 );
-
 -- Indexes for performance
 CREATE INDEX IF NOT EXISTS idx_art_assets_entity ON art_assets(entity_type, entity_id);
 CREATE INDEX IF NOT EXISTS idx_art_assets_variant ON art_assets(variant);
 CREATE INDEX IF NOT EXISTS idx_art_assets_hash ON art_assets(hash);
 CREATE INDEX IF NOT EXISTS idx_art_assets_created_at ON art_assets(created_at);
-
 -- RLS Policies
 ALTER TABLE art_assets ENABLE ROW LEVEL SECURITY;
-
 -- Public read access for generated assets
 CREATE POLICY "Art assets are publicly readable" ON art_assets
   FOR SELECT USING (true);
-
 -- Only authenticated users can create/update assets
 CREATE POLICY "Art assets manageable by authenticated users" ON art_assets
   FOR ALL USING (auth.role() = 'authenticated');
-
 -- Function to get asset paths
-CREATE OR REPLACE FUNCTION public.get_asset_paths(entity_uuid TEXT, entity_variant TEXT DEFAULT 'portrait')
+CREATE OR REPLACE FUNCTION get_asset_paths(entity_uuid TEXT, entity_variant TEXT DEFAULT 'portrait')
 RETURNS TABLE(
   original TEXT,
   thumb TEXT,
@@ -56,8 +51,6 @@ RETURNS TABLE(
   token TEXT
 )
 LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-SECURITY DEFINER
 AS $$
 BEGIN
   RETURN QUERY
@@ -73,13 +66,10 @@ BEGIN
   LIMIT 1;
 END;
 $$;
-
 -- Function to check if asset exists
-CREATE OR REPLACE FUNCTION public.asset_exists(entity_uuid TEXT, entity_variant TEXT DEFAULT 'portrait')
+CREATE OR REPLACE FUNCTION asset_exists(entity_uuid TEXT, entity_variant TEXT DEFAULT 'portrait')
 RETURNS BOOLEAN
 LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-SECURITY DEFINER
 AS $$
 BEGIN
   RETURN EXISTS (
@@ -89,9 +79,8 @@ BEGIN
   );
 END;
 $$;
-
 -- Function to get entity assets
-CREATE OR REPLACE FUNCTION public.get_entity_assets(entity_uuid TEXT)
+CREATE OR REPLACE FUNCTION get_entity_assets(entity_uuid TEXT)
 RETURNS TABLE(
   variant TEXT,
   paths JSONB,
@@ -99,8 +88,6 @@ RETURNS TABLE(
   created_at TIMESTAMPTZ
 )
 LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-SECURITY DEFINER
 AS $$
 BEGIN
   RETURN QUERY
@@ -114,7 +101,6 @@ BEGIN
   ORDER BY variant;
 END;
 $$;
-
 -- Update timestamp trigger
 CREATE TRIGGER update_art_assets_updated_at
   BEFORE UPDATE ON art_assets

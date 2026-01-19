@@ -3,20 +3,25 @@
  * Allows DMs to generate art for monsters, NPCs, and homebrew content
  */
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { ArtGenerator } from '@/components/art/ArtGenerator';
+import { AIEnhancedArtGenerator } from '@/components/art/AIEnhancedArtGenerator';
+import { artPipeline } from '@/lib/artPipeline/service';
+import type { ArtAsset } from '@/lib/artPipeline/types';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Image, Camera, Sparkles, Sword, Shield, MapPin } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 type ContentType = 'monster' | 'npc' | 'item' | 'location';
 
@@ -25,28 +30,209 @@ interface GeneratedContent {
   type: ContentType;
   name: string;
   artId?: string;
+  artUrl?: string;
   data: any;
 }
 
 export default function ArtGeneratorDM() {
   const navigate = useNavigate();
+  const STORAGE_KEY = 'solo-compendium.dm-tools.art-generator.v1';
   const [contentType, setContentType] = useState<ContentType>('monster');
   const [generatedContent, setGeneratedContent] = useState<GeneratedContent[]>([]);
   const [isGeneratorOpen, setIsGeneratorOpen] = useState(false);
   const [currentEditItem, setCurrentEditItem] = useState<GeneratedContent | null>(null);
+  const [lastEditId, setLastEditId] = useState<string | null>(null);
+  const [isAIArtPending, setIsAIArtPending] = useState(false);
+  const [isDialogClosing, setIsDialogClosing] = useState(false);
 
-  const handleArtGenerated = (assetId: string) => {
-    if (currentEditItem) {
-      setGeneratedContent(prev => 
-        prev.map(item => 
-          item.id === currentEditItem.id 
-            ? { ...item, artId: assetId }
-            : item
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    if (!stored) return;
+    try {
+      const parsed = JSON.parse(stored) as GeneratedContent[];
+      if (Array.isArray(parsed)) {
+        setGeneratedContent(parsed);
+      }
+    } catch {
+      // Ignore corrupted local cache
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(generatedContent));
+  }, [generatedContent]);
+
+  const updateCurrentItem = (updates: Partial<GeneratedContent>) => {
+    if (!currentEditItem) return;
+    setGeneratedContent(prev =>
+      prev.map(item =>
+        item.id === currentEditItem.id ? { ...item, ...updates } : item
+      )
+    );
+    setCurrentEditItem(prev => (prev ? { ...prev, ...updates } : prev));
+  };
+
+  const updateCurrentItemData = (updates: Record<string, unknown>) => {
+    if (!currentEditItem) return;
+    const nextData = { ...(currentEditItem.data || {}), ...updates };
+    updateCurrentItem({ data: nextData });
+  };
+
+  const getPreviewUrl = (asset: ArtAsset): string | undefined => {
+    const paths = asset.paths;
+    if (!paths || typeof paths !== 'object') return undefined;
+    const candidates = [
+      (paths as Record<string, string>).md,
+      (paths as Record<string, string>).thumb,
+      (paths as Record<string, string>).lg,
+      (paths as Record<string, string>).original,
+      (paths as Record<string, string>).token,
+    ];
+    return candidates.find((value) => typeof value === 'string' && value.length > 0);
+  };
+
+  const withTimeout = async <T,>(promise: Promise<T>, timeoutMs: number, label: string): Promise<T> => {
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    const timeoutPromise = new Promise<T>((_, reject) => {
+      timeoutId = setTimeout(() => reject(new Error(label)), timeoutMs);
+    });
+    try {
+      return await Promise.race([promise, timeoutPromise]);
+    } finally {
+      if (timeoutId) clearTimeout(timeoutId);
+    }
+  };
+
+  const fetchArtAsset = async (entityId: string) => {
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+    if (!supabaseUrl || !supabaseKey) return null;
+
+    const baseUrl = supabaseUrl.replace(/\/$/, '');
+    const url = new URL(`${baseUrl}/rest/v1/art_assets`);
+    url.searchParams.set('select', 'id,paths');
+    url.searchParams.set('entity_id', `eq.${entityId}`);
+    url.searchParams.set('variant', 'eq.portrait');
+    url.searchParams.set('order', 'created_at.desc');
+    url.searchParams.set('limit', '1');
+
+    const response = await withTimeout(
+      fetch(url.toString(), {
+        headers: {
+          apikey: supabaseKey,
+          Authorization: `Bearer ${supabaseKey}`,
+        },
+      }),
+      8000,
+      'Art asset lookup timed out'
+    );
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const payload = await response.json();
+    if (Array.isArray(payload)) {
+      return payload[0] ?? null;
+    }
+    return payload ?? null;
+  };
+
+  const attemptAttachArt = async (): Promise<boolean> => {
+    if (!currentEditItem) {
+      setIsAIArtPending(false);
+      return false;
+    }
+    if (currentEditItem.artId || currentEditItem.artUrl) {
+      setIsAIArtPending(false);
+      return true;
+    }
+
+    const entityIdCandidates = [
+      currentEditItem.id,
+      `ai-enhanced-${currentEditItem.id}`,
+    ];
+
+    for (let attempt = 0; attempt < 5; attempt += 1) {
+      for (const candidateId of entityIdCandidates) {
+        try {
+          const apiAsset = await fetchArtAsset(candidateId);
+          if (apiAsset) {
+            const previewUrl =
+              apiAsset.paths && typeof apiAsset.paths === 'object'
+                ? Object.values(apiAsset.paths as Record<string, string>).find((value) => typeof value === 'string')
+                : undefined;
+            updateCurrentItem({ artId: apiAsset.id, artUrl: previewUrl });
+            setIsAIArtPending(false);
+            return true;
+          }
+
+          const assets = await artPipeline.getAssetsForEntity(currentEditItem.type, candidateId);
+          if (assets.length > 0) {
+            const asset = assets[0];
+            const previewUrl = getPreviewUrl(asset);
+            updateCurrentItem({ artId: asset.id, artUrl: previewUrl });
+            setIsAIArtPending(false);
+            return true;
+          }
+        } catch {
+          // Ignore lookup errors; fallback to next candidate.
+        }
+      }
+
+      if (attempt < 4) {
+        await new Promise(resolve => setTimeout(resolve, 1500));
+      }
+    }
+
+    setIsAIArtPending(false);
+    return false;
+  };
+
+  useEffect(() => {
+    if (!currentEditItem || isGeneratorOpen) return;
+    if (currentEditItem.artId || currentEditItem.artUrl) return;
+
+    let isActive = true;
+    const resolveArtAttachment = async () => {
+      if (!isActive) return;
+      await attemptAttachArt();
+    };
+
+    void resolveArtAttachment();
+
+    return () => {
+      isActive = false;
+    };
+  }, [currentEditItem, isGeneratorOpen]);
+
+  const handleArtGenerated = (assetId: string, previewUrl?: string) => {
+    const targetId = currentEditItem?.id ?? lastEditId;
+    if (targetId) {
+      setGeneratedContent(prev =>
+        prev.map(item =>
+          item.id === targetId ? { ...item, artId: assetId, artUrl: previewUrl } : item
         )
       );
-      setCurrentEditItem(null);
-      setIsGeneratorOpen(false);
+      if (currentEditItem?.id === targetId) {
+        setCurrentEditItem(prev => (prev ? { ...prev, artId: assetId, artUrl: previewUrl } : prev));
+      }
+      setIsAIArtPending(false);
+      return;
     }
+
+    const fallbackItem: GeneratedContent = {
+      id: `generated-${Date.now()}`,
+      type: contentType,
+      name: 'Generated Art',
+      artId: assetId,
+      artUrl: previewUrl,
+      data: {},
+    };
+    setGeneratedContent(prev => [...prev, fallbackItem]);
+    setIsAIArtPending(false);
   };
 
   const createNewContent = (type: ContentType) => {
@@ -58,17 +244,22 @@ export default function ArtGeneratorDM() {
     };
     setGeneratedContent(prev => [...prev, newItem]);
     setCurrentEditItem(newItem);
+    setLastEditId(newItem.id);
     setIsGeneratorOpen(true);
   };
 
   const editContent = (item: GeneratedContent) => {
     setCurrentEditItem(item);
+    setLastEditId(item.id);
     setIsGeneratorOpen(true);
   };
 
   const deleteContent = (id: string) => {
     setGeneratedContent(prev => prev.filter(item => item.id !== id));
   };
+
+  const formatContentTypeLabel = (type: ContentType) =>
+    type.charAt(0).toUpperCase() + type.slice(1);
 
   const getContentTypeIcon = (type: ContentType) => {
     switch (type) {
@@ -138,7 +329,7 @@ export default function ArtGeneratorDM() {
                 </h2>
                 <Button onClick={() => createNewContent(type)}>
                   <Camera className="w-4 h-4 mr-2" />
-                  Generate New {type.slice(0, -1).toUpperCase() + type.slice(1)}
+                  Generate New {formatContentTypeLabel(type)}
                 </Button>
               </div>
 
@@ -146,78 +337,86 @@ export default function ArtGeneratorDM() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {generatedContent
                   .filter(item => item.type === type)
-                  .map(item => (
-                    <Card 
-                      key={item.id} 
-                      className={`border ${getContentTypeColor(item.type)} hover:shadow-lg transition-shadow`}
-                    >
-                      <CardHeader>
-                        <CardTitle className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            {getContentTypeIcon(item.type)}
-                            <span className="text-lg">{item.name || 'Untitled'}</span>
-                          </div>
-                          <div className="flex gap-2">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => editContent(item)}
-                            >
-                              Edit
-                            </Button>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => deleteContent(item.id)}
-                            >
-                              Delete
-                            </Button>
-                          </div>
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="space-y-4">
-                          {/* Art Display */}
-                          <div className="flex justify-center">
-                            {item.artId ? (
-                              <img
-                                src={item.artId}
-                                alt={item.name}
-                                className="w-full h-32 object-cover rounded-lg border"
-                              />
-                            ) : (
-                              <div className="w-full h-32 border-2 border-dashed border-gray-600 rounded-lg flex items-center justify-center bg-gray-900/50">
-                                <div className="text-center">
-                                  <Camera className="w-8 h-8 mx-auto text-gray-500 mb-2" />
-                                  <p className="text-sm text-gray-500">No Art</p>
+                  .map(item => {
+                    const artSrc =
+                      item.artUrl ||
+                      (item.artId && item.artId.startsWith('http') ? item.artId : null);
+
+                    return (
+                      <Card 
+                        key={item.id} 
+                        className={`border ${getContentTypeColor(item.type)} hover:shadow-lg transition-shadow`}
+                        data-testid="generated-content-card"
+                      >
+                        <CardHeader>
+                          <CardTitle className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              {getContentTypeIcon(item.type)}
+                              <span className="text-lg">{item.name || 'Untitled'}</span>
+                            </div>
+                            <div className="flex gap-2">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => editContent(item)}
+                              >
+                                Edit
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => deleteContent(item.id)}
+                              >
+                                Delete
+                              </Button>
+                            </div>
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="space-y-4">
+                            {/* Art Display */}
+                            <div className="flex justify-center">
+                              {artSrc ? (
+                                <OptimizedImage
+                                  src={artSrc}
+                                  alt={item.name}
+                                  className="w-full h-32 object-cover rounded-lg border"
+                                  size="large"
+                                />
+                              ) : (
+                                <div className="w-full h-32 border-2 border-dashed border-gray-600 rounded-lg flex items-center justify-center bg-gray-900/50">
+                                  <div className="text-center">
+                                    <Camera className="w-8 h-8 mx-auto text-gray-500 mb-2" />
+                                    <p className="text-sm text-gray-500">No Art</p>
+                                  </div>
                                 </div>
-                              </div>
-                            )}
-                          </div>
+                              )}
+                            </div>
 
-                          {/* Content Info */}
-                          <div className="text-sm text-muted-foreground">
-                            <p>Type: {item.type}</p>
-                            <p>ID: {item.id}</p>
-                            {item.artId && <p>✨ Art Generated</p>}
-                          </div>
+                            {/* Content Info */}
+                            <div className="text-sm text-muted-foreground">
+                              <p>Type: {item.type}</p>
+                              <p>ID: {item.id}</p>
+                              {item.artId && <p>Art Generated</p>}
+                            </div>
 
-                          {/* Quick Actions */}
-                          <div className="flex gap-2">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => editContent(item)}
-                              className="flex-1"
-                            >
-                              <Camera className="w-3 h-3 mr-1" />
-                              Regenerate
-                            </Button>
+                            {/* Quick Actions */}
+                            <div className="flex gap-2">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => editContent(item)}
+                                className="flex-1"
+                              >
+                                <Camera className="w-3 h-3 mr-1" />
+                                Regenerate
+                              </Button>
+                            </div>
                           </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
                 </div>
 
                 {/* Empty State */}
@@ -232,7 +431,7 @@ export default function ArtGeneratorDM() {
                     </p>
                     <Button onClick={() => createNewContent(type)}>
                       <Camera className="w-4 h-4 mr-2" />
-                      Generate {type.slice(0, -1).toUpperCase() + type.slice(1)} Art
+                      Generate {formatContentTypeLabel(type)} Art
                     </Button>
                   </div>
                 )}
@@ -242,28 +441,117 @@ export default function ArtGeneratorDM() {
 
         {/* Art Generator Dialog */}
         {currentEditItem && (
-          <Dialog open={isGeneratorOpen} onOpenChange={setIsGeneratorOpen}>
+          <Dialog
+            open={isGeneratorOpen}
+            onOpenChange={(open) => {
+              if (!open) {
+                if (isAIArtPending || isDialogClosing) return;
+                if (currentEditItem && !currentEditItem.artId && !currentEditItem.artUrl) {
+                  setIsDialogClosing(true);
+                  void (async () => {
+                    await attemptAttachArt();
+                    setIsDialogClosing(false);
+                    setIsGeneratorOpen(false);
+                  })();
+                  return;
+                }
+              }
+              setIsGeneratorOpen(open);
+            }}
+          >
             <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-              <div className="mb-4">
-                <h2 className="text-xl font-bold">
-                  Generate {currentEditItem.type.slice(0, -1).toUpperCase() + currentEditItem.type.slice(1)} Art
-                </h2>
-                <p className="text-muted-foreground">
-                  Create custom Solo Leveling themed art for your {currentEditItem.type}
-                </p>
+              <DialogHeader>
+                <DialogTitle>
+                  Generate {formatContentTypeLabel(currentEditItem.type)} Art
+                </DialogTitle>
+                <DialogDescription>
+                  Create custom Solo Leveling themed art for your {currentEditItem.type}.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div>
+                  <Label htmlFor="content-name">Name</Label>
+                  <Input
+                    id="content-name"
+                    value={currentEditItem.name}
+                    onChange={(event) => updateCurrentItem({ name: event.target.value })}
+                    placeholder="Name your content"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="content-tags">Tags</Label>
+                  <Input
+                    id="content-tags"
+                    value={(currentEditItem.data?.tags || []).join(', ')}
+                    onChange={(event) =>
+                      updateCurrentItemData({
+                        tags: event.target.value.split(',').map((tag: string) => tag.trim()).filter(Boolean),
+                      })
+                    }
+                    placeholder="dark, elite, mystic"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <Label htmlFor="content-description">Description</Label>
+                  <Textarea
+                    id="content-description"
+                    value={currentEditItem.data?.description || ''}
+                    onChange={(event) => updateCurrentItemData({ description: event.target.value })}
+                    placeholder="Short description to guide the art generation"
+                    rows={3}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="content-rarity">Rarity / Challenge</Label>
+                  <Input
+                    id="content-rarity"
+                    value={currentEditItem.data?.rarity || ''}
+                    onChange={(event) => updateCurrentItemData({ rarity: event.target.value })}
+                    placeholder="Rare, Legendary, CR 7"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="content-environment">Environment</Label>
+                  <Input
+                    id="content-environment"
+                    value={currentEditItem.data?.environment || ''}
+                    onChange={(event) => updateCurrentItemData({ environment: event.target.value })}
+                    placeholder="Dungeon, city skyline, frozen gate"
+                  />
+                </div>
               </div>
-              <ArtGenerator
-                entityType={currentEditItem.type}
-                entityId={currentEditItem.id}
-                existingData={{
-                  name: currentEditItem.name,
-                  description: currentEditItem.data.description,
-                  tags: currentEditItem.data.tags,
-                  rarity: currentEditItem.data.rarity,
-                  environment: currentEditItem.data.environment,
-                }}
-                onArtGenerated={handleArtGenerated}
-              />
+              <Tabs defaultValue="standard" className="space-y-4">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="standard">Standard</TabsTrigger>
+                  <TabsTrigger value="ai">AI Enhanced</TabsTrigger>
+                </TabsList>
+                <TabsContent value="standard">
+                  <ArtGenerator
+                    entityType={currentEditItem.type}
+                    entityId={currentEditItem.id}
+                    existingData={{
+                      name: currentEditItem.name,
+                      description: currentEditItem.data.description,
+                      tags: currentEditItem.data.tags,
+                      rarity: currentEditItem.data.rarity,
+                      environment: currentEditItem.data.environment,
+                    }}
+                    onArtGenerated={handleArtGenerated}
+                  />
+                </TabsContent>
+                <TabsContent value="ai">
+                  <AIEnhancedArtGenerator
+                    entityType={currentEditItem.type}
+                    entityId={`ai-enhanced-${currentEditItem.id}`}
+                    title={currentEditItem.name || `Generated ${formatContentTypeLabel(currentEditItem.type)}`}
+                    onArtGenerated={handleArtGenerated}
+                    onGenerationStart={() => setIsAIArtPending(true)}
+                    onGenerationComplete={() => {
+                      void attemptAttachArt();
+                    }}
+                  />
+                </TabsContent>
+              </Tabs>
             </DialogContent>
           </Dialog>
         )}

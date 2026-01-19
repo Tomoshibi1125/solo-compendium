@@ -119,21 +119,31 @@ export async function exportCompendiumEntries(
   entryType: string
 ): Promise<string> {
   const { supabase } = await import('@/integrations/supabase/client');
-  const { getTableName, isValidEntryType } = await import('@/lib/compendiumResolver');
+  const { getTableName, isValidEntryType, listStaticEntries } = await import('@/lib/compendiumResolver');
   
   // Validate entry type
   if (!isValidEntryType(entryType)) {
     throw new AppError(`Unknown entry type: ${entryType}`, 'INVALID_INPUT');
   }
 
-  const tableName = getTableName(entryType);
+  try {
+    const tableName = getTableName(entryType);
 
-  const { data: entries } = await supabase
-    .from(tableName as keyof Database['public']['Tables'])
-    .select('*')
-    .in('id', entryIds);
+    const { data: entries } = await supabase
+      .from(tableName as keyof Database['public']['Tables'])
+      .select('*')
+      .in('id', entryIds);
 
-  return JSON.stringify(entries || [], null, 2);
+    return JSON.stringify(entries || [], null, 2);
+  } catch (error) {
+    const typedEntryType = entryType as Parameters<typeof listStaticEntries>[0];
+    const staticEntries = await listStaticEntries(typedEntryType);
+    if (!staticEntries) {
+      throw error;
+    }
+    const filtered = staticEntries.filter((entry) => entryIds.includes(entry.id));
+    return JSON.stringify(filtered, null, 2);
+  }
 }
 
 /**

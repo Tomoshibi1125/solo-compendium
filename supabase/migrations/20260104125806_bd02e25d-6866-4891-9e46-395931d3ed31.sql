@@ -14,7 +14,6 @@ CREATE TABLE IF NOT EXISTS public.campaigns (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Campaign members table
 CREATE TABLE IF NOT EXISTS public.campaign_members (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -25,7 +24,6 @@ CREATE TABLE IF NOT EXISTS public.campaign_members (
   joined_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   UNIQUE(campaign_id, user_id)
 );
-
 -- Campaign messages table (for in-game chat)
 CREATE TABLE IF NOT EXISTS public.campaign_messages (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -37,7 +35,6 @@ CREATE TABLE IF NOT EXISTS public.campaign_messages (
   metadata JSONB DEFAULT '{}',
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Campaign notes table (shared/private notes)
 CREATE TABLE IF NOT EXISTS public.campaign_notes (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -50,7 +47,6 @@ CREATE TABLE IF NOT EXISTS public.campaign_notes (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Campaign shared characters table
 CREATE TABLE IF NOT EXISTS public.campaign_character_shares (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -61,7 +57,6 @@ CREATE TABLE IF NOT EXISTS public.campaign_character_shares (
   shared_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   UNIQUE(campaign_id, character_id)
 );
-
 -- =============================================
 -- User Favorites & Saved Searches
 -- =============================================
@@ -75,7 +70,6 @@ CREATE TABLE IF NOT EXISTS public.user_favorites (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   UNIQUE(user_id, entry_type, entry_id)
 );
-
 -- Saved searches table
 CREATE TABLE IF NOT EXISTS public.saved_searches (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -84,7 +78,6 @@ CREATE TABLE IF NOT EXISTS public.saved_searches (
   search_params JSONB NOT NULL DEFAULT '{}',
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- =============================================
 -- Character Journal & Roll History
 -- =============================================
@@ -100,7 +93,6 @@ CREATE TABLE IF NOT EXISTS public.character_journal (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Roll history table
 CREATE TABLE IF NOT EXISTS public.roll_history (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -115,7 +107,6 @@ CREATE TABLE IF NOT EXISTS public.roll_history (
   context TEXT,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- =============================================
 -- Enable RLS on all new tables
 -- =============================================
@@ -129,7 +120,6 @@ ALTER TABLE public.user_favorites ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.saved_searches ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.character_journal ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.roll_history ENABLE ROW LEVEL SECURITY;
-
 -- =============================================
 -- RLS Policies for Campaigns
 -- =============================================
@@ -141,39 +131,30 @@ USING (
   EXISTS (SELECT 1 FROM public.campaign_members WHERE campaign_id = id AND user_id = auth.uid()) OR
   is_active = true
 );
-
 CREATE POLICY "campaigns_insert" ON public.campaigns FOR INSERT
 WITH CHECK (dm_id = auth.uid());
-
 CREATE POLICY "campaigns_update" ON public.campaigns FOR UPDATE
 USING (dm_id = auth.uid());
-
 CREATE POLICY "campaigns_delete" ON public.campaigns FOR DELETE
 USING (dm_id = auth.uid());
-
 -- Campaign members
 CREATE POLICY "campaign_members_select" ON public.campaign_members FOR SELECT
 USING (
   user_id = auth.uid() OR
   EXISTS (SELECT 1 FROM public.campaigns WHERE id = campaign_id AND dm_id = auth.uid())
 );
-
 CREATE POLICY "campaign_members_insert" ON public.campaign_members FOR INSERT
 WITH CHECK (user_id = auth.uid() OR EXISTS (SELECT 1 FROM public.campaigns WHERE id = campaign_id AND dm_id = auth.uid()));
-
 CREATE POLICY "campaign_members_update" ON public.campaign_members FOR UPDATE
 USING (EXISTS (SELECT 1 FROM public.campaigns WHERE id = campaign_id AND dm_id = auth.uid()));
-
 CREATE POLICY "campaign_members_delete" ON public.campaign_members FOR DELETE
 USING (user_id = auth.uid() OR EXISTS (SELECT 1 FROM public.campaigns WHERE id = campaign_id AND dm_id = auth.uid()));
-
 -- Campaign messages
 CREATE POLICY "campaign_messages_select" ON public.campaign_messages FOR SELECT
 USING (
   EXISTS (SELECT 1 FROM public.campaigns WHERE id = campaign_id AND dm_id = auth.uid()) OR
   EXISTS (SELECT 1 FROM public.campaign_members WHERE campaign_id = campaign_messages.campaign_id AND user_id = auth.uid())
 );
-
 CREATE POLICY "campaign_messages_insert" ON public.campaign_messages FOR INSERT
 WITH CHECK (
   user_id = auth.uid() AND (
@@ -181,7 +162,6 @@ WITH CHECK (
     EXISTS (SELECT 1 FROM public.campaign_members WHERE campaign_id = campaign_messages.campaign_id AND user_id = auth.uid())
   )
 );
-
 -- Campaign notes
 CREATE POLICY "campaign_notes_select" ON public.campaign_notes FOR SELECT
 USING (
@@ -191,16 +171,12 @@ USING (
     EXISTS (SELECT 1 FROM public.campaign_members WHERE campaign_id = campaign_notes.campaign_id AND user_id = auth.uid())
   ))
 );
-
 CREATE POLICY "campaign_notes_insert" ON public.campaign_notes FOR INSERT
 WITH CHECK (user_id = auth.uid());
-
 CREATE POLICY "campaign_notes_update" ON public.campaign_notes FOR UPDATE
 USING (user_id = auth.uid());
-
 CREATE POLICY "campaign_notes_delete" ON public.campaign_notes FOR DELETE
 USING (user_id = auth.uid());
-
 -- Campaign character shares
 CREATE POLICY "campaign_character_shares_select" ON public.campaign_character_shares FOR SELECT
 USING (
@@ -208,13 +184,10 @@ USING (
   EXISTS (SELECT 1 FROM public.campaigns WHERE id = campaign_id AND dm_id = auth.uid()) OR
   EXISTS (SELECT 1 FROM public.campaign_members WHERE campaign_id = campaign_character_shares.campaign_id AND user_id = auth.uid())
 );
-
 CREATE POLICY "campaign_character_shares_insert" ON public.campaign_character_shares FOR INSERT
 WITH CHECK (shared_by = auth.uid());
-
 CREATE POLICY "campaign_character_shares_delete" ON public.campaign_character_shares FOR DELETE
 USING (shared_by = auth.uid() OR EXISTS (SELECT 1 FROM public.campaigns WHERE id = campaign_id AND dm_id = auth.uid()));
-
 -- =============================================
 -- RLS Policies for User Features
 -- =============================================
@@ -222,31 +195,23 @@ USING (shared_by = auth.uid() OR EXISTS (SELECT 1 FROM public.campaigns WHERE id
 -- User favorites
 CREATE POLICY "user_favorites_all" ON public.user_favorites FOR ALL
 USING (user_id = auth.uid());
-
 -- Saved searches
 CREATE POLICY "saved_searches_all" ON public.saved_searches FOR ALL
 USING (user_id = auth.uid());
-
 -- Character journal
 CREATE POLICY "character_journal_all" ON public.character_journal FOR ALL
 USING (EXISTS (SELECT 1 FROM public.characters WHERE id = character_id AND user_id = auth.uid()));
-
 -- Roll history
 CREATE POLICY "roll_history_select" ON public.roll_history FOR SELECT
 USING (user_id = auth.uid());
-
 CREATE POLICY "roll_history_insert" ON public.roll_history FOR INSERT
 WITH CHECK (user_id = auth.uid());
-
 -- =============================================
 -- Functions
 -- =============================================
 
 -- Function to generate unique share code
-CREATE OR REPLACE FUNCTION generate_share_code() RETURNS TEXT 
-LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-AS $$
+CREATE OR REPLACE FUNCTION generate_share_code() RETURNS TEXT AS $$
 DECLARE
   chars TEXT := 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   code TEXT := '';
@@ -257,17 +222,13 @@ BEGIN
   END LOOP;
   RETURN code;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 -- Function to create campaign with auto-generated share code
 CREATE OR REPLACE FUNCTION create_campaign_with_code(
   p_name TEXT,
   p_description TEXT,
   p_dm_id UUID
-) RETURNS UUID 
-LANGUAGE plpgsql
-SECURITY DEFINER
-AS $$
+) RETURNS UUID AS $$
 DECLARE
   new_code TEXT;
   new_id UUID;
@@ -284,74 +245,25 @@ BEGIN
   
   RETURN new_id;
 END;
-$$;
-
+$$ LANGUAGE plpgsql SECURITY DEFINER;
 -- =============================================
 -- Enable realtime for chat
 -- =============================================
 
 ALTER PUBLICATION supabase_realtime ADD TABLE public.campaign_messages;
-
 -- =============================================
 -- Update triggers
 -- =============================================
 
-DO $$
-BEGIN
-  IF EXISTS (
-    SELECT 1
-    FROM pg_class c
-    JOIN pg_namespace n ON n.oid = c.relnamespace
-    WHERE n.nspname = 'public'
-      AND c.relname = 'campaigns'
-  ) AND NOT EXISTS (
-    SELECT 1
-    FROM pg_trigger t
-    JOIN pg_class c ON c.oid = t.tgrelid
-    JOIN pg_namespace n ON n.oid = c.relnamespace
-    WHERE n.nspname = 'public'
-      AND c.relname = 'campaigns'
-      AND t.tgname = 'update_campaigns_updated_at'
-      AND NOT t.tgisinternal
-  ) THEN
-    EXECUTE 'CREATE TRIGGER update_campaigns_updated_at BEFORE UPDATE ON public.campaigns FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();';
-  END IF;
-
-  IF EXISTS (
-    SELECT 1
-    FROM pg_class c
-    JOIN pg_namespace n ON n.oid = c.relnamespace
-    WHERE n.nspname = 'public'
-      AND c.relname = 'campaign_notes'
-  ) AND NOT EXISTS (
-    SELECT 1
-    FROM pg_trigger t
-    JOIN pg_class c ON c.oid = t.tgrelid
-    JOIN pg_namespace n ON n.oid = c.relnamespace
-    WHERE n.nspname = 'public'
-      AND c.relname = 'campaign_notes'
-      AND t.tgname = 'update_campaign_notes_updated_at'
-      AND NOT t.tgisinternal
-  ) THEN
-    EXECUTE 'CREATE TRIGGER update_campaign_notes_updated_at BEFORE UPDATE ON public.campaign_notes FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();';
-  END IF;
-
-  IF EXISTS (
-    SELECT 1
-    FROM pg_class c
-    JOIN pg_namespace n ON n.oid = c.relnamespace
-    WHERE n.nspname = 'public'
-      AND c.relname = 'character_journal'
-  ) AND NOT EXISTS (
-    SELECT 1
-    FROM pg_trigger t
-    JOIN pg_class c ON c.oid = t.tgrelid
-    JOIN pg_namespace n ON n.oid = c.relnamespace
-    WHERE n.nspname = 'public'
-      AND c.relname = 'character_journal'
-      AND t.tgname = 'update_character_journal_updated_at'
-      AND NOT t.tgisinternal
-  ) THEN
-    EXECUTE 'CREATE TRIGGER update_character_journal_updated_at BEFORE UPDATE ON public.character_journal FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();';
-  END IF;
-END $$;
+CREATE TRIGGER update_campaigns_updated_at
+BEFORE UPDATE ON public.campaigns
+FOR EACH ROW
+EXECUTE FUNCTION public.update_updated_at_column();
+CREATE TRIGGER update_campaign_notes_updated_at
+BEFORE UPDATE ON public.campaign_notes
+FOR EACH ROW
+EXECUTE FUNCTION public.update_updated_at_column();
+CREATE TRIGGER update_character_journal_updated_at
+BEFORE UPDATE ON public.character_journal
+FOR EACH ROW
+EXECUTE FUNCTION public.update_updated_at_column();

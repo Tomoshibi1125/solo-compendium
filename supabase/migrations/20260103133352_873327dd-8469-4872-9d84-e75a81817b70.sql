@@ -10,9 +10,7 @@ CREATE TABLE IF NOT EXISTS public.compendium_skills (
   source_book TEXT DEFAULT 'SRD',
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 ALTER TABLE public.compendium_skills ENABLE ROW LEVEL SECURITY;
-
 DO $$
 BEGIN
   IF NOT EXISTS (
@@ -21,13 +19,12 @@ BEGIN
       AND tablename = 'compendium_skills'
       AND policyname = 'Compendium skills are publicly readable'
   ) THEN
-    CREATE POLICY "Compendium skills are publicly readable"
-    ON public.compendium_skills
-    FOR SELECT
+    CREATE POLICY "Compendium skills are publicly readable" 
+    ON public.compendium_skills 
+    FOR SELECT 
     USING (true);
   END IF;
 END $$;
-
 -- Insert all 18 skills adapted to Solo Leveling
 INSERT INTO compendium_skills (name, ability, description, examples, source_book) VALUES
 -- Strength Skills
@@ -45,7 +42,7 @@ INSERT INTO compendium_skills (name, ability, description, examples, source_book
 ('Nature', 'INT', 'Your Intellect (Nature) check measures your ability to recall lore about terrain, plants, animals, and weather. In Gates, this extends to understanding the ecosystem of Gate realms.', ARRAY['Identifying Gate flora and fauna', 'Predicting weather patterns', 'Understanding animal behavior', 'Recognizing natural hazards'], 'SRD'),
 ('Religion', 'INT', 'Your Intellect (Religion) check measures your ability to recall lore about deities, rites and prayers, religious hierarchies, holy symbols, and the practices of secret cults.', ARRAY['Understanding Monarch worship', 'Recognizing cult symbols', 'Knowing about divine entities', 'Identifying religious artifacts'], 'SRD'),
 
--- Sense Skills
+-- Sense Skills  
 ('Animal Handling', 'SENSE', 'When there is any question whether you can calm down a domesticated animal, keep a mount from getting spooked, or intuit an animal''s intentions, the DM might call for a Sense (Animal Handling) check.', ARRAY['Calming a frightened mount', 'Training a beast companion', 'Reading animal body language', 'Controlling summoned creatures'], 'SRD'),
 ('Insight', 'SENSE', 'Your Sense (Insight) check decides whether you can determine the true intentions of a creature, such as when searching out a lie or predicting someone''s next move.', ARRAY['Detecting lies', 'Reading body language', 'Anticipating enemy tactics', 'Understanding hidden motives'], 'SRD'),
 ('Medicine', 'SENSE', 'A Sense (Medicine) check lets you try to stabilize a dying companion or diagnose an illness. In Solo Leveling, this also covers treating mana-related conditions.', ARRAY['Stabilizing a dying hunter', 'Diagnosing mana poisoning', 'Treating Gate-inflicted wounds', 'Identifying diseases'], 'SRD'),
@@ -58,7 +55,6 @@ INSERT INTO compendium_skills (name, ability, description, examples, source_book
 ('Performance', 'PRE', 'Your Presence (Performance) check determines how well you can delight an audience with music, dance, acting, storytelling, or some other form of entertainment.', ARRAY['Public speaking', 'Entertaining crowds', 'Inspiring allies', 'Creating distractions'], 'SRD'),
 ('Persuasion', 'PRE', 'When you attempt to influence someone or a group of people with tact, social graces, or good nature, the DM might ask you to make a Presence (Persuasion) check.', ARRAY['Negotiating contracts', 'Convincing officials', 'Building alliances', 'Bargaining for better rates'], 'SRD')
 ON CONFLICT DO NOTHING;
-
 -- =============================================
 -- CREATE EQUIPMENT TABLE (Standard gear, weapons, armor)
 -- =============================================
@@ -76,9 +72,7 @@ CREATE TABLE IF NOT EXISTS public.compendium_equipment (
   source_book TEXT DEFAULT 'SRD',
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 ALTER TABLE public.compendium_equipment ENABLE ROW LEVEL SECURITY;
-
 DO $$
 BEGIN
   IF NOT EXISTS (
@@ -87,13 +81,12 @@ BEGIN
       AND tablename = 'compendium_equipment'
       AND policyname = 'Compendium equipment is publicly readable'
   ) THEN
-    CREATE POLICY "Compendium equipment is publicly readable"
-    ON public.compendium_equipment
-    FOR SELECT
+    CREATE POLICY "Compendium equipment is publicly readable" 
+    ON public.compendium_equipment 
+    FOR SELECT 
     USING (true);
   END IF;
 END $$;
-
 -- Insert weapons
 INSERT INTO compendium_equipment (name, equipment_type, cost_credits, weight, properties, damage, damage_type, description, source_book) VALUES
 -- Simple Melee Weapons
@@ -144,7 +137,6 @@ INSERT INTO compendium_equipment (name, equipment_type, cost_credits, weight, pr
 ('Assault Rifle', 'weapon', 50000, 8, ARRAY['Ammunition (100/400)', 'Two-Handed', 'Burst Fire'], '2d8', 'piercing', 'Military-grade automatic rifle used by hunter support teams.', 'SL'),
 ('Mana-Infused Blade', 'weapon', 100000, 3, ARRAY['Finesse', 'Magic'], '1d8+2', 'force', 'A blade enhanced with crystallized mana, effective against magical creatures.', 'SL')
 ON CONFLICT DO NOTHING;
-
 -- Insert armor
 INSERT INTO compendium_equipment (name, equipment_type, cost_credits, weight, properties, armor_class, description, source_book) VALUES
 -- Light Armor

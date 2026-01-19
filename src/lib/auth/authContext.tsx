@@ -9,7 +9,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { AppError } from '@/lib/appError';
 import { error as logError } from '@/lib/logger';
 
-export type UserRole = 'dm' | 'player' | 'admin';
+export type UserRole = 'dm' | 'player';
 
 export interface AuthUser {
   id: string;
@@ -31,14 +31,57 @@ interface AuthContextType {
   hasPermission: (permission: string) => boolean;
   isDM: () => boolean;
   isPlayer: () => boolean;
-  isAdmin: () => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const normalizeRole = (value?: string | null): UserRole =>
-  value === 'admin' || value === 'dm' || value === 'player' ? value : 'player';
-const toProfileRole = (role: UserRole): 'dm' | 'player' => (role === 'admin' ? 'dm' : role);
+const normalizeRole = (value?: string | null): UserRole => {
+  if (value === 'dm' || value === 'admin') return 'dm';
+  if (value === 'player') return 'player';
+  return 'player';
+};
+
+const buildFallbackUser = (authUser: User): AuthUser => {
+  const metadata = authUser.user_metadata || {};
+  const displayName =
+    typeof metadata.display_name === 'string'
+      ? metadata.display_name
+      : typeof metadata.full_name === 'string'
+        ? metadata.full_name
+        : undefined;
+  const avatar =
+    typeof metadata.avatar_url === 'string'
+      ? metadata.avatar_url
+      : typeof metadata.avatar === 'string'
+        ? metadata.avatar
+        : undefined;
+
+  return {
+    id: authUser.id,
+    email: authUser.email ?? '',
+    role: normalizeRole(typeof metadata.role === 'string' ? metadata.role : undefined),
+    displayName,
+    avatar,
+    createdAt: authUser.created_at ?? new Date().toISOString(),
+  };
+};
+const toProfileRole = (role: UserRole): 'dm' | 'player' => role;
+const withTimeout = async <T,>(promise: PromiseLike<T>, timeoutMs: number, label: string): Promise<T> => {
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+  const timeout = new Promise<never>((_, reject) => {
+    timeoutId = setTimeout(() => {
+      reject(new Error(`${label} timed out after ${timeoutMs}ms`));
+    }, timeoutMs);
+  });
+
+  try {
+    return await Promise.race([Promise.resolve(promise), timeout]);
+  } finally {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+  }
+};
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
@@ -47,7 +90,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Role-based permissions
   const permissions = {
-    admin: ['*'], // All permissions
     dm: [
       'view:dm_tools',
       'manage:campaigns',
@@ -70,54 +112,41 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const fetchUserProfile = useCallback(async (authUser: User) => {
-    const metadata = authUser.user_metadata || {};
-    const displayName =
-      typeof metadata.display_name === 'string'
-        ? metadata.display_name
-        : typeof metadata.full_name === 'string'
-          ? metadata.full_name
-          : undefined;
-    const avatar =
-      typeof metadata.avatar_url === 'string'
-        ? metadata.avatar_url
-        : typeof metadata.avatar === 'string'
-          ? metadata.avatar
-          : undefined;
+    const fallbackUser = buildFallbackUser(authUser);
 
     try {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('id, role, created_at')
-        .eq('id', authUser.id)
-        .single();
+      const { data, error } = await withTimeout(
+        supabase
+          .from('profiles')
+          .select('id, role, created_at')
+          .eq('id', authUser.id)
+          .single(),
+        8000,
+        'Fetch profile'
+      );
 
       if (error) {
         logError('Error fetching user profile:', error);
-        setUser({
-          id: authUser.id,
-          email: authUser.email ?? '',
-          role: normalizeRole(typeof metadata.role === 'string' ? metadata.role : undefined),
-          displayName,
-          avatar,
-          createdAt: authUser.created_at ?? new Date().toISOString(),
-        });
-        setLoading(false);
+        setUser(fallbackUser);
         return;
       }
 
       if (data) {
-        const metadataRole = typeof metadata.role === 'string' ? metadata.role : undefined;
+        const metadataRole = typeof authUser.user_metadata?.role === 'string' ? authUser.user_metadata.role : undefined;
         setUser({
           id: data.id,
           email: authUser.email ?? '',
-          role: metadataRole === 'admin' ? 'admin' : normalizeRole(data.role),
-          displayName,
-          avatar,
+          role: normalizeRole(metadataRole ?? data.role),
+          displayName: fallbackUser.displayName,
+          avatar: fallbackUser.avatar,
           createdAt: data.created_at,
         });
+      } else {
+        setUser(fallbackUser);
       }
     } catch (error) {
       logError('Error fetching user profile:', error);
+      setUser(fallbackUser);
     } finally {
       setLoading(false);
     }
@@ -125,14 +154,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      if (session?.user) {
-        fetchUserProfile(session.user);
-      } else {
+    withTimeout(supabase.auth.getSession(), 8000, 'Load session')
+      .then(({ data: { session } }) => {
+        setSession(session);
+        if (session?.user) {
+          fetchUserProfile(session.user);
+        } else {
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        logError('Error loading session:', error);
+        setSession(null);
+        setUser(null);
         setLoading(false);
-      }
-    });
+      });
 
     // Listen for auth changes
     const {
@@ -140,7 +176,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } = supabase.auth.onAuthStateChange(async (event, session) => {
       setSession(session);
       if (session?.user) {
-        await fetchUserProfile(session.user);
+        setLoading(true);
+        try {
+          await withTimeout(fetchUserProfile(session.user), 8000, 'Sync profile');
+        } catch (error) {
+          logError('Error syncing user profile:', error);
+          setLoading(false);
+        }
       } else {
         setUser(null);
         setLoading(false);
@@ -149,6 +191,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     return () => subscription.unsubscribe();
   }, [fetchUserProfile]);
+
+  useEffect(() => {
+    if (!session?.user || user) return;
+    setUser(buildFallbackUser(session.user));
+    setLoading(false);
+  }, [session, user]);
 
   const signIn = async (email: string, password: string, role: UserRole) => {
     try {
@@ -172,10 +220,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const expectedRole = toProfileRole(role);
         const metadataRole =
           typeof data.user.user_metadata?.role === 'string' ? data.user.user_metadata.role : undefined;
-        const roleMatches =
-          role === 'admin'
-            ? metadataRole === 'admin' || profile?.role === expectedRole
-            : profile?.role === expectedRole;
+        const actualRole = normalizeRole(profile?.role ?? metadataRole);
+        const roleMatches = actualRole === expectedRole;
 
         if (profileError || !roleMatches) {
           await supabase.auth.signOut();
@@ -280,9 +326,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return userPermissions.includes('*') || userPermissions.includes(permission);
   };
 
-  const isDM = (): boolean => user?.role === 'dm' || user?.role === 'admin';
+  const isDM = (): boolean => user?.role === 'dm';
   const isPlayer = (): boolean => user?.role === 'player';
-  const isAdmin = (): boolean => user?.role === 'admin';
 
   const value: AuthContextType = {
     user,
@@ -294,8 +339,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     updateProfile,
     hasPermission,
     isDM,
-    isPlayer,
-    isAdmin
+    isPlayer
   };
 
   return (

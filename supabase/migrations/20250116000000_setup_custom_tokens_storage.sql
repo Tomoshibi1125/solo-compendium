@@ -11,7 +11,6 @@ VALUES (
   ARRAY['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/gif']
 )
 ON CONFLICT (id) DO NOTHING;
-
 -- Ensure character-portraits bucket exists
 INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 VALUES (
@@ -22,7 +21,6 @@ VALUES (
   ARRAY['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/gif']
 )
 ON CONFLICT (id) DO NOTHING;
-
 -- Storage Policies for custom-tokens bucket
 -- Allow public read access to all custom tokens
 DO $$
@@ -48,7 +46,6 @@ BEGIN
     END IF;
   END IF;
 END $$;
-
 -- Allow authenticated users to upload custom tokens
 DO $$
 BEGIN
@@ -76,7 +73,6 @@ BEGIN
     END IF;
   END IF;
 END $$;
-
 -- Allow authenticated users to update their custom tokens
 DO $$
 BEGIN
@@ -104,7 +100,6 @@ BEGIN
     END IF;
   END IF;
 END $$;
-
 -- Allow authenticated users to delete their custom tokens
 DO $$
 BEGIN
@@ -132,15 +127,14 @@ BEGIN
     END IF;
   END IF;
 END $$;
-
 -- Storage Policies for character-portraits bucket
 -- Allow public read access to character portraits
 DO $$
 BEGIN
   IF NOT EXISTS (
-    SELECT 1 FROM pg_policies
-    WHERE schemaname = 'storage'
-    AND tablename = 'objects'
+    SELECT 1 FROM pg_policies 
+    WHERE schemaname = 'storage' 
+    AND tablename = 'objects' 
     AND policyname = 'Public read access for character portraits'
   ) THEN
     IF EXISTS (
@@ -158,14 +152,13 @@ BEGIN
     END IF;
   END IF;
 END $$;
-
 -- Allow authenticated users to upload character portraits
 DO $$
 BEGIN
   IF NOT EXISTS (
-    SELECT 1 FROM pg_policies
-    WHERE schemaname = 'storage'
-    AND tablename = 'objects'
+    SELECT 1 FROM pg_policies 
+    WHERE schemaname = 'storage' 
+    AND tablename = 'objects' 
     AND policyname = 'Authenticated users can upload character portraits'
   ) THEN
     IF EXISTS (
@@ -186,14 +179,13 @@ BEGIN
     END IF;
   END IF;
 END $$;
-
 -- Allow authenticated users to update their character portraits
 DO $$
 BEGIN
   IF NOT EXISTS (
-    SELECT 1 FROM pg_policies
-    WHERE schemaname = 'storage'
-    AND tablename = 'objects'
+    SELECT 1 FROM pg_policies 
+    WHERE schemaname = 'storage' 
+    AND tablename = 'objects' 
     AND policyname = 'Authenticated users can update character portraits'
   ) THEN
     IF EXISTS (
@@ -214,14 +206,13 @@ BEGIN
     END IF;
   END IF;
 END $$;
-
 -- Allow authenticated users to delete their character portraits
 DO $$
 BEGIN
   IF NOT EXISTS (
-    SELECT 1 FROM pg_policies
-    WHERE schemaname = 'storage'
-    AND tablename = 'objects'
+    SELECT 1 FROM pg_policies 
+    WHERE schemaname = 'storage' 
+    AND tablename = 'objects' 
     AND policyname = 'Authenticated users can delete character portraits'
   ) THEN
     IF EXISTS (

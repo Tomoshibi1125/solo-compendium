@@ -20,6 +20,8 @@ import {
   Grid,
   Globe,
   Image as ImageIcon,
+  Database,
+  BarChart3,
   Layers,
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -200,17 +202,50 @@ const tools = [
     iconColor: 'text-slate-400',
     glow: 'group-hover:shadow-slate-500/20',
   },
+  {
+    id: 'system-console',
+    name: 'System Console',
+    description: 'Import and validate compendium content bundles for your campaign.',
+    icon: Database,
+    status: 'available',
+    color: 'from-slate-500/20 to-slate-600/10 border-slate-500/30 hover:border-slate-500/60',
+    iconColor: 'text-slate-400',
+    glow: 'group-hover:shadow-slate-500/20',
+  },
+  {
+    id: 'content-audit',
+    name: 'Content Audit',
+    description: 'Review database completeness, link integrity, and coverage gaps.',
+    icon: BarChart3,
+    status: 'available',
+    color: 'from-indigo-500/20 to-indigo-600/10 border-indigo-500/30 hover:border-indigo-500/60',
+    iconColor: 'text-indigo-400',
+    glow: 'group-hover:shadow-indigo-500/20',
+  },
+  {
+    id: 'art-generation',
+    name: 'Art Generation',
+    description: 'Monitor AI-assisted art generation, queues, and validation.',
+    icon: ImageIcon,
+    status: 'available',
+    color: 'from-fuchsia-500/20 to-fuchsia-600/10 border-fuchsia-500/30 hover:border-fuchsia-500/60',
+    iconColor: 'text-fuchsia-400',
+    glow: 'group-hover:shadow-fuchsia-500/20',
+  },
 ];
 
 const DMTools = () => {
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8" data-testid="dm-tools">
         <div className="mb-8">
           <div className="flex items-center gap-4 mb-4">
             <ShadowMonarchLogo size="md" />
             <div>
-              <h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow tracking-wider">
+              <h1
+                className="font-arise text-4xl font-bold mb-2 gradient-text-shadow tracking-wider"
+                data-testid="dm-tools-heading"
+              >
                 SUPREME DEITY'S DOMAIN
               </h1>
               <p className="text-muted-foreground font-heading">
@@ -310,7 +345,10 @@ const DMTools = () => {
                 tool.id === 'party-tracker' && "bg-emerald-500/30",
                 tool.id === 'dungeon-map-generator' && "bg-violet-500/30",
                 tool.id === 'token-library' && "bg-teal-500/30",
-                tool.id === 'vtt-map' && "bg-rose-500/30"
+                tool.id === 'vtt-map' && "bg-rose-500/30",
+                tool.id === 'system-console' && "bg-slate-500/30",
+                tool.id === 'content-audit' && "bg-indigo-500/30",
+                tool.id === 'art-generation' && "bg-fuchsia-500/30"
               )} />
               
               {/* Icon */}

@@ -13,13 +13,10 @@ CREATE TABLE IF NOT EXISTS public.character_spell_slots (
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   UNIQUE(character_id, spell_level)
 );
-
 -- Index for faster lookups
 CREATE INDEX IF NOT EXISTS idx_character_spell_slots_character_id ON public.character_spell_slots(character_id);
-
 -- Enable RLS
 ALTER TABLE public.character_spell_slots ENABLE ROW LEVEL SECURITY;
-
 -- RLS Policies
 CREATE POLICY "Users can view their own character spell slots"
   ON public.character_spell_slots FOR SELECT
@@ -28,7 +25,6 @@ CREATE POLICY "Users can view their own character spell slots"
     WHERE characters.id = character_spell_slots.character_id 
     AND characters.user_id = auth.uid()
   ));
-
 CREATE POLICY "Users can insert their own character spell slots"
   ON public.character_spell_slots FOR INSERT
   WITH CHECK (EXISTS (
@@ -36,7 +32,6 @@ CREATE POLICY "Users can insert their own character spell slots"
     WHERE characters.id = character_spell_slots.character_id 
     AND characters.user_id = auth.uid()
   ));
-
 CREATE POLICY "Users can update their own character spell slots"
   ON public.character_spell_slots FOR UPDATE
   USING (EXISTS (
@@ -44,7 +39,6 @@ CREATE POLICY "Users can update their own character spell slots"
     WHERE characters.id = character_spell_slots.character_id 
     AND characters.user_id = auth.uid()
   ));
-
 CREATE POLICY "Users can delete their own character spell slots"
   ON public.character_spell_slots FOR DELETE
   USING (EXISTS (
@@ -52,22 +46,16 @@ CREATE POLICY "Users can delete their own character spell slots"
     WHERE characters.id = character_spell_slots.character_id 
     AND characters.user_id = auth.uid()
   ));
-
 -- Function to update updated_at timestamp
 CREATE OR REPLACE FUNCTION update_character_spell_slots_updated_at()
-RETURNS TRIGGER 
-LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-AS $$
+RETURNS TRIGGER AS $$
 BEGIN
   NEW.updated_at = NOW();
   RETURN NEW;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 -- Trigger to auto-update updated_at
 CREATE TRIGGER update_character_spell_slots_updated_at
   BEFORE UPDATE ON public.character_spell_slots
   FOR EACH ROW
   EXECUTE FUNCTION update_character_spell_slots_updated_at();
-

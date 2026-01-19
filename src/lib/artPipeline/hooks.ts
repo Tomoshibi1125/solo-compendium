@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Art Pipeline React Hooks
  * React integration for the art generation system
  */
@@ -7,7 +7,6 @@ import { useState, useCallback, useEffect } from 'react';
 import { artPipeline } from './service';
 import type { ArtRequest, GenerationResult, ArtAsset } from './types';
 import { useFeatureFlag } from '@/lib/featureFlags';
-import { error } from '@/lib/logger';
 
 /**
  * Hook for art generation status and operations
@@ -42,10 +41,77 @@ export function useArtPipeline() {
     }
 
     setIsGenerating(true);
+    const startedAt = Date.now();
+    const rawTimeout = Number.parseInt(import.meta.env.VITE_ART_OVERALL_TIMEOUT_MS || '', 10);
+    const maxTimeoutMs = Number.isFinite(rawTimeout) && rawTimeout > 0 ? rawTimeout : 90000;
+
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
     try {
-      const result = await artPipeline.generateArt(request);
-      return result;
+      const generationPromise = artPipeline
+        .generateArt(request)
+        .then((result) => ({ kind: 'result' as const, result }))
+        .catch((error) => ({ kind: 'error' as const, error }));
+
+      const timeoutPromise = new Promise<{ kind: 'timeout' }>((resolve) => {
+        timeoutId = setTimeout(() => resolve({ kind: 'timeout' }), maxTimeoutMs);
+      });
+
+      const outcome = await Promise.race([generationPromise, timeoutPromise]);
+
+      if (outcome.kind === 'timeout') {
+        await artPipeline.interrupt();
+        const fallbackAssets = await artPipeline.getAssetsForEntity(request.entityType, request.entityId);
+        if (fallbackAssets.length > 0) {
+          const asset = fallbackAssets[0];
+          return {
+            success: true,
+            assetId: asset.id,
+            paths: Object.values(asset.paths),
+            metadata: asset.metadata,
+            duration: Date.now() - startedAt,
+          };
+        }
+
+        return {
+          success: false,
+          error: `Art generation timed out after ${maxTimeoutMs}ms`,
+          duration: Date.now() - startedAt,
+        };
+      }
+
+      if (outcome.kind === 'error') {
+        throw outcome.error;
+      }
+
+      const result = outcome.result;
+      if (result && typeof result.success === 'boolean') {
+        return {
+          ...result,
+          duration: result.duration ?? Date.now() - startedAt,
+        };
+      }
+
+      const fallbackAssets = await artPipeline.getAssetsForEntity(request.entityType, request.entityId);
+      if (fallbackAssets.length > 0) {
+        const asset = fallbackAssets[0];
+        return {
+          success: true,
+          assetId: asset.id,
+          paths: Object.values(asset.paths),
+          metadata: asset.metadata,
+          duration: Date.now() - startedAt,
+        };
+      }
+
+      return {
+        success: false,
+        error: 'Art generation returned no result',
+        duration: Date.now() - startedAt,
+      };
     } finally {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
       setIsGenerating(false);
     }
   }, [enabled]);
@@ -202,35 +268,3 @@ export function useArtQueueMonitor(interval: number = 2000) {
   return queueStatus;
 }
 
-/**
- * Hook for ComfyUI system information
- */
-export function useComfyUISystem() {
-  const [systemInfo, setSystemInfo] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
-  const { isAvailable } = useArtPipeline();
-
-  const loadSystemInfo = useCallback(async () => {
-    if (!isAvailable) return;
-    
-    setLoading(true);
-    try {
-      const info = await (artPipeline as any).comfyClient?.getSystemInfo();
-      setSystemInfo(info);
-    } catch (error) {
-      error('Failed to load system info:', error);
-    } finally {
-      setLoading(false);
-    }
-  }, [isAvailable]);
-
-  useEffect(() => {
-    loadSystemInfo();
-  }, [loadSystemInfo]);
-
-  return {
-    systemInfo,
-    loading,
-    refresh: loadSystemInfo,
-  };
-}

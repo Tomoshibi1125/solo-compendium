@@ -117,20 +117,20 @@ const Admin = () => {
             </div>
             <div className="flex-1">
               <h1 className="font-arise text-4xl font-bold gradient-text-system tracking-wider">
-                SYSTEM ADMIN
+                SYSTEM CONSOLE
               </h1>
               <p className="text-muted-foreground font-heading">
                 Import and validate homebrew content for the compendium
               </p>
             </div>
             <div className="flex gap-2">
-              <Link to="/admin/audit">
+              <Link to="/dm-tools/content-audit">
                 <Button variant="outline" className="gap-2 border-arise/30 hover:bg-arise/10 hover:border-arise/50">
                   <BarChart3 className="w-4 h-4" />
                   Content Audit
                 </Button>
               </Link>
-              <Link to="/admin/art-generation">
+              <Link to="/dm-tools/art-generation">
                 <Button variant="outline" className="gap-2 border-arise/30 hover:bg-arise/10 hover:border-arise/50">
                   <Image className="w-4 h-4" />
                   Art Generation
@@ -226,7 +226,7 @@ const Admin = () => {
                   <Button
                     onClick={handleImport}
                     className="flex-1 gap-2 bg-gradient-to-r from-arise to-shadow-purple hover:shadow-arise/30 hover:shadow-lg transition-all"
-                    disabled={!content.trim() || loading || (validationResult && !validationResult.valid)}
+                    disabled={!content.trim() || loading || (validationResult && !validationResult.valid) || undefined}
                   >
                     {loading ? (
                       <>

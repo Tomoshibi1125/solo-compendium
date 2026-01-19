@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Audio System React Hooks
  * React integration for the audio player service
  */
@@ -7,7 +7,8 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { audioService } from './audioService';
 import type { AudioTrack, Playlist, AudioPlayerState, AudioSettings } from './types';
 import { AppError } from '@/lib/appError';
-import { error } from '@/lib/logger';
+import { logger } from '@/lib/logger';
+import { saveAudioFile, deleteAudioFile } from './storage';
 
 // Dynamic import to avoid circular dependencies
 const getSupabase = async () => {
@@ -74,8 +75,8 @@ export function useAudioPlayer() {
     audioService.setShuffle(shuffle);
   }, []);
 
-  const loadPlaylist = useCallback((playlist: Playlist, startIndex?: number) => {
-    audioService.loadPlaylist(playlist, startIndex);
+  const loadPlaylist = useCallback((playlist: Playlist, tracks: AudioTrack[] = [], startIndex = 0) => {
+    audioService.loadPlaylist(playlist, tracks, startIndex);
   }, []);
 
   const fadeIn = useCallback((duration?: number, targetVolume?: number) => {
@@ -151,7 +152,7 @@ export function useAudioLibrary() {
         try {
           setTracks(JSON.parse(savedTracks));
         } catch (parseError) {
-          console.warn('Failed to parse saved tracks:', parseError);
+          logger.warn('Failed to parse saved tracks:', parseError);
         }
       }
       
@@ -159,7 +160,7 @@ export function useAudioLibrary() {
         try {
           setPlaylists(JSON.parse(savedPlaylists));
         } catch (parseError) {
-          console.warn('Failed to parse saved playlists:', parseError);
+          logger.warn('Failed to parse saved playlists:', parseError);
         }
       }
     } catch (err) {
@@ -175,7 +176,7 @@ export function useAudioLibrary() {
     try {
       localStorage.setItem('audio-tracks', JSON.stringify(newTracks));
     } catch (error) {
-      error('Failed to save tracks:', error);
+      logger.error('Failed to save tracks:', error);
     }
   }, []);
 
@@ -185,7 +186,7 @@ export function useAudioLibrary() {
     try {
       localStorage.setItem('audio-playlists', JSON.stringify(newPlaylists));
     } catch (error) {
-      error('Failed to save playlists:', error);
+      logger.error('Failed to save playlists:', error);
     }
   }, []);
 
@@ -206,6 +207,10 @@ export function useAudioLibrary() {
       tracks: playlist.tracks.filter(id => id !== trackId),
     }));
     savePlaylists(newPlaylists);
+
+    deleteAudioFile(trackId).catch((error) => {
+      logger.warn('Failed to delete stored audio file:', error);
+    });
   }, [tracks, playlists, saveTracks, savePlaylists]);
 
   // Update track
@@ -305,7 +310,7 @@ export function useAudioUpload() {
         throw new AppError('Invalid audio file type', 'INVALID_INPUT');
       }
 
-      // Create object URL for local storage
+      // Create object URL for duration analysis
       const url = URL.createObjectURL(file);
       
       // Get audio duration
@@ -318,15 +323,18 @@ export function useAudioUpload() {
       const duration = audio.duration;
       URL.revokeObjectURL(url);
 
+      const trackId = `track-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      await saveAudioFile(trackId, file);
+
       // Create track object
       const track: AudioTrack = {
-        id: `track-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        id: trackId,
         title: metadata.title || file.name.replace(/\.[^/.]+$/, ''),
         artist: metadata.artist || 'Unknown',
         category: metadata.category || 'music',
         duration,
         url: '', // Would be uploaded to server
-        localPath: url,
+        localPath: `audio-db:${trackId}`,
         volume: metadata.volume || 0.7,
         loop: metadata.loop || false,
         tags: metadata.tags || [],
@@ -412,3 +420,4 @@ export function useAudioShortcuts() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [play, pause, stop, next, previous, setVolume, setMasterVolume]);
 }
+

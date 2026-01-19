@@ -11,12 +11,12 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useArtPipeline, useArtAsset } from '@/lib/artPipeline/hooks';
-import { Loader2, Image, Sparkles, Settings, Download, RefreshCw } from 'lucide-react';
+import { Loader2, Image, Sparkles, Settings } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 interface ArtGeneratorProps {
   entityType?: 'character' | 'npc' | 'item' | 'monster' | 'location';
@@ -28,7 +28,7 @@ interface ArtGeneratorProps {
     rarity?: string;
     environment?: string;
   };
-  onArtGenerated?: (assetId: string) => void;
+  onArtGenerated?: (assetId: string, previewUrl?: string) => void;
   className?: string;
 }
 
@@ -40,7 +40,9 @@ export function ArtGenerator({
   className 
 }: ArtGeneratorProps) {
   const { generateArt, isAvailable, isGenerating } = useArtPipeline();
-  const { asset, createAsset, loading: assetLoading } = useArtAsset(entityType, entityId || 'temp');
+  const pipelineEntityType =
+    entityType === 'item' ? 'item' : entityType === 'location' ? 'location' : 'monster';
+  const { asset } = useArtAsset(pipelineEntityType, entityId || 'temp');
   
   const [formData, setFormData] = useState({
     name: existingData.name || '',
@@ -57,27 +59,13 @@ export function ArtGenerator({
   const [isGeneratingArt, setIsGeneratingArt] = useState(false);
 
   // Map entity types to art pipeline types
-  const getEntityTypeForPipeline = () => {
-    switch (entityType) {
-      case 'character':
-      case 'npc':
-        return 'monster'; // Use monster pipeline for characters/NPCs
-      case 'item':
-        return 'item';
-      case 'monster':
-        return 'monster';
-      case 'location':
-        return 'location';
-      default:
-        return 'monster';
-    }
-  };
+  const getEntityTypeForPipeline = () => pipelineEntityType;
 
   const handleGenerate = async () => {
     if (!isAvailable) {
       setGenerationResult({
         success: false,
-        error: 'Art generation not available. Please ensure ComfyUI is running.',
+        error: 'Art generation is unavailable. Enable the feature flag or check your connection.',
       });
       return;
     }
@@ -103,7 +91,8 @@ export function ArtGenerator({
       setGenerationResult(result);
       
       if (result.success && result.assetId) {
-        onArtGenerated?.(result.assetId);
+        const previewUrl = Array.isArray(result.paths) ? result.paths[0] : undefined;
+        onArtGenerated?.(result.assetId, previewUrl);
       }
     } catch (error) {
       setGenerationResult({
@@ -156,7 +145,7 @@ export function ArtGenerator({
       {!isAvailable && (
         <Alert>
           <AlertDescription>
-            Art generation is currently unavailable. Please ensure ComfyUI is running.
+            Art generation is currently unavailable. Enable it in settings or try again later.
           </AlertDescription>
         </Alert>
       )}
@@ -174,10 +163,11 @@ export function ArtGenerator({
             <div className="flex gap-4">
               {asset.paths?.original && (
                 <div className="flex-1">
-                  <img 
-                    src={asset.paths.original} 
-                    alt="Generated art" 
+                  <OptimizedImage
+                    src={asset.paths.original}
+                    alt="Generated art"
                     className="w-full h-48 object-cover rounded-lg border"
+                    size="large"
                   />
                   <div className="mt-2 text-sm text-muted-foreground">
                     Generated: {new Date(asset.createdAt).toLocaleDateString()}
@@ -374,7 +364,7 @@ export function ArtGenerator({
                       <p className="text-sm font-medium">Generated files:</p>
                       <ul className="text-xs text-muted-foreground">
                         {generationResult.paths.map((path: string, i: number) => (
-                          <li key={i}>• {path}</li>
+                          <li key={i}>- {path}</li>
                         ))}
                       </ul>
                     </div>

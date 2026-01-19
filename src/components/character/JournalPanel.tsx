@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useCharacterJournal, useCreateJournalEntry, useUpdateJournalEntry, useDeleteJournalEntry, JournalEntry } from '@/hooks/useCharacterJournal';
 import { format } from 'date-fns';
-import { error } from '@/lib/logger';
+import { logger } from '@/lib/logger';
 
 interface JournalPanelProps {
   characterId: string;
@@ -54,7 +54,7 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
       setNewContent('');
       setNewTags('');
     } catch (error) {
-      error("Failed to create journal entry:", error);
+      logger.error('Failed to create journal entry:', error);
       setHasError(true);
     }
   };
@@ -63,7 +63,7 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
     try {
       await deleteEntry.mutateAsync({ id, characterId });
     } catch (error) {
-      error("Failed to delete journal entry:", error);
+      logger.error('Failed to delete journal entry:', error);
       setHasError(true);
     }
   };
@@ -72,7 +72,7 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
     try {
       await updateEntry.mutateAsync({ id, characterId, ...updates });
     } catch (error) {
-      error("Failed to update journal entry:", error);
+      logger.error('Failed to update journal entry:', error);
       setHasError(true);
     }
   };

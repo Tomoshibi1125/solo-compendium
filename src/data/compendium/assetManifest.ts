@@ -1,11 +1,17 @@
 /**
  * Canonical Asset Mapping System
- * 
+ *
  * Provides deterministic mapping between compendium entries and their assets.
  * Includes fallback handling and asset validation.
  */
 
-import comprehensiveAssetIndex from '@/data/comprehensive-asset-index';
+import { backgrounds } from '@/data/compendium/backgrounds';
+import { items } from '@/data/compendium/items';
+import { jobs } from '@/data/compendium/jobs';
+import { locations } from '@/data/compendium/locations';
+import { monsters } from '@/data/compendium/monsters';
+import { runes } from '@/data/compendium/runes';
+import { spells } from '@/data/compendium/spells';
 
 export interface AssetMapping {
   id: string;
@@ -21,6 +27,8 @@ export interface AssetMapping {
     portrait: string;
     thumbnail: string;
     icon: string;
+    banner?: string;
+    token?: string;
   };
 }
 
@@ -31,6 +39,7 @@ export interface AssetManifest {
     thumbnail: string;
     icon: string;
     banner: string;
+    token?: string;
   };
   statistics: {
     totalMappings: number;
@@ -41,14 +50,15 @@ export interface AssetManifest {
 
 // Base asset paths
 const ASSET_BASE_PATH = '/generated/compendium';
-const UI_ASSET_BASE_PATH = '/generated/ui';
+const UI_ASSET_BASE_PATH = '/ui';
 
-// Default fallback assets (using placeholder.svg for now)
+// Default fallback assets
 const DEFAULT_FALLBACKS = {
-  portrait: '/placeholder.svg',
-  thumbnail: '/placeholder.svg',
-  icon: '/placeholder.svg',
-  banner: '/placeholder.svg',
+  portrait: '/ui-art/shadow-silhouette.webp',
+  thumbnail: '/ui-art/shadow-soldier-emblem.webp',
+  icon: '/ui-art/shadow-soldier-emblem.webp',
+  banner: '/ui-art/gate-portal-3d.webp',
+  token: '/ui-art/shadow-soldier-emblem.webp',
 };
 
 // Generate deterministic asset paths
@@ -56,30 +66,56 @@ function generateAssetPaths(id: string, type: string): AssetMapping['assets'] {
   const basePath = `${ASSET_BASE_PATH}/${type}s`;
   
   return {
-    portrait: `${basePath}/${id}_portrait.svg`,
-    thumbnail: `${basePath}/${id}_thumbnail.svg`,
-    banner: `${basePath}/${id}_banner.svg`,
-    icon: `${basePath}/${id}_icon.svg`,
-    token: type === 'monster' ? `${basePath}/tokens/${id}_token.svg` : undefined,
+    portrait: `${basePath}/${id}_portrait.webp`,
+    thumbnail: `${basePath}/${id}_thumbnail.webp`,
+    banner: `${basePath}/${id}_banner.webp`,
+    icon: `${basePath}/${id}_icon.webp`,
+    token: type === 'monster' ? `${basePath}/tokens/${id}_token.webp` : undefined,
   };
 }
 
 // Create the manifest
+function addMappings<T extends { id: string }>(
+  mappings: Record<string, AssetMapping>,
+  entries: T[],
+  type: AssetMapping['type']
+) {
+  for (const entry of entries) {
+    mappings[entry.id] = {
+      id: entry.id,
+      type,
+      assets: generateAssetPaths(entry.id, type),
+      fallbacks: {
+        portrait: DEFAULT_FALLBACKS.portrait,
+        thumbnail: DEFAULT_FALLBACKS.thumbnail,
+        icon: DEFAULT_FALLBACKS.icon,
+        banner: DEFAULT_FALLBACKS.banner,
+        token: DEFAULT_FALLBACKS.token,
+      },
+    };
+  }
+}
+
 export function createAssetManifest(): AssetManifest {
   const mappings: Record<string, AssetMapping> = {};
-  let mappingsWithAssets = 0;
-  const missingAssets: string[] = [];
 
-  // TODO: Process all compendium entries and create mappings
-  // For now, create a basic structure
-  
+  addMappings(mappings, monsters, 'monster');
+  addMappings(mappings, items, 'item');
+  addMappings(mappings, spells, 'spell');
+  addMappings(mappings, jobs, 'job');
+  addMappings(mappings, locations, 'location');
+  addMappings(mappings, runes, 'rune');
+  addMappings(mappings, backgrounds, 'background');
+
+  const totalMappings = Object.keys(mappings).length;
+
   return {
     mappings,
     globalFallbacks: DEFAULT_FALLBACKS,
     statistics: {
-      totalMappings: Object.keys(mappings).length,
-      mappingsWithAssets,
-      missingAssets,
+      totalMappings,
+      mappingsWithAssets: totalMappings,
+      missingAssets: [],
     },
   };
 }
@@ -90,15 +126,14 @@ export function getAssetUrl(
   entryType: string, 
   assetType: keyof AssetMapping['assets']
 ): string {
-  const manifest = createAssetManifest();
-  const mapping = manifest.mappings[entryId];
+  const mapping = assetManifest.mappings[entryId];
   
   if (mapping?.assets[assetType]) {
     return mapping.assets[assetType];
   }
   
   // Use type-specific fallback
-  return mapping?.fallbacks[assetType] || manifest.globalFallbacks[assetType];
+  return mapping?.fallbacks[assetType] || assetManifest.globalFallbacks[assetType as keyof typeof assetManifest.globalFallbacks] || assetManifest.globalFallbacks.portrait;
 }
 
 // Validate asset exists (client-side check)
@@ -113,10 +148,9 @@ export async function validateAsset(url: string): Promise<boolean> {
 
 // Get all missing assets for development
 export async function getMissingAssets(): Promise<string[]> {
-  const manifest = createAssetManifest();
   const missing: string[] = [];
   
-  for (const [entryId, mapping] of Object.entries(manifest.mappings)) {
+  for (const [entryId, mapping] of Object.entries(assetManifest.mappings)) {
     for (const [assetType, assetUrl] of Object.entries(mapping.assets)) {
       if (assetUrl && !(await validateAsset(assetUrl))) {
         missing.push(`${entryId}:${assetType}`);

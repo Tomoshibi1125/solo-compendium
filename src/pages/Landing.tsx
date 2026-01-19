@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 const Landing = () => {
   return (
@@ -13,10 +14,11 @@ const Landing = () => {
 
       <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
         <div className="flex items-center gap-3">
-          <img
-            src="/generated/ui-art/shadow-soldier-emblem.jpg"
+          <OptimizedImage
+            src="/ui-art/shadow-soldier-emblem.webp"
             alt="Shadow Soldier Emblem"
             className="h-10 w-10 rounded-full border border-purple-500/60 shadow-lg shadow-purple-500/40"
+            size="thumbnail"
           />
           <div className="leading-tight">
             <p className="text-xs uppercase tracking-[0.2em] text-purple-200/70">Solo Compendium</p>
@@ -64,10 +66,11 @@ const Landing = () => {
           <div className="flex-1">
             <div className="relative">
               <div className="absolute inset-0 bg-purple-600/20 blur-3xl" />
-              <img
-                src="/generated/ui-art/system-interface.jpg"
+              <OptimizedImage
+                src="/ui-art/system-interface.webp"
                 alt="System Interface"
                 className="relative rounded-lg border border-purple-500/30 shadow-2xl shadow-purple-500/20"
+                size="large"
               />
             </div>
           </div>

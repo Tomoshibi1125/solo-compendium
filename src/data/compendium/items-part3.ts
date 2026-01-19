@@ -11,7 +11,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0401.jpg",
+    "image": "/generated/compendium/items/item-0401.webp",
     "stats": {
       "attack": 177
     },
@@ -24,7 +24,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0402.jpg",
+    "image": "/generated/compendium/items/item-0402.webp",
     "stats": {
       "defense": 122
     },
@@ -37,7 +37,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0403.jpg",
+    "image": "/generated/compendium/items/item-0403.webp",
     "stats": {
       "health": 397
     },
@@ -50,7 +50,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0404.jpg",
+    "image": "/generated/compendium/items/item-0404.webp",
     "stats": {
       "mana": 91
     },
@@ -63,7 +63,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0405.jpg",
+    "image": "/generated/compendium/items/item-0405.webp",
     "stats": {
       "mana": 214
     },
@@ -76,7 +76,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0406.jpg",
+    "image": "/generated/compendium/items/item-0406.webp",
     "stats": {
       "attack": 206
     },
@@ -89,7 +89,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0407.jpg",
+    "image": "/generated/compendium/items/item-0407.webp",
     "stats": {
       "defense": 190
     },
@@ -102,7 +102,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0408.jpg",
+    "image": "/generated/compendium/items/item-0408.webp",
     "stats": {
       "health": 372
     },
@@ -115,7 +115,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0409.jpg",
+    "image": "/generated/compendium/items/item-0409.webp",
     "stats": {
       "mana": 236
     },
@@ -128,7 +128,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0410.jpg",
+    "image": "/generated/compendium/items/item-0410.webp",
     "stats": {
       "mana": 196
     },
@@ -141,7 +141,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0411.jpg",
+    "image": "/generated/compendium/items/item-0411.webp",
     "stats": {
       "attack": 239
     },
@@ -154,7 +154,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0412.jpg",
+    "image": "/generated/compendium/items/item-0412.webp",
     "stats": {
       "defense": 238
     },
@@ -167,7 +167,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0413.jpg",
+    "image": "/generated/compendium/items/item-0413.webp",
     "stats": {
       "health": 395
     },
@@ -180,7 +180,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0414.jpg",
+    "image": "/generated/compendium/items/item-0414.webp",
     "stats": {
       "mana": 196
     },
@@ -193,7 +193,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0415.jpg",
+    "image": "/generated/compendium/items/item-0415.webp",
     "stats": {
       "mana": 226
     },
@@ -206,7 +206,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0416.jpg",
+    "image": "/generated/compendium/items/item-0416.webp",
     "stats": {
       "attack": 176
     },
@@ -219,7 +219,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0417.jpg",
+    "image": "/generated/compendium/items/item-0417.webp",
     "stats": {
       "defense": 131
     },
@@ -232,7 +232,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0418.jpg",
+    "image": "/generated/compendium/items/item-0418.webp",
     "stats": {
       "health": 248
     },
@@ -245,7 +245,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0419.jpg",
+    "image": "/generated/compendium/items/item-0419.webp",
     "stats": {
       "mana": 184
     },
@@ -258,7 +258,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0420.jpg",
+    "image": "/generated/compendium/items/item-0420.webp",
     "stats": {
       "mana": 196
     },
@@ -271,7 +271,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0421.jpg",
+    "image": "/generated/compendium/items/item-0421.webp",
     "stats": {
       "attack": 166
     },
@@ -284,7 +284,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0422.jpg",
+    "image": "/generated/compendium/items/item-0422.webp",
     "stats": {
       "defense": 107
     },
@@ -297,7 +297,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0423.jpg",
+    "image": "/generated/compendium/items/item-0423.webp",
     "stats": {
       "health": 207
     },
@@ -310,7 +310,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0424.jpg",
+    "image": "/generated/compendium/items/item-0424.webp",
     "stats": {
       "mana": 90
     },
@@ -323,7 +323,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0425.jpg",
+    "image": "/generated/compendium/items/item-0425.webp",
     "stats": {
       "mana": 123
     },
@@ -336,7 +336,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0426.jpg",
+    "image": "/generated/compendium/items/item-0426.webp",
     "stats": {
       "attack": 103
     },
@@ -349,7 +349,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0427.jpg",
+    "image": "/generated/compendium/items/item-0427.webp",
     "stats": {
       "defense": 113
     },
@@ -362,7 +362,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0428.jpg",
+    "image": "/generated/compendium/items/item-0428.webp",
     "stats": {
       "health": 558
     },
@@ -375,7 +375,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0429.jpg",
+    "image": "/generated/compendium/items/item-0429.webp",
     "stats": {
       "mana": 111
     },
@@ -388,7 +388,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0430.jpg",
+    "image": "/generated/compendium/items/item-0430.webp",
     "stats": {
       "mana": 155
     },
@@ -401,7 +401,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0431.jpg",
+    "image": "/generated/compendium/items/item-0431.webp",
     "stats": {
       "attack": 170
     },
@@ -414,7 +414,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0432.jpg",
+    "image": "/generated/compendium/items/item-0432.webp",
     "stats": {
       "defense": 100
     },
@@ -427,7 +427,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0433.jpg",
+    "image": "/generated/compendium/items/item-0433.webp",
     "stats": {
       "health": 259
     },
@@ -440,7 +440,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0434.jpg",
+    "image": "/generated/compendium/items/item-0434.webp",
     "stats": {
       "mana": 129
     },
@@ -453,7 +453,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0435.jpg",
+    "image": "/generated/compendium/items/item-0435.webp",
     "stats": {
       "mana": 198
     },
@@ -466,7 +466,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0436.jpg",
+    "image": "/generated/compendium/items/item-0436.webp",
     "stats": {
       "attack": 212
     },
@@ -479,7 +479,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0437.jpg",
+    "image": "/generated/compendium/items/item-0437.webp",
     "stats": {
       "defense": 99
     },
@@ -492,7 +492,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0438.jpg",
+    "image": "/generated/compendium/items/item-0438.webp",
     "stats": {
       "health": 457
     },
@@ -505,7 +505,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0439.jpg",
+    "image": "/generated/compendium/items/item-0439.webp",
     "stats": {
       "mana": 193
     },
@@ -518,7 +518,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0440.jpg",
+    "image": "/generated/compendium/items/item-0440.webp",
     "stats": {
       "mana": 140
     },
@@ -531,7 +531,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0441.jpg",
+    "image": "/generated/compendium/items/item-0441.webp",
     "stats": {
       "attack": 149
     },
@@ -544,7 +544,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0442.jpg",
+    "image": "/generated/compendium/items/item-0442.webp",
     "stats": {
       "defense": 203
     },
@@ -557,7 +557,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0443.jpg",
+    "image": "/generated/compendium/items/item-0443.webp",
     "stats": {
       "health": 425
     },
@@ -570,7 +570,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0444.jpg",
+    "image": "/generated/compendium/items/item-0444.webp",
     "stats": {
       "mana": 191
     },
@@ -583,7 +583,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0445.jpg",
+    "image": "/generated/compendium/items/item-0445.webp",
     "stats": {
       "mana": 186
     },
@@ -596,7 +596,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0446.jpg",
+    "image": "/generated/compendium/items/item-0446.webp",
     "stats": {
       "attack": 97
     },
@@ -609,7 +609,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0447.jpg",
+    "image": "/generated/compendium/items/item-0447.webp",
     "stats": {
       "defense": 140
     },
@@ -622,7 +622,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0448.jpg",
+    "image": "/generated/compendium/items/item-0448.webp",
     "stats": {
       "health": 585
     },
@@ -635,7 +635,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0449.jpg",
+    "image": "/generated/compendium/items/item-0449.webp",
     "stats": {
       "mana": 160
     },
@@ -648,7 +648,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0450.jpg",
+    "image": "/generated/compendium/items/item-0450.webp",
     "stats": {
       "mana": 179
     },
@@ -661,7 +661,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0451.jpg",
+    "image": "/generated/compendium/items/item-0451.webp",
     "stats": {
       "attack": 207
     },
@@ -674,7 +674,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0452.jpg",
+    "image": "/generated/compendium/items/item-0452.webp",
     "stats": {
       "defense": 129
     },
@@ -687,7 +687,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0453.jpg",
+    "image": "/generated/compendium/items/item-0453.webp",
     "stats": {
       "health": 432
     },
@@ -700,7 +700,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0454.jpg",
+    "image": "/generated/compendium/items/item-0454.webp",
     "stats": {
       "mana": 51
     },
@@ -713,7 +713,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0455.jpg",
+    "image": "/generated/compendium/items/item-0455.webp",
     "stats": {
       "mana": 54
     },
@@ -726,7 +726,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0456.jpg",
+    "image": "/generated/compendium/items/item-0456.webp",
     "stats": {
       "attack": 158
     },
@@ -739,7 +739,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0457.jpg",
+    "image": "/generated/compendium/items/item-0457.webp",
     "stats": {
       "defense": 184
     },
@@ -752,7 +752,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0458.jpg",
+    "image": "/generated/compendium/items/item-0458.webp",
     "stats": {
       "health": 587
     },
@@ -765,7 +765,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0459.jpg",
+    "image": "/generated/compendium/items/item-0459.webp",
     "stats": {
       "mana": 105
     },
@@ -778,7 +778,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0460.jpg",
+    "image": "/generated/compendium/items/item-0460.webp",
     "stats": {
       "mana": 115
     },
@@ -791,7 +791,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0461.jpg",
+    "image": "/generated/compendium/items/item-0461.webp",
     "stats": {
       "attack": 227
     },
@@ -804,7 +804,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0462.jpg",
+    "image": "/generated/compendium/items/item-0462.webp",
     "stats": {
       "defense": 69
     },
@@ -817,7 +817,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0463.jpg",
+    "image": "/generated/compendium/items/item-0463.webp",
     "stats": {
       "health": 284
     },
@@ -830,7 +830,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0464.jpg",
+    "image": "/generated/compendium/items/item-0464.webp",
     "stats": {
       "mana": 133
     },
@@ -843,7 +843,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0465.jpg",
+    "image": "/generated/compendium/items/item-0465.webp",
     "stats": {
       "mana": 142
     },
@@ -856,7 +856,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0466.jpg",
+    "image": "/generated/compendium/items/item-0466.webp",
     "stats": {
       "attack": 162
     },
@@ -869,7 +869,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0467.jpg",
+    "image": "/generated/compendium/items/item-0467.webp",
     "stats": {
       "defense": 146
     },
@@ -882,7 +882,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0468.jpg",
+    "image": "/generated/compendium/items/item-0468.webp",
     "stats": {
       "health": 119
     },
@@ -895,7 +895,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0469.jpg",
+    "image": "/generated/compendium/items/item-0469.webp",
     "stats": {
       "mana": 102
     },
@@ -908,7 +908,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0470.jpg",
+    "image": "/generated/compendium/items/item-0470.webp",
     "stats": {
       "mana": 233
     },
@@ -921,7 +921,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0471.jpg",
+    "image": "/generated/compendium/items/item-0471.webp",
     "stats": {
       "attack": 95
     },
@@ -934,7 +934,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0472.jpg",
+    "image": "/generated/compendium/items/item-0472.webp",
     "stats": {
       "defense": 72
     },
@@ -947,7 +947,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0473.jpg",
+    "image": "/generated/compendium/items/item-0473.webp",
     "stats": {
       "health": 398
     },
@@ -960,7 +960,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0474.jpg",
+    "image": "/generated/compendium/items/item-0474.webp",
     "stats": {
       "mana": 189
     },
@@ -973,7 +973,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0475.jpg",
+    "image": "/generated/compendium/items/item-0475.webp",
     "stats": {
       "mana": 189
     },
@@ -986,7 +986,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0476.jpg",
+    "image": "/generated/compendium/items/item-0476.webp",
     "stats": {
       "attack": 115
     },
@@ -999,7 +999,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0477.jpg",
+    "image": "/generated/compendium/items/item-0477.webp",
     "stats": {
       "defense": 221
     },
@@ -1012,7 +1012,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0478.jpg",
+    "image": "/generated/compendium/items/item-0478.webp",
     "stats": {
       "health": 166
     },
@@ -1025,7 +1025,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0479.jpg",
+    "image": "/generated/compendium/items/item-0479.webp",
     "stats": {
       "mana": 203
     },
@@ -1038,7 +1038,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0480.jpg",
+    "image": "/generated/compendium/items/item-0480.webp",
     "stats": {
       "mana": 131
     },
@@ -1051,7 +1051,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0481.jpg",
+    "image": "/generated/compendium/items/item-0481.webp",
     "stats": {
       "attack": 193
     },
@@ -1064,7 +1064,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0482.jpg",
+    "image": "/generated/compendium/items/item-0482.webp",
     "stats": {
       "defense": 168
     },
@@ -1077,7 +1077,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0483.jpg",
+    "image": "/generated/compendium/items/item-0483.webp",
     "stats": {
       "health": 407
     },
@@ -1090,7 +1090,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0484.jpg",
+    "image": "/generated/compendium/items/item-0484.webp",
     "stats": {
       "mana": 179
     },
@@ -1103,7 +1103,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0485.jpg",
+    "image": "/generated/compendium/items/item-0485.webp",
     "stats": {
       "mana": 140
     },
@@ -1116,7 +1116,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0486.jpg",
+    "image": "/generated/compendium/items/item-0486.webp",
     "stats": {
       "attack": 229
     },
@@ -1129,7 +1129,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0487.jpg",
+    "image": "/generated/compendium/items/item-0487.webp",
     "stats": {
       "defense": 241
     },
@@ -1142,7 +1142,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0488.jpg",
+    "image": "/generated/compendium/items/item-0488.webp",
     "stats": {
       "health": 425
     },
@@ -1155,7 +1155,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0489.jpg",
+    "image": "/generated/compendium/items/item-0489.webp",
     "stats": {
       "mana": 80
     },
@@ -1168,7 +1168,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0490.jpg",
+    "image": "/generated/compendium/items/item-0490.webp",
     "stats": {
       "mana": 196
     },
@@ -1181,7 +1181,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0491.jpg",
+    "image": "/generated/compendium/items/item-0491.webp",
     "stats": {
       "attack": 94
     },
@@ -1194,7 +1194,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0492.jpg",
+    "image": "/generated/compendium/items/item-0492.webp",
     "stats": {
       "defense": 205
     },
@@ -1207,7 +1207,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0493.jpg",
+    "image": "/generated/compendium/items/item-0493.webp",
     "stats": {
       "health": 187
     },
@@ -1220,7 +1220,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0494.jpg",
+    "image": "/generated/compendium/items/item-0494.webp",
     "stats": {
       "mana": 228
     },
@@ -1233,7 +1233,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0495.jpg",
+    "image": "/generated/compendium/items/item-0495.webp",
     "stats": {
       "mana": 115
     },
@@ -1246,7 +1246,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0496.jpg",
+    "image": "/generated/compendium/items/item-0496.webp",
     "stats": {
       "attack": 65
     },
@@ -1259,7 +1259,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0497.jpg",
+    "image": "/generated/compendium/items/item-0497.webp",
     "stats": {
       "defense": 228
     },
@@ -1272,7 +1272,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0498.jpg",
+    "image": "/generated/compendium/items/item-0498.webp",
     "stats": {
       "health": 174
     },
@@ -1285,7 +1285,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0499.jpg",
+    "image": "/generated/compendium/items/item-0499.webp",
     "stats": {
       "mana": 230
     },
@@ -1298,7 +1298,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0500.jpg",
+    "image": "/generated/compendium/items/item-0500.webp",
     "stats": {
       "mana": 73
     },
@@ -1311,7 +1311,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0501.jpg",
+    "image": "/generated/compendium/items/item-0501.webp",
     "stats": {
       "attack": 223
     },
@@ -1324,7 +1324,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0502.jpg",
+    "image": "/generated/compendium/items/item-0502.webp",
     "stats": {
       "defense": 224
     },
@@ -1337,7 +1337,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0503.jpg",
+    "image": "/generated/compendium/items/item-0503.webp",
     "stats": {
       "health": 161
     },
@@ -1350,7 +1350,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0504.jpg",
+    "image": "/generated/compendium/items/item-0504.webp",
     "stats": {
       "mana": 167
     },
@@ -1363,7 +1363,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0505.jpg",
+    "image": "/generated/compendium/items/item-0505.webp",
     "stats": {
       "mana": 115
     },
@@ -1376,7 +1376,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0506.jpg",
+    "image": "/generated/compendium/items/item-0506.webp",
     "stats": {
       "attack": 80
     },
@@ -1389,7 +1389,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0507.jpg",
+    "image": "/generated/compendium/items/item-0507.webp",
     "stats": {
       "defense": 172
     },
@@ -1402,7 +1402,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0508.jpg",
+    "image": "/generated/compendium/items/item-0508.webp",
     "stats": {
       "health": 120
     },
@@ -1415,7 +1415,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0509.jpg",
+    "image": "/generated/compendium/items/item-0509.webp",
     "stats": {
       "mana": 121
     },
@@ -1428,7 +1428,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0510.jpg",
+    "image": "/generated/compendium/items/item-0510.webp",
     "stats": {
       "mana": 72
     },
@@ -1441,7 +1441,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0511.jpg",
+    "image": "/generated/compendium/items/item-0511.webp",
     "stats": {
       "attack": 217
     },
@@ -1454,7 +1454,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0512.jpg",
+    "image": "/generated/compendium/items/item-0512.webp",
     "stats": {
       "defense": 171
     },
@@ -1467,7 +1467,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0513.jpg",
+    "image": "/generated/compendium/items/item-0513.webp",
     "stats": {
       "health": 429
     },
@@ -1480,7 +1480,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0514.jpg",
+    "image": "/generated/compendium/items/item-0514.webp",
     "stats": {
       "mana": 96
     },
@@ -1493,7 +1493,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0515.jpg",
+    "image": "/generated/compendium/items/item-0515.webp",
     "stats": {
       "mana": 233
     },
@@ -1506,7 +1506,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0516.jpg",
+    "image": "/generated/compendium/items/item-0516.webp",
     "stats": {
       "attack": 222
     },
@@ -1519,7 +1519,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0517.jpg",
+    "image": "/generated/compendium/items/item-0517.webp",
     "stats": {
       "defense": 63
     },
@@ -1532,7 +1532,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0518.jpg",
+    "image": "/generated/compendium/items/item-0518.webp",
     "stats": {
       "health": 334
     },
@@ -1545,7 +1545,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0519.jpg",
+    "image": "/generated/compendium/items/item-0519.webp",
     "stats": {
       "mana": 149
     },
@@ -1558,7 +1558,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0520.jpg",
+    "image": "/generated/compendium/items/item-0520.webp",
     "stats": {
       "mana": 214
     },
@@ -1571,7 +1571,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0521.jpg",
+    "image": "/generated/compendium/items/item-0521.webp",
     "stats": {
       "attack": 205
     },
@@ -1584,7 +1584,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0522.jpg",
+    "image": "/generated/compendium/items/item-0522.webp",
     "stats": {
       "defense": 171
     },
@@ -1597,7 +1597,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0523.jpg",
+    "image": "/generated/compendium/items/item-0523.webp",
     "stats": {
       "health": 198
     },
@@ -1610,7 +1610,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0524.jpg",
+    "image": "/generated/compendium/items/item-0524.webp",
     "stats": {
       "mana": 222
     },
@@ -1623,7 +1623,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0525.jpg",
+    "image": "/generated/compendium/items/item-0525.webp",
     "stats": {
       "mana": 219
     },
@@ -1636,7 +1636,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0526.jpg",
+    "image": "/generated/compendium/items/item-0526.webp",
     "stats": {
       "attack": 170
     },
@@ -1649,7 +1649,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0527.jpg",
+    "image": "/generated/compendium/items/item-0527.webp",
     "stats": {
       "defense": 81
     },
@@ -1662,7 +1662,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0528.jpg",
+    "image": "/generated/compendium/items/item-0528.webp",
     "stats": {
       "health": 449
     },
@@ -1675,7 +1675,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0529.jpg",
+    "image": "/generated/compendium/items/item-0529.webp",
     "stats": {
       "mana": 201
     },
@@ -1688,7 +1688,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0530.jpg",
+    "image": "/generated/compendium/items/item-0530.webp",
     "stats": {
       "mana": 141
     },
@@ -1701,7 +1701,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0531.jpg",
+    "image": "/generated/compendium/items/item-0531.webp",
     "stats": {
       "attack": 235
     },
@@ -1714,7 +1714,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0532.jpg",
+    "image": "/generated/compendium/items/item-0532.webp",
     "stats": {
       "defense": 154
     },
@@ -1727,7 +1727,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0533.jpg",
+    "image": "/generated/compendium/items/item-0533.webp",
     "stats": {
       "health": 346
     },
@@ -1740,7 +1740,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0534.jpg",
+    "image": "/generated/compendium/items/item-0534.webp",
     "stats": {
       "mana": 75
     },
@@ -1753,7 +1753,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0535.jpg",
+    "image": "/generated/compendium/items/item-0535.webp",
     "stats": {
       "mana": 224
     },
@@ -1766,7 +1766,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0536.jpg",
+    "image": "/generated/compendium/items/item-0536.webp",
     "stats": {
       "attack": 232
     },
@@ -1779,7 +1779,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0537.jpg",
+    "image": "/generated/compendium/items/item-0537.webp",
     "stats": {
       "defense": 221
     },
@@ -1792,7 +1792,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0538.jpg",
+    "image": "/generated/compendium/items/item-0538.webp",
     "stats": {
       "health": 385
     },
@@ -1805,7 +1805,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0539.jpg",
+    "image": "/generated/compendium/items/item-0539.webp",
     "stats": {
       "mana": 179
     },
@@ -1818,7 +1818,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0540.jpg",
+    "image": "/generated/compendium/items/item-0540.webp",
     "stats": {
       "mana": 70
     },
@@ -1831,7 +1831,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0541.jpg",
+    "image": "/generated/compendium/items/item-0541.webp",
     "stats": {
       "attack": 151
     },
@@ -1844,7 +1844,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0542.jpg",
+    "image": "/generated/compendium/items/item-0542.webp",
     "stats": {
       "defense": 72
     },
@@ -1857,7 +1857,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0543.jpg",
+    "image": "/generated/compendium/items/item-0543.webp",
     "stats": {
       "health": 408
     },
@@ -1870,7 +1870,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0544.jpg",
+    "image": "/generated/compendium/items/item-0544.webp",
     "stats": {
       "mana": 228
     },
@@ -1883,7 +1883,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0545.jpg",
+    "image": "/generated/compendium/items/item-0545.webp",
     "stats": {
       "mana": 66
     },
@@ -1896,7 +1896,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0546.jpg",
+    "image": "/generated/compendium/items/item-0546.webp",
     "stats": {
       "attack": 120
     },
@@ -1909,7 +1909,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0547.jpg",
+    "image": "/generated/compendium/items/item-0547.webp",
     "stats": {
       "defense": 177
     },
@@ -1922,7 +1922,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0548.jpg",
+    "image": "/generated/compendium/items/item-0548.webp",
     "stats": {
       "health": 451
     },
@@ -1935,7 +1935,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0549.jpg",
+    "image": "/generated/compendium/items/item-0549.webp",
     "stats": {
       "mana": 110
     },
@@ -1948,7 +1948,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0550.jpg",
+    "image": "/generated/compendium/items/item-0550.webp",
     "stats": {
       "mana": 111
     },
@@ -1961,7 +1961,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0551.jpg",
+    "image": "/generated/compendium/items/item-0551.webp",
     "stats": {
       "attack": 127
     },
@@ -1974,7 +1974,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0552.jpg",
+    "image": "/generated/compendium/items/item-0552.webp",
     "stats": {
       "defense": 212
     },
@@ -1987,7 +1987,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0553.jpg",
+    "image": "/generated/compendium/items/item-0553.webp",
     "stats": {
       "health": 119
     },
@@ -2000,7 +2000,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0554.jpg",
+    "image": "/generated/compendium/items/item-0554.webp",
     "stats": {
       "mana": 226
     },
@@ -2013,7 +2013,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0555.jpg",
+    "image": "/generated/compendium/items/item-0555.webp",
     "stats": {
       "mana": 111
     },
@@ -2026,7 +2026,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0556.jpg",
+    "image": "/generated/compendium/items/item-0556.webp",
     "stats": {
       "attack": 231
     },
@@ -2039,7 +2039,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0557.jpg",
+    "image": "/generated/compendium/items/item-0557.webp",
     "stats": {
       "defense": 160
     },
@@ -2052,7 +2052,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0558.jpg",
+    "image": "/generated/compendium/items/item-0558.webp",
     "stats": {
       "health": 142
     },
@@ -2065,7 +2065,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0559.jpg",
+    "image": "/generated/compendium/items/item-0559.webp",
     "stats": {
       "mana": 130
     },
@@ -2078,7 +2078,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0560.jpg",
+    "image": "/generated/compendium/items/item-0560.webp",
     "stats": {
       "mana": 68
     },
@@ -2091,7 +2091,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0561.jpg",
+    "image": "/generated/compendium/items/item-0561.webp",
     "stats": {
       "attack": 113
     },
@@ -2104,7 +2104,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0562.jpg",
+    "image": "/generated/compendium/items/item-0562.webp",
     "stats": {
       "defense": 205
     },
@@ -2117,7 +2117,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0563.jpg",
+    "image": "/generated/compendium/items/item-0563.webp",
     "stats": {
       "health": 357
     },
@@ -2130,7 +2130,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0564.jpg",
+    "image": "/generated/compendium/items/item-0564.webp",
     "stats": {
       "mana": 159
     },
@@ -2143,7 +2143,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0565.jpg",
+    "image": "/generated/compendium/items/item-0565.webp",
     "stats": {
       "mana": 199
     },
@@ -2156,7 +2156,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0566.jpg",
+    "image": "/generated/compendium/items/item-0566.webp",
     "stats": {
       "attack": 213
     },
@@ -2169,7 +2169,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0567.jpg",
+    "image": "/generated/compendium/items/item-0567.webp",
     "stats": {
       "defense": 172
     },
@@ -2182,7 +2182,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0568.jpg",
+    "image": "/generated/compendium/items/item-0568.webp",
     "stats": {
       "health": 470
     },
@@ -2195,7 +2195,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0569.jpg",
+    "image": "/generated/compendium/items/item-0569.webp",
     "stats": {
       "mana": 142
     },
@@ -2208,7 +2208,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0570.jpg",
+    "image": "/generated/compendium/items/item-0570.webp",
     "stats": {
       "mana": 154
     },
@@ -2221,7 +2221,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0571.jpg",
+    "image": "/generated/compendium/items/item-0571.webp",
     "stats": {
       "attack": 61
     },
@@ -2234,7 +2234,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0572.jpg",
+    "image": "/generated/compendium/items/item-0572.webp",
     "stats": {
       "defense": 199
     },
@@ -2247,7 +2247,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0573.jpg",
+    "image": "/generated/compendium/items/item-0573.webp",
     "stats": {
       "health": 108
     },
@@ -2260,7 +2260,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0574.jpg",
+    "image": "/generated/compendium/items/item-0574.webp",
     "stats": {
       "mana": 164
     },
@@ -2273,7 +2273,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0575.jpg",
+    "image": "/generated/compendium/items/item-0575.webp",
     "stats": {
       "mana": 87
     },
@@ -2286,7 +2286,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0576.jpg",
+    "image": "/generated/compendium/items/item-0576.webp",
     "stats": {
       "attack": 77
     },
@@ -2299,7 +2299,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0577.jpg",
+    "image": "/generated/compendium/items/item-0577.webp",
     "stats": {
       "defense": 113
     },
@@ -2312,7 +2312,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0578.jpg",
+    "image": "/generated/compendium/items/item-0578.webp",
     "stats": {
       "health": 392
     },
@@ -2325,7 +2325,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0579.jpg",
+    "image": "/generated/compendium/items/item-0579.webp",
     "stats": {
       "mana": 199
     },
@@ -2338,7 +2338,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0580.jpg",
+    "image": "/generated/compendium/items/item-0580.webp",
     "stats": {
       "mana": 160
     },
@@ -2351,7 +2351,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0581.jpg",
+    "image": "/generated/compendium/items/item-0581.webp",
     "stats": {
       "attack": 196
     },
@@ -2364,7 +2364,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0582.jpg",
+    "image": "/generated/compendium/items/item-0582.webp",
     "stats": {
       "defense": 212
     },
@@ -2377,7 +2377,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0583.jpg",
+    "image": "/generated/compendium/items/item-0583.webp",
     "stats": {
       "health": 212
     },
@@ -2390,7 +2390,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0584.jpg",
+    "image": "/generated/compendium/items/item-0584.webp",
     "stats": {
       "mana": 240
     },
@@ -2403,7 +2403,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0585.jpg",
+    "image": "/generated/compendium/items/item-0585.webp",
     "stats": {
       "mana": 195
     },
@@ -2416,7 +2416,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0586.jpg",
+    "image": "/generated/compendium/items/item-0586.webp",
     "stats": {
       "attack": 147
     },
@@ -2429,7 +2429,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0587.jpg",
+    "image": "/generated/compendium/items/item-0587.webp",
     "stats": {
       "defense": 192
     },
@@ -2442,7 +2442,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0588.jpg",
+    "image": "/generated/compendium/items/item-0588.webp",
     "stats": {
       "health": 278
     },
@@ -2455,7 +2455,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0589.jpg",
+    "image": "/generated/compendium/items/item-0589.webp",
     "stats": {
       "mana": 161
     },
@@ -2468,7 +2468,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0590.jpg",
+    "image": "/generated/compendium/items/item-0590.webp",
     "stats": {
       "mana": 194
     },
@@ -2481,7 +2481,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0591.jpg",
+    "image": "/generated/compendium/items/item-0591.webp",
     "stats": {
       "attack": 83
     },
@@ -2494,7 +2494,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0592.jpg",
+    "image": "/generated/compendium/items/item-0592.webp",
     "stats": {
       "defense": 185
     },
@@ -2507,7 +2507,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0593.jpg",
+    "image": "/generated/compendium/items/item-0593.webp",
     "stats": {
       "health": 266
     },
@@ -2520,7 +2520,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0594.jpg",
+    "image": "/generated/compendium/items/item-0594.webp",
     "stats": {
       "mana": 176
     },
@@ -2533,7 +2533,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0595.jpg",
+    "image": "/generated/compendium/items/item-0595.webp",
     "stats": {
       "mana": 184
     },
@@ -2546,7 +2546,7 @@ export const items: Item[] = [
     "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
-    "image": "/generated/compendium/items/item-0596.jpg",
+    "image": "/generated/compendium/items/item-0596.webp",
     "stats": {
       "attack": 242
     },
@@ -2559,7 +2559,7 @@ export const items: Item[] = [
     "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
-    "image": "/generated/compendium/items/item-0597.jpg",
+    "image": "/generated/compendium/items/item-0597.webp",
     "stats": {
       "defense": 223
     },
@@ -2572,7 +2572,7 @@ export const items: Item[] = [
     "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
-    "image": "/generated/compendium/items/item-0598.jpg",
+    "image": "/generated/compendium/items/item-0598.webp",
     "stats": {
       "health": 125
     },
@@ -2585,7 +2585,7 @@ export const items: Item[] = [
     "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
-    "image": "/generated/compendium/items/item-0599.jpg",
+    "image": "/generated/compendium/items/item-0599.webp",
     "stats": {
       "mana": 165
     },
@@ -2598,7 +2598,7 @@ export const items: Item[] = [
     "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
-    "image": "/generated/compendium/items/item-0600.jpg",
+    "image": "/generated/compendium/items/item-0600.webp",
     "stats": {
       "mana": 64
     },

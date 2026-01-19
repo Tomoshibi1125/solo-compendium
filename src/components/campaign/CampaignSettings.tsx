@@ -6,12 +6,15 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useCampaign, useHasDMAccess } from '@/hooks/useCampaigns';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import type { Json } from '@/integrations/supabase/types';
 import { logger } from '@/lib/logger';
 import { AppError } from '@/lib/appError';
+import { getLevelingMode, type LevelingMode } from '@/lib/campaignSettings';
 
 interface CampaignSettingsProps {
   campaignId: string;
@@ -25,6 +28,7 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
   const [name, setName] = useState(campaign?.name || '');
   const [description, setDescription] = useState(campaign?.description || '');
   const [isActive, setIsActive] = useState(campaign?.is_active ?? true);
+  const [levelingMode, setLevelingMode] = useState<LevelingMode>(getLevelingMode(campaign?.settings));
 
   // Update when campaign data loads
   useEffect(() => {
@@ -32,11 +36,17 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
       setName(campaign.name);
       setDescription(campaign.description || '');
       setIsActive(campaign.is_active);
+      setLevelingMode(getLevelingMode(campaign.settings));
     }
   }, [campaign]);
 
   const updateCampaign = useMutation({
-    mutationFn: async (updates: { name?: string; description?: string | null; is_active?: boolean }) => {
+    mutationFn: async (updates: {
+      name?: string;
+      description?: string | null;
+      is_active?: boolean;
+      settings?: Json;
+    }) => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         throw new AppError('You must be logged in to update campaigns', 'AUTH_REQUIRED');
@@ -65,6 +75,7 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
           name: updates.name,
           description: updates.description,
           is_active: updates.is_active,
+          settings: updates.settings,
         })
         .eq('id', campaignId)
         .select()
@@ -103,11 +114,27 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
       });
       return;
     }
+    if (!campaign) {
+      toast({
+        title: 'Campaign unavailable',
+        description: 'Campaign details are still loading. Try again shortly.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    const baseSettings =
+      campaign.settings &&
+      typeof campaign.settings === 'object' &&
+      !Array.isArray(campaign.settings)
+        ? (campaign.settings as Record<string, Json>)
+        : {};
 
     updateCampaign.mutate({
       name: name.trim(),
       description: description.trim() || null,
       is_active: isActive,
+      settings: { ...baseSettings, leveling_mode: levelingMode },
     });
   };
 
@@ -173,6 +200,23 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
             checked={isActive}
             onCheckedChange={setIsActive}
           />
+        </div>
+        <div className="flex items-center justify-between p-3 bg-muted/50 rounded">
+          <div>
+            <Label htmlFor="campaign-leveling-mode">Leveling Mode</Label>
+            <p className="text-xs text-muted-foreground">
+              Choose XP or milestone advancement for this campaign
+            </p>
+          </div>
+          <Select value={levelingMode} onValueChange={(value) => setLevelingMode(value as LevelingMode)}>
+            <SelectTrigger id="campaign-leveling-mode" className="w-40">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="milestone">Milestone</SelectItem>
+              <SelectItem value="xp">XP</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
       <div className="pt-4 border-t border-border">

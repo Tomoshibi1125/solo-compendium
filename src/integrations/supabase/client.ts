@@ -80,10 +80,10 @@ if (shouldTestConnection) {
   void (async () => {
     try {
       await supabase.from('characters').select('id').limit(1);
-      log('✅ Supabase connection successful');
+      log('Supabase connection successful');
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      logWarn('⚠️ Supabase connection test failed:', message);
+      logWarn('Supabase connection test failed:', message);
       logWarn('The app will continue to work, but database features may be limited.');
     }
   })();

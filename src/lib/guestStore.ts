@@ -44,9 +44,11 @@ interface GuestStateV1 {
   version: 1;
   updatedAt: string;
   characters: Record<string, GuestCharacterState>;
+  rollHistory: RollHistoryRow[];
 }
 
 const STORAGE_KEY = 'solo-compendium.guest.v1';
+const USER_KEY = 'solo-compendium.guest.user';
 
 function hasLocalStorage(): boolean {
   try {
@@ -83,11 +85,21 @@ export function createLocalId(prefix: string): string {
   return `${prefix}_${uuid}`;
 }
 
+export function getLocalUserId(): string {
+  if (!hasLocalStorage()) return 'guest';
+  const existing = window.localStorage.getItem(USER_KEY);
+  if (existing) return existing;
+  const next = createLocalId('guest');
+  window.localStorage.setItem(USER_KEY, next);
+  return next;
+}
+
 function loadGuestState(): GuestStateV1 {
   const empty: GuestStateV1 = {
     version: 1,
     updatedAt: nowIso(),
     characters: {},
+    rollHistory: [],
   };
 
   if (!hasLocalStorage()) return empty;
@@ -101,6 +113,7 @@ function loadGuestState(): GuestStateV1 {
       version: 1,
       updatedAt: typeof parsed.updatedAt === 'string' ? parsed.updatedAt : nowIso(),
       characters: parsed.characters as GuestStateV1['characters'],
+      rollHistory: Array.isArray(parsed.rollHistory) ? (parsed.rollHistory as RollHistoryRow[]) : [],
     };
   } catch {
     return empty;
@@ -174,6 +187,7 @@ export function createLocalCharacter(data: Omit<CharacterInsert, 'user_id'>): Ch
 
     name: data.name,
     level: data.level ?? 1,
+    experience: data.experience ?? 0,
     job: data.job ?? null,
     path: data.path ?? null,
     background: data.background ?? null,
@@ -363,7 +377,7 @@ export function addLocalPower(characterId: string, power: Omit<PowerInsert, 'cha
     display_order: entry.powers.length,
     name: power.name,
     power_level: power.power_level ?? 0,
-    source: power.source,
+    source: power.source || null,
     description: power.description ?? null,
     higher_levels: power.higher_levels ?? null,
     casting_time: power.casting_time ?? null,
@@ -580,9 +594,47 @@ export function updateLocalSpellSlotRow(slotId: string, updates: SpellSlotUpdate
 // Roll history (optional in guest mode)
 export function listLocalRollHistory(characterId?: string): RollHistoryRow[] {
   const state = loadGuestState();
-  const all = Object.values(state.characters).flatMap((c) => c.rollHistory);
+  const characterRolls = Object.values(state.characters).flatMap((c) => c.rollHistory);
+  const globalRolls = state.rollHistory || [];
+  const all = [...globalRolls, ...characterRolls];
   const filtered = characterId ? all.filter((r) => r.character_id === characterId) : all;
   return filtered.sort((a, b) => b.created_at.localeCompare(a.created_at));
+}
+
+export function addLocalRollHistory(
+  roll: Omit<RollHistoryRow, 'id' | 'created_at' | 'user_id'> & {
+    id?: string;
+    created_at?: string;
+    user_id?: string;
+  }
+): RollHistoryRow {
+  const state = loadGuestState();
+  const now = nowIso();
+  const record: RollHistoryRow = {
+    id: roll.id || createLocalId('local_roll'),
+    created_at: roll.created_at || now,
+    user_id: roll.user_id || 'guest',
+    campaign_id: roll.campaign_id ?? null,
+    character_id: roll.character_id ?? null,
+    context: roll.context ?? null,
+    dice_formula: roll.dice_formula,
+    modifiers: roll.modifiers ?? null,
+    result: roll.result,
+    roll_type: roll.roll_type,
+    rolls: roll.rolls,
+  };
+
+  if (record.character_id && state.characters[record.character_id]) {
+    const entry = state.characters[record.character_id];
+    entry.rollHistory = [record, ...entry.rollHistory].slice(0, 200);
+    state.characters[record.character_id] = entry;
+  } else {
+    state.rollHistory = [record, ...(state.rollHistory || [])].slice(0, 200);
+  }
+
+  state.updatedAt = now;
+  saveGuestState(state);
+  return record;
 }
 
 

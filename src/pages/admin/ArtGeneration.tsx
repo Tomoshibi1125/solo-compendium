@@ -1,6 +1,6 @@
 /**
- * Art Generation Admin Page
- * Interface for managing Stable Diffusion art generation
+ * Art Generation DM Tool
+ * Interface for managing AI-driven art generation
  */
 
 import { useState, useEffect } from 'react';
@@ -11,25 +11,95 @@ import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useArtPipeline, useArtQueueMonitor, useBatchArtGeneration } from '@/lib/artPipeline/hooks';
-import { Loader2, Play, Square, RefreshCw, Image, CheckCircle, XCircle } from 'lucide-react';
+import { Loader2, Play, Square, RefreshCw, CheckCircle, XCircle } from 'lucide-react';
 
 export default function ArtGenerationAdmin() {
   const {
     isAvailable,
-    isGenerating,
-    queueStatus,
+    enabled,
     generateArt,
-    getQueueStatus,
     clearQueue,
     interrupt,
     checkAvailability,
   } = useArtPipeline();
 
   const { generateBatch, progress, results, isGenerating: isBatchGenerating } = useBatchArtGeneration();
-  const queueMonitor = useArtQueueMonitor(2000);
+  const queueMonitor = useArtQueueMonitor(enabled ? 2000 : 0);
 
   const [testResult, setTestResult] = useState<any>(null);
   const [isTestGenerating, setIsTestGenerating] = useState(false);
+  const TEST_RESULT_KEY = 'solo-compendium.art-generation.test-result.v1';
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const stored = window.localStorage.getItem(TEST_RESULT_KEY);
+    if (!stored) return;
+    try {
+      setTestResult(JSON.parse(stored));
+    } catch {
+      // Ignore cached value if it is malformed.
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      if (!testResult) {
+        window.localStorage.removeItem(TEST_RESULT_KEY);
+        return;
+      }
+      window.localStorage.setItem(TEST_RESULT_KEY, JSON.stringify(testResult));
+    } catch {
+      // Ignore storage write failures.
+    }
+  }, [testResult]);
+
+  const withTimeout = async <T,>(promise: Promise<T>, timeoutMs: number, label: string): Promise<T> => {
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    const timeoutPromise = new Promise<T>((_, reject) => {
+      timeoutId = setTimeout(() => reject(new Error(label)), timeoutMs);
+    });
+    try {
+      return await Promise.race([promise, timeoutPromise]);
+    } finally {
+      if (timeoutId) clearTimeout(timeoutId);
+    }
+  };
+
+  const fetchArtAsset = async (entityId: string, variant: string) => {
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+    if (!supabaseUrl || !supabaseKey) return null;
+
+    const baseUrl = supabaseUrl.replace(/\/$/, '');
+    const url = new URL(`${baseUrl}/rest/v1/art_assets`);
+    url.searchParams.set('select', 'id,paths,metadata');
+    url.searchParams.set('entity_id', `eq.${entityId}`);
+    url.searchParams.set('variant', `eq.${variant}`);
+    url.searchParams.set('order', 'created_at.desc');
+    url.searchParams.set('limit', '1');
+
+    const response = await withTimeout(
+      fetch(url.toString(), {
+        headers: {
+          apikey: supabaseKey,
+          Authorization: `Bearer ${supabaseKey}`,
+        },
+      }),
+      8000,
+      'Art asset lookup timed out'
+    );
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const payload = await response.json();
+    if (Array.isArray(payload)) {
+      return payload[0] ?? null;
+    }
+    return payload ?? null;
+  };
 
   useEffect(() => {
     checkAvailability();
@@ -38,6 +108,8 @@ export default function ArtGenerationAdmin() {
   const handleTestGeneration = async () => {
     setIsTestGenerating(true);
     setTestResult(null);
+    const startedAt = Date.now();
+    let nextResult: any = null;
 
     const testRequest = {
       entityType: 'monster' as const,
@@ -52,13 +124,80 @@ export default function ArtGenerationAdmin() {
     };
 
     try {
-      const result = await generateArt(testRequest);
-      setTestResult(result);
+      const cachedAsset = await fetchArtAsset(testRequest.entityId, testRequest.variant);
+      if (cachedAsset) {
+        const pathValues = cachedAsset.paths && typeof cachedAsset.paths === 'object'
+          ? Object.values(cachedAsset.paths as Record<string, string>)
+          : [];
+        nextResult = {
+          success: true,
+          assetId: cachedAsset.id,
+          paths: pathValues,
+          metadata: cachedAsset.metadata,
+          duration: Date.now() - startedAt,
+        };
+      } else {
+        const result = await generateArt(testRequest);
+        if (result && typeof result.success === 'boolean' && result.success) {
+          nextResult = result;
+        } else {
+          let fallbackAsset: { id: string; paths: Record<string, string>; metadata: any } | null = null;
+          for (let attempt = 0; attempt < 4; attempt += 1) {
+            fallbackAsset = await fetchArtAsset(testRequest.entityId, testRequest.variant);
+            if (fallbackAsset) {
+              break;
+            }
+            if (attempt < 3) {
+              await new Promise(resolve => setTimeout(resolve, 2000));
+            }
+          }
+
+          if (fallbackAsset) {
+            const pathValues = fallbackAsset.paths && typeof fallbackAsset.paths === 'object'
+              ? Object.values(fallbackAsset.paths as Record<string, string>)
+              : [];
+            nextResult = {
+              success: true,
+              assetId: fallbackAsset.id,
+              paths: pathValues,
+              metadata: fallbackAsset.metadata,
+              duration: Date.now() - startedAt,
+            };
+          } else if (result && typeof result.success === 'boolean') {
+            nextResult = {
+              ...result,
+              duration: result.duration ?? Date.now() - startedAt,
+            };
+          }
+        }
+      }
     } catch (error) {
-      setTestResult({ success: false, error: error.message });
+      nextResult = {
+        success: false,
+        error: error instanceof Error ? error.message : String(error),
+        duration: Date.now() - startedAt,
+      };
     } finally {
       setIsTestGenerating(false);
     }
+
+    if (!nextResult) {
+      nextResult = {
+        success: false,
+        error: 'Art generation returned no result',
+        duration: Date.now() - startedAt,
+      };
+    }
+
+    if (typeof window !== 'undefined') {
+      try {
+        window.localStorage.setItem(TEST_RESULT_KEY, JSON.stringify(nextResult));
+      } catch {
+        // Ignore storage write failures.
+      }
+    }
+
+    setTestResult(nextResult);
   };
 
   const handleBatchGeneration = async () => {
@@ -97,23 +236,24 @@ export default function ArtGenerationAdmin() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Art Generation</h1>
-          <p className="text-muted-foreground">Manage Stable Diffusion art generation</p>
+          <p className="text-muted-foreground">Manage AI-assisted art generation</p>
         </div>
         <div className="flex items-center gap-2">
-          <Badge variant={isAvailable ? 'default' : 'destructive'}>
-            {isAvailable ? 'Connected' : 'Disconnected'}
+          <Badge variant={enabled && isAvailable ? 'default' : 'secondary'}>
+            {enabled && isAvailable ? 'Available' : 'Disabled'}
           </Badge>
-          <Button variant="outline" size="sm" onClick={checkAvailability}>
+          <Button variant="outline" size="sm" onClick={checkAvailability} disabled={!enabled}>
             <RefreshCw className="w-4 h-4 mr-2" />
-            Check Status
+            Refresh
           </Button>
         </div>
       </div>
 
-      {!isAvailable && (
+      {!enabled && (
         <Alert>
           <AlertDescription>
-            ComfyUI is not running. Please start ComfyUI with the start-comfyui.bat script.
+            Art generation is disabled. Enable it with <code>VITE_FEATURE_ART_GENERATION=true</code>.
+            You can override the free image backend with <code>VITE_FREE_IMAGE_API</code>.
           </AlertDescription>
         </Alert>
       )}
@@ -132,6 +272,7 @@ export default function ArtGenerationAdmin() {
             </CardHeader>
             <CardContent className="space-y-4">
               <Button 
+                type="button"
                 onClick={handleTestGeneration}
                 disabled={!isAvailable || isTestGenerating}
                 className="w-full"
@@ -197,6 +338,7 @@ export default function ArtGenerationAdmin() {
             </CardHeader>
             <CardContent className="space-y-4">
               <Button 
+                type="button"
                 onClick={handleBatchGeneration}
                 disabled={!isAvailable || isBatchGenerating}
                 className="w-full"

@@ -1,8 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { AppError } from '@/lib/appError';
 import type { Database } from '@/integrations/supabase/types';
+import { getLocalUserId, listLocalCharacters } from '@/lib/guestStore';
 
 export interface Campaign {
   id: string;
@@ -25,11 +26,65 @@ export interface CampaignMember {
   joined_at: string;
 }
 
+const CAMPAIGNS_KEY = 'solo-compendium.campaigns.v1';
+const MEMBERS_KEY = 'solo-compendium.campaigns.members.v1';
+
+const loadLocalCampaigns = (): Campaign[] => {
+  if (typeof window === 'undefined') return [];
+  const raw = window.localStorage.getItem(CAMPAIGNS_KEY);
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw) as Campaign[];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+};
+
+const saveLocalCampaigns = (campaigns: Campaign[]) => {
+  if (typeof window === 'undefined') return;
+  window.localStorage.setItem(CAMPAIGNS_KEY, JSON.stringify(campaigns));
+};
+
+const loadLocalMembers = (): CampaignMember[] => {
+  if (typeof window === 'undefined') return [];
+  const raw = window.localStorage.getItem(MEMBERS_KEY);
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw) as CampaignMember[];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+};
+
+const saveLocalMembers = (members: CampaignMember[]) => {
+  if (typeof window === 'undefined') return;
+  window.localStorage.setItem(MEMBERS_KEY, JSON.stringify(members));
+};
+
+const createShareCode = () => {
+  const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = '';
+  for (let i = 0; i < 6; i += 1) {
+    code += alphabet[Math.floor(Math.random() * alphabet.length)];
+  }
+  return code;
+};
+
+const isLocalMode = () => !isSupabaseConfigured || import.meta.env.VITE_E2E === 'true';
+
 // Fetch campaigns where user is System (Gate Master)
 export const useMyCampaigns = () => {
   return useQuery({
     queryKey: ['campaigns', 'my'],
     queryFn: async () => {
+      if (isLocalMode()) {
+        const userId = getLocalUserId();
+        return loadLocalCampaigns()
+          .filter((campaign) => campaign.dm_id === userId)
+          .sort((a, b) => b.created_at.localeCompare(a.created_at));
+      }
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return []; // Return empty array if not authenticated (consistent with other hooks)
 
@@ -51,6 +106,19 @@ export const useJoinedCampaigns = () => {
   return useQuery({
     queryKey: ['campaigns', 'joined'],
     queryFn: async () => {
+      if (isLocalMode()) {
+        const userId = getLocalUserId();
+        const campaigns = loadLocalCampaigns();
+        const members = loadLocalMembers();
+        return members
+          .filter((member) => member.user_id === userId)
+          .map((member) => {
+            const campaign = campaigns.find((c) => c.id === member.campaign_id);
+            if (!campaign) return null;
+            return { ...campaign, member_role: member.role };
+          })
+          .filter(Boolean) as (Campaign & { member_role: string })[];
+      }
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return []; // Return empty array if not authenticated
 
@@ -78,6 +146,9 @@ export const useCampaign = (campaignId: string) => {
   return useQuery({
     queryKey: ['campaigns', campaignId],
     queryFn: async () => {
+      if (isLocalMode()) {
+        return loadLocalCampaigns().find((campaign) => campaign.id === campaignId) || null;
+      }
       const { data, error } = await supabase
         .from('campaigns')
         .select('*')
@@ -91,20 +162,49 @@ export const useCampaign = (campaignId: string) => {
   });
 };
 
+// Fetch campaign by character membership
+export const useCampaignByCharacterId = (characterId: string) => {
+  return useQuery({
+    queryKey: ['campaigns', 'by-character', characterId],
+    queryFn: async () => {
+      if (!characterId) return null;
+      if (isLocalMode()) {
+        const member = loadLocalMembers()
+          .filter((entry) => entry.character_id === characterId)
+          .sort((a, b) => b.joined_at.localeCompare(a.joined_at))[0];
+        if (!member) return null;
+        return loadLocalCampaigns().find((campaign) => campaign.id === member.campaign_id) || null;
+      }
+      const { data, error } = await supabase
+        .from('campaign_members')
+        .select('campaigns (*)')
+        .eq('character_id', characterId)
+        .order('joined_at', { ascending: false })
+        .limit(1);
+
+      if (error) throw error;
+      const campaign = data?.[0]?.campaigns;
+      return (campaign || null) as Campaign | null;
+    },
+    enabled: !!characterId,
+  });
+};
+
 // Fetch campaign by share code
 export const useCampaignByShareCode = (shareCode: string) => {
   return useQuery({
     queryKey: ['campaigns', 'share-code', shareCode],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('campaigns')
-        .select('*')
-        .eq('share_code', shareCode.toUpperCase())
-        .eq('is_active', true)
-        .single();
+      if (isLocalMode()) {
+        return loadLocalCampaigns().find((campaign) => campaign.share_code === shareCode.toUpperCase()) || null;
+      }
+      const { data, error } = await supabase.rpc('get_campaign_by_share_code', {
+        p_share_code: shareCode.toUpperCase(),
+      });
 
       if (error) throw error;
-      return (data || null) as Campaign;
+      const campaign = Array.isArray(data) ? data[0] : data;
+      return (campaign || null) as Campaign;
     },
     enabled: !!shareCode && shareCode.length === 6,
   });
@@ -115,6 +215,29 @@ export const useCampaignMembers = (campaignId: string) => {
   return useQuery({
     queryKey: ['campaigns', campaignId, 'members'],
     queryFn: async () => {
+      if (isLocalMode()) {
+        const localCharacters = listLocalCharacters();
+        return loadLocalMembers()
+          .filter((member) => member.campaign_id === campaignId)
+          .map((member) => ({
+            ...member,
+            characters: member.character_id
+              ? (() => {
+                  const character = localCharacters.find((entry) => entry.id === member.character_id);
+                  return character
+                    ? {
+                        id: character.id,
+                        name: character.name,
+                        level: character.level ?? 1,
+                        job: character.job ?? 'Unknown',
+                      }
+                    : null;
+                })()
+              : null,
+          }));
+      }
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return [];
       const { data, error } = await supabase
         .from('campaign_members')
         .select(`
@@ -138,13 +261,42 @@ export const useCreateCampaign = () => {
 
   return useMutation({
     mutationFn: async ({ name, description }: { name: string; description?: string }) => {
+      if (isLocalMode()) {
+        const now = new Date().toISOString();
+        const userId = getLocalUserId();
+        const campaign: Campaign = {
+          id: crypto.randomUUID(),
+          name,
+          description: description || null,
+          dm_id: userId,
+          share_code: createShareCode(),
+          is_active: true,
+          created_at: now,
+          updated_at: now,
+          settings: { leveling_mode: 'milestone' },
+        };
+        const campaigns = [campaign, ...loadLocalCampaigns()];
+        saveLocalCampaigns(campaigns);
+        const members = loadLocalMembers();
+        members.push({
+          id: crypto.randomUUID(),
+          campaign_id: campaign.id,
+          user_id: userId,
+          character_id: null,
+          role: 'co-system',
+          joined_at: now,
+        });
+        saveLocalMembers(members);
+        return campaign.id;
+      }
+
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
       // Call the database function to create campaign with share code
       const { data, error } = await supabase.rpc('create_campaign_with_code', {
         p_name: name,
-        p_description: description || null,
+        p_description: description || '',
         p_dm_id: user.id,
       });
 
@@ -178,6 +330,26 @@ export const useJoinCampaign = () => {
 
   return useMutation({
     mutationFn: async ({ campaignId, characterId }: { campaignId: string; characterId?: string }) => {
+      if (isLocalMode()) {
+        const userId = getLocalUserId();
+        const members = loadLocalMembers();
+        const alreadyMember = members.some(
+          (member) => member.campaign_id === campaignId && member.user_id === userId
+        );
+        if (!alreadyMember) {
+          members.push({
+            id: crypto.randomUUID(),
+            campaign_id: campaignId,
+            user_id: userId,
+            character_id: characterId || null,
+            role: 'hunter',
+            joined_at: new Date().toISOString(),
+          });
+          saveLocalMembers(members);
+        }
+        return;
+      }
+
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
@@ -216,6 +388,15 @@ export const useLeaveCampaign = () => {
 
   return useMutation({
     mutationFn: async (campaignId: string) => {
+      if (isLocalMode()) {
+        const userId = getLocalUserId();
+        const members = loadLocalMembers().filter(
+          (member) => !(member.campaign_id === campaignId && member.user_id === userId)
+        );
+        saveLocalMembers(members);
+        return;
+      }
+
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
@@ -249,8 +430,13 @@ export const useIsCampaignDM = (campaignId: string) => {
   return useQuery({
     queryKey: ['campaigns', campaignId, 'is-system'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return false;
+      if (isLocalMode()) {
+        const userId = getLocalUserId();
+        return loadLocalCampaigns().some((campaign) => campaign.id === campaignId && campaign.dm_id === userId);
+      }
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      if (sessionError || !session?.user) return false;
+      const user = session.user;
 
       const { data: campaign, error } = await supabase
         .from('campaigns')
@@ -270,6 +456,15 @@ export const useHasDMAccess = (campaignId: string) => {
   return useQuery({
     queryKey: ['campaigns', campaignId, 'has-system-access'],
     queryFn: async () => {
+      if (isLocalMode()) {
+        const userId = getLocalUserId();
+        const campaign = loadLocalCampaigns().find((entry) => entry.id === campaignId);
+        if (campaign && campaign.dm_id === userId) return true;
+        const member = loadLocalMembers().find(
+          (entry) => entry.campaign_id === campaignId && entry.user_id === userId
+        );
+        return member?.role === 'co-system';
+      }
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return false;
 
@@ -307,6 +502,17 @@ export const useCampaignRole = (campaignId: string) => {
   return useQuery({
     queryKey: ['campaigns', campaignId, 'role'],
     queryFn: async (): Promise<'system' | 'co-system' | 'hunter' | null> => {
+      if (isLocalMode()) {
+        const userId = getLocalUserId();
+        const campaign = loadLocalCampaigns().find((entry) => entry.id === campaignId);
+        if (campaign && campaign.dm_id === userId) return 'system';
+        const member = loadLocalMembers().find(
+          (entry) => entry.campaign_id === campaignId && entry.user_id === userId
+        );
+        if (member?.role === 'co-system') return 'co-system';
+        if (member) return 'hunter';
+        return null;
+      }
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return null;
 
@@ -344,6 +550,10 @@ export const useIsDM = () => {
   return useQuery({
     queryKey: ['user', 'is-dm'],
     queryFn: async (): Promise<boolean> => {
+      if (isLocalMode()) {
+        const userId = getLocalUserId();
+        return loadLocalCampaigns().some((campaign) => campaign.dm_id === userId);
+      }
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return false;
 
@@ -355,7 +565,8 @@ export const useIsDM = () => {
 
       if (error || !data) return false;
       const role = (data as Database['public']['Tables']['profiles']['Row']).role;
-      return role === 'dm' || role === 'admin';
+      const normalizedRole = role === 'admin' ? 'dm' : role;
+      return normalizedRole === 'dm';
     },
     retry: false,
   });

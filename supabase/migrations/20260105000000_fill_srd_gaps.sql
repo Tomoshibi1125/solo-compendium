@@ -17,7 +17,6 @@ INSERT INTO compendium_powers (name, power_level, casting_time, range, duration,
 ('Resistance', 0, '1 action', 'Touch', 'Concentration, up to 1 minute', 'You touch one willing creature. Once before the power ends, the target can roll a d4 and add the number rolled to one saving throw of its choice. It can roll the die before or after making the saving throw. The power then ends.', true, false, 'Abjuration', 'V, S, M', ARRAY[]::text[], ARRAY['defense', 'cantrip'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
 ('Toll the Dead', 0, '1 action', '60 feet', 'Instantaneous', 'You point at one creature you can see within range, and the sound of a dolorous bell fills the air around it for a moment. The target must succeed on a Sense saving throw (DC = 8 + your proficiency bonus + your spellcasting ability modifier) or take 1d8 necrotic damage. If the target is missing any of its hit points, it instead takes 1d12 necrotic damage. The power''s damage increases by one die when you reach 5th level (2d8 or 2d12), 11th level (3d8 or 3d12), and 17th level (4d8 or 4d12).', false, false, 'Necromancy', 'V, S', ARRAY[]::text[], ARRAY['damage', 'cantrip'], 'SRD', 'srd', '5e SRD', 'Open Game License content')
 ON CONFLICT (name) DO NOTHING;
-
 -- Additional Tier 1 spells
 INSERT INTO compendium_powers (name, power_level, casting_time, range, duration, description, concentration, ritual, school, components, job_names, tags, source_book, source_kind, source_name, license_note) VALUES
 ('Alarm', 1, '1 minute', '30 feet', '8 hours', 'You set an alarm against unwanted intrusion. Choose a door, a window, or an area within range that is no larger than a 20-foot cube. Until the power ends, an alarm alerts you whenever a Tiny or larger creature touches or enters the warded area.', false, true, 'Abjuration', 'V, S, M', ARRAY[]::text[], ARRAY['utility', 'ritual'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
@@ -50,25 +49,23 @@ INSERT INTO compendium_powers (name, power_level, casting_time, range, duration,
 ('Thunderous Smite', 1, '1 bonus action', 'Self', 'Concentration, up to 1 minute', 'The first time you hit with a melee weapon attack during this power''s duration, your weapon rings with thunder that is audible within 300 feet of you, and the attack deals an extra 2d6 thunder damage to the target. Additionally, if the target is a creature, it must succeed on a Strength saving throw (DC = 8 + your proficiency bonus + your spellcasting ability modifier) or be pushed 10 feet away from you and knocked prone.', true, false, 'Evocation', 'V', ARRAY[]::text[], ARRAY['damage', 'control'], 'SRD', 'srd', '5e SRD', 'Open Game License content'),
 ('Wrathful Smite', 1, '1 bonus action', 'Self', 'Concentration, up to 1 minute', 'The next time you hit with a melee weapon attack during this power''s duration, your attack deals an extra 1d6 psychic damage. Additionally, if the target is a creature, it must make a Sense saving throw (DC = 8 + your proficiency bonus + your spellcasting ability modifier) or be frightened of you until the power ends. As an action, the creature can make a Sense check to steel its resolve and end this power.', true, false, 'Evocation', 'V', ARRAY[]::text[], ARRAY['damage', 'fear'], 'SRD', 'srd', '5e SRD', 'Open Game License content')
 ON CONFLICT (name) DO NOTHING;
-
 -- =============================================
 -- SRD CONDITIONS
 -- =============================================
 -- Add provenance columns to compendium_conditions if they don't exist
-DO $$
+DO $$ 
 BEGIN
   IF NOT EXISTS (
-    SELECT 1 FROM information_schema.columns
-    WHERE table_name = 'compendium_conditions'
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_name = 'compendium_conditions' 
     AND column_name = 'source_kind'
   ) THEN
-    ALTER TABLE compendium_conditions
+    ALTER TABLE compendium_conditions 
     ADD COLUMN source_kind TEXT,
     ADD COLUMN source_name TEXT,
     ADD COLUMN license_note TEXT;
   END IF;
 END $$;
-
 INSERT INTO compendium_conditions (name, description, effects, source_kind, source_name, license_note) VALUES
 ('Blinded', 'A blinded creature can''t see and automatically fails any ability check that requires sight. Attack rolls against the creature have advantage, and the creature''s attack rolls have disadvantage.', ARRAY['Can''t see', 'Fails sight-based checks', 'Attacks against have advantage', 'Attack rolls have disadvantage'], 'srd', '5e SRD', 'Open Game License content'),
 ('Charmed', 'A charmed creature can''t attack the charmer or target the charmer with harmful abilities or magical effects. The charmer has advantage on any ability check to interact socially with the creature.', ARRAY['Can''t attack charmer', 'Charmer has advantage on social checks'], 'srd', '5e SRD', 'Open Game License content'),
@@ -86,73 +83,64 @@ INSERT INTO compendium_conditions (name, description, effects, source_kind, sour
 ('Stunned', 'A stunned creature is incapacitated, can''t move, and can speak only falteringly. The creature automatically fails Strength and Dexterity saving throws. Attack rolls against the creature have advantage.', ARRAY['Incapacitated', 'Can''t move', 'Can speak only falteringly', 'Fails STR and AGI saves', 'Attacks against have advantage'], 'srd', '5e SRD', 'Open Game License content'),
 ('Unconscious', 'An unconscious creature is incapacitated, can''t move or speak, and is unaware of its surroundings. The creature drops whatever it''s holding and falls prone. The creature automatically fails Strength and Dexterity saving throws. Attack rolls against the creature have advantage. Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature.', ARRAY['Incapacitated', 'Can''t move or speak', 'Unaware of surroundings', 'Drops held items', 'Falls prone', 'Fails STR and AGI saves', 'Attacks against have advantage', 'Melee attacks are critical hits'], 'srd', '5e SRD', 'Open Game License content')
 ON CONFLICT (name) DO NOTHING;
-
 -- =============================================
 -- UPDATE EXISTING CONTENT WITH PROVENANCE
 -- =============================================
 -- Ensure all SRD content has proper source tracking
-UPDATE compendium_powers
-SET source_kind = 'srd',
+UPDATE compendium_powers 
+SET source_kind = 'srd', 
     source_name = '5e SRD',
     license_note = 'Open Game License content'
-WHERE source_book = 'SRD'
+WHERE source_book = 'SRD' 
   AND (source_kind IS NULL OR source_kind != 'srd');
-
-UPDATE compendium_equipment
-SET source_kind = 'srd',
+UPDATE compendium_equipment 
+SET source_kind = 'srd', 
     source_name = '5e SRD',
     license_note = 'Open Game License content'
-WHERE source_book = 'SRD'
+WHERE source_book = 'SRD' 
   AND (source_kind IS NULL OR source_kind != 'srd');
-
-UPDATE compendium_backgrounds
-SET source_kind = 'srd',
+UPDATE compendium_backgrounds 
+SET source_kind = 'srd', 
     source_name = '5e SRD',
     license_note = 'Open Game License content'
-WHERE source_book = 'SRD'
+WHERE source_book = 'SRD' 
   AND (source_kind IS NULL OR source_kind != 'srd');
-
-UPDATE compendium_feats
-SET source_kind = 'srd',
+UPDATE compendium_feats 
+SET source_kind = 'srd', 
     source_name = '5e SRD',
     license_note = 'Open Game License content'
-WHERE source_book = 'SRD'
+WHERE source_book = 'SRD' 
   AND (source_kind IS NULL OR source_kind != 'srd');
-
-UPDATE compendium_monsters
-SET source_kind = 'srd',
+UPDATE compendium_monsters 
+SET source_kind = 'srd', 
     source_name = '5e SRD',
     license_note = 'Open Game License content'
-WHERE source_book = 'SRD'
+WHERE source_book = 'SRD' 
   AND (source_kind IS NULL OR source_kind != 'srd');
-
-UPDATE compendium_conditions
-SET source_kind = 'srd',
+UPDATE compendium_conditions 
+SET source_kind = 'srd', 
     source_name = '5e SRD',
     license_note = 'Open Game License content'
 WHERE source_kind IS NULL OR source_kind != 'srd';
-
 -- =============================================
 -- ADD MISSING SRD EQUIPMENT (if any)
 -- =============================================
 -- Most equipment is already present, but adding any that might be missing
 -- Add provenance columns to compendium_equipment if they don't exist
-DO $$
+DO $$ 
 BEGIN
   IF NOT EXISTS (
-    SELECT 1 FROM information_schema.columns
-    WHERE table_name = 'compendium_equipment'
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_name = 'compendium_equipment' 
     AND column_name = 'source_kind'
   ) THEN
-    ALTER TABLE compendium_equipment
+    ALTER TABLE compendium_equipment 
     ADD COLUMN source_kind TEXT,
     ADD COLUMN source_name TEXT,
     ADD COLUMN license_note TEXT;
   END IF;
 END $$;
-
 INSERT INTO compendium_equipment (name, equipment_type, cost_credits, weight, damage, damage_type, properties, armor_class, description, source_book, source_kind, source_name, license_note) VALUES
 ('Unarmed Strike', 'unarmed', 0, 0, '1', 'bludgeoning', NULL, NULL, 'A melee attack with no weapon. Your Strength modifier is added to the damage roll.', 'SRD', 'srd', '5e SRD', 'Open Game License content'),
 ('Improvised Weapon', 'improvised', 0, 0, '1d4', 'varies', NULL, NULL, 'An object that bears no resemblance to a weapon deals 1d4 damage. A weapon-like object can be used as a weapon and deals damage appropriate to its form.', 'SRD', 'srd', '5e SRD', 'Open Game License content')
 ON CONFLICT (name) DO NOTHING;
-

@@ -60,7 +60,16 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
         .order('is_capstone')
         .order('level');
       
-      if (featureData) setFeatures(featureData);
+      if (featureData) setFeatures(featureData.map(feature => ({
+        ...feature,
+        action_type: feature.action_type ?? undefined,
+        display_name: feature.display_name ?? undefined,
+        generated_reason: feature.generated_reason ?? undefined,
+        uses_formula: feature.uses_formula ?? undefined,
+        aliases: feature.aliases ?? undefined,
+        recharge: feature.recharge ?? undefined,
+        origin_sources: feature.origin_sources ?? undefined
+      })));
 
       // Fetch fusion components
       const components: FusionComponent[] = [];
@@ -118,6 +127,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
     <div className="space-y-6">
       {/* Header - Gemini Protocol Title */}
       <SystemWindow 
+        id="sovereign-overview"
         title="GEMINI PROTOCOL" 
         className="border-violet-500/50 border-2 bg-gradient-to-br from-violet-950/20 to-background"
       >
@@ -142,7 +152,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
           <div className="flex flex-wrap gap-2">
             <Badge className="bg-violet-600/80 text-white border-violet-400">
               <Merge className="w-3 h-3 mr-1" />
-              Permanent Fusion
+              Permanent Subclass Overlay
             </Badge>
             {data.is_template && (
               <Badge variant="outline" className="border-amber-500/50 text-amber-400">
@@ -158,10 +168,10 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
       </SystemWindow>
 
       {/* Fusion Components */}
-      <SystemWindow title="FUSION COMPONENTS" className="border-purple-500/30">
+      <SystemWindow id="sovereign-fusion" title="FUSION COMPONENTS" className="border-purple-500/30">
         <div className="space-y-4">
           <p className="text-sm text-muted-foreground">
-            This Sovereign was created through the Gemini Protocol, permanently fusing the following components:
+            This Sovereign was created through the Gemini Protocol as a permanent subclass overlay of the following components:
           </p>
           
           {loading ? (
@@ -216,7 +226,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 
       {/* Core Fusion Features */}
       {coreFeatures.length > 0 && (
-        <SystemWindow title="FUSION ABILITIES" className="border-primary/30">
+        <SystemWindow id="sovereign-features" title="FUSION ABILITIES" className="border-primary/30">
           <div className="space-y-4">
             {coreFeatures.map((feature) => (
               <div key={feature.id} className="border-l-2 border-primary/50 pl-4 space-y-2">
@@ -252,7 +262,11 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 
       {/* Capstone Features */}
       {capstoneFeatures.length > 0 && (
-        <SystemWindow title="CAPSTONE ABILITIES" className="border-amber-500/50">
+        <SystemWindow
+          id={coreFeatures.length === 0 ? 'sovereign-features' : undefined}
+          title="CAPSTONE ABILITIES"
+          className="border-amber-500/50"
+        >
           <div className="space-y-4">
             {capstoneFeatures.map((feature) => (
               <div key={feature.id} className="border-l-2 border-amber-500/50 pl-4 space-y-2 bg-amber-500/5 -ml-4 p-4 rounded-r-lg">
@@ -300,10 +314,10 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
       {/* Lore Note */}
       <SystemWindow title="THE SUPREME DEITY'S BLESSING" className="border-cyan-500/30">
         <p className="text-sm text-muted-foreground italic">
-          In the post-reset timeline, the Supreme Deity Sung Jin-Woo granted the Gemini Protocol to worthy Hunters—a 
-          permanent fusion technique that transcends the limitations of single-path power. Those who complete the 
+          In the post-reset timeline, the Supreme Deity Sung Jin-Woo granted the Gemini Protocol to worthy Hunters, a 
+          permanent subclass overlay that transcends the limitations of single-path power. Those who complete the 
           Protocol become Sovereigns, wielding the combined might of Job, Path, and Dual Monarch Overlays as one 
-          unified force. The fusion is irreversible, for to become a Sovereign is to accept that you will never 
+          unified force. The overlay is irreversible, for to become a Sovereign is to accept that you will never 
           again be anything less.
         </p>
       </SystemWindow>

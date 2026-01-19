@@ -11,6 +11,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { ArtGenerator } from '@/components/art/ArtGenerator';
 import { Image, Camera, RefreshCw } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useArtAsset } from '@/lib/artPipeline/hooks';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 interface CharacterArtPanelProps {
   characterId: string;
@@ -32,11 +34,12 @@ export function CharacterArtPanel({
   className 
 }: CharacterArtPanelProps) {
   const [isGeneratorOpen, setIsGeneratorOpen] = useState(false);
-  const [currentArt, setCurrentArt] = useState<string | null>(null);
+  const { asset, refresh } = useArtAsset('monster', characterId, 'portrait');
+  const currentArt = asset?.paths?.original || null;
 
   const handleArtGenerated = (assetId: string) => {
-    setCurrentArt(assetId);
     onArtUpdated?.(assetId);
+    refresh();
     setIsGeneratorOpen(false);
   };
 
@@ -75,11 +78,13 @@ export function CharacterArtPanel({
         <div className="flex justify-center">
           {currentArt ? (
             <div className="relative group">
-              <img
+              <OptimizedImage
                 src={currentArt}
                 alt={characterData.name || 'Character portrait'}
                 className="w-32 h-32 object-cover rounded-lg border-2 border-purple-500/30"
+                size="small"
               />
+              
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
                 <Button
                   variant="secondary"
@@ -136,9 +141,9 @@ export function CharacterArtPanel({
         {/* Art Info */}
         {currentArt && (
           <div className="text-xs text-muted-foreground space-y-1">
-            <p>✨ Solo Leveling themed character portrait</p>
-            <p>🎨 Generated with Stable Diffusion</p>
-            <p>🔄 Click Regenerate to create new art</p>
+            <p>Solo Leveling themed character portrait</p>
+            <p>Generated with AI art pipeline</p>
+            <p>Click Regenerate to create new art</p>
           </div>
         )}
       </CardContent>

@@ -25,7 +25,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Night Venom';
-
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -41,7 +40,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Night Venom';
-
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -57,7 +55,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Night Venom';
-
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -73,7 +70,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Night Venom';
-
 -- Path of the Red Sigil (Level 3, 6, 10, 14)
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
@@ -90,7 +86,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Red Sigil';
-
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -106,7 +101,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Red Sigil';
-
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -122,7 +116,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Red Sigil';
-
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -138,7 +131,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Red Sigil';
-
 -- Path of the Shadow Net (Level 3, 6, 10, 14)
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
@@ -155,7 +147,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Shadow Net';
-
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -171,7 +162,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Shadow Net';
-
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -187,7 +177,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Shadow Net';
-
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -203,7 +192,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Shadow Net';
-
 -- Path of the Silent Knife (Level 3, 6, 10, 14)
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
@@ -220,7 +208,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Silent Knife';
-
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -236,7 +223,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Silent Knife';
-
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -252,7 +238,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Silent Knife';
-
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -268,7 +253,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Silent Knife';
-
 -- =============================================
 -- NOTE: Path Features Pattern Established
 -- =============================================
@@ -312,7 +296,6 @@ SELECT
   NULL,
   true
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch';
-
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT 
   m.id,
@@ -325,7 +308,6 @@ SELECT
   'Shadow Extraction',
   false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch';
-
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT 
   m.id,
@@ -338,7 +320,6 @@ SELECT
   'Shadow Exchange',
   false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch';
-
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT 
   m.id,
@@ -351,7 +332,6 @@ SELECT
   'Shadow Army',
   false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch';
-
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT 
   m.id,
@@ -364,7 +344,6 @@ SELECT
   'Shadow Domain',
   false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch';
-
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT 
   m.id,
@@ -377,7 +356,6 @@ SELECT
   'Shadow Monarch''s Presence',
   false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch';
-
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT 
   m.id,
@@ -390,7 +368,6 @@ SELECT
   'Eternal Army',
   true
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch';
-
 -- =============================================
 -- NOTE: Monarch Features Pattern Established
 -- =============================================
@@ -408,4 +385,4 @@ FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch';
 -- - White Flames Monarch
 -- - Transfiguration Monarch
 
--- All will follow the same pattern with thematic features matching their descriptions.
+-- All will follow the same pattern with thematic features matching their descriptions.;

@@ -1,10 +1,11 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import type { Json } from '@/integrations/supabase/types';
 import { useToast } from '@/hooks/use-toast';
 import { AppError } from '@/lib/appError';
 import type { RealtimeChannel } from '@supabase/supabase-js';
+import { getLocalUserId } from '@/lib/guestStore';
 
 export interface CampaignMessage {
   id: string;
@@ -17,11 +18,53 @@ export interface CampaignMessage {
   created_at: string;
 }
 
+const getMessagesKey = (campaignId: string) => `solo-compendium.campaign.${campaignId}.messages`;
+
+const getBrowserWindow = (): Window | null => {
+  if (typeof window === 'undefined') return null;
+  return window;
+};
+
+const loadLocalMessages = (campaignId: string): CampaignMessage[] => {
+  const activeWindow = getBrowserWindow();
+  if (!activeWindow) return [];
+  const raw = activeWindow.localStorage.getItem(getMessagesKey(campaignId));
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw) as CampaignMessage[];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+};
+
+const saveLocalMessages = (campaignId: string, messages: CampaignMessage[]) => {
+  const activeWindow = getBrowserWindow();
+  if (!activeWindow) return;
+  activeWindow.localStorage.setItem(getMessagesKey(campaignId), JSON.stringify(messages));
+};
+
+const broadcastLocalMessage = (campaignId: string, message: CampaignMessage) => {
+  const activeWindow = getBrowserWindow();
+  if (!activeWindow) return;
+  if ('BroadcastChannel' in activeWindow) {
+    const channel = new BroadcastChannel(`campaign-messages-${campaignId}`);
+    channel.postMessage(message);
+    channel.close();
+  } else {
+    activeWindow.dispatchEvent(new CustomEvent(`campaign-message-${campaignId}`, { detail: message }));
+  }
+};
+
 // Fetch campaign messages
 export const useCampaignMessages = (campaignId: string) => {
   return useQuery({
     queryKey: ['campaigns', campaignId, 'messages'],
     queryFn: async (): Promise<CampaignMessage[]> => {
+      if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true') {
+        return loadLocalMessages(campaignId).sort((a, b) => a.created_at.localeCompare(b.created_at));
+      }
+
       const { data, error } = await supabase
         .from('campaign_messages')
         .select('*')
@@ -52,6 +95,29 @@ export const useCampaignMessagesRealtime = (
 
   useEffect(() => {
     if (!campaignId) return;
+
+    if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true') {
+      const activeWindow = getBrowserWindow();
+      if (!activeWindow) return;
+      if ('BroadcastChannel' in activeWindow) {
+        const channel = new BroadcastChannel(`campaign-messages-${campaignId}`);
+        channel.onmessage = (event) => {
+          onNewMessageRef.current(event.data as CampaignMessage);
+        };
+        channelRef.current = channel as unknown as RealtimeChannel;
+        return () => {
+          channel.close();
+          channelRef.current = null;
+        };
+      }
+
+      const handler = (event: Event) => {
+        const detail = (event as CustomEvent).detail as CampaignMessage;
+        onNewMessageRef.current(detail);
+      };
+      activeWindow.addEventListener(`campaign-message-${campaignId}`, handler);
+      return () => activeWindow.removeEventListener(`campaign-message-${campaignId}`, handler);
+    }
 
     const channel = supabase
       .channel(`campaign-messages-${campaignId}`)
@@ -99,8 +165,42 @@ export const useSendCampaignMessage = () => {
       messageType?: 'chat' | 'roll' | 'system' | 'whisper';
       metadata?: Json;
     }) => {
+      if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true') {
+        const now = new Date().toISOString();
+        const next: CampaignMessage = {
+          id: crypto.randomUUID(),
+          campaign_id: campaignId,
+          user_id: getLocalUserId(),
+          character_name: characterName || null,
+          message_type: messageType,
+          content,
+          metadata,
+          created_at: now,
+        };
+        const updated = [...loadLocalMessages(campaignId), next];
+        saveLocalMessages(campaignId, updated);
+        broadcastLocalMessage(campaignId, next);
+        return next;
+      }
+
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
+      if (!user) {
+        const now = new Date().toISOString();
+        const next: CampaignMessage = {
+          id: crypto.randomUUID(),
+          campaign_id: campaignId,
+          user_id: getLocalUserId(),
+          character_name: characterName || null,
+          message_type: messageType,
+          content,
+          metadata,
+          created_at: now,
+        };
+        const updated = [...loadLocalMessages(campaignId), next];
+        saveLocalMessages(campaignId, updated);
+        broadcastLocalMessage(campaignId, next);
+        return next;
+      }
 
       const { data, error } = await supabase
         .from('campaign_messages')
@@ -138,6 +238,13 @@ export const useDeleteCampaignMessage = () => {
 
   return useMutation({
     mutationFn: async ({ messageId, campaignId }: { messageId: string; campaignId: string }) => {
+      if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true') {
+        const existing = loadLocalMessages(campaignId);
+        const next = existing.filter((msg) => msg.id !== messageId);
+        saveLocalMessages(campaignId, next);
+        return;
+      }
+
       const { error } = await supabase
         .from('campaign_messages')
         .delete()

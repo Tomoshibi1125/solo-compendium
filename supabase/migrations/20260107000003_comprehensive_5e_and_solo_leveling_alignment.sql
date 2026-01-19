@@ -5,7 +5,7 @@
 -- 1. Proper 5e mechanics (DCs, attack rolls, saves, etc.)
 -- 2. Solo Leveling terminology (STR/AGI/VIT/INT/SENSE/PRE)
 -- 3. Solo Leveling lore alignment (System, Gates, Hunters, etc.)
---
+-- 
 -- Fixes all powers, features, descriptions to use:
 -- - 5e formulas: DC = 8 + proficiency bonus + ability modifier
 -- - Solo Leveling ability names: VIT (not CON), AGI (not DEX), SENSE (not WIS), PRE (not CHA)
@@ -25,7 +25,6 @@ SET description = REPLACE(
 )
 WHERE description LIKE '%must make a Dexterity saving throw%'
   AND description NOT LIKE '%DC =%';
-
 -- Fix powers that mention "Constitution saving throw" without DC
 UPDATE public.compendium_powers
 SET description = REPLACE(
@@ -35,7 +34,6 @@ SET description = REPLACE(
 )
 WHERE description LIKE '%must make a Constitution saving throw%'
   AND description NOT LIKE '%DC =%';
-
 -- Fix powers that mention "Wisdom saving throw" without DC
 UPDATE public.compendium_powers
 SET description = REPLACE(
@@ -45,7 +43,6 @@ SET description = REPLACE(
 )
 WHERE description LIKE '%must make a Wisdom saving throw%'
   AND description NOT LIKE '%DC =%';
-
 -- Fix powers that mention "Strength saving throw" without DC
 UPDATE public.compendium_powers
 SET description = REPLACE(
@@ -55,31 +52,25 @@ SET description = REPLACE(
 )
 WHERE description LIKE '%must make a Strength saving throw%'
   AND description NOT LIKE '%DC =%';
-
 -- Fix "Charisma saving throw" to "Presence saving throw"
 UPDATE public.compendium_powers
 SET description = REPLACE(description, 'Charisma saving throw', 'Presence saving throw')
 WHERE description LIKE '%Charisma saving throw%';
-
 -- Fix ability check references
 UPDATE public.compendium_powers
 SET description = REPLACE(description, 'Charisma check', 'Presence check')
 WHERE description LIKE '%Charisma check%';
-
 UPDATE public.compendium_powers
 SET description = REPLACE(description, 'Wisdom (Perception)', 'Sense (Perception)')
 WHERE description LIKE '%Wisdom (Perception)%';
-
 UPDATE public.compendium_powers
 SET description = REPLACE(description, 'Wisdom (Survival)', 'Sense (Survival)')
 WHERE description LIKE '%Wisdom (Survival)%';
-
 -- Fix spellcasting ability references in powers
 UPDATE public.compendium_powers
 SET description = REPLACE(description, 'spellcasting ability modifier', 'spellcasting ability modifier (Intelligence, Sense, or Presence depending on your job)')
 WHERE description LIKE '%spellcasting ability modifier%'
   AND description NOT LIKE '%depending on your job%';
-
 -- =============================================
 -- FIX EQUIPMENT DESCRIPTIONS
 -- =============================================
@@ -88,19 +79,15 @@ WHERE description LIKE '%spellcasting ability modifier%'
 UPDATE public.compendium_equipment
 SET description = REPLACE(description, 'Dexterity', 'Agility')
 WHERE description LIKE '%Dexterity%';
-
 UPDATE public.compendium_equipment
 SET description = REPLACE(description, 'Constitution', 'Vitality')
 WHERE description LIKE '%Constitution%';
-
 UPDATE public.compendium_equipment
 SET description = REPLACE(description, 'Wisdom', 'Sense')
 WHERE description LIKE '%Wisdom%';
-
 UPDATE public.compendium_equipment
 SET description = REPLACE(description, 'Charisma', 'Presence')
 WHERE description LIKE '%Charisma%';
-
 -- =============================================
 -- FIX FEATS DESCRIPTIONS
 -- =============================================
@@ -109,35 +96,27 @@ WHERE description LIKE '%Charisma%';
 UPDATE public.compendium_feats
 SET description = REPLACE(description, 'Dexterity', 'Agility')
 WHERE description LIKE '%Dexterity%';
-
 UPDATE public.compendium_feats
 SET description = REPLACE(description, 'Constitution', 'Vitality')
 WHERE description LIKE '%Constitution%';
-
 UPDATE public.compendium_feats
 SET description = REPLACE(description, 'Wisdom', 'Sense')
 WHERE description LIKE '%Wisdom%';
-
 UPDATE public.compendium_feats
 SET description = REPLACE(description, 'Charisma', 'Presence')
 WHERE description LIKE '%Charisma%';
-
 UPDATE public.compendium_feats
 SET prerequisites = REPLACE(prerequisites, 'DEX', 'AGI')
 WHERE prerequisites LIKE '%DEX%';
-
 UPDATE public.compendium_feats
 SET prerequisites = REPLACE(prerequisites, 'CON', 'VIT')
 WHERE prerequisites LIKE '%CON%';
-
 UPDATE public.compendium_feats
 SET prerequisites = REPLACE(prerequisites, 'WIS', 'SENSE')
 WHERE prerequisites LIKE '%WIS%';
-
 UPDATE public.compendium_feats
 SET prerequisites = REPLACE(prerequisites, 'CHA', 'PRE')
 WHERE prerequisites LIKE '%CHA%';
-
 -- Fix benefits arrays
 UPDATE public.compendium_feats
 SET benefits = ARRAY(
@@ -148,7 +127,7 @@ SET benefits = ARRAY(
   ), 'DEX', 'AGI'), 'CON', 'VIT'), 'WIS', 'SENSE'), 'CHA', 'PRE')
   FROM unnest(benefits) AS b(benefit)
 )
-WHERE benefits::TEXT LIKE '%Dexterity%'
+WHERE benefits::TEXT LIKE '%Dexterity%' 
    OR benefits::TEXT LIKE '%Constitution%'
    OR benefits::TEXT LIKE '%Wisdom%'
    OR benefits::TEXT LIKE '%Charisma%'
@@ -156,7 +135,6 @@ WHERE benefits::TEXT LIKE '%Dexterity%'
    OR benefits::TEXT LIKE '%CON%'
    OR benefits::TEXT LIKE '%WIS%'
    OR benefits::TEXT LIKE '%CHA%';
-
 -- =============================================
 -- FIX CONDITIONS DESCRIPTIONS
 -- =============================================
@@ -165,11 +143,9 @@ WHERE benefits::TEXT LIKE '%Dexterity%'
 UPDATE public.compendium_conditions
 SET description = REPLACE(description, 'Strength and Dexterity', 'Strength and Agility')
 WHERE description LIKE '%Strength and Dexterity%';
-
 UPDATE public.compendium_conditions
 SET description = REPLACE(description, 'Dexterity saving throw', 'Agility saving throw')
 WHERE description LIKE '%Dexterity saving throw%';
-
 UPDATE public.compendium_conditions
 SET effects = ARRAY(
   SELECT REPLACE(REPLACE(
@@ -179,7 +155,6 @@ SET effects = ARRAY(
   FROM unnest(effects) AS e(effect)
 )
 WHERE effects::TEXT LIKE '%Dexterity%' OR effects::TEXT LIKE '%DEX%';
-
 -- =============================================
 -- FIX MONSTER DESCRIPTIONS AND STATS
 -- =============================================
@@ -189,11 +164,10 @@ UPDATE public.compendium_monsters
 SET description = REPLACE(REPLACE(REPLACE(REPLACE(
   description, 'Dexterity', 'Agility'
 ), 'Constitution', 'Vitality'), 'Wisdom', 'Sense'), 'Charisma', 'Presence')
-WHERE description LIKE '%Dexterity%'
+WHERE description LIKE '%Dexterity%' 
    OR description LIKE '%Constitution%'
    OR description LIKE '%Wisdom%'
    OR description LIKE '%Charisma%';
-
 -- =============================================
 -- FIX SHADOW SOLDIER DESCRIPTIONS
 -- =============================================
@@ -212,13 +186,12 @@ BEGIN
     SET description = REPLACE(REPLACE(REPLACE(REPLACE(
       description, 'Dexterity', 'Agility'
     ), 'Constitution', 'Vitality'), 'Wisdom', 'Sense'), 'Charisma', 'Presence')
-    WHERE description LIKE '%Dexterity%'
+    WHERE description LIKE '%Dexterity%' 
        OR description LIKE '%Constitution%'
        OR description LIKE '%Wisdom%'
        OR description LIKE '%Charisma%';
   END IF;
 END $$;
-
 -- =============================================
 -- GLOBAL SOLO LEVELING TERMINOLOGY AUDIT
 -- =============================================
@@ -227,26 +200,21 @@ END $$;
 UPDATE public.compendium_monarch_features
 SET description = REPLACE(description, 'Jinwoo', 'the Supreme Deity')
 WHERE description LIKE '%Jinwoo%';
-
 UPDATE public.compendium_job_features
 SET description = REPLACE(description, 'Jinwoo', 'the Supreme Deity')
 WHERE description LIKE '%Jinwoo%';
-
 UPDATE public.compendium_monarchs
 SET description = REPLACE(description, 'Jinwoo', 'the Supreme Deity')
 WHERE description LIKE '%Jinwoo%';
-
 UPDATE public.compendium_monarchs
 SET lore = REPLACE(lore, 'Jinwoo', 'the Supreme Deity')
 WHERE lore LIKE '%Jinwoo%';
-
 -- Ensure "Shadow Monarch" references are clear (class vs deity)
 -- Update any ambiguous references to clarify
 UPDATE public.compendium_monarch_features
 SET description = REPLACE(description, 'Shadow Monarch''s', 'the Shadow Monarch''s')
-WHERE description LIKE '%Shadow Monarch''s%'
+WHERE description LIKE '%Shadow Monarch''s%' 
   AND monarch_id NOT IN (SELECT id FROM compendium_monarchs WHERE name = 'Shadow Monarch');
-
 -- =============================================
 -- VERIFY AND FIX MONSTER TRAITS/ACTIONS
 -- =============================================
@@ -256,21 +224,19 @@ UPDATE public.compendium_monster_traits
 SET description = REPLACE(REPLACE(REPLACE(REPLACE(
   description, 'Dexterity', 'Agility'
 ), 'Constitution', 'Vitality'), 'Wisdom', 'Sense'), 'Charisma', 'Presence')
-WHERE description LIKE '%Dexterity%'
+WHERE description LIKE '%Dexterity%' 
    OR description LIKE '%Constitution%'
    OR description LIKE '%Wisdom%'
    OR description LIKE '%Charisma%';
-
 -- Ensure monster action descriptions use proper ability names
 UPDATE public.compendium_monster_actions
 SET description = REPLACE(REPLACE(REPLACE(REPLACE(
   description, 'Dexterity', 'Agility'
 ), 'Constitution', 'Vitality'), 'Wisdom', 'Sense'), 'Charisma', 'Presence')
-WHERE description LIKE '%Dexterity%'
+WHERE description LIKE '%Dexterity%' 
    OR description LIKE '%Constitution%'
    OR description LIKE '%Wisdom%'
    OR description LIKE '%Charisma%';
-
 -- Ensure all monster actions have proper DC calculations if they require saves
 -- Pattern: "must make a [Ability] saving throw" should have "(DC = X)" following it
 
@@ -292,13 +258,12 @@ BEGIN
     SET description = REPLACE(REPLACE(REPLACE(REPLACE(
       description, 'Dexterity', 'Agility'
     ), 'Constitution', 'Vitality'), 'Wisdom', 'Sense'), 'Charisma', 'Presence')
-    WHERE description LIKE '%Dexterity%'
+    WHERE description LIKE '%Dexterity%' 
        OR description LIKE '%Constitution%'
        OR description LIKE '%Wisdom%'
        OR description LIKE '%Charisma%';
   END IF;
 END $$;
-
 -- Ensure shadow soldier action descriptions use proper ability names
 DO $$
 BEGIN
@@ -313,13 +278,12 @@ BEGIN
     SET description = REPLACE(REPLACE(REPLACE(REPLACE(
       description, 'Dexterity', 'Agility'
     ), 'Constitution', 'Vitality'), 'Wisdom', 'Sense'), 'Charisma', 'Presence')
-    WHERE description LIKE '%Dexterity%'
+    WHERE description LIKE '%Dexterity%' 
        OR description LIKE '%Constitution%'
        OR description LIKE '%Wisdom%'
        OR description LIKE '%Charisma%';
   END IF;
 END $$;
-
 -- =============================================
 -- FIX RELIC DESCRIPTIONS
 -- =============================================
@@ -329,11 +293,10 @@ UPDATE public.compendium_relics
 SET description = REPLACE(REPLACE(REPLACE(REPLACE(
   description, 'Dexterity', 'Agility'
 ), 'Constitution', 'Vitality'), 'Wisdom', 'Sense'), 'Charisma', 'Presence')
-WHERE description LIKE '%Dexterity%'
+WHERE description LIKE '%Dexterity%' 
    OR description LIKE '%Constitution%'
    OR description LIKE '%Wisdom%'
    OR description LIKE '%Charisma%';
-
 -- =============================================
 -- FIX BACKGROUND DESCRIPTIONS
 -- =============================================
@@ -343,11 +306,10 @@ UPDATE public.compendium_backgrounds
 SET description = REPLACE(REPLACE(REPLACE(REPLACE(
   description, 'Dexterity', 'Agility'
 ), 'Constitution', 'Vitality'), 'Wisdom', 'Sense'), 'Charisma', 'Presence')
-WHERE description LIKE '%Dexterity%'
+WHERE description LIKE '%Dexterity%' 
    OR description LIKE '%Constitution%'
    OR description LIKE '%Wisdom%'
    OR description LIKE '%Charisma%';
-
 -- =============================================
 -- ADD MISSING SAVE DCs TO POWERS
 -- =============================================
@@ -362,18 +324,14 @@ WHERE description LIKE '%Dexterity%'
 -- DOCUMENTATION COMMENTS
 -- =============================================
 
-COMMENT ON TABLE public.compendium_powers IS
+COMMENT ON TABLE public.compendium_powers IS 
 'Powers/Spells follow 5e mechanics: Save DCs = 8 + proficiency bonus + spellcasting ability modifier. Attack rolls = 1d20 + proficiency bonus + spellcasting ability modifier. Uses Solo Leveling ability scores (STR, AGI, VIT, INT, SENSE, PRE). All save DCs must include the formula.';
-
-COMMENT ON TABLE public.compendium_feats IS
+COMMENT ON TABLE public.compendium_feats IS 
 'Feats follow 5e mechanics and use Solo Leveling ability scores (STR, AGI, VIT, INT, SENSE, PRE). All ability score references use Solo Leveling names.';
-
-COMMENT ON TABLE public.compendium_conditions IS
+COMMENT ON TABLE public.compendium_conditions IS 
 'Conditions follow 5e mechanics. Ability score references use Solo Leveling names (STR, AGI, VIT, INT, SENSE, PRE).';
-
-COMMENT ON TABLE public.compendium_monsters IS
+COMMENT ON TABLE public.compendium_monsters IS 
 'Monsters follow 5e mechanics. All trait and action descriptions use Solo Leveling ability names. Save DCs follow 5e formula (8 + proficiency bonus + relevant ability modifier).';
-
 DO $$
 BEGIN
   IF EXISTS (
@@ -387,15 +345,14 @@ BEGIN
       || quote_literal('Shadow Soldiers follow 5e mechanics. All trait and action descriptions use Solo Leveling ability names. Save DCs follow 5e formula (8 + proficiency bonus + relevant ability modifier).');
   END IF;
 END $$;
-
 -- =============================================
 -- VERIFICATION QUERIES (For manual review)
 -- =============================================
 
 -- These queries can be run to verify compliance:
---
+-- 
 -- Find powers missing save DCs:
--- SELECT name, description FROM compendium_powers
+-- SELECT name, description FROM compendium_powers 
 -- WHERE description LIKE '%saving throw%' AND description NOT LIKE '%DC =%';
 --
 -- Find content with 5e ability names:
@@ -418,5 +375,4 @@ END $$;
 -- ✅ All "Jinwoo" references updated to "Supreme Deity"
 -- ✅ Monster and Shadow Soldier traits/actions fixed
 -- ✅ Comprehensive terminology alignment
--- =============================================
-
+-- =============================================;

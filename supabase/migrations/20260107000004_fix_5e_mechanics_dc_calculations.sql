@@ -25,91 +25,70 @@
 UPDATE public.compendium_monarch_features
 SET description = REPLACE(description, 'Constitution modifier', 'Vitality modifier')
 WHERE description LIKE '%Constitution modifier%';
-
 UPDATE public.compendium_job_features
 SET description = REPLACE(description, 'Constitution modifier', 'Vitality modifier')
 WHERE description LIKE '%Constitution modifier%';
-
 UPDATE public.compendium_runes
 SET effect_description = REPLACE(effect_description, 'Constitution modifier', 'Vitality modifier')
 WHERE effect_description LIKE '%Constitution modifier%';
-
 -- Dexterity → Agility (AGI)
 UPDATE public.compendium_monarch_features
 SET description = REPLACE(description, 'Dexterity modifier', 'Agility modifier')
 WHERE description LIKE '%Dexterity modifier%';
-
 UPDATE public.compendium_job_features
 SET description = REPLACE(description, 'Dexterity modifier', 'Agility modifier')
 WHERE description LIKE '%Dexterity modifier%';
-
 UPDATE public.compendium_runes
 SET effect_description = REPLACE(effect_description, 'Dexterity modifier', 'Agility modifier')
 WHERE effect_description LIKE '%Dexterity modifier%';
-
 -- Wisdom → Sense (SENSE)
 UPDATE public.compendium_monarch_features
 SET description = REPLACE(description, 'Wisdom modifier', 'Sense modifier')
 WHERE description LIKE '%Wisdom modifier%';
-
 UPDATE public.compendium_job_features
 SET description = REPLACE(description, 'Wisdom modifier', 'Sense modifier')
 WHERE description LIKE '%Wisdom modifier%';
-
 UPDATE public.compendium_runes
 SET effect_description = REPLACE(effect_description, 'Wisdom modifier', 'Sense modifier')
 WHERE effect_description LIKE '%Wisdom modifier%';
-
 -- Charisma → Presence (PRE)
 UPDATE public.compendium_monarch_features
 SET description = REPLACE(description, 'Charisma modifier', 'Presence modifier')
 WHERE description LIKE '%Charisma modifier%';
-
 UPDATE public.compendium_job_features
 SET description = REPLACE(description, 'Charisma modifier', 'Presence modifier')
 WHERE description LIKE '%Charisma modifier%';
-
 UPDATE public.compendium_runes
 SET effect_description = REPLACE(effect_description, 'Charisma modifier', 'Presence modifier')
 WHERE effect_description LIKE '%Charisma modifier%';
-
 -- Fix saving throw names
 UPDATE public.compendium_monarch_features
 SET description = REPLACE(description, 'Constitution saving throw', 'Vitality saving throw')
 WHERE description LIKE '%Constitution saving throw%';
-
 UPDATE public.compendium_monarch_features
 SET description = REPLACE(description, 'Dexterity saving throw', 'Agility saving throw')
 WHERE description LIKE '%Dexterity saving throw%';
-
 UPDATE public.compendium_monarch_features
 SET description = REPLACE(description, 'Wisdom saving throw', 'Sense saving throw')
 WHERE description LIKE '%Wisdom saving throw%';
-
 UPDATE public.compendium_job_features
 SET description = REPLACE(description, 'Constitution saving throw', 'Vitality saving throw')
 WHERE description LIKE '%Constitution saving throw%';
-
 UPDATE public.compendium_job_features
 SET description = REPLACE(description, 'Dexterity saving throw', 'Agility saving throw')
 WHERE description LIKE '%Dexterity saving throw%';
-
 UPDATE public.compendium_job_features
 SET description = REPLACE(description, 'Wisdom saving throw', 'Sense saving throw')
 WHERE description LIKE '%Wisdom saving throw%';
-
 UPDATE public.compendium_runes
 SET effect_description = REPLACE(effect_description, 'Constitution saving throw', 'Vitality saving throw')
 WHERE effect_description LIKE '%Constitution saving throw%';
-
 UPDATE public.compendium_runes
 SET effect_description = REPLACE(effect_description, 'Dexterity saving throw', 'Agility saving throw')
 WHERE effect_description LIKE '%Dexterity saving throw%';
-
 UPDATE public.compendium_runes
 SET effect_description = REPLACE(effect_description, 'Wisdom saving throw', 'Sense saving throw')
 WHERE effect_description LIKE '%Wisdom saving throw%';
-
 -- Fireball Rune already fixed in migration file to use proper DC and Solo Leveling ability names
 -- This migration will catch any other runes that need fixing
 
@@ -122,7 +101,6 @@ SET description = REPLACE(
   'DC = 8 + your proficiency bonus + your Sense modifier'
 )
 WHERE description LIKE '%DC = your Warden power save DC%';
-
 -- Techsmith uses INT as primary spellcasting ability
 UPDATE public.compendium_job_features
 SET description = REPLACE(
@@ -131,35 +109,28 @@ SET description = REPLACE(
   'DC = 8 + your proficiency bonus + your Intelligence modifier'
 )
 WHERE description LIKE '%DC = your Techsmith power save DC%';
-
 -- Fix any remaining references to standard 5e ability checks
 -- Constitution checks → Vitality checks
 UPDATE public.compendium_monarch_features
 SET description = REPLACE(description, 'Constitution check', 'Vitality check')
 WHERE description LIKE '%Constitution check%';
-
 UPDATE public.compendium_job_features
 SET description = REPLACE(description, 'Constitution check', 'Vitality check')
 WHERE description LIKE '%Constitution check%';
-
 -- Dexterity checks → Agility checks
 UPDATE public.compendium_monarch_features
 SET description = REPLACE(description, 'Dexterity check', 'Agility check')
 WHERE description LIKE '%Dexterity check%';
-
 UPDATE public.compendium_job_features
 SET description = REPLACE(description, 'Dexterity check', 'Agility check')
 WHERE description LIKE '%Dexterity check%';
-
 -- Wisdom checks → Sense checks
 UPDATE public.compendium_monarch_features
 SET description = REPLACE(description, 'Wisdom check', 'Sense check')
 WHERE description LIKE '%Wisdom check%';
-
 UPDATE public.compendium_job_features
 SET description = REPLACE(description, 'Wisdom check', 'Sense check')
 WHERE description LIKE '%Wisdom check%';
-
 -- Ensure all other DC calculations use proper 5e format
 -- Check for any DC calculations that don't follow 8 + proficiency + modifier pattern
 
@@ -169,13 +140,10 @@ WHERE description LIKE '%Wisdom check%';
 -- Add comment documentation for future reference
 COMMENT ON TABLE public.compendium_runes IS 
 'Runes follow 5e mechanics: Save DCs = 8 + proficiency bonus + relevant ability modifier. Attack bonuses = proficiency bonus + ability modifier. Uses Solo Leveling ability scores (STR, AGI, VIT, INT, SENSE, PRE).';
-
 COMMENT ON TABLE public.compendium_job_features IS 
 'Job features follow 5e mechanics: Save DCs = 8 + proficiency bonus + relevant ability modifier. Attack bonuses = proficiency bonus + ability modifier. Uses Solo Leveling ability scores (STR, AGI, VIT, INT, SENSE, PRE).';
-
 COMMENT ON TABLE public.compendium_monarch_features IS 
 'Monarch features follow 5e mechanics: Save DCs = 8 + proficiency bonus + relevant ability modifier. Attack bonuses = proficiency bonus + ability modifier. Uses Solo Leveling ability scores (STR, AGI, VIT, INT, SENSE, PRE).';
-
 -- =============================================
 -- VERIFY AND DOCUMENT 5E MECHANICS STANDARDS
 -- =============================================
@@ -251,5 +219,4 @@ COMMENT ON TABLE public.compendium_monarch_features IS
 --   - Short Rest: 1 hour, regain hit dice (up to half max), some features recharge
 --   - Long Rest: 8 hours, regain all HP, all hit dice, all spell slots, all features
 --
--- =============================================
-
+-- =============================================;

@@ -54,7 +54,6 @@ WHERE NOT EXISTS (
   FROM compendium_monster_actions a
   WHERE a.monster_id = attack.id AND a.name = 'Basic Attack'
 );
-
 -- ---------------------------------------------
 -- Baseline monster traits (gate adaptation)
 -- ---------------------------------------------
@@ -69,7 +68,6 @@ WHERE NOT EXISTS (
   FROM compendium_monster_traits t
   WHERE t.monster_id = m.id AND t.name = 'Gate Adaptation'
 );
-
 -- ---------------------------------------------
 -- Sovereign templates (Gemini Protocol)
 -- ---------------------------------------------
@@ -177,7 +175,6 @@ SELECT
   tags
 FROM sovereign_rows
 ON CONFLICT (name) DO NOTHING;
-
 -- ---------------------------------------------
 -- Sovereign features
 -- ---------------------------------------------
@@ -205,7 +202,6 @@ SELECT
 FROM compendium_sovereigns s
 WHERE s.name = 'Eclipse Sovereign'
 ON CONFLICT (sovereign_id, name) DO NOTHING;
-
 INSERT INTO compendium_sovereign_features (
   sovereign_id,
   name,
@@ -230,7 +226,6 @@ SELECT
 FROM compendium_sovereigns s
 WHERE s.name = 'Eclipse Sovereign'
 ON CONFLICT (sovereign_id, name) DO NOTHING;
-
 INSERT INTO compendium_sovereign_features (
   sovereign_id,
   name,
@@ -255,7 +250,6 @@ SELECT
 FROM compendium_sovereigns s
 WHERE s.name = 'Eclipse Sovereign'
 ON CONFLICT (sovereign_id, name) DO NOTHING;
-
 INSERT INTO compendium_sovereign_features (
   sovereign_id,
   name,
@@ -280,7 +274,6 @@ SELECT
 FROM compendium_sovereigns s
 WHERE s.name = 'Frostfang Sovereign'
 ON CONFLICT (sovereign_id, name) DO NOTHING;
-
 INSERT INTO compendium_sovereign_features (
   sovereign_id,
   name,
@@ -305,7 +298,6 @@ SELECT
 FROM compendium_sovereigns s
 WHERE s.name = 'Frostfang Sovereign'
 ON CONFLICT (sovereign_id, name) DO NOTHING;
-
 INSERT INTO compendium_sovereign_features (
   sovereign_id,
   name,
@@ -330,7 +322,6 @@ SELECT
 FROM compendium_sovereigns s
 WHERE s.name = 'Frostfang Sovereign'
 ON CONFLICT (sovereign_id, name) DO NOTHING;
-
 INSERT INTO compendium_sovereign_features (
   sovereign_id,
   name,
@@ -355,7 +346,6 @@ SELECT
 FROM compendium_sovereigns s
 WHERE s.name = 'Gravestone Sovereign'
 ON CONFLICT (sovereign_id, name) DO NOTHING;
-
 INSERT INTO compendium_sovereign_features (
   sovereign_id,
   name,
@@ -380,7 +370,6 @@ SELECT
 FROM compendium_sovereigns s
 WHERE s.name = 'Gravestone Sovereign'
 ON CONFLICT (sovereign_id, name) DO NOTHING;
-
 INSERT INTO compendium_sovereign_features (
   sovereign_id,
   name,
@@ -405,7 +394,6 @@ SELECT
 FROM compendium_sovereigns s
 WHERE s.name = 'Gravestone Sovereign'
 ON CONFLICT (sovereign_id, name) DO NOTHING;
-
 INSERT INTO compendium_sovereign_features (
   sovereign_id,
   name,
@@ -430,7 +418,6 @@ SELECT
 FROM compendium_sovereigns s
 WHERE s.name = 'Mirrorbreak Sovereign'
 ON CONFLICT (sovereign_id, name) DO NOTHING;
-
 INSERT INTO compendium_sovereign_features (
   sovereign_id,
   name,
@@ -455,7 +442,6 @@ SELECT
 FROM compendium_sovereigns s
 WHERE s.name = 'Mirrorbreak Sovereign'
 ON CONFLICT (sovereign_id, name) DO NOTHING;
-
 INSERT INTO compendium_sovereign_features (
   sovereign_id,
   name,

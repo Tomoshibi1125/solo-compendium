@@ -177,7 +177,7 @@ export async function checkLinkIntegrity(characterId: string): Promise<BrokenLin
 }
 
 /**
- * Check link integrity for all characters (admin function)
+ * Check link integrity for all characters (DM function)
  * 
  * @returns Summary of broken links across all characters
  */

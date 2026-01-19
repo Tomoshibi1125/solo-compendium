@@ -14,7 +14,6 @@ BEGIN
   NULL;
 END;
 $$;
-
 -- Function: get_asset_paths
 DROP FUNCTION IF EXISTS public.get_asset_paths(p_type TEXT) CASCADE;
 CREATE OR REPLACE FUNCTION public.get_asset_paths(p_type TEXT)
@@ -30,7 +29,6 @@ BEGIN
   WHERE type = p_type;
 END;
 $$;
-
 -- Function: asset_exists
 DROP FUNCTION IF EXISTS public.asset_exists(p_path TEXT) CASCADE;
 CREATE OR REPLACE FUNCTION public.asset_exists(p_path TEXT)
@@ -47,7 +45,6 @@ BEGIN
   );
 END;
 $$;
-
 -- Function: search_compendium_jobs
 DROP FUNCTION IF EXISTS public.search_compendium_jobs(TEXT, INTEGER, INTEGER) CASCADE;
 CREATE OR REPLACE FUNCTION public.search_compendium_jobs(p_query TEXT, p_limit INTEGER DEFAULT 10, p_offset INTEGER DEFAULT 0)
@@ -67,7 +64,6 @@ BEGIN
   OFFSET p_offset;
 END;
 $$;
-
 -- Function: get_entity_assets
 DROP FUNCTION IF EXISTS public.get_entity_assets(UUID, TEXT) CASCADE;
 CREATE OR REPLACE FUNCTION public.get_entity_assets(p_entity_id UUID, p_entity_type TEXT)
@@ -84,7 +80,6 @@ BEGIN
   WHERE ea.entity_id = p_entity_id AND ea.entity_type = p_entity_type;
 END;
 $$;
-
 -- Function: calculate_shadow_energy_max
 DROP FUNCTION IF EXISTS public.calculate_shadow_energy_max(UUID) CASCADE;
 CREATE OR REPLACE FUNCTION public.calculate_shadow_energy_max(p_character_id UUID)
@@ -116,7 +111,6 @@ BEGIN
   END;
 END;
 $$;
-
 -- Function: get_character_by_share_token
 DROP FUNCTION IF EXISTS public.get_character_by_share_token(TEXT) CASCADE;
 CREATE OR REPLACE FUNCTION public.get_character_by_share_token(p_token TEXT)
@@ -133,7 +127,6 @@ BEGIN
   WHERE cs.token = p_token AND cs.expires_at > NOW();
 END;
 $$;
-
 -- Function: search_compendium_relics
 DROP FUNCTION IF EXISTS public.search_compendium_relics(TEXT, INTEGER, INTEGER) CASCADE;
 CREATE OR REPLACE FUNCTION public.search_compendium_relics(p_query TEXT, p_limit INTEGER DEFAULT 10, p_offset INTEGER DEFAULT 0)
@@ -153,7 +146,6 @@ BEGIN
   OFFSET p_offset;
 END;
 $$;
-
 -- Function: search_compendium_powers
 DROP FUNCTION IF EXISTS public.search_compendium_powers(TEXT, INTEGER, INTEGER) CASCADE;
 CREATE OR REPLACE FUNCTION public.search_compendium_powers(p_query TEXT, p_limit INTEGER DEFAULT 10, p_offset INTEGER DEFAULT 0)
@@ -173,7 +165,6 @@ BEGIN
   OFFSET p_offset;
 END;
 $$;
-
 -- Function: search_compendium_monsters
 DROP FUNCTION IF EXISTS public.search_compendium_monsters(TEXT, INTEGER, INTEGER) CASCADE;
 CREATE OR REPLACE FUNCTION public.search_compendium_monsters(p_query TEXT, p_limit INTEGER DEFAULT 10, p_offset INTEGER DEFAULT 0)
@@ -193,7 +184,6 @@ BEGIN
   OFFSET p_offset;
 END;
 $$;
-
 -- Function: search_compendium_paths
 DROP FUNCTION IF EXISTS public.search_compendium_paths(TEXT, INTEGER, INTEGER) CASCADE;
 CREATE OR REPLACE FUNCTION public.search_compendium_paths(p_query TEXT, p_limit INTEGER DEFAULT 10, p_offset INTEGER DEFAULT 0)
@@ -213,7 +203,6 @@ BEGIN
   OFFSET p_offset;
 END;
 $$;
-
 -- Function: search_compendium_monarchs
 DROP FUNCTION IF EXISTS public.search_compendium_monarchs(TEXT, INTEGER, INTEGER) CASCADE;
 CREATE OR REPLACE FUNCTION public.search_compendium_monarchs(p_query TEXT, p_limit INTEGER DEFAULT 10, p_offset INTEGER DEFAULT 0)

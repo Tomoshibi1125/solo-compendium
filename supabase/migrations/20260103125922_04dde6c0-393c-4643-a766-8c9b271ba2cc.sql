@@ -1,6 +1,5 @@
 -- Remove incorrect jobs
 DELETE FROM compendium_jobs WHERE name IN ('Fighter', 'Necromancer', 'Summoner', 'Tank');
-
 -- Add missing jobs
 INSERT INTO compendium_jobs (name, description, hit_die, primary_abilities, saving_throw_proficiencies) VALUES
 ('Assassin', 'Stealth specialists who eliminate high-value targets with lethal precision.', 8, ARRAY['AGI', 'SENSE']::ability_score[], ARRAY['AGI', 'SENSE']::ability_score[]),
@@ -17,7 +16,6 @@ INSERT INTO compendium_jobs (name, description, hit_die, primary_abilities, savi
 ('Vanguard', 'Frontline warriors who lead the charge and hold the line in Gate combat.', 10, ARRAY['STR', 'VIT']::ability_score[], ARRAY['STR', 'VIT']::ability_score[]),
 ('Warden', 'Defensive specialists who create barriers and control the battlefield.', 10, ARRAY['VIT', 'SENSE']::ability_score[], ARRAY['VIT', 'SENSE']::ability_score[])
 ON CONFLICT (name) DO NOTHING;
-
 -- Insert all 78 paths
 WITH paths(job_name, name, description) AS (
   VALUES

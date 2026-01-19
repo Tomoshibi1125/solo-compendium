@@ -12,8 +12,11 @@ dist
 dist-ssr
 *.local
 .env
+.env.*
 
 supabase/.temp/
+supabase/.env
+supabase/functions/.env
 
 # Test output
 playwright-report/

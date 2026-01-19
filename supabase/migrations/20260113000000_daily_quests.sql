@@ -16,7 +16,6 @@ CREATE TABLE IF NOT EXISTS daily_quest_templates (
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
-
 -- Daily Quest Instances (per character per day)
 CREATE TABLE IF NOT EXISTS daily_quest_instances (
   id TEXT PRIMARY KEY,
@@ -35,7 +34,6 @@ CREATE TABLE IF NOT EXISTS daily_quest_instances (
   updated_at TIMESTAMPTZ DEFAULT NOW(),
   UNIQUE(character_id, date_key, template_id)
 );
-
 -- Daily Quest Configuration (per campaign/character)
 CREATE TABLE IF NOT EXISTS daily_quest_configs (
   id TEXT PRIMARY KEY,
@@ -55,7 +53,6 @@ CREATE TABLE IF NOT EXISTS daily_quest_configs (
     (character_id IS NULL AND campaign_id IS NOT NULL)
   )
 );
-
 -- Indexes for performance
 CREATE INDEX IF NOT EXISTS idx_daily_quest_instances_character_date ON daily_quest_instances(character_id, date_key);
 CREATE INDEX IF NOT EXISTS idx_daily_quest_instances_status ON daily_quest_instances(status);
@@ -63,16 +60,13 @@ CREATE INDEX IF NOT EXISTS idx_daily_quest_instances_expires_at ON daily_quest_i
 CREATE INDEX IF NOT EXISTS idx_daily_quest_templates_tier ON daily_quest_templates(tier);
 CREATE INDEX IF NOT EXISTS idx_daily_quest_templates_category ON daily_quest_templates(category);
 CREATE INDEX IF NOT EXISTS idx_daily_quest_templates_active ON daily_quest_templates(is_active);
-
 -- RLS Policies
 ALTER TABLE daily_quest_templates ENABLE ROW LEVEL SECURITY;
 ALTER TABLE daily_quest_instances ENABLE ROW LEVEL SECURITY;
 ALTER TABLE daily_quest_configs ENABLE ROW LEVEL SECURITY;
-
 -- Quest templates are publicly readable (system content)
 CREATE POLICY "Quest templates are publicly readable" ON daily_quest_templates
   FOR SELECT USING (true);
-
 -- Quest instances are readable by owners and campaign members
 CREATE POLICY "Quest instances readable by owner" ON daily_quest_instances
   FOR SELECT USING (
@@ -82,7 +76,6 @@ CREATE POLICY "Quest instances readable by owner" ON daily_quest_instances
       AND characters.user_id = auth.uid()
     )
   );
-
 CREATE POLICY "Quest instances readable by campaign members" ON daily_quest_instances
   FOR SELECT USING (
     EXISTS (
@@ -92,7 +85,6 @@ CREATE POLICY "Quest instances readable by campaign members" ON daily_quest_inst
       AND campaign_members.user_id = auth.uid()
     )
   );
-
 -- Quest instances are manageable by owners
 CREATE POLICY "Quest instances manageable by owner" ON daily_quest_instances
   FOR ALL USING (
@@ -102,7 +94,6 @@ CREATE POLICY "Quest instances manageable by owner" ON daily_quest_instances
       AND characters.user_id = auth.uid()
     )
   );
-
 -- Quest configs are readable/manageable by owners
 CREATE POLICY "Quest configs manageable by character owner" ON daily_quest_configs
   FOR ALL USING (
@@ -112,7 +103,6 @@ CREATE POLICY "Quest configs manageable by character owner" ON daily_quest_confi
       AND characters.user_id = auth.uid()
     )
   );
-
 CREATE POLICY "Quest configs manageable by campaign owner" ON daily_quest_configs
   FOR ALL USING (
     EXISTS (
@@ -121,7 +111,6 @@ CREATE POLICY "Quest configs manageable by campaign owner" ON daily_quest_config
       AND campaigns.dm_id = auth.uid()
     )
   );
-
 -- Insert default quest templates
 INSERT INTO daily_quest_templates (id, name, description, tags, tier, category, requirements, default_scaling, base_rewards) VALUES
 -- Training Quests
@@ -170,12 +159,10 @@ INSERT INTO daily_quest_templates (id, name, description, tags, tier, category, 
  '{"system_favor": 3, "description": "Crafting practice reward"}')
 
 ON CONFLICT (id) DO NOTHING;
-
 -- Functions for quest management
 CREATE OR REPLACE FUNCTION assign_daily_quests(character_uuid UUID)
 RETURNS TABLE(id TEXT, template_id TEXT, status TEXT)
 LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
 AS $$
 DECLARE
   quest_config RECORD;
@@ -240,12 +227,10 @@ BEGIN
   END IF;
 END;
 $$;
-
 -- Trigger to automatically assign quests after long rest
-CREATE OR REPLACE FUNCTION public.on_long_rest_assign_quests()
+CREATE OR REPLACE FUNCTION on_long_rest_assign_quests()
 RETURNS TRIGGER
 LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
 AS $$
 BEGIN
   -- Only proceed if daily quests are enabled for this character
@@ -268,7 +253,6 @@ BEGIN
   RETURN NEW;
 END;
 $$;
-
 -- Create trigger on character updates (long rest completion)
 -- Note: This would be triggered by application logic after executeLongRest
 -- The trigger function exists but should be called explicitly from the app
@@ -277,25 +261,21 @@ $$;
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER
 LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
 AS $$
 BEGIN
   NEW.updated_at = NOW();
   RETURN NEW;
 END;
 $$;
-
 -- Apply timestamp triggers
 CREATE TRIGGER update_daily_quest_templates_updated_at
   BEFORE UPDATE ON daily_quest_templates
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
-
 CREATE TRIGGER update_daily_quest_instances_updated_at
   BEFORE UPDATE ON daily_quest_instances
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
-
 CREATE TRIGGER update_daily_quest_configs_updated_at
   BEFORE UPDATE ON daily_quest_configs
   FOR EACH ROW

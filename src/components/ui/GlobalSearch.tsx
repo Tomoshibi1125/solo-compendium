@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useRecentItems } from '@/hooks/useRecentItems';
 import { cn } from '@/lib/utils';
+import { normalizeSearchText } from '@/lib/fullTextSearch';
 import { error as logError } from '@/lib/logger';
 
 interface SearchResult {
@@ -41,6 +42,10 @@ export function GlobalSearch({ className }: { className?: string }) {
       if (!debouncedQuery.trim()) return [];
 
       const allResults: SearchResult[] = [];
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      const canUseRpc = Boolean(session?.user);
 
       // Search across all compendium types
       const tables = [
@@ -79,10 +84,16 @@ export function GlobalSearch({ className }: { className?: string }) {
           const rpcType = searchFunctions[table];
           let data: SearchRow[] | null = null;
 
-          if (rpcType && debouncedQuery.length > 2) {
+          if (rpcType && debouncedQuery.length > 2 && canUseRpc) {
             try {
+              const preparedQuery = normalizeSearchText(debouncedQuery);
+              if (!preparedQuery) {
+                continue;
+              }
               const { data: rpcData } = await supabase.rpc(`search_compendium_${rpcType}`, {
-                search_text: debouncedQuery.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').trim(),
+                p_query: preparedQuery,
+                p_limit: 5,
+                p_offset: 0,
               });
               if (rpcData) {
                 data = rpcData.slice(0, 5);

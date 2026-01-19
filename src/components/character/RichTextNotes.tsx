@@ -25,7 +25,7 @@ const QUILL_MODULES = {
 const QUILL_FORMATS = [
   'header',
   'bold', 'italic', 'underline', 'strike',
-  'list', 'bullet',
+  'list',
   'color', 'background',
   'link', 'blockquote', 'code-block',
 ];

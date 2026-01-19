@@ -1,8 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 import { useToast } from '@/hooks/use-toast';
 import { AppError } from '@/lib/appError';
+import { getLocalUserId } from '@/lib/guestStore';
 
 export interface CampaignNote {
   id: string;
@@ -16,11 +17,38 @@ export interface CampaignNote {
   updated_at: string;
 }
 
+const getNotesKey = (campaignId: string) => `solo-compendium.campaign.${campaignId}.notes`;
+
+const loadLocalNotes = (campaignId: string): CampaignNote[] => {
+  if (typeof window === 'undefined') return [];
+  const raw = window.localStorage.getItem(getNotesKey(campaignId));
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw) as CampaignNote[];
+    if (!Array.isArray(parsed)) return [];
+    return parsed.map((note) => ({
+      ...note,
+      category: note.category || 'general',
+    }));
+  } catch {
+    return [];
+  }
+};
+
+const saveLocalNotes = (campaignId: string, notes: CampaignNote[]) => {
+  if (typeof window === 'undefined') return;
+  window.localStorage.setItem(getNotesKey(campaignId), JSON.stringify(notes));
+};
+
 // Fetch campaign notes
 export const useCampaignNotes = (campaignId: string) => {
   return useQuery({
     queryKey: ['campaigns', campaignId, 'notes'],
     queryFn: async (): Promise<CampaignNote[]> => {
+      if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true') {
+        return loadLocalNotes(campaignId).sort((a, b) => b.updated_at.localeCompare(a.updated_at));
+      }
+
       const { data, error } = await supabase
         .from('campaign_notes')
         .select('*')
@@ -28,7 +56,11 @@ export const useCampaignNotes = (campaignId: string) => {
         .order('updated_at', { ascending: false });
 
       if (error) throw error;
-      return (data || []) as unknown as CampaignNote[];
+      const notes = (data || []) as Database['public']['Tables']['campaign_notes']['Row'][];
+      return notes.map((note) => ({
+        ...note,
+        category: note.category ?? 'general',
+      }));
     },
     enabled: !!campaignId,
   });
@@ -53,8 +85,42 @@ export const useCreateCampaignNote = () => {
       isShared?: boolean;
       category?: string;
     }) => {
+      if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true') {
+        const now = new Date().toISOString();
+        const next: CampaignNote = {
+          id: crypto.randomUUID(),
+          campaign_id: campaignId,
+          user_id: getLocalUserId(),
+          title,
+          content: content || null,
+          is_shared: isShared,
+          category,
+          created_at: now,
+          updated_at: now,
+        };
+        const updated = [next, ...loadLocalNotes(campaignId)];
+        saveLocalNotes(campaignId, updated);
+        return next;
+      }
+
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
+      if (!user) {
+        const now = new Date().toISOString();
+        const next: CampaignNote = {
+          id: crypto.randomUUID(),
+          campaign_id: campaignId,
+          user_id: getLocalUserId(),
+          title,
+          content: content || null,
+          is_shared: isShared,
+          category,
+          created_at: now,
+          updated_at: now,
+        };
+        const updated = [next, ...loadLocalNotes(campaignId)];
+        saveLocalNotes(campaignId, updated);
+        return next;
+      }
 
       const { data, error } = await supabase
         .from('campaign_notes')
@@ -118,6 +184,24 @@ export const useUpdateCampaignNote = () => {
       if (isShared !== undefined) updates.is_shared = isShared;
       if (category !== undefined) updates.category = category;
 
+      if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true') {
+        const existing = loadLocalNotes(campaignId);
+        const next = existing.map((note) =>
+          note.id === noteId
+            ? {
+                ...note,
+                ...updates,
+                category: (updates.category ?? note.category) || 'general',
+                updated_at: new Date().toISOString(),
+              }
+            : note
+        );
+        saveLocalNotes(campaignId, next);
+        const updatedNote = next.find((note) => note.id === noteId);
+        if (!updatedNote) throw new AppError('Note not found', 'NOT_FOUND');
+        return updatedNote;
+      }
+
       const { data, error } = await supabase
         .from('campaign_notes')
         .update(updates)
@@ -126,7 +210,11 @@ export const useUpdateCampaignNote = () => {
         .single();
 
       if (error) throw error;
-      return data as unknown as CampaignNote;
+      const note = data as Database['public']['Tables']['campaign_notes']['Row'];
+      return {
+        ...note,
+        category: note.category ?? 'general',
+      };
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['campaigns', variables.campaignId, 'notes'] });
@@ -152,6 +240,13 @@ export const useDeleteCampaignNote = () => {
 
   return useMutation({
     mutationFn: async ({ noteId, campaignId }: { noteId: string; campaignId: string }) => {
+      if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true') {
+        const existing = loadLocalNotes(campaignId);
+        const next = existing.filter((note) => note.id !== noteId);
+        saveLocalNotes(campaignId, next);
+        return;
+      }
+
       const { error } = await supabase
         .from('campaign_notes')
         .delete()

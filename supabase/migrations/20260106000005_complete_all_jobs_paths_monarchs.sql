@@ -28,7 +28,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Vanguard';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -41,7 +40,6 @@ SELECT
   'Path chosen at 3rd level',
   false
 FROM compendium_jobs j WHERE j.name = 'Vanguard';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -54,7 +52,6 @@ SELECT
   'Path chosen at 3rd level',
   false
 FROM compendium_jobs j WHERE j.name = 'Vanguard';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -67,7 +64,6 @@ SELECT
   'Path chosen at 3rd level',
   false
 FROM compendium_jobs j WHERE j.name = 'Vanguard';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -80,7 +76,6 @@ SELECT
   'Path chosen at 3rd level',
   false
 FROM compendium_jobs j WHERE j.name = 'Vanguard';
-
 -- Vanguard Level 11: Extra Attack (3 attacks) - already added, but note the upgrade
 -- Vanguard Level 12: Ability Score Improvement (already added)
 -- Vanguard Level 13: Indomitable (2 uses) - already added
@@ -103,7 +98,6 @@ SELECT
   'Extra Attack feature',
   false
 FROM compendium_jobs j WHERE j.name = 'Vanguard';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -116,7 +110,6 @@ SELECT
   'Extra Attack (3) feature',
   false
 FROM compendium_jobs j WHERE j.name = 'Vanguard';
-
 -- =============================================
 -- COMPLETE ASSASSIN FEATURES (Remaining Levels)
 -- =============================================
@@ -146,7 +139,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Assassin';
-
 -- =============================================
 -- MAGE (Wizard Analog) - Complete Features
 -- =============================================
@@ -163,7 +155,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Mage';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -176,7 +167,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Mage';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -189,7 +179,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Mage';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -202,7 +191,6 @@ SELECT
   'Archetype chosen at 2nd level',
   false
 FROM compendium_jobs j WHERE j.name = 'Mage';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -215,7 +203,6 @@ SELECT
   'Archetype chosen at 2nd level',
   false
 FROM compendium_jobs j WHERE j.name = 'Mage';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -228,7 +215,6 @@ SELECT
   'Archetype chosen at 2nd level',
   false
 FROM compendium_jobs j WHERE j.name = 'Mage';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -241,7 +227,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Mage';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -254,7 +239,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Mage';
-
 -- =============================================
 -- HEALER (Cleric Analog) - Complete Features
 -- =============================================
@@ -271,7 +255,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Healer';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -284,7 +267,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Healer';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -297,7 +279,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Healer';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -310,7 +291,6 @@ SELECT
   'Channel System Energy feature',
   false
 FROM compendium_jobs j WHERE j.name = 'Healer';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -323,7 +303,6 @@ SELECT
   'Turn Undead feature',
   false
 FROM compendium_jobs j WHERE j.name = 'Healer';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -336,7 +315,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Healer';
-
 -- =============================================
 -- STRIKER (Monk Analog) - Complete Features
 -- =============================================
@@ -353,7 +331,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Striker';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -366,7 +343,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Striker';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -379,7 +355,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Striker';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -392,7 +367,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Striker';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -405,7 +379,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Striker';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -418,7 +391,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Striker';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -431,7 +403,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Striker';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -444,7 +415,6 @@ SELECT
   'Ki feature',
   false
 FROM compendium_jobs j WHERE j.name = 'Striker';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -457,7 +427,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Striker';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -470,7 +439,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Striker';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -483,7 +451,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Striker';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -496,7 +463,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Striker';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -509,7 +475,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Striker';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -522,7 +487,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Striker';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -535,7 +499,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Striker';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -548,7 +511,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Striker';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -561,7 +523,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Striker';
-
 -- =============================================
 -- RANGER - Complete Features
 -- =============================================
@@ -578,7 +539,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Ranger';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -591,7 +551,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Ranger';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -604,7 +563,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Ranger';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -617,7 +575,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Ranger';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -630,7 +587,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Ranger';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -643,7 +599,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Ranger';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -656,7 +611,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Ranger';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -669,7 +623,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Ranger';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -682,7 +635,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Ranger';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -695,7 +647,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Ranger';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -708,7 +659,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Ranger';
-
 -- =============================================
 -- DESTROYER (Barbarian Analog) - Complete Features
 -- =============================================
@@ -725,7 +675,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Destroyer';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -738,7 +687,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Destroyer';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -751,7 +699,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Destroyer';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -764,7 +711,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Destroyer';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -777,7 +723,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Destroyer';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -790,7 +735,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Destroyer';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -803,7 +747,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Destroyer';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -816,7 +759,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Destroyer';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -829,7 +771,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Destroyer';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -842,7 +783,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Destroyer';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -855,7 +795,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Destroyer';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -868,7 +807,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Destroyer';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -881,7 +819,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Destroyer';
-
 -- =============================================
 -- ESPER (Psion Analog) - Complete Features
 -- =============================================
@@ -898,7 +835,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Esper';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -911,7 +847,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Esper';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -924,7 +859,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Esper';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -937,7 +871,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Esper';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -950,7 +883,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Esper';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -963,7 +895,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Esper';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -976,7 +907,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Esper';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -989,7 +919,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Esper';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1002,7 +931,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Esper';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1015,7 +943,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Esper';
-
 -- =============================================
 -- CONTRACTOR (Warlock Analog) - Complete Features
 -- =============================================
@@ -1032,7 +959,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Contractor';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1045,7 +971,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Contractor';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1058,7 +983,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Contractor';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1071,7 +995,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Contractor';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1084,7 +1007,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Contractor';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1097,7 +1019,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Contractor';
-
 -- =============================================
 -- HERALD (Bard Analog) - Complete Features
 -- =============================================
@@ -1114,7 +1035,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Herald';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1127,7 +1047,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Herald';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1140,7 +1059,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Herald';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1153,7 +1071,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Herald';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1166,7 +1083,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Herald';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1179,7 +1095,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Herald';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1192,7 +1107,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Herald';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1205,7 +1119,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Herald';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1218,7 +1131,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Herald';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1231,7 +1143,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Herald';
-
 -- =============================================
 -- HOLY KNIGHT (Paladin Analog) - Complete Features
 -- =============================================
@@ -1248,7 +1159,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Holy Knight';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1261,7 +1171,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Holy Knight';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1274,7 +1183,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Holy Knight';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1287,7 +1195,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Holy Knight';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1300,7 +1207,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Holy Knight';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1313,7 +1219,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Holy Knight';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1326,7 +1231,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Holy Knight';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1339,7 +1243,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Holy Knight';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1352,7 +1255,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Holy Knight';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1365,7 +1267,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Holy Knight';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1378,7 +1279,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Holy Knight';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1391,7 +1291,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Holy Knight';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1404,7 +1303,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Holy Knight';
-
 -- =============================================
 -- TECHSMITH (Artificer Analog) - Complete Features
 -- =============================================
@@ -1421,7 +1319,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Techsmith';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1434,7 +1331,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Techsmith';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1447,7 +1343,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Techsmith';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1460,7 +1355,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Techsmith';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1473,7 +1367,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Techsmith';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1486,7 +1379,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Techsmith';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1499,7 +1391,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Techsmith';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1512,7 +1403,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Techsmith';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1525,7 +1415,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Techsmith';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1538,7 +1427,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Techsmith';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1551,7 +1439,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Techsmith';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1564,7 +1451,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Techsmith';
-
 -- =============================================
 -- WARDEN (Druid Analog) - Complete Features
 -- =============================================
@@ -1581,7 +1467,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Warden';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1594,7 +1479,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Warden';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1607,7 +1491,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Warden';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1620,7 +1503,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Warden';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1633,7 +1515,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Warden';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1646,7 +1527,6 @@ SELECT
   'Wild Shape feature',
   false
 FROM compendium_jobs j WHERE j.name = 'Warden';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1659,7 +1539,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Warden';
-
 -- =============================================
 -- PATH FEATURES (All 78 Paths)
 -- =============================================
@@ -1686,7 +1565,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Distant Needle';
-
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1702,7 +1580,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Distant Needle';
-
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1718,7 +1595,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Distant Needle';
-
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1734,7 +1610,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Distant Needle';
-
 -- Path of the Masked Ghost (Level 3, 6, 10, 14)
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
@@ -1751,7 +1626,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Masked Ghost';
-
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1767,7 +1641,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Masked Ghost';
-
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1783,7 +1656,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Masked Ghost';
-
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -1799,7 +1671,6 @@ SELECT
 FROM compendium_jobs j
 JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Assassin' AND p.name = 'Path of the Masked Ghost';
-
 -- =============================================
 -- NOTE: Path features pattern established
 -- =============================================
@@ -1819,5 +1690,4 @@ WHERE j.name = 'Assassin' AND p.name = 'Path of the Masked Ghost';
 -- - Prerequisites where applicable
 -- - Thematic coherence with path description
 
--- All paths will be completed following this established pattern.
-
+-- All paths will be completed following this established pattern.;

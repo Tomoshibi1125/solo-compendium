@@ -3,7 +3,7 @@
  * Role-based tools for players in Solo Compendium
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   User, 
@@ -25,7 +25,9 @@ import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
 import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
+import { useActiveCharacter } from '@/hooks/useActiveCharacter';
 
 const playerTools = [
   {
@@ -121,6 +123,25 @@ const playerTools = [
 ];
 
 const PlayerTools = () => {
+  const { activeCharacter, characters, activeCharacterId, setActiveCharacter, isLoading } = useActiveCharacter();
+
+  const rankInfo = useMemo(() => {
+    const level = activeCharacter?.level ?? 0;
+    if (level >= 17) return { rank: 'S', color: 'text-amber-400', stars: 5 };
+    if (level >= 13) return { rank: 'A', color: 'text-red-400', stars: 4 };
+    if (level >= 9) return { rank: 'B', color: 'text-orange-400', stars: 3 };
+    if (level >= 5) return { rank: 'C', color: 'text-blue-400', stars: 2 };
+    if (level >= 2) return { rank: 'D', color: 'text-green-400', stars: 1 };
+    return { rank: 'E', color: 'text-gray-400', stars: 1 };
+  }, [activeCharacter]);
+
+  const hpCurrent = activeCharacter?.hp_current ?? 0;
+  const hpMax = activeCharacter?.hp_max ?? 0;
+  const hpPercent = hpMax > 0 ? Math.min(100, (hpCurrent / hpMax) * 100) : 0;
+  const energyCurrent = activeCharacter?.shadow_energy_current ?? 0;
+  const energyMax = activeCharacter?.shadow_energy_max ?? 0;
+  const energyPercent = energyMax > 0 ? Math.min(100, (energyCurrent / energyMax) * 100) : 0;
+
   return (
     <Layout>
       <div className="container mx-auto px-4 py-8">
@@ -141,15 +162,48 @@ const PlayerTools = () => {
 
         {/* Player Stats Overview */}
         <SystemWindow title="HUNTER STATUS" className="mb-8 border-blue-500/30">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
+            <div>
+              <h2 className="font-heading text-sm text-muted-foreground">Active Hunter</h2>
+              {activeCharacter ? (
+                <div className="text-lg font-semibold">
+                  {activeCharacter.name} - Level {activeCharacter.level} {activeCharacter.job || 'Unawakened'}
+                </div>
+              ) : (
+                <div className="text-sm text-muted-foreground">
+                  {isLoading ? 'Loading hunters...' : 'No hunters yet'}
+                </div>
+              )}
+            </div>
+            {characters.length > 1 && (
+              <Select value={activeCharacterId || ''} onValueChange={setActiveCharacter}>
+                <SelectTrigger className="w-64">
+                  <SelectValue placeholder="Select a hunter" />
+                </SelectTrigger>
+                <SelectContent>
+                  {characters.map((character) => (
+                    <SelectItem key={character.id} value={character.id}>
+                      {character.name} (Level {character.level})
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
               <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-gradient-to-br from-blue-500/30 to-blue-600/20 flex items-center justify-center">
                 <Heart className="w-8 h-8 text-blue-400" />
               </div>
               <h3 className="font-arise text-blue-400 text-lg mb-1">VITALITY</h3>
-              <p className="text-2xl font-bold text-white">125/150</p>
+              <p className="text-2xl font-bold text-white">
+                {activeCharacter ? `${hpCurrent}/${hpMax}` : '--'}
+              </p>
               <div className="w-full bg-gray-700 rounded-full h-2 mt-2">
-                <div className="bg-blue-500 h-2 rounded-full player-tools-style-151"></div>
+                <div
+                  className="bg-blue-500 h-2 rounded-full"
+                  style={{ width: `${hpPercent}%` }}
+                />
               </div>
             </div>
             
@@ -158,9 +212,14 @@ const PlayerTools = () => {
                 <Zap className="w-8 h-8 text-purple-400" />
               </div>
               <h3 className="font-arise text-purple-400 text-lg mb-1">SHADOW ENERGY</h3>
-              <p className="text-2xl font-bold text-white">85/100</p>
+              <p className="text-2xl font-bold text-white">
+                {activeCharacter ? `${energyCurrent}/${energyMax}` : '--'}
+              </p>
               <div className="w-full bg-gray-700 rounded-full h-2 mt-2">
-                <div className="bg-purple-500 h-2 rounded-full player-tools-style-162"></div>
+                <div
+                  className="bg-purple-500 h-2 rounded-full"
+                  style={{ width: `${energyPercent}%` }}
+                />
               </div>
             </div>
             
@@ -169,14 +228,16 @@ const PlayerTools = () => {
                 <Star className="w-8 h-8 text-amber-400" />
               </div>
               <h3 className="font-arise text-amber-400 text-lg mb-1">HUNTER RANK</h3>
-              <p className="text-2xl font-bold text-white">B-RANK</p>
+              <p className="text-2xl font-bold text-white">
+                {activeCharacter ? `${rankInfo.rank}-RANK` : '--'}
+              </p>
               <div className="flex justify-center gap-1 mt-2">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <Star
                     key={star}
                     className={cn(
                       "w-4 h-4",
-                      star <= 3 ? "text-amber-400 fill-current" : "text-gray-600"
+                      activeCharacter && star <= rankInfo.stars ? "text-amber-400 fill-current" : "text-gray-600"
                     )}
                   />
                 ))}

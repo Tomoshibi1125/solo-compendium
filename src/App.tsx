@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { NetworkErrorBoundary } from "@/components/NetworkErrorHandling";
 import { useGlobalShortcuts } from "@/hooks/useGlobalShortcuts";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { CommandPalette } from "@/components/ui/CommandPalette";
@@ -67,6 +68,7 @@ const VTTMap = lazy(() => import("./pages/dm-tools/VTTMap"));
 const VTTEnhanced = lazy(() => import("./pages/dm-tools/VTTEnhanced"));
 const VTTJournal = lazy(() => import("./pages/dm-tools/VTTJournal"));
 const DiceRoller = lazy(() => import("./pages/DiceRoller"));
+const Favorites = lazy(() => import("./pages/Favorites"));
 const Campaigns = lazy(() => import("./pages/Campaigns"));
 const CampaignDetail = lazy(() => import("./pages/CampaignDetail"));
 const CampaignJoin = lazy(() => import("./pages/CampaignJoin"));
@@ -76,6 +78,7 @@ const AuthCallback = lazy(() => import("./pages/AuthCallback"));
 const Landing = lazy(() => import("./pages/Landing"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Setup = lazy(() => import("./pages/Setup"));
+const PlayerToolDetail = lazy(() => import("./pages/PlayerToolDetail"));
 
 // Configure React Query with better caching and error handling
 const queryClient = new QueryClient({
@@ -178,6 +181,14 @@ const AppContent = () => {
         }
       />
       <Route
+        path="/player-tools/:toolId"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <PlayerToolDetail />
+          </Suspense>
+        }
+      />
+      <Route
         path="/compendium"
         element={
           <Suspense fallback={<PageLoader />}>
@@ -234,20 +245,56 @@ const AppContent = () => {
         }
       />
       <Route
-        path="/admin"
+        path="/dm-tools/system-console"
         element={
+          <ProtectedRoute requireDM>
           <Suspense fallback={<PageLoader />}>
             <Admin />
           </Suspense>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/dm-tools/content-audit"
+        element={
+          <ProtectedRoute requireDM>
+          <Suspense fallback={<PageLoader />}>
+            <ContentAudit />
+          </Suspense>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/dm-tools/art-generation"
+        element={
+          <ProtectedRoute requireDM>
+          <Suspense fallback={<PageLoader />}>
+            <ArtGeneration />
+          </Suspense>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute requireDM>
+            <Navigate to="/dm-tools/system-console" replace />
+          </ProtectedRoute>
         }
       />
       <Route
         path="/admin/art-generation"
         element={
           <ProtectedRoute requireDM>
-          <Suspense fallback={<PageLoader />}>
-            <ArtGeneration />
-          </Suspense>
+            <Navigate to="/dm-tools/art-generation" replace />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/audit"
+        element={
+          <ProtectedRoute requireDM>
+            <Navigate to="/dm-tools/content-audit" replace />
           </ProtectedRoute>
         }
       />
@@ -446,6 +493,14 @@ const AppContent = () => {
         }
       />
       <Route
+        path="/favorites"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <Favorites />
+          </Suspense>
+        }
+      />
+      <Route
         path="/campaigns"
         element={
           <Suspense fallback={<PageLoader />}>
@@ -511,9 +566,10 @@ const AppContent = () => {
 const App = () => {
   return (
     <ErrorBoundary>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <AuthProvider>
+      <NetworkErrorBoundary>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <AuthProvider>
             <GlobalEffects />
             <Toaster />
             <Sonner />
@@ -527,6 +583,7 @@ const App = () => {
           </AuthProvider>
         </TooltipProvider>
       </QueryClientProvider>
+    </NetworkErrorBoundary>
     </ErrorBoundary>
   );
 };

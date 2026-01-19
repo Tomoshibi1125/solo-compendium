@@ -5,22 +5,18 @@
 DROP FUNCTION IF EXISTS public.on_long_rest_assign_quests(UUID) CASCADE;
 CREATE OR REPLACE FUNCTION public.on_long_rest_assign_quests(p_character_id UUID)
 RETURNS VOID
-LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
 BEGIN
   -- Implementation would go here
   NULL;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 ALTER FUNCTION public.on_long_rest_assign_quests(UUID) SET search_path = pg_catalog, public, extensions;
-
 -- Function: get_asset_paths
 DROP FUNCTION IF EXISTS public.get_asset_paths(TEXT) CASCADE;
 CREATE OR REPLACE FUNCTION public.get_asset_paths(p_type TEXT)
 RETURNS TABLE (path TEXT)
-LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
 BEGIN
@@ -29,15 +25,12 @@ BEGIN
   FROM public.assets
   WHERE type = p_type;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 ALTER FUNCTION public.get_asset_paths(TEXT) SET search_path = pg_catalog, public, extensions;
-
 -- Function: asset_exists
 DROP FUNCTION IF EXISTS public.asset_exists(TEXT) CASCADE;
 CREATE OR REPLACE FUNCTION public.asset_exists(p_path TEXT)
 RETURNS BOOLEAN
-LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
 BEGIN
@@ -47,15 +40,12 @@ BEGIN
     WHERE path = p_path
   );
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 ALTER FUNCTION public.asset_exists(TEXT) SET search_path = pg_catalog, public, extensions;
-
 -- Function: search_compendium_jobs
 DROP FUNCTION IF EXISTS public.search_compendium_jobs(TEXT, INTEGER, INTEGER) CASCADE;
 CREATE OR REPLACE FUNCTION public.search_compendium_jobs(p_query TEXT, p_limit INTEGER DEFAULT 10, p_offset INTEGER DEFAULT 0)
 RETURNS TABLE (id UUID, name TEXT, description TEXT)
-LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
 BEGIN
@@ -68,15 +58,12 @@ BEGIN
   LIMIT p_limit
   OFFSET p_offset;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 ALTER FUNCTION public.search_compendium_jobs(TEXT, INTEGER, INTEGER) SET search_path = pg_catalog, public, extensions;
-
 -- Function: get_entity_assets
 DROP FUNCTION IF EXISTS public.get_entity_assets(UUID, TEXT) CASCADE;
 CREATE OR REPLACE FUNCTION public.get_entity_assets(p_entity_id UUID, p_entity_type TEXT)
 RETURNS TABLE (path TEXT, type TEXT)
-LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
 BEGIN
@@ -86,15 +73,12 @@ BEGIN
   JOIN public.entity_assets ea ON a.id = ea.asset_id
   WHERE ea.entity_id = p_entity_id AND ea.entity_type = p_entity_type;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 ALTER FUNCTION public.get_entity_assets(UUID, TEXT) SET search_path = pg_catalog, public, extensions;
-
 -- Function: calculate_shadow_energy_max
 DROP FUNCTION IF EXISTS public.calculate_shadow_energy_max(UUID) CASCADE;
 CREATE OR REPLACE FUNCTION public.calculate_shadow_energy_max(p_character_id UUID)
 RETURNS INTEGER
-LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
 DECLARE
@@ -119,15 +103,12 @@ BEGIN
     ELSE 200
   END;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 ALTER FUNCTION public.calculate_shadow_energy_max(UUID) SET search_path = pg_catalog, public, extensions;
-
 -- Function: get_character_by_share_token
 DROP FUNCTION IF EXISTS public.get_character_by_share_token(TEXT) CASCADE;
 CREATE OR REPLACE FUNCTION public.get_character_by_share_token(p_token TEXT)
 RETURNS TABLE (id UUID, name TEXT, user_id UUID)
-LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
 BEGIN
@@ -137,15 +118,12 @@ BEGIN
   JOIN public.character_shares cs ON c.id = cs.character_id
   WHERE cs.token = p_token AND cs.expires_at > NOW();
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 ALTER FUNCTION public.get_character_by_share_token(TEXT) SET search_path = pg_catalog, public, extensions;
-
 -- Function: search_compendium_relics
 DROP FUNCTION IF EXISTS public.search_compendium_relics(TEXT, INTEGER, INTEGER) CASCADE;
 CREATE OR REPLACE FUNCTION public.search_compendium_relics(p_query TEXT, p_limit INTEGER DEFAULT 10, p_offset INTEGER DEFAULT 0)
 RETURNS TABLE (id UUID, name TEXT, description TEXT, rarity TEXT)
-LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
 BEGIN
@@ -158,15 +136,12 @@ BEGIN
   LIMIT p_limit
   OFFSET p_offset;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 ALTER FUNCTION public.search_compendium_relics(TEXT, INTEGER, INTEGER) SET search_path = pg_catalog, public, extensions;
-
 -- Function: search_compendium_powers
 DROP FUNCTION IF EXISTS public.search_compendium_powers(TEXT, INTEGER, INTEGER) CASCADE;
 CREATE OR REPLACE FUNCTION public.search_compendium_powers(p_query TEXT, p_limit INTEGER DEFAULT 10, p_offset INTEGER DEFAULT 0)
 RETURNS TABLE (id UUID, name TEXT, description TEXT, level INTEGER)
-LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
 BEGIN
@@ -179,15 +154,12 @@ BEGIN
   LIMIT p_limit
   OFFSET p_offset;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 ALTER FUNCTION public.search_compendium_powers(TEXT, INTEGER, INTEGER) SET search_path = pg_catalog, public, extensions;
-
 -- Function: search_compendium_monsters
 DROP FUNCTION IF EXISTS public.search_compendium_monsters(TEXT, INTEGER, INTEGER) CASCADE;
 CREATE OR REPLACE FUNCTION public.search_compendium_monsters(p_query TEXT, p_limit INTEGER DEFAULT 10, p_offset INTEGER DEFAULT 0)
 RETURNS TABLE (id UUID, name TEXT, description TEXT, challenge_rating DECIMAL)
-LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
 BEGIN
@@ -200,15 +172,12 @@ BEGIN
   LIMIT p_limit
   OFFSET p_offset;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 ALTER FUNCTION public.search_compendium_monsters(TEXT, INTEGER, INTEGER) SET search_path = pg_catalog, public, extensions;
-
 -- Function: search_compendium_paths
 DROP FUNCTION IF EXISTS public.search_compendium_paths(TEXT, INTEGER, INTEGER) CASCADE;
 CREATE OR REPLACE FUNCTION public.search_compendium_paths(p_query TEXT, p_limit INTEGER DEFAULT 10, p_offset INTEGER DEFAULT 0)
 RETURNS TABLE (id UUID, name TEXT, description TEXT)
-LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
 BEGIN
@@ -221,15 +190,12 @@ BEGIN
   LIMIT p_limit
   OFFSET p_offset;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 ALTER FUNCTION public.search_compendium_paths(TEXT, INTEGER, INTEGER) SET search_path = pg_catalog, public, extensions;
-
 -- Function: search_compendium_monarchs
 DROP FUNCTION IF EXISTS public.search_compendium_monarchs(TEXT, INTEGER, INTEGER) CASCADE;
 CREATE OR REPLACE FUNCTION public.search_compendium_monarchs(p_query TEXT, p_limit INTEGER DEFAULT 10, p_offset INTEGER DEFAULT 0)
 RETURNS TABLE (id UUID, name TEXT, description TEXT, power_level INTEGER)
-LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
 BEGIN
@@ -242,6 +208,5 @@ BEGIN
   LIMIT p_limit
   OFFSET p_offset;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 ALTER FUNCTION public.search_compendium_monarchs(TEXT, INTEGER, INTEGER) SET search_path = pg_catalog, public, extensions;

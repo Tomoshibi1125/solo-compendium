@@ -7,8 +7,62 @@ export interface Item {
   name: string;
   description: string;
   rarity: 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
-  type: 'weapon' | 'armor' | 'consumable' | 'accessory' | 'scroll';
+  type: 'weapon' | 'armor' | 'consumable' | 'accessory' | 'scroll' | 'wondrous' | 'ring' | 'amulet' | 'staff' | 'wand';
   image: string;
+  // D&D 5e mechanics
+  requirements?: {
+    level?: number;
+    class?: string[];
+    race?: string[];
+    alignment?: string[];
+  };
+  properties?: {
+    weapon?: {
+      damage: string;
+      damageType: string;
+      range?: number;
+      versatile?: string;
+      finesse?: boolean;
+    };
+    magical?: {
+      bonus?: {
+        attack?: number;
+        damage?: number;
+        armorClass?: number;
+        savingThrows?: string[];
+        abilityScores?: {
+          strength?: number;
+          dexterity?: number;
+          constitution?: number;
+          intelligence?: number;
+          wisdom?: number;
+          charisma?: number;
+        };
+      };
+      resistance?: string[];
+      immunity?: string[];
+      vulnerability?: string[];
+    };
+  };
+  effects?: {
+    passive?: string[];
+    active?: {
+      name: string;
+      description: string;
+      action?: 'action' | 'bonus-action' | 'reaction';
+      frequency?: 'at-will' | 'short-rest' | 'long-rest' | 'once-per-day';
+      dc?: number;
+    }[];
+    value?: number;
+  };
+  attunement?: boolean;
+  cursed?: boolean;
+  charges?: {
+    max: number;
+    current: number;
+    recharge?: 'dawn' | 'dusk' | 'short-rest' | 'long-rest';
+  };
+  // Legacy stats for backward compatibility
   stats?: {
     attack?: number;
     defense?: number;
@@ -17,6 +71,8 @@ export interface Item {
   };
   effect?: string;
   value: number;
+  weight?: number;
+  source?: string;
 }
 
 // Re-export items from split files

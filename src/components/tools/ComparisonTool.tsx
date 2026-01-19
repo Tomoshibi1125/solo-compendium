@@ -60,7 +60,7 @@ export function ComparisonTool({ type, className }: ComparisonToolProps) {
 
     setSelectedItems(prev => [...prev, {
       id: item.id,
-      name: item.name,
+      name: item.name || '',
       type: type.slice(0, -1) as ComparisonItem['type'], // Remove 's' from end
       data: item,
     }]);

@@ -1,11 +1,12 @@
-/**
+﻿/**
  * Audio Player Service
  * Legal-safe sounds and music management for DMs
  */
 
 import type { AudioTrack, Playlist, AudioPlayerState, AudioSettings } from './types';
 import { DEFAULT_AUDIO_SETTINGS } from './types';
-import { error } from '@/lib/logger';
+import { logger } from '@/lib/logger';
+import { loadAudioFile } from './storage';
 
 export class AudioService {
   private audio: HTMLAudioElement | null = null;
@@ -25,6 +26,8 @@ export class AudioService {
   private settings: AudioSettings = DEFAULT_AUDIO_SETTINGS;
   private listeners: Set<(state: AudioPlayerState) => void> = new Set();
   private fadeTimeout: NodeJS.Timeout | null = null;
+  private activeObjectUrl: string | null = null;
+  private playlistTracks: AudioTrack[] = [];
 
   constructor() {
     // Load settings from localStorage
@@ -106,8 +109,20 @@ export class AudioService {
       
       // Load the audio source
       if (track.isLocal && track.localPath) {
-        this.audio.src = track.localPath;
+        if (track.localPath.startsWith('audio-db:')) {
+          const blob = await loadAudioFile(track.id);
+          if (!blob) {
+            throw new Error('Local audio file not found');
+          }
+          const objectUrl = URL.createObjectURL(blob);
+          this.setActiveObjectUrl(objectUrl);
+          this.audio.src = objectUrl;
+        } else {
+          this.clearActiveObjectUrl();
+          this.audio.src = track.localPath;
+        }
       } else {
+        this.clearActiveObjectUrl();
         this.audio.src = track.url;
       }
       
@@ -180,7 +195,13 @@ export class AudioService {
     }
     
     this.updateState({ currentTrackIndex: nextIndex });
-    // Load next track (would need track data from playlist)
+    const nextTrack = this.playlistTracks[nextIndex];
+    if (nextTrack) {
+      await this.loadTrack(nextTrack);
+      if (this.state.isPlaying) {
+        await this.play();
+      }
+    }
   }
 
   async previous() {
@@ -200,7 +221,13 @@ export class AudioService {
     }
     
     this.updateState({ currentTrackIndex: prevIndex });
-    // Load previous track (would need track data from playlist)
+    const prevTrack = this.playlistTracks[prevIndex];
+    if (prevTrack) {
+      await this.loadTrack(prevTrack);
+      if (this.state.isPlaying) {
+        await this.play();
+      }
+    }
   }
 
   setVolume(volume: number) {
@@ -237,13 +264,17 @@ export class AudioService {
   }
 
   // Playlist management
-  loadPlaylist(playlist: Playlist, startIndex = 0) {
+  loadPlaylist(playlist: Playlist, tracks: AudioTrack[] = [], startIndex = 0) {
+    this.playlistTracks = tracks;
     this.updateState({ 
       playlist,
       currentTrackIndex: startIndex,
     });
-    
-    // Load the first track (would need track data from playlist)
+
+    const track = this.playlistTracks[startIndex];
+    if (track) {
+      void this.loadTrack(track);
+    }
   }
 
   // Volume fading
@@ -265,10 +296,10 @@ export class AudioService {
       const newVolume = startVolume + (stepVolume * currentStep);
       
       if (currentStep >= steps || newVolume >= target) {
-        this.audio.volume = target;
+        if (this.audio) this.audio.volume = target;
         clearInterval(fadeInterval);
       } else {
-        this.audio.volume = newVolume;
+        if (this.audio) this.audio.volume = newVolume;
       }
     }, stepDuration);
     
@@ -294,13 +325,13 @@ export class AudioService {
       const newVolume = startVolume - (stepVolume * currentStep);
       
       if (currentStep >= steps || newVolume <= 0) {
-        this.audio.volume = 0;
+        if (this.audio) this.audio.volume = 0;
         clearInterval(fadeInterval);
         if (this.state.isPlaying) {
           this.pause();
         }
       } else {
-        this.audio.volume = newVolume;
+        if (this.audio) this.audio.volume = newVolume;
       }
     }, stepDuration);
     
@@ -316,6 +347,18 @@ export class AudioService {
     }
   }
 
+  private setActiveObjectUrl(url: string) {
+    this.clearActiveObjectUrl();
+    this.activeObjectUrl = url;
+  }
+
+  private clearActiveObjectUrl() {
+    if (this.activeObjectUrl) {
+      URL.revokeObjectURL(this.activeObjectUrl);
+      this.activeObjectUrl = null;
+    }
+  }
+
   // Settings management
   private loadSettings() {
     if (typeof window === 'undefined') return;
@@ -326,7 +369,7 @@ export class AudioService {
         this.settings = { ...DEFAULT_AUDIO_SETTINGS, ...JSON.parse(saved) };
       }
     } catch (error) {
-      error('Failed to load audio settings:', error);
+      logger.error('Failed to load audio settings:', error);
     }
   }
 
@@ -336,7 +379,7 @@ export class AudioService {
     try {
       localStorage.setItem('audio-settings', JSON.stringify(this.settings));
     } catch (error) {
-      error('Failed to save audio settings:', error);
+      logger.error('Failed to save audio settings:', error);
     }
   }
 
@@ -367,6 +410,7 @@ export class AudioService {
   // Cleanup
   destroy() {
     this.clearFadeTimeout();
+    this.clearActiveObjectUrl();
     this.listeners.clear();
     
     if (this.audio) {
@@ -379,3 +423,4 @@ export class AudioService {
 
 // Singleton instance
 export const audioService = new AudioService();
+

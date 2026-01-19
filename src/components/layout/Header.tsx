@@ -15,10 +15,12 @@ import {
   LogOut, 
   User, 
   Moon, 
-  Sun 
+  Sun,
+  Dice6,
+  Heart
 } from 'lucide-react';
 import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
-import { error } from '@/lib/logger';
+import { logger } from '@/lib/logger';
 import { GlobalSearch } from '@/components/ui/GlobalSearch';
 
 interface HeaderProps {
@@ -35,7 +37,7 @@ export function Header({ user, onLogout }: HeaderProps) {
       onLogout?.();
       navigate('/login');
     } catch (error) {
-      error('Error in navigation:', error);
+      logger.error('Error in navigation:', error);
     }
   };
 
@@ -86,6 +88,20 @@ export function Header({ user, onLogout }: HeaderProps) {
             className="transition-colors hover:text-foreground/80 text-foreground/60"
           >
             DM Tools
+          </Link>
+          <Link
+            to="/dice"
+            className="transition-colors hover:text-foreground/80 text-foreground/60 flex items-center gap-1"
+          >
+            <Dice6 className="h-4 w-4" />
+            Dice
+          </Link>
+          <Link
+            to="/favorites"
+            className="transition-colors hover:text-foreground/80 text-foreground/60 flex items-center gap-1"
+          >
+            <Heart className="h-4 w-4" />
+            Favorites
           </Link>
         </nav>
 

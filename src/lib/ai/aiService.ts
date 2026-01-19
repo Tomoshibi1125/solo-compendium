@@ -12,8 +12,13 @@ import type {
   PromptEnhancement,
   AIConfiguration 
 } from './types';
-import { DEFAULT_AI_SERVICES, DEFAULT_AI_CONFIG, getAIServiceById, getAIServiceForCapability } from './types';
+import { DEFAULT_AI_SERVICES, DEFAULT_AI_CONFIG, getAIServiceById } from './types';
 import { AppError } from '@/lib/appError';
+import { buildCustomService, loadAIUserSettings } from './userSettings';
+
+const FREE_AI_FALLBACK_ENDPOINT = 'https://text.pollinations.ai';
+const CUSTOM_AI_FALLBACK_ENDPOINT = 'https://api.openai.com/v1';
+const CUSTOM_AI_FALLBACK_MODEL = 'gpt-4o-mini';
 
 export class AIServiceManager {
   private config: AIConfiguration;
@@ -67,13 +72,14 @@ export class AIServiceManager {
 
     try {
       const response = await this.callService(service, request);
+      const normalized = this.normalizeResponse(request, response);
       
       // Cache result
-      if (this.config.cacheResults && response.success) {
-        this.cache.set(cacheKey, response);
+      if (this.config.cacheResults && normalized.success) {
+        this.cache.set(cacheKey, normalized);
       }
 
-      return response;
+      return normalized;
     } catch (error) {
       return {
         success: false,
@@ -133,10 +139,19 @@ export class AIServiceManager {
    * Analyze audio for mood and characteristics
    */
   async analyzeAudio(audioFile: File): Promise<AudioAnalysis> {
+    const audioFeatures = await this.extractAudioFeatures(audioFile);
+    const moodHint = this.moodFromEnergy(audioFeatures.energy);
     const request: AIRequest = {
       service: this.config.defaultService,
       type: 'analyze-audio',
-      input: audioFile,
+      input: `Audio file "${audioFile.name}" (${audioFile.type || 'unknown type'}, ${audioFile.size} bytes). Duration: ${audioFeatures.duration.toFixed(1)}s. RMS: ${audioFeatures.rms?.toFixed(4) ?? 'n/a'}.`,
+      context: {
+        filename: audioFile.name,
+        mimeType: audioFile.type,
+        sizeBytes: audioFile.size,
+        mood: moodHint,
+        audioFeatures,
+      },
       options: {
         analysis_type: 'mood_and_characteristics',
       },
@@ -148,7 +163,17 @@ export class AIServiceManager {
       throw new AppError('Failed to analyze audio', 'AI_ERROR', response.error);
     }
 
-    return response.data as AudioAnalysis;
+    const analysis = response.data as AudioAnalysis;
+    return {
+      ...analysis,
+      mood: analysis.mood || moodHint,
+      energy: typeof analysis.energy === 'number' ? analysis.energy : audioFeatures.energy,
+      duration: analysis.duration || audioFeatures.duration,
+      loudness: analysis.loudness ?? audioFeatures.loudness ?? undefined,
+      instruments: analysis.instruments || [],
+      tags: analysis.tags || [],
+      description: analysis.description || `Audio analysis completed for ${audioFile.name}.`,
+    };
   }
 
   /**
@@ -274,6 +299,227 @@ export class AIServiceManager {
   }
 
   // Private methods
+  private normalizeResponse(request: AIRequest, response: AIResponse): AIResponse {
+    if (!response.success) {
+      return response;
+    }
+
+    if (request.type === 'generate-content' && typeof response.data === 'string') {
+      return response;
+    }
+
+    let normalizedData = response.data;
+    if (typeof normalizedData === 'string') {
+      const parsed = this.parseJsonResponse(normalizedData);
+      if (parsed) {
+        normalizedData = parsed;
+      }
+    }
+
+    if (typeof normalizedData === 'string' || normalizedData === null || normalizedData === undefined) {
+      normalizedData = this.buildFallbackData(request, typeof response.data === 'string' ? response.data : '');
+    }
+
+    return {
+      ...response,
+      data: normalizedData,
+    };
+  }
+
+  private parseJsonResponse(text: string): any | null {
+    const trimmed = text.trim();
+    const fenced = trimmed.match(/```(?:json)?\s*([\s\S]*?)```/i);
+    const candidate = fenced ? fenced[1].trim() : trimmed;
+
+    const objectStart = candidate.indexOf('{');
+    const objectEnd = candidate.lastIndexOf('}');
+    if (objectStart !== -1 && objectEnd !== -1 && objectEnd > objectStart) {
+      const slice = candidate.slice(objectStart, objectEnd + 1);
+      try {
+        return JSON.parse(slice);
+      } catch {
+        return null;
+      }
+    }
+
+    const arrayStart = candidate.indexOf('[');
+    const arrayEnd = candidate.lastIndexOf(']');
+    if (arrayStart !== -1 && arrayEnd !== -1 && arrayEnd > arrayStart) {
+      const slice = candidate.slice(arrayStart, arrayEnd + 1);
+      try {
+        return JSON.parse(slice);
+      } catch {
+        return null;
+      }
+    }
+
+    return null;
+  }
+
+  private buildFallbackData(request: AIRequest, rawText: string) {
+    const inputText = typeof request.input === 'string'
+      ? request.input
+      : JSON.stringify(request.input ?? '');
+    const safeText = rawText?.trim() || inputText.trim();
+    const styleHint = request.context?.style || 'Solo Leveling';
+    const moodHint = request.context?.mood || 'dramatic';
+
+    switch (request.type) {
+      case 'enhance-prompt':
+        return {
+          original: inputText,
+          enhanced: safeText || `${inputText}\nStyle: ${styleHint}. Mood: ${moodHint}.`,
+          additions: [],
+          improvements: [],
+          style: styleHint,
+          mood: moodHint,
+          technical: {
+            weight: '1.0',
+            steps: 30,
+            cfg: 7,
+            sampler: 'euler',
+            scheduler: 'normal',
+          },
+        };
+      case 'analyze-image':
+        return {
+          description: safeText || 'Image analysis completed.',
+          tags: this.extractKeywords(safeText),
+          style: styleHint,
+          mood: moodHint,
+          colors: [],
+          composition: 'unknown',
+          subjects: [],
+          quality: 7,
+          technical: {
+            resolution: 'unknown',
+            aspectRatio: 'unknown',
+            sharpness: 5,
+            brightness: 0.5,
+            contrast: 0.5,
+          },
+          suggestions: [],
+        };
+      case 'analyze-audio': {
+        const features = request.context?.audioFeatures || {};
+        const energy = typeof features.energy === 'number' ? features.energy : 0.5;
+        const mood = typeof features.mood === 'string' ? features.mood : this.moodFromEnergy(energy);
+        return {
+          mood,
+          energy,
+          tempo: features.tempo ?? null,
+          key: features.key ?? null,
+          instruments: features.instruments ?? [],
+          genre: features.genre ?? 'unknown',
+          tags: this.extractKeywords(safeText),
+          description: safeText || `Audio analysis completed for ${request.context?.filename || 'uploaded audio'}.`,
+          duration: features.duration ?? 0,
+          loudness: features.loudness ?? null,
+          spectralCentroid: features.spectralCentroid ?? null,
+        };
+      }
+      case 'generate-tags':
+        return { tags: this.extractKeywords(safeText) };
+      case 'detect-mood':
+        return { mood: this.detectMoodFromText(safeText) };
+      case 'suggest-style':
+        return { variations: this.suggestStyleFallback(safeText || styleHint) };
+      case 'filter-content':
+        return { isAppropriate: true, issues: [], suggestions: [] };
+      case 'create-variation':
+        return { variation: safeText || inputText };
+      case 'generate-content':
+        return { content: safeText || inputText };
+      default:
+        return { output: safeText };
+    }
+  }
+
+  private extractKeywords(text: string): string[] {
+    if (!text) return [];
+    const tokens = text
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, ' ')
+      .split(/\s+/)
+      .filter(Boolean);
+    const stopwords = new Set([
+      'the', 'and', 'for', 'with', 'that', 'this', 'from', 'into', 'your', 'you', 'are', 'was', 'were', 'has', 'have',
+      'a', 'an', 'of', 'to', 'in', 'on', 'at', 'by', 'as', 'is', 'it', 'its', 'or', 'be', 'we', 'they', 'their',
+    ]);
+    const counts = new Map<string, number>();
+    for (const token of tokens) {
+      if (stopwords.has(token) || token.length < 3) continue;
+      counts.set(token, (counts.get(token) || 0) + 1);
+    }
+    return Array.from(counts.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 8)
+      .map(([word]) => word);
+  }
+
+  private moodFromEnergy(energy: number): string {
+    if (energy >= 0.75) return 'energetic';
+    if (energy >= 0.55) return 'dramatic';
+    if (energy >= 0.35) return 'focused';
+    return 'calm';
+  }
+
+  private detectMoodFromText(text: string): string {
+    const lower = text.toLowerCase();
+    if (/(battle|combat|fight|war|clash|attack)/.test(lower)) return 'intense';
+    if (/(mystery|shadow|fog|whisper|secret)/.test(lower)) return 'mysterious';
+    if (/(calm|peace|serene|gentle)/.test(lower)) return 'calm';
+    if (/(epic|heroic|legend)/.test(lower)) return 'heroic';
+    if (/(dark|grim|dread|horror)/.test(lower)) return 'dark';
+    return 'neutral';
+  }
+
+  private suggestStyleFallback(baseStyle: string): string[] {
+    return [
+      `${baseStyle} with higher contrast`,
+      `${baseStyle} with softer lighting`,
+      `${baseStyle} with cinematic framing`,
+      `${baseStyle} with atmospheric haze`,
+      `${baseStyle} with sharper linework`,
+    ];
+  }
+
+  private async extractAudioFeatures(file: File): Promise<{ duration: number; energy: number; loudness?: number; rms?: number }> {
+    if (typeof window === 'undefined' || typeof AudioContext === 'undefined') {
+      return { duration: 0, energy: 0.5 };
+    }
+
+    try {
+      const buffer = await file.arrayBuffer();
+      const audioContext = new AudioContext();
+      const audioBuffer = await audioContext.decodeAudioData(buffer.slice(0));
+      const channelData = audioBuffer.getChannelData(0);
+      const step = Math.max(1, Math.floor(channelData.length / 50000));
+      let sumSquares = 0;
+      let count = 0;
+
+      for (let i = 0; i < channelData.length; i += step) {
+        const sample = channelData[i];
+        sumSquares += sample * sample;
+        count += 1;
+      }
+
+      const rms = Math.sqrt(sumSquares / Math.max(1, count));
+      const energy = Math.min(1, rms * 1.5);
+      const loudness = rms > 0 ? 20 * Math.log10(rms) : -60;
+
+      audioContext.close();
+
+      return {
+        duration: audioBuffer.duration,
+        energy,
+        loudness,
+        rms,
+      };
+    } catch {
+      return { duration: 0, energy: 0.5 };
+    }
+  }
   private validateRequest(request: AIRequest): string[] {
     const errors: string[] = [];
     
@@ -327,132 +573,102 @@ export class AIServiceManager {
 
     // Route to appropriate service handler
     switch (service.type) {
-      case 'google':
-        return this.callGoogleGemini(service, request);
-      case 'openai':
-        return this.callSupabaseEdgeFunction(service, request);
-      case 'anthropic':
-        return this.callSupabaseEdgeFunction(service, request);
-      case 'huggingface':
-        return this.callSupabaseEdgeFunction(service, request);
+      case 'pollinations':
+        return this.callPollinations(service, request);
+      case 'custom':
+        return this.callOpenAICompatible(service, request);
       default:
-        return this.callSupabaseEdgeFunction(service, request);
+        return this.callPollinations(service, request);
     }
   }
 
-  private async callGoogleGemini(service: AIService, request: AIRequest): Promise<AIResponse> {
+  private async callPollinations(service: AIService, request: AIRequest): Promise<AIResponse> {
     try {
-      const apiKey = service.apiKey || import.meta.env.GOOGLE_API_KEY;
-      if (!apiKey) {
-        throw new Error('Google Gemini API key not found');
-      }
+      const baseUrl = (service.endpoint || import.meta.env.VITE_FREE_AI_API || FREE_AI_FALLBACK_ENDPOINT).replace(/\/+$/, '');
+      const prompt = `${this.getSystemPrompt(request.type)}\n\n${this.formatInput(request)}`;
+      const url = `${baseUrl}/${encodeURIComponent(prompt)}`;
+      const response = await fetch(url);
 
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/${service.model}:generateContent?key=${apiKey}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contents: [
-            {
-              parts: [
-                {
-                  text: `${this.getSystemPrompt(request.type)}\n\n${this.formatInput(request)}`
-                }
-              ]
-            }
-          ],
-          generationConfig: {
-            temperature: service.temperature,
-            maxOutputTokens: service.maxTokens,
-          },
-        }),
-      });
-
-      const data = await response.json();
-      
       if (!response.ok) {
-        throw new Error(data.error?.message || 'Google Gemini API error');
+        throw new Error(`Free AI request failed: ${response.status}`);
       }
 
+      const text = await response.text();
       return {
         success: true,
-        data: data.candidates?.[0]?.content?.parts?.[0]?.text || '',
-        usage: {
-          promptTokens: data.usageMetadata?.promptTokenCount || 0,
-          completionTokens: data.usageMetadata?.candidatesTokenCount || 0,
-          totalTokens: data.usageMetadata?.totalTokenCount || 0,
-        },
+        data: text,
       };
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Google Gemini API error',
+        error: error instanceof Error ? error.message : 'Free AI error',
       };
     }
   }
 
-  private async callSupabaseEdgeFunction(service: AIService, request: AIRequest): Promise<AIResponse> {
+  private async callOpenAICompatible(service: AIService, request: AIRequest): Promise<AIResponse> {
     try {
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-      
-      if (!supabaseUrl || !supabaseAnonKey) {
-        throw new Error('Supabase configuration not found');
+      const apiKey = service.apiKey;
+      if (!apiKey) {
+        throw new Error('Custom AI API key is missing');
       }
 
-      const edgeFunctionUrl = `${supabaseUrl}/functions/v1/ai-service`;
-      
-      const response = await fetch(edgeFunctionUrl, {
+      const baseUrl = (service.endpoint || CUSTOM_AI_FALLBACK_ENDPOINT).replace(/\/+$/, '');
+      const model = service.model || CUSTOM_AI_FALLBACK_MODEL;
+
+      const response = await fetch(`${baseUrl}/chat/completions`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${supabaseAnonKey}`,
+          'Authorization': `Bearer ${apiKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          service: service.type,
-          type: request.type,
-          input: request.input,
-          context: request.context,
-          options: request.options,
+          model,
+          messages: [
+            { role: 'system', content: this.getSystemPrompt(request.type) },
+            { role: 'user', content: this.formatInput(request) },
+          ],
+          temperature: service.temperature,
+          max_tokens: service.maxTokens,
         }),
       });
 
       const data = await response.json();
-      
       if (!response.ok) {
-        return {
-          success: false,
-          error: data.error || `Edge function error: ${response.status}`,
-        };
+        throw new Error(data?.error?.message || `Custom AI request failed: ${response.status}`);
       }
 
-      // Transform edge function response to match our AI response format
+      const content = data?.choices?.[0]?.message?.content ?? '';
       return {
-        success: data.success,
-        data: data.data,
-        error: data.error,
-        usage: data.usage,
+        success: true,
+        data: content,
+        usage: {
+          promptTokens: data?.usage?.prompt_tokens,
+          completionTokens: data?.usage?.completion_tokens,
+          totalTokens: data?.usage?.total_tokens,
+        },
       };
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Supabase edge function error',
+        error: error instanceof Error ? error.message : 'Custom AI error',
       };
     }
   }
 
   
   private getSystemPrompt(type: string): string {
+    const jsonInstruction = 'Return ONLY valid JSON. Do not wrap in Markdown or code fences. Use double quotes for all keys and strings.';
     const prompts: Record<string, string> = {
-      'enhance-prompt': `You are an expert D&D and AI art prompt engineer. Enhance the given prompt for Stable Diffusion generation in the style of Solo Leveling manhwa anime. Focus on dramatic lighting, high contrast, detailed character art, and dynamic poses. Add specific Solo Leveling elements like shadow energy, gates, and system interface aesthetics.`,
-      'analyze-image': `You are an expert art analyst specializing in anime/manga style artwork, particularly Solo Leveling. Analyze the given image and provide detailed information about style, mood, composition, and technical aspects. Focus on elements that would be useful for D&D campaign art generation.`,
-      'analyze-audio': `You are an audio expert specializing in D&D campaign music and sound effects. Analyze the given audio and provide detailed information about mood, energy, tempo, instruments, and suitability for different D&D scenarios.`,
-      'generate-tags': `You are an expert D&D content curator. Generate relevant tags for the given content in the context of a Solo Leveling themed campaign. Focus on mood, setting, and gameplay elements.`,
-      'detect-mood': `You are an expert in emotional analysis for D&D content. Detect the primary mood of the given content and provide a single-word mood label that would be useful for categorizing campaign materials.`,
-      'suggest-style': `You are an art style expert specializing in Solo Leveling manhwa anime. Suggest variations of the given style that would work well for different D&D scenarios while maintaining the core aesthetic.`,
-      'filter-content': `You are a content moderator for D&D campaigns. Analyze the given content for appropriateness and flag any issues. Consider the audience (general TTRPG players) and platform (tabletop gaming).`,
-      'create-variation': `You are a creative AI assistant helping with D&D content creation. Create a variation of the given content that maintains the core elements but adds a different twist while staying within the Solo Leveling manhwa anime style.`,
+      'enhance-prompt': `${jsonInstruction}\nYou are an expert D&D and AI art prompt engineer. Enhance the given prompt for high-quality image generation in the style of Solo Leveling manhwa anime. Respond with JSON: {"original":"","enhanced":"","additions":[],"improvements":[],"style":"","mood":"","technical":{"weight":"","steps":0,"cfg":0,"sampler":"","scheduler":""}}`,
+      'analyze-image': `${jsonInstruction}\nYou are an expert art analyst specializing in anime/manga style artwork, particularly Solo Leveling. Respond with JSON: {"description":"","tags":[],"style":"","mood":"","colors":[],"composition":"","subjects":[],"quality":1,"technical":{"resolution":"","aspectRatio":"","sharpness":1,"brightness":0.5,"contrast":0.5},"suggestions":[]}`,
+      'analyze-audio': `${jsonInstruction}\nYou are an audio expert specializing in D&D campaign music and sound effects. Respond with JSON: {"mood":"","energy":0.5,"tempo":null,"key":null,"instruments":[],"genre":"","tags":[],"description":"","duration":0,"loudness":null,"spectralCentroid":null}`,
+      'generate-tags': `${jsonInstruction}\nGenerate relevant tags for the given content in the context of a Solo Leveling themed campaign. Respond with JSON: {"tags":[]}`,
+      'detect-mood': `${jsonInstruction}\nDetect the primary mood of the given content. Respond with JSON: {"mood":""}`,
+      'suggest-style': `${jsonInstruction}\nSuggest variations of the given style that would work for different scenarios while maintaining the core aesthetic. Respond with JSON: {"variations":[]}`,
+      'filter-content': `${jsonInstruction}\nAnalyze the given content for appropriateness. Respond with JSON: {"isAppropriate":true,"issues":[],"suggestions":[]}`,
+      'create-variation': `${jsonInstruction}\nCreate a variation of the given content that maintains core elements but adds a different twist. Respond with JSON: {"variation":""}`,
+      'generate-content': `You are an expert tabletop RPG game master and narrative designer for a Solo Leveling inspired setting. Generate polished, player-ready content with clear sections and labels. Return plain text only. Avoid JSON, Markdown fences, or code blocks.`,
     };
     
     return prompts[type] || prompts['enhance-prompt'];
@@ -515,7 +731,29 @@ export class AIServiceManager {
       keys: Array.from(this.cache.keys()),
     };
   }
+
+  applyUserSettings(settings: ReturnType<typeof loadAIUserSettings>): void {
+    const baseServices = DEFAULT_AI_SERVICES.map(service => ({ ...service }));
+    if (settings.provider === 'custom' && settings.apiKey.trim()) {
+      const customService = buildCustomService(settings);
+      this.config = {
+        ...this.config,
+        services: [...baseServices, customService],
+        defaultService: customService.id,
+      };
+      return;
+    }
+
+    this.config = {
+      ...this.config,
+      services: baseServices,
+      defaultService: baseServices[0]?.id ?? this.config.defaultService,
+    };
+  }
 }
 
 // Singleton instance
 export const aiService = new AIServiceManager();
+if (typeof window !== 'undefined') {
+  aiService.applyUserSettings(loadAIUserSettings());
+}

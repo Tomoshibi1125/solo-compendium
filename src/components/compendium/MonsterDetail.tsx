@@ -94,8 +94,22 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
         supabase.from('compendium_monster_traits').select('*').eq('monster_id', data.id),
       ]);
 
-      if (actionsRes.data) setActions(actionsRes.data);
-      if (traitsRes.data) setTraits(traitsRes.data);
+      if (actionsRes.data) setActions(actionsRes.data.map(action => ({
+        ...action,
+        attack_bonus: action.attack_bonus ?? undefined,
+        damage: action.damage ?? undefined,
+        damage_type: action.damage_type ?? undefined,
+        recharge: action.recharge ?? undefined,
+        legendary_cost: action.legendary_cost ?? undefined,
+        action_type: action.action_type ?? undefined,
+        aliases: action.aliases ?? undefined,
+        display_name: action.display_name ?? undefined
+      })));
+      if (traitsRes.data) setTraits(traitsRes.data.map(trait => ({
+        ...trait,
+        display_name: trait.display_name ?? undefined,
+        aliases: trait.aliases ?? undefined
+      })));
     };
 
     fetchRelatedData();
@@ -277,21 +291,21 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
         {(data.damage_vulnerabilities?.length || data.damage_resistances?.length || data.damage_immunities?.length) ? (
           <SystemWindow title="DAMAGE MODIFIERS">
             <div className="space-y-2">
-              {data.damage_vulnerabilities?.length > 0 && (
+              {data.damage_vulnerabilities && data.damage_vulnerabilities.length > 0 && (
                 <div>
                   <span className="text-red-400 font-heading text-sm">Vulnerabilities: </span>
                   <span className="text-muted-foreground">{data.damage_vulnerabilities.join(', ')}</span>
                 </div>
               )}
-              {data.damage_resistances?.length > 0 && (
+              {data.damage_resistances && data.damage_resistances.length > 0 && (
                 <div>
                   <span className="text-yellow-400 font-heading text-sm">Resistances: </span>
                   <span className="text-muted-foreground">{data.damage_resistances.join(', ')}</span>
                 </div>
               )}
-              {data.damage_immunities?.length > 0 && (
+              {data.damage_immunities && data.damage_immunities.length > 0 && (
                 <div>
-                  <span className="text-green-400 font-heading text-sm">Immunities: </span>
+                  <span className="text-black font-heading text-sm">Immunities: </span>
                   <span className="text-muted-foreground">{data.damage_immunities.join(', ')}</span>
                 </div>
               )}
@@ -299,9 +313,9 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
           </SystemWindow>
         ) : null}
 
-        {data.condition_immunities?.length > 0 && (
+        {data.condition_immunities && data.condition_immunities.length > 0 && (
           <SystemWindow title="CONDITION IMMUNITIES">
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1">
               {data.condition_immunities.map((condition) => (
                 <Badge key={condition} variant="outline">{condition}</Badge>
               ))}

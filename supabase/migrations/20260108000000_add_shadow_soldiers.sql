@@ -25,7 +25,6 @@ CREATE TABLE IF NOT EXISTS public.compendium_shadow_soldiers (
   shadow_type TEXT NOT NULL DEFAULT 'soldier',
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Shadow Soldier Traits
 CREATE TABLE IF NOT EXISTS public.compendium_shadow_soldier_traits (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -34,7 +33,6 @@ CREATE TABLE IF NOT EXISTS public.compendium_shadow_soldier_traits (
   description TEXT NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Shadow Soldier Actions
 CREATE TABLE IF NOT EXISTS public.compendium_shadow_soldier_actions (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -49,7 +47,6 @@ CREATE TABLE IF NOT EXISTS public.compendium_shadow_soldier_actions (
   legendary_cost INTEGER,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Shadow Soldier Abilities (special powers)
 CREATE TABLE IF NOT EXISTS public.compendium_shadow_soldier_abilities (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -61,13 +58,11 @@ CREATE TABLE IF NOT EXISTS public.compendium_shadow_soldier_abilities (
   recharge TEXT,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Enable RLS
 ALTER TABLE public.compendium_shadow_soldiers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.compendium_shadow_soldier_traits ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.compendium_shadow_soldier_actions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.compendium_shadow_soldier_abilities ENABLE ROW LEVEL SECURITY;
-
 -- Public read access
 DO $$
 BEGIN
@@ -83,7 +78,6 @@ BEGIN
       USING (true);
   END IF;
 END $$;
-
 DO $$
 BEGIN
   IF NOT EXISTS (
@@ -98,7 +92,6 @@ BEGIN
       USING (true);
   END IF;
 END $$;
-
 DO $$
 BEGIN
   IF NOT EXISTS (
@@ -113,7 +106,6 @@ BEGIN
       USING (true);
   END IF;
 END $$;
-
 DO $$
 BEGIN
   IF NOT EXISTS (
@@ -128,13 +120,11 @@ BEGIN
       USING (true);
   END IF;
 END $$;
-
 -- Indexes
 CREATE INDEX IF NOT EXISTS idx_shadow_soldiers_rank ON public.compendium_shadow_soldiers(rank);
 CREATE INDEX IF NOT EXISTS idx_shadow_soldiers_type ON public.compendium_shadow_soldiers(shadow_type);
 CREATE INDEX IF NOT EXISTS idx_shadow_soldiers_name ON public.compendium_shadow_soldiers(name);
 CREATE INDEX IF NOT EXISTS idx_shadow_soldiers_search ON public.compendium_shadow_soldiers USING GIN (to_tsvector('english', name || ' ' || COALESCE(description, '') || ' ' || COALESCE(lore, '')));
-
 -- Insert Shadow Army Roster
 -- Based on Solo Leveling's Shadow Monarch's army
 
@@ -200,250 +190,193 @@ INSERT INTO public.compendium_shadow_soldiers (
   'dragon',
   'Shadow Monarch unlock + Shadow-themed Sovereign + Level 15+'
 );
-
 -- Add traits for each shadow soldier
 -- Shadow Soldier traits
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Shadow Form', 'The shadow soldier is immune to being charmed, frightened, or exhausted. It does not need to eat, drink, or breathe.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Soldier';
-
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Undead Fortitude', 'If damage reduces the shadow soldier to 0 hit points, it must make a Constitution saving throw with a DC of 5 + the damage taken, unless the damage is radiant or from a critical hit. On a success, the shadow soldier drops to 1 hit point instead.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Soldier';
-
 -- Shadow Knight traits
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Shadow Form', 'The shadow knight is immune to being charmed, frightened, or exhausted. It does not need to eat, drink, or breathe.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Knight';
-
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Shadow Armor', 'The shadow knight''s armor is forged from shadow energy, providing resistance to non-magical bludgeoning, piercing, and slashing damage.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Knight';
-
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Command Presence', 'Other shadow soldiers within 30 feet of the shadow knight have advantage on attack rolls.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Knight';
-
 -- Shadow Marshal traits
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Shadow Form', 'The shadow marshal is immune to being charmed, frightened, or exhausted. It does not need to eat, drink, or breathe.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Marshal';
-
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Tactical Command', 'As a bonus action, the shadow marshal can command up to three shadow soldiers within 60 feet. Each commanded shadow can immediately make one weapon attack.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Marshal';
-
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Shadow Aura', 'Shadow soldiers within 30 feet of the shadow marshal have resistance to radiant damage.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Marshal';
-
 -- Igris traits
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Shadow Form', 'Igris is immune to being charmed, frightened, or exhausted. He does not need to eat, drink, or breathe.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Igris';
-
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Master Swordsman', 'Igris has advantage on all melee weapon attacks. When he hits with a melee weapon attack, he can make an additional attack as a bonus action.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Igris';
-
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Shadow Blade', 'Igris''s greatsword is forged from pure shadow energy. It deals an additional 1d8 necrotic damage on a hit.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Igris';
-
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Army Commander', 'All shadow soldiers within 120 feet of Igris have advantage on saving throws and add Igris''s proficiency bonus to their attack rolls.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Igris';
-
 -- Beru traits
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Shadow Form', 'Beru is immune to being charmed, frightened, or exhausted. He does not need to eat, drink, or breathe.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Beru';
-
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Massive Frame', 'Beru''s size and strength allow him to grapple creatures up to Huge size. He has advantage on Strength checks and saving throws.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Beru';
-
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Crushing Mandibles', 'When Beru hits a creature with his bite attack, the target must succeed on a Strength saving throw (DC 18) or be grappled. While grappled, the target takes 2d6 bludgeoning damage at the start of each of Beru''s turns.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Beru';
-
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Shadow Flight', 'Beru can hover and move through the air with shadow energy. His flight speed is 60 feet.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Beru';
-
 -- Tank traits
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Shadow Form', 'Tank is immune to being charmed, frightened, or exhausted. He does not need to eat, drink, or breathe.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Tank';
-
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Unbreakable', 'Tank has resistance to all damage except radiant damage. When Tank takes damage, he can use his reaction to reduce the damage by 1d10 + his Constitution modifier.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Tank';
-
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Guardian Stance', 'As a bonus action, Tank can enter a defensive stance. While in this stance, Tank has +2 AC and all allies within 10 feet have half cover.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Tank';
-
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Massive Presence', 'Creatures within 15 feet of Tank have disadvantage on attack rolls against targets other than Tank.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Tank';
-
 -- Kaisel traits
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Shadow Form', 'Kaisel is immune to being charmed, frightened, or exhausted. He does not need to eat, drink, or breathe.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Kaisel';
-
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Legendary Resistance (3/Day)', 'If Kaisel fails a saving throw, he can choose to succeed instead.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Kaisel';
-
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Shadow Dragon', 'Kaisel has immunity to necrotic damage and resistance to all other damage types except radiant damage.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Kaisel';
-
 -- Add actions for each shadow soldier
 -- Shadow Soldier actions
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Shadow Blade', 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) slashing damage plus 3 (1d6) necrotic damage.', 'action', 4, '1d6 + 2 slashing plus 1d6 necrotic', 'slashing, necrotic'
 FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Soldier';
-
 -- Shadow Knight actions
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Shadow Greatsword', 'Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) slashing damage plus 7 (2d6) necrotic damage.', 'action', 6, '2d6 + 4 slashing plus 2d6 necrotic', 'slashing, necrotic'
 FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Knight';
-
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Multiattack', 'The shadow knight makes two greatsword attacks.', 'action', NULL, NULL, NULL
 FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Knight';
-
 -- Shadow Marshal actions
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Shadow Blade', 'Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 13 (2d8 + 4) slashing damage plus 10 (2d10) necrotic damage.', 'action', 8, '2d8 + 4 slashing plus 2d10 necrotic', 'slashing, necrotic'
 FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Marshal';
-
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Multiattack', 'The shadow marshal makes three blade attacks.', 'action', NULL, NULL, NULL
 FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Marshal';
-
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, recharge)
 SELECT id, 'Shadow Command', 'The shadow marshal issues a command to all shadow soldiers within 60 feet. Each shadow soldier can immediately use its reaction to make one weapon attack.', 'action', '5-6'
 FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Marshal';
-
 -- Igris actions
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Shadow Greatsword', 'Melee Weapon Attack: +11 to hit, reach 5 ft., one target. Hit: 18 (3d6 + 8) slashing damage plus 9 (2d8) necrotic damage.', 'action', 11, '3d6 + 8 slashing plus 2d8 necrotic', 'slashing, necrotic'
 FROM public.compendium_shadow_soldiers WHERE name = 'Igris';
-
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Multiattack', 'Igris makes four greatsword attacks.', 'action', NULL, NULL, NULL
 FROM public.compendium_shadow_soldiers WHERE name = 'Igris';
-
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, recharge)
 SELECT id, 'Shadow Slash', 'Igris makes a sweeping attack with his greatsword. All creatures within 10 feet must make a Dexterity saving throw (DC 18) or take 21 (6d6) slashing damage plus 14 (4d6) necrotic damage, or half as much on a successful save.', 'action', '5-6'
 FROM public.compendium_shadow_soldiers WHERE name = 'Igris';
-
 -- Beru actions
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Bite', 'Melee Weapon Attack: +11 to hit, reach 10 ft., one target. Hit: 22 (3d10 + 6) piercing damage plus 14 (4d6) necrotic damage. If the target is a Medium or smaller creature, it is grappled (escape DC 18).', 'action', 11, '3d10 + 6 piercing plus 4d6 necrotic', 'piercing, necrotic'
 FROM public.compendium_shadow_soldiers WHERE name = 'Beru';
-
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Claw', 'Melee Weapon Attack: +11 to hit, reach 10 ft., one target. Hit: 18 (3d6 + 6) slashing damage plus 10 (3d6) necrotic damage.', 'action', 11, '3d6 + 6 slashing plus 3d6 necrotic', 'slashing, necrotic'
 FROM public.compendium_shadow_soldiers WHERE name = 'Beru';
-
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Multiattack', 'Beru makes one bite attack and two claw attacks.', 'action', NULL, NULL, NULL
 FROM public.compendium_shadow_soldiers WHERE name = 'Beru';
-
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, recharge)
 SELECT id, 'Shadow Breath', 'Beru exhales a 30-foot cone of shadow energy. Each creature in that area must make a Dexterity saving throw (DC 18), taking 35 (10d6) necrotic damage on a failed save, or half as much on a successful one.', 'action', '5-6'
 FROM public.compendium_shadow_soldiers WHERE name = 'Beru';
-
 -- Tank actions
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Massive Fist', 'Melee Weapon Attack: +12 to hit, reach 10 ft., one target. Hit: 21 (3d8 + 7) bludgeoning damage plus 14 (4d6) necrotic damage.', 'action', 12, '3d8 + 7 bludgeoning plus 4d6 necrotic', 'bludgeoning, necrotic'
 FROM public.compendium_shadow_soldiers WHERE name = 'Tank';
-
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Multiattack', 'Tank makes two fist attacks.', 'action', NULL, NULL, NULL
 FROM public.compendium_shadow_soldiers WHERE name = 'Tank';
-
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, recharge)
 SELECT id, 'Ground Slam', 'Tank slams the ground with tremendous force. All creatures within 15 feet must make a Strength saving throw (DC 20) or be knocked prone and take 28 (8d6) bludgeoning damage plus 14 (4d6) necrotic damage, or half as much on a successful save.', 'action', '5-6'
 FROM public.compendium_shadow_soldiers WHERE name = 'Tank';
-
 -- Kaisel actions
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Bite', 'Melee Weapon Attack: +12 to hit, reach 15 ft., one target. Hit: 24 (4d8 + 6) piercing damage plus 21 (6d6) necrotic damage.', 'action', 12, '4d8 + 6 piercing plus 6d6 necrotic', 'piercing, necrotic'
 FROM public.compendium_shadow_soldiers WHERE name = 'Kaisel';
-
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Claw', 'Melee Weapon Attack: +12 to hit, reach 10 ft., one target. Hit: 20 (3d8 + 6) slashing damage plus 14 (4d6) necrotic damage.', 'action', 12, '3d8 + 6 slashing plus 4d6 necrotic', 'slashing, necrotic'
 FROM public.compendium_shadow_soldiers WHERE name = 'Kaisel';
-
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Tail', 'Melee Weapon Attack: +12 to hit, reach 15 ft., one target. Hit: 18 (2d10 + 6) bludgeoning damage plus 14 (4d6) necrotic damage.', 'action', 12, '2d10 + 6 bludgeoning plus 4d6 necrotic', 'bludgeoning, necrotic'
 FROM public.compendium_shadow_soldiers WHERE name = 'Kaisel';
-
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Multiattack', 'Kaisel can use his Frightful Presence. He then makes three attacks: one with his bite and two with his claws.', 'action', NULL, NULL, NULL
 FROM public.compendium_shadow_soldiers WHERE name = 'Kaisel';
-
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, recharge)
 SELECT id, 'Shadow Fire Breath', 'Kaisel exhales shadow fire in a 60-foot cone. Each creature in that area must make a Dexterity saving throw (DC 20), taking 56 (16d6) necrotic damage on a failed save, or half as much on a successful one.', 'action', '5-6'
 FROM public.compendium_shadow_soldiers WHERE name = 'Kaisel';
-
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type)
 SELECT id, 'Frightful Presence', 'Each creature of Kaisel''s choice within 120 feet of him and aware of him must succeed on a Wisdom saving throw (DC 18) or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.', 'action'
 FROM public.compendium_shadow_soldiers WHERE name = 'Kaisel';
-
 -- Legendary actions for Kaisel
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, legendary_cost)
 SELECT id, 'Attack', 'Kaisel makes one claw attack.', 'legendary', 1
 FROM public.compendium_shadow_soldiers WHERE name = 'Kaisel';
-
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, legendary_cost)
 SELECT id, 'Wing Attack (Costs 2 Actions)', 'Kaisel beats his wings. Each creature within 10 feet must succeed on a Dexterity saving throw (DC 20) or take 14 (2d6 + 6) bludgeoning damage and be knocked prone. Kaisel can then fly up to half his flying speed.', 'legendary', 2
 FROM public.compendium_shadow_soldiers WHERE name = 'Kaisel';
-
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, legendary_cost)
 SELECT id, 'Shadow Roar (Costs 3 Actions)', 'Kaisel unleashes a devastating roar. All creatures within 60 feet must make a Constitution saving throw (DC 20) or take 21 (6d6) thunder damage and be deafened for 1 minute.', 'legendary', 3
 FROM public.compendium_shadow_soldiers WHERE name = 'Kaisel';
-
 -- Add special abilities
 -- Igris abilities
 INSERT INTO public.compendium_shadow_soldier_abilities (shadow_soldier_id, name, description, ability_type)
 SELECT id, 'Shadow Step', 'As a bonus action, Igris can teleport up to 30 feet to an unoccupied space he can see. This movement does not provoke opportunity attacks.', 'bonus'
 FROM public.compendium_shadow_soldiers WHERE name = 'Igris';
-
 INSERT INTO public.compendium_shadow_soldier_abilities (shadow_soldier_id, name, description, ability_type)
 SELECT id, 'Loyalty Beyond Death', 'Igris will never betray the Shadow Monarch. He has advantage on all saving throws against effects that would control or command him.', 'passive'
 FROM public.compendium_shadow_soldiers WHERE name = 'Igris';
-
 -- Beru abilities
 INSERT INTO public.compendium_shadow_soldier_abilities (shadow_soldier_id, name, description, ability_type)
 SELECT id, 'Shadow Regeneration', 'At the start of each of his turns, Beru regains 10 hit points if he has at least 1 hit point remaining.', 'passive'
 FROM public.compendium_shadow_soldiers WHERE name = 'Beru';
-
 INSERT INTO public.compendium_shadow_soldier_abilities (shadow_soldier_id, name, description, ability_type, recharge)
 SELECT id, 'Shadow Burst', 'As a reaction when Beru takes damage, he can release a burst of shadow energy. All creatures within 10 feet must make a Dexterity saving throw (DC 18) or take 14 (4d6) necrotic damage.', 'reaction', '5-6'
 FROM public.compendium_shadow_soldiers WHERE name = 'Beru';
-
 -- Tank abilities
 INSERT INTO public.compendium_shadow_soldier_abilities (shadow_soldier_id, name, description, ability_type)
 SELECT id, 'Damage Absorption', 'When Tank takes damage, he can use his reaction to reduce the damage by 1d10 + his Constitution modifier (minimum 1).', 'reaction'
 FROM public.compendium_shadow_soldiers WHERE name = 'Tank';
-
 INSERT INTO public.compendium_shadow_soldier_abilities (shadow_soldier_id, name, description, ability_type)
 SELECT id, 'Protective Aura', 'Allies within 15 feet of Tank have resistance to necrotic damage and advantage on death saving throws.', 'passive'
 FROM public.compendium_shadow_soldiers WHERE name = 'Tank';
-
 -- Kaisel abilities
 INSERT INTO public.compendium_shadow_soldier_abilities (shadow_soldier_id, name, description, ability_type)
 SELECT id, 'Shadow Flight', 'Kaisel can hover and fly with shadow energy. His flight speed is 80 feet.', 'passive'
 FROM public.compendium_shadow_soldiers WHERE name = 'Kaisel';
-
 INSERT INTO public.compendium_shadow_soldier_abilities (shadow_soldier_id, name, description, ability_type)
 SELECT id, 'Legendary Resistance', 'If Kaisel fails a saving throw, he can choose to succeed instead. He can use this ability three times per day.', 'passive'
 FROM public.compendium_shadow_soldiers WHERE name = 'Kaisel';
-

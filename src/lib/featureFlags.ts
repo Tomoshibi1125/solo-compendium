@@ -17,16 +17,29 @@ export interface FeatureFlags {
 }
 
 const DEFAULT_FLAGS: FeatureFlags = {
-  dailyQuestEnabled: false,
-  artGenerationEnabled: false,
-  aiEnhancementEnabled: false,
-  aiAnalysisEnabled: false,
-  aiTagsEnabled: false,
-  aiMoodDetectionEnabled: false,
-  aiStyleSuggestionsEnabled: false,
-  aiContentFilteringEnabled: false,
-  aiVariationsEnabled: false,
-  aiBatchProcessingEnabled: false,
+  dailyQuestEnabled: true,
+  artGenerationEnabled: true,
+  aiEnhancementEnabled: true,
+  aiAnalysisEnabled: true,
+  aiTagsEnabled: true,
+  aiMoodDetectionEnabled: true,
+  aiStyleSuggestionsEnabled: true,
+  aiContentFilteringEnabled: true,
+  aiVariationsEnabled: true,
+  aiBatchProcessingEnabled: true,
+};
+
+const FLAG_ENV_KEYS: Record<keyof FeatureFlags, string> = {
+  dailyQuestEnabled: 'VITE_FEATURE_DAILY_QUESTS',
+  artGenerationEnabled: 'VITE_FEATURE_ART_GENERATION',
+  aiEnhancementEnabled: 'VITE_FEATURE_AI_ENHANCED_PROMPTS',
+  aiAnalysisEnabled: 'VITE_FEATURE_AI_IMAGE_ANALYSIS',
+  aiTagsEnabled: 'VITE_FEATURE_AI_TAG_GENERATION',
+  aiMoodDetectionEnabled: 'VITE_FEATURE_AI_MOOD_DETECTION',
+  aiStyleSuggestionsEnabled: 'VITE_FEATURE_AI_STYLE_SUGGESTIONS',
+  aiContentFilteringEnabled: 'VITE_FEATURE_AI_CONTENT_FILTERING',
+  aiVariationsEnabled: 'VITE_FEATURE_AI_VARIATIONS',
+  aiBatchProcessingEnabled: 'VITE_FEATURE_AI_BATCH_PROCESSING',
 };
 
 /**
@@ -34,7 +47,7 @@ const DEFAULT_FLAGS: FeatureFlags = {
  * Environment variables should be prefixed with VITE_FEATURE_
  */
 export function getFeatureFlag(flag: keyof FeatureFlags): boolean {
-  const envKey = `VITE_FEATURE_${flag.toUpperCase()}`;
+  const envKey = FLAG_ENV_KEYS[flag];
   const envValue = import.meta.env[envKey];
   
   if (envValue !== undefined) {

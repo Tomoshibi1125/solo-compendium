@@ -14,7 +14,8 @@ export function HeroSection() {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=1920&q=80')`,
+            backgroundImage:
+              "image-set(url('/ui/landing-page-hero.avif') type('image/avif'), url('/ui/landing-page-hero.webp') type('image/webp'))",
             filter: 'brightness(0.3) saturate(1.2) contrast(1.1)',
           }}
         />
@@ -183,4 +184,3 @@ function FeatureCard({ icon: Icon, title, description, graphic, accentColor = 's
     </div>
   );
 }
-

@@ -339,7 +339,7 @@ export function checkRuneRequirements(
   let requirementMultiplier = 1.0;
 
   // Check level requirement
-  if (characterLevel < rune.requires_level) {
+  if (characterLevel < (rune.requires_level || 0)) {
     return { canUse: false, penalties: [`Requires level ${rune.requires_level}`], requirementMultiplier: 1.0 };
   }
 

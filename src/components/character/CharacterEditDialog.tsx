@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Save, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -89,6 +89,7 @@ export function CharacterEditDialog({ character, open, onOpenChange, onStateChan
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Edit Character</DialogTitle>
+          <DialogDescription>Update your hunter profile details and notes.</DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 py-4">

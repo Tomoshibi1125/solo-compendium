@@ -48,6 +48,7 @@ import { ActionsList } from '@/components/character/ActionsList';
 import { FeaturesList } from '@/components/character/FeaturesList';
 import { ExportDialog } from '@/components/character/ExportDialog';
 import { PortraitUpload } from '@/components/character/PortraitUpload';
+import { CharacterLevelUp } from '@/components/CharacterLevelUp';
 import { MonarchUnlocksPanel } from '@/components/character/MonarchUnlocksPanel';
 import { ShadowSoldiersPanel } from '@/components/character/ShadowSoldiersPanel';
 import { CharacterEditDialog } from '@/components/character/CharacterEditDialog';
@@ -58,6 +59,8 @@ import { useToast } from '@/hooks/use-toast';
 import { useEquipment } from '@/hooks/useEquipment';
 import { isLocalCharacterId } from '@/lib/guestStore';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
+import { useCampaignByCharacterId } from '@/hooks/useCampaigns';
+import { getLevelingMode } from '@/lib/campaignSettings';
 import {
   Dialog,
   DialogContent,
@@ -70,6 +73,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { RichTextNotes } from '@/components/character/RichTextNotes';
+import { CharacterResourcesPanel } from '@/components/character/CharacterResourcesPanel';
+import { initializeCharacterResources } from '@/lib/characterResources';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import './CharacterSheet.css';
 
 const CharacterSheet = () => {
@@ -83,6 +89,8 @@ const CharacterSheet = () => {
   const isReadOnly = !!shareToken;
   const { data: character, isLoading } = useCharacter(id || '', shareToken);
   const isLocal = !!character && isLocalCharacterId(character.id);
+  const { data: characterCampaign } = useCampaignByCharacterId(character?.id || '');
+  const levelingMode = getLevelingMode(characterCampaign?.settings);
 
   const { data: jobDisplayRow } = useQuery({
     queryKey: ['compendium-display-job', character?.job],
@@ -138,7 +146,8 @@ const CharacterSheet = () => {
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
-  const undoRedo = useCharacterUndoRedo(character);
+  const [characterResources, setCharacterResources] = useState(initializeCharacterResources());
+  const undoRedo = useCharacterUndoRedo(character ?? null);
   const { data: activeRunes = [] } = useCharacterRuneInscriptions(id);
   const hasTriggeredPrintRef = useRef(false);
   const notesSaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -267,7 +276,13 @@ const CharacterSheet = () => {
     baseStats.armorClass,
     character.speed,
     character.abilities,
-    equipment
+    equipment?.map(item => ({
+      ...item,
+      properties: item.properties || undefined,
+      is_equipped: item.is_equipped || false,
+      is_attuned: item.is_attuned || false,
+      requires_attunement: item.requires_attunement || false,
+    })) || []
   );
 
   // Combine ability modifiers from equipment
@@ -425,7 +440,7 @@ const CharacterSheet = () => {
   const handleLongRest = async () => {
     try {
       const { executeLongRest } = await import('@/lib/restSystem');
-      await executeLongRest(character.id);
+      const result = await executeLongRest(character.id);
 
       // Invalidate queries to refresh data
       queryClient.invalidateQueries({ queryKey: ['character', character.id] });
@@ -435,6 +450,14 @@ const CharacterSheet = () => {
         title: 'Long rest completed',
         description: 'All resources restored. Features recharged. Exhaustion reduced by 1.',
       });
+
+      if (result?.questAssignmentError) {
+        toast({
+          title: 'Daily quests not assigned',
+          description: result.questAssignmentError,
+          variant: 'destructive',
+        });
+      }
     } catch (error) {
       toast({
         title: 'Failed to rest',
@@ -603,10 +626,11 @@ const CharacterSheet = () => {
             <SystemWindow title={character.name.toUpperCase()} className="border-primary/50">
               {character.portrait_url && (
                 <div className="mb-4 flex justify-center">
-                  <img
+                  <OptimizedImage
                     src={character.portrait_url}
                     alt={character.name}
                     className="w-32 h-32 rounded-lg object-cover border border-primary/30"
+                    size="small"
                   />
                 </div>
               )}
@@ -629,6 +653,18 @@ const CharacterSheet = () => {
                 </div>
               </div>
             </SystemWindow>
+
+            {/* Character Level Up */}
+            {!isReadOnly && (
+              <CharacterLevelUp 
+                characterId={character.id}
+                levelingMode={levelingMode}
+                onLevelUp={() => {
+                  // Refresh character data after level up
+                  queryClient.invalidateQueries({ queryKey: ['character', character.id] });
+                }}
+              />
+            )}
 
             {/* Core Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -837,6 +873,17 @@ const CharacterSheet = () => {
                   ))}
                 </div>
               </SystemWindow>
+            )}
+
+            {/* D&D Beyond Resources */}
+            {!isReadOnly && (
+              <CharacterResourcesPanel
+                resources={characterResources}
+                onResourcesChange={setCharacterResources}
+                hpCurrent={character.hp_current}
+                hpMax={character.hp_max}
+                isDead={character.hp_current <= 0 && characterResources.death_saves.death_save_failures >= 3}
+              />
             )}
 
             {/* Actions */}

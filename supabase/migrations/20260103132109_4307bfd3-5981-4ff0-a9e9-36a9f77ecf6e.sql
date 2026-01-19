@@ -40,7 +40,6 @@ INSERT INTO compendium_powers (name, power_level, casting_time, range, duration,
 ('Tier 9 Zone of Control', 9, '1 action', '60 feet', 'Concentration, up to 1 minute', 'You alter a 10-foot-radius sphere of the battlefield with difficult terrain, swirling energy, or oppressive force. A creature that enters the area for the first time on a turn or starts its turn there must succeed on a Strength or Dexterity saving throw or take 1d6 damage and have its speed reduced by 10 feet until the start of its next turn.', true, 'PHB'),
 ('Tier 9 System Scan', 9, '1 action', 'Self', 'Concentration, up to 10 minutes', 'You query the System for information about a Gate, Relic, or creature. For the duration, you have advantage on Intellect (Arcana/Tech) and Sense checks related to the chosen target. The DM can provide additional hints or warnings about major threats.', true, 'PHB')
 ON CONFLICT DO NOTHING;
-
 -- Add more relics from the PHB/Reliquary
 INSERT INTO compendium_relics (name, item_type, rarity, requires_attunement, description, source_book) VALUES
 -- Common Relics
@@ -63,7 +62,6 @@ INSERT INTO compendium_relics (name, item_type, rarity, requires_attunement, des
 ('Crown of the Emergent Sovereign', 'Wondrous Item', 'very_rare', true, 'A crown-like construct of energy and metal. While attuned, you can communicate telepathically with allies within 60 feet. Once per long rest, you can enter a Sovereign-like state for 1 minute, gaining temporary hit points equal to twice your Hunter level and adding your Presence modifier to all saving throws. At the end of this state, you must succeed on a Presence saving throw or suffer a level of exhaustion.', 'PHB'),
 ('System Root Key', 'Wondrous Item', 'legendary', true, 'A mysterious device rumored to interface with the System''s deepest layers. While attuned, you gain advantage on checks to interact with System consoles, artifacts, and anomalies. Once per campaign arc, the DM may allow the Root Key to bypass or rewrite a single major System restriction, with significant narrative consequences.', 'PHB')
 ON CONFLICT DO NOTHING;
-
 -- Create a feats table for character options
 CREATE TABLE IF NOT EXISTS public.compendium_feats (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -75,16 +73,13 @@ CREATE TABLE IF NOT EXISTS public.compendium_feats (
   tags TEXT[] DEFAULT '{}',
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Enable RLS
 ALTER TABLE public.compendium_feats ENABLE ROW LEVEL SECURITY;
-
 -- Create read policy
 CREATE POLICY "Compendium feats are publicly readable" 
 ON public.compendium_feats 
 FOR SELECT 
 USING (true);
-
 -- Insert feats from the PHB
 INSERT INTO compendium_feats (name, prerequisites, description, benefits, source_book) VALUES
 ('Coordinated Healer', 'Healer Job or access to at least one healing power', 'You''re practiced at delivering aid efficiently in combat.', ARRAY['When you restore hit points to an ally with an ability, power, or Relic, that ally can use its reaction to move up to half its speed without provoking opportunity attacks.', 'You have advantage on checks made to stabilize dying creatures.', 'Once per long rest, when you roll the maximum on at least one die to restore hit points, you can reroll one of the other dice and add the new result.'], 'PHB'),

@@ -4,6 +4,8 @@
  */
 
 const isDevelopment = import.meta.env.DEV;
+const isE2E = import.meta.env.VITE_E2E === 'true';
+const allowConsole = isDevelopment && !isE2E;
 
 export interface Logger {
   log: (...args: unknown[]) => void;
@@ -60,7 +62,7 @@ function isCriticalError(args: unknown[], criticalPatterns: string[]): boolean {
 }
 
 const defaultOptions: LoggerOptions = {
-  mode: isDevelopment ? 'development' : 'production',
+  mode: allowConsole ? 'development' : 'production',
   criticalPatterns: defaultCriticalPatterns,
   sink: console,
 };
@@ -83,20 +85,10 @@ export function createLogger(overrides: Partial<LoggerOptions> = {}): Logger {
     };
   }
 
-  const shouldLog = (...args: unknown[]) => isCriticalError(args, options.criticalPatterns);
-
   return {
     log: noop,
-    error: (...args) => {
-      if (shouldLog(...args)) {
-        options.sink.error(...args);
-      }
-    },
-    warn: (...args) => {
-      if (shouldLog(...args)) {
-        options.sink.warn(...args);
-      }
-    },
+    error: noop,
+    warn: noop,
     debug: noop,
   };
 }

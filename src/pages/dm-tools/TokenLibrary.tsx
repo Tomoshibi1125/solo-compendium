@@ -12,6 +12,7 @@ import { cn } from '@/lib/utils';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { supabase } from '@/integrations/supabase/client';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import './TokenLibrary.css';
 
 type TokenType = 'character' | 'monster' | 'npc' | 'prop' | 'effect' | 'custom';
@@ -551,10 +552,11 @@ const TokenLibrary = () => {
                     <div className="space-y-2 mt-2">
                       {imagePreview || newToken.imageUrl ? (
                         <div className="relative inline-block">
-                          <img
+                          <OptimizedImage
                             src={imagePreview || newToken.imageUrl}
                             alt="Token preview"
                             className="w-24 h-24 rounded-lg object-cover border border-border"
+                            size="small"
                           />
                           <Button
                             variant="destructive"
@@ -676,10 +678,11 @@ const TokenLibrary = () => {
                                 }}
                               >
                                 {token.imageUrl ? (
-                                  <img
+                                  <OptimizedImage
                                     src={token.imageUrl}
                                     alt={token.name}
                                     className="w-full h-full object-cover rounded-full"
+                                    size="small"
                                   />
                                 ) : (
                                   token.emoji || '🎲'
@@ -732,10 +735,11 @@ const TokenLibrary = () => {
                             }}
                           >
                             {selectedToken.imageUrl ? (
-                              <img
+                              <OptimizedImage
                                 src={selectedToken.imageUrl}
                                 alt={selectedToken.name}
                                 className="w-full h-full object-cover rounded-full"
+                                size="small"
                               />
                             ) : (
                               selectedToken.emoji || '🎲'

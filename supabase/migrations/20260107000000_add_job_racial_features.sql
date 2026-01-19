@@ -35,7 +35,6 @@ AND NOT EXISTS (
   SELECT 1 FROM compendium_job_features jf 
   WHERE jf.job_id = j.id AND jf.level = 1 AND jf.name = 'Ability Score Increase'
 );
-
 -- Assassin: AGI primary, INT secondary
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
@@ -53,7 +52,6 @@ AND NOT EXISTS (
   SELECT 1 FROM compendium_job_features jf 
   WHERE jf.job_id = j.id AND jf.level = 1 AND jf.name = 'Ability Score Increase'
 );
-
 -- Mage: INT primary, SENSE secondary
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
@@ -71,7 +69,6 @@ AND NOT EXISTS (
   SELECT 1 FROM compendium_job_features jf 
   WHERE jf.job_id = j.id AND jf.level = 1 AND jf.name = 'Ability Score Increase'
 );
-
 -- Healer: PRE primary, INT secondary
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
@@ -89,7 +86,6 @@ AND NOT EXISTS (
   SELECT 1 FROM compendium_job_features jf 
   WHERE jf.job_id = j.id AND jf.level = 1 AND jf.name = 'Ability Score Increase'
 );
-
 -- Striker: STR primary, AGI secondary
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
@@ -107,7 +103,6 @@ AND NOT EXISTS (
   SELECT 1 FROM compendium_job_features jf 
   WHERE jf.job_id = j.id AND jf.level = 1 AND jf.name = 'Ability Score Increase'
 );
-
 -- Ranger: AGI primary, SENSE secondary
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
@@ -125,7 +120,6 @@ AND NOT EXISTS (
   SELECT 1 FROM compendium_job_features jf 
   WHERE jf.job_id = j.id AND jf.level = 1 AND jf.name = 'Ability Score Increase'
 );
-
 -- Destroyer: STR primary, VIT secondary
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
@@ -143,7 +137,6 @@ AND NOT EXISTS (
   SELECT 1 FROM compendium_job_features jf 
   WHERE jf.job_id = j.id AND jf.level = 1 AND jf.name = 'Ability Score Increase'
 );
-
 -- Esper: INT primary, SENSE secondary
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
@@ -161,7 +154,6 @@ AND NOT EXISTS (
   SELECT 1 FROM compendium_job_features jf 
   WHERE jf.job_id = j.id AND jf.level = 1 AND jf.name = 'Ability Score Increase'
 );
-
 -- Contractor: PRE primary, INT secondary
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
@@ -179,7 +171,6 @@ AND NOT EXISTS (
   SELECT 1 FROM compendium_job_features jf 
   WHERE jf.job_id = j.id AND jf.level = 1 AND jf.name = 'Ability Score Increase'
 );
-
 -- Herald: PRE primary, INT secondary
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
@@ -197,7 +188,6 @@ AND NOT EXISTS (
   SELECT 1 FROM compendium_job_features jf 
   WHERE jf.job_id = j.id AND jf.level = 1 AND jf.name = 'Ability Score Increase'
 );
-
 -- Holy Knight: STR primary, PRE secondary
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
@@ -215,7 +205,6 @@ AND NOT EXISTS (
   SELECT 1 FROM compendium_job_features jf 
   WHERE jf.job_id = j.id AND jf.level = 1 AND jf.name = 'Ability Score Increase'
 );
-
 -- Techsmith: INT primary, AGI secondary
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
@@ -233,7 +222,6 @@ AND NOT EXISTS (
   SELECT 1 FROM compendium_job_features jf 
   WHERE jf.job_id = j.id AND jf.level = 1 AND jf.name = 'Ability Score Increase'
 );
-
 -- Warden: VIT primary, STR secondary
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
@@ -251,7 +239,6 @@ AND NOT EXISTS (
   SELECT 1 FROM compendium_job_features jf 
   WHERE jf.job_id = j.id AND jf.level = 1 AND jf.name = 'Ability Score Increase'
 );
-
 -- =============================================
 -- ADDITIONAL RACIAL TRAITS (Speed, Languages, etc.)
 -- =============================================
@@ -260,5 +247,4 @@ AND NOT EXISTS (
 -- Additional languages come from backgrounds
 
 -- Note: Speed and languages are handled at character creation level, not as job features
--- This migration focuses on ability score increases as the primary racial feature
-
+-- This migration focuses on ability score increases as the primary racial feature;

@@ -858,6 +858,7 @@ export type Database = {
           conditions: string[] | null
           created_at: string
           exhaustion_level: number
+          experience: number
           hit_dice_current: number
           hit_dice_max: number
           hit_dice_size: number
@@ -901,6 +902,7 @@ export type Database = {
           conditions?: string[] | null
           created_at?: string
           exhaustion_level?: number
+          experience?: number
           hit_dice_current?: number
           hit_dice_max?: number
           hit_dice_size?: number
@@ -944,6 +946,7 @@ export type Database = {
           conditions?: string[] | null
           created_at?: string
           exhaustion_level?: number
+          experience?: number
           hit_dice_current?: number
           hit_dice_max?: number
           hit_dice_size?: number

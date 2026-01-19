@@ -54,7 +54,10 @@ export function ActionsList({ characterId }: { characterId: string }) {
     character.armor_class,
     character.speed,
     character.abilities,
-    equipment
+    equipment.map(item => ({
+      ...item,
+      properties: item.properties ?? undefined
+    }))
   );
 
   // Combine ability modifiers from equipment

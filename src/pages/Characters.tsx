@@ -8,6 +8,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { BulkActionsBar } from '@/components/character/BulkActionsBar';
 import { cn } from '@/lib/utils';
 import { useCharacters, useDeleteCharacter } from '@/hooks/useCharacters';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -177,10 +178,11 @@ const Characters = () => {
                           "border border-arise/30"
                         )}>
                           {character.portrait_url ? (
-                            <img
+                            <OptimizedImage
                               src={character.portrait_url}
                               alt={character.name}
                               className="w-full h-full object-cover rounded-xl"
+                              size="thumbnail"
                             />
                           ) : (
                             <User className="w-7 h-7 text-arise" />
@@ -218,7 +220,7 @@ const Characters = () => {
                         </div>
                       </div>
 
-                      <Link to={`/characters/${character.id}`} className="block">
+                      <Link to={`/characters/${character.id}`} data-testid="character-card" className="block">
                         <h3 className="font-arise text-xl font-semibold mb-1 group-hover:text-arise transition-colors tracking-wide">
                           {character.name}
                         </h3>
@@ -279,6 +281,7 @@ const Characters = () => {
               {/* New Character Card */}
               <Link
                 to="/characters/new"
+                data-testid="create-character"
                 className={cn(
                   "glass-card p-6 border-dashed border-2 border-arise/30",
                   "hover:border-arise/50 hover:bg-arise/5 transition-all duration-300",

@@ -17,6 +17,8 @@ import { calculateHPMax } from '@/lib/characterCalculations';
 import { useInitializeSpellSlots } from '@/hooks/useSpellSlots';
 import { logger } from '@/lib/logger';
 import type { Database } from '@/integrations/supabase/types';
+import { useCampaignByCharacterId } from '@/hooks/useCampaigns';
+import { getLevelingMode } from '@/lib/campaignSettings';
 
 type JobFeature = Database['public']['Tables']['compendium_job_features']['Row'];
 
@@ -29,6 +31,9 @@ const CharacterLevelUp = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { data: character, isLoading } = useCharacter(id || '');
+  const { data: characterCampaign } = useCampaignByCharacterId(id || '');
+  const levelingMode = getLevelingMode(characterCampaign?.settings);
+  const isMilestone = levelingMode === 'milestone';
   const updateCharacter = useUpdateCharacter();
   const initializeSpellSlots = useInitializeSpellSlots();
   const [newLevel, setNewLevel] = useState(1);
@@ -38,9 +43,10 @@ const CharacterLevelUp = () => {
   const [isRolling, setIsRolling] = useState(false);
 
   // Level progression logic
-  const canLevelUp = character && (character as any).experience >= getExperienceForNextLevel(character.level);
-  const experienceNeeded = character ? getExperienceForNextLevel(character.level) : 0;
-  const currentProgress = character ? ((character as any).experience / experienceNeeded) * 100 : 0;
+  const currentExperience = character?.experience ?? 0;
+  const experienceNeeded = character && !isMilestone ? getExperienceForNextLevel(character.level) : 0;
+  const canLevelUp = !!character && (isMilestone || currentExperience >= experienceNeeded);
+  const currentProgress = experienceNeeded > 0 ? (currentExperience / experienceNeeded) * 100 : 0;
 
   // Fetch features for the new level
   const { data: newFeatures = [] } = useQuery({
@@ -111,6 +117,9 @@ const CharacterLevelUp = () => {
             </div>
             <p className="text-muted-foreground font-heading animate-pulse">Accessing Hunter Data...</p>
           </div>
+          <div className="text-xs text-muted-foreground font-heading mt-2">
+            Advancement Mode: {isMilestone ? 'Milestone' : 'XP'}
+          </div>
         </div>
       </Layout>
     );
@@ -167,6 +176,15 @@ const CharacterLevelUp = () => {
       return;
     }
 
+    if (!isMilestone && !canLevelUp) {
+      toast({
+        title: 'Not enough experience',
+        description: 'You need more XP before leveling up.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     setLoading(true);
     try {
       // Calculate new stats
@@ -176,20 +194,26 @@ const CharacterLevelUp = () => {
       const newHP = character.hp_max + hpIncrease;
       const newHitDiceMax = newLevel;
 
+      const characterUpdates: Database['public']['Tables']['characters']['Update'] = {
+        level: newLevel,
+        proficiency_bonus: newProficiencyBonus,
+        hp_max: newHP,
+        hp_current: character.hp_current + hpIncrease,
+        hit_dice_max: newHitDiceMax,
+        hit_dice_current: newHitDiceMax,
+        system_favor_die: newSystemFavorDie,
+        system_favor_max: newSystemFavorMax,
+        system_favor_current: newSystemFavorMax,
+      };
+
+      if (!isMilestone) {
+        characterUpdates.experience = Math.max(0, currentExperience - experienceNeeded);
+      }
+
       // Update character
       await updateCharacter.mutateAsync({
         id: character.id,
-        data: {
-          level: newLevel,
-          proficiency_bonus: newProficiencyBonus,
-          hp_max: newHP,
-          hp_current: character.hp_current + hpIncrease,
-          hit_dice_max: newHitDiceMax,
-          hit_dice_current: newHitDiceMax,
-          system_favor_die: newSystemFavorDie,
-          system_favor_max: newSystemFavorMax,
-          system_favor_current: newSystemFavorMax,
-        },
+        data: characterUpdates,
       });
 
       // Initialize/update spell slots for new level
@@ -349,7 +373,7 @@ const CharacterLevelUp = () => {
           </h1>
           <div className="flex items-center justify-center gap-4 text-2xl font-arise">
             <span className="text-muted-foreground">LV. {character.level}</span>
-            <span className="text-arise animate-pulse">→</span>
+            <span className="text-arise animate-pulse">{'->'}</span>
             <span className={cn("font-bold", rankInfo.color)}>LV. {newLevel}</span>
             <Badge className={cn("ml-2 font-arise", rankInfo.color, "bg-transparent border-current")}>
               {rankInfo.rank}-RANK
@@ -367,7 +391,7 @@ const CharacterLevelUp = () => {
               </Label>
               <div className="flex items-center gap-4 mt-3">
                 <span className="text-lg text-muted-foreground font-heading">Current: {character.level}</span>
-                <span className="text-2xl font-arise text-arise">→</span>
+                <span className="text-2xl font-arise text-arise">{'->'}</span>
                 <Input
                   type="number"
                   min={character.level + 1}
@@ -378,6 +402,23 @@ const CharacterLevelUp = () => {
                 />
               </div>
             </div>
+
+            {!isMilestone && (
+              <div className="p-4 rounded-lg bg-gradient-to-r from-blue-500/10 to-transparent border border-blue-500/20">
+                <Label className="font-arise text-blue-400 tracking-wide flex items-center gap-2">
+                  <Star className="w-4 h-4" />
+                  EXPERIENCE REQUIREMENT
+                </Label>
+                <div className="flex items-center justify-between mt-3 text-sm font-heading">
+                  <span className="text-muted-foreground">Current XP</span>
+                  <span className="font-arise text-blue-400">{currentExperience}</span>
+                </div>
+                <div className="flex items-center justify-between mt-2 text-sm font-heading">
+                  <span className="text-muted-foreground">Needed for Next Level</span>
+                  <span className="font-arise text-blue-400">{experienceNeeded}</span>
+                </div>
+              </div>
+            )}
 
             {/* HP Increase */}
             <div className="p-4 rounded-lg bg-gradient-to-r from-red-500/10 to-transparent border border-red-500/20">
@@ -507,25 +548,25 @@ const CharacterLevelUp = () => {
                 <div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
                   <span className="text-muted-foreground font-heading">Proficiency Bonus</span>
                   <span className="font-arise text-lg">
-                    +{Math.ceil(character.level / 4) + 1} → <span className="text-arise">+{Math.ceil(newLevel / 4) + 1}</span>
+                    +{Math.ceil(character.level / 4) + 1} {'->'} <span className="text-arise">+{Math.ceil(newLevel / 4) + 1}</span>
                   </span>
                 </div>
                 <div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
                   <span className="text-muted-foreground font-heading">System Favor Die</span>
                   <span className="font-arise text-lg">
-                    d{character.system_favor_die} → <span className="text-arise">d{newLevel <= 4 ? 4 : newLevel <= 10 ? 6 : newLevel <= 16 ? 8 : 10}</span>
+                    d{character.system_favor_die} {'->'} <span className="text-arise">d{newLevel <= 4 ? 4 : newLevel <= 10 ? 6 : newLevel <= 16 ? 8 : 10}</span>
                   </span>
                 </div>
                 <div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
                   <span className="text-muted-foreground font-heading">Max HP</span>
                   <span className="font-arise text-lg">
-                    {character.hp_max} → <span className="text-red-400">{character.hp_max + (hpIncrease || 0)}</span>
+                    {character.hp_max} {'->'} <span className="text-red-400">{character.hp_max + (hpIncrease || 0)}</span>
                   </span>
                 </div>
                 <div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
                   <span className="text-muted-foreground font-heading">Hit Dice</span>
                   <span className="font-arise text-lg">
-                    {character.hit_dice_max} → <span className="text-arise">{newLevel}</span>
+                    {character.hit_dice_max} {'->'} <span className="text-arise">{newLevel}</span>
                   </span>
                 </div>
               </div>
@@ -543,7 +584,7 @@ const CharacterLevelUp = () => {
           </Button>
           <Button
             onClick={handleLevelUp}
-            disabled={loading || hpIncrease === null || newLevel <= character.level}
+            disabled={loading || hpIncrease === null || newLevel <= character.level || (!isMilestone && !canLevelUp)}
             className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple hover:shadow-arise/30 hover:shadow-lg transition-all"
           >
             {loading ? (

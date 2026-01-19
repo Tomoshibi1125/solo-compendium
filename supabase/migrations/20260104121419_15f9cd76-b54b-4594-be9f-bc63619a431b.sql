@@ -19,7 +19,6 @@ CREATE TABLE public.saved_sovereigns (
   is_public BOOLEAN NOT NULL DEFAULT true,
   likes_count INTEGER NOT NULL DEFAULT 0
 );
-
 -- Character monarch unlocks (quest-based, DM marks as complete)
 CREATE TABLE public.character_monarch_unlocks (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -31,7 +30,6 @@ CREATE TABLE public.character_monarch_unlocks (
   is_primary BOOLEAN NOT NULL DEFAULT false,
   UNIQUE(character_id, monarch_id)
 );
-
 -- Shadow Soldiers for Shadow-related Sovereigns
 CREATE TABLE public.compendium_shadow_soldiers (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -56,7 +54,6 @@ CREATE TABLE public.compendium_shadow_soldiers (
   shadow_type TEXT NOT NULL DEFAULT 'soldier',
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Character shadow soldier summons
 CREATE TABLE public.character_shadow_soldiers (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -69,72 +66,57 @@ CREATE TABLE public.character_shadow_soldiers (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   UNIQUE(character_id, soldier_id)
 );
-
 -- Enable RLS
 ALTER TABLE public.saved_sovereigns ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.character_monarch_unlocks ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.compendium_shadow_soldiers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.character_shadow_soldiers ENABLE ROW LEVEL SECURITY;
-
 -- RLS Policies for saved_sovereigns
 CREATE POLICY "Anyone can view public sovereigns" ON public.saved_sovereigns
   FOR SELECT USING (is_public = true OR created_by = auth.uid());
-
 CREATE POLICY "Users can create their own sovereigns" ON public.saved_sovereigns
   FOR INSERT WITH CHECK (auth.uid() = created_by);
-
 CREATE POLICY "Users can update their own sovereigns" ON public.saved_sovereigns
   FOR UPDATE USING (auth.uid() = created_by);
-
 CREATE POLICY "Users can delete their own sovereigns" ON public.saved_sovereigns
   FOR DELETE USING (auth.uid() = created_by);
-
 -- RLS Policies for character_monarch_unlocks
 CREATE POLICY "Users can view their own monarch unlocks" ON public.character_monarch_unlocks
   FOR SELECT USING (EXISTS (
     SELECT 1 FROM characters WHERE characters.id = character_monarch_unlocks.character_id AND characters.user_id = auth.uid()
   ));
-
 CREATE POLICY "Users can create monarch unlocks for their own characters" ON public.character_monarch_unlocks
   FOR INSERT WITH CHECK (EXISTS (
     SELECT 1 FROM characters WHERE characters.id = character_monarch_unlocks.character_id AND characters.user_id = auth.uid()
   ));
-
 CREATE POLICY "Users can update their own monarch unlocks" ON public.character_monarch_unlocks
   FOR UPDATE USING (EXISTS (
     SELECT 1 FROM characters WHERE characters.id = character_monarch_unlocks.character_id AND characters.user_id = auth.uid()
   ));
-
 CREATE POLICY "Users can delete their own monarch unlocks" ON public.character_monarch_unlocks
   FOR DELETE USING (EXISTS (
     SELECT 1 FROM characters WHERE characters.id = character_monarch_unlocks.character_id AND characters.user_id = auth.uid()
   ));
-
 -- RLS Policies for compendium_shadow_soldiers (public read)
 CREATE POLICY "Shadow soldiers are publicly readable" ON public.compendium_shadow_soldiers
   FOR SELECT USING (true);
-
 -- RLS Policies for character_shadow_soldiers
 CREATE POLICY "Users can view their own shadow soldiers" ON public.character_shadow_soldiers
   FOR SELECT USING (EXISTS (
     SELECT 1 FROM characters WHERE characters.id = character_shadow_soldiers.character_id AND characters.user_id = auth.uid()
   ));
-
 CREATE POLICY "Users can summon soldiers for their own characters" ON public.character_shadow_soldiers
   FOR INSERT WITH CHECK (EXISTS (
     SELECT 1 FROM characters WHERE characters.id = character_shadow_soldiers.character_id AND characters.user_id = auth.uid()
   ));
-
 CREATE POLICY "Users can update their own summoned soldiers" ON public.character_shadow_soldiers
   FOR UPDATE USING (EXISTS (
     SELECT 1 FROM characters WHERE characters.id = character_shadow_soldiers.character_id AND characters.user_id = auth.uid()
   ));
-
 CREATE POLICY "Users can release their own shadow soldiers" ON public.character_shadow_soldiers
   FOR DELETE USING (EXISTS (
     SELECT 1 FROM characters WHERE characters.id = character_shadow_soldiers.character_id AND characters.user_id = auth.uid()
   ));
-
 -- Insert iconic Shadow Soldiers from Solo Leveling
 INSERT INTO public.compendium_shadow_soldiers (name, title, rank, description, lore, str, agi, vit, int, sense, pre, armor_class, hit_points, speed, damage_immunities, condition_immunities, abilities, shadow_type, summon_requirements) VALUES
 (

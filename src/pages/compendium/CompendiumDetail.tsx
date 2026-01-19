@@ -4,7 +4,6 @@ import { ArrowLeft, Loader2 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
-import { supabase } from '@/integrations/supabase/client';
 import { Breadcrumbs } from '@/components/compendium/Breadcrumbs';
 import { DetailLayout } from '@/components/compendium/DetailLayout';
 import { QuickReference } from '@/components/compendium/QuickReference';
@@ -26,8 +25,14 @@ import { BackgroundDetail } from '@/components/compendium/BackgroundDetail';
 import { ConditionDetail } from '@/components/compendium/ConditionDetail';
 import { MonarchDetail } from '@/components/compendium/MonarchDetail';
 import { PathDetail } from '@/components/compendium/PathDetail';
+import { ShadowSoldierDetail } from '@/components/compendium/ShadowSoldierDetail';
 import { SovereignDetail } from '@/components/compendium/SovereignDetail';
-import { resolveRef, type EntryType, isValidEntryType, getTableName } from '@/lib/compendiumResolver';
+import { SpellDetail } from '@/components/compendium/SpellDetail';
+import { TechniqueDetail } from '@/components/compendium/TechniqueDetail';
+import { ArtifactDetail } from '@/components/compendium/ArtifactDetail';
+import { LocationDetail } from '@/components/compendium/LocationDetail';
+import { ItemDetail } from '@/components/compendium/ItemDetail';
+import { resolveRef, type EntryType, isValidEntryType, entryTypes, listStaticEntries } from '@/lib/compendiumResolver';
 
 const CompendiumDetail = () => {
   const { type, id } = useParams<{ type: EntryType; id: string }>();
@@ -49,48 +54,34 @@ const CompendiumDetail = () => {
       if (entryTags.length === 0) return [];
 
       const related: Array<{ id: string; name: string; type: string; description?: string }> = [];
-      
-      // Query different tables based on type
-      const tablesToQuery: EntryType[] = ['monsters', 'equipment', 'relics', 'jobs', 'powers', 'runes'].filter(
-        (t): t is EntryType => t !== type && isValidEntryType(t)
-      );
-      
-      for (const tableType of tablesToQuery.slice(0, 2)) {
-        try {
-          const tableName = getTableName(tableType);
-          
-          const { data, error: queryError } = await supabase
-            .from(tableName)
-            .select('id, name, display_name, description')
-            .overlaps('tags', entryTags)
-            .neq('id', id)
-            .limit(3);
-          
-          if (!queryError && data && Array.isArray(data)) {
-            // Type guard to ensure data is valid and not an error
-            // First cast to unknown to bypass union type issues, then validate
-            const items = data as unknown[];
-            const validData = items.filter((item): item is { id: string; name: string; display_name?: string | null; description?: string } => {
-              if (typeof item !== 'object' || item === null) return false;
-              if ('error' in item) return false; // Filter out error objects
-              const obj = item as Record<string, unknown>;
-              if (!('id' in obj) || !('name' in obj)) return false;
-              if (typeof obj.id !== 'string' || typeof obj.name !== 'string') return false;
-              return true;
-            });
-            
-            related.push(...validData.map((item) => ({
-              id: item.id,
-              name: item.display_name || item.name,
-              type: tableType,
-              description: item.description || undefined,
-            })));
-          }
-        } catch (err) {
-          // Continue to next table on error
-        }
+      const normalizedTags = entryTags.map((tag) => tag.toLowerCase());
+      const candidateTypes = entryTypes.filter((entryType) => entryType !== type);
+
+      for (const entryType of candidateTypes) {
+        if (related.length >= 6) break;
+
+        const staticEntries = await listStaticEntries(entryType);
+        if (!staticEntries) continue;
+
+        const matches = staticEntries
+          .filter((item) => {
+            const tags = item.tags || [];
+            if (!Array.isArray(tags) || tags.length === 0) return false;
+            return tags.some((tag) => normalizedTags.includes(tag.toLowerCase()));
+          })
+          .filter((item) => !(entryType === type && item.id === id))
+          .slice(0, 3);
+
+        related.push(
+          ...matches.map((item) => ({
+            id: item.id,
+            name: item.display_name || item.name,
+            type: entryType,
+            description: item.description || undefined,
+          }))
+        );
       }
-      
+
       return related.slice(0, 6);
     },
     enabled: !!type && !!id && !!entry,
@@ -167,6 +158,50 @@ const CompendiumDetail = () => {
         { id: 'rune-effect', title: 'Effect', level: 2 },
         { id: 'rune-inscription', title: 'Inscription', level: 2 }
       );
+    } else if (type === 'shadow-soldiers') {
+      items.push(
+        { id: 'soldier-description', title: 'Overview', level: 2 },
+        { id: 'soldier-role', title: 'Combat Role', level: 2 },
+        { id: 'soldier-tags', title: 'Tags', level: 2 }
+      );
+    } else if (type === 'spells') {
+      items.push(
+        { id: 'spell-stats', title: 'Spell Stats', level: 2 },
+        { id: 'spell-effect', title: 'Effect', level: 2 },
+        { id: 'spell-description', title: 'Description', level: 2 }
+      );
+    } else if (type === 'techniques') {
+      items.push(
+        { id: 'technique-activation', title: 'Activation', level: 2 },
+        { id: 'technique-effects', title: 'Effects', level: 2 },
+        { id: 'technique-mechanics', title: 'Mechanics', level: 2 },
+        { id: 'technique-description', title: 'Description', level: 2 }
+      );
+    } else if (type === 'artifacts') {
+      items.push(
+        { id: 'artifact-properties', title: 'Properties', level: 2 },
+        { id: 'artifact-abilities', title: 'Abilities', level: 2 },
+        { id: 'artifact-lore', title: 'Lore', level: 2 },
+        { id: 'artifact-mechanics', title: 'Mechanics', level: 2 }
+      );
+    } else if (type === 'items') {
+      items.push(
+        { id: 'item-properties', title: 'Properties', level: 2 },
+        { id: 'item-effects', title: 'Effects', level: 2 },
+        { id: 'item-description', title: 'Description', level: 2 }
+      );
+    } else if (type === 'locations') {
+      items.push(
+        { id: 'location-details', title: 'Details', level: 2 },
+        { id: 'location-encounters', title: 'Encounters', level: 2 },
+        { id: 'location-treasures', title: 'Treasures', level: 2 }
+      );
+    } else if (type === 'sovereigns') {
+      items.push(
+        { id: 'sovereign-overview', title: 'Overview', level: 2 },
+        { id: 'sovereign-fusion', title: 'Fusion Components', level: 2 },
+        { id: 'sovereign-features', title: 'Abilities', level: 2 }
+      );
     }
     
     return items;
@@ -203,6 +238,18 @@ const CompendiumDetail = () => {
         return <SkillDetail data={data as any} />;
       case 'equipment':
         return <EquipmentDetail data={data as any} />;
+      case 'shadow-soldiers':
+        return <ShadowSoldierDetail data={data as any} />;
+      case 'items':
+        return <ItemDetail data={data as any} />;
+      case 'spells':
+        return <SpellDetail data={data as any} />;
+      case 'techniques':
+        return <TechniqueDetail data={data as any} />;
+      case 'artifacts':
+        return <ArtifactDetail data={data as any} />;
+      case 'locations':
+        return <LocationDetail data={data as any} />;
       case 'sovereigns':
         return <SovereignDetail data={data as any} />;
       default:
@@ -314,14 +361,20 @@ const CompendiumDetail = () => {
     feats: 'Feats',
     skills: 'Skills',
     equipment: 'Equipment',
+    items: 'Items',
+    spells: 'Spells',
+    techniques: 'Techniques',
+    artifacts: 'Artifacts',
+    locations: 'Locations',
     sovereigns: 'Sovereigns',
+    'shadow-soldiers': 'Shadow Soldiers',
   };
 
   return (
     <Layout>
       <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
         <div className="mb-4">
-          <Button variant="ghost" onClick={() => navigate('/compendium')}>
+          <Button variant="ghost" onClick={() => navigate('/compendium')} aria-label="Back to Compendium">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Compendium
           </Button>
@@ -334,6 +387,8 @@ const CompendiumDetail = () => {
             { label: entryDisplayName },
           ]}
         />
+
+        <span id="entry-header" className="scroll-mt-4" />
 
         <DetailLayout
           main={renderDetail()}

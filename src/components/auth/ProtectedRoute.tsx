@@ -1,8 +1,7 @@
 import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useIsDM } from '@/hooks/useCampaigns';
-import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
-import { useState, useEffect } from 'react';
+import { useAuth } from '@/lib/auth/authContext';
+import { isSupabaseConfigured } from '@/integrations/supabase/client';
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -10,31 +9,13 @@ interface ProtectedRouteProps {
 }
 
 export function ProtectedRoute({ children, requireDM = false }: ProtectedRouteProps) {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-  const { data: isDM = false, isLoading: dmLoading } = useIsDM();
   const isE2E = import.meta.env.VITE_E2E === 'true';
-
-  useEffect(() => {
-    if (isE2E || !isSupabaseConfigured) {
-      // Setup/guest mode: don't run auth checks.
-      return;
-    }
-
-    const checkAuth = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setIsAuthenticated(!!user);
-    };
-
-    checkAuth();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setIsAuthenticated(!!session?.user);
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [isE2E]);
+  const { user, loading, session } = useAuth();
+  const isAuthenticated = !!user;
+  const isDM = user?.role === 'dm';
+  const hasStoredSession =
+    typeof window !== 'undefined' &&
+    Object.keys(localStorage).some((key) => key.includes('auth-token') || key.includes('supabase.auth.token'));
 
   if (isE2E) {
     return <>{children}</>;
@@ -46,8 +27,11 @@ export function ProtectedRoute({ children, requireDM = false }: ProtectedRoutePr
     return <Navigate to="/setup" replace />;
   }
 
+  const shouldHoldForSession =
+    !user && (loading || (session && !user) || (!isAuthenticated && hasStoredSession));
+
   // Show loading state
-  if (isAuthenticated === null || (requireDM && dmLoading)) {
+  if (shouldHoldForSession) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">

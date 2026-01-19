@@ -31,7 +31,7 @@ export const uiAssets: AssetCategory = {
     name: 'Login Page Background',
     category: 'ui',
     type: 'background',
-    path: '/generated/ui/login-page-bg.jpg',
+    path: '/ui/login-page-bg.webp',
     description: 'Solo Leveling styled login page background with shadow theme'
   },
   landingPageHero: {
@@ -39,7 +39,7 @@ export const uiAssets: AssetCategory = {
     name: 'Landing Page Hero',
     category: 'ui',
     type: 'background',
-    path: '/generated/ui/landing-page-hero.jpg',
+    path: '/ui/landing-page-hero.webp',
     description: 'Solo Leveling styled landing page hero image'
   },
   dashboardBg: {
@@ -47,7 +47,7 @@ export const uiAssets: AssetCategory = {
     name: 'Dashboard Background',
     category: 'ui',
     type: 'background',
-    path: '/generated/ui/dashboard-bg.jpg',
+    path: '/ui/dashboard-bg.webp',
     description: 'Solo Leveling styled dashboard background'
   }
 };
@@ -59,7 +59,7 @@ export const itemAssets: AssetCategory = {
     name: 'Shadow Blade of Jinwoo',
     category: 'items',
     type: 'weapon',
-    path: '/generated/items/shadow-blade.jpg',
+    path: '/generated/items/shadow-blade.webp',
     description: 'Legendary blade forged from shadow essence'
   },
   shadowArmor: {
@@ -67,7 +67,7 @@ export const itemAssets: AssetCategory = {
     name: 'Shadow Commander\'s Armor',
     category: 'items',
     type: 'armor',
-    path: '/generated/items/shadow-armor.jpg',
+    path: '/generated/items/shadow-armor.webp',
     description: 'Dark armor infused with shadow energy'
   },
   shadowRing: {
@@ -75,7 +75,7 @@ export const itemAssets: AssetCategory = {
     name: 'Ring of Shadow Sovereignty',
     category: 'items',
     type: 'accessory',
-    path: '/generated/items/shadow-ring.jpg',
+    path: '/generated/items/shadow-ring.webp',
     description: 'Mysterious ring that channels shadow realm power'
   },
   healthPotion: {
@@ -83,7 +83,7 @@ export const itemAssets: AssetCategory = {
     name: 'Elixir of Vital Restoration',
     category: 'items',
     type: 'consumable',
-    path: '/generated/items/health-potion.jpg',
+    path: '/generated/items/health-potion.webp',
     description: 'Potent healing elixir with restorative properties'
   },
   manaPotion: {
@@ -91,7 +91,7 @@ export const itemAssets: AssetCategory = {
     name: 'Elixir of Arcane Renewal',
     category: 'items',
     type: 'consumable',
-    path: '/generated/items/mana-potion.jpg',
+    path: '/generated/items/mana-potion.webp',
     description: 'Magical elixir that restores mana'
   },
   shadowScroll: {
@@ -99,7 +99,7 @@ export const itemAssets: AssetCategory = {
     name: 'Scroll of Shadow Dominion',
     category: 'items',
     type: 'scroll',
-    path: '/generated/items/shadow-scroll.jpg',
+    path: '/generated/items/shadow-scroll.webp',
     description: 'Ancient scroll containing powerful shadow magic'
   }
 };
@@ -111,7 +111,7 @@ export const runeAssets: AssetCategory = {
     name: 'Rune of Eternal Shadow',
     category: 'runes',
     type: 'shadow',
-    path: '/generated/runes/shadow-rune.jpg',
+    path: '/generated/runes/shadow-rune.webp',
     description: 'Powerful rune embodying shadow essence'
   },
   fireRune: {
@@ -119,7 +119,7 @@ export const runeAssets: AssetCategory = {
     name: 'Rune of Infernal Flames',
     category: 'runes',
     type: 'fire',
-    path: '/generated/runes/fire-rune.jpg',
+    path: '/generated/runes/fire-rune.webp',
     description: 'Blazing rune that channels fire power'
   },
   iceRune: {
@@ -127,7 +127,7 @@ export const runeAssets: AssetCategory = {
     name: 'Rune of Frozen Eternal',
     category: 'runes',
     type: 'ice',
-    path: '/generated/runes/ice-rune.jpg',
+    path: '/generated/runes/ice-rune.webp',
     description: 'Chilling rune that harnesses ice power'
   },
   lightningRune: {
@@ -135,7 +135,7 @@ export const runeAssets: AssetCategory = {
     name: 'Rune of Thunder Strike',
     category: 'runes',
     type: 'lightning',
-    path: '/generated/runes/lightning-rune.jpg',
+    path: '/generated/runes/lightning-rune.webp',
     description: 'Electrifying rune commanding lightning'
   },
   healingRune: {
@@ -143,7 +143,7 @@ export const runeAssets: AssetCategory = {
     name: 'Rune of Vital Restoration',
     category: 'runes',
     type: 'healing',
-    path: '/generated/runes/healing-rune.jpg',
+    path: '/generated/runes/healing-rune.webp',
     description: 'Soothing rune with restorative energy'
   },
   protectionRune: {
@@ -151,7 +151,7 @@ export const runeAssets: AssetCategory = {
     name: 'Rune of Divine Protection',
     category: 'runes',
     type: 'protection',
-    path: '/generated/runes/protection-rune.jpg',
+    path: '/generated/runes/protection-rune.webp',
     description: 'Protective rune creating barriers'
   }
 };
@@ -163,7 +163,7 @@ export const mapAssets: AssetCategory = {
     name: 'Shadow Dungeon Floor',
     category: 'maps',
     type: 'floor',
-    path: '/generated/maps/dungeon-floor.jpg',
+    path: '/generated/maps/dungeon-floor.webp',
     description: 'Dark stone floor with shadow energy patterns'
   },
   stoneWall: {
@@ -171,7 +171,7 @@ export const mapAssets: AssetCategory = {
     name: 'Shadow Stone Wall',
     category: 'maps',
     type: 'wall',
-    path: '/generated/maps/stone-wall.jpg',
+    path: '/generated/maps/stone-wall.webp',
     description: 'Impenetrable stone walls with shadow magic'
   },
   woodenDoor: {
@@ -179,7 +179,7 @@ export const mapAssets: AssetCategory = {
     name: 'Ancient Wooden Door',
     category: 'maps',
     type: 'door',
-    path: '/generated/maps/wooden-door.jpg',
+    path: '/generated/maps/wooden-door.webp',
     description: 'Sturdy wooden door with metal fittings'
   },
   ironGate: {
@@ -187,7 +187,7 @@ export const mapAssets: AssetCategory = {
     name: 'Shadow Iron Gate',
     category: 'maps',
     type: 'gate',
-    path: '/generated/maps/iron-gate.jpg',
+    path: '/generated/maps/iron-gate.webp',
     description: 'Massive iron gate with shadow energy'
   },
   treasureChest: {
@@ -195,7 +195,7 @@ export const mapAssets: AssetCategory = {
     name: 'Shadow Treasure Chest',
     category: 'maps',
     type: 'object',
-    path: '/generated/maps/treasure-chest.jpg',
+    path: '/generated/maps/treasure-chest.webp',
     description: 'Mysterious chest with valuable items'
   },
   throneRoom: {
@@ -203,7 +203,7 @@ export const mapAssets: AssetCategory = {
     name: 'Shadow Lord\'s Throne',
     category: 'maps',
     type: 'special',
-    path: '/generated/maps/throne-room.jpg',
+    path: '/generated/maps/throne-room.webp',
     description: 'Imposing throne radiating power'
   }
 };
@@ -215,7 +215,7 @@ export const tokenAssets: AssetCategory = {
     name: 'Shadow Hunter',
     category: 'tokens',
     type: 'player',
-    path: '/generated/tokens/player-token.jpg',
+    path: '/generated/tokens/player-token.webp',
     description: 'Elite warrior trained in shadow arts'
   },
   monsterToken: {
@@ -223,7 +223,7 @@ export const tokenAssets: AssetCategory = {
     name: 'Shadow Demon',
     category: 'tokens',
     type: 'monster',
-    path: '/generated/tokens/monster-token.jpg',
+    path: '/generated/tokens/monster-token.webp',
     description: 'Malevolent creature from shadow energy'
   },
   bossToken: {
@@ -231,7 +231,7 @@ export const tokenAssets: AssetCategory = {
     name: 'Shadow Lord',
     category: 'tokens',
     type: 'boss',
-    path: '/generated/tokens/boss-token.jpg',
+    path: '/generated/tokens/boss-token.webp',
     description: 'Powerful ruler of shadow realm'
   },
   npcToken: {
@@ -239,7 +239,7 @@ export const tokenAssets: AssetCategory = {
     name: 'Mysterious Stranger',
     category: 'tokens',
     type: 'npc',
-    path: '/generated/tokens/npc-token.jpg',
+    path: '/generated/tokens/npc-token.webp',
     description: 'Enigmatic figure with unknown motives'
   },
   merchantToken: {
@@ -247,7 +247,7 @@ export const tokenAssets: AssetCategory = {
     name: 'Shadow Realm Merchant',
     category: 'tokens',
     type: 'merchant',
-    path: '/generated/tokens/merchant-token.jpg',
+    path: '/generated/tokens/merchant-token.webp',
     description: 'Trader specializing in rare items'
   },
   guardToken: {
@@ -255,7 +255,7 @@ export const tokenAssets: AssetCategory = {
     name: 'Shadow Guard',
     category: 'tokens',
     type: 'guard',
-    path: '/generated/tokens/guard-token.jpg',
+    path: '/generated/tokens/guard-token.webp',
     description: 'Elite soldier protecting locations'
   }
 };
@@ -267,7 +267,7 @@ export const spellAssets: AssetCategory = {
     name: 'Shadow Bolt',
     category: 'spells',
     type: 'shadow',
-    path: '/generated/spells/shadow-bolt.jpg',
+    path: '/generated/spells/shadow-bolt.webp',
     description: 'Bolt of pure shadow energy'
   },
   fireball: {
@@ -275,7 +275,7 @@ export const spellAssets: AssetCategory = {
     name: 'Infernal Fireball',
     category: 'spells',
     type: 'fire',
-    path: '/generated/spells/fireball.jpg',
+    path: '/generated/spells/fireball.webp',
     description: 'Massive ball of explosive fire'
   },
   iceShard: {
@@ -283,7 +283,7 @@ export const spellAssets: AssetCategory = {
     name: 'Piercing Ice Shard',
     category: 'spells',
     type: 'ice',
-    path: '/generated/spells/ice-shard.jpg',
+    path: '/generated/spells/ice-shard.webp',
     description: 'Sharp shard of penetrating ice'
   },
   lightningStrike: {
@@ -291,7 +291,7 @@ export const spellAssets: AssetCategory = {
     name: 'Thunder Strike',
     category: 'spells',
     type: 'lightning',
-    path: '/generated/spells/lightning-strike.jpg',
+    path: '/generated/spells/lightning-strike.webp',
     description: 'Powerful lightning from above'
   },
   healingLight: {
@@ -299,7 +299,7 @@ export const spellAssets: AssetCategory = {
     name: 'Restorative Light',
     category: 'spells',
     type: 'healing',
-    path: '/generated/spells/healing-light.jpg',
+    path: '/generated/spells/healing-light.webp',
     description: 'Healing energy that restores health'
   },
   protectionBarrier: {
@@ -307,7 +307,7 @@ export const spellAssets: AssetCategory = {
     name: 'Shield of Protection',
     category: 'spells',
     type: 'protection',
-    path: '/generated/spells/protection-barrier.jpg',
+    path: '/generated/spells/protection-barrier.webp',
     description: 'Magical barrier absorbing damage'
   }
 };

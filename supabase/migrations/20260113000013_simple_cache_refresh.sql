@@ -14,7 +14,6 @@ COMMENT ON FUNCTION public.search_compendium_powers(TEXT, INTEGER, INTEGER) IS '
 COMMENT ON FUNCTION public.search_compendium_monsters(TEXT, INTEGER, INTEGER) IS 'Security Advisor validated - cache refresh';
 COMMENT ON FUNCTION public.search_compendium_paths(TEXT, INTEGER, INTEGER) IS 'Security Advisor validated - cache refresh';
 COMMENT ON FUNCTION public.search_compendium_monarchs(TEXT, INTEGER, INTEGER) IS 'Security Advisor validated - cache refresh';
-
 -- Final verification
 DO $$
 DECLARE

@@ -6,14 +6,15 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/lib/auth/authContext';
-import { Crown, Eye, EyeOff, Shield, Sword, Users } from 'lucide-react';
+import { Eye, EyeOff, Shield, Sword, Users } from 'lucide-react';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 export default function Login() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
-  const [role, setRole] = useState<'dm' | 'player' | 'admin'>('player');
+  const [role, setRole] = useState<'dm' | 'player'>('player');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -35,9 +36,7 @@ export default function Login() {
         setError(result.error);
       } else {
         // Redirect based on role
-        if (role === 'admin') {
-          navigate('/admin');
-        } else if (role === 'dm') {
+        if (role === 'dm') {
           navigate('/dm-tools');
         } else {
           navigate('/player-tools');
@@ -70,10 +69,11 @@ export default function Login() {
         {/* Logo and Title */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <img 
-              src="/generated/ui-art/shadow-soldier-emblem.jpg" 
+            <OptimizedImage
+              src="/ui-art/shadow-soldier-emblem.webp"
               alt="Shadow Soldier Emblem"
               className="w-20 h-20 rounded-full border-2 border-purple-500 shadow-lg shadow-purple-500/50"
+              size="small"
             />
           </div>
           <h1 className="text-4xl font-bold text-white mb-2">
@@ -88,7 +88,7 @@ export default function Login() {
         <div className="bg-gray-800/50 backdrop-blur-lg rounded-2xl p-8 border border-gray-700 shadow-2xl">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Role Selection */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
               <button
                 type="button"
                 onClick={() => setRole('player')}
@@ -114,19 +114,6 @@ export default function Login() {
               >
                 <Shield className="w-4 h-4" />
                 Dungeon Master
-              </button>
-              <button
-                type="button"
-                onClick={() => setRole('admin')}
-                aria-label="Select Admin role"
-                className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
-                  role === 'admin'
-                    ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/50'
-                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                }`}
-              >
-                <Crown className="w-4 h-4" />
-                Admin
               </button>
             </div>
 

@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
+import { logger } from '@/lib/logger';
 import { toast } from '@/hooks/use-toast';
 
 export interface OAuthProvider {
@@ -14,13 +15,13 @@ export const OAUTH_PROVIDERS: OAuthProvider[] = [
   {
     id: 'google',
     name: 'Google',
-    icon: '🔍',
+    icon: 'G',
     color: 'bg-blue-500 hover:bg-blue-600',
   },
   {
     id: 'apple',
     name: 'Apple',
-    icon: '🍎',
+    icon: 'A',
     color: 'bg-gray-800 hover:bg-gray-900',
   },
 ];
@@ -45,7 +46,7 @@ export function useOAuth(): UseOAuthReturn {
         const { data: { user } } = await supabase.auth.getUser();
         setUser(user);
       } catch (error) {
-        console.error('Error getting user:', error);
+        logger.error('Error getting user:', error);
       }
     };
 
@@ -99,7 +100,7 @@ export function useOAuth(): UseOAuthReturn {
 
       // The redirect will happen automatically
     } catch (error) {
-      console.error('OAuth sign in error:', error);
+      logger.error('OAuth sign in error:', error);
       setError(error instanceof Error ? error.message : 'Failed to sign in');
       toast({
         title: 'Sign In Failed',
@@ -126,7 +127,7 @@ export function useOAuth(): UseOAuthReturn {
         description: 'You have been successfully signed out.',
       });
     } catch (error) {
-      console.error('Sign out error:', error);
+      logger.error('Sign out error:', error);
       toast({
         title: 'Sign Out Failed',
         description: 'Failed to sign out. Please try again.',
@@ -145,3 +146,4 @@ export function useOAuth(): UseOAuthReturn {
     error,
   };
 }
+

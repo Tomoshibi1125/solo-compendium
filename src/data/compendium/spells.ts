@@ -26,7 +26,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 88,
     "damage": 192,
-    "image": "/generated/compendium/spells/spell-0001.jpg",
+    "image": "/generated/compendium/spells/spell-0001.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 59,
     "cooldown": 1
@@ -38,7 +38,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 84,
-    "image": "/generated/compendium/spells/spell-0002.jpg",
+    "image": "/generated/compendium/spells/spell-0002.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 44,
     "cooldown": 7
@@ -50,7 +50,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 105,
-    "image": "/generated/compendium/spells/spell-0003.jpg",
+    "image": "/generated/compendium/spells/spell-0003.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 50,
     "cooldown": 10
@@ -63,7 +63,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 107,
     "healing": 297,
-    "image": "/generated/compendium/spells/spell-0004.jpg",
+    "image": "/generated/compendium/spells/spell-0004.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 22,
     "cooldown": 2
@@ -76,7 +76,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 46,
     "damage": 201,
-    "image": "/generated/compendium/spells/spell-0005.jpg",
+    "image": "/generated/compendium/spells/spell-0005.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 43,
     "cooldown": 1
@@ -88,7 +88,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 45,
-    "image": "/generated/compendium/spells/spell-0006.jpg",
+    "image": "/generated/compendium/spells/spell-0006.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 34,
     "cooldown": 10
@@ -100,7 +100,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 106,
-    "image": "/generated/compendium/spells/spell-0007.jpg",
+    "image": "/generated/compendium/spells/spell-0007.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 48,
     "cooldown": 4
@@ -113,7 +113,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 52,
     "healing": 322,
-    "image": "/generated/compendium/spells/spell-0008.jpg",
+    "image": "/generated/compendium/spells/spell-0008.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 38,
     "cooldown": 8
@@ -126,7 +126,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 60,
     "damage": 187,
-    "image": "/generated/compendium/spells/spell-0009.jpg",
+    "image": "/generated/compendium/spells/spell-0009.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 56,
     "cooldown": 5
@@ -138,7 +138,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 103,
-    "image": "/generated/compendium/spells/spell-0010.jpg",
+    "image": "/generated/compendium/spells/spell-0010.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 22,
     "cooldown": 9
@@ -150,7 +150,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 104,
-    "image": "/generated/compendium/spells/spell-0011.jpg",
+    "image": "/generated/compendium/spells/spell-0011.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 45,
     "cooldown": 7
@@ -163,7 +163,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 20,
     "healing": 219,
-    "image": "/generated/compendium/spells/spell-0012.jpg",
+    "image": "/generated/compendium/spells/spell-0012.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 20,
     "cooldown": 5
@@ -176,7 +176,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 48,
     "damage": 153,
-    "image": "/generated/compendium/spells/spell-0013.jpg",
+    "image": "/generated/compendium/spells/spell-0013.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 41,
     "cooldown": 8
@@ -188,7 +188,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 75,
-    "image": "/generated/compendium/spells/spell-0014.jpg",
+    "image": "/generated/compendium/spells/spell-0014.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 25,
     "cooldown": 4
@@ -200,7 +200,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 30,
-    "image": "/generated/compendium/spells/spell-0015.jpg",
+    "image": "/generated/compendium/spells/spell-0015.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 15,
     "cooldown": 2
@@ -213,7 +213,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 73,
     "healing": 380,
-    "image": "/generated/compendium/spells/spell-0016.jpg",
+    "image": "/generated/compendium/spells/spell-0016.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 15,
     "cooldown": 7
@@ -226,7 +226,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 87,
     "damage": 111,
-    "image": "/generated/compendium/spells/spell-0017.jpg",
+    "image": "/generated/compendium/spells/spell-0017.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 46,
     "cooldown": 1
@@ -238,7 +238,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 101,
-    "image": "/generated/compendium/spells/spell-0018.jpg",
+    "image": "/generated/compendium/spells/spell-0018.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 21,
     "cooldown": 8
@@ -250,7 +250,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 52,
-    "image": "/generated/compendium/spells/spell-0019.jpg",
+    "image": "/generated/compendium/spells/spell-0019.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 54,
     "cooldown": 7
@@ -263,7 +263,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 12,
     "healing": 224,
-    "image": "/generated/compendium/spells/spell-0020.jpg",
+    "image": "/generated/compendium/spells/spell-0020.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 42,
     "cooldown": 10
@@ -276,7 +276,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 55,
     "damage": 152,
-    "image": "/generated/compendium/spells/spell-0021.jpg",
+    "image": "/generated/compendium/spells/spell-0021.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 38,
     "cooldown": 6
@@ -288,7 +288,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 84,
-    "image": "/generated/compendium/spells/spell-0022.jpg",
+    "image": "/generated/compendium/spells/spell-0022.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 45,
     "cooldown": 4
@@ -300,7 +300,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 24,
-    "image": "/generated/compendium/spells/spell-0023.jpg",
+    "image": "/generated/compendium/spells/spell-0023.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 16,
     "cooldown": 6
@@ -313,7 +313,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 54,
     "healing": 330,
-    "image": "/generated/compendium/spells/spell-0024.jpg",
+    "image": "/generated/compendium/spells/spell-0024.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 42,
     "cooldown": 3
@@ -326,7 +326,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 19,
     "damage": 222,
-    "image": "/generated/compendium/spells/spell-0025.jpg",
+    "image": "/generated/compendium/spells/spell-0025.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 12,
     "cooldown": 7
@@ -338,7 +338,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 65,
-    "image": "/generated/compendium/spells/spell-0026.jpg",
+    "image": "/generated/compendium/spells/spell-0026.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 55,
     "cooldown": 9
@@ -350,7 +350,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 25,
-    "image": "/generated/compendium/spells/spell-0027.jpg",
+    "image": "/generated/compendium/spells/spell-0027.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 54,
     "cooldown": 1
@@ -363,7 +363,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 25,
     "healing": 114,
-    "image": "/generated/compendium/spells/spell-0028.jpg",
+    "image": "/generated/compendium/spells/spell-0028.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 40,
     "cooldown": 1
@@ -376,7 +376,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 87,
     "damage": 115,
-    "image": "/generated/compendium/spells/spell-0029.jpg",
+    "image": "/generated/compendium/spells/spell-0029.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 17,
     "cooldown": 8
@@ -388,7 +388,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 77,
-    "image": "/generated/compendium/spells/spell-0030.jpg",
+    "image": "/generated/compendium/spells/spell-0030.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 55,
     "cooldown": 8
@@ -400,7 +400,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 32,
-    "image": "/generated/compendium/spells/spell-0031.jpg",
+    "image": "/generated/compendium/spells/spell-0031.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 55,
     "cooldown": 10
@@ -413,7 +413,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 62,
     "healing": 392,
-    "image": "/generated/compendium/spells/spell-0032.jpg",
+    "image": "/generated/compendium/spells/spell-0032.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 53,
     "cooldown": 4
@@ -426,7 +426,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 61,
     "damage": 145,
-    "image": "/generated/compendium/spells/spell-0033.jpg",
+    "image": "/generated/compendium/spells/spell-0033.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 11,
     "cooldown": 2
@@ -438,7 +438,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 73,
-    "image": "/generated/compendium/spells/spell-0034.jpg",
+    "image": "/generated/compendium/spells/spell-0034.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 55,
     "cooldown": 3
@@ -450,7 +450,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 24,
-    "image": "/generated/compendium/spells/spell-0035.jpg",
+    "image": "/generated/compendium/spells/spell-0035.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 39,
     "cooldown": 5
@@ -463,7 +463,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 40,
     "healing": 158,
-    "image": "/generated/compendium/spells/spell-0036.jpg",
+    "image": "/generated/compendium/spells/spell-0036.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 12,
     "cooldown": 2
@@ -476,7 +476,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 33,
     "damage": 219,
-    "image": "/generated/compendium/spells/spell-0037.jpg",
+    "image": "/generated/compendium/spells/spell-0037.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 41,
     "cooldown": 6
@@ -488,7 +488,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 27,
-    "image": "/generated/compendium/spells/spell-0038.jpg",
+    "image": "/generated/compendium/spells/spell-0038.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 43,
     "cooldown": 10
@@ -500,7 +500,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 75,
-    "image": "/generated/compendium/spells/spell-0039.jpg",
+    "image": "/generated/compendium/spells/spell-0039.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 50,
     "cooldown": 6
@@ -513,7 +513,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 89,
     "healing": 188,
-    "image": "/generated/compendium/spells/spell-0040.jpg",
+    "image": "/generated/compendium/spells/spell-0040.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 59,
     "cooldown": 10
@@ -526,7 +526,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 63,
     "damage": 218,
-    "image": "/generated/compendium/spells/spell-0041.jpg",
+    "image": "/generated/compendium/spells/spell-0041.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 37,
     "cooldown": 2
@@ -538,7 +538,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 10,
-    "image": "/generated/compendium/spells/spell-0042.jpg",
+    "image": "/generated/compendium/spells/spell-0042.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 59,
     "cooldown": 6
@@ -550,7 +550,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 53,
-    "image": "/generated/compendium/spells/spell-0043.jpg",
+    "image": "/generated/compendium/spells/spell-0043.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 43,
     "cooldown": 5
@@ -563,7 +563,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 90,
     "healing": 287,
-    "image": "/generated/compendium/spells/spell-0044.jpg",
+    "image": "/generated/compendium/spells/spell-0044.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 19,
     "cooldown": 4
@@ -576,7 +576,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 44,
     "damage": 192,
-    "image": "/generated/compendium/spells/spell-0045.jpg",
+    "image": "/generated/compendium/spells/spell-0045.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 50,
     "cooldown": 7
@@ -588,7 +588,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 34,
-    "image": "/generated/compendium/spells/spell-0046.jpg",
+    "image": "/generated/compendium/spells/spell-0046.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 36,
     "cooldown": 2
@@ -600,7 +600,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 93,
-    "image": "/generated/compendium/spells/spell-0047.jpg",
+    "image": "/generated/compendium/spells/spell-0047.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 32,
     "cooldown": 2
@@ -613,7 +613,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 89,
     "healing": 350,
-    "image": "/generated/compendium/spells/spell-0048.jpg",
+    "image": "/generated/compendium/spells/spell-0048.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 27,
     "cooldown": 7
@@ -626,7 +626,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 31,
     "damage": 218,
-    "image": "/generated/compendium/spells/spell-0049.jpg",
+    "image": "/generated/compendium/spells/spell-0049.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 25,
     "cooldown": 5
@@ -638,7 +638,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 75,
-    "image": "/generated/compendium/spells/spell-0050.jpg",
+    "image": "/generated/compendium/spells/spell-0050.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 25,
     "cooldown": 9
@@ -650,7 +650,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 105,
-    "image": "/generated/compendium/spells/spell-0051.jpg",
+    "image": "/generated/compendium/spells/spell-0051.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 25,
     "cooldown": 6
@@ -663,7 +663,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 92,
     "healing": 322,
-    "image": "/generated/compendium/spells/spell-0052.jpg",
+    "image": "/generated/compendium/spells/spell-0052.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 55,
     "cooldown": 7
@@ -676,7 +676,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 33,
     "damage": 79,
-    "image": "/generated/compendium/spells/spell-0053.jpg",
+    "image": "/generated/compendium/spells/spell-0053.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 59,
     "cooldown": 8
@@ -688,7 +688,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 89,
-    "image": "/generated/compendium/spells/spell-0054.jpg",
+    "image": "/generated/compendium/spells/spell-0054.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 26,
     "cooldown": 4
@@ -700,7 +700,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 24,
-    "image": "/generated/compendium/spells/spell-0055.jpg",
+    "image": "/generated/compendium/spells/spell-0055.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 54,
     "cooldown": 10
@@ -713,7 +713,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 64,
     "healing": 262,
-    "image": "/generated/compendium/spells/spell-0056.jpg",
+    "image": "/generated/compendium/spells/spell-0056.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 49,
     "cooldown": 9
@@ -726,7 +726,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 20,
     "damage": 151,
-    "image": "/generated/compendium/spells/spell-0057.jpg",
+    "image": "/generated/compendium/spells/spell-0057.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 22,
     "cooldown": 6
@@ -738,7 +738,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 50,
-    "image": "/generated/compendium/spells/spell-0058.jpg",
+    "image": "/generated/compendium/spells/spell-0058.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 34,
     "cooldown": 6
@@ -750,7 +750,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 102,
-    "image": "/generated/compendium/spells/spell-0059.jpg",
+    "image": "/generated/compendium/spells/spell-0059.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 18,
     "cooldown": 5
@@ -763,7 +763,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 21,
     "healing": 257,
-    "image": "/generated/compendium/spells/spell-0060.jpg",
+    "image": "/generated/compendium/spells/spell-0060.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 54,
     "cooldown": 9
@@ -776,7 +776,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 61,
     "damage": 165,
-    "image": "/generated/compendium/spells/spell-0061.jpg",
+    "image": "/generated/compendium/spells/spell-0061.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 44,
     "cooldown": 10
@@ -788,7 +788,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 69,
-    "image": "/generated/compendium/spells/spell-0062.jpg",
+    "image": "/generated/compendium/spells/spell-0062.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 35,
     "cooldown": 10
@@ -800,7 +800,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 14,
-    "image": "/generated/compendium/spells/spell-0063.jpg",
+    "image": "/generated/compendium/spells/spell-0063.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 13,
     "cooldown": 7
@@ -813,7 +813,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 91,
     "healing": 386,
-    "image": "/generated/compendium/spells/spell-0064.jpg",
+    "image": "/generated/compendium/spells/spell-0064.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 31,
     "cooldown": 6
@@ -826,7 +826,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 31,
     "damage": 165,
-    "image": "/generated/compendium/spells/spell-0065.jpg",
+    "image": "/generated/compendium/spells/spell-0065.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 53,
     "cooldown": 2
@@ -838,7 +838,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 21,
-    "image": "/generated/compendium/spells/spell-0066.jpg",
+    "image": "/generated/compendium/spells/spell-0066.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 24,
     "cooldown": 8
@@ -850,7 +850,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 80,
-    "image": "/generated/compendium/spells/spell-0067.jpg",
+    "image": "/generated/compendium/spells/spell-0067.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 56,
     "cooldown": 1
@@ -863,7 +863,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 35,
     "healing": 328,
-    "image": "/generated/compendium/spells/spell-0068.jpg",
+    "image": "/generated/compendium/spells/spell-0068.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 33,
     "cooldown": 7
@@ -876,7 +876,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 44,
     "damage": 70,
-    "image": "/generated/compendium/spells/spell-0069.jpg",
+    "image": "/generated/compendium/spells/spell-0069.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 14,
     "cooldown": 6
@@ -888,7 +888,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 52,
-    "image": "/generated/compendium/spells/spell-0070.jpg",
+    "image": "/generated/compendium/spells/spell-0070.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 38,
     "cooldown": 7
@@ -900,7 +900,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 46,
-    "image": "/generated/compendium/spells/spell-0071.jpg",
+    "image": "/generated/compendium/spells/spell-0071.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 58,
     "cooldown": 4
@@ -913,7 +913,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 71,
     "healing": 166,
-    "image": "/generated/compendium/spells/spell-0072.jpg",
+    "image": "/generated/compendium/spells/spell-0072.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 49,
     "cooldown": 6
@@ -926,7 +926,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 40,
     "damage": 218,
-    "image": "/generated/compendium/spells/spell-0073.jpg",
+    "image": "/generated/compendium/spells/spell-0073.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 12,
     "cooldown": 4
@@ -938,7 +938,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 52,
-    "image": "/generated/compendium/spells/spell-0074.jpg",
+    "image": "/generated/compendium/spells/spell-0074.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 53,
     "cooldown": 4
@@ -950,7 +950,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 40,
-    "image": "/generated/compendium/spells/spell-0075.jpg",
+    "image": "/generated/compendium/spells/spell-0075.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 27,
     "cooldown": 1
@@ -963,7 +963,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 11,
     "healing": 117,
-    "image": "/generated/compendium/spells/spell-0076.jpg",
+    "image": "/generated/compendium/spells/spell-0076.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 35,
     "cooldown": 9
@@ -976,7 +976,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 73,
     "damage": 190,
-    "image": "/generated/compendium/spells/spell-0077.jpg",
+    "image": "/generated/compendium/spells/spell-0077.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 13,
     "cooldown": 8
@@ -988,7 +988,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 87,
-    "image": "/generated/compendium/spells/spell-0078.jpg",
+    "image": "/generated/compendium/spells/spell-0078.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 41,
     "cooldown": 7
@@ -1000,7 +1000,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 100,
-    "image": "/generated/compendium/spells/spell-0079.jpg",
+    "image": "/generated/compendium/spells/spell-0079.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 36,
     "cooldown": 8
@@ -1013,7 +1013,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 57,
     "healing": 115,
-    "image": "/generated/compendium/spells/spell-0080.jpg",
+    "image": "/generated/compendium/spells/spell-0080.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 14,
     "cooldown": 10
@@ -1026,7 +1026,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 92,
     "damage": 64,
-    "image": "/generated/compendium/spells/spell-0081.jpg",
+    "image": "/generated/compendium/spells/spell-0081.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 51,
     "cooldown": 9
@@ -1038,7 +1038,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 23,
-    "image": "/generated/compendium/spells/spell-0082.jpg",
+    "image": "/generated/compendium/spells/spell-0082.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 58,
     "cooldown": 2
@@ -1050,7 +1050,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 25,
-    "image": "/generated/compendium/spells/spell-0083.jpg",
+    "image": "/generated/compendium/spells/spell-0083.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 24,
     "cooldown": 6
@@ -1063,7 +1063,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 82,
     "healing": 186,
-    "image": "/generated/compendium/spells/spell-0084.jpg",
+    "image": "/generated/compendium/spells/spell-0084.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 36,
     "cooldown": 9
@@ -1076,7 +1076,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 55,
     "damage": 221,
-    "image": "/generated/compendium/spells/spell-0085.jpg",
+    "image": "/generated/compendium/spells/spell-0085.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 54,
     "cooldown": 5
@@ -1088,7 +1088,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 22,
-    "image": "/generated/compendium/spells/spell-0086.jpg",
+    "image": "/generated/compendium/spells/spell-0086.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 48,
     "cooldown": 8
@@ -1100,7 +1100,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 103,
-    "image": "/generated/compendium/spells/spell-0087.jpg",
+    "image": "/generated/compendium/spells/spell-0087.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 56,
     "cooldown": 4
@@ -1113,7 +1113,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 33,
     "healing": 144,
-    "image": "/generated/compendium/spells/spell-0088.jpg",
+    "image": "/generated/compendium/spells/spell-0088.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 47,
     "cooldown": 3
@@ -1126,7 +1126,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 11,
     "damage": 83,
-    "image": "/generated/compendium/spells/spell-0089.jpg",
+    "image": "/generated/compendium/spells/spell-0089.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 26,
     "cooldown": 5
@@ -1138,7 +1138,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 67,
-    "image": "/generated/compendium/spells/spell-0090.jpg",
+    "image": "/generated/compendium/spells/spell-0090.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 23,
     "cooldown": 6
@@ -1150,7 +1150,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 18,
-    "image": "/generated/compendium/spells/spell-0091.jpg",
+    "image": "/generated/compendium/spells/spell-0091.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 53,
     "cooldown": 7
@@ -1163,7 +1163,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 101,
     "healing": 177,
-    "image": "/generated/compendium/spells/spell-0092.jpg",
+    "image": "/generated/compendium/spells/spell-0092.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 22,
     "cooldown": 7
@@ -1176,7 +1176,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 60,
     "damage": 56,
-    "image": "/generated/compendium/spells/spell-0093.jpg",
+    "image": "/generated/compendium/spells/spell-0093.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 30,
     "cooldown": 1
@@ -1188,7 +1188,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 31,
-    "image": "/generated/compendium/spells/spell-0094.jpg",
+    "image": "/generated/compendium/spells/spell-0094.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 35,
     "cooldown": 4
@@ -1200,7 +1200,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 32,
-    "image": "/generated/compendium/spells/spell-0095.jpg",
+    "image": "/generated/compendium/spells/spell-0095.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 41,
     "cooldown": 5
@@ -1213,7 +1213,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 35,
     "healing": 325,
-    "image": "/generated/compendium/spells/spell-0096.jpg",
+    "image": "/generated/compendium/spells/spell-0096.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 57,
     "cooldown": 10
@@ -1226,7 +1226,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 84,
     "damage": 147,
-    "image": "/generated/compendium/spells/spell-0097.jpg",
+    "image": "/generated/compendium/spells/spell-0097.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 40,
     "cooldown": 2
@@ -1238,7 +1238,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 43,
-    "image": "/generated/compendium/spells/spell-0098.jpg",
+    "image": "/generated/compendium/spells/spell-0098.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 10,
     "cooldown": 2
@@ -1250,7 +1250,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 67,
-    "image": "/generated/compendium/spells/spell-0099.jpg",
+    "image": "/generated/compendium/spells/spell-0099.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 48,
     "cooldown": 6
@@ -1263,7 +1263,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 39,
     "healing": 175,
-    "image": "/generated/compendium/spells/spell-0100.jpg",
+    "image": "/generated/compendium/spells/spell-0100.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 46,
     "cooldown": 1
@@ -1276,7 +1276,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 51,
     "damage": 80,
-    "image": "/generated/compendium/spells/spell-0101.jpg",
+    "image": "/generated/compendium/spells/spell-0101.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 57,
     "cooldown": 4
@@ -1288,7 +1288,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 88,
-    "image": "/generated/compendium/spells/spell-0102.jpg",
+    "image": "/generated/compendium/spells/spell-0102.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 58,
     "cooldown": 10
@@ -1300,7 +1300,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 41,
-    "image": "/generated/compendium/spells/spell-0103.jpg",
+    "image": "/generated/compendium/spells/spell-0103.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 37,
     "cooldown": 2
@@ -1313,7 +1313,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 105,
     "healing": 208,
-    "image": "/generated/compendium/spells/spell-0104.jpg",
+    "image": "/generated/compendium/spells/spell-0104.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 45,
     "cooldown": 1
@@ -1326,7 +1326,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 39,
     "damage": 103,
-    "image": "/generated/compendium/spells/spell-0105.jpg",
+    "image": "/generated/compendium/spells/spell-0105.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 33,
     "cooldown": 4
@@ -1338,7 +1338,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 106,
-    "image": "/generated/compendium/spells/spell-0106.jpg",
+    "image": "/generated/compendium/spells/spell-0106.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 24,
     "cooldown": 4
@@ -1350,7 +1350,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 60,
-    "image": "/generated/compendium/spells/spell-0107.jpg",
+    "image": "/generated/compendium/spells/spell-0107.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 20,
     "cooldown": 2
@@ -1363,7 +1363,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 32,
     "healing": 104,
-    "image": "/generated/compendium/spells/spell-0108.jpg",
+    "image": "/generated/compendium/spells/spell-0108.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 58,
     "cooldown": 6
@@ -1376,7 +1376,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 90,
     "damage": 100,
-    "image": "/generated/compendium/spells/spell-0109.jpg",
+    "image": "/generated/compendium/spells/spell-0109.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 46,
     "cooldown": 9
@@ -1388,7 +1388,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 88,
-    "image": "/generated/compendium/spells/spell-0110.jpg",
+    "image": "/generated/compendium/spells/spell-0110.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 29,
     "cooldown": 8
@@ -1400,7 +1400,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 67,
-    "image": "/generated/compendium/spells/spell-0111.jpg",
+    "image": "/generated/compendium/spells/spell-0111.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 17,
     "cooldown": 9
@@ -1413,7 +1413,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 108,
     "healing": 293,
-    "image": "/generated/compendium/spells/spell-0112.jpg",
+    "image": "/generated/compendium/spells/spell-0112.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 54,
     "cooldown": 6
@@ -1426,7 +1426,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 70,
     "damage": 154,
-    "image": "/generated/compendium/spells/spell-0113.jpg",
+    "image": "/generated/compendium/spells/spell-0113.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 39,
     "cooldown": 6
@@ -1438,7 +1438,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 56,
-    "image": "/generated/compendium/spells/spell-0114.jpg",
+    "image": "/generated/compendium/spells/spell-0114.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 51,
     "cooldown": 2
@@ -1450,7 +1450,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 33,
-    "image": "/generated/compendium/spells/spell-0115.jpg",
+    "image": "/generated/compendium/spells/spell-0115.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 41,
     "cooldown": 1
@@ -1463,7 +1463,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 85,
     "healing": 197,
-    "image": "/generated/compendium/spells/spell-0116.jpg",
+    "image": "/generated/compendium/spells/spell-0116.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 28,
     "cooldown": 9
@@ -1476,7 +1476,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 88,
     "damage": 101,
-    "image": "/generated/compendium/spells/spell-0117.jpg",
+    "image": "/generated/compendium/spells/spell-0117.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 24,
     "cooldown": 3
@@ -1488,7 +1488,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 39,
-    "image": "/generated/compendium/spells/spell-0118.jpg",
+    "image": "/generated/compendium/spells/spell-0118.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 32,
     "cooldown": 5
@@ -1500,7 +1500,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 62,
-    "image": "/generated/compendium/spells/spell-0119.jpg",
+    "image": "/generated/compendium/spells/spell-0119.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 34,
     "cooldown": 8
@@ -1513,7 +1513,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 90,
     "healing": 195,
-    "image": "/generated/compendium/spells/spell-0120.jpg",
+    "image": "/generated/compendium/spells/spell-0120.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 17,
     "cooldown": 5
@@ -1526,7 +1526,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 63,
     "damage": 82,
-    "image": "/generated/compendium/spells/spell-0121.jpg",
+    "image": "/generated/compendium/spells/spell-0121.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 54,
     "cooldown": 9
@@ -1538,7 +1538,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 95,
-    "image": "/generated/compendium/spells/spell-0122.jpg",
+    "image": "/generated/compendium/spells/spell-0122.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 57,
     "cooldown": 5
@@ -1550,7 +1550,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 44,
-    "image": "/generated/compendium/spells/spell-0123.jpg",
+    "image": "/generated/compendium/spells/spell-0123.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 38,
     "cooldown": 3
@@ -1563,7 +1563,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 34,
     "healing": 324,
-    "image": "/generated/compendium/spells/spell-0124.jpg",
+    "image": "/generated/compendium/spells/spell-0124.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 33,
     "cooldown": 1
@@ -1576,7 +1576,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 49,
     "damage": 183,
-    "image": "/generated/compendium/spells/spell-0125.jpg",
+    "image": "/generated/compendium/spells/spell-0125.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 35,
     "cooldown": 6
@@ -1588,7 +1588,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 37,
-    "image": "/generated/compendium/spells/spell-0126.jpg",
+    "image": "/generated/compendium/spells/spell-0126.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 14,
     "cooldown": 10
@@ -1600,7 +1600,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 90,
-    "image": "/generated/compendium/spells/spell-0127.jpg",
+    "image": "/generated/compendium/spells/spell-0127.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 21,
     "cooldown": 2
@@ -1613,7 +1613,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 94,
     "healing": 269,
-    "image": "/generated/compendium/spells/spell-0128.jpg",
+    "image": "/generated/compendium/spells/spell-0128.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 50,
     "cooldown": 9
@@ -1626,7 +1626,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 61,
     "damage": 53,
-    "image": "/generated/compendium/spells/spell-0129.jpg",
+    "image": "/generated/compendium/spells/spell-0129.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 29,
     "cooldown": 2
@@ -1638,7 +1638,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 61,
-    "image": "/generated/compendium/spells/spell-0130.jpg",
+    "image": "/generated/compendium/spells/spell-0130.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 47,
     "cooldown": 6
@@ -1650,7 +1650,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 74,
-    "image": "/generated/compendium/spells/spell-0131.jpg",
+    "image": "/generated/compendium/spells/spell-0131.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 55,
     "cooldown": 1
@@ -1663,7 +1663,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 96,
     "healing": 205,
-    "image": "/generated/compendium/spells/spell-0132.jpg",
+    "image": "/generated/compendium/spells/spell-0132.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 44,
     "cooldown": 9
@@ -1676,7 +1676,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 67,
     "damage": 221,
-    "image": "/generated/compendium/spells/spell-0133.jpg",
+    "image": "/generated/compendium/spells/spell-0133.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 49,
     "cooldown": 7
@@ -1688,7 +1688,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 105,
-    "image": "/generated/compendium/spells/spell-0134.jpg",
+    "image": "/generated/compendium/spells/spell-0134.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 28,
     "cooldown": 4
@@ -1700,7 +1700,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 44,
-    "image": "/generated/compendium/spells/spell-0135.jpg",
+    "image": "/generated/compendium/spells/spell-0135.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 30,
     "cooldown": 1
@@ -1713,7 +1713,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 38,
     "healing": 244,
-    "image": "/generated/compendium/spells/spell-0136.jpg",
+    "image": "/generated/compendium/spells/spell-0136.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 31,
     "cooldown": 4
@@ -1726,7 +1726,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 22,
     "damage": 134,
-    "image": "/generated/compendium/spells/spell-0137.jpg",
+    "image": "/generated/compendium/spells/spell-0137.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 57,
     "cooldown": 10
@@ -1738,7 +1738,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 105,
-    "image": "/generated/compendium/spells/spell-0138.jpg",
+    "image": "/generated/compendium/spells/spell-0138.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 49,
     "cooldown": 1
@@ -1750,7 +1750,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 75,
-    "image": "/generated/compendium/spells/spell-0139.jpg",
+    "image": "/generated/compendium/spells/spell-0139.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 22,
     "cooldown": 1
@@ -1763,7 +1763,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 53,
     "healing": 365,
-    "image": "/generated/compendium/spells/spell-0140.jpg",
+    "image": "/generated/compendium/spells/spell-0140.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 13,
     "cooldown": 10
@@ -1776,7 +1776,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 26,
     "damage": 235,
-    "image": "/generated/compendium/spells/spell-0141.jpg",
+    "image": "/generated/compendium/spells/spell-0141.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 43,
     "cooldown": 8
@@ -1788,7 +1788,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 49,
-    "image": "/generated/compendium/spells/spell-0142.jpg",
+    "image": "/generated/compendium/spells/spell-0142.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 24,
     "cooldown": 8
@@ -1800,7 +1800,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 39,
-    "image": "/generated/compendium/spells/spell-0143.jpg",
+    "image": "/generated/compendium/spells/spell-0143.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 46,
     "cooldown": 6
@@ -1813,7 +1813,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 102,
     "healing": 261,
-    "image": "/generated/compendium/spells/spell-0144.jpg",
+    "image": "/generated/compendium/spells/spell-0144.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 56,
     "cooldown": 1
@@ -1826,7 +1826,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 85,
     "damage": 169,
-    "image": "/generated/compendium/spells/spell-0145.jpg",
+    "image": "/generated/compendium/spells/spell-0145.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 24,
     "cooldown": 7
@@ -1838,7 +1838,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 100,
-    "image": "/generated/compendium/spells/spell-0146.jpg",
+    "image": "/generated/compendium/spells/spell-0146.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 22,
     "cooldown": 5
@@ -1850,7 +1850,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 70,
-    "image": "/generated/compendium/spells/spell-0147.jpg",
+    "image": "/generated/compendium/spells/spell-0147.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 57,
     "cooldown": 1
@@ -1863,7 +1863,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 46,
     "healing": 231,
-    "image": "/generated/compendium/spells/spell-0148.jpg",
+    "image": "/generated/compendium/spells/spell-0148.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 31,
     "cooldown": 9
@@ -1876,7 +1876,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 44,
     "damage": 247,
-    "image": "/generated/compendium/spells/spell-0149.jpg",
+    "image": "/generated/compendium/spells/spell-0149.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 40,
     "cooldown": 5
@@ -1888,7 +1888,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 61,
-    "image": "/generated/compendium/spells/spell-0150.jpg",
+    "image": "/generated/compendium/spells/spell-0150.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 16,
     "cooldown": 6
@@ -1900,7 +1900,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 26,
-    "image": "/generated/compendium/spells/spell-0151.jpg",
+    "image": "/generated/compendium/spells/spell-0151.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 16,
     "cooldown": 6
@@ -1913,7 +1913,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 69,
     "healing": 313,
-    "image": "/generated/compendium/spells/spell-0152.jpg",
+    "image": "/generated/compendium/spells/spell-0152.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 49,
     "cooldown": 5
@@ -1926,7 +1926,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 57,
     "damage": 187,
-    "image": "/generated/compendium/spells/spell-0153.jpg",
+    "image": "/generated/compendium/spells/spell-0153.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 23,
     "cooldown": 2
@@ -1938,7 +1938,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 39,
-    "image": "/generated/compendium/spells/spell-0154.jpg",
+    "image": "/generated/compendium/spells/spell-0154.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 58,
     "cooldown": 10
@@ -1950,7 +1950,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 78,
-    "image": "/generated/compendium/spells/spell-0155.jpg",
+    "image": "/generated/compendium/spells/spell-0155.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 31,
     "cooldown": 3
@@ -1963,7 +1963,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 90,
     "healing": 110,
-    "image": "/generated/compendium/spells/spell-0156.jpg",
+    "image": "/generated/compendium/spells/spell-0156.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 54,
     "cooldown": 1
@@ -1976,7 +1976,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 107,
     "damage": 63,
-    "image": "/generated/compendium/spells/spell-0157.jpg",
+    "image": "/generated/compendium/spells/spell-0157.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 57,
     "cooldown": 2
@@ -1988,7 +1988,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 62,
-    "image": "/generated/compendium/spells/spell-0158.jpg",
+    "image": "/generated/compendium/spells/spell-0158.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 49,
     "cooldown": 9
@@ -2000,7 +2000,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 45,
-    "image": "/generated/compendium/spells/spell-0159.jpg",
+    "image": "/generated/compendium/spells/spell-0159.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 57,
     "cooldown": 10
@@ -2013,7 +2013,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 88,
     "healing": 132,
-    "image": "/generated/compendium/spells/spell-0160.jpg",
+    "image": "/generated/compendium/spells/spell-0160.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 12,
     "cooldown": 3
@@ -2026,7 +2026,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 107,
     "damage": 188,
-    "image": "/generated/compendium/spells/spell-0161.jpg",
+    "image": "/generated/compendium/spells/spell-0161.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 59,
     "cooldown": 7
@@ -2038,7 +2038,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 103,
-    "image": "/generated/compendium/spells/spell-0162.jpg",
+    "image": "/generated/compendium/spells/spell-0162.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 14,
     "cooldown": 9
@@ -2050,7 +2050,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 101,
-    "image": "/generated/compendium/spells/spell-0163.jpg",
+    "image": "/generated/compendium/spells/spell-0163.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 58,
     "cooldown": 4
@@ -2063,7 +2063,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 22,
     "healing": 211,
-    "image": "/generated/compendium/spells/spell-0164.jpg",
+    "image": "/generated/compendium/spells/spell-0164.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 28,
     "cooldown": 5
@@ -2076,7 +2076,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 40,
     "damage": 234,
-    "image": "/generated/compendium/spells/spell-0165.jpg",
+    "image": "/generated/compendium/spells/spell-0165.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 39,
     "cooldown": 7
@@ -2088,7 +2088,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 61,
-    "image": "/generated/compendium/spells/spell-0166.jpg",
+    "image": "/generated/compendium/spells/spell-0166.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 26,
     "cooldown": 7
@@ -2100,7 +2100,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 54,
-    "image": "/generated/compendium/spells/spell-0167.jpg",
+    "image": "/generated/compendium/spells/spell-0167.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 17,
     "cooldown": 1
@@ -2113,7 +2113,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 55,
     "healing": 226,
-    "image": "/generated/compendium/spells/spell-0168.jpg",
+    "image": "/generated/compendium/spells/spell-0168.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 29,
     "cooldown": 5
@@ -2126,7 +2126,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 90,
     "damage": 101,
-    "image": "/generated/compendium/spells/spell-0169.jpg",
+    "image": "/generated/compendium/spells/spell-0169.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 27,
     "cooldown": 3
@@ -2138,7 +2138,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 106,
-    "image": "/generated/compendium/spells/spell-0170.jpg",
+    "image": "/generated/compendium/spells/spell-0170.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 41,
     "cooldown": 2
@@ -2150,7 +2150,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 35,
-    "image": "/generated/compendium/spells/spell-0171.jpg",
+    "image": "/generated/compendium/spells/spell-0171.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 45,
     "cooldown": 7
@@ -2163,7 +2163,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 90,
     "healing": 134,
-    "image": "/generated/compendium/spells/spell-0172.jpg",
+    "image": "/generated/compendium/spells/spell-0172.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 51,
     "cooldown": 7
@@ -2176,7 +2176,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 52,
     "damage": 74,
-    "image": "/generated/compendium/spells/spell-0173.jpg",
+    "image": "/generated/compendium/spells/spell-0173.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 33,
     "cooldown": 1
@@ -2188,7 +2188,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 66,
-    "image": "/generated/compendium/spells/spell-0174.jpg",
+    "image": "/generated/compendium/spells/spell-0174.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 18,
     "cooldown": 4
@@ -2200,7 +2200,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 16,
-    "image": "/generated/compendium/spells/spell-0175.jpg",
+    "image": "/generated/compendium/spells/spell-0175.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 18,
     "cooldown": 3
@@ -2213,7 +2213,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 35,
     "healing": 183,
-    "image": "/generated/compendium/spells/spell-0176.jpg",
+    "image": "/generated/compendium/spells/spell-0176.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 18,
     "cooldown": 8
@@ -2226,7 +2226,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 88,
     "damage": 167,
-    "image": "/generated/compendium/spells/spell-0177.jpg",
+    "image": "/generated/compendium/spells/spell-0177.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 22,
     "cooldown": 9
@@ -2238,7 +2238,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 15,
-    "image": "/generated/compendium/spells/spell-0178.jpg",
+    "image": "/generated/compendium/spells/spell-0178.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 20,
     "cooldown": 9
@@ -2250,7 +2250,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 107,
-    "image": "/generated/compendium/spells/spell-0179.jpg",
+    "image": "/generated/compendium/spells/spell-0179.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 21,
     "cooldown": 9
@@ -2263,7 +2263,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 22,
     "healing": 360,
-    "image": "/generated/compendium/spells/spell-0180.jpg",
+    "image": "/generated/compendium/spells/spell-0180.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 17,
     "cooldown": 4
@@ -2276,7 +2276,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 100,
     "damage": 245,
-    "image": "/generated/compendium/spells/spell-0181.jpg",
+    "image": "/generated/compendium/spells/spell-0181.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 36,
     "cooldown": 2
@@ -2288,7 +2288,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 109,
-    "image": "/generated/compendium/spells/spell-0182.jpg",
+    "image": "/generated/compendium/spells/spell-0182.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 32,
     "cooldown": 1
@@ -2300,7 +2300,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 63,
-    "image": "/generated/compendium/spells/spell-0183.jpg",
+    "image": "/generated/compendium/spells/spell-0183.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 54,
     "cooldown": 9
@@ -2313,7 +2313,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 79,
     "healing": 235,
-    "image": "/generated/compendium/spells/spell-0184.jpg",
+    "image": "/generated/compendium/spells/spell-0184.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 42,
     "cooldown": 10
@@ -2326,7 +2326,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 89,
     "damage": 133,
-    "image": "/generated/compendium/spells/spell-0185.jpg",
+    "image": "/generated/compendium/spells/spell-0185.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 21,
     "cooldown": 7
@@ -2338,7 +2338,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 94,
-    "image": "/generated/compendium/spells/spell-0186.jpg",
+    "image": "/generated/compendium/spells/spell-0186.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 38,
     "cooldown": 9
@@ -2350,7 +2350,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 99,
-    "image": "/generated/compendium/spells/spell-0187.jpg",
+    "image": "/generated/compendium/spells/spell-0187.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 21,
     "cooldown": 2
@@ -2363,7 +2363,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 100,
     "healing": 107,
-    "image": "/generated/compendium/spells/spell-0188.jpg",
+    "image": "/generated/compendium/spells/spell-0188.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 52,
     "cooldown": 2
@@ -2376,7 +2376,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 84,
     "damage": 176,
-    "image": "/generated/compendium/spells/spell-0189.jpg",
+    "image": "/generated/compendium/spells/spell-0189.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 17,
     "cooldown": 8
@@ -2388,7 +2388,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 10,
-    "image": "/generated/compendium/spells/spell-0190.jpg",
+    "image": "/generated/compendium/spells/spell-0190.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 48,
     "cooldown": 10
@@ -2400,7 +2400,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 46,
-    "image": "/generated/compendium/spells/spell-0191.jpg",
+    "image": "/generated/compendium/spells/spell-0191.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 15,
     "cooldown": 9
@@ -2413,7 +2413,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 68,
     "healing": 379,
-    "image": "/generated/compendium/spells/spell-0192.jpg",
+    "image": "/generated/compendium/spells/spell-0192.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 42,
     "cooldown": 9
@@ -2426,7 +2426,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 15,
     "damage": 178,
-    "image": "/generated/compendium/spells/spell-0193.jpg",
+    "image": "/generated/compendium/spells/spell-0193.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 26,
     "cooldown": 3
@@ -2438,7 +2438,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 40,
-    "image": "/generated/compendium/spells/spell-0194.jpg",
+    "image": "/generated/compendium/spells/spell-0194.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 33,
     "cooldown": 9
@@ -2450,7 +2450,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 101,
-    "image": "/generated/compendium/spells/spell-0195.jpg",
+    "image": "/generated/compendium/spells/spell-0195.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 20,
     "cooldown": 1
@@ -2463,7 +2463,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 94,
     "healing": 297,
-    "image": "/generated/compendium/spells/spell-0196.jpg",
+    "image": "/generated/compendium/spells/spell-0196.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 38,
     "cooldown": 6
@@ -2476,7 +2476,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 19,
     "damage": 106,
-    "image": "/generated/compendium/spells/spell-0197.jpg",
+    "image": "/generated/compendium/spells/spell-0197.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 34,
     "cooldown": 7
@@ -2488,7 +2488,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 37,
-    "image": "/generated/compendium/spells/spell-0198.jpg",
+    "image": "/generated/compendium/spells/spell-0198.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 12,
     "cooldown": 4
@@ -2500,7 +2500,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 72,
-    "image": "/generated/compendium/spells/spell-0199.jpg",
+    "image": "/generated/compendium/spells/spell-0199.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 45,
     "cooldown": 9
@@ -2513,7 +2513,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 32,
     "healing": 212,
-    "image": "/generated/compendium/spells/spell-0200.jpg",
+    "image": "/generated/compendium/spells/spell-0200.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 42,
     "cooldown": 4
@@ -2526,7 +2526,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 30,
     "damage": 88,
-    "image": "/generated/compendium/spells/spell-0201.jpg",
+    "image": "/generated/compendium/spells/spell-0201.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 58,
     "cooldown": 7
@@ -2538,7 +2538,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 60,
-    "image": "/generated/compendium/spells/spell-0202.jpg",
+    "image": "/generated/compendium/spells/spell-0202.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 11,
     "cooldown": 9
@@ -2550,7 +2550,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 48,
-    "image": "/generated/compendium/spells/spell-0203.jpg",
+    "image": "/generated/compendium/spells/spell-0203.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 36,
     "cooldown": 4
@@ -2563,7 +2563,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 18,
     "healing": 156,
-    "image": "/generated/compendium/spells/spell-0204.jpg",
+    "image": "/generated/compendium/spells/spell-0204.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 33,
     "cooldown": 6
@@ -2576,7 +2576,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 76,
     "damage": 241,
-    "image": "/generated/compendium/spells/spell-0205.jpg",
+    "image": "/generated/compendium/spells/spell-0205.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 59,
     "cooldown": 3
@@ -2588,7 +2588,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 97,
-    "image": "/generated/compendium/spells/spell-0206.jpg",
+    "image": "/generated/compendium/spells/spell-0206.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 14,
     "cooldown": 8
@@ -2600,7 +2600,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 101,
-    "image": "/generated/compendium/spells/spell-0207.jpg",
+    "image": "/generated/compendium/spells/spell-0207.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 53,
     "cooldown": 7
@@ -2613,7 +2613,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 78,
     "healing": 338,
-    "image": "/generated/compendium/spells/spell-0208.jpg",
+    "image": "/generated/compendium/spells/spell-0208.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 49,
     "cooldown": 7
@@ -2626,7 +2626,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 66,
     "damage": 59,
-    "image": "/generated/compendium/spells/spell-0209.jpg",
+    "image": "/generated/compendium/spells/spell-0209.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 10,
     "cooldown": 7
@@ -2638,7 +2638,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 79,
-    "image": "/generated/compendium/spells/spell-0210.jpg",
+    "image": "/generated/compendium/spells/spell-0210.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 24,
     "cooldown": 2
@@ -2650,7 +2650,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 45,
-    "image": "/generated/compendium/spells/spell-0211.jpg",
+    "image": "/generated/compendium/spells/spell-0211.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 48,
     "cooldown": 2
@@ -2663,7 +2663,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 97,
     "healing": 198,
-    "image": "/generated/compendium/spells/spell-0212.jpg",
+    "image": "/generated/compendium/spells/spell-0212.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 49,
     "cooldown": 10
@@ -2676,7 +2676,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 70,
     "damage": 89,
-    "image": "/generated/compendium/spells/spell-0213.jpg",
+    "image": "/generated/compendium/spells/spell-0213.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 14,
     "cooldown": 2
@@ -2688,7 +2688,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 67,
-    "image": "/generated/compendium/spells/spell-0214.jpg",
+    "image": "/generated/compendium/spells/spell-0214.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 56,
     "cooldown": 9
@@ -2700,7 +2700,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 88,
-    "image": "/generated/compendium/spells/spell-0215.jpg",
+    "image": "/generated/compendium/spells/spell-0215.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 58,
     "cooldown": 9
@@ -2713,7 +2713,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 80,
     "healing": 136,
-    "image": "/generated/compendium/spells/spell-0216.jpg",
+    "image": "/generated/compendium/spells/spell-0216.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 53,
     "cooldown": 10
@@ -2726,7 +2726,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 103,
     "damage": 141,
-    "image": "/generated/compendium/spells/spell-0217.jpg",
+    "image": "/generated/compendium/spells/spell-0217.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 26,
     "cooldown": 8
@@ -2738,7 +2738,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 80,
-    "image": "/generated/compendium/spells/spell-0218.jpg",
+    "image": "/generated/compendium/spells/spell-0218.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 13,
     "cooldown": 10
@@ -2750,7 +2750,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 75,
-    "image": "/generated/compendium/spells/spell-0219.jpg",
+    "image": "/generated/compendium/spells/spell-0219.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 13,
     "cooldown": 3
@@ -2763,7 +2763,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 98,
     "healing": 300,
-    "image": "/generated/compendium/spells/spell-0220.jpg",
+    "image": "/generated/compendium/spells/spell-0220.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 11,
     "cooldown": 9
@@ -2776,7 +2776,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 53,
     "damage": 237,
-    "image": "/generated/compendium/spells/spell-0221.jpg",
+    "image": "/generated/compendium/spells/spell-0221.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 52,
     "cooldown": 2
@@ -2788,7 +2788,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 20,
-    "image": "/generated/compendium/spells/spell-0222.jpg",
+    "image": "/generated/compendium/spells/spell-0222.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 24,
     "cooldown": 3
@@ -2800,7 +2800,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 96,
-    "image": "/generated/compendium/spells/spell-0223.jpg",
+    "image": "/generated/compendium/spells/spell-0223.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 56,
     "cooldown": 2
@@ -2813,7 +2813,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 89,
     "healing": 374,
-    "image": "/generated/compendium/spells/spell-0224.jpg",
+    "image": "/generated/compendium/spells/spell-0224.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 48,
     "cooldown": 5
@@ -2826,7 +2826,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 48,
     "damage": 115,
-    "image": "/generated/compendium/spells/spell-0225.jpg",
+    "image": "/generated/compendium/spells/spell-0225.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 17,
     "cooldown": 9
@@ -2838,7 +2838,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 21,
-    "image": "/generated/compendium/spells/spell-0226.jpg",
+    "image": "/generated/compendium/spells/spell-0226.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 55,
     "cooldown": 3
@@ -2850,7 +2850,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 52,
-    "image": "/generated/compendium/spells/spell-0227.jpg",
+    "image": "/generated/compendium/spells/spell-0227.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 11,
     "cooldown": 5
@@ -2863,7 +2863,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 24,
     "healing": 240,
-    "image": "/generated/compendium/spells/spell-0228.jpg",
+    "image": "/generated/compendium/spells/spell-0228.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 17,
     "cooldown": 4
@@ -2876,7 +2876,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 53,
     "damage": 232,
-    "image": "/generated/compendium/spells/spell-0229.jpg",
+    "image": "/generated/compendium/spells/spell-0229.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 38,
     "cooldown": 10
@@ -2888,7 +2888,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 64,
-    "image": "/generated/compendium/spells/spell-0230.jpg",
+    "image": "/generated/compendium/spells/spell-0230.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 44,
     "cooldown": 10
@@ -2900,7 +2900,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 40,
-    "image": "/generated/compendium/spells/spell-0231.jpg",
+    "image": "/generated/compendium/spells/spell-0231.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 40,
     "cooldown": 1
@@ -2913,7 +2913,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 79,
     "healing": 176,
-    "image": "/generated/compendium/spells/spell-0232.jpg",
+    "image": "/generated/compendium/spells/spell-0232.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 47,
     "cooldown": 3
@@ -2926,7 +2926,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 50,
     "damage": 212,
-    "image": "/generated/compendium/spells/spell-0233.jpg",
+    "image": "/generated/compendium/spells/spell-0233.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 56,
     "cooldown": 8
@@ -2938,7 +2938,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 55,
-    "image": "/generated/compendium/spells/spell-0234.jpg",
+    "image": "/generated/compendium/spells/spell-0234.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 19,
     "cooldown": 2
@@ -2950,7 +2950,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 85,
-    "image": "/generated/compendium/spells/spell-0235.jpg",
+    "image": "/generated/compendium/spells/spell-0235.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 18,
     "cooldown": 8
@@ -2963,7 +2963,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 78,
     "healing": 280,
-    "image": "/generated/compendium/spells/spell-0236.jpg",
+    "image": "/generated/compendium/spells/spell-0236.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 25,
     "cooldown": 1
@@ -2976,7 +2976,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 12,
     "damage": 228,
-    "image": "/generated/compendium/spells/spell-0237.jpg",
+    "image": "/generated/compendium/spells/spell-0237.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 57,
     "cooldown": 4
@@ -2988,7 +2988,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 76,
-    "image": "/generated/compendium/spells/spell-0238.jpg",
+    "image": "/generated/compendium/spells/spell-0238.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 21,
     "cooldown": 1
@@ -3000,7 +3000,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 109,
-    "image": "/generated/compendium/spells/spell-0239.jpg",
+    "image": "/generated/compendium/spells/spell-0239.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 18,
     "cooldown": 8
@@ -3013,7 +3013,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 15,
     "healing": 334,
-    "image": "/generated/compendium/spells/spell-0240.jpg",
+    "image": "/generated/compendium/spells/spell-0240.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 39,
     "cooldown": 6
@@ -3026,7 +3026,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 39,
     "damage": 92,
-    "image": "/generated/compendium/spells/spell-0241.jpg",
+    "image": "/generated/compendium/spells/spell-0241.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 12,
     "cooldown": 7
@@ -3038,7 +3038,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 36,
-    "image": "/generated/compendium/spells/spell-0242.jpg",
+    "image": "/generated/compendium/spells/spell-0242.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 49,
     "cooldown": 1
@@ -3050,7 +3050,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 80,
-    "image": "/generated/compendium/spells/spell-0243.jpg",
+    "image": "/generated/compendium/spells/spell-0243.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 45,
     "cooldown": 8
@@ -3063,7 +3063,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 87,
     "healing": 221,
-    "image": "/generated/compendium/spells/spell-0244.jpg",
+    "image": "/generated/compendium/spells/spell-0244.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 28,
     "cooldown": 1
@@ -3076,7 +3076,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 51,
     "damage": 94,
-    "image": "/generated/compendium/spells/spell-0245.jpg",
+    "image": "/generated/compendium/spells/spell-0245.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 36,
     "cooldown": 10
@@ -3088,7 +3088,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 69,
-    "image": "/generated/compendium/spells/spell-0246.jpg",
+    "image": "/generated/compendium/spells/spell-0246.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 12,
     "cooldown": 10
@@ -3100,7 +3100,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 78,
-    "image": "/generated/compendium/spells/spell-0247.jpg",
+    "image": "/generated/compendium/spells/spell-0247.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 31,
     "cooldown": 6
@@ -3113,7 +3113,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 108,
     "healing": 293,
-    "image": "/generated/compendium/spells/spell-0248.jpg",
+    "image": "/generated/compendium/spells/spell-0248.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 13,
     "cooldown": 7
@@ -3126,7 +3126,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 40,
     "damage": 159,
-    "image": "/generated/compendium/spells/spell-0249.jpg",
+    "image": "/generated/compendium/spells/spell-0249.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 44,
     "cooldown": 3
@@ -3138,7 +3138,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 106,
-    "image": "/generated/compendium/spells/spell-0250.jpg",
+    "image": "/generated/compendium/spells/spell-0250.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 48,
     "cooldown": 3
@@ -3150,7 +3150,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 32,
-    "image": "/generated/compendium/spells/spell-0251.jpg",
+    "image": "/generated/compendium/spells/spell-0251.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 39,
     "cooldown": 9
@@ -3163,7 +3163,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 93,
     "healing": 395,
-    "image": "/generated/compendium/spells/spell-0252.jpg",
+    "image": "/generated/compendium/spells/spell-0252.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 35,
     "cooldown": 1
@@ -3176,7 +3176,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 33,
     "damage": 128,
-    "image": "/generated/compendium/spells/spell-0253.jpg",
+    "image": "/generated/compendium/spells/spell-0253.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 21,
     "cooldown": 4
@@ -3188,7 +3188,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 80,
-    "image": "/generated/compendium/spells/spell-0254.jpg",
+    "image": "/generated/compendium/spells/spell-0254.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 39,
     "cooldown": 9
@@ -3200,7 +3200,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 57,
-    "image": "/generated/compendium/spells/spell-0255.jpg",
+    "image": "/generated/compendium/spells/spell-0255.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 54,
     "cooldown": 1
@@ -3213,7 +3213,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 84,
     "healing": 191,
-    "image": "/generated/compendium/spells/spell-0256.jpg",
+    "image": "/generated/compendium/spells/spell-0256.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 11,
     "cooldown": 10
@@ -3226,7 +3226,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 71,
     "damage": 238,
-    "image": "/generated/compendium/spells/spell-0257.jpg",
+    "image": "/generated/compendium/spells/spell-0257.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 15,
     "cooldown": 10
@@ -3238,7 +3238,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 78,
-    "image": "/generated/compendium/spells/spell-0258.jpg",
+    "image": "/generated/compendium/spells/spell-0258.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 56,
     "cooldown": 2
@@ -3250,7 +3250,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 27,
-    "image": "/generated/compendium/spells/spell-0259.jpg",
+    "image": "/generated/compendium/spells/spell-0259.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 45,
     "cooldown": 1
@@ -3263,7 +3263,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 105,
     "healing": 320,
-    "image": "/generated/compendium/spells/spell-0260.jpg",
+    "image": "/generated/compendium/spells/spell-0260.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 17,
     "cooldown": 8
@@ -3276,7 +3276,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 90,
     "damage": 239,
-    "image": "/generated/compendium/spells/spell-0261.jpg",
+    "image": "/generated/compendium/spells/spell-0261.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 39,
     "cooldown": 8
@@ -3288,7 +3288,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 95,
-    "image": "/generated/compendium/spells/spell-0262.jpg",
+    "image": "/generated/compendium/spells/spell-0262.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 46,
     "cooldown": 8
@@ -3300,7 +3300,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 43,
-    "image": "/generated/compendium/spells/spell-0263.jpg",
+    "image": "/generated/compendium/spells/spell-0263.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 14,
     "cooldown": 9
@@ -3313,7 +3313,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 77,
     "healing": 342,
-    "image": "/generated/compendium/spells/spell-0264.jpg",
+    "image": "/generated/compendium/spells/spell-0264.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 20,
     "cooldown": 5
@@ -3326,7 +3326,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 81,
     "damage": 108,
-    "image": "/generated/compendium/spells/spell-0265.jpg",
+    "image": "/generated/compendium/spells/spell-0265.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 45,
     "cooldown": 9
@@ -3338,7 +3338,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 74,
-    "image": "/generated/compendium/spells/spell-0266.jpg",
+    "image": "/generated/compendium/spells/spell-0266.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 17,
     "cooldown": 6
@@ -3350,7 +3350,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 12,
-    "image": "/generated/compendium/spells/spell-0267.jpg",
+    "image": "/generated/compendium/spells/spell-0267.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 35,
     "cooldown": 8
@@ -3363,7 +3363,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 82,
     "healing": 171,
-    "image": "/generated/compendium/spells/spell-0268.jpg",
+    "image": "/generated/compendium/spells/spell-0268.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 23,
     "cooldown": 10
@@ -3376,7 +3376,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 77,
     "damage": 101,
-    "image": "/generated/compendium/spells/spell-0269.jpg",
+    "image": "/generated/compendium/spells/spell-0269.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 24,
     "cooldown": 10
@@ -3388,7 +3388,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 48,
-    "image": "/generated/compendium/spells/spell-0270.jpg",
+    "image": "/generated/compendium/spells/spell-0270.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 35,
     "cooldown": 1
@@ -3400,7 +3400,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 66,
-    "image": "/generated/compendium/spells/spell-0271.jpg",
+    "image": "/generated/compendium/spells/spell-0271.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 28,
     "cooldown": 4
@@ -3413,7 +3413,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 108,
     "healing": 121,
-    "image": "/generated/compendium/spells/spell-0272.jpg",
+    "image": "/generated/compendium/spells/spell-0272.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 14,
     "cooldown": 7
@@ -3426,7 +3426,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 73,
     "damage": 72,
-    "image": "/generated/compendium/spells/spell-0273.jpg",
+    "image": "/generated/compendium/spells/spell-0273.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 41,
     "cooldown": 8
@@ -3438,7 +3438,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 93,
-    "image": "/generated/compendium/spells/spell-0274.jpg",
+    "image": "/generated/compendium/spells/spell-0274.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 49,
     "cooldown": 3
@@ -3450,7 +3450,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 71,
-    "image": "/generated/compendium/spells/spell-0275.jpg",
+    "image": "/generated/compendium/spells/spell-0275.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 13,
     "cooldown": 1
@@ -3463,7 +3463,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 24,
     "healing": 174,
-    "image": "/generated/compendium/spells/spell-0276.jpg",
+    "image": "/generated/compendium/spells/spell-0276.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 39,
     "cooldown": 9
@@ -3476,7 +3476,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 91,
     "damage": 66,
-    "image": "/generated/compendium/spells/spell-0277.jpg",
+    "image": "/generated/compendium/spells/spell-0277.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 48,
     "cooldown": 3
@@ -3488,7 +3488,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 15,
-    "image": "/generated/compendium/spells/spell-0278.jpg",
+    "image": "/generated/compendium/spells/spell-0278.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 14,
     "cooldown": 5
@@ -3500,7 +3500,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 57,
-    "image": "/generated/compendium/spells/spell-0279.jpg",
+    "image": "/generated/compendium/spells/spell-0279.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 32,
     "cooldown": 9
@@ -3513,7 +3513,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 82,
     "healing": 292,
-    "image": "/generated/compendium/spells/spell-0280.jpg",
+    "image": "/generated/compendium/spells/spell-0280.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 32,
     "cooldown": 3
@@ -3526,7 +3526,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 78,
     "damage": 207,
-    "image": "/generated/compendium/spells/spell-0281.jpg",
+    "image": "/generated/compendium/spells/spell-0281.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 17,
     "cooldown": 3
@@ -3538,7 +3538,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 94,
-    "image": "/generated/compendium/spells/spell-0282.jpg",
+    "image": "/generated/compendium/spells/spell-0282.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 44,
     "cooldown": 9
@@ -3550,7 +3550,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 63,
-    "image": "/generated/compendium/spells/spell-0283.jpg",
+    "image": "/generated/compendium/spells/spell-0283.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 45,
     "cooldown": 10
@@ -3563,7 +3563,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 104,
     "healing": 280,
-    "image": "/generated/compendium/spells/spell-0284.jpg",
+    "image": "/generated/compendium/spells/spell-0284.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 38,
     "cooldown": 6
@@ -3576,7 +3576,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 62,
     "damage": 116,
-    "image": "/generated/compendium/spells/spell-0285.jpg",
+    "image": "/generated/compendium/spells/spell-0285.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 47,
     "cooldown": 4
@@ -3588,7 +3588,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 69,
-    "image": "/generated/compendium/spells/spell-0286.jpg",
+    "image": "/generated/compendium/spells/spell-0286.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 14,
     "cooldown": 7
@@ -3600,7 +3600,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 28,
-    "image": "/generated/compendium/spells/spell-0287.jpg",
+    "image": "/generated/compendium/spells/spell-0287.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 11,
     "cooldown": 5
@@ -3613,7 +3613,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 79,
     "healing": 264,
-    "image": "/generated/compendium/spells/spell-0288.jpg",
+    "image": "/generated/compendium/spells/spell-0288.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 29,
     "cooldown": 8
@@ -3626,7 +3626,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 106,
     "damage": 106,
-    "image": "/generated/compendium/spells/spell-0289.jpg",
+    "image": "/generated/compendium/spells/spell-0289.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 47,
     "cooldown": 1
@@ -3638,7 +3638,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 73,
-    "image": "/generated/compendium/spells/spell-0290.jpg",
+    "image": "/generated/compendium/spells/spell-0290.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 38,
     "cooldown": 10
@@ -3650,7 +3650,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 108,
-    "image": "/generated/compendium/spells/spell-0291.jpg",
+    "image": "/generated/compendium/spells/spell-0291.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 15,
     "cooldown": 7
@@ -3663,7 +3663,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 56,
     "healing": 102,
-    "image": "/generated/compendium/spells/spell-0292.jpg",
+    "image": "/generated/compendium/spells/spell-0292.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 39,
     "cooldown": 2
@@ -3676,7 +3676,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 87,
     "damage": 60,
-    "image": "/generated/compendium/spells/spell-0293.jpg",
+    "image": "/generated/compendium/spells/spell-0293.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 49,
     "cooldown": 5
@@ -3688,7 +3688,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 66,
-    "image": "/generated/compendium/spells/spell-0294.jpg",
+    "image": "/generated/compendium/spells/spell-0294.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 51,
     "cooldown": 5
@@ -3700,7 +3700,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 25,
-    "image": "/generated/compendium/spells/spell-0295.jpg",
+    "image": "/generated/compendium/spells/spell-0295.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 48,
     "cooldown": 7
@@ -3713,7 +3713,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 72,
     "healing": 117,
-    "image": "/generated/compendium/spells/spell-0296.jpg",
+    "image": "/generated/compendium/spells/spell-0296.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 11,
     "cooldown": 4
@@ -3726,7 +3726,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 108,
     "damage": 201,
-    "image": "/generated/compendium/spells/spell-0297.jpg",
+    "image": "/generated/compendium/spells/spell-0297.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 32,
     "cooldown": 3
@@ -3738,7 +3738,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 62,
-    "image": "/generated/compendium/spells/spell-0298.jpg",
+    "image": "/generated/compendium/spells/spell-0298.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 53,
     "cooldown": 9
@@ -3750,7 +3750,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 48,
-    "image": "/generated/compendium/spells/spell-0299.jpg",
+    "image": "/generated/compendium/spells/spell-0299.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 45,
     "cooldown": 6
@@ -3763,7 +3763,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 107,
     "healing": 388,
-    "image": "/generated/compendium/spells/spell-0300.jpg",
+    "image": "/generated/compendium/spells/spell-0300.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 44,
     "cooldown": 7
@@ -3776,7 +3776,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 85,
     "damage": 248,
-    "image": "/generated/compendium/spells/spell-0301.jpg",
+    "image": "/generated/compendium/spells/spell-0301.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 11,
     "cooldown": 3
@@ -3788,7 +3788,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 102,
-    "image": "/generated/compendium/spells/spell-0302.jpg",
+    "image": "/generated/compendium/spells/spell-0302.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 14,
     "cooldown": 2
@@ -3800,7 +3800,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 59,
-    "image": "/generated/compendium/spells/spell-0303.jpg",
+    "image": "/generated/compendium/spells/spell-0303.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 31,
     "cooldown": 6
@@ -3813,7 +3813,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 26,
     "healing": 116,
-    "image": "/generated/compendium/spells/spell-0304.jpg",
+    "image": "/generated/compendium/spells/spell-0304.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 38,
     "cooldown": 9
@@ -3826,7 +3826,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 96,
     "damage": 120,
-    "image": "/generated/compendium/spells/spell-0305.jpg",
+    "image": "/generated/compendium/spells/spell-0305.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 26,
     "cooldown": 8
@@ -3838,7 +3838,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 87,
-    "image": "/generated/compendium/spells/spell-0306.jpg",
+    "image": "/generated/compendium/spells/spell-0306.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 48,
     "cooldown": 7
@@ -3850,7 +3850,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 82,
-    "image": "/generated/compendium/spells/spell-0307.jpg",
+    "image": "/generated/compendium/spells/spell-0307.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 43,
     "cooldown": 7
@@ -3863,7 +3863,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 61,
     "healing": 343,
-    "image": "/generated/compendium/spells/spell-0308.jpg",
+    "image": "/generated/compendium/spells/spell-0308.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 21,
     "cooldown": 2
@@ -3876,7 +3876,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 100,
     "damage": 236,
-    "image": "/generated/compendium/spells/spell-0309.jpg",
+    "image": "/generated/compendium/spells/spell-0309.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 11,
     "cooldown": 8
@@ -3888,7 +3888,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 106,
-    "image": "/generated/compendium/spells/spell-0310.jpg",
+    "image": "/generated/compendium/spells/spell-0310.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 27,
     "cooldown": 6
@@ -3900,7 +3900,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 106,
-    "image": "/generated/compendium/spells/spell-0311.jpg",
+    "image": "/generated/compendium/spells/spell-0311.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 21,
     "cooldown": 2
@@ -3913,7 +3913,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 39,
     "healing": 313,
-    "image": "/generated/compendium/spells/spell-0312.jpg",
+    "image": "/generated/compendium/spells/spell-0312.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 13,
     "cooldown": 6
@@ -3926,7 +3926,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 81,
     "damage": 166,
-    "image": "/generated/compendium/spells/spell-0313.jpg",
+    "image": "/generated/compendium/spells/spell-0313.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 22,
     "cooldown": 3
@@ -3938,7 +3938,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 70,
-    "image": "/generated/compendium/spells/spell-0314.jpg",
+    "image": "/generated/compendium/spells/spell-0314.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 35,
     "cooldown": 2
@@ -3950,7 +3950,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 70,
-    "image": "/generated/compendium/spells/spell-0315.jpg",
+    "image": "/generated/compendium/spells/spell-0315.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 21,
     "cooldown": 5
@@ -3963,7 +3963,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 101,
     "healing": 312,
-    "image": "/generated/compendium/spells/spell-0316.jpg",
+    "image": "/generated/compendium/spells/spell-0316.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 43,
     "cooldown": 5
@@ -3976,7 +3976,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 83,
     "damage": 94,
-    "image": "/generated/compendium/spells/spell-0317.jpg",
+    "image": "/generated/compendium/spells/spell-0317.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 10,
     "cooldown": 9
@@ -3988,7 +3988,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 72,
-    "image": "/generated/compendium/spells/spell-0318.jpg",
+    "image": "/generated/compendium/spells/spell-0318.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 25,
     "cooldown": 8
@@ -4000,7 +4000,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 98,
-    "image": "/generated/compendium/spells/spell-0319.jpg",
+    "image": "/generated/compendium/spells/spell-0319.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 11,
     "cooldown": 5
@@ -4013,7 +4013,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 80,
     "healing": 173,
-    "image": "/generated/compendium/spells/spell-0320.jpg",
+    "image": "/generated/compendium/spells/spell-0320.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 52,
     "cooldown": 5
@@ -4026,7 +4026,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 60,
     "damage": 59,
-    "image": "/generated/compendium/spells/spell-0321.jpg",
+    "image": "/generated/compendium/spells/spell-0321.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 34,
     "cooldown": 6
@@ -4038,7 +4038,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 60,
-    "image": "/generated/compendium/spells/spell-0322.jpg",
+    "image": "/generated/compendium/spells/spell-0322.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 40,
     "cooldown": 4
@@ -4050,7 +4050,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 10,
-    "image": "/generated/compendium/spells/spell-0323.jpg",
+    "image": "/generated/compendium/spells/spell-0323.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 29,
     "cooldown": 6
@@ -4063,7 +4063,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 58,
     "healing": 366,
-    "image": "/generated/compendium/spells/spell-0324.jpg",
+    "image": "/generated/compendium/spells/spell-0324.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 11,
     "cooldown": 8
@@ -4076,7 +4076,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 30,
     "damage": 238,
-    "image": "/generated/compendium/spells/spell-0325.jpg",
+    "image": "/generated/compendium/spells/spell-0325.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 47,
     "cooldown": 10
@@ -4088,7 +4088,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 82,
-    "image": "/generated/compendium/spells/spell-0326.jpg",
+    "image": "/generated/compendium/spells/spell-0326.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 30,
     "cooldown": 6
@@ -4100,7 +4100,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 58,
-    "image": "/generated/compendium/spells/spell-0327.jpg",
+    "image": "/generated/compendium/spells/spell-0327.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 13,
     "cooldown": 6
@@ -4113,7 +4113,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 93,
     "healing": 202,
-    "image": "/generated/compendium/spells/spell-0328.jpg",
+    "image": "/generated/compendium/spells/spell-0328.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 50,
     "cooldown": 6
@@ -4126,7 +4126,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 64,
     "damage": 139,
-    "image": "/generated/compendium/spells/spell-0329.jpg",
+    "image": "/generated/compendium/spells/spell-0329.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 37,
     "cooldown": 4
@@ -4138,7 +4138,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 53,
-    "image": "/generated/compendium/spells/spell-0330.jpg",
+    "image": "/generated/compendium/spells/spell-0330.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 37,
     "cooldown": 5
@@ -4150,7 +4150,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 55,
-    "image": "/generated/compendium/spells/spell-0331.jpg",
+    "image": "/generated/compendium/spells/spell-0331.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 20,
     "cooldown": 5
@@ -4163,7 +4163,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 87,
     "healing": 294,
-    "image": "/generated/compendium/spells/spell-0332.jpg",
+    "image": "/generated/compendium/spells/spell-0332.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 36,
     "cooldown": 10
@@ -4176,7 +4176,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 28,
     "damage": 165,
-    "image": "/generated/compendium/spells/spell-0333.jpg",
+    "image": "/generated/compendium/spells/spell-0333.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 16,
     "cooldown": 2
@@ -4188,7 +4188,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 30,
-    "image": "/generated/compendium/spells/spell-0334.jpg",
+    "image": "/generated/compendium/spells/spell-0334.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 11,
     "cooldown": 4
@@ -4200,7 +4200,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 109,
-    "image": "/generated/compendium/spells/spell-0335.jpg",
+    "image": "/generated/compendium/spells/spell-0335.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 34,
     "cooldown": 2
@@ -4213,7 +4213,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 65,
     "healing": 345,
-    "image": "/generated/compendium/spells/spell-0336.jpg",
+    "image": "/generated/compendium/spells/spell-0336.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 12,
     "cooldown": 1
@@ -4226,7 +4226,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 64,
     "damage": 160,
-    "image": "/generated/compendium/spells/spell-0337.jpg",
+    "image": "/generated/compendium/spells/spell-0337.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 36,
     "cooldown": 1
@@ -4238,7 +4238,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 88,
-    "image": "/generated/compendium/spells/spell-0338.jpg",
+    "image": "/generated/compendium/spells/spell-0338.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 34,
     "cooldown": 2
@@ -4250,7 +4250,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 32,
-    "image": "/generated/compendium/spells/spell-0339.jpg",
+    "image": "/generated/compendium/spells/spell-0339.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 27,
     "cooldown": 10
@@ -4263,7 +4263,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 83,
     "healing": 206,
-    "image": "/generated/compendium/spells/spell-0340.jpg",
+    "image": "/generated/compendium/spells/spell-0340.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 44,
     "cooldown": 6
@@ -4276,7 +4276,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 46,
     "damage": 108,
-    "image": "/generated/compendium/spells/spell-0341.jpg",
+    "image": "/generated/compendium/spells/spell-0341.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 32,
     "cooldown": 1
@@ -4288,7 +4288,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 41,
-    "image": "/generated/compendium/spells/spell-0342.jpg",
+    "image": "/generated/compendium/spells/spell-0342.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 47,
     "cooldown": 1
@@ -4300,7 +4300,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 28,
-    "image": "/generated/compendium/spells/spell-0343.jpg",
+    "image": "/generated/compendium/spells/spell-0343.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 40,
     "cooldown": 7
@@ -4313,7 +4313,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 102,
     "healing": 240,
-    "image": "/generated/compendium/spells/spell-0344.jpg",
+    "image": "/generated/compendium/spells/spell-0344.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 42,
     "cooldown": 10
@@ -4326,7 +4326,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 54,
     "damage": 131,
-    "image": "/generated/compendium/spells/spell-0345.jpg",
+    "image": "/generated/compendium/spells/spell-0345.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 51,
     "cooldown": 7
@@ -4338,7 +4338,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 73,
-    "image": "/generated/compendium/spells/spell-0346.jpg",
+    "image": "/generated/compendium/spells/spell-0346.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 10,
     "cooldown": 3
@@ -4350,7 +4350,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 86,
-    "image": "/generated/compendium/spells/spell-0347.jpg",
+    "image": "/generated/compendium/spells/spell-0347.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 11,
     "cooldown": 10
@@ -4363,7 +4363,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 96,
     "healing": 226,
-    "image": "/generated/compendium/spells/spell-0348.jpg",
+    "image": "/generated/compendium/spells/spell-0348.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 50,
     "cooldown": 8
@@ -4376,7 +4376,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 18,
     "damage": 75,
-    "image": "/generated/compendium/spells/spell-0349.jpg",
+    "image": "/generated/compendium/spells/spell-0349.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 53,
     "cooldown": 5
@@ -4388,7 +4388,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 51,
-    "image": "/generated/compendium/spells/spell-0350.jpg",
+    "image": "/generated/compendium/spells/spell-0350.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 42,
     "cooldown": 2
@@ -4400,7 +4400,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 56,
-    "image": "/generated/compendium/spells/spell-0351.jpg",
+    "image": "/generated/compendium/spells/spell-0351.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 56,
     "cooldown": 10
@@ -4413,7 +4413,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 64,
     "healing": 238,
-    "image": "/generated/compendium/spells/spell-0352.jpg",
+    "image": "/generated/compendium/spells/spell-0352.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 30,
     "cooldown": 2
@@ -4426,7 +4426,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 57,
     "damage": 210,
-    "image": "/generated/compendium/spells/spell-0353.jpg",
+    "image": "/generated/compendium/spells/spell-0353.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 46,
     "cooldown": 7
@@ -4438,7 +4438,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 78,
-    "image": "/generated/compendium/spells/spell-0354.jpg",
+    "image": "/generated/compendium/spells/spell-0354.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 21,
     "cooldown": 2
@@ -4450,7 +4450,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 26,
-    "image": "/generated/compendium/spells/spell-0355.jpg",
+    "image": "/generated/compendium/spells/spell-0355.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 19,
     "cooldown": 10
@@ -4463,7 +4463,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 102,
     "healing": 219,
-    "image": "/generated/compendium/spells/spell-0356.jpg",
+    "image": "/generated/compendium/spells/spell-0356.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 44,
     "cooldown": 1
@@ -4476,7 +4476,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 11,
     "damage": 72,
-    "image": "/generated/compendium/spells/spell-0357.jpg",
+    "image": "/generated/compendium/spells/spell-0357.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 34,
     "cooldown": 6
@@ -4488,7 +4488,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 90,
-    "image": "/generated/compendium/spells/spell-0358.jpg",
+    "image": "/generated/compendium/spells/spell-0358.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 34,
     "cooldown": 1
@@ -4500,7 +4500,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 67,
-    "image": "/generated/compendium/spells/spell-0359.jpg",
+    "image": "/generated/compendium/spells/spell-0359.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 11,
     "cooldown": 6
@@ -4513,7 +4513,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 97,
     "healing": 220,
-    "image": "/generated/compendium/spells/spell-0360.jpg",
+    "image": "/generated/compendium/spells/spell-0360.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 36,
     "cooldown": 10
@@ -4526,7 +4526,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 57,
     "damage": 162,
-    "image": "/generated/compendium/spells/spell-0361.jpg",
+    "image": "/generated/compendium/spells/spell-0361.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 19,
     "cooldown": 8
@@ -4538,7 +4538,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 36,
-    "image": "/generated/compendium/spells/spell-0362.jpg",
+    "image": "/generated/compendium/spells/spell-0362.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 43,
     "cooldown": 2
@@ -4550,7 +4550,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 77,
-    "image": "/generated/compendium/spells/spell-0363.jpg",
+    "image": "/generated/compendium/spells/spell-0363.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 26,
     "cooldown": 5
@@ -4563,7 +4563,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 25,
     "healing": 166,
-    "image": "/generated/compendium/spells/spell-0364.jpg",
+    "image": "/generated/compendium/spells/spell-0364.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 13,
     "cooldown": 2
@@ -4576,7 +4576,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 89,
     "damage": 164,
-    "image": "/generated/compendium/spells/spell-0365.jpg",
+    "image": "/generated/compendium/spells/spell-0365.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 17,
     "cooldown": 2
@@ -4588,7 +4588,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 45,
-    "image": "/generated/compendium/spells/spell-0366.jpg",
+    "image": "/generated/compendium/spells/spell-0366.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 13,
     "cooldown": 4
@@ -4600,7 +4600,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 92,
-    "image": "/generated/compendium/spells/spell-0367.jpg",
+    "image": "/generated/compendium/spells/spell-0367.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 28,
     "cooldown": 5
@@ -4613,7 +4613,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 70,
     "healing": 250,
-    "image": "/generated/compendium/spells/spell-0368.jpg",
+    "image": "/generated/compendium/spells/spell-0368.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 25,
     "cooldown": 7
@@ -4626,7 +4626,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 42,
     "damage": 118,
-    "image": "/generated/compendium/spells/spell-0369.jpg",
+    "image": "/generated/compendium/spells/spell-0369.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 41,
     "cooldown": 2
@@ -4638,7 +4638,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 44,
-    "image": "/generated/compendium/spells/spell-0370.jpg",
+    "image": "/generated/compendium/spells/spell-0370.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 34,
     "cooldown": 3
@@ -4650,7 +4650,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 66,
-    "image": "/generated/compendium/spells/spell-0371.jpg",
+    "image": "/generated/compendium/spells/spell-0371.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 50,
     "cooldown": 1
@@ -4663,7 +4663,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 35,
     "healing": 202,
-    "image": "/generated/compendium/spells/spell-0372.jpg",
+    "image": "/generated/compendium/spells/spell-0372.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 54,
     "cooldown": 5
@@ -4676,7 +4676,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 52,
     "damage": 140,
-    "image": "/generated/compendium/spells/spell-0373.jpg",
+    "image": "/generated/compendium/spells/spell-0373.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 51,
     "cooldown": 7
@@ -4688,7 +4688,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 49,
-    "image": "/generated/compendium/spells/spell-0374.jpg",
+    "image": "/generated/compendium/spells/spell-0374.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 31,
     "cooldown": 10
@@ -4700,7 +4700,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 60,
-    "image": "/generated/compendium/spells/spell-0375.jpg",
+    "image": "/generated/compendium/spells/spell-0375.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 31,
     "cooldown": 5
@@ -4713,7 +4713,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 42,
     "healing": 158,
-    "image": "/generated/compendium/spells/spell-0376.jpg",
+    "image": "/generated/compendium/spells/spell-0376.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 16,
     "cooldown": 3
@@ -4726,7 +4726,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 38,
     "damage": 122,
-    "image": "/generated/compendium/spells/spell-0377.jpg",
+    "image": "/generated/compendium/spells/spell-0377.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 16,
     "cooldown": 1
@@ -4738,7 +4738,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 84,
-    "image": "/generated/compendium/spells/spell-0378.jpg",
+    "image": "/generated/compendium/spells/spell-0378.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 54,
     "cooldown": 9
@@ -4750,7 +4750,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 92,
-    "image": "/generated/compendium/spells/spell-0379.jpg",
+    "image": "/generated/compendium/spells/spell-0379.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 36,
     "cooldown": 8
@@ -4763,7 +4763,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 59,
     "healing": 101,
-    "image": "/generated/compendium/spells/spell-0380.jpg",
+    "image": "/generated/compendium/spells/spell-0380.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 14,
     "cooldown": 6
@@ -4776,7 +4776,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 104,
     "damage": 91,
-    "image": "/generated/compendium/spells/spell-0381.jpg",
+    "image": "/generated/compendium/spells/spell-0381.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 16,
     "cooldown": 10
@@ -4788,7 +4788,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 103,
-    "image": "/generated/compendium/spells/spell-0382.jpg",
+    "image": "/generated/compendium/spells/spell-0382.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 28,
     "cooldown": 2
@@ -4800,7 +4800,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 41,
-    "image": "/generated/compendium/spells/spell-0383.jpg",
+    "image": "/generated/compendium/spells/spell-0383.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 50,
     "cooldown": 1
@@ -4813,7 +4813,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 45,
     "healing": 150,
-    "image": "/generated/compendium/spells/spell-0384.jpg",
+    "image": "/generated/compendium/spells/spell-0384.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 43,
     "cooldown": 1
@@ -4826,7 +4826,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 67,
     "damage": 248,
-    "image": "/generated/compendium/spells/spell-0385.jpg",
+    "image": "/generated/compendium/spells/spell-0385.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 54,
     "cooldown": 9
@@ -4838,7 +4838,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 61,
-    "image": "/generated/compendium/spells/spell-0386.jpg",
+    "image": "/generated/compendium/spells/spell-0386.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 44,
     "cooldown": 9
@@ -4850,7 +4850,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 66,
-    "image": "/generated/compendium/spells/spell-0387.jpg",
+    "image": "/generated/compendium/spells/spell-0387.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 16,
     "cooldown": 10
@@ -4863,7 +4863,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 73,
     "healing": 197,
-    "image": "/generated/compendium/spells/spell-0388.jpg",
+    "image": "/generated/compendium/spells/spell-0388.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 43,
     "cooldown": 1
@@ -4876,7 +4876,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 32,
     "damage": 244,
-    "image": "/generated/compendium/spells/spell-0389.jpg",
+    "image": "/generated/compendium/spells/spell-0389.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 35,
     "cooldown": 4
@@ -4888,7 +4888,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 21,
-    "image": "/generated/compendium/spells/spell-0390.jpg",
+    "image": "/generated/compendium/spells/spell-0390.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 21,
     "cooldown": 9
@@ -4900,7 +4900,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 14,
-    "image": "/generated/compendium/spells/spell-0391.jpg",
+    "image": "/generated/compendium/spells/spell-0391.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 14,
     "cooldown": 3
@@ -4913,7 +4913,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 102,
     "healing": 257,
-    "image": "/generated/compendium/spells/spell-0392.jpg",
+    "image": "/generated/compendium/spells/spell-0392.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 33,
     "cooldown": 3
@@ -4926,7 +4926,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 108,
     "damage": 56,
-    "image": "/generated/compendium/spells/spell-0393.jpg",
+    "image": "/generated/compendium/spells/spell-0393.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 30,
     "cooldown": 2
@@ -4938,7 +4938,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 56,
-    "image": "/generated/compendium/spells/spell-0394.jpg",
+    "image": "/generated/compendium/spells/spell-0394.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 16,
     "cooldown": 7
@@ -4950,7 +4950,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 81,
-    "image": "/generated/compendium/spells/spell-0395.jpg",
+    "image": "/generated/compendium/spells/spell-0395.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 56,
     "cooldown": 1
@@ -4963,7 +4963,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 73,
     "healing": 136,
-    "image": "/generated/compendium/spells/spell-0396.jpg",
+    "image": "/generated/compendium/spells/spell-0396.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 55,
     "cooldown": 4
@@ -4976,7 +4976,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 104,
     "damage": 93,
-    "image": "/generated/compendium/spells/spell-0397.jpg",
+    "image": "/generated/compendium/spells/spell-0397.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 35,
     "cooldown": 6
@@ -4988,7 +4988,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 70,
-    "image": "/generated/compendium/spells/spell-0398.jpg",
+    "image": "/generated/compendium/spells/spell-0398.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 10,
     "cooldown": 4
@@ -5000,7 +5000,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 17,
-    "image": "/generated/compendium/spells/spell-0399.jpg",
+    "image": "/generated/compendium/spells/spell-0399.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 17,
     "cooldown": 2
@@ -5013,7 +5013,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 98,
     "healing": 125,
-    "image": "/generated/compendium/spells/spell-0400.jpg",
+    "image": "/generated/compendium/spells/spell-0400.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 53,
     "cooldown": 2
@@ -5026,7 +5026,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 88,
     "damage": 152,
-    "image": "/generated/compendium/spells/spell-0401.jpg",
+    "image": "/generated/compendium/spells/spell-0401.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 32,
     "cooldown": 8
@@ -5038,7 +5038,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 69,
-    "image": "/generated/compendium/spells/spell-0402.jpg",
+    "image": "/generated/compendium/spells/spell-0402.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 26,
     "cooldown": 9
@@ -5050,7 +5050,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 34,
-    "image": "/generated/compendium/spells/spell-0403.jpg",
+    "image": "/generated/compendium/spells/spell-0403.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 34,
     "cooldown": 2
@@ -5063,7 +5063,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 76,
     "healing": 168,
-    "image": "/generated/compendium/spells/spell-0404.jpg",
+    "image": "/generated/compendium/spells/spell-0404.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 40,
     "cooldown": 9
@@ -5076,7 +5076,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 40,
     "damage": 216,
-    "image": "/generated/compendium/spells/spell-0405.jpg",
+    "image": "/generated/compendium/spells/spell-0405.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 54,
     "cooldown": 9
@@ -5088,7 +5088,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 101,
-    "image": "/generated/compendium/spells/spell-0406.jpg",
+    "image": "/generated/compendium/spells/spell-0406.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 28,
     "cooldown": 8
@@ -5100,7 +5100,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 88,
-    "image": "/generated/compendium/spells/spell-0407.jpg",
+    "image": "/generated/compendium/spells/spell-0407.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 41,
     "cooldown": 1
@@ -5113,7 +5113,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 39,
     "healing": 219,
-    "image": "/generated/compendium/spells/spell-0408.jpg",
+    "image": "/generated/compendium/spells/spell-0408.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 46,
     "cooldown": 4
@@ -5126,7 +5126,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 81,
     "damage": 206,
-    "image": "/generated/compendium/spells/spell-0409.jpg",
+    "image": "/generated/compendium/spells/spell-0409.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 40,
     "cooldown": 3
@@ -5138,7 +5138,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 18,
-    "image": "/generated/compendium/spells/spell-0410.jpg",
+    "image": "/generated/compendium/spells/spell-0410.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 49,
     "cooldown": 5
@@ -5150,7 +5150,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 25,
-    "image": "/generated/compendium/spells/spell-0411.jpg",
+    "image": "/generated/compendium/spells/spell-0411.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 54,
     "cooldown": 1
@@ -5163,7 +5163,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 78,
     "healing": 234,
-    "image": "/generated/compendium/spells/spell-0412.jpg",
+    "image": "/generated/compendium/spells/spell-0412.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 10,
     "cooldown": 4
@@ -5176,7 +5176,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 10,
     "damage": 104,
-    "image": "/generated/compendium/spells/spell-0413.jpg",
+    "image": "/generated/compendium/spells/spell-0413.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 49,
     "cooldown": 2
@@ -5188,7 +5188,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 97,
-    "image": "/generated/compendium/spells/spell-0414.jpg",
+    "image": "/generated/compendium/spells/spell-0414.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 55,
     "cooldown": 1
@@ -5200,7 +5200,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 21,
-    "image": "/generated/compendium/spells/spell-0415.jpg",
+    "image": "/generated/compendium/spells/spell-0415.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 36,
     "cooldown": 4
@@ -5213,7 +5213,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 106,
     "healing": 247,
-    "image": "/generated/compendium/spells/spell-0416.jpg",
+    "image": "/generated/compendium/spells/spell-0416.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 16,
     "cooldown": 2
@@ -5226,7 +5226,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 66,
     "damage": 185,
-    "image": "/generated/compendium/spells/spell-0417.jpg",
+    "image": "/generated/compendium/spells/spell-0417.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 33,
     "cooldown": 5
@@ -5238,7 +5238,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 55,
-    "image": "/generated/compendium/spells/spell-0418.jpg",
+    "image": "/generated/compendium/spells/spell-0418.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 43,
     "cooldown": 8
@@ -5250,7 +5250,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 95,
-    "image": "/generated/compendium/spells/spell-0419.jpg",
+    "image": "/generated/compendium/spells/spell-0419.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 23,
     "cooldown": 5
@@ -5263,7 +5263,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 57,
     "healing": 221,
-    "image": "/generated/compendium/spells/spell-0420.jpg",
+    "image": "/generated/compendium/spells/spell-0420.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 15,
     "cooldown": 9
@@ -5276,7 +5276,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 102,
     "damage": 55,
-    "image": "/generated/compendium/spells/spell-0421.jpg",
+    "image": "/generated/compendium/spells/spell-0421.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 52,
     "cooldown": 3
@@ -5288,7 +5288,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 73,
-    "image": "/generated/compendium/spells/spell-0422.jpg",
+    "image": "/generated/compendium/spells/spell-0422.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 48,
     "cooldown": 7
@@ -5300,7 +5300,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 76,
-    "image": "/generated/compendium/spells/spell-0423.jpg",
+    "image": "/generated/compendium/spells/spell-0423.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 22,
     "cooldown": 2
@@ -5313,7 +5313,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 101,
     "healing": 168,
-    "image": "/generated/compendium/spells/spell-0424.jpg",
+    "image": "/generated/compendium/spells/spell-0424.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 15,
     "cooldown": 5
@@ -5326,7 +5326,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 28,
     "damage": 239,
-    "image": "/generated/compendium/spells/spell-0425.jpg",
+    "image": "/generated/compendium/spells/spell-0425.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 13,
     "cooldown": 1
@@ -5338,7 +5338,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 83,
-    "image": "/generated/compendium/spells/spell-0426.jpg",
+    "image": "/generated/compendium/spells/spell-0426.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 12,
     "cooldown": 5
@@ -5350,7 +5350,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 96,
-    "image": "/generated/compendium/spells/spell-0427.jpg",
+    "image": "/generated/compendium/spells/spell-0427.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 35,
     "cooldown": 7
@@ -5363,7 +5363,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 20,
     "healing": 119,
-    "image": "/generated/compendium/spells/spell-0428.jpg",
+    "image": "/generated/compendium/spells/spell-0428.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 19,
     "cooldown": 2
@@ -5376,7 +5376,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 25,
     "damage": 133,
-    "image": "/generated/compendium/spells/spell-0429.jpg",
+    "image": "/generated/compendium/spells/spell-0429.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 11,
     "cooldown": 4
@@ -5388,7 +5388,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 96,
-    "image": "/generated/compendium/spells/spell-0430.jpg",
+    "image": "/generated/compendium/spells/spell-0430.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 18,
     "cooldown": 8
@@ -5400,7 +5400,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 81,
-    "image": "/generated/compendium/spells/spell-0431.jpg",
+    "image": "/generated/compendium/spells/spell-0431.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 22,
     "cooldown": 2
@@ -5413,7 +5413,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 10,
     "healing": 299,
-    "image": "/generated/compendium/spells/spell-0432.jpg",
+    "image": "/generated/compendium/spells/spell-0432.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 25,
     "cooldown": 2
@@ -5426,7 +5426,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 98,
     "damage": 77,
-    "image": "/generated/compendium/spells/spell-0433.jpg",
+    "image": "/generated/compendium/spells/spell-0433.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 48,
     "cooldown": 8
@@ -5438,7 +5438,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 52,
-    "image": "/generated/compendium/spells/spell-0434.jpg",
+    "image": "/generated/compendium/spells/spell-0434.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 54,
     "cooldown": 5
@@ -5450,7 +5450,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 45,
-    "image": "/generated/compendium/spells/spell-0435.jpg",
+    "image": "/generated/compendium/spells/spell-0435.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 13,
     "cooldown": 5
@@ -5463,7 +5463,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 25,
     "healing": 323,
-    "image": "/generated/compendium/spells/spell-0436.jpg",
+    "image": "/generated/compendium/spells/spell-0436.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 38,
     "cooldown": 8
@@ -5476,7 +5476,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 40,
     "damage": 132,
-    "image": "/generated/compendium/spells/spell-0437.jpg",
+    "image": "/generated/compendium/spells/spell-0437.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 24,
     "cooldown": 6
@@ -5488,7 +5488,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 30,
-    "image": "/generated/compendium/spells/spell-0438.jpg",
+    "image": "/generated/compendium/spells/spell-0438.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 34,
     "cooldown": 7
@@ -5500,7 +5500,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 29,
-    "image": "/generated/compendium/spells/spell-0439.jpg",
+    "image": "/generated/compendium/spells/spell-0439.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 44,
     "cooldown": 9
@@ -5513,7 +5513,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 12,
     "healing": 182,
-    "image": "/generated/compendium/spells/spell-0440.jpg",
+    "image": "/generated/compendium/spells/spell-0440.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 30,
     "cooldown": 1
@@ -5526,7 +5526,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 51,
     "damage": 156,
-    "image": "/generated/compendium/spells/spell-0441.jpg",
+    "image": "/generated/compendium/spells/spell-0441.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 34,
     "cooldown": 4
@@ -5538,7 +5538,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 74,
-    "image": "/generated/compendium/spells/spell-0442.jpg",
+    "image": "/generated/compendium/spells/spell-0442.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 32,
     "cooldown": 4
@@ -5550,7 +5550,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 49,
-    "image": "/generated/compendium/spells/spell-0443.jpg",
+    "image": "/generated/compendium/spells/spell-0443.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 44,
     "cooldown": 4
@@ -5563,7 +5563,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 20,
     "healing": 106,
-    "image": "/generated/compendium/spells/spell-0444.jpg",
+    "image": "/generated/compendium/spells/spell-0444.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 36,
     "cooldown": 10
@@ -5576,7 +5576,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 108,
     "damage": 218,
-    "image": "/generated/compendium/spells/spell-0445.jpg",
+    "image": "/generated/compendium/spells/spell-0445.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 17,
     "cooldown": 6
@@ -5588,7 +5588,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 93,
-    "image": "/generated/compendium/spells/spell-0446.jpg",
+    "image": "/generated/compendium/spells/spell-0446.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 35,
     "cooldown": 3
@@ -5600,7 +5600,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 109,
-    "image": "/generated/compendium/spells/spell-0447.jpg",
+    "image": "/generated/compendium/spells/spell-0447.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 19,
     "cooldown": 4
@@ -5613,7 +5613,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 67,
     "healing": 204,
-    "image": "/generated/compendium/spells/spell-0448.jpg",
+    "image": "/generated/compendium/spells/spell-0448.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 11,
     "cooldown": 2
@@ -5626,7 +5626,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 13,
     "damage": 98,
-    "image": "/generated/compendium/spells/spell-0449.jpg",
+    "image": "/generated/compendium/spells/spell-0449.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 18,
     "cooldown": 7
@@ -5638,7 +5638,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 85,
-    "image": "/generated/compendium/spells/spell-0450.jpg",
+    "image": "/generated/compendium/spells/spell-0450.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 21,
     "cooldown": 3
@@ -5650,7 +5650,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 92,
-    "image": "/generated/compendium/spells/spell-0451.jpg",
+    "image": "/generated/compendium/spells/spell-0451.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 16,
     "cooldown": 9
@@ -5663,7 +5663,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 80,
     "healing": 160,
-    "image": "/generated/compendium/spells/spell-0452.jpg",
+    "image": "/generated/compendium/spells/spell-0452.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 29,
     "cooldown": 1
@@ -5676,7 +5676,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 41,
     "damage": 117,
-    "image": "/generated/compendium/spells/spell-0453.jpg",
+    "image": "/generated/compendium/spells/spell-0453.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 25,
     "cooldown": 9
@@ -5688,7 +5688,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 46,
-    "image": "/generated/compendium/spells/spell-0454.jpg",
+    "image": "/generated/compendium/spells/spell-0454.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 26,
     "cooldown": 8
@@ -5700,7 +5700,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 66,
-    "image": "/generated/compendium/spells/spell-0455.jpg",
+    "image": "/generated/compendium/spells/spell-0455.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 29,
     "cooldown": 1
@@ -5713,7 +5713,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 67,
     "healing": 227,
-    "image": "/generated/compendium/spells/spell-0456.jpg",
+    "image": "/generated/compendium/spells/spell-0456.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 33,
     "cooldown": 7
@@ -5726,7 +5726,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 52,
     "damage": 98,
-    "image": "/generated/compendium/spells/spell-0457.jpg",
+    "image": "/generated/compendium/spells/spell-0457.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 59,
     "cooldown": 2
@@ -5738,7 +5738,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 39,
-    "image": "/generated/compendium/spells/spell-0458.jpg",
+    "image": "/generated/compendium/spells/spell-0458.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 40,
     "cooldown": 6
@@ -5750,7 +5750,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 41,
-    "image": "/generated/compendium/spells/spell-0459.jpg",
+    "image": "/generated/compendium/spells/spell-0459.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 23,
     "cooldown": 3
@@ -5763,7 +5763,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 40,
     "healing": 326,
-    "image": "/generated/compendium/spells/spell-0460.jpg",
+    "image": "/generated/compendium/spells/spell-0460.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 45,
     "cooldown": 6
@@ -5776,7 +5776,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 52,
     "damage": 204,
-    "image": "/generated/compendium/spells/spell-0461.jpg",
+    "image": "/generated/compendium/spells/spell-0461.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 39,
     "cooldown": 10
@@ -5788,7 +5788,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 80,
-    "image": "/generated/compendium/spells/spell-0462.jpg",
+    "image": "/generated/compendium/spells/spell-0462.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 15,
     "cooldown": 7
@@ -5800,7 +5800,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 105,
-    "image": "/generated/compendium/spells/spell-0463.jpg",
+    "image": "/generated/compendium/spells/spell-0463.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 25,
     "cooldown": 1
@@ -5813,7 +5813,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 100,
     "healing": 203,
-    "image": "/generated/compendium/spells/spell-0464.jpg",
+    "image": "/generated/compendium/spells/spell-0464.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 30,
     "cooldown": 1
@@ -5826,7 +5826,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 102,
     "damage": 234,
-    "image": "/generated/compendium/spells/spell-0465.jpg",
+    "image": "/generated/compendium/spells/spell-0465.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 17,
     "cooldown": 7
@@ -5838,7 +5838,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 79,
-    "image": "/generated/compendium/spells/spell-0466.jpg",
+    "image": "/generated/compendium/spells/spell-0466.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 16,
     "cooldown": 7
@@ -5850,7 +5850,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 99,
-    "image": "/generated/compendium/spells/spell-0467.jpg",
+    "image": "/generated/compendium/spells/spell-0467.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 56,
     "cooldown": 9
@@ -5863,7 +5863,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 101,
     "healing": 303,
-    "image": "/generated/compendium/spells/spell-0468.jpg",
+    "image": "/generated/compendium/spells/spell-0468.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 55,
     "cooldown": 6
@@ -5876,7 +5876,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 54,
     "damage": 173,
-    "image": "/generated/compendium/spells/spell-0469.jpg",
+    "image": "/generated/compendium/spells/spell-0469.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 22,
     "cooldown": 6
@@ -5888,7 +5888,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 42,
-    "image": "/generated/compendium/spells/spell-0470.jpg",
+    "image": "/generated/compendium/spells/spell-0470.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 35,
     "cooldown": 5
@@ -5900,7 +5900,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 24,
-    "image": "/generated/compendium/spells/spell-0471.jpg",
+    "image": "/generated/compendium/spells/spell-0471.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 32,
     "cooldown": 10
@@ -5913,7 +5913,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 85,
     "healing": 293,
-    "image": "/generated/compendium/spells/spell-0472.jpg",
+    "image": "/generated/compendium/spells/spell-0472.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 45,
     "cooldown": 6
@@ -5926,7 +5926,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 18,
     "damage": 236,
-    "image": "/generated/compendium/spells/spell-0473.jpg",
+    "image": "/generated/compendium/spells/spell-0473.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 29,
     "cooldown": 1
@@ -5938,7 +5938,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 106,
-    "image": "/generated/compendium/spells/spell-0474.jpg",
+    "image": "/generated/compendium/spells/spell-0474.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 54,
     "cooldown": 4
@@ -5950,7 +5950,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 63,
-    "image": "/generated/compendium/spells/spell-0475.jpg",
+    "image": "/generated/compendium/spells/spell-0475.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 32,
     "cooldown": 8
@@ -5963,7 +5963,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 100,
     "healing": 121,
-    "image": "/generated/compendium/spells/spell-0476.jpg",
+    "image": "/generated/compendium/spells/spell-0476.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 41,
     "cooldown": 6
@@ -5976,7 +5976,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 50,
     "damage": 68,
-    "image": "/generated/compendium/spells/spell-0477.jpg",
+    "image": "/generated/compendium/spells/spell-0477.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 43,
     "cooldown": 3
@@ -5988,7 +5988,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 36,
-    "image": "/generated/compendium/spells/spell-0478.jpg",
+    "image": "/generated/compendium/spells/spell-0478.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 44,
     "cooldown": 4
@@ -6000,7 +6000,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 103,
-    "image": "/generated/compendium/spells/spell-0479.jpg",
+    "image": "/generated/compendium/spells/spell-0479.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 18,
     "cooldown": 10
@@ -6013,7 +6013,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 44,
     "healing": 197,
-    "image": "/generated/compendium/spells/spell-0480.jpg",
+    "image": "/generated/compendium/spells/spell-0480.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 14,
     "cooldown": 1
@@ -6026,7 +6026,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 61,
     "damage": 236,
-    "image": "/generated/compendium/spells/spell-0481.jpg",
+    "image": "/generated/compendium/spells/spell-0481.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 16,
     "cooldown": 6
@@ -6038,7 +6038,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 20,
-    "image": "/generated/compendium/spells/spell-0482.jpg",
+    "image": "/generated/compendium/spells/spell-0482.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 37,
     "cooldown": 9
@@ -6050,7 +6050,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 52,
-    "image": "/generated/compendium/spells/spell-0483.jpg",
+    "image": "/generated/compendium/spells/spell-0483.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 39,
     "cooldown": 6
@@ -6063,7 +6063,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 37,
     "healing": 347,
-    "image": "/generated/compendium/spells/spell-0484.jpg",
+    "image": "/generated/compendium/spells/spell-0484.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 14,
     "cooldown": 2
@@ -6076,7 +6076,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 69,
     "damage": 107,
-    "image": "/generated/compendium/spells/spell-0485.jpg",
+    "image": "/generated/compendium/spells/spell-0485.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 59,
     "cooldown": 3
@@ -6088,7 +6088,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 72,
-    "image": "/generated/compendium/spells/spell-0486.jpg",
+    "image": "/generated/compendium/spells/spell-0486.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 49,
     "cooldown": 10
@@ -6100,7 +6100,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 104,
-    "image": "/generated/compendium/spells/spell-0487.jpg",
+    "image": "/generated/compendium/spells/spell-0487.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 14,
     "cooldown": 9
@@ -6113,7 +6113,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 108,
     "healing": 218,
-    "image": "/generated/compendium/spells/spell-0488.jpg",
+    "image": "/generated/compendium/spells/spell-0488.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 55,
     "cooldown": 7
@@ -6126,7 +6126,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 19,
     "damage": 207,
-    "image": "/generated/compendium/spells/spell-0489.jpg",
+    "image": "/generated/compendium/spells/spell-0489.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 51,
     "cooldown": 5
@@ -6138,7 +6138,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 50,
-    "image": "/generated/compendium/spells/spell-0490.jpg",
+    "image": "/generated/compendium/spells/spell-0490.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 52,
     "cooldown": 7
@@ -6150,7 +6150,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 15,
-    "image": "/generated/compendium/spells/spell-0491.jpg",
+    "image": "/generated/compendium/spells/spell-0491.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 44,
     "cooldown": 4
@@ -6163,7 +6163,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 88,
     "healing": 369,
-    "image": "/generated/compendium/spells/spell-0492.jpg",
+    "image": "/generated/compendium/spells/spell-0492.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 30,
     "cooldown": 9
@@ -6176,7 +6176,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 82,
     "damage": 204,
-    "image": "/generated/compendium/spells/spell-0493.jpg",
+    "image": "/generated/compendium/spells/spell-0493.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 19,
     "cooldown": 2
@@ -6188,7 +6188,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 44,
-    "image": "/generated/compendium/spells/spell-0494.jpg",
+    "image": "/generated/compendium/spells/spell-0494.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 20,
     "cooldown": 8
@@ -6200,7 +6200,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 96,
-    "image": "/generated/compendium/spells/spell-0495.jpg",
+    "image": "/generated/compendium/spells/spell-0495.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 30,
     "cooldown": 2
@@ -6213,7 +6213,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 95,
     "healing": 186,
-    "image": "/generated/compendium/spells/spell-0496.jpg",
+    "image": "/generated/compendium/spells/spell-0496.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 43,
     "cooldown": 7
@@ -6226,7 +6226,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 10,
     "damage": 190,
-    "image": "/generated/compendium/spells/spell-0497.jpg",
+    "image": "/generated/compendium/spells/spell-0497.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 19,
     "cooldown": 10
@@ -6238,7 +6238,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 105,
-    "image": "/generated/compendium/spells/spell-0498.jpg",
+    "image": "/generated/compendium/spells/spell-0498.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 38,
     "cooldown": 2
@@ -6250,7 +6250,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 41,
-    "image": "/generated/compendium/spells/spell-0499.jpg",
+    "image": "/generated/compendium/spells/spell-0499.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 20,
     "cooldown": 4
@@ -6263,7 +6263,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 108,
     "healing": 342,
-    "image": "/generated/compendium/spells/spell-0500.jpg",
+    "image": "/generated/compendium/spells/spell-0500.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 59,
     "cooldown": 7
@@ -6276,7 +6276,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 49,
     "damage": 83,
-    "image": "/generated/compendium/spells/spell-0501.jpg",
+    "image": "/generated/compendium/spells/spell-0501.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 53,
     "cooldown": 3
@@ -6288,7 +6288,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 67,
-    "image": "/generated/compendium/spells/spell-0502.jpg",
+    "image": "/generated/compendium/spells/spell-0502.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 39,
     "cooldown": 9
@@ -6300,7 +6300,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 17,
-    "image": "/generated/compendium/spells/spell-0503.jpg",
+    "image": "/generated/compendium/spells/spell-0503.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 43,
     "cooldown": 1
@@ -6313,7 +6313,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 68,
     "healing": 320,
-    "image": "/generated/compendium/spells/spell-0504.jpg",
+    "image": "/generated/compendium/spells/spell-0504.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 25,
     "cooldown": 6
@@ -6326,7 +6326,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 89,
     "damage": 146,
-    "image": "/generated/compendium/spells/spell-0505.jpg",
+    "image": "/generated/compendium/spells/spell-0505.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 38,
     "cooldown": 1
@@ -6338,7 +6338,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 85,
-    "image": "/generated/compendium/spells/spell-0506.jpg",
+    "image": "/generated/compendium/spells/spell-0506.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 58,
     "cooldown": 7
@@ -6350,7 +6350,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 38,
-    "image": "/generated/compendium/spells/spell-0507.jpg",
+    "image": "/generated/compendium/spells/spell-0507.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 56,
     "cooldown": 8
@@ -6363,7 +6363,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 33,
     "healing": 141,
-    "image": "/generated/compendium/spells/spell-0508.jpg",
+    "image": "/generated/compendium/spells/spell-0508.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 23,
     "cooldown": 4
@@ -6376,7 +6376,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 65,
     "damage": 184,
-    "image": "/generated/compendium/spells/spell-0509.jpg",
+    "image": "/generated/compendium/spells/spell-0509.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 54,
     "cooldown": 4
@@ -6388,7 +6388,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 89,
-    "image": "/generated/compendium/spells/spell-0510.jpg",
+    "image": "/generated/compendium/spells/spell-0510.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 16,
     "cooldown": 5
@@ -6400,7 +6400,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 22,
-    "image": "/generated/compendium/spells/spell-0511.jpg",
+    "image": "/generated/compendium/spells/spell-0511.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 11,
     "cooldown": 9
@@ -6413,7 +6413,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 35,
     "healing": 254,
-    "image": "/generated/compendium/spells/spell-0512.jpg",
+    "image": "/generated/compendium/spells/spell-0512.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 38,
     "cooldown": 1
@@ -6426,7 +6426,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 23,
     "damage": 116,
-    "image": "/generated/compendium/spells/spell-0513.jpg",
+    "image": "/generated/compendium/spells/spell-0513.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 53,
     "cooldown": 5
@@ -6438,7 +6438,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 80,
-    "image": "/generated/compendium/spells/spell-0514.jpg",
+    "image": "/generated/compendium/spells/spell-0514.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 13,
     "cooldown": 3
@@ -6450,7 +6450,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 77,
-    "image": "/generated/compendium/spells/spell-0515.jpg",
+    "image": "/generated/compendium/spells/spell-0515.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 58,
     "cooldown": 9
@@ -6463,7 +6463,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 37,
     "healing": 244,
-    "image": "/generated/compendium/spells/spell-0516.jpg",
+    "image": "/generated/compendium/spells/spell-0516.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 35,
     "cooldown": 2
@@ -6476,7 +6476,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 92,
     "damage": 169,
-    "image": "/generated/compendium/spells/spell-0517.jpg",
+    "image": "/generated/compendium/spells/spell-0517.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 56,
     "cooldown": 5
@@ -6488,7 +6488,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 80,
-    "image": "/generated/compendium/spells/spell-0518.jpg",
+    "image": "/generated/compendium/spells/spell-0518.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 19,
     "cooldown": 4
@@ -6500,7 +6500,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 52,
-    "image": "/generated/compendium/spells/spell-0519.jpg",
+    "image": "/generated/compendium/spells/spell-0519.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 18,
     "cooldown": 3
@@ -6513,7 +6513,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 46,
     "healing": 109,
-    "image": "/generated/compendium/spells/spell-0520.jpg",
+    "image": "/generated/compendium/spells/spell-0520.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 47,
     "cooldown": 8
@@ -6526,7 +6526,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 52,
     "damage": 231,
-    "image": "/generated/compendium/spells/spell-0521.jpg",
+    "image": "/generated/compendium/spells/spell-0521.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 52,
     "cooldown": 8
@@ -6538,7 +6538,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 109,
-    "image": "/generated/compendium/spells/spell-0522.jpg",
+    "image": "/generated/compendium/spells/spell-0522.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 58,
     "cooldown": 8
@@ -6550,7 +6550,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 97,
-    "image": "/generated/compendium/spells/spell-0523.jpg",
+    "image": "/generated/compendium/spells/spell-0523.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 31,
     "cooldown": 9
@@ -6563,7 +6563,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 30,
     "healing": 184,
-    "image": "/generated/compendium/spells/spell-0524.jpg",
+    "image": "/generated/compendium/spells/spell-0524.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 29,
     "cooldown": 3
@@ -6576,7 +6576,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 71,
     "damage": 208,
-    "image": "/generated/compendium/spells/spell-0525.jpg",
+    "image": "/generated/compendium/spells/spell-0525.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 33,
     "cooldown": 10
@@ -6588,7 +6588,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 63,
-    "image": "/generated/compendium/spells/spell-0526.jpg",
+    "image": "/generated/compendium/spells/spell-0526.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 13,
     "cooldown": 1
@@ -6600,7 +6600,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 61,
-    "image": "/generated/compendium/spells/spell-0527.jpg",
+    "image": "/generated/compendium/spells/spell-0527.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 54,
     "cooldown": 3
@@ -6613,7 +6613,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 45,
     "healing": 203,
-    "image": "/generated/compendium/spells/spell-0528.jpg",
+    "image": "/generated/compendium/spells/spell-0528.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 21,
     "cooldown": 5
@@ -6626,7 +6626,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 18,
     "damage": 67,
-    "image": "/generated/compendium/spells/spell-0529.jpg",
+    "image": "/generated/compendium/spells/spell-0529.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 41,
     "cooldown": 9
@@ -6638,7 +6638,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 56,
-    "image": "/generated/compendium/spells/spell-0530.jpg",
+    "image": "/generated/compendium/spells/spell-0530.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 36,
     "cooldown": 6
@@ -6650,7 +6650,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 45,
-    "image": "/generated/compendium/spells/spell-0531.jpg",
+    "image": "/generated/compendium/spells/spell-0531.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 14,
     "cooldown": 7
@@ -6663,7 +6663,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 53,
     "healing": 398,
-    "image": "/generated/compendium/spells/spell-0532.jpg",
+    "image": "/generated/compendium/spells/spell-0532.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 25,
     "cooldown": 8
@@ -6676,7 +6676,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 26,
     "damage": 193,
-    "image": "/generated/compendium/spells/spell-0533.jpg",
+    "image": "/generated/compendium/spells/spell-0533.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 35,
     "cooldown": 5
@@ -6688,7 +6688,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 94,
-    "image": "/generated/compendium/spells/spell-0534.jpg",
+    "image": "/generated/compendium/spells/spell-0534.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 35,
     "cooldown": 5
@@ -6700,7 +6700,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 25,
-    "image": "/generated/compendium/spells/spell-0535.jpg",
+    "image": "/generated/compendium/spells/spell-0535.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 58,
     "cooldown": 1
@@ -6713,7 +6713,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 25,
     "healing": 267,
-    "image": "/generated/compendium/spells/spell-0536.jpg",
+    "image": "/generated/compendium/spells/spell-0536.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 28,
     "cooldown": 7
@@ -6726,7 +6726,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 51,
     "damage": 96,
-    "image": "/generated/compendium/spells/spell-0537.jpg",
+    "image": "/generated/compendium/spells/spell-0537.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 43,
     "cooldown": 5
@@ -6738,7 +6738,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 44,
-    "image": "/generated/compendium/spells/spell-0538.jpg",
+    "image": "/generated/compendium/spells/spell-0538.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 28,
     "cooldown": 5
@@ -6750,7 +6750,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 23,
-    "image": "/generated/compendium/spells/spell-0539.jpg",
+    "image": "/generated/compendium/spells/spell-0539.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 56,
     "cooldown": 2
@@ -6763,7 +6763,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 58,
     "healing": 373,
-    "image": "/generated/compendium/spells/spell-0540.jpg",
+    "image": "/generated/compendium/spells/spell-0540.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 23,
     "cooldown": 5
@@ -6776,7 +6776,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 15,
     "damage": 147,
-    "image": "/generated/compendium/spells/spell-0541.jpg",
+    "image": "/generated/compendium/spells/spell-0541.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 43,
     "cooldown": 4
@@ -6788,7 +6788,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 39,
-    "image": "/generated/compendium/spells/spell-0542.jpg",
+    "image": "/generated/compendium/spells/spell-0542.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 37,
     "cooldown": 3
@@ -6800,7 +6800,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 49,
-    "image": "/generated/compendium/spells/spell-0543.jpg",
+    "image": "/generated/compendium/spells/spell-0543.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 13,
     "cooldown": 9
@@ -6813,7 +6813,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 96,
     "healing": 159,
-    "image": "/generated/compendium/spells/spell-0544.jpg",
+    "image": "/generated/compendium/spells/spell-0544.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 53,
     "cooldown": 10
@@ -6826,7 +6826,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 53,
     "damage": 184,
-    "image": "/generated/compendium/spells/spell-0545.jpg",
+    "image": "/generated/compendium/spells/spell-0545.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 35,
     "cooldown": 4
@@ -6838,7 +6838,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 98,
-    "image": "/generated/compendium/spells/spell-0546.jpg",
+    "image": "/generated/compendium/spells/spell-0546.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 43,
     "cooldown": 8
@@ -6850,7 +6850,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 14,
-    "image": "/generated/compendium/spells/spell-0547.jpg",
+    "image": "/generated/compendium/spells/spell-0547.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 32,
     "cooldown": 6
@@ -6863,7 +6863,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 92,
     "healing": 243,
-    "image": "/generated/compendium/spells/spell-0548.jpg",
+    "image": "/generated/compendium/spells/spell-0548.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 40,
     "cooldown": 8
@@ -6876,7 +6876,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 50,
     "damage": 238,
-    "image": "/generated/compendium/spells/spell-0549.jpg",
+    "image": "/generated/compendium/spells/spell-0549.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 29,
     "cooldown": 5
@@ -6888,7 +6888,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 39,
-    "image": "/generated/compendium/spells/spell-0550.jpg",
+    "image": "/generated/compendium/spells/spell-0550.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 34,
     "cooldown": 4
@@ -6900,7 +6900,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 96,
-    "image": "/generated/compendium/spells/spell-0551.jpg",
+    "image": "/generated/compendium/spells/spell-0551.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 50,
     "cooldown": 5
@@ -6913,7 +6913,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 107,
     "healing": 207,
-    "image": "/generated/compendium/spells/spell-0552.jpg",
+    "image": "/generated/compendium/spells/spell-0552.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 34,
     "cooldown": 7
@@ -6926,7 +6926,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 20,
     "damage": 115,
-    "image": "/generated/compendium/spells/spell-0553.jpg",
+    "image": "/generated/compendium/spells/spell-0553.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 44,
     "cooldown": 5
@@ -6938,7 +6938,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 49,
-    "image": "/generated/compendium/spells/spell-0554.jpg",
+    "image": "/generated/compendium/spells/spell-0554.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 43,
     "cooldown": 4
@@ -6950,7 +6950,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 40,
-    "image": "/generated/compendium/spells/spell-0555.jpg",
+    "image": "/generated/compendium/spells/spell-0555.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 55,
     "cooldown": 3
@@ -6963,7 +6963,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 21,
     "healing": 343,
-    "image": "/generated/compendium/spells/spell-0556.jpg",
+    "image": "/generated/compendium/spells/spell-0556.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 58,
     "cooldown": 7
@@ -6976,7 +6976,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 29,
     "damage": 62,
-    "image": "/generated/compendium/spells/spell-0557.jpg",
+    "image": "/generated/compendium/spells/spell-0557.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 46,
     "cooldown": 6
@@ -6988,7 +6988,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 100,
-    "image": "/generated/compendium/spells/spell-0558.jpg",
+    "image": "/generated/compendium/spells/spell-0558.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 47,
     "cooldown": 2
@@ -7000,7 +7000,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 34,
-    "image": "/generated/compendium/spells/spell-0559.jpg",
+    "image": "/generated/compendium/spells/spell-0559.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 32,
     "cooldown": 10
@@ -7013,7 +7013,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 35,
     "healing": 363,
-    "image": "/generated/compendium/spells/spell-0560.jpg",
+    "image": "/generated/compendium/spells/spell-0560.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 11,
     "cooldown": 10
@@ -7026,7 +7026,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 96,
     "damage": 120,
-    "image": "/generated/compendium/spells/spell-0561.jpg",
+    "image": "/generated/compendium/spells/spell-0561.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 20,
     "cooldown": 2
@@ -7038,7 +7038,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 10,
-    "image": "/generated/compendium/spells/spell-0562.jpg",
+    "image": "/generated/compendium/spells/spell-0562.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 21,
     "cooldown": 8
@@ -7050,7 +7050,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 30,
-    "image": "/generated/compendium/spells/spell-0563.jpg",
+    "image": "/generated/compendium/spells/spell-0563.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 48,
     "cooldown": 4
@@ -7063,7 +7063,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 62,
     "healing": 302,
-    "image": "/generated/compendium/spells/spell-0564.jpg",
+    "image": "/generated/compendium/spells/spell-0564.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 39,
     "cooldown": 5
@@ -7076,7 +7076,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 96,
     "damage": 222,
-    "image": "/generated/compendium/spells/spell-0565.jpg",
+    "image": "/generated/compendium/spells/spell-0565.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 36,
     "cooldown": 7
@@ -7088,7 +7088,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 86,
-    "image": "/generated/compendium/spells/spell-0566.jpg",
+    "image": "/generated/compendium/spells/spell-0566.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 56,
     "cooldown": 8
@@ -7100,7 +7100,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 26,
-    "image": "/generated/compendium/spells/spell-0567.jpg",
+    "image": "/generated/compendium/spells/spell-0567.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 30,
     "cooldown": 2
@@ -7113,7 +7113,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 91,
     "healing": 305,
-    "image": "/generated/compendium/spells/spell-0568.jpg",
+    "image": "/generated/compendium/spells/spell-0568.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 54,
     "cooldown": 7
@@ -7126,7 +7126,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 79,
     "damage": 193,
-    "image": "/generated/compendium/spells/spell-0569.jpg",
+    "image": "/generated/compendium/spells/spell-0569.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 18,
     "cooldown": 3
@@ -7138,7 +7138,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 73,
-    "image": "/generated/compendium/spells/spell-0570.jpg",
+    "image": "/generated/compendium/spells/spell-0570.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 28,
     "cooldown": 4
@@ -7150,7 +7150,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 17,
-    "image": "/generated/compendium/spells/spell-0571.jpg",
+    "image": "/generated/compendium/spells/spell-0571.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 34,
     "cooldown": 5
@@ -7163,7 +7163,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 105,
     "healing": 225,
-    "image": "/generated/compendium/spells/spell-0572.jpg",
+    "image": "/generated/compendium/spells/spell-0572.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 40,
     "cooldown": 7
@@ -7176,7 +7176,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 17,
     "damage": 122,
-    "image": "/generated/compendium/spells/spell-0573.jpg",
+    "image": "/generated/compendium/spells/spell-0573.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 20,
     "cooldown": 6
@@ -7188,7 +7188,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 93,
-    "image": "/generated/compendium/spells/spell-0574.jpg",
+    "image": "/generated/compendium/spells/spell-0574.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 15,
     "cooldown": 1
@@ -7200,7 +7200,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 28,
-    "image": "/generated/compendium/spells/spell-0575.jpg",
+    "image": "/generated/compendium/spells/spell-0575.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 44,
     "cooldown": 8
@@ -7213,7 +7213,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 31,
     "healing": 201,
-    "image": "/generated/compendium/spells/spell-0576.jpg",
+    "image": "/generated/compendium/spells/spell-0576.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 59,
     "cooldown": 4
@@ -7226,7 +7226,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 32,
     "damage": 158,
-    "image": "/generated/compendium/spells/spell-0577.jpg",
+    "image": "/generated/compendium/spells/spell-0577.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 22,
     "cooldown": 8
@@ -7238,7 +7238,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 92,
-    "image": "/generated/compendium/spells/spell-0578.jpg",
+    "image": "/generated/compendium/spells/spell-0578.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 51,
     "cooldown": 4
@@ -7250,7 +7250,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 89,
-    "image": "/generated/compendium/spells/spell-0579.jpg",
+    "image": "/generated/compendium/spells/spell-0579.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 25,
     "cooldown": 3
@@ -7263,7 +7263,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 80,
     "healing": 342,
-    "image": "/generated/compendium/spells/spell-0580.jpg",
+    "image": "/generated/compendium/spells/spell-0580.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 33,
     "cooldown": 4
@@ -7276,7 +7276,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 30,
     "damage": 128,
-    "image": "/generated/compendium/spells/spell-0581.jpg",
+    "image": "/generated/compendium/spells/spell-0581.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 32,
     "cooldown": 4
@@ -7288,7 +7288,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 50,
-    "image": "/generated/compendium/spells/spell-0582.jpg",
+    "image": "/generated/compendium/spells/spell-0582.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 48,
     "cooldown": 6
@@ -7300,7 +7300,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 43,
-    "image": "/generated/compendium/spells/spell-0583.jpg",
+    "image": "/generated/compendium/spells/spell-0583.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 11,
     "cooldown": 7
@@ -7313,7 +7313,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 16,
     "healing": 161,
-    "image": "/generated/compendium/spells/spell-0584.jpg",
+    "image": "/generated/compendium/spells/spell-0584.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 15,
     "cooldown": 10
@@ -7326,7 +7326,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 51,
     "damage": 213,
-    "image": "/generated/compendium/spells/spell-0585.jpg",
+    "image": "/generated/compendium/spells/spell-0585.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 27,
     "cooldown": 1
@@ -7338,7 +7338,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 27,
-    "image": "/generated/compendium/spells/spell-0586.jpg",
+    "image": "/generated/compendium/spells/spell-0586.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 40,
     "cooldown": 9
@@ -7350,7 +7350,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 29,
-    "image": "/generated/compendium/spells/spell-0587.jpg",
+    "image": "/generated/compendium/spells/spell-0587.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 56,
     "cooldown": 1
@@ -7363,7 +7363,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 25,
     "healing": 380,
-    "image": "/generated/compendium/spells/spell-0588.jpg",
+    "image": "/generated/compendium/spells/spell-0588.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 38,
     "cooldown": 9
@@ -7376,7 +7376,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 24,
     "damage": 155,
-    "image": "/generated/compendium/spells/spell-0589.jpg",
+    "image": "/generated/compendium/spells/spell-0589.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 49,
     "cooldown": 2
@@ -7388,7 +7388,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 92,
-    "image": "/generated/compendium/spells/spell-0590.jpg",
+    "image": "/generated/compendium/spells/spell-0590.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 49,
     "cooldown": 10
@@ -7400,7 +7400,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 99,
-    "image": "/generated/compendium/spells/spell-0591.jpg",
+    "image": "/generated/compendium/spells/spell-0591.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 34,
     "cooldown": 3
@@ -7413,7 +7413,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 97,
     "healing": 115,
-    "image": "/generated/compendium/spells/spell-0592.jpg",
+    "image": "/generated/compendium/spells/spell-0592.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 46,
     "cooldown": 3
@@ -7426,7 +7426,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 50,
     "damage": 110,
-    "image": "/generated/compendium/spells/spell-0593.jpg",
+    "image": "/generated/compendium/spells/spell-0593.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 43,
     "cooldown": 8
@@ -7438,7 +7438,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 30,
-    "image": "/generated/compendium/spells/spell-0594.jpg",
+    "image": "/generated/compendium/spells/spell-0594.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 36,
     "cooldown": 5
@@ -7450,7 +7450,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 55,
-    "image": "/generated/compendium/spells/spell-0595.jpg",
+    "image": "/generated/compendium/spells/spell-0595.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 43,
     "cooldown": 6
@@ -7463,7 +7463,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 26,
     "healing": 369,
-    "image": "/generated/compendium/spells/spell-0596.jpg",
+    "image": "/generated/compendium/spells/spell-0596.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 59,
     "cooldown": 5
@@ -7476,7 +7476,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 36,
     "damage": 66,
-    "image": "/generated/compendium/spells/spell-0597.jpg",
+    "image": "/generated/compendium/spells/spell-0597.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 43,
     "cooldown": 2
@@ -7488,7 +7488,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 62,
-    "image": "/generated/compendium/spells/spell-0598.jpg",
+    "image": "/generated/compendium/spells/spell-0598.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 18,
     "cooldown": 8
@@ -7500,7 +7500,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 62,
-    "image": "/generated/compendium/spells/spell-0599.jpg",
+    "image": "/generated/compendium/spells/spell-0599.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 31,
     "cooldown": 5
@@ -7513,7 +7513,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 76,
     "healing": 361,
-    "image": "/generated/compendium/spells/spell-0600.jpg",
+    "image": "/generated/compendium/spells/spell-0600.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 32,
     "cooldown": 1
@@ -7526,7 +7526,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 108,
     "damage": 172,
-    "image": "/generated/compendium/spells/spell-0601.jpg",
+    "image": "/generated/compendium/spells/spell-0601.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 10,
     "cooldown": 2
@@ -7538,7 +7538,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 26,
-    "image": "/generated/compendium/spells/spell-0602.jpg",
+    "image": "/generated/compendium/spells/spell-0602.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 23,
     "cooldown": 5
@@ -7550,7 +7550,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 109,
-    "image": "/generated/compendium/spells/spell-0603.jpg",
+    "image": "/generated/compendium/spells/spell-0603.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 21,
     "cooldown": 10
@@ -7563,7 +7563,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 61,
     "healing": 267,
-    "image": "/generated/compendium/spells/spell-0604.jpg",
+    "image": "/generated/compendium/spells/spell-0604.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 13,
     "cooldown": 3
@@ -7576,7 +7576,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 104,
     "damage": 239,
-    "image": "/generated/compendium/spells/spell-0605.jpg",
+    "image": "/generated/compendium/spells/spell-0605.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 46,
     "cooldown": 5
@@ -7588,7 +7588,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 17,
-    "image": "/generated/compendium/spells/spell-0606.jpg",
+    "image": "/generated/compendium/spells/spell-0606.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 46,
     "cooldown": 6
@@ -7600,7 +7600,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 43,
-    "image": "/generated/compendium/spells/spell-0607.jpg",
+    "image": "/generated/compendium/spells/spell-0607.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 27,
     "cooldown": 2
@@ -7613,7 +7613,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 17,
     "healing": 317,
-    "image": "/generated/compendium/spells/spell-0608.jpg",
+    "image": "/generated/compendium/spells/spell-0608.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 13,
     "cooldown": 3
@@ -7626,7 +7626,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 55,
     "damage": 156,
-    "image": "/generated/compendium/spells/spell-0609.jpg",
+    "image": "/generated/compendium/spells/spell-0609.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 29,
     "cooldown": 10
@@ -7638,7 +7638,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 10,
-    "image": "/generated/compendium/spells/spell-0610.jpg",
+    "image": "/generated/compendium/spells/spell-0610.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 47,
     "cooldown": 4
@@ -7650,7 +7650,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 41,
-    "image": "/generated/compendium/spells/spell-0611.jpg",
+    "image": "/generated/compendium/spells/spell-0611.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 52,
     "cooldown": 10
@@ -7663,7 +7663,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 33,
     "healing": 140,
-    "image": "/generated/compendium/spells/spell-0612.jpg",
+    "image": "/generated/compendium/spells/spell-0612.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 17,
     "cooldown": 3
@@ -7676,7 +7676,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 83,
     "damage": 73,
-    "image": "/generated/compendium/spells/spell-0613.jpg",
+    "image": "/generated/compendium/spells/spell-0613.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 53,
     "cooldown": 10
@@ -7688,7 +7688,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 28,
-    "image": "/generated/compendium/spells/spell-0614.jpg",
+    "image": "/generated/compendium/spells/spell-0614.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 26,
     "cooldown": 7
@@ -7700,7 +7700,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 69,
-    "image": "/generated/compendium/spells/spell-0615.jpg",
+    "image": "/generated/compendium/spells/spell-0615.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 29,
     "cooldown": 7
@@ -7713,7 +7713,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 51,
     "healing": 367,
-    "image": "/generated/compendium/spells/spell-0616.jpg",
+    "image": "/generated/compendium/spells/spell-0616.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 59,
     "cooldown": 4
@@ -7726,7 +7726,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 80,
     "damage": 176,
-    "image": "/generated/compendium/spells/spell-0617.jpg",
+    "image": "/generated/compendium/spells/spell-0617.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 17,
     "cooldown": 7
@@ -7738,7 +7738,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 12,
-    "image": "/generated/compendium/spells/spell-0618.jpg",
+    "image": "/generated/compendium/spells/spell-0618.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 46,
     "cooldown": 8
@@ -7750,7 +7750,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 70,
-    "image": "/generated/compendium/spells/spell-0619.jpg",
+    "image": "/generated/compendium/spells/spell-0619.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 46,
     "cooldown": 6
@@ -7763,7 +7763,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 39,
     "healing": 309,
-    "image": "/generated/compendium/spells/spell-0620.jpg",
+    "image": "/generated/compendium/spells/spell-0620.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 55,
     "cooldown": 10
@@ -7776,7 +7776,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 102,
     "damage": 85,
-    "image": "/generated/compendium/spells/spell-0621.jpg",
+    "image": "/generated/compendium/spells/spell-0621.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 26,
     "cooldown": 2
@@ -7788,7 +7788,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 69,
-    "image": "/generated/compendium/spells/spell-0622.jpg",
+    "image": "/generated/compendium/spells/spell-0622.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 30,
     "cooldown": 7
@@ -7800,7 +7800,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 38,
-    "image": "/generated/compendium/spells/spell-0623.jpg",
+    "image": "/generated/compendium/spells/spell-0623.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 19,
     "cooldown": 6
@@ -7813,7 +7813,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 85,
     "healing": 204,
-    "image": "/generated/compendium/spells/spell-0624.jpg",
+    "image": "/generated/compendium/spells/spell-0624.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 42,
     "cooldown": 3
@@ -7826,7 +7826,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 20,
     "damage": 154,
-    "image": "/generated/compendium/spells/spell-0625.jpg",
+    "image": "/generated/compendium/spells/spell-0625.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 52,
     "cooldown": 8
@@ -7838,7 +7838,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 68,
-    "image": "/generated/compendium/spells/spell-0626.jpg",
+    "image": "/generated/compendium/spells/spell-0626.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 13,
     "cooldown": 3
@@ -7850,7 +7850,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 92,
-    "image": "/generated/compendium/spells/spell-0627.jpg",
+    "image": "/generated/compendium/spells/spell-0627.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 13,
     "cooldown": 3
@@ -7863,7 +7863,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 47,
     "healing": 161,
-    "image": "/generated/compendium/spells/spell-0628.jpg",
+    "image": "/generated/compendium/spells/spell-0628.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 27,
     "cooldown": 5
@@ -7876,7 +7876,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 80,
     "damage": 202,
-    "image": "/generated/compendium/spells/spell-0629.jpg",
+    "image": "/generated/compendium/spells/spell-0629.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 47,
     "cooldown": 8
@@ -7888,7 +7888,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 32,
-    "image": "/generated/compendium/spells/spell-0630.jpg",
+    "image": "/generated/compendium/spells/spell-0630.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 48,
     "cooldown": 3
@@ -7900,7 +7900,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 30,
-    "image": "/generated/compendium/spells/spell-0631.jpg",
+    "image": "/generated/compendium/spells/spell-0631.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 54,
     "cooldown": 4
@@ -7913,7 +7913,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 85,
     "healing": 390,
-    "image": "/generated/compendium/spells/spell-0632.jpg",
+    "image": "/generated/compendium/spells/spell-0632.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 30,
     "cooldown": 7
@@ -7926,7 +7926,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 72,
     "damage": 61,
-    "image": "/generated/compendium/spells/spell-0633.jpg",
+    "image": "/generated/compendium/spells/spell-0633.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 49,
     "cooldown": 6
@@ -7938,7 +7938,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 17,
-    "image": "/generated/compendium/spells/spell-0634.jpg",
+    "image": "/generated/compendium/spells/spell-0634.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 54,
     "cooldown": 5
@@ -7950,7 +7950,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 32,
-    "image": "/generated/compendium/spells/spell-0635.jpg",
+    "image": "/generated/compendium/spells/spell-0635.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 48,
     "cooldown": 8
@@ -7963,7 +7963,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 12,
     "healing": 199,
-    "image": "/generated/compendium/spells/spell-0636.jpg",
+    "image": "/generated/compendium/spells/spell-0636.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 26,
     "cooldown": 3
@@ -7976,7 +7976,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 52,
     "damage": 239,
-    "image": "/generated/compendium/spells/spell-0637.jpg",
+    "image": "/generated/compendium/spells/spell-0637.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 45,
     "cooldown": 7
@@ -7988,7 +7988,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 38,
-    "image": "/generated/compendium/spells/spell-0638.jpg",
+    "image": "/generated/compendium/spells/spell-0638.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 13,
     "cooldown": 1
@@ -8000,7 +8000,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 93,
-    "image": "/generated/compendium/spells/spell-0639.jpg",
+    "image": "/generated/compendium/spells/spell-0639.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 38,
     "cooldown": 1
@@ -8013,7 +8013,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 62,
     "healing": 290,
-    "image": "/generated/compendium/spells/spell-0640.jpg",
+    "image": "/generated/compendium/spells/spell-0640.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 58,
     "cooldown": 3
@@ -8026,7 +8026,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 105,
     "damage": 194,
-    "image": "/generated/compendium/spells/spell-0641.jpg",
+    "image": "/generated/compendium/spells/spell-0641.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 20,
     "cooldown": 4
@@ -8038,7 +8038,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 41,
-    "image": "/generated/compendium/spells/spell-0642.jpg",
+    "image": "/generated/compendium/spells/spell-0642.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 29,
     "cooldown": 7
@@ -8050,7 +8050,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 100,
-    "image": "/generated/compendium/spells/spell-0643.jpg",
+    "image": "/generated/compendium/spells/spell-0643.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 17,
     "cooldown": 7
@@ -8063,7 +8063,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 70,
     "healing": 176,
-    "image": "/generated/compendium/spells/spell-0644.jpg",
+    "image": "/generated/compendium/spells/spell-0644.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 50,
     "cooldown": 3
@@ -8076,7 +8076,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 39,
     "damage": 75,
-    "image": "/generated/compendium/spells/spell-0645.jpg",
+    "image": "/generated/compendium/spells/spell-0645.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 52,
     "cooldown": 2
@@ -8088,7 +8088,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 74,
-    "image": "/generated/compendium/spells/spell-0646.jpg",
+    "image": "/generated/compendium/spells/spell-0646.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 34,
     "cooldown": 8
@@ -8100,7 +8100,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 81,
-    "image": "/generated/compendium/spells/spell-0647.jpg",
+    "image": "/generated/compendium/spells/spell-0647.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 54,
     "cooldown": 9
@@ -8113,7 +8113,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 64,
     "healing": 205,
-    "image": "/generated/compendium/spells/spell-0648.jpg",
+    "image": "/generated/compendium/spells/spell-0648.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 40,
     "cooldown": 6
@@ -8126,7 +8126,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 62,
     "damage": 129,
-    "image": "/generated/compendium/spells/spell-0649.jpg",
+    "image": "/generated/compendium/spells/spell-0649.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 53,
     "cooldown": 5
@@ -8138,7 +8138,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 75,
-    "image": "/generated/compendium/spells/spell-0650.jpg",
+    "image": "/generated/compendium/spells/spell-0650.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 39,
     "cooldown": 7
@@ -8150,7 +8150,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 37,
-    "image": "/generated/compendium/spells/spell-0651.jpg",
+    "image": "/generated/compendium/spells/spell-0651.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 18,
     "cooldown": 6
@@ -8163,7 +8163,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 73,
     "healing": 293,
-    "image": "/generated/compendium/spells/spell-0652.jpg",
+    "image": "/generated/compendium/spells/spell-0652.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 50,
     "cooldown": 1
@@ -8176,7 +8176,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 52,
     "damage": 149,
-    "image": "/generated/compendium/spells/spell-0653.jpg",
+    "image": "/generated/compendium/spells/spell-0653.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 31,
     "cooldown": 5
@@ -8188,7 +8188,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 13,
-    "image": "/generated/compendium/spells/spell-0654.jpg",
+    "image": "/generated/compendium/spells/spell-0654.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 36,
     "cooldown": 2
@@ -8200,7 +8200,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 32,
-    "image": "/generated/compendium/spells/spell-0655.jpg",
+    "image": "/generated/compendium/spells/spell-0655.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 27,
     "cooldown": 2
@@ -8213,7 +8213,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 73,
     "healing": 262,
-    "image": "/generated/compendium/spells/spell-0656.jpg",
+    "image": "/generated/compendium/spells/spell-0656.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 55,
     "cooldown": 9
@@ -8226,7 +8226,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 45,
     "damage": 75,
-    "image": "/generated/compendium/spells/spell-0657.jpg",
+    "image": "/generated/compendium/spells/spell-0657.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 43,
     "cooldown": 9
@@ -8238,7 +8238,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 31,
-    "image": "/generated/compendium/spells/spell-0658.jpg",
+    "image": "/generated/compendium/spells/spell-0658.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 49,
     "cooldown": 6
@@ -8250,7 +8250,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 49,
-    "image": "/generated/compendium/spells/spell-0659.jpg",
+    "image": "/generated/compendium/spells/spell-0659.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 50,
     "cooldown": 3
@@ -8263,7 +8263,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 109,
     "healing": 214,
-    "image": "/generated/compendium/spells/spell-0660.jpg",
+    "image": "/generated/compendium/spells/spell-0660.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 41,
     "cooldown": 9
@@ -8276,7 +8276,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 44,
     "damage": 158,
-    "image": "/generated/compendium/spells/spell-0661.jpg",
+    "image": "/generated/compendium/spells/spell-0661.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 31,
     "cooldown": 3
@@ -8288,7 +8288,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 101,
-    "image": "/generated/compendium/spells/spell-0662.jpg",
+    "image": "/generated/compendium/spells/spell-0662.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 19,
     "cooldown": 6
@@ -8300,7 +8300,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 47,
-    "image": "/generated/compendium/spells/spell-0663.jpg",
+    "image": "/generated/compendium/spells/spell-0663.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 51,
     "cooldown": 2
@@ -8313,7 +8313,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 71,
     "healing": 276,
-    "image": "/generated/compendium/spells/spell-0664.jpg",
+    "image": "/generated/compendium/spells/spell-0664.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 48,
     "cooldown": 1
@@ -8326,7 +8326,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 71,
     "damage": 127,
-    "image": "/generated/compendium/spells/spell-0665.jpg",
+    "image": "/generated/compendium/spells/spell-0665.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 39,
     "cooldown": 5
@@ -8338,7 +8338,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 36,
-    "image": "/generated/compendium/spells/spell-0666.jpg",
+    "image": "/generated/compendium/spells/spell-0666.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 15,
     "cooldown": 4
@@ -8350,7 +8350,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 100,
-    "image": "/generated/compendium/spells/spell-0667.jpg",
+    "image": "/generated/compendium/spells/spell-0667.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 14,
     "cooldown": 2
@@ -8363,7 +8363,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 82,
     "healing": 219,
-    "image": "/generated/compendium/spells/spell-0668.jpg",
+    "image": "/generated/compendium/spells/spell-0668.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 57,
     "cooldown": 1
@@ -8376,7 +8376,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 103,
     "damage": 177,
-    "image": "/generated/compendium/spells/spell-0669.jpg",
+    "image": "/generated/compendium/spells/spell-0669.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 41,
     "cooldown": 8
@@ -8388,7 +8388,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 62,
-    "image": "/generated/compendium/spells/spell-0670.jpg",
+    "image": "/generated/compendium/spells/spell-0670.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 13,
     "cooldown": 10
@@ -8400,7 +8400,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 104,
-    "image": "/generated/compendium/spells/spell-0671.jpg",
+    "image": "/generated/compendium/spells/spell-0671.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 13,
     "cooldown": 4
@@ -8413,7 +8413,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 97,
     "healing": 311,
-    "image": "/generated/compendium/spells/spell-0672.jpg",
+    "image": "/generated/compendium/spells/spell-0672.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 27,
     "cooldown": 3
@@ -8426,7 +8426,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 16,
     "damage": 103,
-    "image": "/generated/compendium/spells/spell-0673.jpg",
+    "image": "/generated/compendium/spells/spell-0673.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 41,
     "cooldown": 10
@@ -8438,7 +8438,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 95,
-    "image": "/generated/compendium/spells/spell-0674.jpg",
+    "image": "/generated/compendium/spells/spell-0674.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 59,
     "cooldown": 6
@@ -8450,7 +8450,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 109,
-    "image": "/generated/compendium/spells/spell-0675.jpg",
+    "image": "/generated/compendium/spells/spell-0675.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 51,
     "cooldown": 4
@@ -8463,7 +8463,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 83,
     "healing": 332,
-    "image": "/generated/compendium/spells/spell-0676.jpg",
+    "image": "/generated/compendium/spells/spell-0676.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 22,
     "cooldown": 8
@@ -8476,7 +8476,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 65,
     "damage": 64,
-    "image": "/generated/compendium/spells/spell-0677.jpg",
+    "image": "/generated/compendium/spells/spell-0677.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 26,
     "cooldown": 9
@@ -8488,7 +8488,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 31,
-    "image": "/generated/compendium/spells/spell-0678.jpg",
+    "image": "/generated/compendium/spells/spell-0678.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 13,
     "cooldown": 6
@@ -8500,7 +8500,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 38,
-    "image": "/generated/compendium/spells/spell-0679.jpg",
+    "image": "/generated/compendium/spells/spell-0679.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 57,
     "cooldown": 5
@@ -8513,7 +8513,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 15,
     "healing": 225,
-    "image": "/generated/compendium/spells/spell-0680.jpg",
+    "image": "/generated/compendium/spells/spell-0680.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 24,
     "cooldown": 1
@@ -8526,7 +8526,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 78,
     "damage": 245,
-    "image": "/generated/compendium/spells/spell-0681.jpg",
+    "image": "/generated/compendium/spells/spell-0681.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 36,
     "cooldown": 6
@@ -8538,7 +8538,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 51,
-    "image": "/generated/compendium/spells/spell-0682.jpg",
+    "image": "/generated/compendium/spells/spell-0682.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 55,
     "cooldown": 1
@@ -8550,7 +8550,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 32,
-    "image": "/generated/compendium/spells/spell-0683.jpg",
+    "image": "/generated/compendium/spells/spell-0683.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 42,
     "cooldown": 3
@@ -8563,7 +8563,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 55,
     "healing": 398,
-    "image": "/generated/compendium/spells/spell-0684.jpg",
+    "image": "/generated/compendium/spells/spell-0684.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 28,
     "cooldown": 1
@@ -8576,7 +8576,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 85,
     "damage": 127,
-    "image": "/generated/compendium/spells/spell-0685.jpg",
+    "image": "/generated/compendium/spells/spell-0685.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 15,
     "cooldown": 3
@@ -8588,7 +8588,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 109,
-    "image": "/generated/compendium/spells/spell-0686.jpg",
+    "image": "/generated/compendium/spells/spell-0686.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 24,
     "cooldown": 5
@@ -8600,7 +8600,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 85,
-    "image": "/generated/compendium/spells/spell-0687.jpg",
+    "image": "/generated/compendium/spells/spell-0687.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 47,
     "cooldown": 1
@@ -8613,7 +8613,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 26,
     "healing": 307,
-    "image": "/generated/compendium/spells/spell-0688.jpg",
+    "image": "/generated/compendium/spells/spell-0688.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 16,
     "cooldown": 3
@@ -8626,7 +8626,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 15,
     "damage": 223,
-    "image": "/generated/compendium/spells/spell-0689.jpg",
+    "image": "/generated/compendium/spells/spell-0689.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 19,
     "cooldown": 10
@@ -8638,7 +8638,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 98,
-    "image": "/generated/compendium/spells/spell-0690.jpg",
+    "image": "/generated/compendium/spells/spell-0690.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 52,
     "cooldown": 9
@@ -8650,7 +8650,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 34,
-    "image": "/generated/compendium/spells/spell-0691.jpg",
+    "image": "/generated/compendium/spells/spell-0691.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 20,
     "cooldown": 6
@@ -8663,7 +8663,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 66,
     "healing": 173,
-    "image": "/generated/compendium/spells/spell-0692.jpg",
+    "image": "/generated/compendium/spells/spell-0692.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 39,
     "cooldown": 3
@@ -8676,7 +8676,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 100,
     "damage": 214,
-    "image": "/generated/compendium/spells/spell-0693.jpg",
+    "image": "/generated/compendium/spells/spell-0693.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 11,
     "cooldown": 7
@@ -8688,7 +8688,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 28,
-    "image": "/generated/compendium/spells/spell-0694.jpg",
+    "image": "/generated/compendium/spells/spell-0694.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 39,
     "cooldown": 5
@@ -8700,7 +8700,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 21,
-    "image": "/generated/compendium/spells/spell-0695.jpg",
+    "image": "/generated/compendium/spells/spell-0695.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 11,
     "cooldown": 7
@@ -8713,7 +8713,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 11,
     "healing": 121,
-    "image": "/generated/compendium/spells/spell-0696.jpg",
+    "image": "/generated/compendium/spells/spell-0696.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 33,
     "cooldown": 4
@@ -8726,7 +8726,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 87,
     "damage": 111,
-    "image": "/generated/compendium/spells/spell-0697.jpg",
+    "image": "/generated/compendium/spells/spell-0697.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 35,
     "cooldown": 2
@@ -8738,7 +8738,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 20,
-    "image": "/generated/compendium/spells/spell-0698.jpg",
+    "image": "/generated/compendium/spells/spell-0698.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 45,
     "cooldown": 8
@@ -8750,7 +8750,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 109,
-    "image": "/generated/compendium/spells/spell-0699.jpg",
+    "image": "/generated/compendium/spells/spell-0699.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 28,
     "cooldown": 5
@@ -8763,7 +8763,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 12,
     "healing": 218,
-    "image": "/generated/compendium/spells/spell-0700.jpg",
+    "image": "/generated/compendium/spells/spell-0700.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 22,
     "cooldown": 8
@@ -8776,7 +8776,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 57,
     "damage": 127,
-    "image": "/generated/compendium/spells/spell-0701.jpg",
+    "image": "/generated/compendium/spells/spell-0701.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 30,
     "cooldown": 10
@@ -8788,7 +8788,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 55,
-    "image": "/generated/compendium/spells/spell-0702.jpg",
+    "image": "/generated/compendium/spells/spell-0702.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 19,
     "cooldown": 1
@@ -8800,7 +8800,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 42,
-    "image": "/generated/compendium/spells/spell-0703.jpg",
+    "image": "/generated/compendium/spells/spell-0703.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 21,
     "cooldown": 4
@@ -8813,7 +8813,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 65,
     "healing": 232,
-    "image": "/generated/compendium/spells/spell-0704.jpg",
+    "image": "/generated/compendium/spells/spell-0704.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 48,
     "cooldown": 10
@@ -8826,7 +8826,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 71,
     "damage": 106,
-    "image": "/generated/compendium/spells/spell-0705.jpg",
+    "image": "/generated/compendium/spells/spell-0705.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 20,
     "cooldown": 1
@@ -8838,7 +8838,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 69,
-    "image": "/generated/compendium/spells/spell-0706.jpg",
+    "image": "/generated/compendium/spells/spell-0706.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 23,
     "cooldown": 5
@@ -8850,7 +8850,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 30,
-    "image": "/generated/compendium/spells/spell-0707.jpg",
+    "image": "/generated/compendium/spells/spell-0707.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 15,
     "cooldown": 6
@@ -8863,7 +8863,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 70,
     "healing": 131,
-    "image": "/generated/compendium/spells/spell-0708.jpg",
+    "image": "/generated/compendium/spells/spell-0708.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 20,
     "cooldown": 8
@@ -8876,7 +8876,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 59,
     "damage": 237,
-    "image": "/generated/compendium/spells/spell-0709.jpg",
+    "image": "/generated/compendium/spells/spell-0709.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 44,
     "cooldown": 4
@@ -8888,7 +8888,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 96,
-    "image": "/generated/compendium/spells/spell-0710.jpg",
+    "image": "/generated/compendium/spells/spell-0710.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 36,
     "cooldown": 4
@@ -8900,7 +8900,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 95,
-    "image": "/generated/compendium/spells/spell-0711.jpg",
+    "image": "/generated/compendium/spells/spell-0711.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 25,
     "cooldown": 7
@@ -8913,7 +8913,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 43,
     "healing": 248,
-    "image": "/generated/compendium/spells/spell-0712.jpg",
+    "image": "/generated/compendium/spells/spell-0712.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 33,
     "cooldown": 3
@@ -8926,7 +8926,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 34,
     "damage": 184,
-    "image": "/generated/compendium/spells/spell-0713.jpg",
+    "image": "/generated/compendium/spells/spell-0713.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 16,
     "cooldown": 3
@@ -8938,7 +8938,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 43,
-    "image": "/generated/compendium/spells/spell-0714.jpg",
+    "image": "/generated/compendium/spells/spell-0714.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 31,
     "cooldown": 6
@@ -8950,7 +8950,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 45,
-    "image": "/generated/compendium/spells/spell-0715.jpg",
+    "image": "/generated/compendium/spells/spell-0715.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 49,
     "cooldown": 6
@@ -8963,7 +8963,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 32,
     "healing": 339,
-    "image": "/generated/compendium/spells/spell-0716.jpg",
+    "image": "/generated/compendium/spells/spell-0716.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 33,
     "cooldown": 7
@@ -8976,7 +8976,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 19,
     "damage": 78,
-    "image": "/generated/compendium/spells/spell-0717.jpg",
+    "image": "/generated/compendium/spells/spell-0717.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 11,
     "cooldown": 2
@@ -8988,7 +8988,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 104,
-    "image": "/generated/compendium/spells/spell-0718.jpg",
+    "image": "/generated/compendium/spells/spell-0718.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 50,
     "cooldown": 8
@@ -9000,7 +9000,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 37,
-    "image": "/generated/compendium/spells/spell-0719.jpg",
+    "image": "/generated/compendium/spells/spell-0719.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 18,
     "cooldown": 5
@@ -9013,7 +9013,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 70,
     "healing": 157,
-    "image": "/generated/compendium/spells/spell-0720.jpg",
+    "image": "/generated/compendium/spells/spell-0720.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 55,
     "cooldown": 3
@@ -9026,7 +9026,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 98,
     "damage": 184,
-    "image": "/generated/compendium/spells/spell-0721.jpg",
+    "image": "/generated/compendium/spells/spell-0721.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 21,
     "cooldown": 9
@@ -9038,7 +9038,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 105,
-    "image": "/generated/compendium/spells/spell-0722.jpg",
+    "image": "/generated/compendium/spells/spell-0722.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 58,
     "cooldown": 8
@@ -9050,7 +9050,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 77,
-    "image": "/generated/compendium/spells/spell-0723.jpg",
+    "image": "/generated/compendium/spells/spell-0723.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 59,
     "cooldown": 1
@@ -9063,7 +9063,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 94,
     "healing": 273,
-    "image": "/generated/compendium/spells/spell-0724.jpg",
+    "image": "/generated/compendium/spells/spell-0724.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 26,
     "cooldown": 3
@@ -9076,7 +9076,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 14,
     "damage": 99,
-    "image": "/generated/compendium/spells/spell-0725.jpg",
+    "image": "/generated/compendium/spells/spell-0725.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 34,
     "cooldown": 7
@@ -9088,7 +9088,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 108,
-    "image": "/generated/compendium/spells/spell-0726.jpg",
+    "image": "/generated/compendium/spells/spell-0726.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 40,
     "cooldown": 7
@@ -9100,7 +9100,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 87,
-    "image": "/generated/compendium/spells/spell-0727.jpg",
+    "image": "/generated/compendium/spells/spell-0727.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 37,
     "cooldown": 2
@@ -9113,7 +9113,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 107,
     "healing": 272,
-    "image": "/generated/compendium/spells/spell-0728.jpg",
+    "image": "/generated/compendium/spells/spell-0728.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 53,
     "cooldown": 4
@@ -9126,7 +9126,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 41,
     "damage": 97,
-    "image": "/generated/compendium/spells/spell-0729.jpg",
+    "image": "/generated/compendium/spells/spell-0729.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 24,
     "cooldown": 8
@@ -9138,7 +9138,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 99,
-    "image": "/generated/compendium/spells/spell-0730.jpg",
+    "image": "/generated/compendium/spells/spell-0730.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 57,
     "cooldown": 3
@@ -9150,7 +9150,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 57,
-    "image": "/generated/compendium/spells/spell-0731.jpg",
+    "image": "/generated/compendium/spells/spell-0731.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 50,
     "cooldown": 1
@@ -9163,7 +9163,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 102,
     "healing": 353,
-    "image": "/generated/compendium/spells/spell-0732.jpg",
+    "image": "/generated/compendium/spells/spell-0732.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 33,
     "cooldown": 5
@@ -9176,7 +9176,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 62,
     "damage": 225,
-    "image": "/generated/compendium/spells/spell-0733.jpg",
+    "image": "/generated/compendium/spells/spell-0733.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 37,
     "cooldown": 4
@@ -9188,7 +9188,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 46,
-    "image": "/generated/compendium/spells/spell-0734.jpg",
+    "image": "/generated/compendium/spells/spell-0734.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 51,
     "cooldown": 8
@@ -9200,7 +9200,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 29,
-    "image": "/generated/compendium/spells/spell-0735.jpg",
+    "image": "/generated/compendium/spells/spell-0735.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 36,
     "cooldown": 2
@@ -9213,7 +9213,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 21,
     "healing": 385,
-    "image": "/generated/compendium/spells/spell-0736.jpg",
+    "image": "/generated/compendium/spells/spell-0736.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 44,
     "cooldown": 1
@@ -9226,7 +9226,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 35,
     "damage": 96,
-    "image": "/generated/compendium/spells/spell-0737.jpg",
+    "image": "/generated/compendium/spells/spell-0737.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 37,
     "cooldown": 4
@@ -9238,7 +9238,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 101,
-    "image": "/generated/compendium/spells/spell-0738.jpg",
+    "image": "/generated/compendium/spells/spell-0738.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 12,
     "cooldown": 3
@@ -9250,7 +9250,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 62,
-    "image": "/generated/compendium/spells/spell-0739.jpg",
+    "image": "/generated/compendium/spells/spell-0739.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 47,
     "cooldown": 8
@@ -9263,7 +9263,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 16,
     "healing": 113,
-    "image": "/generated/compendium/spells/spell-0740.jpg",
+    "image": "/generated/compendium/spells/spell-0740.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 34,
     "cooldown": 1
@@ -9276,7 +9276,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 31,
     "damage": 196,
-    "image": "/generated/compendium/spells/spell-0741.jpg",
+    "image": "/generated/compendium/spells/spell-0741.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 50,
     "cooldown": 8
@@ -9288,7 +9288,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 47,
-    "image": "/generated/compendium/spells/spell-0742.jpg",
+    "image": "/generated/compendium/spells/spell-0742.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 38,
     "cooldown": 4
@@ -9300,7 +9300,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 83,
-    "image": "/generated/compendium/spells/spell-0743.jpg",
+    "image": "/generated/compendium/spells/spell-0743.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 29,
     "cooldown": 2
@@ -9313,7 +9313,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 83,
     "healing": 250,
-    "image": "/generated/compendium/spells/spell-0744.jpg",
+    "image": "/generated/compendium/spells/spell-0744.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 25,
     "cooldown": 4
@@ -9326,7 +9326,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 64,
     "damage": 246,
-    "image": "/generated/compendium/spells/spell-0745.jpg",
+    "image": "/generated/compendium/spells/spell-0745.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 43,
     "cooldown": 9
@@ -9338,7 +9338,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 109,
-    "image": "/generated/compendium/spells/spell-0746.jpg",
+    "image": "/generated/compendium/spells/spell-0746.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 26,
     "cooldown": 6
@@ -9350,7 +9350,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 90,
-    "image": "/generated/compendium/spells/spell-0747.jpg",
+    "image": "/generated/compendium/spells/spell-0747.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 32,
     "cooldown": 6
@@ -9363,7 +9363,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 75,
     "healing": 107,
-    "image": "/generated/compendium/spells/spell-0748.jpg",
+    "image": "/generated/compendium/spells/spell-0748.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 52,
     "cooldown": 7
@@ -9376,7 +9376,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 79,
     "damage": 173,
-    "image": "/generated/compendium/spells/spell-0749.jpg",
+    "image": "/generated/compendium/spells/spell-0749.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 18,
     "cooldown": 1
@@ -9388,7 +9388,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 73,
-    "image": "/generated/compendium/spells/spell-0750.jpg",
+    "image": "/generated/compendium/spells/spell-0750.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 44,
     "cooldown": 2
@@ -9400,7 +9400,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 47,
-    "image": "/generated/compendium/spells/spell-0751.jpg",
+    "image": "/generated/compendium/spells/spell-0751.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 45,
     "cooldown": 10
@@ -9413,7 +9413,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 50,
     "healing": 120,
-    "image": "/generated/compendium/spells/spell-0752.jpg",
+    "image": "/generated/compendium/spells/spell-0752.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 14,
     "cooldown": 6
@@ -9426,7 +9426,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 57,
     "damage": 114,
-    "image": "/generated/compendium/spells/spell-0753.jpg",
+    "image": "/generated/compendium/spells/spell-0753.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 29,
     "cooldown": 2
@@ -9438,7 +9438,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 84,
-    "image": "/generated/compendium/spells/spell-0754.jpg",
+    "image": "/generated/compendium/spells/spell-0754.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 31,
     "cooldown": 10
@@ -9450,7 +9450,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 82,
-    "image": "/generated/compendium/spells/spell-0755.jpg",
+    "image": "/generated/compendium/spells/spell-0755.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 22,
     "cooldown": 3
@@ -9463,7 +9463,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 108,
     "healing": 137,
-    "image": "/generated/compendium/spells/spell-0756.jpg",
+    "image": "/generated/compendium/spells/spell-0756.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 28,
     "cooldown": 1
@@ -9476,7 +9476,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 54,
     "damage": 121,
-    "image": "/generated/compendium/spells/spell-0757.jpg",
+    "image": "/generated/compendium/spells/spell-0757.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 30,
     "cooldown": 1
@@ -9488,7 +9488,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 100,
-    "image": "/generated/compendium/spells/spell-0758.jpg",
+    "image": "/generated/compendium/spells/spell-0758.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 36,
     "cooldown": 4
@@ -9500,7 +9500,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 14,
-    "image": "/generated/compendium/spells/spell-0759.jpg",
+    "image": "/generated/compendium/spells/spell-0759.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 15,
     "cooldown": 5
@@ -9513,7 +9513,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 22,
     "healing": 244,
-    "image": "/generated/compendium/spells/spell-0760.jpg",
+    "image": "/generated/compendium/spells/spell-0760.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 49,
     "cooldown": 2
@@ -9526,7 +9526,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 46,
     "damage": 149,
-    "image": "/generated/compendium/spells/spell-0761.jpg",
+    "image": "/generated/compendium/spells/spell-0761.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 47,
     "cooldown": 6
@@ -9538,7 +9538,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 81,
-    "image": "/generated/compendium/spells/spell-0762.jpg",
+    "image": "/generated/compendium/spells/spell-0762.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 33,
     "cooldown": 7
@@ -9550,7 +9550,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 17,
-    "image": "/generated/compendium/spells/spell-0763.jpg",
+    "image": "/generated/compendium/spells/spell-0763.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 54,
     "cooldown": 9
@@ -9563,7 +9563,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 29,
     "healing": 250,
-    "image": "/generated/compendium/spells/spell-0764.jpg",
+    "image": "/generated/compendium/spells/spell-0764.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 24,
     "cooldown": 5
@@ -9576,7 +9576,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 56,
     "damage": 104,
-    "image": "/generated/compendium/spells/spell-0765.jpg",
+    "image": "/generated/compendium/spells/spell-0765.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 39,
     "cooldown": 7
@@ -9588,7 +9588,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 77,
-    "image": "/generated/compendium/spells/spell-0766.jpg",
+    "image": "/generated/compendium/spells/spell-0766.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 14,
     "cooldown": 4
@@ -9600,7 +9600,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 84,
-    "image": "/generated/compendium/spells/spell-0767.jpg",
+    "image": "/generated/compendium/spells/spell-0767.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 34,
     "cooldown": 2
@@ -9613,7 +9613,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 92,
     "healing": 162,
-    "image": "/generated/compendium/spells/spell-0768.jpg",
+    "image": "/generated/compendium/spells/spell-0768.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 19,
     "cooldown": 2
@@ -9626,7 +9626,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 37,
     "damage": 115,
-    "image": "/generated/compendium/spells/spell-0769.jpg",
+    "image": "/generated/compendium/spells/spell-0769.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 56,
     "cooldown": 5
@@ -9638,7 +9638,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 59,
-    "image": "/generated/compendium/spells/spell-0770.jpg",
+    "image": "/generated/compendium/spells/spell-0770.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 17,
     "cooldown": 6
@@ -9650,7 +9650,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 65,
-    "image": "/generated/compendium/spells/spell-0771.jpg",
+    "image": "/generated/compendium/spells/spell-0771.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 13,
     "cooldown": 2
@@ -9663,7 +9663,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 14,
     "healing": 360,
-    "image": "/generated/compendium/spells/spell-0772.jpg",
+    "image": "/generated/compendium/spells/spell-0772.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 53,
     "cooldown": 9
@@ -9676,7 +9676,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 84,
     "damage": 53,
-    "image": "/generated/compendium/spells/spell-0773.jpg",
+    "image": "/generated/compendium/spells/spell-0773.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 36,
     "cooldown": 3
@@ -9688,7 +9688,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 17,
-    "image": "/generated/compendium/spells/spell-0774.jpg",
+    "image": "/generated/compendium/spells/spell-0774.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 25,
     "cooldown": 8
@@ -9700,7 +9700,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 71,
-    "image": "/generated/compendium/spells/spell-0775.jpg",
+    "image": "/generated/compendium/spells/spell-0775.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 23,
     "cooldown": 8
@@ -9713,7 +9713,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 45,
     "healing": 152,
-    "image": "/generated/compendium/spells/spell-0776.jpg",
+    "image": "/generated/compendium/spells/spell-0776.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 22,
     "cooldown": 8
@@ -9726,7 +9726,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 67,
     "damage": 89,
-    "image": "/generated/compendium/spells/spell-0777.jpg",
+    "image": "/generated/compendium/spells/spell-0777.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 11,
     "cooldown": 1
@@ -9738,7 +9738,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 76,
-    "image": "/generated/compendium/spells/spell-0778.jpg",
+    "image": "/generated/compendium/spells/spell-0778.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 16,
     "cooldown": 3
@@ -9750,7 +9750,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 102,
-    "image": "/generated/compendium/spells/spell-0779.jpg",
+    "image": "/generated/compendium/spells/spell-0779.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 53,
     "cooldown": 9
@@ -9763,7 +9763,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 100,
     "healing": 115,
-    "image": "/generated/compendium/spells/spell-0780.jpg",
+    "image": "/generated/compendium/spells/spell-0780.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 42,
     "cooldown": 2
@@ -9776,7 +9776,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 69,
     "damage": 73,
-    "image": "/generated/compendium/spells/spell-0781.jpg",
+    "image": "/generated/compendium/spells/spell-0781.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 24,
     "cooldown": 7
@@ -9788,7 +9788,7 @@ export const spells = [
     "type": "Defense",
     "rank": "C",
     "manaCost": 36,
-    "image": "/generated/compendium/spells/spell-0782.jpg",
+    "image": "/generated/compendium/spells/spell-0782.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 47,
     "cooldown": 5
@@ -9800,7 +9800,7 @@ export const spells = [
     "type": "Utility",
     "rank": "B",
     "manaCost": 19,
-    "image": "/generated/compendium/spells/spell-0783.jpg",
+    "image": "/generated/compendium/spells/spell-0783.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 45,
     "cooldown": 2
@@ -9813,7 +9813,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 60,
     "healing": 315,
-    "image": "/generated/compendium/spells/spell-0784.jpg",
+    "image": "/generated/compendium/spells/spell-0784.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 28,
     "cooldown": 5
@@ -9826,7 +9826,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 77,
     "damage": 245,
-    "image": "/generated/compendium/spells/spell-0785.jpg",
+    "image": "/generated/compendium/spells/spell-0785.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 30,
     "cooldown": 5
@@ -9838,7 +9838,7 @@ export const spells = [
     "type": "Defense",
     "rank": "D",
     "manaCost": 94,
-    "image": "/generated/compendium/spells/spell-0786.jpg",
+    "image": "/generated/compendium/spells/spell-0786.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 43,
     "cooldown": 9
@@ -9850,7 +9850,7 @@ export const spells = [
     "type": "Utility",
     "rank": "C",
     "manaCost": 104,
-    "image": "/generated/compendium/spells/spell-0787.jpg",
+    "image": "/generated/compendium/spells/spell-0787.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 51,
     "cooldown": 8
@@ -9863,7 +9863,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 109,
     "healing": 204,
-    "image": "/generated/compendium/spells/spell-0788.jpg",
+    "image": "/generated/compendium/spells/spell-0788.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 23,
     "cooldown": 5
@@ -9876,7 +9876,7 @@ export const spells = [
     "rank": "A",
     "manaCost": 50,
     "damage": 119,
-    "image": "/generated/compendium/spells/spell-0789.jpg",
+    "image": "/generated/compendium/spells/spell-0789.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 36,
     "cooldown": 7
@@ -9888,7 +9888,7 @@ export const spells = [
     "type": "Defense",
     "rank": "S",
     "manaCost": 100,
-    "image": "/generated/compendium/spells/spell-0790.jpg",
+    "image": "/generated/compendium/spells/spell-0790.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 16,
     "cooldown": 2
@@ -9900,7 +9900,7 @@ export const spells = [
     "type": "Utility",
     "rank": "D",
     "manaCost": 85,
-    "image": "/generated/compendium/spells/spell-0791.jpg",
+    "image": "/generated/compendium/spells/spell-0791.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 43,
     "cooldown": 5
@@ -9913,7 +9913,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 91,
     "healing": 119,
-    "image": "/generated/compendium/spells/spell-0792.jpg",
+    "image": "/generated/compendium/spells/spell-0792.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 28,
     "cooldown": 8
@@ -9926,7 +9926,7 @@ export const spells = [
     "rank": "B",
     "manaCost": 72,
     "damage": 71,
-    "image": "/generated/compendium/spells/spell-0793.jpg",
+    "image": "/generated/compendium/spells/spell-0793.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 30,
     "cooldown": 8
@@ -9938,7 +9938,7 @@ export const spells = [
     "type": "Defense",
     "rank": "A",
     "manaCost": 45,
-    "image": "/generated/compendium/spells/spell-0794.jpg",
+    "image": "/generated/compendium/spells/spell-0794.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 32,
     "cooldown": 3
@@ -9950,7 +9950,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 80,
-    "image": "/generated/compendium/spells/spell-0795.jpg",
+    "image": "/generated/compendium/spells/spell-0795.webp",
     "effect": "Deals abyssal damage and applies additional effects.",
     "range": 55,
     "cooldown": 8
@@ -9963,7 +9963,7 @@ export const spells = [
     "rank": "D",
     "manaCost": 25,
     "healing": 341,
-    "image": "/generated/compendium/spells/spell-0796.jpg",
+    "image": "/generated/compendium/spells/spell-0796.webp",
     "effect": "Deals demonic damage and applies additional effects.",
     "range": 56,
     "cooldown": 4
@@ -9976,7 +9976,7 @@ export const spells = [
     "rank": "C",
     "manaCost": 79,
     "damage": 121,
-    "image": "/generated/compendium/spells/spell-0797.jpg",
+    "image": "/generated/compendium/spells/spell-0797.webp",
     "effect": "Deals celestial damage and applies additional effects.",
     "range": 55,
     "cooldown": 2
@@ -9988,7 +9988,7 @@ export const spells = [
     "type": "Defense",
     "rank": "B",
     "manaCost": 81,
-    "image": "/generated/compendium/spells/spell-0798.jpg",
+    "image": "/generated/compendium/spells/spell-0798.webp",
     "effect": "Deals divine damage and applies additional effects.",
     "range": 45,
     "cooldown": 5
@@ -10000,7 +10000,7 @@ export const spells = [
     "type": "Utility",
     "rank": "A",
     "manaCost": 71,
-    "image": "/generated/compendium/spells/spell-0799.jpg",
+    "image": "/generated/compendium/spells/spell-0799.webp",
     "effect": "Deals shadow damage and applies additional effects.",
     "range": 26,
     "cooldown": 8
@@ -10013,7 +10013,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 35,
     "healing": 348,
-    "image": "/generated/compendium/spells/spell-0800.jpg",
+    "image": "/generated/compendium/spells/spell-0800.webp",
     "effect": "Deals void damage and applies additional effects.",
     "range": 47,
     "cooldown": 6
@@ -10026,7 +10026,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 150,
     "damage": 999,
-    "image": "/generated/compendium/spells/spell-0801.jpg",
+    "image": "/generated/compendium/spells/spell-0801.webp",
     "effect": "Deals ultimate shadow damage and applies eternal shadow corruption to all enemies in range.",
     "range": 100,
     "cooldown": 10
@@ -10038,7 +10038,7 @@ export const spells = [
     "type": "Utility",
     "rank": "S",
     "manaCost": 200,
-    "image": "/generated/compendium/spells/spell-0802.jpg",
+    "image": "/generated/compendium/spells/spell-0802.webp",
     "effect": "Distorts reality in a massive area, creating void zones that nullify all other magic.",
     "range": 150,
     "cooldown": 15
@@ -10051,7 +10051,7 @@ export const spells = [
     "rank": "S",
     "manaCost": 100,
     "healing": 1000,
-    "image": "/generated/compendium/spells/spell-0803.jpg",
+    "image": "/generated/compendium/spells/spell-0803.webp",
     "effect": "Grants complete invincibility and unlimited mana for a short duration while healing all allies.",
     "range": 200,
     "cooldown": 20

@@ -1,7 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 import { AppError } from '@/lib/appError';
+import { addLocalRollHistory, isLocalCharacterId, listLocalRollHistory } from '@/lib/guestStore';
 
 export type RollRecord = Database['public']['Tables']['roll_history']['Row'];
 type RollRecordInsert = Database['public']['Tables']['roll_history']['Insert'];
@@ -11,8 +12,14 @@ export const useRollHistory = (characterId?: string, limit = 50) => {
   return useQuery({
     queryKey: ['roll-history', characterId, limit],
     queryFn: async () => {
+      if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true' || (characterId && isLocalCharacterId(characterId))) {
+        return listLocalRollHistory(characterId).slice(0, limit);
+      }
+
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return []; // Return empty array if not authenticated
+      if (!user) {
+        return listLocalRollHistory(characterId).slice(0, limit);
+      }
 
       let query = supabase
         .from('roll_history')
@@ -38,13 +45,35 @@ export const useRecordRoll = () => {
 
   return useMutation({
     mutationFn: async (roll: RollRecordInsertClient) => {
+      const normalizedRoll = {
+        ...roll,
+        campaign_id: roll.campaign_id ?? null,
+        character_id: roll.character_id ?? null,
+        context: roll.context ?? null,
+        modifiers: roll.modifiers ?? null,
+      };
+      const isLocal = roll.character_id ? isLocalCharacterId(roll.character_id) : false;
+      if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true' || isLocal) {
+        return addLocalRollHistory({
+          ...normalizedRoll,
+          user_id: 'guest',
+          created_at: new Date().toISOString(),
+        });
+      }
+
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
+      if (!user) {
+        return addLocalRollHistory({
+          ...normalizedRoll,
+          user_id: 'guest',
+          created_at: new Date().toISOString(),
+        });
+      }
 
       const { data, error } = await supabase
         .from('roll_history')
         .insert({
-          ...roll,
+          ...normalizedRoll,
           user_id: user.id,
         })
         .select()

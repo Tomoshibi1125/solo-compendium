@@ -28,7 +28,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Vanguard';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -41,7 +40,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Vanguard';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -54,7 +52,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Vanguard';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -67,7 +64,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Vanguard';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -80,7 +76,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Vanguard';
-
 -- Continue with remaining Vanguard features (11, 13, 15, 17, 18, 20)
 -- Ability Score Improvements at 4, 6, 8, 12, 14, 16, 19
 
@@ -100,7 +95,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Assassin';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -113,7 +107,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Assassin';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -126,7 +119,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Assassin';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -139,7 +131,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Assassin';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -152,7 +143,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Assassin';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -165,7 +155,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Assassin';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -178,7 +167,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Assassin';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -191,7 +179,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Assassin';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -204,7 +191,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Assassin';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -217,7 +203,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Assassin';
-
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
   j.id,
@@ -230,7 +215,6 @@ SELECT
   NULL,
   false
 FROM compendium_jobs j WHERE j.name = 'Assassin';
-
 -- =============================================
 -- NOTE: This migration provides the foundation
 -- =============================================
@@ -269,4 +253,3 @@ SELECT
   false
 FROM compendium_jobs j
 CROSS JOIN (VALUES (4), (6), (8), (12), (14), (16), (19)) AS levels(lvl);
-

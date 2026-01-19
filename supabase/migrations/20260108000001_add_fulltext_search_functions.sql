@@ -2,7 +2,7 @@
 -- These functions use the existing GIN indexes for fast searching
 
 -- Function to search compendium jobs
-CREATE OR REPLACE FUNCTION public.search_compendium_jobs(search_text TEXT)
+CREATE OR REPLACE FUNCTION search_compendium_jobs(search_text TEXT)
 RETURNS TABLE (
   id UUID,
   name TEXT,
@@ -12,11 +12,7 @@ RETURNS TABLE (
   source_book TEXT,
   image_url TEXT,
   rank REAL
-)
-LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-SECURITY DEFINER
-AS $$
+) AS $$
 BEGIN
   RETURN QUERY
   SELECT 
@@ -36,10 +32,9 @@ BEGIN
     @@ to_tsquery('english', search_text)
   ORDER BY rank DESC, j.name ASC;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 -- Function to search compendium powers
-CREATE OR REPLACE FUNCTION public.search_compendium_powers(search_text TEXT)
+CREATE OR REPLACE FUNCTION search_compendium_powers(search_text TEXT)
 RETURNS TABLE (
   id UUID,
   name TEXT,
@@ -50,11 +45,7 @@ RETURNS TABLE (
   tags TEXT[],
   source_book TEXT,
   rank REAL
-)
-LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-SECURITY DEFINER
-AS $$
+) AS $$
 BEGIN
   RETURN QUERY
   SELECT 
@@ -75,10 +66,9 @@ BEGIN
     @@ to_tsquery('english', search_text)
   ORDER BY rank DESC, p.name ASC;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 -- Function to search compendium relics
-CREATE OR REPLACE FUNCTION public.search_compendium_relics(search_text TEXT)
+CREATE OR REPLACE FUNCTION search_compendium_relics(search_text TEXT)
 RETURNS TABLE (
   id UUID,
   name TEXT,
@@ -88,11 +78,7 @@ RETURNS TABLE (
   tags TEXT[],
   source_book TEXT,
   rank REAL
-)
-LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-SECURITY DEFINER
-AS $$
+) AS $$
 BEGIN
   RETURN QUERY
   SELECT 
@@ -112,10 +98,9 @@ BEGIN
     @@ to_tsquery('english', search_text)
   ORDER BY rank DESC, r.name ASC;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 -- Function to search compendium monsters
-CREATE OR REPLACE FUNCTION public.search_compendium_monsters(search_text TEXT)
+CREATE OR REPLACE FUNCTION search_compendium_monsters(search_text TEXT)
 RETURNS TABLE (
   id UUID,
   name TEXT,
@@ -126,11 +111,7 @@ RETURNS TABLE (
   tags TEXT[],
   source_book TEXT,
   rank REAL
-)
-LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-SECURITY DEFINER
-AS $$
+) AS $$
 BEGIN
   RETURN QUERY
   SELECT 
@@ -151,10 +132,9 @@ BEGIN
     @@ to_tsquery('english', search_text)
   ORDER BY rank DESC, m.name ASC;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 -- Function to search compendium job paths
-CREATE OR REPLACE FUNCTION public.search_compendium_paths(search_text TEXT)
+CREATE OR REPLACE FUNCTION search_compendium_paths(search_text TEXT)
 RETURNS TABLE (
   id UUID,
   name TEXT,
@@ -163,11 +143,7 @@ RETURNS TABLE (
   tags TEXT[],
   source_book TEXT,
   rank REAL
-)
-LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-SECURITY DEFINER
-AS $$
+) AS $$
 BEGIN
   RETURN QUERY
   SELECT 
@@ -186,10 +162,9 @@ BEGIN
     @@ to_tsquery('english', search_text)
   ORDER BY rank DESC, p.name ASC;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 -- Function to search compendium monarchs
-CREATE OR REPLACE FUNCTION public.search_compendium_monarchs(search_text TEXT)
+CREATE OR REPLACE FUNCTION search_compendium_monarchs(search_text TEXT)
 RETURNS TABLE (
   id UUID,
   name TEXT,
@@ -200,11 +175,7 @@ RETURNS TABLE (
   tags TEXT[],
   source_book TEXT,
   rank REAL
-)
-LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-SECURITY DEFINER
-AS $$
+) AS $$
 BEGIN
   RETURN QUERY
   SELECT 
@@ -234,16 +205,11 @@ BEGIN
   ) @@ to_tsquery('english', search_text)
   ORDER BY rank DESC, m.name ASC;
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 -- Helper function to prepare search text for tsquery
 -- Converts user input to safe tsquery format
-CREATE OR REPLACE FUNCTION public.prepare_search_text(input_text TEXT)
-RETURNS TEXT 
-LANGUAGE plpgsql
-SET search_path = pg_catalog, public, extensions
-SECURITY DEFINER
-AS $$
+CREATE OR REPLACE FUNCTION prepare_search_text(input_text TEXT)
+RETURNS TEXT AS $$
 DECLARE
   cleaned TEXT;
   words TEXT[];
@@ -272,8 +238,7 @@ BEGIN
   
   RETURN result;
 END;
-$$ IMMUTABLE;
-
+$$ LANGUAGE plpgsql IMMUTABLE;
 -- Grant execute permissions
 GRANT EXECUTE ON FUNCTION search_compendium_jobs(TEXT) TO authenticated;
 GRANT EXECUTE ON FUNCTION search_compendium_powers(TEXT) TO authenticated;
@@ -282,4 +247,3 @@ GRANT EXECUTE ON FUNCTION search_compendium_monsters(TEXT) TO authenticated;
 GRANT EXECUTE ON FUNCTION search_compendium_paths(TEXT) TO authenticated;
 GRANT EXECUTE ON FUNCTION search_compendium_monarchs(TEXT) TO authenticated;
 GRANT EXECUTE ON FUNCTION prepare_search_text(TEXT) TO authenticated;
-

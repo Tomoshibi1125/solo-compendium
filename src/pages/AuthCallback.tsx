@@ -4,6 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Loader2 } from 'lucide-react';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
+import { logger } from '@/lib/logger';
 
 export default function AuthCallback() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ export default function AuthCallback() {
       const errorDescription = searchParams.get('error_description');
 
       if (error) {
-        console.error('Auth callback error:', error, errorDescription);
+        logger.error('Auth callback error:', error, errorDescription);
         navigate('/login?error=' + encodeURIComponent(errorDescription || error));
         return;
       }
@@ -34,7 +35,7 @@ export default function AuthCallback() {
             const user = data.user;
             const provider = user?.app_metadata?.provider;
             
-            console.log('User authenticated successfully:', {
+            logger.debug('User authenticated successfully:', {
               id: user?.id,
               email: user?.email,
               provider,
@@ -44,7 +45,7 @@ export default function AuthCallback() {
             navigate('/compendium');
           }
         } catch (error) {
-          console.error('Error exchanging code for session:', error);
+          logger.error('Error exchanging code for session:', error);
           navigate('/login?error=' + encodeURIComponent('Authentication failed'));
         }
       } else {

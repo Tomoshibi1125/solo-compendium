@@ -67,7 +67,7 @@ export const TREASURE_TABLES: Record<string, {
     relicChance: 0.15,
     items: ['Greater Healing Potion', 'Greater Mana Potion', 'Steel Weapon', 'Chain Armor', 'Relic Fragment', 'Enchanted Item'],
     materials: ['Greater Monster Core', 'Steel Ingot', 'Refined Mana Crystal', 'Shadow Essence (Purified)', 'Gate Fragment'],
-    relics: ['Incomplete Relic', 'Relic Shard'],
+    relics: ['Fragmented Relic', 'Relic Shard'],
   },
   B: {
     goldRange: [500, 1500],

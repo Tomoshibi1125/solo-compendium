@@ -47,7 +47,15 @@ export const MonarchDetail = ({ data }: { data: MonarchData }) => {
         .eq('monarch_id', data.id)
         .order('level');
       
-      if (featureData) setFeatures(featureData);
+      if (featureData) setFeatures(featureData.map(feature => ({
+        ...feature,
+        action_type: feature.action_type ?? undefined,
+        display_name: feature.display_name ?? undefined,
+        generated_reason: feature.generated_reason ?? undefined,
+        uses_formula: feature.uses_formula ?? undefined,
+        aliases: feature.aliases ?? undefined,
+        recharge: feature.recharge ?? undefined
+      })));
     };
 
     fetchFeatures();

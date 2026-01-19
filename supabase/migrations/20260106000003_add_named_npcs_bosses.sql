@@ -71,7 +71,6 @@ INSERT INTO compendium_monsters (name, size, creature_type, cr, armor_class, hit
 ('Sidney', 'Medium', 'Humanoid', '15', 17, 225, '18d12+108', 30, 16, 18, 16, 16, 18, 20, 'A', false, 'An A-Rank Hunter with exceptional leadership skills. Known for coordinating large-scale Gate-clearing operations. Her tactical mind makes her invaluable.', 'Sidney is a rising star in the Hunter community. Her ability to coordinate teams and manage complex Gate-clearing operations has made her a key figure in the post-reset Hunter Association.', 'Solo Leveling', 'homebrew', 'Solo Compendium Homebrew', ARRAY['named-npc', 'a-rank', 'humanoid', 'hunter', 'leader', 'tactician'])
 
 ON CONFLICT (name) DO NOTHING;
-
 -- =============================================
 -- UPDATE XP VALUES FOR NAMED NPCS AND BOSSES
 -- =============================================
@@ -94,4 +93,3 @@ UPDATE compendium_monsters SET xp = CASE cr
 END
 WHERE name IN ('Cha Hae-In', 'Baek Yoonho', 'Choi Jong-In', 'Yoo Jinho', 'Sung Jinah', 'Kamish', 'Antares', 'Baran', 'Legia', 'Querehsha', 'Tarmiel', 'Rakan', 'Cerberus, Gate Guardian', 'The Architect', 'Shadow Revenant', 'Mana Tyrant', 'The Collector', 'Goto Ryuji', 'Thomas Andre', 'Liu Zhigang', 'Sidney')
 AND xp IS NULL;
-

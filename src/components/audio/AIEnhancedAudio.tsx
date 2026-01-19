@@ -23,9 +23,10 @@ import {
   Play,
   Pause
 } from 'lucide-react';
-import { error } from '@/lib/logger';
 import { cn } from '@/lib/utils';
 import type { AudioAnalysis } from '@/lib/ai/types';
+import { logger } from '@/lib/logger';
+import { AIProviderSettings } from '@/components/ai/AIProviderSettings';
 
 interface AIEnhancedAudioProps {
   onAnalysisComplete?: (analysis: AudioAnalysis) => void;
@@ -66,15 +67,17 @@ export function AIEnhancedAudio({ onAnalysisComplete, className }: AIEnhancedAud
     
     try {
       const result = await analyzeAudio(selectedFile);
-      onAnalysisComplete?.(result);
-      
-      // Generate tags and mood from analysis
-      if (result.description) {
-        await generateTags(result.description, 'audio');
-        await detectMood(result.description, 'audio');
+      if (result) {
+        onAnalysisComplete?.(result);
+        
+        // Generate tags and mood from analysis
+        if (result.description) {
+          await generateTags(result.description, 'audio');
+          await detectMood(result.description, 'audio');
+        }
       }
     } catch (error) {
-      error('Failed to analyze audio:', error);
+      logger.error('Failed to analyze audio:', error);
     }
   };
 
@@ -126,6 +129,7 @@ export function AIEnhancedAudio({ onAnalysisComplete, className }: AIEnhancedAud
 
   return (
     <div className={cn("space-y-6", className)}>
+      <AIProviderSettings />
       {/* Audio Upload */}
       <Card>
         <CardHeader>
@@ -341,10 +345,10 @@ export function AIEnhancedAudio({ onAnalysisComplete, className }: AIEnhancedAud
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <h4 className="font-medium text-blue-900 mb-2">Usage Suggestions</h4>
               <ul className="text-sm text-blue-800 space-y-1">
-                <li>• Perfect for {analysis.mood.toLowerCase()} encounters</li>
-                <li>• Energy level {analysis.energy > 0.6 ? 'high - great for combat' : 'low - good for exploration'}</li>
-                <li>• {analysis.instruments.length > 0 ? `Features ${analysis.instruments.slice(0, 2).join(' and ')}` : 'Minimal instrumentation'}</li>
-                <li>• Recommended for {analysis.genre.toLowerCase()} campaigns</li>
+                <li>- Perfect for {analysis.mood.toLowerCase()} encounters</li>
+                <li>- Energy level {analysis.energy > 0.6 ? 'high - great for combat' : 'low - good for exploration'}</li>
+                <li>- {analysis.instruments.length > 0 ? `Features ${analysis.instruments.slice(0, 2).join(' and ')}` : 'Minimal instrumentation'}</li>
+                <li>- Recommended for {analysis.genre.toLowerCase()} campaigns</li>
               </ul>
             </div>
           </CardContent>

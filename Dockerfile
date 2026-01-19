@@ -1,23 +1,32 @@
-# Use Node.js 25 Alpine for smaller image size
-FROM node:25-alpine
+# syntax=docker/dockerfile:1
 
-# Set working directory
+FROM node:24-alpine AS deps
 WORKDIR /app
-
-# Copy package files
-COPY package*.json ./
-
-# Install dependencies
+COPY package.json package-lock.json ./
 RUN npm ci
 
-# Copy source code
+FROM node:24-alpine AS build
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-
-# Build the application
 RUN npm run build
 
-# Expose port
-EXPOSE 5173
-
-# Start development server
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+FROM nginx:1.27-alpine AS runtime
+RUN printf '%s\n' \
+  'server {' \
+  '  listen 3000;' \
+  '  server_name _;' \
+  '  root /usr/share/nginx/html;' \
+  '  index index.html;' \
+  '' \
+  '  location = /healthz { return 200 \"ok\"; add_header Content-Type text/plain; }' \
+  '  location /assets/ { try_files $uri =404; add_header Cache-Control \"public, max-age=31536000, immutable\"; }' \
+  '  location /generated/ { try_files $uri =404; add_header Cache-Control \"public, max-age=1209600\"; }' \
+  '  location / { try_files $uri /index.html; }' \
+  '}' \
+  > /etc/nginx/conf.d/default.conf
+COPY --from=build /app/dist /usr/share/nginx/html
+ENV NODE_ENV=production
+EXPOSE 3000
+HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD wget -qO- http://localhost:3000/healthz || exit 1
+CMD ["nginx", "-g", "daemon off;"]

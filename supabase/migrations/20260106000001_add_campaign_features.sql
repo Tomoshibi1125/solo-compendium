@@ -7,7 +7,6 @@ CREATE TABLE IF NOT EXISTS campaign_messages (
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
-
 -- Campaign Notes/Session Logs
 CREATE TABLE IF NOT EXISTS campaign_notes (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -20,7 +19,6 @@ CREATE TABLE IF NOT EXISTS campaign_notes (
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
-
 -- Campaign Character Shares (for sharing character sheets)
 CREATE TABLE IF NOT EXISTS campaign_character_shares (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -31,7 +29,6 @@ CREATE TABLE IF NOT EXISTS campaign_character_shares (
   created_at TIMESTAMPTZ DEFAULT NOW(),
   UNIQUE(campaign_id, character_id)
 );
-
 -- Indexes for performance
 CREATE INDEX IF NOT EXISTS campaign_messages_campaign_id_idx ON campaign_messages(campaign_id, created_at DESC);
 CREATE INDEX IF NOT EXISTS campaign_messages_user_id_idx ON campaign_messages(user_id);
@@ -39,10 +36,8 @@ CREATE INDEX IF NOT EXISTS campaign_notes_campaign_id_idx ON campaign_notes(camp
 CREATE INDEX IF NOT EXISTS campaign_notes_user_id_idx ON campaign_notes(user_id);
 CREATE INDEX IF NOT EXISTS campaign_character_shares_campaign_id_idx ON campaign_character_shares(campaign_id);
 CREATE INDEX IF NOT EXISTS campaign_character_shares_character_id_idx ON campaign_character_shares(character_id);
-
 -- RLS Policies for campaign_messages
 ALTER TABLE campaign_messages ENABLE ROW LEVEL SECURITY;
-
 CREATE POLICY "Users can view messages in their campaigns"
   ON campaign_messages FOR SELECT
   USING (
@@ -55,7 +50,6 @@ CREATE POLICY "Users can view messages in their campaigns"
       ))
     )
   );
-
 CREATE POLICY "Users can send messages in their campaigns"
   ON campaign_messages FOR INSERT
   WITH CHECK (
@@ -69,11 +63,9 @@ CREATE POLICY "Users can send messages in their campaigns"
       ))
     )
   );
-
 CREATE POLICY "Users can edit their own messages"
   ON campaign_messages FOR UPDATE
   USING (user_id = auth.uid());
-
 CREATE POLICY "Users can delete their own messages, DMs can delete any"
   ON campaign_messages FOR DELETE
   USING (
@@ -83,10 +75,8 @@ CREATE POLICY "Users can delete their own messages, DMs can delete any"
       WHERE id = campaign_messages.campaign_id AND dm_id = auth.uid()
     )
   );
-
 -- RLS Policies for campaign_notes
 ALTER TABLE campaign_notes ENABLE ROW LEVEL SECURITY;
-
 CREATE POLICY "Users can view notes in their campaigns"
   ON campaign_notes FOR SELECT
   USING (
@@ -99,7 +89,6 @@ CREATE POLICY "Users can view notes in their campaigns"
       ))
     )
   );
-
 CREATE POLICY "Users can create notes in their campaigns"
   ON campaign_notes FOR INSERT
   WITH CHECK (
@@ -113,7 +102,6 @@ CREATE POLICY "Users can create notes in their campaigns"
       ))
     )
   );
-
 CREATE POLICY "Users can edit their own notes, DMs can edit any"
   ON campaign_notes FOR UPDATE
   USING (
@@ -123,7 +111,6 @@ CREATE POLICY "Users can edit their own notes, DMs can edit any"
       WHERE id = campaign_notes.campaign_id AND dm_id = auth.uid()
     )
   );
-
 CREATE POLICY "Users can delete their own notes, DMs can delete any"
   ON campaign_notes FOR DELETE
   USING (
@@ -133,10 +120,8 @@ CREATE POLICY "Users can delete their own notes, DMs can delete any"
       WHERE id = campaign_notes.campaign_id AND dm_id = auth.uid()
     )
   );
-
 -- RLS Policies for campaign_character_shares
 ALTER TABLE campaign_character_shares ENABLE ROW LEVEL SECURITY;
-
 CREATE POLICY "Users can view shared characters in their campaigns"
   ON campaign_character_shares FOR SELECT
   USING (
@@ -149,7 +134,6 @@ CREATE POLICY "Users can view shared characters in their campaigns"
       ))
     )
   );
-
 CREATE POLICY "Users can share their own characters"
   ON campaign_character_shares FOR INSERT
   WITH CHECK (
@@ -167,15 +151,12 @@ CREATE POLICY "Users can share their own characters"
       ))
     )
   );
-
 CREATE POLICY "Users can update their own shares"
   ON campaign_character_shares FOR UPDATE
   USING (shared_by = auth.uid());
-
 CREATE POLICY "Users can delete their own shares"
   ON campaign_character_shares FOR DELETE
   USING (shared_by = auth.uid());
-
 -- Updated_at triggers
 DO $$
 BEGIN
@@ -223,13 +204,9 @@ BEGIN
       EXECUTE FUNCTION public.update_updated_at_column();';
   END IF;
 END $$;
-
 -- Function to get campaign member count
 CREATE OR REPLACE FUNCTION get_campaign_member_count(p_campaign_id UUID)
-RETURNS INTEGER 
-LANGUAGE plpgsql
-SECURITY DEFINER
-AS $$
+RETURNS INTEGER AS $$
 BEGIN
   RETURN (
     SELECT COUNT(*)::INTEGER
@@ -237,5 +214,4 @@ BEGIN
     WHERE campaign_id = p_campaign_id
   );
 END;
-$$;
-
+$$ LANGUAGE plpgsql SECURITY DEFINER;

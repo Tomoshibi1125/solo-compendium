@@ -84,7 +84,6 @@ CREATE TABLE IF NOT EXISTS public.compendium_runes (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Rune Inscriptions on Character Equipment
 -- Tracks which runes are inscribed on a character's equipment
 CREATE TABLE IF NOT EXISTS public.character_rune_inscriptions (
@@ -108,7 +107,6 @@ CREATE TABLE IF NOT EXISTS public.character_rune_inscriptions (
   
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Rune Learning/Knowledge Table
 -- Tracks which characters know which runes (for copying/learning mechanics)
 CREATE TABLE IF NOT EXISTS public.character_rune_knowledge (
@@ -128,12 +126,10 @@ CREATE TABLE IF NOT EXISTS public.character_rune_knowledge (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   UNIQUE(character_id, rune_id)
 );
-
 -- Enable RLS
 ALTER TABLE public.compendium_runes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.character_rune_inscriptions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.character_rune_knowledge ENABLE ROW LEVEL SECURITY;
-
 -- =============================================
 -- CROSS-LEARNING MECHANICS - SOLO LEVELING STYLE
 -- =============================================
@@ -213,7 +209,6 @@ INSERT INTO public.compendium_runes (
   'This rune was first discovered by a Striker who survived a high-rank Gate by tapping into his deepest rage. The rune allows even normally calm Hunters to access that primal fury, though it comes at a cost.',
   ARRAY['martial', 'offensive', 'weapon', 'rage']
 );
-
 -- Caster Rune Example: Fireball Rune
 INSERT INTO public.compendium_runes (
   name, rune_type, rune_category, rune_level, rarity,
@@ -254,7 +249,6 @@ INSERT INTO public.compendium_runes (
   'Discovered by a Mage studying ancient magic theory, this rune allows even non-casters to unleash devastating fire magic, though they must channel their life force through it.',
   ARRAY['caster', 'offensive', 'fire', 'area-effect']
 );
-
 -- Hybrid Rune Example: Shadow Step
 INSERT INTO public.compendium_runes (
   name, rune_type, rune_category, rune_level, rarity,
@@ -298,7 +292,6 @@ INSERT INTO public.compendium_runes (
   'This rune was discovered by an Assassin who studied the Shadow Monarch''s techniques. It represents the blending of physical agility and magical understanding needed to move through shadows.',
   ARRAY['hybrid', 'utility', 'teleportation', 'shadow']
 );
-
 -- Utility Rune Example: System Sight
 INSERT INTO public.compendium_runes (
   name, rune_type, rune_category, rune_level, rarity,
@@ -328,7 +321,6 @@ INSERT INTO public.compendium_runes (
   'This common rune was one of the first developed after the Gates appeared. It allows Hunters to see through darkness and detect the presence of Gates and magic. Essential for any Hunter entering unknown territory.',
   ARRAY['utility', 'passive', 'senses', 'defensive']
 );
-
 -- =============================================
 -- RULES FOR CROSS-LEARNING (Application Layer)
 -- =============================================
@@ -371,7 +363,6 @@ CREATE TRIGGER update_runes_updated_at
 BEFORE UPDATE ON public.compendium_runes
 FOR EACH ROW
 EXECUTE FUNCTION public.update_updated_at_column();
-
 -- =============================================
 -- COMPLETION NOTES
 -- =============================================
@@ -388,4 +379,4 @@ EXECUTE FUNCTION public.update_updated_at_column();
 -- - Create UI components for rune browsing and inscription
 -- - Implement cross-learning logic in character sheet
 -- - Add rune learning/copying mechanics to gameplay
--- =============================================
+-- =============================================;

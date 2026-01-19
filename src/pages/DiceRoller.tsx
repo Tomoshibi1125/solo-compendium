@@ -7,6 +7,8 @@ import { cn } from '@/lib/utils';
 import { DICE_THEMES, type DiceTheme } from '@/components/dice/diceThemes';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
+import { useRecordRoll } from '@/hooks/useRollHistory';
+import { logger } from '@/lib/logger';
 
 interface DiceRoll {
   id: string;
@@ -44,6 +46,7 @@ const DiceRoller = () => {
   const [dice3D, setDice3D] = useState<Array<{ sides: number; value: number | null }>>([]);
   const [show3D, setShow3D] = useState(true);
   const [diceTheme, setDiceTheme] = useState<DiceTheme>('shadow-monarch');
+  const recordRoll = useRecordRoll();
 
   const addDie = (sides: number) => {
     setSelectedDice(prev => {
@@ -124,6 +127,24 @@ const DiceRoller = () => {
 
       setLastRoll(newRoll);
       setRollHistory(prev => [newRoll, ...prev.slice(0, 19)]);
+
+      recordRoll.mutate(
+        {
+          dice_formula: newRoll.dice,
+          result: newRoll.total,
+          rolls: newRoll.rolls,
+          roll_type: newRoll.type ?? 'normal',
+          context: 'dice',
+          modifiers: newRoll.modifier ? { modifier: newRoll.modifier } : null,
+          campaign_id: null,
+          character_id: null,
+        },
+        {
+          onError: (err) => {
+            logger.error('Failed to record roll:', err);
+          },
+        }
+      );
       
       // Stop rolling animation after physics settle
       setTimeout(() => {
@@ -183,6 +204,24 @@ const DiceRoller = () => {
 
       setLastRoll(newRoll);
       setRollHistory(prev => [newRoll, ...prev.slice(0, 19)]);
+
+      recordRoll.mutate(
+        {
+          dice_formula: newRoll.dice,
+          result: newRoll.total,
+          rolls: newRoll.rolls,
+          roll_type: newRoll.type ?? 'normal',
+          context: 'dice',
+          modifiers: newRoll.modifier ? { modifier: newRoll.modifier } : null,
+          campaign_id: null,
+          character_id: null,
+        },
+        {
+          onError: (err) => {
+            logger.error('Failed to record roll:', err);
+          },
+        }
+      );
       
       // Stop rolling animation after physics settle
       setTimeout(() => {
@@ -289,6 +328,7 @@ const DiceRoller = () => {
                     variant="outline"
                     onClick={() => quickRoll(notation)}
                     className="font-display"
+                    data-testid={notation === '1d20' ? 'quick-roll-1d20' : undefined}
                   >
                     {notation}
                   </Button>
@@ -393,6 +433,7 @@ const DiceRoller = () => {
                     size="lg"
                     onClick={rollDice}
                     disabled={selectedDice.length === 0 || isRolling}
+                    data-testid="dice-roll-button"
                     className={cn(
                       "flex-1 font-display text-lg relative overflow-hidden",
                       "bg-gradient-to-r from-primary via-shadow-purple to-primary",

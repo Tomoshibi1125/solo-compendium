@@ -6,7 +6,7 @@ import type { Database } from '@/integrations/supabase/types';
 
 export interface Profile {
   id: string;
-  role: 'dm' | 'player' | 'admin';
+  role: 'dm' | 'player';
   created_at: string;
   updated_at: string;
 }
@@ -35,7 +35,9 @@ export const useProfile = () => {
         }
         throw error;
       }
-      return (data || null) as Profile | null;
+      if (!data) return null;
+      const normalizedRole = data.role === 'admin' ? 'dm' : data.role;
+      return { ...data, role: normalizedRole } as Profile;
     },
     retry: false,
     enabled: isSupabaseConfigured && !isE2E,
@@ -49,7 +51,7 @@ export const useUpdateProfile = () => {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ role }: { role: 'dm' | 'player' | 'admin' }) => {
+    mutationFn: async ({ role }: { role: 'dm' | 'player' }) => {
       const isE2E = import.meta.env.VITE_E2E === 'true';
       if (!isSupabaseConfigured || isE2E) {
         throw new AppError('Supabase is not configured', 'CONFIG');

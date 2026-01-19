@@ -18,7 +18,6 @@ SELECT m.id, 'Shadow Touch', 1,
 'action', NULL, NULL, NULL, true
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 2: Shadow Sight
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Shadow Sight', 2,
@@ -26,7 +25,6 @@ SELECT m.id, 'Shadow Sight', 2,
 'action', NULL, NULL, 'Shadow Touch', false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 3: Shadow Step
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Shadow Step', 3,
@@ -34,7 +32,6 @@ SELECT m.id, 'Shadow Step', 3,
 'bonus-action', 'proficiency bonus', 'long-rest', 'Shadow Sight', false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 4: Shadow Resilience
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Shadow Resilience', 4,
@@ -42,7 +39,6 @@ SELECT m.id, 'Shadow Resilience', 4,
 'reaction', 'proficiency bonus', 'long-rest', 'Shadow Step', false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 5: Shadow Whip
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Shadow Whip', 5,
@@ -50,7 +46,6 @@ SELECT m.id, 'Shadow Whip', 5,
 'action', 'proficiency bonus', 'long-rest', 'Shadow Resilience', false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 6: Shadow Armor
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Shadow Armor', 6,
@@ -58,7 +53,6 @@ SELECT m.id, 'Shadow Armor', 6,
 'bonus-action', '1 per long rest', 'long-rest', 'Shadow Whip', false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 7: Shadow Extraction (Signature - Unlocks here)
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Shadow Extraction', 7,
@@ -66,7 +60,6 @@ SELECT m.id, 'Shadow Extraction', 7,
 'reaction', 'proficiency bonus limit', NULL, 'Shadow Armor', true
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 8: Enhanced Shadows
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Enhanced Shadows', 8,
@@ -74,7 +67,6 @@ SELECT m.id, 'Enhanced Shadows', 8,
 'passive', NULL, NULL, 'Shadow Extraction', false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 9: Shadow Exchange
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Shadow Exchange', 9,
@@ -82,7 +74,6 @@ SELECT m.id, 'Shadow Exchange', 9,
 'action', 'proficiency bonus', 'long-rest', 'Enhanced Shadows', false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 10: Shadow Storage
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Shadow Storage', 10,
@@ -90,7 +81,6 @@ SELECT m.id, 'Shadow Storage', 10,
 'bonus-action', NULL, NULL, 'Shadow Exchange', false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 11: Shadow Army Command
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Shadow Army Command', 11,
@@ -98,7 +88,6 @@ SELECT m.id, 'Shadow Army Command', 11,
 'bonus-action', NULL, NULL, 'Shadow Storage', false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 12: Shadow Domain (Minor)
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Shadow Domain', 12,
@@ -106,7 +95,6 @@ SELECT m.id, 'Shadow Domain', 12,
 'action', '1 per long rest', 'long-rest', 'Shadow Army Command', false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 13: Shadow Strike
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Shadow Strike', 13,
@@ -114,7 +102,6 @@ SELECT m.id, 'Shadow Strike', 13,
 'passive', NULL, NULL, 'Shadow Domain', false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 14: Shadow Monarch''s Presence
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Shadow Monarch''s Presence', 14,
@@ -122,7 +109,6 @@ SELECT m.id, 'Shadow Monarch''s Presence', 14,
 'passive', NULL, NULL, 'Shadow Strike', false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 15: Shadow Regeneration
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Shadow Regeneration', 15,
@@ -130,7 +116,6 @@ SELECT m.id, 'Shadow Regeneration', 15,
 'passive', NULL, NULL, 'Shadow Monarch''s Presence', false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 16: Expanded Domain
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Expanded Domain', 16,
@@ -138,7 +123,6 @@ SELECT m.id, 'Expanded Domain', 16,
 'passive', NULL, NULL, 'Shadow Regeneration', false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 17: Eternal Army
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Eternal Army', 17,
@@ -146,7 +130,6 @@ SELECT m.id, 'Eternal Army', 17,
 'passive', NULL, NULL, 'Expanded Domain', false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 18: Shadow Overlord
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Shadow Overlord', 18,
@@ -154,7 +137,6 @@ SELECT m.id, 'Shadow Overlord', 18,
 'action', NULL, NULL, 'Eternal Army', false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 19: Perfect Shadow Form
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Perfect Shadow Form', 19,
@@ -162,7 +144,6 @@ SELECT m.id, 'Perfect Shadow Form', 19,
 'action', '1 per long rest', 'long-rest', 'Shadow Overlord', false
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 20: Shadow Monarch''s Authority (Capstone)
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Shadow Monarch''s Authority', 20,
@@ -170,7 +151,6 @@ SELECT m.id, 'Shadow Monarch''s Authority', 20,
 'action', '1 mass command per long rest', 'long-rest', 'Perfect Shadow Form', true
 FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- =============================================
 -- BEAST MONARCH - Full Progression (1-20)
 -- =============================================
@@ -184,7 +164,6 @@ SELECT m.id, 'Primal Awakening', 1,
 'action', NULL, NULL, NULL, true
 FROM compendium_monarchs m WHERE m.name = 'Beast Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 2: Beast Senses
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Beast Senses', 2,
@@ -192,7 +171,6 @@ SELECT m.id, 'Beast Senses', 2,
 'passive', NULL, NULL, 'Primal Awakening', false
 FROM compendium_monarchs m WHERE m.name = 'Beast Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 3: Beast Form (Minor)
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Beast Form', 3,
@@ -200,7 +178,6 @@ SELECT m.id, 'Beast Form', 3,
 'bonus-action', 'proficiency bonus', 'long-rest', 'Beast Senses', false
 FROM compendium_monarchs m WHERE m.name = 'Beast Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 4: Primal Resilience
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Primal Resilience', 4,
@@ -208,7 +185,6 @@ SELECT m.id, 'Primal Resilience', 4,
 'reaction', 'proficiency bonus', 'long-rest', 'Beast Form', false
 FROM compendium_monarchs m WHERE m.name = 'Beast Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 5: Beast Claws
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Beast Claws', 5,
@@ -216,7 +192,6 @@ SELECT m.id, 'Beast Claws', 5,
 'passive', NULL, NULL, 'Primal Resilience', false
 FROM compendium_monarchs m WHERE m.name = 'Beast Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 6: Predator''s Pounce
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Predator''s Pounce', 6,
@@ -224,7 +199,6 @@ SELECT m.id, 'Predator''s Pounce', 6,
 'bonus-action', NULL, NULL, 'Beast Claws', false
 FROM compendium_monarchs m WHERE m.name = 'Beast Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 7: Beast Command (Signature)
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Beast Command', 7,
@@ -232,7 +206,6 @@ SELECT m.id, 'Beast Command', 7,
 'action', 'proficiency bonus limit', NULL, 'Predator''s Pounce', true
 FROM compendium_monarchs m WHERE m.name = 'Beast Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 8: Enhanced Transformation
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Enhanced Transformation', 8,
@@ -240,7 +213,6 @@ SELECT m.id, 'Enhanced Transformation', 8,
 'passive', NULL, NULL, 'Beast Command', false
 FROM compendium_monarchs m WHERE m.name = 'Beast Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 9: Pack Tactics
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Pack Tactics', 9,
@@ -248,7 +220,6 @@ SELECT m.id, 'Pack Tactics', 9,
 'passive', NULL, NULL, 'Enhanced Transformation', false
 FROM compendium_monarchs m WHERE m.name = 'Beast Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 10: Beast Storage
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Beast Storage', 10,
@@ -256,7 +227,6 @@ SELECT m.id, 'Beast Storage', 10,
 'bonus-action', NULL, NULL, 'Pack Tactics', false
 FROM compendium_monarchs m WHERE m.name = 'Beast Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 11: Pack Alpha
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Pack Alpha', 11,
@@ -264,7 +234,6 @@ SELECT m.id, 'Pack Alpha', 11,
 'bonus-action', NULL, NULL, 'Beast Storage', false
 FROM compendium_monarchs m WHERE m.name = 'Beast Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 12: Apex Form
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Apex Form', 12,
@@ -272,7 +241,6 @@ SELECT m.id, 'Apex Form', 12,
 'action', '1 per long rest', 'long-rest', 'Pack Alpha', false
 FROM compendium_monarchs m WHERE m.name = 'Beast Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 13: Primal Strike
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Primal Strike', 13,
@@ -280,7 +248,6 @@ SELECT m.id, 'Primal Strike', 13,
 'passive', NULL, NULL, 'Apex Form', false
 FROM compendium_monarchs m WHERE m.name = 'Beast Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 14: Beast Monarch''s Presence
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Beast Monarch''s Presence', 14,
@@ -288,7 +255,6 @@ SELECT m.id, 'Beast Monarch''s Presence', 14,
 'passive', NULL, NULL, 'Primal Strike', false
 FROM compendium_monarchs m WHERE m.name = 'Beast Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 15: Primal Regeneration
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Primal Regeneration', 15,
@@ -296,7 +262,6 @@ SELECT m.id, 'Primal Regeneration', 15,
 'passive', NULL, NULL, 'Beast Monarch''s Presence', false
 FROM compendium_monarchs m WHERE m.name = 'Beast Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 16: Perfect Beast Form
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Perfect Beast Form', 16,
@@ -304,7 +269,6 @@ SELECT m.id, 'Perfect Beast Form', 16,
 'passive', NULL, NULL, 'Primal Regeneration', false
 FROM compendium_monarchs m WHERE m.name = 'Beast Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 17: Eternal Pack
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Eternal Pack', 17,
@@ -312,7 +276,6 @@ SELECT m.id, 'Eternal Pack', 17,
 'passive', NULL, NULL, 'Perfect Beast Form', false
 FROM compendium_monarchs m WHERE m.name = 'Beast Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 18: Beast Overlord
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Beast Overlord', 18,
@@ -320,7 +283,6 @@ SELECT m.id, 'Beast Overlord', 18,
 'action', NULL, NULL, 'Eternal Pack', false
 FROM compendium_monarchs m WHERE m.name = 'Beast Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 19: Perfect Predator
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Perfect Predator', 19,
@@ -328,7 +290,6 @@ SELECT m.id, 'Perfect Predator', 19,
 'action', '1 per long rest', 'long-rest', 'Beast Overlord', false
 FROM compendium_monarchs m WHERE m.name = 'Beast Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- Level 20: Beast Monarch''s Authority (Capstone)
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Beast Monarch''s Authority', 20,
@@ -336,10 +297,8 @@ SELECT m.id, 'Beast Monarch''s Authority', 20,
 'action', '1 mass command per long rest', 'long-rest', 'Perfect Predator', true
 FROM compendium_monarchs m WHERE m.name = 'Beast Monarch'
 ON CONFLICT (monarch_id, name) DO NOTHING;
-
 -- =============================================
 -- Continuing with remaining monarchs...
 -- Each will have full 1-20 progressions with power equal to Shadow Monarch
 -- Iron Body, Plague, Frost, Stone, Destruction (unlocks 11), White Flames, Transfiguration
--- =============================================
-
+-- =============================================;

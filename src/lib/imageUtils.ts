@@ -24,7 +24,7 @@ export function slugify(name: string): string {
  */
 export function getImagePath(type: string, entryId: string, name: string): string {
   const slug = slugify(name);
-  return `${type}/${entryId}-${slug}.png`;
+  return `${type}/${entryId}-${slug}.webp`;
 }
 
 /**

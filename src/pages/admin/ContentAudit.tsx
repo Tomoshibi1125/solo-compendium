@@ -1,6 +1,6 @@
-/**
- * Content Audit Page
- * 
+﻿/**
+ * Content Audit DM Tool
+ *
  * Displays comprehensive database content audit report.
  * Shows statistics, completeness metrics, and recommendations.
  */
@@ -28,7 +28,7 @@ import {
 import { cn } from '@/lib/utils';
 import { useQueryClient, useQuery } from '@tanstack/react-query';
 import { checkAllLinkIntegrity, type BrokenLink } from '@/lib/linkIntegrity';
-import { error } from '@/lib/logger';
+import { logger } from '@/lib/logger';
 
 function AuditTable({ report }: { report: ContentAuditReport }) {
   const getCompletenessColor = (completeness: number) => {
@@ -313,7 +313,7 @@ function LinkIntegritySection() {
     }
   
     } catch (error) {
-      error("Failed to check links:", error);
+      logger.error("Failed to check links:", error);
     }
   };
 
@@ -431,4 +431,6 @@ function LinkIntegritySection() {
 }
 
 export default ContentAudit;
+
+
 

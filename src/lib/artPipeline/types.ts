@@ -1,13 +1,13 @@
 /**
  * Art Pipeline Types
- * Stable Diffusion integration with ComfyUI
+ * Gemini-enhanced prompts with a free image generation backend
  */
 
 import { z } from 'zod';
 
 // Art request types
 export const ArtRequestSchema = z.object({
-  entityType: z.enum(['monster', 'item', 'spell', 'location', 'job', 'background']),
+  entityType: z.enum(['monster', 'npc', 'character', 'item', 'spell', 'location', 'job', 'background']),
   entityId: z.string(),
   variant: z.enum(['portrait', 'token', 'icon', 'illustration', 'banner']).default('portrait'),
   title: z.string(),
@@ -74,46 +74,8 @@ export const ArtAssetSchema = z.object({
 
 export type ArtAsset = z.infer<typeof ArtAssetSchema>;
 
-// ComfyUI API types
-export interface ComfyUIPrompt {
-  prompt: Record<string, ComfyUINode>;
-  client_id?: string;
-}
-
-export interface ComfyUINode {
-  inputs: Record<string, any>;
-  class_type: string;
-}
-
-export interface ComfyUIResponse {
-  prompt_id: string;
-  number: number;
-  node_errors: Record<string, any>;
-}
-
-export interface ComfyUIHistory {
-  [prompt_id: string]: {
-    prompt: ComfyUIPrompt;
-    status: {
-      status_str: string;
-      completed: boolean;
-      queue_remaining: number;
-    };
-    outputs: {
-      [node_id: string]: {
-        images: Array<{
-          filename: string;
-          subfolder: string;
-          type: string;
-        }>;
-      };
-    };
-  };
-}
-
 // Generation presets for different asset types
 export interface GenerationPreset {
-  workflow: string;
   width: number;
   height: number;
   promptTemplate: string;
@@ -126,7 +88,6 @@ export interface GenerationPreset {
 
 export const GENERATION_PRESETS: Record<string, GenerationPreset> = {
   'monster-portrait': {
-    workflow: 'sdxl_text2image.json',
     width: 1024,
     height: 1024,
     promptTemplate: 'dark manhwa anime cinematic fantasy, Solo Leveling style, {title} {description}, dramatic lighting, high contrast, detailed character art, dynamic pose, {tags}',
@@ -137,7 +98,6 @@ export const GENERATION_PRESETS: Record<string, GenerationPreset> = {
     scheduler: 'karras',
   },
   'monster-token': {
-    workflow: 'sdxl_text2image.json',
     width: 512,
     height: 512,
     promptTemplate: 'dark manhwa anime style, Solo Leveling, {title} token art, circular composition, high contrast, {tags}',
@@ -148,7 +108,6 @@ export const GENERATION_PRESETS: Record<string, GenerationPreset> = {
     scheduler: 'karras',
   },
   'item-icon': {
-    workflow: 'sdxl_text2image.json',
     width: 256,
     height: 256,
     promptTemplate: 'dark manhwa anime style, Solo Leveling, {title} icon, detailed item, high contrast, {tags}',
@@ -159,7 +118,6 @@ export const GENERATION_PRESETS: Record<string, GenerationPreset> = {
     scheduler: 'karras',
   },
   'item-illustration': {
-    workflow: 'sdxl_text2image.json',
     width: 1024,
     height: 768,
     promptTemplate: 'dark manhwa anime cinematic fantasy, Solo Leveling style, {title} {description}, dramatic lighting, high contrast, detailed item art, {tags}',
@@ -170,7 +128,6 @@ export const GENERATION_PRESETS: Record<string, GenerationPreset> = {
     scheduler: 'karras',
   },
   'spell-illustration': {
-    workflow: 'sdxl_text2image.json',
     width: 1024,
     height: 768,
     promptTemplate: 'dark manhwa anime magical fantasy, Solo Leveling style, {title} spell effect, magical energy, dramatic lighting, high contrast, {tags}',
@@ -181,7 +138,6 @@ export const GENERATION_PRESETS: Record<string, GenerationPreset> = {
     scheduler: 'karras',
   },
   'location-banner': {
-    workflow: 'sdxl_text2image.json',
     width: 1920,
     height: 512,
     promptTemplate: 'dark manhwa anime cinematic landscape, Solo Leveling style, {title} {description}, epic environment, dramatic lighting, high contrast, {tags}',
@@ -192,7 +148,6 @@ export const GENERATION_PRESETS: Record<string, GenerationPreset> = {
     scheduler: 'karras',
   },
   'job-emblem': {
-    workflow: 'sdxl_text2image.json',
     width: 512,
     height: 512,
     promptTemplate: 'dark manhwa anime style, Solo Leveling, {title} job emblem, sigil design, high contrast, {tags}',
@@ -207,14 +162,14 @@ export const GENERATION_PRESETS: Record<string, GenerationPreset> = {
 // Queue status
 export interface QueueStatus {
   running: Array<{
-    prompt_id: string;
-    prompt: ComfyUIPrompt;
-    number: number;
+    id: string;
+    title: string;
+    started_at: string;
   }>;
   pending: Array<{
-    prompt_id: string;
-    prompt: ComfyUIPrompt;
-    number: number;
+    id: string;
+    title: string;
+    queued_at: string;
   }>;
 }
 

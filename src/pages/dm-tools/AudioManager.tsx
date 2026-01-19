@@ -1,123 +1,84 @@
-/**
- * DM Tools Audio Manager
- * Complete audio management system for DMs
- */
-
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AudioPlayer } from '@/components/audio/AudioPlayer';
 import { AudioLibrary } from '@/components/audio/AudioLibrary';
+import { AIEnhancedAudio } from '@/components/audio/AIEnhancedAudio';
 import { Layout } from '@/components/layout/Layout';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Music, Volume2, Settings, PlayCircle } from 'lucide-react';
-import { error } from '@/lib/logger';
+import { ArrowLeft, Music, Volume2, Settings, PlayCircle, Sparkles } from 'lucide-react';
+import { useAudioLibrary, useAudioPlayer } from '@/lib/audio/hooks';
+import { useToast } from '@/hooks/use-toast';
+import type { AudioTrack, Playlist } from '@/lib/audio/types';
 
 export default function AudioManagerDM() {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('player');
-  
-  // Complete audio management system
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(1);
-  const [isMuted, setIsMuted] = useState(false);
-  const [playlist, setPlaylist] = useState<AudioTrack[]>([]);
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
-  
-  interface AudioTrack {
-    id: string;
-    name: string;
-    url: string;
-    duration?: number;
-  }
-  
-  const handlePlay = () => {
-    if (audioRef.current) {
-      try {
-        audioRef.current.play();
-      } catch (error) {
-        error("Error playing audio:", error);
-      }
-      setIsPlaying(true);
+
+  const { tracks, getTracksByCategory, getTracksByMood } = useAudioLibrary();
+  const { loadTrack, play, loadPlaylist, repeat, shuffle, setRepeat, setShuffle, updateSettings, settings } = useAudioPlayer();
+
+  const handleTrackSelect = async (track: AudioTrack) => {
+    try {
+      await loadTrack(track);
+      await play();
+    } catch (error) {
+      toast({
+        title: 'Playback failed',
+        description: error instanceof Error ? error.message : 'Unable to play track.',
+        variant: 'destructive',
+      });
     }
   };
-  
-  const handlePause = () => {
-    if (audioRef.current) {
-      try {
-        audioRef.current.pause();
-      } catch (error) {
-        error("Error pausing audio:", error);
-      }
-      setIsPlaying(false);
+
+  const playPlaylist = async (name: string, category: Playlist['category'], list: AudioTrack[]) => {
+    if (list.length === 0) {
+      toast({
+        title: 'No tracks available',
+        description: 'Upload audio for this playlist first.',
+        variant: 'destructive',
+      });
+      return;
     }
+
+    const now = new Date().toISOString();
+    const playlist: Playlist = {
+      id: `playlist-${category}-${Date.now()}`,
+      name,
+      tracks: list.map((track) => track.id),
+      category,
+      autoPlay: true,
+      shuffle: false,
+      repeat: 'all',
+      crossfade: 2,
+      volume: 0.7,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    loadPlaylist(playlist, list, 0);
+    await play();
   };
-  
-  const handleVolumeChange = (newVolume: number) => {
-    setVolume(newVolume);
-    if (audioRef.current) {
-      audioRef.current.volume = newVolume;
+
+  const playEffect = async (label: string, matcher: (track: AudioTrack) => boolean) => {
+    const effectTracks = getTracksByCategory('effect').filter(matcher);
+    if (effectTracks.length === 0) {
+      toast({
+        title: 'No effects found',
+        description: `Add a sound effect tagged for ${label.toLowerCase()} first.`,
+        variant: 'destructive',
+      });
+      return;
     }
+
+    await handleTrackSelect(effectTracks[0]);
   };
-  
-  const handleMute = () => {
-    setIsMuted(!isMuted);
-    if (audioRef.current) {
-      audioRef.current.muted = !isMuted;
-    }
-  };
-  
-  const handleTimeUpdate = () => {
-    if (audioRef.current) {
-      setCurrentTime(audioRef.current.currentTime);
-      setDuration(audioRef.current.duration || 0);
-    }
-  };
-  
-  const handleSeek = (time: number) => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = time;
-      setCurrentTime(time);
-    }
-  };
-  
-  const playNext = () => {
-    const nextIndex = (currentTrackIndex + 1) % playlist.length;
-    setCurrentTrackIndex(nextIndex);
-  };
-  
-  const playPrevious = () => {
-    const prevIndex = currentTrackIndex === 0 ? playlist.length - 1 : currentTrackIndex - 1;
-    setCurrentTrackIndex(prevIndex);
-  };
-  
-  // Playlist management
-  const addToPlaylist = (track: AudioTrack) => {
-    setPlaylist([...playlist, track]);
-  };
-  
-  const removeFromPlaylist = (trackId: string) => {
-    setPlaylist(playlist.filter(track => track.id !== trackId));
-  };
-  
-  const clearPlaylist = () => {
-    setPlaylist([]);
-    setCurrentTrackIndex(0);
-  };
-  
-  // Audio effects
-  const [crossfadeEnabled, setCrossfadeEnabled] = useState(false);
-  const [loopEnabled, setLoopEnabled] = useState(false);
-  const [shuffleEnabled, setShuffleEnabled] = useState(false);
 
   return (
     <Layout>
       <div className="container mx-auto p-6 space-y-6">
-        {/* Header */}
         <div className="flex items-center gap-4 mb-6">
           <Button
             variant="ghost"
@@ -133,7 +94,6 @@ export default function AudioManagerDM() {
           </div>
         </div>
 
-        {/* Quick Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
           <Card>
             <CardContent className="p-4">
@@ -171,19 +131,18 @@ export default function AudioManagerDM() {
           <Card>
             <CardContent className="p-4">
               <div className="flex items-center gap-2">
-                <Settings className="w-5 h-5 text-orange-500" />
+                <Sparkles className="w-5 h-5 text-orange-500" />
                 <div>
-                  <div className="text-2xl font-bold">Legal Safe</div>
-                  <p className="text-sm text-muted-foreground">Royalty-free content</p>
+                  <div className="text-2xl font-bold">AI Analysis</div>
+                  <p className="text-sm text-muted-foreground">Tag and categorize audio</p>
                 </div>
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Main Content */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="player" className="flex items-center gap-2">
               <PlayCircle className="w-4 h-4" />
               Player
@@ -196,48 +155,74 @@ export default function AudioManagerDM() {
               <Settings className="w-4 h-4" />
               Settings
             </TabsTrigger>
+            <TabsTrigger value="ai" className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4" />
+              AI
+            </TabsTrigger>
           </TabsList>
 
-          {/* Player Tab */}
           <TabsContent value="player" className="space-y-4">
             <AudioPlayer />
-            
-            {/* Quick Access */}
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Card>
                 <CardHeader>
                   <CardTitle className="text-lg">Quick Playlists</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  <Button variant="outline" className="w-full justify-start">
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start"
+                    onClick={() => playPlaylist('Combat Music', 'combat', getTracksByCategory('combat'))}
+                  >
                     <Music className="w-4 h-4 mr-2" />
                     Combat Music
                   </Button>
-                  <Button variant="outline" className="w-full justify-start">
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start"
+                    onClick={() => playPlaylist('Ambient Atmosphere', 'custom', getTracksByMood('calm'))}
+                  >
                     <Music className="w-4 h-4 mr-2" />
                     Ambient Atmosphere
                   </Button>
-                  <Button variant="outline" className="w-full justify-start">
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start"
+                    onClick={() => playPlaylist('Dungeon Exploration', 'exploration', getTracksByCategory('exploration'))}
+                  >
                     <Music className="w-4 h-4 mr-2" />
                     Dungeon Exploration
                   </Button>
                 </CardContent>
               </Card>
-              
+
               <Card>
                 <CardHeader>
                   <CardTitle className="text-lg">Sound Effects</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  <Button variant="outline" className="w-full justify-start">
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start"
+                    onClick={() => playEffect('Sword Clashes', (track) => track.title.toLowerCase().includes('sword') || track.tags.some((tag) => tag.toLowerCase().includes('sword')))}
+                  >
                     <Volume2 className="w-4 h-4 mr-2" />
                     Sword Clashes
                   </Button>
-                  <Button variant="outline" className="w-full justify-start">
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start"
+                    onClick={() => playEffect('Magic Spells', (track) => track.title.toLowerCase().includes('magic') || track.tags.some((tag) => tag.toLowerCase().includes('magic')))}
+                  >
                     <Volume2 className="w-4 h-4 mr-2" />
                     Magic Spells
                   </Button>
-                  <Button variant="outline" className="w-full justify-start">
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start"
+                    onClick={() => playEffect('Monster Roars', (track) => track.title.toLowerCase().includes('monster') || track.tags.some((tag) => tag.toLowerCase().includes('monster')))}
+                  >
                     <Volume2 className="w-4 h-4 mr-2" />
                     Monster Roars
                   </Button>
@@ -246,12 +231,10 @@ export default function AudioManagerDM() {
             </div>
           </TabsContent>
 
-          {/* Library Tab */}
           <TabsContent value="library" className="space-y-4">
-            <AudioLibrary />
+            <AudioLibrary onTrackSelect={handleTrackSelect} />
           </TabsContent>
 
-          {/* Settings Tab */}
           <TabsContent value="settings" className="space-y-4">
             <Card>
               <CardHeader>
@@ -264,40 +247,44 @@ export default function AudioManagerDM() {
                     <p className="text-sm text-muted-foreground">Smooth transitions between tracks</p>
                   </div>
                   <Button
-                    variant={crossfadeEnabled ? "default" : "outline"}
-                    onClick={() => setCrossfadeEnabled(!crossfadeEnabled)}
+                    variant={settings.crossfadeDuration > 0 ? 'default' : 'outline'}
+                    onClick={() => updateSettings({ crossfadeDuration: settings.crossfadeDuration > 0 ? 0 : 2 })}
                   >
-                    {crossfadeEnabled ? "Enabled" : "Disabled"}
+                    {settings.crossfadeDuration > 0 ? 'Enabled' : 'Disabled'}
                   </Button>
                 </div>
-                
+
                 <div className="flex items-center justify-between">
                   <div>
                     <h4 className="font-medium">Loop Playlist</h4>
                     <p className="text-sm text-muted-foreground">Repeat tracks automatically</p>
                   </div>
                   <Button
-                    variant={loopEnabled ? "default" : "outline"}
-                    onClick={() => setLoopEnabled(!loopEnabled)}
+                    variant={repeat === 'all' ? 'default' : 'outline'}
+                    onClick={() => setRepeat(repeat === 'all' ? 'none' : 'all')}
                   >
-                    {loopEnabled ? "Enabled" : "Disabled"}
+                    {repeat === 'all' ? 'Enabled' : 'Disabled'}
                   </Button>
                 </div>
-                
+
                 <div className="flex items-center justify-between">
                   <div>
                     <h4 className="font-medium">Shuffle</h4>
                     <p className="text-sm text-muted-foreground">Random track order</p>
                   </div>
                   <Button
-                    variant={shuffleEnabled ? "default" : "outline"}
-                    onClick={() => setShuffleEnabled(!shuffleEnabled)}
+                    variant={shuffle ? 'default' : 'outline'}
+                    onClick={() => setShuffle(!shuffle)}
                   >
-                    {shuffleEnabled ? "Enabled" : "Disabled"}
+                    {shuffle ? 'Enabled' : 'Disabled'}
                   </Button>
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="ai" className="space-y-4">
+            <AIEnhancedAudio />
           </TabsContent>
         </Tabs>
       </div>

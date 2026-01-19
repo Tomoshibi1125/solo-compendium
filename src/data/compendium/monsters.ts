@@ -7,12 +7,87 @@ export interface Monster {
   name: string;
   type: string;
   rank: 'D' | 'C' | 'B' | 'A' | 'S';
-  hp: number;
-  ac: number;
+  // D&D 5e stats
+  stats: {
+    abilityScores: {
+      strength?: number;
+      dexterity?: number;
+      constitution?: number;
+      intelligence?: number;
+      wisdom?: number;
+      charisma?: number;
+    };
+    armorClass: number;
+    hitPoints: number;
+    speed: number;
+    challengeRating: number;
+    proficiencyBonus: number;
+    savingThrows: {
+      strength?: number;
+      dexterity?: number;
+      constitution?: number;
+      intelligence?: number;
+      wisdom?: number;
+      charisma?: number;
+    };
+    skills: string[];
+    damageResistances: string[];
+    damageImmunities: string[];
+    damageVulnerabilities: string[];
+    conditionImmunities: string[];
+    senses: string[];
+    languages: string[];
+    traits: {
+      name: string;
+      description: string;
+      action?: 'action' | 'bonus-action' | 'reaction' | 'legendary';
+      frequency?: 'at-will' | 'recharge' | 'short-rest' | 'long-rest' | 'once-per-day';
+      dc?: number;
+    }[];
+    actions: {
+      name: string;
+      description: string;
+      type: 'melee' | 'ranged' | 'spell' | 'special';
+      attackBonus?: number;
+      damage?: string;
+      damageType?: string;
+      range?: number;
+      save?: string;
+      dc?: number;
+      hit?: string;
+      recharge?: 'recharge' | 'short-rest' | 'long-rest' | 'once-per-day';
+      usage?: 'at-will' | 'recharge' | 'short-rest' | 'long-rest' | 'once-per-day';
+    }[];
+    legendary?: {
+      name: string;
+      description: string;
+      frequency?: 'day' | 'week' | 'month';
+      dc?: number;
+    }[];
+    lair?: {
+      type: 'innate' | 'perception' | 'darkvision' | 'truesight' | 'blindsight' | 'tremorsense';
+      range?: number;
+      passive?: boolean;
+    };
+  };
+  // Solo Leveling flavor
   image: string;
   description: string;
   abilities: string[];
   weaknesses: string[];
+  // Legacy stats for backward compatibility
+  hp?: number;
+  ac?: number;
+  // Additional properties
+  xp?: number;
+  treasure?: {
+    coin?: number;
+    items?: string[];
+  };
+  environment?: string[];
+  organization?: string;
+  alignment?: string;
+  source?: string;
 }
 
 export const monsters = [
@@ -20,19 +95,114 @@ export const monsters = [
     "id": "monster-0001",
     "name": "Eternal Shadow Demon",
     "type": "Demon",
-    "rank": "D",
-    "hp": 323,
-    "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0001.jpg",
-    "description": "A fearsome Demon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
+    "rank": "S",
+    "stats": {
+      "abilityScores": {
+        "strength": 24,
+        "dexterity": 18,
+        "constitution": 22,
+        "intelligence": 16,
+        "wisdom": 14,
+        "charisma": 18
+      },
+      "armorClass": 19,
+      "hitPoints": 323,
+      "speed": 40,
+      "challengeRating": 18,
+      "proficiencyBonus": 7,
+      "savingThrows": {
+        "constitution": 12,
+        "wisdom": 8,
+        "charisma": 10
+      }
+    },
+    "skills": ["Perception", "Stealth", "Intimidation", "Deception"],
+    "damageResistances": ["necrotic", "cold", "fire", "lightning"],
+    "damageImmunities": ["poison", "disease"],
+    "damageVulnerabilities": ["radiant"],
+    "conditionImmunities": ["charmed", "frightened"],
+    "senses": "darkvision 120 ft., passive Perception 15, tremorsense 60 ft.",
+    "languages": "Abyssal, Common, Infernal",
+    "traits": [
+      {
+        "name": "Shadow Step",
+        "description": "As a bonus action, teleport up to 60 feet to an unoccupied space in dim light or darkness.",
+        "action": "bonus-action",
+        "frequency": "at-will"
+      },
+      {
+        "name": "Shadow Regeneration",
+        "description": "Regains 10 hit points at the start of its turn if it has at least 1 hit point.",
+        "action": "legendary",
+        "frequency": "day"
+      }
+    ],
+    "actions": [
+      {
+        "name": "Shadow Claw",
+        "description": "Melee Weapon Attack: +10 to hit, reach 5 ft., one target. Hit: 13 (2d8 + 5) slashing damage.",
+        "type": "melee",
+        "attackBonus": 10,
+        "damage": "2d8 + 5",
+        "damageType": "slashing",
+        "range": 5,
+        "hit": "13 (2d8 + 5) slashing damage.",
+        "recharge": "recharge"
+      },
+      {
+        "name": "Void Blast",
+        "description": "Ranged Spell Attack: +8 to hit, range 150 ft., one target. Hit: 22 (4d10 force damage).",
+        "type": "spell",
+        "attackBonus": 8,
+        "damage": "4d10",
+        "damageType": "force",
+        "range": 150,
+        "hit": "22 (4d10 force damage).",
+        "save": "Constitution",
+        "dc": 18,
+        "recharge": "short-rest"
+      },
+      {
+        "name": "Abyssal Roar",
+        "description": "Area Attack: 60-foot cone. Each creature in area must make a DC 18 Constitution saving throw or take 16 (4d8 cold damage) and be pushed 15 feet away.",
+        "type": "special",
+        "save": "Constitution",
+        "dc": 18,
+        "recharge": "long-rest"
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Shadow Dominion",
+        "description": "Once per day, the demon can create a 1-mile radius area of shadow control for 1 hour.",
+        "frequency": "day",
+        "dc": 20
+      }
+    ],
+    "lair": {
+      "type": "darkvision",
+      "range": 120,
+      "passive": true
+    },
+    "image": "/generated/compendium/monsters/monster-0001.webp",
+    "description": "A fearsome Demon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
       "Void Blast",
       "Abyssal Roar"
     ],
     "weaknesses": [
-      "Light"
-    ]
+      "Radiant"
+    ],
+    "xp": 78000,
+    "treasure": {
+      "coin": 15000,
+      "items": ["Shadow Essence x3", "Void Crystal x1"]
+    },
+    "environment": ["Shadow Realm", "Abyss"],
+    "organization": "Shadow Army",
+    "alignment": "chaotic evil",
+    "source": "Solo Compendium Canon"
   },
   {
     "id": "monster-0002",
@@ -41,7 +211,7 @@ export const monsters = [
     "rank": "C",
     "hp": 438,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0002.jpg",
+    "image": "/generated/compendium/monsters/monster-0002.webp",
     "description": "A fearsome Beast that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -61,7 +231,7 @@ export const monsters = [
     "rank": "B",
     "hp": 957,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0003.jpg",
+    "image": "/generated/compendium/monsters/monster-0003.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -80,7 +250,7 @@ export const monsters = [
     "rank": "A",
     "hp": 136,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0004.jpg",
+    "image": "/generated/compendium/monsters/monster-0004.webp",
     "description": "A fearsome Undead that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -98,7 +268,7 @@ export const monsters = [
     "rank": "S",
     "hp": 894,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0005.jpg",
+    "image": "/generated/compendium/monsters/monster-0005.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -116,7 +286,7 @@ export const monsters = [
     "rank": "D",
     "hp": 935,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0006.jpg",
+    "image": "/generated/compendium/monsters/monster-0006.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -135,7 +305,7 @@ export const monsters = [
     "rank": "C",
     "hp": 737,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0007.jpg",
+    "image": "/generated/compendium/monsters/monster-0007.webp",
     "description": "A fearsome Demon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -154,7 +324,7 @@ export const monsters = [
     "rank": "B",
     "hp": 900,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0008.jpg",
+    "image": "/generated/compendium/monsters/monster-0008.webp",
     "description": "A fearsome Beast that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -173,7 +343,7 @@ export const monsters = [
     "rank": "A",
     "hp": 263,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0009.jpg",
+    "image": "/generated/compendium/monsters/monster-0009.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -192,7 +362,7 @@ export const monsters = [
     "rank": "S",
     "hp": 724,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0010.jpg",
+    "image": "/generated/compendium/monsters/monster-0010.webp",
     "description": "A fearsome Undead that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -211,7 +381,7 @@ export const monsters = [
     "rank": "D",
     "hp": 568,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0011.jpg",
+    "image": "/generated/compendium/monsters/monster-0011.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -229,7 +399,7 @@ export const monsters = [
     "rank": "C",
     "hp": 626,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0012.jpg",
+    "image": "/generated/compendium/monsters/monster-0012.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -247,7 +417,7 @@ export const monsters = [
     "rank": "B",
     "hp": 287,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0013.jpg",
+    "image": "/generated/compendium/monsters/monster-0013.webp",
     "description": "A fearsome Demon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -264,7 +434,7 @@ export const monsters = [
     "rank": "A",
     "hp": 918,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0014.jpg",
+    "image": "/generated/compendium/monsters/monster-0014.webp",
     "description": "A fearsome Beast that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -283,7 +453,7 @@ export const monsters = [
     "rank": "S",
     "hp": 695,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0015.jpg",
+    "image": "/generated/compendium/monsters/monster-0015.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -302,7 +472,7 @@ export const monsters = [
     "rank": "D",
     "hp": 169,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0016.jpg",
+    "image": "/generated/compendium/monsters/monster-0016.webp",
     "description": "A fearsome Undead that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -322,7 +492,7 @@ export const monsters = [
     "rank": "C",
     "hp": 157,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0017.jpg",
+    "image": "/generated/compendium/monsters/monster-0017.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -341,7 +511,7 @@ export const monsters = [
     "rank": "B",
     "hp": 787,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0018.jpg",
+    "image": "/generated/compendium/monsters/monster-0018.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -358,7 +528,7 @@ export const monsters = [
     "rank": "A",
     "hp": 1079,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0019.jpg",
+    "image": "/generated/compendium/monsters/monster-0019.webp",
     "description": "A fearsome Demon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -377,7 +547,7 @@ export const monsters = [
     "rank": "S",
     "hp": 112,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0020.jpg",
+    "image": "/generated/compendium/monsters/monster-0020.webp",
     "description": "A fearsome Beast that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -396,7 +566,7 @@ export const monsters = [
     "rank": "D",
     "hp": 264,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0021.jpg",
+    "image": "/generated/compendium/monsters/monster-0021.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -415,7 +585,7 @@ export const monsters = [
     "rank": "C",
     "hp": 579,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0022.jpg",
+    "image": "/generated/compendium/monsters/monster-0022.webp",
     "description": "A fearsome Undead that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -434,7 +604,7 @@ export const monsters = [
     "rank": "B",
     "hp": 768,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0023.jpg",
+    "image": "/generated/compendium/monsters/monster-0023.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -453,7 +623,7 @@ export const monsters = [
     "rank": "A",
     "hp": 479,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0024.jpg",
+    "image": "/generated/compendium/monsters/monster-0024.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -472,7 +642,7 @@ export const monsters = [
     "rank": "S",
     "hp": 979,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0025.jpg",
+    "image": "/generated/compendium/monsters/monster-0025.webp",
     "description": "A fearsome Demon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -490,7 +660,7 @@ export const monsters = [
     "rank": "D",
     "hp": 827,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0026.jpg",
+    "image": "/generated/compendium/monsters/monster-0026.webp",
     "description": "A fearsome Beast that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -508,7 +678,7 @@ export const monsters = [
     "rank": "C",
     "hp": 518,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0027.jpg",
+    "image": "/generated/compendium/monsters/monster-0027.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -525,7 +695,7 @@ export const monsters = [
     "rank": "B",
     "hp": 1055,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0028.jpg",
+    "image": "/generated/compendium/monsters/monster-0028.webp",
     "description": "A fearsome Undead that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -543,7 +713,7 @@ export const monsters = [
     "rank": "A",
     "hp": 542,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0029.jpg",
+    "image": "/generated/compendium/monsters/monster-0029.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -562,7 +732,7 @@ export const monsters = [
     "rank": "S",
     "hp": 251,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0030.jpg",
+    "image": "/generated/compendium/monsters/monster-0030.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -581,7 +751,7 @@ export const monsters = [
     "rank": "D",
     "hp": 493,
     "ac": 14,
-    "image": "/generated/compendium/monsters/monster-0031.jpg",
+    "image": "/generated/compendium/monsters/monster-0031.webp",
     "description": "A fearsome Demon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -599,7 +769,7 @@ export const monsters = [
     "rank": "C",
     "hp": 893,
     "ac": 14,
-    "image": "/generated/compendium/monsters/monster-0032.jpg",
+    "image": "/generated/compendium/monsters/monster-0032.webp",
     "description": "A fearsome Beast that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -618,7 +788,7 @@ export const monsters = [
     "rank": "B",
     "hp": 700,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0033.jpg",
+    "image": "/generated/compendium/monsters/monster-0033.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -636,7 +806,7 @@ export const monsters = [
     "rank": "A",
     "hp": 859,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0034.jpg",
+    "image": "/generated/compendium/monsters/monster-0034.webp",
     "description": "A fearsome Undead that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -655,7 +825,7 @@ export const monsters = [
     "rank": "S",
     "hp": 902,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0035.jpg",
+    "image": "/generated/compendium/monsters/monster-0035.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -673,7 +843,7 @@ export const monsters = [
     "rank": "D",
     "hp": 254,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0036.jpg",
+    "image": "/generated/compendium/monsters/monster-0036.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -691,7 +861,7 @@ export const monsters = [
     "rank": "C",
     "hp": 191,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0037.jpg",
+    "image": "/generated/compendium/monsters/monster-0037.webp",
     "description": "A fearsome Demon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -710,7 +880,7 @@ export const monsters = [
     "rank": "B",
     "hp": 253,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0038.jpg",
+    "image": "/generated/compendium/monsters/monster-0038.webp",
     "description": "A fearsome Beast that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -728,7 +898,7 @@ export const monsters = [
     "rank": "A",
     "hp": 179,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0039.jpg",
+    "image": "/generated/compendium/monsters/monster-0039.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -747,7 +917,7 @@ export const monsters = [
     "rank": "S",
     "hp": 198,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0040.jpg",
+    "image": "/generated/compendium/monsters/monster-0040.webp",
     "description": "A fearsome Undead that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -765,7 +935,7 @@ export const monsters = [
     "rank": "D",
     "hp": 169,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0041.jpg",
+    "image": "/generated/compendium/monsters/monster-0041.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -785,7 +955,7 @@ export const monsters = [
     "rank": "C",
     "hp": 1037,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0042.jpg",
+    "image": "/generated/compendium/monsters/monster-0042.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -802,7 +972,7 @@ export const monsters = [
     "rank": "B",
     "hp": 982,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0043.jpg",
+    "image": "/generated/compendium/monsters/monster-0043.webp",
     "description": "A fearsome Demon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -820,7 +990,7 @@ export const monsters = [
     "rank": "A",
     "hp": 131,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0044.jpg",
+    "image": "/generated/compendium/monsters/monster-0044.webp",
     "description": "A fearsome Beast that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -839,7 +1009,7 @@ export const monsters = [
     "rank": "S",
     "hp": 632,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0045.jpg",
+    "image": "/generated/compendium/monsters/monster-0045.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -856,7 +1026,7 @@ export const monsters = [
     "rank": "D",
     "hp": 583,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0046.jpg",
+    "image": "/generated/compendium/monsters/monster-0046.webp",
     "description": "A fearsome Undead that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -873,7 +1043,7 @@ export const monsters = [
     "rank": "C",
     "hp": 781,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0047.jpg",
+    "image": "/generated/compendium/monsters/monster-0047.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -891,7 +1061,7 @@ export const monsters = [
     "rank": "B",
     "hp": 777,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0048.jpg",
+    "image": "/generated/compendium/monsters/monster-0048.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -909,7 +1079,7 @@ export const monsters = [
     "rank": "A",
     "hp": 444,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0049.jpg",
+    "image": "/generated/compendium/monsters/monster-0049.webp",
     "description": "A fearsome Demon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -928,7 +1098,7 @@ export const monsters = [
     "rank": "S",
     "hp": 1018,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0050.jpg",
+    "image": "/generated/compendium/monsters/monster-0050.webp",
     "description": "A fearsome Beast that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -945,7 +1115,7 @@ export const monsters = [
     "rank": "D",
     "hp": 468,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0051.jpg",
+    "image": "/generated/compendium/monsters/monster-0051.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -964,7 +1134,7 @@ export const monsters = [
     "rank": "C",
     "hp": 573,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0052.jpg",
+    "image": "/generated/compendium/monsters/monster-0052.webp",
     "description": "A fearsome Undead that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -982,7 +1152,7 @@ export const monsters = [
     "rank": "B",
     "hp": 903,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0053.jpg",
+    "image": "/generated/compendium/monsters/monster-0053.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1002,7 +1172,7 @@ export const monsters = [
     "rank": "A",
     "hp": 611,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0054.jpg",
+    "image": "/generated/compendium/monsters/monster-0054.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1021,7 +1191,7 @@ export const monsters = [
     "rank": "S",
     "hp": 1060,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0055.jpg",
+    "image": "/generated/compendium/monsters/monster-0055.webp",
     "description": "A fearsome Demon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1039,7 +1209,7 @@ export const monsters = [
     "rank": "D",
     "hp": 951,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0056.jpg",
+    "image": "/generated/compendium/monsters/monster-0056.webp",
     "description": "A fearsome Beast that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1056,7 +1226,7 @@ export const monsters = [
     "rank": "C",
     "hp": 675,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0057.jpg",
+    "image": "/generated/compendium/monsters/monster-0057.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1075,7 +1245,7 @@ export const monsters = [
     "rank": "B",
     "hp": 517,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0058.jpg",
+    "image": "/generated/compendium/monsters/monster-0058.webp",
     "description": "A fearsome Undead that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1093,7 +1263,7 @@ export const monsters = [
     "rank": "A",
     "hp": 113,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0059.jpg",
+    "image": "/generated/compendium/monsters/monster-0059.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1112,7 +1282,7 @@ export const monsters = [
     "rank": "S",
     "hp": 352,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0060.jpg",
+    "image": "/generated/compendium/monsters/monster-0060.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1129,7 +1299,7 @@ export const monsters = [
     "rank": "D",
     "hp": 671,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0061.jpg",
+    "image": "/generated/compendium/monsters/monster-0061.webp",
     "description": "A fearsome Demon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1147,7 +1317,7 @@ export const monsters = [
     "rank": "C",
     "hp": 749,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0062.jpg",
+    "image": "/generated/compendium/monsters/monster-0062.webp",
     "description": "A fearsome Beast that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1165,7 +1335,7 @@ export const monsters = [
     "rank": "B",
     "hp": 576,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0063.jpg",
+    "image": "/generated/compendium/monsters/monster-0063.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1182,7 +1352,7 @@ export const monsters = [
     "rank": "A",
     "hp": 839,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0064.jpg",
+    "image": "/generated/compendium/monsters/monster-0064.webp",
     "description": "A fearsome Undead that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1199,7 +1369,7 @@ export const monsters = [
     "rank": "S",
     "hp": 716,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0065.jpg",
+    "image": "/generated/compendium/monsters/monster-0065.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1218,7 +1388,7 @@ export const monsters = [
     "rank": "D",
     "hp": 573,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0066.jpg",
+    "image": "/generated/compendium/monsters/monster-0066.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1238,7 +1408,7 @@ export const monsters = [
     "rank": "C",
     "hp": 929,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0067.jpg",
+    "image": "/generated/compendium/monsters/monster-0067.webp",
     "description": "A fearsome Demon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1258,7 +1428,7 @@ export const monsters = [
     "rank": "B",
     "hp": 722,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0068.jpg",
+    "image": "/generated/compendium/monsters/monster-0068.webp",
     "description": "A fearsome Beast that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1277,7 +1447,7 @@ export const monsters = [
     "rank": "A",
     "hp": 760,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0069.jpg",
+    "image": "/generated/compendium/monsters/monster-0069.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1294,7 +1464,7 @@ export const monsters = [
     "rank": "S",
     "hp": 365,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0070.jpg",
+    "image": "/generated/compendium/monsters/monster-0070.webp",
     "description": "A fearsome Undead that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1313,7 +1483,7 @@ export const monsters = [
     "rank": "D",
     "hp": 135,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0071.jpg",
+    "image": "/generated/compendium/monsters/monster-0071.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1331,7 +1501,7 @@ export const monsters = [
     "rank": "C",
     "hp": 627,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0072.jpg",
+    "image": "/generated/compendium/monsters/monster-0072.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1350,7 +1520,7 @@ export const monsters = [
     "rank": "B",
     "hp": 905,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0073.jpg",
+    "image": "/generated/compendium/monsters/monster-0073.webp",
     "description": "A fearsome Demon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1369,7 +1539,7 @@ export const monsters = [
     "rank": "A",
     "hp": 173,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0074.jpg",
+    "image": "/generated/compendium/monsters/monster-0074.webp",
     "description": "A fearsome Beast that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1389,7 +1559,7 @@ export const monsters = [
     "rank": "S",
     "hp": 316,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0075.jpg",
+    "image": "/generated/compendium/monsters/monster-0075.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1408,7 +1578,7 @@ export const monsters = [
     "rank": "D",
     "hp": 825,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0076.jpg",
+    "image": "/generated/compendium/monsters/monster-0076.webp",
     "description": "A fearsome Undead that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1428,7 +1598,7 @@ export const monsters = [
     "rank": "C",
     "hp": 589,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0077.jpg",
+    "image": "/generated/compendium/monsters/monster-0077.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1446,7 +1616,7 @@ export const monsters = [
     "rank": "B",
     "hp": 194,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0078.jpg",
+    "image": "/generated/compendium/monsters/monster-0078.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1464,7 +1634,7 @@ export const monsters = [
     "rank": "A",
     "hp": 726,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0079.jpg",
+    "image": "/generated/compendium/monsters/monster-0079.webp",
     "description": "A fearsome Demon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1483,7 +1653,7 @@ export const monsters = [
     "rank": "S",
     "hp": 155,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0080.jpg",
+    "image": "/generated/compendium/monsters/monster-0080.webp",
     "description": "A fearsome Beast that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1502,7 +1672,7 @@ export const monsters = [
     "rank": "D",
     "hp": 563,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0081.jpg",
+    "image": "/generated/compendium/monsters/monster-0081.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1519,7 +1689,7 @@ export const monsters = [
     "rank": "C",
     "hp": 806,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0082.jpg",
+    "image": "/generated/compendium/monsters/monster-0082.webp",
     "description": "A fearsome Undead that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1539,7 +1709,7 @@ export const monsters = [
     "rank": "B",
     "hp": 702,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0083.jpg",
+    "image": "/generated/compendium/monsters/monster-0083.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1557,7 +1727,7 @@ export const monsters = [
     "rank": "A",
     "hp": 338,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0084.jpg",
+    "image": "/generated/compendium/monsters/monster-0084.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1575,7 +1745,7 @@ export const monsters = [
     "rank": "S",
     "hp": 1098,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0085.jpg",
+    "image": "/generated/compendium/monsters/monster-0085.webp",
     "description": "A fearsome Demon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1592,7 +1762,7 @@ export const monsters = [
     "rank": "D",
     "hp": 1068,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0086.jpg",
+    "image": "/generated/compendium/monsters/monster-0086.webp",
     "description": "A fearsome Beast that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1610,7 +1780,7 @@ export const monsters = [
     "rank": "C",
     "hp": 547,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0087.jpg",
+    "image": "/generated/compendium/monsters/monster-0087.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1627,7 +1797,7 @@ export const monsters = [
     "rank": "B",
     "hp": 137,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0088.jpg",
+    "image": "/generated/compendium/monsters/monster-0088.webp",
     "description": "A fearsome Undead that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1644,7 +1814,7 @@ export const monsters = [
     "rank": "A",
     "hp": 559,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0089.jpg",
+    "image": "/generated/compendium/monsters/monster-0089.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1664,7 +1834,7 @@ export const monsters = [
     "rank": "S",
     "hp": 704,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0090.jpg",
+    "image": "/generated/compendium/monsters/monster-0090.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1683,7 +1853,7 @@ export const monsters = [
     "rank": "D",
     "hp": 477,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0091.jpg",
+    "image": "/generated/compendium/monsters/monster-0091.webp",
     "description": "A fearsome Demon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1702,7 +1872,7 @@ export const monsters = [
     "rank": "C",
     "hp": 398,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0092.jpg",
+    "image": "/generated/compendium/monsters/monster-0092.webp",
     "description": "A fearsome Beast that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1720,7 +1890,7 @@ export const monsters = [
     "rank": "B",
     "hp": 983,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0093.jpg",
+    "image": "/generated/compendium/monsters/monster-0093.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1739,7 +1909,7 @@ export const monsters = [
     "rank": "A",
     "hp": 225,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0094.jpg",
+    "image": "/generated/compendium/monsters/monster-0094.webp",
     "description": "A fearsome Undead that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1759,7 +1929,7 @@ export const monsters = [
     "rank": "S",
     "hp": 897,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0095.jpg",
+    "image": "/generated/compendium/monsters/monster-0095.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1777,7 +1947,7 @@ export const monsters = [
     "rank": "D",
     "hp": 454,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0096.jpg",
+    "image": "/generated/compendium/monsters/monster-0096.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1795,7 +1965,7 @@ export const monsters = [
     "rank": "C",
     "hp": 765,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0097.jpg",
+    "image": "/generated/compendium/monsters/monster-0097.webp",
     "description": "A fearsome Demon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1813,7 +1983,7 @@ export const monsters = [
     "rank": "B",
     "hp": 622,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0098.jpg",
+    "image": "/generated/compendium/monsters/monster-0098.webp",
     "description": "A fearsome Beast that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1830,7 +2000,7 @@ export const monsters = [
     "rank": "A",
     "hp": 140,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0099.jpg",
+    "image": "/generated/compendium/monsters/monster-0099.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1848,7 +2018,7 @@ export const monsters = [
     "rank": "S",
     "hp": 752,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0100.jpg",
+    "image": "/generated/compendium/monsters/monster-0100.webp",
     "description": "A fearsome Undead that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1866,7 +2036,7 @@ export const monsters = [
     "rank": "D",
     "hp": 813,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0101.jpg",
+    "image": "/generated/compendium/monsters/monster-0101.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1885,7 +2055,7 @@ export const monsters = [
     "rank": "C",
     "hp": 559,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0102.jpg",
+    "image": "/generated/compendium/monsters/monster-0102.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1904,7 +2074,7 @@ export const monsters = [
     "rank": "B",
     "hp": 406,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0103.jpg",
+    "image": "/generated/compendium/monsters/monster-0103.webp",
     "description": "A fearsome Demon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1922,7 +2092,7 @@ export const monsters = [
     "rank": "A",
     "hp": 1014,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0104.jpg",
+    "image": "/generated/compendium/monsters/monster-0104.webp",
     "description": "A fearsome Beast that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1940,7 +2110,7 @@ export const monsters = [
     "rank": "S",
     "hp": 193,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0105.jpg",
+    "image": "/generated/compendium/monsters/monster-0105.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1957,7 +2127,7 @@ export const monsters = [
     "rank": "D",
     "hp": 258,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0106.jpg",
+    "image": "/generated/compendium/monsters/monster-0106.webp",
     "description": "A fearsome Undead that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1977,7 +2147,7 @@ export const monsters = [
     "rank": "C",
     "hp": 421,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0107.jpg",
+    "image": "/generated/compendium/monsters/monster-0107.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -1994,7 +2164,7 @@ export const monsters = [
     "rank": "B",
     "hp": 1042,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0108.jpg",
+    "image": "/generated/compendium/monsters/monster-0108.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2011,7 +2181,7 @@ export const monsters = [
     "rank": "A",
     "hp": 256,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0109.jpg",
+    "image": "/generated/compendium/monsters/monster-0109.webp",
     "description": "A fearsome Demon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2031,7 +2201,7 @@ export const monsters = [
     "rank": "S",
     "hp": 548,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0110.jpg",
+    "image": "/generated/compendium/monsters/monster-0110.webp",
     "description": "A fearsome Beast that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2049,7 +2219,7 @@ export const monsters = [
     "rank": "D",
     "hp": 413,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0111.jpg",
+    "image": "/generated/compendium/monsters/monster-0111.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2069,7 +2239,7 @@ export const monsters = [
     "rank": "C",
     "hp": 688,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0112.jpg",
+    "image": "/generated/compendium/monsters/monster-0112.webp",
     "description": "A fearsome Undead that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2088,7 +2258,7 @@ export const monsters = [
     "rank": "B",
     "hp": 102,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0113.jpg",
+    "image": "/generated/compendium/monsters/monster-0113.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2107,7 +2277,7 @@ export const monsters = [
     "rank": "A",
     "hp": 394,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0114.jpg",
+    "image": "/generated/compendium/monsters/monster-0114.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2124,7 +2294,7 @@ export const monsters = [
     "rank": "S",
     "hp": 752,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0115.jpg",
+    "image": "/generated/compendium/monsters/monster-0115.webp",
     "description": "A fearsome Demon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2142,7 +2312,7 @@ export const monsters = [
     "rank": "D",
     "hp": 598,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0116.jpg",
+    "image": "/generated/compendium/monsters/monster-0116.webp",
     "description": "A fearsome Beast that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2161,7 +2331,7 @@ export const monsters = [
     "rank": "C",
     "hp": 589,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0117.jpg",
+    "image": "/generated/compendium/monsters/monster-0117.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2179,7 +2349,7 @@ export const monsters = [
     "rank": "B",
     "hp": 1089,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0118.jpg",
+    "image": "/generated/compendium/monsters/monster-0118.webp",
     "description": "A fearsome Undead that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2199,7 +2369,7 @@ export const monsters = [
     "rank": "A",
     "hp": 675,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0119.jpg",
+    "image": "/generated/compendium/monsters/monster-0119.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2219,7 +2389,7 @@ export const monsters = [
     "rank": "S",
     "hp": 101,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0120.jpg",
+    "image": "/generated/compendium/monsters/monster-0120.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2237,7 +2407,7 @@ export const monsters = [
     "rank": "D",
     "hp": 161,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0121.jpg",
+    "image": "/generated/compendium/monsters/monster-0121.webp",
     "description": "A fearsome Demon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2256,7 +2426,7 @@ export const monsters = [
     "rank": "C",
     "hp": 707,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0122.jpg",
+    "image": "/generated/compendium/monsters/monster-0122.webp",
     "description": "A fearsome Beast that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2274,7 +2444,7 @@ export const monsters = [
     "rank": "B",
     "hp": 172,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0123.jpg",
+    "image": "/generated/compendium/monsters/monster-0123.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2292,7 +2462,7 @@ export const monsters = [
     "rank": "A",
     "hp": 995,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0124.jpg",
+    "image": "/generated/compendium/monsters/monster-0124.webp",
     "description": "A fearsome Undead that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2310,7 +2480,7 @@ export const monsters = [
     "rank": "S",
     "hp": 560,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0125.jpg",
+    "image": "/generated/compendium/monsters/monster-0125.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2328,7 +2498,7 @@ export const monsters = [
     "rank": "D",
     "hp": 208,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0126.jpg",
+    "image": "/generated/compendium/monsters/monster-0126.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2345,7 +2515,7 @@ export const monsters = [
     "rank": "C",
     "hp": 341,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0127.jpg",
+    "image": "/generated/compendium/monsters/monster-0127.webp",
     "description": "A fearsome Demon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2363,7 +2533,7 @@ export const monsters = [
     "rank": "B",
     "hp": 1045,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0128.jpg",
+    "image": "/generated/compendium/monsters/monster-0128.webp",
     "description": "A fearsome Beast that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2381,7 +2551,7 @@ export const monsters = [
     "rank": "A",
     "hp": 182,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0129.jpg",
+    "image": "/generated/compendium/monsters/monster-0129.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2400,7 +2570,7 @@ export const monsters = [
     "rank": "S",
     "hp": 536,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0130.jpg",
+    "image": "/generated/compendium/monsters/monster-0130.webp",
     "description": "A fearsome Undead that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2419,7 +2589,7 @@ export const monsters = [
     "rank": "D",
     "hp": 913,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0131.jpg",
+    "image": "/generated/compendium/monsters/monster-0131.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2438,7 +2608,7 @@ export const monsters = [
     "rank": "C",
     "hp": 841,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0132.jpg",
+    "image": "/generated/compendium/monsters/monster-0132.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2455,7 +2625,7 @@ export const monsters = [
     "rank": "B",
     "hp": 1079,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0133.jpg",
+    "image": "/generated/compendium/monsters/monster-0133.webp",
     "description": "A fearsome Demon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2472,7 +2642,7 @@ export const monsters = [
     "rank": "A",
     "hp": 599,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0134.jpg",
+    "image": "/generated/compendium/monsters/monster-0134.webp",
     "description": "A fearsome Beast that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2491,7 +2661,7 @@ export const monsters = [
     "rank": "S",
     "hp": 572,
     "ac": 14,
-    "image": "/generated/compendium/monsters/monster-0135.jpg",
+    "image": "/generated/compendium/monsters/monster-0135.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2509,7 +2679,7 @@ export const monsters = [
     "rank": "D",
     "hp": 331,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0136.jpg",
+    "image": "/generated/compendium/monsters/monster-0136.webp",
     "description": "A fearsome Undead that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2528,7 +2698,7 @@ export const monsters = [
     "rank": "C",
     "hp": 452,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0137.jpg",
+    "image": "/generated/compendium/monsters/monster-0137.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2547,7 +2717,7 @@ export const monsters = [
     "rank": "B",
     "hp": 546,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0138.jpg",
+    "image": "/generated/compendium/monsters/monster-0138.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2566,7 +2736,7 @@ export const monsters = [
     "rank": "A",
     "hp": 479,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0139.jpg",
+    "image": "/generated/compendium/monsters/monster-0139.webp",
     "description": "A fearsome Demon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2585,7 +2755,7 @@ export const monsters = [
     "rank": "S",
     "hp": 261,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0140.jpg",
+    "image": "/generated/compendium/monsters/monster-0140.webp",
     "description": "A fearsome Beast that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2605,7 +2775,7 @@ export const monsters = [
     "rank": "D",
     "hp": 275,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0141.jpg",
+    "image": "/generated/compendium/monsters/monster-0141.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2624,7 +2794,7 @@ export const monsters = [
     "rank": "C",
     "hp": 647,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0142.jpg",
+    "image": "/generated/compendium/monsters/monster-0142.webp",
     "description": "A fearsome Undead that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2642,7 +2812,7 @@ export const monsters = [
     "rank": "B",
     "hp": 1098,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0143.jpg",
+    "image": "/generated/compendium/monsters/monster-0143.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2659,7 +2829,7 @@ export const monsters = [
     "rank": "A",
     "hp": 512,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0144.jpg",
+    "image": "/generated/compendium/monsters/monster-0144.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2679,7 +2849,7 @@ export const monsters = [
     "rank": "S",
     "hp": 530,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0145.jpg",
+    "image": "/generated/compendium/monsters/monster-0145.webp",
     "description": "A fearsome Demon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2697,7 +2867,7 @@ export const monsters = [
     "rank": "D",
     "hp": 1069,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0146.jpg",
+    "image": "/generated/compendium/monsters/monster-0146.webp",
     "description": "A fearsome Beast that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2714,7 +2884,7 @@ export const monsters = [
     "rank": "C",
     "hp": 508,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0147.jpg",
+    "image": "/generated/compendium/monsters/monster-0147.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2731,7 +2901,7 @@ export const monsters = [
     "rank": "B",
     "hp": 349,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0148.jpg",
+    "image": "/generated/compendium/monsters/monster-0148.webp",
     "description": "A fearsome Undead that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2751,7 +2921,7 @@ export const monsters = [
     "rank": "A",
     "hp": 1063,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0149.jpg",
+    "image": "/generated/compendium/monsters/monster-0149.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2768,7 +2938,7 @@ export const monsters = [
     "rank": "S",
     "hp": 1019,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0150.jpg",
+    "image": "/generated/compendium/monsters/monster-0150.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2786,7 +2956,7 @@ export const monsters = [
     "rank": "D",
     "hp": 607,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0151.jpg",
+    "image": "/generated/compendium/monsters/monster-0151.webp",
     "description": "A fearsome Demon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2806,7 +2976,7 @@ export const monsters = [
     "rank": "C",
     "hp": 402,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0152.jpg",
+    "image": "/generated/compendium/monsters/monster-0152.webp",
     "description": "A fearsome Beast that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2825,7 +2995,7 @@ export const monsters = [
     "rank": "B",
     "hp": 526,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0153.jpg",
+    "image": "/generated/compendium/monsters/monster-0153.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2844,7 +3014,7 @@ export const monsters = [
     "rank": "A",
     "hp": 877,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0154.jpg",
+    "image": "/generated/compendium/monsters/monster-0154.webp",
     "description": "A fearsome Undead that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2862,7 +3032,7 @@ export const monsters = [
     "rank": "S",
     "hp": 829,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0155.jpg",
+    "image": "/generated/compendium/monsters/monster-0155.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2881,7 +3051,7 @@ export const monsters = [
     "rank": "D",
     "hp": 849,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0156.jpg",
+    "image": "/generated/compendium/monsters/monster-0156.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2899,7 +3069,7 @@ export const monsters = [
     "rank": "C",
     "hp": 278,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0157.jpg",
+    "image": "/generated/compendium/monsters/monster-0157.webp",
     "description": "A fearsome Demon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2916,7 +3086,7 @@ export const monsters = [
     "rank": "B",
     "hp": 405,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0158.jpg",
+    "image": "/generated/compendium/monsters/monster-0158.webp",
     "description": "A fearsome Beast that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2936,7 +3106,7 @@ export const monsters = [
     "rank": "A",
     "hp": 825,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0159.jpg",
+    "image": "/generated/compendium/monsters/monster-0159.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2956,7 +3126,7 @@ export const monsters = [
     "rank": "S",
     "hp": 162,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0160.jpg",
+    "image": "/generated/compendium/monsters/monster-0160.webp",
     "description": "A fearsome Undead that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2974,7 +3144,7 @@ export const monsters = [
     "rank": "D",
     "hp": 424,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0161.jpg",
+    "image": "/generated/compendium/monsters/monster-0161.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -2991,7 +3161,7 @@ export const monsters = [
     "rank": "C",
     "hp": 727,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0162.jpg",
+    "image": "/generated/compendium/monsters/monster-0162.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3008,7 +3178,7 @@ export const monsters = [
     "rank": "B",
     "hp": 802,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0163.jpg",
+    "image": "/generated/compendium/monsters/monster-0163.webp",
     "description": "A fearsome Demon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3026,7 +3196,7 @@ export const monsters = [
     "rank": "A",
     "hp": 142,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0164.jpg",
+    "image": "/generated/compendium/monsters/monster-0164.webp",
     "description": "A fearsome Beast that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3046,7 +3216,7 @@ export const monsters = [
     "rank": "S",
     "hp": 692,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0165.jpg",
+    "image": "/generated/compendium/monsters/monster-0165.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3063,7 +3233,7 @@ export const monsters = [
     "rank": "D",
     "hp": 478,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0166.jpg",
+    "image": "/generated/compendium/monsters/monster-0166.webp",
     "description": "A fearsome Undead that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3082,7 +3252,7 @@ export const monsters = [
     "rank": "C",
     "hp": 329,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0167.jpg",
+    "image": "/generated/compendium/monsters/monster-0167.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3101,7 +3271,7 @@ export const monsters = [
     "rank": "B",
     "hp": 300,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0168.jpg",
+    "image": "/generated/compendium/monsters/monster-0168.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3119,7 +3289,7 @@ export const monsters = [
     "rank": "A",
     "hp": 1020,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0169.jpg",
+    "image": "/generated/compendium/monsters/monster-0169.webp",
     "description": "A fearsome Demon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3138,7 +3308,7 @@ export const monsters = [
     "rank": "S",
     "hp": 107,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0170.jpg",
+    "image": "/generated/compendium/monsters/monster-0170.webp",
     "description": "A fearsome Beast that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3157,7 +3327,7 @@ export const monsters = [
     "rank": "D",
     "hp": 1067,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0171.jpg",
+    "image": "/generated/compendium/monsters/monster-0171.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3174,7 +3344,7 @@ export const monsters = [
     "rank": "C",
     "hp": 742,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0172.jpg",
+    "image": "/generated/compendium/monsters/monster-0172.webp",
     "description": "A fearsome Undead that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3192,7 +3362,7 @@ export const monsters = [
     "rank": "B",
     "hp": 431,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0173.jpg",
+    "image": "/generated/compendium/monsters/monster-0173.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3212,7 +3382,7 @@ export const monsters = [
     "rank": "A",
     "hp": 188,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0174.jpg",
+    "image": "/generated/compendium/monsters/monster-0174.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3230,7 +3400,7 @@ export const monsters = [
     "rank": "S",
     "hp": 142,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0175.jpg",
+    "image": "/generated/compendium/monsters/monster-0175.webp",
     "description": "A fearsome Demon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3248,7 +3418,7 @@ export const monsters = [
     "rank": "D",
     "hp": 895,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0176.jpg",
+    "image": "/generated/compendium/monsters/monster-0176.webp",
     "description": "A fearsome Beast that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3268,7 +3438,7 @@ export const monsters = [
     "rank": "C",
     "hp": 701,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0177.jpg",
+    "image": "/generated/compendium/monsters/monster-0177.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3286,7 +3456,7 @@ export const monsters = [
     "rank": "B",
     "hp": 669,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0178.jpg",
+    "image": "/generated/compendium/monsters/monster-0178.webp",
     "description": "A fearsome Undead that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3306,7 +3476,7 @@ export const monsters = [
     "rank": "A",
     "hp": 202,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0179.jpg",
+    "image": "/generated/compendium/monsters/monster-0179.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3325,7 +3495,7 @@ export const monsters = [
     "rank": "S",
     "hp": 555,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0180.jpg",
+    "image": "/generated/compendium/monsters/monster-0180.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3342,7 +3512,7 @@ export const monsters = [
     "rank": "D",
     "hp": 1055,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0181.jpg",
+    "image": "/generated/compendium/monsters/monster-0181.webp",
     "description": "A fearsome Demon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3361,7 +3531,7 @@ export const monsters = [
     "rank": "C",
     "hp": 753,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0182.jpg",
+    "image": "/generated/compendium/monsters/monster-0182.webp",
     "description": "A fearsome Beast that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3381,7 +3551,7 @@ export const monsters = [
     "rank": "B",
     "hp": 463,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0183.jpg",
+    "image": "/generated/compendium/monsters/monster-0183.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3401,7 +3571,7 @@ export const monsters = [
     "rank": "A",
     "hp": 158,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0184.jpg",
+    "image": "/generated/compendium/monsters/monster-0184.webp",
     "description": "A fearsome Undead that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3418,7 +3588,7 @@ export const monsters = [
     "rank": "S",
     "hp": 815,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0185.jpg",
+    "image": "/generated/compendium/monsters/monster-0185.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3436,7 +3606,7 @@ export const monsters = [
     "rank": "D",
     "hp": 212,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0186.jpg",
+    "image": "/generated/compendium/monsters/monster-0186.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3455,7 +3625,7 @@ export const monsters = [
     "rank": "C",
     "hp": 737,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0187.jpg",
+    "image": "/generated/compendium/monsters/monster-0187.webp",
     "description": "A fearsome Demon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3475,7 +3645,7 @@ export const monsters = [
     "rank": "B",
     "hp": 892,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0188.jpg",
+    "image": "/generated/compendium/monsters/monster-0188.webp",
     "description": "A fearsome Beast that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3493,7 +3663,7 @@ export const monsters = [
     "rank": "A",
     "hp": 561,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0189.jpg",
+    "image": "/generated/compendium/monsters/monster-0189.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3513,7 +3683,7 @@ export const monsters = [
     "rank": "S",
     "hp": 612,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0190.jpg",
+    "image": "/generated/compendium/monsters/monster-0190.webp",
     "description": "A fearsome Undead that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3533,7 +3703,7 @@ export const monsters = [
     "rank": "D",
     "hp": 543,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0191.jpg",
+    "image": "/generated/compendium/monsters/monster-0191.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3550,7 +3720,7 @@ export const monsters = [
     "rank": "C",
     "hp": 281,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0192.jpg",
+    "image": "/generated/compendium/monsters/monster-0192.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3569,7 +3739,7 @@ export const monsters = [
     "rank": "B",
     "hp": 541,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0193.jpg",
+    "image": "/generated/compendium/monsters/monster-0193.webp",
     "description": "A fearsome Demon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3587,7 +3757,7 @@ export const monsters = [
     "rank": "A",
     "hp": 1024,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0194.jpg",
+    "image": "/generated/compendium/monsters/monster-0194.webp",
     "description": "A fearsome Beast that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3605,7 +3775,7 @@ export const monsters = [
     "rank": "S",
     "hp": 363,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0195.jpg",
+    "image": "/generated/compendium/monsters/monster-0195.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3625,7 +3795,7 @@ export const monsters = [
     "rank": "D",
     "hp": 955,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0196.jpg",
+    "image": "/generated/compendium/monsters/monster-0196.webp",
     "description": "A fearsome Undead that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3644,7 +3814,7 @@ export const monsters = [
     "rank": "C",
     "hp": 434,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0197.jpg",
+    "image": "/generated/compendium/monsters/monster-0197.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3662,7 +3832,7 @@ export const monsters = [
     "rank": "B",
     "hp": 757,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0198.jpg",
+    "image": "/generated/compendium/monsters/monster-0198.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3681,7 +3851,7 @@ export const monsters = [
     "rank": "A",
     "hp": 981,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0199.jpg",
+    "image": "/generated/compendium/monsters/monster-0199.webp",
     "description": "A fearsome Demon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3700,7 +3870,7 @@ export const monsters = [
     "rank": "S",
     "hp": 859,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0200.jpg",
+    "image": "/generated/compendium/monsters/monster-0200.webp",
     "description": "A fearsome Beast that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3719,7 +3889,7 @@ export const monsters = [
     "rank": "D",
     "hp": 395,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0201.jpg",
+    "image": "/generated/compendium/monsters/monster-0201.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3737,7 +3907,7 @@ export const monsters = [
     "rank": "C",
     "hp": 983,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0202.jpg",
+    "image": "/generated/compendium/monsters/monster-0202.webp",
     "description": "A fearsome Undead that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3755,7 +3925,7 @@ export const monsters = [
     "rank": "B",
     "hp": 647,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0203.jpg",
+    "image": "/generated/compendium/monsters/monster-0203.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3775,7 +3945,7 @@ export const monsters = [
     "rank": "A",
     "hp": 485,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0204.jpg",
+    "image": "/generated/compendium/monsters/monster-0204.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3793,7 +3963,7 @@ export const monsters = [
     "rank": "S",
     "hp": 103,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0205.jpg",
+    "image": "/generated/compendium/monsters/monster-0205.webp",
     "description": "A fearsome Demon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3811,7 +3981,7 @@ export const monsters = [
     "rank": "D",
     "hp": 482,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0206.jpg",
+    "image": "/generated/compendium/monsters/monster-0206.webp",
     "description": "A fearsome Beast that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3829,7 +3999,7 @@ export const monsters = [
     "rank": "C",
     "hp": 352,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0207.jpg",
+    "image": "/generated/compendium/monsters/monster-0207.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3849,7 +4019,7 @@ export const monsters = [
     "rank": "B",
     "hp": 741,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0208.jpg",
+    "image": "/generated/compendium/monsters/monster-0208.webp",
     "description": "A fearsome Undead that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3866,7 +4036,7 @@ export const monsters = [
     "rank": "A",
     "hp": 822,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0209.jpg",
+    "image": "/generated/compendium/monsters/monster-0209.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3884,7 +4054,7 @@ export const monsters = [
     "rank": "S",
     "hp": 605,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0210.jpg",
+    "image": "/generated/compendium/monsters/monster-0210.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3904,7 +4074,7 @@ export const monsters = [
     "rank": "D",
     "hp": 704,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0211.jpg",
+    "image": "/generated/compendium/monsters/monster-0211.webp",
     "description": "A fearsome Demon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3922,7 +4092,7 @@ export const monsters = [
     "rank": "C",
     "hp": 372,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0212.jpg",
+    "image": "/generated/compendium/monsters/monster-0212.webp",
     "description": "A fearsome Beast that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3940,7 +4110,7 @@ export const monsters = [
     "rank": "B",
     "hp": 517,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0213.jpg",
+    "image": "/generated/compendium/monsters/monster-0213.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3958,7 +4128,7 @@ export const monsters = [
     "rank": "A",
     "hp": 669,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0214.jpg",
+    "image": "/generated/compendium/monsters/monster-0214.webp",
     "description": "A fearsome Undead that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3978,7 +4148,7 @@ export const monsters = [
     "rank": "S",
     "hp": 886,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0215.jpg",
+    "image": "/generated/compendium/monsters/monster-0215.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -3997,7 +4167,7 @@ export const monsters = [
     "rank": "D",
     "hp": 112,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0216.jpg",
+    "image": "/generated/compendium/monsters/monster-0216.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4015,7 +4185,7 @@ export const monsters = [
     "rank": "C",
     "hp": 132,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0217.jpg",
+    "image": "/generated/compendium/monsters/monster-0217.webp",
     "description": "A fearsome Demon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4032,7 +4202,7 @@ export const monsters = [
     "rank": "B",
     "hp": 771,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0218.jpg",
+    "image": "/generated/compendium/monsters/monster-0218.webp",
     "description": "A fearsome Beast that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4050,7 +4220,7 @@ export const monsters = [
     "rank": "A",
     "hp": 1023,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0219.jpg",
+    "image": "/generated/compendium/monsters/monster-0219.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4070,7 +4240,7 @@ export const monsters = [
     "rank": "S",
     "hp": 505,
     "ac": 14,
-    "image": "/generated/compendium/monsters/monster-0220.jpg",
+    "image": "/generated/compendium/monsters/monster-0220.webp",
     "description": "A fearsome Undead that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4089,7 +4259,7 @@ export const monsters = [
     "rank": "D",
     "hp": 606,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0221.jpg",
+    "image": "/generated/compendium/monsters/monster-0221.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4109,7 +4279,7 @@ export const monsters = [
     "rank": "C",
     "hp": 306,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0222.jpg",
+    "image": "/generated/compendium/monsters/monster-0222.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4129,7 +4299,7 @@ export const monsters = [
     "rank": "B",
     "hp": 124,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0223.jpg",
+    "image": "/generated/compendium/monsters/monster-0223.webp",
     "description": "A fearsome Demon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4148,7 +4318,7 @@ export const monsters = [
     "rank": "A",
     "hp": 587,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0224.jpg",
+    "image": "/generated/compendium/monsters/monster-0224.webp",
     "description": "A fearsome Beast that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4167,7 +4337,7 @@ export const monsters = [
     "rank": "S",
     "hp": 211,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0225.jpg",
+    "image": "/generated/compendium/monsters/monster-0225.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4187,7 +4357,7 @@ export const monsters = [
     "rank": "D",
     "hp": 122,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0226.jpg",
+    "image": "/generated/compendium/monsters/monster-0226.webp",
     "description": "A fearsome Undead that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4205,7 +4375,7 @@ export const monsters = [
     "rank": "C",
     "hp": 783,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0227.jpg",
+    "image": "/generated/compendium/monsters/monster-0227.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4222,7 +4392,7 @@ export const monsters = [
     "rank": "B",
     "hp": 523,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0228.jpg",
+    "image": "/generated/compendium/monsters/monster-0228.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4241,7 +4411,7 @@ export const monsters = [
     "rank": "A",
     "hp": 898,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0229.jpg",
+    "image": "/generated/compendium/monsters/monster-0229.webp",
     "description": "A fearsome Demon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4261,7 +4431,7 @@ export const monsters = [
     "rank": "S",
     "hp": 1086,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0230.jpg",
+    "image": "/generated/compendium/monsters/monster-0230.webp",
     "description": "A fearsome Beast that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4280,7 +4450,7 @@ export const monsters = [
     "rank": "D",
     "hp": 237,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0231.jpg",
+    "image": "/generated/compendium/monsters/monster-0231.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4299,7 +4469,7 @@ export const monsters = [
     "rank": "C",
     "hp": 756,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0232.jpg",
+    "image": "/generated/compendium/monsters/monster-0232.webp",
     "description": "A fearsome Undead that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4317,7 +4487,7 @@ export const monsters = [
     "rank": "B",
     "hp": 441,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0233.jpg",
+    "image": "/generated/compendium/monsters/monster-0233.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4337,7 +4507,7 @@ export const monsters = [
     "rank": "A",
     "hp": 871,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0234.jpg",
+    "image": "/generated/compendium/monsters/monster-0234.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4355,7 +4525,7 @@ export const monsters = [
     "rank": "S",
     "hp": 575,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0235.jpg",
+    "image": "/generated/compendium/monsters/monster-0235.webp",
     "description": "A fearsome Demon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4374,7 +4544,7 @@ export const monsters = [
     "rank": "D",
     "hp": 796,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0236.jpg",
+    "image": "/generated/compendium/monsters/monster-0236.webp",
     "description": "A fearsome Beast that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4392,7 +4562,7 @@ export const monsters = [
     "rank": "C",
     "hp": 824,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0237.jpg",
+    "image": "/generated/compendium/monsters/monster-0237.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4411,7 +4581,7 @@ export const monsters = [
     "rank": "B",
     "hp": 490,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0238.jpg",
+    "image": "/generated/compendium/monsters/monster-0238.webp",
     "description": "A fearsome Undead that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4430,7 +4600,7 @@ export const monsters = [
     "rank": "A",
     "hp": 138,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0239.jpg",
+    "image": "/generated/compendium/monsters/monster-0239.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4448,7 +4618,7 @@ export const monsters = [
     "rank": "S",
     "hp": 949,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0240.jpg",
+    "image": "/generated/compendium/monsters/monster-0240.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4467,7 +4637,7 @@ export const monsters = [
     "rank": "D",
     "hp": 489,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0241.jpg",
+    "image": "/generated/compendium/monsters/monster-0241.webp",
     "description": "A fearsome Demon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4485,7 +4655,7 @@ export const monsters = [
     "rank": "C",
     "hp": 449,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0242.jpg",
+    "image": "/generated/compendium/monsters/monster-0242.webp",
     "description": "A fearsome Beast that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4504,7 +4674,7 @@ export const monsters = [
     "rank": "B",
     "hp": 441,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0243.jpg",
+    "image": "/generated/compendium/monsters/monster-0243.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4524,7 +4694,7 @@ export const monsters = [
     "rank": "A",
     "hp": 159,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0244.jpg",
+    "image": "/generated/compendium/monsters/monster-0244.webp",
     "description": "A fearsome Undead that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4542,7 +4712,7 @@ export const monsters = [
     "rank": "S",
     "hp": 286,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0245.jpg",
+    "image": "/generated/compendium/monsters/monster-0245.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4561,7 +4731,7 @@ export const monsters = [
     "rank": "D",
     "hp": 459,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0246.jpg",
+    "image": "/generated/compendium/monsters/monster-0246.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4579,7 +4749,7 @@ export const monsters = [
     "rank": "C",
     "hp": 855,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0247.jpg",
+    "image": "/generated/compendium/monsters/monster-0247.webp",
     "description": "A fearsome Demon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4597,7 +4767,7 @@ export const monsters = [
     "rank": "B",
     "hp": 128,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0248.jpg",
+    "image": "/generated/compendium/monsters/monster-0248.webp",
     "description": "A fearsome Beast that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4616,7 +4786,7 @@ export const monsters = [
     "rank": "A",
     "hp": 883,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0249.jpg",
+    "image": "/generated/compendium/monsters/monster-0249.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4636,7 +4806,7 @@ export const monsters = [
     "rank": "S",
     "hp": 161,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0250.jpg",
+    "image": "/generated/compendium/monsters/monster-0250.webp",
     "description": "A fearsome Undead that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4655,7 +4825,7 @@ export const monsters = [
     "rank": "D",
     "hp": 379,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0251.jpg",
+    "image": "/generated/compendium/monsters/monster-0251.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4674,7 +4844,7 @@ export const monsters = [
     "rank": "C",
     "hp": 285,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0252.jpg",
+    "image": "/generated/compendium/monsters/monster-0252.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4694,7 +4864,7 @@ export const monsters = [
     "rank": "B",
     "hp": 596,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0253.jpg",
+    "image": "/generated/compendium/monsters/monster-0253.webp",
     "description": "A fearsome Demon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4712,7 +4882,7 @@ export const monsters = [
     "rank": "A",
     "hp": 845,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0254.jpg",
+    "image": "/generated/compendium/monsters/monster-0254.webp",
     "description": "A fearsome Beast that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4732,7 +4902,7 @@ export const monsters = [
     "rank": "S",
     "hp": 600,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0255.jpg",
+    "image": "/generated/compendium/monsters/monster-0255.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4749,7 +4919,7 @@ export const monsters = [
     "rank": "D",
     "hp": 300,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0256.jpg",
+    "image": "/generated/compendium/monsters/monster-0256.webp",
     "description": "A fearsome Undead that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4767,7 +4937,7 @@ export const monsters = [
     "rank": "C",
     "hp": 1000,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0257.jpg",
+    "image": "/generated/compendium/monsters/monster-0257.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4787,7 +4957,7 @@ export const monsters = [
     "rank": "B",
     "hp": 266,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0258.jpg",
+    "image": "/generated/compendium/monsters/monster-0258.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4807,7 +4977,7 @@ export const monsters = [
     "rank": "A",
     "hp": 363,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0259.jpg",
+    "image": "/generated/compendium/monsters/monster-0259.webp",
     "description": "A fearsome Demon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4826,7 +4996,7 @@ export const monsters = [
     "rank": "S",
     "hp": 498,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0260.jpg",
+    "image": "/generated/compendium/monsters/monster-0260.webp",
     "description": "A fearsome Beast that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4843,7 +5013,7 @@ export const monsters = [
     "rank": "D",
     "hp": 1049,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0261.jpg",
+    "image": "/generated/compendium/monsters/monster-0261.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4861,7 +5031,7 @@ export const monsters = [
     "rank": "C",
     "hp": 905,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0262.jpg",
+    "image": "/generated/compendium/monsters/monster-0262.webp",
     "description": "A fearsome Undead that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4880,7 +5050,7 @@ export const monsters = [
     "rank": "B",
     "hp": 815,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0263.jpg",
+    "image": "/generated/compendium/monsters/monster-0263.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4899,7 +5069,7 @@ export const monsters = [
     "rank": "A",
     "hp": 842,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0264.jpg",
+    "image": "/generated/compendium/monsters/monster-0264.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4918,7 +5088,7 @@ export const monsters = [
     "rank": "S",
     "hp": 425,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0265.jpg",
+    "image": "/generated/compendium/monsters/monster-0265.webp",
     "description": "A fearsome Demon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4936,7 +5106,7 @@ export const monsters = [
     "rank": "D",
     "hp": 606,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0266.jpg",
+    "image": "/generated/compendium/monsters/monster-0266.webp",
     "description": "A fearsome Beast that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4954,7 +5124,7 @@ export const monsters = [
     "rank": "C",
     "hp": 524,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0267.jpg",
+    "image": "/generated/compendium/monsters/monster-0267.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4973,7 +5143,7 @@ export const monsters = [
     "rank": "B",
     "hp": 914,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0268.jpg",
+    "image": "/generated/compendium/monsters/monster-0268.webp",
     "description": "A fearsome Undead that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -4991,7 +5161,7 @@ export const monsters = [
     "rank": "A",
     "hp": 701,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0269.jpg",
+    "image": "/generated/compendium/monsters/monster-0269.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5010,7 +5180,7 @@ export const monsters = [
     "rank": "S",
     "hp": 341,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0270.jpg",
+    "image": "/generated/compendium/monsters/monster-0270.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5030,7 +5200,7 @@ export const monsters = [
     "rank": "D",
     "hp": 136,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0271.jpg",
+    "image": "/generated/compendium/monsters/monster-0271.webp",
     "description": "A fearsome Demon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5049,7 +5219,7 @@ export const monsters = [
     "rank": "C",
     "hp": 792,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0272.jpg",
+    "image": "/generated/compendium/monsters/monster-0272.webp",
     "description": "A fearsome Beast that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5067,7 +5237,7 @@ export const monsters = [
     "rank": "B",
     "hp": 925,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0273.jpg",
+    "image": "/generated/compendium/monsters/monster-0273.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5086,7 +5256,7 @@ export const monsters = [
     "rank": "A",
     "hp": 590,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0274.jpg",
+    "image": "/generated/compendium/monsters/monster-0274.webp",
     "description": "A fearsome Undead that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5105,7 +5275,7 @@ export const monsters = [
     "rank": "S",
     "hp": 617,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0275.jpg",
+    "image": "/generated/compendium/monsters/monster-0275.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5124,7 +5294,7 @@ export const monsters = [
     "rank": "D",
     "hp": 261,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0276.jpg",
+    "image": "/generated/compendium/monsters/monster-0276.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5142,7 +5312,7 @@ export const monsters = [
     "rank": "C",
     "hp": 135,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0277.jpg",
+    "image": "/generated/compendium/monsters/monster-0277.webp",
     "description": "A fearsome Demon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5160,7 +5330,7 @@ export const monsters = [
     "rank": "B",
     "hp": 225,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0278.jpg",
+    "image": "/generated/compendium/monsters/monster-0278.webp",
     "description": "A fearsome Beast that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5177,7 +5347,7 @@ export const monsters = [
     "rank": "A",
     "hp": 197,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0279.jpg",
+    "image": "/generated/compendium/monsters/monster-0279.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5194,7 +5364,7 @@ export const monsters = [
     "rank": "S",
     "hp": 951,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0280.jpg",
+    "image": "/generated/compendium/monsters/monster-0280.webp",
     "description": "A fearsome Undead that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5212,7 +5382,7 @@ export const monsters = [
     "rank": "D",
     "hp": 400,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0281.jpg",
+    "image": "/generated/compendium/monsters/monster-0281.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5229,7 +5399,7 @@ export const monsters = [
     "rank": "C",
     "hp": 950,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0282.jpg",
+    "image": "/generated/compendium/monsters/monster-0282.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5246,7 +5416,7 @@ export const monsters = [
     "rank": "B",
     "hp": 706,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0283.jpg",
+    "image": "/generated/compendium/monsters/monster-0283.webp",
     "description": "A fearsome Demon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5265,7 +5435,7 @@ export const monsters = [
     "rank": "A",
     "hp": 907,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0284.jpg",
+    "image": "/generated/compendium/monsters/monster-0284.webp",
     "description": "A fearsome Beast that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5285,7 +5455,7 @@ export const monsters = [
     "rank": "S",
     "hp": 749,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0285.jpg",
+    "image": "/generated/compendium/monsters/monster-0285.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5304,7 +5474,7 @@ export const monsters = [
     "rank": "D",
     "hp": 860,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0286.jpg",
+    "image": "/generated/compendium/monsters/monster-0286.webp",
     "description": "A fearsome Undead that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5323,7 +5493,7 @@ export const monsters = [
     "rank": "C",
     "hp": 598,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0287.jpg",
+    "image": "/generated/compendium/monsters/monster-0287.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5340,7 +5510,7 @@ export const monsters = [
     "rank": "B",
     "hp": 791,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0288.jpg",
+    "image": "/generated/compendium/monsters/monster-0288.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5360,7 +5530,7 @@ export const monsters = [
     "rank": "A",
     "hp": 304,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0289.jpg",
+    "image": "/generated/compendium/monsters/monster-0289.webp",
     "description": "A fearsome Demon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5379,7 +5549,7 @@ export const monsters = [
     "rank": "S",
     "hp": 984,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0290.jpg",
+    "image": "/generated/compendium/monsters/monster-0290.webp",
     "description": "A fearsome Beast that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5397,7 +5567,7 @@ export const monsters = [
     "rank": "D",
     "hp": 246,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0291.jpg",
+    "image": "/generated/compendium/monsters/monster-0291.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5414,7 +5584,7 @@ export const monsters = [
     "rank": "C",
     "hp": 459,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0292.jpg",
+    "image": "/generated/compendium/monsters/monster-0292.webp",
     "description": "A fearsome Undead that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5431,7 +5601,7 @@ export const monsters = [
     "rank": "B",
     "hp": 1019,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0293.jpg",
+    "image": "/generated/compendium/monsters/monster-0293.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5450,7 +5620,7 @@ export const monsters = [
     "rank": "A",
     "hp": 984,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0294.jpg",
+    "image": "/generated/compendium/monsters/monster-0294.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5469,7 +5639,7 @@ export const monsters = [
     "rank": "S",
     "hp": 141,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0295.jpg",
+    "image": "/generated/compendium/monsters/monster-0295.webp",
     "description": "A fearsome Demon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5487,7 +5657,7 @@ export const monsters = [
     "rank": "D",
     "hp": 972,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0296.jpg",
+    "image": "/generated/compendium/monsters/monster-0296.webp",
     "description": "A fearsome Beast that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5504,7 +5674,7 @@ export const monsters = [
     "rank": "C",
     "hp": 504,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0297.jpg",
+    "image": "/generated/compendium/monsters/monster-0297.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5521,7 +5691,7 @@ export const monsters = [
     "rank": "B",
     "hp": 802,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0298.jpg",
+    "image": "/generated/compendium/monsters/monster-0298.webp",
     "description": "A fearsome Undead that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5540,7 +5710,7 @@ export const monsters = [
     "rank": "A",
     "hp": 299,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0299.jpg",
+    "image": "/generated/compendium/monsters/monster-0299.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5559,7 +5729,7 @@ export const monsters = [
     "rank": "S",
     "hp": 121,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0300.jpg",
+    "image": "/generated/compendium/monsters/monster-0300.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5577,7 +5747,7 @@ export const monsters = [
     "rank": "D",
     "hp": 1078,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0301.jpg",
+    "image": "/generated/compendium/monsters/monster-0301.webp",
     "description": "A fearsome Demon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5596,7 +5766,7 @@ export const monsters = [
     "rank": "C",
     "hp": 644,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0302.jpg",
+    "image": "/generated/compendium/monsters/monster-0302.webp",
     "description": "A fearsome Beast that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5615,7 +5785,7 @@ export const monsters = [
     "rank": "B",
     "hp": 736,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0303.jpg",
+    "image": "/generated/compendium/monsters/monster-0303.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5635,7 +5805,7 @@ export const monsters = [
     "rank": "A",
     "hp": 679,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0304.jpg",
+    "image": "/generated/compendium/monsters/monster-0304.webp",
     "description": "A fearsome Undead that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5652,7 +5822,7 @@ export const monsters = [
     "rank": "S",
     "hp": 1003,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0305.jpg",
+    "image": "/generated/compendium/monsters/monster-0305.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5670,7 +5840,7 @@ export const monsters = [
     "rank": "D",
     "hp": 579,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0306.jpg",
+    "image": "/generated/compendium/monsters/monster-0306.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5689,7 +5859,7 @@ export const monsters = [
     "rank": "C",
     "hp": 687,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0307.jpg",
+    "image": "/generated/compendium/monsters/monster-0307.webp",
     "description": "A fearsome Demon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5708,7 +5878,7 @@ export const monsters = [
     "rank": "B",
     "hp": 448,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0308.jpg",
+    "image": "/generated/compendium/monsters/monster-0308.webp",
     "description": "A fearsome Beast that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5726,7 +5896,7 @@ export const monsters = [
     "rank": "A",
     "hp": 298,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0309.jpg",
+    "image": "/generated/compendium/monsters/monster-0309.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5745,7 +5915,7 @@ export const monsters = [
     "rank": "S",
     "hp": 271,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0310.jpg",
+    "image": "/generated/compendium/monsters/monster-0310.webp",
     "description": "A fearsome Undead that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5764,7 +5934,7 @@ export const monsters = [
     "rank": "D",
     "hp": 387,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0311.jpg",
+    "image": "/generated/compendium/monsters/monster-0311.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5783,7 +5953,7 @@ export const monsters = [
     "rank": "C",
     "hp": 580,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0312.jpg",
+    "image": "/generated/compendium/monsters/monster-0312.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5801,7 +5971,7 @@ export const monsters = [
     "rank": "B",
     "hp": 159,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0313.jpg",
+    "image": "/generated/compendium/monsters/monster-0313.webp",
     "description": "A fearsome Demon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5820,7 +5990,7 @@ export const monsters = [
     "rank": "A",
     "hp": 649,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0314.jpg",
+    "image": "/generated/compendium/monsters/monster-0314.webp",
     "description": "A fearsome Beast that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5839,7 +6009,7 @@ export const monsters = [
     "rank": "S",
     "hp": 521,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0315.jpg",
+    "image": "/generated/compendium/monsters/monster-0315.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5858,7 +6028,7 @@ export const monsters = [
     "rank": "D",
     "hp": 634,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0316.jpg",
+    "image": "/generated/compendium/monsters/monster-0316.webp",
     "description": "A fearsome Undead that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5876,7 +6046,7 @@ export const monsters = [
     "rank": "C",
     "hp": 527,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0317.jpg",
+    "image": "/generated/compendium/monsters/monster-0317.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5896,7 +6066,7 @@ export const monsters = [
     "rank": "B",
     "hp": 592,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0318.jpg",
+    "image": "/generated/compendium/monsters/monster-0318.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5915,7 +6085,7 @@ export const monsters = [
     "rank": "A",
     "hp": 777,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0319.jpg",
+    "image": "/generated/compendium/monsters/monster-0319.webp",
     "description": "A fearsome Demon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5934,7 +6104,7 @@ export const monsters = [
     "rank": "S",
     "hp": 912,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0320.jpg",
+    "image": "/generated/compendium/monsters/monster-0320.webp",
     "description": "A fearsome Beast that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5952,7 +6122,7 @@ export const monsters = [
     "rank": "D",
     "hp": 836,
     "ac": 14,
-    "image": "/generated/compendium/monsters/monster-0321.jpg",
+    "image": "/generated/compendium/monsters/monster-0321.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5969,7 +6139,7 @@ export const monsters = [
     "rank": "C",
     "hp": 823,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0322.jpg",
+    "image": "/generated/compendium/monsters/monster-0322.webp",
     "description": "A fearsome Undead that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -5988,7 +6158,7 @@ export const monsters = [
     "rank": "B",
     "hp": 136,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0323.jpg",
+    "image": "/generated/compendium/monsters/monster-0323.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6006,7 +6176,7 @@ export const monsters = [
     "rank": "A",
     "hp": 407,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0324.jpg",
+    "image": "/generated/compendium/monsters/monster-0324.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6023,7 +6193,7 @@ export const monsters = [
     "rank": "S",
     "hp": 906,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0325.jpg",
+    "image": "/generated/compendium/monsters/monster-0325.webp",
     "description": "A fearsome Demon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6041,7 +6211,7 @@ export const monsters = [
     "rank": "D",
     "hp": 704,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0326.jpg",
+    "image": "/generated/compendium/monsters/monster-0326.webp",
     "description": "A fearsome Beast that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6059,7 +6229,7 @@ export const monsters = [
     "rank": "C",
     "hp": 658,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0327.jpg",
+    "image": "/generated/compendium/monsters/monster-0327.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6078,7 +6248,7 @@ export const monsters = [
     "rank": "B",
     "hp": 122,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0328.jpg",
+    "image": "/generated/compendium/monsters/monster-0328.webp",
     "description": "A fearsome Undead that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6097,7 +6267,7 @@ export const monsters = [
     "rank": "A",
     "hp": 721,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0329.jpg",
+    "image": "/generated/compendium/monsters/monster-0329.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6116,7 +6286,7 @@ export const monsters = [
     "rank": "S",
     "hp": 567,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0330.jpg",
+    "image": "/generated/compendium/monsters/monster-0330.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6133,7 +6303,7 @@ export const monsters = [
     "rank": "D",
     "hp": 106,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0331.jpg",
+    "image": "/generated/compendium/monsters/monster-0331.webp",
     "description": "A fearsome Demon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6152,7 +6322,7 @@ export const monsters = [
     "rank": "C",
     "hp": 1088,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0332.jpg",
+    "image": "/generated/compendium/monsters/monster-0332.webp",
     "description": "A fearsome Beast that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6172,7 +6342,7 @@ export const monsters = [
     "rank": "B",
     "hp": 278,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0333.jpg",
+    "image": "/generated/compendium/monsters/monster-0333.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6190,7 +6360,7 @@ export const monsters = [
     "rank": "A",
     "hp": 586,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0334.jpg",
+    "image": "/generated/compendium/monsters/monster-0334.webp",
     "description": "A fearsome Undead that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6209,7 +6379,7 @@ export const monsters = [
     "rank": "S",
     "hp": 570,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0335.jpg",
+    "image": "/generated/compendium/monsters/monster-0335.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6227,7 +6397,7 @@ export const monsters = [
     "rank": "D",
     "hp": 226,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0336.jpg",
+    "image": "/generated/compendium/monsters/monster-0336.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6244,7 +6414,7 @@ export const monsters = [
     "rank": "C",
     "hp": 366,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0337.jpg",
+    "image": "/generated/compendium/monsters/monster-0337.webp",
     "description": "A fearsome Demon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6262,7 +6432,7 @@ export const monsters = [
     "rank": "B",
     "hp": 1056,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0338.jpg",
+    "image": "/generated/compendium/monsters/monster-0338.webp",
     "description": "A fearsome Beast that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6281,7 +6451,7 @@ export const monsters = [
     "rank": "A",
     "hp": 480,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0339.jpg",
+    "image": "/generated/compendium/monsters/monster-0339.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6301,7 +6471,7 @@ export const monsters = [
     "rank": "S",
     "hp": 718,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0340.jpg",
+    "image": "/generated/compendium/monsters/monster-0340.webp",
     "description": "A fearsome Undead that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6319,7 +6489,7 @@ export const monsters = [
     "rank": "D",
     "hp": 319,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0341.jpg",
+    "image": "/generated/compendium/monsters/monster-0341.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6339,7 +6509,7 @@ export const monsters = [
     "rank": "C",
     "hp": 1050,
     "ac": 14,
-    "image": "/generated/compendium/monsters/monster-0342.jpg",
+    "image": "/generated/compendium/monsters/monster-0342.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6358,7 +6528,7 @@ export const monsters = [
     "rank": "B",
     "hp": 1089,
     "ac": 14,
-    "image": "/generated/compendium/monsters/monster-0343.jpg",
+    "image": "/generated/compendium/monsters/monster-0343.webp",
     "description": "A fearsome Demon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6377,7 +6547,7 @@ export const monsters = [
     "rank": "A",
     "hp": 921,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0344.jpg",
+    "image": "/generated/compendium/monsters/monster-0344.webp",
     "description": "A fearsome Beast that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6396,7 +6566,7 @@ export const monsters = [
     "rank": "S",
     "hp": 352,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0345.jpg",
+    "image": "/generated/compendium/monsters/monster-0345.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6414,7 +6584,7 @@ export const monsters = [
     "rank": "D",
     "hp": 494,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0346.jpg",
+    "image": "/generated/compendium/monsters/monster-0346.webp",
     "description": "A fearsome Undead that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6433,7 +6603,7 @@ export const monsters = [
     "rank": "C",
     "hp": 721,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0347.jpg",
+    "image": "/generated/compendium/monsters/monster-0347.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6451,7 +6621,7 @@ export const monsters = [
     "rank": "B",
     "hp": 190,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0348.jpg",
+    "image": "/generated/compendium/monsters/monster-0348.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6470,7 +6640,7 @@ export const monsters = [
     "rank": "A",
     "hp": 597,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0349.jpg",
+    "image": "/generated/compendium/monsters/monster-0349.webp",
     "description": "A fearsome Demon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6487,7 +6657,7 @@ export const monsters = [
     "rank": "S",
     "hp": 145,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0350.jpg",
+    "image": "/generated/compendium/monsters/monster-0350.webp",
     "description": "A fearsome Beast that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6505,7 +6675,7 @@ export const monsters = [
     "rank": "D",
     "hp": 397,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0351.jpg",
+    "image": "/generated/compendium/monsters/monster-0351.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6522,7 +6692,7 @@ export const monsters = [
     "rank": "C",
     "hp": 552,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0352.jpg",
+    "image": "/generated/compendium/monsters/monster-0352.webp",
     "description": "A fearsome Undead that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6542,7 +6712,7 @@ export const monsters = [
     "rank": "B",
     "hp": 452,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0353.jpg",
+    "image": "/generated/compendium/monsters/monster-0353.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6562,7 +6732,7 @@ export const monsters = [
     "rank": "A",
     "hp": 202,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0354.jpg",
+    "image": "/generated/compendium/monsters/monster-0354.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6582,7 +6752,7 @@ export const monsters = [
     "rank": "S",
     "hp": 658,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0355.jpg",
+    "image": "/generated/compendium/monsters/monster-0355.webp",
     "description": "A fearsome Demon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6599,7 +6769,7 @@ export const monsters = [
     "rank": "D",
     "hp": 668,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0356.jpg",
+    "image": "/generated/compendium/monsters/monster-0356.webp",
     "description": "A fearsome Beast that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6616,7 +6786,7 @@ export const monsters = [
     "rank": "C",
     "hp": 686,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0357.jpg",
+    "image": "/generated/compendium/monsters/monster-0357.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6636,7 +6806,7 @@ export const monsters = [
     "rank": "B",
     "hp": 395,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0358.jpg",
+    "image": "/generated/compendium/monsters/monster-0358.webp",
     "description": "A fearsome Undead that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6654,7 +6824,7 @@ export const monsters = [
     "rank": "A",
     "hp": 1030,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0359.jpg",
+    "image": "/generated/compendium/monsters/monster-0359.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6672,7 +6842,7 @@ export const monsters = [
     "rank": "S",
     "hp": 751,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0360.jpg",
+    "image": "/generated/compendium/monsters/monster-0360.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6692,7 +6862,7 @@ export const monsters = [
     "rank": "D",
     "hp": 1065,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0361.jpg",
+    "image": "/generated/compendium/monsters/monster-0361.webp",
     "description": "A fearsome Demon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6710,7 +6880,7 @@ export const monsters = [
     "rank": "C",
     "hp": 646,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0362.jpg",
+    "image": "/generated/compendium/monsters/monster-0362.webp",
     "description": "A fearsome Beast that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6728,7 +6898,7 @@ export const monsters = [
     "rank": "B",
     "hp": 923,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0363.jpg",
+    "image": "/generated/compendium/monsters/monster-0363.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6748,7 +6918,7 @@ export const monsters = [
     "rank": "A",
     "hp": 565,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0364.jpg",
+    "image": "/generated/compendium/monsters/monster-0364.webp",
     "description": "A fearsome Undead that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6767,7 +6937,7 @@ export const monsters = [
     "rank": "S",
     "hp": 389,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0365.jpg",
+    "image": "/generated/compendium/monsters/monster-0365.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6784,7 +6954,7 @@ export const monsters = [
     "rank": "D",
     "hp": 161,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0366.jpg",
+    "image": "/generated/compendium/monsters/monster-0366.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6801,7 +6971,7 @@ export const monsters = [
     "rank": "C",
     "hp": 203,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0367.jpg",
+    "image": "/generated/compendium/monsters/monster-0367.webp",
     "description": "A fearsome Demon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6818,7 +6988,7 @@ export const monsters = [
     "rank": "B",
     "hp": 210,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0368.jpg",
+    "image": "/generated/compendium/monsters/monster-0368.webp",
     "description": "A fearsome Beast that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6835,7 +7005,7 @@ export const monsters = [
     "rank": "A",
     "hp": 394,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0369.jpg",
+    "image": "/generated/compendium/monsters/monster-0369.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6853,7 +7023,7 @@ export const monsters = [
     "rank": "S",
     "hp": 237,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0370.jpg",
+    "image": "/generated/compendium/monsters/monster-0370.webp",
     "description": "A fearsome Undead that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6871,7 +7041,7 @@ export const monsters = [
     "rank": "D",
     "hp": 352,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0371.jpg",
+    "image": "/generated/compendium/monsters/monster-0371.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6889,7 +7059,7 @@ export const monsters = [
     "rank": "C",
     "hp": 474,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0372.jpg",
+    "image": "/generated/compendium/monsters/monster-0372.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6908,7 +7078,7 @@ export const monsters = [
     "rank": "B",
     "hp": 458,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0373.jpg",
+    "image": "/generated/compendium/monsters/monster-0373.webp",
     "description": "A fearsome Demon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6928,7 +7098,7 @@ export const monsters = [
     "rank": "A",
     "hp": 263,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0374.jpg",
+    "image": "/generated/compendium/monsters/monster-0374.webp",
     "description": "A fearsome Beast that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6946,7 +7116,7 @@ export const monsters = [
     "rank": "S",
     "hp": 167,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0375.jpg",
+    "image": "/generated/compendium/monsters/monster-0375.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6964,7 +7134,7 @@ export const monsters = [
     "rank": "D",
     "hp": 162,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0376.jpg",
+    "image": "/generated/compendium/monsters/monster-0376.webp",
     "description": "A fearsome Undead that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -6981,7 +7151,7 @@ export const monsters = [
     "rank": "C",
     "hp": 1029,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0377.jpg",
+    "image": "/generated/compendium/monsters/monster-0377.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7000,7 +7170,7 @@ export const monsters = [
     "rank": "B",
     "hp": 144,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0378.jpg",
+    "image": "/generated/compendium/monsters/monster-0378.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7019,7 +7189,7 @@ export const monsters = [
     "rank": "A",
     "hp": 947,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0379.jpg",
+    "image": "/generated/compendium/monsters/monster-0379.webp",
     "description": "A fearsome Demon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7037,7 +7207,7 @@ export const monsters = [
     "rank": "S",
     "hp": 419,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0380.jpg",
+    "image": "/generated/compendium/monsters/monster-0380.webp",
     "description": "A fearsome Beast that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7056,7 +7226,7 @@ export const monsters = [
     "rank": "D",
     "hp": 553,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0381.jpg",
+    "image": "/generated/compendium/monsters/monster-0381.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7073,7 +7243,7 @@ export const monsters = [
     "rank": "C",
     "hp": 1033,
     "ac": 14,
-    "image": "/generated/compendium/monsters/monster-0382.jpg",
+    "image": "/generated/compendium/monsters/monster-0382.webp",
     "description": "A fearsome Undead that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7092,7 +7262,7 @@ export const monsters = [
     "rank": "B",
     "hp": 893,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0383.jpg",
+    "image": "/generated/compendium/monsters/monster-0383.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7112,7 +7282,7 @@ export const monsters = [
     "rank": "A",
     "hp": 794,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0384.jpg",
+    "image": "/generated/compendium/monsters/monster-0384.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7130,7 +7300,7 @@ export const monsters = [
     "rank": "S",
     "hp": 1038,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0385.jpg",
+    "image": "/generated/compendium/monsters/monster-0385.webp",
     "description": "A fearsome Demon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7149,7 +7319,7 @@ export const monsters = [
     "rank": "D",
     "hp": 609,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0386.jpg",
+    "image": "/generated/compendium/monsters/monster-0386.webp",
     "description": "A fearsome Beast that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7167,7 +7337,7 @@ export const monsters = [
     "rank": "C",
     "hp": 1059,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0387.jpg",
+    "image": "/generated/compendium/monsters/monster-0387.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7186,7 +7356,7 @@ export const monsters = [
     "rank": "B",
     "hp": 743,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0388.jpg",
+    "image": "/generated/compendium/monsters/monster-0388.webp",
     "description": "A fearsome Undead that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7206,7 +7376,7 @@ export const monsters = [
     "rank": "A",
     "hp": 352,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0389.jpg",
+    "image": "/generated/compendium/monsters/monster-0389.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7225,7 +7395,7 @@ export const monsters = [
     "rank": "S",
     "hp": 1089,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0390.jpg",
+    "image": "/generated/compendium/monsters/monster-0390.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7244,7 +7414,7 @@ export const monsters = [
     "rank": "D",
     "hp": 696,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0391.jpg",
+    "image": "/generated/compendium/monsters/monster-0391.webp",
     "description": "A fearsome Demon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7263,7 +7433,7 @@ export const monsters = [
     "rank": "C",
     "hp": 713,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0392.jpg",
+    "image": "/generated/compendium/monsters/monster-0392.webp",
     "description": "A fearsome Beast that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7281,7 +7451,7 @@ export const monsters = [
     "rank": "B",
     "hp": 271,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0393.jpg",
+    "image": "/generated/compendium/monsters/monster-0393.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7300,7 +7470,7 @@ export const monsters = [
     "rank": "A",
     "hp": 988,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0394.jpg",
+    "image": "/generated/compendium/monsters/monster-0394.webp",
     "description": "A fearsome Undead that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7317,7 +7487,7 @@ export const monsters = [
     "rank": "S",
     "hp": 505,
     "ac": 14,
-    "image": "/generated/compendium/monsters/monster-0395.jpg",
+    "image": "/generated/compendium/monsters/monster-0395.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7337,7 +7507,7 @@ export const monsters = [
     "rank": "D",
     "hp": 708,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0396.jpg",
+    "image": "/generated/compendium/monsters/monster-0396.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7355,7 +7525,7 @@ export const monsters = [
     "rank": "C",
     "hp": 164,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0397.jpg",
+    "image": "/generated/compendium/monsters/monster-0397.webp",
     "description": "A fearsome Demon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7373,7 +7543,7 @@ export const monsters = [
     "rank": "B",
     "hp": 882,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0398.jpg",
+    "image": "/generated/compendium/monsters/monster-0398.webp",
     "description": "A fearsome Beast that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7392,7 +7562,7 @@ export const monsters = [
     "rank": "A",
     "hp": 904,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0399.jpg",
+    "image": "/generated/compendium/monsters/monster-0399.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7409,7 +7579,7 @@ export const monsters = [
     "rank": "S",
     "hp": 480,
     "ac": 14,
-    "image": "/generated/compendium/monsters/monster-0400.jpg",
+    "image": "/generated/compendium/monsters/monster-0400.webp",
     "description": "A fearsome Undead that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7428,7 +7598,7 @@ export const monsters = [
     "rank": "D",
     "hp": 1041,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0401.jpg",
+    "image": "/generated/compendium/monsters/monster-0401.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7446,7 +7616,7 @@ export const monsters = [
     "rank": "C",
     "hp": 1071,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0402.jpg",
+    "image": "/generated/compendium/monsters/monster-0402.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7465,7 +7635,7 @@ export const monsters = [
     "rank": "B",
     "hp": 625,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0403.jpg",
+    "image": "/generated/compendium/monsters/monster-0403.webp",
     "description": "A fearsome Demon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7484,7 +7654,7 @@ export const monsters = [
     "rank": "A",
     "hp": 1042,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0404.jpg",
+    "image": "/generated/compendium/monsters/monster-0404.webp",
     "description": "A fearsome Beast that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7502,7 +7672,7 @@ export const monsters = [
     "rank": "S",
     "hp": 133,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0405.jpg",
+    "image": "/generated/compendium/monsters/monster-0405.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7521,7 +7691,7 @@ export const monsters = [
     "rank": "D",
     "hp": 465,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0406.jpg",
+    "image": "/generated/compendium/monsters/monster-0406.webp",
     "description": "A fearsome Undead that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7540,7 +7710,7 @@ export const monsters = [
     "rank": "C",
     "hp": 378,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0407.jpg",
+    "image": "/generated/compendium/monsters/monster-0407.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7557,7 +7727,7 @@ export const monsters = [
     "rank": "B",
     "hp": 208,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0408.jpg",
+    "image": "/generated/compendium/monsters/monster-0408.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7575,7 +7745,7 @@ export const monsters = [
     "rank": "A",
     "hp": 874,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0409.jpg",
+    "image": "/generated/compendium/monsters/monster-0409.webp",
     "description": "A fearsome Demon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7593,7 +7763,7 @@ export const monsters = [
     "rank": "S",
     "hp": 168,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0410.jpg",
+    "image": "/generated/compendium/monsters/monster-0410.webp",
     "description": "A fearsome Beast that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7613,7 +7783,7 @@ export const monsters = [
     "rank": "D",
     "hp": 248,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0411.jpg",
+    "image": "/generated/compendium/monsters/monster-0411.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7632,7 +7802,7 @@ export const monsters = [
     "rank": "C",
     "hp": 781,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0412.jpg",
+    "image": "/generated/compendium/monsters/monster-0412.webp",
     "description": "A fearsome Undead that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7651,7 +7821,7 @@ export const monsters = [
     "rank": "B",
     "hp": 938,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0413.jpg",
+    "image": "/generated/compendium/monsters/monster-0413.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7670,7 +7840,7 @@ export const monsters = [
     "rank": "A",
     "hp": 1030,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0414.jpg",
+    "image": "/generated/compendium/monsters/monster-0414.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7689,7 +7859,7 @@ export const monsters = [
     "rank": "S",
     "hp": 384,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0415.jpg",
+    "image": "/generated/compendium/monsters/monster-0415.webp",
     "description": "A fearsome Demon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7707,7 +7877,7 @@ export const monsters = [
     "rank": "D",
     "hp": 615,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0416.jpg",
+    "image": "/generated/compendium/monsters/monster-0416.webp",
     "description": "A fearsome Beast that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7725,7 +7895,7 @@ export const monsters = [
     "rank": "C",
     "hp": 621,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0417.jpg",
+    "image": "/generated/compendium/monsters/monster-0417.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7743,7 +7913,7 @@ export const monsters = [
     "rank": "B",
     "hp": 333,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0418.jpg",
+    "image": "/generated/compendium/monsters/monster-0418.webp",
     "description": "A fearsome Undead that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7761,7 +7931,7 @@ export const monsters = [
     "rank": "A",
     "hp": 465,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0419.jpg",
+    "image": "/generated/compendium/monsters/monster-0419.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7780,7 +7950,7 @@ export const monsters = [
     "rank": "S",
     "hp": 1066,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0420.jpg",
+    "image": "/generated/compendium/monsters/monster-0420.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7799,7 +7969,7 @@ export const monsters = [
     "rank": "D",
     "hp": 694,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0421.jpg",
+    "image": "/generated/compendium/monsters/monster-0421.webp",
     "description": "A fearsome Demon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7817,7 +7987,7 @@ export const monsters = [
     "rank": "C",
     "hp": 290,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0422.jpg",
+    "image": "/generated/compendium/monsters/monster-0422.webp",
     "description": "A fearsome Beast that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7837,7 +8007,7 @@ export const monsters = [
     "rank": "B",
     "hp": 754,
     "ac": 14,
-    "image": "/generated/compendium/monsters/monster-0423.jpg",
+    "image": "/generated/compendium/monsters/monster-0423.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7855,7 +8025,7 @@ export const monsters = [
     "rank": "A",
     "hp": 405,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0424.jpg",
+    "image": "/generated/compendium/monsters/monster-0424.webp",
     "description": "A fearsome Undead that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7872,7 +8042,7 @@ export const monsters = [
     "rank": "S",
     "hp": 1023,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0425.jpg",
+    "image": "/generated/compendium/monsters/monster-0425.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7890,7 +8060,7 @@ export const monsters = [
     "rank": "D",
     "hp": 547,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0426.jpg",
+    "image": "/generated/compendium/monsters/monster-0426.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7909,7 +8079,7 @@ export const monsters = [
     "rank": "C",
     "hp": 791,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0427.jpg",
+    "image": "/generated/compendium/monsters/monster-0427.webp",
     "description": "A fearsome Demon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7929,7 +8099,7 @@ export const monsters = [
     "rank": "B",
     "hp": 902,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0428.jpg",
+    "image": "/generated/compendium/monsters/monster-0428.webp",
     "description": "A fearsome Beast that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7948,7 +8118,7 @@ export const monsters = [
     "rank": "A",
     "hp": 862,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0429.jpg",
+    "image": "/generated/compendium/monsters/monster-0429.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7968,7 +8138,7 @@ export const monsters = [
     "rank": "S",
     "hp": 550,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0430.jpg",
+    "image": "/generated/compendium/monsters/monster-0430.webp",
     "description": "A fearsome Undead that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -7986,7 +8156,7 @@ export const monsters = [
     "rank": "D",
     "hp": 910,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0431.jpg",
+    "image": "/generated/compendium/monsters/monster-0431.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8005,7 +8175,7 @@ export const monsters = [
     "rank": "C",
     "hp": 633,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0432.jpg",
+    "image": "/generated/compendium/monsters/monster-0432.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8025,7 +8195,7 @@ export const monsters = [
     "rank": "B",
     "hp": 602,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0433.jpg",
+    "image": "/generated/compendium/monsters/monster-0433.webp",
     "description": "A fearsome Demon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8045,7 +8215,7 @@ export const monsters = [
     "rank": "A",
     "hp": 799,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0434.jpg",
+    "image": "/generated/compendium/monsters/monster-0434.webp",
     "description": "A fearsome Beast that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8064,7 +8234,7 @@ export const monsters = [
     "rank": "S",
     "hp": 838,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0435.jpg",
+    "image": "/generated/compendium/monsters/monster-0435.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8082,7 +8252,7 @@ export const monsters = [
     "rank": "D",
     "hp": 637,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0436.jpg",
+    "image": "/generated/compendium/monsters/monster-0436.webp",
     "description": "A fearsome Undead that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8100,7 +8270,7 @@ export const monsters = [
     "rank": "C",
     "hp": 611,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0437.jpg",
+    "image": "/generated/compendium/monsters/monster-0437.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8120,7 +8290,7 @@ export const monsters = [
     "rank": "B",
     "hp": 817,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0438.jpg",
+    "image": "/generated/compendium/monsters/monster-0438.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8138,7 +8308,7 @@ export const monsters = [
     "rank": "A",
     "hp": 698,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0439.jpg",
+    "image": "/generated/compendium/monsters/monster-0439.webp",
     "description": "A fearsome Demon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8156,7 +8326,7 @@ export const monsters = [
     "rank": "S",
     "hp": 168,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0440.jpg",
+    "image": "/generated/compendium/monsters/monster-0440.webp",
     "description": "A fearsome Beast that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8174,7 +8344,7 @@ export const monsters = [
     "rank": "D",
     "hp": 534,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0441.jpg",
+    "image": "/generated/compendium/monsters/monster-0441.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8193,7 +8363,7 @@ export const monsters = [
     "rank": "C",
     "hp": 549,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0442.jpg",
+    "image": "/generated/compendium/monsters/monster-0442.webp",
     "description": "A fearsome Undead that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8210,7 +8380,7 @@ export const monsters = [
     "rank": "B",
     "hp": 862,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0443.jpg",
+    "image": "/generated/compendium/monsters/monster-0443.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8227,7 +8397,7 @@ export const monsters = [
     "rank": "A",
     "hp": 920,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0444.jpg",
+    "image": "/generated/compendium/monsters/monster-0444.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8245,7 +8415,7 @@ export const monsters = [
     "rank": "S",
     "hp": 763,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0445.jpg",
+    "image": "/generated/compendium/monsters/monster-0445.webp",
     "description": "A fearsome Demon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8264,7 +8434,7 @@ export const monsters = [
     "rank": "D",
     "hp": 1034,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0446.jpg",
+    "image": "/generated/compendium/monsters/monster-0446.webp",
     "description": "A fearsome Beast that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8283,7 +8453,7 @@ export const monsters = [
     "rank": "C",
     "hp": 940,
     "ac": 14,
-    "image": "/generated/compendium/monsters/monster-0447.jpg",
+    "image": "/generated/compendium/monsters/monster-0447.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8301,7 +8471,7 @@ export const monsters = [
     "rank": "B",
     "hp": 327,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0448.jpg",
+    "image": "/generated/compendium/monsters/monster-0448.webp",
     "description": "A fearsome Undead that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8318,7 +8488,7 @@ export const monsters = [
     "rank": "A",
     "hp": 615,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0449.jpg",
+    "image": "/generated/compendium/monsters/monster-0449.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8337,7 +8507,7 @@ export const monsters = [
     "rank": "S",
     "hp": 1077,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0450.jpg",
+    "image": "/generated/compendium/monsters/monster-0450.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8354,7 +8524,7 @@ export const monsters = [
     "rank": "D",
     "hp": 416,
     "ac": 14,
-    "image": "/generated/compendium/monsters/monster-0451.jpg",
+    "image": "/generated/compendium/monsters/monster-0451.webp",
     "description": "A fearsome Demon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8373,7 +8543,7 @@ export const monsters = [
     "rank": "C",
     "hp": 852,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0452.jpg",
+    "image": "/generated/compendium/monsters/monster-0452.webp",
     "description": "A fearsome Beast that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8391,7 +8561,7 @@ export const monsters = [
     "rank": "B",
     "hp": 976,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0453.jpg",
+    "image": "/generated/compendium/monsters/monster-0453.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8409,7 +8579,7 @@ export const monsters = [
     "rank": "A",
     "hp": 937,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0454.jpg",
+    "image": "/generated/compendium/monsters/monster-0454.webp",
     "description": "A fearsome Undead that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8428,7 +8598,7 @@ export const monsters = [
     "rank": "S",
     "hp": 1041,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0455.jpg",
+    "image": "/generated/compendium/monsters/monster-0455.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8445,7 +8615,7 @@ export const monsters = [
     "rank": "D",
     "hp": 102,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0456.jpg",
+    "image": "/generated/compendium/monsters/monster-0456.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8464,7 +8634,7 @@ export const monsters = [
     "rank": "C",
     "hp": 247,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0457.jpg",
+    "image": "/generated/compendium/monsters/monster-0457.webp",
     "description": "A fearsome Demon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8481,7 +8651,7 @@ export const monsters = [
     "rank": "B",
     "hp": 193,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0458.jpg",
+    "image": "/generated/compendium/monsters/monster-0458.webp",
     "description": "A fearsome Beast that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8500,7 +8670,7 @@ export const monsters = [
     "rank": "A",
     "hp": 108,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0459.jpg",
+    "image": "/generated/compendium/monsters/monster-0459.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8518,7 +8688,7 @@ export const monsters = [
     "rank": "S",
     "hp": 449,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0460.jpg",
+    "image": "/generated/compendium/monsters/monster-0460.webp",
     "description": "A fearsome Undead that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8537,7 +8707,7 @@ export const monsters = [
     "rank": "D",
     "hp": 1066,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0461.jpg",
+    "image": "/generated/compendium/monsters/monster-0461.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8555,7 +8725,7 @@ export const monsters = [
     "rank": "C",
     "hp": 134,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0462.jpg",
+    "image": "/generated/compendium/monsters/monster-0462.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8575,7 +8745,7 @@ export const monsters = [
     "rank": "B",
     "hp": 887,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0463.jpg",
+    "image": "/generated/compendium/monsters/monster-0463.webp",
     "description": "A fearsome Demon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8593,7 +8763,7 @@ export const monsters = [
     "rank": "A",
     "hp": 841,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0464.jpg",
+    "image": "/generated/compendium/monsters/monster-0464.webp",
     "description": "A fearsome Beast that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8611,7 +8781,7 @@ export const monsters = [
     "rank": "S",
     "hp": 1003,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0465.jpg",
+    "image": "/generated/compendium/monsters/monster-0465.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8629,7 +8799,7 @@ export const monsters = [
     "rank": "D",
     "hp": 1091,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0466.jpg",
+    "image": "/generated/compendium/monsters/monster-0466.webp",
     "description": "A fearsome Undead that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8649,7 +8819,7 @@ export const monsters = [
     "rank": "C",
     "hp": 791,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0467.jpg",
+    "image": "/generated/compendium/monsters/monster-0467.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8667,7 +8837,7 @@ export const monsters = [
     "rank": "B",
     "hp": 123,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0468.jpg",
+    "image": "/generated/compendium/monsters/monster-0468.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8687,7 +8857,7 @@ export const monsters = [
     "rank": "A",
     "hp": 1020,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0469.jpg",
+    "image": "/generated/compendium/monsters/monster-0469.webp",
     "description": "A fearsome Demon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8704,7 +8874,7 @@ export const monsters = [
     "rank": "S",
     "hp": 834,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0470.jpg",
+    "image": "/generated/compendium/monsters/monster-0470.webp",
     "description": "A fearsome Beast that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8722,7 +8892,7 @@ export const monsters = [
     "rank": "D",
     "hp": 192,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0471.jpg",
+    "image": "/generated/compendium/monsters/monster-0471.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8740,7 +8910,7 @@ export const monsters = [
     "rank": "C",
     "hp": 316,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0472.jpg",
+    "image": "/generated/compendium/monsters/monster-0472.webp",
     "description": "A fearsome Undead that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8760,7 +8930,7 @@ export const monsters = [
     "rank": "B",
     "hp": 1056,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0473.jpg",
+    "image": "/generated/compendium/monsters/monster-0473.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8778,7 +8948,7 @@ export const monsters = [
     "rank": "A",
     "hp": 108,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0474.jpg",
+    "image": "/generated/compendium/monsters/monster-0474.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8796,7 +8966,7 @@ export const monsters = [
     "rank": "S",
     "hp": 191,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0475.jpg",
+    "image": "/generated/compendium/monsters/monster-0475.webp",
     "description": "A fearsome Demon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8816,7 +8986,7 @@ export const monsters = [
     "rank": "D",
     "hp": 551,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0476.jpg",
+    "image": "/generated/compendium/monsters/monster-0476.webp",
     "description": "A fearsome Beast that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8835,7 +9005,7 @@ export const monsters = [
     "rank": "C",
     "hp": 898,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0477.jpg",
+    "image": "/generated/compendium/monsters/monster-0477.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8855,7 +9025,7 @@ export const monsters = [
     "rank": "B",
     "hp": 212,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0478.jpg",
+    "image": "/generated/compendium/monsters/monster-0478.webp",
     "description": "A fearsome Undead that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8872,7 +9042,7 @@ export const monsters = [
     "rank": "A",
     "hp": 921,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0479.jpg",
+    "image": "/generated/compendium/monsters/monster-0479.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8889,7 +9059,7 @@ export const monsters = [
     "rank": "S",
     "hp": 213,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0480.jpg",
+    "image": "/generated/compendium/monsters/monster-0480.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8906,7 +9076,7 @@ export const monsters = [
     "rank": "D",
     "hp": 993,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0481.jpg",
+    "image": "/generated/compendium/monsters/monster-0481.webp",
     "description": "A fearsome Demon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8925,7 +9095,7 @@ export const monsters = [
     "rank": "C",
     "hp": 510,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0482.jpg",
+    "image": "/generated/compendium/monsters/monster-0482.webp",
     "description": "A fearsome Beast that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8943,7 +9113,7 @@ export const monsters = [
     "rank": "B",
     "hp": 770,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0483.jpg",
+    "image": "/generated/compendium/monsters/monster-0483.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8961,7 +9131,7 @@ export const monsters = [
     "rank": "A",
     "hp": 848,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0484.jpg",
+    "image": "/generated/compendium/monsters/monster-0484.webp",
     "description": "A fearsome Undead that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8980,7 +9150,7 @@ export const monsters = [
     "rank": "S",
     "hp": 105,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0485.jpg",
+    "image": "/generated/compendium/monsters/monster-0485.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -8997,7 +9167,7 @@ export const monsters = [
     "rank": "D",
     "hp": 684,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0486.jpg",
+    "image": "/generated/compendium/monsters/monster-0486.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9015,7 +9185,7 @@ export const monsters = [
     "rank": "C",
     "hp": 523,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0487.jpg",
+    "image": "/generated/compendium/monsters/monster-0487.webp",
     "description": "A fearsome Demon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9035,7 +9205,7 @@ export const monsters = [
     "rank": "B",
     "hp": 740,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0488.jpg",
+    "image": "/generated/compendium/monsters/monster-0488.webp",
     "description": "A fearsome Beast that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9055,7 +9225,7 @@ export const monsters = [
     "rank": "A",
     "hp": 936,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0489.jpg",
+    "image": "/generated/compendium/monsters/monster-0489.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9074,7 +9244,7 @@ export const monsters = [
     "rank": "S",
     "hp": 785,
     "ac": 14,
-    "image": "/generated/compendium/monsters/monster-0490.jpg",
+    "image": "/generated/compendium/monsters/monster-0490.webp",
     "description": "A fearsome Undead that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9093,7 +9263,7 @@ export const monsters = [
     "rank": "D",
     "hp": 895,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0491.jpg",
+    "image": "/generated/compendium/monsters/monster-0491.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9112,7 +9282,7 @@ export const monsters = [
     "rank": "C",
     "hp": 530,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0492.jpg",
+    "image": "/generated/compendium/monsters/monster-0492.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9129,7 +9299,7 @@ export const monsters = [
     "rank": "B",
     "hp": 356,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0493.jpg",
+    "image": "/generated/compendium/monsters/monster-0493.webp",
     "description": "A fearsome Demon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9146,7 +9316,7 @@ export const monsters = [
     "rank": "A",
     "hp": 822,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0494.jpg",
+    "image": "/generated/compendium/monsters/monster-0494.webp",
     "description": "A fearsome Beast that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9163,7 +9333,7 @@ export const monsters = [
     "rank": "S",
     "hp": 784,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0495.jpg",
+    "image": "/generated/compendium/monsters/monster-0495.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9182,7 +9352,7 @@ export const monsters = [
     "rank": "D",
     "hp": 186,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0496.jpg",
+    "image": "/generated/compendium/monsters/monster-0496.webp",
     "description": "A fearsome Undead that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9201,7 +9371,7 @@ export const monsters = [
     "rank": "C",
     "hp": 918,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0497.jpg",
+    "image": "/generated/compendium/monsters/monster-0497.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9220,7 +9390,7 @@ export const monsters = [
     "rank": "B",
     "hp": 171,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0498.jpg",
+    "image": "/generated/compendium/monsters/monster-0498.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9237,7 +9407,7 @@ export const monsters = [
     "rank": "A",
     "hp": 848,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0499.jpg",
+    "image": "/generated/compendium/monsters/monster-0499.webp",
     "description": "A fearsome Demon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9256,7 +9426,7 @@ export const monsters = [
     "rank": "S",
     "hp": 593,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0500.jpg",
+    "image": "/generated/compendium/monsters/monster-0500.webp",
     "description": "A fearsome Beast that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9273,7 +9443,7 @@ export const monsters = [
     "rank": "D",
     "hp": 276,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0501.jpg",
+    "image": "/generated/compendium/monsters/monster-0501.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9291,7 +9461,7 @@ export const monsters = [
     "rank": "C",
     "hp": 571,
     "ac": 14,
-    "image": "/generated/compendium/monsters/monster-0502.jpg",
+    "image": "/generated/compendium/monsters/monster-0502.webp",
     "description": "A fearsome Undead that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9309,7 +9479,7 @@ export const monsters = [
     "rank": "B",
     "hp": 623,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0503.jpg",
+    "image": "/generated/compendium/monsters/monster-0503.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9328,7 +9498,7 @@ export const monsters = [
     "rank": "A",
     "hp": 1059,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0504.jpg",
+    "image": "/generated/compendium/monsters/monster-0504.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9346,7 +9516,7 @@ export const monsters = [
     "rank": "S",
     "hp": 346,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0505.jpg",
+    "image": "/generated/compendium/monsters/monster-0505.webp",
     "description": "A fearsome Demon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9364,7 +9534,7 @@ export const monsters = [
     "rank": "D",
     "hp": 259,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0506.jpg",
+    "image": "/generated/compendium/monsters/monster-0506.webp",
     "description": "A fearsome Beast that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9384,7 +9554,7 @@ export const monsters = [
     "rank": "C",
     "hp": 458,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0507.jpg",
+    "image": "/generated/compendium/monsters/monster-0507.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9403,7 +9573,7 @@ export const monsters = [
     "rank": "B",
     "hp": 841,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0508.jpg",
+    "image": "/generated/compendium/monsters/monster-0508.webp",
     "description": "A fearsome Undead that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9422,7 +9592,7 @@ export const monsters = [
     "rank": "A",
     "hp": 608,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0509.jpg",
+    "image": "/generated/compendium/monsters/monster-0509.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9440,7 +9610,7 @@ export const monsters = [
     "rank": "S",
     "hp": 585,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0510.jpg",
+    "image": "/generated/compendium/monsters/monster-0510.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9458,7 +9628,7 @@ export const monsters = [
     "rank": "D",
     "hp": 243,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0511.jpg",
+    "image": "/generated/compendium/monsters/monster-0511.webp",
     "description": "A fearsome Demon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9476,7 +9646,7 @@ export const monsters = [
     "rank": "C",
     "hp": 249,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0512.jpg",
+    "image": "/generated/compendium/monsters/monster-0512.webp",
     "description": "A fearsome Beast that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9494,7 +9664,7 @@ export const monsters = [
     "rank": "B",
     "hp": 629,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0513.jpg",
+    "image": "/generated/compendium/monsters/monster-0513.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9511,7 +9681,7 @@ export const monsters = [
     "rank": "A",
     "hp": 812,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0514.jpg",
+    "image": "/generated/compendium/monsters/monster-0514.webp",
     "description": "A fearsome Undead that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9529,7 +9699,7 @@ export const monsters = [
     "rank": "S",
     "hp": 517,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0515.jpg",
+    "image": "/generated/compendium/monsters/monster-0515.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9549,7 +9719,7 @@ export const monsters = [
     "rank": "D",
     "hp": 883,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0516.jpg",
+    "image": "/generated/compendium/monsters/monster-0516.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9569,7 +9739,7 @@ export const monsters = [
     "rank": "C",
     "hp": 841,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0517.jpg",
+    "image": "/generated/compendium/monsters/monster-0517.webp",
     "description": "A fearsome Demon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9588,7 +9758,7 @@ export const monsters = [
     "rank": "B",
     "hp": 472,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0518.jpg",
+    "image": "/generated/compendium/monsters/monster-0518.webp",
     "description": "A fearsome Beast that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9607,7 +9777,7 @@ export const monsters = [
     "rank": "A",
     "hp": 1090,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0519.jpg",
+    "image": "/generated/compendium/monsters/monster-0519.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9627,7 +9797,7 @@ export const monsters = [
     "rank": "S",
     "hp": 459,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0520.jpg",
+    "image": "/generated/compendium/monsters/monster-0520.webp",
     "description": "A fearsome Undead that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9646,7 +9816,7 @@ export const monsters = [
     "rank": "D",
     "hp": 853,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0521.jpg",
+    "image": "/generated/compendium/monsters/monster-0521.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9665,7 +9835,7 @@ export const monsters = [
     "rank": "C",
     "hp": 703,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0522.jpg",
+    "image": "/generated/compendium/monsters/monster-0522.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9683,7 +9853,7 @@ export const monsters = [
     "rank": "B",
     "hp": 119,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0523.jpg",
+    "image": "/generated/compendium/monsters/monster-0523.webp",
     "description": "A fearsome Demon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9702,7 +9872,7 @@ export const monsters = [
     "rank": "A",
     "hp": 757,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0524.jpg",
+    "image": "/generated/compendium/monsters/monster-0524.webp",
     "description": "A fearsome Beast that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9721,7 +9891,7 @@ export const monsters = [
     "rank": "S",
     "hp": 145,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0525.jpg",
+    "image": "/generated/compendium/monsters/monster-0525.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9739,7 +9909,7 @@ export const monsters = [
     "rank": "D",
     "hp": 419,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0526.jpg",
+    "image": "/generated/compendium/monsters/monster-0526.webp",
     "description": "A fearsome Undead that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9757,7 +9927,7 @@ export const monsters = [
     "rank": "C",
     "hp": 676,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0527.jpg",
+    "image": "/generated/compendium/monsters/monster-0527.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9776,7 +9946,7 @@ export const monsters = [
     "rank": "B",
     "hp": 170,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0528.jpg",
+    "image": "/generated/compendium/monsters/monster-0528.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9793,7 +9963,7 @@ export const monsters = [
     "rank": "A",
     "hp": 646,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0529.jpg",
+    "image": "/generated/compendium/monsters/monster-0529.webp",
     "description": "A fearsome Demon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9811,7 +9981,7 @@ export const monsters = [
     "rank": "S",
     "hp": 367,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0530.jpg",
+    "image": "/generated/compendium/monsters/monster-0530.webp",
     "description": "A fearsome Beast that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9828,7 +9998,7 @@ export const monsters = [
     "rank": "D",
     "hp": 396,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0531.jpg",
+    "image": "/generated/compendium/monsters/monster-0531.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9846,7 +10016,7 @@ export const monsters = [
     "rank": "C",
     "hp": 819,
     "ac": 14,
-    "image": "/generated/compendium/monsters/monster-0532.jpg",
+    "image": "/generated/compendium/monsters/monster-0532.webp",
     "description": "A fearsome Undead that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9864,7 +10034,7 @@ export const monsters = [
     "rank": "B",
     "hp": 554,
     "ac": 14,
-    "image": "/generated/compendium/monsters/monster-0533.jpg",
+    "image": "/generated/compendium/monsters/monster-0533.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9883,7 +10053,7 @@ export const monsters = [
     "rank": "A",
     "hp": 1046,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0534.jpg",
+    "image": "/generated/compendium/monsters/monster-0534.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9903,7 +10073,7 @@ export const monsters = [
     "rank": "S",
     "hp": 261,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0535.jpg",
+    "image": "/generated/compendium/monsters/monster-0535.webp",
     "description": "A fearsome Demon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9922,7 +10092,7 @@ export const monsters = [
     "rank": "D",
     "hp": 167,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0536.jpg",
+    "image": "/generated/compendium/monsters/monster-0536.webp",
     "description": "A fearsome Beast that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9941,7 +10111,7 @@ export const monsters = [
     "rank": "C",
     "hp": 961,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0537.jpg",
+    "image": "/generated/compendium/monsters/monster-0537.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9961,7 +10131,7 @@ export const monsters = [
     "rank": "B",
     "hp": 450,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0538.jpg",
+    "image": "/generated/compendium/monsters/monster-0538.webp",
     "description": "A fearsome Undead that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9981,7 +10151,7 @@ export const monsters = [
     "rank": "A",
     "hp": 501,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0539.jpg",
+    "image": "/generated/compendium/monsters/monster-0539.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -9999,7 +10169,7 @@ export const monsters = [
     "rank": "S",
     "hp": 534,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0540.jpg",
+    "image": "/generated/compendium/monsters/monster-0540.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10018,7 +10188,7 @@ export const monsters = [
     "rank": "D",
     "hp": 546,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0541.jpg",
+    "image": "/generated/compendium/monsters/monster-0541.webp",
     "description": "A fearsome Demon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10035,7 +10205,7 @@ export const monsters = [
     "rank": "C",
     "hp": 355,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0542.jpg",
+    "image": "/generated/compendium/monsters/monster-0542.webp",
     "description": "A fearsome Beast that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10054,7 +10224,7 @@ export const monsters = [
     "rank": "B",
     "hp": 102,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0543.jpg",
+    "image": "/generated/compendium/monsters/monster-0543.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10071,7 +10241,7 @@ export const monsters = [
     "rank": "A",
     "hp": 539,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0544.jpg",
+    "image": "/generated/compendium/monsters/monster-0544.webp",
     "description": "A fearsome Undead that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10089,7 +10259,7 @@ export const monsters = [
     "rank": "S",
     "hp": 377,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0545.jpg",
+    "image": "/generated/compendium/monsters/monster-0545.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10107,7 +10277,7 @@ export const monsters = [
     "rank": "D",
     "hp": 224,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0546.jpg",
+    "image": "/generated/compendium/monsters/monster-0546.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10125,7 +10295,7 @@ export const monsters = [
     "rank": "C",
     "hp": 271,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0547.jpg",
+    "image": "/generated/compendium/monsters/monster-0547.webp",
     "description": "A fearsome Demon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10144,7 +10314,7 @@ export const monsters = [
     "rank": "B",
     "hp": 502,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0548.jpg",
+    "image": "/generated/compendium/monsters/monster-0548.webp",
     "description": "A fearsome Beast that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10161,7 +10331,7 @@ export const monsters = [
     "rank": "A",
     "hp": 933,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0549.jpg",
+    "image": "/generated/compendium/monsters/monster-0549.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10180,7 +10350,7 @@ export const monsters = [
     "rank": "S",
     "hp": 877,
     "ac": 12,
-    "image": "/generated/compendium/monsters/monster-0550.jpg",
+    "image": "/generated/compendium/monsters/monster-0550.webp",
     "description": "A fearsome Undead that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10198,7 +10368,7 @@ export const monsters = [
     "rank": "D",
     "hp": 924,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0551.jpg",
+    "image": "/generated/compendium/monsters/monster-0551.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10215,7 +10385,7 @@ export const monsters = [
     "rank": "C",
     "hp": 603,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0552.jpg",
+    "image": "/generated/compendium/monsters/monster-0552.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10233,7 +10403,7 @@ export const monsters = [
     "rank": "B",
     "hp": 114,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0553.jpg",
+    "image": "/generated/compendium/monsters/monster-0553.webp",
     "description": "A fearsome Demon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10251,7 +10421,7 @@ export const monsters = [
     "rank": "A",
     "hp": 877,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0554.jpg",
+    "image": "/generated/compendium/monsters/monster-0554.webp",
     "description": "A fearsome Beast that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10269,7 +10439,7 @@ export const monsters = [
     "rank": "S",
     "hp": 506,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0555.jpg",
+    "image": "/generated/compendium/monsters/monster-0555.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10288,7 +10458,7 @@ export const monsters = [
     "rank": "D",
     "hp": 553,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0556.jpg",
+    "image": "/generated/compendium/monsters/monster-0556.webp",
     "description": "A fearsome Undead that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10307,7 +10477,7 @@ export const monsters = [
     "rank": "C",
     "hp": 263,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0557.jpg",
+    "image": "/generated/compendium/monsters/monster-0557.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10327,7 +10497,7 @@ export const monsters = [
     "rank": "B",
     "hp": 103,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0558.jpg",
+    "image": "/generated/compendium/monsters/monster-0558.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10347,7 +10517,7 @@ export const monsters = [
     "rank": "A",
     "hp": 968,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0559.jpg",
+    "image": "/generated/compendium/monsters/monster-0559.webp",
     "description": "A fearsome Demon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10366,7 +10536,7 @@ export const monsters = [
     "rank": "S",
     "hp": 782,
     "ac": 18,
-    "image": "/generated/compendium/monsters/monster-0560.jpg",
+    "image": "/generated/compendium/monsters/monster-0560.webp",
     "description": "A fearsome Beast that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10385,7 +10555,7 @@ export const monsters = [
     "rank": "D",
     "hp": 820,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0561.jpg",
+    "image": "/generated/compendium/monsters/monster-0561.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10405,7 +10575,7 @@ export const monsters = [
     "rank": "C",
     "hp": 541,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0562.jpg",
+    "image": "/generated/compendium/monsters/monster-0562.webp",
     "description": "A fearsome Undead that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10423,7 +10593,7 @@ export const monsters = [
     "rank": "B",
     "hp": 374,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0563.jpg",
+    "image": "/generated/compendium/monsters/monster-0563.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10441,7 +10611,7 @@ export const monsters = [
     "rank": "A",
     "hp": 103,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0564.jpg",
+    "image": "/generated/compendium/monsters/monster-0564.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10459,7 +10629,7 @@ export const monsters = [
     "rank": "S",
     "hp": 732,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0565.jpg",
+    "image": "/generated/compendium/monsters/monster-0565.webp",
     "description": "A fearsome Demon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10479,7 +10649,7 @@ export const monsters = [
     "rank": "D",
     "hp": 722,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0566.jpg",
+    "image": "/generated/compendium/monsters/monster-0566.webp",
     "description": "A fearsome Beast that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10498,7 +10668,7 @@ export const monsters = [
     "rank": "C",
     "hp": 811,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0567.jpg",
+    "image": "/generated/compendium/monsters/monster-0567.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10517,7 +10687,7 @@ export const monsters = [
     "rank": "B",
     "hp": 847,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0568.jpg",
+    "image": "/generated/compendium/monsters/monster-0568.webp",
     "description": "A fearsome Undead that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10535,7 +10705,7 @@ export const monsters = [
     "rank": "A",
     "hp": 862,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0569.jpg",
+    "image": "/generated/compendium/monsters/monster-0569.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10553,7 +10723,7 @@ export const monsters = [
     "rank": "S",
     "hp": 361,
     "ac": 11,
-    "image": "/generated/compendium/monsters/monster-0570.jpg",
+    "image": "/generated/compendium/monsters/monster-0570.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10572,7 +10742,7 @@ export const monsters = [
     "rank": "D",
     "hp": 837,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0571.jpg",
+    "image": "/generated/compendium/monsters/monster-0571.webp",
     "description": "A fearsome Demon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10591,7 +10761,7 @@ export const monsters = [
     "rank": "C",
     "hp": 426,
     "ac": 29,
-    "image": "/generated/compendium/monsters/monster-0572.jpg",
+    "image": "/generated/compendium/monsters/monster-0572.webp",
     "description": "A fearsome Beast that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10610,7 +10780,7 @@ export const monsters = [
     "rank": "B",
     "hp": 554,
     "ac": 14,
-    "image": "/generated/compendium/monsters/monster-0573.jpg",
+    "image": "/generated/compendium/monsters/monster-0573.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10628,7 +10798,7 @@ export const monsters = [
     "rank": "A",
     "hp": 141,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0574.jpg",
+    "image": "/generated/compendium/monsters/monster-0574.webp",
     "description": "A fearsome Undead that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10647,7 +10817,7 @@ export const monsters = [
     "rank": "S",
     "hp": 288,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0575.jpg",
+    "image": "/generated/compendium/monsters/monster-0575.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10667,7 +10837,7 @@ export const monsters = [
     "rank": "D",
     "hp": 121,
     "ac": 20,
-    "image": "/generated/compendium/monsters/monster-0576.jpg",
+    "image": "/generated/compendium/monsters/monster-0576.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10687,7 +10857,7 @@ export const monsters = [
     "rank": "C",
     "hp": 659,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0577.jpg",
+    "image": "/generated/compendium/monsters/monster-0577.webp",
     "description": "A fearsome Demon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10706,7 +10876,7 @@ export const monsters = [
     "rank": "B",
     "hp": 150,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0578.jpg",
+    "image": "/generated/compendium/monsters/monster-0578.webp",
     "description": "A fearsome Beast that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10725,7 +10895,7 @@ export const monsters = [
     "rank": "A",
     "hp": 386,
     "ac": 17,
-    "image": "/generated/compendium/monsters/monster-0579.jpg",
+    "image": "/generated/compendium/monsters/monster-0579.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10745,7 +10915,7 @@ export const monsters = [
     "rank": "S",
     "hp": 699,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0580.jpg",
+    "image": "/generated/compendium/monsters/monster-0580.webp",
     "description": "A fearsome Undead that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10764,7 +10934,7 @@ export const monsters = [
     "rank": "D",
     "hp": 282,
     "ac": 26,
-    "image": "/generated/compendium/monsters/monster-0581.jpg",
+    "image": "/generated/compendium/monsters/monster-0581.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10784,7 +10954,7 @@ export const monsters = [
     "rank": "C",
     "hp": 283,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0582.jpg",
+    "image": "/generated/compendium/monsters/monster-0582.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10803,7 +10973,7 @@ export const monsters = [
     "rank": "B",
     "hp": 864,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0583.jpg",
+    "image": "/generated/compendium/monsters/monster-0583.webp",
     "description": "A fearsome Demon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10821,7 +10991,7 @@ export const monsters = [
     "rank": "A",
     "hp": 241,
     "ac": 10,
-    "image": "/generated/compendium/monsters/monster-0584.jpg",
+    "image": "/generated/compendium/monsters/monster-0584.webp",
     "description": "A fearsome Beast that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10838,7 +11008,7 @@ export const monsters = [
     "rank": "S",
     "hp": 512,
     "ac": 14,
-    "image": "/generated/compendium/monsters/monster-0585.jpg",
+    "image": "/generated/compendium/monsters/monster-0585.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10855,7 +11025,7 @@ export const monsters = [
     "rank": "D",
     "hp": 306,
     "ac": 19,
-    "image": "/generated/compendium/monsters/monster-0586.jpg",
+    "image": "/generated/compendium/monsters/monster-0586.webp",
     "description": "A fearsome Undead that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10875,7 +11045,7 @@ export const monsters = [
     "rank": "C",
     "hp": 304,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0587.jpg",
+    "image": "/generated/compendium/monsters/monster-0587.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10895,7 +11065,7 @@ export const monsters = [
     "rank": "B",
     "hp": 897,
     "ac": 27,
-    "image": "/generated/compendium/monsters/monster-0588.jpg",
+    "image": "/generated/compendium/monsters/monster-0588.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10913,7 +11083,7 @@ export const monsters = [
     "rank": "A",
     "hp": 736,
     "ac": 21,
-    "image": "/generated/compendium/monsters/monster-0589.jpg",
+    "image": "/generated/compendium/monsters/monster-0589.webp",
     "description": "A fearsome Demon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10930,7 +11100,7 @@ export const monsters = [
     "rank": "S",
     "hp": 813,
     "ac": 23,
-    "image": "/generated/compendium/monsters/monster-0590.jpg",
+    "image": "/generated/compendium/monsters/monster-0590.webp",
     "description": "A fearsome Beast that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10948,7 +11118,7 @@ export const monsters = [
     "rank": "D",
     "hp": 837,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0591.jpg",
+    "image": "/generated/compendium/monsters/monster-0591.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10968,7 +11138,7 @@ export const monsters = [
     "rank": "C",
     "hp": 481,
     "ac": 16,
-    "image": "/generated/compendium/monsters/monster-0592.jpg",
+    "image": "/generated/compendium/monsters/monster-0592.webp",
     "description": "A fearsome Undead that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -10986,7 +11156,7 @@ export const monsters = [
     "rank": "B",
     "hp": 523,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0593.jpg",
+    "image": "/generated/compendium/monsters/monster-0593.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -11003,7 +11173,7 @@ export const monsters = [
     "rank": "A",
     "hp": 554,
     "ac": 25,
-    "image": "/generated/compendium/monsters/monster-0594.jpg",
+    "image": "/generated/compendium/monsters/monster-0594.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -11020,7 +11190,7 @@ export const monsters = [
     "rank": "S",
     "hp": 244,
     "ac": 24,
-    "image": "/generated/compendium/monsters/monster-0595.jpg",
+    "image": "/generated/compendium/monsters/monster-0595.webp",
     "description": "A fearsome Demon that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -11039,7 +11209,7 @@ export const monsters = [
     "rank": "D",
     "hp": 697,
     "ac": 15,
-    "image": "/generated/compendium/monsters/monster-0596.jpg",
+    "image": "/generated/compendium/monsters/monster-0596.webp",
     "description": "A fearsome Beast that serves the shadow armies. This D rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -11058,7 +11228,7 @@ export const monsters = [
     "rank": "C",
     "hp": 204,
     "ac": 22,
-    "image": "/generated/compendium/monsters/monster-0597.jpg",
+    "image": "/generated/compendium/monsters/monster-0597.webp",
     "description": "A fearsome Humanoid that serves the shadow armies. This C rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -11077,7 +11247,7 @@ export const monsters = [
     "rank": "B",
     "hp": 1043,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0598.jpg",
+    "image": "/generated/compendium/monsters/monster-0598.webp",
     "description": "A fearsome Undead that serves the shadow armies. This B rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -11095,7 +11265,7 @@ export const monsters = [
     "rank": "A",
     "hp": 569,
     "ac": 28,
-    "image": "/generated/compendium/monsters/monster-0599.jpg",
+    "image": "/generated/compendium/monsters/monster-0599.webp",
     "description": "A fearsome Dragon that serves the shadow armies. This A rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -11113,7 +11283,7 @@ export const monsters = [
     "rank": "S",
     "hp": 607,
     "ac": 13,
-    "image": "/generated/compendium/monsters/monster-0600.jpg",
+    "image": "/generated/compendium/monsters/monster-0600.webp",
     "description": "A fearsome Elemental that serves the shadow armies. This S rank creature possesses immense power and is a formidable opponent for even the most experienced hunters.",
     "abilities": [
       "Shadow Strike",
@@ -11131,7 +11301,7 @@ export const monsters = [
     "rank": "S",
     "hp": 650,
     "ac": 32,
-    "image": "/generated/compendium/monsters/monster-0601.jpg",
+    "image": "/generated/compendium/monsters/monster-0601.webp",
     "description": "An eternal overlord of shadows that commands legions of darkness. This S rank demon possesses godlike power and threatens the very fabric of reality.",
     "abilities": [
       "Eternal Shadow Dominion",
@@ -11151,7 +11321,7 @@ export const monsters = [
     "rank": "S",
     "hp": 720,
     "ac": 35,
-    "image": "/generated/compendium/monsters/monster-0602.jpg",
+    "image": "/generated/compendium/monsters/monster-0602.webp",
     "description": "A titanic entity that has ascended beyond mortal comprehension. This S rank titan wields the power of the void itself.",
     "abilities": [
       "Void Titan Slam",
@@ -11171,7 +11341,7 @@ export const monsters = [
     "rank": "S",
     "hp": 888,
     "ac": 42,
-    "image": "/generated/compendium/monsters/monster-0603.jpg",
+    "image": "/generated/compendium/monsters/monster-0603.webp",
     "description": "The supreme god of the abyss who has achieved ultimate power. This S rank deity represents the pinnacle of shadow evolution.",
     "abilities": [
       "Supreme Abyssal Command",
@@ -11187,3 +11357,4 @@ export const monsters = [
 ];
 
 export default monsters;
+

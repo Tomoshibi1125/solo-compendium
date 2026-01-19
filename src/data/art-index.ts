@@ -4,37 +4,37 @@ export const artIndex = {
   "style": "Solo Leveling Dark Manhwa Anime",
   "categories": {
     "ui": {
-      "path": "public/generated/ui-art/",
+      "path": "public/ui-art/",
       "count": 6,
       "assets": [
         {
           "id": "landing-hero",
-          "filename": "landing-hero.jpg",
+          "filename": "landing-hero.webp",
           "description": "Hero banner for landing page"
         },
         {
           "id": "login-bg",
-          "filename": "login-bg.jpg",
+          "filename": "login-bg.webp",
           "description": "Login page background"
         },
         {
           "id": "shadow-soldier-emblem",
-          "filename": "shadow-soldier-emblem.jpg",
+          "filename": "shadow-soldier-emblem.webp",
           "description": "Shadow soldier emblem"
         },
         {
           "id": "system-interface",
-          "filename": "system-interface.jpg",
+          "filename": "system-interface.webp",
           "description": "System interface design"
         },
         {
           "id": "gate-portal-3d",
-          "filename": "gate-portal-3d.jpg",
+          "filename": "gate-portal-3d.webp",
           "description": "Gate portal 3D scene"
         },
         {
           "id": "shadow-silhouette",
-          "filename": "shadow-silhouette.jpg",
+          "filename": "shadow-silhouette.webp",
           "description": "Character silhouette"
         }
       ]

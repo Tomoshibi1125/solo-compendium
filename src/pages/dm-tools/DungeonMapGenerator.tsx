@@ -136,7 +136,7 @@ function generateMap(width: number, height: number, rank: string): DungeonMap {
       }
     }
 
-    // Fill room cells
+    // Fill room cells with dungeon tiles
     for (let ry = room.y; ry < room.y + room.height; ry++) {
       for (let rx = room.x; rx < room.x + room.width; rx++) {
         const key = `${rx},${ry}`;

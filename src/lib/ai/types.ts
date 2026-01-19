@@ -9,7 +9,7 @@ import { z } from 'zod';
 export const AIServiceSchema = z.object({
   id: z.string(),
   name: z.string(),
-  type: z.enum(['openai', 'anthropic', 'stability', 'elevenlabs', 'custom', 'google', 'huggingface']),
+  type: z.enum(['pollinations', 'custom']),
   capabilities: z.array(z.enum([
     'enhance-prompt',
     'analyze-image',
@@ -18,7 +18,8 @@ export const AIServiceSchema = z.object({
     'detect-mood',
     'suggest-style',
     'filter-content',
-    'create-variation'
+    'create-variation',
+    'generate-content',
   ])).default([]),
   apiKey: z.string().optional(),
   endpoint: z.string().optional(),
@@ -41,7 +42,8 @@ export const AIRequestSchema = z.object({
     'detect-mood',
     'suggest-style',
     'filter-content',
-    'create-variation'
+    'create-variation',
+    'generate-content',
   ]),
   input: z.any(),
   context: z.record(z.string(), z.any()).optional(),
@@ -151,9 +153,9 @@ export interface AIConfiguration {
 // Default AI services configuration
 export const DEFAULT_AI_SERVICES: AIService[] = [
   {
-    id: 'google-gemini',
-    name: 'Google Gemini Pro (Free)',
-    type: 'google',
+    id: 'pollinations',
+    name: 'Pollinations (Free)',
+    type: 'pollinations',
     capabilities: [
       'enhance-prompt',
       'analyze-image',
@@ -163,59 +165,44 @@ export const DEFAULT_AI_SERVICES: AIService[] = [
       'suggest-style',
       'filter-content',
       'create-variation',
+      'generate-content',
     ],
-    model: 'gemini-1.5-flash',
-    maxTokens: 1024,
-    temperature: 0.7,
-    enabled: true,
-  },
-  {
-    id: 'openai',
-    name: 'OpenAI GPT-3.5 (Free Tier)',
-    type: 'openai',
-    capabilities: [
-      'enhance-prompt',
-      'analyze-image',
-      'analyze-audio',
-      'generate-tags',
-      'detect-mood',
-      'suggest-style',
-      'filter-content',
-      'create-variation',
-    ],
-    model: 'gpt-3.5-turbo',
-    maxTokens: 1024,
-    temperature: 0.7,
-    enabled: true,
-  },
-  {
-    id: 'huggingface',
-    name: 'Hugging Face (Open Source)',
-    type: 'huggingface',
-    capabilities: [
-      'enhance-prompt',
-      'generate-tags',
-      'detect-mood',
-      'suggest-style',
-      'filter-content',
-      'create-variation',
-    ],
-    model: 'mistral-7b-instruct',
+    endpoint: 'https://text.pollinations.ai',
+    model: 'openai',
     maxTokens: 1024,
     temperature: 0.7,
     enabled: true,
   },
 ];
 
+const parseBooleanEnv = (value: unknown, fallback: boolean) => {
+  if (value === undefined || value === null) return fallback;
+  if (typeof value === 'boolean') return value;
+  if (typeof value === 'string') {
+    if (value === 'true' || value === '1') return true;
+    if (value === 'false' || value === '0') return false;
+  }
+  return fallback;
+};
+
+const parseNumberEnv = (value: unknown, fallback: number) => {
+  if (typeof value === 'number' && Number.isFinite(value)) return value;
+  if (typeof value === 'string') {
+    const parsed = Number(value);
+    if (Number.isFinite(parsed)) return parsed;
+  }
+  return fallback;
+};
+
 export const DEFAULT_AI_CONFIG: AIConfiguration = {
   services: DEFAULT_AI_SERVICES,
-  defaultService: 'google-gemini', // Best ethical free option
+  defaultService: 'pollinations',
   autoEnhancePrompts: true,
   autoAnalyzeAudio: true,
   autoAnalyzeImages: true,
   contentFiltering: true,
-  maxRequestsPerHour: 30, // Reduced for free tiers
-  cacheResults: true,
+  maxRequestsPerHour: parseNumberEnv(import.meta.env.VITE_AI_MAX_REQUESTS_PER_HOUR, 60),
+  cacheResults: parseBooleanEnv(import.meta.env.VITE_AI_CACHE_RESULTS, true),
 };
 
 // Helper functions

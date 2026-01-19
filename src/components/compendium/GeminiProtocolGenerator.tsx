@@ -1,31 +1,24 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { generateSovereign, type GeneratedSovereign, calculateTotalCombinations, getFusionMethodDescription } from '@/lib/geminiProtocol';
+import { generateSovereign, type GeneratedSovereign, calculateTotalCombinations } from '@/lib/geminiProtocol';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Crown, Swords, Shield, Zap, Sparkles, RefreshCw, Dna, Atom, Flame, Link2, CircleDot, Save, Loader2 } from 'lucide-react';
+import { Crown, Swords, Shield, Zap, Sparkles, RefreshCw, Dna, Save, Loader2 } from 'lucide-react';
 import { useSaveSovereign } from '@/hooks/useSavedSovereigns';
-
-const fusionTypeIcons = {
-  potara: <CircleDot className="h-4 w-4 text-yellow-500" />,
-  dance: <Atom className="h-4 w-4 text-blue-500" />,
-  dual_class: <Link2 className="h-4 w-4 text-green-500" />,
-  absorbed: <Flame className="h-4 w-4 text-orange-500" />,
-};
-
-const fusionTypeBadgeStyles = {
-  potara: 'bg-yellow-500/20 text-yellow-600 border-yellow-500/30',
-  dance: 'bg-blue-500/20 text-blue-600 border-blue-500/30',
-  dual_class: 'bg-green-500/20 text-green-600 border-green-500/30',
-  absorbed: 'bg-orange-500/20 text-orange-600 border-orange-500/30',
-};
+import { useAuth } from '@/lib/auth/authContext';
+import { useActiveCharacter } from '@/hooks/useActiveCharacter';
+import { useCharacterMonarchUnlocks } from '@/hooks/useMonarchUnlocks';
 
 export function GeminiProtocolGenerator() {
+  const { isPlayer } = useAuth();
+  const { activeCharacter } = useActiveCharacter();
+  const { data: monarchUnlocks = [], isLoading: monarchUnlocksLoading } = useCharacterMonarchUnlocks(activeCharacter?.id);
   const [selectedJob, setSelectedJob] = useState<string>('');
   const [selectedPath, setSelectedPath] = useState<string>('');
   const [selectedMonarchA, setSelectedMonarchA] = useState<string>('');
@@ -35,7 +28,7 @@ export function GeminiProtocolGenerator() {
   const saveSovereign = useSaveSovereign();
 
   // Fetch all jobs
-  const { data: jobs = [] } = useQuery({
+  const { data: jobs = [], isLoading: jobsLoading } = useQuery({
     queryKey: ['gemini-jobs'],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -48,7 +41,7 @@ export function GeminiProtocolGenerator() {
   });
 
   // Fetch paths for selected job
-  const { data: paths = [] } = useQuery({
+  const { data: paths = [], isLoading: pathsLoading } = useQuery({
     queryKey: ['gemini-paths', selectedJob],
     queryFn: async () => {
       if (!selectedJob) return [];
@@ -63,8 +56,20 @@ export function GeminiProtocolGenerator() {
     enabled: !!selectedJob,
   });
 
+  const { data: allPaths = [], isLoading: allPathsLoading } = useQuery({
+    queryKey: ['gemini-paths-all'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('compendium_job_paths')
+        .select('*')
+        .order('name');
+      if (error) throw error;
+      return data || [];
+    },
+  });
+
   // Fetch all monarchs
-  const { data: monarchs = [] } = useQuery({
+  const { data: monarchs = [], isLoading: monarchsLoading } = useQuery({
     queryKey: ['gemini-monarchs'],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -82,11 +87,87 @@ export function GeminiProtocolGenerator() {
     return calculateTotalCombinations(jobs.length, jobs.length * avgPathsPerJob, monarchs.length);
   }, [jobs.length, monarchs.length]);
 
+  const autoMode = isPlayer() && !!activeCharacter;
+
+  const canRandomize =
+    !jobsLoading &&
+    !monarchsLoading &&
+    !allPathsLoading &&
+    jobs.length > 0 &&
+    monarchs.length > 1 &&
+    (allPaths.length > 0 || paths.length > 0) &&
+    !autoMode;
   const canGenerate = selectedJob && selectedPath && selectedMonarchA && selectedMonarchB && selectedMonarchA !== selectedMonarchB;
+
+  useEffect(() => {
+    if (autoMode) {
+      if (!activeCharacter) return;
+      if (!selectedJob && jobs.length > 0 && activeCharacter.job) {
+        const target = activeCharacter.job.trim().toLowerCase();
+        const match = jobs.find((job) => job.name.trim().toLowerCase() === target);
+        if (match) {
+          setSelectedJob(match.id);
+        }
+      }
+      return;
+    }
+
+    if (!selectedJob && jobs.length > 0) {
+      setSelectedJob(jobs[0].id);
+    }
+  }, [activeCharacter, autoMode, jobs, selectedJob]);
+
+  useEffect(() => {
+    if (autoMode) {
+      if (!activeCharacter?.path) return;
+      const normalize = (value: string) => value.trim().toLowerCase();
+      const normalizePath = (value: string) => normalize(value.replace(/^path of the\s+/i, ''));
+      const desired = normalizePath(activeCharacter.path);
+      const match = allPaths.find((path) => normalizePath(path.name) === desired);
+      if (match) {
+        if (selectedJob !== match.job_id) {
+          setSelectedJob(match.job_id);
+        }
+        if (selectedPath !== match.id) {
+          setSelectedPath(match.id);
+        }
+      }
+      return;
+    }
+
+    if (selectedJob && !selectedPath && paths.length > 0) {
+      setSelectedPath(paths[0].id);
+    }
+  }, [activeCharacter, allPaths, autoMode, paths, selectedJob, selectedPath]);
+
+  useEffect(() => {
+    if (autoMode) {
+      if (monarchUnlocksLoading) return;
+      const primary = monarchUnlocks.find((unlock) => unlock.is_primary) || monarchUnlocks[0];
+      const secondary = monarchUnlocks.find((unlock) => unlock.id !== primary?.id);
+      if (primary && selectedMonarchA !== primary.monarch_id) {
+        setSelectedMonarchA(primary.monarch_id);
+      }
+      if (secondary && selectedMonarchB !== secondary.monarch_id) {
+        setSelectedMonarchB(secondary.monarch_id);
+      }
+      return;
+    }
+
+    if (!selectedMonarchA && monarchs.length > 0) {
+      setSelectedMonarchA(monarchs[0].id);
+    }
+    if ((!selectedMonarchB || selectedMonarchB === selectedMonarchA) && monarchs.length > 1) {
+      const fallback = monarchs.find((monarch) => monarch.id !== selectedMonarchA) || monarchs[1];
+      if (fallback) {
+        setSelectedMonarchB(fallback.id);
+      }
+    }
+  }, [autoMode, monarchs, monarchUnlocks, monarchUnlocksLoading, selectedMonarchA, selectedMonarchB]);
 
   const handleGenerate = () => {
     const job = jobs.find(j => j.id === selectedJob);
-    const path = paths.find(p => p.id === selectedPath);
+    const path = paths.find(p => p.id === selectedPath) || allPaths.find((p) => p.id === selectedPath);
     const monarchA = monarchs.find(m => m.id === selectedMonarchA);
     const monarchB = monarchs.find(m => m.id === selectedMonarchB);
 
@@ -96,27 +177,25 @@ export function GeminiProtocolGenerator() {
     }
   };
 
-  const handleRandomize = () => {
-    if (jobs.length === 0 || monarchs.length === 0) return;
+  const handleRandomize = async () => {
+    if (jobs.length === 0 || monarchs.length < 2) return;
 
-    const randomJob = jobs[Math.floor(Math.random() * jobs.length)];
-    setSelectedJob(randomJob.id);
+    const pathPool = allPaths.length > 0 ? allPaths : paths;
+    if (pathPool.length === 0) return;
 
-    setTimeout(async () => {
-      const { data: jobPaths } = await supabase
-        .from('compendium_job_paths')
-        .select('*')
-        .eq('job_id', randomJob.id);
-      
-      if (jobPaths && jobPaths.length > 0) {
-        const randomPath = jobPaths[Math.floor(Math.random() * jobPaths.length)];
-        setSelectedPath(randomPath.id);
-      }
-    }, 100);
+    const randomPath = pathPool[Math.floor(Math.random() * pathPool.length)];
+    if (!randomPath) return;
+
+    const jobId = (randomPath as { job_id?: string }).job_id || jobs[Math.floor(Math.random() * jobs.length)].id;
+    setSelectedJob(jobId);
+    setSelectedPath(randomPath.id);
 
     const shuffledMonarchs = [...monarchs].sort(() => Math.random() - 0.5);
-    setSelectedMonarchA(shuffledMonarchs[0].id);
-    setSelectedMonarchB(shuffledMonarchs[1].id);
+    const primaryMonarch = shuffledMonarchs[0];
+    const secondaryMonarch = shuffledMonarchs.find((monarch) => monarch.id !== primaryMonarch?.id);
+    if (!primaryMonarch || !secondaryMonarch) return;
+    setSelectedMonarchA(primaryMonarch.id);
+    setSelectedMonarchB(secondaryMonarch.id);
   };
 
   const getActionIcon = (actionType: string | null) => {
@@ -127,12 +206,38 @@ export function GeminiProtocolGenerator() {
     return <Swords className="h-4 w-4" />;
   };
 
-  const getFusionMethodFromSovereign = (sovereign: GeneratedSovereign): 'potara' | 'dance' | 'dual_class' | 'absorbed' => {
-    if (sovereign.fusion_method.includes('Potara')) return 'potara';
-    if (sovereign.fusion_method.includes('Metamoran')) return 'dance';
-    if (sovereign.fusion_method.includes('Absorption')) return 'absorbed';
-    return 'dual_class';
-  };
+  const selectedJobEntry = jobs.find((job) => job.id === selectedJob) || null;
+  const selectedPathEntry = paths.find((path) => path.id === selectedPath)
+    || allPaths.find((path) => path.id === selectedPath)
+    || null;
+  const selectedMonarchAEntry = monarchs.find((monarch) => monarch.id === selectedMonarchA) || null;
+  const selectedMonarchBEntry = monarchs.find((monarch) => monarch.id === selectedMonarchB) || null;
+  const dataReady = !jobsLoading && !monarchsLoading && !allPathsLoading;
+  const templateReady = Boolean(
+    selectedJobEntry &&
+      selectedPathEntry &&
+      selectedMonarchAEntry &&
+      selectedMonarchBEntry &&
+      selectedMonarchA !== selectedMonarchB
+  );
+  const autoKey = `${selectedJobEntry?.id || ''}:${selectedPathEntry?.id || ''}:${selectedMonarchAEntry?.id || ''}:${selectedMonarchBEntry?.id || ''}`;
+  const lastAutoKey = useRef<string>('');
+
+  const autoIssues: string[] = [];
+  if (autoMode) {
+    if (!activeCharacter?.job) autoIssues.push('Active character is missing a Job.');
+    if (!activeCharacter?.path) autoIssues.push('Active character is missing a Path.');
+    if (monarchUnlocks.length < 2) autoIssues.push('Unlock two Monarchs to auto-generate a Sovereign.');
+    if (activeCharacter?.job && !selectedJobEntry) autoIssues.push('No matching Job found in the compendium.');
+    if (activeCharacter?.path && !selectedPathEntry) autoIssues.push('No matching Path found in the compendium.');
+  }
+
+  useEffect(() => {
+    if (!autoMode || !dataReady || !templateReady) return;
+    if (autoKey === lastAutoKey.current) return;
+    handleGenerate();
+    lastAutoKey.current = autoKey;
+  }, [autoKey, autoMode, dataReady, templateReady]);
 
   return (
     <div className="space-y-6">
@@ -140,28 +245,17 @@ export function GeminiProtocolGenerator() {
       <div className="text-center space-y-2">
         <div className="flex items-center justify-center gap-2">
           <Dna className="h-8 w-8 text-primary" />
-          <h2 className="text-2xl font-bold">Gemini Protocol</h2>
+          <h3 className="text-2xl font-bold">Fusion Console</h3>
         </div>
         <p className="text-muted-foreground">
-          DBZ/Super + Dual Class LitRPG Fusion System - {totalCombinations.toLocaleString()}+ Combinations
+          Permanent subclass overlays - {totalCombinations.toLocaleString()}+ combinations available
         </p>
         <p className="text-sm text-muted-foreground italic">
-          By the blessing of the Supreme Deity, fuse Job + Path + Monarch A + Monarch B into a unique Sovereign
+          Any Job + Path + Monarch A + Monarch B template qualifies for a Sovereign overlay.
         </p>
-        <div className="flex flex-wrap justify-center gap-2 pt-2">
-          <Badge variant="outline" className={fusionTypeBadgeStyles.potara}>
-            {fusionTypeIcons.potara} Potara Fusion
-          </Badge>
-          <Badge variant="outline" className={fusionTypeBadgeStyles.dance}>
-            {fusionTypeIcons.dance} Metamoran Dance
-          </Badge>
-          <Badge variant="outline" className={fusionTypeBadgeStyles.dual_class}>
-            {fusionTypeIcons.dual_class} Dual Class Merge
-          </Badge>
-          <Badge variant="outline" className={fusionTypeBadgeStyles.absorbed}>
-            {fusionTypeIcons.absorbed} Absorption Fusion
-          </Badge>
-        </div>
+        <p className="text-xs text-muted-foreground">
+          Fusion cues are thematic guides, not literal procedures.
+        </p>
       </div>
 
       {/* Selection Panel */}
@@ -169,86 +263,126 @@ export function GeminiProtocolGenerator() {
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <span>Fusion Components</span>
-            <Button variant="outline" size="sm" onClick={handleRandomize}>
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Randomize
-            </Button>
+            {!autoMode && (
+              <Button variant="outline" size="sm" onClick={handleRandomize} disabled={!canRandomize}>
+                <RefreshCw className="h-4 w-4 mr-2" />
+                {jobsLoading || monarchsLoading || pathsLoading ? 'Loading...' : 'Randomize'}
+              </Button>
+            )}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Job Selection */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Job Class</label>
-              <Select value={selectedJob} onValueChange={(v) => { setSelectedJob(v); setSelectedPath(''); }}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a Job..." />
-                </SelectTrigger>
-                <SelectContent>
-                  {jobs.map((job) => (
-                    <SelectItem key={job.id} value={job.id}>
-                      {job.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+          {autoMode ? (
+            <div className="space-y-4">
+              <div className="text-sm text-muted-foreground">
+                Sovereign fusion auto-syncs from your active character. The protocol triggers automatically once your Job,
+                Path, and Monarch pair are complete.
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <div className="text-xs uppercase tracking-wide text-muted-foreground">Job</div>
+                  <div className="font-medium">{selectedJobEntry?.name || 'Not set'}</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-xs uppercase tracking-wide text-muted-foreground">Path</div>
+                  <div className="font-medium">{selectedPathEntry?.name?.replace('Path of the ', '') || 'Not set'}</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-xs uppercase tracking-wide text-muted-foreground">Primary Monarch</div>
+                  <div className="font-medium">{selectedMonarchAEntry ? `${selectedMonarchAEntry.title} (${selectedMonarchAEntry.theme})` : 'Not set'}</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-xs uppercase tracking-wide text-muted-foreground">Secondary Monarch</div>
+                  <div className="font-medium">{selectedMonarchBEntry ? `${selectedMonarchBEntry.title} (${selectedMonarchBEntry.theme})` : 'Not set'}</div>
+                </div>
+              </div>
+              {autoIssues.length > 0 && (
+                <Alert>
+                  <AlertDescription>
+                    {autoIssues.join(' ')}
+                  </AlertDescription>
+                </Alert>
+              )}
             </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Job Selection */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Job Class</label>
+                <Select value={selectedJob} onValueChange={(v) => { setSelectedJob(v); setSelectedPath(''); }}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a Job..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {jobs.map((job) => (
+                      <SelectItem key={job.id} value={job.id}>
+                        {job.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
-            {/* Path Selection */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Path Specialization</label>
-              <Select value={selectedPath} onValueChange={setSelectedPath} disabled={!selectedJob}>
-                <SelectTrigger>
-                  <SelectValue placeholder={selectedJob ? "Select a Path..." : "Select Job first"} />
-                </SelectTrigger>
-                <SelectContent>
-                  {paths.map((path) => (
-                    <SelectItem key={path.id} value={path.id}>
-                      {path.name.replace('Path of the ', '')}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              {/* Path Selection */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Path Specialization</label>
+                <Select value={selectedPath} onValueChange={setSelectedPath} disabled={!selectedJob}>
+                  <SelectTrigger>
+                    <SelectValue placeholder={selectedJob ? "Select a Path..." : "Select Job first"} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {paths.map((path) => (
+                      <SelectItem key={path.id} value={path.id}>
+                        {path.name.replace('Path of the ', '')}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Monarch A Selection */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Primary Monarch (Dominant)</label>
+                <Select value={selectedMonarchA} onValueChange={setSelectedMonarchA}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Primary Monarch..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {monarchs.map((monarch) => (
+                      <SelectItem key={monarch.id} value={monarch.id} disabled={monarch.id === selectedMonarchB}>
+                        {monarch.title} ({monarch.theme})
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Monarch B Selection */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Secondary Monarch (Merged)</label>
+                <Select value={selectedMonarchB} onValueChange={setSelectedMonarchB}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Secondary Monarch..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {monarchs.map((monarch) => (
+                      <SelectItem key={monarch.id} value={monarch.id} disabled={monarch.id === selectedMonarchA}>
+                        {monarch.title} ({monarch.theme})
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
+          )}
 
-            {/* Monarch A Selection */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Primary Monarch (Dominant)</label>
-              <Select value={selectedMonarchA} onValueChange={setSelectedMonarchA}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select Primary Monarch..." />
-                </SelectTrigger>
-                <SelectContent>
-                  {monarchs.map((monarch) => (
-                    <SelectItem key={monarch.id} value={monarch.id} disabled={monarch.id === selectedMonarchB}>
-                      {monarch.title} ({monarch.theme})
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Monarch B Selection */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Secondary Monarch (Merged)</label>
-              <Select value={selectedMonarchB} onValueChange={setSelectedMonarchB}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select Secondary Monarch..." />
-                </SelectTrigger>
-                <SelectContent>
-                  {monarchs.map((monarch) => (
-                    <SelectItem key={monarch.id} value={monarch.id} disabled={monarch.id === selectedMonarchA}>
-                      {monarch.title} ({monarch.theme})
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <Button onClick={handleGenerate} disabled={!canGenerate} className="w-full">
+          <Button
+            onClick={handleGenerate}
+            disabled={!canGenerate || (autoMode && !templateReady)}
+            className="w-full"
+          >
             <Dna className="h-4 w-4 mr-2" />
-            Initiate Gemini Protocol Fusion
+            {autoMode ? 'Generate Sovereign Overlay' : 'Initiate Gemini Protocol Fusion'}
           </Button>
         </CardContent>
       </Card>
@@ -278,17 +412,6 @@ export function GeminiProtocolGenerator() {
                 </Button>
               </div>
               <p className="text-lg text-muted-foreground italic">{generatedSovereign.title}</p>
-              
-              {/* Fusion Method Badge */}
-              <div className="flex flex-wrap gap-2">
-                <Badge 
-                  variant="outline" 
-                  className={`${fusionTypeBadgeStyles[getFusionMethodFromSovereign(generatedSovereign)]} flex items-center gap-1`}
-                >
-                  {fusionTypeIcons[getFusionMethodFromSovereign(generatedSovereign)]}
-                  {generatedSovereign.fusion_method}
-                </Badge>
-              </div>
               
               {/* Component Badges */}
               <div className="flex flex-wrap gap-2">
@@ -347,13 +470,6 @@ export function GeminiProtocolGenerator() {
                           {ability.is_capstone && (
                             <Badge variant="default" className="text-xs">CAPSTONE</Badge>
                           )}
-                          <Badge 
-                            variant="outline" 
-                            className={`text-xs ${fusionTypeBadgeStyles[ability.fusion_type]}`}
-                          >
-                            {fusionTypeIcons[ability.fusion_type]}
-                            <span className="ml-1">{ability.fusion_type.replace('_', ' ').toUpperCase()}</span>
-                          </Badge>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
                           <Badge variant="outline">Level {ability.level}</Badge>

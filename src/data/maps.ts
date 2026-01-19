@@ -19,7 +19,7 @@ export const mapsCompendium: MapTile[] = [
     name: 'Shadow Dungeon Floor',
     description: 'Dark stone floor infused with shadow energy patterns. Provides a solid foundation for dungeon construction.',
     type: 'floor',
-    image: '/generated/maps/dungeon-floor.jpg',
+    image: '/generated/maps/dungeon-floor.webp',
     walkable: true,
     transparent: false,
     effect: 'Grants +5% shadow resistance when standing on'
@@ -29,7 +29,7 @@ export const mapsCompendium: MapTile[] = [
     name: 'Shadow Stone Wall',
     description: 'Impenetrable stone walls that block movement and sight. Reinforced with shadow magic for extra durability.',
     type: 'wall',
-    image: '/generated/maps/stone-wall.jpg',
+    image: '/generated/maps/stone-wall.webp',
     walkable: false,
     transparent: false
   },
@@ -38,7 +38,7 @@ export const mapsCompendium: MapTile[] = [
     name: 'Ancient Wooden Door',
     description: 'Sturdy wooden door with metal fittings. Can be opened with proper keys or sufficient force.',
     type: 'door',
-    image: '/generated/maps/wooden-door.jpg',
+    image: '/generated/maps/wooden-door.webp',
     walkable: false,
     transparent: false,
     effect: 'Requires key or strength check to open'
@@ -48,7 +48,7 @@ export const mapsCompendium: MapTile[] = [
     name: 'Shadow Iron Gate',
     description: 'Massive iron gate infused with shadow energy. Provides security and serves as a dramatic entrance.',
     type: 'gate',
-    image: '/generated/maps/iron-gate.jpg',
+    image: '/generated/maps/iron-gate.webp',
     walkable: false,
     transparent: false,
     effect: 'Requires special key or magical means to open'
@@ -58,7 +58,7 @@ export const mapsCompendium: MapTile[] = [
     name: 'Shadow Treasure Chest',
     description: 'Mysterious chest containing valuable items. Protected by shadow magic and may be trapped.',
     type: 'object',
-    image: '/generated/maps/treasure-chest.jpg',
+    image: '/generated/maps/treasure-chest.webp',
     walkable: false,
     transparent: false,
     effect: 'Contains random valuable items, may be trapped'
@@ -68,7 +68,7 @@ export const mapsCompendium: MapTile[] = [
     name: 'Shadow Lord\'s Throne',
     description: 'Imposing throne where the Shadow Lord holds court. Radiates immense power and authority.',
     type: 'special',
-    image: '/generated/maps/throne-room.jpg',
+    image: '/generated/maps/throne-room.webp',
     walkable: false,
     transparent: true,
     effect: 'Grants +20% intimidation when nearby'

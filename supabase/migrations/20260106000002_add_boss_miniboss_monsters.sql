@@ -100,7 +100,6 @@ INSERT INTO compendium_monsters (name, size, creature_type, cr, armor_class, hit
 ('Kraken Leviathan', 'Gargantuan', 'Monstrosity', '26', 20, 567, '27d20+378', 60, 32, 13, 27, 24, 20, 22, 'S', true, 'An oceanic horror that devours entire fleets. It is worshipped as a god by sea-dwelling Gate creatures and commands the depths.', 'SRD', 'homebrew', 'Solo Compendium Homebrew', ARRAY['boss', 'monstrosity', 'gate-creature', 'legendary']),
 ('Tarrasque World Eater', 'Gargantuan', 'Monstrosity', '30', 27, 810, '33d20+660', 40, 30, 13, 30, 5, 13, 13, 'S', true, 'The most powerful non-Monarch creature in existence. Its awakening signals the end of an era, and only the Shadow Monarch can truly defeat it.', 'SRD', 'homebrew', 'Solo Compendium Homebrew', ARRAY['boss', 'monstrosity', 'gate-creature', 'legendary'])
 ON CONFLICT (name) DO NOTHING;
-
 -- =============================================
 -- ADD LEGENDARY ACTIONS TO BOSSES
 -- =============================================
@@ -150,4 +149,3 @@ UPDATE compendium_monsters SET xp = CASE cr
   ELSE xp
 END
 WHERE xp IS NULL;
-

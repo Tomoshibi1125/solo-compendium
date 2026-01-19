@@ -1,6 +1,5 @@
 -- Remove Shadow Monarch from jobs (it's a Monarch overlay, not a Job)
 DELETE FROM compendium_jobs WHERE name = 'Shadow Monarch';
-
 -- Add Vanguard as a proper Job (Fighter analog)
 INSERT INTO compendium_jobs (name, description, flavor_text, primary_abilities, secondary_abilities, hit_die, armor_proficiencies, weapon_proficiencies, tool_proficiencies, saving_throw_proficiencies, skill_choices, skill_choice_count, source_book, tags)
 VALUES (
@@ -19,7 +18,6 @@ VALUES (
   'PHB',
   ARRAY['Martial', 'Tank', 'Melee', 'Leader']
 );
-
 -- Create compendium_monarchs table for the 9 Monarch overlays
 CREATE TABLE public.compendium_monarchs (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -51,15 +49,12 @@ CREATE TABLE public.compendium_monarchs (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 -- Enable RLS
 ALTER TABLE public.compendium_monarchs ENABLE ROW LEVEL SECURITY;
-
 -- Public read access
 CREATE POLICY "Compendium monarchs are publicly readable"
   ON public.compendium_monarchs FOR SELECT
   USING (true);
-
 -- Create monarch features table
 CREATE TABLE public.compendium_monarch_features (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -83,13 +78,10 @@ CREATE TABLE public.compendium_monarch_features (
   
   UNIQUE (monarch_id, name)
 );
-
 ALTER TABLE public.compendium_monarch_features ENABLE ROW LEVEL SECURITY;
-
 CREATE POLICY "Compendium monarch features are publicly readable"
   ON public.compendium_monarch_features FOR SELECT
   USING (true);
-
 -- Create compendium_sovereigns table for Gemini Protocol fusions
 CREATE TABLE public.compendium_sovereigns (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -121,13 +113,10 @@ CREATE TABLE public.compendium_sovereigns (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-
 ALTER TABLE public.compendium_sovereigns ENABLE ROW LEVEL SECURITY;
-
 CREATE POLICY "Compendium sovereigns are publicly readable"
   ON public.compendium_sovereigns FOR SELECT
   USING (true);
-
 -- Create sovereign features table for fused abilities
 CREATE TABLE public.compendium_sovereign_features (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -149,23 +138,18 @@ CREATE TABLE public.compendium_sovereign_features (
   
   UNIQUE (sovereign_id, name)
 );
-
 ALTER TABLE public.compendium_sovereign_features ENABLE ROW LEVEL SECURITY;
-
 CREATE POLICY "Compendium sovereign features are publicly readable"
   ON public.compendium_sovereign_features FOR SELECT
   USING (true);
-
 -- Add character support for Monarchs and Sovereigns
 ALTER TABLE public.characters 
 ADD COLUMN IF NOT EXISTS monarch_overlays UUID[] DEFAULT '{}',
 ADD COLUMN IF NOT EXISTS sovereign_id UUID REFERENCES public.compendium_sovereigns(id) ON DELETE SET NULL;
-
 -- Create indexes
 CREATE INDEX idx_monarch_features_monarch ON public.compendium_monarch_features(monarch_id);
 CREATE INDEX idx_sovereign_features_sovereign ON public.compendium_sovereign_features(sovereign_id);
 CREATE INDEX idx_sovereigns_components ON public.compendium_sovereigns(job_id, path_id, monarch_a_id, monarch_b_id);
-
 -- Insert the 9 Canon Monarchs
 INSERT INTO compendium_monarchs (name, title, description, flavor_text, lore, theme, damage_type, unlock_level, primary_abilities, manifestation_description, corruption_risk, tags) VALUES
 (
@@ -294,13 +278,11 @@ INSERT INTO compendium_monarchs (name, title, description, flavor_text, lore, th
   'Identity becomes fluid. Some forget which shape was the original.',
   ARRAY['Shapeshifting', 'Illusion', 'Control', 'Transformation']
 );
-
 -- Add updated_at trigger for monarchs
 CREATE TRIGGER update_monarchs_updated_at
 BEFORE UPDATE ON public.compendium_monarchs
 FOR EACH ROW
 EXECUTE FUNCTION public.update_updated_at_column();
-
 -- Add updated_at trigger for sovereigns
 CREATE TRIGGER update_sovereigns_updated_at
 BEFORE UPDATE ON public.compendium_sovereigns

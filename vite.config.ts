@@ -9,10 +9,23 @@ export default defineConfig(({ mode }) => {
     react(),
     // PWA plugin for better mobile experience
     VitePWA({
+      injectRegister: null,
       registerType: 'autoUpdate',
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,json}'],
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,webmanifest}'],
+        globIgnores: ['**/generated/**'],
         runtimeCaching: [
+          {
+            urlPattern: /\/generated\/.*\.(png|jpg|jpeg|webp|svg|json)$/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'generated-assets',
+              expiration: {
+                maxEntries: 500,
+                maxAgeSeconds: 60 * 60 * 24 * 14 // 14 days
+              }
+            }
+          },
           {
             urlPattern: /^https:\/\/.*\.supabase\.co\/.*/i,
             handler: 'NetworkFirst',
@@ -64,12 +77,13 @@ export default defineConfig(({ mode }) => {
       alias: {
         "@": path.resolve(__dirname, "./src"),
       },
+      dedupe: ['react', 'react-dom'],
     },
     build: {
       chunkSizeWarningLimit: 1500,
       // Optimize for production and mobile
       minify: 'esbuild',
-      sourcemap: false, // TEMPORARILY DISABLED due to Sentry issues
+      sourcemap: false, // Disabled due to Sentry issues
       // Tree shaking optimization
       treeshake: {
         moduleSideEffects: false,
@@ -81,13 +95,28 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks(id) {
-            // Split vendor chunks for better caching
-            if (id.includes('node_modules')) {
-              if (id.includes('react')) return 'react-vendor';
-              if (id.includes('@radix-ui')) return 'ui-vendor';
-              if (id.includes('three')) return 'dice-3d-vendor';
-              if (id.includes('@tanstack')) return 'query-vendor';
-              if (id.includes('@supabase')) return 'supabase-vendor';
+            // Split vendor chunks for better caching while avoiding circular deps.
+            const normalizedId = id.replace(/\\/g, '/');
+            if (normalizedId.includes('node_modules')) {
+            if (
+              normalizedId.includes('/node_modules/react/') ||
+              normalizedId.includes('/node_modules/react-dom/') ||
+              normalizedId.includes('/node_modules/react-is/') ||
+              normalizedId.includes('/node_modules/scheduler/')
+            ) {
+              return 'react-vendor';
+            }
+              if (normalizedId.includes('/@radix-ui/')) return 'ui-vendor';
+              if (
+                normalizedId.includes('/three/') ||
+                normalizedId.includes('/@react-three/') ||
+                normalizedId.includes('/three-stdlib/') ||
+                normalizedId.includes('/troika-')
+              ) {
+                return 'dice-3d-vendor';
+              }
+              if (normalizedId.includes('/@tanstack/')) return 'query-vendor';
+              if (normalizedId.includes('/@supabase/')) return 'supabase-vendor';
               return 'vendor';
             }
           },

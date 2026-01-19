@@ -1,9 +1,10 @@
 import { ReactNode } from 'react';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
-import { Heart, Share2, Download, BookOpen } from 'lucide-react';
+import { Heart, Share2, Download, BookOpen, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { NotesManager } from './NotesManager';
 
 interface QuickReferenceProps {
   entry: {
@@ -42,6 +43,7 @@ export function QuickReference({
               size="sm"
               onClick={onToggleFavorite}
               className="w-full justify-start"
+              title={isFavorite ? "Remove from favorites" : "Add to favorites"}
             >
               <Heart className={cn("w-4 h-4 mr-2", isFavorite && "fill-current")} />
               {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
@@ -69,6 +71,22 @@ export function QuickReference({
               Export
             </Button>
           )}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              // Scroll to notes section
+              const notesSection = document.querySelector('[data-notes-section]');
+              if (notesSection) {
+                notesSection.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            className="w-full justify-start"
+            title="View notes for this entry"
+          >
+            <FileText className="w-4 h-4 mr-2" />
+            View Notes
+          </Button>
         </div>
       </SystemWindow>
 
@@ -128,6 +146,15 @@ export function QuickReference({
           )}
         </div>
       </SystemWindow>
+      
+      {/* Notes Section */}
+      <div data-notes-section>
+        <NotesManager 
+          entryId={entry.name}
+          entryType={entry.type}
+          entryName={entry.name}
+        />
+      </div>
     </div>
   );
 }

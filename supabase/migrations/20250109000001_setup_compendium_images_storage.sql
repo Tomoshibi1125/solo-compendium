@@ -11,7 +11,6 @@ VALUES (
   ARRAY['image/png', 'image/jpeg', 'image/jpg', 'image/webp']
 )
 ON CONFLICT (id) DO NOTHING;
-
 -- Storage Policies
 -- Allow public read access to all images
 DO $$
@@ -38,7 +37,6 @@ BEGIN
     END IF;
   END IF;
 END $$;
-
 -- Allow authenticated users to upload (for admin/image generation)
 DO $$
 BEGIN
@@ -67,7 +65,6 @@ BEGIN
     END IF;
   END IF;
 END $$;
-
 -- Allow authenticated users to update their uploads
 DO $$
 BEGIN
@@ -96,7 +93,6 @@ BEGIN
     END IF;
   END IF;
 END $$;
-
 -- Allow authenticated users to delete (for admin/image regeneration)
 DO $$
 BEGIN
@@ -125,4 +121,3 @@ BEGIN
     END IF;
   END IF;
 END $$;
-

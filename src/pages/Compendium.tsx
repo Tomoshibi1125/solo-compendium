@@ -19,7 +19,9 @@ import {
   Sparkles,
   Users,
   Package,
-  Dna
+  Dna,
+  MapPin,
+  AlertTriangle
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Input } from '@/components/ui/input';
@@ -31,8 +33,9 @@ import { Pagination } from '@/components/ui/pagination';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
+import { logger } from '@/lib/logger';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { useFavorites } from '@/hooks/useFavorites';
@@ -54,30 +57,7 @@ import { GeminiProtocolGenerator } from '@/components/compendium/GeminiProtocolG
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
 import { staticDataProvider } from '@/data/compendium/staticDataProvider';
 
-interface CompendiumEntry {
-  id: string;
-  name: string;
-  type: 'jobs' | 'paths' | 'powers' | 'runes' | 'relics' | 'monsters' | 'backgrounds' | 'conditions' | 'monarchs' | 'feats' | 'skills' | 'equipment' | 'sovereigns';
-  rarity?: string;
-  description: string;
-  level?: number;
-  cr?: string;
-  gate_rank?: string;
-  title?: string;
-  prerequisites?: string;
-  equipment_type?: string;
-  ability?: string;
-  rune_type?: string;
-  rune_category?: string;
-  tags?: string[];
-  created_at?: string;
-  isFavorite?: boolean;
-  source_book?: string;
-  source_kind?: string;
-  school?: string;
-  is_boss?: boolean;
-  image_url?: string | null;
-}
+import { CompendiumEntry } from '@/hooks/useStartupData';
 
 type JobSearchRow = {
   id: string;
@@ -106,19 +86,33 @@ type SortOption = 'name-asc' | 'name-desc' | 'level-asc' | 'level-desc' | 'rarit
 
 const categories = [
   { id: 'all', name: 'All', icon: Grid3X3 },
-  { id: 'jobs', name: 'Jobs', icon: Swords },
+  
+  // Character Foundation
+  { id: 'backgrounds', name: 'Backgrounds', icon: Users },
+  { id: 'jobs', name: 'Classes', icon: Swords },
   { id: 'paths', name: 'Paths', icon: GitBranch },
   { id: 'monarchs', name: 'Monarchs', icon: Crown },
-  { id: 'sovereigns', name: 'Sovereigns', icon: Sparkles },
-  { id: 'powers', name: 'Powers', icon: Wand2 },
-  { id: 'runes', name: 'Runes', icon: Sparkles },
-  { id: 'relics', name: 'Relics', icon: Gem },
+  
+  // Abilities & Skills
   { id: 'feats', name: 'Feats', icon: Sparkles },
+  { id: 'skills', name: 'Skills', icon: Dna },
+  { id: 'powers', name: 'Powers', icon: Wand2 },
+  { id: 'techniques', name: 'Techniques', icon: Package },
+  
+  // Magic & Equipment
+  { id: 'spells', name: 'Spells', icon: ScrollText },
+  { id: 'runes', name: 'Runes', icon: Gem },
+  { id: 'relics', name: 'Relics', icon: Skull },
+  { id: 'artifacts', name: 'Artifacts', icon: Crown },
+  
+  // World & Entities
   { id: 'monsters', name: 'Monsters', icon: Skull },
-  { id: 'backgrounds', name: 'Backgrounds', icon: Users },
-  { id: 'conditions', name: 'Conditions', icon: ScrollText },
-  { id: 'skills', name: 'Skills', icon: Users },
-  { id: 'equipment', name: 'Equipment', icon: Package },
+  { id: 'locations', name: 'Locations', icon: MapPin },
+  { id: 'conditions', name: 'Conditions', icon: AlertTriangle },
+  { id: 'shadow-soldiers', name: 'Shadow Soldiers', icon: Users },
+  
+  // Items
+  { id: 'items', name: 'Items', icon: Package }
 ];
 
 // Enhanced rarity colors with Solo Leveling theme
@@ -183,490 +177,134 @@ const Compendium = () => {
   const { toast } = useToast();
   const showSetup = !isSupabaseConfigured;
 
-  // Fetch compendium data (using debounced search)
+  // Fetch compendium data (using comprehensive static data loading)
   const { data: entries = [], isLoading, error } = useQuery({
-    queryKey: ['compendium', selectedCategory, parsedQuery.text, parsedQuery.operators],
+    queryKey: ['compendium', selectedCategory, parsedQuery.text, parsedQuery.operators, currentPage],
     queryFn: async () => {
+      logger.debug('=== COMPREHENSIVE DATA LOADING ===');
+      logger.debug('Query called with:', { 
+        selectedCategory, 
+        searchQuery: parsedQuery.text,
+        isSupabaseConfigured
+      });
+      
       const allEntries: CompendiumEntry[] = [];
 
-      // Check if Supabase is configured, otherwise use static data
-      if (!isSupabaseConfigured) {
-        // Use static data provider
-        const staticData = await staticDataProvider.getJobs(parsedQuery.text);
-        allEntries.push(...staticData.map(j => ({
-          id: j.id,
-          name: j.display_name || j.name,
-          type: 'jobs' as const,
-          description: j.description,
-          rarity: j.rarity || 'legendary',
-          tags: j.tags || [],
-          created_at: j.created_at,
-          source_book: j.source_book,
-          image_url: j.image_url,
-          isFavorite: favorites.has(`jobs:${j.id}`) || false,
-        })));
-
-        // Add monsters from static data
-        if (selectedCategory === 'all' || selectedCategory === 'monsters') {
-          const monsterData = await staticDataProvider.getMonsters(parsedQuery.text);
-          allEntries.push(...monsterData.map(m => ({
-            id: m.id,
-            name: m.display_name || m.name,
-            type: 'monsters' as const,
-            description: m.description,
-            rarity: m.rarity || 'common',
-            tags: m.tags || [],
-            created_at: m.created_at,
-            source_book: m.source_book,
-            image_url: m.image_url,
-            cr: m.cr,
-            gate_rank: m.gate_rank,
-            is_boss: m.is_boss,
-            isFavorite: favorites.has(`monsters:${m.id}`) || false,
-          })));
+      // Always use static data provider for comprehensive loading
+      logger.debug('Using comprehensive static data provider');
+      
+      // Use static data provider - fetch ALL categories for comprehensive loading
+      const categories = ['backgrounds', 'jobs', 'paths', 'monarchs', 'feats', 'skills', 'powers', 'techniques', 'spells', 'runes', 'relics', 'artifacts', 'monsters', 'locations', 'conditions', 'shadow-soldiers', 'items'] as const;
+      
+      for (const category of categories) {
+        if (selectedCategory === 'all' || selectedCategory === category) {
+          logger.debug(`Fetching ${category} data...`);
+          let data: any[] = [];
+          
+          try {
+            switch (category) {
+              case 'backgrounds':
+                data = await staticDataProvider.getBackgrounds(parsedQuery.text);
+                break;
+              case 'jobs':
+                data = await staticDataProvider.getJobs(parsedQuery.text);
+                break;
+              case 'paths':
+                data = await staticDataProvider.getPaths(parsedQuery.text);
+                break;
+              case 'monarchs':
+                data = await staticDataProvider.getMonarchs(parsedQuery.text);
+                break;
+              case 'feats':
+                data = await staticDataProvider.getFeats(parsedQuery.text);
+                break;
+              case 'skills':
+                data = await staticDataProvider.getSkills(parsedQuery.text);
+                break;
+              case 'powers':
+                data = await staticDataProvider.getPowers(parsedQuery.text);
+                break;
+              case 'techniques':
+                data = await staticDataProvider.getTechniques(parsedQuery.text);
+                break;
+              case 'spells':
+                data = await staticDataProvider.getSpells(parsedQuery.text);
+                break;
+              case 'runes':
+                data = await staticDataProvider.getRunes(parsedQuery.text);
+                break;
+              case 'relics':
+                data = await staticDataProvider.getRelics(parsedQuery.text);
+                break;
+              case 'artifacts':
+                data = await staticDataProvider.getArtifacts(parsedQuery.text);
+                break;
+              case 'monsters':
+                data = await staticDataProvider.getMonsters(parsedQuery.text);
+                break;
+              case 'locations':
+                data = await staticDataProvider.getLocations(parsedQuery.text);
+                break;
+              case 'conditions':
+                data = await staticDataProvider.getConditions(parsedQuery.text);
+                break;
+              case 'shadow-soldiers':
+                data = await staticDataProvider.getShadowSoldiers(parsedQuery.text);
+                break;
+              case 'items':
+                data = await staticDataProvider.getItems(parsedQuery.text);
+                break;
+            }
+            
+            logger.debug(`Got ${data.length} ${category} entries`);
+            
+            allEntries.push(...data.map(item => ({
+              id: item.id,
+              name: item.display_name || item.name,
+              type: category,
+              description: item.description || 'No description available',
+              rarity: item.rarity || 'common',
+              tags: item.tags || [],
+              created_at: item.created_at,
+              source_book: item.source_book,
+              image_url: item.image_url,
+              isFavorite: favorites.has(`${category}:${item.id}`) || false,
+              // Include type-specific fields
+              ...(category === 'monsters' && {
+                cr: item.cr,
+                gate_rank: item.gate_rank,
+                is_boss: item.is_boss,
+              }),
+              ...(category === 'powers' && {
+                power_level: item.power_level,
+                school: item.school,
+              }),
+              ...(category === 'runes' && {
+                rune_type: item.rune_type,
+                rune_category: item.rune_category,
+                level: item.rune_level,
+              }),
+              ...(category === 'skills' && {
+                ability: item.ability,
+              }),
+              ...(category === 'feats' && {
+                prerequisites: item.prerequisites,
+              }),
+              ...(category === 'monarchs' && {
+                title: item.title,
+                theme: item.theme,
+              }),
+            })));
+          } catch (error) {
+            logger.error(`Error fetching ${category}:`, error);
+          }
         }
-
-        // Add items from static data
-        if (selectedCategory === 'all' || selectedCategory === 'equipment') {
-          const itemData = await staticDataProvider.getItems(parsedQuery.text);
-          allEntries.push(...itemData.map(i => ({
-            id: i.id,
-            name: i.display_name || i.name,
-            type: 'equipment' as const,
-            description: i.description,
-            rarity: i.rarity || 'common',
-            tags: i.tags || [],
-            created_at: i.created_at,
-            source_book: i.source_book,
-            image_url: i.image_url,
-            equipment_type: i.equipment_type,
-            isFavorite: favorites.has(`equipment:${i.id}`) || false,
-          })));
-        }
-
-        // Add spells from static data
-        if (selectedCategory === 'all' || selectedCategory === 'powers') {
-          const spellData = await staticDataProvider.getSpells(parsedQuery.text);
-          allEntries.push(...spellData.map(s => ({
-            id: s.id,
-            name: s.display_name || s.name,
-            type: 'powers' as const,
-            description: s.description,
-            rarity: s.rarity || 'common',
-            tags: s.tags || [],
-            created_at: s.created_at,
-            source_book: s.source_book,
-            image_url: s.image_url,
-            school: s.school,
-            isFavorite: favorites.has(`powers:${s.id}`) || false,
-          })));
-        }
-
-        // Add runes from static data
-        if (selectedCategory === 'all' || selectedCategory === 'runes') {
-          const runeData = await staticDataProvider.getRunes(parsedQuery.text);
-          allEntries.push(...runeData.map(r => ({
-            id: r.id,
-            name: r.display_name || r.name,
-            type: 'runes' as const,
-            description: r.description,
-            rarity: r.rarity || 'rare',
-            tags: r.tags || [],
-            created_at: r.created_at,
-            source_book: r.source_book,
-            image_url: r.image_url,
-            rune_type: r.rune_type,
-            isFavorite: favorites.has(`runes:${r.id}`) || false,
-          })));
-        }
-
-        return allEntries;
       }
 
-      // Fetch Jobs
-      if (selectedCategory === 'all' || selectedCategory === 'jobs') {
-          let jobs: JobSearchRow[] | null = null;
-          
-          // Use full-text search RPC if query is long enough
-          if (debouncedSearchQuery.trim() && debouncedSearchQuery.length > 2) {
-            try {
-              const { data: rpcData } = await supabase.rpc('search_compendium_jobs', {
-                search_text: debouncedSearchQuery.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').trim(),
-              });
-              jobs = rpcData;
-            } catch (error) {
-              // Fallback to regular query
-            }
-          }
-          
-          // Fallback to regular query if RPC not used or failed
-          if (!jobs) {
-            let query = supabase
-              .from('compendium_jobs')
-              .select('id, name, display_name, description, created_at, tags, source_book, image_url');
-            
-            if (debouncedSearchQuery.trim()) {
-              query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
-            }
-            
-            const { data } = await query;
-            jobs = data;
-          }
-          if (jobs) {
-            allEntries.push(...jobs.map(j => ({
-              id: j.id,
-              name: (j.display_name || j.name),
-              type: 'jobs' as const,
-              description: j.description,
-              rarity: 'legendary',
-              tags: j.tags || [],
-              created_at: j.created_at,
-              source_book: j.source_book,
-              image_url: j.image_url,
-              isFavorite: favorites.has(`jobs:${j.id}`) || false,
-            })));
-          }
-        }
-
-        // Fetch Paths
-        if (selectedCategory === 'all' || selectedCategory === 'paths') {
-          let query = supabase
-            .from('compendium_job_paths')
-            .select('id, name, display_name, description, created_at, tags, source_book');
-          
-          if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
-          }
-          
-          const { data: paths } = await query;
-          if (paths) {
-            allEntries.push(...paths.map(p => ({
-              id: p.id,
-              name: ((p as { display_name?: string | null }).display_name || p.name),
-              type: 'paths' as const,
-              description: p.description,
-              rarity: 'rare',
-              tags: p.tags || [],
-              created_at: p.created_at,
-              source_book: p.source_book,
-              isFavorite: favorites.has(`paths:${p.id}`) || false,
-            })));
-          }
-        }
-
-        // Fetch Monarchs
-        if (selectedCategory === 'all' || selectedCategory === 'monarchs') {
-          let query = supabase
-            .from('compendium_monarchs')
-            .select('id, name, display_name, title, description, theme, created_at, tags, source_book');
-          
-          if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
-          }
-          
-          const { data: monarchs } = await query;
-          if (monarchs) {
-            allEntries.push(...monarchs.map(m => ({
-              id: m.id,
-              name: ((m as { display_name?: string | null }).display_name || m.name),
-              type: 'monarchs' as const,
-              description: m.description,
-              title: m.title,
-              rarity: 'legendary',
-              tags: m.tags || [],
-              created_at: m.created_at,
-              source_book: m.source_book,
-              isFavorite: favorites.has(`monarchs:${m.id}`) || false,
-            })));
-          }
-        }
-
-        // Fetch Sovereigns (Gemini Protocol fusions - no unlock level requirement)
-        if (selectedCategory === 'all' || selectedCategory === 'sovereigns') {
-          let query = supabase
-            .from('compendium_sovereigns')
-            .select('id, name, display_name, description, fusion_theme, prerequisites, created_at, tags, source_book');
-          
-          if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%,fusion_theme.ilike.%${debouncedSearchQuery}%`);
-          }
-          
-          const { data: sovereigns } = await query;
-          if (sovereigns) {
-            allEntries.push(...sovereigns.map(s => ({
-              id: s.id,
-              name: ((s as { display_name?: string | null }).display_name || s.name),
-              type: 'sovereigns' as const,
-              description: s.description,
-              prerequisites: s.prerequisites,
-              rarity: 'legendary',
-              tags: [...(s.tags || []), 'gemini-protocol'],
-              created_at: s.created_at,
-              source_book: s.source_book || 'Gemini Protocol',
-              isFavorite: favorites.has(`sovereigns:${s.id}`) || false,
-            })));
-          }
-        }
-
-        // Fetch Powers
-        if (selectedCategory === 'all' || selectedCategory === 'powers') {
-          let powers: PowerSearchRow[] | null = null;
-          
-          if (debouncedSearchQuery.trim() && debouncedSearchQuery.length > 2) {
-            try {
-              const { data: rpcData } = await supabase.rpc('search_compendium_powers', {
-                search_text: debouncedSearchQuery.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').trim(),
-              });
-              powers = rpcData;
-            } catch (error) {
-              // Fallback
-            }
-          }
-          
-          if (!powers) {
-            let query = supabase
-              .from('compendium_powers')
-              .select('id, name, display_name, description, power_level, school, created_at, tags, source_book');
-            
-            if (debouncedSearchQuery.trim()) {
-              query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
-            }
-            
-            const { data } = await query;
-            powers = data;
-          }
-          if (powers) {
-            allEntries.push(...powers.map(p => ({
-              id: p.id,
-              name: (p.display_name || p.name),
-              type: 'powers' as const,
-              description: p.description,
-              level: p.power_level || 0,
-              rarity: p.power_level ? `tier-${p.power_level}` : 'common',
-              tags: p.tags || [],
-              created_at: p.created_at,
-              source_book: p.source_book,
-              isFavorite: favorites.has(`powers:${p.id}`) || false,
-            })));
-          }
-        }
-
-        // Fetch Runes
-        if (selectedCategory === 'all' || selectedCategory === 'runes') {
-          let query = supabase
-            .from('compendium_runes')
-            .select('id, name, display_name, description, rune_level, rune_type, rune_category, rarity, created_at, tags, source_book');
-          
-          if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
-          }
-          
-          const { data: runes } = await query;
-          if (runes) {
-            allEntries.push(...runes.map(r => ({
-              id: r.id,
-              name: ((r as { display_name?: string | null }).display_name || r.name),
-              type: 'runes' as const,
-              description: r.description,
-              level: r.rune_level,
-              rarity: r.rarity,
-              tags: r.tags || [],
-              created_at: r.created_at,
-              source_book: r.source_book || 'SL',
-              isFavorite: favorites.has(`runes:${r.id}`) || false,
-            })));
-          }
-        }
-
-        // Fetch Relics
-        if (selectedCategory === 'all' || selectedCategory === 'relics') {
-          let query = supabase
-            .from('compendium_relics')
-            .select('id, name, display_name, description, rarity, item_type, created_at, tags, source_book, image_url');
-          
-          if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
-          }
-          
-          const { data: relics } = await query;
-          if (relics) {
-            allEntries.push(...relics.map(r => ({
-              id: r.id,
-              name: ((r as { display_name?: string | null }).display_name || r.name),
-              type: 'relics' as const,
-              description: r.description,
-              rarity: r.rarity,
-              tags: r.tags || [],
-              created_at: r.created_at,
-              source_book: r.source_book,
-              image_url: r.image_url,
-              isFavorite: favorites.has(`relics:${r.id}`) || false,
-            })));
-          }
-        }
-
-        // Fetch Feats
-        if (selectedCategory === 'all' || selectedCategory === 'feats') {
-          let query = supabase
-            .from('compendium_feats')
-            .select('id, name, display_name, description, prerequisites, created_at, tags, source_book');
-          
-          if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
-          }
-          
-          const { data: feats } = await query;
-          if (feats) {
-            allEntries.push(...feats.map(f => ({
-              id: f.id,
-              name: ((f as { display_name?: string | null }).display_name || f.name),
-              type: 'feats' as const,
-              description: f.description,
-              prerequisites: f.prerequisites,
-              rarity: 'uncommon',
-              tags: f.tags || [],
-              created_at: f.created_at,
-              source_book: f.source_book,
-              isFavorite: favorites.has(`feats:${f.id}`) || false,
-            })));
-          }
-        }
-
-        // Fetch Monsters
-        if (selectedCategory === 'all' || selectedCategory === 'monsters') {
-          let query = supabase
-            .from('compendium_monsters')
-            .select('id, name, display_name, description, cr, gate_rank, is_boss, created_at, tags, source_book, image_url');
-          
-          if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
-          }
-          
-          const { data: monsters } = await query;
-          if (monsters) {
-            allEntries.push(...monsters.map(m => ({
-              id: m.id,
-              name: ((m as { display_name?: string | null }).display_name || m.name),
-              type: 'monsters' as const,
-              description: m.description,
-              cr: m.cr,
-              gate_rank: m.gate_rank,
-              rarity: m.gate_rank || 'common',
-              tags: m.tags || [],
-              created_at: m.created_at,
-              source_book: m.source_book,
-              image_url: m.image_url,
-              isFavorite: favorites.has(`monsters:${m.id}`) || false,
-            })));
-          }
-        }
-
-        // Fetch Backgrounds
-        if (selectedCategory === 'all' || selectedCategory === 'backgrounds') {
-          let query = supabase
-            .from('compendium_backgrounds')
-            .select('id, name, display_name, description, created_at, tags, source_book');
-          
-          if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
-          }
-          
-          const { data: backgrounds } = await query;
-          if (backgrounds) {
-            allEntries.push(...backgrounds.map(b => ({
-              id: b.id,
-              name: ((b as { display_name?: string | null }).display_name || b.name),
-              type: 'backgrounds' as const,
-              description: b.description,
-              rarity: 'common',
-              tags: b.tags || [],
-              created_at: b.created_at,
-              source_book: b.source_book,
-              isFavorite: favorites.has(`backgrounds:${b.id}`) || false,
-            })));
-          }
-        }
-
-        // Fetch Conditions
-        if (selectedCategory === 'all' || selectedCategory === 'conditions') {
-          let query = supabase
-            .from('compendium_conditions')
-            .select('id, name, display_name, description, created_at');
-          
-          if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
-          }
-          
-          const { data: conditions } = await query;
-          if (conditions) {
-            allEntries.push(...conditions.map(c => ({
-              id: c.id,
-              name: ((c as { display_name?: string | null }).display_name || c.name),
-              type: 'conditions' as const,
-              description: c.description,
-              rarity: 'common',
-              created_at: c.created_at,
-              isFavorite: favorites.has(`conditions:${c.id}`) || false,
-            })));
-          }
-        }
-
-        // Fetch Skills
-        if (selectedCategory === 'all' || selectedCategory === 'skills') {
-          let query = supabase
-            .from('compendium_skills')
-            .select('id, name, display_name, description, ability, created_at, source_book');
-          
-          if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
-          }
-          
-          const { data: skills } = await query;
-          if (skills) {
-            allEntries.push(...skills.map(s => ({
-              id: s.id,
-              name: ((s as { display_name?: string | null }).display_name || s.name),
-              type: 'skills' as const,
-              description: s.description,
-              rarity: 'common',
-              ability: s.ability,
-              created_at: s.created_at,
-              source_book: s.source_book,
-              isFavorite: favorites.has(`skills:${s.id}`) || false,
-            })));
-          }
-        }
-
-        // Fetch Equipment
-        if (selectedCategory === 'all' || selectedCategory === 'equipment') {
-          let query = supabase
-            .from('compendium_equipment')
-            .select('id, name, display_name, description, equipment_type, damage, armor_class, created_at, source_book, image_url');
-          
-          if (debouncedSearchQuery.trim()) {
-            query = query.or(`name.ilike.%${debouncedSearchQuery}%,display_name.ilike.%${debouncedSearchQuery}%,description.ilike.%${debouncedSearchQuery}%`);
-          }
-          
-          const { data: equipment } = await query;
-          if (equipment) {
-            allEntries.push(...equipment.map(e => ({
-              id: e.id,
-              name: ((e as { display_name?: string | null }).display_name || e.name),
-              type: 'equipment' as const,
-              description: e.description,
-              rarity: 'common',
-              equipment_type: e.equipment_type,
-              created_at: e.created_at,
-              source_book: e.source_book,
-              image_url: e.image_url,
-              isFavorite: favorites.has(`equipment:${e.id}`) || false,
-            })));
-          }
-        }
-
+      logger.debug('=== TOTAL ENTRIES LOADED ===:', allEntries.length);
       return allEntries;
     },
-    enabled: isSupabaseConfigured,
+    enabled: true, // Always enable this query since we have both Supabase and static data fallback
   });
 
   // Track search history
@@ -1094,21 +732,21 @@ const Compendium = () => {
     <Layout>
       <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="font-display text-4xl font-bold mb-2 gradient-text-system">
+        <header className="mb-8">
+          <h1 className="font-display text-4xl font-bold mb-2 gradient-text-system" role="heading">
             COMPENDIUM
           </h1>
           <p className="text-muted-foreground font-heading">
             Browse the complete Solo Leveling 5e ruleset — {filteredAndSortedEntries.length} {filteredAndSortedEntries.length === 1 ? 'entry' : 'entries'}
           </p>
-        </div>
+        </header>
 
         {/* Search and Controls */}
-        <div className="flex flex-col gap-4 mb-6">
+        <section className="flex flex-col gap-4 mb-6" aria-label="Search and filters">
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="relative flex-1 flex items-center gap-2">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" aria-hidden="true" />
                 <Input
                   placeholder="Search... (e.g., fire damage, type:power, level:>3)"
                   aria-label="Search compendium"
@@ -1174,7 +812,7 @@ const Compendium = () => {
               Searching...
             </div>
           )}
-        </div>
+        </section>
 
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Sidebar */}
@@ -1219,6 +857,12 @@ const Compendium = () => {
                     </Button>
                   </DialogTrigger>
                   <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto w-[calc(100%-2rem)]">
+                    <DialogHeader>
+                      <DialogTitle>Gemini Protocol</DialogTitle>
+                      <DialogDescription>
+                        Fuse Job, Path, and Monarch essences into a sovereign profile.
+                      </DialogDescription>
+                    </DialogHeader>
                     <GeminiProtocolGenerator />
                   </DialogContent>
                 </Dialog>
@@ -1450,3 +1094,4 @@ const Compendium = () => {
 };
 
 export default Compendium;
+
