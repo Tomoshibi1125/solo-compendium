@@ -26,6 +26,7 @@ export default function Login() {
   const { isLoading: oauthLoading, signInWithProvider } = useOAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const oauthEnabled = import.meta.env.VITE_OAUTH_ENABLED === 'true';
 
   useEffect(() => {
     const authError = searchParams.get('error');
@@ -110,20 +111,22 @@ export default function Login() {
 
         {/* Login Form */}
         <div className="bg-gray-800/50 backdrop-blur-lg rounded-2xl p-8 border border-gray-700 shadow-2xl">
-          <div className="mb-6 space-y-4">
-            <OAuthButtons
-              isLoading={oauthLoading}
-              onSignIn={handleOAuthSignIn}
-            />
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-700"></div>
-              </div>
-              <div className="relative flex justify-center text-xs">
-                <span className="bg-gray-800/60 px-2 text-gray-400">or continue with email</span>
+          {oauthEnabled && (
+            <div className="mb-6 space-y-4">
+              <OAuthButtons
+                isLoading={oauthLoading}
+                onSignIn={handleOAuthSignIn}
+              />
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-700"></div>
+                </div>
+                <div className="relative flex justify-center text-xs">
+                  <span className="bg-gray-800/60 px-2 text-gray-400">or continue with email</span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Role Selection */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
