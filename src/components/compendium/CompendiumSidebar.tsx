@@ -178,9 +178,9 @@ export function CompendiumSidebar({
         </SystemWindow>
       )}
 
-      {/* Gate Ranks (for Monsters) */}
+      {/* Rift Ranks (for Monsters) */}
       {gateRanks.length > 0 && onGateRankToggle && (
-        <SystemWindow title="GATE RANKS" className="p-4">
+        <SystemWindow title="RIFT RANKS" className="p-4">
           <div className="space-y-2">
             {gateRanks.map((rank) => {
               const isSelected = selectedGateRanks?.includes(rank);

@@ -1,1417 +1,214 @@
 @import "tailwindcss";
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   SOLO LEVELING: ARISE — POST-RESET TIMELINE
-   The Supreme Deity reigns over all
-   "I am the Monarch of Shadows. All who dwell in darkness... arise."
-   ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Landing page hero background */
-.landing-hero-bg {
-  background-image: url('/ui/landing-page-hero.webp');
-  background-image: image-set(
-    url('/ui/landing-page-hero.avif') type('image/avif'),
-    url('/ui/landing-page-hero.webp') type('image/webp')
-  );
-}
 
-/* Login page background */
-.login-page-bg {
-  background-image: url('/ui/login-page-bg.webp');
-  background-image: image-set(
-    url('/ui/login-page-bg.avif') type('image/avif'),
-    url('/ui/login-page-bg.webp') type('image/webp')
-  );
-}
+/* Print Styles - Chronicle of Ascendants */
 
-@layer base {
-  :root {
-    /* Core Shadow Monarch palette - The Void Between Worlds */
-    --background: 228 25% 3%;
-    --foreground: 220 25% 95%;
-    
-    /* Card surfaces - Shadow Realm depths */
-    --card: 228 30% 6%;
-    --card-foreground: 220 25% 95%;
-    
-    --popover: 228 35% 7%;
-    --popover-foreground: 220 25% 95%;
-    
-    /* Primary - Supreme Deity's Shadow Blue (Ruler's Authority) */
-    --primary: 220 100% 60%;
-    --primary-foreground: 228 50% 10%;
-    
-    /* Secondary - Deep Shadow Purple (Monarch's Essence) */
-    --secondary: 265 45% 16%;
-    --secondary-foreground: 220 25% 95%;
-    
-    /* Muted - Eternal Darkness */
-    --muted: 225 30% 12%;
-    --muted-foreground: 220 20% 55%;
-    
-    /* Accent - System Interface Green (The System's blessing) */
-    --accent: 155 90% 40%;
-    --accent-foreground: 220 30% 98%;
-    
-    /* Destructive - Gate Break Crimson */
-    --destructive: 0 75% 50%;
-    --destructive-foreground: 220 30% 98%;
-    
-    /* Borders and inputs */
-    --border: 225 35% 18%;
-    --input: 225 35% 12%;
-    --ring: 220 100% 55%;
-    
-    /* Radius */
-    --radius: 0.5rem;
-    
-    /* Solo Leveling Specific - Supreme Deity Palette */
-    --shadow-blue: 220 100% 60%;
-    --shadow-purple: 265 75% 55%;
-    --shadow-deep: 265 50% 25%;
-    --monarch-gold: 42 100% 50%;
-    --monarch-silver: 220 15% 75%;
-    --gate-red: 0 90% 55%;
-    --system-green: 155 90% 42%;
-    --void-black: 228 40% 2%;
-    --mana-cyan: 190 90% 50%;
-    --arise-violet: 280 85% 65%;
-    
-    /* Hunter Rank Colors - Post-Reset Hierarchy */
-    --gate-e: 0 0% 55%;
-    --gate-d: 35 85% 50%;
-    --gate-c: 195 85% 50%;
-    --gate-b: 275 75% 55%;
-    --gate-a: 0 90% 55%;
-    --gate-s: 42 100% 55%;
-    --gate-ss: 265 100% 70%;
-    --gate-national: 220 100% 65%;
-    
-    /* Shadow Army Colors */
-    --shadow-soldier: 265 70% 50%;
-    --shadow-marshal: 220 85% 55%;
-    --shadow-general: 280 80% 60%;
-    --igris-crimson: 0 80% 45%;
-    --beru-gold: 50 90% 50%;
-    --bellion-silver: 220 20% 80%;
-    
-    /* Sidebar */
-    --sidebar-background: 228 30% 5%;
-    --sidebar-foreground: 220 25% 90%;
-    --sidebar-primary: 220 100% 60%;
-    --sidebar-primary-foreground: 228 50% 10%;
-    --sidebar-accent: 155 90% 40%;
-    --sidebar-accent-foreground: 220 30% 98%;
-    --sidebar-border: 225 35% 18%;
-    --sidebar-ring: 220 100% 55%;
-    
-    /* Success/Warning states */
-    --success: 155 90% 40%;
-    --success-foreground: 220 30% 98%;
-    --warning: 42 100% 50%;
-    --warning-foreground: 228 50% 10%;
-    
-    /* System Glow Effects */
-    --system-glow: 220 100% 60%;
-    --shadow-dark: 265 50% 25%;
-    --hunter-blue: 220 100% 60%;
-  }
-}
-
-@layer base {
-  *,
-  *::before,
-  *::after {
-    border-color: hsl(var(--border));
-    box-sizing: border-box;
-  }
-  
-  html {
-    height: 100%;
-    width: 100%;
-  }
-  
-  body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
-    font-feature-settings: "rlig" 1, "calt" 1;
-    min-height: 100vh;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    /* Supreme Deity's presence - subtle shadow particles */
-    background-image: 
-      radial-gradient(ellipse at 15% 25%, hsl(220 100% 60% / 0.04) 0%, transparent 45%),
-      radial-gradient(ellipse at 85% 75%, hsl(265 75% 55% / 0.04) 0%, transparent 45%),
-      radial-gradient(ellipse at 50% 50%, hsl(280 85% 65% / 0.02) 0%, transparent 60%);
-    background-color: hsl(var(--background));
-  }
-  
-  #root {
-    min-height: 100vh;
-    width: 100%;
-    display: block;
-    position: relative;
-  }
-  
-  /* Scrollbar - Shadow Monarch's aesthetic */
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-  
-  ::-webkit-scrollbar-track {
-    background: hsl(var(--void-black));
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, hsl(var(--shadow-blue) / 0.4), hsl(var(--shadow-purple) / 0.4));
-    border-radius: 3px;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, hsl(var(--shadow-blue) / 0.6), hsl(var(--shadow-purple) / 0.6));
-  }
-  
-  /* Selection - Monarch's Touch */
-  ::selection {
-    background: hsl(var(--shadow-purple) / 0.4);
-    color: hsl(var(--foreground));
-    text-shadow: 0 0 10px hsl(var(--shadow-blue) / 0.5);
-  }
-
-  /* Mobile Optimizations */
-  @media (max-width: 768px) {
-    html {
-      /* Text size adjustment for mobile browsers - prevents automatic zooming */
-      /* Legacy IE - Microsoft browsers */
-      -ms-text-size-adjust: 100%;
-      /* Safari, iOS, Chrome, Edge - WebKit browsers */
-      -webkit-text-size-adjust: 100%;
-      /* Standard property - supported by Firefox 111+, Safari 16.4+, Chrome 54+, Edge 79+ */
-      text-size-adjust: 100%;
-    }
-
-    body {
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: optimizeLegibility;
-      overflow-x: hidden;
-    }
-
-    /* Ensure touch targets are at least 44x44px on mobile */
-    button,
-    a,
-    input[type="button"],
-    input[type="submit"],
-    [role="button"] {
-      min-height: 44px;
-      min-width: 44px;
-    }
-
-    /* Prevent text input zoom on iOS */
-    input[type="text"],
-    input[type="email"],
-    input[type="number"],
-    input[type="password"],
-    input[type="search"],
-    input[type="tel"],
-    input[type="url"],
-    textarea,
-    select {
-      font-size: 16px !important;
-    }
-
-    /* Improve tap highlight */
-    a,
-    button {
-      -webkit-tap-highlight-color: hsl(var(--primary) / 0.2);
-    }
-
-  /* Prevent horizontal scroll */
-  * {
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-
-  img,
-  video,
-  iframe {
-    max-width: 100%;
-    height: auto;
-  }
-
-  /* Ensure containers don't overflow */
-  .container {
-    width: 100%;
-    max-width: 100%;
-  }
-
-    /* Better scrolling on iOS */
-    .overflow-y-auto,
-    [data-scroll] {
-      /* -webkit-overflow-scrolling: touch; Deprecated in iOS 13+ */
-      overscroll-behavior: contain;
-    }
-  }
-
-  /* Touch device optimizations */
-  .touch-device button,
-  .touch-device a,
-  .touch-device [role="button"] {
-    min-height: 44px;
-    min-width: 44px;
-  }
-
-  .touch-device input[type="text"],
-  .touch-device input[type="email"],
-  .touch-device input[type="number"],
-  .touch-device input[type="password"],
-  .touch-device input[type="search"],
-  .touch-device input[type="tel"],
-  .touch-device input[type="url"],
-  .touch-device textarea,
-  .touch-device select {
-    font-size: 16px !important;
-  }
-
-  /* Mobile-specific spacing adjustments */
-  @media (max-width: 640px) {
-    .container {
-      padding-left: 1rem;
-      padding-right: 1rem;
-    }
-  }
-
-  /* iOS Safe Area Support */
-  @supports (padding: max(0px)) {
-    body {
-      padding-left: max(0px, env(safe-area-inset-left));
-      padding-right: max(0px, env(safe-area-inset-right));
-    }
-
-    header {
-      padding-left: max(1rem, env(safe-area-inset-left));
-      padding-right: max(1rem, env(safe-area-inset-right));
-    }
-  }
-
-  /* Better mobile scrolling */
-  @media (hover: none) and (pointer: coarse) {
-    * {
-      /* -webkit-overflow-scrolling: touch; Deprecated in iOS 13+ */
-      overscroll-behavior: contain;
-    }
-  }
-
-  /* Prevent text selection on mobile buttons */
-  @media (max-width: 768px) {
-    button,
-    [role="button"] {
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      user-select: none;
-    }
-  }
-
-  /* Reduced motion support */
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
-  }
-
-  /* High contrast mode support */
-  @media (prefers-contrast: high) {
-    :root {
-      --border: 0 0% 50%;
-      --ring: 0 0% 100%;
-    }
-    
-    button,
-    a,
-    [role="button"] {
-      border: 2px solid currentColor;
-    }
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   TYPOGRAPHY — The System's Voice
-   ═══════════════════════════════════════════════════════════════════════════ */
-@layer utilities {
-  .font-display {
-    font-family: 'Orbitron', 'Courier New', monospace;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .font-heading {
-    font-family: 'Rajdhani', 'Inter', system-ui, sans-serif;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    line-height: 1.5;
-  }
-  
-  .font-system {
-    font-family: 'Share Tech Mono', 'Courier New', monospace;
-    letter-spacing: 0.04em;
-  }
-  
-  .font-arise {
-    font-family: 'Orbitron', monospace;
-    font-weight: 900;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-  }
-
-  /* Improved typography for compendium content */
-  .compendium-content h1,
-  .compendium-content .h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 1rem;
-    letter-spacing: 0.02em;
-  }
-
-  .compendium-content h2,
-  .compendium-content .h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    line-height: 1.3;
-    margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
-    letter-spacing: 0.02em;
-  }
-
-  .compendium-content h3,
-  .compendium-content .h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    line-height: 1.4;
-    margin-top: 1.25rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .compendium-content h4,
-  .compendium-content .h4 {
-    font-size: 1.125rem;
-    font-weight: 600;
-    line-height: 1.4;
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .compendium-content p {
-    font-size: 1rem;
-    line-height: 1.7;
-    margin-bottom: 1rem;
-  }
-
-  .compendium-content ul,
-  .compendium-content ol {
-    margin-bottom: 1rem;
-    padding-left: 1.5rem;
-  }
-
-  .compendium-content li {
-    margin-bottom: 0.5rem;
-    line-height: 1.6;
-  }
-
-  /* Better spacing for stat blocks */
-  .stat-block-content {
-    font-size: 0.9375rem;
-    line-height: 1.6;
-  }
-
-  .stat-block-content p {
-    margin-bottom: 0.75rem;
-  }
-
-  /* Text gradients - Monarch's Essence */
-  .gradient-text-shadow {
-    background: linear-gradient(135deg, hsl(var(--shadow-blue)) 0%, hsl(var(--shadow-purple)) 50%, hsl(var(--arise-violet)) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .gradient-text-system {
-    background: linear-gradient(135deg, hsl(var(--system-green)) 0%, hsl(var(--shadow-blue)) 40%, hsl(var(--arise-violet)) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  
-  .gradient-text-monarch {
-    background: linear-gradient(135deg, hsl(var(--monarch-gold)) 0%, hsl(var(--shadow-purple)) 50%, hsl(var(--arise-violet)) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  
-  .gradient-text-arise {
-    background: linear-gradient(180deg, hsl(var(--arise-violet)) 0%, hsl(var(--shadow-purple)) 50%, hsl(var(--shadow-blue)) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  
-  .gradient-text-gold {
-    background: linear-gradient(135deg, hsl(var(--monarch-gold)) 0%, hsl(42 90% 65%) 50%, hsl(var(--monarch-gold)) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  
-  .gradient-text-supreme {
-    background: linear-gradient(135deg, hsl(var(--monarch-silver)) 0%, hsl(var(--monarch-gold)) 25%, hsl(var(--shadow-blue)) 50%, hsl(var(--arise-violet)) 75%, hsl(var(--monarch-gold)) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    background-size: 200% 200%;
-    animation: supreme-shimmer 3s ease-in-out infinite;
-  }
-  
-  /* Text glows - Divine Radiance */
-  .text-glow {
-    text-shadow: 0 0 15px hsl(var(--primary) / 0.6), 0 0 35px hsl(var(--primary) / 0.4), 0 0 55px hsl(var(--primary) / 0.2);
-  }
-  
-  .text-glow-purple {
-    text-shadow: 0 0 15px hsl(var(--shadow-purple) / 0.6), 0 0 35px hsl(var(--shadow-purple) / 0.4), 0 0 55px hsl(var(--arise-violet) / 0.3);
-  }
-  
-  .text-glow-gold {
-    text-shadow: 0 0 15px hsl(var(--monarch-gold) / 0.6), 0 0 35px hsl(var(--monarch-gold) / 0.4), 0 0 55px hsl(var(--monarch-gold) / 0.2);
-  }
-  
-  .text-glow-arise {
-    text-shadow: 0 0 20px hsl(var(--arise-violet) / 0.7), 0 0 40px hsl(var(--shadow-purple) / 0.5), 0 0 60px hsl(var(--shadow-blue) / 0.3);
-  }
-
-  /* ═══════════════════════════════════════════════════════════════════════════
-     GLASS MORPHISM — Shadow Realm Windows
-     ═══════════════════════════════════════════════════════════════════════════ */
-  .glass-card {
-    background: linear-gradient(135deg, hsl(var(--card) / 0.85) 0%, hsl(var(--void-black) / 0.7) 100%);
-    -webkit-backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
-    border: 1px solid hsl(var(--border) / 0.6);
-    box-shadow: 
-      0 4px 30px hsl(var(--void-black) / 0.5),
-      0 0 1px hsl(var(--shadow-blue) / 0.2),
-      inset 0 1px 0 hsl(var(--primary) / 0.08);
-  }
-  
-  .glass-card-hover:hover {
-    border-color: hsl(var(--primary) / 0.5);
-    box-shadow: 
-      0 8px 40px hsl(var(--shadow-blue) / 0.15),
-      0 0 2px hsl(var(--shadow-purple) / 0.3),
-      inset 0 1px 0 hsl(var(--primary) / 0.15);
-  }
-  
-  .card-shadow-energy {
-    transition: all 0.3s ease;
-  }
-  
-  .card-shadow-energy:hover {
-    box-shadow: 
-      0 0 20px hsl(var(--shadow-blue) / 0.2),
-      0 0 40px hsl(var(--shadow-purple) / 0.1),
-      0 8px 32px hsl(var(--void-black) / 0.4);
-    transform: translateY(-2px);
-  }
-
-  /* ═══════════════════════════════════════════════════════════════════════════
-     MONARCH'S SEAL — Supreme Deity's Mark
-     ═══════════════════════════════════════════════════════════════════════════ */
-  .monarch-seal {
-    position: relative;
-  }
-
-  .monarch-seal::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: inherit;
-    padding: 2px;
-    background: linear-gradient(135deg, hsl(var(--shadow-blue)), hsl(var(--shadow-purple)), hsl(var(--arise-violet)), hsl(var(--monarch-gold)), hsl(var(--shadow-blue)));
-    background-size: 300% 300%;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0.7;
-    animation: monarch-seal-rotate 4s ease-in-out infinite;
-  }
-  
-  .shadow-monarch-glow {
-    box-shadow: 
-      0 0 20px hsl(var(--shadow-blue) / 0.3),
-      0 0 40px hsl(var(--shadow-purple) / 0.2),
-      0 0 60px hsl(var(--arise-violet) / 0.1);
-  }
-  
-  .monarch-presence {
-    filter: drop-shadow(0 0 8px hsl(var(--shadow-blue) / 0.4)) drop-shadow(0 0 16px hsl(var(--shadow-purple) / 0.2));
-    transition: filter 0.3s ease;
-  }
-  
-  .monarch-presence:hover {
-    filter: drop-shadow(0 0 12px hsl(var(--shadow-blue) / 0.6)) drop-shadow(0 0 24px hsl(var(--shadow-purple) / 0.4));
-  }
-  
-  /* Shadow particle effect */
-  .shadow-particle {
-    position: absolute;
-    width: var(--particle-size, 6px);
-    height: var(--particle-size, 6px);
-    background: radial-gradient(circle, hsl(var(--shadow-purple) / 0.8) 0%, hsl(var(--arise-violet) / 0.4) 50%, transparent 100%);
-    border-radius: 50%;
-    top: var(--particle-top, 50%);
-    left: var(--particle-left, 50%);
-    animation: shadow-float 4s ease-in-out infinite;
-    animation-delay: var(--particle-delay, 0s);
-    pointer-events: none;
-    filter: blur(1px);
-  }
-  
-  /* ═══════════════════════════════════════════════════════════════════════════
-     HUNTER RANK BADGES — Post-Reset Hierarchy
-     ═══════════════════════════════════════════════════════════════════════════ */
-  .gate-e { color: hsl(var(--gate-e)); border-color: hsl(var(--gate-e)); }
-  .gate-d { color: hsl(var(--gate-d)); border-color: hsl(var(--gate-d)); }
-  .gate-c { color: hsl(var(--gate-c)); border-color: hsl(var(--gate-c)); }
-  .gate-b { color: hsl(var(--gate-b)); border-color: hsl(var(--gate-b)); text-shadow: 0 0 8px hsl(var(--gate-b) / 0.4); }
-  .gate-a { color: hsl(var(--gate-a)); border-color: hsl(var(--gate-a)); text-shadow: 0 0 10px hsl(var(--gate-a) / 0.5); }
-  .gate-s { color: hsl(var(--gate-s)); border-color: hsl(var(--gate-s)); text-shadow: 0 0 15px hsl(var(--gate-s) / 0.6); }
-  .gate-ss { color: hsl(var(--gate-ss)); border-color: hsl(var(--gate-ss)); text-shadow: 0 0 20px hsl(var(--gate-ss) / 0.7); animation: gate-ss-pulse 2s ease-in-out infinite; }
-  .gate-national { color: hsl(var(--gate-national)); border-color: hsl(var(--gate-national)); text-shadow: 0 0 20px hsl(var(--gate-national) / 0.6); animation: national-glow 3s ease-in-out infinite; }
-  
-  /* Shadow Soldier ranks */
-  .shadow-soldier { color: hsl(var(--shadow-soldier)); text-shadow: 0 0 10px hsl(var(--shadow-soldier) / 0.5); }
-  .shadow-marshal { color: hsl(var(--shadow-marshal)); text-shadow: 0 0 15px hsl(var(--shadow-marshal) / 0.6); }
-  .shadow-general { color: hsl(var(--shadow-general)); text-shadow: 0 0 20px hsl(var(--shadow-general) / 0.7); }
-  
-  /* Named Shadow Soldiers */
-  .igris-rank { color: hsl(var(--igris-crimson)); text-shadow: 0 0 15px hsl(var(--igris-crimson) / 0.6); }
-  .beru-rank { color: hsl(var(--beru-gold)); text-shadow: 0 0 15px hsl(var(--beru-gold) / 0.6); }
-  .bellion-rank { color: hsl(var(--bellion-silver)); text-shadow: 0 0 20px hsl(var(--bellion-silver) / 0.5); }
-  
-  /* System Button styles */
-  .btn-shadow-monarch {
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .btn-shadow-monarch::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, transparent, hsl(var(--shadow-blue) / 0.2), transparent);
-    transform: translateX(-100%);
-    transition: transform 0.5s ease;
-  }
-  
-  .btn-shadow-monarch:hover::before {
-    transform: translateX(100%);
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   ANIMATIONS — The System's Commands
-   "Arise." - The Supreme Deity
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/* Core Shadow Monarch Glow */
-@keyframes shadow-monarch-glow {
-  0%, 100% {
-    box-shadow: 0 0 20px hsl(var(--shadow-blue) / 0.3), 0 0 40px hsl(var(--shadow-purple) / 0.2), 0 0 60px hsl(var(--arise-violet) / 0.1);
-  }
-  50% {
-    box-shadow: 0 0 30px hsl(var(--shadow-blue) / 0.5), 0 0 60px hsl(var(--shadow-purple) / 0.3), 0 0 80px hsl(var(--arise-violet) / 0.2);
-  }
-}
-
-/* Shadow Float - Eternal Shadow Army */
-@keyframes shadow-float {
-  0%, 100% {
-    transform: translateY(0) scale(1);
-    opacity: 0.6;
-  }
-  50% {
-    transform: translateY(-25px) scale(1.3);
-    opacity: 0.2;
-  }
-}
-
-/* Slow Spin - Monarch's Seal Rotation */
-@keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.animate-spin-slow { animation: spin-slow 20s linear infinite; }
-.animate-spin-slow-15s { animation: spin-slow 15s linear infinite; }
-.animate-spin-slow-reverse-10s { animation: spin-slow 10s linear infinite reverse; }
-
-/* Pulse Glow - System Interface */
-@keyframes pulse-glow {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(1.05); }
-}
-
-.animate-pulse-glow { animation: pulse-glow 4s ease-in-out infinite; }
-.animate-pulse-glow-delay-1s { animation: pulse-glow 4s ease-in-out infinite; animation-delay: 1s; }
-
-.animate-pulse-3s { animation: pulse 3s ease-in-out infinite; }
-.animate-pulse-1-5s { animation: pulse 1.5s ease-in-out infinite; }
-.animate-pulse-2s { animation: pulse 2s ease-in-out infinite; }
-.animate-pulse-delay-1s { animation: pulse 2s ease-in-out infinite; animation-delay: 1s; }
-
-/* Slide Up - System Notifications */
-@keyframes slide-up {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-slide-up { animation: slide-up 0.6s ease-out forwards; }
-.animate-slide-up-delay-05s { animation: slide-up 0.6s ease-out forwards; animation-delay: 0.05s; opacity: 0; }
-.animate-slide-up-delay-1s { animation: slide-up 0.6s ease-out forwards; animation-delay: 0.1s; opacity: 0; }
-.animate-slide-up-delay-2s { animation: slide-up 0.6s ease-out forwards; animation-delay: 0.2s; opacity: 0; }
-.animate-slide-up-delay-3s { animation: slide-up 0.6s ease-out forwards; animation-delay: 0.3s; opacity: 0; }
-.animate-slide-up-delay-4s { animation: slide-up 0.6s ease-out forwards; animation-delay: 0.4s; opacity: 0; }
-
-/* Monarch Seal Rotation */
-@keyframes monarch-seal-rotate {
-  0%, 100% { 
-    opacity: 0.5; 
-    background-position: 0% 50%;
-  }
-  50% { 
-    opacity: 0.9; 
-    background-position: 100% 50%;
-  }
-}
-
-@keyframes monarch-pulse {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
-}
-
-/* Gate Break - Dungeon Collapse */
-@keyframes gate-break {
-  0% { transform: scale(1); opacity: 1; box-shadow: 0 0 20px hsl(var(--gate-red) / 0.5); }
-  25% { transform: scale(1.05); box-shadow: 0 0 30px hsl(var(--gate-red) / 0.7); }
-  50% { transform: scale(1.15); opacity: 0.8; box-shadow: 0 0 50px hsl(var(--gate-red) / 0.9); }
-  75% { transform: scale(1.05); box-shadow: 0 0 30px hsl(var(--gate-red) / 0.7); }
-  100% { transform: scale(1); opacity: 1; box-shadow: 0 0 20px hsl(var(--gate-red) / 0.5); }
-}
-
-/* Shadow Extraction - "Arise" Command */
-@keyframes shadow-extraction {
-  0% { transform: translateY(0); opacity: 1; filter: brightness(1) drop-shadow(0 0 0 transparent); }
-  30% { filter: brightness(1.2) drop-shadow(0 0 10px hsl(var(--shadow-purple) / 0.5)); }
-  60% { transform: translateY(-20px); filter: brightness(1.8) drop-shadow(0 0 20px hsl(var(--arise-violet) / 0.7)); }
-  100% { transform: translateY(-100%); opacity: 0; filter: brightness(2.5) drop-shadow(0 0 30px hsl(var(--shadow-blue) / 0.8)); }
-}
-
-/* Monarch Presence - Divine Aura */
-@keyframes monarch-presence-aura {
-  0%, 100% { 
-    filter: drop-shadow(0 0 10px hsl(var(--shadow-blue) / 0.5)) drop-shadow(0 0 20px hsl(var(--shadow-purple) / 0.3));
-  }
-  50% { 
-    filter: drop-shadow(0 0 20px hsl(var(--shadow-blue) / 0.7)) drop-shadow(0 0 40px hsl(var(--arise-violet) / 0.5));
-  }
-}
-
-/* System Scan Line - Interface Effect */
-@keyframes system-scan-line {
-  0% { transform: translateY(-100%); opacity: 0; }
-  20% { opacity: 0.8; }
-  80% { opacity: 0.8; }
-  100% { transform: translateY(100%); opacity: 0; }
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   ARISE ANIMATION — The Monarch's Ultimate Command
-   ═══════════════════════════════════════════════════════════════════════════ */
-@keyframes shadow-arise {
-  0% { 
-    transform: translateY(80px) scale(0.7); 
-    opacity: 0; 
-    filter: blur(15px) brightness(0.5); 
-  }
-  30% { 
-    filter: blur(8px) brightness(1.2) drop-shadow(0 0 20px hsl(var(--shadow-purple) / 0.8)); 
-  }
-  60% { 
-    transform: translateY(-10px) scale(1.05); 
-    filter: blur(2px) brightness(1.5) drop-shadow(0 0 30px hsl(var(--arise-violet) / 0.9)); 
-  }
-  100% { 
-    transform: translateY(0) scale(1); 
-    opacity: 1; 
-    filter: blur(0) brightness(1) drop-shadow(0 0 15px hsl(var(--shadow-blue) / 0.5)); 
-  }
-}
-
-.animate-arise { animation: shadow-arise 1s ease-out forwards; }
-.animate-arise-delay-1 { animation: shadow-arise 1s ease-out 0.1s forwards; opacity: 0; }
-.animate-arise-delay-2 { animation: shadow-arise 1s ease-out 0.2s forwards; opacity: 0; }
-.animate-arise-delay-3 { animation: shadow-arise 1s ease-out 0.3s forwards; opacity: 0; }
-
-/* ARISE Animation Container and Elements */
-.arise-animation-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
-
-@keyframes arise-text {
-  0% { 
-    opacity: 0; 
-    transform: scale(0.5) translateY(50px); 
-    filter: blur(10px); 
-  }
-  20% { 
-    opacity: 1; 
-    transform: scale(1.2) translateY(-20px); 
-    filter: blur(0px); 
-  }
-  40% { 
-    transform: scale(1) translateY(0); 
-  }
-  60% { 
-    transform: scale(1.05); 
-  }
-  80% { 
-    transform: scale(1); 
-  }
-  100% { 
-    opacity: 0; 
-    transform: scale(0.8) translateY(-50px); 
-    filter: blur(5px); 
-  }
-}
-
-.arise-text {
-  font-family: var(--font-display, 'Inter', sans-serif);
-  font-size: 8rem;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  background: linear-gradient(135deg, hsl(var(--shadow-blue)), hsl(var(--shadow-purple)), hsl(var(--arise-violet)));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 
-    0 0 30px hsl(var(--shadow-blue) / 0.8),
-    0 0 60px hsl(var(--shadow-purple) / 0.6),
-    0 0 90px hsl(var(--arise-violet) / 0.4);
-  animation: arise-text 3s ease-out forwards;
-  z-index: 1;
-}
-
-@keyframes arise-shadow-effect {
-  0% { 
-    opacity: 0; 
-    transform: scale(0); 
-    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); 
-  }
-  30% { 
-    opacity: 1; 
-    transform: scale(1.5); 
-    box-shadow: 
-      0 0 100px 50px hsl(var(--shadow-purple) / 0.8), 
-      0 0 200px 100px hsl(var(--shadow-blue) / 0.6), 
-      0 0 300px 150px hsl(var(--arise-violet) / 0.4); 
-  }
-  70% { 
-    transform: scale(2); 
-    box-shadow: 
-      0 0 150px 75px hsl(var(--shadow-purple) / 0.6), 
-      0 0 300px 150px hsl(var(--shadow-blue) / 0.4), 
-      0 0 450px 225px hsl(var(--arise-violet) / 0.2); 
-  }
-  100% { 
-    opacity: 0; 
-    transform: scale(3); 
-  }
-}
-
-.arise-shadow-effect {
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background: radial-gradient(circle, hsl(var(--shadow-purple) / 0.3), transparent);
-  animation: arise-shadow-effect 3s ease-out forwards;
-  z-index: 0;
-}
-
-@media (max-width: 768px) {
-  .arise-text {
-    font-size: 4rem;
-  }
-}
-
-/* Level Up Flash - System Reward */
-@keyframes level-up-flash {
-  0%, 100% { background: transparent; }
-  20% { background: linear-gradient(135deg, hsl(var(--shadow-blue) / 0.3), hsl(var(--shadow-purple) / 0.2)); }
-  50% { background: linear-gradient(135deg, hsl(var(--arise-violet) / 0.4), hsl(var(--monarch-gold) / 0.3)); }
-  80% { background: linear-gradient(135deg, hsl(var(--shadow-purple) / 0.2), hsl(var(--shadow-blue) / 0.2)); }
-}
-
-/* Stat Increase Glow - Power Growth */
-@keyframes stat-increase-glow {
-  0%, 100% { box-shadow: 0 0 10px hsl(var(--system-green) / 0.3); }
-  50% { box-shadow: 0 0 25px hsl(var(--system-green) / 0.7), 0 0 40px hsl(var(--shadow-blue) / 0.3); }
-}
-
-/* Gate SS Pulse - Beyond S-Rank */
-@keyframes gate-ss-pulse {
-  0%, 100% { text-shadow: 0 0 15px hsl(var(--gate-ss) / 0.6); }
-  50% { text-shadow: 0 0 25px hsl(var(--gate-ss) / 0.9), 0 0 40px hsl(var(--arise-violet) / 0.5); }
-}
-
-/* National Level Hunter - Supreme Power */
-@keyframes national-glow {
-  0%, 100% { 
-    text-shadow: 0 0 15px hsl(var(--gate-national) / 0.5);
-    filter: brightness(1);
-  }
-  50% { 
-    text-shadow: 0 0 30px hsl(var(--gate-national) / 0.8), 0 0 50px hsl(var(--shadow-blue) / 0.4);
-    filter: brightness(1.1);
-  }
-}
-
-/* Supreme Shimmer - The Supreme Deity's Divine Form */
-@keyframes supreme-shimmer {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Shadow Army March */
-@keyframes shadow-march {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-3px) translateY(-2px); }
-  75% { transform: translateX(3px) translateY(-2px); }
-}
-
-/* System Interface Flicker */
-@keyframes system-flicker {
-  0%, 100% { opacity: 1; }
-  92% { opacity: 1; }
-  93% { opacity: 0.8; }
-  94% { opacity: 1; }
-  96% { opacity: 0.9; }
-  97% { opacity: 1; }
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   SYSTEM NOTIFICATION — The System Speaks
-   ═══════════════════════════════════════════════════════════════════════════ */
-.system-notification {
-  background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--secondary)) 100%);
-  border: 1px solid hsl(var(--primary) / 0.4);
-  box-shadow: 
-    0 0 25px hsl(var(--primary) / 0.2),
-    0 0 50px hsl(var(--shadow-purple) / 0.1),
-    inset 0 1px 0 hsl(var(--primary) / 0.15);
-  animation: system-flicker 5s ease-in-out infinite;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   GLOBAL VISUAL ENHANCEMENTS — Supreme System Optimizations
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/* Global hover effects with performance optimization */
-.hover-lift {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
-              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform, box-shadow;
-}
-
-.hover-lift:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 20px 40px hsl(var(--shadow-blue) / 0.15),
-              0 0 20px hsl(var(--shadow-purple) / 0.1);
-}
-
-/* Global glass morphism enhancement */
-.glass-enhance {
-  background: linear-gradient(135deg, 
-    hsl(var(--card) / 0.1) 0%, 
-    hsl(var(--card) / 0.05) 100%);
-  -webkit-backdrop-filter: blur(20px) saturate(1.8);
-  backdrop-filter: blur(20px) saturate(1.8);
-  border: 1px solid hsl(var(--border) / 0.3);
-  box-shadow: 
-    0 8px 32px hsl(var(--void-black) / 0.3),
-    inset 0 1px 0 hsl(var(--primary) / 0.1);
-}
-
-/* Performance-optimized particle effects */
-.shadow-particles {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.shadow-particle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: radial-gradient(circle, 
-    hsl(var(--shadow-purple) / 0.6) 0%, 
-    hsl(var(--arise-violet) / 0.3) 50%, 
-    transparent 100%);
-  border-radius: 50%;
-  animation: particle-float 15s infinite linear;
-  opacity: 0;
-}
-
-@keyframes particle-float {
-  0% {
-    transform: translateY(100vh) translateX(0) scale(0);
-    opacity: 0;
-  }
-  10% {
-    opacity: 0.4;
-  }
-  90% {
-    opacity: 0.4;
-  }
-  100% {
-    transform: translateY(-100vh) translateX(100px) scale(1.5);
-    opacity: 0;
-  }
-}
-
-/* Global loading shimmer effect */
-.loading-shimmer {
-  position: relative;
-  overflow: hidden;
-}
-
-.loading-shimmer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, 
-    transparent, 
-    hsl(var(--shadow-blue) / 0.1), 
-    transparent);
-  animation: shimmer 2s infinite;
-}
-
-@keyframes shimmer {
-  0% { left: -100%; }
-  100% { left: 100%; }
-}
-
-/* Enhanced focus states for accessibility */
-.focus-enhance:focus-visible {
-  outline: 2px solid hsl(var(--shadow-blue));
-  outline-offset: 2px;
-  box-shadow: 0 0 0 4px hsl(var(--shadow-blue) / 0.2);
-}
-
-/* Global smooth scroll behavior */
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 80px;
-}
-
-/* Enhanced image loading */
-img {
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-  image-rendering: pixelated;
-}
-
-@media (min-resolution: 2dppx) {
-  img {
-    image-rendering: auto;
-  }
-}
-
-/* Global transition utilities */
-.transition-all-smooth {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.transition-colors-smooth {
-  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
-}
-
-.transition-transform-smooth {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Global backdrop blur utility */
-.backdrop-blur-enhanced {
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
-}
-
-/* Performance optimizations */
-.gpu-accelerated {
-  transform: translateZ(0);
-  will-change: transform;
-}
-
-.reduce-motion * {
-  animation-duration: 0.01ms !important;
-  animation-iteration-count: 1 !important;
-  transition-duration: 0.01ms !important;
-}
-
-/* Global gradient overlays */
-.gradient-overlay-purple {
-  position: relative;
-}
-
-.gradient-overlay-purple::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, 
-    hsl(var(--shadow-purple) / 0.1) 0%, 
-    hsl(var(--arise-violet) / 0.05) 50%,
-    transparent 100%);
-  pointer-events: none;
-  border-radius: inherit;
-}
-
-/* Enhanced card hover states */
-.card-hover-enhanced {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-}
-
-.card-hover-enhanced::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(135deg, 
-    hsl(var(--shadow-blue) / 0.1) 0%, 
-    hsl(var(--shadow-purple) / 0.05) 100%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.card-hover-enhanced:hover::before {
-  opacity: 1;
-}
-
-.card-hover-enhanced:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 24px hsl(var(--shadow-blue) / 0.15),
-              0 0 16px hsl(var(--shadow-purple) / 0.1);
-}
-
-/* Global text selection enhancement */
-::selection {
-  background: linear-gradient(135deg, 
-    hsl(var(--shadow-purple) / 0.3) 0%, 
-    hsl(var(--shadow-blue) / 0.2) 100%);
-  color: hsl(var(--foreground));
-  text-shadow: none;
-}
-
-/* Enhanced scrollbar styling */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: hsl(var(--void-black));
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, 
-    hsl(var(--shadow-blue) / 0.6) 0%, 
-    hsl(var(--shadow-purple) / 0.6) 100%);
-  border-radius: 4px;
-  border: 1px solid hsl(var(--border) / 0.2);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, 
-    hsl(var(--shadow-blue) / 0.8) 0%, 
-    hsl(var(--shadow-purple) / 0.8) 100%);
-}
-
-/* Global button enhancements */
-.btn-enhanced {
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn-enhanced::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: radial-gradient(circle, 
-    hsl(var(--shadow-blue) / 0.3) 0%, 
-    transparent 70%);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s ease, height 0.6s ease;
-}
-
-.btn-enhanced:hover::before {
-  width: 300px;
-  height: 300px;
-}
-
-/* Global input enhancements */
-.input-enhanced {
-  transition: all 0.3s ease;
-  background: hsl(var(--input) / 0.5);
-  border: 1px solid hsl(var(--border) / 0.5);
-}
-
-.input-enhanced:focus {
-  border-color: hsl(var(--shadow-blue) / 0.5);
-  box-shadow: 0 0 0 3px hsl(var(--shadow-blue) / 0.1),
-              0 0 20px hsl(var(--shadow-purple) / 0.1);
-  background: hsl(var(--input) / 0.8);
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   GLOBAL EFFECTS COMPONENT STYLES
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/* Enhanced shadow particle with CSS variables */
-.shadow-particle {
-  left: var(--particle-x, 50%);
-  top: var(--particle-y, 50%);
-  width: var(--particle-size, 4px);
-  height: var(--particle-size, 4px);
-  animation-duration: var(--particle-duration, 15s);
-  animation-delay: var(--particle-delay, 0s);
-}
-
-/* Mouse follow glow effect */
-.mouse-follow-glow::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  width: 40px;
-  height: 40px;
-  background: radial-gradient(circle, 
-    hsl(var(--shadow-purple) / 0.2) 0%, 
-    hsl(var(--shadow-blue) / 0.1) 50%, 
-    transparent 100%);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-
-/* Ambient glow containers */
-.ambient-glow-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.ambient-glow-purple {
-  position: absolute;
-  top: 25%;
-  left: 25%;
-  width: 24rem;
-  height: 24rem;
-  background: hsl(var(--shadow-purple) / 0.05);
-  border-radius: 50%;
-  filter: blur(3rem);
-}
-
-.ambient-glow-blue {
-  position: absolute;
-  bottom: 25%;
-  right: 25%;
-  width: 24rem;
-  height: 24rem;
-  background: hsl(var(--shadow-blue) / 0.05);
-  border-radius: 50%;
-  filter: blur(3rem);
-}
-
-.ambient-glow-violet {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 36rem;
-  height: 36rem;
-  background: hsl(var(--arise-violet) / 0.03);
-  border-radius: 50%;
-  filter: blur(3rem);
-  transform: translate(-50%, -50%);
-}
-
-.ambient-glow-1 { animation: pulse 3s ease-in-out infinite; }
-.ambient-glow-2 { animation: pulse 3s ease-in-out infinite; animation-delay: 1s; }
-.ambient-glow-3 { animation: pulse 5s ease-in-out infinite; }
-
-/* System scan line */
-.system-scan-line {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    hsl(var(--shadow-blue) / 0.2) 50%, 
-    transparent 100%);
-  pointer-events: none;
-  z-index: 40;
-  animation: pulse-glow 4s ease-in-out infinite;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   PRINT STYLES — Chronicle of Hunters
-   ═══════════════════════════════════════════════════════════════════════════ */
 @media print {
+
   @page {
+
     margin: 0.5in;
+
     size: letter;
+
   }
 
+
+
   body {
+
     background: white !important;
+
     color: black !important;
+
     font-size: 11pt;
+
     line-height: 1.4;
+
   }
+
+
 
   /* Hide navigation and interactive elements */
+
   nav, header, footer, button, .no-print, 
+
   [role="button"], [class~="print:hidden"],
+
   aside, .sidebar {
+
     display: none !important;
+
   }
+
+
 
   /* Character sheet print styles */
+
   .character-sheet-print { page-break-inside: avoid; }
+
   .character-sheet-section { page-break-inside: avoid; margin-bottom: 1rem; }
 
+
+
   /* Compendium stat blocks */
+
   .glass-card,
+
   .SystemWindow {
+
     border: 2px solid #000 !important;
+
     background: white !important;
+
     page-break-inside: avoid;
+
     margin-bottom: 0.75rem;
+
     padding: 0.75rem;
+
     box-shadow: none !important;
+
   }
+
+
 
   /* Stat block specific */
+
   [class*="stat-block"],
+
   .stat-block {
+
     border: 2px solid #000 !important;
+
     background: white !important;
+
     page-break-inside: avoid;
+
     font-family: 'Times New Roman', serif;
+
   }
+
+
 
   /* Remove gradients, use black text */
+
   .gradient-text-shadow,
+
   .gradient-text-system,
+
   .gradient-text-monarch,
+
   .gradient-text-arise,
+
   .gradient-text-supreme {
+
     -webkit-text-fill-color: black !important;
+
     color: black !important;
+
     background: none !important;
+
   }
+
+
 
   /* Images */
+
   img {
+
     max-width: 100% !important;
+
     page-break-inside: avoid;
+
   }
+
+
 
   /* Remove animations and transitions */
+
   * { 
+
     animation: none !important; 
+
     transition: none !important;
+
     box-shadow: none !important;
+
   }
+
+
 
   /* Tables */
+
   table { 
+
     page-break-inside: avoid;
+
     border-collapse: collapse;
+
     width: 100%;
+
   }
+
+
 
   th, td {
+
     border: 1px solid #000;
+
     padding: 0.25rem;
+
   }
+
+
 
   /* Typography */
+
   h1, h2, h3, h4, h5, h6 {
+
     page-break-after: avoid;
+
     color: black !important;
+
   }
+
+
 
   /* Links */
+
   a {
+
     color: black !important;
+
     text-decoration: underline;
+
   }
+
+
 
   /* Two-column layout becomes single column */
+
   .detail-layout,
+
   [class~="lg:flex-row"] {
+
     flex-direction: column !important;
+
   }
 
+
+
   /* Ensure proper spacing */
+
   .space-y-6 > * + * {
+
     margin-top: 1rem;
+
   }
+
 }
+
+
+

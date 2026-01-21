@@ -1,11 +1,11 @@
 -- =============================================
--- RUNES SYSTEM - SOLO LEVELING MANHWA STYLE
+-- RUNES SYSTEM - SYSTEM ASCENDANT MANHWA STYLE
 -- =============================================
 -- Runes are magical symbols that can be inscribed on equipment to grant abilities
--- Just like in Solo Leveling, runes allow Hunters to gain abilities they wouldn't normally have
+-- Just like in System Ascendant, runes allow Ascendants to gain abilities they wouldn't normally have
 -- This includes cross-class usage: casters can use martial runes, martials can use caster runes
 --
--- In Solo Leveling:
+-- In System Ascendant:
 -- - Runes are inscribed on weapons/equipment
 -- - They grant active abilities and passive bonuses
 -- - Anyone can use any rune if they have the required attributes
@@ -73,10 +73,10 @@ CREATE TABLE IF NOT EXISTS public.compendium_runes (
   can_inscribe_on TEXT[] DEFAULT ARRAY['weapon', 'armor', 'accessory'], -- What equipment types this rune can be inscribed on
   inscription_difficulty INTEGER DEFAULT 10, -- DC for inscribing this rune
   
-  -- Solo Leveling Lore
+  -- System Ascendant Lore
   description TEXT NOT NULL,
   lore TEXT, -- Background story of the rune
-  discovery_lore TEXT, -- How this rune was discovered in the Solo Leveling world
+  discovery_lore TEXT, -- How this rune was discovered in the System Ascendant world
   
   -- System Integration
   tags TEXT[] DEFAULT '{}',
@@ -131,9 +131,9 @@ ALTER TABLE public.compendium_runes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.character_rune_inscriptions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.character_rune_knowledge ENABLE ROW LEVEL SECURITY;
 -- =============================================
--- CROSS-LEARNING MECHANICS - SOLO LEVELING STYLE
+-- CROSS-LEARNING MECHANICS - SYSTEM ASCENDANT STYLE
 -- =============================================
--- In Solo Leveling, anyone can use any rune if they meet requirements
+-- In System Ascendant, anyone can use any rune if they meet requirements
 -- However, cross-class usage has penalties:
 --
 -- CASTERS USING MARTIAL RUNES:
@@ -166,7 +166,7 @@ ALTER TABLE public.character_rune_knowledge ENABLE ROW LEVEL SECURITY;
 -- 5. Return: (can_use: boolean, penalty: text, effective_requirements: object)
 
 -- =============================================
--- EXAMPLE RUNES - SOLO LEVELING THEMED
+-- EXAMPLE RUNES - SYSTEM ASCENDANT THEMED
 -- =============================================
 
 -- Martial Rune Example: Berserker's Rage
@@ -206,7 +206,7 @@ INSERT INTO public.compendium_runes (
   ARRAY['weapon'],
   15,
   'A rune of primal fury that channels System energy into raw physical power. The rune pulses with red energy when activated.',
-  'This rune was first discovered by a Striker who survived a high-rank Gate by tapping into his deepest rage. The rune allows even normally calm Hunters to access that primal fury, though it comes at a cost.',
+  'This rune was first discovered by a Striker who survived a high-rank Rift by tapping into his deepest rage. The rune allows even normally calm Ascendants to access that primal fury, though it comes at a cost.',
   ARRAY['martial', 'offensive', 'weapon', 'rage']
 );
 -- Caster Rune Example: Fireball Rune
@@ -289,7 +289,7 @@ INSERT INTO public.compendium_runes (
   ARRAY['accessory', 'armor'],
   16,
   'A rune of shadow magic that allows instant teleportation through darkness. The rune pulses with dark energy.',
-  'This rune was discovered by an Assassin who studied the Shadow Monarch''s techniques. It represents the blending of physical agility and magical understanding needed to move through shadows.',
+  'This rune was discovered by an Assassin who studied the Umbral Monarch''s techniques. It represents the blending of physical agility and magical understanding needed to move through shadows.',
   ARRAY['hybrid', 'utility', 'teleportation', 'shadow']
 );
 -- Utility Rune Example: System Sight
@@ -313,12 +313,12 @@ INSERT INTO public.compendium_runes (
   ARRAY[]::TEXT[], -- Works equally for all jobs
   3,
   'passive',
-  'You gain enhanced system awareness, granting darkvision out to 60 feet and allowing you to sense active Gate energy or magical effects within 30 feet.',
+  'You gain enhanced system awareness, granting darkvision out to 60 feet and allowing you to sense active Rift energy or magical effects within 30 feet.',
   '{"darkvision": 60, "detect_magic": true, "detect_gates": true}'::JSONB,
   ARRAY['accessory'],
   12,
   'A utility rune that enhances perception and allows the user to see System energy.',
-  'This common rune was one of the first developed after the Gates appeared. It allows Hunters to see through darkness and detect the presence of Gates and magic. Essential for any Hunter entering unknown territory.',
+  'This common rune was one of the first developed after the Rifts appeared. It allows Ascendants to see through darkness and detect the presence of Rifts and magic. Essential for any Ascendant entering unknown territory.',
   ARRAY['utility', 'passive', 'senses', 'defensive']
 );
 -- =============================================
@@ -366,7 +366,7 @@ EXECUTE FUNCTION public.update_updated_at_column();
 -- =============================================
 -- COMPLETION NOTES
 -- =============================================
--- This migration creates the complete Runes system aligned with Solo Leveling manhwa:
+-- This migration creates the complete Runes system aligned with System Ascendant canon:
 -- ✅ Rune compendium table with all mechanics
 -- ✅ Cross-learning mechanics for casters→martial and martials→caster runes
 -- ✅ Character rune inscriptions tracking
@@ -380,3 +380,4 @@ EXECUTE FUNCTION public.update_updated_at_column();
 -- - Implement cross-learning logic in character sheet
 -- - Add rune learning/copying mechanics to gameplay
 -- =============================================;
+

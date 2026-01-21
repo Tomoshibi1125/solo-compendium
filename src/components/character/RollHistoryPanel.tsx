@@ -5,6 +5,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { useRollHistory, RollRecord } from '@/hooks/useRollHistory';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface RollHistoryPanelProps {
   characterId?: string;
@@ -18,6 +19,7 @@ const rollTypeConfig: Record<string, { icon: typeof Dice5; color: string; label:
   skill: { icon: Sparkles, color: 'text-green-400', label: 'Skill' },
   ability: { icon: Dice5, color: 'text-purple-400', label: 'Ability' },
   initiative: { icon: Dice5, color: 'text-yellow-400', label: 'Initiative' },
+  resource: { icon: Sparkles, color: 'text-indigo-400', label: 'Resource' },
   default: { icon: Dice5, color: 'text-primary', label: 'Roll' },
 };
 
@@ -105,7 +107,7 @@ export function RollHistoryPanel({ characterId, limit = 20 }: RollHistoryPanelPr
                       </div>
                       {roll.context && (
                         <p className="text-xs text-muted-foreground truncate">
-                          {roll.context}
+                          {formatMonarchVernacular(roll.context)}
                         </p>
                       )}
                       <p className="text-xs text-muted-foreground">

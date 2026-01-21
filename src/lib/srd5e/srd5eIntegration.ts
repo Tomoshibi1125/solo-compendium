@@ -1,27 +1,27 @@
 /**
- * D&D 5e Integration System
- * Provides dual system support for Solo Leveling and D&D 5e mechanics
+ * SRD 5e Integration System
+ * Provides dual system support for System Ascendant and SRD 5e mechanics
  */
 
-import { Dnd5eCharacter, getDnd5eAbilityModifier, getDnd5eProficiencyBonus, Dnd5eSkill } from './rulesEngine';
+import { Srd5eCharacter, getSrd5eAbilityModifier, getSrd5eProficiencyBonus, Srd5eSkill } from './rulesEngine';
 import { ConcentrationState, initializeConcentration } from './concentration';
 import { SpellSlotState, initializeSpellSlots, SpellSlots } from './spellSlots';
 import { DeathSaveState, initializeDeathSaves } from './deathSaves';
 
-export type RulesSystem = 'solo-leveling' | 'dnd5e' | 'hybrid';
+export type RulesSystem = 'system-ascendant' | 'srd5e' | 'hybrid';
 
 export interface DualSystemCharacter {
-  // Solo Leveling system
-  soloLeveling: {
+  // System Ascendant system
+  systemAscendant: {
     level: number;
     abilities: Record<string, number>;
     job: string;
     path?: string;
-    // Other Solo Leveling specific properties
+    // Other System Ascendant specific properties
   };
   
-  // D&D 5e system
-  dnd5e: Dnd5eCharacter;
+  // SRD 5e system
+  srd5e: Srd5eCharacter;
   
   // Active system
   activeSystem: RulesSystem;
@@ -32,55 +32,55 @@ export interface DualSystemCharacter {
   deathSaves: DeathSaveState;
 }
 
-// Convert Solo Leveling abilities to D&D 5e abilities
-export function convertSoloLevelingToDnd5e(soloAbilities: Record<string, number>): Dnd5eCharacter['abilityScores'] {
+// Convert System Ascendant abilities to SRD 5e abilities
+export function convertSystemAscendantToSrd5e(systemAbilities: Record<string, number>): Srd5eCharacter['abilityScores'] {
   return {
-    strength: soloAbilities.STR || 10,
-    dexterity: soloAbilities.AGI || 10,
-    constitution: soloAbilities.VIT || 10,
-    intelligence: soloAbilities.INT || 10,
-    wisdom: soloAbilities.SENSE || 10,
-    charisma: soloAbilities.PRE || 10
+    strength: systemAbilities.STR || 10,
+    dexterity: systemAbilities.AGI || 10,
+    constitution: systemAbilities.VIT || 10,
+    intelligence: systemAbilities.INT || 10,
+    wisdom: systemAbilities.SENSE || 10,
+    charisma: systemAbilities.PRE || 10
   };
 }
 
-// Convert D&D 5e abilities to Solo Leveling abilities
-export function convertDnd5eToSoloLeveling(dndAbilities: Dnd5eCharacter['abilityScores']): Record<string, number> {
+// Convert SRD 5e abilities to System Ascendant abilities
+export function convertSrd5eToSystemAscendant(srdAbilities: Srd5eCharacter['abilityScores']): Record<string, number> {
   return {
-    STR: dndAbilities.strength,
-    AGI: dndAbilities.dexterity,
-    VIT: dndAbilities.constitution,
-    INT: dndAbilities.intelligence,
-    SENSE: dndAbilities.wisdom,
-    PRE: dndAbilities.charisma
+    STR: srdAbilities.strength,
+    AGI: srdAbilities.dexterity,
+    VIT: srdAbilities.constitution,
+    INT: srdAbilities.intelligence,
+    SENSE: srdAbilities.wisdom,
+    PRE: srdAbilities.charisma
   };
 }
 
 // Initialize dual system character
 export function initializeDualSystemCharacter(
-  soloLevelingData: any,
-  rulesSystem: RulesSystem = 'solo-leveling'
+  systemAscendantData: any,
+  rulesSystem: RulesSystem = 'system-ascendant'
 ): DualSystemCharacter {
-  const dnd5eAbilities = convertSoloLevelingToDnd5e(soloLevelingData.abilities || {});
+  const srd5eAbilities = convertSystemAscendantToSrd5e(systemAscendantData.abilities || {});
   
-  const dnd5eCharacter: Dnd5eCharacter = {
-    level: soloLevelingData.level || 1,
-    abilityScores: dnd5eAbilities,
-    skillProficiencies: [], // Would need to be mapped from Solo Leveling skills
-    savingThrowProficiencies: [], // Would need to be mapped from Solo Leveling saves
-    proficiencyBonus: getDnd5eProficiencyBonus(soloLevelingData.level || 1),
-    class: soloLevelingData.job || 'Commoner',
-    subclass: soloLevelingData.path,
-    race: 'Human', // Default for Solo Leveling
-    background: 'Adventurer' // Default for Solo Leveling
+  const srd5eCharacter: Srd5eCharacter = {
+    level: systemAscendantData.level || 1,
+    abilityScores: srd5eAbilities,
+    skillProficiencies: [], // Would need to be mapped from System Ascendant skills
+    savingThrowProficiencies: [], // Would need to be mapped from System Ascendant saves
+    proficiencyBonus: getSrd5eProficiencyBonus(systemAscendantData.level || 1),
+    class: systemAscendantData.job || 'Commoner',
+    subclass: systemAscendantData.path,
+    race: 'Human', // Default for System Ascendant
+    background: 'Adventurer' // Default for System Ascendant
   };
 
   return {
-    soloLeveling: soloLevelingData,
-    dnd5e: dnd5eCharacter,
+    systemAscendant: systemAscendantData,
+    srd5e: srd5eCharacter,
     activeSystem: rulesSystem,
     concentration: initializeConcentration(),
-    spellSlots: initializeSpellSlots(soloLevelingData.level || 1, {
+    spellSlots: initializeSpellSlots(systemAscendantData.level || 1, {
       name: 'Mage',
       spellcastingAbility: 'level3' as keyof SpellSlots,
       spellProgression: 'full'
@@ -102,26 +102,26 @@ export function switchRulesSystem(
 
 // Get current ability scores based on active system
 export function getCurrentAbilityScores(character: DualSystemCharacter): Record<string, number> {
-  if (character.activeSystem === 'solo-leveling' || character.activeSystem === 'hybrid') {
-    return character.soloLeveling.abilities;
+  if (character.activeSystem === 'system-ascendant' || character.activeSystem === 'hybrid') {
+    return character.systemAscendant.abilities;
   } else {
-    return convertDnd5eToSoloLeveling(character.dnd5e.abilityScores);
+    return convertSrd5eToSystemAscendant(character.srd5e.abilityScores);
   }
 }
 
 // Get current proficiency bonus based on active system
 export function getCurrentProficiencyBonus(character: DualSystemCharacter): number {
-  if (character.activeSystem === 'solo-leveling' || character.activeSystem === 'hybrid') {
-    // Solo Leveling might use a different formula
-    return Math.floor((character.soloLeveling.level - 1) / 4) + 2;
+  if (character.activeSystem === 'system-ascendant' || character.activeSystem === 'hybrid') {
+    // System Ascendant might use a different formula
+    return Math.floor((character.systemAscendant.level - 1) / 4) + 2;
   } else {
-    return character.dnd5e.proficiencyBonus;
+    return character.srd5e.proficiencyBonus;
   }
 }
 
 // Get current level (both systems should be synchronized)
 export function getCurrentLevel(character: DualSystemCharacter): number {
-  return character.soloLeveling.level; // Both systems should use the same level
+  return character.systemAscendant.level; // Both systems should use the same level
 }
 
 // Calculate unified armor class
@@ -130,10 +130,10 @@ export function calculateUnifiedArmorClass(
   armorType?: string,
   shield?: boolean
 ): number {
-  if (character.activeSystem === 'dnd5e') {
-    // Use D&D 5e AC calculation
-    const abilities = character.dnd5e.abilityScores;
-    const dexMod = getDnd5eAbilityModifier(abilities.dexterity);
+  if (character.activeSystem === 'srd5e') {
+    // Use SRD 5e AC calculation
+    const abilities = character.srd5e.abilityScores;
+    const dexMod = getSrd5eAbilityModifier(abilities.dexterity);
     
     switch (armorType) {
       case 'light':
@@ -146,8 +146,8 @@ export function calculateUnifiedArmorClass(
         return 10 + dexMod + (shield ? 2 : 0);
     }
   } else {
-    // Use Solo Leveling AC calculation (would need to be implemented)
-    const abilities = character.soloLeveling.abilities;
+    // Use System Ascendant AC calculation (would need to be implemented)
+    const abilities = character.systemAscendant.abilities;
     const agiMod = Math.floor((abilities.AGI - 10) / 2);
     return 10 + agiMod + (shield ? 2 : 0);
   }
@@ -158,28 +158,28 @@ export function getUnifiedSkillModifier(
   character: DualSystemCharacter,
   skill: string
 ): number {
-  if (character.activeSystem === 'dnd5e') {
-    // Use D&D 5e skill calculation
-    const dndSkill = mapSoloSkillToDnd5e(skill);
-    if (dndSkill) {
-      const skillProf = character.dnd5e.skillProficiencies.find(p => p.skill === dndSkill);
-      const ability = getSkillAbilityForDnd5e(dndSkill);
-      const abilityMod = getDnd5eAbilityModifier(character.dnd5e.abilityScores[ability]);
-      const profBonus = skillProf?.proficient ? character.dnd5e.proficiencyBonus : 0;
-      const expertiseBonus = skillProf?.expertise ? character.dnd5e.proficiencyBonus : 0;
+  if (character.activeSystem === 'srd5e') {
+    // Use SRD 5e skill calculation
+    const srdSkill = mapSystemSkillToSrd5e(skill);
+    if (srdSkill) {
+      const skillProf = character.srd5e.skillProficiencies.find(p => p.skill === srdSkill);
+      const ability = getSkillAbilityForSrd5e(srdSkill);
+      const abilityMod = getSrd5eAbilityModifier(character.srd5e.abilityScores[ability]);
+      const profBonus = skillProf?.proficient ? character.srd5e.proficiencyBonus : 0;
+      const expertiseBonus = skillProf?.expertise ? character.srd5e.proficiencyBonus : 0;
       
       return abilityMod + profBonus + expertiseBonus;
     }
   }
   
-  // Use Solo Leveling skill calculation (would need to be implemented)
-  const abilities = character.soloLeveling.abilities;
+  // Use System Ascendant skill calculation (would need to be implemented)
+  const abilities = character.systemAscendant.abilities;
   return Math.floor((abilities.AGI - 10) / 2); // Simplified
 }
 
-// Map Solo Leveling skills to D&D 5e skills
-function mapSoloSkillToDnd5e(soloSkill: string): Dnd5eSkill | null {
-  const skillMap: Record<string, Dnd5eSkill> = {
+// Map System Ascendant skills to SRD 5e skills
+function mapSystemSkillToSrd5e(systemSkill: string): Srd5eSkill | null {
+  const skillMap: Record<string, Srd5eSkill> = {
     'athletics': 'athletics',
     'acrobatics': 'acrobatics',
     'stealth': 'stealth',
@@ -191,12 +191,12 @@ function mapSoloSkillToDnd5e(soloSkill: string): Dnd5eSkill | null {
     'deception': 'deception'
   };
   
-  return skillMap[soloSkill.toLowerCase()] || null;
+  return skillMap[systemSkill.toLowerCase()] || null;
 }
 
-// Get ability for D&D 5e skill
-function getSkillAbilityForDnd5e(skill: Dnd5eSkill): keyof Dnd5eCharacter['abilityScores'] {
-  const skillAbilities: Record<Dnd5eSkill, keyof Dnd5eCharacter['abilityScores']> = {
+// Get ability for SRD 5e skill
+function getSkillAbilityForSrd5e(skill: Srd5eSkill): keyof Srd5eCharacter['abilityScores'] {
+  const skillAbilities: Record<Srd5eSkill, keyof Srd5eCharacter['abilityScores']> = {
     'athletics': 'strength',
     'acrobatics': 'dexterity',
     'sleight-of-hand': 'dexterity',
@@ -274,3 +274,6 @@ export function getCharacterStatus(character: DualSystemCharacter): {
     }
   };
 }
+
+
+

@@ -33,7 +33,7 @@ const QUILL_FORMATS = [
 export function RichTextNotes({
   value,
   onChange,
-  placeholder: placeholderText = "Add notes about your Hunter, campaign events, session summaries, or anything else...",
+  placeholder: placeholderText = "Add notes about your Ascendant, campaign events, session summaries, or anything else...",
   className,
   disabled = false
 }: RichTextNotesProps) {

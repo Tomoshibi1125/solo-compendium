@@ -98,7 +98,7 @@ export class AIServiceManager {
       input: originalPrompt,
       context: {
         ...context,
-        style: 'dark manhwa anime cinematic fantasy, Solo Leveling style',
+        style: 'dark manhwa anime cinematic fantasy, System Ascendant style',
         mood: 'dramatic, high contrast, detailed',
       },
     };
@@ -186,7 +186,7 @@ export class AIServiceManager {
       input: content,
       context: {
         content_type: type,
-        style: 'dark manhwa anime cinematic fantasy, Solo Leveling',
+        style: 'dark manhwa anime cinematic fantasy, System Ascendant',
       },
     };
 
@@ -233,7 +233,7 @@ export class AIServiceManager {
       context: {
         base_style: baseStyle,
         variations: ['darker', 'lighter', 'more_dramatic', 'more_mysterious', 'more_heroic'],
-        universe: 'Solo Leveling',
+        universe: 'System Ascendant',
       },
     };
 
@@ -284,7 +284,7 @@ export class AIServiceManager {
       input: originalContent,
       context: {
         variation_type: variationType,
-        style: 'dark manhwa anime cinematic fantasy, Solo Leveling',
+        style: 'dark manhwa anime cinematic fantasy, System Ascendant',
         preserve_core_elements: true,
       },
     };
@@ -361,7 +361,7 @@ export class AIServiceManager {
       ? request.input
       : JSON.stringify(request.input ?? '');
     const safeText = rawText?.trim() || inputText.trim();
-    const styleHint = request.context?.style || 'Solo Leveling';
+    const styleHint = request.context?.style || 'System Ascendant';
     const moodHint = request.context?.mood || 'dramatic';
 
     switch (request.type) {
@@ -660,15 +660,15 @@ export class AIServiceManager {
   private getSystemPrompt(type: string): string {
     const jsonInstruction = 'Return ONLY valid JSON. Do not wrap in Markdown or code fences. Use double quotes for all keys and strings.';
     const prompts: Record<string, string> = {
-      'enhance-prompt': `${jsonInstruction}\nYou are an expert D&D and AI art prompt engineer. Enhance the given prompt for high-quality image generation in the style of Solo Leveling manhwa anime. Respond with JSON: {"original":"","enhanced":"","additions":[],"improvements":[],"style":"","mood":"","technical":{"weight":"","steps":0,"cfg":0,"sampler":"","scheduler":""}}`,
-      'analyze-image': `${jsonInstruction}\nYou are an expert art analyst specializing in anime/manga style artwork, particularly Solo Leveling. Respond with JSON: {"description":"","tags":[],"style":"","mood":"","colors":[],"composition":"","subjects":[],"quality":1,"technical":{"resolution":"","aspectRatio":"","sharpness":1,"brightness":0.5,"contrast":0.5},"suggestions":[]}`,
-      'analyze-audio': `${jsonInstruction}\nYou are an audio expert specializing in D&D campaign music and sound effects. Respond with JSON: {"mood":"","energy":0.5,"tempo":null,"key":null,"instruments":[],"genre":"","tags":[],"description":"","duration":0,"loudness":null,"spectralCentroid":null}`,
-      'generate-tags': `${jsonInstruction}\nGenerate relevant tags for the given content in the context of a Solo Leveling themed campaign. Respond with JSON: {"tags":[]}`,
+      'enhance-prompt': `${jsonInstruction}\nYou are an expert tabletop RPG and AI art prompt engineer. Enhance the given prompt for high-quality image generation in the style of System Ascendant manhwa-inspired fantasy. Respond with JSON: {"original":"","enhanced":"","additions":[],"improvements":[],"style":"","mood":"","technical":{"weight":"","steps":0,"cfg":0,"sampler":"","scheduler":""}}`,
+      'analyze-image': `${jsonInstruction}\nYou are an expert art analyst specializing in anime/manga style artwork, particularly System Ascendant. Respond with JSON: {"description":"","tags":[],"style":"","mood":"","colors":[],"composition":"","subjects":[],"quality":1,"technical":{"resolution":"","aspectRatio":"","sharpness":1,"brightness":0.5,"contrast":0.5},"suggestions":[]}`,
+      'analyze-audio': `${jsonInstruction}\nYou are an audio expert specializing in tabletop campaign music and sound effects. Respond with JSON: {"mood":"","energy":0.5,"tempo":null,"key":null,"instruments":[],"genre":"","tags":[],"description":"","duration":0,"loudness":null,"spectralCentroid":null}`,
+      'generate-tags': `${jsonInstruction}\nGenerate relevant tags for the given content in the context of a System Ascendant themed campaign. Respond with JSON: {"tags":[]}`,
       'detect-mood': `${jsonInstruction}\nDetect the primary mood of the given content. Respond with JSON: {"mood":""}`,
       'suggest-style': `${jsonInstruction}\nSuggest variations of the given style that would work for different scenarios while maintaining the core aesthetic. Respond with JSON: {"variations":[]}`,
       'filter-content': `${jsonInstruction}\nAnalyze the given content for appropriateness. Respond with JSON: {"isAppropriate":true,"issues":[],"suggestions":[]}`,
       'create-variation': `${jsonInstruction}\nCreate a variation of the given content that maintains core elements but adds a different twist. Respond with JSON: {"variation":""}`,
-      'generate-content': `You are an expert tabletop RPG game master and narrative designer for a Solo Leveling inspired setting. Generate polished, player-ready content with clear sections and labels. Return plain text only. Avoid JSON, Markdown fences, or code blocks.`,
+      'generate-content': `You are an expert tabletop RPG game master and narrative designer for a System Ascendant inspired setting. Generate polished, player-ready content with clear sections and labels. Return plain text only. Avoid JSON, Markdown fences, or code blocks.`,
     };
     
     return prompts[type] || prompts['enhance-prompt'];
@@ -757,3 +757,4 @@ export const aiService = new AIServiceManager();
 if (typeof window !== 'undefined') {
   aiService.applyUserSettings(loadAIUserSettings());
 }
+

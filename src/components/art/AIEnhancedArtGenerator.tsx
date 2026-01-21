@@ -111,9 +111,9 @@ export function AIEnhancedArtGenerator({
     
     try {
       const result = await enhancePrompt(originalPrompt, {
-        style: 'dark manhwa anime cinematic fantasy, Solo Leveling style',
+        style: 'dark manhwa anime cinematic fantasy, System Ascendant style',
         mood: 'dramatic, high contrast, detailed',
-        universe: 'Solo Leveling',
+        universe: 'System Ascendant',
       });
       
       if (result?.enhanced) {
@@ -151,7 +151,7 @@ export function AIEnhancedArtGenerator({
     if (!finalPrompt.trim()) return;
     
     try {
-      const suggestions = await suggestStyles('dark manhwa anime cinematic fantasy, Solo Leveling');
+      const suggestions = await suggestStyles('dark manhwa anime cinematic fantasy, System Ascendant');
       // Style suggestions are now available
     } catch (error) {
       logger.error('Failed to suggest styles:', error);
@@ -299,7 +299,7 @@ export function AIEnhancedArtGenerator({
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-purple-500" />
-              <span className="text-sm">Solo Leveling Style</span>
+              <span className="text-sm">System Ascendant Style</span>
             </div>
           </div>
         </CardContent>
@@ -374,7 +374,7 @@ export function AIEnhancedArtGenerator({
                   />
                   {enhancement && (
                     <div className="text-xs text-muted-foreground">
-                      <p>- AI enhanced with Solo Leveling styling</p>
+                      <p>- AI enhanced with System Ascendant styling</p>
                       <p>- Added dramatic lighting and contrast</p>
                       <p>- Included manhwa anime elements</p>
                     </div>
@@ -589,3 +589,4 @@ export function AIEnhancedArtGenerator({
     </div>
   );
 }
+

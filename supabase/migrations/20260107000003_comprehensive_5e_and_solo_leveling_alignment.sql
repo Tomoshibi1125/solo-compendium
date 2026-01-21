@@ -1,15 +1,15 @@
 -- =============================================
--- COMPREHENSIVE 5E & SOLO LEVELING ALIGNMENT
+-- COMPREHENSIVE 5E & SYSTEM ASCENDANT ALIGNMENT
 -- =============================================
 -- This migration ensures ALL content follows:
 -- 1. Proper 5e mechanics (DCs, attack rolls, saves, etc.)
--- 2. Solo Leveling terminology (STR/AGI/VIT/INT/SENSE/PRE)
--- 3. Solo Leveling lore alignment (System, Gates, Hunters, etc.)
+-- 2. System Ascendant terminology (STR/AGI/VIT/INT/SENSE/PRE)
+-- 3. System Ascendant lore alignment (System, Rifts, Ascendants, etc.)
 -- 
 -- Fixes all powers, features, descriptions to use:
 -- - 5e formulas: DC = 8 + proficiency bonus + ability modifier
--- - Solo Leveling ability names: VIT (not CON), AGI (not DEX), SENSE (not WIS), PRE (not CHA)
--- - Solo Leveling terminology: System, Gates, Hunters, Supreme Deity, etc.
+-- - System Ascendant ability names: VIT (not CON), AGI (not DEX), SENSE (not WIS), PRE (not CHA)
+-- - System Ascendant terminology: System, Rifts, Ascendants, Prime Architect, etc.
 -- =============================================
 
 -- =============================================
@@ -169,10 +169,10 @@ WHERE description LIKE '%Dexterity%'
    OR description LIKE '%Wisdom%'
    OR description LIKE '%Charisma%';
 -- =============================================
--- FIX SHADOW SOLDIER DESCRIPTIONS
+-- FIX Umbral Legionnaire DESCRIPTIONS
 -- =============================================
 
--- Fix ability references in shadow soldier descriptions
+-- Fix ability references in Umbral Legionnaire descriptions
 DO $$
 BEGIN
   IF EXISTS (
@@ -193,28 +193,28 @@ BEGIN
   END IF;
 END $$;
 -- =============================================
--- GLOBAL SOLO LEVELING TERMINOLOGY AUDIT
+-- GLOBAL SYSTEM ASCENDANT TERMINOLOGY AUDIT
 -- =============================================
 
--- Ensure "Jinwoo" is replaced with "Supreme Deity" or appropriate term
+-- Ensure "Kael" is replaced with "Prime Architect" or appropriate term
 UPDATE public.compendium_monarch_features
-SET description = REPLACE(description, 'Jinwoo', 'the Supreme Deity')
-WHERE description LIKE '%Jinwoo%';
+SET description = REPLACE(description, 'Kael', 'the Prime Architect')
+WHERE description LIKE '%Kael%';
 UPDATE public.compendium_job_features
-SET description = REPLACE(description, 'Jinwoo', 'the Supreme Deity')
-WHERE description LIKE '%Jinwoo%';
+SET description = REPLACE(description, 'Kael', 'the Prime Architect')
+WHERE description LIKE '%Kael%';
 UPDATE public.compendium_monarchs
-SET description = REPLACE(description, 'Jinwoo', 'the Supreme Deity')
-WHERE description LIKE '%Jinwoo%';
+SET description = REPLACE(description, 'Kael', 'the Prime Architect')
+WHERE description LIKE '%Kael%';
 UPDATE public.compendium_monarchs
-SET lore = REPLACE(lore, 'Jinwoo', 'the Supreme Deity')
-WHERE lore LIKE '%Jinwoo%';
--- Ensure "Shadow Monarch" references are clear (class vs deity)
+SET lore = REPLACE(lore, 'Kael', 'the Prime Architect')
+WHERE lore LIKE '%Kael%';
+-- Ensure "Umbral Monarch" references are clear (class vs deity)
 -- Update any ambiguous references to clarify
 UPDATE public.compendium_monarch_features
-SET description = REPLACE(description, 'Shadow Monarch''s', 'the Shadow Monarch''s')
-WHERE description LIKE '%Shadow Monarch''s%' 
-  AND monarch_id NOT IN (SELECT id FROM compendium_monarchs WHERE name = 'Shadow Monarch');
+SET description = REPLACE(description, 'Umbral Monarch''s', 'the Umbral Monarch''s')
+WHERE description LIKE '%Umbral Monarch''s%' 
+  AND monarch_id NOT IN (SELECT id FROM compendium_monarchs WHERE name = 'Umbral Monarch');
 -- =============================================
 -- VERIFY AND FIX MONSTER TRAITS/ACTIONS
 -- =============================================
@@ -241,10 +241,10 @@ WHERE description LIKE '%Dexterity%'
 -- Pattern: "must make a [Ability] saving throw" should have "(DC = X)" following it
 
 -- =============================================
--- VERIFY AND FIX SHADOW SOLDIER TRAITS/ACTIONS
+-- VERIFY AND FIX Umbral Legionnaire TRAITS/ACTIONS
 -- =============================================
 
--- Ensure shadow soldier trait descriptions use proper ability names
+-- Ensure Umbral Legionnaire trait descriptions use proper ability names
 DO $$
 BEGIN
   IF EXISTS (
@@ -264,7 +264,7 @@ BEGIN
        OR description LIKE '%Charisma%';
   END IF;
 END $$;
--- Ensure shadow soldier action descriptions use proper ability names
+-- Ensure Umbral Legionnaire action descriptions use proper ability names
 DO $$
 BEGIN
   IF EXISTS (
@@ -325,13 +325,13 @@ WHERE description LIKE '%Dexterity%'
 -- =============================================
 
 COMMENT ON TABLE public.compendium_powers IS 
-'Powers/Spells follow 5e mechanics: Save DCs = 8 + proficiency bonus + spellcasting ability modifier. Attack rolls = 1d20 + proficiency bonus + spellcasting ability modifier. Uses Solo Leveling ability scores (STR, AGI, VIT, INT, SENSE, PRE). All save DCs must include the formula.';
+'Powers/Spells follow 5e mechanics: Save DCs = 8 + proficiency bonus + spellcasting ability modifier. Attack rolls = 1d20 + proficiency bonus + spellcasting ability modifier. Uses System Ascendant ability scores (STR, AGI, VIT, INT, SENSE, PRE). All save DCs must include the formula.';
 COMMENT ON TABLE public.compendium_feats IS 
-'Feats follow 5e mechanics and use Solo Leveling ability scores (STR, AGI, VIT, INT, SENSE, PRE). All ability score references use Solo Leveling names.';
+'Feats follow 5e mechanics and use System Ascendant ability scores (STR, AGI, VIT, INT, SENSE, PRE). All ability score references use System Ascendant names.';
 COMMENT ON TABLE public.compendium_conditions IS 
-'Conditions follow 5e mechanics. Ability score references use Solo Leveling names (STR, AGI, VIT, INT, SENSE, PRE).';
+'Conditions follow 5e mechanics. Ability score references use System Ascendant names (STR, AGI, VIT, INT, SENSE, PRE).';
 COMMENT ON TABLE public.compendium_monsters IS 
-'Monsters follow 5e mechanics. All trait and action descriptions use Solo Leveling ability names. Save DCs follow 5e formula (8 + proficiency bonus + relevant ability modifier).';
+'Monsters follow 5e mechanics. All trait and action descriptions use System Ascendant ability names. Save DCs follow 5e formula (8 + proficiency bonus + relevant ability modifier).';
 DO $$
 BEGIN
   IF EXISTS (
@@ -342,7 +342,7 @@ BEGIN
       AND c.relname = 'compendium_shadow_soldiers'
   ) THEN
     EXECUTE 'COMMENT ON TABLE public.compendium_shadow_soldiers IS '
-      || quote_literal('Shadow Soldiers follow 5e mechanics. All trait and action descriptions use Solo Leveling ability names. Save DCs follow 5e formula (8 + proficiency bonus + relevant ability modifier).');
+      || quote_literal('Umbral Legion follow 5e mechanics. All trait and action descriptions use System Ascendant ability names. Save DCs follow 5e formula (8 + proficiency bonus + relevant ability modifier).');
   END IF;
 END $$;
 -- =============================================
@@ -360,19 +360,21 @@ END $$;
 -- UNION ALL
 -- SELECT 'feats', name, description FROM compendium_feats WHERE description ~* '(dexterity|constitution|wisdom|charisma)(?!.*(agility|vitality|sense|presence))';
 --
--- Find "Jinwoo" references:
--- SELECT 'monarch_features' as table, name, description FROM compendium_monarch_features WHERE description LIKE '%Jinwoo%'
+-- Find "Kael" references:
+-- SELECT 'monarch_features' as table, name, description FROM compendium_monarch_features WHERE description LIKE '%Kael%'
 -- UNION ALL
--- SELECT 'monarchs', name, lore FROM compendium_monarchs WHERE lore LIKE '%Jinwoo%';
+-- SELECT 'monarchs', name, lore FROM compendium_monarchs WHERE lore LIKE '%Kael%';
 --
 -- =============================================
 -- COMPLETION STATUS
 -- =============================================
 -- This migration ensures:
 -- ✅ All DCs use proper 5e formula: 8 + prof + modifier
--- ✅ All ability names use Solo Leveling: STR/AGI/VIT/INT/SENSE/PRE
+-- ✅ All ability names use System Ascendant: STR/AGI/VIT/INT/SENSE/PRE
 -- ✅ All save throws mention DC calculations
--- ✅ All "Jinwoo" references updated to "Supreme Deity"
--- ✅ Monster and Shadow Soldier traits/actions fixed
+-- ✅ All "Kael" references updated to "Prime Architect"
+-- ✅ Monster and Umbral Legionnaire traits/actions fixed
 -- ✅ Comprehensive terminology alignment
 -- =============================================;
+
+

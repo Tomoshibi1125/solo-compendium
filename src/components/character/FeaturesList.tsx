@@ -10,6 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 export function FeaturesList({ characterId }: { characterId: string }) {
   const { features, updateFeature, reorderFeatures } = useFeatures(characterId);
@@ -120,7 +121,7 @@ export function FeaturesList({ characterId }: { characterId: string }) {
           Object.entries(groupedFeatures).map(([source, sourceFeatures]) => (
             <div key={source} className="space-y-2">
               <div className="text-sm font-heading text-muted-foreground">
-                {source}
+                {formatMonarchVernacular(source)}
               </div>
               <SortableList
                 items={sourceFeatures}
@@ -136,18 +137,20 @@ export function FeaturesList({ characterId }: { characterId: string }) {
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="font-heading font-semibold">{feature.name}</span>
+                          <span className="font-heading font-semibold">
+                            {formatMonarchVernacular(feature.name)}
+                          </span>
                           <Badge variant="outline" className="text-xs">
                             Level {feature.level_acquired}
                           </Badge>
                           {feature.action_type && (
                             <Badge variant="secondary" className="text-xs">
-                              {feature.action_type}
+                              {formatMonarchVernacular(feature.action_type)}
                             </Badge>
                           )}
                           {feature.recharge && (
                             <Badge variant="outline" className="text-xs">
-                              {feature.recharge}
+                              {formatMonarchVernacular(feature.recharge)}
                             </Badge>
                           )}
                           {!feature.is_active && (
@@ -156,7 +159,7 @@ export function FeaturesList({ characterId }: { characterId: string }) {
                         </div>
                         {feature.description && (
                           <p className="text-xs text-muted-foreground line-clamp-2">
-                            {feature.description}
+                            {formatMonarchVernacular(feature.description)}
                           </p>
                         )}
                         {feature.uses_max !== null && (

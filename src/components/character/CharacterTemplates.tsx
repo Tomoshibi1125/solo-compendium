@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { Sparkles, Swords, Shield, Zap } from 'lucide-react';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface CharacterTemplate {
   id: string;
@@ -55,15 +56,15 @@ const TEMPLATES: CharacterTemplate[] = [
     tags: ['stealth', 'damage', 'mobile'],
   },
   {
-    id: 'shadow-monarch',
-    name: 'Shadow Monarch',
-    description: 'A necromancer with shadow army',
+    id: 'umbral-monarch',
+    name: 'Umbral Monarch',
+    description: 'A necromancer with an umbral legion',
     job: 'Necromancer',
-    path: 'Shadow Monarch',
-    background: 'Reawakened Hunter',
+    path: 'Umbral Monarch',
+    background: 'Reawakened Ascendant',
     level: 1,
     icon: Sparkles,
-    tags: ['summoner', 'necromancer', 'shadow'],
+    tags: ['summoner', 'necromancer', 'umbral'],
   },
 ];
 
@@ -97,6 +98,9 @@ export function CharacterTemplates({ onTemplateSelect, className }: CharacterTem
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {TEMPLATES.map((template) => {
           const Icon = template.icon;
+          const displayName = formatMonarchVernacular(template.name);
+          const displayDescription = formatMonarchVernacular(template.description);
+          const displayPath = template.path ? formatMonarchVernacular(template.path) : '';
           return (
             <div
               key={template.id}
@@ -112,22 +116,22 @@ export function CharacterTemplates({ onTemplateSelect, className }: CharacterTem
               <div className="flex items-start gap-3 mb-2">
                 <Icon className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                 <div className="flex-1">
-                  <h3 className="font-heading font-semibold">{template.name}</h3>
-                  <p className="text-sm text-muted-foreground">{template.description}</p>
+                  <h3 className="font-heading font-semibold">{displayName}</h3>
+                  <p className="text-sm text-muted-foreground">{displayDescription}</p>
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 mt-3">
                 <Badge variant="outline" className="text-xs">
-                  {template.job}
+                  {formatMonarchVernacular(template.job)}
                 </Badge>
                 {template.path && (
                   <Badge variant="outline" className="text-xs">
-                    {template.path}
+                    {displayPath}
                   </Badge>
                 )}
                 {template.tags.map(tag => (
                   <Badge key={tag} variant="secondary" className="text-xs">
-                    {tag}
+                    {formatMonarchVernacular(tag)}
                   </Badge>
                 ))}
               </div>
@@ -138,4 +142,5 @@ export function CharacterTemplates({ onTemplateSelect, className }: CharacterTem
     </SystemWindow>
   );
 }
+
 

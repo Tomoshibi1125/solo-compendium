@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 import { calculateRuneMaxUses } from '@/lib/runeAutomation';
-import { getProficiencyBonus } from '@/types/solo-leveling';
+import { getProficiencyBonus } from '@/types/system-rules';
 import { isLocalCharacterId } from '@/lib/guestStore';
 import { AppError } from '@/lib/appError';
 
@@ -388,4 +388,5 @@ export function checkRuneRequirements(
 
   return { canUse: true, penalties, requirementMultiplier };
 }
+
 

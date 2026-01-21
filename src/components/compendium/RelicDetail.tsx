@@ -2,6 +2,7 @@ import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Gem, Sparkles, AlertTriangle, Coins } from 'lucide-react';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface RelicData {
   id: string;
@@ -44,7 +45,7 @@ const tierColors: Record<string, string> = {
 };
 
 export const RelicDetail = ({ data }: { data: RelicData }) => {
-  const displayName = data.display_name || data.name;
+  const displayName = formatMonarchVernacular(data.display_name || data.name);
 
   return (
     <div className="space-y-6">
@@ -70,12 +71,12 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-2">
             <Badge className={`${rarityColors[data.rarity]} text-white capitalize`}>
-              {data.rarity.replace('_', ' ')}
+              {formatMonarchVernacular(data.rarity.replace('_', ' '))}
             </Badge>
-            <Badge variant="secondary">{data.item_type}</Badge>
+            <Badge variant="secondary">{formatMonarchVernacular(data.item_type)}</Badge>
             {data.relic_tier && (
               <Badge variant="outline" className={tierColors[data.relic_tier]}>
-                {data.relic_tier}
+                {formatMonarchVernacular(data.relic_tier)}
               </Badge>
             )}
             {data.requires_attunement && (
@@ -85,7 +86,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 
           {data.attunement_requirements && (
             <p className="text-sm text-muted-foreground">
-              <em>Attunement: {data.attunement_requirements}</em>
+              <em>Attunement: {formatMonarchVernacular(data.attunement_requirements)}</em>
             </p>
           )}
         </div>
@@ -94,10 +95,10 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         <SystemWindow title="RARITY" compact>
-          <div className="flex items-center gap-2">
-            <Gem className={`w-5 h-5 ${rarityColors[data.rarity] ? 'text-white' : ''}`}
+            <div className="flex items-center gap-2">
+              <Gem className={`w-5 h-5 ${rarityColors[data.rarity] ? 'text-white' : ''}`}
                  style={{ color: data.rarity === 'legendary' ? '#f59e0b' : undefined }} />
-            <span className="font-heading capitalize">{data.rarity.replace('_', ' ')}</span>
+            <span className="font-heading capitalize">{formatMonarchVernacular(data.rarity.replace('_', ' '))}</span>
           </div>
         </SystemWindow>
 
@@ -105,7 +106,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
           <SystemWindow title="TIER" compact>
             <div className="flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-primary" />
-              <span className="font-heading capitalize">{data.relic_tier}</span>
+              <span className="font-heading capitalize">{formatMonarchVernacular(data.relic_tier)}</span>
             </div>
           </SystemWindow>
         )}
@@ -122,7 +123,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 
       {/* Description */}
       <SystemWindow title="DESCRIPTION">
-        <p className="text-foreground whitespace-pre-wrap leading-relaxed text-base">{data.description}</p>
+        <p className="text-foreground whitespace-pre-wrap leading-relaxed text-base">{formatMonarchVernacular(data.description)}</p>
       </SystemWindow>
 
       {/* Properties */}
@@ -132,7 +133,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
             {data.properties.map((prop, i) => (
               <li key={i} className="flex items-start gap-2">
                 <span className="text-primary">•</span>
-                <span className="text-foreground">{prop}</span>
+                <span className="text-foreground">{formatMonarchVernacular(prop)}</span>
               </li>
             ))}
           </ul>
@@ -146,7 +147,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
             {data.quirks.map((quirk, i) => (
               <li key={i} className="flex items-start gap-2">
                 <Sparkles className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
-                <span className="text-muted-foreground">{quirk}</span>
+                <span className="text-muted-foreground">{formatMonarchVernacular(quirk)}</span>
               </li>
             ))}
           </ul>
@@ -158,7 +159,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
         <SystemWindow title="CORRUPTION RISK" className="border-red-500/30">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0" />
-            <p className="text-foreground">{data.corruption_risk}</p>
+            <p className="text-foreground">{formatMonarchVernacular(data.corruption_risk)}</p>
           </div>
         </SystemWindow>
       )}
@@ -167,7 +168,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
       {data.tags && data.tags.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {data.tags.map((tag) => (
-            <Badge key={tag} variant="outline" className="text-xs">{tag}</Badge>
+            <Badge key={tag} variant="outline" className="text-xs">{formatMonarchVernacular(tag)}</Badge>
           ))}
         </div>
       )}

@@ -32,7 +32,7 @@ export const uiAssets: AssetCategory = {
     category: 'ui',
     type: 'background',
     path: '/ui/login-page-bg.webp',
-    description: 'Solo Leveling styled login page background with shadow theme'
+    description: 'System Ascendant styled login page background with shadow theme'
   },
   landingPageHero: {
     id: 'landing-page-hero',
@@ -40,7 +40,7 @@ export const uiAssets: AssetCategory = {
     category: 'ui',
     type: 'background',
     path: '/ui/landing-page-hero.webp',
-    description: 'Solo Leveling styled landing page hero image'
+    description: 'System Ascendant styled landing page hero image'
   },
   dashboardBg: {
     id: 'dashboard-bg',
@@ -48,7 +48,7 @@ export const uiAssets: AssetCategory = {
     category: 'ui',
     type: 'background',
     path: '/ui/dashboard-bg.webp',
-    description: 'Solo Leveling styled dashboard background'
+    description: 'System Ascendant styled dashboard background'
   }
 };
 
@@ -56,7 +56,7 @@ export const uiAssets: AssetCategory = {
 export const itemAssets: AssetCategory = {
   shadowBlade: {
     id: 'shadow-blade',
-    name: 'Shadow Blade of Jinwoo',
+    name: 'Shadow Blade of Kael',
     category: 'items',
     type: 'weapon',
     path: '/generated/items/shadow-blade.webp',
@@ -72,7 +72,7 @@ export const itemAssets: AssetCategory = {
   },
   shadowRing: {
     id: 'shadow-ring',
-    name: 'Ring of Shadow Sovereignty',
+    name: 'Ring of Shadow Dominion',
     category: 'items',
     type: 'accessory',
     path: '/generated/items/shadow-ring.webp',
@@ -184,11 +184,11 @@ export const mapAssets: AssetCategory = {
   },
   ironGate: {
     id: 'iron-gate',
-    name: 'Shadow Iron Gate',
+    name: 'Shadow Iron Portal',
     category: 'maps',
     type: 'gate',
     path: '/generated/maps/iron-gate.webp',
-    description: 'Massive iron gate with shadow energy'
+    description: 'Massive iron portal frame infused with shadow energy'
   },
   treasureChest: {
     id: 'treasure-chest',
@@ -212,7 +212,7 @@ export const mapAssets: AssetCategory = {
 export const tokenAssets: AssetCategory = {
   playerToken: {
     id: 'player-token',
-    name: 'Shadow Hunter',
+    name: 'Shadow Ascendant',
     category: 'tokens',
     type: 'player',
     path: '/generated/tokens/player-token.webp',
@@ -232,7 +232,7 @@ export const tokenAssets: AssetCategory = {
     category: 'tokens',
     type: 'boss',
     path: '/generated/tokens/boss-token.webp',
-    description: 'Powerful ruler of shadow realm'
+    description: 'Powerful regent of the shadow realm'
   },
   npcToken: {
     id: 'npc-token',
@@ -323,3 +323,4 @@ export const comprehensiveAssetIndex: AssetIndex = {
 };
 
 export default comprehensiveAssetIndex;
+

@@ -1,12 +1,12 @@
 import { cn } from '@/lib/utils';
 
-interface ShadowMonarchLogoProps {
+interface SystemSigilLogoProps {
   className?: string;
   size?: 'sm' | 'md' | 'lg' | 'xl';
   variant?: 'default' | 'supreme' | 'arise';
 }
 
-export function ShadowMonarchLogo({ className, size = 'md', variant = 'default' }: ShadowMonarchLogoProps) {
+export function SystemSigilLogo({ className, size = 'md', variant = 'default' }: SystemSigilLogoProps) {
   const sizeClasses = {
     sm: 'w-12 h-12',
     md: 'w-24 h-24',
@@ -44,7 +44,7 @@ export function ShadowMonarchLogo({ className, size = 'md', variant = 'default' 
         className="w-full h-full relative z-10"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Gradient Definitions - Supreme Deity Palette */}
+        {/* Gradient Definitions - Prime Architect Palette */}
         <defs>
           <linearGradient id="monarchGradientSupreme" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="hsl(220 100% 60%)" />
@@ -71,7 +71,7 @@ export function ShadowMonarchLogo({ className, size = 'md', variant = 'default' 
           </filter>
         </defs>
 
-        {/* Outer Ring - Monarch's Domain */}
+        {/* Outer Ring - Ascendant's Domain */}
         <circle
           cx="50"
           cy="50"
@@ -96,7 +96,7 @@ export function ShadowMonarchLogo({ className, size = 'md', variant = 'default' 
           className={styles.outerGlow}
         />
         
-        {/* Shadow Energy Core */}
+        {/* Umbral Energy Core */}
         <circle
           cx="50"
           cy="50"
@@ -105,7 +105,7 @@ export function ShadowMonarchLogo({ className, size = 'md', variant = 'default' 
           className={styles.innerPulse}
         />
         
-        {/* Monarch's Seal - The Crown */}
+        {/* Ascendant's Seal - The Crown */}
         <path
           d="M 50 15 L 62 35 L 85 35 L 68 52 L 75 75 L 50 62 L 25 75 L 32 52 L 15 35 L 38 35 Z"
           fill="url(#monarchGradientSupreme)"
@@ -122,7 +122,7 @@ export function ShadowMonarchLogo({ className, size = 'md', variant = 'default' 
           className={styles.corePulse}
         />
         
-        {/* Central Core - Supreme Deity's Eye */}
+        {/* Central Core - Prime Architect's Eye */}
         <circle
           cx="50"
           cy="50"
@@ -153,3 +153,5 @@ export function ShadowMonarchLogo({ className, size = 'md', variant = 'default' 
     </div>
   );
 }
+
+

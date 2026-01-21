@@ -3,7 +3,7 @@ import { Auth as SupabaseAuth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { SystemWindow } from '@/components/ui/SystemWindow';
-import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
+import { SystemSigilLogo } from '@/components/ui/SystemSigilLogo';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
@@ -126,7 +126,7 @@ export function Auth() {
           <SystemWindow variant="arise" title="AUTH (E2E)" className="text-center">
             <div className="p-8 space-y-4">
               <div className="flex justify-center">
-                <ShadowMonarchLogo size="md" variant="supreme" />
+                <SystemSigilLogo size="md" variant="supreme" />
               </div>
               <div>
                 <h2 className="font-arise text-2xl font-bold gradient-text-arise mb-2">
@@ -153,7 +153,7 @@ export function Auth() {
           <SystemWindow variant="arise" title="AUTH SETUP" className="text-center">
             <div className="p-8 space-y-4">
               <div className="flex justify-center">
-                <ShadowMonarchLogo size="md" variant="supreme" />
+                <SystemSigilLogo size="md" variant="supreme" />
               </div>
               <div>
                 <h2 className="font-arise text-2xl font-bold gradient-text-arise mb-2">
@@ -182,7 +182,7 @@ export function Auth() {
           <SystemWindow variant="arise" className="text-center">
             <div className="p-8 space-y-6">
               <div className="flex justify-center mb-4">
-                <ShadowMonarchLogo size="md" variant="supreme" />
+                <SystemSigilLogo size="md" variant="supreme" />
               </div>
               <h2 className="font-arise text-2xl font-bold gradient-text-arise mb-2">
                 {isSignup ? 'Choose Your Role' : profile ? 'Change Your Role' : 'Select Your Role'}
@@ -215,7 +215,7 @@ export function Auth() {
                       <Sword className="w-5 h-5 text-primary" />
                     </div>
                     <div className="text-left">
-                      <div className="font-heading font-semibold">Hunter (Player)</div>
+                      <div className="font-heading font-semibold">Ascendant (Player)</div>
                       <div className="text-sm text-muted-foreground">
                         Join campaigns and create characters
                       </div>
@@ -238,9 +238,9 @@ export function Auth() {
                       <Crown className="w-5 h-5 text-primary" />
                     </div>
                     <div className="text-left">
-                      <div className="font-heading font-semibold">Gate Master (DM)</div>
+                      <div className="font-heading font-semibold">Protocol Warden</div>
                       <div className="text-sm text-muted-foreground">
-                        Create campaigns and access DM tools
+                        Create campaigns and access Warden tools
                       </div>
                     </div>
                   </div>
@@ -271,7 +271,7 @@ export function Auth() {
         <SystemWindow variant="arise">
           <div className="p-6">
             <div className="flex justify-center mb-6">
-              <ShadowMonarchLogo size="md" variant="supreme" />
+              <SystemSigilLogo size="md" variant="supreme" />
             </div>
             
             {/* OAuth Buttons */}
@@ -340,4 +340,6 @@ export function Auth() {
     </div>
   );
 }
+
+
 

@@ -1,6 +1,6 @@
 /**
  * In-App Art Generator Component
- * Allows players/DMs to generate custom art for characters, NPCs, and homebrew items
+ * Allows players/Wardens to generate custom art for characters, NPCs, and homebrew items
  */
 
 import { useState } from 'react';

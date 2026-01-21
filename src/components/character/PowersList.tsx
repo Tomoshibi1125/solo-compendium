@@ -16,11 +16,13 @@ import { useSpellSlots, useUpdateSpellSlot } from '@/hooks/useSpellSlots';
 import { getSpellcastingAbility, getSpellsKnownLimit, getSpellsPreparedLimit, getAbilityModifier } from '@/lib/characterCalculations';
 import { cn } from '@/lib/utils';
 import { AddPowerDialog } from './AddPowerDialog';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 function CompendiumLink({ type, id, name, className }: { type: string; id: string; name: string; className?: string }) {
+  const displayName = formatMonarchVernacular(name);
   return (
     <Link to={`/compendium/${type}/${id}`} className={className}>
-      {name}
+      {displayName}
     </Link>
   );
 }
@@ -93,6 +95,7 @@ export function PowersList({ characterId }: { characterId: string }) {
   }, [reorderPowers]);
 
   const handleTogglePrepared = async (power: typeof powers[0]) => {
+    const displayName = formatMonarchVernacular(power.name);
     // Check if preparing would exceed limit
     if (!power.is_prepared && spellsPreparedLimit !== null) {
       if (preparedCount >= spellsPreparedLimit) {
@@ -112,7 +115,7 @@ export function PowersList({ characterId }: { characterId: string }) {
       });
       toast({
         title: power.is_prepared ? 'Unprepared' : 'Prepared',
-        description: `${power.name} has been ${power.is_prepared ? 'unprepared' : 'prepared'}.`,
+        description: `${displayName} has been ${power.is_prepared ? 'unprepared' : 'prepared'}.`,
       });
     } catch (error) {
       toast({
@@ -124,11 +127,12 @@ export function PowersList({ characterId }: { characterId: string }) {
   };
 
   const handleCastSpell = async (power: typeof powers[0]) => {
+    const displayName = formatMonarchVernacular(power.name);
     // Cantrips don't use spell slots
     if (power.power_level === 0) {
       toast({
         title: 'Cantrip Cast',
-        description: `${power.name} is cast without using a spell slot.`,
+        description: `${displayName} is cast without using a spell slot.`,
       });
       return;
     }
@@ -153,7 +157,7 @@ export function PowersList({ characterId }: { characterId: string }) {
       });
       toast({
         title: 'Spell Cast',
-        description: `${power.name} cast! Used 1 Tier ${power.power_level} spell slot.`,
+        description: `${displayName} cast! Used 1 Tier ${power.power_level} spell slot.`,
       });
     } catch (error) {
       toast({
@@ -165,13 +169,14 @@ export function PowersList({ characterId }: { characterId: string }) {
   };
 
   const handleRemove = async (power: typeof powers[0]) => {
-    if (!confirm(`Remove ${power.name}?`)) return;
+    const displayName = formatMonarchVernacular(power.name);
+    if (!confirm(`Remove ${displayName}?`)) return;
 
     try {
       await removePower(power.id);
       toast({
         title: 'Removed',
-        description: `${power.name} has been removed.`,
+        description: `${displayName} has been removed.`,
       });
     } catch (error) {
       toast({
@@ -263,7 +268,7 @@ export function PowersList({ characterId }: { characterId: string }) {
           <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20">
             <div className="flex items-center gap-2 text-sm">
               <Badge variant="destructive">Concentrating</Badge>
-              <span>{concentrationPower.name}</span>
+              <span>{formatMonarchVernacular(concentrationPower.name)}</span>
             </div>
           </div>
         )}
@@ -294,96 +299,111 @@ export function PowersList({ characterId }: { characterId: string }) {
               <SortableList
                 items={levelPowers}
                 onReorder={(newOrder) => handleReorderGroup(level, newOrder)}
-                renderItem={(power) => (
-                  <div
-                    key={power.id}
-                    className={cn(
-                      "p-3 rounded-lg border bg-muted/30",
-                      power.is_prepared && "border-primary/50 bg-primary/5"
-                    )}
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        {getPowerId(power.name) ? (
-                          <CompendiumLink
-                            type="powers"
-                            id={getPowerId(power.name)!}
-                            name={power.name}
-                            className="font-heading font-semibold hover:text-primary"
-                          />
-                        ) : (
-                          <span className="font-heading font-semibold">{power.name}</span>
-                        )}
-                          {power.power_level > 0 && (
-                            <Badge variant="secondary" className="text-xs">
-                              Level {power.power_level}
-                            </Badge>
+                renderItem={(power) => {
+                  const displayName = formatMonarchVernacular(power.name);
+                  const displayDescription = power.description
+                    ? formatMonarchVernacular(power.description)
+                    : null;
+                  const displaySource = power.source ? formatMonarchVernacular(power.source) : null;
+                  const displayCastingTime = power.casting_time
+                    ? formatMonarchVernacular(power.casting_time)
+                    : null;
+                  const displayRange = power.range ? formatMonarchVernacular(power.range) : null;
+                  const displayDuration = power.duration
+                    ? formatMonarchVernacular(power.duration)
+                    : null;
+
+                  return (
+                    <div
+                      key={power.id}
+                      className={cn(
+                        "p-3 rounded-lg border bg-muted/30",
+                        power.is_prepared && "border-primary/50 bg-primary/5"
+                      )}
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          {getPowerId(power.name) ? (
+                            <CompendiumLink
+                              type="powers"
+                              id={getPowerId(power.name)!}
+                              name={displayName}
+                              className="font-heading font-semibold hover:text-primary"
+                            />
+                          ) : (
+                            <span className="font-heading font-semibold">{displayName}</span>
                           )}
-                          {power.is_prepared && (
-                            <Badge variant="default" className="text-xs">Prepared</Badge>
+                            {power.power_level > 0 && (
+                              <Badge variant="secondary" className="text-xs">
+                                Level {power.power_level}
+                              </Badge>
+                            )}
+                            {power.is_prepared && (
+                              <Badge variant="default" className="text-xs">Prepared</Badge>
+                            )}
+                            {power.concentration && (
+                              <Badge variant="destructive" className="text-xs">Concentration</Badge>
+                            )}
+                            {displaySource && (
+                              <Badge variant="outline" className="text-xs">{displaySource}</Badge>
+                            )}
+                          </div>
+                          {displayDescription && (
+                            <p className="text-xs text-muted-foreground line-clamp-2">
+                              {displayDescription}
+                            </p>
                           )}
-                          {power.concentration && (
-                            <Badge variant="destructive" className="text-xs">Concentration</Badge>
-                          )}
-                          {power.source && (
-                            <Badge variant="outline" className="text-xs">{power.source}</Badge>
-                          )}
+                          <div className="flex flex-wrap gap-2 mt-1 text-xs text-muted-foreground">
+                            {displayCastingTime && <span>Casting: {displayCastingTime}</span>}
+                            {displayRange && <span>Range: {displayRange}</span>}
+                            {displayDuration && <span>Duration: {displayDuration}</span>}
+                          </div>
                         </div>
-                        {power.description && (
-                          <p className="text-xs text-muted-foreground line-clamp-2">
-                            {power.description}
-                          </p>
-                        )}
-                        <div className="flex flex-wrap gap-2 mt-1 text-xs text-muted-foreground">
-                          {power.casting_time && <span>Casting: {power.casting_time}</span>}
-                          {power.range && <span>Range: {power.range}</span>}
-                          {power.duration && <span>Duration: {power.duration}</span>}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
                         <div className="flex items-center gap-2">
-                          <Checkbox
-                            id={`prepared-${power.id}`}
-                            checked={power.is_prepared}
-                            onCheckedChange={() => handleTogglePrepared(power)}
-                            disabled={!power.is_prepared && isOverPreparedLimit}
-                          />
-                          <label
-                            htmlFor={`prepared-${power.id}`}
-                            className="text-xs cursor-pointer"
-                          >
-                            Prep
-                          </label>
-                        </div>
-                        {power.is_prepared && (
+                          <div className="flex items-center gap-2">
+                            <Checkbox
+                              id={`prepared-${power.id}`}
+                              checked={power.is_prepared}
+                              onCheckedChange={() => handleTogglePrepared(power)}
+                              disabled={!power.is_prepared && isOverPreparedLimit}
+                            />
+                            <label
+                              htmlFor={`prepared-${power.id}`}
+                              className="text-xs cursor-pointer"
+                            >
+                              Prep
+                            </label>
+                          </div>
+                          {power.is_prepared && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleCastSpell(power)}
+                              disabled={
+                                power.power_level > 0 &&
+                                !spellSlots.find(
+                                  (s) => s.level === power.power_level && s.current > 0
+                                )
+                              }
+                              className="text-xs"
+                            >
+                              Cast
+                            </Button>
+                          )}
                           <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleCastSpell(power)}
-                            disabled={
-                              power.power_level > 0 &&
-                              !spellSlots.find(
-                                (s) => s.level === power.power_level && s.current > 0
-                              )
-                            }
-                            className="text-xs"
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8"
+                            onClick={() => handleRemove(power)}
                           >
-                            Cast
+                            <Trash2 className="w-4 h-4" />
                           </Button>
-                        )}
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8"
-                          onClick={() => handleRemove(power)}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )}
+                  );
+                }}
                 itemClassName="mb-2"
               />
             </div>

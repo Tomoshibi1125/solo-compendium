@@ -1,5 +1,5 @@
 /**
- * D&D 5e Spell Slots System
+ * SRD 5e Spell Slots System
  * Manages spell slots for spellcasting classes
  */
 
@@ -247,3 +247,4 @@ export function getHighestAvailableSlot(state: SpellSlotState): keyof SpellSlots
   }
   return null;
 }
+

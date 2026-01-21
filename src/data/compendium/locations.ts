@@ -1,6 +1,6 @@
-// Comprehensive Locations Compendium - D&D Beyond Scale
+// Comprehensive Locations Compendium - Digital Character Sheet Scale
 // Generated with full admin privileges
-// Solo Leveling themed locations with images
+// System Ascendant themed locations with images
 
 export interface Location {
   id: string;
@@ -20,7 +20,7 @@ export const locations = [
     "type": "Dungeon",
     "rank": "D",
     "image": "/generated/compendium/locations/location-0001.webp",
-    "description": "An ancient dungeon carved from solid shadow stone, where the barriers between the mortal realm and the shadow dimension grow thin. The Eternal Shadow Dungeon is a training ground for D-rank hunters, featuring shifting corridors that reconfigure themselves and walls that whisper forgotten secrets. Those who venture here report seeing their own shadows move independently and hearing voices that promise power at a terrible cost.",
+    "description": "An ancient dungeon carved from solid shadow stone, where the barriers between the mortal realm and the shadow dimension grow thin. The Eternal Shadow Dungeon is a training ground for D-rank ascendants, featuring shifting corridors that reconfigure themselves and walls that whisper forgotten secrets. Those who venture here report seeing their own shadows move independently and hearing voices that promise power at a terrible cost.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts",
@@ -38,7 +38,7 @@ export const locations = [
     "type": "Castle",
     "rank": "C",
     "image": "/generated/compendium/locations/location-0002.webp",
-    "description": "A massive fortress that floats in the void between dimensions, its towers constructed from crystallized nothingness. The Eternal Void Fortress was once the stronghold of a void monarch who sought to erase all existence from reality. Now abandoned, it serves as a proving ground for C-rank hunters who must navigate anti-gravity chambers and reality-warping traps while avoiding the void remnants that still patrol its halls.",
+    "description": "A massive fortress that floats in the void between dimensions, its towers constructed from crystallized nothingness. The Eternal Void Fortress was once the stronghold of a void monarch who sought to erase all existence from reality. Now abandoned, it serves as a proving ground for C-rank ascendants who must navigate anti-gravity chambers and reality-warping traps while avoiding the void remnants that still patrol its halls.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts"
@@ -55,7 +55,7 @@ export const locations = [
     "type": "City",
     "rank": "B",
     "image": "/generated/compendium/locations/location-0003.webp",
-    "description": "A sprawling city built within the caldera of an active volcano, where demons and mortals once coexisted in an uneasy alliance. The Abyssal Metropolis is now a ruin of obsidian streets and magma-flooded districts, home to B-rank hunters seeking demonic artifacts. The city's central spire contains the throne room where the Demon King once held court, and many claim his essence still lingers, tempting visitors with promises of power.",
+    "description": "A sprawling city built within the caldera of an active volcano, where demons and mortals once coexisted in an uneasy alliance. The Abyssal Metropolis is now a ruin of obsidian streets and magma-flooded districts, home to B-rank ascendants seeking demonic artifacts. The city's central spire contains the throne room where the Demon King once held court, and many claim his essence still lingers, tempting visitors with promises of power.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts",
@@ -73,7 +73,7 @@ export const locations = [
     "type": "Forest",
     "rank": "A",
     "image": "/generated/compendium/locations/location-0004.webp",
-    "description": "An ancient forest where trees grow upside down from a crimson sky and their roots drink from rivers of liquid shadow. The Eternal Demonic Realm is a pocket dimension where demonic nature has evolved beyond mortal comprehension. A-rank hunters who enter this realm find themselves hunted by predator plants that sing death songs and must navigate through groves where time flows backward, revealing glimpses of ancient demonic battles.",
+    "description": "An ancient forest where trees grow upside down from a crimson sky and their roots drink from rivers of liquid shadow. The Eternal Demonic Realm is a pocket dimension where demonic nature has evolved beyond mortal comprehension. A-rank ascendants who enter this realm find themselves hunted by predator plants that sing death songs and must navigate through groves where time flows backward, revealing glimpses of ancient demonic battles.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts",
@@ -93,7 +93,7 @@ export const locations = [
     "type": "Mountain",
     "rank": "S",
     "image": "/generated/compendium/locations/location-0005.webp",
-    "description": "A divine palace carved from the peak of a mountain that pierces the veil between dimensions, its spires touching the celestial realm. The Eternal Celestial Palace was built by the first gods as a bridge between mortal and divine existence. Now it serves as the ultimate testing ground for S-rank hunters, who must ascend through seven celestial trials while avoiding the celestial guardians that still protect its sacred halls from unworthy mortals.",
+    "description": "A divine palace carved from the peak of a mountain that pierces the veil between dimensions, its spires touching the celestial realm. The Eternal Celestial Palace was built by the first gods as a bridge between mortal and divine existence. Now it serves as the ultimate testing ground for S-rank ascendants, who must ascend through seven celestial trials while avoiding the celestial guardians that still protect its sacred halls from unworthy mortals.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts",
@@ -110,7 +110,7 @@ export const locations = [
     "type": "Temple",
     "rank": "D",
     "image": "/generated/compendium/locations/location-0006.webp",
-    "description": "A desecrated temple where shadow priests once conducted rituals to breach the dimensional barriers. Now D-rank hunters must navigate through halls where prayers echo backward and sacred symbols writhe with forbidden knowledge.",
+    "description": "A desecrated temple where shadow priests once conducted rituals to breach the dimensional barriers. Now D-rank ascendants must navigate through halls where prayers echo backward and sacred symbols writhe with forbidden knowledge.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts",
@@ -129,7 +129,7 @@ export const locations = [
     "type": "Dungeon",
     "rank": "C",
     "image": "/generated/compendium/locations/location-0007.webp",
-    "description": "A multi-level dungeon complex where reality itself becomes unstable, causing gravity to shift and time to flow erratically. C-rank hunters who venture here must contend with rooms that exist in multiple dimensions simultaneously and corridors that lead to different versions of the same place.",
+    "description": "A multi-level dungeon complex where reality itself becomes unstable, causing gravity to shift and time to flow erratically. C-rank ascendants who venture here must contend with rooms that exist in multiple dimensions simultaneously and corridors that lead to different versions of the same place.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts"
@@ -145,7 +145,7 @@ export const locations = [
     "type": "Castle",
     "rank": "B",
     "image": "/generated/compendium/locations/location-0008.webp",
-    "description": "A fortress that was once the seat of a shadow monarch's power, now split across seven different dimensions. B-rank hunters must navigate through versions of the same castle that exist simultaneously, each with different dangers and secrets.",
+    "description": "A fortress that was once the seat of a umbral monarch's power, now split across seven different dimensions. B-rank ascendants must navigate through versions of the same castle that exist simultaneously, each with different dangers and secrets.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts"
@@ -161,7 +161,7 @@ export const locations = [
     "type": "City",
     "rank": "A",
     "image": "/generated/compendium/locations/location-0009.webp",
-    "description": "A city that has achieved a form of transcendence, existing simultaneously in multiple dimensions and time periods. A-rank hunters who enter must navigate through streets where reality itself is fluid and where the buildings remember everyone who has ever lived or died within them.",
+    "description": "A city that has achieved a form of transcendence, existing simultaneously in multiple dimensions and time periods. A-rank ascendants who enter must navigate through streets where reality itself is fluid and where the buildings remember everyone who has ever lived or died within them.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts",
@@ -216,7 +216,7 @@ export const locations = [
     "type": "Temple",
     "rank": "C",
     "image": "/generated/compendium/locations/location-0012.webp",
-    "description": "A temple complex where the boundaries between sacred and profane have dissolved, creating spaces where divine energy and shadow magic merge into something new and terrible. C-rank hunters who enter must navigate through chambers where the laws of physics are merely suggestions.",
+    "description": "A temple complex where the boundaries between sacred and profane have dissolved, creating spaces where divine energy and shadow magic merge into something new and terrible. C-rank ascendants who enter must navigate through chambers where the laws of physics are merely suggestions.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts",
@@ -234,7 +234,7 @@ export const locations = [
     "type": "Dungeon",
     "rank": "B",
     "image": "/generated/compendium/locations/location-0013.webp",
-    "description": "An extensive dungeon network that serves as a proving ground for B-rank hunters, featuring intelligent traps that learn from their victims and corridors that actively resist intrusion. The dungeon's central core houses a fragment of pure shadow energy that warps reality around it.",
+    "description": "An extensive dungeon network that serves as a proving ground for B-rank ascendants, featuring intelligent traps that learn from their victims and corridors that actively resist intrusion. The dungeon's central core houses a fragment of pure shadow energy that warps reality around it.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts",
@@ -270,7 +270,7 @@ export const locations = [
     "type": "City",
     "rank": "S",
     "image": "/generated/compendium/locations/location-0015.webp",
-    "description": "A city that exists as a manifestation of collective consciousness, where the thoughts and dreams of all who have ever lived take physical form. S-rank hunters who enter must navigate through streets where reality itself is shaped by belief and where the impossible becomes possible.",
+    "description": "A city that exists as a manifestation of collective consciousness, where the thoughts and dreams of all who have ever lived take physical form. S-rank ascendants who enter must navigate through streets where reality itself is shaped by belief and where the impossible becomes possible.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts",
@@ -290,7 +290,7 @@ export const locations = [
     "type": "Forest",
     "rank": "D",
     "image": "/generated/compendium/locations/location-0016.webp",
-    "description": "A corrupted forest where the trees have turned to shadow and the wildlife has adapted to eternal twilight. D-rank hunters must navigate through groves where the very air tries to steal their memories and replace them with fragments of forgotten nightmares.",
+    "description": "A corrupted forest where the trees have turned to shadow and the wildlife has adapted to eternal twilight. D-rank ascendants must navigate through groves where the very air tries to steal their memories and replace them with fragments of forgotten nightmares.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts",
@@ -327,7 +327,7 @@ export const locations = [
     "type": "Temple",
     "rank": "B",
     "image": "/generated/compendium/locations/location-0018.webp",
-    "description": "A temple complex that serves as a nexus point for multiple shadow dimensions, where different versions of reality overlap and merge. B-rank hunters who enter must navigate through spaces where the laws of magic are broken and remade constantly.",
+    "description": "A temple complex that serves as a nexus point for multiple shadow dimensions, where different versions of reality overlap and merge. B-rank ascendants who enter must navigate through spaces where the laws of magic are broken and remade constantly.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts",
@@ -346,7 +346,7 @@ export const locations = [
     "type": "Dungeon",
     "rank": "A",
     "image": "/generated/compendium/locations/location-0019.webp",
-    "description": "A legendary dungeon that exists as a living entity, constantly evolving and adapting to challenge those who enter. A-rank hunters must contend with the dungeon's intelligence, which learns from their tactics and creates new challenges specifically designed to exploit their weaknesses.",
+    "description": "A legendary dungeon that exists as a living entity, constantly evolving and adapting to challenge those who enter. A-rank ascendants must contend with the dungeon's intelligence, which learns from their tactics and creates new challenges specifically designed to exploit their weaknesses.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts"
@@ -382,7 +382,7 @@ export const locations = [
     "type": "City",
     "rank": "D",
     "image": "/generated/compendium/locations/location-0021.webp",
-    "description": "A ruined city swallowed by the shadow realm during an ancient cataclysm. Now its broken streets serve as a training ground for D-rank hunters, where the ghosts of former citizens still reenact their final moments in eternal loops.",
+    "description": "A ruined city swallowed by the shadow realm during an ancient cataclysm. Now its broken streets serve as a training ground for D-rank ascendants, where the ghosts of former citizens still reenact their final moments in eternal loops.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts",
@@ -435,7 +435,7 @@ export const locations = [
     "type": "Temple",
     "rank": "A",
     "image": "/generated/compendium/locations/location-0024.webp",
-    "description": "A temple complex that exists as a bridge between mortal and divine realms, where the boundaries between sacred and shadow have merged. A-rank hunters who enter must navigate through chambers where the gods themselves fear to tread.",
+    "description": "A temple complex that exists as a bridge between mortal and divine realms, where the boundaries between sacred and shadow have merged. A-rank ascendants who enter must navigate through chambers where the gods themselves fear to tread.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts",
@@ -453,7 +453,7 @@ export const locations = [
     "type": "Dungeon",
     "rank": "S",
     "image": "/generated/compendium/locations/location-0025.webp",
-    "description": "The ultimate dungeon, a living labyrinth that exists as a test of worthiness for those who would challenge the gods themselves. S-rank hunters who enter must face manifestations of their own fears and doubts, given form by the dungeon's consciousness.",
+    "description": "The ultimate dungeon, a living labyrinth that exists as a test of worthiness for those who would challenge the gods themselves. S-rank ascendants who enter must face manifestations of their own fears and doubts, given form by the dungeon's consciousness.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts",
@@ -473,7 +473,7 @@ export const locations = [
     "type": "Castle",
     "rank": "D",
     "image": "/generated/compendium/locations/location-0026.webp",
-    "description": "A crumbling castle where the last shadow lord made his final stand against the forces of light. The castle's foundations are built upon layers of forgotten history, and D-rank hunters who explore its halls often discover rooms that exist outside normal space.",
+    "description": "A crumbling castle where the last shadow lord made his final stand against the forces of light. The castle's foundations are built upon layers of forgotten history, and D-rank ascendants who explore its halls often discover rooms that exist outside normal space.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts",
@@ -492,7 +492,7 @@ export const locations = [
     "type": "City",
     "rank": "C",
     "image": "/generated/compendium/locations/location-0027.webp",
-    "description": "A city that exists in the space between heartbeats, where buildings phase in and out of existence and the streets rearrange themselves when no one is watching. C-rank hunters who spend too much here risk becoming part of the city's eternal cycle of appearance and disappearance.",
+    "description": "A city that exists in the space between heartbeats, where buildings phase in and out of existence and the streets rearrange themselves when no one is watching. C-rank ascendants who spend too much here risk becoming part of the city's eternal cycle of appearance and disappearance.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts",
@@ -511,7 +511,7 @@ export const locations = [
     "type": "Forest",
     "rank": "B",
     "image": "/generated/compendium/locations/location-0028.webp",
-    "description": "An ancient forest that has achieved consciousness and now actively hunts those who enter its domain. B-rank hunters find themselves stalked by trees that can move through shadows and plants that feed on fear and doubt.",
+    "description": "An ancient forest that has achieved consciousness and now actively hunts those who enter its domain. B-rank ascendants find themselves stalked by trees that can move through shadows and plants that feed on fear and doubt.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts",
@@ -549,7 +549,7 @@ export const locations = [
     "type": "Temple",
     "rank": "S",
     "image": "/generated/compendium/locations/location-0030.webp",
-    "description": "The ultimate temple, a place where the boundaries between all realities dissolve and where the divine and shadow merge into a single, terrible truth. S-rank hunters who enter must confront the nature of power itself and decide whether they are worthy to wield it.",
+    "description": "The ultimate temple, a place where the boundaries between all realities dissolve and where the divine and shadow merge into a single, terrible truth. S-rank ascendants who enter must confront the nature of power itself and decide whether they are worthy to wield it.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts",
@@ -7277,3 +7277,5 @@ export const locations = [
 ];
 
 export default locations;
+
+

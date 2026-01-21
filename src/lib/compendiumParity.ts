@@ -1,7 +1,7 @@
 /**
- * D&D Beyond Compendium Parity Enhancement Plan
+ * Digital Character Sheet Compendium Parity Enhancement Plan
  * 
- * Missing features to implement for full D&D Beyond parity:
+ * Missing features to implement for full Digital Character Sheet parity:
  */
 
 // 1. Advanced Search & Filtering
@@ -161,3 +161,4 @@ interface BulkOperations {
   bulkTag: boolean;
   bulkDelete: boolean;
 }
+

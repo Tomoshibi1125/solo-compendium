@@ -1,6 +1,7 @@
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Coins, BookOpen, Users, Wrench } from 'lucide-react';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface BackgroundData {
   id: string;
@@ -23,18 +24,18 @@ interface BackgroundData {
 }
 
 export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
-  const displayName = data.display_name || data.name;
+  const displayName = formatMonarchVernacular(data.display_name || data.name);
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <SystemWindow title={displayName.toUpperCase()}>
         <div className="space-y-4">
-          <p className="text-foreground">{data.description}</p>
+          <p className="text-foreground">{formatMonarchVernacular(data.description)}</p>
           {data.tags && data.tags.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {data.tags.map((tag) => (
-                <Badge key={tag} variant="secondary">{tag}</Badge>
+                <Badge key={tag} variant="secondary">{formatMonarchVernacular(tag)}</Badge>
               ))}
             </div>
           )}
@@ -49,7 +50,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
               <h4 className="font-heading text-sm text-muted-foreground mb-1">Skills</h4>
               <div className="flex flex-wrap gap-2">
                 {data.skill_proficiencies?.map((skill) => (
-                  <Badge key={skill} variant="outline">{skill}</Badge>
+                  <Badge key={skill} variant="outline">{formatMonarchVernacular(skill)}</Badge>
                 )) || <span className="text-muted-foreground">None</span>}
               </div>
             </div>
@@ -58,7 +59,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
                 <h4 className="font-heading text-sm text-muted-foreground mb-1">Tools</h4>
                 <div className="flex flex-wrap gap-2">
                   {data.tool_proficiencies.map((tool) => (
-                    <Badge key={tool} variant="outline">{tool}</Badge>
+                    <Badge key={tool} variant="outline">{formatMonarchVernacular(tool)}</Badge>
                   ))}
                 </div>
               </div>
@@ -75,7 +76,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
         <SystemWindow title="STARTING EQUIPMENT">
           <div className="space-y-3">
             {data.starting_equipment && (
-              <p className="text-foreground">{data.starting_equipment}</p>
+              <p className="text-foreground">{formatMonarchVernacular(data.starting_equipment)}</p>
             )}
             {data.starting_credits && (
               <div className="flex items-center gap-2 mt-2">
@@ -89,8 +90,8 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 
       {/* Feature */}
       {data.feature_name && (
-        <SystemWindow title={`FEATURE: ${data.feature_name.toUpperCase()}`} className="border-primary/50">
-          <p className="text-foreground">{data.feature_description}</p>
+        <SystemWindow title={`FEATURE: ${formatMonarchVernacular(data.feature_name).toUpperCase()}`} className="border-primary/50">
+          <p className="text-foreground">{data.feature_description ? formatMonarchVernacular(data.feature_description) : ''}</p>
         </SystemWindow>
       )}
 
@@ -102,7 +103,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
               {data.personality_traits.map((trait, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <span className="text-primary font-bold">{i + 1}.</span>
-                  <span className="text-muted-foreground">{trait}</span>
+                  <span className="text-muted-foreground">{formatMonarchVernacular(trait)}</span>
                 </li>
               ))}
             </ul>
@@ -115,7 +116,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
               {data.ideals.map((ideal, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <span className="text-primary font-bold">{i + 1}.</span>
-                  <span className="text-muted-foreground">{ideal}</span>
+                  <span className="text-muted-foreground">{formatMonarchVernacular(ideal)}</span>
                 </li>
               ))}
             </ul>
@@ -128,7 +129,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
               {data.bonds.map((bond, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <span className="text-primary font-bold">{i + 1}.</span>
-                  <span className="text-muted-foreground">{bond}</span>
+                  <span className="text-muted-foreground">{formatMonarchVernacular(bond)}</span>
                 </li>
               ))}
             </ul>
@@ -141,7 +142,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
               {data.flaws.map((flaw, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <span className="text-red-400 font-bold">{i + 1}.</span>
-                  <span className="text-muted-foreground">{flaw}</span>
+                  <span className="text-muted-foreground">{formatMonarchVernacular(flaw)}</span>
                 </li>
               ))}
             </ul>
@@ -151,7 +152,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 
       {data.source_book && (
         <div className="flex justify-end">
-          <Badge variant="outline">{data.source_book}</Badge>
+          <Badge variant="outline">{formatMonarchVernacular(data.source_book)}</Badge>
         </div>
       )}
     </div>

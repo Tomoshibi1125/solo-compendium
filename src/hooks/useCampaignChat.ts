@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast';
 import { AppError } from '@/lib/appError';
 import type { RealtimeChannel } from '@supabase/supabase-js';
 import { getLocalUserId } from '@/lib/guestStore';
+import { useAuth } from '@/lib/auth/authContext';
 
 export interface CampaignMessage {
   id: string;
@@ -19,6 +20,7 @@ export interface CampaignMessage {
 }
 
 const getMessagesKey = (campaignId: string) => `solo-compendium.campaign.${campaignId}.messages`;
+const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== 'false';
 
 const getBrowserWindow = (): Window | null => {
   if (typeof window === 'undefined') return null;
@@ -65,6 +67,11 @@ export const useCampaignMessages = (campaignId: string) => {
         return loadLocalMessages(campaignId).sort((a, b) => a.created_at.localeCompare(b.created_at));
       }
 
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user && guestEnabled) {
+        return loadLocalMessages(campaignId).sort((a, b) => a.created_at.localeCompare(b.created_at));
+      }
+
       const { data, error } = await supabase
         .from('campaign_messages')
         .select('*')
@@ -86,6 +93,7 @@ export const useCampaignMessagesRealtime = (
   campaignId: string,
   onNewMessage: (message: CampaignMessage) => void
 ) => {
+  const { user, loading } = useAuth();
   const channelRef = useRef<RealtimeChannel | null>(null);
   const onNewMessageRef = useRef(onNewMessage);
 
@@ -95,8 +103,9 @@ export const useCampaignMessagesRealtime = (
 
   useEffect(() => {
     if (!campaignId) return;
+    if (loading) return;
 
-    if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true') {
+    if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true' || (guestEnabled && !user)) {
       const activeWindow = getBrowserWindow();
       if (!activeWindow) return;
       if ('BroadcastChannel' in activeWindow) {
@@ -143,7 +152,7 @@ export const useCampaignMessagesRealtime = (
         channelRef.current = null;
       }
     };
-  }, [campaignId]);
+  }, [campaignId, loading, user]);
 };
 
 // Send message mutation
@@ -231,7 +240,7 @@ export const useSendCampaignMessage = () => {
   });
 };
 
-// Delete message mutation (for DMs)
+// Delete message mutation (for Wardens)
 export const useDeleteCampaignMessage = () => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -239,6 +248,14 @@ export const useDeleteCampaignMessage = () => {
   return useMutation({
     mutationFn: async ({ messageId, campaignId }: { messageId: string; campaignId: string }) => {
       if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true') {
+        const existing = loadLocalMessages(campaignId);
+        const next = existing.filter((msg) => msg.id !== messageId);
+        saveLocalMessages(campaignId, next);
+        return;
+      }
+
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user && guestEnabled) {
         const existing = loadLocalMessages(campaignId);
         const next = existing.filter((msg) => msg.id !== messageId);
         saveLocalMessages(campaignId, next);

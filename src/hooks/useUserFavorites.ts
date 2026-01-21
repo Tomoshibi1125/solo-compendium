@@ -99,6 +99,7 @@ export const useToggleFavorite = () => {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['user-favorites'] });
       queryClient.invalidateQueries({ queryKey: ['user-favorites', 'check', variables.entryType, variables.entryId] });
+      queryClient.invalidateQueries({ queryKey: ['favorites'] });
     },
   });
 };

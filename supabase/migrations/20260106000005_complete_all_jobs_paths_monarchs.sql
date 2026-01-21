@@ -5,7 +5,7 @@
 -- - All 13 jobs (levels 1-20)
 -- - All 78 paths (levels 3, 6, 10, 14)
 -- - All 9 monarchs (appropriate levels)
--- All with D&D 5e-level detail and completeness.
+-- All with SRD 5e-level detail and completeness.
 
 -- =============================================
 -- COMPLETE VANGUARD FEATURES (Remaining Levels)
@@ -148,7 +148,7 @@ SELECT
   j.id,
   'Powercasting',
   1,
-  'As a student of the System''s arcane interface, you have access to a powerbook containing powers granted by the Shadow Monarch''s domain. See the Powers section for the general rules of powercasting and the Mage power list. You prepare the list of powers that are available for you to manifest. To do so, choose a number of powers from your powerbook equal to your Intelligence modifier + your Mage level (minimum of one power). The powers must be of a level for which you have power slots. You can change your list of prepared powers when you finish a long rest. Preparing a new list of powers requires time spent interfacing with the System and memorizing the incantations and gestures you must make to manifest the power: at least 1 minute per power level for each power on your list.',
+  'As a student of the System''s arcane interface, you have access to a powerbook containing powers granted by the Umbral Monarch''s domain. See the Powers section for the general rules of powercasting and the Mage power list. You prepare the list of powers that are available for you to manifest. To do so, choose a number of powers from your powerbook equal to your Intelligence modifier + your Mage level (minimum of one power). The powers must be of a level for which you have power slots. You can change your list of prepared powers when you finish a long rest. Preparing a new list of powers requires time spent interfacing with the System and memorizing the incantations and gestures you must make to manifest the power: at least 1 minute per power level for each power on your list.',
   'passive',
   NULL,
   NULL,
@@ -248,7 +248,7 @@ SELECT
   j.id,
   'Powercasting',
   1,
-  'As a conduit for the System''s healing energy, you can manifest powers granted by the Shadow Monarch''s domain. See the Powers section for the general rules of powercasting and the Healer power list. You prepare the list of powers that are available for you to manifest, choosing from the Healer power list. When you do so, choose a number of powers equal to your Sense modifier + your Healer level (minimum of one power). The powers must be of a level for which you have power slots. You can change your list of prepared powers when you finish a long rest. Preparing a new list of powers requires time spent in System interface meditation: at least 1 minute per power level for each power on your list.',
+  'As a conduit for the System''s healing energy, you can manifest powers granted by the Umbral Monarch''s domain. See the Powers section for the general rules of powercasting and the Healer power list. You prepare the list of powers that are available for you to manifest, choosing from the Healer power list. When you do so, choose a number of powers equal to your Sense modifier + your Healer level (minimum of one power). The powers must be of a level for which you have power slots. You can change your list of prepared powers when you finish a long rest. Preparing a new list of powers requires time spent in System interface meditation: at least 1 minute per power level for each power on your list.',
   'passive',
   NULL,
   NULL,
@@ -272,7 +272,7 @@ SELECT
   j.id,
   'Channel System Energy',
   2,
-  'At 2nd level, you gain the ability to channel System energy directly from the Shadow Monarch''s domain, using that energy to fuel healing effects. You start with two such effects: Turn Undead and an effect determined by your domain. Some domains grant you additional effects as you advance in levels, as noted in the domain description. When you use your Channel System Energy, you choose which effect to create. You must then finish a short or long rest to use your Channel System Energy again. Some Channel System Energy effects require saving throws. When you use such an effect from this class, the DC equals your Healer power save DC. Beginning at 6th level, you can use your Channel System Energy twice between rests, and beginning at 18th level, you can use it three times between rests. When you finish a short or long rest, you regain your expended uses.',
+  'At 2nd level, you gain the ability to channel System energy directly from the Umbral Monarch''s domain, using that energy to fuel healing effects. You start with two such effects: Turn Undead and an effect determined by your domain. Some domains grant you additional effects as you advance in levels, as noted in the domain description. When you use your Channel System Energy, you choose which effect to create. You must then finish a short or long rest to use your Channel System Energy again. Some Channel System Energy effects require saving throws. When you use such an effect from this class, the DC equals your Healer power save DC. Beginning at 6th level, you can use your Channel System Energy twice between rests, and beginning at 18th level, you can use it three times between rests. When you finish a short or long rest, you regain your expended uses.',
   'action',
   '1 (2 at 6th level, 3 at 18th level)',
   'short-rest',
@@ -284,7 +284,7 @@ SELECT
   j.id,
   'Turn Undead',
   2,
-  'As an action, you activate your System interface and channel the Shadow Monarch''s authority to censure the undead. Each undead that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage. A turned creature must spend its turns trying to move as far away from you as it can, and it can''t willingly move to a space within 30 feet of you. It also can''t take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there''s nowhere to move, the creature can use the Dodge action.',
+  'As an action, you activate your System interface and channel the Umbral Monarch''s authority to censure the undead. Each undead that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage. A turned creature must spend its turns trying to move as far away from you as it can, and it can''t willingly move to a space within 30 feet of you. It also can''t take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there''s nowhere to move, the creature can use the Dodge action.',
   'action',
   NULL,
   NULL,
@@ -308,7 +308,7 @@ SELECT
   j.id,
   'System Intervention',
   10,
-  'Beginning at 10th level, you can call on the System and the Shadow Monarch''s domain to intervene on your behalf when your need is great. Requesting the System''s aid requires you to use your action. Describe the assistance you seek, and roll percentile dice. If you roll a number equal to or lower than your Healer level, the System intervenes through the Shadow Monarch''s authority. The System chooses the nature of the intervention; the effect of any Healer power or Healer domain power would be appropriate. If the System intervenes, you can''t use this feature again for 7 days. Otherwise, you can use it again after you finish a long rest. At 20th level, your call for intervention succeeds automatically, no roll required.',
+  'Beginning at 10th level, you can call on the System and the Umbral Monarch''s domain to intervene on your behalf when your need is great. Requesting the System''s aid requires you to use your action. Describe the assistance you seek, and roll percentile dice. If you roll a number equal to or lower than your Healer level, the System intervenes through the Umbral Monarch''s authority. The System chooses the nature of the intervention; the effect of any Healer power or Healer domain power would be appropriate. If the System intervenes, you can''t use this feature again for 7 days. Otherwise, you can use it again after you finish a long rest. At 20th level, your call for intervention succeeds automatically, no roll required.',
   'action',
   '1 (automatic at 20th level)',
   'long-rest (7 days if successful)',
@@ -432,7 +432,7 @@ SELECT
   j.id,
   'Evasion',
   7,
-  'At 7th level, your instinctive agility lets you dodge out of the way of certain area effects, such as a Gate dragon''s fiery breath or a lightning power. When you are subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw, and only half damage if you fail.',
+  'At 7th level, your instinctive agility lets you dodge out of the way of certain area effects, such as a Rift dragon''s fiery breath or a lightning power. When you are subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw, and only half damage if you fail.',
   'passive',
   NULL,
   NULL,
@@ -568,7 +568,7 @@ SELECT
   j.id,
   'Ranger Archetype',
   3,
-  'At 3rd level, you choose an archetype that you strive to emulate: the Beast Warden, the Gate Hunter, the Shadow Trail, the Storm Archer, the Verdant Sentinel, or the Wildrunner. Your choice grants you features at 3rd level and again at 7th, 11th, and 15th level.',
+  'At 3rd level, you choose an archetype that you strive to emulate: the Beast Warden, the Rift Ascendant, the Shadow Trail, the Storm Archer, the Verdant Sentinel, or the Wildrunner. Your choice grants you features at 3rd level and again at 7th, 11th, and 15th level.',
   'passive',
   NULL,
   NULL,
@@ -652,7 +652,7 @@ SELECT
   j.id,
   'Foe Slayer',
   20,
-  'At 20th level, you become an unparalleled hunter of your enemies. Once on each of your turns, you can add your Wisdom modifier to the attack roll or the damage roll of an attack you make against one of your favored enemies. You can choose to use this feature before or after the roll, but before any effects of the roll are applied.',
+  'At 20th level, you become an unparalleled ascendant of your enemies. Once on each of your turns, you can add your Wisdom modifier to the attack roll or the damage roll of an attack you make against one of your favored enemies. You can choose to use this feature before or after the roll, but before any effects of the roll are applied.',
   'passive',
   '1 per turn',
   NULL,
@@ -1543,7 +1543,7 @@ FROM compendium_jobs j WHERE j.name = 'Warden';
 -- PATH FEATURES (All 78 Paths)
 -- =============================================
 -- Each path gets features at levels 3, 6, 10, 14
--- Following D&D 5e subclass detail standards
+-- Following SRD 5e subclass detail standards
 
 -- =============================================
 -- ASSASSIN PATHS (6 paths)
@@ -1691,3 +1691,4 @@ WHERE j.name = 'Assassin' AND p.name = 'Path of the Masked Ghost';
 -- - Thematic coherence with path description
 
 -- All paths will be completed following this established pattern.;
+

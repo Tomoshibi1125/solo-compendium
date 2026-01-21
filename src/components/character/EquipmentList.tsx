@@ -16,6 +16,7 @@ import { InscribeRuneDialog } from './InscribeRuneDialog';
 import { EquipmentItem } from './EquipmentItem';
 import { CompendiumLink } from './CompendiumLink';
 import { calculateTotalWeight, calculateEncumbrance, calculateCarryingCapacity } from '@/lib/encumbrance';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 import type { Database } from '@/integrations/supabase/types';
 
 type Equipment = Database['public']['Tables']['character_equipment']['Row'];
@@ -73,6 +74,7 @@ export function EquipmentList({ characterId }: { characterId: string }) {
   }, [reorderEquipment]);
 
   const handleToggleEquipped = async (item: Equipment) => {
+    const displayName = formatMonarchVernacular(item.name);
     try {
       await updateEquipment({
         id: item.id,
@@ -80,7 +82,7 @@ export function EquipmentList({ characterId }: { characterId: string }) {
       });
       toast({
         title: item.is_equipped ? 'Unequipped' : 'Equipped',
-        description: `${item.name} has been ${item.is_equipped ? 'unequipped' : 'equipped'}.`,
+        description: `${displayName} has been ${item.is_equipped ? 'unequipped' : 'equipped'}.`,
       });
     } catch (error) {
       toast({
@@ -92,6 +94,7 @@ export function EquipmentList({ characterId }: { characterId: string }) {
   };
 
   const handleToggleAttuned = async (item: Equipment) => {
+    const displayName = formatMonarchVernacular(item.name);
     if (!item.is_attuned && !canAttune) {
       toast({
         title: 'Attunement limit reached',
@@ -108,7 +111,7 @@ export function EquipmentList({ characterId }: { characterId: string }) {
       });
       toast({
         title: item.is_attuned ? 'Attunement removed' : 'Attuned',
-        description: `${item.name} has been ${item.is_attuned ? 'unattuned' : 'attuned'}.`,
+        description: `${displayName} has been ${item.is_attuned ? 'unattuned' : 'attuned'}.`,
       });
     } catch (error) {
       toast({
@@ -120,13 +123,14 @@ export function EquipmentList({ characterId }: { characterId: string }) {
   };
 
   const handleRemove = async (item: Equipment) => {
-    if (!confirm(`Remove ${item.name} from inventory?`)) return;
+    const displayName = formatMonarchVernacular(item.name);
+    if (!confirm(`Remove ${displayName} from inventory?`)) return;
 
     try {
       await removeEquipment(item.id);
       toast({
         title: 'Removed',
-        description: `${item.name} has been removed.`,
+        description: `${displayName} has been removed.`,
       });
     } catch (error) {
       toast({

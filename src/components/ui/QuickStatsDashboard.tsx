@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Users, TrendingUp, Heart, Shield, Zap, Crown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface QuickStatsDashboardProps {
   className?: string;
@@ -71,7 +72,7 @@ export function QuickStatsDashboard({ className }: QuickStatsDashboardProps) {
                   <div className="flex-1 min-w-0">
                     <div className="font-heading text-sm truncate">{character.name}</div>
                     <div className="text-xs text-muted-foreground">
-                      Level {character.level} {character.job}
+                      Level {character.level} {formatMonarchVernacular(character.job || 'Unknown')}
                     </div>
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">

@@ -4,6 +4,8 @@ import { useToast } from '@/hooks/use-toast';
 import { AppError } from '@/lib/appError';
 import { getLocalUserId } from '@/lib/guestStore';
 
+const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== 'false';
+
 export interface CampaignCharacterShare {
   id: string;
   campaign_id: string;
@@ -44,6 +46,11 @@ export const useCampaignSharedCharacters = (campaignId: string) => {
     queryKey: ['campaigns', campaignId, 'shared-characters'],
     queryFn: async (): Promise<CampaignCharacterShare[]> => {
       if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true') {
+        return loadLocalShares(campaignId);
+      }
+
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user && guestEnabled) {
         return loadLocalShares(campaignId);
       }
 
@@ -93,7 +100,23 @@ export const useShareCharacter = () => {
       }
 
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
+      if (!user) {
+        if (guestEnabled) {
+          const now = new Date().toISOString();
+          const next: CampaignCharacterShare = {
+            id: crypto.randomUUID(),
+            campaign_id: campaignId,
+            character_id: characterId,
+            shared_by: getLocalUserId(),
+            permissions,
+            shared_at: now,
+          };
+          const updated = [...loadLocalShares(campaignId), next];
+          saveLocalShares(campaignId, updated);
+          return next;
+        }
+        throw new AppError('Not authenticated', 'AUTH_REQUIRED');
+      }
 
       const { data, error } = await supabase
         .from('campaign_character_shares')
@@ -112,13 +135,13 @@ export const useShareCharacter = () => {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['campaigns', variables.campaignId, 'shared-characters'] });
       toast({
-        title: 'Hunter shared',
-        description: 'Your hunter is now visible to campaign members.',
+        title: 'Ascendant shared',
+        description: 'Your ascendant is now visible to campaign members.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: 'Failed to share hunter',
+        title: 'Failed to share ascendant',
         description: error.message,
         variant: 'destructive',
       });
@@ -140,6 +163,14 @@ export const useUnshareCharacter = () => {
         return;
       }
 
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user && guestEnabled) {
+        const existing = loadLocalShares(campaignId);
+        const next = existing.filter((share) => share.character_id !== characterId);
+        saveLocalShares(campaignId, next);
+        return;
+      }
+
       const { error } = await supabase
         .from('campaign_character_shares')
         .delete()
@@ -151,13 +182,13 @@ export const useUnshareCharacter = () => {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['campaigns', variables.campaignId, 'shared-characters'] });
       toast({
-        title: 'Hunter unshared',
-        description: 'Your hunter is no longer visible to campaign members.',
+        title: 'Ascendant unshared',
+        description: 'Your ascendant is no longer visible to campaign members.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: 'Failed to unshare hunter',
+        title: 'Failed to unshare ascendant',
         description: error.message,
         variant: 'destructive',
       });
@@ -181,6 +212,18 @@ export const useUpdateSharePermissions = () => {
       permissions: 'view' | 'edit';
     }) => {
       if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true') {
+        const existing = loadLocalShares(campaignId);
+        const next = existing.map((share) =>
+          share.id === shareId ? { ...share, permissions } : share
+        );
+        saveLocalShares(campaignId, next);
+        const updatedShare = next.find((share) => share.id === shareId);
+        if (!updatedShare) throw new AppError('Share not found', 'NOT_FOUND');
+        return updatedShare;
+      }
+
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user && guestEnabled) {
         const existing = loadLocalShares(campaignId);
         const next = existing.map((share) =>
           share.id === shareId ? { ...share, permissions } : share

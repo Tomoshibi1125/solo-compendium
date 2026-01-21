@@ -7,7 +7,7 @@ import type { Database } from '@/integrations/supabase/types';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from './logger';
 import { calculateRuneMaxUses } from './runeAutomation';
-import { getProficiencyBonus } from '@/types/solo-leveling';
+import { getProficiencyBonus } from '@/types/system-rules';
 import { AppError } from './appError';
 
 type Character = Database['public']['Tables']['characters']['Row'];
@@ -27,7 +27,7 @@ export async function executeShortRest(characterId: string): Promise<void> {
     .eq('id', characterId)
     .single();
 
-  if (!character) throw new AppError('Hunter not found', 'NOT_FOUND');
+  if (!character) throw new AppError('Ascendant not found', 'NOT_FOUND');
 
   // Restore hit dice (up to half of max, rounded up)
   const hitDiceToRestore = Math.ceil(character.hit_dice_max / 2);
@@ -106,7 +106,7 @@ export async function executeLongRest(characterId: string): Promise<{ questAssig
     .eq('id', characterId)
     .single();
 
-  if (!character) throw new AppError('Hunter not found', 'NOT_FOUND');
+  if (!character) throw new AppError('Ascendant not found', 'NOT_FOUND');
 
   // Update character
   await supabase
@@ -269,4 +269,5 @@ async function resetRuneUses(characterId: string, restType: 'short' | 'long'): P
       .eq('id', inscription.id);
   }
 }
+
 

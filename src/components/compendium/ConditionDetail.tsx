@@ -1,6 +1,7 @@
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { AlertTriangle } from 'lucide-react';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface ConditionData {
   id: string;
@@ -11,7 +12,7 @@ interface ConditionData {
 }
 
 export const ConditionDetail = ({ data }: { data: ConditionData }) => {
-  const displayName = data.display_name || data.name;
+  const displayName = formatMonarchVernacular(data.display_name || data.name);
 
   return (
     <div className="space-y-6">
@@ -19,7 +20,7 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
       <SystemWindow title={displayName.toUpperCase()} className="border-yellow-500/30">
         <div className="flex items-start gap-3">
           <AlertTriangle className="w-6 h-6 text-yellow-400 flex-shrink-0" />
-          <p className="text-foreground">{data.description}</p>
+          <p className="text-foreground">{formatMonarchVernacular(data.description)}</p>
         </div>
       </SystemWindow>
 
@@ -29,7 +30,7 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
           <ul className="space-y-3">
             {data.effects.map((effect, i) => (
               <li key={i} className="flex items-start gap-3 border-l-2 border-yellow-500/30 pl-4">
-                <span className="text-foreground">{effect}</span>
+                <span className="text-foreground">{formatMonarchVernacular(effect)}</span>
               </li>
             ))}
           </ul>

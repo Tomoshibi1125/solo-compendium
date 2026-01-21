@@ -18,13 +18,14 @@ import {
 import { useCharacterMonarchUnlocks } from '@/hooks/useMonarchUnlocks';
 import { Ghost, Sword, Shield, Heart, Zap, Plus, Minus, Crown, Skull, Flame, Wind, Bird, Dog, Mountain, Crosshair } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { formatMonarchVernacular, MONARCH_LABEL, normalizeMonarchSearch } from '@/lib/vernacular';
 
 interface ShadowSoldiersPanelProps {
   characterId: string;
   characterLevel: number;
 }
 
-// Enhanced rank colors with Solo Leveling theme
+// Enhanced rank colors with System Ascendant theme
 const rankColors: Record<string, string> = {
   'General Grade': 'bg-arise-violet/20 text-arise-violet border-arise-violet/40 shadow-[0_0_10px_hsl(var(--arise-violet)/0.3)]',
   'Marshal Grade': 'bg-shadow-purple/20 text-shadow-purple border-shadow-purple/40 shadow-[0_0_8px_hsl(var(--shadow-purple)/0.3)]',
@@ -43,9 +44,9 @@ const rankGlow: Record<string, string> = {
 
 // Type icons with thematic styling
 const typeIcons: Record<string, { icon: React.ReactNode; color: string }> = {
-  knight: { icon: <Sword className="h-4 w-4" />, color: 'text-igris-crimson' },
-  insect: { icon: <Zap className="h-4 w-4" />, color: 'text-beru-gold' },
-  tank: { icon: <Shield className="h-4 w-4" />, color: 'text-bellion-silver' },
+  knight: { icon: <Sword className="h-4 w-4" />, color: 'text-crimson-knight' },
+  insect: { icon: <Zap className="h-4 w-4" />, color: 'text-gilded-reaper' },
+  tank: { icon: <Shield className="h-4 w-4" />, color: 'text-silver-commander' },
   berserker: { icon: <Sword className="h-4 w-4" />, color: 'text-gate-a' },
   beast: { icon: <Dog className="h-4 w-4" />, color: 'text-shadow-purple' },
   mage: { icon: <Flame className="h-4 w-4" />, color: 'text-gate-a' },
@@ -63,8 +64,13 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
   const toggleSummon = useToggleSummon();
   const updateHP = useUpdateSoldierHP();
 
-  // Check if character has Shadow Monarch unlock
-  const hasShadowMonarch = monarchUnlocks.some(u => u.monarch?.theme === 'Shadow');
+  // Check if character has Umbral Monarch unlock
+  const hasUmbralMonarch = monarchUnlocks.some((unlock) => {
+    const theme = unlock.monarch?.theme?.toLowerCase() || '';
+    const name = normalizeMonarchSearch(unlock.monarch?.name || '').toLowerCase();
+    return theme.includes('umbral') || name.includes('umbral monarch');
+  });
+  const umbralTitle = `Umbral ${MONARCH_LABEL}`;
   
   // Get soldiers this character can extract
   const extractedIds = new Set(mySoldiers.map(s => s.soldier_id));
@@ -76,7 +82,7 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
     const levelMatch = req.match(/Level (\d+)\+/);
     const requiredLevel = levelMatch ? parseInt(levelMatch[1]) : 0;
     
-    return characterLevel >= requiredLevel && hasShadowMonarch;
+    return characterLevel >= requiredLevel && hasUmbralMonarch;
   });
 
   const summonedCount = mySoldiers.filter(s => s.is_summoned).length;
@@ -86,16 +92,16 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
     updateHP.mutate({ characterId, shadowSoldierId: soldierId, currentHp: newHp });
   };
 
-  if (!hasShadowMonarch) {
+  if (!hasUmbralMonarch) {
     return (
-      <SystemWindow title="SHADOW ARMY" variant="monarch">
+      <SystemWindow title="Umbral Legion" variant="monarch">
         <div className="text-center py-8">
           <Ghost className="h-12 w-12 text-shadow-purple/40 mx-auto mb-4" />
           <p className="text-muted-foreground font-heading mb-2">
-            The Shadow Army awaits a worthy commander
+            The Umbral Legion awaits a worthy commander
           </p>
           <p className="text-sm text-muted-foreground">
-            Unlock the <span className="text-shadow-purple">Shadow Monarch</span> through a quest to command Shadow Soldiers.
+            Unlock the <span className="text-shadow-purple">{umbralTitle}</span> overlay through a quest to command the Umbral Legion.
           </p>
         </div>
       </SystemWindow>
@@ -103,7 +109,7 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
   }
 
   return (
-    <SystemWindow title="SHADOW ARMY — ARISE" variant="arise" className="border-shadow-purple/40">
+    <SystemWindow title="UMBRAL LEGION - ASCEND" variant="arise" className="border-shadow-purple/40">
       <div className="space-y-4">
         {/* Army Status Header */}
         <div className="flex items-center justify-between">
@@ -112,8 +118,8 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
               <Skull className="h-5 w-5 text-shadow-purple" />
             </div>
             <div>
-              <p className="font-heading text-sm text-muted-foreground">Army Strength</p>
-              <p className="font-display text-lg text-shadow-purple">{mySoldiers.length} Soldiers</p>
+              <p className="font-heading text-sm text-muted-foreground">Legion Strength</p>
+              <p className="font-display text-lg text-shadow-purple">{mySoldiers.length} Legionnaires</p>
             </div>
           </div>
           <Badge 
@@ -156,7 +162,7 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                       <div>
                         <div className="flex items-center gap-2">
                           <span className={cn("font-heading font-semibold", css.is_summoned && "text-shadow-purple")}>
-                            {css.nickname || soldier.name}
+                            {formatMonarchVernacular(css.nickname || soldier.name)}
                           </span>
                           <Badge 
                             variant="outline" 
@@ -165,7 +171,7 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                             {soldier.rank}
                           </Badge>
                         </div>
-                        <p className="text-xs text-muted-foreground italic">{soldier.title}</p>
+                        <p className="text-xs text-muted-foreground italic">{formatMonarchVernacular(soldier.title)}</p>
                       </div>
                     </div>
                     <Button
@@ -183,7 +189,7 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                           : "border-shadow-purple/40 hover:border-shadow-purple hover:bg-shadow-purple/10"
                       )}
                     >
-                      {css.is_summoned ? 'Dismiss' : 'ARISE'}
+                      {css.is_summoned ? 'Dismiss' : 'ASCEND'}
                     </Button>
                   </div>
                   
@@ -250,10 +256,10 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
           <div className="text-center py-6">
             <Ghost className="h-10 w-10 text-shadow-purple/30 mx-auto mb-3" />
             <p className="text-sm text-muted-foreground font-heading">
-              No shadow soldiers extracted yet
+              No Umbral Legion extracted yet
             </p>
             <p className="text-xs text-muted-foreground mt-1">
-              Extract fallen foes to build your shadow army
+              Extract fallen foes to build your Umbral Legion
             </p>
           </div>
         )}
@@ -267,7 +273,7 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                 className="w-full border-arise-violet/40 hover:border-arise-violet hover:bg-arise-violet/10 font-arise tracking-wider"
               >
                 <Skull className="h-4 w-4 mr-2 text-arise-violet" />
-                EXTRACT SHADOW SOLDIER
+                EXTRACT Umbral Legionnaire
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-2xl bg-card border-shadow-purple/40">
@@ -297,8 +303,8 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                                 {typeData.icon}
                               </div>
                               <div>
-                                <CardTitle className="text-lg font-heading">{soldier.name}</CardTitle>
-                                <p className="text-sm text-muted-foreground italic">{soldier.title}</p>
+                                <CardTitle className="text-lg font-heading">{formatMonarchVernacular(soldier.name)}</CardTitle>
+                                <p className="text-sm text-muted-foreground italic">{formatMonarchVernacular(soldier.title)}</p>
                               </div>
                             </div>
                             <Badge className={cn("font-display", rankColors[soldier.rank] || '')}>
@@ -307,7 +313,7 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                           </div>
                         </CardHeader>
                         <CardContent>
-                          <p className="text-sm text-muted-foreground mb-4">{soldier.description}</p>
+                          <p className="text-sm text-muted-foreground mb-4">{formatMonarchVernacular(soldier.description)}</p>
                           
                           <div className="flex gap-4 text-xs font-heading mb-4">
                             <span className="text-gate-a">HP {soldier.hit_points}</span>
@@ -321,7 +327,7 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                             <p className="text-xs font-display text-shadow-purple tracking-wider">ABILITIES:</p>
                             {soldier.abilities.map((ability, i) => (
                               <div key={i} className="text-xs p-2 rounded bg-muted/50">
-                                <span className="font-heading font-semibold text-foreground">{ability.name}</span>
+                                <span className="font-heading font-semibold text-foreground">{formatMonarchVernacular(ability.name)}</span>
                                 <Badge variant="outline" className="ml-2 text-[10px] h-4">
                                   {ability.action_type}
                                 </Badge>
@@ -343,7 +349,7 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                               disabled={extractSoldier.isPending}
                             >
                               <Skull className="h-4 w-4 mr-2" />
-                              ARISE — {soldier.name}
+                              ASCEND - {formatMonarchVernacular(soldier.name)}
                             </Button>
                           )}
                         </CardContent>
@@ -359,3 +365,5 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
     </SystemWindow>
   );
 }
+
+

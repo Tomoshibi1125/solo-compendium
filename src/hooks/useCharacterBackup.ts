@@ -1,10 +1,11 @@
 import React from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { useQuery, useMutation } from '@tanstack/react-query';
+import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { getErrorMessage, logErrorWithContext } from '@/lib/errorHandling';
 import { logger } from '@/lib/logger';
 import { AppError } from '@/lib/appError';
+import { useAuth } from '@/lib/auth/authContext';
 import type { CharacterWithAbilities } from './useCharacters';
 
 export interface CharacterBackup {
@@ -23,6 +24,9 @@ const MAX_LOCAL_BACKUPS = 10;
  * Create a backup of a character (localStorage)
  */
 export function createLocalBackup(character: CharacterWithAbilities, backupName?: string): string {
+  if (typeof window === 'undefined') {
+    throw new AppError('Local storage is not available', 'CONFIG');
+  }
   const backup: CharacterBackup = {
     id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
     character_id: character.id,
@@ -53,6 +57,7 @@ export function createLocalBackup(character: CharacterWithAbilities, backupName?
  */
 export function loadLocalBackups(characterId: string): CharacterBackup[] {
   try {
+    if (typeof window === 'undefined') return [];
     const key = `${STORAGE_KEY_PREFIX}${characterId}`;
     const stored = localStorage.getItem(key);
     if (!stored) return [];
@@ -75,6 +80,7 @@ export function restoreFromBackup(backup: CharacterBackup): CharacterWithAbiliti
  */
 export function deleteLocalBackup(characterId: string, backupId: string): void {
   try {
+    if (typeof window === 'undefined') return;
     const key = `${STORAGE_KEY_PREFIX}${characterId}`;
     const backups = loadLocalBackups(characterId);
     const filtered = backups.filter(b => b.id !== backupId);
@@ -128,18 +134,47 @@ export function importBackupFromFile(file: File): Promise<CharacterBackup> {
  * Hook for managing character backups
  */
 export function useCharacterBackups(characterId: string) {
-  const queryClient = useQueryClient();
   const { toast } = useToast();
+  const { user, loading } = useAuth();
+  const isAuthed = isSupabaseConfigured && !!user?.id;
 
   const { data: backups = [], refetch } = useQuery({
-    queryKey: ['character-backups', characterId],
-    queryFn: () => loadLocalBackups(characterId),
-    enabled: !!characterId,
+    queryKey: ['character-backups', characterId, isAuthed ? user?.id : 'guest'],
+    queryFn: async () => {
+      if (!characterId) return [];
+      if (!isAuthed || !user?.id) {
+        return loadLocalBackups(characterId);
+      }
+      const { data, error } = await supabase
+        .from('character_backups' as any)
+        .select('id, character_id, backup_data, backup_name, created_at, version')
+        .eq('character_id', characterId)
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      return (data || []) as CharacterBackup[];
+    },
+    enabled: !!characterId && !loading,
   });
 
   const createBackup = useMutation({
     mutationFn: async ({ character, backupName }: { character: CharacterWithAbilities; backupName?: string }) => {
-      return createLocalBackup(character, backupName);
+      if (!isAuthed || !user?.id) {
+        return createLocalBackup(character, backupName);
+      }
+      const { data, error } = await supabase
+        .from('character_backups' as any)
+        .insert({
+          user_id: user.id,
+          character_id: character.id,
+          backup_data: JSON.parse(JSON.stringify(character)),
+          backup_name: backupName,
+          version: 1,
+        })
+        .select('id')
+        .single();
+      if (error) throw error;
+      return data?.id;
     },
     onSuccess: (backupId) => {
       refetch();
@@ -161,7 +196,16 @@ export function useCharacterBackups(characterId: string) {
 
   const deleteBackup = useMutation({
     mutationFn: async (backupId: string) => {
-      deleteLocalBackup(characterId, backupId);
+      if (!isAuthed || !user?.id) {
+        deleteLocalBackup(characterId, backupId);
+        return;
+      }
+      const { error } = await supabase
+        .from('character_backups' as any)
+        .delete()
+        .eq('id', backupId)
+        .eq('user_id', user.id);
+      if (error) throw error;
     },
     onSuccess: () => {
       refetch();
@@ -200,12 +244,62 @@ export function useCharacterBackups(characterId: string) {
     },
   });
 
+  const importBackup = useMutation({
+    mutationFn: async (backup: CharacterBackup) => {
+      if (!isAuthed || !user?.id) {
+        if (typeof window === 'undefined') {
+          throw new AppError('Local storage is not available', 'CONFIG');
+        }
+        const key = `${STORAGE_KEY_PREFIX}${backup.character_id}`;
+        const existing = loadLocalBackups(backup.character_id);
+        const normalized: CharacterBackup = {
+          ...backup,
+          id: backup.id || `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+        };
+        const updated = [normalized, ...existing].slice(0, MAX_LOCAL_BACKUPS);
+        localStorage.setItem(key, JSON.stringify(updated));
+        return normalized.id;
+      }
+
+      const { data, error } = await supabase
+        .from('character_backups' as any)
+        .insert({
+          user_id: user.id,
+          character_id: backup.character_id,
+          backup_data: backup.backup_data,
+          backup_name: backup.backup_name,
+          version: backup.version ?? 1,
+          created_at: backup.created_at,
+        })
+        .select('id')
+        .single();
+      if (error) throw error;
+      return data?.id;
+    },
+    onSuccess: () => {
+      refetch();
+      toast({
+        title: 'Backup imported',
+        description: 'Backup file imported successfully.',
+      });
+    },
+    onError: (error) => {
+      logErrorWithContext(error, 'useCharacterBackups.importBackup');
+      toast({
+        title: 'Failed to import backup',
+        description: getErrorMessage(error),
+        variant: 'destructive',
+      });
+    },
+  });
+
   return {
     backups,
     createBackup: createBackup.mutateAsync,
     deleteBackup: deleteBackup.mutateAsync,
     exportBackup: exportBackup.mutateAsync,
-    isLoading: createBackup.isPending || deleteBackup.isPending || exportBackup.isPending,
+    importBackup: importBackup.mutateAsync,
+    isLoading: createBackup.isPending || deleteBackup.isPending || exportBackup.isPending || importBackup.isPending,
   };
 }
 

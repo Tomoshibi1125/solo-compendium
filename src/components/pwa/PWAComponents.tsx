@@ -18,7 +18,7 @@ export function PWAInstallPrompt({
     <div className="fixed bottom-4 right-4 p-4 bg-background border rounded-lg shadow-lg max-w-sm">
       <div className="flex items-center space-x-3">
         <div className="text-sm">
-          <p className="font-medium">Install Solo Compendium</p>
+          <p className="font-medium">Install System Ascendant</p>
           <p className="text-muted-foreground text-xs">
             Get offline access and a native app experience
           </p>
@@ -78,3 +78,4 @@ export function OfflineStatus({
     </div>
   );
 }
+

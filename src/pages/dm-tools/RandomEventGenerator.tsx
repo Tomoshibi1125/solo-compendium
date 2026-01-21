@@ -6,46 +6,47 @@ import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 const WORLD_EVENTS = [
-  'Gate Surge: Multiple Gates appear simultaneously in an area',
-  'Hunter Association Alert: High-priority mission issued',
-  'Shadow Monarch Fragment Detected: Powerful energy signature located',
+  'Rift Surge: Multiple Rifts appear simultaneously in an area',
+  'Awakened Council Alert: High-priority mission issued',
+  'Umbral Monarch Fragment Detected: Powerful energy signature located',
   'Mana Storm: Abnormal mana concentration causes strange phenomena',
   'Guild Conflict: Two major guilds have a territorial dispute',
-  'Mysterious Disappearances: Hunters go missing in a specific area',
-  'New Gate Rank Discovered: Previously unknown Gate rank appears',
+  'Mysterious Disappearances: Ascendants go missing in a specific area',
+  'New Rift Rank Discovered: Previously unknown Rift rank appears',
   'System Anomaly: The System behaves unexpectedly',
   'Monarch Activity: Evidence of Monarch presence detected',
   'Relic Discovery: Ancient relic found, causing a rush',
-  'Gate Breach: A Gate fails to close properly',
-  'Hunter Awakening Event: Multiple new Hunters awaken at once',
-  'Corporate Interest: Large corporation takes interest in Gate activity',
-  'Media Attention: Gate incident draws public attention',
-  'Political Movement: Government interference with Hunter operations',
-  'Ancient Gate Opens: Long-dormant Gate activates',
-  'Shadow Corruption Spread: Shadow energy spreads beyond Gates',
-  'Hunter Association Scandal: Internal conflict revealed',
-  'Gate Ecology Change: Monsters adapt or mutate unexpectedly',
-  'Divine Intervention: Supreme Deity\'s influence becomes visible',
+  'Rift Breach: A Rift fails to close properly',
+  'Ascendant Awakening Event: Multiple new Ascendants awaken at once',
+  'Corporate Interest: Large corporation takes interest in Rift activity',
+  'Media Attention: Rift incident draws public attention',
+  'Political Movement: Government interference with Ascendant operations',
+  'Ancient Rift Opens: Long-dormant Rift activates',
+  'Shadow Corruption Spread: Shadow energy spreads beyond Rifts',
+  'Awakened Council Scandal: Internal conflict revealed',
+  'Rift Ecology Change: Monsters adapt or mutate unexpectedly',
+  'Divine Intervention: Prime Architect\'s influence becomes visible',
 ];
 
 const NPC_ENCOUNTERS = [
-  'Rival Hunter Team: Encounter competitive hunters',
+  'Rival Ascendant Team: Encounter competitive ascendants',
   'Information Broker: NPC offers valuable information',
-  'Wounded Hunter: Needs assistance or has a warning',
+  'Wounded Ascendant: Needs assistance or has a warning',
   'Mysterious Stranger: NPC with unclear motives',
-  'Gate Survivor: Civilian trapped in Gate needs help',
-  'Hunter Association Agent: Official with a mission',
+  'Rift Survivor: Civilian trapped in Rift needs help',
+  'Awakened Council Agent: Official with a mission',
   'Relic Merchant: Sells or trades relics',
-  'Gate Researcher: Scientist studying Gates',
-  'Former S-Rank: Retired hunter with stories and advice',
-  'Shadow Soldier: Encounter with a shadow creature',
+  'Rift Researcher: Scientist studying Rifts',
+  'Former S-Rank: Retired ascendant with stories and advice',
+  'Umbral Legionnaire: Encounter with a shadow creature',
   'Monarch Cultist: Dangerous individual with Monarch ties',
-  'Gate Master: Experienced DM/Gate Master offers guidance',
+  'Protocol Warden: Experienced Warden offers guidance',
   'Corporate Representative: Business person with an offer',
-  'Media Reporter: Journalist investigating Gates',
-  'Child Hunter: Young awakened individual in danger',
+  'Media Reporter: Journalist investigating Rifts',
+  'Child Ascendant: Young awakened individual in danger',
 ];
 
 const COMPLICATIONS = [
@@ -55,7 +56,7 @@ const COMPLICATIONS = [
   'Time distortion affects area',
   'Allies turn hostile',
   'Environmental hazard activates',
-  'Gate structure changes',
+  'Rift structure changes',
   'Shadow corruption spreads',
   'Third party intervenes',
   'Information is misleading or false',
@@ -76,17 +77,17 @@ function generateEvent(type: 'world' | 'encounter' | 'complication'): GeneratedE
   if (type === 'world') {
     const event = WORLD_EVENTS[Math.floor(Math.random() * WORLD_EVENTS.length)];
     title = 'World Event';
-    description = event;
+    description = formatMonarchVernacular(event);
     impact = 'This event affects the larger world and may create new opportunities or complications for the party.';
   } else if (type === 'encounter') {
     const encounter = NPC_ENCOUNTERS[Math.floor(Math.random() * NPC_ENCOUNTERS.length)];
     title = 'NPC Encounter';
-    description = encounter;
+    description = formatMonarchVernacular(encounter);
     impact = 'This encounter can provide roleplay opportunities, information, resources, or complications.';
   } else {
     const complication = COMPLICATIONS[Math.floor(Math.random() * COMPLICATIONS.length)];
     title = 'Complication';
-    description = complication;
+    description = formatMonarchVernacular(complication);
     impact = 'This complication adds difficulty or urgency to the current situation.';
   }
 
@@ -137,7 +138,7 @@ const RandomEventGenerator = () => {
             className="mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to DM Tools
+            Back to Warden Tools
           </Button>
           <h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow">
             RANDOM EVENT GENERATOR
@@ -175,7 +176,7 @@ const RandomEventGenerator = () => {
 
             <Button
               onClick={handleGenerate}
-              className="w-full btn-shadow-monarch"
+              className="w-full btn-umbral"
               size="lg"
             >
               <Sparkles className="w-4 h-4 mr-2" />
@@ -256,4 +257,9 @@ const RandomEventGenerator = () => {
 };
 
 export default RandomEventGenerator;
+
+
+
+
+
 

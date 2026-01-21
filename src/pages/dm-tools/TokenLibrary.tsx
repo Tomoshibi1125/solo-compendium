@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Upload, Download, Trash2, Edit, Plus, Search, Filter, Image as ImageIcon, Users, Skull, Crown, Gem, Shield, Sword, X } from 'lucide-react';
+import { ArrowLeft, Upload, Download, Trash2, Plus, Search, Filter, Image as ImageIcon, Users, Skull, Crown, Gem, Shield, Sword, X } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
@@ -13,69 +13,26 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { supabase } from '@/integrations/supabase/client';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useUserToolState } from '@/hooks/useToolState';
+import {
+  DEFAULT_TOKENS,
+  mergeBaseTokens,
+  normalizeLibraryTokens,
+  type LibraryToken,
+  type TokenCategory,
+  type TokenType,
+} from '@/data/tokenLibraryDefaults';
 import './TokenLibrary.css';
-
-type TokenType = 'character' | 'monster' | 'npc' | 'prop' | 'effect' | 'custom';
-type TokenCategory = 'hunter' | 'monster' | 'boss' | 'npc' | 'treasure' | 'trap' | 'effect' | 'other';
-
-interface Token {
-  id: string;
-  name: string;
-  type: TokenType;
-  category: TokenCategory;
-  imageUrl?: string;
-  emoji?: string;
-  size: 'small' | 'medium' | 'large' | 'huge';
-  color?: string;
-  tags: string[];
-  notes?: string;
-  createdAt: string;
-}
-
-const DEFAULT_TOKENS: Token[] = [
-  // Hunters
-  { id: 'hunter-1', name: 'Hunter (E-Rank)', type: 'character', category: 'hunter', emoji: '⚔️', size: 'medium', tags: ['hunter', 'e-rank'], createdAt: new Date().toISOString() },
-  { id: 'hunter-2', name: 'Hunter (D-Rank)', type: 'character', category: 'hunter', emoji: '🗡️', size: 'medium', tags: ['hunter', 'd-rank'], createdAt: new Date().toISOString() },
-  { id: 'hunter-3', name: 'Hunter (C-Rank)', type: 'character', category: 'hunter', emoji: '⚡', size: 'medium', tags: ['hunter', 'c-rank'], createdAt: new Date().toISOString() },
-  { id: 'hunter-4', name: 'Hunter (B-Rank)', type: 'character', category: 'hunter', emoji: '🔥', size: 'medium', tags: ['hunter', 'b-rank'], createdAt: new Date().toISOString() },
-  { id: 'hunter-5', name: 'Hunter (A-Rank)', type: 'character', category: 'hunter', emoji: '💎', size: 'medium', tags: ['hunter', 'a-rank'], createdAt: new Date().toISOString() },
-  { id: 'hunter-6', name: 'Hunter (S-Rank)', type: 'character', category: 'hunter', emoji: '👑', size: 'large', tags: ['hunter', 's-rank'], createdAt: new Date().toISOString() },
-  
-  // Monsters
-  { id: 'monster-1', name: 'Monster (E-Rank)', type: 'monster', category: 'monster', emoji: '👹', size: 'small', tags: ['monster', 'e-rank'], createdAt: new Date().toISOString() },
-  { id: 'monster-2', name: 'Monster (D-Rank)', type: 'monster', category: 'monster', emoji: '👺', size: 'small', tags: ['monster', 'd-rank'], createdAt: new Date().toISOString() },
-  { id: 'monster-3', name: 'Monster (C-Rank)', type: 'monster', category: 'monster', emoji: '🐉', size: 'medium', tags: ['monster', 'c-rank'], createdAt: new Date().toISOString() },
-  { id: 'monster-4', name: 'Monster (B-Rank)', type: 'monster', category: 'monster', emoji: '🦑', size: 'medium', tags: ['monster', 'b-rank'], createdAt: new Date().toISOString() },
-  { id: 'monster-5', name: 'Monster (A-Rank)', type: 'monster', category: 'monster', emoji: '👾', size: 'large', tags: ['monster', 'a-rank'], createdAt: new Date().toISOString() },
-  { id: 'monster-6', name: 'Monster (S-Rank)', type: 'monster', category: 'monster', emoji: '🔥', size: 'huge', tags: ['monster', 's-rank'], createdAt: new Date().toISOString() },
-  
-  // Bosses
-  { id: 'boss-1', name: 'Boss (E-Rank)', type: 'monster', category: 'boss', emoji: '👑', size: 'large', color: '#ef4444', tags: ['boss', 'e-rank'], createdAt: new Date().toISOString() },
-  { id: 'boss-2', name: 'Boss (D-Rank)', type: 'monster', category: 'boss', emoji: '👑', size: 'large', color: '#f97316', tags: ['boss', 'd-rank'], createdAt: new Date().toISOString() },
-  { id: 'boss-3', name: 'Boss (C-Rank)', type: 'monster', category: 'boss', emoji: '👑', size: 'large', color: '#eab308', tags: ['boss', 'c-rank'], createdAt: new Date().toISOString() },
-  { id: 'boss-4', name: 'Boss (B-Rank)', type: 'monster', category: 'boss', emoji: '👑', size: 'huge', color: '#3b82f6', tags: ['boss', 'b-rank'], createdAt: new Date().toISOString() },
-  { id: 'boss-5', name: 'Boss (A-Rank)', type: 'monster', category: 'boss', emoji: '👑', size: 'huge', color: '#8b5cf6', tags: ['boss', 'a-rank'], createdAt: new Date().toISOString() },
-  { id: 'boss-6', name: 'Boss (S-Rank)', type: 'monster', category: 'boss', emoji: '💀', size: 'huge', color: '#ec4899', tags: ['boss', 's-rank'], createdAt: new Date().toISOString() },
-  
-  // NPCs
-  { id: 'npc-1', name: 'NPC - Hunter', type: 'npc', category: 'npc', emoji: '🧑', size: 'medium', tags: ['npc', 'hunter'], createdAt: new Date().toISOString() },
-  { id: 'npc-2', name: 'NPC - Merchant', type: 'npc', category: 'npc', emoji: '🛒', size: 'medium', tags: ['npc', 'merchant'], createdAt: new Date().toISOString() },
-  { id: 'npc-3', name: 'NPC - Guild Master', type: 'npc', category: 'npc', emoji: '👔', size: 'medium', tags: ['npc', 'guild'], createdAt: new Date().toISOString() },
-  { id: 'npc-4', name: 'NPC - Civilian', type: 'npc', category: 'npc', emoji: '🧍', size: 'medium', tags: ['npc', 'civilian'], createdAt: new Date().toISOString() },
-  
-  // Props & Effects
-  { id: 'treasure-1', name: 'Treasure Chest', type: 'prop', category: 'treasure', emoji: '📦', size: 'small', tags: ['treasure', 'chest'], createdAt: new Date().toISOString() },
-  { id: 'treasure-2', name: 'Relic', type: 'prop', category: 'treasure', emoji: '💎', size: 'small', tags: ['treasure', 'relic'], createdAt: new Date().toISOString() },
-  { id: 'trap-1', name: 'Trap', type: 'prop', category: 'trap', emoji: '⚠️', size: 'small', color: '#ef4444', tags: ['trap'], createdAt: new Date().toISOString() },
-  { id: 'effect-1', name: 'Fire Effect', type: 'effect', category: 'effect', emoji: '🔥', size: 'medium', tags: ['effect', 'fire'], createdAt: new Date().toISOString() },
-  { id: 'effect-2', name: 'Shadow Effect', type: 'effect', category: 'effect', emoji: '🌑', size: 'medium', tags: ['effect', 'shadow'], createdAt: new Date().toISOString() },
-  { id: 'effect-3', name: 'Mana Effect', type: 'effect', category: 'effect', emoji: '✨', size: 'medium', tags: ['effect', 'mana'], createdAt: new Date().toISOString() },
-];
 
 import type { LucideIcon } from 'lucide-react';
 
+export type Token = LibraryToken;
+
+const isBaseToken = (token: Token) => token.id.startsWith('base-') || token.tags.includes('base');
+
 const TOKEN_CATEGORIES: { value: TokenCategory; label: string; icon: LucideIcon; color: string }[] = [
-  { value: 'hunter', label: 'Hunters', icon: Sword, color: 'text-blue-400' },
+  { value: 'ascendant', label: 'Ascendants', icon: Sword, color: 'text-blue-400' },
   { value: 'monster', label: 'Monsters', icon: Skull, color: 'text-red-400' },
   { value: 'boss', label: 'Bosses', icon: Crown, color: 'text-purple-400' },
   { value: 'npc', label: 'NPCs', icon: Users, color: 'text-green-400' },
@@ -95,6 +52,7 @@ const SIZE_VALUES = {
 const TokenLibrary = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const hydratedRef = useRef(false);
   const [tokens, setTokens] = useState<Token[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<TokenCategory | 'all'>('all');
@@ -102,6 +60,7 @@ const TokenLibrary = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const nameInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const [newToken, setNewToken] = useState<Partial<Token>>({
     name: '',
@@ -111,29 +70,42 @@ const TokenLibrary = () => {
     tags: [],
   });
 
-  useEffect(() => {
-    loadTokens();
-  }, []);
+  const { state: storedTokens, isLoading, saveNow } = useUserToolState<Token[]>('token_library', {
+    initialState: DEFAULT_TOKENS,
+    storageKey: 'vtt-tokens',
+  });
+  const debouncedTokens = useDebounce(tokens, 600);
 
-  const loadTokens = () => {
-    const saved = localStorage.getItem('vtt-tokens');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        setTokens(parsed);
-      } catch (e) {
-        // Invalid data, use defaults
-        setTokens(DEFAULT_TOKENS);
+  useEffect(() => {
+    if (isLoading || hydratedRef.current) return;
+    if (tokens.length > 0) {
+      hydratedRef.current = true;
+      return;
+    }
+    if (Array.isArray(storedTokens) && storedTokens.length > 0) {
+      const normalizedTokens = normalizeLibraryTokens(storedTokens);
+      const mergedTokens = mergeBaseTokens(normalizedTokens);
+      setTokens(mergedTokens);
+      if (mergedTokens !== storedTokens) {
+        void saveNow(mergedTokens);
       }
     } else {
       setTokens(DEFAULT_TOKENS);
+      void saveNow(DEFAULT_TOKENS);
     }
-  };
+    hydratedRef.current = true;
+  }, [isLoading, saveNow, storedTokens, tokens.length]);
 
-  const saveTokens = (updatedTokens: Token[]) => {
-    setTokens(updatedTokens);
-    localStorage.setItem('vtt-tokens', JSON.stringify(updatedTokens));
-  };
+  useEffect(() => {
+    if (!hydratedRef.current) return;
+    const mergedTokens = mergeBaseTokens(debouncedTokens);
+    if (mergedTokens !== debouncedTokens) {
+      setTokens(mergedTokens);
+      void saveNow(mergedTokens);
+      return;
+    }
+    void saveNow(debouncedTokens);
+  }, [debouncedTokens, saveNow]);
 
   const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -221,7 +193,7 @@ const TokenLibrary = () => {
         .getPublicUrl(filePath);
 
       // Update newToken with image URL
-      setNewToken({ ...newToken, imageUrl: publicUrl });
+      setNewToken((prev) => ({ ...prev, imageUrl: publicUrl }));
 
       toast({
         title: 'Image uploaded',
@@ -240,14 +212,15 @@ const TokenLibrary = () => {
 
   const handleRemoveImage = () => {
     setImagePreview(null);
-    setNewToken({ ...newToken, imageUrl: undefined });
+    setNewToken((prev) => ({ ...prev, imageUrl: undefined }));
     if (imageInputRef.current) {
       imageInputRef.current.value = '';
     }
   };
 
   const handleCreateToken = () => {
-    if (!newToken.name) {
+    const resolvedName = (newToken.name || nameInputRef.current?.value || '').trim();
+    if (!resolvedName) {
       toast({
         title: 'Error',
         description: 'Please enter a token name.',
@@ -258,7 +231,7 @@ const TokenLibrary = () => {
 
     const token: Token = {
       id: `token-${Date.now()}`,
-      name: newToken.name,
+      name: resolvedName,
       type: newToken.type || 'custom',
       category: newToken.category || 'other',
       size: newToken.size || 'medium',
@@ -270,7 +243,12 @@ const TokenLibrary = () => {
       createdAt: new Date().toISOString(),
     };
 
-    saveTokens([...tokens, token]);
+    const nextTokens = mergeBaseTokens([...tokens, token]);
+    setTokens(nextTokens);
+    setSelectedToken(token);
+    setSelectedCategory(token.category);
+    setSearchQuery(token.name);
+    void saveNow(nextTokens);
     setIsCreating(false);
     setImagePreview(null);
     setNewToken({
@@ -291,8 +269,10 @@ const TokenLibrary = () => {
   };
 
   const handleDeleteToken = (id: string) => {
+    const token = tokens.find((entry) => entry.id === id);
+    if (token && isBaseToken(token)) return;
     const updated = tokens.filter(t => t.id !== id);
-    saveTokens(updated);
+    setTokens(updated);
     toast({
       title: 'Deleted!',
       description: 'Token deleted.',
@@ -323,7 +303,10 @@ const TokenLibrary = () => {
       try {
         const imported = JSON.parse(e.target?.result as string);
         if (Array.isArray(imported)) {
-          saveTokens(imported);
+          const normalizedTokens = normalizeLibraryTokens(imported);
+          const mergedTokens = mergeBaseTokens(normalizedTokens);
+          setTokens(mergedTokens);
+          void saveNow(mergedTokens);
           toast({
             title: 'Imported!',
             description: `${imported.length} tokens imported.`,
@@ -352,6 +335,10 @@ const TokenLibrary = () => {
     const cat = TOKEN_CATEGORIES.find(c => c.value === category);
     return cat?.icon || ImageIcon;
   };
+  const getCategoryLabel = (category: TokenCategory) => {
+    const cat = TOKEN_CATEGORIES.find(c => c.value === category);
+    return cat?.label || category;
+  };
 
   return (
     <Layout>
@@ -363,7 +350,7 @@ const TokenLibrary = () => {
             className="mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to DM Tools
+            Back to Warden Tools
           </Button>
           <h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow">
             TOKEN LIBRARY
@@ -472,14 +459,15 @@ const TokenLibrary = () => {
 
           <div className="lg:col-span-3 space-y-6">
             {isCreating ? (
-              <SystemWindow title="CREATE TOKEN">
+              <SystemWindow title="CREATE TOKEN" id="token-create-window">
                 <div className="space-y-4">
                   <div>
                     <Label htmlFor="token-name">Token Name</Label>
                     <Input
                       id="token-name"
+                      ref={nameInputRef}
                       value={newToken.name || ''}
-                      onChange={(e) => setNewToken({ ...newToken, name: e.target.value })}
+                      onChange={(e) => setNewToken((prev) => ({ ...prev, name: e.target.value }))}
                       placeholder="Token name"
                     />
                   </div>
@@ -487,7 +475,12 @@ const TokenLibrary = () => {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="token-type">Type</Label>
-                      <Select value={newToken.type} onValueChange={(value) => setNewToken({ ...newToken, type: value as TokenType })}>
+                      <Select
+                        value={newToken.type}
+                        onValueChange={(value) =>
+                          setNewToken((prev) => ({ ...prev, type: value as TokenType }))
+                        }
+                      >
                         <SelectTrigger className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                           <SelectValue placeholder="Select type" />
                         </SelectTrigger>
@@ -504,7 +497,12 @@ const TokenLibrary = () => {
 
                     <div>
                       <Label htmlFor="token-category">Category</Label>
-                      <Select value={newToken.category} onValueChange={(value) => setNewToken({ ...newToken, category: value as TokenCategory })}>
+                      <Select
+                        value={newToken.category}
+                        onValueChange={(value) =>
+                          setNewToken((prev) => ({ ...prev, category: value as TokenCategory }))
+                        }
+                      >
                         <SelectTrigger className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                           <SelectValue placeholder="Select category" />
                         </SelectTrigger>
@@ -522,7 +520,12 @@ const TokenLibrary = () => {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="token-size">Size</Label>
-                      <Select value={newToken.size} onValueChange={(value) => setNewToken({ ...newToken, size: value as Token['size'] })}>
+                      <Select
+                        value={newToken.size}
+                        onValueChange={(value) =>
+                          setNewToken((prev) => ({ ...prev, size: value as Token['size'] }))
+                        }
+                      >
                         <SelectTrigger className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                           <SelectValue placeholder="Select size" />
                         </SelectTrigger>
@@ -540,8 +543,8 @@ const TokenLibrary = () => {
                       <Input
                         id="token-emoji"
                         value={newToken.emoji || ''}
-                        onChange={(e) => setNewToken({ ...newToken, emoji: e.target.value })}
-                        placeholder="🎲"
+                        onChange={(e) => setNewToken((prev) => ({ ...prev, emoji: e.target.value }))}
+                        placeholder="TK"
                         maxLength={2}
                       />
                     </div>
@@ -614,7 +617,7 @@ const TokenLibrary = () => {
                       id="token-color"
                       type="color"
                       value={newToken.color || '#3b82f6'}
-                      onChange={(e) => setNewToken({ ...newToken, color: e.target.value })}
+                      onChange={(e) => setNewToken((prev) => ({ ...prev, color: e.target.value }))}
                       className="h-10"
                     />
                   </div>
@@ -643,7 +646,7 @@ const TokenLibrary = () => {
               </SystemWindow>
             ) : (
               <>
-                <SystemWindow title={`TOKENS (${filteredTokens.length})`}>
+                <SystemWindow title={`TOKENS (${filteredTokens.length})`} id="token-list-window">
                   {filteredTokens.length === 0 ? (
                     <div className="text-center py-12">
                       <ImageIcon className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
@@ -656,6 +659,7 @@ const TokenLibrary = () => {
                       {filteredTokens.map((token) => {
                         const CategoryIcon = getCategoryIcon(token.category);
                         const size = SIZE_VALUES[token.size];
+                        const baseToken = isBaseToken(token);
                         
                         return (
                           <div
@@ -664,6 +668,8 @@ const TokenLibrary = () => {
                               'p-4 rounded-lg border border-border bg-background/50 hover:bg-muted/50 transition-all cursor-pointer group',
                               selectedToken?.id === token.id && 'ring-2 ring-primary'
                             )}
+                            data-token-name={token.name}
+                            aria-label={`Token ${token.name}`}
                             onClick={() => setSelectedToken(token)}
                           >
                             <div className="flex flex-col items-center gap-3">
@@ -685,7 +691,7 @@ const TokenLibrary = () => {
                                     size="small"
                                   />
                                 ) : (
-                                  token.emoji || '🎲'
+                                  token.emoji || 'TK'
                                 )}
                               </div>
                               <div className="text-center w-full">
@@ -699,18 +705,20 @@ const TokenLibrary = () => {
                                   </Badge>
                                 </div>
                               </div>
-                              <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleDeleteToken(token.id);
-                                  }}
-                                >
-                                  <Trash2 className="w-3 h-3" />
-                                </Button>
-                              </div>
+                              {!baseToken && (
+                                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleDeleteToken(token.id);
+                                    }}
+                                  >
+                                    <Trash2 className="w-3 h-3" />
+                                  </Button>
+                                </div>
+                              )}
                             </div>
                           </div>
                         );
@@ -720,7 +728,7 @@ const TokenLibrary = () => {
                 </SystemWindow>
 
                 {selectedToken && (
-                  <SystemWindow title="TOKEN DETAILS">
+                  <SystemWindow title="TOKEN DETAILS" id="token-details-window">
                     <div className="space-y-4">
                       <div className="flex items-start justify-between">
                         <div className="flex items-center gap-4">
@@ -742,14 +750,14 @@ const TokenLibrary = () => {
                                 size="small"
                               />
                             ) : (
-                              selectedToken.emoji || '🎲'
+                              selectedToken.emoji || 'TK'
                             )}
                           </div>
                           <div>
                             <h3 className="font-heading font-semibold text-xl">{selectedToken.name}</h3>
                             <div className="flex items-center gap-2 mt-1">
                               <Badge variant="outline">{selectedToken.type}</Badge>
-                              <Badge variant="outline">{selectedToken.category}</Badge>
+                              <Badge variant="outline">{getCategoryLabel(selectedToken.category)}</Badge>
                               <Badge variant="outline">{selectedToken.size}</Badge>
                             </div>
                           </div>
@@ -798,4 +806,5 @@ const TokenLibrary = () => {
 };
 
 export default TokenLibrary;
+
 

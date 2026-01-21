@@ -1,5 +1,5 @@
-import type { AbilityScore } from '@/types/solo-leveling';
-import { getAbilityModifier, getProficiencyBonus, getSystemFavorDie } from '@/types/solo-leveling';
+import type { AbilityScore } from '@/types/system-rules';
+import { getAbilityModifier, getProficiencyBonus, getSystemFavorDie } from '@/types/system-rules';
 
 export interface CharacterStats {
   level: number;
@@ -97,7 +97,7 @@ export function formatModifier(modifier: number): string {
 }
 
 // Spell slot tables for different caster types
-// Based on D&D 5e spell slot progression
+// Based on SRD 5e spell slot progression
 
 export type CasterType = 'full' | 'half' | 'third' | 'none';
 
@@ -254,10 +254,12 @@ export function getSpellsPreparedLimit(
 
 // Calculate character hit points
 export function calculateHitPoints(level: number, constitution: number): number {
-  const baseHP = 8 + constitution; // D&D 5e style base
+  const baseHP = 8 + constitution; // SRD 5e style base
   const levelHP = (level - 1) * 5 + constitution; // 5 HP per level + CON mod
   return Math.max(1, baseHP + levelHP);
 }
 
-export { getAbilityModifier, getProficiencyBonus, getSystemFavorDie } from '@/types/solo-leveling';
+export { getAbilityModifier, getProficiencyBonus, getSystemFavorDie } from '@/types/system-rules';
+
+
 

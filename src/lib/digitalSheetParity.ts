@@ -1,7 +1,7 @@
 /**
- * D&D Beyond Parity Analysis - Character Sheet
+ * Digital Character Sheet Parity Analysis - Character Sheet
  * 
- * Features to implement for full D&D Beyond parity:
+ * Features to implement for full Digital Character Sheet parity:
  */
 
 // 1. Inspiration System
@@ -118,3 +118,4 @@ interface AdditionalFeatures {
   second_wind?: boolean;
   action_surge?: boolean;
 }
+

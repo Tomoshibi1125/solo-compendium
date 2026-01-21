@@ -1,6 +1,6 @@
-// Techniques Compendium - Authoritative Solo Leveling Content
+// Techniques Compendium - Authoritative System Ascendant Content
 // Combat maneuvers and martial techniques
-// Based on Solo Leveling canon with D&D 5e mechanics
+// Based on System Ascendant canon with SRD 5e mechanics
 
 export interface Technique {
   id: string;
@@ -110,7 +110,7 @@ export const techniques: Technique[] = [
       cooldown: 'Short rest'
     },
     flavor: 'You strike from the shadows themselves, appearing where your enemy least expects.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/shadow-strike.webp'
   },
   {
@@ -153,7 +153,7 @@ export const techniques: Technique[] = [
       conditions: ['Must spend 2 ki points for enhanced effect']
     },
     flavor: 'Your fist channels the raw power of ancient dragons, striking with devastating force.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/dragon-fist.webp'
   },
   {
@@ -195,7 +195,7 @@ export const techniques: Technique[] = [
       cooldown: 'None'
     },
     flavor: 'Your weapon cuts through dimensions themselves, ignoring conventional defenses.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/void-slash.webp'
   },
   {
@@ -237,7 +237,7 @@ export const techniques: Technique[] = [
       cooldown: 'None'
     },
     flavor: 'Your weapon cuts through dimensions themselves, ignoring conventional defenses.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/void-slash.webp'
   },
   {
@@ -274,7 +274,7 @@ export const techniques: Technique[] = [
       conditions: ['Must have enough ammunition', 'Targets must be different']
     },
     flavor: 'Your arrows fly in impossible arcs, striking multiple foes in a single motion.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/multi-shot.webp'
   },
   {
@@ -311,7 +311,7 @@ export const techniques: Technique[] = [
       cooldown: 'None'
     },
     flavor: 'You spin like a vortex of steel, striking all who dare approach.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/whirlwind-strike.webp'
   },
 
@@ -346,7 +346,7 @@ export const techniques: Technique[] = [
       conditions: ['Must have shadows or dim light available']
     },
     flavor: 'You melt into the shadows, becoming untouchable as long as darkness surrounds you.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/shadow-dodge.webp'
   },
   {
@@ -375,7 +375,7 @@ export const techniques: Technique[] = [
       cooldown: 'Short rest'
     },
     flavor: 'Your shield becomes an unbreakable wall, protecting you and your allies.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/iron-wall.webp'
   },
   {
@@ -409,7 +409,7 @@ export const techniques: Technique[] = [
       cooldown: 'None'
     },
     flavor: 'You turn your enemy\'s missed attack into an opening for your own devastating strike.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/counter-strike.webp'
   },
   {
@@ -438,7 +438,7 @@ export const techniques: Technique[] = [
       conditions: ['Must be wielding a suitable weapon', 'Limited to one projectile per reaction']
     },
     flavor: 'Your weapon becomes a shield, deflecting arrows and bolts as if they were mere annoyances.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/deflect-arrows.webp'
   },
   {
@@ -471,7 +471,7 @@ export const techniques: Technique[] = [
       cooldown: 'Long rest'
     },
     flavor: 'You become a living shield, protecting your allies with your very presence.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/guardian-stance.webp'
   },
 
@@ -505,7 +505,7 @@ export const techniques: Technique[] = [
       conditions: ['Must have shadows or dim light available']
     },
     flavor: 'You step through the shadows themselves, appearing where your enemies least expect.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/shadow-step-mobility.webp'
   },
   {
@@ -537,7 +537,7 @@ export const techniques: Technique[] = [
       cooldown: 'Short rest'
     },
     flavor: 'You move like the wind itself, too fast for enemies to track your movements.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/wind-dash.webp'
   },
   {
@@ -571,7 +571,7 @@ export const techniques: Technique[] = [
       conditions: ['Must end movement on a surface or fall']
     },
     flavor: 'Gravity becomes your servant as you run along walls and ceilings.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/wall-run.webp'
   },
   {
@@ -609,7 +609,7 @@ export const techniques: Technique[] = [
       cooldown: 'Long rest'
     },
     flavor: 'Your body becomes intangible, passing through matter as if it were mere illusion.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/phase-walk.webp'
   },
   {
@@ -652,7 +652,7 @@ export const techniques: Technique[] = [
       cooldown: 'Short rest'
     },
     flavor: 'You leap through the air like a predator, striking from above with devastating force.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/leap-strike.webp'
   },
 
@@ -699,7 +699,7 @@ export const techniques: Technique[] = [
       conditions: ['Requires shadows or dim light']
     },
     flavor: 'Shadows themselves rise to bind your enemies, holding them fast with dark tendrils.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/shadow-bind.webp'
   },
   {
@@ -737,7 +737,7 @@ export const techniques: Technique[] = [
       conditions: ['Target must be holding a weapon']
     },
     flavor: 'Your precise strike targets not flesh but steel, disarming your foes with surgical precision.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/disarming-strike.webp'
   },
   {
@@ -775,7 +775,7 @@ export const techniques: Technique[] = [
       conditions: ['Target must be your size or smaller']
     },
     flavor: 'Your sweeping attack targets not just bodies but balance, sending foes tumbling to the ground.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/trip-attack.webp'
   },
   {
@@ -809,7 +809,7 @@ export const techniques: Technique[] = [
       conditions: ['Target must be your size or smaller']
     },
     flavor: 'Your grip becomes unbreakable, seizing your enemies with inescapable force.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/grappling-strike.webp'
   },
   {
@@ -848,7 +848,7 @@ export const techniques: Technique[] = [
       cooldown: 'Long rest'
     },
     flavor: 'Your presence alone is enough to make lesser beings tremble in fear.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/intimidating-presence.webp'
   },
 
@@ -895,7 +895,7 @@ export const techniques: Technique[] = [
       conditions: ['Target must be below 50% hit points', 'Requires dim light or darkness']
     },
     flavor: 'You become death itself, striking from the shadows to deliver the final blow.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/shadow-termination.webp'
   },
   {
@@ -941,7 +941,7 @@ export const techniques: Technique[] = [
       conditions: ['Target must be a dragon or similar powerful creature']
     },
     flavor: 'You channel the legendary power of dragon slayers, delivering a blow worthy of legends.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/dragon-slaying-blow.webp'
   },
   {
@@ -987,7 +987,7 @@ export const techniques: Technique[] = [
       conditions: ['Requires legendary weapon', 'Must be at full health']
     },
     flavor: 'Your attack tears through the fabric of reality, leaving nothing but void in its wake.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/void-annihilation.webp'
   },
   {
@@ -1032,7 +1032,7 @@ export const techniques: Technique[] = [
       conditions: ['Target must be evil', 'Requires holy weapon']
     },
     flavor: 'Divine light flows through your weapon, delivering righteous judgment to the wicked.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/divine-execution.webp'
   },
   {
@@ -1074,10 +1074,12 @@ export const techniques: Technique[] = [
       conditions: ['Must expend a spell slot', 'Cannot be used with cantrips']
     },
     flavor: 'You channel raw arcane energy through your attack, unleashing the full power of your magic.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/arcane-overload.webp'
   }
 ];
 
 export default techniques;
+
+
 

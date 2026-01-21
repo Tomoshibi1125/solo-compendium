@@ -151,7 +151,7 @@ export function NotificationCenter() {
             )}
           </SheetTitle>
           <SheetDescription>
-            Stay updated with your Hunters and campaigns
+            Stay updated with your Ascendants and campaigns
           </SheetDescription>
         </SheetHeader>
 

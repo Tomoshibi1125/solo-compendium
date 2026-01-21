@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Plus, Trash2, ArrowUp, ArrowDown, RotateCcw } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -9,6 +9,8 @@ import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useUserToolState } from '@/hooks/useToolState';
 
 interface Combatant {
   id: string;
@@ -44,6 +46,7 @@ const CONDITION_OPTIONS = [
 const InitiativeTracker = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const hydratedRef = useRef(false);
   const [combatants, setCombatants] = useState<Combatant[]>([]);
   const [currentTurn, setCurrentTurn] = useState(0);
   const [round, setRound] = useState(1);
@@ -56,54 +59,57 @@ const InitiativeTracker = () => {
     isHunter: true,
   });
 
+  const { state: storedState, isLoading, saveNow } = useUserToolState<{
+    combatants: Combatant[];
+    currentTurn: number;
+    round: number;
+    version?: number;
+    savedAt?: string;
+  }>('initiative_tracker', {
+    initialState: { combatants: [], currentTurn: 0, round: 1 },
+    storageKey: STORAGE_KEY,
+  });
+
+  const savePayload = useMemo(
+    () => ({
+      combatants,
+      currentTurn,
+      round,
+    }),
+    [combatants, currentTurn, round]
+  );
+  const debouncedState = useDebounce(savePayload, 600);
+
   // Load persisted state (best-effort)
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return;
-      const parsed = JSON.parse(raw) as Partial<{
-        combatants: Combatant[];
-        currentTurn: number;
-        round: number;
-      }>;
-
-      if (Array.isArray(parsed.combatants)) {
-        setCombatants(parsed.combatants);
-      }
-      if (typeof parsed.currentTurn === 'number') {
-        setCurrentTurn(parsed.currentTurn);
-      }
-      if (typeof parsed.round === 'number') {
-        setRound(parsed.round);
-      }
-    } catch {
-      // ignore corrupted storage
+    if (isLoading || hydratedRef.current) return;
+    if (Array.isArray(storedState.combatants)) {
+      setCombatants(storedState.combatants);
     }
-  }, []);
+    if (typeof storedState.currentTurn === 'number') {
+      setCurrentTurn(storedState.currentTurn);
+    }
+    if (typeof storedState.round === 'number') {
+      setRound(storedState.round);
+    }
+    hydratedRef.current = true;
+  }, [isLoading, storedState.combatants, storedState.currentTurn, storedState.round]);
 
   // Persist state (best-effort)
   useEffect(() => {
-    try {
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify({
-          version: 1,
-          savedAt: new Date().toISOString(),
-          combatants,
-          currentTurn,
-          round,
-        })
-      );
-    } catch {
-      // ignore quota errors
-    }
-  }, [combatants, currentTurn, round]);
+    if (!hydratedRef.current) return;
+    void saveNow({
+      ...debouncedState,
+      version: 1,
+      savedAt: new Date().toISOString(),
+    });
+  }, [debouncedState, saveNow]);
 
   const sortedCombatants = [...combatants].sort((a, b) => {
     if (b.initiative !== a.initiative) {
       return b.initiative - a.initiative;
     }
-    // Tiebreaker: hunters go first
+    // Tiebreaker: ascendants go first
     if (a.isHunter !== b.isHunter) {
       return a.isHunter ? -1 : 1;
     }
@@ -229,11 +235,6 @@ const InitiativeTracker = () => {
     setCombatants([]);
     setCurrentTurn(0);
     setRound(1);
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-    } catch {
-      // ignore
-    }
     toast({
       title: 'Combat reset',
       description: 'All combatants cleared from the tracker.',
@@ -255,10 +256,10 @@ const InitiativeTracker = () => {
             Back to System Tools
           </Button>
           <h1 className="font-display text-4xl font-bold mb-2 gradient-text-shadow">
-            GATE COMBAT TRACKER
+            RIFT COMBAT TRACKER
           </h1>
           <p className="text-muted-foreground font-heading">
-            Track initiative, HP, and conditions during Gate combat encounters.
+            Track initiative, HP, and conditions during Rift combat encounters.
           </p>
         </div>
 
@@ -342,7 +343,7 @@ const InitiativeTracker = () => {
                             <div className="font-heading font-semibold flex items-center gap-2">
                               {combatant.name}
                               {combatant.isHunter ? (
-                                <Badge variant="secondary" className="text-xs">Hunter</Badge>
+                                <Badge variant="secondary" className="text-xs">Ascendant</Badge>
                               ) : (
                                 <Badge variant="outline" className="text-xs">Monster</Badge>
                               )}
@@ -483,7 +484,7 @@ const InitiativeTracker = () => {
                     id="combatant-name"
                     value={newCombatant.name}
                     onChange={(e) => setNewCombatant({ ...newCombatant, name: e.target.value })}
-                    placeholder="Hunter or Gate creature name"
+                    placeholder="Ascendant or Rift creature name"
                     className="font-display"
                   />
                 </div>

@@ -1,9 +1,9 @@
 /**
- * Unified Rules Engine - Solo Leveling adapted to D&D 5e framework
- * Merges Solo Leveling mechanics with standard D&D 5e rules
+ * Unified Rules Engine - System Ascendant adapted to SRD 5e framework
+ * Merges System Ascendant mechanics with standard SRD 5e rules
  */
 
-// Unified Ability Scores (Solo Leveling names, D&D 5e mechanics)
+// Unified Ability Scores (System Ascendant names, SRD 5e mechanics)
 export interface UnifiedAbilityScores {
   STR: number;  // Strength - Physical power, melee attacks
   AGI: number;  // Agility - Dexterity equivalent, reflexes, stealth
@@ -13,20 +13,20 @@ export interface UnifiedAbilityScores {
   PRE: number;  // Presence - Charisma equivalent, leadership, influence
 }
 
-// Solo Leveling Jobs adapted as D&D 5e Classes
+// System Ascendant Jobs adapted as SRD 5e Classes
 export type UnifiedClass = 
   | 'warrior' | 'mage' | 'assassin' | 'healer' | 'ranger' | 'berserker'
   | 'tank' | 'summoner' | 'paladin' | 'technomancer' | 'warlock' | 'necromancer'
   | 'monk' | 'bard';
 
-// Solo Leveling Paths adapted as D&D 5e Subclasses
+// System Ascendant Paths adapted as SRD 5e Subclasses
 export interface UnifiedPath {
   id: string;
   name: string;
   classId: UnifiedClass;
   className: string;
   pathType: string;
-  tier: 1 | 2 | 3; // Solo Leveling tiers (adapted as subclass levels)
+  tier: 1 | 2 | 3; // System Ascendant tiers (adapted as subclass levels)
   requirements: {
     level: number;
     abilities?: string[];
@@ -62,16 +62,16 @@ export interface UnifiedCharacter {
   race: string;
   background: string;
   
-  // Unified Ability Scores (Solo Leveling names)
+  // Unified Ability Scores (System Ascendant names)
   abilities: UnifiedAbilityScores;
   
-  // D&D 5e mechanics with Solo Leveling flavor
+  // SRD 5e mechanics with System Ascendant flavor
   proficiencyBonus: number;
   skillProficiencies: UnifiedSkillProficiency[];
   savingThrowProficiencies: UnifiedSavingThrowProficiency[];
   
-  // Solo Leveling unique mechanics adapted to D&D 5e
-  systemFavorDie: number; // Solo Leveling System Favor (adapted as inspiration/bonus)
+  // System Ascendant unique mechanics adapted to SRD 5e
+  systemFavorDie: number; // System Ascendant System Favor (adapted as inspiration/bonus)
   systemFavorMax: number;
   systemFavorCurrent: number;
   
@@ -79,7 +79,7 @@ export interface UnifiedCharacter {
   monarchUnlocks?: string[]; // References to existing monarch IDs
   activeMonarch?: string; // Currently active monarch ID
   
-  // Standard D&D 5e mechanics
+  // Standard SRD 5e mechanics
   hitPoints: {
     max: number;
     current: number;
@@ -92,15 +92,15 @@ export interface UnifiedCharacter {
   spellSlots: UnifiedSpellSlots;
   knownPowers: UnifiedPower[];
   
-  // Equipment (Solo Leveling equipment with D&D 5e stats)
+  // Equipment (System Ascendant equipment with SRD 5e stats)
   equipment: UnifiedEquipment[];
   
-  // Solo Leveling unique features
-  shadowSoldiers?: UnifiedShadowSoldier[]; // Only for Shadow Monarch
+  // System Ascendant unique features
+  shadowSoldiers?: UnifiedShadowSoldier[]; // Only for Gemini Sovereign overlay
   runeInscriptions?: UnifiedRune[];
 }
 
-// Unified Skills (D&D 5e skills with Solo Leveling flavor)
+// Unified Skills (SRD 5e skills with System Ascendant flavor)
 export type UnifiedSkill = 
   | 'athletics' | 'acrobatics' | 'sleight-of-hand' | 'stealth'
   | 'arcana' | 'history' | 'investigation' | 'nature' | 'religion'
@@ -124,7 +124,7 @@ export interface UnifiedSavingThrowProficiency {
   bonus?: number;
 }
 
-// Unified Spell Slots (D&D 5e mechanics for Solo Leveling powers)
+// Unified Spell Slots (SRD 5e mechanics for System Ascendant powers)
 export interface UnifiedSpellSlots {
   cantrips: number; // 0-level powers
   level1: number;
@@ -138,7 +138,7 @@ export interface UnifiedSpellSlots {
   level9: number;
 }
 
-// Unified Power (Solo Leveling powers with D&D 5e spell structure)
+// Unified Power (System Ascendant powers with SRD 5e spell structure)
 export interface UnifiedPower {
   id: string;
   name: string;
@@ -149,7 +149,7 @@ export interface UnifiedPower {
   duration: string;
   concentration: boolean;
   components: string[];
-  school: string; // Solo Leveling schools adapted to D&D 5e schools
+  school: string; // System Ascendant schools adapted to SRD 5e schools
   class: UnifiedClass;
   path?: string;
   damage?: string;
@@ -159,7 +159,7 @@ export interface UnifiedPower {
   };
 }
 
-// Unified Equipment (Solo Leveling equipment with D&D 5e stats)
+// Unified Equipment (System Ascendant equipment with SRD 5e stats)
 export interface UnifiedEquipment {
   id: string;
   name: string;
@@ -167,14 +167,14 @@ export interface UnifiedEquipment {
   rarity: 'common' | 'uncommon' | 'rare' | 'very-rare' | 'legendary' | 'mythic';
   description: string;
   
-  // D&D 5e mechanics
+  // SRD 5e mechanics
   armorClass?: number;
   damage?: string;
   damageType?: string;
   weaponType?: string;
   properties?: string[];
   
-  // Solo Leveling unique properties
+  // System Ascendant unique properties
   shadowAffinity?: number;
   systemFavorBonus?: number;
   runeSlots?: number;
@@ -189,7 +189,7 @@ export interface UnifiedEquipment {
   };
 }
 
-// Unified Shadow Soldier (adapted as D&D 5e creature)
+// Unified Umbral Legionnaire (adapted as SRD 5e creature)
 export interface UnifiedShadowSoldier {
   id: string;
   name: string;
@@ -209,7 +209,7 @@ export interface UnifiedShadowSoldier {
   };
 }
 
-// Unified Attack (D&D 5e attack mechanics)
+// Unified Attack (SRD 5e attack mechanics)
 export interface UnifiedAttack {
   name: string;
   attackBonus: number;
@@ -219,7 +219,7 @@ export interface UnifiedAttack {
   properties?: string[];
 }
 
-// Unified Rune (adapted as D&D 5e magic item)
+// Unified Rune (adapted as SRD 5e magic item)
 export interface UnifiedRune {
   id: string;
   name: string;
@@ -234,7 +234,7 @@ export interface UnifiedRune {
   };
 }
 
-// Calculate unified ability modifier (Solo Leveling abilities, D&D 5e formula)
+// Calculate unified ability modifier (System Ascendant abilities, SRD 5e formula)
 export function getUnifiedAbilityModifier(ability: keyof UnifiedAbilityScores, score: number): number {
   return Math.floor((score - 10) / 2);
 }
@@ -305,7 +305,7 @@ export function getUnifiedArmorClass(
   const agiMod = dexBonus ?? getUnifiedAbilityModifier('AGI', character.abilities.AGI);
   const shieldBonus = shield ? 2 : 0;
   
-  // Different armor types use AGI (Dexterity) with Solo Leveling flavor
+  // Different armor types use AGI (Dexterity) with System Ascendant flavor
   switch (armorType) {
     case 'light':
       return baseAC + agiMod + shieldBonus;
@@ -319,7 +319,7 @@ export function getUnifiedArmorClass(
   }
 }
 
-// Calculate unified hit points (Solo Leveling VIT + D&D 5e formula)
+// Calculate unified hit points (System Ascendant VIT + SRD 5e formula)
 export function getUnifiedHitPoints(
   character: UnifiedCharacter,
   hitDie: string,
@@ -340,12 +340,12 @@ export function getUnifiedHitPoints(
   return totalHP;
 }
 
-// Calculate unified proficiency bonus (D&D 5e formula)
+// Calculate unified proficiency bonus (SRD 5e formula)
 export function getUnifiedProficiencyBonus(level: number): number {
   return Math.floor((level - 1) / 4) + 2;
 }
 
-// Calculate System Favor (Solo Leveling mechanic adapted as inspiration)
+// Calculate System Favor (System Ascendant mechanic adapted as inspiration)
 export function getSystemFavorMax(level: number): number {
   if (level <= 4) return 3;
   if (level <= 10) return 4;
@@ -353,7 +353,7 @@ export function getSystemFavorMax(level: number): number {
   return 6;
 }
 
-// Calculate Shadow Energy (Solo Leveling mechanic - monarch-specific domains)
+// Calculate Umbral Energy (System Ascendant mechanic - monarch-specific domains)
 export function getShadowEnergyMax(level: number, monarchDomain?: string): number {
   // Only monarchs have access to shadow energy, and it's domain-specific
   if (!monarchDomain) {
@@ -424,3 +424,5 @@ export function getUnifiedCharacterStatus(character: UnifiedCharacter): {
     runeInscriptions: character.runeInscriptions?.length || 0
   };
 }
+
+

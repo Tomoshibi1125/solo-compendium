@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Book, Sword, Wand2, Shield, Crown, Users, Skull, Sparkles, Scroll, Box } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
+import { MONARCH_LABEL_PLURAL } from '@/lib/vernacular';
 
 interface CategoryStat {
   category: string;
@@ -35,10 +36,10 @@ export function CompendiumQuickStats() {
         { category: 'Equipment', count: counts[3].count || 0, icon: Shield, color: 'text-green-400' },
         { category: 'Relics', count: counts[4].count || 0, icon: Sparkles, color: 'text-yellow-400' },
         { category: 'Monsters', count: counts[5].count || 0, icon: Skull, color: 'text-rose-400' },
-        { category: 'Monarchs', count: counts[6].count || 0, icon: Crown, color: 'text-arise' },
+        { category: MONARCH_LABEL_PLURAL, count: counts[6].count || 0, icon: Crown, color: 'text-arise' },
         { category: 'Backgrounds', count: counts[7].count || 0, icon: Scroll, color: 'text-cyan-400' },
         { category: 'Feats', count: counts[8].count || 0, icon: Book, color: 'text-orange-400' },
-        { category: 'Shadow Army', count: counts[9].count || 0, icon: Box, color: 'text-violet-400' },
+        { category: 'Umbral Legion', count: counts[9].count || 0, icon: Box, color: 'text-violet-400' },
       ];
 
       return categories.filter(c => c.count > 0);
@@ -69,3 +70,4 @@ export function CompendiumQuickStats() {
     </div>
   );
 }
+

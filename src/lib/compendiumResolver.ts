@@ -60,6 +60,12 @@ const supabaseTableMap: Partial<Record<EntryType, keyof Database['public']['Tabl
   'shadow-soldiers': 'compendium_shadow_soldiers',
 };
 
+const legacyIdMap: Partial<Record<EntryType, Record<string, string>>> = {
+  monarchs: {
+    'umbral-sovereign-overlay': 'umbral-monarch-overlay',
+  },
+};
+
 type StaticDataProvider = {
   getJobs: (search?: string) => Promise<StaticCompendiumEntry[]>;
   getPaths: (search?: string) => Promise<StaticCompendiumEntry[]>;
@@ -173,15 +179,25 @@ export async function resolveRef(
           return null;
         }
 
-        const entityData = checkedData as { id: unknown; name: unknown; description?: unknown; [key: string]: unknown };
+        const entityData = checkedData as {
+          id: unknown;
+          name: unknown;
+          display_name?: unknown;
+          description?: unknown;
+          [key: string]: unknown;
+        };
         if (typeof entityData.id !== 'string' || typeof entityData.name !== 'string') {
           return null;
         }
+        const displayName =
+          typeof entityData.display_name === 'string' && entityData.display_name.trim().length > 0
+            ? entityData.display_name
+            : entityData.name;
 
         return {
           ...entityData,
           id: entityData.id,
-          name: entityData.name,
+          name: displayName,
           type,
           description:
             typeof entityData.description === 'string' ? entityData.description : null,
@@ -197,7 +213,8 @@ export async function resolveRef(
     return null;
   }
 
-  const entry = staticEntries.find((item) => item.id === id);
+  const resolvedId = legacyIdMap[type]?.[id] ?? id;
+  const entry = staticEntries.find((item) => item.id === resolvedId);
   if (!entry) {
     return null;
   }

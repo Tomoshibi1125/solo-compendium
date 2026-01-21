@@ -1,7 +1,9 @@
 /**
  * Enhanced rollable tables system
- * Comprehensive tables for Solo Leveling 5e
+ * Comprehensive tables for System Ascendant 5e SRD
  */
+
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 export interface RollableTable {
   id: string;
@@ -14,28 +16,28 @@ export interface RollableTable {
 export const ROLLABLE_TABLES: Record<string, RollableTable> = {
   'gate-complications': {
     id: 'gate-complications',
-    name: 'Gate Complications',
-    description: 'Unexpected events during Gate exploration',
+    name: 'Rift Complications',
+    description: 'Unexpected events during Rift exploration',
     entries: [
       'Mana surge causes random power effects',
-      'Gate structure shifts, changing layout',
+      'Rift structure shifts, changing layout',
       'Monster reinforcements arrive',
       'Environmental hazard activates (fire, ice, poison)',
-      'Time distortion slows/speeds hunter team',
+      'Time distortion slows/speeds ascendant team',
       'Shadow corruption spreads',
-      'Gate boss awakens early',
+      'Rift boss awakens early',
       'Core instability causes tremors',
       'Mana depletion reduces power effectiveness',
-      'Illusionary duplicates confuse hunters',
-      'Gate rank increases mid-encounter',
+      'Illusionary duplicates confuse ascendants',
+      'Rift rank increases mid-encounter',
       'Monster evolution triggers',
     ],
     dice: '1d12',
   },
   'gate-rewards': {
     id: 'gate-rewards',
-    name: 'Gate Rewards',
-    description: 'Rewards from completing Gates',
+    name: 'Rift Rewards',
+    description: 'Rewards from completing Rifts',
     entries: [
       'Standard core yield',
       'Enhanced core (double value)',
@@ -44,7 +46,7 @@ export const ROLLABLE_TABLES: Record<string, RollableTable> = {
       'System favor bonus',
       'Experience multiplier',
       'Unique monster part',
-      'Gate completion bonus',
+      'Rift completion bonus',
       'Hidden treasure cache',
       'Monarch blessing',
       'Skill point bonus',
@@ -54,8 +56,8 @@ export const ROLLABLE_TABLES: Record<string, RollableTable> = {
   },
   'gate-hazards': {
     id: 'gate-hazards',
-    name: 'Gate Hazards',
-    description: 'Environmental dangers in Gates',
+    name: 'Rift Hazards',
+    description: 'Environmental dangers in Rifts',
     entries: [
       'Mana vortex (random teleportation)',
       'Shadow trap (damage + condition)',
@@ -75,14 +77,14 @@ export const ROLLABLE_TABLES: Record<string, RollableTable> = {
   'npc-motivations': {
     id: 'npc-motivations',
     name: 'NPC Motivations',
-    description: 'What drives NPCs in Solo Leveling',
+    description: 'What drives NPCs in System Ascendant',
     entries: [
-      'Seeking power through Gates',
+      'Seeking power through Rifts',
       'Protecting loved ones',
       'Revenge against monsters',
-      'Researching Gate phenomena',
-      'Building a hunter organization',
-      'Seeking the Shadow Monarch',
+      'Researching Rift phenomena',
+      'Building an ascendant organization',
+      'Seeking the Umbral Monarch',
       'Escaping past trauma',
       'Proving their worth',
       'Accumulating wealth',
@@ -97,25 +99,25 @@ export const ROLLABLE_TABLES: Record<string, RollableTable> = {
     name: 'NPC Secrets',
     description: 'Hidden truths about NPCs',
     entries: [
-      'Former S-Rank hunter (lost power)',
+      'Former S-Rank ascendant (lost power)',
       'Working for a Monarch',
       'Has a cursed relic',
       'Knows about the reset',
       'Is actually a monster',
       'Has System favor debt',
-      'Betrayed their Hunter team',
+      'Betrayed their Ascendant team',
       'Seeking forbidden knowledge',
-      'Has a hidden Gate',
+      'Has a hidden Rift',
       'Is being hunted',
-      'Knows the Supreme Deity personally',
+      'Knows the Prime Architect personally',
       'Has a duplicate identity',
     ],
     dice: '1d12',
   },
   'gate-themes': {
     id: 'gate-themes',
-    name: 'Gate Themes',
-    description: 'Thematic elements for Gates',
+    name: 'Rift Themes',
+    description: 'Thematic elements for Rifts',
     entries: [
       'Shadow Realm (undead focus)',
       'Elemental Chaos (elemental focus)',
@@ -123,10 +125,10 @@ export const ROLLABLE_TABLES: Record<string, RollableTable> = {
       'Construct Forge (construct focus)',
       'Abyssal Depths (fiend focus)',
       'Celestial Spire (celestial focus)',
-      'Supreme Deity\'s Domain (shadow focus)',
+      'Prime Architect\'s Domain (shadow focus)',
       'Necromantic Lab (undead + construct)',
       'Mana Nexus (elemental + aberration)',
-      'Shadow Monarch\'s Memory',
+      'Umbral Monarch\'s Memory',
       'System Testing Ground',
       'Post-Reset Fragment',
     ],
@@ -182,7 +184,7 @@ export function rollTable(tableId: string): string | null {
   if (!table) return null;
 
   const roll = Math.floor(Math.random() * table.entries.length);
-  return table.entries[roll];
+  return formatMonarchVernacular(table.entries[roll]);
 }
 
 /**
@@ -204,4 +206,5 @@ export function rollDice(notation: string): number {
 
   return total + modifier;
 }
+
 

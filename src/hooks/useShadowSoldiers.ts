@@ -129,8 +129,8 @@ export function useExtractShadowSoldier() {
     onSuccess: (data, variables) => {
       queryClient.invalidateQueries({ queryKey: ['character-shadow-soldiers', variables.characterId] });
       toast({
-        title: 'Shadow Extraction Complete!',
-        description: `${data.soldierName} has joined your shadow army.`,
+        title: 'Umbral Extraction Complete!',
+        description: `${data.soldierName} has joined your Umbral Legion.`,
       });
     },
     onError: (error) => {
@@ -167,10 +167,10 @@ export function useToggleSummon() {
       queryClient.invalidateQueries({ queryKey: ['character-shadow-soldiers', variables.characterId] });
       const soldierName = (data.soldier as { name: string })?.name || 'Soldier';
       toast({
-        title: variables.summon ? 'Arise!' : 'Return to Shadow',
-        description: variables.summon 
-          ? `${soldierName} emerges from the shadows!`
-          : `${soldierName} returns to the shadow realm.`,
+        title: variables.summon ? 'Ascend!' : 'Return to the Veil',
+        description: variables.summon
+          ? `${soldierName} emerges from the veil!`
+          : `${soldierName} returns to the veil.`,
       });
     },
   });

@@ -15,11 +15,12 @@ import { CharacterArtPanel } from '@/components/character/CharacterArtPanel';
 import { useActiveCharacter } from '@/hooks/useActiveCharacter';
 import { QuestLog } from '@/pages/player-tools/QuestLog';
 import { Achievements } from '@/pages/player-tools/Achievements';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 const TOOL_TITLES: Record<string, { title: string; subtitle: string }> = {
   'character-sheet': {
     title: 'Character Sheet',
-    subtitle: 'Review stats, abilities, and full hunter details.',
+    subtitle: 'Review stats, abilities, and full ascendant details.',
   },
   inventory: {
     title: 'Inventory',
@@ -31,7 +32,7 @@ const TOOL_TITLES: Record<string, { title: string; subtitle: string }> = {
   },
   'character-art': {
     title: 'Character Art Generator',
-    subtitle: 'Create portrait art for your hunter.',
+    subtitle: 'Create portrait art for your ascendant.',
   },
   'compendium-viewer': {
     title: 'Compendium Viewer',
@@ -65,8 +66,11 @@ export default function PlayerToolDetail() {
     if (!toolId) return null;
     if (toolId === 'compendium-viewer') return '/compendium';
     if (toolId === 'dice-roller') return '/dice';
+    if (toolId === 'character-sheet' && activeCharacter?.id) {
+      return `/characters/${activeCharacter.id}`;
+    }
     return null;
-  }, [toolId]);
+  }, [activeCharacter?.id, toolId]);
 
   if (shouldRedirect) {
     return <Navigate to={shouldRedirect} replace />;
@@ -81,14 +85,14 @@ export default function PlayerToolDetail() {
   const renderCharacterGate = () => {
     if (!requiresCharacter(toolId)) return null;
     if (isLoading) {
-      return <div className="text-sm text-muted-foreground">Loading hunter data...</div>;
+      return <div className="text-sm text-muted-foreground">Loading ascendant data...</div>;
     }
     if (!activeCharacter) {
       return (
-        <SystemWindow title="NO ACTIVE HUNTER">
+        <SystemWindow title="NO ACTIVE ASCENDANT">
           <div className="space-y-3 text-sm text-muted-foreground">
-            <p>Create a hunter to unlock player tools.</p>
-            <Button onClick={() => navigate('/characters/new')}>Create Hunter</Button>
+            <p>Create an ascendant to unlock player tools.</p>
+            <Button onClick={() => navigate('/characters/new')}>Create Ascendant</Button>
           </div>
         </SystemWindow>
       );
@@ -104,10 +108,10 @@ export default function PlayerToolDetail() {
     switch (toolId) {
       case 'character-sheet':
         return (
-          <SystemWindow title="ACTIVE HUNTER">
+          <SystemWindow title="ACTIVE ASCENDANT">
             <div className="space-y-3">
               <div className="text-sm text-muted-foreground">
-                {activeCharacter?.name} | Level {activeCharacter?.level} {activeCharacter?.job || 'Unawakened'}
+                {activeCharacter?.name} | Level {activeCharacter?.level} {formatMonarchVernacular(activeCharacter?.job || 'Unawakened')}
               </div>
               <Button onClick={() => navigate(`/characters/${activeCharacter?.id}`)} className="gap-2">
                 <ScrollText className="w-4 h-4" />
@@ -185,17 +189,17 @@ export default function PlayerToolDetail() {
           {toolId === 'character-art' && (
             <Button onClick={() => navigate('/dm-tools/art-generator')} variant="outline" className="gap-2">
               <Sparkles className="w-4 h-4" />
-              DM Art Tools
+              Warden Art Tools
             </Button>
           )}
         </div>
 
         {showCharacterSelector && (
           <div className="flex items-center gap-3">
-            <span className="text-sm text-muted-foreground">Active Hunter</span>
+            <span className="text-sm text-muted-foreground">Active Ascendant</span>
             <Select value={activeCharacterId || ''} onValueChange={setActiveCharacter}>
               <SelectTrigger className="w-64">
-                <SelectValue placeholder="Select a hunter" />
+                  <SelectValue placeholder="Select an ascendant" />
               </SelectTrigger>
               <SelectContent>
                 {characters.map((character) => (
@@ -213,3 +217,4 @@ export default function PlayerToolDetail() {
     </Layout>
   );
 }
+

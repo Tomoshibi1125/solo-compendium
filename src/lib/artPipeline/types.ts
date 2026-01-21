@@ -90,7 +90,7 @@ export const GENERATION_PRESETS: Record<string, GenerationPreset> = {
   'monster-portrait': {
     width: 1024,
     height: 1024,
-    promptTemplate: 'dark manhwa anime cinematic fantasy, Solo Leveling style, {title} {description}, dramatic lighting, high contrast, detailed character art, dynamic pose, {tags}',
+    promptTemplate: 'dark manhwa-inspired cinematic fantasy, System Ascendant style, {title} {description}, dramatic lighting, high contrast, detailed character art, dynamic pose, {tags}',
     negativePrompt: 'low quality, blurry, pixelated, distorted, bad anatomy, poorly drawn face, mutation, duplicate, ugly, disfigured, jpeg artifacts',
     steps: 20,
     cfg: 7.5,
@@ -100,7 +100,7 @@ export const GENERATION_PRESETS: Record<string, GenerationPreset> = {
   'monster-token': {
     width: 512,
     height: 512,
-    promptTemplate: 'dark manhwa anime style, Solo Leveling, {title} token art, circular composition, high contrast, {tags}',
+    promptTemplate: 'dark manhwa-inspired style, System Ascendant, {title} token art, circular composition, high contrast, {tags}',
     negativePrompt: 'low quality, blurry, pixelated, distorted, bad anatomy, poorly drawn face, mutation, duplicate, ugly, disfigured, jpeg artifacts',
     steps: 15,
     cfg: 7.0,
@@ -110,7 +110,7 @@ export const GENERATION_PRESETS: Record<string, GenerationPreset> = {
   'item-icon': {
     width: 256,
     height: 256,
-    promptTemplate: 'dark manhwa anime style, Solo Leveling, {title} icon, detailed item, high contrast, {tags}',
+    promptTemplate: 'dark manhwa-inspired style, System Ascendant, {title} icon, detailed item, high contrast, {tags}',
     negativePrompt: 'low quality, blurry, pixelated, distorted, bad anatomy, poorly drawn face, mutation, duplicate, ugly, disfigured, jpeg artifacts',
     steps: 15,
     cfg: 7.0,
@@ -120,7 +120,7 @@ export const GENERATION_PRESETS: Record<string, GenerationPreset> = {
   'item-illustration': {
     width: 1024,
     height: 768,
-    promptTemplate: 'dark manhwa anime cinematic fantasy, Solo Leveling style, {title} {description}, dramatic lighting, high contrast, detailed item art, {tags}',
+    promptTemplate: 'dark manhwa-inspired cinematic fantasy, System Ascendant style, {title} {description}, dramatic lighting, high contrast, detailed item art, {tags}',
     negativePrompt: 'low quality, blurry, pixelated, distorted, bad anatomy, poorly drawn face, mutation, duplicate, ugly, disfigured, jpeg artifacts',
     steps: 20,
     cfg: 7.5,
@@ -130,7 +130,7 @@ export const GENERATION_PRESETS: Record<string, GenerationPreset> = {
   'spell-illustration': {
     width: 1024,
     height: 768,
-    promptTemplate: 'dark manhwa anime magical fantasy, Solo Leveling style, {title} spell effect, magical energy, dramatic lighting, high contrast, {tags}',
+    promptTemplate: 'dark manhwa-inspired magical fantasy, System Ascendant style, {title} spell effect, magical energy, dramatic lighting, high contrast, {tags}',
     negativePrompt: 'low quality, blurry, pixelated, distorted, bad anatomy, poorly drawn face, mutation, duplicate, ugly, disfigured, jpeg artifacts',
     steps: 20,
     cfg: 7.5,
@@ -140,7 +140,7 @@ export const GENERATION_PRESETS: Record<string, GenerationPreset> = {
   'location-banner': {
     width: 1920,
     height: 512,
-    promptTemplate: 'dark manhwa anime cinematic landscape, Solo Leveling style, {title} {description}, epic environment, dramatic lighting, high contrast, {tags}',
+    promptTemplate: 'dark manhwa-inspired cinematic landscape, System Ascendant style, {title} {description}, epic environment, dramatic lighting, high contrast, {tags}',
     negativePrompt: 'low quality, blurry, pixelated, distorted, bad anatomy, poorly drawn face, mutation, duplicate, ugly, disfigured, jpeg artifacts',
     steps: 25,
     cfg: 7.5,
@@ -150,7 +150,7 @@ export const GENERATION_PRESETS: Record<string, GenerationPreset> = {
   'job-emblem': {
     width: 512,
     height: 512,
-    promptTemplate: 'dark manhwa anime style, Solo Leveling, {title} job emblem, sigil design, high contrast, {tags}',
+    promptTemplate: 'dark manhwa-inspired style, System Ascendant, {title} job emblem, sigil design, high contrast, {tags}',
     negativePrompt: 'low quality, blurry, pixelated, distorted, bad anatomy, poorly drawn face, mutation, duplicate, ugly, disfigured, jpeg artifacts',
     steps: 15,
     cfg: 7.0,
@@ -212,3 +212,4 @@ export function generateCacheKey(request: ArtRequest): string {
   ];
   return parts.join('|').toLowerCase().replace(/[^a-z0-9|]/g, '_');
 }
+

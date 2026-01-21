@@ -1,6 +1,6 @@
 // Comprehensive Maps Compendium
 // Generated with full admin privileges
-// Solo Leveling themed map tiles and environments with images
+// System Ascendant themed map tiles and environments with images
 
 export interface MapTile {
   id: string;
@@ -45,8 +45,8 @@ export const mapsCompendium: MapTile[] = [
   },
   {
     id: 'iron-gate',
-    name: 'Shadow Iron Gate',
-    description: 'Massive iron gate infused with shadow energy. Provides security and serves as a dramatic entrance.',
+    name: 'Shadow Iron Portal',
+    description: 'Massive iron portal frame infused with shadow energy. Provides security and serves as a dramatic entrance.',
     type: 'gate',
     image: '/generated/maps/iron-gate.webp',
     walkable: false,
@@ -76,3 +76,4 @@ export const mapsCompendium: MapTile[] = [
 ];
 
 export default mapsCompendium;
+

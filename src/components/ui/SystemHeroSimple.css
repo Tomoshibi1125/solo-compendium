@@ -1,4 +1,4 @@
-/* SoloLevelingHeroSimple.css */
+/* SystemHeroSimple.css */
 .hero-particle {
   position: absolute;
   width: 4px;
@@ -35,3 +35,4 @@
     opacity: 0;
   }
 }
+

@@ -1,16 +1,16 @@
 -- =============================================
--- COMPLETE ALL PATHS AND MONARCHS - SOLO LEVELING ALIGNED
+-- COMPLETE ALL PATHS AND MONARCHS - SYSTEM ASCENDANT ALIGNED
 -- =============================================
 -- This migration completes all remaining 72 path features and 8 monarch features
--- All features fully aligned with Solo Leveling manhwa universe, post-reset timeline
--- Uses System, Shadow Monarch, Gates, Hunters, and Solo Leveling terminology throughout
+-- All features fully aligned with System Ascendant canon, post-reset timeline
+-- Uses System, Umbral Monarch, Rifts, Ascendants, and System Ascendant terminology throughout
 --
 -- Pattern: Each path gets 4 features (levels 3, 6, 10, 14)
 -- Pattern: Each monarch gets features at appropriate levels (7, 9, 11, 13, 15, 17, 20)
--- All with D&D 5e-level detail but Solo Leveling theming
+-- All with SRD 5e-level detail but System Ascendant theming
 
 -- =============================================
--- UPDATE EXISTING FEATURES FOR SOLO LEVELING ALIGNMENT
+-- UPDATE EXISTING FEATURES FOR SYSTEM ASCENDANT ALIGNMENT
 -- =============================================
 
 -- Update "ki" references to "System energy" or "mana" for Striker
@@ -56,11 +56,11 @@ WHERE description LIKE '%eldritch invocations%' AND job_id IN (SELECT id FROM co
 UPDATE compendium_job_features 
 SET description = REPLACE(description, 'Eldritch Master', 'Pact Master')
 WHERE name = 'Eldritch Master' AND job_id IN (SELECT id FROM compendium_jobs WHERE name = 'Contractor');
--- Update "adventures" to "Gate raids" in Ranger
+-- Update "adventures" to "Rift raids" in Ranger
 UPDATE compendium_job_features 
-SET description = REPLACE(description, 'on your adventures', 'during your Gate raids')
+SET description = REPLACE(description, 'on your adventures', 'during your Rift raids')
 WHERE description LIKE '%on your adventures%' AND job_id IN (SELECT id FROM compendium_jobs WHERE name = 'Ranger');
--- Update comments to remove D&D references
+-- Update comments to remove SRD references
 -- (Comments will be updated when migration runs)
 
 -- =============================================
@@ -224,7 +224,7 @@ WHERE j.name = 'Contractor' AND p.name = 'Path of the Weapon Pact';
 -- Path of the Berserker
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Frenzy', 3,
-'When you choose this path at 3rd level, you can go into a frenzy when you rage. If you do so, for the duration of your rage you can make a single melee weapon attack as a bonus action on each of your turns after this one. When your rage ends, you suffer one level of exhaustion. In the post-reset world where Gates constantly threaten, many Destroyers embrace this reckless power despite its cost.',
+'When you choose this path at 3rd level, you can go into a frenzy when you rage. If you do so, for the duration of your rage you can make a single melee weapon attack as a bonus action on each of your turns after this one. When your rage ends, you suffer one level of exhaustion. In the post-reset world where Rifts constantly threaten, many Destroyers embrace this reckless power despite its cost.',
 'bonus-action', NULL, NULL, NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Destroyer' AND p.name = 'Path of the Berserker';
@@ -242,14 +242,14 @@ FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Destroyer' AND p.name = 'Path of the Berserker';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Retaliation', 14,
-'Starting at 14th level, when you take damage from a creature that is within 5 feet of you, you can use your reaction to make a melee weapon attack against that creature. Your rage makes you unstoppable—even Gate bosses learn to fear your retribution.',
+'Starting at 14th level, when you take damage from a creature that is within 5 feet of you, you can use your reaction to make a melee weapon attack against that creature. Your rage makes you unstoppable—even Rift bosses learn to fear your retribution.',
 'reaction', NULL, NULL, 'Intimidating Presence', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Destroyer' AND p.name = 'Path of the Berserker';
 -- Path of the Colossus
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Giant''s Stature', 3,
-'When you choose this path at 3rd level, your rage allows you to grow to massive size. When you enter your rage, you can choose to increase your size by one category (from Medium to Large, or Large to Huge if you are already Large). While enlarged, your reach increases by 5 feet, and your melee weapon attacks deal an additional die of damage. The enlargement lasts for the duration of your rage. Gate creatures that tower over Hunters learn that you can match their size.',
+'When you choose this path at 3rd level, your rage allows you to grow to massive size. When you enter your rage, you can choose to increase your size by one category (from Medium to Large, or Large to Huge if you are already Large). While enlarged, your reach increases by 5 feet, and your melee weapon attacks deal an additional die of damage. The enlargement lasts for the duration of your rage. Rift creatures that tower over Ascendants learn that you can match their size.',
 'passive', NULL, NULL, NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Destroyer' AND p.name = 'Path of the Colossus';
@@ -267,32 +267,32 @@ FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Destroyer' AND p.name = 'Path of the Colossus';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'True Colossus', 14,
-'At 14th level, you can grow even larger and more powerful. When you use your Giant''s Stature feature, you can choose to increase your size by two categories instead of one (from Medium to Huge). Additionally, while you are Huge, your melee weapon attacks deal two additional dice of damage instead of one, and your reach increases by 10 feet. You become a living siege engine capable of breaking through Gate barriers with your bare hands.',
+'At 14th level, you can grow even larger and more powerful. When you use your Giant''s Stature feature, you can choose to increase your size by two categories instead of one (from Medium to Huge). Additionally, while you are Huge, your melee weapon attacks deal two additional dice of damage instead of one, and your reach increases by 10 feet. You become a living siege engine capable of breaking through Rift barriers with your bare hands.',
 'passive', NULL, NULL, 'Titanic Blow', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Destroyer' AND p.name = 'Path of the Colossus';
 -- Path of the Gatebreaker
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
-SELECT j.id, p.id, 'Gate Sense', 3,
-'When you choose this path at 3rd level, you develop an instinctive sense for Gate structures and barriers. You can use your action to detect the presence of Gate barriers, magical walls, or dimensional rifts within 60 feet. Additionally, your melee weapon attacks deal double damage to objects, structures, and constructs. This makes you invaluable for clearing Gate passages and breaking through obstacles.',
+SELECT j.id, p.id, 'Rift Sense', 3,
+'When you choose this path at 3rd level, you develop an instinctive sense for Rift structures and barriers. You can use your action to detect the presence of Rift barriers, magical walls, or dimensional rifts within 60 feet. Additionally, your melee weapon attacks deal double damage to objects, structures, and constructs. This makes you invaluable for clearing Rift passages and breaking through obstacles.',
 'action', NULL, NULL, NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Destroyer' AND p.name = 'Path of the Gatebreaker';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Shattering Blow', 6,
-'At 6th level, your attacks can shatter even the strongest Gate barriers. When you hit a creature or object with a melee weapon attack, you can choose to deal additional force damage equal to your Destroyer level. If you use this feature against an object or structure, you deal maximum damage. Additionally, when you destroy an object or structure, you can use your reaction to make a melee weapon attack against each creature within 5 feet of it, as shards and debris fly outward.',
-'passive', '1 per turn', NULL, 'Gate Sense', true
+'At 6th level, your attacks can shatter even the strongest Rift barriers. When you hit a creature or object with a melee weapon attack, you can choose to deal additional force damage equal to your Destroyer level. If you use this feature against an object or structure, you deal maximum damage. Additionally, when you destroy an object or structure, you can use your reaction to make a melee weapon attack against each creature within 5 feet of it, as shards and debris fly outward.',
+'passive', '1 per turn', NULL, 'Rift Sense', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Destroyer' AND p.name = 'Path of the Gatebreaker';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Breach Specialist', 10,
-'Starting at 10th level, you become a master at breaking through Gate barriers. You ignore damage resistance and immunity of objects and structures. Additionally, when you attack a barrier or wall, you can choose to make it vulnerable to all damage types for 1 minute. Any attacks against the barrier during this time deal double damage.',
+'Starting at 10th level, you become a master at breaking through Rift barriers. You ignore damage resistance and immunity of objects and structures. Additionally, when you attack a barrier or wall, you can choose to make it vulnerable to all damage types for 1 minute. Any attacks against the barrier during this time deal double damage.',
 'passive', NULL, NULL, 'Shattering Blow', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Destroyer' AND p.name = 'Path of the Gatebreaker';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
-SELECT j.id, p.id, 'Gate''s Bane', 14,
-'At 14th level, you are a living weapon against Gates themselves. When you enter your rage, you can choose to make all of your attacks deal force damage and ignore all damage resistance and immunity. Additionally, when you destroy a Gate barrier, magical wall, or dimensional structure, you can choose to seal it permanently, preventing it from reforming or allowing passage. Once you use this sealing ability, you can''t use it again until you finish a long rest.',
+SELECT j.id, p.id, 'Rift''s Bane', 14,
+'At 14th level, you are a living weapon against Rifts themselves. When you enter your rage, you can choose to make all of your attacks deal force damage and ignore all damage resistance and immunity. Additionally, when you destroy a Rift barrier, magical wall, or dimensional structure, you can choose to seal it permanently, preventing it from reforming or allowing passage. Once you use this sealing ability, you can''t use it again until you finish a long rest.',
 'passive', '1 seal per long rest', 'long-rest', 'Breach Specialist', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Destroyer' AND p.name = 'Path of the Gatebreaker';
@@ -349,7 +349,7 @@ WHERE j.name = 'Destroyer' AND p.name = 'Path of the Unstoppable';
 -- Path of the War Titan
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Titan''s Grip', 3,
-'When you choose this path at 3rd level, you can wield massive weapons with ease. You can use two-handed weapons in one hand without penalty, and you can dual-wield weapons with the two-handed property. Additionally, weapons you wield deal an additional die of damage. Gate creatures learn that no weapon is too large for you to master.',
+'When you choose this path at 3rd level, you can wield massive weapons with ease. You can use two-handed weapons in one hand without penalty, and you can dual-wield weapons with the two-handed property. Additionally, weapons you wield deal an additional die of damage. Rift creatures learn that no weapon is too large for you to master.',
 'passive', NULL, NULL, NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Destroyer' AND p.name = 'Path of the War Titan';
@@ -374,7 +374,7 @@ WHERE j.name = 'Destroyer' AND p.name = 'Path of the War Titan';
 -- =============================================
 -- ESPER PATHS (6 paths) - Complete All Features
 -- =============================================
--- Note: These continue the pattern with Solo Leveling theming
+-- Note: These continue the pattern with System Ascendant theming
 -- Focusing on psychic/telekinetic powers aligned with System interface
 
 -- Path of the Kinetic
@@ -530,12 +530,12 @@ WHERE j.name = 'Esper' AND p.name = 'Path of the Voidmind';
 -- =============================================
 -- HEALER PATHS (6 paths) - Complete All Features
 -- =============================================
--- All aligned with System healing interface and Shadow Monarch's domain
+-- All aligned with System healing interface and Umbral Monarch's domain
 
 -- Path of the Battle Medic
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Combat Medic', 3,
-'When you choose this path at 3rd level, you excel at healing while in the thick of Gate combat. When you use a power to restore hit points to a creature, you can make a melee weapon attack as a bonus action. Additionally, you have advantage on saving throws against being frightened while within 30 feet of an ally that has at least 1 hit point.',
+'When you choose this path at 3rd level, you excel at healing while in the thick of Rift combat. When you use a power to restore hit points to a creature, you can make a melee weapon attack as a bonus action. Additionally, you have advantage on saving throws against being frightened while within 30 feet of an ally that has at least 1 hit point.',
 'bonus-action', NULL, NULL, NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Healer' AND p.name = 'Path of the Battle Medic';
@@ -566,7 +566,7 @@ FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Healer' AND p.name = 'Path of the Covenant Voice';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Voice of Authority', 6,
-'At 6th level, your voice carries the Shadow Monarch''s authority. When you use your Channel System Energy, you can choose to speak a word of command. Each creature of your choice within 30 feet that can hear you must make a Wisdom saving throw (DC = your Healer power save DC). On a failed save, a creature is charmed or frightened by you (your choice) for 1 minute or until you or your companions do anything harmful to it. On a successful save, a creature takes 2d8 psychic damage.',
+'At 6th level, your voice carries the Umbral Monarch''s authority. When you use your Channel System Energy, you can choose to speak a word of command. Each creature of your choice within 30 feet that can hear you must make a Wisdom saving throw (DC = your Healer power save DC). On a failed save, a creature is charmed or frightened by you (your choice) for 1 minute or until you or your companions do anything harmful to it. On a successful save, a creature takes 2d8 psychic damage.',
 'passive', NULL, NULL, 'Divine Word', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Healer' AND p.name = 'Path of the Covenant Voice';
@@ -845,19 +845,19 @@ WHERE j.name = 'Herald' AND p.name = 'Path of the War Drummer';
 -- Path of the Iron Banner
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Oath of Iron', 3,
-'When you choose this path at 3rd level, you swear an oath of unyielding faith. You gain the Channel System Energy feature and two oath powers: Abjure Enemy and Turn the Faithless. When you use your Channel System Energy, you choose which effect to create. You must then finish a short or long rest to use your Channel System Energy again. Your oath grants you power to protect the innocent and stand firm against Gate corruption.',
+'When you choose this path at 3rd level, you swear an oath of unyielding faith. You gain the Channel System Energy feature and two oath powers: Abjure Enemy and Turn the Faithless. When you use your Channel System Energy, you choose which effect to create. You must then finish a short or long rest to use your Channel System Energy again. Your oath grants you power to protect the innocent and stand firm against Rift corruption.',
 'action', '1 per short rest', 'short-rest', NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Holy Knight' AND p.name = 'Path of the Iron Banner';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Aura of Devotion', 7,
-'Starting at 7th level, you and friendly creatures within 10 feet of you can''t be charmed while you are conscious. At 18th level, the range of this aura increases to 30 feet. Your unyielding faith creates a bastion against mental manipulation in Gate raids.',
+'Starting at 7th level, you and friendly creatures within 10 feet of you can''t be charmed while you are conscious. At 18th level, the range of this aura increases to 30 feet. Your unyielding faith creates a bastion against mental manipulation in Rift raids.',
 'passive', NULL, NULL, 'Oath of Iron', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Holy Knight' AND p.name = 'Path of the Iron Banner';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Purity of Spirit', 15,
-'Beginning at 15th level, you are always under the effects of a protection from evil and good power. This effect can be dispelled, but you can use your action to reapply it. Your faith protects you from Gate corruption and otherworldly influence.',
+'Beginning at 15th level, you are always under the effects of a protection from evil and good power. This effect can be dispelled, but you can use your action to reapply it. Your faith protects you from Rift corruption and otherworldly influence.',
 'passive', NULL, NULL, 'Aura of Devotion', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Holy Knight' AND p.name = 'Path of the Iron Banner';
@@ -882,7 +882,7 @@ FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Holy Knight' AND p.name = 'Path of the Oathbreaker';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Supernatural Resistance', 15,
-'At 15th level, you gain resistance to bludgeoning, piercing, and slashing damage from nonmagical attacks. Your body has been strengthened by dark power from Gate corruption.',
+'At 15th level, you gain resistance to bludgeoning, piercing, and slashing damage from nonmagical attacks. Your body has been strengthened by dark power from Rift corruption.',
 'passive', NULL, NULL, 'Aura of Hate', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Holy Knight' AND p.name = 'Path of the Oathbreaker';
@@ -895,7 +895,7 @@ WHERE j.name = 'Holy Knight' AND p.name = 'Path of the Oathbreaker';
 -- Path of the Radiant Shield
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Oath of Protection', 3,
-'When you choose this path at 3rd level, you swear an oath to protect others from Gate threats. You gain the Channel System Energy feature and two oath powers: Nature''s Wrath and Turn the Faithless. When you use your Channel System Energy, you choose which effect to create. You must then finish a short or long rest to use your Channel System Energy again. Your shield becomes a symbol of divine protection.',
+'When you choose this path at 3rd level, you swear an oath to protect others from Rift threats. You gain the Channel System Energy feature and two oath powers: Nature''s Wrath and Turn the Faithless. When you use your Channel System Energy, you choose which effect to create. You must then finish a short or long rest to use your Channel System Energy again. Your shield becomes a symbol of divine protection.',
 'action', '1 per short rest', 'short-rest', NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Holy Knight' AND p.name = 'Path of the Radiant Shield';
@@ -920,7 +920,7 @@ WHERE j.name = 'Holy Knight' AND p.name = 'Path of the Radiant Shield';
 -- Path of the Redeemer
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Oath of Redemption', 3,
-'When you choose this path at 3rd level, you swear an oath to seek redemption and protect the innocent. You gain the Channel System Energy feature and two oath powers: Emissary of Peace and Rebuke the Violent. When you use your Channel System Energy, you choose which effect to create. You must then finish a short or long rest to use your Channel System Energy again. You seek to redeem even those corrupted by Gate influence.',
+'When you choose this path at 3rd level, you swear an oath to seek redemption and protect the innocent. You gain the Channel System Energy feature and two oath powers: Emissary of Peace and Rebuke the Violent. When you use your Channel System Energy, you choose which effect to create. You must then finish a short or long rest to use your Channel System Energy again. You seek to redeem even those corrupted by Rift influence.',
 'action', '1 per short rest', 'short-rest', NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Holy Knight' AND p.name = 'Path of the Redeemer';
@@ -945,13 +945,13 @@ WHERE j.name = 'Holy Knight' AND p.name = 'Path of the Redeemer';
 -- Path of the Sanctifier
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Oath of Sanctification', 3,
-'When you choose this path at 3rd level, you swear an oath to purify corruption and destroy evil. You gain the Channel System Energy feature and two oath powers: Abjure Enemy and Turn the Faithless. When you use your Channel System Energy, you choose which effect to create. You must then finish a short or long rest to use your Channel System Energy again. You specialize in purifying Gate corruption.',
+'When you choose this path at 3rd level, you swear an oath to purify corruption and destroy evil. You gain the Channel System Energy feature and two oath powers: Abjure Enemy and Turn the Faithless. When you use your Channel System Energy, you choose which effect to create. You must then finish a short or long rest to use your Channel System Energy again. You specialize in purifying Rift corruption.',
 'action', '1 per short rest', 'short-rest', NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Holy Knight' AND p.name = 'Path of the Sanctifier';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Aura of Purity', 7,
-'Starting at 7th level, you and friendly creatures within 10 feet of you cannot be diseased or poisoned while you are conscious. At 18th level, the range of this aura increases to 30 feet. Your presence purifies Gate taint.',
+'Starting at 7th level, you and friendly creatures within 10 feet of you cannot be diseased or poisoned while you are conscious. At 18th level, the range of this aura increases to 30 feet. Your presence purifies Rift taint.',
 'passive', NULL, NULL, 'Oath of Sanctification', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Holy Knight' AND p.name = 'Path of the Sanctifier';
@@ -970,13 +970,13 @@ WHERE j.name = 'Holy Knight' AND p.name = 'Path of the Sanctifier';
 -- Path of the Vengeful Flame
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Oath of Vengeance', 3,
-'When you choose this path at 3rd level, you swear an oath of vengeance against those who have committed great evils. You gain the Channel System Energy feature and two oath powers: Abjure Enemy and Vow of Enmity. When you use your Channel System Energy, you choose which effect to create. You must then finish a short or long rest to use your Channel System Energy again. You hunt down Gate threats with holy fire.',
+'When you choose this path at 3rd level, you swear an oath of vengeance against those who have committed great evils. You gain the Channel System Energy feature and two oath powers: Abjure Enemy and Vow of Enmity. When you use your Channel System Energy, you choose which effect to create. You must then finish a short or long rest to use your Channel System Energy again. You hunt down Rift threats with holy fire.',
 'action', '1 per short rest', 'short-rest', NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Holy Knight' AND p.name = 'Path of the Vengeful Flame';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Relentless Avenger', 7,
-'Starting at 7th level, your supernatural focus helps you close off a foe''s retreat. When you hit a creature with an opportunity attack, you can move up to half your speed immediately after the attack and as part of the same reaction. This movement doesn''t provoke opportunity attacks. You pursue Gate enemies with unrelenting fury.',
+'Starting at 7th level, your supernatural focus helps you close off a foe''s retreat. When you hit a creature with an opportunity attack, you can move up to half your speed immediately after the attack and as part of the same reaction. This movement doesn''t provoke opportunity attacks. You pursue Rift enemies with unrelenting fury.',
 'passive', NULL, NULL, 'Oath of Vengeance', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Holy Knight' AND p.name = 'Path of the Vengeful Flame';
@@ -1018,7 +1018,7 @@ FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Mage' AND p.name = 'Path of the Battlecaster';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Durable Magic', 14,
-'Beginning at 14th level, the magic you channel helps ward off harm. While you maintain concentration on a Mage power, you have a +2 bonus to AC and all saving throws. The System rewards focused powercasting in Gate combat.',
+'Beginning at 14th level, the magic you channel helps ward off harm. While you maintain concentration on a Mage power, you have a +2 bonus to AC and all saving throws. The System rewards focused powercasting in Rift combat.',
 'passive', NULL, NULL, 'Arcane Deflection', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Mage' AND p.name = 'Path of the Battlecaster';
@@ -1031,7 +1031,7 @@ FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Mage' AND p.name = 'Path of the Chronomancer';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Temporal Awareness', 2,
-'Starting at 2nd level, you can add your Intelligence modifier to your initiative rolls. Your ability to perceive the flow of time gives you an edge in Gate encounters.',
+'Starting at 2nd level, you can add your Intelligence modifier to your initiative rolls. Your ability to perceive the flow of time gives you an edge in Rift encounters.',
 'passive', NULL, NULL, NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Mage' AND p.name = 'Path of the Chronomancer';
@@ -1050,7 +1050,7 @@ WHERE j.name = 'Mage' AND p.name = 'Path of the Chronomancer';
 -- Path of the Elementalist
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Elemental Affinity', 2,
-'When you choose this path at 2nd level, you choose one element to master: Fire, Cold, Lightning, or Acid. When you cast a Mage power that deals damage of the chosen type, you can add your Intelligence modifier to one damage roll of that power. Additionally, you have resistance to damage of the chosen type. Gate creatures learn to fear your elemental mastery.',
+'When you choose this path at 2nd level, you choose one element to master: Fire, Cold, Lightning, or Acid. When you cast a Mage power that deals damage of the chosen type, you can add your Intelligence modifier to one damage roll of that power. Additionally, you have resistance to damage of the chosen type. Rift creatures learn to fear your elemental mastery.',
 'passive', NULL, NULL, NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Mage' AND p.name = 'Path of the Elementalist';
@@ -1075,7 +1075,7 @@ WHERE j.name = 'Mage' AND p.name = 'Path of the Elementalist';
 -- Path of the Illusionist
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Illusion Savant', 2,
-'When you choose this path at 2nd level, you have learned the intricacies of illusion magic through the System''s interface. The gold and time you must spend to copy an illusion power into your powerbook is halved. The System rewards specialization in Gate deception tactics.',
+'When you choose this path at 2nd level, you have learned the intricacies of illusion magic through the System''s interface. The gold and time you must spend to copy an illusion power into your powerbook is halved. The System rewards specialization in Rift deception tactics.',
 'passive', NULL, NULL, NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Mage' AND p.name = 'Path of the Illusionist';
@@ -1087,7 +1087,7 @@ FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Mage' AND p.name = 'Path of the Illusionist';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Malleable Illusions', 6,
-'Starting at 6th level, when you cast an illusion power that has a duration of 1 minute or longer, you can use your action to change the nature of that illusion (using the power''s normal parameters for the illusion), provided you can see the illusion. Gate creatures struggle to distinguish your illusions from reality.',
+'Starting at 6th level, when you cast an illusion power that has a duration of 1 minute or longer, you can use your action to change the nature of that illusion (using the power''s normal parameters for the illusion), provided you can see the illusion. Rift creatures struggle to distinguish your illusions from reality.',
 'action', NULL, NULL, 'Improved Minor Illusion', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Mage' AND p.name = 'Path of the Illusionist';
@@ -1106,7 +1106,7 @@ WHERE j.name = 'Mage' AND p.name = 'Path of the Illusionist';
 -- Path of the Rift Summoner
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Conjuration Savant', 2,
-'When you choose this path at 2nd level, you have learned the secrets of conjuration through the System''s interface. The gold and time you must spend to copy a conjuration power into your powerbook is halved. Summoning through Gates becomes second nature.',
+'When you choose this path at 2nd level, you have learned the secrets of conjuration through the System''s interface. The gold and time you must spend to copy a conjuration power into your powerbook is halved. Summoning through Rifts becomes second nature.',
 'passive', NULL, NULL, NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Mage' AND p.name = 'Path of the Rift Summoner';
@@ -1118,7 +1118,7 @@ FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Mage' AND p.name = 'Path of the Rift Summoner';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Benign Transportation', 6,
-'Starting at 6th level, you can use your action to teleport up to 30 feet to an unoccupied space that you can see. Alternatively, you can choose a space within range that is occupied by a Small or Medium creature. If that creature is willing, you both teleport, swapping places. Once you use this feature, you can''t use it again until you finish a short rest or until you cast a conjuration power of 1st level or higher. Gate travel becomes trivial for you.',
+'Starting at 6th level, you can use your action to teleport up to 30 feet to an unoccupied space that you can see. Alternatively, you can choose a space within range that is occupied by a Small or Medium creature. If that creature is willing, you both teleport, swapping places. Once you use this feature, you can''t use it again until you finish a short rest or until you cast a conjuration power of 1st level or higher. Rift travel becomes trivial for you.',
 'action', '1 per short rest', 'short-rest', 'Minor Conjuration', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Mage' AND p.name = 'Path of the Rift Summoner';
@@ -1130,14 +1130,14 @@ FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Mage' AND p.name = 'Path of the Rift Summoner';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Durable Summons', 14,
-'Starting at 14th level, any creature or object you summon or create with a conjuration power has 30 temporary hit points and a +2 bonus to all saving throws. Your Gate-summoned allies are more resilient.',
+'Starting at 14th level, any creature or object you summon or create with a conjuration power has 30 temporary hit points and a +2 bonus to all saving throws. Your Rift-summoned allies are more resilient.',
 'passive', NULL, NULL, 'Focused Conjuration', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Mage' AND p.name = 'Path of the Rift Summoner';
 -- Path of the Void Scholar
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Void Savant', 2,
-'When you choose this path at 2nd level, you have studied the void between dimensions through the System''s interface. The gold and time you must spend to copy a void or necromancy power into your powerbook is halved. You understand the darkness that lurks in Gates.',
+'When you choose this path at 2nd level, you have studied the void between dimensions through the System''s interface. The gold and time you must spend to copy a void or necromancy power into your powerbook is halved. You understand the darkness that lurks in Rifts.',
 'passive', NULL, NULL, NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Mage' AND p.name = 'Path of the Void Scholar';
@@ -1149,7 +1149,7 @@ FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Mage' AND p.name = 'Path of the Void Scholar';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Necrotic Resistance', 6,
-'Starting at 6th level, your study of death has made you resistant to the powers that manipulate life force. You have resistance to necrotic damage. Your connection to the void protects you from Gate corruption.',
+'Starting at 6th level, your study of death has made you resistant to the powers that manipulate life force. You have resistance to necrotic damage. Your connection to the void protects you from Rift corruption.',
 'passive', NULL, NULL, 'Grim Harvest', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Mage' AND p.name = 'Path of the Void Scholar';
@@ -1161,14 +1161,14 @@ FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Mage' AND p.name = 'Path of the Void Scholar';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Command Undead', 14,
-'Starting at 14th level, you can use magic to bring undead under your control, even those created by other Mage powers. As an action, you can target one undead creature you can see within 60 feet of you. The target must make a Wisdom saving throw against your power save DC. If it succeeds, you can''t use this feature on it again. If it fails, it becomes friendly to you and obeys your commands until you use this feature again. Intelligent undead are harder to control in this way. If the target has an Intelligence of 8 or higher, it has advantage on the saving throw. If it fails the saving throw and has an Intelligence of 12 or higher, it can repeat the saving throw at the end of every hour until it succeeds and breaks free. You can command the undead through Gate connections.',
+'Starting at 14th level, you can use magic to bring undead under your control, even those created by other Mage powers. As an action, you can target one undead creature you can see within 60 feet of you. The target must make a Wisdom saving throw against your power save DC. If it succeeds, you can''t use this feature on it again. If it fails, it becomes friendly to you and obeys your commands until you use this feature again. Intelligent undead are harder to control in this way. If the target has an Intelligence of 8 or higher, it has advantage on the saving throw. If it fails the saving throw and has an Intelligence of 12 or higher, it can repeat the saving throw at the end of every hour until it succeeds and breaks free. You can command the undead through Rift connections.',
 'action', NULL, NULL, 'Inured to Undeath', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Mage' AND p.name = 'Path of the Void Scholar';
 -- =============================================
 -- RANGER PATHS (6 paths) - Complete All Features
 -- =============================================
--- All aligned with Gate hunting, nature magic, and survival in the post-reset world
+-- All aligned with Rift hunting, nature magic, and survival in the post-reset world
 
 -- Path of the Beast Warden
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
@@ -1179,13 +1179,13 @@ FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Ranger' AND p.name = 'Path of the Beast Warden';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Exceptional Training', 7,
-'Beginning at 7th level, on any of your turns when your beast companion doesn''t attack, you can use a bonus action to command the beast to take the Dash, Disengage, Dodge, or Help action on its turn. Additionally, when you command your beast companion to take the Attack action, the beast can make two attacks, or it can take the Multiattack action if it has that action. Your bond with Gate-touched creatures makes you a master of teamwork.',
+'Beginning at 7th level, on any of your turns when your beast companion doesn''t attack, you can use a bonus action to command the beast to take the Dash, Disengage, Dodge, or Help action on its turn. Additionally, when you command your beast companion to take the Attack action, the beast can make two attacks, or it can take the Multiattack action if it has that action. Your bond with Rift-touched creatures makes you a master of teamwork.',
 'bonus-action', NULL, NULL, 'Ranger''s Companion', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Ranger' AND p.name = 'Path of the Beast Warden';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Bestial Fury', 11,
-'Starting at 11th level, when you command your beast companion to take the Attack action, the beast can make two attacks when it takes the Attack action, or it can take the Multiattack action if it has that action. Your companion becomes a true force in Gate combat.',
+'Starting at 11th level, when you command your beast companion to take the Attack action, the beast can make two attacks when it takes the Attack action, or it can take the Multiattack action if it has that action. Your companion becomes a true force in Rift combat.',
 'passive', NULL, NULL, 'Exceptional Training', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Ranger' AND p.name = 'Path of the Beast Warden';
@@ -1195,35 +1195,35 @@ SELECT j.id, p.id, 'Share Spells', 15,
 'passive', NULL, NULL, 'Bestial Fury', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Ranger' AND p.name = 'Path of the Beast Warden';
--- Path of the Gate Hunter
+-- Path of the Rift Ascendant
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
-SELECT j.id, p.id, 'Gate Sense', 3,
-'When you choose this path at 3rd level, you develop an instinctive sense for Gates and dimensional rifts. As an action, you can detect the presence, direction, and approximate distance of any Gate within 1 mile. Additionally, you have advantage on Wisdom (Survival) checks to track Gate creatures, and you learn the Gate creature type languages you need to communicate basic threats.',
+SELECT j.id, p.id, 'Rift Sense', 3,
+'When you choose this path at 3rd level, you develop an instinctive sense for Rifts and dimensional rifts. As an action, you can detect the presence, direction, and approximate distance of any Rift within 1 mile. Additionally, you have advantage on Wisdom (Survival) checks to track Rift creatures, and you learn the Rift creature type languages you need to communicate basic threats.',
 'action', NULL, NULL, NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
-WHERE j.name = 'Ranger' AND p.name = 'Path of the Gate Hunter';
+WHERE j.name = 'Ranger' AND p.name = 'Path of the Rift Ascendant';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
-SELECT j.id, p.id, 'Gate Slayer', 7,
-'At 7th level, you become an expert hunter of Gate creatures. When you hit a Gate creature (any creature that spawned from a Gate) with a weapon attack, you can deal additional damage equal to your Ranger level. Additionally, you have advantage on saving throws against abilities and powers used by Gate creatures.',
-'passive', NULL, NULL, 'Gate Sense', true
+SELECT j.id, p.id, 'Rift Slayer', 7,
+'At 7th level, you become an expert ascendant of Rift creatures. When you hit a Rift creature (any creature that spawned from a Rift) with a weapon attack, you can deal additional damage equal to your Ranger level. Additionally, you have advantage on saving throws against abilities and powers used by Rift creatures.',
+'passive', NULL, NULL, 'Rift Sense', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
-WHERE j.name = 'Ranger' AND p.name = 'Path of the Gate Hunter';
+WHERE j.name = 'Ranger' AND p.name = 'Path of the Rift Ascendant';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
-SELECT j.id, p.id, 'Superior Gate Tracking', 11,
-'Starting at 11th level, your Gate Sense feature extends to 5 miles, and you can determine the Gate''s rank (E, D, C, B, A, or S) and what types of creatures are likely to be inside. Additionally, you can use your action to mark a Gate creature you can see. Until the end of your next turn, you have advantage on all attack rolls against the marked creature, and all damage you deal to it ignores resistance.',
-'action', NULL, NULL, 'Gate Slayer', true
+SELECT j.id, p.id, 'Superior Rift Tracking', 11,
+'Starting at 11th level, your Rift Sense feature extends to 5 miles, and you can determine the Rift''s rank (E, D, C, B, A, or S) and what types of creatures are likely to be inside. Additionally, you can use your action to mark a Rift creature you can see. Until the end of your next turn, you have advantage on all attack rolls against the marked creature, and all damage you deal to it ignores resistance.',
+'action', NULL, NULL, 'Rift Slayer', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
-WHERE j.name = 'Ranger' AND p.name = 'Path of the Gate Hunter';
+WHERE j.name = 'Ranger' AND p.name = 'Path of the Rift Ascendant';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
-SELECT j.id, p.id, 'Gate Master', 15,
-'At 15th level, you have become a master hunter of Gates. You can sense Gates within 10 miles, and you can determine not only the Gate''s rank and creature types, but also the approximate number of creatures and the Gate''s layout. Additionally, once per long rest, when you enter a Gate, you can use your action to instantly know the location of the Gate boss, even if it''s not in line of sight.',
-'passive', '1 boss location per long rest', 'long-rest', 'Superior Gate Tracking', true
+SELECT j.id, p.id, 'Rift Master', 15,
+'At 15th level, you have become a master ascendant of Rifts. You can sense Rifts within 10 miles, and you can determine not only the Rift''s rank and creature types, but also the approximate number of creatures and the Rift''s layout. Additionally, once per long rest, when you enter a Rift, you can use your action to instantly know the location of the Rift boss, even if it''s not in line of sight.',
+'passive', '1 boss location per long rest', 'long-rest', 'Superior Rift Tracking', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
-WHERE j.name = 'Ranger' AND p.name = 'Path of the Gate Hunter';
+WHERE j.name = 'Ranger' AND p.name = 'Path of the Rift Ascendant';
 -- Path of the Shadow Trail
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Ambush Master', 3,
-'When you choose this path at 3rd level, you excel at stealth and ambush tactics. You have advantage on initiative rolls. Additionally, on the first turn of each combat, your speed increases by 10 feet, and if you use the Attack action on that turn, you can make one additional weapon attack as part of that action. Gate creatures learn to fear your shadow.',
+'When you choose this path at 3rd level, you excel at stealth and ambush tactics. You have advantage on initiative rolls. Additionally, on the first turn of each combat, your speed increases by 10 feet, and if you use the Attack action on that turn, you can make one additional weapon attack as part of that action. Rift creatures learn to fear your shadow.',
 'passive', NULL, NULL, NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Ranger' AND p.name = 'Path of the Shadow Trail';
@@ -1273,7 +1273,7 @@ WHERE j.name = 'Ranger' AND p.name = 'Path of the Storm Archer';
 -- Path of the Verdant Sentinel
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Nature''s Wrath', 3,
-'When you choose this path at 3rd level, you learn to channel nature magic from the System''s natural essence interface. You learn two Ranger cantrips of your choice. Additionally, you learn the speak with animals power and can cast it as a ritual. The System grants you communion with Gate-touched nature.',
+'When you choose this path at 3rd level, you learn to channel nature magic from the System''s natural essence interface. You learn two Ranger cantrips of your choice. Additionally, you learn the speak with animals power and can cast it as a ritual. The System grants you communion with Rift-touched nature.',
 'passive', NULL, NULL, NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Ranger' AND p.name = 'Path of the Verdant Sentinel';
@@ -1298,25 +1298,25 @@ WHERE j.name = 'Ranger' AND p.name = 'Path of the Verdant Sentinel';
 -- Path of the Wildrunner
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Fleet of Foot', 3,
-'When you choose this path at 3rd level, your speed increases by 10 feet. Additionally, difficult terrain doesn''t slow your group''s travel. Your group can''t become lost except by magical means. You are a master of traversing Gate environments quickly.',
+'When you choose this path at 3rd level, your speed increases by 10 feet. Additionally, difficult terrain doesn''t slow your group''s travel. Your group can''t become lost except by magical means. You are a master of traversing Rift environments quickly.',
 'passive', NULL, NULL, NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Ranger' AND p.name = 'Path of the Wildrunner';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Horde Breaker', 7,
-'At 7th level, once on each of your turns when you make a weapon attack, you can make another attack with the same weapon against a different creature that is within 5 feet of the original target and within range of your weapon. Gate swarms are no match for your speed.',
+'At 7th level, once on each of your turns when you make a weapon attack, you can make another attack with the same weapon against a different creature that is within 5 feet of the original target and within range of your weapon. Rift swarms are no match for your speed.',
 'passive', '1 per turn', NULL, 'Fleet of Foot', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Ranger' AND p.name = 'Path of the Wildrunner';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Escape the Horde', 11,
-'Starting at 11th level, opportunity attacks against you are made with disadvantage. Additionally, when you move at least 20 feet on your turn, you can use your bonus action to make one weapon attack. Your mobility makes you nearly impossible to pin down in Gate combat.',
+'Starting at 11th level, opportunity attacks against you are made with disadvantage. Additionally, when you move at least 20 feet on your turn, you can use your bonus action to make one weapon attack. Your mobility makes you nearly impossible to pin down in Rift combat.',
 'bonus-action', NULL, NULL, 'Horde Breaker', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Ranger' AND p.name = 'Path of the Wildrunner';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Whirlwind Attack', 15,
-'At 15th level, you can use your action to make melee attacks against any number of creatures within 5 feet of you, with a separate attack roll for each target. Additionally, your speed increases by an additional 10 feet (for a total increase of 20 feet), and you can take the Dash action as a bonus action on each of your turns. You become a whirlwind of destruction in Gate raids.',
+'At 15th level, you can use your action to make melee attacks against any number of creatures within 5 feet of you, with a separate attack roll for each target. Additionally, your speed increases by an additional 10 feet (for a total increase of 20 feet), and you can take the Dash action as a bonus action on each of your turns. You become a whirlwind of destruction in Rift raids.',
 'action', NULL, NULL, 'Escape the Horde', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Ranger' AND p.name = 'Path of the Wildrunner';
@@ -1324,4 +1324,5 @@ WHERE j.name = 'Ranger' AND p.name = 'Path of the Wildrunner';
 -- Continuing with remaining paths...
 -- Striker (6), Techsmith (6), Vanguard (6), Warden (6)
 -- Then all 8 remaining monarchs
--- All following established Solo Leveling theming;
+-- All following established System Ascendant theming;
+

@@ -7,20 +7,21 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
-// Solo Leveling themed DMG tables
+// System Ascendant themed reference tables
 const GATE_COMPLICATIONS = [
   'Mana surge causes random power effects',
-  'Gate structure shifts, changing layout',
+  'Rift structure shifts, changing layout',
   'Monster reinforcements arrive',
   'Environmental hazard activates (fire, ice, poison)',
-  'Time distortion slows/speeds hunter team',
+  'Time distortion slows/speeds ascendant team',
   'Shadow corruption spreads',
-  'Gate boss awakens early',
+  'Rift boss awakens early',
   'Core instability causes tremors',
   'Mana depletion reduces power effectiveness',
-  'Illusionary duplicates confuse hunters',
-  'Gate rank increases mid-encounter',
+  'Illusionary duplicates confuse ascendants',
+  'Rift rank increases mid-encounter',
   'Monster evolution triggers',
 ];
 
@@ -32,7 +33,7 @@ const GATE_REWARDS = [
   'System favor bonus',
   'Experience multiplier',
   'Unique monster part',
-  'Gate completion bonus',
+  'Rift completion bonus',
   'Hidden treasure cache',
   'Monarch blessing',
   'Skill point bonus',
@@ -55,12 +56,12 @@ const GATE_HAZARDS = [
 ];
 
 const NPC_MOTIVATIONS = [
-  'Seeking power through Gates',
+  'Seeking power through Rifts',
   'Protecting loved ones',
   'Revenge against monsters',
-  'Researching Gate phenomena',
-  'Building a hunter organization',
-  'Seeking the Shadow Monarch',
+  'Researching Rift phenomena',
+  'Building an ascendant organization',
+  'Seeking the Umbral Monarch',
   'Escaping past trauma',
   'Proving their worth',
   'Accumulating wealth',
@@ -70,17 +71,17 @@ const NPC_MOTIVATIONS = [
 ];
 
 const NPC_SECRETS = [
-  'Former S-Rank hunter (lost power)',
+  'Former S-Rank ascendant (lost power)',
   'Working for a Monarch',
   'Has a cursed relic',
   'Knows about the reset',
   'Is actually a monster',
   'Has System favor debt',
-  'Betrayed their Hunter team',
+  'Betrayed their Ascendant team',
   'Seeking forbidden knowledge',
-  'Has a hidden Gate',
+  'Has a hidden Rift',
   'Is being hunted',
-  'Knows the Supreme Deity personally',
+  'Knows the Prime Architect personally',
   'Has a duplicate identity',
 ];
 
@@ -91,10 +92,10 @@ const GATE_THEMES = [
   'Construct Forge (construct focus)',
   'Abyssal Depths (fiend focus)',
   'Celestial Spire (celestial focus)',
-  'Supreme Deity\'s Domain (shadow focus)',
+  'Prime Architect\'s Domain (shadow focus)',
   'Necromantic Lab (undead + construct)',
   'Mana Nexus (elemental + aberration)',
-  'Shadow Monarch\'s Memory',
+  'Umbral Monarch\'s Memory',
   'System Testing Ground',
   'Post-Reset Fragment',
 ];
@@ -151,11 +152,11 @@ const TREASURE_TIERS = {
     'Artifact equipment',
   ],
   'S-Rank': [
-    'Sovereign relic (resonant)',
-    'Sovereign materials',
+    'Monarch relic (resonant)',
+    'Monarch materials',
     'Incredible credit sum',
     'System-granted consumables',
-    'Sovereign equipment',
+    'Monarch equipment',
   ],
 };
 
@@ -172,7 +173,7 @@ const RollableTables = () => {
   const [results, setResults] = useState<Record<string, string>>({});
 
   const roll = (key: string, table: string[]) => {
-    const result = rollTable(table);
+    const result = formatMonarchVernacular(rollTable(table));
     setResults(prev => ({ ...prev, [key]: result }));
   };
 
@@ -189,16 +190,16 @@ const RollableTables = () => {
             Back to System Tools
           </Button>
           <h1 className="font-display text-4xl font-bold mb-2 gradient-text-shadow">
-            GATE MASTER'S TABLES
+            PROTOCOL WARDEN TABLES
           </h1>
           <p className="text-muted-foreground font-heading">
-            Rollable tables from the Gate Master's Guide, adapted for the post-reset world.
+            Rollable tables from the Protocol Warden's Guide, adapted for the post-reset world.
           </p>
         </div>
 
         <Tabs defaultValue="gates" className="w-full">
           <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="gates">Gates</TabsTrigger>
+            <TabsTrigger value="gates">Rifts</TabsTrigger>
             <TabsTrigger value="rewards">Rewards</TabsTrigger>
             <TabsTrigger value="npcs">NPCs</TabsTrigger>
             <TabsTrigger value="treasure">Treasure</TabsTrigger>
@@ -206,7 +207,7 @@ const RollableTables = () => {
 
           <TabsContent value="gates" className="space-y-4 mt-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <SystemWindow title="GATE COMPLICATIONS">
+              <SystemWindow title="RIFT COMPLICATIONS">
                 <div className="space-y-3">
                   <Button
                     onClick={() => roll('complication', GATE_COMPLICATIONS)}
@@ -224,7 +225,7 @@ const RollableTables = () => {
                 </div>
               </SystemWindow>
 
-              <SystemWindow title="GATE HAZARDS">
+              <SystemWindow title="RIFT HAZARDS">
                 <div className="space-y-3">
                   <Button
                     onClick={() => roll('hazard', GATE_HAZARDS)}
@@ -242,7 +243,7 @@ const RollableTables = () => {
                 </div>
               </SystemWindow>
 
-              <SystemWindow title="GATE THEMES">
+              <SystemWindow title="RIFT THEMES">
                 <div className="space-y-3">
                   <Button
                     onClick={() => roll('theme', GATE_THEMES)}
@@ -260,7 +261,7 @@ const RollableTables = () => {
                 </div>
               </SystemWindow>
 
-              <SystemWindow title="GATE BIOMES">
+              <SystemWindow title="RIFT BIOMES">
                 <div className="space-y-3">
                   <Button
                     onClick={() => roll('biome', GATE_BIOMES)}
@@ -281,7 +282,7 @@ const RollableTables = () => {
           </TabsContent>
 
           <TabsContent value="rewards" className="space-y-4 mt-6">
-            <SystemWindow title="GATE REWARDS">
+            <SystemWindow title="RIFT REWARDS">
               <div className="space-y-3">
                 <Button
                   onClick={() => roll('reward', GATE_REWARDS)}
@@ -341,12 +342,12 @@ const RollableTables = () => {
           </TabsContent>
 
           <TabsContent value="treasure" className="space-y-4 mt-6">
-            <SystemWindow title="TREASURE BY GATE RANK">
+            <SystemWindow title="TREASURE BY RIFT RANK">
               <div className="space-y-4">
                 {Object.entries(TREASURE_TIERS).map(([rank, items]) => (
                   <div key={rank} className="border rounded p-3">
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-heading font-semibold">{rank} Gates</h3>
+                      <h3 className="font-heading font-semibold">{rank} Rifts</h3>
                       <Button
                         size="sm"
                         variant="outline"
@@ -364,7 +365,7 @@ const RollableTables = () => {
                       </div>
                     )}
                     <div className="text-xs text-muted-foreground mt-2">
-                      {items.join(', ')}
+                      {items.map(formatMonarchVernacular).join(', ')}
                     </div>
                   </div>
                 ))}
@@ -378,4 +379,6 @@ const RollableTables = () => {
 };
 
 export default RollableTables;
+
+
 

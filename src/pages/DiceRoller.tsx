@@ -1,5 +1,5 @@
 import { lazy, Suspense, useState, useEffect } from 'react';
-import { Dice1, Dice2, Dice3, Dice4, Dice5, Dice6, RotateCcw, Plus, Minus, History, Sparkles, Zap, Palette, Crown, Flame, Zap as ZapIcon, Gem } from 'lucide-react';
+import { Biohazard, Crown, Dice1, Dice2, Dice3, Dice4, Dice5, Dice6, Flame, Gem, History, Minus, Palette, PawPrint, Plus, RotateCcw, Shield, Snowflake, Sparkles, Swords, Zap, Zap as ZapIcon, type LucideIcon } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
@@ -20,6 +20,19 @@ interface DiceRoll {
   type?: 'normal' | 'advantage' | 'disadvantage';
 }
 
+type DiceDisplayMode = 'standard' | 'percentile-tens' | 'percentile-ones';
+
+type Dice3DState = {
+  sides: number;
+  value: number | null;
+  displayValue?: number | null;
+  displayMode?: DiceDisplayMode;
+};
+
+type DiceSlot =
+  | { kind: 'standard'; index: number }
+  | { kind: 'percentile'; indices: [number, number] };
+
 const diceTypes = [
   { sides: 4, label: 'd4' },
   { sides: 6, label: 'd6' },
@@ -30,11 +43,81 @@ const diceTypes = [
   { sides: 100, label: 'd100' },
 ];
 
+const THEME_ICONS: Partial<Record<DiceTheme, LucideIcon>> = {
+  'umbral-ascendant': Crown,
+  'frost-monarch': Snowflake,
+  'flame-monarch': Flame,
+  'beast-monarch': PawPrint,
+  'plague-monarch': Biohazard,
+  'iron-monarch': Shield,
+  'dragon-monarch': Swords,
+  'regent-monarch': Gem,
+  'supreme-deity': ZapIcon,
+  'gate-portal': Flame,
+  'system-interface': Sparkles,
+  'arise-violet': Gem,
+  'monarch-gold': Crown,
+};
+
 const Dice3DRoller = lazy(() =>
   import('@/components/dice/Dice3D').then((module) => ({
     default: module.Dice3DRoller,
   }))
 );
+
+const buildDice3DState = (entries: Array<{ sides: number; count: number }>) => {
+  const dice: Dice3DState[] = [];
+  const slots: DiceSlot[] = [];
+
+  entries.forEach(({ sides, count }) => {
+    for (let i = 0; i < count; i += 1) {
+      if (sides === 100) {
+        const tensIndex = dice.length;
+        dice.push({ sides: 10, value: null, displayMode: 'percentile-tens' });
+        const onesIndex = dice.length;
+        dice.push({ sides: 10, value: null, displayMode: 'percentile-ones' });
+        slots.push({ kind: 'percentile', indices: [tensIndex, onesIndex] });
+      } else {
+        const index = dice.length;
+        dice.push({ sides, value: null, displayMode: 'standard' });
+        slots.push({ kind: 'standard', index });
+      }
+    }
+  });
+
+  return { dice, slots };
+};
+
+const applyRollsToDice3D = (dice: Dice3DState[], slots: DiceSlot[], rolls: number[]) => {
+  const updated = dice.map((entry) => ({ ...entry }));
+  let rollIndex = 0;
+
+  slots.forEach((slot) => {
+    const roll = rolls[rollIndex] ?? 0;
+    rollIndex += 1;
+    if (slot.kind === 'standard') {
+      updated[slot.index] = { ...updated[slot.index], value: roll };
+      return;
+    }
+
+    const tens = Math.floor((roll % 100) / 10);
+    const ones = roll % 10;
+    updated[slot.indices[0]] = {
+      ...updated[slot.indices[0]],
+      value: tens,
+      displayValue: tens,
+      displayMode: 'percentile-tens',
+    };
+    updated[slot.indices[1]] = {
+      ...updated[slot.indices[1]],
+      value: ones,
+      displayValue: ones,
+      displayMode: 'percentile-ones',
+    };
+  });
+
+  return updated;
+};
 
 const DiceRoller = () => {
   const [selectedDice, setSelectedDice] = useState<{ sides: number; count: number }[]>([]);
@@ -43,9 +126,9 @@ const DiceRoller = () => {
   const [lastRoll, setLastRoll] = useState<DiceRoll | null>(null);
   const [rollType, setRollType] = useState<'normal' | 'advantage' | 'disadvantage'>('normal');
   const [isRolling, setIsRolling] = useState(false);
-  const [dice3D, setDice3D] = useState<Array<{ sides: number; value: number | null }>>([]);
+  const [dice3D, setDice3D] = useState<Dice3DState[]>([]);
   const [show3D, setShow3D] = useState(true);
-  const [diceTheme, setDiceTheme] = useState<DiceTheme>('shadow-monarch');
+  const [diceTheme, setDiceTheme] = useState<DiceTheme>('umbral-ascendant');
   const recordRoll = useRecordRoll();
 
   const addDie = (sides: number) => {
@@ -71,13 +154,8 @@ const DiceRoller = () => {
 
     setIsRolling(true);
     
-    // Prepare 3D dice array
-    const diceArray: Array<{ sides: number; value: number | null }> = [];
-    selectedDice.forEach(({ sides, count }) => {
-      for (let i = 0; i < count; i++) {
-        diceArray.push({ sides, value: null });
-      }
-    });
+    // Prepare 3D dice array (percentile d100 uses two d10s)
+    const { dice: diceArray, slots } = buildDice3DState(selectedDice);
     setDice3D(diceArray);
 
     // Calculate rolls after animation delay
@@ -108,11 +186,7 @@ const DiceRoller = () => {
       const total = rolls.reduce((a, b) => a + b, 0) + modifier;
 
       // Update 3D dice with values
-      let rollIndex = 0;
-      const updatedDice = diceArray.map((die, index) => {
-        const roll = rolls[rollIndex++];
-        return { ...die, value: roll };
-      });
+      const updatedDice = applyRollsToDice3D(diceArray, slots, rolls);
       setDice3D(updatedDice);
 
       const newRoll: DiceRoll = {
@@ -170,11 +244,8 @@ const DiceRoller = () => {
 
     setIsRolling(true);
     
-    // Prepare 3D dice array
-    const diceArray: Array<{ sides: number; value: number | null }> = [];
-    for (let i = 0; i < count; i++) {
-      diceArray.push({ sides, value: null });
-    }
+    // Prepare 3D dice array (percentile d100 uses two d10s)
+    const { dice: diceArray, slots } = buildDice3DState([{ sides, count }]);
     setDice3D(diceArray);
 
     // Calculate rolls after animation delay
@@ -187,10 +258,7 @@ const DiceRoller = () => {
       const total = rolls.reduce((a, b) => a + b, 0) + mod;
 
       // Update 3D dice with values
-      const updatedDice = diceArray.map((die, index) => ({
-        ...die,
-        value: rolls[index],
-      }));
+      const updatedDice = applyRollsToDice3D(diceArray, slots, rolls);
       setDice3D(updatedDice);
 
       const newRoll: DiceRoll = {
@@ -242,7 +310,7 @@ const DiceRoller = () => {
                 <Zap className="w-8 h-8 text-shadow-blue animate-pulse" style={{ animationDelay: '0.5s' }} />
               </h1>
               <p className="text-muted-foreground font-heading">
-                Roll dice with the <span className="text-primary">System's</span> guidance — may the Supreme Deity's favor be with you
+                Roll dice with the <span className="text-primary">System's</span> guidance - may the Prime Architect's favor be with you
               </p>
             </div>
             <Button
@@ -288,11 +356,7 @@ const DiceRoller = () => {
                   <Label>Choose Your Dice Aesthetic</Label>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                     {Object.entries(DICE_THEMES).map(([key, theme]) => {
-                      const Icon = key === 'shadow-monarch' ? Crown :
-                                   key === 'supreme-deity' ? ZapIcon :
-                                   key === 'gate-portal' ? Flame :
-                                   key === 'system-interface' ? Sparkles :
-                                   key === 'arise-violet' ? Gem : Palette;
+                      const Icon = THEME_ICONS[key as DiceTheme] ?? Palette;
                       return (
                         <button
                           key={key}
@@ -474,7 +538,7 @@ const DiceRoller = () => {
             {/* Last Roll Result */}
             {lastRoll && (
               <SystemWindow title="SYSTEM RESULT" variant="arise" className="animate-arise relative overflow-hidden">
-                {/* Solo Leveling background effects */}
+                {/* System Ascendant background effects */}
                 <div className="absolute inset-0 pointer-events-none">
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-gradient-radial from-shadow-blue/20 via-shadow-purple/10 to-transparent rounded-full blur-3xl animate-pulse" />
                   <div className="absolute bottom-0 right-0 w-48 h-48 bg-gradient-radial from-arise-violet/15 to-transparent rounded-full blur-2xl animate-pulse" style={{ animationDelay: '0.5s' }} />
@@ -563,3 +627,4 @@ const DiceRoller = () => {
 };
 
 export default DiceRoller;
+

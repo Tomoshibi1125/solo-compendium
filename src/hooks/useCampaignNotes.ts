@@ -5,6 +5,8 @@ import { useToast } from '@/hooks/use-toast';
 import { AppError } from '@/lib/appError';
 import { getLocalUserId } from '@/lib/guestStore';
 
+const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== 'false';
+
 export interface CampaignNote {
   id: string;
   campaign_id: string;
@@ -46,6 +48,11 @@ export const useCampaignNotes = (campaignId: string) => {
     queryKey: ['campaigns', campaignId, 'notes'],
     queryFn: async (): Promise<CampaignNote[]> => {
       if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true') {
+        return loadLocalNotes(campaignId).sort((a, b) => b.updated_at.localeCompare(a.updated_at));
+      }
+
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user && guestEnabled) {
         return loadLocalNotes(campaignId).sort((a, b) => b.updated_at.localeCompare(a.updated_at));
       }
 
@@ -202,6 +209,25 @@ export const useUpdateCampaignNote = () => {
         return updatedNote;
       }
 
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user && guestEnabled) {
+        const existing = loadLocalNotes(campaignId);
+        const next = existing.map((note) =>
+          note.id === noteId
+            ? {
+                ...note,
+                ...updates,
+                category: (updates.category ?? note.category) || 'general',
+                updated_at: new Date().toISOString(),
+              }
+            : note
+        );
+        saveLocalNotes(campaignId, next);
+        const updatedNote = next.find((note) => note.id === noteId);
+        if (!updatedNote) throw new AppError('Note not found', 'NOT_FOUND');
+        return updatedNote;
+      }
+
       const { data, error } = await supabase
         .from('campaign_notes')
         .update(updates)
@@ -241,6 +267,14 @@ export const useDeleteCampaignNote = () => {
   return useMutation({
     mutationFn: async ({ noteId, campaignId }: { noteId: string; campaignId: string }) => {
       if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true') {
+        const existing = loadLocalNotes(campaignId);
+        const next = existing.filter((note) => note.id !== noteId);
+        saveLocalNotes(campaignId, next);
+        return;
+      }
+
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user && guestEnabled) {
         const existing = loadLocalNotes(campaignId);
         const next = existing.filter((note) => note.id !== noteId);
         saveLocalNotes(campaignId, next);

@@ -1,10 +1,10 @@
 /**
- * D&D 5e Rules Engine
- * Provides standard D&D 5e mechanics alongside Solo Leveling system
+ * SRD 5e Rules Engine
+ * Provides standard SRD 5e mechanics alongside System Ascendant system
  */
 
-// Standard D&D 5e Ability Scores
-export interface Dnd5eAbilityScores {
+// Standard SRD 5e Ability Scores
+export interface Srd5eAbilityScores {
   strength: number;
   dexterity: number;
   constitution: number;
@@ -13,37 +13,37 @@ export interface Dnd5eAbilityScores {
   charisma: number;
 }
 
-// Standard D&D 5e Skills
-export type Dnd5eSkill = 
+// Standard SRD 5e Skills
+export type Srd5eSkill = 
   | 'athletics' | 'acrobatics' | 'sleight-of-hand' | 'stealth'
   | 'arcana' | 'history' | 'investigation' | 'nature' | 'religion'
   | 'animal-handling' | 'insight' | 'medicine' | 'perception' | 'survival'
   | 'deception' | 'intimidation' | 'performance' | 'persuasion';
 
-export interface Dnd5eSkillProficiency {
-  skill: Dnd5eSkill;
+export interface Srd5eSkillProficiency {
+  skill: Srd5eSkill;
   proficient: boolean;
   expertise: boolean;
   bonus?: number;
 }
 
-// Standard D&D 5e Saving Throws
-export type Dnd5eSavingThrow = 
+// Standard SRD 5e Saving Throws
+export type Srd5eSavingThrow = 
   | 'strength' | 'dexterity' | 'constitution' 
   | 'intelligence' | 'wisdom' | 'charisma';
 
-export interface Dnd5eSavingThrowProficiency {
-  ability: Dnd5eSavingThrow;
+export interface Srd5eSavingThrowProficiency {
+  ability: Srd5eSavingThrow;
   proficient: boolean;
   bonus?: number;
 }
 
-// Standard D&D 5e Character
-export interface Dnd5eCharacter {
+// Standard SRD 5e Character
+export interface Srd5eCharacter {
   level: number;
-  abilityScores: Dnd5eAbilityScores;
-  skillProficiencies: Dnd5eSkillProficiency[];
-  savingThrowProficiencies: Dnd5eSavingThrowProficiency[];
+  abilityScores: Srd5eAbilityScores;
+  skillProficiencies: Srd5eSkillProficiency[];
+  savingThrowProficiencies: Srd5eSavingThrowProficiency[];
   proficiencyBonus: number;
   class: string;
   subclass?: string;
@@ -52,18 +52,18 @@ export interface Dnd5eCharacter {
 }
 
 // Calculate ability modifier
-export function getDnd5eAbilityModifier(score: number): number {
+export function getSrd5eAbilityModifier(score: number): number {
   return Math.floor((score - 10) / 2);
 }
 
 // Calculate skill modifier
-export function getDnd5eSkillModifier(
-  character: Dnd5eCharacter,
-  skill: Dnd5eSkill
+export function getSrd5eSkillModifier(
+  character: Srd5eCharacter,
+  skill: Srd5eSkill
 ): number {
   const skillProf = character.skillProficiencies.find(p => p.skill === skill);
   const ability = getSkillAbility(skill);
-  const abilityMod = getDnd5eAbilityModifier(character.abilityScores[ability]);
+  const abilityMod = getSrd5eAbilityModifier(character.abilityScores[ability]);
   const profBonus = skillProf?.proficient ? character.proficiencyBonus : 0;
   const expertiseBonus = skillProf?.expertise ? character.proficiencyBonus : 0;
   const customBonus = skillProf?.bonus || 0;
@@ -72,8 +72,8 @@ export function getDnd5eSkillModifier(
 }
 
 // Get ability for a skill
-function getSkillAbility(skill: Dnd5eSkill): keyof Dnd5eAbilityScores {
-  const skillAbilities: Record<Dnd5eSkill, keyof Dnd5eAbilityScores> = {
+function getSkillAbility(skill: Srd5eSkill): keyof Srd5eAbilityScores {
+  const skillAbilities: Record<Srd5eSkill, keyof Srd5eAbilityScores> = {
     'athletics': 'strength',
     'acrobatics': 'dexterity',
     'sleight-of-hand': 'dexterity',
@@ -98,12 +98,12 @@ function getSkillAbility(skill: Dnd5eSkill): keyof Dnd5eAbilityScores {
 }
 
 // Calculate saving throw modifier
-export function getDnd5eSavingThrowModifier(
-  character: Dnd5eCharacter,
-  ability: Dnd5eSavingThrow
+export function getSrd5eSavingThrowModifier(
+  character: Srd5eCharacter,
+  ability: Srd5eSavingThrow
 ): number {
   const saveProf = character.savingThrowProficiencies.find(p => p.ability === ability);
-  const abilityMod = getDnd5eAbilityModifier(character.abilityScores[ability]);
+  const abilityMod = getSrd5eAbilityModifier(character.abilityScores[ability]);
   const profBonus = saveProf?.proficient ? character.proficiencyBonus : 0;
   const customBonus = saveProf?.bonus || 0;
   
@@ -111,15 +111,15 @@ export function getDnd5eSavingThrowModifier(
 }
 
 // Calculate Armor Class
-export function getDnd5eArmorClass(
-  character: Dnd5eCharacter,
+export function getSrd5eArmorClass(
+  character: Srd5eCharacter,
   armorType?: string,
   shield?: boolean,
   dexBonus?: number,
   naturalArmor?: number
 ): number {
   const baseAC = 10;
-  const dexMod = dexBonus ?? getDnd5eAbilityModifier(character.abilityScores.dexterity);
+  const dexMod = dexBonus ?? getSrd5eAbilityModifier(character.abilityScores.dexterity);
   const shieldBonus = shield ? 2 : 0;
   const naturalBonus = naturalArmor ?? 0;
   
@@ -138,14 +138,14 @@ export function getDnd5eArmorClass(
 }
 
 // Calculate hit points
-export function getDnd5eHitPoints(
-  character: Dnd5eCharacter,
+export function getSrd5eHitPoints(
+  character: Srd5eCharacter,
   hitDie: string,
   conMod?: number,
   previousHP?: number,
   rolledHP?: number
 ): number {
-  const conBonus = conMod ?? getDnd5eAbilityModifier(character.abilityScores.constitution);
+  const conBonus = conMod ?? getSrd5eAbilityModifier(character.abilityScores.constitution);
   const hitDieNum = parseInt(hitDie.replace('d', ''));
   
   if (character.level === 1) {
@@ -159,44 +159,46 @@ export function getDnd5eHitPoints(
 }
 
 // Calculate proficiency bonus
-export function getDnd5eProficiencyBonus(level: number): number {
+export function getSrd5eProficiencyBonus(level: number): number {
   return Math.floor((level - 1) / 4) + 2;
 }
 
 // Calculate passive perception
-export function getDnd5ePassivePerception(character: Dnd5eCharacter): number {
-  const perceptionMod = getDnd5eSkillModifier(character, 'perception');
+export function getSrd5ePassivePerception(character: Srd5eCharacter): number {
+  const perceptionMod = getSrd5eSkillModifier(character, 'perception');
   return 10 + perceptionMod;
 }
 
 // Calculate passive investigation
-export function getDnd5ePassiveInvestigation(character: Dnd5eCharacter): number {
-  const investigationMod = getDnd5eSkillModifier(character, 'investigation');
+export function getSrd5ePassiveInvestigation(character: Srd5eCharacter): number {
+  const investigationMod = getSrd5eSkillModifier(character, 'investigation');
   return 10 + investigationMod;
 }
 
 // Calculate passive insight
-export function getDnd5ePassiveInsight(character: Dnd5eCharacter): number {
-  const insightMod = getDnd5eSkillModifier(character, 'insight');
+export function getSrd5ePassiveInsight(character: Srd5eCharacter): number {
+  const insightMod = getSrd5eSkillModifier(character, 'insight');
   return 10 + insightMod;
 }
 
 // Calculate carrying capacity
-export function getDnd5eCarryingCapacity(character: Dnd5eCharacter): number {
+export function getSrd5eCarryingCapacity(character: Srd5eCharacter): number {
   const strScore = character.abilityScores.strength;
   return strScore * 15;
 }
 
 // Calculate encumbrance thresholds
-export function getDnd5eEncumbranceThresholds(character: Dnd5eCharacter): {
+export function getSrd5eEncumbranceThresholds(character: Srd5eCharacter): {
   light: number;
   medium: number;
   heavy: number;
 } {
-  const capacity = getDnd5eCarryingCapacity(character);
+  const capacity = getSrd5eCarryingCapacity(character);
   return {
     light: Math.floor(capacity * 0.33),
     medium: Math.floor(capacity * 0.66),
     heavy: capacity
   };
 }
+
+

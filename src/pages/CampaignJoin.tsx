@@ -11,13 +11,14 @@ import { useCampaignByShareCode, useJoinCampaign } from '@/hooks/useCampaigns';
 import { useCharacters } from '@/hooks/useCharacters';
 import { useToast } from '@/hooks/use-toast';
 import { Link } from 'react-router-dom';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 const CampaignJoin = () => {
   const { shareCode: urlShareCode } = useParams<{ shareCode: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [shareCode, setShareCode] = useState(urlShareCode?.toUpperCase() || '');
-  const [selectedCharacter, setSelectedCharacter] = useState<string>('');
+  const [selectedCharacter, setSelectedCharacter] = useState<string>('none');
 
   const { data: campaign, isLoading: loadingCampaign, error: campaignError } = useCampaignByShareCode(shareCode);
   const { data: characters = [] } = useCharacters();
@@ -29,7 +30,7 @@ const CampaignJoin = () => {
     try {
       await joinCampaign.mutateAsync({
         campaignId: campaign.id,
-        characterId: selectedCharacter || undefined,
+        characterId: selectedCharacter !== 'none' ? selectedCharacter : undefined,
       });
       navigate(`/campaigns/${campaign.id}`);
     } catch (error) {
@@ -59,7 +60,7 @@ const CampaignJoin = () => {
           JOIN CAMPAIGN
         </h1>
         <p className="text-muted-foreground font-heading mb-8">
-          Enter the share code provided by your Gate Master (System) to join their campaign
+          Enter the share code provided by your Protocol Warden (System) to join their campaign
         </p>
 
         {/* Share Code Input */}
@@ -77,7 +78,7 @@ const CampaignJoin = () => {
                   maxLength={6}
                 />
                 <p className="text-xs text-muted-foreground mt-2">
-                  Enter the 6-character code your Gate Master (System) provided
+                  Enter the 6-character code your Protocol Warden (System) provided
                 </p>
               </div>
               <Button type="submit" className="w-full" disabled={shareCode.length !== 6}>
@@ -117,20 +118,20 @@ const CampaignJoin = () => {
 
         {/* Character Selection */}
         {campaign && characters.length > 0 && (
-          <SystemWindow title="SELECT HUNTER (OPTIONAL)" className="mb-6">
+          <SystemWindow title="SELECT ASCENDANT (OPTIONAL)" className="mb-6">
             <div className="space-y-4">
               <p className="text-sm text-muted-foreground">
-                Optionally link one of your Hunters to this campaign. You can change this later.
+                Optionally link one of your Ascendants to this campaign. You can change this later.
               </p>
               <Select value={selectedCharacter} onValueChange={setSelectedCharacter}>
                 <SelectTrigger>
-                  <SelectValue placeholder="No Hunter linked" />
+                  <SelectValue placeholder="No Ascendant linked" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">No Hunter linked</SelectItem>
+                  <SelectItem value="none">No Ascendant linked</SelectItem>
                   {characters.map((char) => (
                     <SelectItem key={char.id} value={char.id}>
-                      {char.name} - Level {char.level} {char.job}
+                      {char.name} - Level {char.level} {formatMonarchVernacular(char.job || 'Unknown')}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -175,4 +176,5 @@ const CampaignJoin = () => {
 };
 
 export default CampaignJoin;
+
 

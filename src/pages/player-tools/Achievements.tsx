@@ -35,7 +35,7 @@ export function Achievements({ characterId }: { characterId?: string | null }) {
     {
       id: 'first-hunter',
       name: 'First Awakening',
-      description: 'Create your first hunter character.',
+      description: 'Create your first ascendant character.',
       icon: <Star className="w-4 h-4 text-amber-400" />,
       target: 1,
       progress: characters.length,

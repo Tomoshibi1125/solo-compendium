@@ -7,6 +7,7 @@
 
 import type { Database } from '@/integrations/supabase/types';
 import { AppError } from '@/lib/appError';
+import { createDefaultCharacterSheetState, type CharacterSheetState } from '@/lib/characterSheetState';
 
 type AbilityScore = Database['public']['Enums']['ability_score'];
 type CharacterRow = Database['public']['Tables']['characters']['Row'];
@@ -38,6 +39,7 @@ export interface GuestCharacterState {
   runeInscriptions: RuneInscriptionRow[];
   runeKnowledge: RuneKnowledgeRow[];
   rollHistory: RollHistoryRow[];
+  sheetState: CharacterSheetState;
 }
 
 interface GuestStateV1 {
@@ -49,6 +51,9 @@ interface GuestStateV1 {
 
 const STORAGE_KEY = 'solo-compendium.guest.v1';
 const USER_KEY = 'solo-compendium.guest.user';
+const ROLE_KEY = 'solo-compendium.guest.role';
+
+export type GuestRole = 'dm' | 'player';
 
 function hasLocalStorage(): boolean {
   try {
@@ -92,6 +97,17 @@ export function getLocalUserId(): string {
   const next = createLocalId('guest');
   window.localStorage.setItem(USER_KEY, next);
   return next;
+}
+
+export function getLocalGuestRole(): GuestRole {
+  if (!hasLocalStorage()) return 'player';
+  const stored = window.localStorage.getItem(ROLE_KEY);
+  return stored === 'dm' || stored === 'player' ? stored : 'player';
+}
+
+export function setLocalGuestRole(role: GuestRole): void {
+  if (!hasLocalStorage()) return;
+  window.localStorage.setItem(ROLE_KEY, role);
 }
 
 function loadGuestState(): GuestStateV1 {
@@ -138,7 +154,15 @@ export function listLocalCharacters(): CharacterRow[] {
 
 export function getLocalCharacterState(characterId: string): GuestCharacterState | null {
   const state = loadGuestState();
-  return state.characters[characterId] || null;
+  const entry = state.characters[characterId] || null;
+  if (!entry) return null;
+  if (!entry.sheetState) {
+    entry.sheetState = createDefaultCharacterSheetState();
+    state.characters[characterId] = entry;
+    state.updatedAt = nowIso();
+    saveGuestState(state);
+  }
+  return entry;
 }
 
 export function getLocalCharacterWithAbilities(
@@ -169,6 +193,7 @@ export function upsertLocalCharacter(
     runeInscriptions: existing?.runeInscriptions || [],
     runeKnowledge: existing?.runeKnowledge || [],
     rollHistory: existing?.rollHistory || [],
+    sheetState: existing?.sheetState || createDefaultCharacterSheetState(),
   };
 
   state.updatedAt = nowIso();
@@ -262,6 +287,26 @@ export function setLocalAbilities(characterId: string, abilities: Record<Ability
   const entry = getLocalCharacterState(characterId);
   if (!entry) return;
   upsertLocalCharacter(entry.character, abilities);
+}
+
+export function getLocalCharacterSheetState(characterId: string): CharacterSheetState | null {
+  const entry = getLocalCharacterState(characterId);
+  return entry?.sheetState || null;
+}
+
+export function setLocalCharacterSheetState(characterId: string, sheetState: CharacterSheetState): void {
+  const state = loadGuestState();
+  const entry = state.characters[characterId];
+  if (!entry) return;
+
+  const now = nowIso();
+  state.characters[characterId] = {
+    ...entry,
+    sheetState,
+    character: { ...entry.character, updated_at: now },
+  };
+  state.updatedAt = now;
+  saveGuestState(state);
 }
 
 // Equipment helpers

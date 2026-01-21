@@ -71,7 +71,7 @@ const Campaigns = () => {
     navigator.clipboard.writeText(shareUrl);
     toast({
       title: 'Share link copied!',
-      description: 'Hunters can use this link to join your campaign.',
+      description: 'Ascendants can use this link to join your campaign.',
     });
   };
 
@@ -102,7 +102,7 @@ const Campaigns = () => {
           </Button>
         </div>
 
-        {/* My Campaigns (Gate Master) */}
+        {/* My Campaigns (Protocol Warden) */}
         <div className="mb-8">
           <h2 className="font-arise text-2xl font-bold mb-4 gradient-text-gold flex items-center gap-2 tracking-wide">
             <Crown className="w-5 h-5 text-amber-400" />
@@ -120,7 +120,7 @@ const Campaigns = () => {
             <SystemWindow title="NO GUILDS FOUND" className="text-center py-8 border-amber-500/30">
               <Crown className="w-12 h-12 mx-auto text-amber-400/50 mb-4" />
               <p className="text-muted-foreground mb-4">
-                You haven't established any guilds yet. Create one to unite Hunters under your banner.
+                You haven't established any guilds yet. Create one to unite Ascendants under your banner.
               </p>
               <Button onClick={() => setCreateDialogOpen(true)} className="bg-gradient-to-r from-amber-500 to-amber-600 hover:shadow-amber-500/30 hover:shadow-lg">
                 <Crown className="w-4 h-4 mr-2" />
@@ -182,7 +182,7 @@ const Campaigns = () => {
           )}
         </div>
 
-        {/* Joined Campaigns (Hunter) */}
+        {/* Joined Campaigns (Ascendant) */}
         <div>
           <h2 className="font-arise text-2xl font-bold mb-4 gradient-text-system flex items-center gap-2 tracking-wide">
             <Users className="w-5 h-5 text-arise" />
@@ -241,7 +241,7 @@ const Campaigns = () => {
                           ? "text-amber-400 bg-amber-500/10" 
                           : "text-arise bg-arise/10"
                       )}>
-                        {campaign.member_role === 'co-system' ? 'Co-System' : 'Hunter'}
+                        {campaign.member_role === 'co-system' ? 'Co-System' : 'Ascendant'}
                       </span>
                     </div>
                     <div className="flex gap-2">
@@ -277,7 +277,7 @@ const Campaigns = () => {
                 CREATE NEW GUILD
               </DialogTitle>
               <DialogDescription>
-                Establish your guild and share the code with your Hunters. They can join from anywhere in the realm.
+                Establish your guild and share the code with your Ascendants. They can join from anywhere in the realm.
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4 py-4">
@@ -297,7 +297,7 @@ const Campaigns = () => {
                   id="campaign-description"
                   value={campaignDescription}
                   onChange={(e) => setCampaignDescription(e.target.value)}
-                  placeholder="A guild dedicated to clearing the highest rank gates..."
+                  placeholder="A guild dedicated to clearing the highest rank rifts..."
                   className="mt-1 border-arise/30 focus:border-arise/50"
                   rows={3}
                 />
@@ -333,3 +333,4 @@ const Campaigns = () => {
 };
 
 export default Campaigns;
+

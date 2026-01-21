@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
+import { useAuth } from '@/lib/auth/authContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -47,34 +49,83 @@ export function NotesManager({
   const [editingNote, setEditingNote] = useState<Note | null>(null);
   const [noteContent, setNoteContent] = useState('');
   const [noteTags, setNoteTags] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
+  const { user, loading } = useAuth();
+  const isAuthed = isSupabaseConfigured && !!user?.id;
 
   // Load notes from localStorage
   React.useEffect(() => {
-    const storageKey = `notes_${entryType}_${entryId}`;
-    const savedNotes = localStorage.getItem(storageKey);
-    if (savedNotes) {
+    if (loading) return;
+    let active = true;
+
+    const loadLocal = () => {
+      const storageKey = `notes_${entryType}_${entryId}`;
+      const savedNotes = localStorage.getItem(storageKey);
+      if (!savedNotes) return [];
       try {
-        const parsedNotes = JSON.parse(savedNotes).map((note: any) => ({
+        return JSON.parse(savedNotes).map((note: any) => ({
           ...note,
           createdAt: new Date(note.createdAt),
-          updatedAt: new Date(note.updatedAt)
-        }));
-        setNotes(parsedNotes);
+          updatedAt: new Date(note.updatedAt),
+        })) as Note[];
       } catch (error) {
         logger.error('Failed to load notes:', error);
+        return [];
       }
-    }
-  }, [entryType, entryId]);
+    };
+
+    const loadRemote = async () => {
+      if (!user?.id) return [];
+      const { data, error } = await supabase
+        .from('compendium_notes' as any)
+        .select('id, content, tags, created_at, updated_at')
+        .eq('entry_type', entryType)
+        .eq('entry_id', entryId)
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: true });
+      if (error) {
+        logger.error('Failed to load notes:', error);
+        return [];
+      }
+      return (data || []).map((row: any) => ({
+        id: row.id,
+        content: row.content,
+        tags: Array.isArray(row.tags) ? row.tags : [],
+        createdAt: new Date(row.created_at),
+        updatedAt: new Date(row.updated_at),
+      })) as Note[];
+    };
+
+    const hydrate = async () => {
+      setIsLoading(true);
+      const localNotes = loadLocal();
+      if (!isAuthed) {
+        if (active) setNotes(localNotes);
+        setIsLoading(false);
+        return;
+      }
+      const remoteNotes = await loadRemote();
+      if (!active) return;
+      setNotes(remoteNotes.length > 0 ? remoteNotes : localNotes);
+      setIsLoading(false);
+    };
+
+    void hydrate();
+    return () => {
+      active = false;
+    };
+  }, [entryType, entryId, isAuthed, loading, user?.id]);
 
   // Save notes to localStorage
   const saveNotes = (updatedNotes: Note[]) => {
+    if (typeof window === 'undefined') return;
     const storageKey = `notes_${entryType}_${entryId}`;
     localStorage.setItem(storageKey, JSON.stringify(updatedNotes));
     setNotes(updatedNotes);
   };
 
-  const handleAddNote = () => {
+  const handleAddNote = async () => {
     if (!noteContent.trim()) {
       toast({
         title: 'Error',
@@ -84,25 +135,100 @@ export function NotesManager({
       return;
     }
 
+    const tags = noteTags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
+
+    if (!isAuthed || !user?.id) {
+      const newNote: Note = {
+        id: Date.now().toString(),
+        content: noteContent.trim(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags,
+      };
+
+      const updatedNotes = editingNote
+        ? notes.map(note => note.id === editingNote.id ? { ...newNote, id: editingNote.id } : note)
+        : [...notes, newNote];
+
+      saveNotes(updatedNotes);
+      toast({
+        title: editingNote ? 'Note updated' : 'Note added',
+        description: editingNote ? 'Your note has been updated' : 'Your note has been saved',
+      });
+      resetForm();
+      return;
+    }
+
+    if (editingNote) {
+      const { data, error } = await supabase
+        .from('compendium_notes' as any)
+        .update({
+          content: noteContent.trim(),
+          tags,
+        })
+        .eq('id', editingNote.id)
+        .eq('user_id', user.id)
+        .select('id, content, tags, created_at, updated_at')
+        .single();
+      if (error || !data) {
+        toast({
+          title: 'Error',
+          description: 'Failed to update note',
+          variant: 'destructive',
+        });
+        return;
+      }
+      const updated = notes.map((note) =>
+        note.id === editingNote.id
+          ? {
+              id: data.id,
+              content: data.content,
+              tags: Array.isArray(data.tags) ? data.tags : [],
+              createdAt: new Date(data.created_at),
+              updatedAt: new Date(data.updated_at),
+            }
+          : note
+      );
+      setNotes(updated);
+      toast({
+        title: 'Note updated',
+        description: 'Your note has been updated',
+      });
+      resetForm();
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from('compendium_notes' as any)
+      .insert({
+        user_id: user.id,
+        entry_type: entryType,
+        entry_id: entryId,
+        content: noteContent.trim(),
+        tags,
+      })
+      .select('id, content, tags, created_at, updated_at')
+      .single();
+    if (error || !data) {
+      toast({
+        title: 'Error',
+        description: 'Failed to add note',
+        variant: 'destructive',
+      });
+      return;
+    }
     const newNote: Note = {
-      id: Date.now().toString(),
-      content: noteContent.trim(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      tags: noteTags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0)
+      id: data.id,
+      content: data.content,
+      tags: Array.isArray(data.tags) ? data.tags : [],
+      createdAt: new Date(data.created_at),
+      updatedAt: new Date(data.updated_at),
     };
-
-    const updatedNotes = editingNote 
-      ? notes.map(note => note.id === editingNote.id ? { ...newNote, id: editingNote.id } : note)
-      : [...notes, newNote];
-
-    saveNotes(updatedNotes);
-    
+    setNotes([...notes, newNote]);
     toast({
-      title: editingNote ? 'Note updated' : 'Note added',
-      description: editingNote ? 'Your note has been updated' : 'Your note has been saved',
+      title: 'Note added',
+      description: 'Your note has been saved',
     });
-
     resetForm();
   };
 
@@ -113,10 +239,31 @@ export function NotesManager({
     setIsDialogOpen(true);
   };
 
-  const handleDeleteNote = (noteId: string) => {
-    const updatedNotes = notes.filter(note => note.id !== noteId);
-    saveNotes(updatedNotes);
-    
+  const handleDeleteNote = async (noteId: string) => {
+    if (!isAuthed || !user?.id) {
+      const updatedNotes = notes.filter(note => note.id !== noteId);
+      saveNotes(updatedNotes);
+      toast({
+        title: 'Note deleted',
+        description: 'Your note has been removed',
+      });
+      return;
+    }
+
+    const { error } = await supabase
+      .from('compendium_notes' as any)
+      .delete()
+      .eq('id', noteId)
+      .eq('user_id', user.id);
+    if (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to delete note',
+        variant: 'destructive',
+      });
+      return;
+    }
+    setNotes((prev) => prev.filter((note) => note.id !== noteId));
     toast({
       title: 'Note deleted',
       description: 'Your note has been removed',
@@ -185,7 +332,14 @@ export function NotesManager({
       </Dialog>
 
       {/* Notes List */}
-      {notes.length > 0 && (
+      {isLoading && (
+        <Card>
+          <CardContent className="py-6 text-center text-sm text-muted-foreground">
+            Loading notes...
+          </CardContent>
+        </Card>
+      )}
+      {!isLoading && notes.length > 0 && (
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-sm">

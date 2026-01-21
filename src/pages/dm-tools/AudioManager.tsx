@@ -86,7 +86,7 @@ export default function AudioManagerDM() {
             className="mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to DM Tools
+            Back to Warden Tools
           </Button>
           <div className="flex-1">
             <h1 className="text-3xl font-bold">Audio Manager</h1>
@@ -291,3 +291,4 @@ export default function AudioManagerDM() {
     </Layout>
   );
 }
+

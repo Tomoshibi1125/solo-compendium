@@ -1,6 +1,6 @@
-// Powers Compendium - Authoritative Solo Leveling Content
+// Powers Compendium - Authoritative System Ascendant Content
 // Supernatural abilities and extraordinary powers
-// Based on Solo Leveling canon with D&D 5e mechanics
+// Based on System Ascendant canon with SRD 5e mechanics
 
 export interface Power {
   id: string;
@@ -75,7 +75,7 @@ export const powers: Power[] = [
       conditions: ['Must have shadows or dim light available']
     },
     flavor: 'The shadows become your personal highway, allowing you to move unseen and unheard.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/shadow-step.webp'
   },
   {
@@ -104,7 +104,7 @@ export const powers: Power[] = [
       cooldown: 'Long rest'
     },
     flavor: 'Your presence alone is enough to make lesser beings tremble in fear.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/demonic-aura.webp'
   },
   {
@@ -124,7 +124,7 @@ export const powers: Power[] = [
       conditions: ['Reduced effectiveness in light or against radiant damage']
     },
     flavor: 'Your body naturally repairs itself, knitting flesh and bone back together.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/regeneration.webp'
   },
   {
@@ -142,7 +142,7 @@ export const powers: Power[] = [
       tertiary: 'Can see into the Ethereal Plane.'
     },
     flavor: 'Your eyes perceive the true nature of reality, seeing through all deceptions.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/true-sight.webp'
   },
   {
@@ -168,7 +168,7 @@ export const powers: Power[] = [
       cooldown: 'Long rest'
     },
     flavor: 'You are not just in the shadows - you are the shadows.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/shadow-essence.webp'
   },
 
@@ -201,7 +201,7 @@ export const powers: Power[] = [
       cooldown: 'Short rest'
     },
     flavor: 'The draconic blood flows through your veins, granting you the breath of your ancestors.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/dragon-breath.webp'
   },
   {
@@ -233,7 +233,7 @@ export const powers: Power[] = [
       cooldown: 'Long rest'
     },
     flavor: 'The fey magic of your ancestors flows through your words and gestures.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/fey-charm.webp'
   },
   {
@@ -254,7 +254,7 @@ export const powers: Power[] = [
       tertiary: 'Advantage on saving throws against spells and magical effects.'
     },
     flavor: 'The mountain blood of your ancestors grants you unbreakable resilience.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/dwarven-resilience.webp'
   },
   {
@@ -276,7 +276,7 @@ export const powers: Power[] = [
       uses: 'Once per turn'
     },
     flavor: 'Fortune smiles upon the small and nimble, turning disaster into opportunity.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/halfling-luck.webp'
   },
   {
@@ -305,7 +305,7 @@ export const powers: Power[] = [
       cooldown: 'Long rest'
     },
     flavor: 'The primal rage of your ancestors surges through your veins in battle.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/orcish-rage.webp'
   },
 
@@ -330,7 +330,7 @@ export const powers: Power[] = [
       uses: 'Regain all ki points after a long rest'
     },
     flavor: 'Your body and mind are one, channeling universal energy through martial discipline.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/ki-point.webp'
   },
   {
@@ -355,7 +355,7 @@ export const powers: Power[] = [
       conditions: ['Must hit a creature']
     },
     flavor: 'Divine light flows through your weapon, smiting evil with righteous fury.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/divine-smite.webp'
   },
   {
@@ -384,7 +384,7 @@ export const powers: Power[] = [
       cooldown: 'Short rest'
     },
     flavor: 'You become one with nature, taking the form of the beasts of the wild.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/wild-shape.webp'
   },
   {
@@ -408,7 +408,7 @@ export const powers: Power[] = [
       uses: 'Once per long rest'
     },
     flavor: 'Your mastery of arcane magic allows you to recover magical energy through study and rest.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/arcane-recovery.webp'
   },
   {
@@ -431,7 +431,7 @@ export const powers: Power[] = [
       conditions: ['Must use finesse or ranged weapon', 'Target must be vulnerable']
     },
     flavor: 'You strike where it hurts most, exploiting every weakness and opening.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/sneak-attack.webp'
   },
 
@@ -454,7 +454,7 @@ export const powers: Power[] = [
       cooldown: 'Long rest'
     },
     flavor: 'Your touch drains the very life force from your victims, sustaining yourself with their vitality.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/vampiric-touch.webp'
   },
   {
@@ -480,7 +480,7 @@ export const powers: Power[] = [
       conditions: ['Full moon transformation is involuntary']
     },
     flavor: 'The beast within you awakens under the moon\'s gaze, transforming you into a predator.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/lycanthropy.webp'
   },
   {
@@ -509,7 +509,7 @@ export const powers: Power[] = [
       cooldown: 'Long rest'
     },
     flavor: 'Your gaze carries the curse of stone, freezing flesh in eternal stillness.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/gaze-of-petrification.webp'
   },
   {
@@ -530,7 +530,7 @@ export const powers: Power[] = [
       secondary: 'Can understand languages you don\'t know through telepathic communication.'
     },
     flavor: 'Your mind reaches out to touch the thoughts of others, bypassing the need for words.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/telepathy.webp'
   },
   {
@@ -555,7 +555,7 @@ export const powers: Power[] = [
       conditions: ['Ends when taking hostile action']
     },
     flavor: 'You bend light around yourself, becoming as unseen as the air itself.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/invisibility.webp'
   },
 
@@ -574,14 +574,14 @@ export const powers: Power[] = [
     },
     effects: {
       primary: 'Request direct intervention from your deity.',
-      secondary: 'DM determines the form and effectiveness of the intervention.'
+      secondary: 'Warden determines the form and effectiveness of the intervention.'
     },
     limitations: {
       uses: 'Once per lifetime',
       cooldown: 'Never'
     },
     flavor: 'You call upon the ultimate power of your deity, asking for direct intervention in mortal affairs.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/divine-intervention.webp'
   },
   {
@@ -609,7 +609,7 @@ export const powers: Power[] = [
       cooldown: 'Long rest'
     },
     flavor: 'Divine light manifests as wings, allowing you to soar among the heavens.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/angelic-wings.webp'
   },
   {
@@ -643,7 +643,7 @@ export const powers: Power[] = [
       cooldown: 'Long rest'
     },
     flavor: 'Divine radiance surrounds you and your allies, protecting against the forces of darkness.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/holy-aura.webp'
   },
   {
@@ -673,7 +673,7 @@ export const powers: Power[] = [
       cooldown: 'Long rest'
     },
     flavor: 'You become the embodiment of martial perfection, a living avatar of battle itself.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/avatar-of-battle.webp'
   },
   {
@@ -703,10 +703,13 @@ export const powers: Power[] = [
       cooldown: 'Long rest'
     },
     flavor: 'You transcend the limits of mortal magic, becoming one with the arcane fabric of reality.',
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/arcane-ascension.webp'
   }
 ];
 
 export default powers;
+
+
+
 

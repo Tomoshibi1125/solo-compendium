@@ -14,6 +14,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useCharacters } from '@/hooks/useCharacters';
 import { FileText, User, BookOpen, Dice6, Settings, Home, Search } from 'lucide-react';
 import { getTableName, type EntryType } from '@/lib/compendiumResolver';
+import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
 
 interface CommandPaletteProps {
   open: boolean;
@@ -24,6 +25,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
   const navigate = useNavigate();
   const { data: characters } = useCharacters();
   const [search, setSearch] = useState('');
+  const canonicalSearch = normalizeMonarchSearch(search.toLowerCase());
 
   // Search compendium items
   const { data: compendiumResults } = useQuery({
@@ -32,6 +34,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
       if (!search || search.length < 2) return [];
 
       const results: Array<{ id: string; name: string; type: string; href: string }> = [];
+      const canonicalQuery = normalizeMonarchSearch(search);
 
       // Search common compendium types using resolver table names
       const searchTypes: Array<{ type: EntryType; label: string; route: string }> = [
@@ -46,7 +49,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
           const { data } = await supabase
             .from(tableName)
             .select('id, name, display_name')
-            .or(`name.ilike.%${search}%,display_name.ilike.%${search}%`)
+            .or(`name.ilike.%${canonicalQuery}%,display_name.ilike.%${canonicalQuery}%`)
             .limit(5);
 
           if (data && Array.isArray(data)) {
@@ -84,7 +87,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
     { id: 'compendium', name: 'Open Compendium', href: '/compendium', icon: BookOpen },
     { id: 'characters', name: 'My Characters', href: '/characters', icon: User },
     { id: 'dice', name: 'Dice Roller', href: '/dice', icon: Dice6 },
-    { id: 'dm-tools', name: 'DM Tools', href: '/dm-tools', icon: Settings },
+    { id: 'dm-tools', name: 'Warden Tools', href: '/dm-tools', icon: Settings },
   ];
 
   const handleSelect = (href: string) => {
@@ -123,7 +126,10 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
         {characters && characters.length > 0 && (
           <CommandGroup heading="Characters">
             {characters
-              .filter(char => !search || char.name.toLowerCase().includes(search.toLowerCase()))
+              .filter(char =>
+                !search ||
+                normalizeMonarchSearch(char.name.toLowerCase()).includes(canonicalSearch)
+              )
               .slice(0, 5)
               .map((character) => (
                 <CommandItem
@@ -131,9 +137,9 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
                   onSelect={() => handleSelect(`/characters/${character.id}`)}
                 >
                   <User className="mr-2 h-4 w-4" />
-                  {character.name}
+                  {formatMonarchVernacular(character.name)}
                   <span className="ml-2 text-xs text-muted-foreground">
-                    Level {character.level} {character.job || 'Hunter'}
+                    Level {character.level} {formatMonarchVernacular(character.job || 'Ascendant')}
                   </span>
                 </CommandItem>
               ))}
@@ -149,8 +155,10 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
                 onSelect={() => handleSelect(item.href)}
               >
                 <FileText className="mr-2 h-4 w-4" />
-                {item.name}
-                <span className="ml-2 text-xs text-muted-foreground">{item.type}</span>
+                {formatMonarchVernacular(item.name)}
+                <span className="ml-2 text-xs text-muted-foreground">
+                  {formatMonarchVernacular(item.type)}
+                </span>
               </CommandItem>
             ))}
           </CommandGroup>
@@ -159,4 +167,5 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
     </CommandDialog>
   );
 }
+
 

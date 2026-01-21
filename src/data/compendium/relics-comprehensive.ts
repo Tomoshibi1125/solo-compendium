@@ -1,6 +1,6 @@
-// Comprehensive Relics Compendium - Authoritative Solo Leveling Content
+// Comprehensive Relics Compendium - Authoritative System Ascendant Content
 // ALL relics needed for the complete compendium system
-// Based on Solo Leveling canon with D&D 5e mechanics
+// Based on System Ascendant canon with SRD 5e mechanics
 
 export interface Relic {
   id: string;
@@ -103,9 +103,9 @@ export const comprehensiveRelics: Relic[] = [
       }
     ],
     lore: {
-      origin: 'Forged by the first Shadow Monarch from the essence of a defeated god',
-      history: 'This dagger has served as the symbol of power for countless Shadow Monarchs throughout history. It is said to contain the collective will and power of all who have wielded it.',
-      previousOwners: ['First Shadow Monarch', 'Ashborn', 'Various Shadow Monarchs']
+      origin: 'Forged by the first Umbral Monarch from the essence of a defeated god',
+      history: 'This dagger has served as the symbol of power for countless Umbral Monarchs throughout history. It is said to contain the collective will and power of all who have wielded it.',
+      previousOwners: ['First Umbral Monarch', 'First Monarch', 'Various Umbral Monarchs']
     },
     mechanics: {
       bonus: {
@@ -116,7 +116,7 @@ export const comprehensiveRelics: Relic[] = [
       resistance: ['necrotic', 'force'],
       immunity: ['poison']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'bloodthirsty-greatsword',
@@ -166,7 +166,7 @@ export const comprehensiveRelics: Relic[] = [
       },
       vulnerabilities: ['radiant']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'lightning-blade',
@@ -217,7 +217,7 @@ export const comprehensiveRelics: Relic[] = [
       },
       resistance: ['lightning', 'thunder']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'frost-axe',
@@ -269,20 +269,20 @@ export const comprehensiveRelics: Relic[] = [
       resistance: ['cold'],
       vulnerabilities: ['fire']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // LEGENDARY ARMOR
   {
-    id: 'kamishs-gauntlet',
-    name: 'Kamish\'s Gauntlet',
-    description: 'The legendary gauntlet of the Shadow Monarch, containing the power to command shadows and bend reality.',
+    id: 'skywyrms-gauntlet',
+    name: 'Skywyrm\'s Gauntlet',
+    description: 'The legendary gauntlet of the Umbral Monarch, containing the power to command shadows and bend reality.',
     type: 'armor',
     rarity: 'mythic',
     attunement: true,
     requirements: {
       level: 20,
-      class: 'Shadow Monarch'
+      class: 'Umbral Monarch'
     },
     properties: {
       magical: true,
@@ -311,23 +311,23 @@ export const comprehensiveRelics: Relic[] = [
         type: 'passive'
       },
       {
-        name: 'Shadow Army',
-        description: 'Summon an army of 100 shadow soldiers that serve you for 24 hours.',
+        name: 'Umbral Legion',
+        description: 'Summon an army of 100 Umbral Legion that serve you for 24 hours.',
         type: 'command',
         frequency: 'once-per-week',
         action: 'action'
       }
     ],
     lore: {
-      origin: 'Created by the original Shadow Monarch from the essence of conquered dimensions',
+      origin: 'Created by the original Umbral Monarch from the essence of conquered dimensions',
       history: 'This gauntlet represents the pinnacle of shadow power, containing the authority to command all shadows and reshape reality itself.',
-      currentOwner: 'Current Shadow Monarch'
+      currentOwner: 'Current Umbral Monarch'
     },
     mechanics: {
       resistance: ['bludgeoning', 'piercing', 'slashing', 'fire', 'cold', 'lightning', 'thunder', 'acid', 'poison', 'necrotic', 'radiant', 'force'],
       immunity: ['magical']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'abyssal-plate',
@@ -378,7 +378,7 @@ export const comprehensiveRelics: Relic[] = [
       resistance: ['necrotic', 'cold'],
       immunity: ['poison']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'dragon-scale-mail',
@@ -427,14 +427,14 @@ export const comprehensiveRelics: Relic[] = [
       },
       resistance: ['fire']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // LEGENDARY ACCESSORIES
   {
     id: 'rulers-authority',
-    name: 'Ruler\'s Authority',
-    description: 'An artifact that grants the user command over lesser shadows and the respect of all beings.',
+    name: 'Architect\'s Authority',
+    description: 'An artifact that grants the bearer command over lesser shadows and the respect of all beings.',
     type: 'accessory',
     rarity: 'legendary',
     attunement: true,
@@ -477,7 +477,7 @@ export const comprehensiveRelics: Relic[] = [
     lore: {
       origin: 'Created by the first Monarch to establish authority over their growing shadow empire',
       history: 'This artifact represents the right to rule, containing the essence of leadership and command that all Monarchs must possess.',
-      previousOwners: ['First Shadow Monarch', 'Queen of Shadows', 'Emperor of Night']
+      previousOwners: ['First Umbral Monarch', 'Queen of Shadows', 'Emperor of Night']
     },
     mechanics: {
       bonus: {
@@ -486,7 +486,7 @@ export const comprehensiveRelics: Relic[] = [
         ability: 'Charisma'
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'bloodstone-amulet',
@@ -534,7 +534,7 @@ export const comprehensiveRelics: Relic[] = [
       resistance: ['necrotic'],
       immunity: ['shadow corruption']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'dimensional-compass',
@@ -574,12 +574,12 @@ export const comprehensiveRelics: Relic[] = [
     lore: {
       origin: 'Forged by dimensional travelers who learned to navigate the spaces between worlds',
       history: 'This compass has guided countless adventurers through dangerous dimensional journeys, its needle always pointing toward safety or adventure.',
-      previousOwners: ['Dimensional Explorer Alara', 'Portal Hunter Marcus', 'Shadow Walker Lena']
+      previousOwners: ['Dimensional Explorer Alara', 'Rift Tracker Marcus', 'Shadow Walker Lena']
     },
     mechanics: {
       immunity: ['getting lost']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'crown-of-wisdom',
@@ -635,7 +635,7 @@ export const comprehensiveRelics: Relic[] = [
       },
       immunity: ['psychic']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // EPIC ITEMS
@@ -687,7 +687,7 @@ export const comprehensiveRelics: Relic[] = [
     mechanics: {
       resistance: ['necrotic']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'time-turner',
@@ -742,7 +742,7 @@ export const comprehensiveRelics: Relic[] = [
     mechanics: {
       immunity: ['time-based effects']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // CONSUMABLES
@@ -773,7 +773,7 @@ export const comprehensiveRelics: Relic[] = [
         value: 1
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'shadow-elixir',
@@ -803,7 +803,7 @@ export const comprehensiveRelics: Relic[] = [
         skills: ['Stealth', 'Acrobatics']
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'dragon-blood-potion',
@@ -829,7 +829,7 @@ export const comprehensiveRelics: Relic[] = [
     mechanics: {
       resistance: ['fire', 'cold', 'lightning', 'acid', 'poison']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // TOOLS
@@ -872,7 +872,7 @@ export const comprehensiveRelics: Relic[] = [
         skills: ['Perception', 'Investigation']
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'essence-collector',
@@ -915,7 +915,11 @@ export const comprehensiveRelics: Relic[] = [
         ability: 'Wisdom'
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   }
 ];
+
+
+
+
 

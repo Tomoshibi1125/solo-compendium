@@ -20,6 +20,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { useToast } from '@/hooks/use-toast';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 const Characters = () => {
   const navigate = useNavigate();
@@ -36,20 +37,20 @@ const Characters = () => {
     try {
       await deleteCharacter.mutateAsync(deleteTarget);
       toast({
-        title: 'Hunter removed',
-        description: 'The Hunter has been removed from your roster.',
+        title: 'Ascendant removed',
+        description: 'The Ascendant has been removed from your roster.',
       });
       setDeleteTarget(null);
     } catch (error) {
       toast({
         title: 'Failed to remove',
-        description: 'Could not remove the Hunter.',
+        description: 'Could not remove the Ascendant.',
         variant: 'destructive',
       });
     }
   };
 
-  // Get hunter rank based on level
+  // Get ascendant rank based on level
   const getHunterRank = (level: number) => {
     if (level >= 17) return { rank: 'S', color: 'text-amber-400', bg: 'bg-amber-500/20', border: 'border-amber-500/50', glow: 'shadow-amber-500/30' };
     if (level >= 13) return { rank: 'A', color: 'text-red-400', bg: 'bg-red-500/20', border: 'border-red-500/50', glow: 'shadow-red-500/30' };
@@ -64,23 +65,23 @@ const Characters = () => {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow tracking-wider">
-              HUNTER REGISTRY
+              ASCENDANT REGISTRY
             </h1>
             <p className="text-muted-foreground font-heading">
-              Awaken and manage your Hunters in the Supreme Deity's domain
+              Awaken and manage your Ascendants in the Prime Architect's domain
             </p>
           </div>
           <div className="flex gap-2">
             <Link to="/characters/compare">
               <Button variant="outline" className="gap-2">
                 <Users className="w-4 h-4" />
-                Compare Hunters
+                Compare Ascendants
               </Button>
             </Link>
             <Link to="/characters/new">
               <Button className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple hover:shadow-arise/30 hover:shadow-lg transition-all">
                 <Plus className="w-4 h-4" />
-                Awaken New Hunter
+                Awaken New Ascendant
               </Button>
             </Link>
           </div>
@@ -89,7 +90,7 @@ const Characters = () => {
         {isGuestMode && (
           <SystemWindow title="GUEST MODE" variant="alert" className="mb-6">
             <p className="text-sm text-muted-foreground">
-              You are playing in guest mode. Hunters are stored locally on this device only. Sign in to sync across devices and enable all online features.
+              You are playing in guest mode. Ascendants are stored locally on this device only. Sign in to sync across devices and enable all online features.
             </p>
           </SystemWindow>
         )}
@@ -100,20 +101,20 @@ const Characters = () => {
               <div className="w-16 h-16 border-4 border-arise/20 rounded-full" />
               <div className="absolute inset-0 w-16 h-16 border-4 border-t-arise rounded-full animate-spin" />
             </div>
-            <p className="text-muted-foreground font-heading animate-pulse">Scanning Hunter Database...</p>
+            <p className="text-muted-foreground font-heading animate-pulse">Scanning Ascendant Database...</p>
           </div>
         ) : characters.length === 0 ? (
-          <SystemWindow title="NO HUNTERS DETECTED" variant="alert" className="max-w-lg mx-auto text-center py-12">
+          <SystemWindow title="NO ASCENDANTS DETECTED" variant="alert" className="max-w-lg mx-auto text-center py-12">
             <div className="mb-6">
               <Skull className="w-16 h-16 mx-auto text-muted-foreground mb-4 opacity-50" />
               <p className="text-muted-foreground">
-                No awakened Hunters in the System registry. Begin your journey in the Supreme Deity's domain.
+                No awakened Ascendants in the System registry. Begin your journey in the Prime Architect's domain.
               </p>
             </div>
             <Link to="/characters/new">
               <Button className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple">
                 <Zap className="w-4 h-4" />
-                Awaken Your First Hunter
+                Awaken Your First Ascendant
               </Button>
             </Link>
           </SystemWindow>
@@ -225,7 +226,8 @@ const Characters = () => {
                           {character.name}
                         </h3>
                         <p className="text-sm text-muted-foreground mb-4 font-heading">
-                          {character.job || 'Unawakened'} {character.path && `• ${character.path}`}
+                          {formatMonarchVernacular(character.job || 'Unawakened')}
+                          {character.path && ` - ${formatMonarchVernacular(character.path)}`}
                         </p>
 
                         {/* HP Bar */}
@@ -296,7 +298,7 @@ const Characters = () => {
                   <Plus className="w-8 h-8 text-muted-foreground group-hover:text-arise transition-colors" />
                 </div>
                 <p className="font-arise text-lg text-muted-foreground group-hover:text-arise transition-colors tracking-wide">
-                  AWAKEN HUNTER
+                  AWAKEN ASCENDANT
                 </p>
                 <p className="text-xs text-muted-foreground mt-1">
                   Begin your journey
@@ -327,7 +329,7 @@ const Characters = () => {
                   ))}
                 </div>
                 <p className="text-sm text-muted-foreground mt-6">
-                  The System guides you through each awakening step, validating your choices against the Supreme Deity's laws.
+                  The System guides you through each awakening step, validating your choices against the Prime Architect's laws.
                 </p>
                 <Link to="/characters/new" className="inline-block mt-4">
                   <Button className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple">
@@ -352,10 +354,10 @@ const Characters = () => {
             <AlertDialogHeader>
               <AlertDialogTitle className="font-arise text-destructive flex items-center gap-2">
                 <Skull className="w-5 h-5" />
-                DELETE HUNTER?
+                DELETE ASCENDANT?
               </AlertDialogTitle>
               <AlertDialogDescription>
-                This action cannot be undone. This Hunter will be permanently removed from the System registry.
+                This action cannot be undone. This Ascendant will be permanently removed from the System registry.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
@@ -375,3 +377,4 @@ const Characters = () => {
 };
 
 export default Characters;
+

@@ -1,11 +1,11 @@
--- Add Shadow Energy and Shadow Army tracking to characters
+-- Add Shadow Energy and Umbral Legion tracking to characters
 -- This allows characters to track their shadow energy resource and summoned shadows
 
 -- Add shadow energy fields to characters table
 ALTER TABLE public.characters
 ADD COLUMN IF NOT EXISTS shadow_energy_current INTEGER NOT NULL DEFAULT 0,
 ADD COLUMN IF NOT EXISTS shadow_energy_max INTEGER NOT NULL DEFAULT 0;
--- Create shadow army table (tracks summoned shadows for a character)
+-- Create Umbral Legion table (tracks summoned shadows for a character)
 CREATE TABLE IF NOT EXISTS public.character_shadow_army (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   character_id UUID NOT NULL REFERENCES public.characters(id) ON DELETE CASCADE,
@@ -37,7 +37,7 @@ CREATE INDEX IF NOT EXISTS idx_character_shadow_army_active ON public.character_
 -- Enable RLS
 ALTER TABLE public.character_shadow_army ENABLE ROW LEVEL SECURITY;
 -- RLS Policies
-CREATE POLICY "Users can view their own shadow army" ON public.character_shadow_army
+CREATE POLICY "Users can view their own Umbral Legion" ON public.character_shadow_army
   FOR SELECT USING (
     EXISTS (
       SELECT 1 FROM public.characters
@@ -45,7 +45,7 @@ CREATE POLICY "Users can view their own shadow army" ON public.character_shadow_
       AND characters.user_id = auth.uid()
     )
   );
-CREATE POLICY "Users can insert their own shadow army" ON public.character_shadow_army
+CREATE POLICY "Users can insert their own Umbral Legion" ON public.character_shadow_army
   FOR INSERT WITH CHECK (
     EXISTS (
       SELECT 1 FROM public.characters
@@ -53,7 +53,7 @@ CREATE POLICY "Users can insert their own shadow army" ON public.character_shado
       AND characters.user_id = auth.uid()
     )
   );
-CREATE POLICY "Users can update their own shadow army" ON public.character_shadow_army
+CREATE POLICY "Users can update their own Umbral Legion" ON public.character_shadow_army
   FOR UPDATE USING (
     EXISTS (
       SELECT 1 FROM public.characters
@@ -61,7 +61,7 @@ CREATE POLICY "Users can update their own shadow army" ON public.character_shado
       AND characters.user_id = auth.uid()
     )
   );
-CREATE POLICY "Users can delete their own shadow army" ON public.character_shadow_army
+CREATE POLICY "Users can delete their own Umbral Legion" ON public.character_shadow_army
   FOR DELETE USING (
     EXISTS (
       SELECT 1 FROM public.characters
@@ -70,7 +70,7 @@ CREATE POLICY "Users can delete their own shadow army" ON public.character_shado
     )
   );
 -- Function to calculate shadow energy max based on level
--- Shadow Monarchs gain shadow energy as they level up
+-- Umbral Monarchs gain shadow energy as they level up
 CREATE OR REPLACE FUNCTION calculate_shadow_energy_max(character_level INTEGER)
 RETURNS INTEGER AS $$
 BEGIN
@@ -89,3 +89,5 @@ BEGIN
   END;
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
+
+

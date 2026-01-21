@@ -198,7 +198,7 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
                 id="note-title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="Session 1: The First Gate"
+                placeholder="Session 1: The First Rift"
                 className="mt-1"
               />
             </div>

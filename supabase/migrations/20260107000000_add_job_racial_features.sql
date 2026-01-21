@@ -1,9 +1,9 @@
 -- =============================================
 -- ADD RACIAL FEATURES TO JOBS (Level 1)
 -- =============================================
--- Jobs function as both race and class in Solo Leveling 5e
+-- Jobs function as both race and class in System Ascendant 5e SRD
 -- This migration adds racial features (ability score increases) to all jobs at level 1
--- All aligned with Solo Leveling manhwa post-reset timeline with Supreme Deity
+-- All aligned with System Ascendant canon post-reset timeline with Prime Architect
 
 -- =============================================
 -- ABILITY SCORE INCREASES (Racial Feature)
@@ -24,7 +24,7 @@ SELECT
   j.id,
   'Ability Score Increase',
   1,
-  'Your training as a Vanguard has honed your physical prowess. You increase your Strength score by 2, and your Agility score by 1. In the post-reset world, the System recognizes your natural aptitude for frontline combat, blessed by the Shadow Monarch''s domain.',
+  'Your training as a Vanguard has honed your physical prowess. You increase your Strength score by 2, and your Agility score by 1. In the post-reset world, the System recognizes your natural aptitude for frontline combat, blessed by the Umbral Monarch''s domain.',
   'passive',
   NULL,
   NULL,
@@ -41,7 +41,7 @@ SELECT
   j.id,
   'Ability Score Increase',
   1,
-  'Your path as an Assassin has sharpened your reflexes and cunning. You increase your Agility score by 2, and your Intelligence score by 1. The System acknowledges your natural talent for precision and stealth, a gift from the Shadow Monarch''s realm.',
+  'Your path as an Assassin has sharpened your reflexes and cunning. You increase your Agility score by 2, and your Intelligence score by 1. The System acknowledges your natural talent for precision and stealth, a gift from the Umbral Monarch''s realm.',
   'passive',
   NULL,
   NULL,
@@ -58,7 +58,7 @@ SELECT
   j.id,
   'Ability Score Increase',
   1,
-  'Your awakening as a Mage has expanded your mind and awareness. You increase your Intelligence score by 2, and your Sense score by 1. The System recognizes your natural affinity for powercasting, blessed by the Shadow Monarch''s domain in this new world.',
+  'Your awakening as a Mage has expanded your mind and awareness. You increase your Intelligence score by 2, and your Sense score by 1. The System recognizes your natural affinity for powercasting, blessed by the Umbral Monarch''s domain in this new world.',
   'passive',
   NULL,
   NULL,
@@ -75,7 +75,7 @@ SELECT
   j.id,
   'Ability Score Increase',
   1,
-  'Your calling as a Healer has enhanced your presence and understanding. You increase your Presence score by 2, and your Intelligence score by 1. The System acknowledges your natural gift for channeling healing energy, a blessing from the Shadow Monarch''s realm.',
+  'Your calling as a Healer has enhanced your presence and understanding. You increase your Presence score by 2, and your Intelligence score by 1. The System acknowledges your natural gift for channeling healing energy, a blessing from the Umbral Monarch''s realm.',
   'passive',
   NULL,
   NULL,
@@ -92,7 +92,7 @@ SELECT
   j.id,
   'Ability Score Increase',
   1,
-  'Your training as a Striker has developed your power and speed. You increase your Strength score by 2, and your Agility score by 1. The System recognizes your natural aptitude for devastating attacks, blessed by the Shadow Monarch''s domain.',
+  'Your training as a Striker has developed your power and speed. You increase your Strength score by 2, and your Agility score by 1. The System recognizes your natural aptitude for devastating attacks, blessed by the Umbral Monarch''s domain.',
   'passive',
   NULL,
   NULL,
@@ -109,7 +109,7 @@ SELECT
   j.id,
   'Ability Score Increase',
   1,
-  'Your path as a Ranger has honed your reflexes and awareness. You increase your Agility score by 2, and your Sense score by 1. The System acknowledges your natural talent for tracking and survival, a gift from the Shadow Monarch''s realm.',
+  'Your path as a Ranger has honed your reflexes and awareness. You increase your Agility score by 2, and your Sense score by 1. The System acknowledges your natural talent for tracking and survival, a gift from the Umbral Monarch''s realm.',
   'passive',
   NULL,
   NULL,
@@ -126,7 +126,7 @@ SELECT
   j.id,
   'Ability Score Increase',
   1,
-  'Your awakening as a Destroyer has amplified your strength and endurance. You increase your Strength score by 2, and your Vitality score by 1. The System recognizes your natural capacity for destruction, blessed by the Shadow Monarch''s domain.',
+  'Your awakening as a Destroyer has amplified your strength and endurance. You increase your Strength score by 2, and your Vitality score by 1. The System recognizes your natural capacity for destruction, blessed by the Umbral Monarch''s domain.',
   'passive',
   NULL,
   NULL,
@@ -143,7 +143,7 @@ SELECT
   j.id,
   'Ability Score Increase',
   1,
-  'Your calling as an Esper has expanded your mind and perception. You increase your Intelligence score by 2, and your Sense score by 1. The System acknowledges your natural gift for psychic abilities, a blessing from the Shadow Monarch''s realm.',
+  'Your calling as an Esper has expanded your mind and perception. You increase your Intelligence score by 2, and your Sense score by 1. The System acknowledges your natural gift for psychic abilities, a blessing from the Umbral Monarch''s realm.',
   'passive',
   NULL,
   NULL,
@@ -160,7 +160,7 @@ SELECT
   j.id,
   'Ability Score Increase',
   1,
-  'Your path as a Contractor has enhanced your presence and intellect. You increase your Presence score by 2, and your Intelligence score by 1. The System recognizes your natural aptitude for summoning and binding, blessed by the Shadow Monarch''s domain.',
+  'Your path as a Contractor has enhanced your presence and intellect. You increase your Presence score by 2, and your Intelligence score by 1. The System recognizes your natural aptitude for summoning and binding, blessed by the Umbral Monarch''s domain.',
   'passive',
   NULL,
   NULL,
@@ -177,7 +177,7 @@ SELECT
   j.id,
   'Ability Score Increase',
   1,
-  'Your awakening as a Herald has amplified your presence and understanding. You increase your Presence score by 2, and your Intelligence score by 1. The System acknowledges your natural gift for inspiring others, a blessing from the Shadow Monarch''s realm.',
+  'Your awakening as a Herald has amplified your presence and understanding. You increase your Presence score by 2, and your Intelligence score by 1. The System acknowledges your natural gift for inspiring others, a blessing from the Umbral Monarch''s realm.',
   'passive',
   NULL,
   NULL,
@@ -194,7 +194,7 @@ SELECT
   j.id,
   'Ability Score Increase',
   1,
-  'Your training as a Holy Knight has developed your strength and presence. You increase your Strength score by 2, and your Presence score by 1. The System recognizes your natural aptitude for divine combat, blessed by the Shadow Monarch''s domain in this post-reset world.',
+  'Your training as a Holy Knight has developed your strength and presence. You increase your Strength score by 2, and your Presence score by 1. The System recognizes your natural aptitude for divine combat, blessed by the Umbral Monarch''s domain in this post-reset world.',
   'passive',
   NULL,
   NULL,
@@ -211,7 +211,7 @@ SELECT
   j.id,
   'Ability Score Increase',
   1,
-  'Your calling as a Techsmith has enhanced your intellect and dexterity. You increase your Intelligence score by 2, and your Agility score by 1. The System acknowledges your natural gift for crafting and technology, a blessing from the Shadow Monarch''s realm.',
+  'Your calling as a Techsmith has enhanced your intellect and dexterity. You increase your Intelligence score by 2, and your Agility score by 1. The System acknowledges your natural gift for crafting and technology, a blessing from the Umbral Monarch''s realm.',
   'passive',
   NULL,
   NULL,
@@ -228,7 +228,7 @@ SELECT
   j.id,
   'Ability Score Increase',
   1,
-  'Your path as a Warden has fortified your endurance and strength. You increase your Vitality score by 2, and your Strength score by 1. The System recognizes your natural capacity for protection and defense, blessed by the Shadow Monarch''s domain.',
+  'Your path as a Warden has fortified your endurance and strength. You increase your Vitality score by 2, and your Strength score by 1. The System recognizes your natural capacity for protection and defense, blessed by the Umbral Monarch''s domain.',
   'passive',
   NULL,
   NULL,
@@ -242,9 +242,10 @@ AND NOT EXISTS (
 -- =============================================
 -- ADDITIONAL RACIAL TRAITS (Speed, Languages, etc.)
 -- =============================================
--- All Hunters in the post-reset world have base speed of 30 feet (handled in character creation)
--- All Hunters speak Common (handled in character creation)
+-- All Ascendants in the post-reset world have base speed of 30 feet (handled in character creation)
+-- All Ascendants speak Common (handled in character creation)
 -- Additional languages come from backgrounds
 
 -- Note: Speed and languages are handled at character creation level, not as job features
 -- This migration focuses on ability score increases as the primary racial feature;
+

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Save, Download, Upload, Grid, Plus, Minus, Move, RotateCw, Trash2, Layers } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -8,8 +8,10 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import tokensCompendium from '@/data/tokens';
+import { DEFAULT_TOKENS, mergeBaseTokens, normalizeLibraryTokens, type LibraryToken } from '@/data/tokenLibraryDefaults';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useUserToolState } from '@/hooks/useToolState';
 
 interface PlacedToken {
   id: string;
@@ -26,15 +28,16 @@ interface PlacedToken {
   locked: boolean;
 }
 
-interface MapToken {
-  id: string;
-  name: string;
-  emoji?: string;
-  imageUrl?: string;
-  color?: string;
-  size: 'small' | 'medium' | 'large' | 'huge';
-  category: string;
-}
+type MapToken = Pick<
+  LibraryToken,
+  'id' | 'name' | 'emoji' | 'imageUrl' | 'color' | 'size' | 'category'
+>;
+
+type VTTMapState = {
+  tokens: PlacedToken[];
+  currentLayer: number;
+  savedAt?: string;
+};
 
 const SIZE_VALUES = {
   small: 32,
@@ -55,51 +58,63 @@ const VTTMap = () => {
   const [draggedToken, setDraggedToken] = useState<PlacedToken | null>(null);
   const [availableTokens, setAvailableTokens] = useState<MapToken[]>([]);
   const [currentLayer, setCurrentLayer] = useState(0);
+  const mapHydratedRef = useRef(false);
+
+  const { state: storedTokens, isLoading: tokensLoading, saveNow: saveTokenLibrary } = useUserToolState<LibraryToken[]>(
+    'token_library',
+    {
+      initialState: DEFAULT_TOKENS,
+      storageKey: 'vtt-tokens',
+    }
+  );
+  const { state: storedMapState, isLoading: mapLoading, saveNow: saveMapNow } = useUserToolState<VTTMapState>('vtt_map', {
+    initialState: { tokens: [], currentLayer: 0 },
+    storageKey: 'vtt-map-state',
+  });
+  const mapSavePayload = useMemo(
+    () => ({ tokens: placedTokens, currentLayer }),
+    [currentLayer, placedTokens]
+  );
+  const debouncedMapState = useDebounce(mapSavePayload, 500);
 
   useEffect(() => {
-    // Load tokens
-    const savedTokens = localStorage.getItem('vtt-tokens');
-    if (savedTokens) {
-      try {
-        const parsed = JSON.parse(savedTokens);
-        const tokens: MapToken[] = parsed.map((t: { id: string; name: string; emoji?: string; imageUrl?: string; color?: string; size: 'small' | 'medium' | 'large' | 'huge'; category: string }) => ({
-          id: t.id,
-          name: t.name,
-          emoji: t.emoji,
-          imageUrl: t.imageUrl,
-          color: t.color,
-          size: t.size,
-          category: t.category,
-        }));
-        setAvailableTokens(tokens);
-      } catch (e) {
-        // No tokens available
-      }
-    } else {
-      const fallbackTokens: MapToken[] = tokensCompendium.map((token) => ({
-        id: token.id,
-        name: token.name,
-        imageUrl: token.image,
-        size: token.type === 'boss' ? 'huge' : token.type === 'monster' ? 'large' : 'medium',
-        category: token.type,
-        color: token.friendly ? '#38bdf8' : '#f97316',
-      }));
-      setAvailableTokens(fallbackTokens);
-      localStorage.setItem('vtt-tokens', JSON.stringify(fallbackTokens));
+    if (tokensLoading) return;
+    const normalizedTokens = normalizeLibraryTokens(Array.isArray(storedTokens) ? storedTokens : []);
+    const sourceTokens = normalizedTokens.length > 0 ? normalizedTokens : DEFAULT_TOKENS;
+    const mergedTokens = mergeBaseTokens(sourceTokens);
+    const mapped = mergedTokens.map((t) => ({
+      id: t.id,
+      name: t.name,
+      emoji: t.emoji,
+      imageUrl: t.imageUrl,
+      color: t.color,
+      size: t.size,
+      category: t.category,
+    }));
+    setAvailableTokens(mapped);
+    if (mergedTokens !== storedTokens) {
+      void saveTokenLibrary(mergedTokens);
     }
+  }, [saveTokenLibrary, storedTokens, tokensLoading]);
 
-    // Load map state
-    const savedState = localStorage.getItem('vtt-map-state');
-    if (savedState) {
-      try {
-        const parsed = JSON.parse(savedState);
-        setPlacedTokens(parsed.tokens || []);
-        setCurrentLayer(parsed.currentLayer || 0);
-      } catch (e) {
-        // Invalid state
-      }
+  useEffect(() => {
+    if (mapLoading || mapHydratedRef.current) return;
+    if (Array.isArray(storedMapState.tokens)) {
+      setPlacedTokens(storedMapState.tokens);
     }
-  }, []);
+    if (typeof storedMapState.currentLayer === 'number') {
+      setCurrentLayer(storedMapState.currentLayer);
+    }
+    mapHydratedRef.current = true;
+  }, [mapLoading, storedMapState.currentLayer, storedMapState.tokens]);
+
+  useEffect(() => {
+    if (!mapHydratedRef.current) return;
+    void saveMapNow({
+      ...debouncedMapState,
+      savedAt: new Date().toISOString(),
+    });
+  }, [debouncedMapState, saveMapNow]);
 
   const saveMapState = () => {
     const state = {
@@ -107,7 +122,7 @@ const VTTMap = () => {
       currentLayer,
       savedAt: new Date().toISOString(),
     };
-    localStorage.setItem('vtt-map-state', JSON.stringify(state));
+    void saveMapNow(state);
     toast({
       title: 'Saved!',
       description: 'Map state saved.',
@@ -228,7 +243,7 @@ const VTTMap = () => {
             className="mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to DM Tools
+            Back to Warden Tools
           </Button>
           <h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow">
             VTT MAP VIEWER
@@ -526,7 +541,7 @@ const VTTMap = () => {
                   Click map to place selected token. Drag tokens to move. Right-click to rotate.
                 </div>
                 <Badge variant="outline">
-                  Layer {currentLayer} • {visibleTokens.length} tokens
+                  Layer {currentLayer} | {visibleTokens.length} tokens
                 </Badge>
               </div>
             </SystemWindow>
@@ -538,4 +553,5 @@ const VTTMap = () => {
 };
 
 export default VTTMap;
+
 

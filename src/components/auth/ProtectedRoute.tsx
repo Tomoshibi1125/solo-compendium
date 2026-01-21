@@ -6,13 +6,16 @@ import { isSupabaseConfigured } from '@/integrations/supabase/client';
 interface ProtectedRouteProps {
   children: ReactNode;
   requireDM?: boolean;
+  allowGuest?: boolean;
 }
 
-export function ProtectedRoute({ children, requireDM = false }: ProtectedRouteProps) {
+export function ProtectedRoute({ children, requireDM = false, allowGuest }: ProtectedRouteProps) {
   const isE2E = import.meta.env.VITE_E2E === 'true';
+  const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== 'false';
   const { user, loading, session } = useAuth();
   const isAuthenticated = !!user;
   const isDM = user?.role === 'dm';
+  const guestAllowed = allowGuest ?? guestEnabled;
   const hasStoredSession =
     typeof window !== 'undefined' &&
     Object.keys(localStorage).some((key) => key.includes('auth-token') || key.includes('supabase.auth.token'));
@@ -42,8 +45,11 @@ export function ProtectedRoute({ children, requireDM = false }: ProtectedRoutePr
     );
   }
 
-  // Not authenticated - redirect to auth
+  // Not authenticated - allow guest access if enabled, otherwise redirect to auth
   if (!isAuthenticated) {
+    if (guestAllowed) {
+      return <>{children}</>;
+    }
     return <Navigate to="/auth" replace />;
   }
 

@@ -4,6 +4,7 @@
  */
 
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { normalizeMonarchSearch } from '@/lib/vernacular';
 
 /**
  * Prepare search text for PostgreSQL tsquery
@@ -21,7 +22,7 @@ export function normalizeSearchText(searchQuery: string): string {
     .replace(/\s+/g, ' ') // Normalize whitespace
     .trim();
 
-  return cleaned;
+  return normalizeMonarchSearch(cleaned);
 }
 
 export function prepareSearchText(searchQuery: string): string {

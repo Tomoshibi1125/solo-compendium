@@ -2,6 +2,7 @@ import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Zap, Timer, Target, Heart, Sparkles } from 'lucide-react';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface SpellData {
   id: string;
@@ -30,7 +31,7 @@ const rankStyles: Record<string, string> = {
 };
 
 export const SpellDetail = ({ data }: { data: SpellData }) => {
-  const displayName = data.display_name || data.name;
+  const displayName = formatMonarchVernacular(data.display_name || data.name);
   const imageSrc = data.image_url || data.image || undefined;
   const rankStyle = data.rank ? rankStyles[data.rank] : undefined;
 
@@ -52,13 +53,13 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
       <SystemWindow title={displayName.toUpperCase()}>
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-2">
-            {data.spell_type && <Badge variant="secondary">{data.spell_type}</Badge>}
+            {data.spell_type && <Badge variant="secondary">{formatMonarchVernacular(data.spell_type)}</Badge>}
             {data.rank && (
               <Badge variant="outline" className={rankStyle}>
                 Rank {data.rank}
               </Badge>
             )}
-            {data.source_book && <Badge variant="outline">{data.source_book}</Badge>}
+            {data.source_book && <Badge variant="outline">{formatMonarchVernacular(data.source_book)}</Badge>}
           </div>
         </div>
       </SystemWindow>
@@ -112,13 +113,13 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 
       {data.effect && (
         <SystemWindow id="spell-effect" title="EFFECT">
-          <p className="text-foreground leading-relaxed">{data.effect}</p>
+          <p className="text-foreground leading-relaxed">{formatMonarchVernacular(data.effect)}</p>
         </SystemWindow>
       )}
 
       {data.description && (
         <SystemWindow id="spell-description" title="DESCRIPTION">
-          <p className="text-foreground leading-relaxed">{data.description}</p>
+          <p className="text-foreground leading-relaxed">{formatMonarchVernacular(data.description)}</p>
         </SystemWindow>
       )}
     </div>

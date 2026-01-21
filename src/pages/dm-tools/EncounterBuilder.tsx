@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Plus, Trash2, Search, Sword } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -14,6 +14,10 @@ import { calculateDifficulty, calculateXP } from '@/lib/encounterMath';
 import type { Database } from '@/integrations/supabase/types';
 import { monsters as staticMonsters } from '@/data/compendium/monsters';
 import { getCRXP } from '@/lib/experience';
+import { useDebounce } from '@/hooks/useDebounce';
+import { saveUserToolState, useUserToolState, writeLocalToolState } from '@/hooks/useToolState';
+import { useAuth } from '@/lib/auth/authContext';
+import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
 
 type Monster = Database['public']['Tables']['compendium_monsters']['Row'];
 
@@ -130,7 +134,7 @@ const mapStaticMonster = (monster: StaticMonster): Monster => {
     image_generated_at: null,
     image_url: monster.image || null,
     license_note: null,
-    source_book: 'Solo Compendium Homebrew',
+    source_book: 'System Ascendant Homebrew',
     source_kind: null,
     source_name: null,
     speed_burrow: null,
@@ -144,15 +148,15 @@ const mapStaticMonster = (monster: StaticMonster): Monster => {
 };
 
 const buildFallbackMonsters = (searchQuery: string) => {
-  const query = searchQuery.trim().toLowerCase();
+  const query = normalizeMonarchSearch(searchQuery.trim().toLowerCase());
   const filtered = query
     ? staticMonstersList.filter((monster) => {
         const description = monster.description || '';
         return (
-          monster.name.toLowerCase().includes(query) ||
-          monster.type.toLowerCase().includes(query) ||
-          monster.rank.toLowerCase().includes(query) ||
-          description.toLowerCase().includes(query)
+          normalizeMonarchSearch(monster.name.toLowerCase()).includes(query) ||
+          normalizeMonarchSearch(monster.type.toLowerCase()).includes(query) ||
+          normalizeMonarchSearch(monster.rank.toLowerCase()).includes(query) ||
+          normalizeMonarchSearch(description.toLowerCase()).includes(query)
         );
       })
     : staticMonstersList;
@@ -162,47 +166,53 @@ const buildFallbackMonsters = (searchQuery: string) => {
 const EncounterBuilder = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { user } = useAuth();
+  const isAuthed = isSupabaseConfigured && !!user?.id;
+  const hydratedRef = useRef(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [hunterLevel, setHunterLevel] = useState(1);
   const [hunterCount, setHunterCount] = useState(4);
   const [encounterMonsters, setEncounterMonsters] = useState<EncounterMonster[]>([]);
 
+  const { state: storedState, isLoading: isToolStateLoading, saveNow } = useUserToolState<{
+    hunterLevel: number;
+    hunterCount: number;
+    encounterMonsters: EncounterMonster[];
+    version?: number;
+    savedAt?: string;
+  }>('encounter_builder', {
+    initialState: { hunterLevel: 1, hunterCount: 4, encounterMonsters: [] },
+    storageKey: ENCOUNTER_STORAGE_KEY,
+  });
+
+  const savePayload = useMemo(
+    () => ({
+      hunterLevel,
+      hunterCount,
+      encounterMonsters,
+    }),
+    [hunterCount, hunterLevel, encounterMonsters]
+  );
+  const debouncedState = useDebounce(savePayload, 600);
+
   // Load persisted encounter (best-effort)
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(ENCOUNTER_STORAGE_KEY);
-      if (!raw) return;
-      const parsed = JSON.parse(raw) as Partial<{
-        hunterLevel: number;
-        hunterCount: number;
-        encounterMonsters: EncounterMonster[];
-      }>;
-
-      if (typeof parsed.hunterLevel === 'number') setHunterLevel(parsed.hunterLevel);
-      if (typeof parsed.hunterCount === 'number') setHunterCount(parsed.hunterCount);
-      if (Array.isArray(parsed.encounterMonsters)) setEncounterMonsters(parsed.encounterMonsters);
-    } catch {
-      // ignore corrupted storage
-    }
-  }, []);
+    if (isToolStateLoading || hydratedRef.current) return;
+    if (typeof storedState.hunterLevel === 'number') setHunterLevel(storedState.hunterLevel);
+    if (typeof storedState.hunterCount === 'number') setHunterCount(storedState.hunterCount);
+    if (Array.isArray(storedState.encounterMonsters)) setEncounterMonsters(storedState.encounterMonsters);
+    hydratedRef.current = true;
+  }, [isToolStateLoading, storedState.encounterMonsters, storedState.hunterCount, storedState.hunterLevel]);
 
   // Persist encounter (best-effort)
   useEffect(() => {
-    try {
-      localStorage.setItem(
-        ENCOUNTER_STORAGE_KEY,
-        JSON.stringify({
-          version: 1,
-          savedAt: new Date().toISOString(),
-          hunterLevel,
-          hunterCount,
-          encounterMonsters,
-        })
-      );
-    } catch {
-      // ignore quota errors
-    }
-  }, [hunterLevel, hunterCount, encounterMonsters]);
+    if (!hydratedRef.current) return;
+    void saveNow({
+      ...debouncedState,
+      version: 1,
+      savedAt: new Date().toISOString(),
+    });
+  }, [debouncedState, saveNow]);
 
   const { data: monsters = [], isLoading } = useQuery({
     queryKey: ['monsters', searchQuery],
@@ -223,13 +233,14 @@ const EncounterBuilder = () => {
         }
       };
 
+      const canonicalQuery = normalizeMonarchSearch(searchQuery);
       let query = supabase
         .from('compendium_monsters')
         .select('*')
         .limit(50);
 
-      if (searchQuery) {
-        query = query.ilike('name', `%${searchQuery}%`);
+      if (canonicalQuery) {
+        query = query.ilike('name', `%${canonicalQuery}%`);
       }
 
       try {
@@ -252,6 +263,7 @@ const EncounterBuilder = () => {
   const difficulty = calculateDifficulty(totalXP, hunterLevel, hunterCount);
 
   const addMonster = (monster: Monster) => {
+    const displayName = formatMonarchVernacular(monster.name);
     const existing = encounterMonsters.find(em => em.monster.id === monster.id);
     if (existing) {
       setEncounterMonsters(encounterMonsters.map(em =>
@@ -266,7 +278,7 @@ const EncounterBuilder = () => {
     }
       toast({
         title: 'Creature added',
-        description: `${monster.name} added to Gate encounter.`,
+        description: `${displayName} added to Rift encounter.`,
       });
   };
 
@@ -286,25 +298,21 @@ const EncounterBuilder = () => {
 
   const clearEncounter = () => {
     setEncounterMonsters([]);
-    try {
-      localStorage.removeItem(ENCOUNTER_STORAGE_KEY);
-    } catch {
-      // ignore
-    }
     toast({
       title: 'Encounter cleared',
       description: 'Encounter builder state cleared.',
     });
   };
 
-  const sendToInitiativeTracker = () => {
+  const sendToInitiativeTracker = async () => {
     if (encounterMonsters.length === 0) return;
 
     const combatants = encounterMonsters.flatMap((em) => {
       const qty = Math.max(1, em.quantity || 1);
+      const displayName = formatMonarchVernacular(em.monster.name);
       return Array.from({ length: qty }, (_, i) => ({
         id: `${em.monster.id}-${Date.now()}-${Math.random()}-${i}`,
-        name: qty > 1 ? `${em.monster.name} #${i + 1}` : em.monster.name,
+        name: qty > 1 ? `${displayName} #${i + 1}` : displayName,
         initiative: 0,
         hp: em.monster.hit_points_average || undefined,
         maxHp: em.monster.hit_points_average || undefined,
@@ -314,19 +322,18 @@ const EncounterBuilder = () => {
       }));
     });
 
-    try {
-      localStorage.setItem(
-        INITIATIVE_STORAGE_KEY,
-        JSON.stringify({
-          version: 1,
-          savedAt: new Date().toISOString(),
-          combatants,
-          currentTurn: 0,
-          round: 1,
-        })
-      );
-    } catch {
-      // ignore
+    const initiativeState = {
+      version: 1,
+      savedAt: new Date().toISOString(),
+      combatants,
+      currentTurn: 0,
+      round: 1,
+    };
+
+    if (isAuthed && user?.id) {
+      await saveUserToolState(user.id, 'initiative_tracker', initiativeState);
+    } else {
+      writeLocalToolState(INITIATIVE_STORAGE_KEY, initiativeState);
     }
 
     toast({
@@ -358,10 +365,10 @@ const EncounterBuilder = () => {
             Back to System Tools
           </Button>
           <h1 className="font-display text-4xl font-bold mb-2 gradient-text-shadow">
-            GATE ENCOUNTER BUILDER
+            RIFT ENCOUNTER BUILDER
           </h1>
           <p className="text-muted-foreground font-heading">
-            Design balanced encounters for Hunters entering Gates. The System watches.
+            Design balanced encounters for Ascendants entering Rifts. The System watches.
           </p>
         </div>
 
@@ -372,7 +379,7 @@ const EncounterBuilder = () => {
               <div className="space-y-4">
                 <div>
                   <label className="text-xs font-display text-muted-foreground mb-1 block">
-                    HUNTER LEVEL
+                    ASCENDANT LEVEL
                   </label>
                   <Input
                     type="number"
@@ -385,7 +392,7 @@ const EncounterBuilder = () => {
                 </div>
                 <div>
                   <label className="text-xs font-display text-muted-foreground mb-1 block">
-                    HUNTER COUNT
+                    ASCENDANT COUNT
                   </label>
                   <Input
                     type="number"
@@ -424,7 +431,9 @@ const EncounterBuilder = () => {
                         className="p-2 rounded border bg-muted/30 flex items-center justify-between"
                       >
                         <div className="flex-1">
-                          <div className="font-heading text-sm">{em.monster.name}</div>
+                          <div className="font-heading text-sm">
+                            {formatMonarchVernacular(em.monster.name)}
+                          </div>
                           <div className="text-xs text-muted-foreground">
                             CR {em.monster.cr || '?'} | {calculateXP(em.monster, em.quantity)} XP
                           </div>
@@ -435,7 +444,7 @@ const EncounterBuilder = () => {
                             variant="ghost"
                             className="h-6 w-6"
                             onClick={() => updateQuantity(em.id, em.quantity - 1)}
-                            aria-label={`Decrease quantity of ${em.monster.name}`}
+                            aria-label={`Decrease quantity of ${formatMonarchVernacular(em.monster.name)}`}
                           >
                             <Trash2 className="w-3 h-3" />
                           </Button>
@@ -451,7 +460,7 @@ const EncounterBuilder = () => {
                             variant="ghost"
                             className="h-6 w-6"
                             onClick={() => updateQuantity(em.id, em.quantity + 1)}
-                            aria-label={`Increase quantity of ${em.monster.name}`}
+                            aria-label={`Increase quantity of ${formatMonarchVernacular(em.monster.name)}`}
                           >
                             <Plus className="w-3 h-3" />
                           </Button>
@@ -490,7 +499,7 @@ const EncounterBuilder = () => {
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
-                    placeholder="Search Gate creatures..."
+                    placeholder="Search Rift creatures..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="pl-10"
@@ -500,12 +509,12 @@ const EncounterBuilder = () => {
 
               {showLoadingState ? (
                 <div className="text-center py-8 text-muted-foreground">
-                  Loading Gate creatures...
+                  Loading Rift creatures...
                 </div>
               ) : monsters.length === 0 ? (
                 <div className="text-center py-8 text-muted-foreground">
                   <Sword className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                  <p>No Gate creatures found</p>
+                  <p>No Rift creatures found</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[600px] overflow-y-auto">
@@ -518,7 +527,9 @@ const EncounterBuilder = () => {
                     >
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex-1">
-                          <div className="font-heading font-semibold">{monster.name}</div>
+                          <div className="font-heading font-semibold">
+                            {formatMonarchVernacular(monster.name)}
+                          </div>
                           <div className="text-xs text-muted-foreground">
                             CR {monster.cr || '?'} | {monster.xp || 0} XP
                           </div>
@@ -531,7 +542,7 @@ const EncounterBuilder = () => {
                             e.stopPropagation();
                             addMonster(monster);
                           }}
-                          aria-label={`Add ${monster.name} to encounter`}
+                          aria-label={`Add ${formatMonarchVernacular(monster.name)} to encounter`}
                           data-testid="encounter-add-button"
                         >
                           <Plus className="w-3 h-3" />
@@ -539,7 +550,7 @@ const EncounterBuilder = () => {
                       </div>
                       {monster.creature_type && (
                         <Badge variant="outline" className="text-xs">
-                          {monster.creature_type}
+                          {formatMonarchVernacular(monster.creature_type)}
                         </Badge>
                       )}
                     </div>
@@ -555,4 +566,5 @@ const EncounterBuilder = () => {
 };
 
 export default EncounterBuilder;
+
 

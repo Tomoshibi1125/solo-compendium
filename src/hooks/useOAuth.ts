@@ -77,7 +77,7 @@ export function useOAuth(): UseOAuthReturn {
           if (provider && provider !== 'email') {
             const providerName = OAUTH_PROVIDERS.find(p => p.id === provider)?.name || provider;
             toast({
-              title: `Welcome, Hunter!`,
+              title: `Welcome, Ascendant!`,
               description: `You've successfully signed in with ${providerName}`,
             });
           }

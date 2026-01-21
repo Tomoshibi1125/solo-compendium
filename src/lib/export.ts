@@ -6,6 +6,7 @@
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 import { AppError } from '@/lib/appError';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 type Character = Database['public']['Tables']['characters']['Row'];
 
@@ -83,14 +84,14 @@ export async function exportCharacter(
     exportData.powers = powers || [];
   }
 
-  return JSON.stringify(exportData, null, 2);
+  return formatMonarchVernacular(JSON.stringify(exportData, null, 2));
 }
 
 /**
  * Export character to PDF (markdown format for now)
  */
 export function exportCharacterToMarkdown(character: Character): string {
-  return `# ${character.name}
+  const markdown = `# ${character.name}
 
 **Level ${character.level}** ${character.job}${character.path ? ` (${character.path})` : ''}
 
@@ -109,6 +110,7 @@ ${character.conditions && character.conditions.length > 0
 
 ${character.notes ? `## Notes\n${character.notes}` : ''}
 `;
+  return formatMonarchVernacular(markdown);
 }
 
 /**

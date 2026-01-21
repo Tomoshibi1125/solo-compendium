@@ -1,7 +1,7 @@
--- Create Shadow Soldiers compendium tables
--- Shadow Soldiers are the Shadow Monarch's summoned army
+-- Create Umbral Legion compendium tables
+-- Umbral Legion are the Umbral Monarch's summoned army
 
--- Shadow Soldiers main table (aligned with character sheet usage)
+-- Umbral Legion main table (aligned with character sheet usage)
 CREATE TABLE IF NOT EXISTS public.compendium_shadow_soldiers (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS public.compendium_shadow_soldiers (
   shadow_type TEXT NOT NULL DEFAULT 'soldier',
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
--- Shadow Soldier Traits
+-- Umbral Legionnaire Traits
 CREATE TABLE IF NOT EXISTS public.compendium_shadow_soldier_traits (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   shadow_soldier_id UUID NOT NULL REFERENCES public.compendium_shadow_soldiers(id) ON DELETE CASCADE,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS public.compendium_shadow_soldier_traits (
   description TEXT NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
--- Shadow Soldier Actions
+-- Umbral Legionnaire Actions
 CREATE TABLE IF NOT EXISTS public.compendium_shadow_soldier_actions (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   shadow_soldier_id UUID NOT NULL REFERENCES public.compendium_shadow_soldiers(id) ON DELETE CASCADE,
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS public.compendium_shadow_soldier_actions (
   legendary_cost INTEGER,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
--- Shadow Soldier Abilities (special powers)
+-- Umbral Legionnaire Abilities (special powers)
 CREATE TABLE IF NOT EXISTS public.compendium_shadow_soldier_abilities (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   shadow_soldier_id UUID NOT NULL REFERENCES public.compendium_shadow_soldiers(id) ON DELETE CASCADE,
@@ -70,9 +70,9 @@ BEGIN
     SELECT 1 FROM pg_policies
     WHERE schemaname = 'public'
       AND tablename = 'compendium_shadow_soldiers'
-      AND policyname = 'Shadow soldiers are publicly readable'
+      AND policyname = 'Umbral Legion are publicly readable'
   ) THEN
-    CREATE POLICY "Shadow soldiers are publicly readable"
+    CREATE POLICY "Umbral Legion are publicly readable"
       ON public.compendium_shadow_soldiers
       FOR SELECT
       USING (true);
@@ -84,9 +84,9 @@ BEGIN
     SELECT 1 FROM pg_policies
     WHERE schemaname = 'public'
       AND tablename = 'compendium_shadow_soldier_traits'
-      AND policyname = 'Shadow soldier traits are publicly readable'
+      AND policyname = 'Umbral Legionnaire traits are publicly readable'
   ) THEN
-    CREATE POLICY "Shadow soldier traits are publicly readable"
+    CREATE POLICY "Umbral Legionnaire traits are publicly readable"
       ON public.compendium_shadow_soldier_traits
       FOR SELECT
       USING (true);
@@ -98,9 +98,9 @@ BEGIN
     SELECT 1 FROM pg_policies
     WHERE schemaname = 'public'
       AND tablename = 'compendium_shadow_soldier_actions'
-      AND policyname = 'Shadow soldier actions are publicly readable'
+      AND policyname = 'Umbral Legionnaire actions are publicly readable'
   ) THEN
-    CREATE POLICY "Shadow soldier actions are publicly readable"
+    CREATE POLICY "Umbral Legionnaire actions are publicly readable"
       ON public.compendium_shadow_soldier_actions
       FOR SELECT
       USING (true);
@@ -112,9 +112,9 @@ BEGIN
     SELECT 1 FROM pg_policies
     WHERE schemaname = 'public'
       AND tablename = 'compendium_shadow_soldier_abilities'
-      AND policyname = 'Shadow soldier abilities are publicly readable'
+      AND policyname = 'Umbral Legionnaire abilities are publicly readable'
   ) THEN
-    CREATE POLICY "Shadow soldier abilities are publicly readable"
+    CREATE POLICY "Umbral Legionnaire abilities are publicly readable"
       ON public.compendium_shadow_soldier_abilities
       FOR SELECT
       USING (true);
@@ -125,62 +125,62 @@ CREATE INDEX IF NOT EXISTS idx_shadow_soldiers_rank ON public.compendium_shadow_
 CREATE INDEX IF NOT EXISTS idx_shadow_soldiers_type ON public.compendium_shadow_soldiers(shadow_type);
 CREATE INDEX IF NOT EXISTS idx_shadow_soldiers_name ON public.compendium_shadow_soldiers(name);
 CREATE INDEX IF NOT EXISTS idx_shadow_soldiers_search ON public.compendium_shadow_soldiers USING GIN (to_tsvector('english', name || ' ' || COALESCE(description, '') || ' ' || COALESCE(lore, '')));
--- Insert Shadow Army Roster
--- Based on Solo Leveling's Shadow Monarch's army
+-- Insert Umbral Legion Roster
+-- Based on System Ascendant's Umbral Monarch's army
 
--- Shadow Soldier roster (schema aligned with compendium_shadow_soldiers)
+-- Umbral Legionnaire roster (schema aligned with compendium_shadow_soldiers)
 INSERT INTO public.compendium_shadow_soldiers (
   name, title, rank, description, lore, str, agi, vit, int, sense, pre,
   armor_class, hit_points, speed, damage_immunities, condition_immunities,
   abilities, shadow_type, summon_requirements
 ) VALUES
 (
-  'Shadow Soldier',
+  'Umbral Legionnaire',
   'Basic Shadow',
   'Soldier Grade',
-  'A basic shadow soldier summoned from the Shadow Monarch''s domain. These are the most common soldiers in the Shadow Army, serving as the backbone of the undead forces.',
-  'Shadow Soldiers are the first shadows that the Shadow Monarch can summon. They are created from the souls of defeated enemies, bound to serve their master for eternity. Though individually weak, they fight with unwavering loyalty and can overwhelm enemies through sheer numbers.',
+  'A basic Umbral Legionnaire summoned from the Umbral Monarch''s domain. These are the most common soldiers in the Umbral Legion, serving as the backbone of the undead forces.',
+  'Umbral Legion are the first shadows that the Umbral Monarch can summon. They are created from the souls of defeated enemies, bound to serve their master for eternity. Though individually weak, they fight with unwavering loyalty and can overwhelm enemies through sheer numbers.',
   12, 14, 13, 6, 10, 8,
   13, 7, 30,
   ARRAY['necrotic', 'poison'],
   ARRAY['charmed', 'frightened'],
-  '[{"name":"Shadow Strike","description":"Melee Weapon Attack: +4 to hit, reach 5 ft. Hit: 1d6+2 slashing damage plus 1d4 necrotic damage.","action_type":"action"},{"name":"Unyielding Obedience","description":"The shadow soldier has advantage on saving throws against being turned or banished.","action_type":"passive"}]'::jsonb,
+  '[{"name":"Shadow Strike","description":"Melee Weapon Attack: +4 to hit, reach 5 ft. Hit: 1d6+2 slashing damage plus 1d4 necrotic damage.","action_type":"action"},{"name":"Unyielding Obedience","description":"The Umbral Legionnaire has advantage on saving throws against being turned or banished.","action_type":"passive"}]'::jsonb,
   'soldier',
-  'Shadow Monarch unlock + Shadow-themed Sovereign + Level 1+'
+  'Umbral Monarch unlock + Shadow-themed Sovereign + Level 1+'
 ),
 (
   'Shadow Knight',
   'Shadow Knight',
   'Knight Grade',
-  'A more powerful shadow soldier, clad in dark armor and wielding shadow-forged weapons. Shadow Knights serve as commanders among the basic shadows.',
-  'Shadow Knights are the elite warriors of the Shadow Army. They retain more of their combat prowess from life, making them formidable fighters. Their armor is forged from shadow energy itself, providing superior protection.',
+  'A more powerful Umbral Legionnaire, clad in dark armor and wielding shadow-forged weapons. Shadow Knights serve as commanders among the basic shadows.',
+  'Shadow Knights are the elite warriors of the Umbral Legion. They retain more of their combat prowess from life, making them formidable fighters. Their armor is forged from shadow energy itself, providing superior protection.',
   16, 14, 16, 10, 12, 14,
   16, 45, 30,
   ARRAY['necrotic', 'poison'],
   ARRAY['charmed', 'frightened'],
-  '[{"name":"Shadow Blade","description":"Melee Weapon Attack: +6 to hit, reach 10 ft. Hit: 2d8+4 slashing damage plus 1d6 necrotic damage.","action_type":"action"},{"name":"Command Presence","description":"Allied shadow soldiers within 30 feet gain +2 to attack rolls.","action_type":"passive"}]'::jsonb,
+  '[{"name":"Shadow Blade","description":"Melee Weapon Attack: +6 to hit, reach 10 ft. Hit: 2d8+4 slashing damage plus 1d6 necrotic damage.","action_type":"action"},{"name":"Command Presence","description":"Allied Umbral Legion within 30 feet gain +2 to attack rolls.","action_type":"passive"}]'::jsonb,
   'knight',
-  'Shadow Monarch unlock + Shadow-themed Sovereign + Level 3+'
+  'Umbral Monarch unlock + Shadow-themed Sovereign + Level 3+'
 ),
 (
   'Shadow Marshal',
   'Shadow Marshal',
   'Elite Knight Grade',
-  'A high-ranking shadow officer capable of commanding other shadows. Shadow Marshals are powerful enough to lead entire battalions of shadow soldiers.',
-  'Shadow Marshals are the generals of the Shadow Army. They possess tactical knowledge and can coordinate multiple shadow units in battle. Their presence on the battlefield significantly increases the effectiveness of nearby shadows.',
+  'A high-ranking shadow officer capable of commanding other shadows. Shadow Marshals are powerful enough to lead entire battalions of Umbral Legion.',
+  'Shadow Marshals are the generals of the Umbral Legion. They possess tactical knowledge and can coordinate multiple shadow units in battle. Their presence on the battlefield significantly increases the effectiveness of nearby shadows.',
   18, 16, 18, 12, 14, 16,
   17, 78, 30,
   ARRAY['necrotic', 'poison'],
   ARRAY['charmed', 'frightened'],
-  '[{"name":"Tactical Command","description":"As a bonus action, the shadow marshal can command up to three shadow soldiers within 60 feet to immediately make one attack.","action_type":"bonus-action"},{"name":"Shadow Aura","description":"Allied shadows within 30 feet gain resistance to radiant damage.","action_type":"passive"}]'::jsonb,
+  '[{"name":"Tactical Command","description":"As a bonus action, the shadow marshal can command up to three Umbral Legion within 60 feet to immediately make one attack.","action_type":"bonus-action"},{"name":"Shadow Aura","description":"Allied shadows within 30 feet gain resistance to radiant damage.","action_type":"passive"}]'::jsonb,
   'knight',
-  'Shadow Monarch unlock + Shadow-themed Sovereign + Level 7+'
+  'Umbral Monarch unlock + Shadow-themed Sovereign + Level 7+'
 ),
 (
   'Kaisel',
   'Shadow Dragon',
   'General Grade',
-  'A dragon-like shadow, one of the Shadow Monarch''s most powerful named shadows. Kaisel combines the power of a dragon with shadow energy, capable of devastating area attacks and aerial dominance.',
+  'A dragon-like shadow, one of the Umbral Monarch''s most powerful named shadows. Kaisel combines the power of a dragon with shadow energy, capable of devastating area attacks and aerial dominance.',
   'Kaisel represents the pinnacle of shadow summoning. This dragon shadow retains the majesty and power of its draconic nature while gaining the benefits of shadow transformation. Kaisel can rain down shadow fire and dominate the skies, making it a force of destruction on the battlefield.',
   22, 18, 22, 14, 16, 18,
   19, 200, 80,
@@ -188,16 +188,16 @@ INSERT INTO public.compendium_shadow_soldiers (
   ARRAY['charmed', 'frightened', 'exhaustion'],
   '[{"name":"Shadow Flame","description":"Kaisel exhales shadow fire in a 60-foot cone. Creatures in the area make a DC 18 Agility save, taking 6d10 fire damage plus 3d10 necrotic damage on a failure, or half on a success.","action_type":"action"},{"name":"Aerial Dominance","description":"Kaisel has advantage on attack rolls against creatures that cannot fly.","action_type":"passive"}]'::jsonb,
   'dragon',
-  'Shadow Monarch unlock + Shadow-themed Sovereign + Level 15+'
+  'Umbral Monarch unlock + Shadow-themed Sovereign + Level 15+'
 );
--- Add traits for each shadow soldier
--- Shadow Soldier traits
+-- Add traits for each Umbral Legionnaire
+-- Umbral Legionnaire traits
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
-SELECT id, 'Shadow Form', 'The shadow soldier is immune to being charmed, frightened, or exhausted. It does not need to eat, drink, or breathe.'
-FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Soldier';
+SELECT id, 'Shadow Form', 'The Umbral Legionnaire is immune to being charmed, frightened, or exhausted. It does not need to eat, drink, or breathe.'
+FROM public.compendium_shadow_soldiers WHERE name = 'Umbral Legionnaire';
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
-SELECT id, 'Undead Fortitude', 'If damage reduces the shadow soldier to 0 hit points, it must make a Constitution saving throw with a DC of 5 + the damage taken, unless the damage is radiant or from a critical hit. On a success, the shadow soldier drops to 1 hit point instead.'
-FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Soldier';
+SELECT id, 'Undead Fortitude', 'If damage reduces the Umbral Legionnaire to 0 hit points, it must make a Constitution saving throw with a DC of 5 + the damage taken, unless the damage is radiant or from a critical hit. On a success, the Umbral Legionnaire drops to 1 hit point instead.'
+FROM public.compendium_shadow_soldiers WHERE name = 'Umbral Legionnaire';
 -- Shadow Knight traits
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Shadow Form', 'The shadow knight is immune to being charmed, frightened, or exhausted. It does not need to eat, drink, or breathe.'
@@ -206,44 +206,44 @@ INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, de
 SELECT id, 'Shadow Armor', 'The shadow knight''s armor is forged from shadow energy, providing resistance to non-magical bludgeoning, piercing, and slashing damage.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Knight';
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
-SELECT id, 'Command Presence', 'Other shadow soldiers within 30 feet of the shadow knight have advantage on attack rolls.'
+SELECT id, 'Command Presence', 'Other Umbral Legion within 30 feet of the shadow knight have advantage on attack rolls.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Knight';
 -- Shadow Marshal traits
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Shadow Form', 'The shadow marshal is immune to being charmed, frightened, or exhausted. It does not need to eat, drink, or breathe.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Marshal';
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
-SELECT id, 'Tactical Command', 'As a bonus action, the shadow marshal can command up to three shadow soldiers within 60 feet. Each commanded shadow can immediately make one weapon attack.'
+SELECT id, 'Tactical Command', 'As a bonus action, the shadow marshal can command up to three Umbral Legion within 60 feet. Each commanded shadow can immediately make one weapon attack.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Marshal';
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
-SELECT id, 'Shadow Aura', 'Shadow soldiers within 30 feet of the shadow marshal have resistance to radiant damage.'
+SELECT id, 'Shadow Aura', 'Umbral Legion within 30 feet of the shadow marshal have resistance to radiant damage.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Marshal';
--- Igris traits
+-- Crimson Knight traits
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
-SELECT id, 'Shadow Form', 'Igris is immune to being charmed, frightened, or exhausted. He does not need to eat, drink, or breathe.'
-FROM public.compendium_shadow_soldiers WHERE name = 'Igris';
+SELECT id, 'Shadow Form', 'Crimson Knight is immune to being charmed, frightened, or exhausted. He does not need to eat, drink, or breathe.'
+FROM public.compendium_shadow_soldiers WHERE name = 'Crimson Knight';
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
-SELECT id, 'Master Swordsman', 'Igris has advantage on all melee weapon attacks. When he hits with a melee weapon attack, he can make an additional attack as a bonus action.'
-FROM public.compendium_shadow_soldiers WHERE name = 'Igris';
+SELECT id, 'Master Swordsman', 'Crimson Knight has advantage on all melee weapon attacks. When he hits with a melee weapon attack, he can make an additional attack as a bonus action.'
+FROM public.compendium_shadow_soldiers WHERE name = 'Crimson Knight';
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
-SELECT id, 'Shadow Blade', 'Igris''s greatsword is forged from pure shadow energy. It deals an additional 1d8 necrotic damage on a hit.'
-FROM public.compendium_shadow_soldiers WHERE name = 'Igris';
+SELECT id, 'Shadow Blade', 'Crimson Knight''s greatsword is forged from pure shadow energy. It deals an additional 1d8 necrotic damage on a hit.'
+FROM public.compendium_shadow_soldiers WHERE name = 'Crimson Knight';
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
-SELECT id, 'Army Commander', 'All shadow soldiers within 120 feet of Igris have advantage on saving throws and add Igris''s proficiency bonus to their attack rolls.'
-FROM public.compendium_shadow_soldiers WHERE name = 'Igris';
--- Beru traits
+SELECT id, 'Army Commander', 'All Umbral Legion within 120 feet of Crimson Knight have advantage on saving throws and add Crimson Knight''s proficiency bonus to their attack rolls.'
+FROM public.compendium_shadow_soldiers WHERE name = 'Crimson Knight';
+-- Gilded Reaper traits
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
-SELECT id, 'Shadow Form', 'Beru is immune to being charmed, frightened, or exhausted. He does not need to eat, drink, or breathe.'
-FROM public.compendium_shadow_soldiers WHERE name = 'Beru';
+SELECT id, 'Shadow Form', 'Gilded Reaper is immune to being charmed, frightened, or exhausted. He does not need to eat, drink, or breathe.'
+FROM public.compendium_shadow_soldiers WHERE name = 'Gilded Reaper';
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
-SELECT id, 'Massive Frame', 'Beru''s size and strength allow him to grapple creatures up to Huge size. He has advantage on Strength checks and saving throws.'
-FROM public.compendium_shadow_soldiers WHERE name = 'Beru';
+SELECT id, 'Massive Frame', 'Gilded Reaper''s size and strength allow him to grapple creatures up to Huge size. He has advantage on Strength checks and saving throws.'
+FROM public.compendium_shadow_soldiers WHERE name = 'Gilded Reaper';
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
-SELECT id, 'Crushing Mandibles', 'When Beru hits a creature with his bite attack, the target must succeed on a Strength saving throw (DC 18) or be grappled. While grappled, the target takes 2d6 bludgeoning damage at the start of each of Beru''s turns.'
-FROM public.compendium_shadow_soldiers WHERE name = 'Beru';
+SELECT id, 'Crushing Mandibles', 'When Gilded Reaper hits a creature with his bite attack, the target must succeed on a Strength saving throw (DC 18) or be grappled. While grappled, the target takes 2d6 bludgeoning damage at the start of each of Gilded Reaper''s turns.'
+FROM public.compendium_shadow_soldiers WHERE name = 'Gilded Reaper';
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
-SELECT id, 'Shadow Flight', 'Beru can hover and move through the air with shadow energy. His flight speed is 60 feet.'
-FROM public.compendium_shadow_soldiers WHERE name = 'Beru';
+SELECT id, 'Shadow Flight', 'Gilded Reaper can hover and move through the air with shadow energy. His flight speed is 60 feet.'
+FROM public.compendium_shadow_soldiers WHERE name = 'Gilded Reaper';
 -- Tank traits
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Shadow Form', 'Tank is immune to being charmed, frightened, or exhausted. He does not need to eat, drink, or breathe.'
@@ -267,11 +267,11 @@ FROM public.compendium_shadow_soldiers WHERE name = 'Kaisel';
 INSERT INTO public.compendium_shadow_soldier_traits (shadow_soldier_id, name, description)
 SELECT id, 'Shadow Dragon', 'Kaisel has immunity to necrotic damage and resistance to all other damage types except radiant damage.'
 FROM public.compendium_shadow_soldiers WHERE name = 'Kaisel';
--- Add actions for each shadow soldier
--- Shadow Soldier actions
+-- Add actions for each Umbral Legionnaire
+-- Umbral Legionnaire actions
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Shadow Blade', 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) slashing damage plus 3 (1d6) necrotic damage.', 'action', 4, '1d6 + 2 slashing plus 1d6 necrotic', 'slashing, necrotic'
-FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Soldier';
+FROM public.compendium_shadow_soldiers WHERE name = 'Umbral Legionnaire';
 -- Shadow Knight actions
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Shadow Greatsword', 'Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) slashing damage plus 7 (2d6) necrotic damage.', 'action', 6, '2d6 + 4 slashing plus 2d6 necrotic', 'slashing, necrotic'
@@ -287,31 +287,31 @@ INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, d
 SELECT id, 'Multiattack', 'The shadow marshal makes three blade attacks.', 'action', NULL, NULL, NULL
 FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Marshal';
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, recharge)
-SELECT id, 'Shadow Command', 'The shadow marshal issues a command to all shadow soldiers within 60 feet. Each shadow soldier can immediately use its reaction to make one weapon attack.', 'action', '5-6'
+SELECT id, 'Shadow Command', 'The shadow marshal issues a command to all Umbral Legion within 60 feet. Each Umbral Legionnaire can immediately use its reaction to make one weapon attack.', 'action', '5-6'
 FROM public.compendium_shadow_soldiers WHERE name = 'Shadow Marshal';
--- Igris actions
+-- Crimson Knight actions
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Shadow Greatsword', 'Melee Weapon Attack: +11 to hit, reach 5 ft., one target. Hit: 18 (3d6 + 8) slashing damage plus 9 (2d8) necrotic damage.', 'action', 11, '3d6 + 8 slashing plus 2d8 necrotic', 'slashing, necrotic'
-FROM public.compendium_shadow_soldiers WHERE name = 'Igris';
+FROM public.compendium_shadow_soldiers WHERE name = 'Crimson Knight';
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
-SELECT id, 'Multiattack', 'Igris makes four greatsword attacks.', 'action', NULL, NULL, NULL
-FROM public.compendium_shadow_soldiers WHERE name = 'Igris';
+SELECT id, 'Multiattack', 'Crimson Knight makes four greatsword attacks.', 'action', NULL, NULL, NULL
+FROM public.compendium_shadow_soldiers WHERE name = 'Crimson Knight';
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, recharge)
-SELECT id, 'Shadow Slash', 'Igris makes a sweeping attack with his greatsword. All creatures within 10 feet must make a Dexterity saving throw (DC 18) or take 21 (6d6) slashing damage plus 14 (4d6) necrotic damage, or half as much on a successful save.', 'action', '5-6'
-FROM public.compendium_shadow_soldiers WHERE name = 'Igris';
--- Beru actions
+SELECT id, 'Shadow Slash', 'Crimson Knight makes a sweeping attack with his greatsword. All creatures within 10 feet must make a Dexterity saving throw (DC 18) or take 21 (6d6) slashing damage plus 14 (4d6) necrotic damage, or half as much on a successful save.', 'action', '5-6'
+FROM public.compendium_shadow_soldiers WHERE name = 'Crimson Knight';
+-- Gilded Reaper actions
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Bite', 'Melee Weapon Attack: +11 to hit, reach 10 ft., one target. Hit: 22 (3d10 + 6) piercing damage plus 14 (4d6) necrotic damage. If the target is a Medium or smaller creature, it is grappled (escape DC 18).', 'action', 11, '3d10 + 6 piercing plus 4d6 necrotic', 'piercing, necrotic'
-FROM public.compendium_shadow_soldiers WHERE name = 'Beru';
+FROM public.compendium_shadow_soldiers WHERE name = 'Gilded Reaper';
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Claw', 'Melee Weapon Attack: +11 to hit, reach 10 ft., one target. Hit: 18 (3d6 + 6) slashing damage plus 10 (3d6) necrotic damage.', 'action', 11, '3d6 + 6 slashing plus 3d6 necrotic', 'slashing, necrotic'
-FROM public.compendium_shadow_soldiers WHERE name = 'Beru';
+FROM public.compendium_shadow_soldiers WHERE name = 'Gilded Reaper';
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
-SELECT id, 'Multiattack', 'Beru makes one bite attack and two claw attacks.', 'action', NULL, NULL, NULL
-FROM public.compendium_shadow_soldiers WHERE name = 'Beru';
+SELECT id, 'Multiattack', 'Gilded Reaper makes one bite attack and two claw attacks.', 'action', NULL, NULL, NULL
+FROM public.compendium_shadow_soldiers WHERE name = 'Gilded Reaper';
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, recharge)
-SELECT id, 'Shadow Breath', 'Beru exhales a 30-foot cone of shadow energy. Each creature in that area must make a Dexterity saving throw (DC 18), taking 35 (10d6) necrotic damage on a failed save, or half as much on a successful one.', 'action', '5-6'
-FROM public.compendium_shadow_soldiers WHERE name = 'Beru';
+SELECT id, 'Shadow Breath', 'Gilded Reaper exhales a 30-foot cone of shadow energy. Each creature in that area must make a Dexterity saving throw (DC 18), taking 35 (10d6) necrotic damage on a failed save, or half as much on a successful one.', 'action', '5-6'
+FROM public.compendium_shadow_soldiers WHERE name = 'Gilded Reaper';
 -- Tank actions
 INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, description, action_type, attack_bonus, damage, damage_type)
 SELECT id, 'Massive Fist', 'Melee Weapon Attack: +12 to hit, reach 10 ft., one target. Hit: 21 (3d8 + 7) bludgeoning damage plus 14 (4d6) necrotic damage.', 'action', 12, '3d8 + 7 bludgeoning plus 4d6 necrotic', 'bludgeoning, necrotic'
@@ -352,20 +352,20 @@ INSERT INTO public.compendium_shadow_soldier_actions (shadow_soldier_id, name, d
 SELECT id, 'Shadow Roar (Costs 3 Actions)', 'Kaisel unleashes a devastating roar. All creatures within 60 feet must make a Constitution saving throw (DC 20) or take 21 (6d6) thunder damage and be deafened for 1 minute.', 'legendary', 3
 FROM public.compendium_shadow_soldiers WHERE name = 'Kaisel';
 -- Add special abilities
--- Igris abilities
+-- Crimson Knight abilities
 INSERT INTO public.compendium_shadow_soldier_abilities (shadow_soldier_id, name, description, ability_type)
-SELECT id, 'Shadow Step', 'As a bonus action, Igris can teleport up to 30 feet to an unoccupied space he can see. This movement does not provoke opportunity attacks.', 'bonus'
-FROM public.compendium_shadow_soldiers WHERE name = 'Igris';
+SELECT id, 'Shadow Step', 'As a bonus action, Crimson Knight can teleport up to 30 feet to an unoccupied space he can see. This movement does not provoke opportunity attacks.', 'bonus'
+FROM public.compendium_shadow_soldiers WHERE name = 'Crimson Knight';
 INSERT INTO public.compendium_shadow_soldier_abilities (shadow_soldier_id, name, description, ability_type)
-SELECT id, 'Loyalty Beyond Death', 'Igris will never betray the Shadow Monarch. He has advantage on all saving throws against effects that would control or command him.', 'passive'
-FROM public.compendium_shadow_soldiers WHERE name = 'Igris';
--- Beru abilities
+SELECT id, 'Loyalty Beyond Death', 'Crimson Knight will never betray the Umbral Monarch. He has advantage on all saving throws against effects that would control or command him.', 'passive'
+FROM public.compendium_shadow_soldiers WHERE name = 'Crimson Knight';
+-- Gilded Reaper abilities
 INSERT INTO public.compendium_shadow_soldier_abilities (shadow_soldier_id, name, description, ability_type)
-SELECT id, 'Shadow Regeneration', 'At the start of each of his turns, Beru regains 10 hit points if he has at least 1 hit point remaining.', 'passive'
-FROM public.compendium_shadow_soldiers WHERE name = 'Beru';
+SELECT id, 'Shadow Regeneration', 'At the start of each of his turns, Gilded Reaper regains 10 hit points if he has at least 1 hit point remaining.', 'passive'
+FROM public.compendium_shadow_soldiers WHERE name = 'Gilded Reaper';
 INSERT INTO public.compendium_shadow_soldier_abilities (shadow_soldier_id, name, description, ability_type, recharge)
-SELECT id, 'Shadow Burst', 'As a reaction when Beru takes damage, he can release a burst of shadow energy. All creatures within 10 feet must make a Dexterity saving throw (DC 18) or take 14 (4d6) necrotic damage.', 'reaction', '5-6'
-FROM public.compendium_shadow_soldiers WHERE name = 'Beru';
+SELECT id, 'Shadow Burst', 'As a reaction when Gilded Reaper takes damage, he can release a burst of shadow energy. All creatures within 10 feet must make a Dexterity saving throw (DC 18) or take 14 (4d6) necrotic damage.', 'reaction', '5-6'
+FROM public.compendium_shadow_soldiers WHERE name = 'Gilded Reaper';
 -- Tank abilities
 INSERT INTO public.compendium_shadow_soldier_abilities (shadow_soldier_id, name, description, ability_type)
 SELECT id, 'Damage Absorption', 'When Tank takes damage, he can use his reaction to reduce the damage by 1d10 + his Constitution modifier (minimum 1).', 'reaction'
@@ -380,3 +380,5 @@ FROM public.compendium_shadow_soldiers WHERE name = 'Kaisel';
 INSERT INTO public.compendium_shadow_soldier_abilities (shadow_soldier_id, name, description, ability_type)
 SELECT id, 'Legendary Resistance', 'If Kaisel fails a saving throw, he can choose to succeed instead. He can use this ability three times per day.', 'passive'
 FROM public.compendium_shadow_soldiers WHERE name = 'Kaisel';
+
+

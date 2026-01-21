@@ -164,7 +164,7 @@ BEGIN
   -- For now, return a basic enhancement
   RETURN QUERY
   SELECT 
-    p_base_prompt || ', dramatic lighting, high contrast, detailed character art, Solo Leveling manhwa style' as enhanced_prompt,
+    p_base_prompt || ', dramatic lighting, high contrast, detailed character art, System Ascendant illustrated style' as enhanced_prompt,
     ARRAY['Add shadow energy effects', 'Include system interface elements', 'Dynamic pose recommended'] as suggestions,
     '{"weight": "stable-diffusion", "steps": 30, "cfg_scale": 7.5, "sampler": "DPM++ 2M Karras"}'::JSONB as technical_params;
 END;
@@ -225,3 +225,4 @@ GRANT EXECUTE ON FUNCTION public.get_ai_generated_content TO authenticated;
 GRANT EXECUTE ON FUNCTION public.log_ai_usage TO authenticated;
 GRANT EXECUTE ON FUNCTION public.get_ai_usage_stats TO authenticated;
 GRANT EXECUTE ON FUNCTION public.enhance_art_prompt TO authenticated;
+

@@ -32,7 +32,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "login-page-bg.webp",
       "path": "/ui/login-page-bg.webp",
       "size": "1920x1080",
-      "prompt": "Solo Leveling login interface, dark theme, shadow soldier emblem, glowing purple energy, futuristic UI, epic fantasy login screen"
+      "prompt": "System Ascendant login interface, dark theme, umbral legion emblem, glowing purple energy, futuristic UI, epic fantasy login screen"
     },
     "landingPage": {
       "category": "ui",
@@ -40,7 +40,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "landing-page-hero.webp",
       "path": "/ui/landing-page-hero.webp",
       "size": "1920x1080",
-      "prompt": "Solo Leveling landing page hero, shadow soldier standing before gate portal, epic fantasy landscape, dark atmosphere, glowing effects"
+      "prompt": "System Ascendant landing page hero, umbral legionnaire standing before gate portal, epic fantasy landscape, dark atmosphere, glowing effects"
     },
     "dashboardBg": {
       "category": "ui",
@@ -48,7 +48,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "dashboard-bg.webp",
       "path": "/ui/dashboard-bg.webp",
       "size": "1920x1080",
-      "prompt": "Solo Leveling dashboard background, dark interface theme, shadow realm aesthetic, futuristic UI elements, purple energy flows"
+      "prompt": "System Ascendant dashboard background, dark interface theme, shadow realm aesthetic, futuristic UI elements, purple energy flows"
     }
   },
   "items": {
@@ -58,7 +58,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "shadow-blade.webp",
       "path": "/generated/items/shadow-blade.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style shadow blade, dark sword with purple energy, glowing runes, epic fantasy weapon, detailed illustration"
+      "prompt": "System Ascendant style shadow blade, dark sword with purple energy, glowing runes, epic fantasy weapon, detailed illustration"
     },
     "shadowArmor": {
       "category": "items",
@@ -66,7 +66,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "shadow-armor.webp",
       "path": "/generated/items/shadow-armor.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style shadow armor, dark plate armor with purple energy, glowing runes, epic fantasy armor, detailed illustration"
+      "prompt": "System Ascendant style shadow armor, dark plate armor with purple energy, glowing runes, epic fantasy armor, detailed illustration"
     },
     "shadowRing": {
       "category": "items",
@@ -74,7 +74,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "shadow-ring.webp",
       "path": "/generated/items/shadow-ring.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style shadow ring, dark ring with purple gemstone, glowing energy, epic fantasy jewelry, detailed illustration"
+      "prompt": "System Ascendant style shadow ring, dark ring with purple gemstone, glowing energy, epic fantasy jewelry, detailed illustration"
     },
     "healthPotion": {
       "category": "items",
@@ -82,7 +82,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "health-potion.webp",
       "path": "/generated/items/health-potion.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style health potion, glowing red potion in dark bottle, magical energy, epic fantasy item, detailed illustration"
+      "prompt": "System Ascendant style health potion, glowing red potion in dark bottle, magical energy, epic fantasy item, detailed illustration"
     },
     "manaPotion": {
       "category": "items",
@@ -90,7 +90,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "mana-potion.webp",
       "path": "/generated/items/mana-potion.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style mana potion, glowing blue potion in dark bottle, magical energy, epic fantasy item, detailed illustration"
+      "prompt": "System Ascendant style mana potion, glowing blue potion in dark bottle, magical energy, epic fantasy item, detailed illustration"
     },
     "shadowScroll": {
       "category": "items",
@@ -98,7 +98,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "shadow-scroll.webp",
       "path": "/generated/items/shadow-scroll.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style shadow scroll, ancient scroll with purple energy, glowing runes, epic fantasy document, detailed illustration"
+      "prompt": "System Ascendant style shadow scroll, ancient scroll with purple energy, glowing runes, epic fantasy document, detailed illustration"
     }
   },
   "runes": {
@@ -108,7 +108,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "shadow-rune.webp",
       "path": "/generated/runes/shadow-rune.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style shadow rune, ancient magical symbol with purple energy, glowing rune stone, epic fantasy magic, detailed illustration"
+      "prompt": "System Ascendant style shadow rune, ancient magical symbol with purple energy, glowing rune stone, epic fantasy magic, detailed illustration"
     },
     "fireRune": {
       "category": "runes",
@@ -116,7 +116,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "fire-rune.webp",
       "path": "/generated/runes/fire-rune.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style fire rune, ancient magical symbol with red energy, glowing rune stone, epic fantasy magic, detailed illustration"
+      "prompt": "System Ascendant style fire rune, ancient magical symbol with red energy, glowing rune stone, epic fantasy magic, detailed illustration"
     },
     "iceRune": {
       "category": "runes",
@@ -124,7 +124,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "ice-rune.webp",
       "path": "/generated/runes/ice-rune.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style ice rune, ancient magical symbol with blue energy, glowing rune stone, epic fantasy magic, detailed illustration"
+      "prompt": "System Ascendant style ice rune, ancient magical symbol with blue energy, glowing rune stone, epic fantasy magic, detailed illustration"
     },
     "lightningRune": {
       "category": "runes",
@@ -132,7 +132,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "lightning-rune.webp",
       "path": "/generated/runes/lightning-rune.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style lightning rune, ancient magical symbol with yellow energy, glowing rune stone, epic fantasy magic, detailed illustration"
+      "prompt": "System Ascendant style lightning rune, ancient magical symbol with yellow energy, glowing rune stone, epic fantasy magic, detailed illustration"
     },
     "healingRune": {
       "category": "runes",
@@ -140,7 +140,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "healing-rune.webp",
       "path": "/generated/runes/healing-rune.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style healing rune, ancient magical symbol with green energy, glowing rune stone, epic fantasy magic, detailed illustration"
+      "prompt": "System Ascendant style healing rune, ancient magical symbol with green energy, glowing rune stone, epic fantasy magic, detailed illustration"
     },
     "protectionRune": {
       "category": "runes",
@@ -148,7 +148,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "protection-rune.webp",
       "path": "/generated/runes/protection-rune.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style protection rune, ancient magical symbol with white energy, glowing rune stone, epic fantasy magic, detailed illustration"
+      "prompt": "System Ascendant style protection rune, ancient magical symbol with white energy, glowing rune stone, epic fantasy magic, detailed illustration"
     }
   },
   "maps": {
@@ -158,7 +158,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "dungeon-floor.webp",
       "path": "/generated/maps/dungeon-floor.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style dungeon floor tile, dark stone floor with purple energy patterns, epic fantasy dungeon, detailed texture"
+      "prompt": "System Ascendant style dungeon floor tile, dark stone floor with purple energy patterns, epic fantasy dungeon, detailed texture"
     },
     "stoneWall": {
       "category": "maps",
@@ -166,7 +166,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "stone-wall.webp",
       "path": "/generated/maps/stone-wall.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style stone wall tile, dark stone wall with shadow energy, epic fantasy dungeon wall, detailed texture"
+      "prompt": "System Ascendant style stone wall tile, dark stone wall with shadow energy, epic fantasy dungeon wall, detailed texture"
     },
     "woodenDoor": {
       "category": "maps",
@@ -174,7 +174,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "wooden-door.webp",
       "path": "/generated/maps/wooden-door.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style wooden door, dark wooden door with metal fittings, epic fantasy dungeon door, detailed illustration"
+      "prompt": "System Ascendant style wooden door, dark wooden door with metal fittings, epic fantasy dungeon door, detailed illustration"
     },
     "ironGate": {
       "category": "maps",
@@ -182,7 +182,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "iron-gate.webp",
       "path": "/generated/maps/iron-gate.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style iron gate, dark metal gate with shadow energy, epic fantasy dungeon gate, detailed illustration"
+      "prompt": "System Ascendant style iron gate, dark metal gate with shadow energy, epic fantasy dungeon gate, detailed illustration"
     },
     "treasureChest": {
       "category": "maps",
@@ -190,7 +190,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "treasure-chest.webp",
       "path": "/generated/maps/treasure-chest.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style treasure chest, dark chest with purple energy glow, epic fantasy treasure, detailed illustration"
+      "prompt": "System Ascendant style treasure chest, dark chest with purple energy glow, epic fantasy treasure, detailed illustration"
     },
     "throneRoom": {
       "category": "maps",
@@ -198,7 +198,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "throne-room.webp",
       "path": "/generated/maps/throne-room.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style throne room, dark throne with shadow energy, epic fantasy throne room, detailed illustration"
+      "prompt": "System Ascendant style throne room, dark throne with shadow energy, epic fantasy throne room, detailed illustration"
     }
   },
   "tokens": {
@@ -208,7 +208,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "player-token.webp",
       "path": "/generated/tokens/player-token.webp",
       "size": "256x256",
-      "prompt": "Solo Leveling style player token, shadow warrior character, circular token frame, epic fantasy character portrait"
+      "prompt": "System Ascendant style player token, shadow warrior character, circular token frame, epic fantasy character portrait"
     },
     "monsterToken": {
       "category": "tokens",
@@ -216,7 +216,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "monster-token.webp",
       "path": "/generated/tokens/monster-token.webp",
       "size": "256x256",
-      "prompt": "Solo Leveling style monster token, shadow demon creature, circular token frame, epic fantasy monster portrait"
+      "prompt": "System Ascendant style monster token, shadow demon creature, circular token frame, epic fantasy monster portrait"
     },
     "bossToken": {
       "category": "tokens",
@@ -224,7 +224,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "boss-token.webp",
       "path": "/generated/tokens/boss-token.webp",
       "size": "256x256",
-      "prompt": "Solo Leveling style boss token, shadow lord character, circular token frame, epic fantasy boss portrait"
+      "prompt": "System Ascendant style boss token, shadow lord character, circular token frame, epic fantasy boss portrait"
     },
     "npcToken": {
       "category": "tokens",
@@ -232,7 +232,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "npc-token.webp",
       "path": "/generated/tokens/npc-token.webp",
       "size": "256x256",
-      "prompt": "Solo Leveling style NPC token, mysterious hooded figure, circular token frame, epic fantasy NPC portrait"
+      "prompt": "System Ascendant style NPC token, mysterious hooded figure, circular token frame, epic fantasy NPC portrait"
     },
     "merchantToken": {
       "category": "tokens",
@@ -240,7 +240,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "merchant-token.webp",
       "path": "/generated/tokens/merchant-token.webp",
       "size": "256x256",
-      "prompt": "Solo Leveling style merchant token, shadow realm merchant, circular token frame, epic fantasy merchant portrait"
+      "prompt": "System Ascendant style merchant token, shadow realm merchant, circular token frame, epic fantasy merchant portrait"
     },
     "guardToken": {
       "category": "tokens",
@@ -248,7 +248,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "guard-token.webp",
       "path": "/generated/tokens/guard-token.webp",
       "size": "256x256",
-      "prompt": "Solo Leveling style guard token, shadow soldier guard, circular token frame, epic fantasy guard portrait"
+      "prompt": "System Ascendant style guard token, umbral legion guard, circular token frame, epic fantasy guard portrait"
     }
   },
   "spells": {
@@ -258,7 +258,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "shadow-bolt.webp",
       "path": "/generated/spells/shadow-bolt.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style shadow bolt spell, purple energy projectile, dark magic effect, epic fantasy spell, detailed illustration"
+      "prompt": "System Ascendant style shadow bolt spell, purple energy projectile, dark magic effect, epic fantasy spell, detailed illustration"
     },
     "fireball": {
       "category": "spells",
@@ -266,7 +266,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "fireball.webp",
       "path": "/generated/spells/fireball.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style fireball spell, red energy projectile, fire magic effect, epic fantasy spell, detailed illustration"
+      "prompt": "System Ascendant style fireball spell, red energy projectile, fire magic effect, epic fantasy spell, detailed illustration"
     },
     "iceShard": {
       "category": "spells",
@@ -274,7 +274,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "ice-shard.webp",
       "path": "/generated/spells/ice-shard.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style ice shard spell, blue energy projectile, ice magic effect, epic fantasy spell, detailed illustration"
+      "prompt": "System Ascendant style ice shard spell, blue energy projectile, ice magic effect, epic fantasy spell, detailed illustration"
     },
     "lightningStrike": {
       "category": "spells",
@@ -282,7 +282,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "lightning-strike.webp",
       "path": "/generated/spells/lightning-strike.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style lightning strike spell, yellow energy bolt, lightning magic effect, epic fantasy spell, detailed illustration"
+      "prompt": "System Ascendant style lightning strike spell, yellow energy bolt, lightning magic effect, epic fantasy spell, detailed illustration"
     },
     "healingLight": {
       "category": "spells",
@@ -290,7 +290,7 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "healing-light.webp",
       "path": "/generated/spells/healing-light.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style healing light spell, green energy aura, restoration magic effect, epic fantasy spell, detailed illustration"
+      "prompt": "System Ascendant style healing light spell, green energy aura, restoration magic effect, epic fantasy spell, detailed illustration"
     },
     "protectionBarrier": {
       "category": "spells",
@@ -298,9 +298,10 @@ export const comprehensiveArtIndex: ArtIndex = {
       "filename": "protection-barrier.webp",
       "path": "/generated/spells/protection-barrier.webp",
       "size": "512x512",
-      "prompt": "Solo Leveling style protection barrier spell, white energy shield, protection magic effect, epic fantasy spell, detailed illustration"
+      "prompt": "System Ascendant style protection barrier spell, white energy shield, protection magic effect, epic fantasy spell, detailed illustration"
     }
   }
 };
 
 export default comprehensiveArtIndex;
+

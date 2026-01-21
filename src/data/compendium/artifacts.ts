@@ -1,6 +1,6 @@
-// Artifacts Compendium - Authoritative Solo Leveling Content
+// Artifacts Compendium - Authoritative System Ascendant Content
 // God-tier items and legendary artifacts
-// Based on Solo Leveling canon with D&D 5e mechanics
+// Based on System Ascendant canon with SRD 5e mechanics
 
 export interface Artifact {
   id: string;
@@ -81,7 +81,7 @@ export const artifacts: Artifact[] = [
   {
     id: 'shadow-lord-blade',
     name: 'Shadow Lord Blade',
-    description: 'The legendary blade of the Shadow Monarch, capable of cutting through dimensions.',
+    description: 'The legendary blade of the Umbral Monarch, capable of cutting through dimensions.',
     type: 'weapon',
     rarity: 'divine',
     attunement: true,
@@ -90,7 +90,7 @@ export const artifacts: Artifact[] = [
       ability: 'Dexterity',
       score: 20,
       alignment: 'Chaotic Neutral',
-      quest: 'Must defeat a shadow monarch or be chosen by the shadows'
+      quest: 'Must defeat a umbral monarch or be chosen by the shadows'
     },
     properties: {
       magical: true,
@@ -112,8 +112,8 @@ export const artifacts: Artifact[] = [
         action: 'bonus-action'
       },
       tertiary: {
-        name: 'Shadow Army',
-        description: 'Summon shadow soldiers to fight for you.',
+        name: 'Umbral Legion',
+        description: 'Summon Umbral Legion to fight for you.',
         type: 'active',
         frequency: 'once-per-day',
         action: 'action'
@@ -127,7 +127,7 @@ export const artifacts: Artifact[] = [
       }
     },
     lore: {
-      origin: 'Forged by the first Shadow Monarch from the essence of the void.',
+      origin: 'Forged by the first Umbral Monarch from the essence of the void.',
       history: 'This blade has passed through countless hands, each wielder becoming a legend.',
       personality: 'The blade speaks in whispers of shadows and secrets, offering power at a cost.',
       curse: 'Wielders slowly lose their connection to the material world.'
@@ -141,7 +141,7 @@ export const artifacts: Artifact[] = [
       resistance: ['bludgeoning', 'piercing', 'slashing', 'radiant'],
       special: ['Can cut through dimensions', 'Cannot be destroyed by conventional means']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/artifacts/shadow-lord-blade.webp'
   },
   {
@@ -203,7 +203,7 @@ export const artifacts: Artifact[] = [
       immunity: ['fire', 'cold', 'lightning', 'poison', 'acid'],
       special: ['Can communicate with dragons', 'Cannot be broken']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/artifacts/dragon-god-spear.webp'
   },
   {
@@ -267,7 +267,7 @@ export const artifacts: Artifact[] = [
       immunity: ['temporal', 'aging'],
       special: ['Cannot be affected by time magic', 'Exists outside normal time flow']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/artifacts/time-master-staff.webp'
   },
 
@@ -329,7 +329,7 @@ export const artifacts: Artifact[] = [
       immunity: ['all damage while in void'],
       special: ['Cannot be detected by normal means', 'Exists in multiple dimensions']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/artifacts/void-armor.webp'
   },
   {
@@ -393,7 +393,7 @@ export const artifacts: Artifact[] = [
       immunity: ['charm', 'fear', 'poison'],
       special: ['Cannot be lied to', 'Commands cannot be resisted by mortals']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/artifacts/divine-crown.webp'
   },
   {
@@ -449,7 +449,7 @@ export const artifacts: Artifact[] = [
       immunity: ['death', 'necrotic', 'poison'],
       special: ['Cannot be killed', 'Regenerates from nothing']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/artifacts/eternal-heart.webp'
   },
 
@@ -511,7 +511,7 @@ export const artifacts: Artifact[] = [
       immunity: ['illusion', 'reality-warping'],
       special: ['Cannot be deceived', 'Can perceive all truths']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/artifacts/reality-weaver.webp'
   },
   {
@@ -574,7 +574,7 @@ export const artifacts: Artifact[] = [
       immunity: ['necrotic', 'death'],
       special: ['Cannot be killed by normal means', 'Controls the flow of souls']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/artifacts/soul-harvester.webp'
   },
   {
@@ -632,7 +632,7 @@ export const artifacts: Artifact[] = [
       immunity: ['all damage'],
       special: ['Cannot be destroyed', 'Exists in all places at once']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/artifacts/infinity-orb.webp'
   },
 
@@ -694,7 +694,7 @@ export const artifacts: Artifact[] = [
       immunity: ['charm', 'fear'],
       special: ['Cannot be disobeyed', 'Commands all creatures']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/artifacts/monarch-gauntlets.webp'
   },
   {
@@ -751,7 +751,7 @@ export const artifacts: Artifact[] = [
       immunity: ['poison', 'disease'],
       special: ['Cannot be destroyed', 'Grows stronger with time']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/artifacts/world-tree-acorn.webp'
   },
   {
@@ -811,7 +811,7 @@ export const artifacts: Artifact[] = [
       immunity: ['fate', 'destiny'],
       special: ['Cannot be surprised', 'Knows all outcomes']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/artifacts/destiny-book.webp'
   },
   {
@@ -871,7 +871,7 @@ export const artifacts: Artifact[] = [
       immunity: ['order', 'law'],
       special: ['Cannot be predicted', 'Random effects always beneficial']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/artifacts/chaos-heart.webp'
   },
   {
@@ -930,10 +930,14 @@ export const artifacts: Artifact[] = [
       immunity: ['chaos', 'randomness'],
       special: ['Cannot be surprised', 'All actions are predictable and perfect']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/artifacts/order-crystal.webp'
   }
 ];
 
 export default artifacts;
+
+
+
+
 

@@ -1,4 +1,4 @@
--- Create enum types for Solo Leveling 5e
+-- Create enum types for System Ascendant 5e SRD
 DO $$
 BEGIN
   IF NOT EXISTS (
@@ -61,7 +61,7 @@ CREATE TABLE public.characters (
   hit_dice_max INTEGER NOT NULL DEFAULT 1,
   hit_dice_size INTEGER NOT NULL DEFAULT 8,
   
-  -- System Favor (Reawakened Hunter resource)
+  -- System Favor (Reawakened Ascendant resource)
   system_favor_current INTEGER NOT NULL DEFAULT 3,
   system_favor_max INTEGER NOT NULL DEFAULT 3,
   system_favor_die INTEGER NOT NULL DEFAULT 4,
@@ -103,7 +103,7 @@ CREATE TABLE public.character_features (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   character_id UUID NOT NULL REFERENCES public.characters(id) ON DELETE CASCADE,
   name TEXT NOT NULL,
-  source TEXT NOT NULL, -- e.g., "Job: Striker", "Path: Shadow Monarch", "Background: Former E-Rank"
+  source TEXT NOT NULL, -- e.g., "Job: Striker", "Path: Umbral Monarch", "Background: Former E-Rank"
   level_acquired INTEGER NOT NULL DEFAULT 1,
   description TEXT,
   
@@ -330,3 +330,4 @@ CREATE INDEX idx_character_abilities_character_id ON public.character_abilities(
 CREATE INDEX idx_character_features_character_id ON public.character_features(character_id);
 CREATE INDEX idx_character_equipment_character_id ON public.character_equipment(character_id);
 CREATE INDEX idx_character_powers_character_id ON public.character_powers(character_id);
+

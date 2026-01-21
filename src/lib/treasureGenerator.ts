@@ -1,3 +1,4 @@
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 // Rarity system for treasure
 export const RARITY_CHANCES = {
@@ -66,7 +67,7 @@ export const TREASURE_TABLES: Record<string, {
     materialChance: 0.5,
     relicChance: 0.15,
     items: ['Greater Healing Potion', 'Greater Mana Potion', 'Steel Weapon', 'Chain Armor', 'Relic Fragment', 'Enchanted Item'],
-    materials: ['Greater Monster Core', 'Steel Ingot', 'Refined Mana Crystal', 'Shadow Essence (Purified)', 'Gate Fragment'],
+    materials: ['Greater Monster Core', 'Steel Ingot', 'Refined Mana Crystal', 'Shadow Essence (Purified)', 'Rift Fragment'],
     relics: ['Fragmented Relic', 'Relic Shard'],
   },
   B: {
@@ -75,7 +76,7 @@ export const TREASURE_TABLES: Record<string, {
     materialChance: 0.6,
     relicChance: 0.25,
     items: ['Superior Healing Potion', 'Superior Mana Potion', 'Masterwork Weapon', 'Plate Armor', 'Relic Component', 'Rare Enchanted Item'],
-    materials: ['Elite Monster Core', 'Mithril Ingot', 'Pure Mana Crystal', 'Shadow Essence (Crystallized)', 'Gate Fragment (Large)'],
+    materials: ['Elite Monster Core', 'Mithril Ingot', 'Pure Mana Crystal', 'Shadow Essence (Crystallized)', 'Rift Fragment (Large)'],
     relics: ['Partial Relic', 'Relic Core'],
   },
   A: {
@@ -84,7 +85,7 @@ export const TREASURE_TABLES: Record<string, {
     materialChance: 0.7,
     relicChance: 0.4,
     items: ['Ultimate Healing Potion', 'Ultimate Mana Potion', 'Legendary Weapon Blueprint', 'Legendary Armor Blueprint', 'Relic Fragment (Large)', 'Epic Enchanted Item'],
-    materials: ['Boss Monster Core', 'Adamantite Ingot', 'Perfect Mana Crystal', 'Shadow Essence (Perfect)', 'Gate Fragment (Massive)', "Supreme Deity's Blessing Fragment"],
+    materials: ['Boss Monster Core', 'Adamantite Ingot', 'Perfect Mana Crystal', 'Shadow Essence (Perfect)', 'Rift Fragment (Massive)', "Prime Architect's Blessing Fragment"],
     relics: ['Near-Complete Relic', 'Relic Heart'],
   },
   S: {
@@ -93,8 +94,8 @@ export const TREASURE_TABLES: Record<string, {
     materialChance: 0.9,
     relicChance: 0.6,
     items: ['Divine Healing Elixir', 'Divine Mana Elixir', 'Artifact Weapon Blueprint', 'Artifact Armor Blueprint', 'Complete Relic Fragment', 'Legendary Enchanted Item'],
-    materials: ['S-Rank Monster Core', 'Divine Metal', 'Divine Mana Crystal', 'Shadow Essence (Divine)', 'Gate Core Fragment', "Supreme Deity's Blessing"],
-    relics: ['Complete Relic', 'Relic Soul', 'Shadow Monarch Fragment'],
+    materials: ['S-Rank Monster Core', 'Divine Metal', 'Divine Mana Crystal', 'Shadow Essence (Divine)', 'Rift Core Fragment', "Prime Architect's Blessing"],
+    relics: ['Complete Relic', 'Relic Soul', 'Umbral Monarch Fragment'],
   },
 };
 
@@ -145,18 +146,22 @@ export function generateTreasure(rank: string): TreasureResult {
   }
 
   const descriptions: string[] = [];
-  descriptions.push(`Gate Rank ${rank} treasure hoard containing ${gold} gold pieces.`);
+  const displayItems = items.map(formatMonarchVernacular);
+  const displayMaterials = materials.map(formatMonarchVernacular);
+  const displayRelics = relics.map(formatMonarchVernacular);
 
-  if (items.length > 0) {
-    descriptions.push(`Items found: ${items.join(', ')}.`);
+  descriptions.push(`Rift Rank ${rank} treasure hoard containing ${gold} gold pieces.`);
+
+  if (displayItems.length > 0) {
+    descriptions.push(`Items found: ${displayItems.join(', ')}.`);
   }
 
-  if (materials.length > 0) {
-    descriptions.push(`Materials recovered: ${materials.join(', ')}.`);
+  if (displayMaterials.length > 0) {
+    descriptions.push(`Materials recovered: ${displayMaterials.join(', ')}.`);
   }
 
-  if (relics.length > 0) {
-    descriptions.push(`Relics discovered: ${relics.join(', ')} - these are particularly valuable and rare!`);
+  if (displayRelics.length > 0) {
+    descriptions.push(`Relics discovered: ${displayRelics.join(', ')} - these are particularly valuable and rare!`);
   }
 
   if (items.length === 0 && materials.length === 0 && relics.length === 0) {
@@ -166,9 +171,10 @@ export function generateTreasure(rank: string): TreasureResult {
   return {
     rank,
     gold,
-    items,
-    materials,
-    relics,
-    description: descriptions.join(' '),
+    items: displayItems,
+    materials: displayMaterials,
+    relics: displayRelics,
+    description: formatMonarchVernacular(descriptions.join(' ')),
   };
 }
+

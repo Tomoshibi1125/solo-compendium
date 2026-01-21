@@ -26,7 +26,7 @@ const rankDisplayNames: Record<string, string> = {
   A: 'A',
   S: 'S',
   SS: 'SS',
-  NATIONAL: '★',
+  NATIONAL: 'N',
 };
 
 export function HunterBadge({ className, rank = 'C', size = 'md', showGlow = true }: HunterBadgeProps) {

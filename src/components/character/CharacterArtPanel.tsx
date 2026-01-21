@@ -13,6 +13,7 @@ import { Image, Camera, RefreshCw } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useArtAsset } from '@/lib/artPipeline/hooks';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface CharacterArtPanelProps {
   characterId: string;
@@ -45,7 +46,7 @@ export function CharacterArtPanel({
 
   const getCharacterTags = () => {
     const tags = [];
-    if (characterData.job) tags.push(characterData.job.toLowerCase());
+    if (characterData.job) tags.push(formatMonarchVernacular(characterData.job).toLowerCase());
     if (characterData.level) tags.push(`level ${characterData.level}`);
     if (characterData.appearance) {
       // Extract keywords from appearance
@@ -69,7 +70,7 @@ export function CharacterArtPanel({
             Character Art
           </div>
           <Badge variant="outline">
-            Solo Leveling Style
+            System Ascendant Style
           </Badge>
         </CardTitle>
       </CardHeader>
@@ -141,7 +142,7 @@ export function CharacterArtPanel({
         {/* Art Info */}
         {currentArt && (
           <div className="text-xs text-muted-foreground space-y-1">
-            <p>Solo Leveling themed character portrait</p>
+            <p>System Ascendant themed character portrait</p>
             <p>Generated with AI art pipeline</p>
             <p>Click Regenerate to create new art</p>
           </div>
@@ -150,3 +151,4 @@ export function CharacterArtPanel({
     </Card>
   );
 }
+

@@ -1,5 +1,5 @@
 /**
- * D&D 5e Concentration System
+ * SRD 5e Concentration System
  * Manages concentration mechanics for spells and abilities
  */
 
@@ -185,3 +185,4 @@ export function getConcentrationStatus(state: ConcentrationState): {
     description: state.currentEffect.description
   };
 }
+

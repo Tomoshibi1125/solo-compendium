@@ -7,6 +7,16 @@
   height: var(--scene-height, auto);
 }
 
+.vtt-background {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: saturate(1.05);
+  opacity: 0.95;
+  z-index: 1;
+}
+
 .vtt-grid {
   position: absolute;
   top: 0;
@@ -16,16 +26,7 @@
   opacity: 0.2;
   background-image: var(--grid-image, none);
   background-size: var(--grid-size, 20px 20px);
-}
-
-.vtt-measurement-line {
-  position: absolute;
-  pointer-events: none;
-  z-index: 50;
-  left: var(--measure-x, 0);
-  top: var(--measure-y, 0);
-  width: var(--measure-size, 20px);
-  height: var(--measure-size, 20px);
+  z-index: 2;
 }
 
 .vtt-fog-of-war {
@@ -35,6 +36,7 @@
   right: 0;
   bottom: 0;
   background: radial-gradient(circle, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+  z-index: 60;
 }
 
 .vtt-fog-tile {
@@ -45,6 +47,7 @@
   top: var(--tile-y, 0);
   width: var(--tile-size, 20px);
   height: var(--tile-size, 20px);
+  pointer-events: none;
 }
 
 .vtt-token {
@@ -69,13 +72,14 @@
   width: var(--token-size, 40px);
   height: var(--token-size, 40px);
   transform: rotate(var(--token-rotation, 0deg));
+  z-index: 20;
 }
 
 .vtt-token:hover {
   transform: scale(1.1) rotate(var(--token-rotation, 0deg));
 }
 
-.vtt-token.selected {
+.vtt-token.active {
   border-color: hsl(var(--accent));
   box-shadow: 0 0 0 2px hsl(var(--accent));
 }
@@ -126,16 +130,46 @@
   background: hsl(var(--accent));
   border-radius: 2px;
   pointer-events: none;
-  z-index: 40;
+  transform-origin: 0 50%;
+  z-index: 30;
 }
 
-.vtt-area-effect {
+.vtt-drawing-shape {
   position: absolute;
-  border: 2px dashed hsl(var(--destructive));
-  border-radius: 50%;
+  border-style: solid;
   pointer-events: none;
   z-index: 30;
-  background: hsl(var(--destructive) / 0.1);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.35);
+}
+
+.vtt-drawing-shape.is-circle {
+  border-radius: 50%;
+}
+
+.vtt-measurement {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 55;
+}
+
+.vtt-measurement-line {
+  position: absolute;
+  height: 2px;
+  background: #fbbf24;
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.8);
+  transform-origin: 0 50%;
+}
+
+.vtt-measurement-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.75);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.6);
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 11px;
 }
 
 .vtt-annotation {
@@ -145,7 +179,9 @@
   border-radius: 4px;
   padding: 4px 8px;
   font-size: 12px;
-  pointer-events: none;
+  pointer-events: auto;
   z-index: 60;
   white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }

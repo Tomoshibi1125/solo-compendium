@@ -2,14 +2,14 @@
 // Extracted from internal compendium data pack
 // This is the authoritative source for backgrounds data - FULL ADMIN PRIVILEGES INTEGRATION
 // Generated on: 2026-01-13T22:03:39.609Z
-// 22 Backgrounds from Solo Leveling Canon
+// 22 Backgrounds from System Ascendant Canon
 
 export interface Background {
   id: string;
   name: string;
   type: string;
   rank: 'D' | 'C' | 'B' | 'A' | 'S';
-  // D&D 5e background features
+  // SRD 5e background features
   skillProficiencies: string[];
   toolProficiencies?: string[];
   languages?: string[];
@@ -22,7 +22,7 @@ export interface Background {
   ideals?: string[];
   bonds?: string[];
   flaws?: string[];
-  // Solo Leveling specific
+  // System Ascendant specific
   image: string;
   description: string;
   dangers: string[];
@@ -94,11 +94,11 @@ export const backgrounds = [
       "I am willing to sacrifice others for my own survival."
     ],
     "image": "/generated/compendium/backgrounds/shadow-realm-exile.webp",
-    "description": "Background as a Shadow Realm Exile from Solo Leveling, with unique experiences and abilities.",
+    "description": "Background as a Shadow Realm Exile from System Ascendant, with unique experiences and abilities.",
     "dangers": [
       "Post-Traumatic Stress",
       "Dimensional Instability",
-      "Gate Attraction",
+      "Rift Attraction",
       "Memory Loss"
     ],
     "abilities": [
@@ -107,16 +107,16 @@ export const backgrounds = [
       "Shadow Affinity",
       "Essence Sensitivity"
     ],
-    "source": "Solo Compendium Canon"
+    "source": "System Ascendant Canon"
   },
   {
     "id": "gate-survivor",
-    "name": "Gate Survivor",
+    "name": "Rift Survivor",
     "type": "Background",
     "rank": "S",
-    "description": "You survived a catastrophic gate event that claimed the lives of countless others. This traumatic experience has granted you unique insights into dimensional phenomena and an unbreakable will to live.",
+    "description": "You survived a catastrophic rift event that claimed the lives of countless others. This traumatic experience has granted you unique insights into dimensional phenomena and an unbreakable will to live.",
     "features": [
-      "Enhanced Gate Resistance",
+      "Enhanced Rift Resistance",
       "Dimensional Awareness",
       "Shadow Affinity",
       "Essence Sensitivity"
@@ -137,12 +137,12 @@ export const backgrounds = [
   },
   {
     "id": "hunter-academy-graduate",
-    "name": "Hunter Academy Graduate",
+    "name": "Ascendant Academy Graduate",
     "type": "Background",
     "rank": "C",
-    "description": "You graduated from the prestigious Hunter Academy, receiving formal training in combat, magic, and dimensional theory. Your education makes you a valuable asset to any hunter organization.",
+    "description": "You graduated from the prestigious Ascendant Academy, receiving formal training in combat, magic, and dimensional theory. Your education makes you a valuable asset to any ascendant organization.",
     "features": [
-      "Enhanced Hunter Resistance",
+      "Enhanced Ascendant Resistance",
       "Dimensional Awareness",
       "Shadow Affinity",
       "Essence Sensitivity"
@@ -166,7 +166,7 @@ export const backgrounds = [
     "name": "Guild Master",
     "type": "Background",
     "rank": "C",
-    "description": "You have led or managed a hunter guild, taking responsibility for organizing raids, managing resources, and training new hunters. Your leadership experience is invaluable in the field.",
+    "description": "You have led or managed an ascendant guild, taking responsibility for organizing raids, managing resources, and training new ascendants. Your leadership experience is invaluable in the field.",
     "features": [
       "Enhanced Guild Resistance",
       "Dimensional Awareness",
@@ -244,7 +244,7 @@ export const backgrounds = [
     "name": "Monarch's Chosen",
     "type": "Background",
     "rank": "B",
-    "description": "Background as a Monarch's Chosen from Solo Leveling, with unique experiences and abilities.",
+    "description": "Background as a Monarch's Chosen from System Ascendant, with unique experiences and abilities.",
     "features": [
       "Enhanced Monarch's Resistance",
       "Dimensional Awareness",
@@ -267,10 +267,10 @@ export const backgrounds = [
   },
   {
     "id": "shadow-soldier",
-    "name": "Shadow Soldier",
+    "name": "Umbral Legionnaire",
     "type": "Background",
     "rank": "D",
-    "description": "You served as a soldier in the shadow armies, fighting in countless battles across dimensions. Your combat experience is extensive and you understand the art of warfare better than most.",
+    "description": "You served as a legionnaire in the umbral legions, fighting in countless battles across dimensions. Your combat experience is extensive and you understand the art of warfare better than most.",
     "features": [
       "Enhanced Shadow Resistance",
       "Dimensional Awareness",
@@ -371,7 +371,7 @@ export const backgrounds = [
   },
   {
     "id": "demon-hunter",
-    "name": "Demon Hunter",
+    "name": "Demon Slayer",
     "type": "Background",
     "rank": "D",
     "description": "You specialize in hunting demonic entities, understanding their nature and knowing how to banish them permanently. Your expertise makes you the first line of defense against demonic incursions.",
@@ -556,7 +556,7 @@ export const backgrounds = [
     "name": "Champion of Light",
     "type": "Background",
     "rank": "A",
-    "description": "Background as a Champion of Light from Solo Leveling, with unique experiences and abilities.",
+    "description": "Background as a Champion of Light from System Ascendant, with unique experiences and abilities.",
     "features": [
       "Enhanced Champion Resistance",
       "Dimensional Awareness",
@@ -582,7 +582,7 @@ export const backgrounds = [
     "name": "Bringer of Dawn",
     "type": "Background",
     "rank": "D",
-    "description": "Background as a Bringer of Dawn from Solo Leveling, with unique experiences and abilities.",
+    "description": "Background as a Bringer of Dawn from System Ascendant, with unique experiences and abilities.",
     "features": [
       "Enhanced Bringer Resistance",
       "Dimensional Awareness",
@@ -643,7 +643,7 @@ export const backgrounds = [
     ],
     "dangers": [
       "Shadow Corruption",
-      "Gate Instability",
+      "Rift Instability",
       "Monarch's Wrath",
       "Dimensional Sickness"
     ],
@@ -656,5 +656,8 @@ export const backgrounds = [
     ]
   }
 ];
+
+
+
 
 

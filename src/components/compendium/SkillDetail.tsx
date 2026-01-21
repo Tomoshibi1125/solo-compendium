@@ -1,6 +1,7 @@
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Zap, BookOpen } from 'lucide-react';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface SkillData {
   id: string;
@@ -22,7 +23,7 @@ const abilityColors: Record<string, string> = {
 };
 
 export const SkillDetail = ({ data }: { data: SkillData }) => {
-  const displayName = data.display_name || data.name;
+  const displayName = formatMonarchVernacular(data.display_name || data.name);
 
   return (
     <div className="space-y-6">
@@ -35,7 +36,7 @@ export const SkillDetail = ({ data }: { data: SkillData }) => {
               {data.ability}
             </Badge>
           </div>
-          <p className="text-foreground">{data.description}</p>
+          <p className="text-foreground">{formatMonarchVernacular(data.description)}</p>
         </div>
       </SystemWindow>
 
@@ -58,7 +59,7 @@ export const SkillDetail = ({ data }: { data: SkillData }) => {
             {data.examples.map((example, i) => (
               <li key={i} className="flex items-start gap-3">
                 <BookOpen className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                <span className="text-foreground">{example}</span>
+                <span className="text-foreground">{formatMonarchVernacular(example)}</span>
               </li>
             ))}
           </ul>
@@ -67,7 +68,7 @@ export const SkillDetail = ({ data }: { data: SkillData }) => {
 
       {data.source_book && (
         <div className="flex justify-end">
-          <Badge variant="outline">{data.source_book}</Badge>
+          <Badge variant="outline">{formatMonarchVernacular(data.source_book)}</Badge>
         </div>
       )}
     </div>

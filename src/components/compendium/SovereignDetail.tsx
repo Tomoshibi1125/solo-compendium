@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Separator } from '@/components/ui/separator';
 import { supabase } from '@/integrations/supabase/client';
+import { formatMonarchVernacular, MONARCH_LABEL } from '@/lib/vernacular';
 
 interface SovereignData {
   id: string;
@@ -46,7 +47,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
   const [fusionComponents, setFusionComponents] = useState<FusionComponent[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const displayName = data.display_name || data.name;
+  const displayName = formatMonarchVernacular(data.display_name || data.name);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -89,12 +90,18 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
       
       if (data.monarch_a_id) {
         const monarch = await resolveRef('monarchs', data.monarch_a_id);
-        if (monarch) components.push({ type: 'monarch', id: monarch.id, name: ((monarch as { display_name?: string | null }).display_name || monarch.name) });
+        if (monarch) {
+          const rawName = (monarch as { display_name?: string | null; name: string }).display_name || monarch.name;
+          components.push({ type: 'monarch', id: monarch.id, name: formatMonarchVernacular(rawName) });
+        }
       }
       
       if (data.monarch_b_id) {
         const monarch = await resolveRef('monarchs', data.monarch_b_id);
-        if (monarch) components.push({ type: 'monarch', id: monarch.id, name: ((monarch as { display_name?: string | null }).display_name || monarch.name) });
+        if (monarch) {
+          const rawName = (monarch as { display_name?: string | null; name: string }).display_name || monarch.name;
+          components.push({ type: 'monarch', id: monarch.id, name: formatMonarchVernacular(rawName) });
+        }
       }
       
       setFusionComponents(components);
@@ -147,7 +154,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
             </div>
           </div>
           
-          <p className="text-foreground leading-relaxed">{data.description}</p>
+          <p className="text-foreground leading-relaxed">{formatMonarchVernacular(data.description)}</p>
           
           <div className="flex flex-wrap gap-2">
             <Badge className="bg-violet-600/80 text-white border-violet-400">
@@ -190,7 +197,9 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
                   >
                     <Icon className="w-5 h-5 flex-shrink-0" />
                     <div>
-                      <p className="text-xs text-muted-foreground capitalize">{component.type}</p>
+                      <p className="text-xs text-muted-foreground capitalize">
+                        {component.type === 'monarch' ? MONARCH_LABEL : component.type}
+                      </p>
                       <p className="font-heading font-medium">{component.name}</p>
                     </div>
                     {index < fusionComponents.length - 1 && (
@@ -209,7 +218,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
         <SystemWindow title="FUSION MANIFESTATION" className="border-violet-500/30">
           <div className="flex items-start gap-3">
             <Sparkles className="w-6 h-6 text-violet-400 flex-shrink-0" />
-            <p className="text-foreground leading-relaxed italic">{data.fusion_description}</p>
+            <p className="text-foreground leading-relaxed italic">{formatMonarchVernacular(data.fusion_description)}</p>
           </div>
         </SystemWindow>
       )}
@@ -219,7 +228,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
         <SystemWindow title="GEMINI PROTOCOL REQUIREMENTS" className="border-rose-500/30">
           <div className="flex items-start gap-3">
             <Shield className="w-5 h-5 text-rose-400 flex-shrink-0" />
-            <p className="text-foreground">{data.prerequisites}</p>
+            <p className="text-foreground">{formatMonarchVernacular(data.prerequisites)}</p>
           </div>
         </SystemWindow>
       )}
@@ -232,7 +241,9 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
               <div key={feature.id} className="border-l-2 border-primary/50 pl-4 space-y-2">
                 <div className="flex flex-wrap items-center gap-2">
                   <Zap className="w-4 h-4 text-primary" />
-                  <h4 className="font-heading font-semibold text-primary">{feature.display_name || feature.name}</h4>
+                  <h4 className="font-heading font-semibold text-primary">
+                    {formatMonarchVernacular(feature.display_name || feature.name)}
+                  </h4>
                   {feature.action_type && (
                     <Badge variant="secondary" className="text-xs">{feature.action_type}</Badge>
                   )}
@@ -240,7 +251,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
                     <Badge variant="outline" className="text-xs">{feature.recharge}</Badge>
                   )}
                 </div>
-                <p className="text-sm text-muted-foreground">{feature.description}</p>
+                <p className="text-sm text-muted-foreground">{formatMonarchVernacular(feature.description)}</p>
                 {feature.origin_sources && feature.origin_sources.length > 0 && (
                   <div className="flex flex-wrap gap-1 pt-1">
                     {feature.origin_sources.map((source, idx) => (
@@ -249,7 +260,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
                         variant="outline" 
                         className="text-xs text-muted-foreground border-muted-foreground/30"
                       >
-                        {source}
+                        {formatMonarchVernacular(source)}
                       </Badge>
                     ))}
                   </div>
@@ -272,7 +283,9 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
               <div key={feature.id} className="border-l-2 border-amber-500/50 pl-4 space-y-2 bg-amber-500/5 -ml-4 p-4 rounded-r-lg">
                 <div className="flex flex-wrap items-center gap-2">
                   <Flame className="w-5 h-5 text-amber-400" />
-                  <h4 className="font-heading font-semibold text-amber-400">{feature.display_name || feature.name}</h4>
+                  <h4 className="font-heading font-semibold text-amber-400">
+                    {formatMonarchVernacular(feature.display_name || feature.name)}
+                  </h4>
                   {feature.action_type && (
                     <Badge className="bg-amber-500/20 text-amber-300 text-xs">{feature.action_type}</Badge>
                   )}
@@ -280,7 +293,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
                     <Badge variant="outline" className="text-xs border-amber-500/30">{feature.recharge}</Badge>
                   )}
                 </div>
-                <p className="text-sm text-foreground">{feature.description}</p>
+                <p className="text-sm text-foreground">{formatMonarchVernacular(feature.description)}</p>
                 {feature.origin_sources && feature.origin_sources.length > 0 && (
                   <div className="flex flex-wrap gap-1 pt-1">
                     {feature.origin_sources.map((source, idx) => (
@@ -289,7 +302,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
                         variant="outline" 
                         className="text-xs text-amber-400/70 border-amber-500/30"
                       >
-                        {source}
+                        {formatMonarchVernacular(source)}
                       </Badge>
                     ))}
                   </div>
@@ -305,18 +318,18 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
         <div className="flex flex-wrap gap-2">
           {data.tags.map((tag) => (
             <Badge key={tag} variant="outline" className="text-xs capitalize">
-              {tag.replace(/-/g, ' ')}
+              {formatMonarchVernacular(tag.replace(/-/g, ' '))}
             </Badge>
           ))}
         </div>
       )}
 
       {/* Lore Note */}
-      <SystemWindow title="THE SUPREME DEITY'S BLESSING" className="border-cyan-500/30">
+      <SystemWindow title="THE PRIME ARCHITECT'S BLESSING" className="border-cyan-500/30">
         <p className="text-sm text-muted-foreground italic">
-          In the post-reset timeline, the Supreme Deity Sung Jin-Woo granted the Gemini Protocol to worthy Hunters, a 
+          In the post-reset timeline, the Prime Architect Kael Voss granted the Gemini Protocol to worthy Ascendants, a 
           permanent subclass overlay that transcends the limitations of single-path power. Those who complete the 
-          Protocol become Sovereigns, wielding the combined might of Job, Path, and Dual Monarch Overlays as one 
+          Protocol become Sovereigns, wielding the combined might of Job, Path, and Dual {MONARCH_LABEL} Overlays as one 
           unified force. The overlay is irreversible, for to become a Sovereign is to accept that you will never 
           again be anything less.
         </p>
@@ -324,3 +337,4 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
     </div>
   );
 };
+

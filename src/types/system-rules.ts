@@ -1,7 +1,7 @@
-// Solo Leveling 5e Data Types
-// Based on parsed PHB/DMG content
+// System Ascendant 5e SRD Data Types
+// Based on parsed SRD and core rule references
 
-// Ability Scores (Solo Leveling uses different names)
+// Ability Scores (System Ascendant uses different names)
 export type AbilityScore = 'STR' | 'AGI' | 'VIT' | 'INT' | 'SENSE' | 'PRE';
 
 export const ABILITY_NAMES: Record<AbilityScore, string> = {
@@ -26,8 +26,8 @@ export const SKILLS: Skill[] = [
   { id: 'acrobatics', name: 'Acrobatics', defaultAbility: 'AGI', description: 'Grappling, balancing, tumbling, avoiding falls' },
   { id: 'sleight-of-hand', name: 'Sleight of Hand', defaultAbility: 'AGI', description: 'Palming items, quick draws, subtle relic use' },
   { id: 'stealth', name: 'Stealth', defaultAbility: 'AGI', description: 'Moving quietly, hiding from sensors or monsters' },
-  { id: 'arcana', name: 'Arcana', defaultAbility: 'INT', description: 'Understanding Gates, System anomalies, and power theory in the post-reset world' },
-  { id: 'history', name: 'History', defaultAbility: 'INT', description: 'Recalling past events, notable Hunters, major incidents' },
+  { id: 'arcana', name: 'Arcana', defaultAbility: 'INT', description: 'Understanding Rifts, System anomalies, and power theory in the post-reset world' },
+  { id: 'history', name: 'History', defaultAbility: 'INT', description: 'Recalling past events, notable Ascendants, major incidents' },
   { id: 'investigation', name: 'Investigation', defaultAbility: 'INT', description: 'Reconstructing events, searching for clues, analyzing scenes' },
   { id: 'nature', name: 'Nature', defaultAbility: 'INT', description: 'Knowing wild ecosystems, beasts, natural hazards' },
   { id: 'religion', name: 'Religion', defaultAbility: 'INT', description: 'Understanding cults, rituals, spiritual traditions' },
@@ -160,7 +160,7 @@ export interface Monster {
   actions: MonsterAction[];
   legendaryActions?: MonsterAction[];
   lairActions?: MonsterAction[];
-  tags: string[]; // Gate tags, faction tags, etc.
+  tags: string[]; // Rift tags, faction tags, etc.
 }
 
 export interface MonsterTrait {
@@ -251,3 +251,4 @@ export function getSystemFavorDie(level: number): number {
   if (level <= 16) return 8;
   return 10;
 }
+

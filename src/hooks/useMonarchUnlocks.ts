@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { MONARCH_LABEL, formatMonarchVernacular } from '@/lib/vernacular';
 
 export interface MonarchUnlock {
   id: string;
@@ -73,8 +74,8 @@ export function useUnlockMonarch() {
     onSuccess: (data, variables) => {
       queryClient.invalidateQueries({ queryKey: ['monarch-unlocks', variables.characterId] });
       toast({
-        title: 'Monarch Unlocked!',
-        description: `Quest "${variables.questName}" complete. Monarch power awakened!`,
+        title: `${MONARCH_LABEL} Unlocked!`,
+        description: formatMonarchVernacular(`Quest "${variables.questName}" complete. Monarch power awakened!`),
       });
     },
     onError: (error) => {
@@ -113,8 +114,8 @@ export function useSetPrimaryMonarch() {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['monarch-unlocks', variables.characterId] });
       toast({
-        title: 'Primary Monarch Set',
-        description: 'This Monarch is now your dominant power source.',
+        title: `Primary ${MONARCH_LABEL} Set`,
+        description: `This ${MONARCH_LABEL} is now your dominant power source.`,
       });
     },
   });

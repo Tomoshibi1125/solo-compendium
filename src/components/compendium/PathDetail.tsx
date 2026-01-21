@@ -1,6 +1,9 @@
+import { useEffect, useMemo, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { GitBranch, Swords, Star, Shield, Zap } from 'lucide-react';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface PathData {
   id: string;
@@ -8,31 +11,86 @@ interface PathData {
   display_name?: string | null;
   description: string;
   jobId?: string;
+  job_id?: string | null;
   jobName?: string;
   tier?: number;
   level?: number;
+  path_level?: number | null;
   prerequisites?: string;
   tags?: string[];
   source_book?: string;
   image_url?: string;
+  flavor_text?: string | null;
+}
+
+interface PathFeature {
+  id: string;
+  name: string;
+  display_name?: string | null;
+  description: string;
+  level: number;
+  action_type?: string | null;
+  recharge?: string | null;
+  uses_formula?: string | null;
+  prerequisites?: string | null;
 }
 
 export const PathDetail = ({ data }: { data: PathData }) => {
-  const displayName = data.display_name || data.name;
+  const displayName = formatMonarchVernacular(data.display_name || data.name);
+  const pathLevel = data.level ?? data.path_level ?? undefined;
+  const [features, setFeatures] = useState<PathFeature[]>([]);
+  const [jobName, setJobName] = useState<string | null>(data.jobName ?? null);
 
-  // Generate path features based on data structure
-  const mockFeatures = [
-    { name: 'Path Feature 1', description: 'Basic ability gained at this path level.', level: data.level || 5 },
-    { name: 'Path Feature 2', description: 'Advanced ability gained through progression.', level: (data.level || 5) + 4 },
-    { name: 'Path Feature 3', description: 'Master ability gained at higher levels.', level: (data.level || 5) + 8 },
-    { name: 'Path Ultimate', description: 'Ultimate ability of this path.', level: (data.level || 5) + 12 },
-  ];
+  useEffect(() => {
+    if (!isSupabaseConfigured) return;
+    let isCancelled = false;
 
-  const mockAbilities = [
-    { name: 'Signature Attack', description: 'A powerful attack unique to this path.', cooldown: 3, cost: 'Action' },
-    { name: 'Defensive Maneuver', description: 'A defensive ability for survival.', cooldown: 5, cost: 'Bonus Action' },
-    { name: 'Utility Skill', description: 'A useful ability for exploration or social interaction.', cooldown: 1, cost: 'Action' },
-  ];
+    const loadPathData = async () => {
+      const jobId = data.jobId ?? data.job_id ?? null;
+
+      const featuresRes = await supabase
+        .from('compendium_job_features')
+        .select('id, name, display_name, description, level, action_type, recharge, uses_formula, prerequisites')
+        .eq('path_id', data.id)
+        .eq('is_path_feature', true)
+        .order('level');
+
+      if (!isCancelled) {
+        setFeatures((featuresRes.data as PathFeature[]) || []);
+      }
+
+      if (!jobName && jobId) {
+        const { data: jobData } = await supabase
+          .from('compendium_jobs')
+          .select('name, display_name')
+          .eq('id', jobId)
+          .maybeSingle();
+
+        if (!isCancelled) {
+          setJobName(jobData?.display_name || jobData?.name || null);
+        }
+      }
+    };
+
+    loadPathData();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [data.id, data.jobId, data.job_id, jobName]);
+
+  const abilityFeatures = useMemo(
+    () => features.filter((feature) => feature.action_type || feature.recharge || feature.uses_formula),
+    [features]
+  );
+  const abilityIds = useMemo(
+    () => new Set(abilityFeatures.map((feature) => feature.id)),
+    [abilityFeatures]
+  );
+  const coreFeatures = useMemo(
+    () => features.filter((feature) => !abilityIds.has(feature.id)),
+    [features, abilityIds]
+  );
 
   const getTierIcon = (tier?: number) => {
     switch (tier) {
@@ -61,9 +119,9 @@ export const PathDetail = ({ data }: { data: PathData }) => {
             {getTierIcon(data.tier)}
             {displayName}
           </h2>
-          {data.jobName && (
+          {(jobName || data.jobName) && (
             <p className="text-muted-foreground mt-1">
-              Subclass of <span className="font-semibold">{data.jobName}</span>
+              Subclass of <span className="font-semibold">{formatMonarchVernacular(jobName || data.jobName || '')}</span>
             </p>
           )}
         </div>
@@ -79,23 +137,28 @@ export const PathDetail = ({ data }: { data: PathData }) => {
       {/* Description */}
       <div>
         <h3 className="text-lg font-semibold mb-3 font-heading">Overview</h3>
-        <p className="text-muted-foreground leading-relaxed">{data.description}</p>
+        <p className="text-muted-foreground leading-relaxed">{formatMonarchVernacular(data.description)}</p>
+        {data.flavor_text && (
+          <p className="text-muted-foreground leading-relaxed mt-3 italic">
+            {formatMonarchVernacular(data.flavor_text)}
+          </p>
+        )}
       </div>
 
       {/* Requirements */}
-      {(data.level || data.prerequisites) && (
+      {(pathLevel || data.prerequisites) && (
         <div>
           <h3 className="text-lg font-semibold mb-3 font-heading">Requirements</h3>
           <div className="space-y-2">
-            {data.level && (
+            {pathLevel && (
               <div className="flex items-center gap-2">
                 <Swords className="w-4 h-4" />
-                <span>Level {data.level}</span>
+                <span>Level {pathLevel}</span>
               </div>
             )}
             {data.prerequisites && (
               <div className="text-sm text-muted-foreground">
-                Prerequisites: {data.prerequisites}
+                Prerequisites: {formatMonarchVernacular(data.prerequisites)}
               </div>
             )}
           </div>
@@ -105,35 +168,51 @@ export const PathDetail = ({ data }: { data: PathData }) => {
       {/* Features */}
       <div>
         <h3 className="text-lg font-semibold mb-3 font-heading">Path Features</h3>
-        <div className="space-y-4">
-          {mockFeatures.map((feature, index) => (
-            <div key={index} className="p-4 bg-card border rounded-lg">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-sm font-medium text-primary">Level {feature.level}</span>
-                <span className="font-semibold">{feature.name}</span>
+        {coreFeatures.length === 0 ? (
+          <div className="text-sm text-muted-foreground">
+            No path features available yet.
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {coreFeatures.map((feature) => (
+              <div key={feature.id} className="p-4 bg-card border rounded-lg">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-sm font-medium text-primary">Level {feature.level}</span>
+                  <span className="font-semibold">{formatMonarchVernacular(feature.display_name || feature.name)}</span>
+                </div>
+                <p className="text-sm text-muted-foreground">{formatMonarchVernacular(feature.description)}</p>
+                {(feature.action_type || feature.recharge || feature.uses_formula) && (
+                  <div className="flex gap-4 text-xs text-muted-foreground mt-2">
+                    {feature.action_type && <span>Action: {formatMonarchVernacular(feature.action_type)}</span>}
+                    {feature.recharge && <span>Recharge: {formatMonarchVernacular(feature.recharge)}</span>}
+                    {feature.uses_formula && <span>Uses: {formatMonarchVernacular(feature.uses_formula)}</span>}
+                  </div>
+                )}
               </div>
-              <p className="text-sm text-muted-foreground">{feature.description}</p>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Abilities */}
-      <div>
-        <h3 className="text-lg font-semibold mb-3 font-heading">Signature Abilities</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {mockAbilities.map((ability, index) => (
-            <div key={index} className="p-4 bg-card border rounded-lg">
-              <h4 className="font-semibold mb-2">{ability.name}</h4>
-              <p className="text-sm text-muted-foreground mb-3">{ability.description}</p>
-              <div className="flex gap-4 text-xs text-muted-foreground">
-                {ability.cooldown && <span>Cooldown: {ability.cooldown} turns</span>}
-                {ability.cost && <span>Cost: {ability.cost}</span>}
+      {abilityFeatures.length > 0 && (
+        <div>
+          <h3 className="text-lg font-semibold mb-3 font-heading">Signature Abilities</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {abilityFeatures.map((ability) => (
+              <div key={ability.id} className="p-4 bg-card border rounded-lg">
+                <h4 className="font-semibold mb-2">{formatMonarchVernacular(ability.display_name || ability.name)}</h4>
+                <p className="text-sm text-muted-foreground mb-3">{formatMonarchVernacular(ability.description)}</p>
+                <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
+                  {ability.action_type && <span>Action: {formatMonarchVernacular(ability.action_type)}</span>}
+                  {ability.recharge && <span>Recharge: {formatMonarchVernacular(ability.recharge)}</span>}
+                  {ability.uses_formula && <span>Uses: {formatMonarchVernacular(ability.uses_formula)}</span>}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Tags */}
       {data.tags && data.tags.length > 0 && (
@@ -142,7 +221,7 @@ export const PathDetail = ({ data }: { data: PathData }) => {
           <div className="flex flex-wrap gap-2">
             {data.tags.map((tag, index) => (
               <Badge key={index} variant="secondary" className="capitalize">
-                {tag.replace('-', ' ')}
+                {formatMonarchVernacular(tag.replace('-', ' '))}
               </Badge>
             ))}
           </div>
@@ -152,7 +231,7 @@ export const PathDetail = ({ data }: { data: PathData }) => {
       {/* Source */}
       {data.source_book && (
         <div className="text-sm text-muted-foreground">
-          Source: {data.source_book}
+          Source: {formatMonarchVernacular(data.source_book)}
         </div>
       )}
     </div>

@@ -78,7 +78,7 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        // Solo Leveling: ARISE - Supreme Deity Colors
+        // System Ascendant: Protocol Palette
         shadow: {
           blue: "hsl(var(--shadow-blue))",
           purple: "hsl(var(--shadow-purple))",
@@ -115,10 +115,13 @@ export default {
         },
         // Named Shadow Soldiers
         soldier: {
-          igris: "hsl(var(--igris-crimson))",
-          beru: "hsl(var(--beru-gold))",
-          bellion: "hsl(var(--bellion-silver))",
+          crimson: "hsl(var(--crimson-knight))",
+          gilded: "hsl(var(--gilded-reaper))",
+          silver: "hsl(var(--silver-commander))",
         },
+        "crimson-knight": "hsl(var(--crimson-knight))",
+        "gilded-reaper": "hsl(var(--gilded-reaper))",
+        "silver-commander": "hsl(var(--silver-commander))",
         void: {
           black: "hsl(var(--void-black))",
         },

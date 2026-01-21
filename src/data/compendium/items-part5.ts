@@ -1,14 +1,14 @@
 // Items Compendium - Part 5
 // Generated with full admin privileges
-// Solo Leveling themed items with images
+// System Ascendant themed items with images
 
 import { Item } from './items';
 
 export const items: Item[] = [
   {
     "id": "item-0801",
-    "name": "Shadow Essence of the Shadow Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Shadow Essence of the Umbral Monarch",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0801.webp",
@@ -20,8 +20,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0802",
-    "name": "Eternal Essence of the Shadow Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Eternal Essence of the Umbral Monarch",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0802.webp",
@@ -33,8 +33,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0803",
-    "name": "Void Essence of the Shadow Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Void Essence of the Umbral Monarch",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0803.webp",
@@ -46,8 +46,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0804",
-    "name": "Abyssal Essence of the Shadow Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Abyssal Essence of the Umbral Monarch",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0804.webp",
@@ -59,8 +59,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0805",
-    "name": "Demonic Essence of the Shadow Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Demonic Essence of the Umbral Monarch",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0805.webp",
@@ -72,8 +72,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0806",
-    "name": "Celestial Essence of the Shadow Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Celestial Essence of the Umbral Monarch",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0806.webp",
@@ -85,8 +85,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0807",
-    "name": "Divine Essence of the Shadow Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Divine Essence of the Umbral Monarch",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0807.webp",
@@ -98,8 +98,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0808",
-    "name": "Ancient Essence of the Shadow Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Ancient Essence of the Umbral Monarch",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0808.webp",
@@ -111,8 +111,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0809",
-    "name": "Forgotten Essence of the Shadow Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Forgotten Essence of the Umbral Monarch",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0809.webp",
@@ -124,8 +124,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0810",
-    "name": "Cursed Essence of the Shadow Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Cursed Essence of the Umbral Monarch",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0810.webp",
@@ -137,8 +137,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0811",
-    "name": "Blessed Essence of the Shadow Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Blessed Essence of the Umbral Monarch",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0811.webp",
@@ -150,8 +150,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0812",
-    "name": "Sacred Essence of the Shadow Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Sacred Essence of the Umbral Monarch",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0812.webp",
@@ -163,8 +163,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0813",
-    "name": "Profane Essence of the Shadow Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Profane Essence of the Umbral Monarch",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0813.webp",
@@ -176,8 +176,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0814",
-    "name": "Mystic Essence of the Shadow Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Mystic Essence of the Umbral Monarch",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0814.webp",
@@ -189,8 +189,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0815",
-    "name": "Arcane Essence of the Shadow Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Arcane Essence of the Umbral Monarch",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0815.webp",
@@ -202,8 +202,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0816",
-    "name": "Infernal Essence of the Shadow Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Infernal Essence of the Umbral Monarch",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0816.webp",
@@ -215,8 +215,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0817",
-    "name": "Frozen Essence of the Shadow Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Frozen Essence of the Umbral Monarch",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0817.webp",
@@ -228,8 +228,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0818",
-    "name": "Thunder Essence of the Shadow Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Thunder Essence of the Umbral Monarch",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0818.webp",
@@ -241,8 +241,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0819",
-    "name": "Holy Essence of the Shadow Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Holy Essence of the Umbral Monarch",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0819.webp",
@@ -254,8 +254,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0820",
-    "name": "Dark Essence of the Shadow Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Dark Essence of the Umbral Monarch",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0820.webp",
@@ -267,8 +267,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0821",
-    "name": "Shadow Heart of the Shadow Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Shadow Heart of the Umbral Monarch",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0821.webp",
@@ -280,8 +280,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0822",
-    "name": "Eternal Heart of the Shadow Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Eternal Heart of the Umbral Monarch",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0822.webp",
@@ -293,8 +293,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0823",
-    "name": "Void Heart of the Shadow Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Void Heart of the Umbral Monarch",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0823.webp",
@@ -306,8 +306,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0824",
-    "name": "Abyssal Heart of the Shadow Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Abyssal Heart of the Umbral Monarch",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0824.webp",
@@ -319,8 +319,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0825",
-    "name": "Demonic Heart of the Shadow Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Demonic Heart of the Umbral Monarch",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0825.webp",
@@ -332,8 +332,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0826",
-    "name": "Celestial Heart of the Shadow Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Celestial Heart of the Umbral Monarch",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0826.webp",
@@ -345,8 +345,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0827",
-    "name": "Divine Heart of the Shadow Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Divine Heart of the Umbral Monarch",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0827.webp",
@@ -358,8 +358,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0828",
-    "name": "Ancient Heart of the Shadow Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Ancient Heart of the Umbral Monarch",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0828.webp",
@@ -371,8 +371,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0829",
-    "name": "Forgotten Heart of the Shadow Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Forgotten Heart of the Umbral Monarch",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0829.webp",
@@ -384,8 +384,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0830",
-    "name": "Cursed Heart of the Shadow Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Cursed Heart of the Umbral Monarch",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0830.webp",
@@ -397,8 +397,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0831",
-    "name": "Blessed Heart of the Shadow Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Blessed Heart of the Umbral Monarch",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0831.webp",
@@ -410,8 +410,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0832",
-    "name": "Sacred Heart of the Shadow Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Sacred Heart of the Umbral Monarch",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0832.webp",
@@ -423,8 +423,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0833",
-    "name": "Profane Heart of the Shadow Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Profane Heart of the Umbral Monarch",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0833.webp",
@@ -436,8 +436,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0834",
-    "name": "Mystic Heart of the Shadow Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Mystic Heart of the Umbral Monarch",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0834.webp",
@@ -449,8 +449,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0835",
-    "name": "Arcane Heart of the Shadow Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Arcane Heart of the Umbral Monarch",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0835.webp",
@@ -462,8 +462,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0836",
-    "name": "Infernal Heart of the Shadow Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Infernal Heart of the Umbral Monarch",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0836.webp",
@@ -475,8 +475,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0837",
-    "name": "Frozen Heart of the Shadow Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Frozen Heart of the Umbral Monarch",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0837.webp",
@@ -488,8 +488,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0838",
-    "name": "Thunder Heart of the Shadow Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Thunder Heart of the Umbral Monarch",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0838.webp",
@@ -501,8 +501,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0839",
-    "name": "Holy Heart of the Shadow Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Holy Heart of the Umbral Monarch",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0839.webp",
@@ -514,8 +514,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0840",
-    "name": "Dark Heart of the Shadow Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Dark Heart of the Umbral Monarch",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0840.webp",
@@ -527,8 +527,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0841",
-    "name": "Shadow Soul of the Shadow Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Shadow Soul of the Umbral Monarch",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0841.webp",
@@ -540,8 +540,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0842",
-    "name": "Eternal Soul of the Shadow Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Eternal Soul of the Umbral Monarch",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0842.webp",
@@ -553,8 +553,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0843",
-    "name": "Void Soul of the Shadow Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Void Soul of the Umbral Monarch",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0843.webp",
@@ -566,8 +566,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0844",
-    "name": "Abyssal Soul of the Shadow Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Abyssal Soul of the Umbral Monarch",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0844.webp",
@@ -579,8 +579,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0845",
-    "name": "Demonic Soul of the Shadow Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Demonic Soul of the Umbral Monarch",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0845.webp",
@@ -592,8 +592,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0846",
-    "name": "Celestial Soul of the Shadow Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Celestial Soul of the Umbral Monarch",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0846.webp",
@@ -605,8 +605,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0847",
-    "name": "Divine Soul of the Shadow Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Divine Soul of the Umbral Monarch",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0847.webp",
@@ -618,8 +618,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0848",
-    "name": "Ancient Soul of the Shadow Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Ancient Soul of the Umbral Monarch",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0848.webp",
@@ -631,8 +631,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0849",
-    "name": "Forgotten Soul of the Shadow Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Forgotten Soul of the Umbral Monarch",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0849.webp",
@@ -644,8 +644,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0850",
-    "name": "Cursed Soul of the Shadow Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Cursed Soul of the Umbral Monarch",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0850.webp",
@@ -657,8 +657,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0851",
-    "name": "Blessed Soul of the Shadow Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Blessed Soul of the Umbral Monarch",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0851.webp",
@@ -670,8 +670,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0852",
-    "name": "Sacred Soul of the Shadow Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Sacred Soul of the Umbral Monarch",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0852.webp",
@@ -683,8 +683,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0853",
-    "name": "Profane Soul of the Shadow Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Profane Soul of the Umbral Monarch",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0853.webp",
@@ -696,8 +696,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0854",
-    "name": "Mystic Soul of the Shadow Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Mystic Soul of the Umbral Monarch",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0854.webp",
@@ -709,8 +709,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0855",
-    "name": "Arcane Soul of the Shadow Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Arcane Soul of the Umbral Monarch",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0855.webp",
@@ -722,8 +722,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0856",
-    "name": "Infernal Soul of the Shadow Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Infernal Soul of the Umbral Monarch",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0856.webp",
@@ -735,8 +735,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0857",
-    "name": "Frozen Soul of the Shadow Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Frozen Soul of the Umbral Monarch",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0857.webp",
@@ -748,8 +748,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0858",
-    "name": "Thunder Soul of the Shadow Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Thunder Soul of the Umbral Monarch",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0858.webp",
@@ -761,8 +761,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0859",
-    "name": "Holy Soul of the Shadow Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Holy Soul of the Umbral Monarch",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0859.webp",
@@ -774,8 +774,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0860",
-    "name": "Dark Soul of the Shadow Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Dark Soul of the Umbral Monarch",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0860.webp",
@@ -787,8 +787,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0861",
-    "name": "Shadow Core of the Shadow Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Shadow Core of the Umbral Monarch",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0861.webp",
@@ -800,8 +800,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0862",
-    "name": "Eternal Core of the Shadow Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Eternal Core of the Umbral Monarch",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0862.webp",
@@ -813,8 +813,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0863",
-    "name": "Void Core of the Shadow Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Void Core of the Umbral Monarch",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0863.webp",
@@ -826,8 +826,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0864",
-    "name": "Abyssal Core of the Shadow Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Abyssal Core of the Umbral Monarch",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0864.webp",
@@ -839,8 +839,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0865",
-    "name": "Demonic Core of the Shadow Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Demonic Core of the Umbral Monarch",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0865.webp",
@@ -852,8 +852,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0866",
-    "name": "Celestial Core of the Shadow Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Celestial Core of the Umbral Monarch",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0866.webp",
@@ -865,8 +865,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0867",
-    "name": "Divine Core of the Shadow Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Divine Core of the Umbral Monarch",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0867.webp",
@@ -878,8 +878,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0868",
-    "name": "Ancient Core of the Shadow Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Ancient Core of the Umbral Monarch",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0868.webp",
@@ -891,8 +891,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0869",
-    "name": "Forgotten Core of the Shadow Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Forgotten Core of the Umbral Monarch",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0869.webp",
@@ -904,8 +904,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0870",
-    "name": "Cursed Core of the Shadow Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Cursed Core of the Umbral Monarch",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0870.webp",
@@ -917,8 +917,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0871",
-    "name": "Blessed Core of the Shadow Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Blessed Core of the Umbral Monarch",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0871.webp",
@@ -930,8 +930,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0872",
-    "name": "Sacred Core of the Shadow Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Sacred Core of the Umbral Monarch",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0872.webp",
@@ -943,8 +943,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0873",
-    "name": "Profane Core of the Shadow Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Profane Core of the Umbral Monarch",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0873.webp",
@@ -956,8 +956,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0874",
-    "name": "Mystic Core of the Shadow Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Mystic Core of the Umbral Monarch",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0874.webp",
@@ -969,8 +969,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0875",
-    "name": "Arcane Core of the Shadow Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Arcane Core of the Umbral Monarch",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0875.webp",
@@ -982,8 +982,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0876",
-    "name": "Infernal Core of the Shadow Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Infernal Core of the Umbral Monarch",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0876.webp",
@@ -995,8 +995,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0877",
-    "name": "Frozen Core of the Shadow Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Frozen Core of the Umbral Monarch",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0877.webp",
@@ -1008,8 +1008,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0878",
-    "name": "Thunder Core of the Shadow Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Thunder Core of the Umbral Monarch",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0878.webp",
@@ -1021,8 +1021,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0879",
-    "name": "Holy Core of the Shadow Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Holy Core of the Umbral Monarch",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0879.webp",
@@ -1034,8 +1034,8 @@ export const items: Item[] = [
   },
   {
     "id": "item-0880",
-    "name": "Dark Core of the Shadow Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "name": "Dark Core of the Umbral Monarch",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0880.webp",
@@ -1048,7 +1048,7 @@ export const items: Item[] = [
   {
     "id": "item-0881",
     "name": "Shadow Blade of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0881.webp",
@@ -1061,7 +1061,7 @@ export const items: Item[] = [
   {
     "id": "item-0882",
     "name": "Eternal Blade of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0882.webp",
@@ -1074,7 +1074,7 @@ export const items: Item[] = [
   {
     "id": "item-0883",
     "name": "Void Blade of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0883.webp",
@@ -1087,7 +1087,7 @@ export const items: Item[] = [
   {
     "id": "item-0884",
     "name": "Abyssal Blade of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0884.webp",
@@ -1100,7 +1100,7 @@ export const items: Item[] = [
   {
     "id": "item-0885",
     "name": "Demonic Blade of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0885.webp",
@@ -1113,7 +1113,7 @@ export const items: Item[] = [
   {
     "id": "item-0886",
     "name": "Celestial Blade of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0886.webp",
@@ -1126,7 +1126,7 @@ export const items: Item[] = [
   {
     "id": "item-0887",
     "name": "Divine Blade of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0887.webp",
@@ -1139,7 +1139,7 @@ export const items: Item[] = [
   {
     "id": "item-0888",
     "name": "Ancient Blade of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0888.webp",
@@ -1152,7 +1152,7 @@ export const items: Item[] = [
   {
     "id": "item-0889",
     "name": "Forgotten Blade of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0889.webp",
@@ -1165,7 +1165,7 @@ export const items: Item[] = [
   {
     "id": "item-0890",
     "name": "Cursed Blade of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0890.webp",
@@ -1178,7 +1178,7 @@ export const items: Item[] = [
   {
     "id": "item-0891",
     "name": "Blessed Blade of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0891.webp",
@@ -1191,7 +1191,7 @@ export const items: Item[] = [
   {
     "id": "item-0892",
     "name": "Sacred Blade of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0892.webp",
@@ -1204,7 +1204,7 @@ export const items: Item[] = [
   {
     "id": "item-0893",
     "name": "Profane Blade of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0893.webp",
@@ -1217,7 +1217,7 @@ export const items: Item[] = [
   {
     "id": "item-0894",
     "name": "Mystic Blade of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0894.webp",
@@ -1230,7 +1230,7 @@ export const items: Item[] = [
   {
     "id": "item-0895",
     "name": "Arcane Blade of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0895.webp",
@@ -1243,7 +1243,7 @@ export const items: Item[] = [
   {
     "id": "item-0896",
     "name": "Infernal Blade of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0896.webp",
@@ -1256,7 +1256,7 @@ export const items: Item[] = [
   {
     "id": "item-0897",
     "name": "Frozen Blade of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0897.webp",
@@ -1269,7 +1269,7 @@ export const items: Item[] = [
   {
     "id": "item-0898",
     "name": "Thunder Blade of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0898.webp",
@@ -1282,7 +1282,7 @@ export const items: Item[] = [
   {
     "id": "item-0899",
     "name": "Holy Blade of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0899.webp",
@@ -1295,7 +1295,7 @@ export const items: Item[] = [
   {
     "id": "item-0900",
     "name": "Dark Blade of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0900.webp",
@@ -1308,7 +1308,7 @@ export const items: Item[] = [
   {
     "id": "item-0901",
     "name": "Shadow Sword of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0901.webp",
@@ -1321,7 +1321,7 @@ export const items: Item[] = [
   {
     "id": "item-0902",
     "name": "Eternal Sword of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0902.webp",
@@ -1334,7 +1334,7 @@ export const items: Item[] = [
   {
     "id": "item-0903",
     "name": "Void Sword of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0903.webp",
@@ -1347,7 +1347,7 @@ export const items: Item[] = [
   {
     "id": "item-0904",
     "name": "Abyssal Sword of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0904.webp",
@@ -1360,7 +1360,7 @@ export const items: Item[] = [
   {
     "id": "item-0905",
     "name": "Demonic Sword of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0905.webp",
@@ -1373,7 +1373,7 @@ export const items: Item[] = [
   {
     "id": "item-0906",
     "name": "Celestial Sword of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0906.webp",
@@ -1386,7 +1386,7 @@ export const items: Item[] = [
   {
     "id": "item-0907",
     "name": "Divine Sword of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0907.webp",
@@ -1399,7 +1399,7 @@ export const items: Item[] = [
   {
     "id": "item-0908",
     "name": "Ancient Sword of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0908.webp",
@@ -1412,7 +1412,7 @@ export const items: Item[] = [
   {
     "id": "item-0909",
     "name": "Forgotten Sword of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0909.webp",
@@ -1425,7 +1425,7 @@ export const items: Item[] = [
   {
     "id": "item-0910",
     "name": "Cursed Sword of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0910.webp",
@@ -1438,7 +1438,7 @@ export const items: Item[] = [
   {
     "id": "item-0911",
     "name": "Blessed Sword of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0911.webp",
@@ -1451,7 +1451,7 @@ export const items: Item[] = [
   {
     "id": "item-0912",
     "name": "Sacred Sword of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0912.webp",
@@ -1464,7 +1464,7 @@ export const items: Item[] = [
   {
     "id": "item-0913",
     "name": "Profane Sword of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0913.webp",
@@ -1477,7 +1477,7 @@ export const items: Item[] = [
   {
     "id": "item-0914",
     "name": "Mystic Sword of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0914.webp",
@@ -1490,7 +1490,7 @@ export const items: Item[] = [
   {
     "id": "item-0915",
     "name": "Arcane Sword of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0915.webp",
@@ -1503,7 +1503,7 @@ export const items: Item[] = [
   {
     "id": "item-0916",
     "name": "Infernal Sword of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0916.webp",
@@ -1516,7 +1516,7 @@ export const items: Item[] = [
   {
     "id": "item-0917",
     "name": "Frozen Sword of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0917.webp",
@@ -1529,7 +1529,7 @@ export const items: Item[] = [
   {
     "id": "item-0918",
     "name": "Thunder Sword of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0918.webp",
@@ -1542,7 +1542,7 @@ export const items: Item[] = [
   {
     "id": "item-0919",
     "name": "Holy Sword of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0919.webp",
@@ -1555,7 +1555,7 @@ export const items: Item[] = [
   {
     "id": "item-0920",
     "name": "Dark Sword of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0920.webp",
@@ -1568,7 +1568,7 @@ export const items: Item[] = [
   {
     "id": "item-0921",
     "name": "Shadow Dagger of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0921.webp",
@@ -1581,7 +1581,7 @@ export const items: Item[] = [
   {
     "id": "item-0922",
     "name": "Eternal Dagger of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0922.webp",
@@ -1594,7 +1594,7 @@ export const items: Item[] = [
   {
     "id": "item-0923",
     "name": "Void Dagger of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0923.webp",
@@ -1607,7 +1607,7 @@ export const items: Item[] = [
   {
     "id": "item-0924",
     "name": "Abyssal Dagger of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0924.webp",
@@ -1620,7 +1620,7 @@ export const items: Item[] = [
   {
     "id": "item-0925",
     "name": "Demonic Dagger of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0925.webp",
@@ -1633,7 +1633,7 @@ export const items: Item[] = [
   {
     "id": "item-0926",
     "name": "Celestial Dagger of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0926.webp",
@@ -1646,7 +1646,7 @@ export const items: Item[] = [
   {
     "id": "item-0927",
     "name": "Divine Dagger of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0927.webp",
@@ -1659,7 +1659,7 @@ export const items: Item[] = [
   {
     "id": "item-0928",
     "name": "Ancient Dagger of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0928.webp",
@@ -1672,7 +1672,7 @@ export const items: Item[] = [
   {
     "id": "item-0929",
     "name": "Forgotten Dagger of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0929.webp",
@@ -1685,7 +1685,7 @@ export const items: Item[] = [
   {
     "id": "item-0930",
     "name": "Cursed Dagger of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0930.webp",
@@ -1698,7 +1698,7 @@ export const items: Item[] = [
   {
     "id": "item-0931",
     "name": "Blessed Dagger of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0931.webp",
@@ -1711,7 +1711,7 @@ export const items: Item[] = [
   {
     "id": "item-0932",
     "name": "Sacred Dagger of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0932.webp",
@@ -1724,7 +1724,7 @@ export const items: Item[] = [
   {
     "id": "item-0933",
     "name": "Profane Dagger of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0933.webp",
@@ -1737,7 +1737,7 @@ export const items: Item[] = [
   {
     "id": "item-0934",
     "name": "Mystic Dagger of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0934.webp",
@@ -1750,7 +1750,7 @@ export const items: Item[] = [
   {
     "id": "item-0935",
     "name": "Arcane Dagger of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0935.webp",
@@ -1763,7 +1763,7 @@ export const items: Item[] = [
   {
     "id": "item-0936",
     "name": "Infernal Dagger of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0936.webp",
@@ -1776,7 +1776,7 @@ export const items: Item[] = [
   {
     "id": "item-0937",
     "name": "Frozen Dagger of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0937.webp",
@@ -1789,7 +1789,7 @@ export const items: Item[] = [
   {
     "id": "item-0938",
     "name": "Thunder Dagger of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0938.webp",
@@ -1802,7 +1802,7 @@ export const items: Item[] = [
   {
     "id": "item-0939",
     "name": "Holy Dagger of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0939.webp",
@@ -1815,7 +1815,7 @@ export const items: Item[] = [
   {
     "id": "item-0940",
     "name": "Dark Dagger of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0940.webp",
@@ -1828,7 +1828,7 @@ export const items: Item[] = [
   {
     "id": "item-0941",
     "name": "Shadow Axe of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0941.webp",
@@ -1841,7 +1841,7 @@ export const items: Item[] = [
   {
     "id": "item-0942",
     "name": "Eternal Axe of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0942.webp",
@@ -1854,7 +1854,7 @@ export const items: Item[] = [
   {
     "id": "item-0943",
     "name": "Void Axe of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0943.webp",
@@ -1867,7 +1867,7 @@ export const items: Item[] = [
   {
     "id": "item-0944",
     "name": "Abyssal Axe of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0944.webp",
@@ -1880,7 +1880,7 @@ export const items: Item[] = [
   {
     "id": "item-0945",
     "name": "Demonic Axe of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0945.webp",
@@ -1893,7 +1893,7 @@ export const items: Item[] = [
   {
     "id": "item-0946",
     "name": "Celestial Axe of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0946.webp",
@@ -1906,7 +1906,7 @@ export const items: Item[] = [
   {
     "id": "item-0947",
     "name": "Divine Axe of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0947.webp",
@@ -1919,7 +1919,7 @@ export const items: Item[] = [
   {
     "id": "item-0948",
     "name": "Ancient Axe of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0948.webp",
@@ -1932,7 +1932,7 @@ export const items: Item[] = [
   {
     "id": "item-0949",
     "name": "Forgotten Axe of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0949.webp",
@@ -1945,7 +1945,7 @@ export const items: Item[] = [
   {
     "id": "item-0950",
     "name": "Cursed Axe of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0950.webp",
@@ -1958,7 +1958,7 @@ export const items: Item[] = [
   {
     "id": "item-0951",
     "name": "Blessed Axe of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0951.webp",
@@ -1971,7 +1971,7 @@ export const items: Item[] = [
   {
     "id": "item-0952",
     "name": "Sacred Axe of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0952.webp",
@@ -1984,7 +1984,7 @@ export const items: Item[] = [
   {
     "id": "item-0953",
     "name": "Profane Axe of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0953.webp",
@@ -1997,7 +1997,7 @@ export const items: Item[] = [
   {
     "id": "item-0954",
     "name": "Mystic Axe of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0954.webp",
@@ -2010,7 +2010,7 @@ export const items: Item[] = [
   {
     "id": "item-0955",
     "name": "Arcane Axe of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0955.webp",
@@ -2023,7 +2023,7 @@ export const items: Item[] = [
   {
     "id": "item-0956",
     "name": "Infernal Axe of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0956.webp",
@@ -2036,7 +2036,7 @@ export const items: Item[] = [
   {
     "id": "item-0957",
     "name": "Frozen Axe of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0957.webp",
@@ -2049,7 +2049,7 @@ export const items: Item[] = [
   {
     "id": "item-0958",
     "name": "Thunder Axe of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0958.webp",
@@ -2062,7 +2062,7 @@ export const items: Item[] = [
   {
     "id": "item-0959",
     "name": "Holy Axe of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0959.webp",
@@ -2075,7 +2075,7 @@ export const items: Item[] = [
   {
     "id": "item-0960",
     "name": "Dark Axe of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0960.webp",
@@ -2088,7 +2088,7 @@ export const items: Item[] = [
   {
     "id": "item-0961",
     "name": "Shadow Hammer of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0961.webp",
@@ -2101,7 +2101,7 @@ export const items: Item[] = [
   {
     "id": "item-0962",
     "name": "Eternal Hammer of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0962.webp",
@@ -2114,7 +2114,7 @@ export const items: Item[] = [
   {
     "id": "item-0963",
     "name": "Void Hammer of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0963.webp",
@@ -2127,7 +2127,7 @@ export const items: Item[] = [
   {
     "id": "item-0964",
     "name": "Abyssal Hammer of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0964.webp",
@@ -2140,7 +2140,7 @@ export const items: Item[] = [
   {
     "id": "item-0965",
     "name": "Demonic Hammer of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0965.webp",
@@ -2153,7 +2153,7 @@ export const items: Item[] = [
   {
     "id": "item-0966",
     "name": "Celestial Hammer of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0966.webp",
@@ -2166,7 +2166,7 @@ export const items: Item[] = [
   {
     "id": "item-0967",
     "name": "Divine Hammer of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0967.webp",
@@ -2179,7 +2179,7 @@ export const items: Item[] = [
   {
     "id": "item-0968",
     "name": "Ancient Hammer of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0968.webp",
@@ -2192,7 +2192,7 @@ export const items: Item[] = [
   {
     "id": "item-0969",
     "name": "Forgotten Hammer of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0969.webp",
@@ -2205,7 +2205,7 @@ export const items: Item[] = [
   {
     "id": "item-0970",
     "name": "Cursed Hammer of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0970.webp",
@@ -2218,7 +2218,7 @@ export const items: Item[] = [
   {
     "id": "item-0971",
     "name": "Blessed Hammer of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0971.webp",
@@ -2231,7 +2231,7 @@ export const items: Item[] = [
   {
     "id": "item-0972",
     "name": "Sacred Hammer of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0972.webp",
@@ -2244,7 +2244,7 @@ export const items: Item[] = [
   {
     "id": "item-0973",
     "name": "Profane Hammer of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0973.webp",
@@ -2257,7 +2257,7 @@ export const items: Item[] = [
   {
     "id": "item-0974",
     "name": "Mystic Hammer of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0974.webp",
@@ -2270,7 +2270,7 @@ export const items: Item[] = [
   {
     "id": "item-0975",
     "name": "Arcane Hammer of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0975.webp",
@@ -2283,7 +2283,7 @@ export const items: Item[] = [
   {
     "id": "item-0976",
     "name": "Infernal Hammer of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0976.webp",
@@ -2296,7 +2296,7 @@ export const items: Item[] = [
   {
     "id": "item-0977",
     "name": "Frozen Hammer of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0977.webp",
@@ -2309,7 +2309,7 @@ export const items: Item[] = [
   {
     "id": "item-0978",
     "name": "Thunder Hammer of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0978.webp",
@@ -2322,7 +2322,7 @@ export const items: Item[] = [
   {
     "id": "item-0979",
     "name": "Holy Hammer of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0979.webp",
@@ -2335,7 +2335,7 @@ export const items: Item[] = [
   {
     "id": "item-0980",
     "name": "Dark Hammer of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0980.webp",
@@ -2348,7 +2348,7 @@ export const items: Item[] = [
   {
     "id": "item-0981",
     "name": "Shadow Staff of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0981.webp",
@@ -2361,7 +2361,7 @@ export const items: Item[] = [
   {
     "id": "item-0982",
     "name": "Eternal Staff of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0982.webp",
@@ -2374,7 +2374,7 @@ export const items: Item[] = [
   {
     "id": "item-0983",
     "name": "Void Staff of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0983.webp",
@@ -2387,7 +2387,7 @@ export const items: Item[] = [
   {
     "id": "item-0984",
     "name": "Abyssal Staff of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0984.webp",
@@ -2400,7 +2400,7 @@ export const items: Item[] = [
   {
     "id": "item-0985",
     "name": "Demonic Staff of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0985.webp",
@@ -2413,7 +2413,7 @@ export const items: Item[] = [
   {
     "id": "item-0986",
     "name": "Celestial Staff of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0986.webp",
@@ -2426,7 +2426,7 @@ export const items: Item[] = [
   {
     "id": "item-0987",
     "name": "Divine Staff of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0987.webp",
@@ -2439,7 +2439,7 @@ export const items: Item[] = [
   {
     "id": "item-0988",
     "name": "Ancient Staff of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0988.webp",
@@ -2452,7 +2452,7 @@ export const items: Item[] = [
   {
     "id": "item-0989",
     "name": "Forgotten Staff of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0989.webp",
@@ -2465,7 +2465,7 @@ export const items: Item[] = [
   {
     "id": "item-0990",
     "name": "Cursed Staff of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0990.webp",
@@ -2478,7 +2478,7 @@ export const items: Item[] = [
   {
     "id": "item-0991",
     "name": "Blessed Staff of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0991.webp",
@@ -2491,7 +2491,7 @@ export const items: Item[] = [
   {
     "id": "item-0992",
     "name": "Sacred Staff of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0992.webp",
@@ -2504,7 +2504,7 @@ export const items: Item[] = [
   {
     "id": "item-0993",
     "name": "Profane Staff of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0993.webp",
@@ -2517,7 +2517,7 @@ export const items: Item[] = [
   {
     "id": "item-0994",
     "name": "Mystic Staff of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0994.webp",
@@ -2530,7 +2530,7 @@ export const items: Item[] = [
   {
     "id": "item-0995",
     "name": "Arcane Staff of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0995.webp",
@@ -2543,7 +2543,7 @@ export const items: Item[] = [
   {
     "id": "item-0996",
     "name": "Infernal Staff of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0996.webp",
@@ -2556,7 +2556,7 @@ export const items: Item[] = [
   {
     "id": "item-0997",
     "name": "Frozen Staff of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0997.webp",
@@ -2569,7 +2569,7 @@ export const items: Item[] = [
   {
     "id": "item-0998",
     "name": "Thunder Staff of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0998.webp",
@@ -2582,7 +2582,7 @@ export const items: Item[] = [
   {
     "id": "item-0999",
     "name": "Holy Staff of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0999.webp",
@@ -2595,7 +2595,7 @@ export const items: Item[] = [
   {
     "id": "item-1000",
     "name": "Dark Staff of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Supreme Hunter Jinwoo. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-1000.webp",
@@ -2606,3 +2606,5 @@ export const items: Item[] = [
     "value": 50685
   }
 ];
+
+

@@ -1,6 +1,6 @@
 // Comprehensive Spells Compendium
 // Generated with full admin privileges
-// Solo Leveling themed spells with images
+// System Ascendant themed spells with images
 
 export interface Spell {
   id: string;
@@ -91,3 +91,4 @@ export const spellsCompendium: Spell[] = [
 ];
 
 export default spellsCompendium;
+

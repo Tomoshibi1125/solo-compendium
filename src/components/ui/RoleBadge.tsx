@@ -43,7 +43,7 @@ export function RoleBadge({ role, variant = 'default', className }: RoleBadgePro
   const roleConfig = {
     system: {
       icon: Crown,
-      text: variant === 'inline' ? 'SYSTEM' : 'GATE MASTER (SYSTEM)',
+      text: variant === 'inline' ? 'SYSTEM' : 'PROTOCOL WARDEN (SYSTEM)',
       color: 'text-primary',
     },
     'co-system': {
@@ -53,7 +53,7 @@ export function RoleBadge({ role, variant = 'default', className }: RoleBadgePro
     },
     hunter: {
       icon: Shield,
-      text: 'HUNTER',
+      text: 'ASCENDANT',
       color: 'text-muted-foreground',
     },
   };

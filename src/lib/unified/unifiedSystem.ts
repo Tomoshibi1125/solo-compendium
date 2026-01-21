@@ -1,6 +1,6 @@
 /**
  * Unified System Integration
- * Main integration point for Solo Leveling + D&D 5e merged system
+ * Main integration point for System Ascendant + SRD 5e merged system
  */
 
 import { 
@@ -125,7 +125,7 @@ export class UnifiedSystem {
     return result;
   }
 
-  // Apply Monarch Power (replaces Shadow Energy)
+  // Apply Monarch Power (replaces Umbral Energy)
   applyMonarchPower(cost: number, effect: string) {
     const result = applyMonarchPowerUtil(this.character, cost, effect);
     if (result.success) {
@@ -328,7 +328,7 @@ export type {
 
 // Export constants
 export const UNIFIED_SYSTEM_VERSION = '1.0.0';
-export const UNIFIED_SYSTEM_NAME = 'Solo Leveling + D&D 5e Unified System';
+export const UNIFIED_SYSTEM_NAME = 'System Ascendant + SRD 5e Unified System';
 
 // System configuration
 export const UNIFIED_CONFIG = {
@@ -358,7 +358,7 @@ export const UNIFIED_CONFIG = {
   MAX_EQUIPMENT_SLOTS: 20,
   MAX_RUNE_INSCRIPTIONS: 10,
   
-  // Solo Leveling specific
+  // System Ascendant specific
   MAX_MONARCH_UNLOCKS: 10,
   MAX_SHADOW_SOLDIERS: 5,
   
@@ -430,3 +430,4 @@ export const UnifiedUtils = {
     return xpTable[cr] || 0;
   }
 };
+

@@ -7,6 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Swords, Shield, Heart, Zap, Wand2 } from 'lucide-react';
 import { DetailHeader } from './DetailHeader';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface JobData {
   id: string;
@@ -51,7 +52,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
   const [paths, setPaths] = useState<JobPath[]>([]);
   const [relatedPowers, setRelatedPowers] = useState<Array<{ id: string; name: string; display_name?: string | null; power_level: number }>>([]);
 
-  const displayName = data.display_name || data.name;
+  const displayName = formatMonarchVernacular(data.display_name || data.name);
 
   useEffect(() => {
     const fetchRelatedData = async () => {
@@ -111,21 +112,21 @@ export const JobDetail = ({ data }: { data: JobData }) => {
         entryType="jobs"
         entryId={data.id}
         title={displayName}
-        subtitle={data.source_book ? `Source: ${data.source_book}` : undefined}
+        subtitle={data.source_book ? `Source: ${formatMonarchVernacular(data.source_book)}` : undefined}
       />
       <SystemWindow title={displayName.toUpperCase()} className="border-primary/50">
         <div className="space-y-4">
           {data.flavor_text && (
             <p className="text-muted-foreground italic border-l-2 border-primary/30 pl-4">
-              {data.flavor_text}
+              {formatMonarchVernacular(data.flavor_text)}
             </p>
           )}
-          <p className="text-foreground">{data.description}</p>
+          <p className="text-foreground">{formatMonarchVernacular(data.description)}</p>
           
           {data.tags && data.tags.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {data.tags.map((tag) => (
-                <Badge key={tag} variant="secondary">{tag}</Badge>
+                <Badge key={tag} variant="secondary">{formatMonarchVernacular(tag)}</Badge>
               ))}
             </div>
           )}
@@ -144,14 +145,14 @@ export const JobDetail = ({ data }: { data: JobData }) => {
         <SystemWindow title="PRIMARY ABILITIES" compact>
           <div className="flex items-center gap-2">
             <Zap className="w-5 h-5 text-yellow-400" />
-            <span className="font-heading">{data.primary_abilities?.join(', ') || 'None'}</span>
+            <span className="font-heading">{data.primary_abilities?.map(formatMonarchVernacular).join(', ') || 'None'}</span>
           </div>
         </SystemWindow>
         
         <SystemWindow title="SAVING THROWS" compact>
           <div className="flex items-center gap-2">
             <Shield className="w-5 h-5 text-blue-400" />
-            <span className="font-heading">{data.saving_throw_proficiencies?.join(', ') || 'None'}</span>
+            <span className="font-heading">{data.saving_throw_proficiencies?.map(formatMonarchVernacular).join(', ') || 'None'}</span>
           </div>
         </SystemWindow>
         
@@ -168,21 +169,21 @@ export const JobDetail = ({ data }: { data: JobData }) => {
         <div className="grid md:grid-cols-3 gap-4">
           <div>
             <h4 className="font-heading text-sm text-muted-foreground mb-2">Armor</h4>
-            <p className="font-heading">{data.armor_proficiencies?.join(', ') || 'None'}</p>
+            <p className="font-heading">{data.armor_proficiencies ? data.armor_proficiencies.map(formatMonarchVernacular).join(', ') : 'None'}</p>
           </div>
           <div>
             <h4 className="font-heading text-sm text-muted-foreground mb-2">Weapons</h4>
-            <p className="font-heading">{data.weapon_proficiencies?.join(', ') || 'None'}</p>
+            <p className="font-heading">{data.weapon_proficiencies ? data.weapon_proficiencies.map(formatMonarchVernacular).join(', ') : 'None'}</p>
           </div>
           <div>
             <h4 className="font-heading text-sm text-muted-foreground mb-2">Tools</h4>
-            <p className="font-heading">{data.tool_proficiencies?.join(', ') || 'None'}</p>
+            <p className="font-heading">{data.tool_proficiencies ? data.tool_proficiencies.map(formatMonarchVernacular).join(', ') : 'None'}</p>
           </div>
         </div>
         {data.skill_choices && data.skill_choices.length > 0 && (
           <div className="mt-4">
             <h4 className="font-heading text-sm text-muted-foreground mb-2">Skill Options</h4>
-            <p className="font-heading">{data.skill_choices.join(', ')}</p>
+            <p className="font-heading">{data.skill_choices.map(formatMonarchVernacular).join(', ')}</p>
           </div>
         )}
       </SystemWindow>
@@ -197,8 +198,8 @@ export const JobDetail = ({ data }: { data: JobData }) => {
                 to={`/compendium/paths/${path.id}`}
                 className="glass-card p-4 border border-border hover:border-primary/30 transition-colors"
               >
-                <h4 className="font-heading text-lg font-semibold text-primary mb-2 hover:underline">{path.display_name || path.name}</h4>
-                <p className="text-sm text-muted-foreground line-clamp-3">{path.description}</p>
+                <h4 className="font-heading text-lg font-semibold text-primary mb-2 hover:underline">{formatMonarchVernacular(path.display_name || path.name)}</h4>
+                <p className="text-sm text-muted-foreground line-clamp-3">{formatMonarchVernacular(path.description)}</p>
                 <p className="text-xs text-muted-foreground mt-2">Available at level {path.path_level}</p>
               </Link>
             ))}
@@ -219,7 +220,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
                 <Wand2 className="w-5 h-5 text-primary flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <h4 className="font-heading font-semibold group-hover:text-primary transition-colors truncate">
-                    {power.display_name || power.name}
+                    {formatMonarchVernacular(power.display_name || power.name)}
                   </h4>
                   <p className="text-xs text-muted-foreground">
                     {power.power_level === 0 ? 'Cantrip' : `Tier ${power.power_level}`}
@@ -244,13 +245,13 @@ export const JobDetail = ({ data }: { data: JobData }) => {
             {features.map((feature) => (
               <div key={feature.id} className="border-l-2 border-primary/30 pl-4">
                 <div className="flex items-center gap-2 mb-1">
-                  <h4 className="font-heading font-semibold">{feature.display_name || feature.name}</h4>
+                  <h4 className="font-heading font-semibold">{formatMonarchVernacular(feature.display_name || feature.name)}</h4>
                   <Badge variant="outline" className="text-xs">Level {feature.level}</Badge>
                   {feature.action_type && (
                     <Badge variant="secondary" className="text-xs">{feature.action_type}</Badge>
                   )}
                 </div>
-                <p className="text-sm text-muted-foreground">{feature.description}</p>
+                <p className="text-sm text-muted-foreground">{formatMonarchVernacular(feature.description)}</p>
               </div>
             ))}
           </div>

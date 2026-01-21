@@ -5,13 +5,13 @@
 -- All spell save DCs should use: DC = 8 + proficiency bonus + spellcasting ability modifier
 -- All attack bonuses should use: proficiency bonus + ability modifier
 -- 
--- Solo Leveling Custom Mechanics (keep as-is):
+-- System Ascendant Custom Mechanics (keep as-is):
 -- - Ability scores: STR, AGI, VIT, INT, SENSE, PRE (instead of STR, DEX, CON, INT, WIS, CHA)
 -- - System Favor resource (instead of spell slots for some jobs)
 -- - Cross-learning mechanics for runes
--- - Solo Leveling lore and terminology
+-- - System Ascendant lore and terminology
 --
--- IMPORTANT: All 5e ability score references must be converted to Solo Leveling equivalents:
+-- IMPORTANT: All 5e ability score references must be converted to System Ascendant equivalents:
 --   STR = STR (same)
 --   DEX = AGI (Agility)
 --   CON = VIT (Vitality)
@@ -20,7 +20,7 @@
 --   CHA = PRE (Presence)
 -- =============================================
 
--- Fix ability score name references to use Solo Leveling names
+-- Fix ability score name references to use System Ascendant names
 -- Constitution → Vitality (VIT)
 UPDATE public.compendium_monarch_features
 SET description = REPLACE(description, 'Constitution modifier', 'Vitality modifier')
@@ -89,7 +89,7 @@ WHERE effect_description LIKE '%Dexterity saving throw%';
 UPDATE public.compendium_runes
 SET effect_description = REPLACE(effect_description, 'Wisdom saving throw', 'Sense saving throw')
 WHERE effect_description LIKE '%Wisdom saving throw%';
--- Fireball Rune already fixed in migration file to use proper DC and Solo Leveling ability names
+-- Fireball Rune already fixed in migration file to use proper DC and System Ascendant ability names
 -- This migration will catch any other runes that need fixing
 
 -- Fix all references to "your [Job] power save DC" to use proper 5e formula
@@ -139,16 +139,16 @@ WHERE description LIKE '%Wisdom check%';
 
 -- Add comment documentation for future reference
 COMMENT ON TABLE public.compendium_runes IS 
-'Runes follow 5e mechanics: Save DCs = 8 + proficiency bonus + relevant ability modifier. Attack bonuses = proficiency bonus + ability modifier. Uses Solo Leveling ability scores (STR, AGI, VIT, INT, SENSE, PRE).';
+'Runes follow 5e mechanics: Save DCs = 8 + proficiency bonus + relevant ability modifier. Attack bonuses = proficiency bonus + ability modifier. Uses System Ascendant ability scores (STR, AGI, VIT, INT, SENSE, PRE).';
 COMMENT ON TABLE public.compendium_job_features IS 
-'Job features follow 5e mechanics: Save DCs = 8 + proficiency bonus + relevant ability modifier. Attack bonuses = proficiency bonus + ability modifier. Uses Solo Leveling ability scores (STR, AGI, VIT, INT, SENSE, PRE).';
+'Job features follow 5e mechanics: Save DCs = 8 + proficiency bonus + relevant ability modifier. Attack bonuses = proficiency bonus + ability modifier. Uses System Ascendant ability scores (STR, AGI, VIT, INT, SENSE, PRE).';
 COMMENT ON TABLE public.compendium_monarch_features IS 
-'Monarch features follow 5e mechanics: Save DCs = 8 + proficiency bonus + relevant ability modifier. Attack bonuses = proficiency bonus + ability modifier. Uses Solo Leveling ability scores (STR, AGI, VIT, INT, SENSE, PRE).';
+'Monarch features follow 5e mechanics: Save DCs = 8 + proficiency bonus + relevant ability modifier. Attack bonuses = proficiency bonus + ability modifier. Uses System Ascendant ability scores (STR, AGI, VIT, INT, SENSE, PRE).';
 -- =============================================
 -- VERIFY AND DOCUMENT 5E MECHANICS STANDARDS
 -- =============================================
 -- 
--- ABILITY SCORES (Solo Leveling Custom):
+-- ABILITY SCORES (System Ascendant Custom):
 --   STR = Strength (matches 5e)
 --   AGI = Agility (replaces DEX)
 --   VIT = Vitality (replaces CON)
@@ -170,7 +170,7 @@ COMMENT ON TABLE public.compendium_monarch_features IS
 -- SAVING THROW DC (5e Standard):
 --   DC = 8 + proficiency bonus + relevant ability modifier
 --   Example: Constitution save = 8 + prof + CON modifier
---   For Solo Leveling: Constitution save = 8 + prof + VIT modifier
+--   For System Ascendant: Constitution save = 8 + prof + VIT modifier
 --
 -- SPELL SAVE DC (5e Standard):
 --   DC = 8 + proficiency bonus + spellcasting ability modifier
@@ -207,16 +207,17 @@ COMMENT ON TABLE public.compendium_monarch_features IS
 --   Invisible, Paralyzed, Petrified, Poisoned, Prone, Restrained, 
 --   Stunned, Unconscious, Exhaustion
 --
--- RESOURCES (Solo Leveling Custom where noted):
+-- RESOURCES (System Ascendant Custom where noted):
 --   - Hit Points: Standard 5e
 --   - Hit Dice: Standard 5e (short rest recovery)
 --   - Spell Slots: Standard 5e for casters
---   - Mana: Solo Leveling custom (some jobs use mana instead of spell slots)
---   - Stamina: Solo Leveling custom (some jobs use stamina)
---   - System Favor: Solo Leveling custom (Reawakened Hunter resource)
+--   - Mana: System Ascendant custom (some jobs use mana instead of spell slots)
+--   - Stamina: System Ascendant custom (some jobs use stamina)
+--   - System Favor: System Ascendant custom (Reawakened Ascendant resource)
 --
 -- REST MECHANICS (5e Standard):
 --   - Short Rest: 1 hour, regain hit dice (up to half max), some features recharge
 --   - Long Rest: 8 hours, regain all HP, all hit dice, all spell slots, all features
 --
 -- =============================================;
+

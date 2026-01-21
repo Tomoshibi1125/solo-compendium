@@ -71,7 +71,7 @@ const QUICK_ACTIONS: QuickAction[] = [
   },
   {
     id: 'dm-tools',
-    label: 'DM Tools',
+    label: 'Warden Tools',
     icon: Crown,
     href: '/dm-tools',
     shortcut: 'Ctrl+M',
@@ -210,4 +210,5 @@ export function QuickActionsPanel({ className, variant = 'floating' }: QuickActi
     </SystemWindow>
   );
 }
+
 

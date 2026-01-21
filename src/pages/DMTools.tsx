@@ -26,7 +26,7 @@ import {
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
-import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
+import { SystemSigilLogo } from '@/components/ui/SystemSigilLogo';
 import { GatePortal } from '@/components/ui/GatePortal';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -54,8 +54,8 @@ const tools = [
   },
   {
     id: 'gate-generator',
-    name: 'Gate Generator',
-    description: 'Generate random Gates with themes, biomes, bosses, and complications.',
+    name: 'Rift Generator',
+    description: 'Generate random rifts with themes, biomes, bosses, and complications.',
     icon: Flame,
     status: 'available',
     color: 'from-orange-500/20 to-orange-600/10 border-orange-500/30 hover:border-orange-500/60',
@@ -75,7 +75,7 @@ const tools = [
   {
     id: 'rollable-tables',
     name: 'Rollable Tables',
-    description: 'Access all Gate Master\'s Guide tables for hazards, complications, rewards, and more.',
+    description: 'Access all Protocol Warden\'s Guide tables for hazards, complications, rewards, and more.',
     icon: Dice6,
     status: 'available',
     color: 'from-green-500/20 to-green-600/10 border-green-500/30 hover:border-green-500/60',
@@ -95,7 +95,7 @@ const tools = [
   {
     id: 'treasure-generator',
     name: 'Treasure Generator',
-    description: 'Generate treasure hoards by Gate Rank with gold, items, materials, and relics.',
+    description: 'Generate treasure hoards by Rift Rank with gold, items, materials, and relics.',
     icon: Gem,
     status: 'available',
     color: 'from-yellow-500/20 to-yellow-600/10 border-yellow-500/30 hover:border-yellow-500/60',
@@ -145,7 +145,7 @@ const tools = [
   {
     id: 'dungeon-map-generator',
     name: 'Dungeon Map Generator',
-    description: 'Generate full Gate/dungeon maps with rooms, corridors, and special chambers for VTT-style gameplay.',
+    description: 'Generate full rift/dungeon maps with rooms, corridors, and special chambers for VTT-style gameplay.',
     icon: Grid,
     status: 'available',
     color: 'from-violet-500/20 to-violet-600/10 border-violet-500/30 hover:border-violet-500/60',
@@ -240,16 +240,16 @@ const DMTools = () => {
       <div className="container mx-auto px-4 py-8" data-testid="dm-tools">
         <div className="mb-8">
           <div className="flex items-center gap-4 mb-4">
-            <ShadowMonarchLogo size="md" />
+            <SystemSigilLogo size="md" />
             <div>
               <h1
                 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow tracking-wider"
                 data-testid="dm-tools-heading"
               >
-                SUPREME DEITY'S DOMAIN
+                PRIME ARCHITECT'S DOMAIN
               </h1>
               <p className="text-muted-foreground font-heading">
-                Divine tools granted to guide Hunters through the Gates. 
+                Divine tools granted to guide Ascendants through the Rifts. 
                 In this post-reset world, the System's will shapes reality.
               </p>
             </div>
@@ -274,7 +274,7 @@ const DMTools = () => {
                 2
               </span>
               <div>
-                <span className="font-arise text-orange-400 tracking-wide">GATE</span>
+                <span className="font-arise text-orange-400 tracking-wide">RIFT</span>
                 <p className="text-xs text-muted-foreground">Enter the dungeon</p>
               </div>
             </div>
@@ -290,7 +290,7 @@ const DMTools = () => {
             </div>
           </div>
           <p className="text-sm text-muted-foreground mt-6 text-center">
-            The core session structure from the Gate Master's Guide. Hunters navigate Contracts, Gates, and their Aftermath under the System's watchful gaze.
+            The core session structure from the Protocol Warden's Guide. Ascendants navigate Contracts, Rifts, and their Aftermath under the System's watchful gaze.
           </p>
         </SystemWindow>
 
@@ -325,7 +325,7 @@ const DMTools = () => {
               )}
               {tool.id === 'encounter-builder' && (
                 <div className="absolute top-0 right-0 opacity-10 group-hover:opacity-20 transition-opacity">
-                  <ShadowMonarchLogo size="md" />
+                  <SystemSigilLogo size="md" />
                 </div>
               )}
               
@@ -428,7 +428,7 @@ const DMTools = () => {
               </div>
             </SystemWindow>
 
-            <SystemWindow title="HUNTER TIERS" variant="alert" className="border-amber-500/30">
+            <SystemWindow title="ASCENDANT TIERS" variant="alert" className="border-amber-500/30">
               <div className="space-y-2 text-sm">
                 {[
                   { tier: 'Tier 1 (1-4)', bonus: '+6', dc: '14', rank: 'D-C', color: 'text-green-400' },
@@ -458,3 +458,6 @@ const DMTools = () => {
 };
 
 export default DMTools;
+
+
+

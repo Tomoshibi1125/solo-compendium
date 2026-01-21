@@ -1,5 +1,5 @@
 -- =============================================
--- PHASE 1: EXPAND POWERS (SRD Spells → Solo Leveling Powers)
+-- PHASE 1: EXPAND POWERS (SRD Spells → System Ascendant Powers)
 -- =============================================
 
 -- Add Cantrips (Tier 0)
@@ -13,7 +13,7 @@ INSERT INTO compendium_powers (name, power_level, casting_time, range, duration,
 ('Message', 0, '1 action', '120 feet', '1 round', 'You point your finger toward a creature within range and whisper a message. The target hears the message and can reply in a whisper that only you can hear.', false, 'Transmutation', 'SRD'),
 ('Minor Illusion', 0, '1 action', '30 feet', '1 minute', 'You create a sound or an image of an object within range that lasts for the duration. The illusion ends if you dismiss it or cast this power again.', false, 'Illusion', 'SRD'),
 ('Poison Spray', 0, '1 action', '10 feet', 'Instantaneous', 'You extend your hand toward a creature you can see within range and project a puff of noxious gas. The creature must succeed on a Constitution saving throw or take 1d12 poison damage. Damage increases by 1d12 at HR 5, 11, and 17.', false, 'Conjuration', 'SRD'),
-('Prestidigitation', 0, '1 action', '10 feet', 'Up to 1 hour', 'This power is a minor magical trick that novice hunters use for practice. You create one of several harmless sensory effects.', false, 'Transmutation', 'SRD'),
+('Prestidigitation', 0, '1 action', '10 feet', 'Up to 1 hour', 'This power is a minor magical trick that novice ascendants use for practice. You create one of several harmless sensory effects.', false, 'Transmutation', 'SRD'),
 ('Ray of Frost', 0, '1 action', '60 feet', 'Instantaneous', 'A frigid beam of blue-white light streaks toward a creature within range. Make a ranged spell attack. On a hit, it takes 1d8 cold damage, and its speed is reduced by 10 feet until the start of your next turn. Damage increases by 1d8 at HR 5, 11, and 17.', false, 'Evocation', 'SRD'),
 ('Sacred Flame', 0, '1 action', '60 feet', 'Instantaneous', 'Flame-like radiance descends on a creature that you can see within range. The target must succeed on a Dexterity saving throw or take 1d8 radiant damage. The target gains no benefit from cover. Damage increases by 1d8 at HR 5, 11, and 17.', false, 'Evocation', 'SRD'),
 ('Shocking Grasp', 0, '1 action', 'Touch', 'Instantaneous', 'Lightning springs from your hand to deliver a shock to a creature you try to touch. Make a melee spell attack with advantage if the target is wearing metal armor. On a hit, the target takes 1d8 lightning damage and can''t take reactions until the start of its next turn. Damage increases by 1d8 at HR 5, 11, and 17.', false, 'Evocation', 'SRD'),
@@ -57,3 +57,4 @@ INSERT INTO compendium_powers (name, power_level, casting_time, range, duration,
 ('Unseen Servant', 1, '1 action', '60 feet', '1 hour', 'This power creates an invisible, mindless, shapeless force that performs simple tasks at your command until the power ends. The servant springs into existence in an unoccupied space on the ground within range.', false, 'Conjuration', 'SRD'),
 ('Witch Bolt', 1, '1 action', '30 feet', 'Concentration, up to 1 minute', 'A beam of crackling, blue energy lances out toward a creature within range, forming a sustained arc of lightning between you and the target. Make a ranged spell attack. On a hit, the target takes 1d12 lightning damage, and on each of your turns for the duration, you can use your action to deal 1d12 lightning damage automatically.', true, 'Evocation', 'SRD')
 ON CONFLICT DO NOTHING;
+

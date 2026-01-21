@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Save, Plus, Trash2, Edit, FileText, Eye, EyeOff, Lock, Unlock } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -11,6 +11,8 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { useCampaignRole } from '@/hooks/useCampaigns';
 import { cn } from '@/lib/utils';
+import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
+import { useAuth } from '@/lib/auth/authContext';
 
 interface JournalEntry {
   id: string;
@@ -28,10 +30,13 @@ const VTTJournal = () => {
   const { toast } = useToast();
   const { data: role } = useCampaignRole(campaignId || '');
   const isGM = role === 'system' || role === 'co-system';
+  const { user, loading } = useAuth();
+  const isAuthed = isSupabaseConfigured && !!user?.id;
   
   const [entries, setEntries] = useState<JournalEntry[]>([]);
   const [selectedEntry, setSelectedEntry] = useState<JournalEntry | null>(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [newEntry, setNewEntry] = useState<{
     title: string;
     content: string;
@@ -46,28 +51,64 @@ const VTTJournal = () => {
 
   // Load entries when campaignId changes
   useEffect(() => {
-    if (!campaignId) return;
-    const saved = localStorage.getItem(`vtt-journal-${campaignId}`);
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        setEntries(parsed);
-      } catch (e) {
-        setEntries([]);
-      }
+    if (!campaignId) {
+      setIsLoading(false);
+      return;
     }
-  }, [campaignId]);
+    if (loading) return;
+    let active = true;
 
-  const saveEntries = () => {
-    if (!campaignId) return;
-    localStorage.setItem(`vtt-journal-${campaignId}`, JSON.stringify(entries));
-    toast({
-      title: 'Saved!',
-      description: 'Journal entries saved.',
-    });
-  };
+    const loadLocal = () => {
+      const saved = localStorage.getItem(`vtt-journal-${campaignId}`);
+      if (!saved) return [];
+      try {
+        return JSON.parse(saved) as JournalEntry[];
+      } catch (e) {
+        return [];
+      }
+    };
 
-  const handleCreateEntry = () => {
+    const loadRemote = async () => {
+      const { data, error } = await supabase
+        .from('vtt_journal_entries' as any)
+        .select('id, title, content, category, visible_to_players, created_at, updated_at')
+        .eq('campaign_id', campaignId)
+        .order('created_at', { ascending: false });
+      if (error) {
+        return [];
+      }
+      return (data || []).map((row: any) => ({
+        id: row.id,
+        title: row.title,
+        content: row.content ?? '',
+        category: row.category,
+        visibleToPlayers: !!row.visible_to_players,
+        createdAt: row.created_at,
+        updatedAt: row.updated_at,
+      })) as JournalEntry[];
+    };
+
+    const hydrate = async () => {
+      setIsLoading(true);
+      const localEntries = loadLocal();
+      if (!isAuthed) {
+        if (active) setEntries(localEntries);
+        setIsLoading(false);
+        return;
+      }
+      const remoteEntries = await loadRemote();
+      if (!active) return;
+      setEntries(remoteEntries.length > 0 ? remoteEntries : localEntries);
+      setIsLoading(false);
+    };
+
+    void hydrate();
+    return () => {
+      active = false;
+    };
+  }, [campaignId, isAuthed, loading]);
+
+  const handleCreateEntry = async () => {
     if (!newEntry.title.trim()) {
       toast({
         title: 'Error',
@@ -77,51 +118,157 @@ const VTTJournal = () => {
       return;
     }
 
-    const entry: JournalEntry = {
-      id: `entry-${Date.now()}`,
-      title: newEntry.title,
-      content: newEntry.content,
-      visibleToPlayers: newEntry.visibleToPlayers,
-      category: newEntry.category,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
+    if (!isAuthed || !user?.id || !campaignId) {
+      const entry: JournalEntry = {
+        id: `entry-${Date.now()}`,
+        title: newEntry.title,
+        content: newEntry.content,
+        visibleToPlayers: newEntry.visibleToPlayers,
+        category: newEntry.category,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      const updated = [entry, ...entries];
+      setEntries(updated);
+      localStorage.setItem(`vtt-journal-${campaignId}`, JSON.stringify(updated));
+      setNewEntry({ title: '', content: '', visibleToPlayers: false, category: 'note' });
+      setIsEditing(false);
+      toast({
+        title: 'Created!',
+        description: 'Journal entry created.',
+      });
+      return;
+    }
 
+    const { data, error } = await supabase
+      .from('vtt_journal_entries' as any)
+      .insert({
+        campaign_id: campaignId,
+        user_id: user.id,
+        title: newEntry.title,
+        content: newEntry.content,
+        visible_to_players: newEntry.visibleToPlayers,
+        category: newEntry.category,
+      })
+      .select('id, title, content, category, visible_to_players, created_at, updated_at')
+      .single();
+    if (error || !data) {
+      toast({
+        title: 'Error',
+        description: 'Failed to create journal entry.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    const entry: JournalEntry = {
+      id: data.id,
+      title: data.title,
+      content: data.content ?? '',
+      visibleToPlayers: !!data.visible_to_players,
+      category: data.category,
+      createdAt: data.created_at,
+      updatedAt: data.updated_at,
+    };
     setEntries([entry, ...entries]);
-    saveEntries();
     setNewEntry({ title: '', content: '', visibleToPlayers: false, category: 'note' });
     setIsEditing(false);
-
     toast({
       title: 'Created!',
       description: 'Journal entry created.',
     });
   };
 
-  const handleUpdateEntry = () => {
+  const handleUpdateEntry = async () => {
     if (!selectedEntry) return;
 
-    const updated = entries.map(e =>
-      e.id === selectedEntry.id
-        ? { ...selectedEntry, updatedAt: new Date().toISOString() }
-        : e
+    if (!isAuthed || !user?.id || !campaignId) {
+      const updatedEntry = { ...selectedEntry, updatedAt: new Date().toISOString() };
+      const updated = entries.map(e =>
+        e.id === selectedEntry.id ? updatedEntry : e
+      );
+      setEntries(updated);
+      setSelectedEntry(updatedEntry);
+      localStorage.setItem(`vtt-journal-${campaignId}`, JSON.stringify(updated));
+      setIsEditing(false);
+      toast({
+        title: 'Updated!',
+        description: 'Journal entry updated.',
+      });
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from('vtt_journal_entries' as any)
+      .update({
+        title: selectedEntry.title,
+        content: selectedEntry.content,
+        visible_to_players: selectedEntry.visibleToPlayers,
+        category: selectedEntry.category,
+      })
+      .eq('id', selectedEntry.id)
+      .select('id, title, content, category, visible_to_players, created_at, updated_at')
+      .single();
+    if (error || !data) {
+      toast({
+        title: 'Error',
+        description: 'Failed to update journal entry.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    const updatedEntry: JournalEntry = {
+      id: data.id,
+      title: data.title,
+      content: data.content ?? '',
+      category: data.category,
+      visibleToPlayers: !!data.visible_to_players,
+      createdAt: data.created_at,
+      updatedAt: data.updated_at,
+    };
+    const updated = entries.map((entry) =>
+      entry.id === selectedEntry.id ? updatedEntry : entry
     );
     setEntries(updated);
-    saveEntries();
+    setSelectedEntry(updatedEntry);
     setIsEditing(false);
-
     toast({
       title: 'Updated!',
       description: 'Journal entry updated.',
     });
   };
 
-  const handleDeleteEntry = (id: string) => {
+  const handleDeleteEntry = async (id: string) => {
+    if (!campaignId) return;
+    if (!isAuthed || !user?.id) {
+      const updated = entries.filter(e => e.id !== id);
+      setEntries(updated);
+      if (selectedEntry?.id === id) {
+        setSelectedEntry(null);
+      }
+      localStorage.setItem(`vtt-journal-${campaignId}`, JSON.stringify(updated));
+      toast({
+        title: 'Deleted!',
+        description: 'Journal entry deleted.',
+      });
+      return;
+    }
+
+    const { error } = await supabase
+      .from('vtt_journal_entries' as any)
+      .delete()
+      .eq('id', id);
+    if (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to delete journal entry.',
+        variant: 'destructive',
+      });
+      return;
+    }
     setEntries(entries.filter(e => e.id !== id));
     if (selectedEntry?.id === id) {
       setSelectedEntry(null);
     }
-    saveEntries();
     toast({
       title: 'Deleted!',
       description: 'Journal entry deleted.',
@@ -131,7 +278,7 @@ const VTTJournal = () => {
   const visibleEntries = entries.filter(e => isGM || e.visibleToPlayers);
   const categories = {
     session: 'Session Log',
-    note: 'DM Note',
+    note: 'Warden Note',
     lore: 'Lore',
     handout: 'Handout',
   };
@@ -186,7 +333,7 @@ const VTTJournal = () => {
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                       >
                         <option value="session">Session Log</option>
-                        <option value="note">DM Note</option>
+                        <option value="note">Warden Note</option>
                         <option value="lore">Lore</option>
                         <option value="handout">Handout</option>
                       </select>
@@ -225,7 +372,11 @@ const VTTJournal = () => {
 
             <SystemWindow title="ENTRIES">
               <div className="space-y-2 max-h-[600px] overflow-y-auto">
-                {visibleEntries.length === 0 ? (
+                {isLoading ? (
+                  <p className="text-xs text-muted-foreground text-center py-4">
+                    Loading entries...
+                  </p>
+                ) : visibleEntries.length === 0 ? (
                   <p className="text-xs text-muted-foreground text-center py-4">
                     No entries yet. {isGM && 'Create your first entry!'}
                   </p>
@@ -362,4 +513,5 @@ const VTTJournal = () => {
 };
 
 export default VTTJournal;
+
 

@@ -5,10 +5,12 @@ import { Heart, Share2, Download, BookOpen, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { NotesManager } from './NotesManager';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface QuickReferenceProps {
   entry: {
     name: string;
+    display_name?: string | null;
     type: string;
     source_book?: string | null;
     tags?: string[] | null;
@@ -32,6 +34,7 @@ export function QuickReference({
   onExport,
   className 
 }: QuickReferenceProps) {
+  const displayName = formatMonarchVernacular(entry.display_name || entry.name);
   return (
     <div className={cn("space-y-4", className)}>
       {/* Actions */}
@@ -99,7 +102,7 @@ export function QuickReference({
               <div className="mt-1">
                 <Badge variant="outline" className="text-xs">
                   <BookOpen className="w-3 h-3 mr-1" />
-                  {entry.source_book}
+                  {formatMonarchVernacular(entry.source_book)}
                 </Badge>
               </div>
             </div>
@@ -108,7 +111,7 @@ export function QuickReference({
           {(entry.rarity || entry.gate_rank) && (
             <div>
               <span className="text-xs text-muted-foreground uppercase tracking-wide">
-                {entry.gate_rank ? 'Gate Rank' : 'Rarity'}
+                {entry.gate_rank ? 'Rift Rank' : 'Rarity'}
               </span>
               <div className="mt-1">
                 <Badge variant="secondary" className="text-xs">
@@ -138,7 +141,7 @@ export function QuickReference({
               <div className="mt-1 flex flex-wrap gap-1">
                 {entry.tags.slice(0, 5).map((tag) => (
                   <Badge key={tag} variant="outline" className="text-xs">
-                    {tag}
+                    {formatMonarchVernacular(tag)}
                   </Badge>
                 ))}
               </div>
@@ -152,7 +155,7 @@ export function QuickReference({
         <NotesManager 
           entryId={entry.name}
           entryType={entry.type}
-          entryName={entry.name}
+          entryName={displayName}
         />
       </div>
     </div>

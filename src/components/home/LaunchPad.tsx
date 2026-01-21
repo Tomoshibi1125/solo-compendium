@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
-import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
+import { SystemSigilLogo } from '@/components/ui/SystemSigilLogo';
 import { GatePortal } from '@/components/ui/GatePortal';
 import { HunterBadge } from '@/components/ui/HunterBadge';
 import { CompendiumQuickStats } from '@/components/compendium/CompendiumQuickStats';
@@ -27,6 +27,7 @@ import { RoleBadge } from '@/components/ui/RoleBadge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { MONARCH_LABEL_PLURAL, formatMonarchVernacular } from '@/lib/vernacular';
 
 type ViewMode = 'dm' | 'player';
 
@@ -73,7 +74,7 @@ export function LaunchPad() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5">
-      {/* Supreme Deity's Domain - Background effects */}
+      {/* Prime Architect's Domain - Background effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] bg-gradient-radial from-shadow-blue/8 via-shadow-purple/4 to-transparent rounded-full blur-3xl animate-pulse-glow" />
         <div className="absolute bottom-1/4 right-1/4 w-[150px] h-[150px] sm:w-[250px] sm:h-[250px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px] bg-gradient-radial from-arise-violet/6 via-shadow-purple/3 to-transparent rounded-full blur-3xl animate-pulse-glow-delay-1s" />
@@ -98,9 +99,9 @@ export function LaunchPad() {
             </SystemWindow>
           </div>
           
-          {/* Supreme Deity Logo - Supreme variant */}
+          {/* Prime Architect Logo - Supreme variant */}
           <div className="flex justify-center mb-6">
-            <ShadowMonarchLogo size="lg" variant="supreme" className="drop-shadow-2xl" />
+            <SystemSigilLogo size="lg" variant="supreme" className="drop-shadow-2xl" />
           </div>
           
           <h1 className="font-arise text-4xl sm:text-5xl lg:text-6xl font-black mb-4">
@@ -117,11 +118,11 @@ export function LaunchPad() {
           <p className="text-muted-foreground font-heading max-w-2xl mx-auto leading-relaxed mb-6">
             {isDM ? (
               <>
-                <span className="text-primary font-semibold">Gate Master (System)</span> — You have access to System Tools to manage your campaigns. Manage your <span className="text-primary">Hunters</span>, create <span className="text-shadow-purple">Campaigns</span>, and explore the <span className="text-accent">Compendium</span>.
+                <span className="text-primary font-semibold">Protocol Warden (System)</span> - You have access to System Tools to manage your campaigns. Manage your <span className="text-primary">Ascendants</span>, create <span className="text-shadow-purple">Campaigns</span>, and explore the <span className="text-accent">Compendium</span>.
               </>
             ) : (
               <>
-                Your gateway to the System. Manage your <span className="text-primary">Hunters</span>, join <span className="text-shadow-purple">Campaigns</span>, and explore the <span className="text-accent">Compendium</span>.
+                Your gateway to the System. Manage your <span className="text-primary">Ascendants</span>, join <span className="text-shadow-purple">Campaigns</span>, and explore the <span className="text-accent">Compendium</span>.
               </>
             )}
           </p>
@@ -139,7 +140,7 @@ export function LaunchPad() {
                     )}
                   >
                     <Crown className="w-4 h-4 mr-2" />
-                    Gate Master Mode
+                    Protocol Warden Mode
                   </TabsTrigger>
                   <TabsTrigger 
                     value="player"
@@ -149,7 +150,7 @@ export function LaunchPad() {
                     )}
                   >
                     <Sword className="w-4 h-4 mr-2" />
-                    Hunter Mode
+                    Ascendant Mode
                   </TabsTrigger>
                 </TabsList>
               </Tabs>
@@ -165,7 +166,7 @@ export function LaunchPad() {
               <QuickActionCard
                 icon={Map}
                 title="System Tools"
-                description="Gate Master tools for campaigns"
+                description="Protocol Warden tools for campaigns"
                 href="/dm-tools"
                 variant="primary"
                 graphic={<Crown className="w-16 h-16 opacity-60 text-primary" />}
@@ -198,8 +199,8 @@ export function LaunchPad() {
               {/* Player Mode Actions */}
               <QuickActionCard
                 icon={Zap}
-                title="Awaken Hunter"
-                description="Awaken a new Hunter"
+                title="Awaken Ascendant"
+                description="Awaken a new Ascendant"
                 href="/characters/new"
                 variant="primary"
               />
@@ -230,10 +231,10 @@ export function LaunchPad() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Recent Hunters - Shadow Army - Only show in Player Mode or if not DM */}
+          {/* Recent Ascendants - Umbral Legion - Only show in Player Mode or if not DM */}
           {(viewMode === 'player' || !isDM) && (
             <div className="lg:col-span-2">
-              <SystemWindow title="SHADOW ARMY — HUNTERS" variant="monarch" className="h-full">
+              <SystemWindow title="UMBRAL LEGION - ASCENDANTS" variant="monarch" className="h-full">
               {charactersLoading ? (
                 <div className="space-y-4">
                   <Skeleton className="h-20 w-full" />
@@ -261,7 +262,7 @@ export function LaunchPad() {
                                 {character.name}
                               </h3>
                               <p className="text-sm text-muted-foreground">
-                                {character.job || 'Unknown Job'} • Level {character.level}
+                                {formatMonarchVernacular(character.job || 'Unknown Job')} - Level {character.level}
                               </p>
                             </div>
                           </div>
@@ -274,7 +275,7 @@ export function LaunchPad() {
                     to="/characters"
                     className="block mt-4 text-center text-sm text-primary font-heading hover:underline hover:text-shadow-purple transition-colors"
                   >
-                    View all Hunters →
+                    View all Ascendants ->
                   </Link>
                 </div>
               ) : (
@@ -283,12 +284,12 @@ export function LaunchPad() {
                     <HunterBadge rank="E" size="md" className="opacity-50" />
                   </div>
                   <p className="text-muted-foreground font-heading mb-4">
-                    No Hunters awakened yet. Create your first one!
+                    No Ascendants awakened yet. Create your first one!
                   </p>
                   <Link to="/characters/new">
-                    <Button size="sm" className="btn-shadow-monarch">
+                    <Button size="sm" className="btn-umbral">
                       <Zap className="w-4 h-4 mr-2" />
-                      Awaken Hunter
+                      Awaken Ascendant
                     </Button>
                   </Link>
                 </div>
@@ -300,7 +301,7 @@ export function LaunchPad() {
           {/* DM Campaign View - Show when in DM Mode */}
           {viewMode === 'dm' && isDM && (
             <div className="lg:col-span-2">
-              <SystemWindow title="GATE MASTER'S CAMPAIGNS" variant="monarch" className="h-full">
+              <SystemWindow title="PROTOCOL WARDEN CAMPAIGNS" variant="monarch" className="h-full">
                 {myCampaignsLoading ? (
                   <div className="space-y-4">
                     <Skeleton className="h-20 w-full" />
@@ -341,7 +342,7 @@ export function LaunchPad() {
                       to="/campaigns"
                       className="block mt-4 text-center text-sm text-primary font-heading hover:underline hover:text-shadow-purple transition-colors"
                     >
-                      Manage all Campaigns →
+                      Manage all Campaigns ->
                     </Link>
                   </div>
                 ) : (
@@ -353,7 +354,7 @@ export function LaunchPad() {
                       No campaigns created yet. Start your first one!
                     </p>
                     <Link to="/campaigns">
-                      <Button size="sm" className="btn-shadow-monarch">
+                      <Button size="sm" className="btn-umbral">
                         <Crown className="w-4 h-4 mr-2" />
                         Create Campaign
                       </Button>
@@ -396,7 +397,7 @@ export function LaunchPad() {
                     to="/campaigns"
                     className="block mt-2 text-center text-xs text-primary font-heading hover:underline"
                   >
-                    View all →
+                    View all ->
                   </Link>
                 </div>
               ) : (
@@ -444,7 +445,7 @@ export function LaunchPad() {
                     to="/campaigns"
                     className="block mt-2 text-center text-xs text-primary font-heading hover:underline"
                   >
-                    View all →
+                    View all ->
                   </Link>
                 </div>
               ) : (
@@ -467,12 +468,12 @@ export function LaunchPad() {
               <div className="space-y-4">
                 <StatItem
                   icon={Sword}
-                  label="Total Hunters"
+                  label="Total Ascendants"
                   value={characters?.length || 0}
                 />
                 <StatItem
                   icon={Crown}
-                  label="Gate Master Campaigns"
+                  label="Protocol Warden Campaigns"
                   value={myCampaigns?.length || 0}
                 />
                 <StatItem
@@ -488,7 +489,7 @@ export function LaunchPad() {
         {/* Compendium Quick Stats */}
         <div className="mt-12 mb-8">
           <h2 className="font-heading text-lg font-semibold text-muted-foreground mb-4">
-            📚 Compendium Overview
+            System Compendium Overview
           </h2>
           <CompendiumQuickStats />
         </div>
@@ -508,7 +509,7 @@ export function LaunchPad() {
                   Dice Roller
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  Roll dice for your Hunter
+                  Roll dice for your Ascendant
                 </p>
               </div>
             </div>
@@ -572,7 +573,7 @@ function QuickActionCard({ icon: Icon, title, description, href, variant = 'defa
       to={href}
       className={cn(
         "glass-card card-shadow-energy p-6 hover:border-primary/30 transition-all group relative overflow-hidden",
-        variant === 'primary' && "border-primary/20 bg-primary/5 shadow-monarch-glow"
+        variant === 'primary' && "border-primary/20 bg-primary/5 umbral-glow"
       )}
     >
       {/* Background graphic */}
@@ -632,7 +633,7 @@ function StatItem({ icon: Icon, label, value }: StatItemProps) {
 function UnauthenticatedWelcomeScreen() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5">
-      {/* Supreme Deity's Domain - Background effects */}
+      {/* Prime Architect's Domain - Background effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] bg-gradient-radial from-shadow-blue/8 via-shadow-purple/4 to-transparent rounded-full blur-3xl animate-pulse-glow" />
         <div className="absolute bottom-1/4 right-1/4 w-[150px] h-[150px] sm:w-[250px] sm:h-[250px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px] bg-gradient-radial from-arise-violet/6 via-shadow-purple/3 to-transparent rounded-full blur-3xl animate-pulse-glow-delay-1s" />
@@ -657,17 +658,17 @@ function UnauthenticatedWelcomeScreen() {
             </SystemWindow>
           </div>
 
-          {/* Supreme Deity Logo - Supreme variant */}
+          {/* Prime Architect Logo - Supreme variant */}
           <div className="flex justify-center mb-6">
-            <ShadowMonarchLogo size="lg" variant="supreme" className="drop-shadow-2xl" />
+            <SystemSigilLogo size="lg" variant="supreme" className="drop-shadow-2xl" />
           </div>
 
           <h1 className="font-arise text-4xl sm:text-5xl lg:text-6xl font-black mb-4">
-            <span className="gradient-text-arise text-glow-arise">WELCOME, HUNTER</span>
+            <span className="gradient-text-arise text-glow-arise">WELCOME, ASCENDANT</span>
           </h1>
           <p className="text-muted-foreground font-heading max-w-2xl mx-auto leading-relaxed mb-8">
-            The System awaits your awakening. In the world reset by the Supreme Deity,
-            your journey as a Hunter begins here.
+            The System awaits your awakening. In the world reset by the Prime Architect,
+            your journey as an Ascendant begins here.
           </p>
         </div>
 
@@ -676,10 +677,10 @@ function UnauthenticatedWelcomeScreen() {
           <SystemWindow title="THE SYSTEM'S WELCOME" variant="monarch" className="text-center">
             <div className="space-y-6">
               <p className="text-muted-foreground font-heading leading-relaxed">
-                <span className="gradient-text-shadow font-semibold">Greetings, potential Hunter.</span>
+                <span className="gradient-text-shadow font-semibold">Greetings, potential Ascendant.</span>
                 The System has detected your presence in the post-reset timeline.
                 To begin your journey and access the full power of the System's Compendium,
-                you must first awaken as a Hunter.
+                you must first awaken as an Ascendant.
               </p>
 
               <p className="text-muted-foreground font-heading leading-relaxed">
@@ -693,7 +694,7 @@ function UnauthenticatedWelcomeScreen() {
                   </div>
                   <div>
                     <h4 className="font-heading font-semibold text-primary mb-1">Complete Compendium</h4>
-                    <p className="text-sm text-muted-foreground">All knowledge of the Solo Leveling universe</p>
+                    <p className="text-sm text-muted-foreground">All knowledge of the System Ascendant universe</p>
                   </div>
                 </div>
 
@@ -703,7 +704,7 @@ function UnauthenticatedWelcomeScreen() {
                   </div>
                   <div>
                     <h4 className="font-heading font-semibold text-primary mb-1">Character Management</h4>
-                    <p className="text-sm text-muted-foreground">Create and track your Hunters</p>
+                    <p className="text-sm text-muted-foreground">Create and track your Ascendants</p>
                   </div>
                 </div>
 
@@ -713,7 +714,7 @@ function UnauthenticatedWelcomeScreen() {
                   </div>
                   <div>
                     <h4 className="font-heading font-semibold text-primary mb-1">Campaign System</h4>
-                    <p className="text-sm text-muted-foreground">Join or create campaigns with other Hunters</p>
+                    <p className="text-sm text-muted-foreground">Join or create campaigns with other Ascendants</p>
                   </div>
                 </div>
               </div>
@@ -726,12 +727,12 @@ function UnauthenticatedWelcomeScreen() {
           <SystemWindow title="BEGIN YOUR JOURNEY" variant="quest" className="text-center">
             <div className="space-y-6">
               <p className="text-muted-foreground font-heading">
-                Ready to step into the world of Gates, Shadows, and Monarchs?
+                Ready to step into the world of Rifts, Shadows, and {MONARCH_LABEL_PLURAL}?
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/auth">
-                  <Button size="lg" className="btn-shadow-monarch shadow-monarch-glow w-full sm:w-auto">
+                  <Button size="lg" className="btn-umbral umbral-glow w-full sm:w-auto">
                     <Zap className="w-5 h-5 mr-3" />
                     <span className="font-heading font-semibold">LOG IN</span>
                   </Button>
@@ -745,7 +746,7 @@ function UnauthenticatedWelcomeScreen() {
               </div>
 
               <p className="text-xs text-muted-foreground font-heading">
-                Choose your role (Gate Master or Hunter) when you log in or sign up.
+                Choose your role (Protocol Warden or Ascendant) when you log in or sign up.
               </p>
             </div>
           </SystemWindow>
@@ -771,7 +772,7 @@ function UnauthenticatedWelcomeScreen() {
                     Browse Compendium
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    Explore all knowledge of the Solo Leveling universe
+                    Explore all knowledge of the System Ascendant universe
                   </p>
                 </div>
               </div>
@@ -808,10 +809,10 @@ function UnauthenticatedWelcomeScreen() {
                 </div>
                 <div>
                   <h3 className="font-heading font-semibold mb-1 group-hover:text-primary transition-colors">
-                    DM Tools
+                    Warden Tools
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    Tools for Game Masters and Supreme Deities
+                    Tools for Wardens and Prime Architects
                   </p>
                 </div>
               </div>
@@ -823,3 +824,9 @@ function UnauthenticatedWelcomeScreen() {
     </div>
   );
 }
+
+
+
+
+
+

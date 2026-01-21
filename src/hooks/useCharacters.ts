@@ -12,7 +12,7 @@ import {
   listLocalCharacters,
   updateLocalCharacter,
 } from '@/lib/guestStore';
-// Note: These functions are defined in solo-leveling.ts but we'll use the ones from characterCalculations
+// Note: These functions are defined in system-rules.ts but we'll use the ones from characterCalculations
 
 type Character = Database['public']['Tables']['characters']['Row'];
 type CharacterInsert = Database['public']['Tables']['characters']['Insert'];
@@ -195,14 +195,14 @@ export const useCreateCharacter = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['characters'] });
       toast({
-        title: 'Hunter created',
-        description: 'Your Hunter has been awakened.',
+        title: 'Ascendant created',
+        description: 'Your Ascendant has been awakened.',
       });
     },
     onError: (error) => {
       logErrorWithContext(error, 'useCreateCharacter');
       toast({
-        title: 'Failed to create Hunter',
+        title: 'Failed to create Ascendant',
         description: getErrorMessage(error),
         variant: 'destructive',
       });
@@ -219,7 +219,7 @@ export const useUpdateCharacter = () => {
     mutationFn: async ({ id, data }: { id: string; data: CharacterUpdate }) => {
       if (isLocalCharacterId(id)) {
         const updated = updateLocalCharacter(id, data);
-        if (!updated) throw new AppError('Hunter not found', 'NOT_FOUND');
+        if (!updated) throw new AppError('Ascendant not found', 'NOT_FOUND');
         return updated;
       }
 
@@ -247,7 +247,7 @@ export const useUpdateCharacter = () => {
     onError: (error) => {
       logErrorWithContext(error, 'useUpdateCharacter');
       toast({
-        title: 'Failed to update Hunter',
+        title: 'Failed to update Ascendant',
         description: getErrorMessage(error),
         variant: 'destructive',
       });
@@ -287,7 +287,7 @@ export const useDeleteCharacter = () => {
     onError: (error) => {
       logErrorWithContext(error, 'useDeleteCharacter');
       toast({
-        title: 'Failed to delete Hunter',
+        title: 'Failed to delete Ascendant',
         description: getErrorMessage(error),
         variant: 'destructive',
       });

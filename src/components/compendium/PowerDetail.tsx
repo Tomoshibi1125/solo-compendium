@@ -2,6 +2,7 @@ import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Clock, Target, Timer, Zap, BookOpen } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface PowerData {
   id: string;
@@ -38,7 +39,7 @@ const tierColors: Record<number, string> = {
 export const PowerDetail = ({ data }: { data: PowerData }) => {
   const tierLabel = data.power_level === 0 ? 'Cantrip' : `Tier ${data.power_level}`;
   const tierColor = tierColors[data.power_level] || 'text-foreground';
-  const displayName = data.display_name || data.name;
+  const displayName = formatMonarchVernacular(data.display_name || data.name);
 
   return (
     <div className="space-y-6">
@@ -47,7 +48,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-2">
             <Badge className={tierColor}>{tierLabel}</Badge>
-            {data.school && <Badge variant="secondary">{data.school}</Badge>}
+            {data.school && <Badge variant="secondary">{formatMonarchVernacular(data.school)}</Badge>}
             {data.concentration && <Badge variant="destructive">Concentration</Badge>}
             {data.ritual && <Badge variant="outline">Ritual</Badge>}
           </div>
@@ -56,7 +57,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
             <div className="flex flex-wrap gap-2">
               <span className="text-sm text-muted-foreground">Jobs:</span>
               {data.job_names.map((job) => (
-                <Badge key={job} variant="outline" className="text-xs">{job}</Badge>
+                <Badge key={job} variant="outline" className="text-xs">{formatMonarchVernacular(job)}</Badge>
               ))}
             </div>
           )}
@@ -68,35 +69,35 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
         <SystemWindow title="CASTING TIME" compact>
           <div className="flex items-center gap-2">
             <Clock className="w-5 h-5 text-primary" />
-            <span className="font-heading">{data.casting_time}</span>
+            <span className="font-heading">{formatMonarchVernacular(data.casting_time)}</span>
           </div>
         </SystemWindow>
         
         <SystemWindow title="RANGE" compact>
           <div className="flex items-center gap-2">
             <Target className="w-5 h-5 text-primary" />
-            <span className="font-heading">{data.range}</span>
+            <span className="font-heading">{formatMonarchVernacular(data.range)}</span>
           </div>
         </SystemWindow>
         
         <SystemWindow title="DURATION" compact>
           <div className="flex items-center gap-2">
             <Timer className="w-5 h-5 text-primary" />
-            <span className="font-heading">{data.duration}</span>
+            <span className="font-heading">{formatMonarchVernacular(data.duration)}</span>
           </div>
         </SystemWindow>
         
         <SystemWindow title="COMPONENTS" compact>
           <div className="flex items-center gap-2">
             <Zap className="w-5 h-5 text-primary" />
-            <span className="font-heading">{data.components || 'V, S'}</span>
+            <span className="font-heading">{formatMonarchVernacular(data.components || 'V, S')}</span>
           </div>
         </SystemWindow>
       </div>
 
       {/* Description */}
       <SystemWindow title="DESCRIPTION">
-        <p className="text-foreground whitespace-pre-wrap leading-relaxed text-base">{data.description}</p>
+        <p className="text-foreground whitespace-pre-wrap leading-relaxed text-base">{formatMonarchVernacular(data.description)}</p>
       </SystemWindow>
 
       {/* At Higher Levels */}
@@ -104,7 +105,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
         <SystemWindow title="AT HIGHER TIERS">
           <div className="flex items-start gap-3">
             <BookOpen className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-            <p className="text-foreground leading-relaxed text-base">{data.higher_levels}</p>
+            <p className="text-foreground leading-relaxed text-base">{formatMonarchVernacular(data.higher_levels)}</p>
           </div>
         </SystemWindow>
       )}
@@ -113,7 +114,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
       {data.tags && data.tags.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {data.tags.map((tag) => (
-            <Badge key={tag} variant="outline" className="text-xs">{tag}</Badge>
+            <Badge key={tag} variant="outline" className="text-xs">{formatMonarchVernacular(tag)}</Badge>
           ))}
         </div>
       )}

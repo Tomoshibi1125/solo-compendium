@@ -23,7 +23,7 @@ const typeLabels: Record<string, string> = {
   'powers': 'Power',
   'relics': 'Relic',
   'monsters': 'Monster',
-  'shadow-soldiers': 'Shadow',
+  'shadow-soldiers': 'Umbral Legion',
   'characters': 'Character',
   'compendium': 'Compendium',
 };

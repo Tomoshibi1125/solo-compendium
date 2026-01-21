@@ -1,6 +1,6 @@
 /**
  * Audio System Types
- * Legal safe sounds and music integration for DMs
+ * Legal safe sounds and music integration for Wardens
  */
 
 import { z } from 'zod';

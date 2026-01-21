@@ -12,6 +12,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { useSearchHistory } from '@/hooks/useSearchHistory';
 import { formatDistanceToNow } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface SearchHistoryDropdownProps {
   onSelect: (query: string) => void;
@@ -59,7 +60,7 @@ export function SearchHistoryDropdown({ onSelect, className }: SearchHistoryDrop
               onSelect={() => onSelect(item.query)}
             >
               <div className="flex-1 min-w-0">
-                <div className="font-medium truncate">{item.query}</div>
+                <div className="font-medium truncate">{formatMonarchVernacular(item.query)}</div>
                 {item.resultCount !== undefined && (
                   <div className="text-xs text-muted-foreground">
                     {item.resultCount} results • {formatDistanceToNow(new Date(item.timestamp), { addSuffix: true })}

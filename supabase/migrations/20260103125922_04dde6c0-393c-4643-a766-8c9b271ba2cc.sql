@@ -3,17 +3,17 @@ DELETE FROM compendium_jobs WHERE name IN ('Fighter', 'Necromancer', 'Summoner',
 -- Add missing jobs
 INSERT INTO compendium_jobs (name, description, hit_die, primary_abilities, saving_throw_proficiencies) VALUES
 ('Assassin', 'Stealth specialists who eliminate high-value targets with lethal precision.', 8, ARRAY['AGI', 'SENSE']::ability_score[], ARRAY['AGI', 'SENSE']::ability_score[]),
-('Contractor', 'Hunters who form binding contracts with entities, relic spirits, or fragments of greater powers.', 8, ARRAY['PRE', 'INT']::ability_score[], ARRAY['PRE', 'INT']::ability_score[]),
+('Contractor', 'Ascendants who form binding contracts with entities, relic spirits, or fragments of greater powers.', 8, ARRAY['PRE', 'INT']::ability_score[], ARRAY['PRE', 'INT']::ability_score[]),
 ('Destroyer', 'Brutal frontliners who specialize in overwhelming force and breaking enemy formations.', 12, ARRAY['STR', 'VIT']::ability_score[], ARRAY['STR', 'VIT']::ability_score[]),
-('Esper', 'Psychic hunters who wield mental force, telekinesis, and perception beyond human limits.', 8, ARRAY['INT', 'SENSE']::ability_score[], ARRAY['INT', 'SENSE']::ability_score[]),
-('Healer', 'Support specialists who restore allies and counter hostile effects amid Gate combat.', 8, ARRAY['PRE', 'SENSE']::ability_score[], ARRAY['PRE', 'SENSE']::ability_score[]),
+('Esper', 'Psychic ascendants who wield mental force, telekinesis, and perception beyond human limits.', 8, ARRAY['INT', 'SENSE']::ability_score[], ARRAY['INT', 'SENSE']::ability_score[]),
+('Healer', 'Support specialists who restore allies and counter hostile effects amid Rift combat.', 8, ARRAY['PRE', 'SENSE']::ability_score[], ARRAY['PRE', 'SENSE']::ability_score[]),
 ('Herald', 'Masters of inspiration and battlefield control through voice and presence.', 8, ARRAY['PRE', 'AGI']::ability_score[], ARRAY['PRE', 'AGI']::ability_score[]),
 ('Holy Knight', 'Divine warriors who channel sacred power through martial prowess.', 10, ARRAY['STR', 'PRE']::ability_score[], ARRAY['SENSE', 'PRE']::ability_score[]),
 ('Mage', 'Arcane specialists who manipulate mana through spells, sigils, and forbidden lore.', 6, ARRAY['INT', 'PRE']::ability_score[], ARRAY['INT', 'PRE']::ability_score[]),
-('Ranger', 'Skirmishers and trackers who excel at ranged combat and Gate navigation.', 10, ARRAY['AGI', 'SENSE']::ability_score[], ARRAY['AGI', 'SENSE']::ability_score[]),
+('Ranger', 'Skirmishers and trackers who excel at ranged combat and Rift navigation.', 10, ARRAY['AGI', 'SENSE']::ability_score[], ARRAY['AGI', 'SENSE']::ability_score[]),
 ('Striker', 'Mobile melee specialists who rely on speed, precision, and burst damage.', 10, ARRAY['AGI', 'STR']::ability_score[], ARRAY['AGI', 'SENSE']::ability_score[]),
-('Techsmith', 'Ingenious inventors who blend technology with Hunter abilities.', 8, ARRAY['INT', 'AGI']::ability_score[], ARRAY['INT', 'VIT']::ability_score[]),
-('Vanguard', 'Frontline warriors who lead the charge and hold the line in Gate combat.', 10, ARRAY['STR', 'VIT']::ability_score[], ARRAY['STR', 'VIT']::ability_score[]),
+('Techsmith', 'Ingenious inventors who blend technology with Ascendant abilities.', 8, ARRAY['INT', 'AGI']::ability_score[], ARRAY['INT', 'VIT']::ability_score[]),
+('Vanguard', 'Frontline warriors who lead the charge and hold the line in Rift combat.', 10, ARRAY['STR', 'VIT']::ability_score[], ARRAY['STR', 'VIT']::ability_score[]),
 ('Warden', 'Defensive specialists who create barriers and control the battlefield.', 10, ARRAY['VIT', 'SENSE']::ability_score[], ARRAY['VIT', 'SENSE']::ability_score[])
 ON CONFLICT (name) DO NOTHING;
 -- Insert all 78 paths
@@ -38,7 +38,7 @@ WITH paths(job_name, name, description) AS (
   -- Destroyer paths
   ('Destroyer', 'Path of the Berserker', 'Rage-fueled destruction without restraint.'),
   ('Destroyer', 'Path of the Colossus', 'Growing to massive size for devastating attacks.'),
-  ('Destroyer', 'Path of the Gatebreaker', 'Specialized in destroying Gate structures.'),
+  ('Destroyer', 'Path of the Gatebreaker', 'Specialized in destroying Rift structures.'),
   ('Destroyer', 'Path of the Juggernaut', 'Unstoppable momentum-based combat.'),
   ('Destroyer', 'Path of the Unstoppable', 'Ignoring damage to keep fighting.'),
   ('Destroyer', 'Path of the War Titan', 'Wielding massive weapons with ease.'),
@@ -85,7 +85,7 @@ WITH paths(job_name, name, description) AS (
 
   -- Ranger paths
   ('Ranger', 'Path of the Beast Warden', 'Animal companions and beast mastery.'),
-  ('Ranger', 'Path of the Gate Hunter', 'Specialized Gate tracking and hunting.'),
+  ('Ranger', 'Path of the Rift Ascendant', 'Specialized Rift tracking and hunting.'),
   ('Ranger', 'Path of the Shadow Trail', 'Stealth tracking and ambush tactics.'),
   ('Ranger', 'Path of the Storm Archer', 'Lightning-infused ranged combat.'),
   ('Ranger', 'Path of the Verdant Sentinel', 'Nature magic and plant manipulation.'),

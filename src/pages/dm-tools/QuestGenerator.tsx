@@ -9,9 +9,10 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 const QUEST_TYPES = [
-  'Gate Clearance',
+  'Rift Clearance',
   'Rescue Mission',
   'Investigation',
   'Defense',
@@ -24,44 +25,44 @@ const QUEST_TYPES = [
 ] as const;
 
 const QUEST_LOCATIONS = [
-  'Urban Gate',
-  'Forest Gate',
-  'Underground Gate',
-  'Sky Gate',
-  'Abyssal Gate',
-  'Shadow Gate',
-  'Elemental Gate',
-  'Beast Gate',
-  'Construct Gate',
-  'Necromantic Gate',
-  'Celestial Gate',
+  'Urban Rift',
+  'Forest Rift',
+  'Underground Rift',
+  'Sky Rift',
+  'Abyssal Rift',
+  'Shadow Rift',
+  'Elemental Rift',
+  'Beast Rift',
+  'Construct Rift',
+  'Necromantic Rift',
+  'Celestial Rift',
   'Dimensional Rift',
 ] as const;
 
 const QUEST_COMPLICATIONS = [
   'Time limit: Must complete within X hours',
-  'Multiple Gates: Series of connected Gates',
+  'Multiple Rifts: Series of connected Rifts',
   'Environmental hazard: Extreme weather or terrain',
-  'Rival hunters: Competing teams want the reward',
+  'Rival ascendants: Competing teams want the reward',
   'Hidden objective: True goal is different from stated',
   'Betrayal: NPC contact is untrustworthy',
   'Escalation: Situation worsens during mission',
   'Information blackout: Limited communication',
-  'Political interference: Hunter Association politics',
-  'Monarch involvement: Shadow Monarch fragments detected',
+  'Political interference: Awakened Council politics',
+  'Monarch involvement: Umbral Monarch fragments detected',
 ] as const;
 
 const QUEST_REWARDS = [
-  'Standard Gate rewards',
+  'Standard Rift rewards',
   'Bonus gold payment',
   'Rare material access',
-  'Hunter Association favor',
+  'Awakened Council favor',
   'Relic fragment',
   'Exclusive information',
   'Guild recommendation',
   'Special equipment',
   'System favor bonus',
-  'Supreme Deity blessing',
+  'Prime Architect blessing',
 ] as const;
 
 const QUEST_RANKS = ['E', 'D', 'C', 'B', 'A', 'S'] as const;
@@ -88,10 +89,10 @@ function generateQuest(rank?: string): GeneratedQuest {
   
   // Generate description based on type
   const descriptions: Record<string, string> = {
-    'Gate Clearance': `Clear the ${location} and eliminate all threats. The Hunter Association has marked this Gate for immediate clearance.`,
-    'Rescue Mission': `A group of civilians/hunters are trapped within the ${location}. Extract them safely before it's too late.`,
-    'Investigation': `Strange activity detected in the ${location}. Investigate the source and report findings to the Hunter Association.`,
-    'Defense': `Defend a location from an incoming Gate breach. Hold the line until reinforcements arrive.`,
+    'Rift Clearance': `Clear the ${location} and eliminate all threats. The Awakened Council has marked this Rift for immediate clearance.`,
+    'Rescue Mission': `A group of civilians/ascendants are trapped within the ${location}. Extract them safely before it's too late.`,
+    'Investigation': `Strange activity detected in the ${location}. Investigate the source and report findings to the Awakened Council.`,
+    'Defense': `Defend a location from an incoming Rift breach. Hold the line until reinforcements arrive.`,
     'Extermination': `Eliminate a specific threat within the ${location}. Target is particularly dangerous and must be destroyed.`,
     'Retrieval': `Recover a valuable item or artifact from within the ${location}. Item is critical and must not be damaged.`,
     'Escort': `Escort an important individual through the ${location}. Protect them at all costs.`,
@@ -108,14 +109,14 @@ function generateQuest(rank?: string): GeneratedQuest {
   objectives.push(`Reach the ${location}`);
   
   switch (type) {
-    case 'Gate Clearance':
-      objectives.push('Eliminate all monsters', 'Clear the Gate boss', 'Secure the Gate core');
+    case 'Rift Clearance':
+      objectives.push('Eliminate all monsters', 'Clear the Rift boss', 'Secure the Rift core');
       break;
     case 'Rescue Mission':
       objectives.push('Locate trapped individuals', 'Extract survivors', 'Ensure no one is left behind');
       break;
     case 'Investigation':
-      objectives.push('Explore the Gate', 'Gather evidence', 'Identify the threat level');
+      objectives.push('Explore the Rift', 'Gather evidence', 'Identify the threat level');
       break;
     case 'Defense':
       objectives.push('Set up defensive positions', 'Hold for specified duration', 'Protect key infrastructure');
@@ -127,7 +128,7 @@ function generateQuest(rank?: string): GeneratedQuest {
       objectives.push('Locate the item', 'Secure the item', 'Extract safely');
       break;
     case 'Escort':
-      objectives.push('Meet the client', 'Navigate safely through Gate', 'Deliver to destination');
+      objectives.push('Meet the client', 'Navigate safely through Rift', 'Deliver to destination');
       break;
     case 'Reconnaissance':
       objectives.push('Enter undetected', 'Map the area', 'Gather intelligence', 'Extract without alerting enemies');
@@ -161,13 +162,13 @@ function generateQuest(rank?: string): GeneratedQuest {
   
   return {
     type,
-    title,
+    title: formatMonarchVernacular(title),
     rank: selectedRank,
-    location,
-    description,
-    objectives: objectives.slice(0, numObjectives),
-    complications,
-    rewards,
+    location: formatMonarchVernacular(location),
+    description: formatMonarchVernacular(description),
+    objectives: objectives.slice(0, numObjectives).map(formatMonarchVernacular),
+    complications: complications.map(formatMonarchVernacular),
+    rewards: rewards.map(formatMonarchVernacular),
     timeLimit,
   };
 }
@@ -226,13 +227,13 @@ ${quest.rewards.map((r) => `- ${r}`).join('\n')}`;
             className="mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to DM Tools
+            Back to Warden Tools
           </Button>
           <h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow">
             QUEST GENERATOR
           </h1>
           <p className="text-muted-foreground font-heading">
-            Generate missions and contracts for Hunters. Create diverse quests with objectives, complications, and rewards.
+            Generate missions and contracts for Ascendants. Create diverse quests with objectives, complications, and rewards.
           </p>
         </div>
 
@@ -259,7 +260,7 @@ ${quest.rewards.map((r) => `- ${r}`).join('\n')}`;
 
             <Button
               onClick={handleGenerate}
-              className="w-full btn-shadow-monarch"
+              className="w-full btn-umbral"
               size="lg"
             >
               <Target className="w-4 h-4 mr-2" />
@@ -361,4 +362,8 @@ ${quest.rewards.map((r) => `- ${r}`).join('\n')}`;
 };
 
 export default QuestGenerator;
+
+
+
+
 

@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Sparkles, Zap, Shield, Scroll, BookOpen, AlertCircle, CheckCircle } from 'lucide-react';
 import type { Database } from '@/integrations/supabase/types';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 type Rune = Database['public']['Tables']['compendium_runes']['Row'];
 
@@ -31,7 +32,7 @@ const RUNE_TYPE_COLORS: Record<string, string> = {
 export const RuneDetail = ({ data }: RuneDetailProps) => {
   const Icon = RUNE_TYPE_ICONS[data.rune_type] || Sparkles;
   const typeColor = RUNE_TYPE_COLORS[data.rune_type] || '';
-  const displayName = (data as { display_name?: string | null }).display_name || data.name;
+  const displayName = formatMonarchVernacular((data as { display_name?: string | null }).display_name || data.name);
 
   // Format requirements
   const requirements: string[] = [];
@@ -54,20 +55,20 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
               <h2 className="font-display text-2xl gradient-text-system">{displayName}</h2>
               <div className="flex items-center gap-2 mt-1">
                 <Badge className={typeColor || 'bg-primary/20 text-primary border-primary/30'}>
-                  {data.rune_type}
+                  {formatMonarchVernacular(data.rune_type)}
                 </Badge>
                 <Badge variant="secondary">Level {data.rune_level}</Badge>
-                <Badge variant="outline">{data.rarity}</Badge>
-                <Badge variant="outline">{data.rune_category}</Badge>
+                <Badge variant="outline">{formatMonarchVernacular(data.rarity)}</Badge>
+                <Badge variant="outline">{formatMonarchVernacular(data.rune_category)}</Badge>
               </div>
             </div>
           </div>
 
-          <p className="text-foreground">{data.description}</p>
+          <p className="text-foreground">{formatMonarchVernacular(data.description)}</p>
 
           {data.lore && (
             <div className="border-l-2 border-primary/30 pl-4">
-              <p className="text-muted-foreground italic">{data.lore}</p>
+              <p className="text-muted-foreground italic">{formatMonarchVernacular(data.lore)}</p>
             </div>
           )}
         </div>
@@ -86,7 +87,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
               <p className="text-sm text-muted-foreground mb-2">Natural Users (no penalties):</p>
               <div className="flex flex-wrap gap-2">
                 {data.requires_job.map((job) => (
-                  <Badge key={job} variant="secondary">{job}</Badge>
+                  <Badge key={job} variant="secondary">{formatMonarchVernacular(job)}</Badge>
                 ))}
               </div>
             </div>
@@ -104,7 +105,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
                   <AlertCircle className="w-4 h-4 text-blue-400" />
                   <h4 className="font-heading font-semibold text-sm">Casters Using Martial Runes</h4>
                 </div>
-                <p className="text-sm text-muted-foreground ml-6">{data.caster_penalty}</p>
+                <p className="text-sm text-muted-foreground ml-6">{formatMonarchVernacular(data.caster_penalty)}</p>
                 {data.caster_requirement_multiplier && data.caster_requirement_multiplier !== 1.0 && (
                   <p className="text-xs text-muted-foreground ml-6 mt-1">
                     Requirement multiplier: {data.caster_requirement_multiplier}x
@@ -118,7 +119,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
                   <AlertCircle className="w-4 h-4 text-red-400" />
                   <h4 className="font-heading font-semibold text-sm">Martials Using Caster Runes</h4>
                 </div>
-                <p className="text-sm text-muted-foreground ml-6">{data.martial_penalty}</p>
+                <p className="text-sm text-muted-foreground ml-6">{formatMonarchVernacular(data.martial_penalty)}</p>
                 {data.martial_requirement_multiplier && data.martial_requirement_multiplier !== 1.0 && (
                   <p className="text-xs text-muted-foreground ml-6 mt-1">
                     Requirement multiplier: {data.martial_requirement_multiplier}x
@@ -138,12 +139,12 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
               <CheckCircle className="w-4 h-4 text-green-400" />
               <h4 className="font-heading font-semibold">Effect Type</h4>
             </div>
-            <Badge variant="outline">{data.effect_type}</Badge>
+            <Badge variant="outline">{formatMonarchVernacular(data.effect_type)}</Badge>
           </div>
 
           {data.effect_description && (
             <div>
-              <p className="text-foreground">{data.effect_description}</p>
+              <p className="text-foreground">{formatMonarchVernacular(data.effect_description)}</p>
             </div>
           )}
 
@@ -153,26 +154,26 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div>
                   <span className="text-muted-foreground">Action: </span>
-                  <Badge variant="outline" className="text-xs">{data.activation_action}</Badge>
+                  <Badge variant="outline" className="text-xs">{formatMonarchVernacular(data.activation_action)}</Badge>
                 </div>
                 {data.activation_cost && (
                   <div>
                     <span className="text-muted-foreground">Cost: </span>
                     <Badge variant="outline" className="text-xs">
-                      {data.activation_cost_amount} {data.activation_cost}
+                      {data.activation_cost_amount} {formatMonarchVernacular(data.activation_cost)}
                     </Badge>
                   </div>
                 )}
                 {data.uses_per_rest && (
                   <div>
                     <span className="text-muted-foreground">Uses: </span>
-                    <Badge variant="outline" className="text-xs">{data.uses_per_rest}</Badge>
+                    <Badge variant="outline" className="text-xs">{formatMonarchVernacular(data.uses_per_rest)}</Badge>
                   </div>
                 )}
                 {data.recharge && data.recharge !== 'none' && (
                   <div>
                     <span className="text-muted-foreground">Recharge: </span>
-                    <Badge variant="outline" className="text-xs">{data.recharge}</Badge>
+                    <Badge variant="outline" className="text-xs">{formatMonarchVernacular(data.recharge)}</Badge>
                   </div>
                 )}
               </div>
@@ -182,14 +183,14 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
           {data.range && (
             <div>
               <span className="text-muted-foreground">Range: </span>
-              <span className="text-foreground">{data.range}</span>
+              <span className="text-foreground">{formatMonarchVernacular(data.range)}</span>
             </div>
           )}
 
           {data.duration && (
             <div>
               <span className="text-muted-foreground">Duration: </span>
-              <span className="text-foreground">{data.duration}</span>
+              <span className="text-foreground">{formatMonarchVernacular(data.duration)}</span>
               {data.concentration && (
                 <Badge variant="secondary" className="ml-2 text-xs">Concentration</Badge>
               )}
@@ -199,7 +200,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
           {data.higher_levels && (
             <div className="border-l-2 border-primary/30 pl-4 mt-3">
               <h4 className="font-heading font-semibold text-sm mb-2">At Higher Rune Levels</h4>
-              <p className="text-sm text-muted-foreground">{data.higher_levels}</p>
+              <p className="text-sm text-muted-foreground">{formatMonarchVernacular(data.higher_levels)}</p>
             </div>
           )}
         </div>
@@ -227,7 +228,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
             <span className="text-muted-foreground">Can be inscribed on: </span>
             <div className="flex flex-wrap gap-2 mt-1">
               {data.can_inscribe_on?.map((type) => (
-                <Badge key={type} variant="outline" className="text-xs">{type}</Badge>
+                <Badge key={type} variant="outline" className="text-xs">{formatMonarchVernacular(type)}</Badge>
               ))}
             </div>
           </div>
@@ -241,7 +242,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
       {/* Discovery Lore */}
       {data.discovery_lore && (
         <SystemWindow title="DISCOVERY">
-          <p className="text-muted-foreground italic">{data.discovery_lore}</p>
+          <p className="text-muted-foreground italic">{formatMonarchVernacular(data.discovery_lore)}</p>
         </SystemWindow>
       )}
 
@@ -249,7 +250,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
       {data.tags && data.tags.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {data.tags.map((tag) => (
-            <Badge key={tag} variant="outline" className="text-xs">{tag}</Badge>
+            <Badge key={tag} variant="outline" className="text-xs">{formatMonarchVernacular(tag)}</Badge>
           ))}
         </div>
       )}

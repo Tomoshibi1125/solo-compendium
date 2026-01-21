@@ -3,6 +3,7 @@ import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface RelatedEntry {
   id: string;
@@ -35,15 +36,15 @@ export function RelatedContent({ title, entries, className }: RelatedContentProp
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
                 <span className="font-heading text-sm font-medium group-hover:text-primary transition-colors">
-                  {entry.name}
+                  {formatMonarchVernacular(entry.name)}
                 </span>
                 <Badge variant="outline" className="text-xs capitalize">
-                  {entry.type}
+                  {formatMonarchVernacular(entry.type)}
                 </Badge>
               </div>
               {entry.description && (
                 <p className="text-xs text-muted-foreground line-clamp-2">
-                  {entry.description}
+                  {formatMonarchVernacular(entry.description)}
                 </p>
               )}
             </div>

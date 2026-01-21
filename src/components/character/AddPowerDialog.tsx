@@ -14,6 +14,7 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { usePowers } from '@/hooks/usePowers';
 import { useToast } from '@/hooks/use-toast';
+import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
 
 export function AddPowerDialog({
   open,
@@ -36,8 +37,10 @@ export function AddPowerDialog({
         .select('*')
         .limit(20);
 
-      if (searchQuery.trim()) {
-        query = query.ilike('name', `%${searchQuery}%`);
+      const trimmedQuery = searchQuery.trim();
+      if (trimmedQuery) {
+        const canonicalQuery = normalizeMonarchSearch(trimmedQuery);
+        query = query.ilike('name', `%${canonicalQuery}%`);
       }
 
       const { data, error } = await query;
@@ -48,6 +51,7 @@ export function AddPowerDialog({
   });
 
   const handleAdd = async (power: typeof powers[0]) => {
+    const displayName = formatMonarchVernacular(power.name);
     try {
       await addPower({
         character_id: characterId,
@@ -66,7 +70,7 @@ export function AddPowerDialog({
 
       toast({
         title: 'Power added',
-        description: `${power.name} has been added to your powers.`,
+        description: `${displayName} has been added to your powers.`,
       });
 
       onOpenChange(false);
@@ -119,7 +123,9 @@ export function AddPowerDialog({
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="font-heading font-semibold">{power.name}</span>
+                        <span className="font-heading font-semibold">
+                          {formatMonarchVernacular(power.name)}
+                        </span>
                         {power.power_level > 0 && (
                           <Badge variant="secondary" className="text-xs">
                             Level {power.power_level}
@@ -131,12 +137,12 @@ export function AddPowerDialog({
                       </div>
                       {power.description && (
                         <p className="text-xs text-muted-foreground line-clamp-2">
-                          {power.description}
+                          {formatMonarchVernacular(power.description)}
                         </p>
                       )}
                       <div className="flex flex-wrap gap-2 mt-1 text-xs text-muted-foreground">
-                        {power.casting_time && <span>{power.casting_time}</span>}
-                        {power.range && <span>{power.range}</span>}
+                        {power.casting_time && <span>{formatMonarchVernacular(power.casting_time)}</span>}
+                        {power.range && <span>{formatMonarchVernacular(power.range)}</span>}
                       </div>
                     </div>
                     <Button

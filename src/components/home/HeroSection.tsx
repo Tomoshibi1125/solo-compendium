@@ -2,15 +2,16 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, BookOpen, Users, Sword, Sparkles, Crown, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
-import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
+import { SystemSigilLogo } from '@/components/ui/SystemSigilLogo';
 import { GatePortal } from '@/components/ui/GatePortal';
+import { MONARCH_LABEL_PLURAL } from '@/lib/vernacular';
 
 export function HeroSection() {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-      {/* High Detail Painterly Solo Leveling Background Image */}
+      {/* High Detail Painterly System Ascendant Background Image */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Background image with painterly Solo Leveling style */}
+        {/* Background image with painterly System Ascendant style */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
           style={{
@@ -19,7 +20,7 @@ export function HeroSection() {
             filter: 'brightness(0.3) saturate(1.2) contrast(1.1)',
           }}
         />
-        {/* Overlay gradient for Solo Leveling dark fantasy aesthetic */}
+        {/* Overlay gradient for System Ascendant dark fantasy aesthetic */}
         <div className="absolute inset-0 bg-gradient-to-b from-void-black/90 via-shadow-deep/80 to-void-black/90" />
         
         {/* Primary shadow energy orbs */}
@@ -36,7 +37,7 @@ export function HeroSection() {
         }} />
       </div>
 
-      {/* Shadow particles - Arise effect */}
+      {/* Shadow particles - Ascend effect */}
       {[...Array(12)].map((_, i) => {
         const delay = i * 0.4;
         const top = 15 + Math.random() * 70;
@@ -63,28 +64,28 @@ export function HeroSection() {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          {/* System notification - Supreme Deity's blessing */}
+          {/* System notification - Prime Architect's blessing */}
           <div className="inline-block mb-8 animate-slide-up">
             <SystemWindow variant="quest" className="px-6 py-2">
               <div className="flex items-center gap-2 text-accent font-heading">
                 <Crown className="w-4 h-4" />
-                <span className="text-sm tracking-wide">The Supreme Deity reigns</span>
+                <span className="text-sm tracking-wide">The Prime Architect reigns</span>
                 <Sparkles className="w-4 h-4" />
               </div>
             </SystemWindow>
           </div>
 
-          {/* Supreme Deity Logo - Supreme variant */}
+          {/* Prime Architect Logo - Supreme variant */}
           <div className="flex justify-center mb-8 animate-slide-up-delay-05s">
-            <ShadowMonarchLogo size="xl" variant="supreme" className="drop-shadow-2xl" />
+            <SystemSigilLogo size="xl" variant="supreme" className="drop-shadow-2xl" />
           </div>
 
-          {/* Main heading - "ARISE" */}
+          {/* Main heading - "ASCEND" */}
           <h1 className="font-arise text-5xl sm:text-6xl lg:text-7xl font-black mb-6 animate-slide-up-delay-1s">
-            <span className="gradient-text-arise text-glow-arise block mb-2">ARISE</span>
-            <span className="gradient-text-shadow text-glow-purple">SHADOW MONARCH</span>
+            <span className="gradient-text-arise text-glow-arise block mb-2">ASCEND</span>
+            <span className="gradient-text-shadow text-glow-purple">UMBRAL ASCENDANT</span>
             <br />
-            <span className="gradient-text-system text-glow">SOLO LEVELING</span>
+            <span className="gradient-text-system text-glow">SYSTEM ASCENDANT</span>
             <br />
             <span className="text-foreground/90 text-2xl sm:text-3xl lg:text-4xl font-display tracking-widest mt-4 block">
               5e Compendium
@@ -92,17 +93,17 @@ export function HeroSection() {
           </h1>
 
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 font-heading animate-slide-up-delay-2s leading-relaxed">
-            In the post-reset timeline, where <span className="text-primary font-semibold">the Supreme Deity</span> reigns, 
-            awaken your Hunter and navigate the Gates. This System serves as your guide 
-            through a world reborn under the <span className="text-shadow-purple font-semibold">Supreme Deity's</span> eternal watchful gaze.
+            In the post-reset timeline, where <span className="text-primary font-semibold">the Prime Architect</span> reigns, 
+            awaken your Ascendant and navigate the Rifts. This System serves as your guide 
+            through a world reborn under the <span className="text-shadow-purple font-semibold">Prime Architect's</span> eternal watchful gaze.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-slide-up-delay-3s">
             <Link to="/characters/new">
-              <Button size="lg" className="gap-2 text-lg px-8 font-heading btn-shadow-monarch shadow-monarch">
+              <Button size="lg" className="gap-2 text-lg px-8 font-heading btn-umbral umbral-glow">
                 <Zap className="w-5 h-5" />
-                Awaken a Hunter
+                Awaken an Ascendant
                 <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
@@ -118,22 +119,22 @@ export function HeroSection() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 animate-slide-up-delay-4s">
             <FeatureCard
               icon={BookOpen}
-              title="Shadow Compendium"
-              description="Jobs, Powers, Relics, Monsters, and Monarchs — all knowledge preserved by the System"
+              title="System Compendium"
+              description={`Jobs, Powers, Relics, Monsters, and ${MONARCH_LABEL_PLURAL} - all knowledge preserved by the System`}
               graphic={<GatePortal rank="S" className="w-20 h-20 opacity-30" animated={false} />}
               accentColor="shadow-blue"
             />
             <FeatureCard
               icon={Users}
-              title="Hunter Awakening"
-              description="Forge your Reawakened Hunter with the System's divine guidance"
-              graphic={<ShadowMonarchLogo size="md" className="opacity-30" />}
+              title="Ascendant Awakening"
+              description="Forge your Reawakened Ascendant with the System's divine guidance"
+              graphic={<SystemSigilLogo size="md" className="opacity-30" />}
               accentColor="arise-violet"
             />
             <FeatureCard
               icon={Sword}
               title="The System's Tools"
-              description="Gate generation, encounter building, and combat tracking under the System's domain"
+              description="Rift generation, encounter building, and combat tracking under the System's domain"
               graphic={<GatePortal rank="SS" className="w-20 h-20 opacity-30" animated={false} />}
               accentColor="monarch-gold"
             />
@@ -184,3 +185,6 @@ function FeatureCard({ icon: Icon, title, description, graphic, accentColor = 's
     </div>
   );
 }
+
+
+

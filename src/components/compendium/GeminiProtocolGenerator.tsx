@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { generateSovereign, type GeneratedSovereign, calculateTotalCombinations } from '@/lib/geminiProtocol';
+import { formatMonarchVernacular, MONARCH_LABEL, MONARCH_LABEL_PLURAL } from '@/lib/vernacular';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -222,12 +223,35 @@ export function GeminiProtocolGenerator() {
   );
   const autoKey = `${selectedJobEntry?.id || ''}:${selectedPathEntry?.id || ''}:${selectedMonarchAEntry?.id || ''}:${selectedMonarchBEntry?.id || ''}`;
   const lastAutoKey = useRef<string>('');
+  const displaySovereign = generatedSovereign
+    ? {
+        name: formatMonarchVernacular(generatedSovereign.name),
+        title: formatMonarchVernacular(generatedSovereign.title),
+        jobName: formatMonarchVernacular(generatedSovereign.job.name),
+        pathName: formatMonarchVernacular(generatedSovereign.path.name.replace('Path of the ', '')),
+        monarchATheme: formatMonarchVernacular(generatedSovereign.monarchA.theme),
+        monarchBTheme: formatMonarchVernacular(generatedSovereign.monarchB.theme),
+        fusionTheme: formatMonarchVernacular(generatedSovereign.fusion_theme),
+        powerMultiplier: formatMonarchVernacular(generatedSovereign.power_multiplier),
+        fusionStability: formatMonarchVernacular(generatedSovereign.fusion_stability),
+        description: formatMonarchVernacular(generatedSovereign.description),
+        fusionDescription: formatMonarchVernacular(generatedSovereign.fusion_description),
+        abilities: generatedSovereign.abilities.map((ability) => ({
+          ...ability,
+          name: formatMonarchVernacular(ability.name),
+          description: formatMonarchVernacular(ability.description),
+          action_type: ability.action_type ? formatMonarchVernacular(ability.action_type) : null,
+          recharge: ability.recharge ? formatMonarchVernacular(ability.recharge) : null,
+          origin_sources: ability.origin_sources.map(formatMonarchVernacular),
+        })),
+      }
+    : null;
 
   const autoIssues: string[] = [];
   if (autoMode) {
     if (!activeCharacter?.job) autoIssues.push('Active character is missing a Job.');
     if (!activeCharacter?.path) autoIssues.push('Active character is missing a Path.');
-    if (monarchUnlocks.length < 2) autoIssues.push('Unlock two Monarchs to auto-generate a Sovereign.');
+    if (monarchUnlocks.length < 2) autoIssues.push(`Unlock two ${MONARCH_LABEL_PLURAL} to auto-generate a Sovereign.`);
     if (activeCharacter?.job && !selectedJobEntry) autoIssues.push('No matching Job found in the compendium.');
     if (activeCharacter?.path && !selectedPathEntry) autoIssues.push('No matching Path found in the compendium.');
   }
@@ -251,7 +275,7 @@ export function GeminiProtocolGenerator() {
           Permanent subclass overlays - {totalCombinations.toLocaleString()}+ combinations available
         </p>
         <p className="text-sm text-muted-foreground italic">
-          Any Job + Path + Monarch A + Monarch B template qualifies for a Sovereign overlay.
+          Any Job + Path + {MONARCH_LABEL} A + {MONARCH_LABEL} B template qualifies for a Sovereign overlay.
         </p>
         <p className="text-xs text-muted-foreground">
           Fusion cues are thematic guides, not literal procedures.
@@ -276,7 +300,7 @@ export function GeminiProtocolGenerator() {
             <div className="space-y-4">
               <div className="text-sm text-muted-foreground">
                 Sovereign fusion auto-syncs from your active character. The protocol triggers automatically once your Job,
-                Path, and Monarch pair are complete.
+                Path, and {MONARCH_LABEL} pair are complete.
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1">
@@ -288,12 +312,20 @@ export function GeminiProtocolGenerator() {
                   <div className="font-medium">{selectedPathEntry?.name?.replace('Path of the ', '') || 'Not set'}</div>
                 </div>
                 <div className="space-y-1">
-                  <div className="text-xs uppercase tracking-wide text-muted-foreground">Primary Monarch</div>
-                  <div className="font-medium">{selectedMonarchAEntry ? `${selectedMonarchAEntry.title} (${selectedMonarchAEntry.theme})` : 'Not set'}</div>
+                  <div className="text-xs uppercase tracking-wide text-muted-foreground">Primary {MONARCH_LABEL}</div>
+                  <div className="font-medium">
+                    {selectedMonarchAEntry
+                      ? `${formatMonarchVernacular(selectedMonarchAEntry.title || selectedMonarchAEntry.name)} (${selectedMonarchAEntry.theme})`
+                      : 'Not set'}
+                  </div>
                 </div>
                 <div className="space-y-1">
-                  <div className="text-xs uppercase tracking-wide text-muted-foreground">Secondary Monarch</div>
-                  <div className="font-medium">{selectedMonarchBEntry ? `${selectedMonarchBEntry.title} (${selectedMonarchBEntry.theme})` : 'Not set'}</div>
+                  <div className="text-xs uppercase tracking-wide text-muted-foreground">Secondary {MONARCH_LABEL}</div>
+                  <div className="font-medium">
+                    {selectedMonarchBEntry
+                      ? `${formatMonarchVernacular(selectedMonarchBEntry.title || selectedMonarchBEntry.name)} (${selectedMonarchBEntry.theme})`
+                      : 'Not set'}
+                  </div>
                 </div>
               </div>
               {autoIssues.length > 0 && (
@@ -342,15 +374,15 @@ export function GeminiProtocolGenerator() {
 
               {/* Monarch A Selection */}
               <div className="space-y-2">
-                <label className="text-sm font-medium">Primary Monarch (Dominant)</label>
+                <label className="text-sm font-medium">Primary {MONARCH_LABEL} (Dominant)</label>
                 <Select value={selectedMonarchA} onValueChange={setSelectedMonarchA}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select Primary Monarch..." />
+                    <SelectValue placeholder={`Select Primary ${MONARCH_LABEL}...`} />
                   </SelectTrigger>
                   <SelectContent>
                     {monarchs.map((monarch) => (
                       <SelectItem key={monarch.id} value={monarch.id} disabled={monarch.id === selectedMonarchB}>
-                        {monarch.title} ({monarch.theme})
+                        {formatMonarchVernacular(monarch.title || monarch.name)} ({monarch.theme})
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -359,15 +391,15 @@ export function GeminiProtocolGenerator() {
 
               {/* Monarch B Selection */}
               <div className="space-y-2">
-                <label className="text-sm font-medium">Secondary Monarch (Merged)</label>
+                <label className="text-sm font-medium">Secondary {MONARCH_LABEL} (Merged)</label>
                 <Select value={selectedMonarchB} onValueChange={setSelectedMonarchB}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select Secondary Monarch..." />
+                    <SelectValue placeholder={`Select Secondary ${MONARCH_LABEL}...`} />
                   </SelectTrigger>
                   <SelectContent>
                     {monarchs.map((monarch) => (
                       <SelectItem key={monarch.id} value={monarch.id} disabled={monarch.id === selectedMonarchA}>
-                        {monarch.title} ({monarch.theme})
+                        {formatMonarchVernacular(monarch.title || monarch.name)} ({monarch.theme})
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -388,14 +420,14 @@ export function GeminiProtocolGenerator() {
       </Card>
 
       {/* Generated Sovereign Display */}
-      {generatedSovereign && (
+      {generatedSovereign && displaySovereign && (
         <Card className="border-primary/50">
           <CardHeader className="bg-primary/5">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Crown className="h-6 w-6 text-primary" />
-                  <CardTitle className="text-xl">{generatedSovereign.name}</CardTitle>
+                  <CardTitle className="text-xl">{displaySovereign.name}</CardTitle>
                 </div>
                 <Button
                   variant="outline"
@@ -411,15 +443,15 @@ export function GeminiProtocolGenerator() {
                   Save to Archive
                 </Button>
               </div>
-              <p className="text-lg text-muted-foreground italic">{generatedSovereign.title}</p>
+              <p className="text-lg text-muted-foreground italic">{displaySovereign.title}</p>
               
               {/* Component Badges */}
               <div className="flex flex-wrap gap-2">
-                <Badge variant="outline">{generatedSovereign.job.name}</Badge>
-                <Badge variant="outline">{generatedSovereign.path.name.replace('Path of the ', '')}</Badge>
-                <Badge variant="secondary">{generatedSovereign.monarchA.theme}</Badge>
-                <Badge variant="secondary">{generatedSovereign.monarchB.theme}</Badge>
-                <Badge className="bg-primary/20 text-primary">{generatedSovereign.fusion_theme}</Badge>
+                <Badge variant="outline">{displaySovereign.jobName}</Badge>
+                <Badge variant="outline">{displaySovereign.pathName}</Badge>
+                <Badge variant="secondary">{displaySovereign.monarchATheme}</Badge>
+                <Badge variant="secondary">{displaySovereign.monarchBTheme}</Badge>
+                <Badge className="bg-primary/20 text-primary">{displaySovereign.fusionTheme}</Badge>
               </div>
             </div>
           </CardHeader>
@@ -428,11 +460,11 @@ export function GeminiProtocolGenerator() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-3 rounded-lg bg-muted/50">
                 <h4 className="font-semibold text-sm mb-1">Power Multiplier</h4>
-                <p className="text-xs text-muted-foreground">{generatedSovereign.power_multiplier}</p>
+                <p className="text-xs text-muted-foreground">{displaySovereign.powerMultiplier}</p>
               </div>
               <div className="p-3 rounded-lg bg-muted/50">
                 <h4 className="font-semibold text-sm mb-1">Fusion Stability</h4>
-                <p className="text-xs text-muted-foreground">{generatedSovereign.fusion_stability}</p>
+                <p className="text-xs text-muted-foreground">{displaySovereign.fusionStability}</p>
               </div>
             </div>
 
@@ -440,12 +472,12 @@ export function GeminiProtocolGenerator() {
 
             <div>
               <h4 className="font-semibold mb-2">Fusion Origin</h4>
-              <p className="text-sm text-muted-foreground whitespace-pre-line">{generatedSovereign.description}</p>
+              <p className="text-sm text-muted-foreground whitespace-pre-line">{displaySovereign.description}</p>
             </div>
 
             <div>
               <h4 className="font-semibold mb-2">Combat Doctrine</h4>
-              <p className="text-sm text-muted-foreground whitespace-pre-line">{generatedSovereign.fusion_description}</p>
+              <p className="text-sm text-muted-foreground whitespace-pre-line">{displaySovereign.fusionDescription}</p>
             </div>
 
             <Separator />
@@ -454,7 +486,7 @@ export function GeminiProtocolGenerator() {
               <h4 className="font-semibold mb-3">Fusion Abilities (8 Total)</h4>
               <ScrollArea className="h-[500px] pr-4">
                 <div className="space-y-3">
-                  {generatedSovereign.abilities.map((ability, index) => (
+                  {displaySovereign.abilities.map((ability, index) => (
                     <div
                       key={ability.name || `ability-${index}`}
                       className={`p-3 rounded-lg border ${

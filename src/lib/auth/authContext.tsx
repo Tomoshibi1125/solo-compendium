@@ -1,6 +1,6 @@
 /**
  * Authentication Context
- * Role-based authentication for Solo Compendium
+ * Role-based authentication for System Ascendant
  */
 
 import React, { createContext, useCallback, useContext, useEffect, useState, ReactNode } from 'react';
@@ -412,3 +412,4 @@ export function withPermission(permission: string, Component: React.ComponentTyp
     return <Component {...props} />;
   };
 }
+

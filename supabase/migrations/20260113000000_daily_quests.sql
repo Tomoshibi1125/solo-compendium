@@ -1,5 +1,5 @@
 -- Daily Quest System Migration
--- Implements Solo Leveling inspired daily training quests
+-- Implements System Ascendant inspired daily training quests
 
 -- Daily Quest Templates (definitions)
 CREATE TABLE IF NOT EXISTS daily_quest_templates (
@@ -280,3 +280,4 @@ CREATE TRIGGER update_daily_quest_configs_updated_at
   BEFORE UPDATE ON daily_quest_configs
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
+

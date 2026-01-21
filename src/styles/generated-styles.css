@@ -9,13 +9,13 @@
 }
 
 /* Hero Components */
-.sololevelinghero-style-152,
-.sololevelingherosimple-style-48,
-.sololevelingherosimple-style-73,
-.sololevelingherosimple-style-79,
-.sololevelingherosimple-style-86,
-.sololevelingherosimple-style-129,
-.sololevelingherosimple-style-142 {
+.SystemHero-style-152,
+.SystemHeroSimple-style-48,
+.SystemHeroSimple-style-73,
+.SystemHeroSimple-style-79,
+.SystemHeroSimple-style-86,
+.SystemHeroSimple-style-129,
+.SystemHeroSimple-style-142 {
   /* Add hero component styles */
 }
 
@@ -26,3 +26,4 @@
 .player-tools-style-162 {
   /* Add page-specific styles */
 }
+

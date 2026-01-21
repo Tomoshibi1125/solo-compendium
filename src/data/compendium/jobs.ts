@@ -11,7 +11,7 @@ export interface Job {
   rank: 'D' | 'C' | 'B' | 'A' | 'S';
   image: string;
   description: string;
-  // D&D 5e Class Features
+  // SRD 5e Class Features
   hitDie: string;
   primaryAbility: string;
   savingThrows: string[];
@@ -19,7 +19,7 @@ export interface Job {
   armorProficiencies: string[];
   weaponProficiencies: string[];
   toolProficiencies: string[];
-  // Solo Leveling Awakening Features (serves as racial bonuses)
+  // System Ascendant Awakening Features (serves as racial bonuses)
   awakeningFeatures: {
     name: string;
     description: string;
@@ -69,8 +69,8 @@ export const jobs = [
     "name": "Warrior",
     "type": "Job",
     "rank": "C",
-    "description": "A versatile combatant who masters various weapons and fighting styles. Warriors can specialize in offense, defense, or tactical leadership, embodying the foundation of martial prowess in the Solo Leveling world.",
-    // D&D 5e Class Features
+    "description": "A versatile combatant who masters various weapons and fighting styles. Warriors can specialize in offense, defense, or tactical leadership, embodying the foundation of martial prowess in the System Ascendant world.",
+    // SRD 5e Class Features
     "hitDie": "1d10",
     "primaryAbility": "Strength",
     "savingThrows": ["Strength", "Constitution"],
@@ -78,7 +78,7 @@ export const jobs = [
     "armorProficiencies": ["All armor", "shields"],
     "weaponProficiencies": ["Simple weapons", "martial weapons"],
     "toolProficiencies": ["One type of artisan's tools"],
-    // Solo Leveling Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (serves as racial bonuses)
     "awakeningFeatures": [
       {
         "name": "Battlefield Instinct",
@@ -156,7 +156,7 @@ export const jobs = [
       "charisma": 12
     },
     "primary_abilities": ["Strength", "Constitution"],
-    "source": "Solo Compendium Canon"
+    "source": "System Ascendant Canon"
   },
   // MAGE - Wizard (Arcane magic mastery)
   {
@@ -164,8 +164,8 @@ export const jobs = [
     "name": "Mage",
     "type": "Job",
     "rank": "C",
-    "description": "A master of arcane magic who manipulates the fundamental forces of reality. Mages can specialize in different schools of magic, from destructive evocation to protective abjuration, embodying the intellectual pursuit of power in the Solo Leveling world.",
-    // D&D 5e Class Features
+    "description": "A master of arcane magic who manipulates the fundamental forces of reality. Mages can specialize in different schools of magic, from destructive evocation to protective abjuration, embodying the intellectual pursuit of power in the System Ascendant world.",
+    // SRD 5e Class Features
     "hitDie": "1d6",
     "primaryAbility": "Intelligence",
     "savingThrows": ["Intelligence", "Wisdom"],
@@ -173,7 +173,7 @@ export const jobs = [
     "armorProficiencies": [],
     "weaponProficiencies": ["Daggers", "darts", "slings", "quarterstaffs", "light crossbows"],
     "toolProficiencies": [],
-    // Solo Leveling Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (serves as racial bonuses)
     "awakeningFeatures": [
       {
         "name": "Arcane Insight",
@@ -251,7 +251,7 @@ export const jobs = [
       "charisma": 12
     },
     "primary_abilities": ["Intelligence", "Wisdom"],
-    "source": "Solo Compendium Canon"
+    "source": "System Ascendant Canon"
   },
   // ASSASSIN - Rogue (Stealth and precision)
   {
@@ -259,8 +259,8 @@ export const jobs = [
     "name": "Assassin",
     "type": "Job",
     "rank": "B",
-    "description": "A master of stealth and precision strikes who moves unseen through the shadows. Assassins excel at infiltration, deception, and eliminating targets with deadly efficiency, embodying the shadow arts in the Solo Leveling world.",
-    // D&D 5e Class Features
+    "description": "A master of stealth and precision strikes who moves unseen through the shadows. Assassins excel at infiltration, deception, and eliminating targets with deadly efficiency, embodying the shadow arts in the System Ascendant world.",
+    // SRD 5e Class Features
     "hitDie": "1d8",
     "primaryAbility": "Dexterity",
     "savingThrows": ["Dexterity", "Intelligence"],
@@ -268,7 +268,7 @@ export const jobs = [
     "armorProficiencies": ["Light armor"],
     "weaponProficiencies": ["Simple weapons", "hand crossbows", "longswords", "rapiers", "shortswords"],
     "toolProficiencies": ["Thieves' tools"],
-    // Solo Leveling Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (serves as racial bonuses)
     "awakeningFeatures": [
       {
         "name": "Shadow Affinity",
@@ -346,7 +346,7 @@ export const jobs = [
       "charisma": 12
     },
     "primary_abilities": ["Dexterity", "Intelligence"],
-    "source": "Solo Compendium Canon"
+    "source": "System Ascendant Canon"
   },
   // HEALER - Cleric (Divine healing magic)
   {
@@ -354,8 +354,8 @@ export const jobs = [
     "name": "Healer",
     "type": "Job",
     "rank": "B",
-    "description": "A divine conduit who channels healing energy to mend wounds and cure ailments. Healers can specialize in different domains of divine power, from restorative healing to protective wards, embodying the life-giving forces in the Solo Leveling world.",
-    // D&D 5e Class Features
+    "description": "A divine conduit who channels healing energy to mend wounds and cure ailments. Healers can specialize in different domains of divine power, from restorative healing to protective wards, embodying the life-giving forces in the System Ascendant world.",
+    // SRD 5e Class Features
     "hitDie": "1d8",
     "primaryAbility": "Wisdom",
     "savingThrows": ["Wisdom", "Charisma"],
@@ -363,7 +363,7 @@ export const jobs = [
     "armorProficiencies": ["Light armor", "medium armor", "shields"],
     "weaponProficiencies": ["Simple weapons"],
     "toolProficiencies": ["Herbalism kit"],
-    // Solo Leveling Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (serves as racial bonuses)
     "awakeningFeatures": [
       {
         "name": "Divine Touch",
@@ -440,7 +440,7 @@ export const jobs = [
       "charisma": 14
     },
     "primary_abilities": ["Wisdom", "Charisma"],
-    "source": "Solo Compendium Canon"
+    "source": "System Ascendant Canon"
   },
   // RANGER - Ranger (Nature and tracking)
   {
@@ -448,8 +448,8 @@ export const jobs = [
     "name": "Ranger",
     "type": "Job",
     "rank": "B",
-    "description": "A master of the wild who tracks and survives in any environment. Rangers excel at hunting, tracking, and surviving in the wilderness, embodying the connection to nature in the Solo Leveling world.",
-    // D&D 5e Class Features
+    "description": "A master of the wild who tracks and survives in any environment. Rangers excel at hunting, tracking, and surviving in the wilderness, embodying the connection to nature in the System Ascendant world.",
+    // SRD 5e Class Features
     "hitDie": "1d10",
     "primaryAbility": "Dexterity",
     "savingThrows": ["Strength", "Dexterity"],
@@ -457,7 +457,7 @@ export const jobs = [
     "armorProficiencies": ["Light armor", "medium armor", "shields"],
     "weaponProficiencies": ["Simple weapons", "martial weapons"],
     "toolProficiencies": [],
-    // Solo Leveling Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (serves as racial bonuses)
     "awakeningFeatures": [
       {
         "name": "Nature's Bond",
@@ -475,7 +475,7 @@ export const jobs = [
         "level": 1
       },
       {
-        "name": "Hunter's Focus",
+        "name": "Ascendant's Focus",
         "description": "Your mind attunes to hunting patterns, allowing you to predict prey movements and find weaknesses.",
         "level": 1
       }
@@ -497,7 +497,7 @@ export const jobs = [
         "type": "resistance"
       },
       {
-        "name": "Hunter's Mark",
+        "name": "Ascendant's Mark",
         "description": "As a bonus action, you can mark a creature. Your attacks against marked creatures have advantage.",
         "type": "active",
         "frequency": "short-rest"
@@ -534,7 +534,7 @@ export const jobs = [
       "charisma": 13
     },
     "primary_abilities": ["Dexterity", "Wisdom"],
-    "source": "Solo Compendium Canon"
+    "source": "System Ascendant Canon"
   },
   // BERSERKER - Barbarian (Rage and fury)
   {
@@ -542,8 +542,8 @@ export const jobs = [
     "name": "Berserker",
     "type": "Job",
     "rank": "A",
-    "description": "A warrior who channels primal fury into devastating combat power. Berserkers can enter rage states that enhance their strength and resilience, embodying the raw power of fury in the Solo Leveling world.",
-    // D&D 5e Class Features
+    "description": "A warrior who channels primal fury into devastating combat power. Berserkers can enter rage states that enhance their strength and resilience, embodying the raw power of fury in the System Ascendant world.",
+    // SRD 5e Class Features
     "hitDie": "1d12",
     "primaryAbility": "Strength",
     "savingThrows": ["Strength", "Constitution"],
@@ -551,7 +551,7 @@ export const jobs = [
     "armorProficiencies": ["Light armor", "medium armor", "shields"],
     "weaponProficiencies": ["Simple weapons", "martial weapons"],
     "toolProficiencies": [],
-    // Solo Leveling Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (serves as racial bonuses)
     "awakeningFeatures": [
       {
         "name": "Primal Fury",
@@ -629,7 +629,7 @@ export const jobs = [
       "charisma": 12
     },
     "primary_abilities": ["Strength", "Constitution"],
-    "source": "Solo Compendium Canon"
+    "source": "System Ascendant Canon"
   },
   // TANK - Fighter (Defense and protection)
   {
@@ -637,8 +637,8 @@ export const jobs = [
     "name": "Tank",
     "type": "Job",
     "rank": "B",
-    "description": "A defensive specialist who protects allies and absorbs damage. Tanks can withstand incredible punishment and shield others from harm, embodying the protective spirit in the Solo Leveling world.",
-    // D&D 5e Class Features
+    "description": "A defensive specialist who protects allies and absorbs damage. Tanks can withstand incredible punishment and shield others from harm, embodying the protective spirit in the System Ascendant world.",
+    // SRD 5e Class Features
     "hitDie": "1d10",
     "primaryAbility": "Constitution",
     "savingThrows": ["Constitution", "Wisdom"],
@@ -646,7 +646,7 @@ export const jobs = [
     "armorProficiencies": ["All armor", "shields"],
     "weaponProficiencies": ["Simple weapons", "martial weapons"],
     "toolProficiencies": [],
-    // Solo Leveling Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (serves as racial bonuses)
     "awakeningFeatures": [
       {
         "name": "Iron Will",
@@ -724,7 +724,7 @@ export const jobs = [
       "charisma": 12
     },
     "primary_abilities": ["Constitution", "Strength"],
-    "source": "Solo Compendium Canon"
+    "source": "System Ascendant Canon"
   },
   // SUMMONER - Bard (Essence bonding with magical creatures)
   {
@@ -732,8 +732,8 @@ export const jobs = [
     "name": "Summoner",
     "type": "Job",
     "rank": "A",
-    "description": "A master of magical creature bonds who forms deep connections with mystical beasts. Summoners can communicate with and temporarily summon magical creatures through performance and essence bonding, embodying the beast tamer abilities seen in certain hunters in the Solo Leveling world.",
-    // D&D 5e Class Features
+    "description": "A master of magical creature bonds who forms deep connections with mystical beasts. Summoners can communicate with and temporarily summon magical creatures through performance and essence bonding, embodying the beast tamer abilities seen in certain ascendants in the System Ascendant world.",
+    // SRD 5e Class Features
     "hitDie": "1d8",
     "primaryAbility": "Charisma",
     "savingThrows": ["Dexterity", "Charisma"],
@@ -741,7 +741,7 @@ export const jobs = [
     "armorProficiencies": ["Light armor"],
     "weaponProficiencies": ["Simple weapons", "hand crossbows", "longswords", "rapiers", "shortswords"],
     "toolProficiencies": ["One type of musical instrument"],
-    // Solo Leveling Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (serves as racial bonuses)
     "awakeningFeatures": [
       {
         "name": "Beast Bond",
@@ -820,7 +820,7 @@ export const jobs = [
       "charisma": 15
     },
     "primary_abilities": ["Charisma", "Dexterity"],
-    "source": "Solo Compendium Canon"
+    "source": "System Ascendant Canon"
   },
   // PALADIN - Paladin (Holy power inspired by sacred hunters)
   {
@@ -828,8 +828,8 @@ export const jobs = [
     "name": "Paladin",
     "type": "Job",
     "rank": "A",
-    "description": "A holy warrior who channels divine power through sacred combat. Paladins can smite enemies with holy energy and protect allies with divine auras, embodying the sacred warrior abilities seen in certain blessed hunters in the Solo Leveling world.",
-    // D&D 5e Class Features
+    "description": "A holy warrior who channels divine power through sacred combat. Paladins can smite enemies with holy energy and protect allies with divine auras, embodying the sacred warrior abilities seen in certain blessed ascendants in the System Ascendant world.",
+    // SRD 5e Class Features
     "hitDie": "1d10",
     "primaryAbility": "Strength",
     "savingThrows": ["Wisdom", "Charisma"],
@@ -837,7 +837,7 @@ export const jobs = [
     "armorProficiencies": ["All armor", "shields"],
     "weaponProficiencies": ["Simple weapons", "martial weapons"],
     "toolProficiencies": [],
-    // Solo Leveling Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (serves as racial bonuses)
     "awakeningFeatures": [
       {
         "name": "Divine Blessing",
@@ -915,7 +915,7 @@ export const jobs = [
       "charisma": 14
     },
     "primary_abilities": ["Strength", "Charisma"],
-    "source": "Solo Compendium Canon"
+    "source": "System Ascendant Canon"
   },
   // TECHNOMANCER - Artificer (Technology manipulation inspired by tech hunters)
   {
@@ -923,8 +923,8 @@ export const jobs = [
     "name": "Technomancer",
     "type": "Job",
     "rank": "A",
-    "description": "A master of magical technology who infuses devices with arcane power. Technomancers can create and modify technological weapons and tools, embodying the fusion of magic and technology seen in advanced hunters in the Solo Leveling world.",
-    // D&D 5e Class Features
+    "description": "A master of magical technology who infuses devices with arcane power. Technomancers can create and modify technological weapons and tools, embodying the fusion of magic and technology seen in advanced ascendants in the System Ascendant world.",
+    // SRD 5e Class Features
     "hitDie": "1d8",
     "primaryAbility": "Intelligence",
     "savingThrows": ["Intelligence", "Constitution"],
@@ -932,7 +932,7 @@ export const jobs = [
     "armorProficiencies": ["Light armor", "medium armor", "shields"],
     "weaponProficiencies": ["Simple weapons"],
     "toolProficiencies": ["Tinker's tools", "One type of artisan's tools"],
-    // Solo Leveling Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (serves as racial bonuses)
     "awakeningFeatures": [
       {
         "name": "Tech Affinity",
@@ -1009,16 +1009,16 @@ export const jobs = [
       "charisma": 13
     },
     "primary_abilities": ["Intelligence", "Constitution"],
-    "source": "Solo Compendium Canon"
+    "source": "System Ascendant Canon"
   },
-  // WARLOCK - Warlock (Pact magic inspired by shadow monarch contractors)
+  // WARLOCK - Warlock (Pact magic inspired by umbral monarch contractors)
   {
     "id": "warlock",
     "name": "Warlock",
     "type": "Job",
     "rank": "A",
-    "description": "A master of pact magic who forms supernatural bonds with powerful entities. Warlocks can channel otherworldly power through mystical contracts, embodying the contract-based abilities seen in hunters who make deals with shadow monarchs in the Solo Leveling world.",
-    // D&D 5e Class Features
+    "description": "A master of pact magic who forms supernatural bonds with powerful entities. Warlocks can channel otherworldly power through mystical contracts, embodying the contract-based abilities seen in ascendants who make deals with umbral monarchs in the System Ascendant world.",
+    // SRD 5e Class Features
     "hitDie": "1d8",
     "primaryAbility": "Charisma",
     "savingThrows": ["Wisdom", "Charisma"],
@@ -1026,7 +1026,7 @@ export const jobs = [
     "armorProficiencies": ["Light armor"],
     "weaponProficiencies": ["Simple weapons"],
     "toolProficiencies": [],
-    // Solo Leveling Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (serves as racial bonuses)
     "awakeningFeatures": [
       {
         "name": "Pact Binding",
@@ -1103,7 +1103,7 @@ export const jobs = [
       "charisma": 15
     },
     "primary_abilities": ["Charisma", "Wisdom"],
-    "source": "Solo Compendium Canon"
+    "source": "System Ascendant Canon"
   },
   // NECROMANCER - Wizard (Death magic inspired by death-themed hunters)
   {
@@ -1111,8 +1111,8 @@ export const jobs = [
     "name": "Necromancer",
     "type": "Job",
     "rank": "S",
-    "description": "A master of death magic who commands undead and manipulates life force. Necromancers can raise and control the dead, embodying the dark powers seen in certain specialized hunters in the Solo Leveling world.",
-    // D&D 5e Class Features
+    "description": "A master of death magic who commands undead and manipulates life force. Necromancers can raise and control the dead, embodying the dark powers seen in certain specialized ascendants in the System Ascendant world.",
+    // SRD 5e Class Features
     "hitDie": "1d6",
     "primaryAbility": "Intelligence",
     "savingThrows": ["Intelligence", "Wisdom"],
@@ -1120,7 +1120,7 @@ export const jobs = [
     "armorProficiencies": [],
     "weaponProficiencies": ["Daggers", "darts", "slings", "quarterstaffs", "light crossbows"],
     "toolProficiencies": [],
-    // Solo Leveling Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (serves as racial bonuses)
     "awakeningFeatures": [
       {
         "name": "Death Essence",
@@ -1198,7 +1198,7 @@ export const jobs = [
       "charisma": 12
     },
     "primary_abilities": ["Intelligence", "Wisdom"],
-    "source": "Solo Compendium Canon"
+    "source": "System Ascendant Canon"
   },
   // MONK - Monk (Discipline mastery inspired by martial artist hunters)
   {
@@ -1206,8 +1206,8 @@ export const jobs = [
     "name": "Monk",
     "type": "Job",
     "rank": "A",
-    "description": "A master of martial discipline who harnesses inner energy through combat training. Monks can strike with unarmed precision and control their body's energy flow, embodying the disciplined warrior abilities seen in certain specialized hunters in the Solo Leveling world.",
-    // D&D 5e Class Features
+    "description": "A master of martial discipline who harnesses inner energy through combat training. Monks can strike with unarmed precision and control their body's energy flow, embodying the disciplined warrior abilities seen in certain specialized ascendants in the System Ascendant world.",
+    // SRD 5e Class Features
     "hitDie": "1d8",
     "primaryAbility": "Dexterity",
     "savingThrows": ["Strength", "Dexterity"],
@@ -1215,7 +1215,7 @@ export const jobs = [
     "armorProficiencies": [],
     "weaponProficiencies": ["Simple weapons", "shortswords"],
     "toolProficiencies": ["One type of artisan's tools", "Musical instrument"],
-    // Solo Leveling Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (serves as racial bonuses)
     "awakeningFeatures": [
       {
         "name": "Ki Control",
@@ -1294,7 +1294,7 @@ export const jobs = [
       "charisma": 11
     },
     "primary_abilities": ["Dexterity", "Wisdom"],
-    "source": "Solo Compendium Canon"
+    "source": "System Ascendant Canon"
   },
   // BARD - Bard (Inspiration magic inspired by performance hunters)
   {
@@ -1302,8 +1302,8 @@ export const jobs = [
     "name": "Bard",
     "type": "Job",
     "rank": "B",
-    "description": "A master of inspirational performance who can motivate allies and demoralize enemies through music and storytelling. Bards can channel magical energy through artistic expression, embodying the performance-based abilities seen in certain charismatic hunters in the Solo Leveling world.",
-    // D&D 5e Class Features
+    "description": "A master of inspirational performance who can motivate allies and demoralize enemies through music and storytelling. Bards can channel magical energy through artistic expression, embodying the performance-based abilities seen in certain charismatic ascendants in the System Ascendant world.",
+    // SRD 5e Class Features
     "hitDie": "1d8",
     "primaryAbility": "Charisma",
     "savingThrows": ["Dexterity", "Charisma"],
@@ -1311,7 +1311,7 @@ export const jobs = [
     "armorProficiencies": ["Light armor"],
     "weaponProficiencies": ["Simple weapons", "hand crossbows", "longswords", "rapiers", "shortswords"],
     "toolProficiencies": ["Three types of musical instruments"],
-    // Solo Leveling Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (serves as racial bonuses)
     "awakeningFeatures": [
       {
         "name": "Performance Magic",
@@ -1390,8 +1390,11 @@ export const jobs = [
       "charisma": 15
     },
     "primary_abilities": ["Charisma", "Dexterity"],
-    "source": "Solo Compendium Canon"
+    "source": "System Ascendant Canon"
   }
 ];
+
+
+
 
 

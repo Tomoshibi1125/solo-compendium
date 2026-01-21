@@ -56,6 +56,7 @@ import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/comp
 import { GeminiProtocolGenerator } from '@/components/compendium/GeminiProtocolGenerator';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
 import { staticDataProvider } from '@/data/compendium/staticDataProvider';
+import { formatMonarchVernacular, MONARCH_LABEL, MONARCH_LABEL_PLURAL } from '@/lib/vernacular';
 
 import { CompendiumEntry } from '@/hooks/useStartupData';
 
@@ -91,7 +92,7 @@ const categories = [
   { id: 'backgrounds', name: 'Backgrounds', icon: Users },
   { id: 'jobs', name: 'Classes', icon: Swords },
   { id: 'paths', name: 'Paths', icon: GitBranch },
-  { id: 'monarchs', name: 'Monarchs', icon: Crown },
+  { id: 'monarchs', name: MONARCH_LABEL_PLURAL, icon: Crown },
   
   // Abilities & Skills
   { id: 'feats', name: 'Feats', icon: Sparkles },
@@ -109,13 +110,13 @@ const categories = [
   { id: 'monsters', name: 'Monsters', icon: Skull },
   { id: 'locations', name: 'Locations', icon: MapPin },
   { id: 'conditions', name: 'Conditions', icon: AlertTriangle },
-  { id: 'shadow-soldiers', name: 'Shadow Soldiers', icon: Users },
+  { id: 'shadow-soldiers', name: 'Umbral Legion', icon: Users },
   
   // Items
   { id: 'items', name: 'Items', icon: Package }
 ];
 
-// Enhanced rarity colors with Solo Leveling theme
+// Enhanced rarity colors with System Ascendant theme
 const rarityColors: Record<string, string> = {
   'common': 'text-muted-foreground border-muted',
   'uncommon': 'text-accent border-accent/40',
@@ -124,7 +125,7 @@ const rarityColors: Record<string, string> = {
   'legendary': 'text-monarch-gold border-monarch-gold/40 shadow-[0_0_8px_hsl(var(--monarch-gold)/0.3)]',
 };
 
-// Enhanced gate rank colors with Solo Leveling theme
+// Enhanced gate rank colors with System Ascendant theme
 const gateRankColors: Record<string, string> = {
   'E': 'text-gate-e border-gate-e/40',
   'D': 'text-gate-d border-gate-d/40',
@@ -660,16 +661,17 @@ const Compendium = () => {
     e.stopPropagation();
     const wasFavorite = favorites.has(`${entry.type}:${entry.id}`);
     toggleFavorite(entry.type, entry.id);
+    const displayName = formatMonarchVernacular(entry.name);
     
     if (wasFavorite) {
-      toast({ title: 'Removed from favorites', description: `${entry.name} has been removed from your favorites` });
+      toast({ title: 'Removed from favorites', description: `${displayName} has been removed from your favorites` });
     } else {
-      toast({ title: 'Added to favorites', description: `${entry.name} has been added to your favorites` });
+      toast({ title: 'Added to favorites', description: `${displayName} has been added to your favorites` });
     }
   };
 
   const handleExport = () => {
-    const dataStr = JSON.stringify(filteredAndSortedEntries, null, 2);
+    const dataStr = formatMonarchVernacular(JSON.stringify(filteredAndSortedEntries, null, 2));
     const dataBlob = new Blob([dataStr], { type: 'application/json' });
     const url = URL.createObjectURL(dataBlob);
     const link = document.createElement('a');
@@ -709,11 +711,13 @@ const Compendium = () => {
 
   // Highlight search terms in text (sanitized)
   const highlightText = (text: string, query: string) => {
-    if (!query.trim()) return text;
-    const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const parts = text.split(new RegExp(`(${escapedQuery})`, 'gi'));
+    const displayText = formatMonarchVernacular(text);
+    const displayQuery = formatMonarchVernacular(query);
+    if (!displayQuery.trim()) return displayText;
+    const escapedQuery = displayQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const parts = displayText.split(new RegExp(`(${escapedQuery})`, 'gi'));
     return parts.map((part, i) => 
-      part.toLowerCase() === query.toLowerCase() ? (
+      part.toLowerCase() === displayQuery.toLowerCase() ? (
         <mark key={i} className="bg-primary/20 text-primary font-semibold" aria-label={`Search match: ${part}`}>{part}</mark>
       ) : part
     );
@@ -737,7 +741,7 @@ const Compendium = () => {
             COMPENDIUM
           </h1>
           <p className="text-muted-foreground font-heading">
-            Browse the complete Solo Leveling 5e ruleset — {filteredAndSortedEntries.length} {filteredAndSortedEntries.length === 1 ? 'entry' : 'entries'}
+            Browse the complete System Ascendant 5e SRD ruleset — {filteredAndSortedEntries.length} {filteredAndSortedEntries.length === 1 ? 'entry' : 'entries'}
           </p>
         </header>
 
@@ -860,7 +864,7 @@ const Compendium = () => {
                     <DialogHeader>
                       <DialogTitle>Gemini Protocol</DialogTitle>
                       <DialogDescription>
-                        Fuse Job, Path, and Monarch essences into a sovereign profile.
+                        Fuse Job, Path, and {MONARCH_LABEL} essences into a Sovereign overlay.
                       </DialogDescription>
                     </DialogHeader>
                     <GeminiProtocolGenerator />
@@ -1094,4 +1098,6 @@ const Compendium = () => {
 };
 
 export default Compendium;
+
+
 

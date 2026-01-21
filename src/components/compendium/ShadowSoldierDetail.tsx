@@ -1,6 +1,7 @@
 import { Shield, Sword, Target, Eye } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface ShadowSoldierDetailProps {
   data: {
@@ -47,11 +48,11 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
-          <h2 className="text-2xl font-bold font-heading">{entry.name}</h2>
+          <h2 className="text-2xl font-bold font-heading">{formatMonarchVernacular(entry.name)}</h2>
           {entry.role && (
             <div className="flex items-center gap-2 mt-2">
               {getRoleIcon(entry.role)}
-              <span className="text-lg text-muted-foreground capitalize">{entry.role}</span>
+              <span className="text-lg text-muted-foreground capitalize">{formatMonarchVernacular(entry.role)}</span>
             </div>
           )}
         </div>
@@ -67,7 +68,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
       {/* Description */}
       <div id="soldier-description" className="scroll-mt-4">
         <h3 className="text-lg font-semibold mb-3 font-heading">Overview</h3>
-        <p className="text-muted-foreground leading-relaxed">{entry.description}</p>
+        <p className="text-muted-foreground leading-relaxed">{formatMonarchVernacular(entry.description)}</p>
       </div>
 
       {/* Combat Role Details */}
@@ -100,7 +101,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
           <div className="flex flex-wrap gap-2">
             {entry.tags.map((tag, index) => (
               <Badge key={index} variant="secondary" className="capitalize">
-                {tag.replace('-', ' ')}
+                {formatMonarchVernacular(tag.replace('-', ' '))}
               </Badge>
             ))}
           </div>
@@ -110,7 +111,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
       {/* Source */}
       {entry.source_book && (
         <div className="text-sm text-muted-foreground">
-          Source: {entry.source_book}
+          Source: {formatMonarchVernacular(entry.source_book)}
         </div>
       )}
     </div>

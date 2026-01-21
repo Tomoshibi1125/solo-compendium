@@ -9,18 +9,23 @@ import { useCampaign, useCampaignMembers, useHasDMAccess, useCampaignRole } from
 import { RoleBadge } from '@/components/ui/RoleBadge';
 import { useToast } from '@/hooks/use-toast';
 import { useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { Link } from 'react-router-dom';
 import { CampaignChat } from '@/components/campaign/CampaignChat';
 import { CampaignNotes } from '@/components/campaign/CampaignNotes';
 import { CampaignCharacters } from '@/components/campaign/CampaignCharacters';
 import { CampaignSettings } from '@/components/campaign/CampaignSettings';
+import { useAuth } from '@/lib/auth/authContext';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 const CampaignDetail = () => {
   const { id } = useParams<{ id: string }>();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [activeTab, setActiveTab] = useState('overview');
+  const { user, loading } = useAuth();
+  const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== 'false';
+  const isE2E = import.meta.env.VITE_E2E === 'true';
 
   const { data: campaign, isLoading: loadingCampaign } = useCampaign(id || '');
   const { data: members = [], isLoading: loadingMembers } = useCampaignMembers(id || '');
@@ -30,6 +35,7 @@ const CampaignDetail = () => {
   // Real-time updates for campaign members
   useEffect(() => {
     if (!id) return;
+    if (!isSupabaseConfigured || isE2E || loading || (guestEnabled && !user)) return;
 
     const channel = supabase
       .channel(`campaign:${id}:members`)
@@ -50,7 +56,7 @@ const CampaignDetail = () => {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [id, queryClient]);  
+  }, [guestEnabled, id, isE2E, loading, queryClient, user]);  
 
   const handleCopyShareLink = () => {
     if (!campaign) return;
@@ -58,7 +64,7 @@ const CampaignDetail = () => {
     navigator.clipboard.writeText(shareUrl);
     toast({
       title: 'Share link copied!',
-      description: 'Hunters can use this link to join your campaign.',
+      description: 'Ascendants can use this link to join your campaign.',
     });
   };
 
@@ -153,7 +159,7 @@ const CampaignDetail = () => {
                   dice rolling, chat, fog of war, and more. Everything you need for running sessions online.
                 </p>
                 <Link to={`/campaigns/${id}/vtt`}>
-                  <Button className="btn-shadow-monarch" size="lg">
+                  <Button className="btn-umbral" size="lg">
                     <Layers className="w-5 h-5 mr-2" />
                     Launch VTT
                   </Button>
@@ -202,7 +208,7 @@ const CampaignDetail = () => {
                         Copy Share Link
                       </Button>
                       <div className="pt-4 border-t border-border">
-                        <p className="text-xs text-muted-foreground mb-2">Share this link with Hunters:</p>
+                        <p className="text-xs text-muted-foreground mb-2">Share this link with Ascendants:</p>
                         <p className="text-sm font-mono bg-muted p-2 rounded break-all">
                           {window.location.origin}/campaigns/join/{campaign.share_code}
                         </p>
@@ -211,10 +217,10 @@ const CampaignDetail = () => {
                   ) : (
                     <div className="text-center py-6">
                       <p className="text-sm text-muted-foreground font-heading mb-2">
-                        Share code and invite links are only visible to the Gate Master (System).
+                        Share code and invite links are only visible to the Protocol Warden (System).
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        Ask your Gate Master (System) for the share code to invite others.
+                        Ask your Protocol Warden (System) for the share code to invite others.
                       </p>
                     </div>
                   )}
@@ -232,7 +238,7 @@ const CampaignDetail = () => {
                 ) : (
                   <div className="space-y-2">
                     {members.map((member) => {
-                      // Check if this member is the System (Gate Master)
+                      // Check if this member is the System (Protocol Warden)
                       const isDM = campaign.dm_id === member.user_id;
                       return (
                         <div
@@ -248,17 +254,17 @@ const CampaignDetail = () => {
                             )}
                             <div>
                               <p className="font-heading font-semibold">
-                                {member.characters?.name || 'No Hunter linked'}
+                                {member.characters?.name || 'No Ascendant linked'}
                               </p>
                               {member.characters && (
                                 <p className="text-xs text-muted-foreground">
-                                  Level {member.characters.level} {member.characters.job}
+                                  Level {member.characters.level} {formatMonarchVernacular(member.characters.job || 'Unknown')}
                                 </p>
                               )}
                             </div>
                           </div>
                           <span className="text-xs font-display text-muted-foreground">
-                            {isDM ? 'System' : member.role === 'co-system' ? 'Co-System' : 'Hunter'}
+                            {isDM ? 'System' : member.role === 'co-system' ? 'Co-System' : 'Ascendant'}
                           </span>
                         </div>
                       );
@@ -293,4 +299,6 @@ const CampaignDetail = () => {
 };
 
 export default CampaignDetail;
+
+
 

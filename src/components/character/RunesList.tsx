@@ -8,6 +8,7 @@ import { useCharacter } from '@/hooks/useCharacters';
 import { useToast } from '@/hooks/use-toast';
 import { InscribeRuneDialog } from './InscribeRuneDialog';
 import { cn } from '@/lib/utils';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 import type { Database } from '@/integrations/supabase/types';
 
 type Rune = Database['public']['Tables']['compendium_runes']['Row'];
@@ -43,11 +44,12 @@ export function RunesList({ characterId }: { characterId: string }) {
   const toggleActive = useToggleRuneActive();
 
   const handleRemoveInscription = async (inscriptionId: string, runeName: string) => {
+    const displayName = formatMonarchVernacular(runeName);
     try {
       await removeInscription.mutateAsync({ inscriptionId });
       toast({
         title: 'Rune removed',
-        description: `${runeName} has been removed from equipment.`,
+        description: `${displayName} has been removed from equipment.`,
       });
     } catch (error) {
       toast({
@@ -59,11 +61,12 @@ export function RunesList({ characterId }: { characterId: string }) {
   };
 
   const handleToggleActive = async (inscriptionId: string, isActive: boolean, runeName: string) => {
+    const displayName = formatMonarchVernacular(runeName);
     try {
       await toggleActive.mutateAsync({ inscriptionId, isActive: !isActive });
       toast({
         title: isActive ? 'Rune deactivated' : 'Rune activated',
-        description: `${runeName} has been ${isActive ? 'deactivated' : 'activated'}.`,
+        description: `${displayName} has been ${isActive ? 'deactivated' : 'activated'}.`,
       });
     } catch (error) {
       toast({
@@ -98,7 +101,7 @@ export function RunesList({ characterId }: { characterId: string }) {
                     className={cn(RUNE_TYPE_COLORS[rk.rune.rune_type] || '', 'gap-1')}
                   >
                     <Icon className="w-3 h-3" />
-                    {rk.rune.name}
+                    {formatMonarchVernacular(rk.rune.name)}
                     {rk.mastery_level && rk.mastery_level >= 3 && (
                       <CheckCircle className="w-3 h-3 text-amber-400" />
                     )}
@@ -117,7 +120,9 @@ export function RunesList({ characterId }: { characterId: string }) {
               {Object.entries(inscriptionsByEquipment).map(([equipName, runes]) => (
                 <div key={equipName} className="border border-primary/20 rounded-lg p-3 space-y-2">
                   <div className="flex items-center justify-between">
-                    <h4 className="font-heading font-semibold text-sm">{equipName}</h4>
+                    <h4 className="font-heading font-semibold text-sm">
+                      {formatMonarchVernacular(equipName)}
+                    </h4>
                     <Button
                       size="sm"
                       variant="ghost"
@@ -134,6 +139,7 @@ export function RunesList({ characterId }: { characterId: string }) {
                   <div className="flex flex-wrap gap-2">
                     {runes.map((ins) => {
                       const Icon = RUNE_TYPE_ICONS[ins.rune.rune_type] || BookOpen;
+                      const displayRuneName = formatMonarchVernacular(ins.rune.name);
                       return (
                         <Badge
                           key={ins.id}
@@ -145,7 +151,7 @@ export function RunesList({ characterId }: { characterId: string }) {
                           onClick={() => handleToggleActive(ins.id, ins.is_active, ins.rune.name)}
                         >
                           <Icon className="w-3 h-3" />
-                          {ins.rune.name}
+                          {displayRuneName}
                           {ins.is_active ? (
                             <CheckCircle className="w-3 h-3" />
                           ) : (

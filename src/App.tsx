@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { ThemeProvider } from "next-themes";
 import { Loader2 } from "lucide-react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { NetworkErrorBoundary } from "@/components/NetworkErrorHandling";
@@ -14,6 +15,7 @@ import { ServiceWorkerUpdatePrompt } from "@/components/ui/ServiceWorkerUpdatePr
 import { OfflineIndicator } from "@/components/ui/OfflineIndicator";
 import { AnalyticsConsentBanner } from "@/components/ui/AnalyticsConsentBanner";
 import { PageViewTracker } from "@/components/analytics/PageViewTracker";
+import { RouteEffects } from "@/components/RouteEffects";
 import { setCommandPaletteOpener } from "@/lib/globalShortcuts";
 import { setSentryUser } from "@/lib/sentry";
 import { trackEvent, identifyUser, resetUser, AnalyticsEvents } from "@/lib/analytics";
@@ -247,7 +249,7 @@ const AppContent = () => {
       <Route
         path="/dm-tools/system-console"
         element={
-          <ProtectedRoute requireDM>
+          <ProtectedRoute requireDM allowGuest={false}>
           <Suspense fallback={<PageLoader />}>
             <Admin />
           </Suspense>
@@ -257,7 +259,7 @@ const AppContent = () => {
       <Route
         path="/dm-tools/content-audit"
         element={
-          <ProtectedRoute requireDM>
+          <ProtectedRoute requireDM allowGuest={false}>
           <Suspense fallback={<PageLoader />}>
             <ContentAudit />
           </Suspense>
@@ -267,7 +269,7 @@ const AppContent = () => {
       <Route
         path="/dm-tools/art-generation"
         element={
-          <ProtectedRoute requireDM>
+          <ProtectedRoute requireDM allowGuest={false}>
           <Suspense fallback={<PageLoader />}>
             <ArtGeneration />
           </Suspense>
@@ -277,7 +279,7 @@ const AppContent = () => {
       <Route
         path="/admin"
         element={
-          <ProtectedRoute requireDM>
+          <ProtectedRoute requireDM allowGuest={false}>
             <Navigate to="/dm-tools/system-console" replace />
           </ProtectedRoute>
         }
@@ -285,7 +287,7 @@ const AppContent = () => {
       <Route
         path="/admin/art-generation"
         element={
-          <ProtectedRoute requireDM>
+          <ProtectedRoute requireDM allowGuest={false}>
             <Navigate to="/dm-tools/art-generation" replace />
           </ProtectedRoute>
         }
@@ -293,7 +295,7 @@ const AppContent = () => {
       <Route
         path="/admin/audit"
         element={
-          <ProtectedRoute requireDM>
+          <ProtectedRoute requireDM allowGuest={false}>
             <Navigate to="/dm-tools/content-audit" replace />
           </ProtectedRoute>
         }
@@ -525,6 +527,14 @@ const AppContent = () => {
         }
       />
       <Route
+        path="/campaigns/join/:shareCode"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <CampaignJoin />
+          </Suspense>
+        }
+      />
+      <Route
         path="/campaigns/:id"
         element={
           <Suspense fallback={<PageLoader />}>
@@ -566,24 +576,27 @@ const AppContent = () => {
 const App = () => {
   return (
     <ErrorBoundary>
-      <NetworkErrorBoundary>
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <AuthProvider>
-            <GlobalEffects />
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <PageViewTracker />
-              <AppContent />
-            </BrowserRouter>
-            <ServiceWorkerUpdatePrompt />
-            <OfflineIndicator />
-            <AnalyticsConsentBanner />
-          </AuthProvider>
-        </TooltipProvider>
-      </QueryClientProvider>
-    </NetworkErrorBoundary>
+      <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" disableTransitionOnChange>
+        <NetworkErrorBoundary>
+          <QueryClientProvider client={queryClient}>
+            <TooltipProvider>
+              <AuthProvider>
+                <GlobalEffects />
+                <Toaster />
+                <Sonner />
+                <BrowserRouter>
+                  <RouteEffects />
+                  <PageViewTracker />
+                  <AppContent />
+                </BrowserRouter>
+                <ServiceWorkerUpdatePrompt />
+                <OfflineIndicator />
+                <AnalyticsConsentBanner />
+              </AuthProvider>
+            </TooltipProvider>
+          </QueryClientProvider>
+        </NetworkErrorBoundary>
+      </ThemeProvider>
     </ErrorBoundary>
   );
 };

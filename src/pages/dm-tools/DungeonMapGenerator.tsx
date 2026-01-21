@@ -215,7 +215,7 @@ const DungeonMapGenerator = () => {
     setDungeonMap(newMap);
     toast({
       title: 'Map Generated!',
-      description: `Created a Rank ${selectedRank} Gate with ${newMap.rooms.length} rooms.`,
+      description: `Created a Rank ${selectedRank} Rift with ${newMap.rooms.length} rooms.`,
     });
   };
 
@@ -253,7 +253,7 @@ const DungeonMapGenerator = () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `gate-${selectedRank}-map-${Date.now()}.json`;
+    a.download = `rift-${selectedRank}-map-${Date.now()}.json`;
     a.click();
     URL.revokeObjectURL(url);
     
@@ -284,13 +284,13 @@ const DungeonMapGenerator = () => {
             className="mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to DM Tools
+            Back to Warden Tools
           </Button>
           <h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow">
-            GATE MAP GENERATOR
+            RIFT MAP GENERATOR
           </h1>
           <p className="text-muted-foreground font-heading">
-            Generate full Gate/dungeon maps for VTT-style gameplay. Create visual layouts with rooms, corridors, and special chambers.
+            Generate full Rift/dungeon maps for VTT-style gameplay. Create visual layouts with rooms, corridors, and special chambers.
           </p>
         </div>
 
@@ -299,7 +299,7 @@ const DungeonMapGenerator = () => {
             <SystemWindow title="MAP SETTINGS">
               <div className="space-y-4">
                 <div>
-                  <Label htmlFor="rank">Gate Rank</Label>
+                  <Label htmlFor="rank">Rift Rank</Label>
                   <Select value={selectedRank} onValueChange={setSelectedRank}>
                     <SelectTrigger id="rank">
                       <SelectValue />
@@ -341,7 +341,7 @@ const DungeonMapGenerator = () => {
 
                 <Button
                   onClick={handleGenerate}
-                  className="w-full btn-shadow-monarch"
+                  className="w-full btn-umbral"
                   size="lg"
                 >
                   <RefreshCw className="w-4 h-4 mr-2" />
@@ -419,7 +419,7 @@ const DungeonMapGenerator = () => {
           <div className="lg:col-span-3 space-y-6">
             {dungeonMap ? (
               <>
-                <SystemWindow title={`RANK ${selectedRank} GATE MAP`}>
+                <SystemWindow title={`RANK ${selectedRank} RIFT MAP`}>
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <Badge variant="outline">
@@ -517,9 +517,9 @@ const DungeonMapGenerator = () => {
                 <div className="text-center py-12">
                   <Grid className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
                   <p className="text-muted-foreground font-heading mb-4">
-                    Configure map settings and click "Generate Map" to create a Gate layout.
+                    Configure map settings and click "Generate Map" to create a Rift layout.
                   </p>
-                  <Button onClick={handleGenerate} className="btn-shadow-monarch">
+                  <Button onClick={handleGenerate} className="btn-umbral">
                     <RefreshCw className="w-4 h-4 mr-2" />
                     Generate Your First Map
                   </Button>
@@ -534,4 +534,6 @@ const DungeonMapGenerator = () => {
 };
 
 export default DungeonMapGenerator;
+
+
 

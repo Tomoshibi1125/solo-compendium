@@ -129,7 +129,7 @@ export const useUpdateSpellSlot = () => {
     }) => {
       if (isLocalCharacterId(characterId)) {
         const entry = getLocalCharacterState(characterId);
-        if (!entry) throw new AppError('Hunter not found', 'NOT_FOUND');
+        if (!entry) throw new AppError('Ascendant not found', 'NOT_FOUND');
 
         const casterType = getCasterType(entry.character.job);
         const expectedSlots = getSpellSlotsPerLevel(casterType, entry.character.level);

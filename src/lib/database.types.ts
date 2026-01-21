@@ -523,6 +523,41 @@ export type Database = {
           },
         ]
       }
+      character_sheet_state: {
+        Row: {
+          character_id: string
+          created_at: string
+          custom_modifiers: Json
+          id: string
+          resources: Json
+          updated_at: string
+        }
+        Insert: {
+          character_id: string
+          created_at?: string
+          custom_modifiers?: Json
+          id?: string
+          resources?: Json
+          updated_at?: string
+        }
+        Update: {
+          character_id?: string
+          created_at?: string
+          custom_modifiers?: Json
+          id?: string
+          resources?: Json
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "character_sheet_state_character_id_fkey"
+            columns: ["character_id"]
+            isOneToOne: true
+            referencedRelation: "characters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       character_rune_inscriptions: {
         Row: {
           applied_cross_penalty: string | null

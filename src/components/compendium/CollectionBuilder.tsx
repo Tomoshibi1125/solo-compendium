@@ -26,6 +26,7 @@ import {
 } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
 
 interface CollectionItem {
   id: string;
@@ -168,7 +169,7 @@ export function CollectionBuilder({
     const forked = onForkCollection(collection.id);
     toast({
       title: 'Collection Forked',
-      description: `You have forked "${collection.name}".`,
+      description: `You have forked "${formatMonarchVernacular(collection.name)}".`,
     });
   };
 
@@ -225,10 +226,13 @@ export function CollectionBuilder({
     }));
   };
 
-  const filteredItems = availableItems.filter(item =>
-    item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.type.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredItems = availableItems.filter((item) => {
+    const canonicalQuery = normalizeMonarchSearch(searchQuery.toLowerCase());
+    return (
+      normalizeMonarchSearch(item.name.toLowerCase()).includes(canonicalQuery) ||
+      normalizeMonarchSearch(item.type.toLowerCase()).includes(canonicalQuery)
+    );
+  });
 
   return (
     <div className={cn("space-y-6", className)}>
@@ -251,9 +255,9 @@ export function CollectionBuilder({
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <CardTitle className="text-lg">{collection.name}</CardTitle>
+                  <CardTitle className="text-lg">{formatMonarchVernacular(collection.name)}</CardTitle>
                   <p className="text-sm text-muted-foreground mt-1">
-                    {collection.description}
+                    {formatMonarchVernacular(collection.description)}
                   </p>
                 </div>
                 <div className="flex items-center gap-1">
@@ -281,7 +285,7 @@ export function CollectionBuilder({
                   <div className="flex flex-wrap gap-1">
                     {collection.tags.map((tag) => (
                       <Badge key={tag} variant="secondary" className="text-xs">
-                        {tag}
+                        {formatMonarchVernacular(tag)}
                       </Badge>
                     ))}
                   </div>
@@ -372,7 +376,7 @@ export function CollectionBuilder({
                 <div className="flex flex-wrap gap-1 mt-2">
                   {formData.tags.map((tag) => (
                     <Badge key={tag} variant="secondary" className="cursor-pointer">
-                      {tag}
+                      {formatMonarchVernacular(tag)}
                       <X
                         className="w-3 h-3 ml-1"
                         onClick={() => removeTag(tag)}
@@ -417,12 +421,12 @@ export function CollectionBuilder({
                     >
                       <div className="flex items-center gap-2">
                         <div className="w-8 h-8 bg-muted rounded flex items-center justify-center text-xs">
-                          {item.type[0]?.toUpperCase()}
+                          {formatMonarchVernacular(item.type)[0]?.toUpperCase()}
                         </div>
                         <div>
-                          <div className="font-medium">{item.name}</div>
+                          <div className="font-medium">{formatMonarchVernacular(item.name)}</div>
                           <div className="text-xs text-muted-foreground">
-                            {item.type} {item.rarity && `• ${item.rarity}`}
+                            {formatMonarchVernacular(item.type)} {item.rarity && `• ${formatMonarchVernacular(item.rarity)}`}
                           </div>
                         </div>
                       </div>
@@ -442,7 +446,7 @@ export function CollectionBuilder({
                         key={item.id}
                         className="flex items-center justify-between p-1 border rounded"
                       >
-                        <div className="text-sm">{item.name}</div>
+                        <div className="text-sm">{formatMonarchVernacular(item.name)}</div>
                         <Button
                           size="sm"
                           variant="ghost"
@@ -529,7 +533,7 @@ export function CollectionBuilder({
           <DialogHeader>
             <DialogTitle>Share Collection</DialogTitle>
             <DialogDescription>
-              Share "{selectedCollection?.name}" with others
+              Share "{selectedCollection ? formatMonarchVernacular(selectedCollection.name) : ''}" with others
             </DialogDescription>
           </DialogHeader>
           

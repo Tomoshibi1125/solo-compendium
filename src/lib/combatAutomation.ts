@@ -1,5 +1,5 @@
 /**
- * Combat Automation System - D&D Beyond Style
+ * Combat Automation System - Digital Character Sheet Style
  * 
  * Advanced combat calculations including attacks, damage, saving throws,
  * critical hits, and combat flow automation
@@ -480,3 +480,4 @@ export function formatInitiativeResult(initiative: InitiativeResult): string {
   const rollStr = formatRollResult(initiative);
   return `Initiative: ${rollStr} +${initiative.dexterityBonus} = ${initiative.initiative}`;
 }
+

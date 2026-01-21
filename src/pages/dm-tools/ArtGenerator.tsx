@@ -1,9 +1,9 @@
 /**
- * DM Tools Art Generator
- * Allows DMs to generate art for monsters, NPCs, and homebrew content
+ * Warden Tools Art Generator
+ * Allows Wardens to generate art for monsters, NPCs, and homebrew content
  */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -22,6 +22,8 @@ import { Layout } from '@/components/layout/Layout';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useUserToolState } from '@/hooks/useToolState';
 
 type ContentType = 'monster' | 'npc' | 'item' | 'location';
 
@@ -44,25 +46,25 @@ export default function ArtGeneratorDM() {
   const [lastEditId, setLastEditId] = useState<string | null>(null);
   const [isAIArtPending, setIsAIArtPending] = useState(false);
   const [isDialogClosing, setIsDialogClosing] = useState(false);
+  const hydratedRef = useRef(false);
+  const { state: storedContent, isLoading, saveNow } = useUserToolState<GeneratedContent[]>('art_generator', {
+    initialState: [],
+    storageKey: STORAGE_KEY,
+  });
+  const debouncedContent = useDebounce(generatedContent, 800);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (!stored) return;
-    try {
-      const parsed = JSON.parse(stored) as GeneratedContent[];
-      if (Array.isArray(parsed)) {
-        setGeneratedContent(parsed);
-      }
-    } catch {
-      // Ignore corrupted local cache
+    if (isLoading || hydratedRef.current) return;
+    if (Array.isArray(storedContent) && storedContent.length > 0) {
+      setGeneratedContent(storedContent);
     }
-  }, []);
+    hydratedRef.current = true;
+  }, [isLoading, storedContent]);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(generatedContent));
-  }, [generatedContent]);
+    if (!hydratedRef.current) return;
+    void saveNow(debouncedContent);
+  }, [debouncedContent, saveNow]);
 
   const updateCurrentItem = (updates: Partial<GeneratedContent>) => {
     if (!currentEditItem) return;
@@ -290,7 +292,7 @@ export default function ArtGeneratorDM() {
             className="mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to DM Tools
+            Back to Warden Tools
           </Button>
           <div className="flex-1">
             <h1 className="text-3xl font-bold">Art Generator</h1>
@@ -465,7 +467,7 @@ export default function ArtGeneratorDM() {
                   Generate {formatContentTypeLabel(currentEditItem.type)} Art
                 </DialogTitle>
                 <DialogDescription>
-                  Create custom Solo Leveling themed art for your {currentEditItem.type}.
+                  Create custom System Ascendant themed art for your {currentEditItem.type}.
                 </DialogDescription>
               </DialogHeader>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -516,7 +518,7 @@ export default function ArtGeneratorDM() {
                     id="content-environment"
                     value={currentEditItem.data?.environment || ''}
                     onChange={(event) => updateCurrentItemData({ environment: event.target.value })}
-                    placeholder="Dungeon, city skyline, frozen gate"
+                    placeholder="Dungeon, city skyline, frozen rift"
                   />
                 </div>
               </div>
@@ -559,3 +561,5 @@ export default function ArtGeneratorDM() {
     </Layout>
   );
 }
+
+

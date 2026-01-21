@@ -53,7 +53,7 @@ export function AnalyticsConsentBanner() {
           <div className="flex-1 min-w-0">
             <h3 className="font-semibold mb-1 flex items-center gap-2">
               <BarChart3 className="w-4 h-4" />
-              Help Improve Solo Compendium
+              Help Improve System Ascendant
             </h3>
             <p className="text-sm text-muted-foreground mb-3">
               We use privacy-respecting analytics to understand how you use the app and improve it.
@@ -79,4 +79,5 @@ export function AnalyticsConsentBanner() {
     </div>
   );
 }
+
 

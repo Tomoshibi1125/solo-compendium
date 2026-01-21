@@ -1,5 +1,5 @@
-﻿/**
- * Content Audit DM Tool
+/**
+ * Content Audit Warden Tool
  *
  * Displays comprehensive database content audit report.
  * Shows statistics, completeness metrics, and recommendations.
@@ -431,6 +431,7 @@ function LinkIntegritySection() {
 }
 
 export default ContentAudit;
+
 
 
 

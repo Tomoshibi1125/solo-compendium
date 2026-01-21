@@ -12,6 +12,7 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { useRecentItems } from '@/hooks/useRecentItems';
 import { cn } from '@/lib/utils';
 import { normalizeSearchText } from '@/lib/fullTextSearch';
+import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
 import { error as logError } from '@/lib/logger';
 
 interface SearchResult {
@@ -42,6 +43,8 @@ export function GlobalSearch({ className }: { className?: string }) {
       if (!debouncedQuery.trim()) return [];
 
       const allResults: SearchResult[] = [];
+      const canonicalQuery = normalizeMonarchSearch(debouncedQuery);
+      const searchTerms = canonicalQuery === debouncedQuery ? [debouncedQuery] : [debouncedQuery, canonicalQuery];
       const {
         data: { session },
       } = await supabase.auth.getSession();
@@ -105,10 +108,15 @@ export function GlobalSearch({ className }: { className?: string }) {
 
           // Fallback to ILIKE if RPC not available or failed
           if (!data) {
+            const ilikeFilters = searchTerms
+              .map((term) =>
+                `name.ilike.%${term}%,display_name.ilike.%${term}%,description.ilike.%${term}%`
+              )
+              .join(',');
             const { data: ilikeData } = await supabase
               .from(table)
               .select('id, name, display_name, description')
-              .or(`name.ilike.%${debouncedQuery}%,display_name.ilike.%${debouncedQuery}%,description.ilike.%${debouncedQuery}%`)
+              .or(ilikeFilters)
               .limit(5);
             // Type guard to filter out error objects
             if (ilikeData && Array.isArray(ilikeData)) {
@@ -224,9 +232,9 @@ export function GlobalSearch({ className }: { className?: string }) {
                           className="w-full text-left p-2 rounded hover:bg-muted/50 transition-colors text-sm"
                         >
                           <div className="flex items-center justify-between">
-                            <span>{item.name}</span>
+                            <span>{formatMonarchVernacular(item.name)}</span>
                             <Badge variant="outline" className="text-xs">
-                              {item.type}
+                              {formatMonarchVernacular(item.type)}
                             </Badge>
                           </div>
                         </button>
@@ -251,14 +259,14 @@ export function GlobalSearch({ className }: { className?: string }) {
                     className="w-full text-left p-2 rounded hover:bg-muted/50 transition-colors"
                   >
                     <div className="flex items-center justify-between mb-1">
-                      <span className="font-heading text-sm">{result.name}</span>
+                      <span className="font-heading text-sm">{formatMonarchVernacular(result.name)}</span>
                       <Badge variant="outline" className="text-xs">
-                        {result.type}
+                        {formatMonarchVernacular(result.type)}
                       </Badge>
                     </div>
                     {result.description && (
                       <p className="text-xs text-muted-foreground line-clamp-1">
-                        {result.description}
+                        {formatMonarchVernacular(result.description)}
                       </p>
                     )}
                   </button>

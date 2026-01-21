@@ -1,5 +1,5 @@
 /**
- * Dice rolling utilities for Solo Leveling 5e
+ * Dice rolling utilities for System Ascendant 5e SRD
  * Supports direct roll execution from action cards
  */
 
@@ -76,3 +76,4 @@ export function formatRollResult(roll: DiceRoll): string {
   }
   return `${rollsStr}${roll.modifier >= 0 ? '+' : ''}${roll.modifier} = ${roll.result}`;
 }
+

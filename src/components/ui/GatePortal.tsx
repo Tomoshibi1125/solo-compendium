@@ -26,7 +26,7 @@ const rankDisplayNames: Record<string, string> = {
   A: 'A',
   S: 'S',
   SS: 'SS',
-  NATIONAL: '★',
+  NATIONAL: 'N',
 };
 
 export function GatePortal({ className, rank = 'C', animated = true, showRunes = true }: GatePortalProps) {
@@ -164,7 +164,7 @@ export function GatePortal({ className, rank = 'C', animated = true, showRunes =
           </>
         )}
         
-        {/* Gate rank symbol */}
+        {/* Rift rank symbol */}
         <text
           x="100"
           y={rank === 'NATIONAL' ? '115' : '112'}

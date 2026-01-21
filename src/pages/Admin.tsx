@@ -262,7 +262,7 @@ const Admin = () => {
                         saving_throw_proficiencies: ["STR", "AGI"],
                         hit_die: 10,
                         source_kind: "homebrew",
-                        source_name: "Solo Compendium Homebrew",
+                        source_name: "System Ascendant Homebrew",
                       }
                     ],
                   };
@@ -456,3 +456,4 @@ const Admin = () => {
 };
 
 export default Admin;
+

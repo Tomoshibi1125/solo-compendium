@@ -118,7 +118,7 @@ export function CharacterLevelUp({ characterId, onLevelUp, levelingMode }: Chara
               </Button>
               <div className="text-xs text-muted-foreground text-center">
                 {isMilestone
-                  ? 'Milestone mode - level up at DM discretion'
+                  ? 'Milestone mode - level up at Warden discretion'
                   : canLevelUp()
                     ? 'Ready to level up!'
                     : `${getExperienceToNextLevel(progression.level)} XP needed`}
@@ -286,10 +286,12 @@ export function CharacterLevelUp({ characterId, onLevelUp, levelingMode }: Chara
 }
 
 function getExperienceToNextLevel(currentLevel: number): number {
-  // D&D 5e experience table - simplified version
+  // SRD 5e experience table - simplified version
   const expTable = [0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000];
   const nextLevel = Math.min(currentLevel + 1, 20);
   return expTable[nextLevel] - expTable[currentLevel];
 }
 
 export default CharacterLevelUp;
+
+

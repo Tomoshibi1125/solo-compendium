@@ -10,6 +10,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
 import type { CampaignMessage } from '@/hooks/useCampaignChat';
+import { getLocalUserId } from '@/lib/guestStore';
 
 interface CampaignChatProps {
   campaignId: string;
@@ -18,6 +19,7 @@ interface CampaignChatProps {
 export function CampaignChat({ campaignId }: CampaignChatProps) {
   const [message, setMessage] = useState('');
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== 'false';
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
 
@@ -28,9 +30,15 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
   // Get current user ID
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
-      setCurrentUserId(user?.id || null);
+      if (user?.id) {
+        setCurrentUserId(user.id);
+      } else if (guestEnabled) {
+        setCurrentUserId(getLocalUserId());
+      } else {
+        setCurrentUserId(null);
+      }
     });
-  }, []);
+  }, [guestEnabled]);
 
   // Real-time updates handler
   const handleNewMessage = useRef<(message: CampaignMessage) => void>(() => {});

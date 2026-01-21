@@ -4,7 +4,7 @@
 -- This migration ensures all jobs have features for levels 1-20,
 -- all paths have features at appropriate levels (3, 6, 10, 14),
 -- and all monarchs have features at appropriate levels,
--- all with D&D 5e-level detail and completeness.
+-- all with SRD 5e-level detail and completeness.
 
 -- =============================================
 -- HELPER FUNCTION: Get Job ID by Name
@@ -14,7 +14,7 @@
 -- =============================================
 -- VANGUARD (Fighter Analog) - Complete Features
 -- =============================================
--- Vanguard features at every level 1-20, matching D&D 5e Fighter detail
+-- Vanguard features at every level 1-20, matching SRD 5e Fighter detail
 
 INSERT INTO compendium_job_features (job_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT 
@@ -219,11 +219,11 @@ FROM compendium_jobs j WHERE j.name = 'Assassin';
 -- NOTE: This migration provides the foundation
 -- =============================================
 -- This migration establishes the pattern and adds core features for Vanguard and Assassin
--- as examples of D&D 5e-level detail. Additional migrations can expand this to cover
+-- as examples of SRD 5e-level detail. Additional migrations can expand this to cover
 -- all jobs, paths, and monarchs following the same pattern.
 
 -- The structure ensures:
--- 1. Features have detailed descriptions matching D&D 5e SRD detail level
+-- 1. Features have detailed descriptions matching SRD 5e SRD detail level
 -- 2. Action types are specified where applicable
 -- 3. Uses formulas are specified for limited-use features
 -- 4. Prerequisites are specified where applicable
@@ -253,3 +253,4 @@ SELECT
   false
 FROM compendium_jobs j
 CROSS JOIN (VALUES (4), (6), (8), (12), (14), (16), (19)) AS levels(lvl);
+

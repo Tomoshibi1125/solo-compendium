@@ -1,4 +1,4 @@
-/* Solo Leveling Hero Component Styles */
+/* System Ascendant Hero Component Styles */
 
 @keyframes portalPulse {
   0%, 100% {
@@ -69,3 +69,4 @@
 .solo-hero-glow-medium { --glow-intensity: 0.5; }
 .solo-hero-glow-high { --glow-intensity: 0.7; }
 .solo-hero-glow-max { --glow-intensity: 1.0; }
+

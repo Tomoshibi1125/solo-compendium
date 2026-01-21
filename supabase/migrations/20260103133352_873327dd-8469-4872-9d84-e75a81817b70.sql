@@ -25,29 +25,29 @@ BEGIN
     USING (true);
   END IF;
 END $$;
--- Insert all 18 skills adapted to Solo Leveling
+-- Insert all 18 skills adapted to System Ascendant
 INSERT INTO compendium_skills (name, ability, description, examples, source_book) VALUES
 -- Strength Skills
-('Athletics', 'STR', 'Your Strength (Athletics) check covers difficult situations you encounter while climbing, jumping, or swimming. Examples include scaling a Gate wall, leaping across a chasm, or swimming against a strong current.', ARRAY['Climbing a sheer or slippery cliff', 'Avoiding hazards while scaling a wall', 'Clinging to a surface while something is trying to knock you off', 'Trying to jump an unusually long distance', 'Struggling to swim against a powerful current'], 'SRD'),
+('Athletics', 'STR', 'Your Strength (Athletics) check covers difficult situations you encounter while climbing, jumping, or swimming. Examples include scaling a Rift wall, leaping across a chasm, or swimming against a strong current.', ARRAY['Climbing a sheer or slippery cliff', 'Avoiding hazards while scaling a wall', 'Clinging to a surface while something is trying to knock you off', 'Trying to jump an unusually long distance', 'Struggling to swim against a powerful current'], 'SRD'),
 
 -- Agility Skills
 ('Acrobatics', 'AGI', 'Your Agility (Acrobatics) check covers your attempt to stay on your feet in a tricky situation, such as when you''re trying to run across a sheet of ice, balance on a tightrope, or stay upright on a rocking surface.', ARRAY['Staying on your feet in difficult terrain', 'Landing safely after a fall', 'Performing a diving roll', 'Running across a crumbling bridge'], 'SRD'),
 ('Sleight of Hand', 'AGI', 'Whenever you attempt an act of legerdemain or manual trickery, such as planting something on someone or concealing an object on your person, make an Agility (Sleight of Hand) check.', ARRAY['Picking a pocket', 'Planting a tracking device', 'Palming a small object', 'Cheating at a game of chance'], 'SRD'),
-('Stealth', 'AGI', 'Make an Agility (Stealth) check when you attempt to conceal yourself from enemies, slink past guards, slip away without being noticed, or sneak up on someone without being seen or heard.', ARRAY['Hiding in shadows during a Gate raid', 'Moving silently past monsters', 'Evading security systems', 'Tailing a target unnoticed'], 'SRD'),
+('Stealth', 'AGI', 'Make an Agility (Stealth) check when you attempt to conceal yourself from enemies, slink past guards, slip away without being noticed, or sneak up on someone without being seen or heard.', ARRAY['Hiding in shadows during a Rift raid', 'Moving silently past monsters', 'Evading security systems', 'Tailing a target unnoticed'], 'SRD'),
 
 -- Intellect Skills
-('Arcana', 'INT', 'Your Intellect (Arcana) check measures your ability to recall lore about powers, relics, magical symbols, and Gate phenomena. In Solo Leveling, this also covers knowledge about the System.', ARRAY['Identifying magical effects', 'Understanding Gate phenomena', 'Deciphering System messages', 'Recognizing relic properties'], 'SRD'),
-('History', 'INT', 'Your Intellect (History) check measures your ability to recall lore about historical events, legendary people, ancient kingdoms, past disputes, recent wars, and lost civilizations.', ARRAY['Recalling Gate outbreak history', 'Knowing famous hunter achievements', 'Understanding guild politics', 'Remembering Monarch lore'], 'SRD'),
-('Investigation', 'INT', 'When you look around for clues and make deductions based on those clues, you make an Intellect (Investigation) check. You might deduce the location of a hidden object or determine what kind of weapon dealt a wound.', ARRAY['Analyzing a crime scene', 'Finding hidden compartments', 'Determining cause of death', 'Locating Gate cores'], 'SRD'),
-('Nature', 'INT', 'Your Intellect (Nature) check measures your ability to recall lore about terrain, plants, animals, and weather. In Gates, this extends to understanding the ecosystem of Gate realms.', ARRAY['Identifying Gate flora and fauna', 'Predicting weather patterns', 'Understanding animal behavior', 'Recognizing natural hazards'], 'SRD'),
+('Arcana', 'INT', 'Your Intellect (Arcana) check measures your ability to recall lore about powers, relics, magical symbols, and Rift phenomena. In System Ascendant, this also covers knowledge about the System.', ARRAY['Identifying magical effects', 'Understanding Rift phenomena', 'Deciphering System messages', 'Recognizing relic properties'], 'SRD'),
+('History', 'INT', 'Your Intellect (History) check measures your ability to recall lore about historical events, legendary people, ancient kingdoms, past disputes, recent wars, and lost civilizations.', ARRAY['Recalling Rift outbreak history', 'Knowing famous ascendant achievements', 'Understanding guild politics', 'Remembering Monarch lore'], 'SRD'),
+('Investigation', 'INT', 'When you look around for clues and make deductions based on those clues, you make an Intellect (Investigation) check. You might deduce the location of a hidden object or determine what kind of weapon dealt a wound.', ARRAY['Analyzing a crime scene', 'Finding hidden compartments', 'Determining cause of death', 'Locating Rift cores'], 'SRD'),
+('Nature', 'INT', 'Your Intellect (Nature) check measures your ability to recall lore about terrain, plants, animals, and weather. In Rifts, this extends to understanding the ecosystem of Rift realms.', ARRAY['Identifying Rift flora and fauna', 'Predicting weather patterns', 'Understanding animal behavior', 'Recognizing natural hazards'], 'SRD'),
 ('Religion', 'INT', 'Your Intellect (Religion) check measures your ability to recall lore about deities, rites and prayers, religious hierarchies, holy symbols, and the practices of secret cults.', ARRAY['Understanding Monarch worship', 'Recognizing cult symbols', 'Knowing about divine entities', 'Identifying religious artifacts'], 'SRD'),
 
 -- Sense Skills  
 ('Animal Handling', 'SENSE', 'When there is any question whether you can calm down a domesticated animal, keep a mount from getting spooked, or intuit an animal''s intentions, the DM might call for a Sense (Animal Handling) check.', ARRAY['Calming a frightened mount', 'Training a beast companion', 'Reading animal body language', 'Controlling summoned creatures'], 'SRD'),
 ('Insight', 'SENSE', 'Your Sense (Insight) check decides whether you can determine the true intentions of a creature, such as when searching out a lie or predicting someone''s next move.', ARRAY['Detecting lies', 'Reading body language', 'Anticipating enemy tactics', 'Understanding hidden motives'], 'SRD'),
-('Medicine', 'SENSE', 'A Sense (Medicine) check lets you try to stabilize a dying companion or diagnose an illness. In Solo Leveling, this also covers treating mana-related conditions.', ARRAY['Stabilizing a dying hunter', 'Diagnosing mana poisoning', 'Treating Gate-inflicted wounds', 'Identifying diseases'], 'SRD'),
+('Medicine', 'SENSE', 'A Sense (Medicine) check lets you try to stabilize a dying companion or diagnose an illness. In System Ascendant, this also covers treating mana-related conditions.', ARRAY['Stabilizing a dying ascendant', 'Diagnosing mana poisoning', 'Treating Rift-inflicted wounds', 'Identifying diseases'], 'SRD'),
 ('Perception', 'SENSE', 'Your Sense (Perception) check lets you spot, hear, or otherwise detect the presence of something. It measures your general awareness of your surroundings and the keenness of your senses.', ARRAY['Spotting hidden enemies', 'Hearing approaching monsters', 'Noticing traps', 'Detecting ambushes'], 'SRD'),
-('Survival', 'SENSE', 'The DM might ask you to make a Sense (Survival) check to follow tracks, hunt wild game, guide your group through frozen wastelands, identify signs that owlbears live nearby, or navigate through a Gate.', ARRAY['Tracking creatures', 'Navigating Gates', 'Finding food and water', 'Predicting weather', 'Identifying monster signs'], 'SRD'),
+('Survival', 'SENSE', 'The DM might ask you to make a Sense (Survival) check to follow tracks, hunt wild game, guide your group through frozen wastelands, identify signs that owlbears live nearby, or navigate through a Rift.', ARRAY['Tracking creatures', 'Navigating Rifts', 'Finding food and water', 'Predicting weather', 'Identifying monster signs'], 'SRD'),
 
 -- Presence Skills
 ('Deception', 'PRE', 'Your Presence (Deception) check determines whether you can convincingly hide the truth, either verbally or through your actions. This includes misleading others through ambiguity or telling outright lies.', ARRAY['Fast-talking guards', 'Creating false identities', 'Maintaining a poker face', 'Covering your tracks'], 'SRD'),
@@ -90,7 +90,7 @@ END $$;
 -- Insert weapons
 INSERT INTO compendium_equipment (name, equipment_type, cost_credits, weight, properties, damage, damage_type, description, source_book) VALUES
 -- Simple Melee Weapons
-('Combat Knife', 'weapon', 200, 1, ARRAY['Finesse', 'Light', 'Thrown (20/60)'], '1d4', 'piercing', 'A standard-issue combat knife used by hunters for close-quarters combat.', 'SRD'),
+('Combat Knife', 'weapon', 200, 1, ARRAY['Finesse', 'Light', 'Thrown (20/60)'], '1d4', 'piercing', 'A standard-issue combat knife used by ascendants for close-quarters combat.', 'SRD'),
 ('Club', 'weapon', 10, 2, ARRAY['Light'], '1d4', 'bludgeoning', 'A simple wooden or metal club.', 'SRD'),
 ('Greatclub', 'weapon', 20, 10, ARRAY['Two-Handed'], '1d8', 'bludgeoning', 'A large, heavy club requiring two hands to wield effectively.', 'SRD'),
 ('Handaxe', 'weapon', 500, 2, ARRAY['Light', 'Thrown (20/60)'], '1d6', 'slashing', 'A small axe designed for one-handed use and throwing.', 'SRD'),
@@ -114,7 +114,7 @@ INSERT INTO compendium_equipment (name, equipment_type, cost_credits, weight, pr
 ('Greatsword', 'weapon', 5000, 6, ARRAY['Heavy', 'Two-Handed'], '2d6', 'slashing', 'A large two-handed sword requiring significant strength to wield.', 'SRD'),
 ('Halberd', 'weapon', 2000, 6, ARRAY['Heavy', 'Reach', 'Two-Handed'], '1d10', 'slashing', 'A versatile pole weapon combining axe and spear.', 'SRD'),
 ('Lance', 'weapon', 1000, 6, ARRAY['Reach', 'Special'], '1d12', 'piercing', 'A long weapon designed for mounted combat.', 'SRD'),
-('Longsword', 'weapon', 1500, 3, ARRAY['Versatile (1d10)'], '1d8', 'slashing', 'The standard weapon of many hunters, balanced and reliable.', 'SRD'),
+('Longsword', 'weapon', 1500, 3, ARRAY['Versatile (1d10)'], '1d8', 'slashing', 'The standard weapon of many ascendants, balanced and reliable.', 'SRD'),
 ('Maul', 'weapon', 1000, 10, ARRAY['Heavy', 'Two-Handed'], '2d6', 'bludgeoning', 'A massive hammer that crushes armor and bone.', 'SRD'),
 ('Morningstar', 'weapon', 1500, 4, NULL, '1d8', 'piercing', 'A mace with a spiked head for piercing armor.', 'SRD'),
 ('Pike', 'weapon', 500, 18, ARRAY['Heavy', 'Reach', 'Two-Handed'], '1d10', 'piercing', 'An extremely long spear used for keeping enemies at bay.', 'SRD'),
@@ -132,9 +132,9 @@ INSERT INTO compendium_equipment (name, equipment_type, cost_credits, weight, pr
 ('Longbow', 'weapon', 5000, 2, ARRAY['Ammunition (150/600)', 'Heavy', 'Two-Handed'], '1d8', 'piercing', 'A large bow with impressive range, favored by Rangers.', 'SRD'),
 ('Net', 'weapon', 100, 3, ARRAY['Special', 'Thrown (5/15)'], NULL, NULL, 'A mesh used to restrain enemies rather than damage them.', 'SRD'),
 
--- Modern Weapons (Solo Leveling additions)
+-- Modern Weapons (System Ascendant additions)
 ('Combat Pistol', 'weapon', 15000, 3, ARRAY['Ammunition (50/150)', 'Light', 'Loading'], '2d6', 'piercing', 'A modern sidearm effective against low-rank monsters.', 'SL'),
-('Assault Rifle', 'weapon', 50000, 8, ARRAY['Ammunition (100/400)', 'Two-Handed', 'Burst Fire'], '2d8', 'piercing', 'Military-grade automatic rifle used by hunter support teams.', 'SL'),
+('Assault Rifle', 'weapon', 50000, 8, ARRAY['Ammunition (100/400)', 'Two-Handed', 'Burst Fire'], '2d8', 'piercing', 'Military-grade automatic rifle used by ascendant support teams.', 'SL'),
 ('Mana-Infused Blade', 'weapon', 100000, 3, ARRAY['Finesse', 'Magic'], '1d8+2', 'force', 'A blade enhanced with crystallized mana, effective against magical creatures.', 'SL')
 ON CONFLICT DO NOTHING;
 -- Insert armor
@@ -143,24 +143,25 @@ INSERT INTO compendium_equipment (name, equipment_type, cost_credits, weight, pr
 ('Padded Armor', 'armor', 500, 8, ARRAY['Disadvantage on Stealth'], 11, 'Quilted layers of cloth and batting, offering minimal protection.', 'SRD'),
 ('Leather Armor', 'armor', 1000, 10, NULL, 11, 'Soft, supple leather armor that doesn''t impede movement.', 'SRD'),
 ('Studded Leather', 'armor', 4500, 13, NULL, 12, 'Leather armor reinforced with metal studs for added protection.', 'SRD'),
-('Hunter''s Vest', 'armor', 10000, 6, NULL, 12, 'Lightweight tactical vest worn by modern hunters, includes utility pouches.', 'SL'),
+('Ascendant''s Vest', 'armor', 10000, 6, NULL, 12, 'Lightweight tactical vest worn by modern ascendants, includes utility pouches.', 'SL'),
 
 -- Medium Armor
-('Hide Armor', 'armor', 1000, 12, NULL, 12, 'Crude armor made from thick hides, often from Gate creatures.', 'SRD'),
+('Hide Armor', 'armor', 1000, 12, NULL, 12, 'Crude armor made from thick hides, often from Rift creatures.', 'SRD'),
 ('Chain Shirt', 'armor', 5000, 20, NULL, 13, 'A shirt of interlocking metal rings worn under clothes.', 'SRD'),
 ('Scale Mail', 'armor', 5000, 45, ARRAY['Disadvantage on Stealth'], 14, 'Overlapping metal scales like fish or dragon hide.', 'SRD'),
 ('Breastplate', 'armor', 40000, 20, NULL, 14, 'A fitted metal chest piece that leaves limbs free.', 'SRD'),
 ('Half Plate', 'armor', 75000, 40, ARRAY['Disadvantage on Stealth'], 15, 'Shaped metal plates covering vital areas with chain underneath.', 'SRD'),
-('Tactical Armor', 'armor', 50000, 15, NULL, 14, 'Modern body armor designed for hunter operations. Includes trauma plates.', 'SL'),
+('Tactical Armor', 'armor', 50000, 15, NULL, 14, 'Modern body armor designed for ascendant operations. Includes trauma plates.', 'SL'),
 
 -- Heavy Armor
 ('Ring Mail', 'armor', 3000, 40, ARRAY['Disadvantage on Stealth'], 14, 'Leather armor with heavy rings sewn into it.', 'SRD'),
 ('Chain Mail', 'armor', 7500, 55, ARRAY['Disadvantage on Stealth', 'Str 13'], 16, 'Full-body armor made of interlocking metal rings.', 'SRD'),
 ('Splint Armor', 'armor', 20000, 60, ARRAY['Disadvantage on Stealth', 'Str 15'], 17, 'Metal strips riveted to a leather backing.', 'SRD'),
 ('Plate Armor', 'armor', 150000, 65, ARRAY['Disadvantage on Stealth', 'Str 15'], 18, 'Full plate armor offering maximum protection.', 'SRD'),
-('Powered Armor', 'armor', 500000, 35, ARRAY['Str 15', 'Powered'], 18, 'Advanced armor with servo-motors to assist movement. Used by elite hunters.', 'SL'),
+('Powered Armor', 'armor', 500000, 35, ARRAY['Str 15', 'Powered'], 18, 'Advanced armor with servo-motors to assist movement. Used by elite ascendants.', 'SL'),
 
 -- Shields
 ('Shield', 'armor', 1000, 6, NULL, 2, 'A standard shield adding +2 to AC when wielded.', 'SRD'),
 ('Tower Shield', 'armor', 3000, 15, ARRAY['Heavy'], 3, 'A massive shield offering superior protection but limiting mobility.', 'SL')
 ON CONFLICT DO NOTHING;
+

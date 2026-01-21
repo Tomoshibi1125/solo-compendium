@@ -89,7 +89,7 @@ export function CharacterEditDialog({ character, open, onOpenChange, onStateChan
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Edit Character</DialogTitle>
-          <DialogDescription>Update your hunter profile details and notes.</DialogDescription>
+          <DialogDescription>Update your ascendant profile details and notes.</DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 py-4">

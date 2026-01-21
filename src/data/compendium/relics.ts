@@ -1,6 +1,6 @@
-// Relics Compendium - Authoritative Solo Leveling Content
+// Relics Compendium - Authoritative System Ascendant Content
 // Legendary and mythic items with unique powers and lore
-// Based on Solo Leveling canon with D&D 5e mechanics
+// Based on System Ascendant canon with SRD 5e mechanics
 
 export interface Relic {
   id: string;
@@ -99,9 +99,9 @@ export const relics: Relic[] = [
       }
     ],
     lore: {
-      origin: 'Forged by the first Shadow Monarch from the essence of a defeated god',
-      history: 'This dagger has served as the symbol of power for countless Shadow Monarchs throughout history. It is said to contain the collective will and power of all who have wielded it.',
-      previousOwners: ['First Shadow Monarch', 'Ashborn', 'Various Shadow Monarchs']
+      origin: 'Forged by the first Umbral Monarch from the essence of a defeated god',
+      history: 'This dagger has served as the symbol of power for countless Umbral Monarchs throughout history. It is said to contain the collective will and power of all who have wielded it.',
+      previousOwners: ['First Umbral Monarch', 'First Monarch', 'Various Umbral Monarchs']
     },
     mechanics: {
       bonus: {
@@ -112,7 +112,7 @@ export const relics: Relic[] = [
       resistance: ['necrotic', 'force'],
       immunity: ['poison']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'bloodthirsty-greatsword',
@@ -162,20 +162,20 @@ export const relics: Relic[] = [
       },
       vulnerabilities: ['radiant']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // ARMOR
   {
-    id: 'kamishs-gauntlet',
-    name: 'Kamish\'s Gauntlet',
-    description: 'The legendary gauntlet of the Shadow Monarch, containing the power to command shadows and bend reality.',
+    id: 'skywyrms-gauntlet',
+    name: 'Skywyrm\'s Gauntlet',
+    description: 'The legendary gauntlet of the Umbral Monarch, containing the power to command shadows and bend reality.',
     type: 'armor',
     rarity: 'mythic',
     attunement: true,
     requirements: {
       level: 20,
-      class: 'Shadow Monarch'
+      class: 'Umbral Monarch'
     },
     properties: {
       magical: true,
@@ -203,23 +203,23 @@ export const relics: Relic[] = [
         type: 'passive'
       },
       {
-        name: 'Shadow Army',
-        description: 'Summon an army of 100 shadow soldiers that serve you for 24 hours.',
+        name: 'Umbral Legion',
+        description: 'Summon an army of 100 Umbral Legion that serve you for 24 hours.',
         type: 'command',
         frequency: 'once-per-week',
         action: 'action'
       }
     ],
     lore: {
-      origin: 'Created by the original Shadow Monarch from the essence of conquered dimensions',
+      origin: 'Created by the original Umbral Monarch from the essence of conquered dimensions',
       history: 'This gauntlet represents the pinnacle of shadow power, containing the authority to command all shadows and reshape reality itself.',
-      currentOwner: 'Current Shadow Monarch'
+      currentOwner: 'Current Umbral Monarch'
     },
     mechanics: {
       resistance: ['bludgeoning', 'piercing', 'slashing', 'fire', 'cold', 'lightning', 'thunder', 'acid', 'poison', 'necrotic', 'radiant', 'force'],
       immunity: ['magical']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'abyssal-plate',
@@ -269,14 +269,14 @@ export const relics: Relic[] = [
       resistance: ['necrotic', 'cold'],
       immunity: ['poison']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // ACCESSORIES
   {
     id: 'rulers-authority',
-    name: 'Ruler\'s Authority',
-    description: 'An artifact that grants the user command over lesser shadows and the respect of all beings.',
+    name: 'Architect\'s Authority',
+    description: 'An artifact that grants the bearer command over lesser shadows and the respect of all beings.',
     type: 'accessory',
     rarity: 'legendary',
     attunement: true,
@@ -319,7 +319,7 @@ export const relics: Relic[] = [
     lore: {
       origin: 'Created by the first Monarch to establish authority over their growing shadow empire',
       history: 'This artifact represents the right to rule, containing the essence of leadership and command that all Monarchs must possess.',
-      previousOwners: ['First Shadow Monarch', 'Queen of Shadows', 'Emperor of Night']
+      previousOwners: ['First Umbral Monarch', 'Queen of Shadows', 'Emperor of Night']
     },
     mechanics: {
       bonus: {
@@ -328,7 +328,7 @@ export const relics: Relic[] = [
         ability: 'Charisma'
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'bloodstone-amulet',
@@ -376,7 +376,7 @@ export const relics: Relic[] = [
       resistance: ['necrotic'],
       immunity: ['shadow corruption']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // UTILITY ITEMS
@@ -418,12 +418,12 @@ export const relics: Relic[] = [
     lore: {
       origin: 'Forged by dimensional travelers who learned to navigate the spaces between worlds',
       history: 'This compass has guided countless adventurers through dangerous dimensional journeys, its needle always pointing toward safety or adventure.',
-      previousOwners: ['Dimensional Explorer Alara', 'Portal Hunter Marcus', 'Shadow Walker Lena']
+      previousOwners: ['Dimensional Explorer Alara', 'Rift Tracker Marcus', 'Shadow Walker Lena']
     },
     mechanics: {
       immunity: ['getting lost']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // CONSUMABLES
@@ -454,7 +454,7 @@ export const relics: Relic[] = [
         value: 1
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // ADVANCED WEAPONS
@@ -496,8 +496,8 @@ export const relics: Relic[] = [
     ],
     lore: {
       origin: 'Crafted by shadow archers from the wood of the Shadow Realm',
-      history: 'This bow has been used by legendary shadow hunters to strike down enemies from impossible angles.',
-      previousOwners: ['Shadow Hunter Selene', 'Dark Archer Marcus', 'Night Stalker Elena']
+      history: 'This bow has been used by legendary shadow ascendants to strike down enemies from impossible angles.',
+      previousOwners: ['Shadow Ascendant Selene', 'Dark Archer Marcus', 'Night Stalker Elena']
     },
     mechanics: {
       bonus: {
@@ -507,7 +507,7 @@ export const relics: Relic[] = [
       },
       resistance: ['radiant']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'flame-greatsword',
@@ -557,7 +557,7 @@ export const relics: Relic[] = [
       },
       vulnerabilities: ['cold']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // ADVANCED ARMOR
@@ -607,7 +607,7 @@ export const relics: Relic[] = [
       resistance: ['necrotic', 'force'],
       immunity: ['poison']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'crystal-plate',
@@ -655,7 +655,7 @@ export const relics: Relic[] = [
       },
       resistance: ['force', 'lightning', 'thunder']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // ADVANCED ACCESSORIES
@@ -704,7 +704,7 @@ export const relics: Relic[] = [
     mechanics: {
       resistance: ['necrotic']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'mana-amulet',
@@ -748,7 +748,7 @@ export const relics: Relic[] = [
     mechanics: {
       resistance: ['force', 'lightning', 'thunder']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'time-circlet',
@@ -796,7 +796,7 @@ export const relics: Relic[] = [
     mechanics: {
       immunity: ['time-based effects']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // ADVANCED UTILITY ITEMS
@@ -833,12 +833,12 @@ export const relics: Relic[] = [
     lore: {
       origin: 'Created by shadow cartographers to navigate the endless realms',
       history: 'This map has guided countless adventurers through the most dangerous shadow territories.',
-      previousOwners: ['Shadow Explorer Guild', 'Dungeon Master Association', 'Realm Walker']
+      previousOwners: ['Shadow Explorer Guild', 'Protocol Warden Association', 'Realm Walker']
     },
     mechanics: {
       immunity: ['getting lost']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'crystal-ball',
@@ -880,7 +880,7 @@ export const relics: Relic[] = [
     mechanics: {
       immunity: ['illusions']
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // ADVANCED CONSUMABLES
@@ -912,7 +912,7 @@ export const relics: Relic[] = [
         ability: 'Dexterity'
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'phoenix-feather',
@@ -939,7 +939,7 @@ export const relics: Relic[] = [
     mechanics: {
       immunity: ['death effects']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/phoenix-feather.webp'
   },
   {
@@ -984,7 +984,7 @@ export const relics: Relic[] = [
         ability: 'Wisdom'
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/dragonscale-helmet.webp'
   },
   {
@@ -1020,7 +1020,7 @@ export const relics: Relic[] = [
         skills: ['Stealth']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/shadow-leather-boots.webp'
   },
   {
@@ -1068,7 +1068,7 @@ export const relics: Relic[] = [
         skills: ['Perception', 'Investigation']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/crystal-of-clairvoyance.webp'
   },
   {
@@ -1112,7 +1112,7 @@ export const relics: Relic[] = [
         value: 1
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/giants-belt.webp'
   },
   {
@@ -1149,7 +1149,7 @@ export const relics: Relic[] = [
     mechanics: {
       immunity: ['psychic']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/ring-of-mind-shielding.webp'
   },
   {
@@ -1191,7 +1191,7 @@ export const relics: Relic[] = [
       },
       immunity: ['disease', 'poison']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/amulet-of-health.webp'
   },
   {
@@ -1230,7 +1230,7 @@ export const relics: Relic[] = [
     mechanics: {
       immunity: ['falling']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/boots-of-levitation.webp'
   },
   {
@@ -1271,7 +1271,7 @@ export const relics: Relic[] = [
         skills: ['Stealth']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/cloak-of-elvenkind.webp'
   },
   {
@@ -1311,7 +1311,7 @@ export const relics: Relic[] = [
         value: 2
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/gauntlets-of-ogre-power.webp'
   },
   {
@@ -1347,7 +1347,7 @@ export const relics: Relic[] = [
     mechanics: {
       resistance: ['fire']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/necklace-of-fireballs.webp'
   },
   {
@@ -1385,7 +1385,7 @@ export const relics: Relic[] = [
         skills: ['Stealth']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/ring-of-invisibility.webp'
   },
   {
@@ -1417,7 +1417,7 @@ export const relics: Relic[] = [
     ],
     lore: {
       origin: 'Crafted by elven archers who perfected the art of ranged combat',
-      history: 'These bracers have been worn by legendary hunters and marksmen.'
+      history: 'These bracers have been worn by legendary ascendants and marksmen.'
     },
     mechanics: {
       bonus: {
@@ -1425,7 +1425,7 @@ export const relics: Relic[] = [
         value: 2
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/bracers-of-archery.webp'
   },
   {
@@ -1475,7 +1475,7 @@ export const relics: Relic[] = [
         ability: 'Wisdom'
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/helm-of-telepathy.webp'
   },
   {
@@ -1517,7 +1517,7 @@ export const relics: Relic[] = [
         value: 1
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/cloak-of-protection.webp'
   },
   {
@@ -1558,7 +1558,7 @@ export const relics: Relic[] = [
         skills: ['Sleight of Hand', 'Investigation']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/gloves-of-thievery.webp'
   },
   {
@@ -1604,7 +1604,7 @@ export const relics: Relic[] = [
         ability: 'Dexterity'
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/boots-of-speed.webp'
   },
   {
@@ -1650,7 +1650,7 @@ export const relics: Relic[] = [
     mechanics: {
       resistance: ['fire', 'lightning']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/ring-of-shooting-stars.webp'
   },
   {
@@ -1700,7 +1700,7 @@ export const relics: Relic[] = [
         ability: 'Charisma'
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/amulet-of-the-forsaken.webp'
   },
   {
@@ -1742,7 +1742,7 @@ export const relics: Relic[] = [
         value: 2
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/mantle-of-spell-resistance.webp'
   },
   {
@@ -1787,7 +1787,7 @@ export const relics: Relic[] = [
         ability: 'Wisdom'
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/circlet-of-wisdom.webp'
   },
   {
@@ -1829,7 +1829,7 @@ export const relics: Relic[] = [
         value: 2
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/bracers-of-defense.webp'
   },
   {
@@ -1876,7 +1876,7 @@ export const relics: Relic[] = [
     mechanics: {
       resistance: ['fire', 'poison']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/pendant-of-the-abyss.webp'
   },
   {
@@ -1920,7 +1920,7 @@ export const relics: Relic[] = [
     mechanics: {
       resistance: ['lightning', 'thunder']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/gauntlets-of-the-sky.webp'
   },
   {
@@ -1961,7 +1961,7 @@ export const relics: Relic[] = [
     mechanics: {
       resistance: ['necrotic']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/amulet-of-life-draining.webp'
   },
   {
@@ -2000,7 +2000,7 @@ export const relics: Relic[] = [
     mechanics: {
       immunity: ['cold']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/boots-of-winter-wolf.webp'
   },
   {
@@ -2044,7 +2044,7 @@ export const relics: Relic[] = [
     mechanics: {
       immunity: ['fire', 'cold', 'lightning', 'acid']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/ring-of-elemental-command.webp'
   },
   {
@@ -2087,7 +2087,7 @@ export const relics: Relic[] = [
         skills: ['Perception', 'Stealth']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/cloak-of-the-bat.webp'
   },
   {
@@ -2134,7 +2134,7 @@ export const relics: Relic[] = [
         ability: 'Charisma'
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/helm-of-brilliance.webp'
   },
   {
@@ -2166,7 +2166,7 @@ export const relics: Relic[] = [
     ],
     lore: {
       origin: 'Created by master weapon throwers who perfected the art',
-      history: 'These bracers have been worn by legendary warriors and hunters.'
+      history: 'These bracers have been worn by legendary warriors and ascendants.'
     },
     mechanics: {
       bonus: {
@@ -2174,7 +2174,7 @@ export const relics: Relic[] = [
         value: 2
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/bracers-of-weapon-throwing.webp'
   },
   {
@@ -2211,7 +2211,7 @@ export const relics: Relic[] = [
     mechanics: {
       immunity: ['poison']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/necklace-of-adaptation.webp'
   },
   {
@@ -2247,7 +2247,7 @@ export const relics: Relic[] = [
         skills: ['athletics']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/ring-of-water-walking.webp'
   },
   {
@@ -2288,7 +2288,7 @@ export const relics: Relic[] = [
         skills: ['athletics', 'survival']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/cloak-of-the-manta-ray.webp'
   },
   {
@@ -2325,7 +2325,7 @@ export const relics: Relic[] = [
     mechanics: {
       immunity: ['falling']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/boots-of-striding-and-springing.webp'
   },
   {
@@ -2366,7 +2366,7 @@ export const relics: Relic[] = [
         skills: ['Athletics']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/gloves-of-swimming-and-climbing.webp'
   },
   {
@@ -2403,7 +2403,7 @@ export const relics: Relic[] = [
     mechanics: {
       resistance: ['divination', 'scrying']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/amulet-of-proof-against-detection.webp'
   },
   {
@@ -2444,7 +2444,7 @@ export const relics: Relic[] = [
         skills: ['Athletics', 'Survival']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/bracers-of-mountaineering.webp'
   },
   {
@@ -2487,7 +2487,7 @@ export const relics: Relic[] = [
         skills: ['Investigation', 'Medicine']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/ring-of-x-ray-vision.webp'
   },
   {
@@ -2530,7 +2530,7 @@ export const relics: Relic[] = [
         ability: 'Dexterity'
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/cloak-of-displacement.webp'
   },
   {
@@ -2571,7 +2571,7 @@ export const relics: Relic[] = [
         skills: ['Investigation']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/helm-of-comprehending-languages.webp'
   },
   {
@@ -2602,7 +2602,7 @@ export const relics: Relic[] = [
       }
     ],
     lore: {
-      origin: 'Created by hunters who needed to spot prey from great distances',
+      origin: 'Created by ascendants who needed to spot prey from great distances',
       history: 'These lenses have been used by scouts and marksmen for centuries.'
     },
     mechanics: {
@@ -2612,7 +2612,7 @@ export const relics: Relic[] = [
         skills: ['Perception']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/eyes-of-the-eagle.webp'
   },
   {
@@ -2653,7 +2653,7 @@ export const relics: Relic[] = [
         skills: ['Investigation']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/eyes-of-minute-seeing.webp'
   },
   {
@@ -2689,7 +2689,7 @@ export const relics: Relic[] = [
         skills: ['perception', 'investigation']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/goggles-of-night.webp'
   },
   {
@@ -2730,7 +2730,7 @@ export const relics: Relic[] = [
     mechanics: {
       resistance: ['psychic']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/medallion-of-thoughts.webp'
   },
   {
@@ -2772,7 +2772,7 @@ export const relics: Relic[] = [
         skills: ['Arcana']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/pearl-of-power.webp'
   },
   {
@@ -2818,7 +2818,7 @@ export const relics: Relic[] = [
         value: 2
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/robe-of-the-archmagi.webp'
   },
   {
@@ -2859,7 +2859,7 @@ export const relics: Relic[] = [
         skills: ['athletics', 'survival']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/cloak-of-the-manta-ray-2.webp'
   },
   {
@@ -2898,7 +2898,7 @@ export const relics: Relic[] = [
     mechanics: {
       resistance: ['thunder']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/horn-of-blasting.webp'
   },
   {
@@ -2945,7 +2945,7 @@ export const relics: Relic[] = [
         skills: ['Performance']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/instrument-of-the-bards.webp'
   },
   {
@@ -2983,7 +2983,7 @@ export const relics: Relic[] = [
         value: 1
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/wand-of-magic-missiles.webp'
   },
   {
@@ -3029,7 +3029,7 @@ export const relics: Relic[] = [
     mechanics: {
       immunity: ['fire']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/staff-of-fire.webp'
   },
   {
@@ -3075,7 +3075,7 @@ export const relics: Relic[] = [
     mechanics: {
       immunity: ['cold']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/staff-of-frost.webp'
   },
   {
@@ -3121,7 +3121,7 @@ export const relics: Relic[] = [
     mechanics: {
       immunity: ['lightning']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/staff-of-lightning.webp'
   },
   {
@@ -3169,7 +3169,7 @@ export const relics: Relic[] = [
         value: 2
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/staff-of-power.webp'
   },
   {
@@ -3204,7 +3204,7 @@ export const relics: Relic[] = [
     mechanics: {
       resistance: ['fire']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/wand-of-fireballs.webp'
   },
   {
@@ -3239,7 +3239,7 @@ export const relics: Relic[] = [
     mechanics: {
       resistance: ['lightning']
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/wand-of-lightning-bolts.webp'
   },
   {
@@ -3277,7 +3277,7 @@ export const relics: Relic[] = [
     ],
     lore: {
       origin: 'Created by a master spy who could find any secret',
-      history: 'This wand has been used by investigators and treasure hunters.'
+      history: 'This wand has been used by investigators and treasure ascendants.'
     },
     mechanics: {
       bonus: {
@@ -3286,7 +3286,7 @@ export const relics: Relic[] = [
         skills: ['Investigation']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/wand-of-secrets.webp'
   },
   {
@@ -3325,7 +3325,7 @@ export const relics: Relic[] = [
         value: 1
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/wand-of-paralysis.webp'
   },
   {
@@ -3365,7 +3365,7 @@ export const relics: Relic[] = [
         value: 2
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/wand-of-the-war-mage.webp'
   },
   {
@@ -3404,7 +3404,7 @@ export const relics: Relic[] = [
     ],
     lore: {
       origin: 'Created by a master thief who could open any lock',
-      history: 'This chime has been used by adventurers and treasure hunters.'
+      history: 'This chime has been used by adventurers and treasure ascendants.'
     },
     mechanics: {
       bonus: {
@@ -3413,7 +3413,7 @@ export const relics: Relic[] = [
         skills: ['Investigation']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/chime-of-opening.webp'
   },
   {
@@ -3458,7 +3458,7 @@ export const relics: Relic[] = [
         skills: ['survival']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/decanter-of-endless-water.webp'
   },
   {
@@ -3501,7 +3501,7 @@ export const relics: Relic[] = [
         skills: ['athletics']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/immovable-rod.webp'
   },
   {
@@ -3535,7 +3535,7 @@ export const relics: Relic[] = [
     ],
     lore: {
       origin: 'Created by a paladin who hunted invisible monsters',
-      history: 'This lantern has been used by monster hunters and investigators.'
+      history: 'This lantern has been used by monster ascendants and investigators.'
     },
     mechanics: {
       bonus: {
@@ -3544,7 +3544,7 @@ export const relics: Relic[] = [
         skills: ['Perception', 'Investigation']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/lantern-of-revealing.webp'
   },
   {
@@ -3587,7 +3587,7 @@ export const relics: Relic[] = [
         skills: ['Carpenters Tools', 'Masons Tools']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/lyre-of-building.webp'
   },
   {
@@ -3625,7 +3625,7 @@ export const relics: Relic[] = [
         skills: ['Medicine']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/manual-of-bodily-health.webp'
   },
   {
@@ -3663,7 +3663,7 @@ export const relics: Relic[] = [
         skills: ['Athletics']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/manual-of-gainful-exercise.webp'
   },
   {
@@ -3701,7 +3701,7 @@ export const relics: Relic[] = [
         skills: ['Acrobatics']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/manual-of-quickness-of-action.webp'
   },
   {
@@ -3739,7 +3739,7 @@ export const relics: Relic[] = [
         skills: ['Arcana']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/tome-of-clear-thought.webp'
   },
   {
@@ -3777,7 +3777,7 @@ export const relics: Relic[] = [
         skills: ['Persuasion']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/tome-of-leadership-and-influence.webp'
   },
   {
@@ -3815,7 +3815,7 @@ export const relics: Relic[] = [
         skills: ['Insight']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/tome-of-understanding.webp'
   },
   {
@@ -3858,7 +3858,7 @@ export const relics: Relic[] = [
         skills: ['athletics']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/iron-bands-of-bilarro.webp'
   },
   {
@@ -3901,7 +3901,7 @@ export const relics: Relic[] = [
         skills: ['investigation']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/portable-hole.webp'
   },
   {
@@ -3933,7 +3933,7 @@ export const relics: Relic[] = [
     ],
     lore: {
       origin: 'Blessed by a goddess of the hunt and nature',
-      history: 'This quiver has been used by hunters and rangers for generations.'
+      history: 'This quiver has been used by ascendants and rangers for generations.'
     },
     mechanics: {
       bonus: {
@@ -3942,7 +3942,7 @@ export const relics: Relic[] = [
         skills: ['athletics']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/quiver-of-ehlonna.webp'
   },
   {
@@ -3985,7 +3985,7 @@ export const relics: Relic[] = [
         skills: ['investigation', 'sleight-of-hand']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/robe-of-useful-items.webp'
   },
   {
@@ -4026,7 +4026,7 @@ export const relics: Relic[] = [
         skills: ['investigation']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/bag-of-holding.webp'
   },
   {
@@ -4067,7 +4067,7 @@ export const relics: Relic[] = [
         skills: ['investigation']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/handy-haversack.webp'
   },
   {
@@ -4099,7 +4099,7 @@ export const relics: Relic[] = [
     ],
     lore: {
       origin: 'Created by an elven archer who needed quick access to ammunition',
-      history: 'This quiver has been used by archers and hunters for generations.'
+      history: 'This quiver has been used by archers and ascendants for generations.'
     },
     mechanics: {
       bonus: {
@@ -4108,7 +4108,7 @@ export const relics: Relic[] = [
         skills: ['athletics']
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/efficient-quiver.webp'
   },
   {
@@ -4148,7 +4148,7 @@ export const relics: Relic[] = [
         value: 2
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/girdle-of-giant-strength.webp'
   },
   {
@@ -4189,7 +4189,7 @@ export const relics: Relic[] = [
         ability: 'Dexterity'
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/bracers-of-dexterity.webp'
   },
   {
@@ -4230,8 +4230,12 @@ export const relics: Relic[] = [
         ability: 'Intelligence'
       }
     },
-    source: 'Solo Compendium Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/compendium/relics/headband-of-intellect.webp'
   }
 ];
+
+
+
+
 

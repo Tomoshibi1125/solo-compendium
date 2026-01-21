@@ -1,6 +1,6 @@
 // Comprehensive Runes Compendium
 // Generated with full admin privileges
-// Solo Leveling themed magical runes with images
+// System Ascendant themed magical runes with images
 
 export interface Rune {
   id: string;
@@ -542,3 +542,4 @@ export const runesCompendium: Rune[] = [
 
 export const runes = runesCompendium;
 export default runesCompendium;
+

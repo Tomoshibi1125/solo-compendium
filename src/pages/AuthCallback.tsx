@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Loader2 } from 'lucide-react';
 import { SystemWindow } from '@/components/ui/SystemWindow';
-import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
+import { SystemSigilLogo } from '@/components/ui/SystemSigilLogo';
 import { logger } from '@/lib/logger';
 
 export default function AuthCallback() {
@@ -107,7 +107,7 @@ export default function AuthCallback() {
         <SystemWindow variant="arise">
           <div className="p-6">
             <div className="flex justify-center mb-6">
-              <ShadowMonarchLogo size="md" variant="supreme" />
+              <SystemSigilLogo size="md" variant="supreme" />
             </div>
             
             <div className="flex flex-col items-center justify-center py-8">
@@ -125,3 +125,4 @@ export default function AuthCallback() {
     </div>
   );
 }
+

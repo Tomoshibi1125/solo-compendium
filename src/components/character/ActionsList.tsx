@@ -7,13 +7,16 @@ import { useEquipment } from '@/hooks/useEquipment';
 import { usePowers } from '@/hooks/usePowers';
 import { useFeatures } from '@/hooks/useFeatures';
 import { useCharacter } from '@/hooks/useCharacters';
+import { useCharacterSheetState } from '@/hooks/useCharacterSheetState';
 import { useCharacterRuneInscriptions, useUseRune } from '@/hooks/useRunes';
-import { getAbilityModifier, getProficiencyBonus } from '@/types/solo-leveling';
+import { getAbilityModifier, getProficiencyBonus } from '@/types/system-rules';
 import { parseModifiers, applyEquipmentModifiers } from '@/lib/equipmentModifiers';
 import { applyRuneBonuses } from '@/lib/runeAutomation';
 import { logger } from '@/lib/logger';
 import { useToast } from '@/hooks/use-toast';
-import type { AbilityScore } from '@/types/solo-leveling';
+import { normalizeCustomModifiers, sumCustomModifiers } from '@/lib/customModifiers';
+import { formatMonarchVernacular } from '@/lib/vernacular';
+import type { AbilityScore } from '@/types/system-rules';
 import type { Database } from '@/integrations/supabase/types';
 
 type Rune = Database['public']['Tables']['compendium_runes']['Row'];
@@ -24,6 +27,8 @@ export function ActionsList({ characterId }: { characterId: string }) {
   const { powers } = usePowers(characterId);
   const { features } = useFeatures(characterId);
   const { data: activeRunes = [] } = useCharacterRuneInscriptions(characterId);
+  const { state: sheetState } = useCharacterSheetState(characterId);
+  const customModifiers = normalizeCustomModifiers(sheetState.customModifiers);
   const useRune = useUseRune();
   const { toast } = useToast();
 
@@ -33,7 +38,7 @@ export function ActionsList({ characterId }: { characterId: string }) {
     try {
       await useRune.mutateAsync({ inscriptionId });
       const inscription = activeRunes.find((ri) => ri.id === inscriptionId);
-      const runeName = inscription?.rune?.name || 'Rune';
+      const runeName = formatMonarchVernacular(inscription?.rune?.name || 'Rune');
       toast({
         title: 'Rune used',
         description: `${runeName} consumed 1 use.`,
@@ -98,6 +103,13 @@ export function ActionsList({ characterId }: { characterId: string }) {
       finalAbilities[ability as keyof typeof finalAbilities] = value;
     }
   });
+  const abilityKeys: AbilityScore[] = ['STR', 'AGI', 'VIT', 'INT', 'SENSE', 'PRE'];
+  abilityKeys.forEach((ability) => {
+    const bonus = sumCustomModifiers(customModifiers, 'ability', ability);
+    if (bonus !== 0) {
+      finalAbilities[ability] = (finalAbilities[ability] || 0) + bonus;
+    }
+  });
 
   const proficiencyBonus = getProficiencyBonus(character.level);
   const strMod = getAbilityModifier(finalAbilities.STR);
@@ -134,7 +146,8 @@ export function ActionsList({ characterId }: { characterId: string }) {
     // Determine if weapon uses STR or AGI (default to STR for melee, AGI for ranged)
     const isRanged = weapon.item_type?.includes('ranged') || weapon.name.toLowerCase().includes('bow');
     const abilityMod = isRanged ? agiMod : strMod;
-    const attackBonus = abilityMod + proficiencyBonus + attackMod + runeAttackBonus;
+    const customAttackBonus = sumCustomModifiers(customModifiers, 'attack', isRanged ? 'ranged' : 'melee');
+    const attackBonus = abilityMod + proficiencyBonus + attackMod + runeAttackBonus + customAttackBonus;
 
     // Parse damage from properties or use default
     let damage = '1d8';
@@ -152,6 +165,22 @@ export function ActionsList({ characterId }: { characterId: string }) {
       }
     }
     
+    const customDamageBonus = sumCustomModifiers(customModifiers, 'damage', isRanged ? 'ranged' : 'melee');
+    if (customDamageBonus !== 0) {
+      const normalized = damage.replace(/\s+/g, '');
+      const match = normalized.match(/(\d+d\d+)([+-]\d+)?/i);
+      if (match) {
+        const baseDice = match[1];
+        const baseMod = parseInt(match[2] || '0', 10);
+        const totalMod = baseMod + customDamageBonus;
+        damage = totalMod !== 0
+          ? `${baseDice}${totalMod >= 0 ? '+' : ''}${totalMod}`
+          : baseDice;
+      } else {
+        damage += customDamageBonus > 0 ? `+${customDamageBonus}` : `${customDamageBonus}`;
+      }
+    }
+
     // Add rune damage bonuses
     const runeDamageBonus = weaponRuneDamageBonuses.get(weapon.name);
     if (runeDamageBonus) {
@@ -252,6 +281,7 @@ export function ActionsList({ characterId }: { characterId: string }) {
                 attackBonus={action.attackBonus}
                 damage={action.damage}
                 range={action.range}
+                characterId={characterId}
               />
             ))
           )}
@@ -272,6 +302,7 @@ export function ActionsList({ characterId }: { characterId: string }) {
                 type={action.type}
                 description={action.description}
                 range={action.range}
+                characterId={characterId}
               />
             ))
           )}
@@ -293,6 +324,7 @@ export function ActionsList({ characterId }: { characterId: string }) {
                 description={action.description}
                 uses={action.uses}
                 recharge={action.recharge}
+                characterId={characterId}
               />
             ))
           )}
@@ -317,6 +349,7 @@ export function ActionsList({ characterId }: { characterId: string }) {
                 recharge={action.recharge}
                 inscriptionId={action.inscriptionId}
                 onUse={action.inscriptionId ? () => handleUseRune(action.inscriptionId!) : undefined}
+                characterId={characterId}
               />
             ))
           )}
@@ -325,5 +358,6 @@ export function ActionsList({ characterId }: { characterId: string }) {
     </SystemWindow>
   );
 }
+
 
 

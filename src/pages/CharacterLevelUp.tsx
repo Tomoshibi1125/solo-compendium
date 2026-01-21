@@ -16,6 +16,7 @@ import { cn } from '@/lib/utils';
 import { calculateHPMax } from '@/lib/characterCalculations';
 import { useInitializeSpellSlots } from '@/hooks/useSpellSlots';
 import { logger } from '@/lib/logger';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 import type { Database } from '@/integrations/supabase/types';
 import { useCampaignByCharacterId } from '@/hooks/useCampaigns';
 import { getLevelingMode } from '@/lib/campaignSettings';
@@ -115,7 +116,7 @@ const CharacterLevelUp = () => {
               <div className="w-16 h-16 border-4 border-arise/20 rounded-full" />
               <div className="absolute inset-0 w-16 h-16 border-4 border-t-arise rounded-full animate-spin" />
             </div>
-            <p className="text-muted-foreground font-heading animate-pulse">Accessing Hunter Data...</p>
+            <p className="text-muted-foreground font-heading animate-pulse">Accessing Ascendant Data...</p>
           </div>
           <div className="text-xs text-muted-foreground font-heading mt-2">
             Advancement Mode: {isMilestone ? 'Milestone' : 'XP'}
@@ -135,7 +136,7 @@ const CharacterLevelUp = () => {
             className="mb-6"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Hunter
+            Back to Ascendant
           </Button>
           <SystemWindow title="MAXIMUM LEVEL REACHED" variant="alert" className="text-center py-12">
             <Crown className="w-16 h-16 mx-auto text-amber-400 mb-4" />
@@ -143,7 +144,7 @@ const CharacterLevelUp = () => {
               {character.name} has reached the pinnacle of power.
             </p>
             <p className="text-muted-foreground">
-              Level 20 - The System has no further tests for this Hunter.
+              Level 20 - The System has no further tests for this Ascendant.
             </p>
           </SystemWindow>
         </div>
@@ -359,7 +360,7 @@ const CharacterLevelUp = () => {
           className="mb-6"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Hunter
+          Back to Ascendant
         </Button>
 
         {/* Level Up Header */}
@@ -511,23 +512,25 @@ const CharacterLevelUp = () => {
                               htmlFor={`feature-${feature.id}`}
                               className="font-arise font-semibold cursor-pointer text-amber-400 tracking-wide"
                             >
-                              {feature.name}
+                              {formatMonarchVernacular(feature.name)}
                             </Label>
                             {feature.action_type && (
                               <Badge variant="secondary" className="text-xs font-heading">
-                                {feature.action_type}
+                                {formatMonarchVernacular(feature.action_type)}
                               </Badge>
                             )}
                             {feature.uses_formula && (
                               <Badge variant="outline" className="text-xs font-heading border-amber-500/30 text-amber-400">
-                                {feature.uses_formula}
+                                {formatMonarchVernacular(feature.uses_formula)}
                               </Badge>
                             )}
                           </div>
-                          <p className="text-sm text-muted-foreground font-heading">{feature.description}</p>
+                          <p className="text-sm text-muted-foreground font-heading">
+                            {formatMonarchVernacular(feature.description || '')}
+                          </p>
                           {feature.prerequisites && (
                             <p className="text-xs text-muted-foreground mt-1 italic">
-                              Prerequisites: {feature.prerequisites}
+                              Prerequisites: {formatMonarchVernacular(feature.prerequisites)}
                             </p>
                           )}
                         </div>

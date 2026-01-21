@@ -23,6 +23,7 @@ import { comprehensiveRelics } from './relics-comprehensive';
 import { powers } from './powers';
 import { techniques } from './techniques';
 import { artifacts } from './artifacts';
+import { normalizeMonarchSearch } from '@/lib/vernacular';
 
 // Type definitions matching the UI expectations
 export interface StaticCompendiumEntry {
@@ -114,7 +115,7 @@ function filterBySearch<T extends Record<string, any>>(
 ): T[] {
   if (!search?.trim()) return items;
   
-  const searchLower = search.toLowerCase();
+  const searchLower = normalizeMonarchSearch(search.toLowerCase());
   return items.filter(item => 
     searchFields.some(field => {
       const value = item[field];
@@ -133,7 +134,7 @@ function transformMonster(monster: any): StaticCompendiumEntry {
     description: monster.description,
     created_at: new Date().toISOString(),
     tags: [monster.type, monster.rank],
-    source_book: 'Solo Compendium Homebrew',
+    source_book: 'System Ascendant Homebrew',
     image_url: monster.image,
     cr: monster.rank,
     gate_rank: monster.rank,
@@ -153,7 +154,7 @@ function transformItem(item: any): StaticCompendiumEntry {
     description: item.description,
     created_at: new Date().toISOString(),
     tags: [item.type, item.rarity],
-    source_book: 'Solo Compendium Homebrew',
+    source_book: 'System Ascendant Homebrew',
     image_url: item.image,
     equipment_type: item.type,
     item_type: item.type,
@@ -181,7 +182,7 @@ function transformJob(job: any): StaticCompendiumEntry {
     description: job.description,
     created_at: new Date().toISOString(),
     tags: job.primary_abilities || [],
-    source_book: 'Solo Compendium Canon',
+    source_book: 'System Ascendant Canon',
     image_url: job.image,
     rarity: job.rank === 'S' ? 'legendary' :
             job.rank === 'A' ? 'epic' :
@@ -199,7 +200,7 @@ function transformSpell(spell: any): StaticCompendiumEntry {
     description: spell.description,
     created_at: new Date().toISOString(),
     tags: [spell.type, spell.rank],
-    source_book: 'Solo Compendium Homebrew',
+    source_book: 'System Ascendant Homebrew',
     image_url: spell.image,
     spell_type: spell.type,
     rank: spell.rank,
@@ -226,7 +227,7 @@ function transformLocation(location: any): StaticCompendiumEntry {
     description: location.description,
     created_at: new Date().toISOString(),
     tags: [location.type, location.rank],
-    source_book: 'Solo Compendium Homebrew',
+    source_book: 'System Ascendant Homebrew',
     image_url: location.image,
     location_type: location.type,
     rank: location.rank,
@@ -247,7 +248,7 @@ function transformRune(rune: any): StaticCompendiumEntry {
     description: rune.description,
     created_at: new Date().toISOString(),
     tags: [rune.element, rune.rarity],
-    source_book: 'Solo Compendium Homebrew',
+    source_book: 'System Ascendant Homebrew',
     image_url: rune.image,
     rune_type: rune.element,
     rune_category: rune.rarity,
@@ -263,7 +264,7 @@ function transformBackground(background: any): StaticCompendiumEntry {
     description: background.description,
     created_at: new Date().toISOString(),
     tags: background.skills || [],
-    source_book: 'Solo Compendium Canon',
+    source_book: 'System Ascendant Canon',
     image_url: background.image,
     rarity: 'uncommon'
   };
@@ -276,8 +277,8 @@ function transformMonarch(monarch: any): StaticCompendiumEntry {
     display_name: monarch.name,
     description: monarch.description,
     created_at: new Date().toISOString(),
-    tags: ['monarch', 'sovereign', monarch.theme],
-    source_book: 'Solo Compendium Canon',
+    tags: ['monarch', monarch.theme],
+    source_book: 'System Ascendant Canon',
     title: monarch.title,
     theme: monarch.theme,
     rarity: monarch.rank === 'S' ? 'legendary' :
@@ -494,43 +495,43 @@ export const staticDataProvider: StaticDataProvider = {
     const shadowSoldiers = [
       {
         id: 'tank-soldier',
-        name: 'Shadow Tank',
-        description: 'Heavy armored shadow soldier specialized in defense and crowd control.',
+        name: 'Umbral Tank',
+        description: 'Heavy armored legionnaire specialized in defense and crowd control.',
         rank: 'A',
         role: 'Tank'
       },
       {
         id: 'assassin-soldier',
-        name: 'Shadow Assassin',
-        description: 'Stealthy shadow soldier specialized in assassination and reconnaissance.',
+        name: 'Umbral Assassin',
+        description: 'Stealthy legionnaire specialized in assassination and reconnaissance.',
         rank: 'A',
         role: 'Assassin'
       },
       {
         id: 'mage-soldier',
-        name: 'Shadow Mage',
-        description: 'Magic-wielding shadow soldier capable of casting shadow spells.',
+        name: 'Umbral Mage',
+        description: 'Magic-wielding legionnaire capable of casting umbral spells.',
         rank: 'B',
         role: 'Mage'
       },
       {
         id: 'archer-soldier',
-        name: 'Shadow Archer',
-        description: 'Ranged shadow soldier specialized in precise long-range attacks.',
+        name: 'Umbral Archer',
+        description: 'Ranged legionnaire specialized in precise long-range attacks.',
         rank: 'B',
         role: 'Archer'
       },
       {
         id: 'warrior-soldier',
-        name: 'Shadow Warrior',
-        description: 'Versatile melee shadow soldier balanced in offense and defense.',
+        name: 'Umbral Warrior',
+        description: 'Versatile melee legionnaire balanced in offense and defense.',
         rank: 'C',
         role: 'Warrior'
       },
       {
         id: 'scout-soldier',
-        name: 'Shadow Scout',
-        description: 'Fast and agile shadow soldier specialized in reconnaissance and scouting.',
+        name: 'Umbral Scout',
+        description: 'Fast and agile legionnaire specialized in reconnaissance and scouting.',
         rank: 'C',
         role: 'Scout'
       }
@@ -543,8 +544,8 @@ export const staticDataProvider: StaticDataProvider = {
       display_name: item.name,
       description: item.description,
       created_at: new Date().toISOString(),
-      tags: ['shadow-soldier', 'shadow', 'minion'],
-      source_book: 'Solo Compendium Canon',
+      tags: ['umbral-legion', 'umbral', 'minion'],
+      source_book: 'System Ascendant Canon',
       role: item.role,
       gate_rank: item.rank,
       rarity: item.rank === 'A' ? 'very_rare' : 
@@ -560,5 +561,6 @@ export const useStaticDataFallback = () => {
   // @ts-expect-error - Global variable from Supabase integration
   return !window.supabaseConfigured || false;
 };
+
 
 

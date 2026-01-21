@@ -22,6 +22,13 @@ export function setCommandPaletteOpener(opener: () => void) {
   openCommandPalette = opener;
 }
 
+const findButtonByText = (text: string) => {
+  const needle = text.toLowerCase();
+  return Array.from(document.querySelectorAll('button')).find((button) =>
+    (button.textContent || '').toLowerCase().includes(needle)
+  ) as HTMLButtonElement | undefined;
+};
+
 export const GLOBAL_SHORTCUTS: GlobalShortcut[] = [
   // Navigation
   {
@@ -90,7 +97,7 @@ export const GLOBAL_SHORTCUTS: GlobalShortcut[] = [
     action: () => {
       window.location.href = '/dm-tools';
     },
-    description: 'Open DM tools',
+    description: 'Open Warden tools',
     category: 'navigation',
     global: true,
   },
@@ -112,7 +119,8 @@ export const GLOBAL_SHORTCUTS: GlobalShortcut[] = [
     ctrl: true,
     action: () => {
       // Save current character if on character sheet
-      const saveButton = document.querySelector('button[aria-label*="Save"], button:has-text("Save")') as HTMLButtonElement;
+      const saveButton = (document.querySelector('button[aria-label*="Save"]') as HTMLButtonElement)
+        || findButtonByText('Save');
       if (saveButton && !saveButton.disabled) {
         saveButton.click();
       }
@@ -155,7 +163,7 @@ export const GLOBAL_SHORTCUTS: GlobalShortcut[] = [
     ctrl: true,
     action: () => {
       // Short rest
-      const shortRestButton = document.querySelector('button:has-text("Short Rest")') as HTMLButtonElement;
+      const shortRestButton = findButtonByText('Short Rest');
       if (shortRestButton) shortRestButton.click();
     },
     description: 'Short rest',
@@ -168,7 +176,7 @@ export const GLOBAL_SHORTCUTS: GlobalShortcut[] = [
     shift: true,
     action: () => {
       // Long rest
-      const longRestButton = document.querySelector('button:has-text("Long Rest")') as HTMLButtonElement;
+      const longRestButton = findButtonByText('Long Rest');
       if (longRestButton) longRestButton.click();
     },
     description: 'Long rest',
@@ -181,7 +189,9 @@ export const GLOBAL_SHORTCUTS: GlobalShortcut[] = [
     key: 'f',
     action: () => {
       // Toggle favorites filter
-      const favoritesToggle = document.querySelector('input[type="checkbox"][aria-label*="favorite"], button:has-text("Favorites")') as HTMLElement;
+      const favoritesToggle =
+        (document.querySelector('input[type="checkbox"][aria-label*="favorite"]') as HTMLElement)
+        || findButtonByText('Favorites');
       if (favoritesToggle) favoritesToggle.click();
     },
     description: 'Toggle favorites',
@@ -194,7 +204,9 @@ export const GLOBAL_SHORTCUTS: GlobalShortcut[] = [
     key: 'Escape',
     action: () => {
       // Close modals/dialogs
-      const closeButton = document.querySelector('button[aria-label="Close"], button:has-text("Cancel")') as HTMLButtonElement;
+      const closeButton =
+        (document.querySelector('button[aria-label="Close"]') as HTMLButtonElement)
+        || findButtonByText('Cancel');
       if (closeButton) closeButton.click();
     },
     description: 'Close modal/dialog',

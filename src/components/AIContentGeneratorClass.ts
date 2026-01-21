@@ -30,7 +30,7 @@ export interface ContentGenerationOptions {
 }
 
 const AI_CONTENT_PROMPTS = {
-  npc: "Generate a detailed D&D NPC with name, appearance, personality, background, motivations, and dialogue examples.",
+  npc: "Generate a detailed SRD NPC with name, appearance, personality, background, motivations, and dialogue examples.",
   encounter: "Create a combat encounter with enemies, environment, tactics, treasure, and story context.",
   location: "Describe a detailed location with atmosphere, features, secrets, and interactive elements.",
   quest: "Design a quest with objectives, NPCs involved, challenges, rewards, and story hooks.",
@@ -59,7 +59,7 @@ export class AIContentGenerator {
           includeStats: options.includeStats ?? false,
           includeDialogue: options.includeDialogue ?? false,
           includeDescription: options.includeDescription ?? false,
-          universe: 'Solo Leveling',
+          universe: 'System Ascendant',
         },
       });
 
@@ -102,8 +102,8 @@ export class AIContentGenerator {
       enhancedPrompt += `\n- Include detailed descriptions`;
     }
 
-    enhancedPrompt += `\n\nFormat the response clearly with sections and appropriate D&D terminology.`;
-    enhancedPrompt += `\n\nKeep the flavor aligned with Solo Leveling: cinematic, high-stakes, and system-driven.`;
+    enhancedPrompt += `\n\nFormat the response clearly with sections and appropriate SRD terminology.`;
+    enhancedPrompt += `\n\nKeep the flavor aligned with System Ascendant: cinematic, high-stakes, and system-driven.`;
 
     return enhancedPrompt;
   }
@@ -183,3 +183,4 @@ export class AIContentGenerator {
     return tags;
   }
 }
+

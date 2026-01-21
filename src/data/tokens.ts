@@ -1,6 +1,5 @@
 // Comprehensive Tokens Compendium
-// Generated with full admin privileges
-// Solo Leveling themed character tokens with images
+// System Ascendant themed character tokens with images
 
 export interface Token {
   id: string;
@@ -21,37 +20,37 @@ export interface Token {
 export const tokensCompendium: Token[] = [
   {
     id: 'player-token',
-    name: 'Shadow Hunter',
-    description: 'Elite warrior trained in shadow arts. Master of stealth and assassination techniques.',
+    name: 'Umbral Ascendant',
+    description: 'Elite warrior trained in umbral arts. Master of stealth and precision strikes.',
     type: 'player',
     image: '/generated/tokens/player-token.webp',
     stats: { health: 150, attack: 80, defense: 60, speed: 75 },
-    abilities: ['Shadow Strike', 'Stealth', 'Critical Hit'],
+    abilities: ['Umbral Strike', 'Stealth', 'Critical Hit'],
     friendly: true
   },
   {
     id: 'monster-token',
-    name: 'Shadow Demon',
-    description: 'Malevolent creature born from pure shadow energy. Highly aggressive and dangerous.',
+    name: 'Veil Demon',
+    description: 'Malevolent creature born from raw veil energy. Highly aggressive and dangerous.',
     type: 'monster',
     image: '/generated/tokens/monster-token.webp',
     stats: { health: 100, attack: 60, defense: 40, speed: 50 },
-    abilities: ['Shadow Claw', 'Dark Vision', 'Fear'],
+    abilities: ['Umbral Claw', 'Dark Vision', 'Fear'],
     friendly: false
   },
   {
     id: 'boss-token',
-    name: 'Shadow Lord',
-    description: 'Powerful ruler of the shadow realm. Commands armies of shadow creatures and possesses immense power.',
+    name: 'Umbral Lord',
+    description: 'Powerful regent of the umbral realm. Commands legions of veilbound creatures and possesses immense power.',
     type: 'boss',
     image: '/generated/tokens/boss-token.webp',
     stats: { health: 500, attack: 120, defense: 100, speed: 60 },
-    abilities: ['Shadow Dominion', 'Army of Darkness', 'Ultimate Shadow'],
+    abilities: ['Umbral Dominion', 'Army of Darkness', 'Veil Apex'],
     friendly: false
   },
   {
     id: 'npc-token',
-    name: 'Mysterious Stranger',
+    name: 'Veiled Stranger',
     description: 'Enigmatic figure with unknown motives. May offer quests or valuable information.',
     type: 'npc',
     image: '/generated/tokens/npc-token.webp',
@@ -61,8 +60,8 @@ export const tokensCompendium: Token[] = [
   },
   {
     id: 'merchant-token',
-    name: 'Shadow Realm Merchant',
-    description: 'Trader specializing in rare items and artifacts from the shadow realm.',
+    name: 'Veil Market Broker',
+    description: 'Trader specializing in rare items and artifacts from the umbral realm.',
     type: 'merchant',
     image: '/generated/tokens/merchant-token.webp',
     stats: { health: 60, attack: 20, defense: 30, speed: 40 },
@@ -71,7 +70,7 @@ export const tokensCompendium: Token[] = [
   },
   {
     id: 'guard-token',
-    name: 'Shadow Guard',
+    name: 'Veilguard',
     description: 'Elite soldier protecting important locations and personages. Well-trained and loyal.',
     type: 'guard',
     image: '/generated/tokens/guard-token.webp',
@@ -82,3 +81,4 @@ export const tokensCompendium: Token[] = [
 ];
 
 export default tokensCompendium;
+

@@ -10,7 +10,7 @@ import { X, Filter } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface CompendiumFiltersProps {
-  // Shadow Soldier specific filters
+  // Umbral Legionnaire specific filters
   selectedTiers?: number[];
   onTierToggle?: (tier: number) => void;
   showNamedOnly?: boolean;
@@ -90,7 +90,7 @@ export function CompendiumFilters({
         </Button>
       </div>
       <div className="space-y-4">
-        {/* Shadow Soldier Specific Filters */}
+        {/* Umbral Legionnaire Specific Filters */}
         {category === 'shadow-soldiers' && (
           <>
             <div>
@@ -202,9 +202,9 @@ export function CompendiumFilters({
               </div>
             )}
 
-            {/* Gate Rank */}
+            {/* Rift Rank */}
             <div>
-              <Label className="text-xs font-heading mb-2 block">GATE RANK</Label>
+              <Label className="text-xs font-heading mb-2 block">RIFT RANK</Label>
               <div className="flex flex-wrap gap-2">
                 {gateRanks.map(rank => (
                   <Badge
@@ -224,4 +224,5 @@ export function CompendiumFilters({
     </SystemWindow>
   );
 }
+
 

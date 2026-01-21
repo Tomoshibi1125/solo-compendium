@@ -24,7 +24,7 @@ const TreasureGenerator = () => {
 
   const handleCopy = () => {
     if (!treasure) return;
-    const text = `Gate Rank ${treasure.rank} Treasure:
+    const text = `Rift Rank ${treasure.rank} Treasure:
 Gold: ${treasure.gold}
 ${treasure.items.length > 0 ? `Items: ${treasure.items.join(', ')}\n` : ''}${treasure.materials.length > 0 ? `Materials: ${treasure.materials.join(', ')}\n` : ''}${treasure.relics.length > 0 ? `Relics: ${treasure.relics.join(', ')}\n` : ''}
 ${treasure.description}`;
@@ -58,13 +58,13 @@ ${treasure.description}`;
             className="mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to DM Tools
+            Back to Warden Tools
           </Button>
           <h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow">
             TREASURE GENERATOR
           </h1>
           <p className="text-muted-foreground font-heading">
-            Generate treasure hoards appropriate for each Gate Rank. Rewards scale with difficulty.
+            Generate treasure hoards appropriate for each Rift Rank. Rewards scale with difficulty.
           </p>
         </div>
 
@@ -72,7 +72,7 @@ ${treasure.description}`;
           <div className="space-y-4">
             <div>
               <Label htmlFor="rank" className="mb-2 block">
-                Gate Rank
+                Rift Rank
               </Label>
               <Select value={selectedRank} onValueChange={setSelectedRank}>
                 <SelectTrigger id="rank">
@@ -90,7 +90,7 @@ ${treasure.description}`;
 
             <Button
               onClick={handleGenerate}
-              className="w-full btn-shadow-monarch"
+              className="w-full btn-umbral"
               size="lg"
             >
               <Sparkles className="w-4 h-4 mr-2" />
@@ -191,7 +191,7 @@ ${treasure.description}`;
         <SystemWindow title="TREASURE GUIDE" variant="quest">
           <div className="space-y-4 text-sm">
             <p className="text-muted-foreground font-heading">
-              Treasure generation follows the Gate Rank system. Higher ranks yield significantly more valuable rewards.
+              Treasure generation follows the Rift Rank system. Higher ranks yield significantly more valuable rewards.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {GATE_RANKS.map((rank) => {
@@ -214,4 +214,6 @@ ${treasure.description}`;
 };
 
 export default TreasureGenerator;
+
+
 

@@ -119,7 +119,7 @@ const FILTER_OPTIONS = {
     "Disguise Kit", "Forgery Kit", "Herbalism Kit", "Navigator's Tools", "Poisoner's Kit"
   ],
   sourceBooks: [
-    "Player's Handbook", "Dungeon Master's Guide", "Monster Manual",
+    "Player's Handbook", "Protocol Warden's Guide", "Monster Manual",
     "Xanathar's Guide to Everything", "Tasha's Cauldron of Everything",
     "Mordenkainen's Tome of Foes", "Volo's Guide to Monsters"
   ],
@@ -326,9 +326,9 @@ export function AdvancedSearch({ filters, onFiltersChange, className }: Advanced
               </div>
             </div>
 
-            {/* Gate Ranks */}
+            {/* Rift Ranks */}
             <div>
-              <Label>Gate Rank</Label>
+              <Label>Rift Rank</Label>
               <div className="grid grid-cols-4 md:grid-cols-7 gap-2 mt-2">
                 {FILTER_OPTIONS.gateRanks.map((rank) => (
                   <div key={rank} className="flex items-center space-x-2">
@@ -450,3 +450,4 @@ export function AdvancedSearch({ filters, onFiltersChange, className }: Advanced
     </Card>
   );
 }
+

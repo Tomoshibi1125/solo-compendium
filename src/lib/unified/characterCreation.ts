@@ -1,6 +1,6 @@
 /**
  * Unified Character Creation System
- * Merges Solo Leveling and D&D 5e character creation
+ * Merges System Ascendant and SRD 5e character creation
  */
 
 import { 
@@ -16,6 +16,7 @@ import {
   getUnifiedProficiencyBonus,
   getSystemFavorMax
 } from './rulesEngine';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 // Unified Character Creation Options
 export interface UnifiedCharacterCreation {
@@ -28,7 +29,7 @@ export interface UnifiedCharacterCreation {
   class: UnifiedClass;
   path?: string;
   
-  // Ability Scores (Solo Leveling names, D&D 5e point buy or rolled)
+  // Ability Scores (System Ascendant names, SRD 5e point buy or rolled)
   abilities: UnifiedAbilityScores;
   abilityGenerationMethod: 'point-buy' | 'rolled' | 'standard-array';
   
@@ -37,7 +38,7 @@ export interface UnifiedCharacterCreation {
   skillExpertise: UnifiedSkill[];
   savingThrowProficiencies: UnifiedSavingThrow[];
   
-  // Solo Leveling Unique Options
+  // System Ascendant Unique Options
   systemFavor: boolean; // Whether to use System Favor mechanic
   monarchPower: boolean; // Whether to use Monarch Power (for monarch classes)
   
@@ -45,7 +46,7 @@ export interface UnifiedCharacterCreation {
   startingEquipment: string[];
 }
 
-// Class-specific starting packages (Solo Leveling adapted to D&D 5e)
+// Class-specific starting packages (System Ascendant adapted to SRD 5e)
 export interface UnifiedClassPackage {
   name: string;
   description: string;
@@ -59,7 +60,7 @@ export interface UnifiedClassPackage {
   startingEquipment: string[];
   features: string[];
   
-  // Solo Leveling specific
+  // System Ascendant specific
   systemFavor: boolean;
   monarchPower: boolean;
   uniqueAbilities: string[];
@@ -477,7 +478,7 @@ export function validateUnifiedCharacter(options: UnifiedCharacterCreation): {
   
   // Validate monarch power
   if (options.monarchPower && !classPackage.monarchPower) {
-    errors.push('Monarch Power is not available for this class');
+    errors.push(formatMonarchVernacular('Monarch Power is not available for this class'));
   }
   
   return {
@@ -486,3 +487,4 @@ export function validateUnifiedCharacter(options: UnifiedCharacterCreation): {
     warnings
   };
 }
+

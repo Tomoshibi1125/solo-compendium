@@ -10,8 +10,9 @@ import { useCharacter } from '@/hooks/useCharacters';
 import { calculateCharacterStats, formatModifier } from '@/lib/characterCalculations';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { ABILITY_NAMES, type AbilityScore } from '@/types/solo-leveling';
+import { ABILITY_NAMES, type AbilityScore } from '@/types/system-rules';
 import { cn } from '@/lib/utils';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 const CharacterCompare = () => {
   const navigate = useNavigate();
@@ -136,21 +137,21 @@ const CharacterCompare = () => {
           </Button>
         </div>
 
-        <SystemWindow title="COMPARE HUNTERS" className="mb-6">
+        <SystemWindow title="COMPARE ASCENDANTS" className="mb-6">
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="text-sm font-heading text-muted-foreground mb-2 block">
-                  Hunter 1
+                  Ascendant 1
                 </label>
                 <Select value={char1Id} onValueChange={handleChar1Change}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select first hunter" />
+                    <SelectValue placeholder="Select first ascendant" />
                   </SelectTrigger>
                   <SelectContent>
                     {characters.map((char) => (
                       <SelectItem key={char.id} value={char.id}>
-                        {char.name} (Level {char.level} {char.job})
+                        {char.name} (Level {char.level} {formatMonarchVernacular(char.job || 'Unknown')})
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -158,16 +159,16 @@ const CharacterCompare = () => {
               </div>
               <div>
                 <label className="text-sm font-heading text-muted-foreground mb-2 block">
-                  Hunter 2
+                  Ascendant 2
                 </label>
                 <Select value={char2Id} onValueChange={handleChar2Change}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select second hunter" />
+                    <SelectValue placeholder="Select second ascendant" />
                   </SelectTrigger>
                   <SelectContent>
                     {characters.map((char) => (
                       <SelectItem key={char.id} value={char.id}>
-                        {char.name} (Level {char.level} {char.job})
+                        {char.name} (Level {char.level} {formatMonarchVernacular(char.job || 'Unknown')})
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -190,8 +191,18 @@ const CharacterCompare = () => {
               <div className="space-y-2">
                 <StatRow label="Name" value1={char1.name} value2={char2.name} higherIsBetter={false} />
                 <StatRow label="Level" value1={char1.level} value2={char2.level} />
-                <StatRow label="Job" value1={char1.job} value2={char2.job} higherIsBetter={false} />
-                <StatRow label="Path" value1={char1.path || 'N/A'} value2={char2.path || 'N/A'} higherIsBetter={false} />
+                <StatRow
+                  label="Job"
+                  value1={formatMonarchVernacular(char1.job || 'Unknown')}
+                  value2={formatMonarchVernacular(char2.job || 'Unknown')}
+                  higherIsBetter={false}
+                />
+                <StatRow
+                  label="Path"
+                  value1={formatMonarchVernacular(char1.path || 'N/A')}
+                  value2={formatMonarchVernacular(char2.path || 'N/A')}
+                  higherIsBetter={false}
+                />
               </div>
             </SystemWindow>
 
@@ -245,7 +256,7 @@ const CharacterCompare = () => {
             <div className="text-center py-12">
               <Users className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
               <p className="text-muted-foreground font-heading">
-                Select two hunters to compare their stats
+                Select two ascendants to compare their stats
               </p>
             </div>
           </SystemWindow>
@@ -256,4 +267,5 @@ const CharacterCompare = () => {
 };
 
 export default CharacterCompare;
+
 

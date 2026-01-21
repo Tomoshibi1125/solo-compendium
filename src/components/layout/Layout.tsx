@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Header } from './Header';
 import { cn } from '@/lib/utils';
-import { logger } from '@/lib/logger';
 import { useAuth } from '@/lib/auth/authContext';
+import { useAccessibility } from '@/hooks/useAccessibility';
 
 interface LayoutProps {
   children?: React.ReactNode;
@@ -11,20 +11,8 @@ interface LayoutProps {
 }
 
 export function Layout({ children, className }: LayoutProps) {
-  const [isLoading, setIsLoading] = useState(true);
   const { user, signOut } = useAuth();
-  
-  useEffect(() => {
-    // Simulate loading completion
-    const timer = setTimeout(() => {
-      try {
-        setIsLoading(false);
-      } catch (error) {
-        logger.error('Error setting loading state:', error);
-      }
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
+  const { reducedMotion, highContrast } = useAccessibility();
 
   // Complete responsive design system
   const useMediaQuery = (query: string): boolean => {
@@ -68,32 +56,19 @@ export function Layout({ children, className }: LayoutProps) {
     isDesktop && 'desktop-layout',
     className
   );
-  
-  // Accessibility features
-  const [isHighContrast, setIsHighContrast] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
-  
-  useEffect(() => {
-    // Check for user preferences
-    const highContrastQuery = window.matchMedia('(prefers-contrast: high)');
-    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    
-    setIsHighContrast(highContrastQuery.matches);
-    setReducedMotion(motionQuery.matches);
-  }, []);
 
-  if (isLoading) {
-    return (
-      <div className={layoutClasses}>
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-        </div>
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const root = document.documentElement;
+    root.classList.toggle('reduce-motion', reducedMotion);
+    root.classList.toggle('high-contrast', highContrast);
+  }, [reducedMotion, highContrast]);
 
   return (
     <div className={layoutClasses}>
+      <a href="#main-content" className="skip-link">
+        Skip to content
+      </a>
       <Header
         user={
           user
@@ -108,10 +83,14 @@ export function Layout({ children, className }: LayoutProps) {
           void signOut();
         }}
       />
-      <main className={cn(
-        "flex-1",
-        isMobile ? "px-4 py-6" : "px-8 py-8"
-      )}>
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className={cn(
+          "flex-1",
+          isMobile ? "px-4 py-6" : "px-8 py-8"
+        )}
+      >
         {children || <Outlet />}
       </main>
     </div>

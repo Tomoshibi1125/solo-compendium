@@ -1,8 +1,9 @@
 // Gemini Protocol - Unified Sovereign Fusion Generator
-// Solo Leveling Post-Reset Timeline - Supreme Deity Setting
+// System Ascendant Post-Reset Timeline - Prime Architect Setting
 // Unified Fusion System - Single comprehensive fusion approach
 
 import type { Tables } from '@/integrations/supabase/types';
+import { formatMonarchVernacular, MONARCH_LABEL, MONARCH_LABEL_PLURAL } from '@/lib/vernacular';
 
 type Job = Tables<'compendium_jobs'>;
 type Path = Tables<'compendium_job_paths'>;
@@ -35,6 +36,14 @@ export interface GeneratedSovereign {
   fusion_stability: string;
 }
 
+const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+const stripMonarchTerm = (value: string): string => {
+  const label = escapeRegExp(MONARCH_LABEL);
+  const pattern = new RegExp(`\\s*(?:Monarch|${label})\\s*`, 'gi');
+  return value.replace(pattern, ' ').replace(/\s{2,}/g, ' ').trim();
+};
+
 // Unified Fusion Name Generator - Single comprehensive approach
 const generateUnifiedFusionName = (a: string, b: string): string => {
   // Unified fusion: Balanced blend of both names with power suffix
@@ -45,8 +54,8 @@ const generateUnifiedFusionName = (a: string, b: string): string => {
 
 // Generate fusion name based on unified approach
 function generateFusionName(monarchA: Monarch, monarchB: Monarch): string {
-  const nameA = monarchA.name.replace(/\s*Monarch\s*/gi, '').trim();
-  const nameB = monarchB.name.replace(/\s*Monarch\s*/gi, '').trim();
+  const nameA = stripMonarchTerm(monarchA.name);
+  const nameB = stripMonarchTerm(monarchB.name);
   
   return generateUnifiedFusionName(nameA, nameB);
 }
@@ -57,7 +66,7 @@ const themeMatrix: Record<string, Record<string, { theme: string; element: strin
     Frost: { theme: 'Frozen Shadow', element: 'umbral-ice', concept: 'absolute darkness that freezes souls' },
     Plague: { theme: 'Necrotic Void', element: 'death-miasma', concept: 'shadow that corrupts and consumes' },
     Stone: { theme: 'Obsidian Titan', element: 'void-stone', concept: 'unyielding darkness made manifest' },
-    Beast: { theme: 'Shadow Pack Alpha', element: 'predator-shade', concept: 'apex hunters of eternal night' },
+    Beast: { theme: 'Shadow Pack Alpha', element: 'predator-shade', concept: 'apex ascendants of eternal night' },
     Iron: { theme: 'Darksteel Legion', element: 'shadow-metal', concept: 'army of shadow-forged warriors' },
     Destruction: { theme: 'Annihilating Void', element: 'entropy-shadow', concept: 'darkness that erases existence' },
     'White Flames': { theme: 'Eclipse Flame', element: 'black-fire', concept: 'shadow flames that burn souls' },
@@ -68,7 +77,7 @@ const themeMatrix: Record<string, Record<string, { theme: string; element: strin
     Shadow: { theme: 'Frozen Shadow', element: 'ice-void', concept: 'cold that darkens the soul' },
     Plague: { theme: 'Cryogenic Plague', element: 'frost-rot', concept: 'frozen corruption that spreads' },
     Stone: { theme: 'Glacial Colossus', element: 'perma-frost', concept: 'eternal ice mountains' },
-    Beast: { theme: 'Arctic Apex', element: 'frost-fang', concept: 'hunters of frozen wastes' },
+    Beast: { theme: 'Arctic Apex', element: 'frost-fang', concept: 'ascendants of frozen wastes' },
     Iron: { theme: 'Cryosteel', element: 'frost-metal', concept: 'frozen metal that never thaws' },
     Destruction: { theme: 'Absolute Zero', element: 'entropy-cold', concept: 'cold that ends all motion' },
     'White Flames': { theme: 'Frostfire Paradox', element: 'ice-flame', concept: 'flames that freeze and ice that burns' },
@@ -209,7 +218,7 @@ const abilityTemplates: Record<string, AbilityTemplate> = {
   // LEVEL 7: Domain Overlap - Territories merge
   domainOverlap: {
     name: 'Dual Domain: {fusionTheme}',
-    desc: '[TERRITORY FUSION] Manifest the overlapping domains of both Monarchs. Create a 30-foot radius zone where {themeA} and {themeB} rules apply simultaneously. Allies gain advantage on attacks; enemies suffer disadvantage on saves against {element} effects.',
+    desc: `[TERRITORY FUSION] Manifest the overlapping domains of both ${MONARCH_LABEL_PLURAL}. Create a 30-foot radius zone where {themeA} and {themeB} rules apply simultaneously. Allies gain advantage on attacks; enemies suffer disadvantage on saves against {element} effects.`,
     action: '1 action',
     recharge: 'Long Rest',
   },
@@ -217,14 +226,14 @@ const abilityTemplates: Record<string, AbilityTemplate> = {
   // LEVEL 10: Path Synthesis
   pathSynthesis: {
     name: '{path}: {fusionName} Form',
-    desc: '[PATH FUSION] Your {path} techniques have been rewritten by the Gemini Protocol. When you use Path features, they manifest as {fusionTheme} techniques. Gain a unique combo: use any Path ability followed by a Monarch ability as a single action.',
+    desc: `[PATH FUSION] Your {path} techniques have been rewritten by the Gemini Protocol. When you use Path features, they manifest as {fusionTheme} techniques. Gain a unique combo: use any Path ability followed by a ${MONARCH_LABEL.toLowerCase()} ability as a single action.`,
     action: '1 bonus action',
   },
 
   // LEVEL 14: Resonant Burst - Major power spike
   resonantBurst: {
     name: '{fusionName} Burst',
-    desc: '[FUSION EXPLOSION] Release the full combined power of both Monarchs simultaneously. Create a 30-foot radius explosion of {element} energy. All creatures take [8d10 {damageA} + 8d10 {damageB}] damage (save for half). The explosion leaves behind a zone of {fusionTheme} for 1 minute.',
+    desc: `[FUSION EXPLOSION] Release the full combined power of both ${MONARCH_LABEL_PLURAL} simultaneously. Create a 30-foot radius explosion of {element} energy. All creatures take [8d10 {damageA} + 8d10 {damageB}] damage (save for half). The explosion leaves behind a zone of {fusionTheme} for 1 minute.`,
     action: '1 action',
     recharge: 'Long Rest',
   },
@@ -232,7 +241,7 @@ const abilityTemplates: Record<string, AbilityTemplate> = {
   // LEVEL 17: Perfect Fusion - Capstone ability
   perfectFusion: {
     name: 'Perfect Fusion: {fusionName}',
-    desc: '[ULTIMATE UNIFIED FUSION] Achieve complete integration of {job}, {path}, {monarchA}, and {monarchB} into a single being. For 1 minute: double proficiency on all rolls, all damage becomes [{damageA}+{damageB}], immune to {damageA} and {damageB} damage, and you may use any class/path/monarch ability as a bonus action.',
+    desc: `[ULTIMATE UNIFIED FUSION] Achieve complete integration of {job}, {path}, {monarchA}, and {monarchB} into a single being. For 1 minute: double proficiency on all rolls, all damage becomes [{damageA}+{damageB}], immune to {damageA} and {damageB} damage, and you may use any class, path, or ${MONARCH_LABEL.toLowerCase()} ability as a bonus action.`,
     action: '1 action',
     recharge: 'Long Rest',
     isCapstone: true,
@@ -241,7 +250,7 @@ const abilityTemplates: Record<string, AbilityTemplate> = {
   // LEVEL 20: Sovereign Transcendence - Ultimate power
   sovereignTranscendence: {
     name: 'Sovereign Transcendence: {fusionName}',
-    desc: '[BEYOND FUSION] Under the Supreme Deity\'s blessing, transcend the Gemini Protocol itself. You have become a true Sovereign of {fusionTheme}. Permanent benefits: +4 to all ability scores, resistance to all damage, and once per day you may automatically succeed on any roll. When you die, you may choose to reform after 1d4 days at full power.',
+    desc: '[BEYOND FUSION] Under the Prime Architect\'s blessing, transcend the Gemini Protocol itself. You have become a true Sovereign of {fusionTheme}. Permanent benefits: +4 to all ability scores, resistance to all damage, and once per day you may automatically succeed on any roll. When you die, you may choose to reform after 1d4 days at full power.',
     action: 'Passive',
     isCapstone: true,
   },
@@ -301,6 +310,10 @@ export function generateSovereign(
   const powerMultiplier = getPowerMultiplier();
   
   const pathShortName = path.name.replace(/^Path of the\s*/i, '').replace(/\s*Path$/i, '');
+  const displayMonarchAName = formatMonarchVernacular(monarchA.name);
+  const displayMonarchBName = formatMonarchVernacular(monarchB.name);
+  const displayMonarchATitle = formatMonarchVernacular(monarchA.title || monarchA.name);
+  const displayMonarchBTitle = formatMonarchVernacular(monarchB.title || monarchB.name);
   
   const context: Record<string, string> = {
     fusionName,
@@ -312,15 +325,15 @@ export function generateSovereign(
     themeB: monarchB.theme,
     damageA: monarchA.damage_type || 'necrotic',
     damageB: monarchB.damage_type || 'force',
-    monarchA: monarchA.name,
-    monarchB: monarchB.name,
+    monarchA: displayMonarchAName,
+    monarchB: displayMonarchBName,
     job: job.name,
     path: pathShortName,
     profMod: 'proficiency modifier',
   };
 
   const abilities: FusionAbility[] = [];
-  const requiredSources = [job.name, path.name, monarchA.name, monarchB.name];
+  const requiredSources = [job.name, path.name, displayMonarchAName, displayMonarchBName];
   
   // Level 1: Fusion Awakening
   abilities.push(generateAbilityFromTemplate(
@@ -391,17 +404,17 @@ export function generateSovereign(
     title: `The ${fusionThemeData.theme} ${job.name}`,
     description: `[GEMINI PROTOCOL: SUBCLASS OVERLAY]
     
-A permanent subclass overlay combining ${job.name} (${pathShortName}) with the merged essence of ${monarchA.title} and ${monarchB.title}. Through the Gemini Protocol - blessed by the Supreme Deity in the post-reset timeline - this Sovereign embodies ${fusionThemeData.concept}. The overlay is permanent and stabilized by sovereign power.
+A permanent subclass overlay combining ${job.name} (${pathShortName}) with the merged essence of ${displayMonarchATitle} and ${displayMonarchBTitle}. Through the Gemini Protocol - blessed by the Prime Architect in the post-reset timeline - this Sovereign embodies ${fusionThemeData.concept}. The overlay is permanent and stabilized by sovereign power.
 
-Unlike temporary boosts or conditional fusions, this overlay rewrites the base class. The four components (Job, Path, Monarch A, Monarch B) do not merely cooperate - they become ONE sovereign identity with new capabilities.
+Unlike temporary boosts or conditional fusions, this overlay rewrites the base class. The four components (Job, Path, ${MONARCH_LABEL} A, ${MONARCH_LABEL} B) do not merely cooperate - they become ONE sovereign identity with new capabilities.
 
-This Sovereign wields ${fusionThemeData.theme} power, a force that neither ${monarchA.name} nor ${monarchB.name} could manifest alone.`,
+This Sovereign wields ${fusionThemeData.theme} power, a force that neither ${displayMonarchAName} nor ${displayMonarchBName} could manifest alone.`,
     fusion_theme: fusionThemeData.theme,
     fusion_description: `The ${fusionThemeData.theme} overlay represents ${fusionThemeData.concept}. This combines ${monarchA.theme}'s mastery of ${monarchA.damage_type || 'necrotic'} with ${monarchB.theme}'s control over ${monarchB.damage_type || 'force'}, filtered through ${job.name} combat doctrine and ${pathShortName} techniques.
 
 In system terms: this is a permanent subclass overlay, not multi-classing or a temporary fusion. Every Sovereign is a unique overlay that never exists again in exactly the same form.
 
-The overlay is greater than the sum of its parts. ${fusionName} is not "${monarchA.name} + ${monarchB.name}" - ${fusionName} is a NEW SOVEREIGN with NEW POWER.`,
+The overlay is greater than the sum of its parts. ${fusionName} is not "${displayMonarchAName} + ${displayMonarchBName}" - ${fusionName} is a NEW SOVEREIGN with NEW POWER.`,
     fusion_method: 'Gemini Protocol',
     abilities,
     job,
@@ -427,10 +440,11 @@ export function calculateTotalCombinations(
 
 // Get fusion description for display
 export function getFusionDescription(): string {
-  return 'Gemini Protocol overlays a permanent subclass using Job + Path + Monarch A + Monarch B. Any valid template can fuse, and each Sovereign is a unique, irreversible overlay with combined memories and abilities.';
+  return `Gemini Protocol overlays a permanent subclass using Job + Path + ${MONARCH_LABEL} A + ${MONARCH_LABEL} B. Any valid template can fuse, and each Sovereign is a unique, irreversible overlay with combined memories and abilities.`;
 }
 
 // Get fusion method description for display (legacy compatibility)
 export function getFusionMethodDescription(): string {
   return getFusionDescription();
 }
+

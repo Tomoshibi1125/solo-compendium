@@ -1,6 +1,6 @@
-// Conditions Compendium - Authoritative Solo Leveling Content
+// Conditions Compendium - Authoritative System Ascendant Content
 // Status effects and conditions that affect characters in combat and exploration
-// Based on D&D 5e conditions with Solo Leveling themed additions
+// Based on SRD 5e conditions with System Ascendant themed additions
 
 export interface Condition {
   id: string;
@@ -20,7 +20,7 @@ export interface Condition {
 }
 
 export const conditions: Condition[] = [
-  // STANDARD D&D CONDITIONS
+  // STANDARD SRD CONDITIONS
   {
     id: 'blinded',
     name: 'Blinded',
@@ -230,7 +230,7 @@ export const conditions: Condition[] = [
     source: 'SRD 5.1'
   },
 
-  // SOLO LEVELING THEMED CONDITIONS
+  // SYSTEM ASCENDANT THEMED CONDITIONS
   {
     id: 'shadow-corrupted',
     name: 'Shadow Corrupted',
@@ -248,14 +248,14 @@ export const conditions: Condition[] = [
       type: 'Wisdom',
       description: 'Can repeat save at end of each turn after taking damage'
     },
-    source: 'Solo Leveling Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/conditions/shadow-corrupted.webp'
   },
   {
     id: 'gate-exhausted',
-    name: 'Gate Exhausted',
+    name: 'Rift Exhausted',
     type: 'shadow',
-    description: 'Exhaustion from surviving a gate raid or intense shadow energy exposure.',
+    description: 'Exhaustion from surviving a rift raid or intense shadow energy exposure.',
     effects: [
       'Disadvantage on all ability checks',
       'Speed reduced by half',
@@ -264,7 +264,7 @@ export const conditions: Condition[] = [
     ],
     duration: 'Until long rest',
     removal: ['Long rest', 'Greater restoration spell', 'Shadow recovery potion'],
-    source: 'Solo Leveling Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/conditions/gate-exhausted.webp'
   },
   {
@@ -280,7 +280,7 @@ export const conditions: Condition[] = [
     ],
     duration: 'Until cured',
     removal: ['Greater restoration spell', 'Essence recovery ritual', 'Defeating the creature that drained you'],
-    source: 'Solo Leveling Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/conditions/essence-drained.webp'
   },
   {
@@ -300,7 +300,7 @@ export const conditions: Condition[] = [
       type: 'Charisma',
       description: 'Can attempt to break free once per day'
     },
-    source: 'Solo Leveling Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/conditions/shadow-bound.webp'
   },
   {
@@ -316,7 +316,7 @@ export const conditions: Condition[] = [
     ],
     duration: 'Until Monarch removes it or dies',
     removal: ['Monarch removes the mark', 'Monarch dies', 'Divine intervention', 'Wish spell'],
-    source: 'Solo Leveling Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/conditions/monarch-marked.webp'
   },
   {
@@ -337,7 +337,8 @@ export const conditions: Condition[] = [
       type: 'Wisdom',
       description: 'Must save each turn to maintain control'
     },
-    source: 'Solo Leveling Canon',
+    source: 'System Ascendant Canon',
     image: '/generated/conditions/shadow-fused.webp'
   }
 ];
+

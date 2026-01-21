@@ -2,6 +2,7 @@ import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Coins, Weight, Zap, Sparkles, Shield, Swords, Heart } from 'lucide-react';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface ItemData {
   id: string;
@@ -78,7 +79,7 @@ const rarityStyles: Record<string, string> = {
 };
 
 export const ItemDetail = ({ data }: { data: ItemData }) => {
-  const displayName = data.display_name || data.name;
+  const displayName = formatMonarchVernacular(data.display_name || data.name);
   const imageSrc = data.image_url || data.image || undefined;
   const rarityStyle = data.rarity ? rarityStyles[data.rarity] : undefined;
   const weapon = data.properties?.weapon;
@@ -102,15 +103,15 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
       <SystemWindow title={displayName.toUpperCase()}>
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-2">
-            {data.item_type && <Badge variant="secondary">{data.item_type}</Badge>}
+            {data.item_type && <Badge variant="secondary">{formatMonarchVernacular(data.item_type)}</Badge>}
             {data.rarity && (
               <Badge variant="outline" className={rarityStyle}>
-                {data.rarity}
+                {formatMonarchVernacular(data.rarity)}
               </Badge>
             )}
             {data.attunement && <Badge variant="destructive">Requires Attunement</Badge>}
             {data.cursed && <Badge variant="destructive">Cursed</Badge>}
-            {data.source_book && <Badge variant="outline">{data.source_book}</Badge>}
+            {data.source_book && <Badge variant="outline">{formatMonarchVernacular(data.source_book)}</Badge>}
           </div>
         </div>
       </SystemWindow>
@@ -139,7 +140,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
               <span className="font-heading">{data.charges.current}/{data.charges.max}</span>
             </div>
             {data.charges.recharge && (
-              <span className="text-xs text-muted-foreground">{data.charges.recharge} recharge</span>
+              <span className="text-xs text-muted-foreground">{formatMonarchVernacular(`${data.charges.recharge} recharge`)}</span>
             )}
           </SystemWindow>
         )}
@@ -157,19 +158,19 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
             {data.requirements.class && data.requirements.class.length > 0 && (
               <li className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-muted-foreground" />
-                <span>Classes: {data.requirements.class.join(', ')}</span>
+                <span>Classes: {data.requirements.class.map(formatMonarchVernacular).join(', ')}</span>
               </li>
             )}
             {data.requirements.race && data.requirements.race.length > 0 && (
               <li className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-muted-foreground" />
-                <span>Races: {data.requirements.race.join(', ')}</span>
+                <span>Races: {data.requirements.race.map(formatMonarchVernacular).join(', ')}</span>
               </li>
             )}
             {data.requirements.alignment && data.requirements.alignment.length > 0 && (
               <li className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-muted-foreground" />
-                <span>Alignment: {data.requirements.alignment.join(', ')}</span>
+                <span>Alignment: {data.requirements.alignment.map(formatMonarchVernacular).join(', ')}</span>
               </li>
             )}
           </ul>
@@ -186,12 +187,12 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
                   <span className="font-heading">Weapon Profile</span>
                 </div>
                 <p className="text-muted-foreground">
-                  {weapon.damage ? `Damage: ${weapon.damage}` : 'Damage varies'}
-                  {weapon.damageType ? ` (${weapon.damageType})` : ''}
+                  {weapon.damage ? formatMonarchVernacular(`Damage: ${weapon.damage}`) : 'Damage varies'}
+                  {weapon.damageType ? formatMonarchVernacular(` (${weapon.damageType})`) : ''}
                   {weapon.range ? ` | Range: ${weapon.range} ft` : ''}
                 </p>
                 {weapon.versatile && (
-                  <p className="text-muted-foreground">Versatile: {weapon.versatile}</p>
+                  <p className="text-muted-foreground">{formatMonarchVernacular(`Versatile: ${weapon.versatile}`)}</p>
                 )}
                 {weapon.finesse && (
                   <p className="text-muted-foreground">Finesse weapon</p>
@@ -210,7 +211,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
                     {magical.bonus.damage !== undefined && <li>Damage bonus: +{magical.bonus.damage}</li>}
                     {magical.bonus.armorClass !== undefined && <li>Armor Class: +{magical.bonus.armorClass}</li>}
                     {magical.bonus.savingThrows && magical.bonus.savingThrows.length > 0 && (
-                      <li>Saving throws: {magical.bonus.savingThrows.join(', ')}</li>
+                      <li>Saving throws: {magical.bonus.savingThrows.map(formatMonarchVernacular).join(', ')}</li>
                     )}
                     {magical.bonus.abilityScores && (
                       <li>
@@ -223,13 +224,13 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
                   </ul>
                 )}
                 {magical.resistance && magical.resistance.length > 0 && (
-                  <p className="text-muted-foreground">Resistance: {magical.resistance.join(', ')}</p>
+                  <p className="text-muted-foreground">Resistance: {magical.resistance.map(formatMonarchVernacular).join(', ')}</p>
                 )}
                 {magical.immunity && magical.immunity.length > 0 && (
-                  <p className="text-muted-foreground">Immunity: {magical.immunity.join(', ')}</p>
+                  <p className="text-muted-foreground">Immunity: {magical.immunity.map(formatMonarchVernacular).join(', ')}</p>
                 )}
                 {magical.vulnerability && magical.vulnerability.length > 0 && (
-                  <p className="text-muted-foreground">Vulnerability: {magical.vulnerability.join(', ')}</p>
+                  <p className="text-muted-foreground">Vulnerability: {magical.vulnerability.map(formatMonarchVernacular).join(', ')}</p>
                 )}
               </div>
             )}
@@ -245,7 +246,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
                 <p className="font-heading text-foreground">Passive</p>
                 <ul className="list-disc list-inside text-muted-foreground">
                   {data.effects.passive.map((entry) => (
-                    <li key={entry}>{entry}</li>
+                    <li key={entry}>{formatMonarchVernacular(entry)}</li>
                   ))}
                 </ul>
               </div>
@@ -256,18 +257,18 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
                 {data.effects.active.map((active) => (
                   <div key={active.name} className="border-l-2 border-primary/40 pl-3">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-heading">{active.name}</span>
-                      {active.action && <Badge variant="outline" className="text-xs">{active.action}</Badge>}
-                      {active.frequency && <Badge variant="outline" className="text-xs">{active.frequency}</Badge>}
+                      <span className="font-heading">{formatMonarchVernacular(active.name)}</span>
+                      {active.action && <Badge variant="outline" className="text-xs">{formatMonarchVernacular(active.action)}</Badge>}
+                      {active.frequency && <Badge variant="outline" className="text-xs">{formatMonarchVernacular(active.frequency)}</Badge>}
                       {active.dc !== undefined && <Badge variant="outline" className="text-xs">DC {active.dc}</Badge>}
                     </div>
-                    <p className="text-muted-foreground">{active.description}</p>
+                    <p className="text-muted-foreground">{formatMonarchVernacular(active.description)}</p>
                   </div>
                 ))}
               </div>
             )}
             {data.effect && (
-              <p className="text-muted-foreground">{data.effect}</p>
+              <p className="text-muted-foreground">{formatMonarchVernacular(data.effect)}</p>
             )}
           </div>
         </SystemWindow>
@@ -275,7 +276,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 
       {data.description && (
         <SystemWindow id="item-description" title="DESCRIPTION">
-          <p className="text-foreground leading-relaxed">{data.description}</p>
+          <p className="text-foreground leading-relaxed">{formatMonarchVernacular(data.description)}</p>
         </SystemWindow>
       )}
 

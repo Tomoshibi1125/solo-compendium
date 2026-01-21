@@ -15,10 +15,11 @@ import { useCreateCharacter } from '@/hooks/useCharacters';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { calculateHPMax } from '@/lib/characterCalculations';
-import { ABILITY_NAMES, type AbilityScore } from '@/types/solo-leveling';
+import { ABILITY_NAMES, type AbilityScore } from '@/types/system-rules';
 import type { Database } from '@/integrations/supabase/types';
 import { isLocalCharacterId, setLocalAbilities } from '@/lib/guestStore';
 import { logger } from '@/lib/logger';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 type Job = Database['public']['Tables']['compendium_jobs']['Row'] & {
   display_name?: string | null;
@@ -233,7 +234,7 @@ const CharacterNew = () => {
     if (!name.trim()) {
       toast({
         title: 'Name required',
-        description: 'Please enter your Hunter\'s name.',
+        description: 'Please enter your Ascendant\'s name.',
         variant: 'destructive',
       });
       return;
@@ -318,15 +319,14 @@ const CharacterNew = () => {
       if (isLocalCharacterId(character.id)) {
         setLocalAbilities(character.id, abilities as unknown as Record<DbAbilityScore, number>);
       } else {
-        for (const [ability, score] of Object.entries(abilities)) {
-          await supabase
-            .from('character_abilities')
-            .upsert({
-              character_id: character.id,
-              ability: ability as AbilityScore,
-              score: score,
-            });
-        }
+        const abilityUpdates = Object.entries(abilities).map(([ability, score]) => ({
+          character_id: character.id,
+          ability: ability as AbilityScore,
+          score: score,
+        }));
+        await supabase
+          .from('character_abilities')
+          .upsert(abilityUpdates, { onConflict: 'character_id,ability' });
       }
 
       // Add level 1 features from compendium
@@ -346,7 +346,7 @@ const CharacterNew = () => {
       await addStartingPowers(character.id, job);
 
       toast({
-        title: 'Hunter Awakened!',
+        title: 'Ascendant Awakened!',
         description: `${name} has awakened successfully. The System has granted features and equipment.`,
       });
 
@@ -355,7 +355,7 @@ const CharacterNew = () => {
       // Error is handled by React Query's error state
       toast({
         title: 'Awakening Failed',
-        description: 'The System could not awaken your Hunter. Please try again.',
+        description: 'The System could not awaken your Ascendant. Please try again.',
         variant: 'destructive',
       });
     } finally {
@@ -447,7 +447,7 @@ const CharacterNew = () => {
                   id="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Enter Hunter name"
+                  placeholder="Enter Ascendant name"
                   className="mt-1"
                 />
               </div>
@@ -467,7 +467,7 @@ const CharacterNew = () => {
                   id="backstory"
                   value={backstory}
                   onChange={(e) => setBackstory(e.target.value)}
-                  placeholder="Hunter background and history in the post-reset world"
+                  placeholder="Ascendant background and history in the post-reset world"
                   className="mt-1"
                 />
               </div>
@@ -602,17 +602,17 @@ const CharacterNew = () => {
                 <SelectContent>
                   {jobs.map((job) => (
                     <SelectItem key={job.id} value={job.id}>
-                      {job.display_name || job.name}
+                      {formatMonarchVernacular(job.display_name || job.name)}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
               {jobData && (
                 <div className="mt-4 p-4 rounded-lg bg-muted/30">
-                  <h4 className="font-heading font-semibold mb-2">{jobData.display_name || jobData.name}</h4>
-                  <p className="text-sm text-muted-foreground">{jobData.description}</p>
+                  <h4 className="font-heading font-semibold mb-2">{formatMonarchVernacular(jobData.display_name || jobData.name)}</h4>
+                  <p className="text-sm text-muted-foreground">{formatMonarchVernacular(jobData.description)}</p>
                   <div className="mt-2 text-xs text-muted-foreground">
-                    Hit Die: d{jobData.hit_die} | Primary: {jobData.primary_abilities.join(', ')}
+                    Hit Die: d{jobData.hit_die} | Primary: {jobData.primary_abilities.map(formatMonarchVernacular).join(', ')}
                   </div>
                 </div>
               )}
@@ -639,14 +639,14 @@ const CharacterNew = () => {
                           disabled={!selectedSkills.includes(skill) && selectedSkills.length >= jobData.skill_choice_count}
                         />
                         <label htmlFor={`skill-${skill}`} className="text-sm font-heading cursor-pointer">
-                          {skill}
+                          {formatMonarchVernacular(skill)}
                         </label>
                       </div>
                     ))}
                   </div>
                   {selectedSkills.length > 0 && (
                     <p className="text-xs text-muted-foreground mt-2">
-                      Selected: {selectedSkills.join(', ')} ({selectedSkills.length}/{jobData.skill_choice_count})
+                      Selected: {selectedSkills.map(formatMonarchVernacular).join(', ')} ({selectedSkills.length}/{jobData.skill_choice_count})
                     </p>
                   )}
                 </div>
@@ -675,21 +675,21 @@ const CharacterNew = () => {
                       <SelectValue placeholder="Choose a path..." />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">None (Select later at level 3)</SelectItem>
+                      <SelectItem value="none">None (Select later at level 3)</SelectItem>
                       {paths.map((path) => (
                         <SelectItem key={path.id} value={path.id}>
-                          {(path as { display_name?: string | null }).display_name || path.name}
+                          {formatMonarchVernacular((path as { display_name?: string | null }).display_name || path.name)}
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
-                  {selectedPath && (
+                  {selectedPath && selectedPath !== 'none' && (
                     <div className="mt-4 p-4 rounded-lg bg-muted/30">
                       <h4 className="font-heading font-semibold mb-2">
-                        {(paths.find(p => p.id === selectedPath) as { name?: string; display_name?: string | null } | undefined)?.display_name || paths.find(p => p.id === selectedPath)?.name}
+                        {formatMonarchVernacular((paths.find(p => p.id === selectedPath) as { name?: string; display_name?: string | null } | undefined)?.display_name || paths.find(p => p.id === selectedPath)?.name || '')}
                       </h4>
                       <p className="text-sm text-muted-foreground">
-                        {paths.find(p => p.id === selectedPath)?.description}
+                        {formatMonarchVernacular(paths.find(p => p.id === selectedPath)?.description || '')}
                       </p>
                     </div>
                   )}
@@ -708,7 +708,7 @@ const CharacterNew = () => {
                 <SelectContent>
                   {backgrounds.map((bg) => (
                     <SelectItem key={bg.id} value={bg.id}>
-                      {bg.display_name || bg.name}
+                      {formatMonarchVernacular(bg.display_name || bg.name)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -717,10 +717,10 @@ const CharacterNew = () => {
                 <div className="mt-4 p-4 rounded-lg bg-muted/30 space-y-3">
                   <div>
                     <h4 className="font-heading font-semibold mb-2">
-                      {(backgrounds.find(b => b.id === selectedBackground) as { name?: string; display_name?: string | null } | undefined)?.display_name || backgrounds.find(b => b.id === selectedBackground)?.name}
+                      {formatMonarchVernacular((backgrounds.find(b => b.id === selectedBackground) as { name?: string; display_name?: string | null } | undefined)?.display_name || backgrounds.find(b => b.id === selectedBackground)?.name || '')}
                     </h4>
                     <p className="text-sm text-muted-foreground">
-                      {backgrounds.find(b => b.id === selectedBackground)?.description}
+                      {formatMonarchVernacular(backgrounds.find(b => b.id === selectedBackground)?.description || '')}
                     </p>
                   </div>
                   {(() => {
@@ -730,7 +730,7 @@ const CharacterNew = () => {
                     const bg = backgrounds.find(b => b.id === selectedBackground);
                     return (
                       <div className="text-xs text-muted-foreground">
-                        <strong>Skill Proficiencies:</strong> {bg?.skill_proficiencies?.join(', ') || ''}
+                        <strong>Skill Proficiencies:</strong> {bg?.skill_proficiencies?.map(formatMonarchVernacular).join(', ') || ''}
                       </div>
                     );
                   })()}
@@ -741,7 +741,7 @@ const CharacterNew = () => {
                     const bg = backgrounds.find(b => b.id === selectedBackground);
                     return (
                       <div className="text-xs text-muted-foreground">
-                        <strong>Tool Proficiencies:</strong> {bg?.tool_proficiencies?.join(', ') || ''}
+                        <strong>Tool Proficiencies:</strong> {bg?.tool_proficiencies?.map(formatMonarchVernacular).join(', ') || ''}
                       </div>
                     );
                   })()}
@@ -752,7 +752,7 @@ const CharacterNew = () => {
                   )}
                   {backgrounds.find(b => b.id === selectedBackground)?.starting_equipment && (
                     <div className="text-xs text-muted-foreground">
-                      <strong>Starting Equipment:</strong> {backgrounds.find(b => b.id === selectedBackground)!.starting_equipment}
+                      <strong>Starting Equipment:</strong> {formatMonarchVernacular(backgrounds.find(b => b.id === selectedBackground)!.starting_equipment || '')}
                     </div>
                   )}
                   {backgrounds.find(b => b.id === selectedBackground)?.starting_credits && (
@@ -763,11 +763,11 @@ const CharacterNew = () => {
                   {backgrounds.find(b => b.id === selectedBackground)?.feature_name && (
                     <div className="mt-3 pt-3 border-t border-border">
                       <div className="text-xs font-heading font-semibold mb-1">
-                        {backgrounds.find(b => b.id === selectedBackground)!.feature_name}
+                        {formatMonarchVernacular(backgrounds.find(b => b.id === selectedBackground)!.feature_name || '')}
                       </div>
                       {backgrounds.find(b => b.id === selectedBackground)?.feature_description && (
                         <div className="text-xs text-muted-foreground">
-                          {backgrounds.find(b => b.id === selectedBackground)!.feature_description}
+                          {formatMonarchVernacular(backgrounds.find(b => b.id === selectedBackground)!.feature_description || '')}
                         </div>
                       )}
                     </div>
@@ -783,9 +783,9 @@ const CharacterNew = () => {
                 <h3 className="font-heading font-semibold mb-2">Character Summary</h3>
                 <div className="space-y-2 text-sm">
                   <div><strong>Name:</strong> {name || 'Unnamed'}</div>
-                  <div><strong>Job:</strong> {jobData ? (jobData.display_name || jobData.name) : 'None'}</div>
-                  <div><strong>Path:</strong> {(paths.find(p => p.id === selectedPath) as { name?: string; display_name?: string | null } | undefined)?.display_name || paths.find(p => p.id === selectedPath)?.name || 'None'}</div>
-                  <div><strong>Background:</strong> {(backgrounds.find(b => b.id === selectedBackground) as { name?: string; display_name?: string | null } | undefined)?.display_name || backgrounds.find(b => b.id === selectedBackground)?.name || 'None'}</div>
+                  <div><strong>Job:</strong> {jobData ? formatMonarchVernacular(jobData.display_name || jobData.name) : 'None'}</div>
+                  <div><strong>Path:</strong> {formatMonarchVernacular((paths.find(p => p.id === selectedPath) as { name?: string; display_name?: string | null } | undefined)?.display_name || paths.find(p => p.id === selectedPath)?.name || 'None')}</div>
+                  <div><strong>Background:</strong> {formatMonarchVernacular((backgrounds.find(b => b.id === selectedBackground) as { name?: string; display_name?: string | null } | undefined)?.display_name || backgrounds.find(b => b.id === selectedBackground)?.name || 'None')}</div>
                 </div>
               </div>
               <div>
@@ -855,3 +855,4 @@ const CharacterNew = () => {
 };
 
 export default CharacterNew;
+

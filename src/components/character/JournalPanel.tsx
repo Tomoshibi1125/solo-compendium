@@ -99,7 +99,7 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
           <div className="flex items-center justify-between">
             <CardTitle className="text-lg font-arise flex items-center gap-2">
               <BookOpen className="w-5 h-5 text-arise" />
-              Hunter's Journal
+              Ascendant's Journal
             </CardTitle>
             <Button
               onClick={() => setIsCreating(true)}

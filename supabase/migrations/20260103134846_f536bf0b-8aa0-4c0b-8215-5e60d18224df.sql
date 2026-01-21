@@ -2,7 +2,7 @@
 INSERT INTO compendium_equipment (name, equipment_type, cost_credits, weight, damage, damage_type, properties, armor_class, description, source_book) VALUES
 -- SIMPLE MELEE WEAPONS
 ('Club', 'simple_melee', 10, 2, '1d4', 'bludgeoning', ARRAY['light'], NULL, 'A basic blunt weapon, often improvised from gate debris.', 'SRD'),
-('Dagger', 'simple_melee', 200, 1, '1d4', 'piercing', ARRAY['finesse', 'light', 'thrown (20/60)'], NULL, 'A small blade favored by assassin-class hunters.', 'SRD'),
+('Dagger', 'simple_melee', 200, 1, '1d4', 'piercing', ARRAY['finesse', 'light', 'thrown (20/60)'], NULL, 'A small blade favored by assassin-class ascendants.', 'SRD'),
 ('Greatclub', 'simple_melee', 20, 10, '1d8', 'bludgeoning', ARRAY['two-handed'], NULL, 'A massive club requiring both hands to wield.', 'SRD'),
 ('Handaxe', 'simple_melee', 500, 2, '1d6', 'slashing', ARRAY['light', 'thrown (20/60)'], NULL, 'A versatile axe that can be thrown at enemies.', 'SRD'),
 ('Javelin', 'simple_melee', 50, 2, '1d6', 'piercing', ARRAY['thrown (30/120)'], NULL, 'A throwing spear used for ranged engagement.', 'SRD'),
@@ -17,18 +17,18 @@ INSERT INTO compendium_equipment (name, equipment_type, cost_credits, weight, da
 ('Shortbow', 'simple_ranged', 2500, 2, '1d6', 'piercing', ARRAY['ammunition (80/320)', 'two-handed'], NULL, 'A compact bow suitable for quick shots.', 'SRD'),
 ('Sling', 'simple_ranged', 10, 0, '1d4', 'bludgeoning', ARRAY['ammunition (30/120)'], NULL, 'A primitive but effective ranged weapon.', 'SRD'),
 -- MARTIAL MELEE WEAPONS
-('Battleaxe', 'martial_melee', 1000, 4, '1d8', 'slashing', ARRAY['versatile (1d10)'], NULL, 'A heavy axe favored by striker-class hunters.', 'SRD'),
+('Battleaxe', 'martial_melee', 1000, 4, '1d8', 'slashing', ARRAY['versatile (1d10)'], NULL, 'A heavy axe favored by striker-class ascendants.', 'SRD'),
 ('Flail', 'martial_melee', 1000, 2, '1d8', 'bludgeoning', NULL, NULL, 'A spiked ball on a chain, devastating against armor.', 'SRD'),
 ('Glaive', 'martial_melee', 2000, 6, '1d10', 'slashing', ARRAY['heavy', 'reach', 'two-handed'], NULL, 'A polearm with extended reach capabilities.', 'SRD'),
 ('Greataxe', 'martial_melee', 3000, 7, '1d12', 'slashing', ARRAY['heavy', 'two-handed'], NULL, 'A massive axe capable of cleaving through gates monsters.', 'SRD'),
-('Greatsword', 'martial_melee', 5000, 6, '2d6', 'slashing', ARRAY['heavy', 'two-handed'], NULL, 'A large two-handed sword favored by elite hunters.', 'SRD'),
+('Greatsword', 'martial_melee', 5000, 6, '2d6', 'slashing', ARRAY['heavy', 'two-handed'], NULL, 'A large two-handed sword favored by elite ascendants.', 'SRD'),
 ('Halberd', 'martial_melee', 2000, 6, '1d10', 'slashing', ARRAY['heavy', 'reach', 'two-handed'], NULL, 'An axe-spear hybrid with extended reach.', 'SRD'),
 ('Lance', 'martial_melee', 1000, 6, '1d12', 'piercing', ARRAY['reach', 'special'], NULL, 'A jousting weapon, effective when mounted.', 'SRD'),
-('Longsword', 'martial_melee', 1500, 3, '1d8', 'slashing', ARRAY['versatile (1d10)'], NULL, 'The quintessential hunter sword, balanced and deadly.', 'SRD'),
+('Longsword', 'martial_melee', 1500, 3, '1d8', 'slashing', ARRAY['versatile (1d10)'], NULL, 'The quintessential ascendant sword, balanced and deadly.', 'SRD'),
 ('Maul', 'martial_melee', 1000, 10, '2d6', 'bludgeoning', ARRAY['heavy', 'two-handed'], NULL, 'A massive hammer for crushing gate monsters.', 'SRD'),
 ('Morningstar', 'martial_melee', 1500, 4, '1d8', 'piercing', NULL, NULL, 'A spiked mace that pierces armor.', 'SRD'),
 ('Pike', 'martial_melee', 500, 18, '1d10', 'piercing', ARRAY['heavy', 'reach', 'two-handed'], NULL, 'An extremely long spear for formation fighting.', 'SRD'),
-('Rapier', 'martial_melee', 2500, 2, '1d8', 'piercing', ARRAY['finesse'], NULL, 'A precise thrusting sword favored by agility-based hunters.', 'SRD'),
+('Rapier', 'martial_melee', 2500, 2, '1d8', 'piercing', ARRAY['finesse'], NULL, 'A precise thrusting sword favored by agility-based ascendants.', 'SRD'),
 ('Scimitar', 'martial_melee', 2500, 3, '1d6', 'slashing', ARRAY['finesse', 'light'], NULL, 'A curved blade for swift slashing attacks.', 'SRD'),
 ('Shortsword', 'martial_melee', 1000, 2, '1d6', 'piercing', ARRAY['finesse', 'light'], NULL, 'A compact sword for close-quarters combat.', 'SRD'),
 ('Trident', 'martial_melee', 500, 4, '1d6', 'piercing', ARRAY['thrown (20/60)', 'versatile (1d8)'], NULL, 'A three-pronged spear, throwable.', 'SRD'),
@@ -43,7 +43,7 @@ INSERT INTO compendium_equipment (name, equipment_type, cost_credits, weight, da
 ('Net', 'martial_ranged', 100, 3, NULL, NULL, ARRAY['special', 'thrown (5/15)'], NULL, 'A throwing net to restrain enemies.', 'SRD'),
 -- LIGHT ARMOR
 ('Padded Armor', 'light_armor', 500, 8, NULL, NULL, ARRAY['stealth disadvantage'], 11, 'Quilted layers of cloth and batting.', 'SRD'),
-('Leather Armor', 'light_armor', 1000, 10, NULL, NULL, NULL, 11, 'Standard hunter armor made from treated hides.', 'SRD'),
+('Leather Armor', 'light_armor', 1000, 10, NULL, NULL, NULL, 11, 'Standard ascendant armor made from treated hides.', 'SRD'),
 ('Studded Leather', 'light_armor', 4500, 13, NULL, NULL, NULL, 12, 'Leather reinforced with metal rivets.', 'SRD'),
 -- MEDIUM ARMOR
 ('Hide Armor', 'medium_armor', 1000, 12, NULL, NULL, NULL, 12, 'Crude armor made from thick monster hides.', 'SRD'),
@@ -95,14 +95,14 @@ INSERT INTO compendium_equipment (name, equipment_type, cost_credits, weight, da
 ('Navigators Tools', 'tools', 2500, 2, NULL, NULL, NULL, NULL, 'For navigation and mapping gates.', 'SRD'),
 ('Poisoners Kit', 'tools', 5000, 2, NULL, NULL, NULL, NULL, 'For creating and applying poisons.', 'SRD'),
 -- HUNTER SPECIFIC GEAR
-('Gate Compass', 'hunter_gear', 10000, 1, NULL, NULL, NULL, NULL, 'Detects nearby gate activity and ranks.', 'SRD'),
+('Rift Compass', 'hunter_gear', 10000, 1, NULL, NULL, NULL, NULL, 'Detects nearby gate activity and ranks.', 'SRD'),
 ('Mana Crystal (Small)', 'hunter_gear', 5000, 0.5, NULL, NULL, NULL, NULL, 'Stores small amounts of mana energy.', 'SRD'),
 ('Mana Crystal (Medium)', 'hunter_gear', 25000, 1, NULL, NULL, NULL, NULL, 'Stores moderate mana energy.', 'SRD'),
 ('Mana Crystal (Large)', 'hunter_gear', 100000, 2, NULL, NULL, NULL, NULL, 'Stores significant mana energy.', 'SRD'),
 ('System Interface Upgrade', 'hunter_gear', 50000, 0, NULL, NULL, NULL, NULL, 'Enhances system window clarity and features.', 'SRD'),
 ('Emergency Extraction Beacon', 'hunter_gear', 75000, 1, NULL, NULL, NULL, NULL, 'One-use device to signal for extraction from a gate.', 'SRD'),
-('Gate Mapping Device', 'hunter_gear', 30000, 2, NULL, NULL, NULL, NULL, 'Records and displays gate layouts.', 'SRD'),
+('Rift Mapping Device', 'hunter_gear', 30000, 2, NULL, NULL, NULL, NULL, 'Records and displays gate layouts.', 'SRD'),
 ('Monster Core Extractor', 'hunter_gear', 15000, 3, NULL, NULL, NULL, NULL, 'Tool for extracting mana cores from slain monsters.', 'SRD'),
-('Hunter License Badge', 'hunter_gear', 0, 0, NULL, NULL, NULL, NULL, 'Official hunter identification and rank display.', 'SRD'),
+('Ascendant License Badge', 'hunter_gear', 0, 0, NULL, NULL, NULL, NULL, 'Official ascendant identification and rank display.', 'SRD'),
 ('Reinforced Storage Case', 'hunter_gear', 5000, 5, NULL, NULL, NULL, NULL, 'Protects valuable items and cores from damage.', 'SRD')
 ON CONFLICT (name) DO NOTHING;

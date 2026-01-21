@@ -54,7 +54,7 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
           item_type: 'currency',
           quantity: amount,
           weight: 0.02, // 50 coins per pound
-          description: `Gate rewards - ${currencyType.name} coins`,
+          description: `Rift rewards - ${currencyType.name} coins`,
         });
         toast({
           title: 'Currency added',
@@ -88,7 +88,7 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
           item_type: 'currency',
           quantity: amount,
           weight: 0.02,
-          description: `Gate rewards - ${currencyType.name} coins`,
+          description: `Rift rewards - ${currencyType.name} coins`,
         });
       }
       setEditing(null);
@@ -106,10 +106,10 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
   };
 
   return (
-    <SystemWindow title="GATE REWARDS">
+    <SystemWindow title="RIFT REWARDS">
       <div className="space-y-3">
         <p className="text-xs text-muted-foreground mb-4">
-          Track currency earned from Gate completions. In the post-reset world, Hunters are rewarded by the System.
+          Track currency earned from Rift completions. In the post-reset world, Ascendants are rewarded by the System.
         </p>
         {CURRENCY_TYPES.map((type) => {
           const currency = getCurrency(type.id);

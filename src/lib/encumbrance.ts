@@ -1,6 +1,6 @@
 /**
- * Encumbrance calculations for Solo Leveling 5e
- * Based on STR score - Hunters must manage their Gate loot carefully
+ * Encumbrance calculations for System Ascendant 5e SRD
+ * Based on STR score - Ascendants must manage their Rift loot carefully
  */
 
 export interface EncumbranceStatus {
@@ -107,4 +107,5 @@ export function getEncumbranceSpeedPenalty(status: EncumbranceStatus['status']):
       return 0;
   }
 }
+
 

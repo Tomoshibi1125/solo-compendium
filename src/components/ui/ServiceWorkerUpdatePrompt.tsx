@@ -99,7 +99,7 @@ export function ServiceWorkerUpdatePrompt() {
         <DialogHeader>
           <DialogTitle>Update Available</DialogTitle>
           <DialogDescription>
-            A new version of Solo Compendium is available. Would you like to update now?
+            A new version of System Ascendant is available. Would you like to update now?
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -116,4 +116,5 @@ export function ServiceWorkerUpdatePrompt() {
     </Dialog>
   );
 }
+
 

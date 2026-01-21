@@ -1,10 +1,10 @@
 -- =============================================
--- FINALIZE ALL REMAINING PATHS AND MONARCHS - SOLO LEVELING ALIGNED
+-- FINALIZE ALL REMAINING PATHS AND MONARCHS - SYSTEM ASCENDANT ALIGNED
 -- =============================================
 -- This migration completes:
 -- - Remaining 24 paths: Striker (6), Techsmith (6), Vanguard (6), Warden (6)
 -- - All 8 remaining monarchs: Beast, Iron Body, Plague, Frost, Stone, Destruction, White Flames, Transfiguration
--- All features fully aligned with Solo Leveling manhwa universe, post-reset timeline
+-- All features fully aligned with System Ascendant canon, post-reset timeline
 --
 -- Pattern: Each path gets 4 features (levels 3, 6, 10, 14)
 -- Pattern: Each monarch gets features at appropriate levels (7, 9, 11, 13, 15, 17, 20)
@@ -18,7 +18,7 @@
 -- Path of the Blitz Raider
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Blitz Rush', 3,
-'When you choose this path at 3rd level, you gain incredible speed through System energy channeling. Your speed increases by 10 feet. Additionally, when you take the Dash action, you can make one weapon attack as a bonus action. Your attacks are a blur in Gate combat.',
+'When you choose this path at 3rd level, you gain incredible speed through System energy channeling. Your speed increases by 10 feet. Additionally, when you take the Dash action, you can make one weapon attack as a bonus action. Your attacks are a blur in Rift combat.',
 'bonus-action', NULL, NULL, NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Striker' AND p.name = 'Path of the Blitz Raider';
@@ -36,7 +36,7 @@ FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Striker' AND p.name = 'Path of the Blitz Raider';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Perfect Blitz', 14,
-'At 14th level, your speed reaches perfection. Your speed increases by an additional 10 feet (total 20 feet). Additionally, once per turn when you hit a creature with a weapon attack, you can make an additional weapon attack against a different creature within 5 feet of the first. Gate enemies cannot escape your blitz.',
+'At 14th level, your speed reaches perfection. Your speed increases by an additional 10 feet (total 20 feet). Additionally, once per turn when you hit a creature with a weapon attack, you can make an additional weapon attack against a different creature within 5 feet of the first. Rift enemies cannot escape your blitz.',
 'passive', '1 per turn', NULL, 'Speed Burst', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Striker' AND p.name = 'Path of the Blitz Raider';
@@ -155,7 +155,7 @@ FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Striker' AND p.name = 'Path of the Shockstep Adept';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Perfect Momentum', 10,
-'Starting at 10th level, you can maintain perfect momentum. When you use your Shockstep feature, you don''t expend a use. Additionally, when you move at least 20 feet on your turn, you can use your bonus action to make a weapon attack. Gate enemies cannot keep up with your speed.',
+'Starting at 10th level, you can maintain perfect momentum. When you use your Shockstep feature, you don''t expend a use. Additionally, when you move at least 20 feet on your turn, you can use your bonus action to make a weapon attack. Rift enemies cannot keep up with your speed.',
 'passive', NULL, NULL, 'Momentum Strike', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Striker' AND p.name = 'Path of the Shockstep Adept';
@@ -168,7 +168,7 @@ WHERE j.name = 'Striker' AND p.name = 'Path of the Shockstep Adept';
 -- =============================================
 -- TECHSMITH PATHS (6 paths) - Complete All Features
 -- =============================================
--- All aligned with technology, System interface, and Hunter gear
+-- All aligned with technology, System interface, and Ascendant gear
 
 -- Path of the Arc Reactor
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
@@ -273,7 +273,7 @@ WHERE j.name = 'Techsmith' AND p.name = 'Path of the Ghost Protocol';
 -- Path of the Relic Smith (Item Crafting)
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Master Craftsman', 3,
-'When you choose this path at 3rd level, you excel at creating and enhancing Hunter relics. You can create magic items in half the normal time and cost. Additionally, you can use your Infuse Item feature to create temporary magic items that last for 24 hours instead of indefinitely. These temporary items can be more powerful than normal infusions.',
+'When you choose this path at 3rd level, you excel at creating and enhancing Ascendant relics. You can create magic items in half the normal time and cost. Additionally, you can use your Infuse Item feature to create temporary magic items that last for 24 hours instead of indefinitely. These temporary items can be more powerful than normal infusions.',
 'passive', NULL, NULL, NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Techsmith' AND p.name = 'Path of the Relic Smith';
@@ -353,7 +353,7 @@ WHERE j.name = 'Vanguard' AND p.name = 'Path of the Bastion';
 -- Path of the Battle Captain (Tactical Leadership)
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Command Presence', 3,
-'When you choose this path at 3rd level, you become a natural leader on the battlefield. As a bonus action, you can issue a command to one ally within 30 feet. The ally can immediately use their reaction to make one weapon attack or take the Dash, Disengage, or Dodge action. You can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a short or long rest. Your tactical commands coordinate Gate raids perfectly.',
+'When you choose this path at 3rd level, you become a natural leader on the battlefield. As a bonus action, you can issue a command to one ally within 30 feet. The ally can immediately use their reaction to make one weapon attack or take the Dash, Disengage, or Dodge action. You can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a short or long rest. Your tactical commands coordinate Rift raids perfectly.',
 'bonus-action', 'proficiency bonus', 'short-rest', NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Vanguard' AND p.name = 'Path of the Battle Captain';
@@ -365,20 +365,20 @@ FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Vanguard' AND p.name = 'Path of the Battle Captain';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Tactical Mastery', 10,
-'Starting at 10th level, your tactical knowledge is unmatched. You can grant advantage on attack rolls to all allies within 30 feet of you as a bonus action. Additionally, once per long rest, you can use your action to grant all allies within 60 feet an extra action on their next turn. Your strategies are flawless, coordinating entire Hunter teams.',
+'Starting at 10th level, your tactical knowledge is unmatched. You can grant advantage on attack rolls to all allies within 30 feet of you as a bonus action. Additionally, once per long rest, you can use your action to grant all allies within 60 feet an extra action on their next turn. Your strategies are flawless, coordinating entire Ascendant teams.',
 'bonus-action', NULL, NULL, 'Rallying Cry', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Vanguard' AND p.name = 'Path of the Battle Captain';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Perfect Coordination', 14,
-'At 14th level, you achieve perfect battlefield coordination. When you use your Command Presence feature, you can target all allies within 30 feet instead of one. Additionally, you can use your Rallying Cry as a bonus action, and allies affected gain temporary hit points equal to your Vanguard level. Your leadership makes any team unstoppable in Gate combat.',
+'At 14th level, you achieve perfect battlefield coordination. When you use your Command Presence feature, you can target all allies within 30 feet instead of one. Additionally, you can use your Rallying Cry as a bonus action, and allies affected gain temporary hit points equal to your Vanguard level. Your leadership makes any team unstoppable in Rift combat.',
 'bonus-action', NULL, NULL, 'Tactical Mastery', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Vanguard' AND p.name = 'Path of the Battle Captain';
 -- Path of the Iron Guard (Heavy Armor Defense)
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Iron Armor Mastery', 3,
-'When you choose this path at 3rd level, you master heavy armor. You ignore the Strength requirement for heavy armor, and you can don or doff heavy armor in half the normal time. Additionally, while wearing heavy armor, you have a +1 bonus to AC, and you have resistance to slashing, piercing, and bludgeoning damage from nonmagical attacks. Your armor becomes a second skin, like Hunter defensive gear.',
+'When you choose this path at 3rd level, you master heavy armor. You ignore the Strength requirement for heavy armor, and you can don or doff heavy armor in half the normal time. Additionally, while wearing heavy armor, you have a +1 bonus to AC, and you have resistance to slashing, piercing, and bludgeoning damage from nonmagical attacks. Your armor becomes a second skin, like Ascendant defensive gear.',
 'passive', NULL, NULL, NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Vanguard' AND p.name = 'Path of the Iron Guard';
@@ -396,7 +396,7 @@ FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Vanguard' AND p.name = 'Path of the Iron Guard';
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Perfect Iron Guard', 14,
-'At 14th level, you become the perfect iron guard. Your AC bonus from Iron Armor Mastery increases to +2, and you have resistance to all damage while wearing heavy armor. Additionally, once per long rest, you can use your action to become immune to all damage for 1 minute. Your iron defense is absolute, unmatched in Gate combat.',
+'At 14th level, you become the perfect iron guard. Your AC bonus from Iron Armor Mastery increases to +2, and you have resistance to all damage while wearing heavy armor. Additionally, once per long rest, you can use your action to become immune to all damage for 1 minute. Your iron defense is absolute, unmatched in Rift combat.',
 'action', '1 immunity per long rest', 'long-rest', 'Unbreakable Defense', true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Vanguard' AND p.name = 'Path of the Iron Guard';
@@ -484,7 +484,7 @@ WHERE j.name = 'Vanguard' AND p.name = 'Path of the Shieldwall';
 -- Path of the Frost Ring (Ice Barriers)
 INSERT INTO compendium_job_features (job_id, path_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_path_feature)
 SELECT j.id, p.id, 'Frost Barrier', 3,
-'When you choose this path at 3rd level, you can create barriers of ice. As an action, you can create a wall of ice up to 30 feet long, 10 feet high, and 1 foot thick. The wall appears on a surface you can see within 60 feet. Each 10-foot section has AC 12, 30 hit points, vulnerability to fire damage, and is difficult terrain. The wall lasts for 1 hour or until destroyed. Additionally, creatures that move through the wall take 2d6 cold damage. You create freezing defenses in Gate battles.',
+'When you choose this path at 3rd level, you can create barriers of ice. As an action, you can create a wall of ice up to 30 feet long, 10 feet high, and 1 foot thick. The wall appears on a surface you can see within 60 feet. Each 10-foot section has AC 12, 30 hit points, vulnerability to fire damage, and is difficult terrain. The wall lasts for 1 hour or until destroyed. Additionally, creatures that move through the wall take 2d6 cold damage. You create freezing defenses in Rift battles.',
 'action', 'proficiency bonus', 'long-rest', NULL, true
 FROM compendium_jobs j JOIN compendium_job_paths p ON p.job_id = j.id
 WHERE j.name = 'Warden' AND p.name = 'Path of the Frost Ring';
@@ -638,5 +638,6 @@ WHERE j.name = 'Warden' AND p.name = 'Path of the Void Fence';
 -- ✅ Techsmith: 6/6 paths complete
 -- ✅ Vanguard: 6/6 paths complete
 -- ✅ Warden: 6/6 paths complete
--- All paths have 4 features (levels 3, 6, 10, 14) with Solo Leveling alignment
+-- All paths have 4 features (levels 3, 6, 10, 14) with System Ascendant alignment
 -- =============================================;
+

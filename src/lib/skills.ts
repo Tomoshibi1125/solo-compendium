@@ -1,4 +1,4 @@
-import type { AbilityScore } from '@/types/solo-leveling';
+import type { AbilityScore } from '@/types/system-rules';
 import { getAbilityModifier } from './characterCalculations';
 
 export interface SkillDefinition {
@@ -62,5 +62,6 @@ export function calculatePassiveSkill(
 export function getAllSkills(): SkillDefinition[] {
   return Object.values(SKILLS);
 }
+
 
 

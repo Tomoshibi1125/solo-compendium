@@ -33,6 +33,7 @@ import { ArtifactDetail } from '@/components/compendium/ArtifactDetail';
 import { LocationDetail } from '@/components/compendium/LocationDetail';
 import { ItemDetail } from '@/components/compendium/ItemDetail';
 import { resolveRef, type EntryType, isValidEntryType, entryTypes, listStaticEntries } from '@/lib/compendiumResolver';
+import { formatMonarchVernacular, MONARCH_LABEL_PLURAL } from '@/lib/vernacular';
 
 const CompendiumDetail = () => {
   const { type, id } = useParams<{ type: EntryType; id: string }>();
@@ -75,9 +76,9 @@ const CompendiumDetail = () => {
         related.push(
           ...matches.map((item) => ({
             id: item.id,
-            name: item.display_name || item.name,
+            name: formatMonarchVernacular(item.display_name || item.name),
             type: entryType,
-            description: item.description || undefined,
+            description: item.description ? formatMonarchVernacular(item.description) : undefined,
           }))
         );
       }
@@ -127,7 +128,8 @@ const CompendiumDetail = () => {
   const getTocItems = () => {
     if (!entry || !type) return [];
     
-    const entryName = (entry as { display_name?: string | null; name?: string }).display_name || (entry as { name?: string }).name || '';
+    const entryNameRaw = (entry as { display_name?: string | null; name?: string }).display_name || (entry as { name?: string }).name || '';
+    const entryName = formatMonarchVernacular(entryNameRaw);
     const items: Array<{ id: string; title: string; level: number }> = [
       { id: 'entry-header', title: entryName, level: 1 },
     ];
@@ -301,7 +303,8 @@ const CompendiumDetail = () => {
   };
 
   const isFavorite = favorites.has(`${type}:${id || ''}`);
-  const entryDisplayName = entryData.display_name || entryData.name;
+  const entryDisplayNameRaw = entryData.display_name || entryData.name;
+  const entryDisplayName = formatMonarchVernacular(entryDisplayNameRaw);
   
   const handleToggleFavorite = () => {
     if (!id) return;
@@ -331,7 +334,7 @@ const CompendiumDetail = () => {
   };
 
   const handleExport = () => {
-    const dataStr = JSON.stringify(entry, null, 2);
+    const dataStr = formatMonarchVernacular(JSON.stringify(entry, null, 2));
     const dataBlob = new Blob([dataStr], { type: 'application/json' });
     const url = URL.createObjectURL(dataBlob);
     const link = document.createElement('a');
@@ -357,7 +360,7 @@ const CompendiumDetail = () => {
     monsters: 'Monsters',
     backgrounds: 'Backgrounds',
     conditions: 'Conditions',
-    monarchs: 'Monarchs',
+    monarchs: MONARCH_LABEL_PLURAL,
     feats: 'Feats',
     skills: 'Skills',
     equipment: 'Equipment',
@@ -367,7 +370,7 @@ const CompendiumDetail = () => {
     artifacts: 'Artifacts',
     locations: 'Locations',
     sovereigns: 'Sovereigns',
-    'shadow-soldiers': 'Shadow Soldiers',
+    'shadow-soldiers': 'Umbral Legion',
   };
 
   return (
@@ -383,7 +386,7 @@ const CompendiumDetail = () => {
         <Breadcrumbs
           items={[
             { label: 'Compendium', href: '/compendium' },
-            { label: categoryLabels[type] || type, href: `/compendium?category=${type}` },
+            { label: formatMonarchVernacular(categoryLabels[type] || type), href: `/compendium?category=${type}` },
             { label: entryDisplayName },
           ]}
         />
@@ -395,7 +398,7 @@ const CompendiumDetail = () => {
           sidebar={
             <>
               <QuickReference
-                entry={{ ...entryData, name: entryDisplayName }}
+                entry={{ ...entryData, name: entryData.name, display_name: entryDisplayName }}
                 isFavorite={isFavorite}
                 onToggleFavorite={handleToggleFavorite}
                 onShare={handleShare}
@@ -419,3 +422,4 @@ const CompendiumDetail = () => {
 };
 
 export default CompendiumDetail;
+

@@ -1,6 +1,6 @@
-// Comprehensive Spells Compendium - D&D Beyond Scale
+// Comprehensive Spells Compendium - Digital Character Sheet Scale
 // Generated with full admin privileges
-// Solo Leveling themed spells with images
+// System Ascendant themed spells with images
 
 export interface Spell {
   id: string;
@@ -21,7 +21,7 @@ export const spells = [
   {
     "id": "spell-0001",
     "name": "Shadow Bolt",
-    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 88,
@@ -34,7 +34,7 @@ export const spells = [
   {
     "id": "spell-0002",
     "name": "Void Bolt",
-    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 84,
@@ -46,7 +46,7 @@ export const spells = [
   {
     "id": "spell-0003",
     "name": "Abyssal Bolt",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 105,
@@ -58,7 +58,7 @@ export const spells = [
   {
     "id": "spell-0004",
     "name": "Demonic Bolt",
-    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 107,
@@ -71,7 +71,7 @@ export const spells = [
   {
     "id": "spell-0005",
     "name": "Celestial Bolt",
-    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 46,
@@ -84,7 +84,7 @@ export const spells = [
   {
     "id": "spell-0006",
     "name": "Divine Bolt",
-    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 45,
@@ -96,7 +96,7 @@ export const spells = [
   {
     "id": "spell-0007",
     "name": "Arcane Bolt",
-    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 106,
@@ -108,7 +108,7 @@ export const spells = [
   {
     "id": "spell-0008",
     "name": "Infernal Bolt",
-    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 52,
@@ -121,7 +121,7 @@ export const spells = [
   {
     "id": "spell-0009",
     "name": "Frozen Bolt",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 60,
@@ -134,7 +134,7 @@ export const spells = [
   {
     "id": "spell-0010",
     "name": "Thunder Bolt",
-    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 103,
@@ -146,7 +146,7 @@ export const spells = [
   {
     "id": "spell-0011",
     "name": "Holy Bolt",
-    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 104,
@@ -158,7 +158,7 @@ export const spells = [
   {
     "id": "spell-0012",
     "name": "Dark Bolt",
-    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 20,
@@ -171,7 +171,7 @@ export const spells = [
   {
     "id": "spell-0013",
     "name": "Shadow Blast",
-    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 48,
@@ -184,7 +184,7 @@ export const spells = [
   {
     "id": "spell-0014",
     "name": "Void Blast",
-    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 75,
@@ -196,7 +196,7 @@ export const spells = [
   {
     "id": "spell-0015",
     "name": "Abyssal Blast",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 30,
@@ -208,7 +208,7 @@ export const spells = [
   {
     "id": "spell-0016",
     "name": "Demonic Blast",
-    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 73,
@@ -221,7 +221,7 @@ export const spells = [
   {
     "id": "spell-0017",
     "name": "Celestial Blast",
-    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 87,
@@ -234,7 +234,7 @@ export const spells = [
   {
     "id": "spell-0018",
     "name": "Divine Blast",
-    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 101,
@@ -246,7 +246,7 @@ export const spells = [
   {
     "id": "spell-0019",
     "name": "Arcane Blast",
-    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 52,
@@ -258,7 +258,7 @@ export const spells = [
   {
     "id": "spell-0020",
     "name": "Infernal Blast",
-    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 12,
@@ -271,7 +271,7 @@ export const spells = [
   {
     "id": "spell-0021",
     "name": "Frozen Blast",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 55,
@@ -284,7 +284,7 @@ export const spells = [
   {
     "id": "spell-0022",
     "name": "Thunder Blast",
-    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 84,
@@ -296,7 +296,7 @@ export const spells = [
   {
     "id": "spell-0023",
     "name": "Holy Blast",
-    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 24,
@@ -308,7 +308,7 @@ export const spells = [
   {
     "id": "spell-0024",
     "name": "Dark Blast",
-    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 54,
@@ -321,7 +321,7 @@ export const spells = [
   {
     "id": "spell-0025",
     "name": "Shadow Storm",
-    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 19,
@@ -334,7 +334,7 @@ export const spells = [
   {
     "id": "spell-0026",
     "name": "Void Storm",
-    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 65,
@@ -346,7 +346,7 @@ export const spells = [
   {
     "id": "spell-0027",
     "name": "Abyssal Storm",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 25,
@@ -358,7 +358,7 @@ export const spells = [
   {
     "id": "spell-0028",
     "name": "Demonic Storm",
-    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 25,
@@ -371,7 +371,7 @@ export const spells = [
   {
     "id": "spell-0029",
     "name": "Celestial Storm",
-    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 87,
@@ -384,7 +384,7 @@ export const spells = [
   {
     "id": "spell-0030",
     "name": "Divine Storm",
-    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 77,
@@ -396,7 +396,7 @@ export const spells = [
   {
     "id": "spell-0031",
     "name": "Arcane Storm",
-    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 32,
@@ -408,7 +408,7 @@ export const spells = [
   {
     "id": "spell-0032",
     "name": "Infernal Storm",
-    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 62,
@@ -421,7 +421,7 @@ export const spells = [
   {
     "id": "spell-0033",
     "name": "Frozen Storm",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 61,
@@ -434,7 +434,7 @@ export const spells = [
   {
     "id": "spell-0034",
     "name": "Thunder Storm",
-    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 73,
@@ -446,7 +446,7 @@ export const spells = [
   {
     "id": "spell-0035",
     "name": "Holy Storm",
-    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 24,
@@ -458,7 +458,7 @@ export const spells = [
   {
     "id": "spell-0036",
     "name": "Dark Storm",
-    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 40,
@@ -471,7 +471,7 @@ export const spells = [
   {
     "id": "spell-0037",
     "name": "Shadow Wave",
-    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 33,
@@ -484,7 +484,7 @@ export const spells = [
   {
     "id": "spell-0038",
     "name": "Void Wave",
-    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 27,
@@ -496,7 +496,7 @@ export const spells = [
   {
     "id": "spell-0039",
     "name": "Abyssal Wave",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 75,
@@ -508,7 +508,7 @@ export const spells = [
   {
     "id": "spell-0040",
     "name": "Demonic Wave",
-    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 89,
@@ -521,7 +521,7 @@ export const spells = [
   {
     "id": "spell-0041",
     "name": "Celestial Wave",
-    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 63,
@@ -534,7 +534,7 @@ export const spells = [
   {
     "id": "spell-0042",
     "name": "Divine Wave",
-    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 10,
@@ -546,7 +546,7 @@ export const spells = [
   {
     "id": "spell-0043",
     "name": "Arcane Wave",
-    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 53,
@@ -558,7 +558,7 @@ export const spells = [
   {
     "id": "spell-0044",
     "name": "Infernal Wave",
-    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 90,
@@ -571,7 +571,7 @@ export const spells = [
   {
     "id": "spell-0045",
     "name": "Frozen Wave",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 44,
@@ -584,7 +584,7 @@ export const spells = [
   {
     "id": "spell-0046",
     "name": "Thunder Wave",
-    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 34,
@@ -596,7 +596,7 @@ export const spells = [
   {
     "id": "spell-0047",
     "name": "Holy Wave",
-    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 93,
@@ -608,7 +608,7 @@ export const spells = [
   {
     "id": "spell-0048",
     "name": "Dark Wave",
-    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 89,
@@ -621,7 +621,7 @@ export const spells = [
   {
     "id": "spell-0049",
     "name": "Shadow Nova",
-    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 31,
@@ -634,7 +634,7 @@ export const spells = [
   {
     "id": "spell-0050",
     "name": "Void Nova",
-    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 75,
@@ -646,7 +646,7 @@ export const spells = [
   {
     "id": "spell-0051",
     "name": "Abyssal Nova",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 105,
@@ -658,7 +658,7 @@ export const spells = [
   {
     "id": "spell-0052",
     "name": "Demonic Nova",
-    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 92,
@@ -671,7 +671,7 @@ export const spells = [
   {
     "id": "spell-0053",
     "name": "Celestial Nova",
-    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 33,
@@ -684,7 +684,7 @@ export const spells = [
   {
     "id": "spell-0054",
     "name": "Divine Nova",
-    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 89,
@@ -696,7 +696,7 @@ export const spells = [
   {
     "id": "spell-0055",
     "name": "Arcane Nova",
-    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 24,
@@ -708,7 +708,7 @@ export const spells = [
   {
     "id": "spell-0056",
     "name": "Infernal Nova",
-    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 64,
@@ -721,7 +721,7 @@ export const spells = [
   {
     "id": "spell-0057",
     "name": "Frozen Nova",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 20,
@@ -734,7 +734,7 @@ export const spells = [
   {
     "id": "spell-0058",
     "name": "Thunder Nova",
-    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 50,
@@ -746,7 +746,7 @@ export const spells = [
   {
     "id": "spell-0059",
     "name": "Holy Nova",
-    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 102,
@@ -758,7 +758,7 @@ export const spells = [
   {
     "id": "spell-0060",
     "name": "Dark Nova",
-    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 21,
@@ -771,7 +771,7 @@ export const spells = [
   {
     "id": "spell-0061",
     "name": "Shadow Barrier",
-    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 61,
@@ -784,7 +784,7 @@ export const spells = [
   {
     "id": "spell-0062",
     "name": "Void Barrier",
-    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 69,
@@ -796,7 +796,7 @@ export const spells = [
   {
     "id": "spell-0063",
     "name": "Abyssal Barrier",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 14,
@@ -808,7 +808,7 @@ export const spells = [
   {
     "id": "spell-0064",
     "name": "Demonic Barrier",
-    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 91,
@@ -821,7 +821,7 @@ export const spells = [
   {
     "id": "spell-0065",
     "name": "Celestial Barrier",
-    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 31,
@@ -834,7 +834,7 @@ export const spells = [
   {
     "id": "spell-0066",
     "name": "Divine Barrier",
-    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 21,
@@ -846,7 +846,7 @@ export const spells = [
   {
     "id": "spell-0067",
     "name": "Arcane Barrier",
-    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 80,
@@ -858,7 +858,7 @@ export const spells = [
   {
     "id": "spell-0068",
     "name": "Infernal Barrier",
-    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 35,
@@ -871,7 +871,7 @@ export const spells = [
   {
     "id": "spell-0069",
     "name": "Frozen Barrier",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 44,
@@ -884,7 +884,7 @@ export const spells = [
   {
     "id": "spell-0070",
     "name": "Thunder Barrier",
-    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 52,
@@ -896,7 +896,7 @@ export const spells = [
   {
     "id": "spell-0071",
     "name": "Holy Barrier",
-    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 46,
@@ -908,7 +908,7 @@ export const spells = [
   {
     "id": "spell-0072",
     "name": "Dark Barrier",
-    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 71,
@@ -921,7 +921,7 @@ export const spells = [
   {
     "id": "spell-0073",
     "name": "Shadow Shield",
-    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 40,
@@ -934,7 +934,7 @@ export const spells = [
   {
     "id": "spell-0074",
     "name": "Void Shield",
-    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 52,
@@ -946,7 +946,7 @@ export const spells = [
   {
     "id": "spell-0075",
     "name": "Abyssal Shield",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 40,
@@ -958,7 +958,7 @@ export const spells = [
   {
     "id": "spell-0076",
     "name": "Demonic Shield",
-    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 11,
@@ -971,7 +971,7 @@ export const spells = [
   {
     "id": "spell-0077",
     "name": "Celestial Shield",
-    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 73,
@@ -984,7 +984,7 @@ export const spells = [
   {
     "id": "spell-0078",
     "name": "Divine Shield",
-    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 87,
@@ -996,7 +996,7 @@ export const spells = [
   {
     "id": "spell-0079",
     "name": "Arcane Shield",
-    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 100,
@@ -1008,7 +1008,7 @@ export const spells = [
   {
     "id": "spell-0080",
     "name": "Infernal Shield",
-    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 57,
@@ -1021,7 +1021,7 @@ export const spells = [
   {
     "id": "spell-0081",
     "name": "Frozen Shield",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 92,
@@ -1034,7 +1034,7 @@ export const spells = [
   {
     "id": "spell-0082",
     "name": "Thunder Shield",
-    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 23,
@@ -1046,7 +1046,7 @@ export const spells = [
   {
     "id": "spell-0083",
     "name": "Holy Shield",
-    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 25,
@@ -1058,7 +1058,7 @@ export const spells = [
   {
     "id": "spell-0084",
     "name": "Dark Shield",
-    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 82,
@@ -1071,7 +1071,7 @@ export const spells = [
   {
     "id": "spell-0085",
     "name": "Shadow Curse",
-    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 55,
@@ -1084,7 +1084,7 @@ export const spells = [
   {
     "id": "spell-0086",
     "name": "Void Curse",
-    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 22,
@@ -1096,7 +1096,7 @@ export const spells = [
   {
     "id": "spell-0087",
     "name": "Abyssal Curse",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 103,
@@ -1108,7 +1108,7 @@ export const spells = [
   {
     "id": "spell-0088",
     "name": "Demonic Curse",
-    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 33,
@@ -1121,7 +1121,7 @@ export const spells = [
   {
     "id": "spell-0089",
     "name": "Celestial Curse",
-    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 11,
@@ -1134,7 +1134,7 @@ export const spells = [
   {
     "id": "spell-0090",
     "name": "Divine Curse",
-    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 67,
@@ -1146,7 +1146,7 @@ export const spells = [
   {
     "id": "spell-0091",
     "name": "Arcane Curse",
-    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 18,
@@ -1158,7 +1158,7 @@ export const spells = [
   {
     "id": "spell-0092",
     "name": "Infernal Curse",
-    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 101,
@@ -1171,7 +1171,7 @@ export const spells = [
   {
     "id": "spell-0093",
     "name": "Frozen Curse",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 60,
@@ -1184,7 +1184,7 @@ export const spells = [
   {
     "id": "spell-0094",
     "name": "Thunder Curse",
-    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 31,
@@ -1196,7 +1196,7 @@ export const spells = [
   {
     "id": "spell-0095",
     "name": "Holy Curse",
-    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 32,
@@ -1208,7 +1208,7 @@ export const spells = [
   {
     "id": "spell-0096",
     "name": "Dark Curse",
-    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 35,
@@ -1221,7 +1221,7 @@ export const spells = [
   {
     "id": "spell-0097",
     "name": "Shadow Blessing",
-    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 84,
@@ -1234,7 +1234,7 @@ export const spells = [
   {
     "id": "spell-0098",
     "name": "Void Blessing",
-    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 43,
@@ -1246,7 +1246,7 @@ export const spells = [
   {
     "id": "spell-0099",
     "name": "Abyssal Blessing",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 67,
@@ -1258,7 +1258,7 @@ export const spells = [
   {
     "id": "spell-0100",
     "name": "Demonic Blessing",
-    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 39,
@@ -1271,7 +1271,7 @@ export const spells = [
   {
     "id": "spell-0101",
     "name": "Celestial Blessing",
-    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 51,
@@ -1284,7 +1284,7 @@ export const spells = [
   {
     "id": "spell-0102",
     "name": "Divine Blessing",
-    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 88,
@@ -1296,7 +1296,7 @@ export const spells = [
   {
     "id": "spell-0103",
     "name": "Arcane Blessing",
-    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 41,
@@ -1308,7 +1308,7 @@ export const spells = [
   {
     "id": "spell-0104",
     "name": "Infernal Blessing",
-    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 105,
@@ -1321,7 +1321,7 @@ export const spells = [
   {
     "id": "spell-0105",
     "name": "Frozen Blessing",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 39,
@@ -1334,7 +1334,7 @@ export const spells = [
   {
     "id": "spell-0106",
     "name": "Thunder Blessing",
-    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 106,
@@ -1346,7 +1346,7 @@ export const spells = [
   {
     "id": "spell-0107",
     "name": "Holy Blessing",
-    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 60,
@@ -1358,7 +1358,7 @@ export const spells = [
   {
     "id": "spell-0108",
     "name": "Dark Blessing",
-    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 32,
@@ -1371,7 +1371,7 @@ export const spells = [
   {
     "id": "spell-0109",
     "name": "Shadow Healing",
-    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 90,
@@ -1384,7 +1384,7 @@ export const spells = [
   {
     "id": "spell-0110",
     "name": "Void Healing",
-    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 88,
@@ -1396,7 +1396,7 @@ export const spells = [
   {
     "id": "spell-0111",
     "name": "Abyssal Healing",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 67,
@@ -1408,7 +1408,7 @@ export const spells = [
   {
     "id": "spell-0112",
     "name": "Demonic Healing",
-    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 108,
@@ -1421,7 +1421,7 @@ export const spells = [
   {
     "id": "spell-0113",
     "name": "Celestial Healing",
-    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 70,
@@ -1434,7 +1434,7 @@ export const spells = [
   {
     "id": "spell-0114",
     "name": "Divine Healing",
-    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 56,
@@ -1446,7 +1446,7 @@ export const spells = [
   {
     "id": "spell-0115",
     "name": "Arcane Healing",
-    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 33,
@@ -1458,7 +1458,7 @@ export const spells = [
   {
     "id": "spell-0116",
     "name": "Infernal Healing",
-    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 85,
@@ -1471,7 +1471,7 @@ export const spells = [
   {
     "id": "spell-0117",
     "name": "Frozen Healing",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 88,
@@ -1484,7 +1484,7 @@ export const spells = [
   {
     "id": "spell-0118",
     "name": "Thunder Healing",
-    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 39,
@@ -1496,7 +1496,7 @@ export const spells = [
   {
     "id": "spell-0119",
     "name": "Holy Healing",
-    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 62,
@@ -1508,7 +1508,7 @@ export const spells = [
   {
     "id": "spell-0120",
     "name": "Dark Healing",
-    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 90,
@@ -1521,7 +1521,7 @@ export const spells = [
   {
     "id": "spell-0121",
     "name": "Shadow Restoration",
-    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 63,
@@ -1534,7 +1534,7 @@ export const spells = [
   {
     "id": "spell-0122",
     "name": "Void Restoration",
-    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 95,
@@ -1546,7 +1546,7 @@ export const spells = [
   {
     "id": "spell-0123",
     "name": "Abyssal Restoration",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 44,
@@ -1558,7 +1558,7 @@ export const spells = [
   {
     "id": "spell-0124",
     "name": "Demonic Restoration",
-    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 34,
@@ -1571,7 +1571,7 @@ export const spells = [
   {
     "id": "spell-0125",
     "name": "Celestial Restoration",
-    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 49,
@@ -1584,7 +1584,7 @@ export const spells = [
   {
     "id": "spell-0126",
     "name": "Divine Restoration",
-    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 37,
@@ -1596,7 +1596,7 @@ export const spells = [
   {
     "id": "spell-0127",
     "name": "Arcane Restoration",
-    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 90,
@@ -1608,7 +1608,7 @@ export const spells = [
   {
     "id": "spell-0128",
     "name": "Infernal Restoration",
-    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 94,
@@ -1621,7 +1621,7 @@ export const spells = [
   {
     "id": "spell-0129",
     "name": "Frozen Restoration",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 61,
@@ -1634,7 +1634,7 @@ export const spells = [
   {
     "id": "spell-0130",
     "name": "Thunder Restoration",
-    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 61,
@@ -1646,7 +1646,7 @@ export const spells = [
   {
     "id": "spell-0131",
     "name": "Holy Restoration",
-    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 74,
@@ -1658,7 +1658,7 @@ export const spells = [
   {
     "id": "spell-0132",
     "name": "Dark Restoration",
-    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 96,
@@ -1671,7 +1671,7 @@ export const spells = [
   {
     "id": "spell-0133",
     "name": "Shadow Destruction",
-    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 67,
@@ -1684,7 +1684,7 @@ export const spells = [
   {
     "id": "spell-0134",
     "name": "Void Destruction",
-    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 105,
@@ -1696,7 +1696,7 @@ export const spells = [
   {
     "id": "spell-0135",
     "name": "Abyssal Destruction",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 44,
@@ -1708,7 +1708,7 @@ export const spells = [
   {
     "id": "spell-0136",
     "name": "Demonic Destruction",
-    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 38,
@@ -1721,7 +1721,7 @@ export const spells = [
   {
     "id": "spell-0137",
     "name": "Celestial Destruction",
-    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 22,
@@ -1734,7 +1734,7 @@ export const spells = [
   {
     "id": "spell-0138",
     "name": "Divine Destruction",
-    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 105,
@@ -1746,7 +1746,7 @@ export const spells = [
   {
     "id": "spell-0139",
     "name": "Arcane Destruction",
-    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 75,
@@ -1758,7 +1758,7 @@ export const spells = [
   {
     "id": "spell-0140",
     "name": "Infernal Destruction",
-    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 53,
@@ -1771,7 +1771,7 @@ export const spells = [
   {
     "id": "spell-0141",
     "name": "Frozen Destruction",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 26,
@@ -1784,7 +1784,7 @@ export const spells = [
   {
     "id": "spell-0142",
     "name": "Thunder Destruction",
-    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 49,
@@ -1796,7 +1796,7 @@ export const spells = [
   {
     "id": "spell-0143",
     "name": "Holy Destruction",
-    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 39,
@@ -1808,7 +1808,7 @@ export const spells = [
   {
     "id": "spell-0144",
     "name": "Dark Destruction",
-    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 102,
@@ -1821,7 +1821,7 @@ export const spells = [
   {
     "id": "spell-0145",
     "name": "Shadow Summoning",
-    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 85,
@@ -1834,7 +1834,7 @@ export const spells = [
   {
     "id": "spell-0146",
     "name": "Void Summoning",
-    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 100,
@@ -1846,7 +1846,7 @@ export const spells = [
   {
     "id": "spell-0147",
     "name": "Abyssal Summoning",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 70,
@@ -1858,7 +1858,7 @@ export const spells = [
   {
     "id": "spell-0148",
     "name": "Demonic Summoning",
-    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 46,
@@ -1871,7 +1871,7 @@ export const spells = [
   {
     "id": "spell-0149",
     "name": "Celestial Summoning",
-    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 44,
@@ -1884,7 +1884,7 @@ export const spells = [
   {
     "id": "spell-0150",
     "name": "Divine Summoning",
-    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 61,
@@ -1896,7 +1896,7 @@ export const spells = [
   {
     "id": "spell-0151",
     "name": "Arcane Summoning",
-    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 26,
@@ -1908,7 +1908,7 @@ export const spells = [
   {
     "id": "spell-0152",
     "name": "Infernal Summoning",
-    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 69,
@@ -1921,7 +1921,7 @@ export const spells = [
   {
     "id": "spell-0153",
     "name": "Frozen Summoning",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 57,
@@ -1934,7 +1934,7 @@ export const spells = [
   {
     "id": "spell-0154",
     "name": "Thunder Summoning",
-    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 39,
@@ -1946,7 +1946,7 @@ export const spells = [
   {
     "id": "spell-0155",
     "name": "Holy Summoning",
-    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 78,
@@ -1958,7 +1958,7 @@ export const spells = [
   {
     "id": "spell-0156",
     "name": "Dark Summoning",
-    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 90,
@@ -1971,7 +1971,7 @@ export const spells = [
   {
     "id": "spell-0157",
     "name": "Shadow Binding",
-    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 107,
@@ -1984,7 +1984,7 @@ export const spells = [
   {
     "id": "spell-0158",
     "name": "Void Binding",
-    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 62,
@@ -1996,7 +1996,7 @@ export const spells = [
   {
     "id": "spell-0159",
     "name": "Abyssal Binding",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 45,
@@ -2008,7 +2008,7 @@ export const spells = [
   {
     "id": "spell-0160",
     "name": "Demonic Binding",
-    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 88,
@@ -2021,7 +2021,7 @@ export const spells = [
   {
     "id": "spell-0161",
     "name": "Celestial Binding",
-    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 107,
@@ -2034,7 +2034,7 @@ export const spells = [
   {
     "id": "spell-0162",
     "name": "Divine Binding",
-    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 103,
@@ -2046,7 +2046,7 @@ export const spells = [
   {
     "id": "spell-0163",
     "name": "Arcane Binding",
-    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 101,
@@ -2058,7 +2058,7 @@ export const spells = [
   {
     "id": "spell-0164",
     "name": "Infernal Binding",
-    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 22,
@@ -2071,7 +2071,7 @@ export const spells = [
   {
     "id": "spell-0165",
     "name": "Frozen Binding",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 40,
@@ -2084,7 +2084,7 @@ export const spells = [
   {
     "id": "spell-0166",
     "name": "Thunder Binding",
-    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 61,
@@ -2096,7 +2096,7 @@ export const spells = [
   {
     "id": "spell-0167",
     "name": "Holy Binding",
-    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 54,
@@ -2108,7 +2108,7 @@ export const spells = [
   {
     "id": "spell-0168",
     "name": "Dark Binding",
-    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 55,
@@ -2121,7 +2121,7 @@ export const spells = [
   {
     "id": "spell-0169",
     "name": "Shadow Teleportation",
-    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 90,
@@ -2134,7 +2134,7 @@ export const spells = [
   {
     "id": "spell-0170",
     "name": "Void Teleportation",
-    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 106,
@@ -2146,7 +2146,7 @@ export const spells = [
   {
     "id": "spell-0171",
     "name": "Abyssal Teleportation",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 35,
@@ -2158,7 +2158,7 @@ export const spells = [
   {
     "id": "spell-0172",
     "name": "Demonic Teleportation",
-    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 90,
@@ -2171,7 +2171,7 @@ export const spells = [
   {
     "id": "spell-0173",
     "name": "Celestial Teleportation",
-    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 52,
@@ -2184,7 +2184,7 @@ export const spells = [
   {
     "id": "spell-0174",
     "name": "Divine Teleportation",
-    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 66,
@@ -2196,7 +2196,7 @@ export const spells = [
   {
     "id": "spell-0175",
     "name": "Arcane Teleportation",
-    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 16,
@@ -2208,7 +2208,7 @@ export const spells = [
   {
     "id": "spell-0176",
     "name": "Infernal Teleportation",
-    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 35,
@@ -2221,7 +2221,7 @@ export const spells = [
   {
     "id": "spell-0177",
     "name": "Frozen Teleportation",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 88,
@@ -2234,7 +2234,7 @@ export const spells = [
   {
     "id": "spell-0178",
     "name": "Thunder Teleportation",
-    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 15,
@@ -2246,7 +2246,7 @@ export const spells = [
   {
     "id": "spell-0179",
     "name": "Holy Teleportation",
-    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 107,
@@ -2258,7 +2258,7 @@ export const spells = [
   {
     "id": "spell-0180",
     "name": "Dark Teleportation",
-    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 22,
@@ -2271,7 +2271,7 @@ export const spells = [
   {
     "id": "spell-0181",
     "name": "Shadow Transformation",
-    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 100,
@@ -2284,7 +2284,7 @@ export const spells = [
   {
     "id": "spell-0182",
     "name": "Void Transformation",
-    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 109,
@@ -2296,7 +2296,7 @@ export const spells = [
   {
     "id": "spell-0183",
     "name": "Abyssal Transformation",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 63,
@@ -2308,7 +2308,7 @@ export const spells = [
   {
     "id": "spell-0184",
     "name": "Demonic Transformation",
-    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 79,
@@ -2321,7 +2321,7 @@ export const spells = [
   {
     "id": "spell-0185",
     "name": "Celestial Transformation",
-    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 89,
@@ -2334,7 +2334,7 @@ export const spells = [
   {
     "id": "spell-0186",
     "name": "Divine Transformation",
-    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 94,
@@ -2346,7 +2346,7 @@ export const spells = [
   {
     "id": "spell-0187",
     "name": "Arcane Transformation",
-    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 99,
@@ -2358,7 +2358,7 @@ export const spells = [
   {
     "id": "spell-0188",
     "name": "Infernal Transformation",
-    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 100,
@@ -2371,7 +2371,7 @@ export const spells = [
   {
     "id": "spell-0189",
     "name": "Frozen Transformation",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 84,
@@ -2384,7 +2384,7 @@ export const spells = [
   {
     "id": "spell-0190",
     "name": "Thunder Transformation",
-    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 10,
@@ -2396,7 +2396,7 @@ export const spells = [
   {
     "id": "spell-0191",
     "name": "Holy Transformation",
-    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 46,
@@ -2408,7 +2408,7 @@ export const spells = [
   {
     "id": "spell-0192",
     "name": "Dark Transformation",
-    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 68,
@@ -2421,7 +2421,7 @@ export const spells = [
   {
     "id": "spell-0193",
     "name": "Shadow Bolt",
-    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 15,
@@ -2434,7 +2434,7 @@ export const spells = [
   {
     "id": "spell-0194",
     "name": "Void Bolt",
-    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 40,
@@ -2446,7 +2446,7 @@ export const spells = [
   {
     "id": "spell-0195",
     "name": "Abyssal Bolt",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 101,
@@ -2458,7 +2458,7 @@ export const spells = [
   {
     "id": "spell-0196",
     "name": "Demonic Bolt",
-    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 94,
@@ -2471,7 +2471,7 @@ export const spells = [
   {
     "id": "spell-0197",
     "name": "Celestial Bolt",
-    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 19,
@@ -2484,7 +2484,7 @@ export const spells = [
   {
     "id": "spell-0198",
     "name": "Divine Bolt",
-    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 37,
@@ -2496,7 +2496,7 @@ export const spells = [
   {
     "id": "spell-0199",
     "name": "Arcane Bolt",
-    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 72,
@@ -2508,7 +2508,7 @@ export const spells = [
   {
     "id": "spell-0200",
     "name": "Infernal Bolt",
-    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 32,
@@ -2521,7 +2521,7 @@ export const spells = [
   {
     "id": "spell-0201",
     "name": "Frozen Bolt",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 30,
@@ -2534,7 +2534,7 @@ export const spells = [
   {
     "id": "spell-0202",
     "name": "Thunder Bolt",
-    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 60,
@@ -2546,7 +2546,7 @@ export const spells = [
   {
     "id": "spell-0203",
     "name": "Holy Bolt",
-    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 48,
@@ -2558,7 +2558,7 @@ export const spells = [
   {
     "id": "spell-0204",
     "name": "Dark Bolt",
-    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 18,
@@ -2571,7 +2571,7 @@ export const spells = [
   {
     "id": "spell-0205",
     "name": "Shadow Blast",
-    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 76,
@@ -2584,7 +2584,7 @@ export const spells = [
   {
     "id": "spell-0206",
     "name": "Void Blast",
-    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 97,
@@ -2596,7 +2596,7 @@ export const spells = [
   {
     "id": "spell-0207",
     "name": "Abyssal Blast",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 101,
@@ -2608,7 +2608,7 @@ export const spells = [
   {
     "id": "spell-0208",
     "name": "Demonic Blast",
-    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 78,
@@ -2621,7 +2621,7 @@ export const spells = [
   {
     "id": "spell-0209",
     "name": "Celestial Blast",
-    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 66,
@@ -2634,7 +2634,7 @@ export const spells = [
   {
     "id": "spell-0210",
     "name": "Divine Blast",
-    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 79,
@@ -2646,7 +2646,7 @@ export const spells = [
   {
     "id": "spell-0211",
     "name": "Arcane Blast",
-    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 45,
@@ -2658,7 +2658,7 @@ export const spells = [
   {
     "id": "spell-0212",
     "name": "Infernal Blast",
-    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 97,
@@ -2671,7 +2671,7 @@ export const spells = [
   {
     "id": "spell-0213",
     "name": "Frozen Blast",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 70,
@@ -2684,7 +2684,7 @@ export const spells = [
   {
     "id": "spell-0214",
     "name": "Thunder Blast",
-    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 67,
@@ -2696,7 +2696,7 @@ export const spells = [
   {
     "id": "spell-0215",
     "name": "Holy Blast",
-    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 88,
@@ -2708,7 +2708,7 @@ export const spells = [
   {
     "id": "spell-0216",
     "name": "Dark Blast",
-    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 80,
@@ -2721,7 +2721,7 @@ export const spells = [
   {
     "id": "spell-0217",
     "name": "Shadow Storm",
-    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 103,
@@ -2734,7 +2734,7 @@ export const spells = [
   {
     "id": "spell-0218",
     "name": "Void Storm",
-    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 80,
@@ -2746,7 +2746,7 @@ export const spells = [
   {
     "id": "spell-0219",
     "name": "Abyssal Storm",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 75,
@@ -2758,7 +2758,7 @@ export const spells = [
   {
     "id": "spell-0220",
     "name": "Demonic Storm",
-    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 98,
@@ -2771,7 +2771,7 @@ export const spells = [
   {
     "id": "spell-0221",
     "name": "Celestial Storm",
-    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 53,
@@ -2784,7 +2784,7 @@ export const spells = [
   {
     "id": "spell-0222",
     "name": "Divine Storm",
-    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 20,
@@ -2796,7 +2796,7 @@ export const spells = [
   {
     "id": "spell-0223",
     "name": "Arcane Storm",
-    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 96,
@@ -2808,7 +2808,7 @@ export const spells = [
   {
     "id": "spell-0224",
     "name": "Infernal Storm",
-    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 89,
@@ -2821,7 +2821,7 @@ export const spells = [
   {
     "id": "spell-0225",
     "name": "Frozen Storm",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 48,
@@ -2834,7 +2834,7 @@ export const spells = [
   {
     "id": "spell-0226",
     "name": "Thunder Storm",
-    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 21,
@@ -2846,7 +2846,7 @@ export const spells = [
   {
     "id": "spell-0227",
     "name": "Holy Storm",
-    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 52,
@@ -2858,7 +2858,7 @@ export const spells = [
   {
     "id": "spell-0228",
     "name": "Dark Storm",
-    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 24,
@@ -2871,7 +2871,7 @@ export const spells = [
   {
     "id": "spell-0229",
     "name": "Shadow Wave",
-    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 53,
@@ -2884,7 +2884,7 @@ export const spells = [
   {
     "id": "spell-0230",
     "name": "Void Wave",
-    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 64,
@@ -2896,7 +2896,7 @@ export const spells = [
   {
     "id": "spell-0231",
     "name": "Abyssal Wave",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 40,
@@ -2908,7 +2908,7 @@ export const spells = [
   {
     "id": "spell-0232",
     "name": "Demonic Wave",
-    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 79,
@@ -2921,7 +2921,7 @@ export const spells = [
   {
     "id": "spell-0233",
     "name": "Celestial Wave",
-    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 50,
@@ -2934,7 +2934,7 @@ export const spells = [
   {
     "id": "spell-0234",
     "name": "Divine Wave",
-    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 55,
@@ -2946,7 +2946,7 @@ export const spells = [
   {
     "id": "spell-0235",
     "name": "Arcane Wave",
-    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 85,
@@ -2958,7 +2958,7 @@ export const spells = [
   {
     "id": "spell-0236",
     "name": "Infernal Wave",
-    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 78,
@@ -2971,7 +2971,7 @@ export const spells = [
   {
     "id": "spell-0237",
     "name": "Frozen Wave",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 12,
@@ -2984,7 +2984,7 @@ export const spells = [
   {
     "id": "spell-0238",
     "name": "Thunder Wave",
-    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 76,
@@ -2996,7 +2996,7 @@ export const spells = [
   {
     "id": "spell-0239",
     "name": "Holy Wave",
-    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 109,
@@ -3008,7 +3008,7 @@ export const spells = [
   {
     "id": "spell-0240",
     "name": "Dark Wave",
-    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 15,
@@ -3021,7 +3021,7 @@ export const spells = [
   {
     "id": "spell-0241",
     "name": "Shadow Nova",
-    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 39,
@@ -3034,7 +3034,7 @@ export const spells = [
   {
     "id": "spell-0242",
     "name": "Void Nova",
-    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 36,
@@ -3046,7 +3046,7 @@ export const spells = [
   {
     "id": "spell-0243",
     "name": "Abyssal Nova",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 80,
@@ -3058,7 +3058,7 @@ export const spells = [
   {
     "id": "spell-0244",
     "name": "Demonic Nova",
-    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 87,
@@ -3071,7 +3071,7 @@ export const spells = [
   {
     "id": "spell-0245",
     "name": "Celestial Nova",
-    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 51,
@@ -3084,7 +3084,7 @@ export const spells = [
   {
     "id": "spell-0246",
     "name": "Divine Nova",
-    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 69,
@@ -3096,7 +3096,7 @@ export const spells = [
   {
     "id": "spell-0247",
     "name": "Arcane Nova",
-    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 78,
@@ -3108,7 +3108,7 @@ export const spells = [
   {
     "id": "spell-0248",
     "name": "Infernal Nova",
-    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 108,
@@ -3121,7 +3121,7 @@ export const spells = [
   {
     "id": "spell-0249",
     "name": "Frozen Nova",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 40,
@@ -3134,7 +3134,7 @@ export const spells = [
   {
     "id": "spell-0250",
     "name": "Thunder Nova",
-    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 106,
@@ -3146,7 +3146,7 @@ export const spells = [
   {
     "id": "spell-0251",
     "name": "Holy Nova",
-    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 32,
@@ -3158,7 +3158,7 @@ export const spells = [
   {
     "id": "spell-0252",
     "name": "Dark Nova",
-    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 93,
@@ -3171,7 +3171,7 @@ export const spells = [
   {
     "id": "spell-0253",
     "name": "Shadow Barrier",
-    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 33,
@@ -3184,7 +3184,7 @@ export const spells = [
   {
     "id": "spell-0254",
     "name": "Void Barrier",
-    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 80,
@@ -3196,7 +3196,7 @@ export const spells = [
   {
     "id": "spell-0255",
     "name": "Abyssal Barrier",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 57,
@@ -3208,7 +3208,7 @@ export const spells = [
   {
     "id": "spell-0256",
     "name": "Demonic Barrier",
-    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 84,
@@ -3221,7 +3221,7 @@ export const spells = [
   {
     "id": "spell-0257",
     "name": "Celestial Barrier",
-    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 71,
@@ -3234,7 +3234,7 @@ export const spells = [
   {
     "id": "spell-0258",
     "name": "Divine Barrier",
-    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 78,
@@ -3246,7 +3246,7 @@ export const spells = [
   {
     "id": "spell-0259",
     "name": "Arcane Barrier",
-    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 27,
@@ -3258,7 +3258,7 @@ export const spells = [
   {
     "id": "spell-0260",
     "name": "Infernal Barrier",
-    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 105,
@@ -3271,7 +3271,7 @@ export const spells = [
   {
     "id": "spell-0261",
     "name": "Frozen Barrier",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 90,
@@ -3284,7 +3284,7 @@ export const spells = [
   {
     "id": "spell-0262",
     "name": "Thunder Barrier",
-    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 95,
@@ -3296,7 +3296,7 @@ export const spells = [
   {
     "id": "spell-0263",
     "name": "Holy Barrier",
-    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 43,
@@ -3308,7 +3308,7 @@ export const spells = [
   {
     "id": "spell-0264",
     "name": "Dark Barrier",
-    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 77,
@@ -3321,7 +3321,7 @@ export const spells = [
   {
     "id": "spell-0265",
     "name": "Shadow Shield",
-    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 81,
@@ -3334,7 +3334,7 @@ export const spells = [
   {
     "id": "spell-0266",
     "name": "Void Shield",
-    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 74,
@@ -3346,7 +3346,7 @@ export const spells = [
   {
     "id": "spell-0267",
     "name": "Abyssal Shield",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 12,
@@ -3358,7 +3358,7 @@ export const spells = [
   {
     "id": "spell-0268",
     "name": "Demonic Shield",
-    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 82,
@@ -3371,7 +3371,7 @@ export const spells = [
   {
     "id": "spell-0269",
     "name": "Celestial Shield",
-    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 77,
@@ -3384,7 +3384,7 @@ export const spells = [
   {
     "id": "spell-0270",
     "name": "Divine Shield",
-    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 48,
@@ -3396,7 +3396,7 @@ export const spells = [
   {
     "id": "spell-0271",
     "name": "Arcane Shield",
-    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 66,
@@ -3408,7 +3408,7 @@ export const spells = [
   {
     "id": "spell-0272",
     "name": "Infernal Shield",
-    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 108,
@@ -3421,7 +3421,7 @@ export const spells = [
   {
     "id": "spell-0273",
     "name": "Frozen Shield",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 73,
@@ -3434,7 +3434,7 @@ export const spells = [
   {
     "id": "spell-0274",
     "name": "Thunder Shield",
-    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 93,
@@ -3446,7 +3446,7 @@ export const spells = [
   {
     "id": "spell-0275",
     "name": "Holy Shield",
-    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 71,
@@ -3458,7 +3458,7 @@ export const spells = [
   {
     "id": "spell-0276",
     "name": "Dark Shield",
-    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 24,
@@ -3471,7 +3471,7 @@ export const spells = [
   {
     "id": "spell-0277",
     "name": "Shadow Curse",
-    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 91,
@@ -3484,7 +3484,7 @@ export const spells = [
   {
     "id": "spell-0278",
     "name": "Void Curse",
-    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 15,
@@ -3496,7 +3496,7 @@ export const spells = [
   {
     "id": "spell-0279",
     "name": "Abyssal Curse",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 57,
@@ -3508,7 +3508,7 @@ export const spells = [
   {
     "id": "spell-0280",
     "name": "Demonic Curse",
-    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 82,
@@ -3521,7 +3521,7 @@ export const spells = [
   {
     "id": "spell-0281",
     "name": "Celestial Curse",
-    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 78,
@@ -3534,7 +3534,7 @@ export const spells = [
   {
     "id": "spell-0282",
     "name": "Divine Curse",
-    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 94,
@@ -3546,7 +3546,7 @@ export const spells = [
   {
     "id": "spell-0283",
     "name": "Arcane Curse",
-    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 63,
@@ -3558,7 +3558,7 @@ export const spells = [
   {
     "id": "spell-0284",
     "name": "Infernal Curse",
-    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 104,
@@ -3571,7 +3571,7 @@ export const spells = [
   {
     "id": "spell-0285",
     "name": "Frozen Curse",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 62,
@@ -3584,7 +3584,7 @@ export const spells = [
   {
     "id": "spell-0286",
     "name": "Thunder Curse",
-    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 69,
@@ -3596,7 +3596,7 @@ export const spells = [
   {
     "id": "spell-0287",
     "name": "Holy Curse",
-    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 28,
@@ -3608,7 +3608,7 @@ export const spells = [
   {
     "id": "spell-0288",
     "name": "Dark Curse",
-    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 79,
@@ -3621,7 +3621,7 @@ export const spells = [
   {
     "id": "spell-0289",
     "name": "Shadow Blessing",
-    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 106,
@@ -3634,7 +3634,7 @@ export const spells = [
   {
     "id": "spell-0290",
     "name": "Void Blessing",
-    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 73,
@@ -3646,7 +3646,7 @@ export const spells = [
   {
     "id": "spell-0291",
     "name": "Abyssal Blessing",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 108,
@@ -3658,7 +3658,7 @@ export const spells = [
   {
     "id": "spell-0292",
     "name": "Demonic Blessing",
-    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 56,
@@ -3671,7 +3671,7 @@ export const spells = [
   {
     "id": "spell-0293",
     "name": "Celestial Blessing",
-    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 87,
@@ -3684,7 +3684,7 @@ export const spells = [
   {
     "id": "spell-0294",
     "name": "Divine Blessing",
-    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 66,
@@ -3696,7 +3696,7 @@ export const spells = [
   {
     "id": "spell-0295",
     "name": "Arcane Blessing",
-    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 25,
@@ -3708,7 +3708,7 @@ export const spells = [
   {
     "id": "spell-0296",
     "name": "Infernal Blessing",
-    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 72,
@@ -3721,7 +3721,7 @@ export const spells = [
   {
     "id": "spell-0297",
     "name": "Frozen Blessing",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 108,
@@ -3734,7 +3734,7 @@ export const spells = [
   {
     "id": "spell-0298",
     "name": "Thunder Blessing",
-    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 62,
@@ -3746,7 +3746,7 @@ export const spells = [
   {
     "id": "spell-0299",
     "name": "Holy Blessing",
-    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 48,
@@ -3758,7 +3758,7 @@ export const spells = [
   {
     "id": "spell-0300",
     "name": "Dark Blessing",
-    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 107,
@@ -3771,7 +3771,7 @@ export const spells = [
   {
     "id": "spell-0301",
     "name": "Shadow Healing",
-    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 85,
@@ -3784,7 +3784,7 @@ export const spells = [
   {
     "id": "spell-0302",
     "name": "Void Healing",
-    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 102,
@@ -3796,7 +3796,7 @@ export const spells = [
   {
     "id": "spell-0303",
     "name": "Abyssal Healing",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 59,
@@ -3808,7 +3808,7 @@ export const spells = [
   {
     "id": "spell-0304",
     "name": "Demonic Healing",
-    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 26,
@@ -3821,7 +3821,7 @@ export const spells = [
   {
     "id": "spell-0305",
     "name": "Celestial Healing",
-    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 96,
@@ -3834,7 +3834,7 @@ export const spells = [
   {
     "id": "spell-0306",
     "name": "Divine Healing",
-    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 87,
@@ -3846,7 +3846,7 @@ export const spells = [
   {
     "id": "spell-0307",
     "name": "Arcane Healing",
-    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 82,
@@ -3858,7 +3858,7 @@ export const spells = [
   {
     "id": "spell-0308",
     "name": "Infernal Healing",
-    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 61,
@@ -3871,7 +3871,7 @@ export const spells = [
   {
     "id": "spell-0309",
     "name": "Frozen Healing",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 100,
@@ -3884,7 +3884,7 @@ export const spells = [
   {
     "id": "spell-0310",
     "name": "Thunder Healing",
-    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 106,
@@ -3896,7 +3896,7 @@ export const spells = [
   {
     "id": "spell-0311",
     "name": "Holy Healing",
-    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 106,
@@ -3908,7 +3908,7 @@ export const spells = [
   {
     "id": "spell-0312",
     "name": "Dark Healing",
-    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 39,
@@ -3921,7 +3921,7 @@ export const spells = [
   {
     "id": "spell-0313",
     "name": "Shadow Restoration",
-    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 81,
@@ -3934,7 +3934,7 @@ export const spells = [
   {
     "id": "spell-0314",
     "name": "Void Restoration",
-    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 70,
@@ -3946,7 +3946,7 @@ export const spells = [
   {
     "id": "spell-0315",
     "name": "Abyssal Restoration",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 70,
@@ -3958,7 +3958,7 @@ export const spells = [
   {
     "id": "spell-0316",
     "name": "Demonic Restoration",
-    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 101,
@@ -3971,7 +3971,7 @@ export const spells = [
   {
     "id": "spell-0317",
     "name": "Celestial Restoration",
-    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 83,
@@ -3984,7 +3984,7 @@ export const spells = [
   {
     "id": "spell-0318",
     "name": "Divine Restoration",
-    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 72,
@@ -3996,7 +3996,7 @@ export const spells = [
   {
     "id": "spell-0319",
     "name": "Arcane Restoration",
-    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 98,
@@ -4008,7 +4008,7 @@ export const spells = [
   {
     "id": "spell-0320",
     "name": "Infernal Restoration",
-    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 80,
@@ -4021,7 +4021,7 @@ export const spells = [
   {
     "id": "spell-0321",
     "name": "Frozen Restoration",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 60,
@@ -4034,7 +4034,7 @@ export const spells = [
   {
     "id": "spell-0322",
     "name": "Thunder Restoration",
-    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 60,
@@ -4046,7 +4046,7 @@ export const spells = [
   {
     "id": "spell-0323",
     "name": "Holy Restoration",
-    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 10,
@@ -4058,7 +4058,7 @@ export const spells = [
   {
     "id": "spell-0324",
     "name": "Dark Restoration",
-    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 58,
@@ -4071,7 +4071,7 @@ export const spells = [
   {
     "id": "spell-0325",
     "name": "Shadow Destruction",
-    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 30,
@@ -4084,7 +4084,7 @@ export const spells = [
   {
     "id": "spell-0326",
     "name": "Void Destruction",
-    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 82,
@@ -4096,7 +4096,7 @@ export const spells = [
   {
     "id": "spell-0327",
     "name": "Abyssal Destruction",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 58,
@@ -4108,7 +4108,7 @@ export const spells = [
   {
     "id": "spell-0328",
     "name": "Demonic Destruction",
-    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 93,
@@ -4121,7 +4121,7 @@ export const spells = [
   {
     "id": "spell-0329",
     "name": "Celestial Destruction",
-    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 64,
@@ -4134,7 +4134,7 @@ export const spells = [
   {
     "id": "spell-0330",
     "name": "Divine Destruction",
-    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 53,
@@ -4146,7 +4146,7 @@ export const spells = [
   {
     "id": "spell-0331",
     "name": "Arcane Destruction",
-    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 55,
@@ -4158,7 +4158,7 @@ export const spells = [
   {
     "id": "spell-0332",
     "name": "Infernal Destruction",
-    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 87,
@@ -4171,7 +4171,7 @@ export const spells = [
   {
     "id": "spell-0333",
     "name": "Frozen Destruction",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 28,
@@ -4184,7 +4184,7 @@ export const spells = [
   {
     "id": "spell-0334",
     "name": "Thunder Destruction",
-    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 30,
@@ -4196,7 +4196,7 @@ export const spells = [
   {
     "id": "spell-0335",
     "name": "Holy Destruction",
-    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 109,
@@ -4208,7 +4208,7 @@ export const spells = [
   {
     "id": "spell-0336",
     "name": "Dark Destruction",
-    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 65,
@@ -4221,7 +4221,7 @@ export const spells = [
   {
     "id": "spell-0337",
     "name": "Shadow Summoning",
-    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 64,
@@ -4234,7 +4234,7 @@ export const spells = [
   {
     "id": "spell-0338",
     "name": "Void Summoning",
-    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 88,
@@ -4246,7 +4246,7 @@ export const spells = [
   {
     "id": "spell-0339",
     "name": "Abyssal Summoning",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 32,
@@ -4258,7 +4258,7 @@ export const spells = [
   {
     "id": "spell-0340",
     "name": "Demonic Summoning",
-    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 83,
@@ -4271,7 +4271,7 @@ export const spells = [
   {
     "id": "spell-0341",
     "name": "Celestial Summoning",
-    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 46,
@@ -4284,7 +4284,7 @@ export const spells = [
   {
     "id": "spell-0342",
     "name": "Divine Summoning",
-    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 41,
@@ -4296,7 +4296,7 @@ export const spells = [
   {
     "id": "spell-0343",
     "name": "Arcane Summoning",
-    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 28,
@@ -4308,7 +4308,7 @@ export const spells = [
   {
     "id": "spell-0344",
     "name": "Infernal Summoning",
-    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 102,
@@ -4321,7 +4321,7 @@ export const spells = [
   {
     "id": "spell-0345",
     "name": "Frozen Summoning",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 54,
@@ -4334,7 +4334,7 @@ export const spells = [
   {
     "id": "spell-0346",
     "name": "Thunder Summoning",
-    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 73,
@@ -4346,7 +4346,7 @@ export const spells = [
   {
     "id": "spell-0347",
     "name": "Holy Summoning",
-    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 86,
@@ -4358,7 +4358,7 @@ export const spells = [
   {
     "id": "spell-0348",
     "name": "Dark Summoning",
-    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 96,
@@ -4371,7 +4371,7 @@ export const spells = [
   {
     "id": "spell-0349",
     "name": "Shadow Binding",
-    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 18,
@@ -4384,7 +4384,7 @@ export const spells = [
   {
     "id": "spell-0350",
     "name": "Void Binding",
-    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 51,
@@ -4396,7 +4396,7 @@ export const spells = [
   {
     "id": "spell-0351",
     "name": "Abyssal Binding",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 56,
@@ -4408,7 +4408,7 @@ export const spells = [
   {
     "id": "spell-0352",
     "name": "Demonic Binding",
-    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 64,
@@ -4421,7 +4421,7 @@ export const spells = [
   {
     "id": "spell-0353",
     "name": "Celestial Binding",
-    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 57,
@@ -4434,7 +4434,7 @@ export const spells = [
   {
     "id": "spell-0354",
     "name": "Divine Binding",
-    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 78,
@@ -4446,7 +4446,7 @@ export const spells = [
   {
     "id": "spell-0355",
     "name": "Arcane Binding",
-    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 26,
@@ -4458,7 +4458,7 @@ export const spells = [
   {
     "id": "spell-0356",
     "name": "Infernal Binding",
-    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 102,
@@ -4471,7 +4471,7 @@ export const spells = [
   {
     "id": "spell-0357",
     "name": "Frozen Binding",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 11,
@@ -4484,7 +4484,7 @@ export const spells = [
   {
     "id": "spell-0358",
     "name": "Thunder Binding",
-    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 90,
@@ -4496,7 +4496,7 @@ export const spells = [
   {
     "id": "spell-0359",
     "name": "Holy Binding",
-    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 67,
@@ -4508,7 +4508,7 @@ export const spells = [
   {
     "id": "spell-0360",
     "name": "Dark Binding",
-    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 97,
@@ -4521,7 +4521,7 @@ export const spells = [
   {
     "id": "spell-0361",
     "name": "Shadow Teleportation",
-    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 57,
@@ -4534,7 +4534,7 @@ export const spells = [
   {
     "id": "spell-0362",
     "name": "Void Teleportation",
-    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 36,
@@ -4546,7 +4546,7 @@ export const spells = [
   {
     "id": "spell-0363",
     "name": "Abyssal Teleportation",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 77,
@@ -4558,7 +4558,7 @@ export const spells = [
   {
     "id": "spell-0364",
     "name": "Demonic Teleportation",
-    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 25,
@@ -4571,7 +4571,7 @@ export const spells = [
   {
     "id": "spell-0365",
     "name": "Celestial Teleportation",
-    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 89,
@@ -4584,7 +4584,7 @@ export const spells = [
   {
     "id": "spell-0366",
     "name": "Divine Teleportation",
-    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 45,
@@ -4596,7 +4596,7 @@ export const spells = [
   {
     "id": "spell-0367",
     "name": "Arcane Teleportation",
-    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 92,
@@ -4608,7 +4608,7 @@ export const spells = [
   {
     "id": "spell-0368",
     "name": "Infernal Teleportation",
-    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 70,
@@ -4621,7 +4621,7 @@ export const spells = [
   {
     "id": "spell-0369",
     "name": "Frozen Teleportation",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 42,
@@ -4634,7 +4634,7 @@ export const spells = [
   {
     "id": "spell-0370",
     "name": "Thunder Teleportation",
-    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 44,
@@ -4646,7 +4646,7 @@ export const spells = [
   {
     "id": "spell-0371",
     "name": "Holy Teleportation",
-    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 66,
@@ -4658,7 +4658,7 @@ export const spells = [
   {
     "id": "spell-0372",
     "name": "Dark Teleportation",
-    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 35,
@@ -4671,7 +4671,7 @@ export const spells = [
   {
     "id": "spell-0373",
     "name": "Shadow Transformation",
-    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 52,
@@ -4684,7 +4684,7 @@ export const spells = [
   {
     "id": "spell-0374",
     "name": "Void Transformation",
-    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 49,
@@ -4696,7 +4696,7 @@ export const spells = [
   {
     "id": "spell-0375",
     "name": "Abyssal Transformation",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 60,
@@ -4708,7 +4708,7 @@ export const spells = [
   {
     "id": "spell-0376",
     "name": "Demonic Transformation",
-    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 42,
@@ -4721,7 +4721,7 @@ export const spells = [
   {
     "id": "spell-0377",
     "name": "Celestial Transformation",
-    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 38,
@@ -4734,7 +4734,7 @@ export const spells = [
   {
     "id": "spell-0378",
     "name": "Divine Transformation",
-    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 84,
@@ -4746,7 +4746,7 @@ export const spells = [
   {
     "id": "spell-0379",
     "name": "Arcane Transformation",
-    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 92,
@@ -4758,7 +4758,7 @@ export const spells = [
   {
     "id": "spell-0380",
     "name": "Infernal Transformation",
-    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 59,
@@ -4771,7 +4771,7 @@ export const spells = [
   {
     "id": "spell-0381",
     "name": "Frozen Transformation",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 104,
@@ -4784,7 +4784,7 @@ export const spells = [
   {
     "id": "spell-0382",
     "name": "Thunder Transformation",
-    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 103,
@@ -4796,7 +4796,7 @@ export const spells = [
   {
     "id": "spell-0383",
     "name": "Holy Transformation",
-    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 41,
@@ -4808,7 +4808,7 @@ export const spells = [
   {
     "id": "spell-0384",
     "name": "Dark Transformation",
-    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 45,
@@ -4821,7 +4821,7 @@ export const spells = [
   {
     "id": "spell-0385",
     "name": "Shadow Bolt",
-    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 67,
@@ -4834,7 +4834,7 @@ export const spells = [
   {
     "id": "spell-0386",
     "name": "Void Bolt",
-    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 61,
@@ -4846,7 +4846,7 @@ export const spells = [
   {
     "id": "spell-0387",
     "name": "Abyssal Bolt",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 66,
@@ -4858,7 +4858,7 @@ export const spells = [
   {
     "id": "spell-0388",
     "name": "Demonic Bolt",
-    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 73,
@@ -4871,7 +4871,7 @@ export const spells = [
   {
     "id": "spell-0389",
     "name": "Celestial Bolt",
-    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 32,
@@ -4884,7 +4884,7 @@ export const spells = [
   {
     "id": "spell-0390",
     "name": "Divine Bolt",
-    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 21,
@@ -4896,7 +4896,7 @@ export const spells = [
   {
     "id": "spell-0391",
     "name": "Arcane Bolt",
-    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 14,
@@ -4908,7 +4908,7 @@ export const spells = [
   {
     "id": "spell-0392",
     "name": "Infernal Bolt",
-    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 102,
@@ -4921,7 +4921,7 @@ export const spells = [
   {
     "id": "spell-0393",
     "name": "Frozen Bolt",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 108,
@@ -4934,7 +4934,7 @@ export const spells = [
   {
     "id": "spell-0394",
     "name": "Thunder Bolt",
-    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 56,
@@ -4946,7 +4946,7 @@ export const spells = [
   {
     "id": "spell-0395",
     "name": "Holy Bolt",
-    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 81,
@@ -4958,7 +4958,7 @@ export const spells = [
   {
     "id": "spell-0396",
     "name": "Dark Bolt",
-    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 73,
@@ -4971,7 +4971,7 @@ export const spells = [
   {
     "id": "spell-0397",
     "name": "Shadow Blast",
-    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 104,
@@ -4984,7 +4984,7 @@ export const spells = [
   {
     "id": "spell-0398",
     "name": "Void Blast",
-    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 70,
@@ -4996,7 +4996,7 @@ export const spells = [
   {
     "id": "spell-0399",
     "name": "Abyssal Blast",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 17,
@@ -5008,7 +5008,7 @@ export const spells = [
   {
     "id": "spell-0400",
     "name": "Demonic Blast",
-    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 98,
@@ -5021,7 +5021,7 @@ export const spells = [
   {
     "id": "spell-0401",
     "name": "Celestial Blast",
-    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 88,
@@ -5034,7 +5034,7 @@ export const spells = [
   {
     "id": "spell-0402",
     "name": "Divine Blast",
-    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 69,
@@ -5046,7 +5046,7 @@ export const spells = [
   {
     "id": "spell-0403",
     "name": "Arcane Blast",
-    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 34,
@@ -5058,7 +5058,7 @@ export const spells = [
   {
     "id": "spell-0404",
     "name": "Infernal Blast",
-    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 76,
@@ -5071,7 +5071,7 @@ export const spells = [
   {
     "id": "spell-0405",
     "name": "Frozen Blast",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 40,
@@ -5084,7 +5084,7 @@ export const spells = [
   {
     "id": "spell-0406",
     "name": "Thunder Blast",
-    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 101,
@@ -5096,7 +5096,7 @@ export const spells = [
   {
     "id": "spell-0407",
     "name": "Holy Blast",
-    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 88,
@@ -5108,7 +5108,7 @@ export const spells = [
   {
     "id": "spell-0408",
     "name": "Dark Blast",
-    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 39,
@@ -5121,7 +5121,7 @@ export const spells = [
   {
     "id": "spell-0409",
     "name": "Shadow Storm",
-    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 81,
@@ -5134,7 +5134,7 @@ export const spells = [
   {
     "id": "spell-0410",
     "name": "Void Storm",
-    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 18,
@@ -5146,7 +5146,7 @@ export const spells = [
   {
     "id": "spell-0411",
     "name": "Abyssal Storm",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 25,
@@ -5158,7 +5158,7 @@ export const spells = [
   {
     "id": "spell-0412",
     "name": "Demonic Storm",
-    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 78,
@@ -5171,7 +5171,7 @@ export const spells = [
   {
     "id": "spell-0413",
     "name": "Celestial Storm",
-    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 10,
@@ -5184,7 +5184,7 @@ export const spells = [
   {
     "id": "spell-0414",
     "name": "Divine Storm",
-    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 97,
@@ -5196,7 +5196,7 @@ export const spells = [
   {
     "id": "spell-0415",
     "name": "Arcane Storm",
-    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 21,
@@ -5208,7 +5208,7 @@ export const spells = [
   {
     "id": "spell-0416",
     "name": "Infernal Storm",
-    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 106,
@@ -5221,7 +5221,7 @@ export const spells = [
   {
     "id": "spell-0417",
     "name": "Frozen Storm",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 66,
@@ -5234,7 +5234,7 @@ export const spells = [
   {
     "id": "spell-0418",
     "name": "Thunder Storm",
-    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 55,
@@ -5246,7 +5246,7 @@ export const spells = [
   {
     "id": "spell-0419",
     "name": "Holy Storm",
-    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 95,
@@ -5258,7 +5258,7 @@ export const spells = [
   {
     "id": "spell-0420",
     "name": "Dark Storm",
-    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 57,
@@ -5271,7 +5271,7 @@ export const spells = [
   {
     "id": "spell-0421",
     "name": "Shadow Wave",
-    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 102,
@@ -5284,7 +5284,7 @@ export const spells = [
   {
     "id": "spell-0422",
     "name": "Void Wave",
-    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 73,
@@ -5296,7 +5296,7 @@ export const spells = [
   {
     "id": "spell-0423",
     "name": "Abyssal Wave",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 76,
@@ -5308,7 +5308,7 @@ export const spells = [
   {
     "id": "spell-0424",
     "name": "Demonic Wave",
-    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 101,
@@ -5321,7 +5321,7 @@ export const spells = [
   {
     "id": "spell-0425",
     "name": "Celestial Wave",
-    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 28,
@@ -5334,7 +5334,7 @@ export const spells = [
   {
     "id": "spell-0426",
     "name": "Divine Wave",
-    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 83,
@@ -5346,7 +5346,7 @@ export const spells = [
   {
     "id": "spell-0427",
     "name": "Arcane Wave",
-    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 96,
@@ -5358,7 +5358,7 @@ export const spells = [
   {
     "id": "spell-0428",
     "name": "Infernal Wave",
-    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 20,
@@ -5371,7 +5371,7 @@ export const spells = [
   {
     "id": "spell-0429",
     "name": "Frozen Wave",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 25,
@@ -5384,7 +5384,7 @@ export const spells = [
   {
     "id": "spell-0430",
     "name": "Thunder Wave",
-    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 96,
@@ -5396,7 +5396,7 @@ export const spells = [
   {
     "id": "spell-0431",
     "name": "Holy Wave",
-    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 81,
@@ -5408,7 +5408,7 @@ export const spells = [
   {
     "id": "spell-0432",
     "name": "Dark Wave",
-    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 10,
@@ -5421,7 +5421,7 @@ export const spells = [
   {
     "id": "spell-0433",
     "name": "Shadow Nova",
-    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 98,
@@ -5434,7 +5434,7 @@ export const spells = [
   {
     "id": "spell-0434",
     "name": "Void Nova",
-    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 52,
@@ -5446,7 +5446,7 @@ export const spells = [
   {
     "id": "spell-0435",
     "name": "Abyssal Nova",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 45,
@@ -5458,7 +5458,7 @@ export const spells = [
   {
     "id": "spell-0436",
     "name": "Demonic Nova",
-    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 25,
@@ -5471,7 +5471,7 @@ export const spells = [
   {
     "id": "spell-0437",
     "name": "Celestial Nova",
-    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 40,
@@ -5484,7 +5484,7 @@ export const spells = [
   {
     "id": "spell-0438",
     "name": "Divine Nova",
-    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 30,
@@ -5496,7 +5496,7 @@ export const spells = [
   {
     "id": "spell-0439",
     "name": "Arcane Nova",
-    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 29,
@@ -5508,7 +5508,7 @@ export const spells = [
   {
     "id": "spell-0440",
     "name": "Infernal Nova",
-    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 12,
@@ -5521,7 +5521,7 @@ export const spells = [
   {
     "id": "spell-0441",
     "name": "Frozen Nova",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 51,
@@ -5534,7 +5534,7 @@ export const spells = [
   {
     "id": "spell-0442",
     "name": "Thunder Nova",
-    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 74,
@@ -5546,7 +5546,7 @@ export const spells = [
   {
     "id": "spell-0443",
     "name": "Holy Nova",
-    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 49,
@@ -5558,7 +5558,7 @@ export const spells = [
   {
     "id": "spell-0444",
     "name": "Dark Nova",
-    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 20,
@@ -5571,7 +5571,7 @@ export const spells = [
   {
     "id": "spell-0445",
     "name": "Shadow Barrier",
-    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 108,
@@ -5584,7 +5584,7 @@ export const spells = [
   {
     "id": "spell-0446",
     "name": "Void Barrier",
-    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 93,
@@ -5596,7 +5596,7 @@ export const spells = [
   {
     "id": "spell-0447",
     "name": "Abyssal Barrier",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 109,
@@ -5608,7 +5608,7 @@ export const spells = [
   {
     "id": "spell-0448",
     "name": "Demonic Barrier",
-    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 67,
@@ -5621,7 +5621,7 @@ export const spells = [
   {
     "id": "spell-0449",
     "name": "Celestial Barrier",
-    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 13,
@@ -5634,7 +5634,7 @@ export const spells = [
   {
     "id": "spell-0450",
     "name": "Divine Barrier",
-    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 85,
@@ -5646,7 +5646,7 @@ export const spells = [
   {
     "id": "spell-0451",
     "name": "Arcane Barrier",
-    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 92,
@@ -5658,7 +5658,7 @@ export const spells = [
   {
     "id": "spell-0452",
     "name": "Infernal Barrier",
-    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 80,
@@ -5671,7 +5671,7 @@ export const spells = [
   {
     "id": "spell-0453",
     "name": "Frozen Barrier",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 41,
@@ -5684,7 +5684,7 @@ export const spells = [
   {
     "id": "spell-0454",
     "name": "Thunder Barrier",
-    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 46,
@@ -5696,7 +5696,7 @@ export const spells = [
   {
     "id": "spell-0455",
     "name": "Holy Barrier",
-    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 66,
@@ -5708,7 +5708,7 @@ export const spells = [
   {
     "id": "spell-0456",
     "name": "Dark Barrier",
-    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 67,
@@ -5721,7 +5721,7 @@ export const spells = [
   {
     "id": "spell-0457",
     "name": "Shadow Shield",
-    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 52,
@@ -5734,7 +5734,7 @@ export const spells = [
   {
     "id": "spell-0458",
     "name": "Void Shield",
-    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 39,
@@ -5746,7 +5746,7 @@ export const spells = [
   {
     "id": "spell-0459",
     "name": "Abyssal Shield",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 41,
@@ -5758,7 +5758,7 @@ export const spells = [
   {
     "id": "spell-0460",
     "name": "Demonic Shield",
-    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 40,
@@ -5771,7 +5771,7 @@ export const spells = [
   {
     "id": "spell-0461",
     "name": "Celestial Shield",
-    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 52,
@@ -5784,7 +5784,7 @@ export const spells = [
   {
     "id": "spell-0462",
     "name": "Divine Shield",
-    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 80,
@@ -5796,7 +5796,7 @@ export const spells = [
   {
     "id": "spell-0463",
     "name": "Arcane Shield",
-    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 105,
@@ -5808,7 +5808,7 @@ export const spells = [
   {
     "id": "spell-0464",
     "name": "Infernal Shield",
-    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 100,
@@ -5821,7 +5821,7 @@ export const spells = [
   {
     "id": "spell-0465",
     "name": "Frozen Shield",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 102,
@@ -5834,7 +5834,7 @@ export const spells = [
   {
     "id": "spell-0466",
     "name": "Thunder Shield",
-    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 79,
@@ -5846,7 +5846,7 @@ export const spells = [
   {
     "id": "spell-0467",
     "name": "Holy Shield",
-    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 99,
@@ -5858,7 +5858,7 @@ export const spells = [
   {
     "id": "spell-0468",
     "name": "Dark Shield",
-    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 101,
@@ -5871,7 +5871,7 @@ export const spells = [
   {
     "id": "spell-0469",
     "name": "Shadow Curse",
-    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 54,
@@ -5884,7 +5884,7 @@ export const spells = [
   {
     "id": "spell-0470",
     "name": "Void Curse",
-    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 42,
@@ -5896,7 +5896,7 @@ export const spells = [
   {
     "id": "spell-0471",
     "name": "Abyssal Curse",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 24,
@@ -5908,7 +5908,7 @@ export const spells = [
   {
     "id": "spell-0472",
     "name": "Demonic Curse",
-    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 85,
@@ -5921,7 +5921,7 @@ export const spells = [
   {
     "id": "spell-0473",
     "name": "Celestial Curse",
-    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 18,
@@ -5934,7 +5934,7 @@ export const spells = [
   {
     "id": "spell-0474",
     "name": "Divine Curse",
-    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 106,
@@ -5946,7 +5946,7 @@ export const spells = [
   {
     "id": "spell-0475",
     "name": "Arcane Curse",
-    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 63,
@@ -5958,7 +5958,7 @@ export const spells = [
   {
     "id": "spell-0476",
     "name": "Infernal Curse",
-    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 100,
@@ -5971,7 +5971,7 @@ export const spells = [
   {
     "id": "spell-0477",
     "name": "Frozen Curse",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 50,
@@ -5984,7 +5984,7 @@ export const spells = [
   {
     "id": "spell-0478",
     "name": "Thunder Curse",
-    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 36,
@@ -5996,7 +5996,7 @@ export const spells = [
   {
     "id": "spell-0479",
     "name": "Holy Curse",
-    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 103,
@@ -6008,7 +6008,7 @@ export const spells = [
   {
     "id": "spell-0480",
     "name": "Dark Curse",
-    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 44,
@@ -6021,7 +6021,7 @@ export const spells = [
   {
     "id": "spell-0481",
     "name": "Shadow Blessing",
-    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 61,
@@ -6034,7 +6034,7 @@ export const spells = [
   {
     "id": "spell-0482",
     "name": "Void Blessing",
-    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 20,
@@ -6046,7 +6046,7 @@ export const spells = [
   {
     "id": "spell-0483",
     "name": "Abyssal Blessing",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 52,
@@ -6058,7 +6058,7 @@ export const spells = [
   {
     "id": "spell-0484",
     "name": "Demonic Blessing",
-    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 37,
@@ -6071,7 +6071,7 @@ export const spells = [
   {
     "id": "spell-0485",
     "name": "Celestial Blessing",
-    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 69,
@@ -6084,7 +6084,7 @@ export const spells = [
   {
     "id": "spell-0486",
     "name": "Divine Blessing",
-    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 72,
@@ -6096,7 +6096,7 @@ export const spells = [
   {
     "id": "spell-0487",
     "name": "Arcane Blessing",
-    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 104,
@@ -6108,7 +6108,7 @@ export const spells = [
   {
     "id": "spell-0488",
     "name": "Infernal Blessing",
-    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 108,
@@ -6121,7 +6121,7 @@ export const spells = [
   {
     "id": "spell-0489",
     "name": "Frozen Blessing",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 19,
@@ -6134,7 +6134,7 @@ export const spells = [
   {
     "id": "spell-0490",
     "name": "Thunder Blessing",
-    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 50,
@@ -6146,7 +6146,7 @@ export const spells = [
   {
     "id": "spell-0491",
     "name": "Holy Blessing",
-    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 15,
@@ -6158,7 +6158,7 @@ export const spells = [
   {
     "id": "spell-0492",
     "name": "Dark Blessing",
-    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 88,
@@ -6171,7 +6171,7 @@ export const spells = [
   {
     "id": "spell-0493",
     "name": "Shadow Healing",
-    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 82,
@@ -6184,7 +6184,7 @@ export const spells = [
   {
     "id": "spell-0494",
     "name": "Void Healing",
-    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 44,
@@ -6196,7 +6196,7 @@ export const spells = [
   {
     "id": "spell-0495",
     "name": "Abyssal Healing",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 96,
@@ -6208,7 +6208,7 @@ export const spells = [
   {
     "id": "spell-0496",
     "name": "Demonic Healing",
-    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 95,
@@ -6221,7 +6221,7 @@ export const spells = [
   {
     "id": "spell-0497",
     "name": "Celestial Healing",
-    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 10,
@@ -6234,7 +6234,7 @@ export const spells = [
   {
     "id": "spell-0498",
     "name": "Divine Healing",
-    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 105,
@@ -6246,7 +6246,7 @@ export const spells = [
   {
     "id": "spell-0499",
     "name": "Arcane Healing",
-    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 41,
@@ -6258,7 +6258,7 @@ export const spells = [
   {
     "id": "spell-0500",
     "name": "Infernal Healing",
-    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 108,
@@ -6271,7 +6271,7 @@ export const spells = [
   {
     "id": "spell-0501",
     "name": "Frozen Healing",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 49,
@@ -6284,7 +6284,7 @@ export const spells = [
   {
     "id": "spell-0502",
     "name": "Thunder Healing",
-    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 67,
@@ -6296,7 +6296,7 @@ export const spells = [
   {
     "id": "spell-0503",
     "name": "Holy Healing",
-    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 17,
@@ -6308,7 +6308,7 @@ export const spells = [
   {
     "id": "spell-0504",
     "name": "Dark Healing",
-    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 68,
@@ -6321,7 +6321,7 @@ export const spells = [
   {
     "id": "spell-0505",
     "name": "Shadow Restoration",
-    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 89,
@@ -6334,7 +6334,7 @@ export const spells = [
   {
     "id": "spell-0506",
     "name": "Void Restoration",
-    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 85,
@@ -6346,7 +6346,7 @@ export const spells = [
   {
     "id": "spell-0507",
     "name": "Abyssal Restoration",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 38,
@@ -6358,7 +6358,7 @@ export const spells = [
   {
     "id": "spell-0508",
     "name": "Demonic Restoration",
-    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 33,
@@ -6371,7 +6371,7 @@ export const spells = [
   {
     "id": "spell-0509",
     "name": "Celestial Restoration",
-    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 65,
@@ -6384,7 +6384,7 @@ export const spells = [
   {
     "id": "spell-0510",
     "name": "Divine Restoration",
-    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 89,
@@ -6396,7 +6396,7 @@ export const spells = [
   {
     "id": "spell-0511",
     "name": "Arcane Restoration",
-    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 22,
@@ -6408,7 +6408,7 @@ export const spells = [
   {
     "id": "spell-0512",
     "name": "Infernal Restoration",
-    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 35,
@@ -6421,7 +6421,7 @@ export const spells = [
   {
     "id": "spell-0513",
     "name": "Frozen Restoration",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 23,
@@ -6434,7 +6434,7 @@ export const spells = [
   {
     "id": "spell-0514",
     "name": "Thunder Restoration",
-    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 80,
@@ -6446,7 +6446,7 @@ export const spells = [
   {
     "id": "spell-0515",
     "name": "Holy Restoration",
-    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 77,
@@ -6458,7 +6458,7 @@ export const spells = [
   {
     "id": "spell-0516",
     "name": "Dark Restoration",
-    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 37,
@@ -6471,7 +6471,7 @@ export const spells = [
   {
     "id": "spell-0517",
     "name": "Shadow Destruction",
-    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 92,
@@ -6484,7 +6484,7 @@ export const spells = [
   {
     "id": "spell-0518",
     "name": "Void Destruction",
-    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 80,
@@ -6496,7 +6496,7 @@ export const spells = [
   {
     "id": "spell-0519",
     "name": "Abyssal Destruction",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 52,
@@ -6508,7 +6508,7 @@ export const spells = [
   {
     "id": "spell-0520",
     "name": "Demonic Destruction",
-    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 46,
@@ -6521,7 +6521,7 @@ export const spells = [
   {
     "id": "spell-0521",
     "name": "Celestial Destruction",
-    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 52,
@@ -6534,7 +6534,7 @@ export const spells = [
   {
     "id": "spell-0522",
     "name": "Divine Destruction",
-    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 109,
@@ -6546,7 +6546,7 @@ export const spells = [
   {
     "id": "spell-0523",
     "name": "Arcane Destruction",
-    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 97,
@@ -6558,7 +6558,7 @@ export const spells = [
   {
     "id": "spell-0524",
     "name": "Infernal Destruction",
-    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 30,
@@ -6571,7 +6571,7 @@ export const spells = [
   {
     "id": "spell-0525",
     "name": "Frozen Destruction",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 71,
@@ -6584,7 +6584,7 @@ export const spells = [
   {
     "id": "spell-0526",
     "name": "Thunder Destruction",
-    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 63,
@@ -6596,7 +6596,7 @@ export const spells = [
   {
     "id": "spell-0527",
     "name": "Holy Destruction",
-    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 61,
@@ -6608,7 +6608,7 @@ export const spells = [
   {
     "id": "spell-0528",
     "name": "Dark Destruction",
-    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 45,
@@ -6621,7 +6621,7 @@ export const spells = [
   {
     "id": "spell-0529",
     "name": "Shadow Summoning",
-    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 18,
@@ -6634,7 +6634,7 @@ export const spells = [
   {
     "id": "spell-0530",
     "name": "Void Summoning",
-    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 56,
@@ -6646,7 +6646,7 @@ export const spells = [
   {
     "id": "spell-0531",
     "name": "Abyssal Summoning",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 45,
@@ -6658,7 +6658,7 @@ export const spells = [
   {
     "id": "spell-0532",
     "name": "Demonic Summoning",
-    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 53,
@@ -6671,7 +6671,7 @@ export const spells = [
   {
     "id": "spell-0533",
     "name": "Celestial Summoning",
-    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 26,
@@ -6684,7 +6684,7 @@ export const spells = [
   {
     "id": "spell-0534",
     "name": "Divine Summoning",
-    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 94,
@@ -6696,7 +6696,7 @@ export const spells = [
   {
     "id": "spell-0535",
     "name": "Arcane Summoning",
-    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 25,
@@ -6708,7 +6708,7 @@ export const spells = [
   {
     "id": "spell-0536",
     "name": "Infernal Summoning",
-    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 25,
@@ -6721,7 +6721,7 @@ export const spells = [
   {
     "id": "spell-0537",
     "name": "Frozen Summoning",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 51,
@@ -6734,7 +6734,7 @@ export const spells = [
   {
     "id": "spell-0538",
     "name": "Thunder Summoning",
-    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 44,
@@ -6746,7 +6746,7 @@ export const spells = [
   {
     "id": "spell-0539",
     "name": "Holy Summoning",
-    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 23,
@@ -6758,7 +6758,7 @@ export const spells = [
   {
     "id": "spell-0540",
     "name": "Dark Summoning",
-    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 58,
@@ -6771,7 +6771,7 @@ export const spells = [
   {
     "id": "spell-0541",
     "name": "Shadow Binding",
-    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 15,
@@ -6784,7 +6784,7 @@ export const spells = [
   {
     "id": "spell-0542",
     "name": "Void Binding",
-    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 39,
@@ -6796,7 +6796,7 @@ export const spells = [
   {
     "id": "spell-0543",
     "name": "Abyssal Binding",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 49,
@@ -6808,7 +6808,7 @@ export const spells = [
   {
     "id": "spell-0544",
     "name": "Demonic Binding",
-    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 96,
@@ -6821,7 +6821,7 @@ export const spells = [
   {
     "id": "spell-0545",
     "name": "Celestial Binding",
-    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 53,
@@ -6834,7 +6834,7 @@ export const spells = [
   {
     "id": "spell-0546",
     "name": "Divine Binding",
-    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 98,
@@ -6846,7 +6846,7 @@ export const spells = [
   {
     "id": "spell-0547",
     "name": "Arcane Binding",
-    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 14,
@@ -6858,7 +6858,7 @@ export const spells = [
   {
     "id": "spell-0548",
     "name": "Infernal Binding",
-    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 92,
@@ -6871,7 +6871,7 @@ export const spells = [
   {
     "id": "spell-0549",
     "name": "Frozen Binding",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 50,
@@ -6884,7 +6884,7 @@ export const spells = [
   {
     "id": "spell-0550",
     "name": "Thunder Binding",
-    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 39,
@@ -6896,7 +6896,7 @@ export const spells = [
   {
     "id": "spell-0551",
     "name": "Holy Binding",
-    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 96,
@@ -6908,7 +6908,7 @@ export const spells = [
   {
     "id": "spell-0552",
     "name": "Dark Binding",
-    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 107,
@@ -6921,7 +6921,7 @@ export const spells = [
   {
     "id": "spell-0553",
     "name": "Shadow Teleportation",
-    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 20,
@@ -6934,7 +6934,7 @@ export const spells = [
   {
     "id": "spell-0554",
     "name": "Void Teleportation",
-    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 49,
@@ -6946,7 +6946,7 @@ export const spells = [
   {
     "id": "spell-0555",
     "name": "Abyssal Teleportation",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 40,
@@ -6958,7 +6958,7 @@ export const spells = [
   {
     "id": "spell-0556",
     "name": "Demonic Teleportation",
-    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 21,
@@ -6971,7 +6971,7 @@ export const spells = [
   {
     "id": "spell-0557",
     "name": "Celestial Teleportation",
-    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 29,
@@ -6984,7 +6984,7 @@ export const spells = [
   {
     "id": "spell-0558",
     "name": "Divine Teleportation",
-    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 100,
@@ -6996,7 +6996,7 @@ export const spells = [
   {
     "id": "spell-0559",
     "name": "Arcane Teleportation",
-    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 34,
@@ -7008,7 +7008,7 @@ export const spells = [
   {
     "id": "spell-0560",
     "name": "Infernal Teleportation",
-    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 35,
@@ -7021,7 +7021,7 @@ export const spells = [
   {
     "id": "spell-0561",
     "name": "Frozen Teleportation",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 96,
@@ -7034,7 +7034,7 @@ export const spells = [
   {
     "id": "spell-0562",
     "name": "Thunder Teleportation",
-    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 10,
@@ -7046,7 +7046,7 @@ export const spells = [
   {
     "id": "spell-0563",
     "name": "Holy Teleportation",
-    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 30,
@@ -7058,7 +7058,7 @@ export const spells = [
   {
     "id": "spell-0564",
     "name": "Dark Teleportation",
-    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 62,
@@ -7071,7 +7071,7 @@ export const spells = [
   {
     "id": "spell-0565",
     "name": "Shadow Transformation",
-    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 96,
@@ -7084,7 +7084,7 @@ export const spells = [
   {
     "id": "spell-0566",
     "name": "Void Transformation",
-    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 86,
@@ -7096,7 +7096,7 @@ export const spells = [
   {
     "id": "spell-0567",
     "name": "Abyssal Transformation",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 26,
@@ -7108,7 +7108,7 @@ export const spells = [
   {
     "id": "spell-0568",
     "name": "Demonic Transformation",
-    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 91,
@@ -7121,7 +7121,7 @@ export const spells = [
   {
     "id": "spell-0569",
     "name": "Celestial Transformation",
-    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 79,
@@ -7134,7 +7134,7 @@ export const spells = [
   {
     "id": "spell-0570",
     "name": "Divine Transformation",
-    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 73,
@@ -7146,7 +7146,7 @@ export const spells = [
   {
     "id": "spell-0571",
     "name": "Arcane Transformation",
-    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 17,
@@ -7158,7 +7158,7 @@ export const spells = [
   {
     "id": "spell-0572",
     "name": "Infernal Transformation",
-    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 105,
@@ -7171,7 +7171,7 @@ export const spells = [
   {
     "id": "spell-0573",
     "name": "Frozen Transformation",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 17,
@@ -7184,7 +7184,7 @@ export const spells = [
   {
     "id": "spell-0574",
     "name": "Thunder Transformation",
-    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 93,
@@ -7196,7 +7196,7 @@ export const spells = [
   {
     "id": "spell-0575",
     "name": "Holy Transformation",
-    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 28,
@@ -7208,7 +7208,7 @@ export const spells = [
   {
     "id": "spell-0576",
     "name": "Dark Transformation",
-    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 31,
@@ -7221,7 +7221,7 @@ export const spells = [
   {
     "id": "spell-0577",
     "name": "Shadow Bolt",
-    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 32,
@@ -7234,7 +7234,7 @@ export const spells = [
   {
     "id": "spell-0578",
     "name": "Void Bolt",
-    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 92,
@@ -7246,7 +7246,7 @@ export const spells = [
   {
     "id": "spell-0579",
     "name": "Abyssal Bolt",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 89,
@@ -7258,7 +7258,7 @@ export const spells = [
   {
     "id": "spell-0580",
     "name": "Demonic Bolt",
-    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 80,
@@ -7271,7 +7271,7 @@ export const spells = [
   {
     "id": "spell-0581",
     "name": "Celestial Bolt",
-    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 30,
@@ -7284,7 +7284,7 @@ export const spells = [
   {
     "id": "spell-0582",
     "name": "Divine Bolt",
-    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 50,
@@ -7296,7 +7296,7 @@ export const spells = [
   {
     "id": "spell-0583",
     "name": "Arcane Bolt",
-    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 43,
@@ -7308,7 +7308,7 @@ export const spells = [
   {
     "id": "spell-0584",
     "name": "Infernal Bolt",
-    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 16,
@@ -7321,7 +7321,7 @@ export const spells = [
   {
     "id": "spell-0585",
     "name": "Frozen Bolt",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 51,
@@ -7334,7 +7334,7 @@ export const spells = [
   {
     "id": "spell-0586",
     "name": "Thunder Bolt",
-    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 27,
@@ -7346,7 +7346,7 @@ export const spells = [
   {
     "id": "spell-0587",
     "name": "Holy Bolt",
-    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 29,
@@ -7358,7 +7358,7 @@ export const spells = [
   {
     "id": "spell-0588",
     "name": "Dark Bolt",
-    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 25,
@@ -7371,7 +7371,7 @@ export const spells = [
   {
     "id": "spell-0589",
     "name": "Shadow Blast",
-    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 24,
@@ -7384,7 +7384,7 @@ export const spells = [
   {
     "id": "spell-0590",
     "name": "Void Blast",
-    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 92,
@@ -7396,7 +7396,7 @@ export const spells = [
   {
     "id": "spell-0591",
     "name": "Abyssal Blast",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 99,
@@ -7408,7 +7408,7 @@ export const spells = [
   {
     "id": "spell-0592",
     "name": "Demonic Blast",
-    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 97,
@@ -7421,7 +7421,7 @@ export const spells = [
   {
     "id": "spell-0593",
     "name": "Celestial Blast",
-    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 50,
@@ -7434,7 +7434,7 @@ export const spells = [
   {
     "id": "spell-0594",
     "name": "Divine Blast",
-    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 30,
@@ -7446,7 +7446,7 @@ export const spells = [
   {
     "id": "spell-0595",
     "name": "Arcane Blast",
-    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 55,
@@ -7458,7 +7458,7 @@ export const spells = [
   {
     "id": "spell-0596",
     "name": "Infernal Blast",
-    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 26,
@@ -7471,7 +7471,7 @@ export const spells = [
   {
     "id": "spell-0597",
     "name": "Frozen Blast",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 36,
@@ -7484,7 +7484,7 @@ export const spells = [
   {
     "id": "spell-0598",
     "name": "Thunder Blast",
-    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 62,
@@ -7496,7 +7496,7 @@ export const spells = [
   {
     "id": "spell-0599",
     "name": "Holy Blast",
-    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 62,
@@ -7508,7 +7508,7 @@ export const spells = [
   {
     "id": "spell-0600",
     "name": "Dark Blast",
-    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 76,
@@ -7521,7 +7521,7 @@ export const spells = [
   {
     "id": "spell-0601",
     "name": "Shadow Storm",
-    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 108,
@@ -7534,7 +7534,7 @@ export const spells = [
   {
     "id": "spell-0602",
     "name": "Void Storm",
-    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 26,
@@ -7546,7 +7546,7 @@ export const spells = [
   {
     "id": "spell-0603",
     "name": "Abyssal Storm",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 109,
@@ -7558,7 +7558,7 @@ export const spells = [
   {
     "id": "spell-0604",
     "name": "Demonic Storm",
-    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 61,
@@ -7571,7 +7571,7 @@ export const spells = [
   {
     "id": "spell-0605",
     "name": "Celestial Storm",
-    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 104,
@@ -7584,7 +7584,7 @@ export const spells = [
   {
     "id": "spell-0606",
     "name": "Divine Storm",
-    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 17,
@@ -7596,7 +7596,7 @@ export const spells = [
   {
     "id": "spell-0607",
     "name": "Arcane Storm",
-    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 43,
@@ -7608,7 +7608,7 @@ export const spells = [
   {
     "id": "spell-0608",
     "name": "Infernal Storm",
-    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 17,
@@ -7621,7 +7621,7 @@ export const spells = [
   {
     "id": "spell-0609",
     "name": "Frozen Storm",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 55,
@@ -7634,7 +7634,7 @@ export const spells = [
   {
     "id": "spell-0610",
     "name": "Thunder Storm",
-    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 10,
@@ -7646,7 +7646,7 @@ export const spells = [
   {
     "id": "spell-0611",
     "name": "Holy Storm",
-    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 41,
@@ -7658,7 +7658,7 @@ export const spells = [
   {
     "id": "spell-0612",
     "name": "Dark Storm",
-    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 33,
@@ -7671,7 +7671,7 @@ export const spells = [
   {
     "id": "spell-0613",
     "name": "Shadow Wave",
-    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 83,
@@ -7684,7 +7684,7 @@ export const spells = [
   {
     "id": "spell-0614",
     "name": "Void Wave",
-    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 28,
@@ -7696,7 +7696,7 @@ export const spells = [
   {
     "id": "spell-0615",
     "name": "Abyssal Wave",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 69,
@@ -7708,7 +7708,7 @@ export const spells = [
   {
     "id": "spell-0616",
     "name": "Demonic Wave",
-    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 51,
@@ -7721,7 +7721,7 @@ export const spells = [
   {
     "id": "spell-0617",
     "name": "Celestial Wave",
-    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 80,
@@ -7734,7 +7734,7 @@ export const spells = [
   {
     "id": "spell-0618",
     "name": "Divine Wave",
-    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 12,
@@ -7746,7 +7746,7 @@ export const spells = [
   {
     "id": "spell-0619",
     "name": "Arcane Wave",
-    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 70,
@@ -7758,7 +7758,7 @@ export const spells = [
   {
     "id": "spell-0620",
     "name": "Infernal Wave",
-    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 39,
@@ -7771,7 +7771,7 @@ export const spells = [
   {
     "id": "spell-0621",
     "name": "Frozen Wave",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 102,
@@ -7784,7 +7784,7 @@ export const spells = [
   {
     "id": "spell-0622",
     "name": "Thunder Wave",
-    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 69,
@@ -7796,7 +7796,7 @@ export const spells = [
   {
     "id": "spell-0623",
     "name": "Holy Wave",
-    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 38,
@@ -7808,7 +7808,7 @@ export const spells = [
   {
     "id": "spell-0624",
     "name": "Dark Wave",
-    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 85,
@@ -7821,7 +7821,7 @@ export const spells = [
   {
     "id": "spell-0625",
     "name": "Shadow Nova",
-    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 20,
@@ -7834,7 +7834,7 @@ export const spells = [
   {
     "id": "spell-0626",
     "name": "Void Nova",
-    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 68,
@@ -7846,7 +7846,7 @@ export const spells = [
   {
     "id": "spell-0627",
     "name": "Abyssal Nova",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 92,
@@ -7858,7 +7858,7 @@ export const spells = [
   {
     "id": "spell-0628",
     "name": "Demonic Nova",
-    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 47,
@@ -7871,7 +7871,7 @@ export const spells = [
   {
     "id": "spell-0629",
     "name": "Celestial Nova",
-    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 80,
@@ -7884,7 +7884,7 @@ export const spells = [
   {
     "id": "spell-0630",
     "name": "Divine Nova",
-    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 32,
@@ -7896,7 +7896,7 @@ export const spells = [
   {
     "id": "spell-0631",
     "name": "Arcane Nova",
-    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 30,
@@ -7908,7 +7908,7 @@ export const spells = [
   {
     "id": "spell-0632",
     "name": "Infernal Nova",
-    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 85,
@@ -7921,7 +7921,7 @@ export const spells = [
   {
     "id": "spell-0633",
     "name": "Frozen Nova",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 72,
@@ -7934,7 +7934,7 @@ export const spells = [
   {
     "id": "spell-0634",
     "name": "Thunder Nova",
-    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 17,
@@ -7946,7 +7946,7 @@ export const spells = [
   {
     "id": "spell-0635",
     "name": "Holy Nova",
-    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 32,
@@ -7958,7 +7958,7 @@ export const spells = [
   {
     "id": "spell-0636",
     "name": "Dark Nova",
-    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 12,
@@ -7971,7 +7971,7 @@ export const spells = [
   {
     "id": "spell-0637",
     "name": "Shadow Barrier",
-    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 52,
@@ -7984,7 +7984,7 @@ export const spells = [
   {
     "id": "spell-0638",
     "name": "Void Barrier",
-    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 38,
@@ -7996,7 +7996,7 @@ export const spells = [
   {
     "id": "spell-0639",
     "name": "Abyssal Barrier",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 93,
@@ -8008,7 +8008,7 @@ export const spells = [
   {
     "id": "spell-0640",
     "name": "Demonic Barrier",
-    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 62,
@@ -8021,7 +8021,7 @@ export const spells = [
   {
     "id": "spell-0641",
     "name": "Celestial Barrier",
-    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 105,
@@ -8034,7 +8034,7 @@ export const spells = [
   {
     "id": "spell-0642",
     "name": "Divine Barrier",
-    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 41,
@@ -8046,7 +8046,7 @@ export const spells = [
   {
     "id": "spell-0643",
     "name": "Arcane Barrier",
-    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 100,
@@ -8058,7 +8058,7 @@ export const spells = [
   {
     "id": "spell-0644",
     "name": "Infernal Barrier",
-    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 70,
@@ -8071,7 +8071,7 @@ export const spells = [
   {
     "id": "spell-0645",
     "name": "Frozen Barrier",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 39,
@@ -8084,7 +8084,7 @@ export const spells = [
   {
     "id": "spell-0646",
     "name": "Thunder Barrier",
-    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 74,
@@ -8096,7 +8096,7 @@ export const spells = [
   {
     "id": "spell-0647",
     "name": "Holy Barrier",
-    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 81,
@@ -8108,7 +8108,7 @@ export const spells = [
   {
     "id": "spell-0648",
     "name": "Dark Barrier",
-    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 64,
@@ -8121,7 +8121,7 @@ export const spells = [
   {
     "id": "spell-0649",
     "name": "Shadow Shield",
-    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 62,
@@ -8134,7 +8134,7 @@ export const spells = [
   {
     "id": "spell-0650",
     "name": "Void Shield",
-    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 75,
@@ -8146,7 +8146,7 @@ export const spells = [
   {
     "id": "spell-0651",
     "name": "Abyssal Shield",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 37,
@@ -8158,7 +8158,7 @@ export const spells = [
   {
     "id": "spell-0652",
     "name": "Demonic Shield",
-    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 73,
@@ -8171,7 +8171,7 @@ export const spells = [
   {
     "id": "spell-0653",
     "name": "Celestial Shield",
-    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 52,
@@ -8184,7 +8184,7 @@ export const spells = [
   {
     "id": "spell-0654",
     "name": "Divine Shield",
-    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 13,
@@ -8196,7 +8196,7 @@ export const spells = [
   {
     "id": "spell-0655",
     "name": "Arcane Shield",
-    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 32,
@@ -8208,7 +8208,7 @@ export const spells = [
   {
     "id": "spell-0656",
     "name": "Infernal Shield",
-    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 73,
@@ -8221,7 +8221,7 @@ export const spells = [
   {
     "id": "spell-0657",
     "name": "Frozen Shield",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 45,
@@ -8234,7 +8234,7 @@ export const spells = [
   {
     "id": "spell-0658",
     "name": "Thunder Shield",
-    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 31,
@@ -8246,7 +8246,7 @@ export const spells = [
   {
     "id": "spell-0659",
     "name": "Holy Shield",
-    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 49,
@@ -8258,7 +8258,7 @@ export const spells = [
   {
     "id": "spell-0660",
     "name": "Dark Shield",
-    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 109,
@@ -8271,7 +8271,7 @@ export const spells = [
   {
     "id": "spell-0661",
     "name": "Shadow Curse",
-    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 44,
@@ -8284,7 +8284,7 @@ export const spells = [
   {
     "id": "spell-0662",
     "name": "Void Curse",
-    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 101,
@@ -8296,7 +8296,7 @@ export const spells = [
   {
     "id": "spell-0663",
     "name": "Abyssal Curse",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 47,
@@ -8308,7 +8308,7 @@ export const spells = [
   {
     "id": "spell-0664",
     "name": "Demonic Curse",
-    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 71,
@@ -8321,7 +8321,7 @@ export const spells = [
   {
     "id": "spell-0665",
     "name": "Celestial Curse",
-    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 71,
@@ -8334,7 +8334,7 @@ export const spells = [
   {
     "id": "spell-0666",
     "name": "Divine Curse",
-    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 36,
@@ -8346,7 +8346,7 @@ export const spells = [
   {
     "id": "spell-0667",
     "name": "Arcane Curse",
-    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 100,
@@ -8358,7 +8358,7 @@ export const spells = [
   {
     "id": "spell-0668",
     "name": "Infernal Curse",
-    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 82,
@@ -8371,7 +8371,7 @@ export const spells = [
   {
     "id": "spell-0669",
     "name": "Frozen Curse",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 103,
@@ -8384,7 +8384,7 @@ export const spells = [
   {
     "id": "spell-0670",
     "name": "Thunder Curse",
-    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 62,
@@ -8396,7 +8396,7 @@ export const spells = [
   {
     "id": "spell-0671",
     "name": "Holy Curse",
-    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 104,
@@ -8408,7 +8408,7 @@ export const spells = [
   {
     "id": "spell-0672",
     "name": "Dark Curse",
-    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 97,
@@ -8421,7 +8421,7 @@ export const spells = [
   {
     "id": "spell-0673",
     "name": "Shadow Blessing",
-    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 16,
@@ -8434,7 +8434,7 @@ export const spells = [
   {
     "id": "spell-0674",
     "name": "Void Blessing",
-    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 95,
@@ -8446,7 +8446,7 @@ export const spells = [
   {
     "id": "spell-0675",
     "name": "Abyssal Blessing",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 109,
@@ -8458,7 +8458,7 @@ export const spells = [
   {
     "id": "spell-0676",
     "name": "Demonic Blessing",
-    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 83,
@@ -8471,7 +8471,7 @@ export const spells = [
   {
     "id": "spell-0677",
     "name": "Celestial Blessing",
-    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 65,
@@ -8484,7 +8484,7 @@ export const spells = [
   {
     "id": "spell-0678",
     "name": "Divine Blessing",
-    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 31,
@@ -8496,7 +8496,7 @@ export const spells = [
   {
     "id": "spell-0679",
     "name": "Arcane Blessing",
-    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 38,
@@ -8508,7 +8508,7 @@ export const spells = [
   {
     "id": "spell-0680",
     "name": "Infernal Blessing",
-    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 15,
@@ -8521,7 +8521,7 @@ export const spells = [
   {
     "id": "spell-0681",
     "name": "Frozen Blessing",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 78,
@@ -8534,7 +8534,7 @@ export const spells = [
   {
     "id": "spell-0682",
     "name": "Thunder Blessing",
-    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 51,
@@ -8546,7 +8546,7 @@ export const spells = [
   {
     "id": "spell-0683",
     "name": "Holy Blessing",
-    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 32,
@@ -8558,7 +8558,7 @@ export const spells = [
   {
     "id": "spell-0684",
     "name": "Dark Blessing",
-    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 55,
@@ -8571,7 +8571,7 @@ export const spells = [
   {
     "id": "spell-0685",
     "name": "Shadow Healing",
-    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 85,
@@ -8584,7 +8584,7 @@ export const spells = [
   {
     "id": "spell-0686",
     "name": "Void Healing",
-    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 109,
@@ -8596,7 +8596,7 @@ export const spells = [
   {
     "id": "spell-0687",
     "name": "Abyssal Healing",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 85,
@@ -8608,7 +8608,7 @@ export const spells = [
   {
     "id": "spell-0688",
     "name": "Demonic Healing",
-    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 26,
@@ -8621,7 +8621,7 @@ export const spells = [
   {
     "id": "spell-0689",
     "name": "Celestial Healing",
-    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 15,
@@ -8634,7 +8634,7 @@ export const spells = [
   {
     "id": "spell-0690",
     "name": "Divine Healing",
-    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 98,
@@ -8646,7 +8646,7 @@ export const spells = [
   {
     "id": "spell-0691",
     "name": "Arcane Healing",
-    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 34,
@@ -8658,7 +8658,7 @@ export const spells = [
   {
     "id": "spell-0692",
     "name": "Infernal Healing",
-    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 66,
@@ -8671,7 +8671,7 @@ export const spells = [
   {
     "id": "spell-0693",
     "name": "Frozen Healing",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 100,
@@ -8684,7 +8684,7 @@ export const spells = [
   {
     "id": "spell-0694",
     "name": "Thunder Healing",
-    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 28,
@@ -8696,7 +8696,7 @@ export const spells = [
   {
     "id": "spell-0695",
     "name": "Holy Healing",
-    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 21,
@@ -8708,7 +8708,7 @@ export const spells = [
   {
     "id": "spell-0696",
     "name": "Dark Healing",
-    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 11,
@@ -8721,7 +8721,7 @@ export const spells = [
   {
     "id": "spell-0697",
     "name": "Shadow Restoration",
-    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 87,
@@ -8734,7 +8734,7 @@ export const spells = [
   {
     "id": "spell-0698",
     "name": "Void Restoration",
-    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 20,
@@ -8746,7 +8746,7 @@ export const spells = [
   {
     "id": "spell-0699",
     "name": "Abyssal Restoration",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 109,
@@ -8758,7 +8758,7 @@ export const spells = [
   {
     "id": "spell-0700",
     "name": "Demonic Restoration",
-    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 12,
@@ -8771,7 +8771,7 @@ export const spells = [
   {
     "id": "spell-0701",
     "name": "Celestial Restoration",
-    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 57,
@@ -8784,7 +8784,7 @@ export const spells = [
   {
     "id": "spell-0702",
     "name": "Divine Restoration",
-    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 55,
@@ -8796,7 +8796,7 @@ export const spells = [
   {
     "id": "spell-0703",
     "name": "Arcane Restoration",
-    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 42,
@@ -8808,7 +8808,7 @@ export const spells = [
   {
     "id": "spell-0704",
     "name": "Infernal Restoration",
-    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 65,
@@ -8821,7 +8821,7 @@ export const spells = [
   {
     "id": "spell-0705",
     "name": "Frozen Restoration",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 71,
@@ -8834,7 +8834,7 @@ export const spells = [
   {
     "id": "spell-0706",
     "name": "Thunder Restoration",
-    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 69,
@@ -8846,7 +8846,7 @@ export const spells = [
   {
     "id": "spell-0707",
     "name": "Holy Restoration",
-    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 30,
@@ -8858,7 +8858,7 @@ export const spells = [
   {
     "id": "spell-0708",
     "name": "Dark Restoration",
-    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 70,
@@ -8871,7 +8871,7 @@ export const spells = [
   {
     "id": "spell-0709",
     "name": "Shadow Destruction",
-    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 59,
@@ -8884,7 +8884,7 @@ export const spells = [
   {
     "id": "spell-0710",
     "name": "Void Destruction",
-    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 96,
@@ -8896,7 +8896,7 @@ export const spells = [
   {
     "id": "spell-0711",
     "name": "Abyssal Destruction",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 95,
@@ -8908,7 +8908,7 @@ export const spells = [
   {
     "id": "spell-0712",
     "name": "Demonic Destruction",
-    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 43,
@@ -8921,7 +8921,7 @@ export const spells = [
   {
     "id": "spell-0713",
     "name": "Celestial Destruction",
-    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 34,
@@ -8934,7 +8934,7 @@ export const spells = [
   {
     "id": "spell-0714",
     "name": "Divine Destruction",
-    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 43,
@@ -8946,7 +8946,7 @@ export const spells = [
   {
     "id": "spell-0715",
     "name": "Arcane Destruction",
-    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 45,
@@ -8958,7 +8958,7 @@ export const spells = [
   {
     "id": "spell-0716",
     "name": "Infernal Destruction",
-    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 32,
@@ -8971,7 +8971,7 @@ export const spells = [
   {
     "id": "spell-0717",
     "name": "Frozen Destruction",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 19,
@@ -8984,7 +8984,7 @@ export const spells = [
   {
     "id": "spell-0718",
     "name": "Thunder Destruction",
-    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 104,
@@ -8996,7 +8996,7 @@ export const spells = [
   {
     "id": "spell-0719",
     "name": "Holy Destruction",
-    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 37,
@@ -9008,7 +9008,7 @@ export const spells = [
   {
     "id": "spell-0720",
     "name": "Dark Destruction",
-    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 70,
@@ -9021,7 +9021,7 @@ export const spells = [
   {
     "id": "spell-0721",
     "name": "Shadow Summoning",
-    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 98,
@@ -9034,7 +9034,7 @@ export const spells = [
   {
     "id": "spell-0722",
     "name": "Void Summoning",
-    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 105,
@@ -9046,7 +9046,7 @@ export const spells = [
   {
     "id": "spell-0723",
     "name": "Abyssal Summoning",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 77,
@@ -9058,7 +9058,7 @@ export const spells = [
   {
     "id": "spell-0724",
     "name": "Demonic Summoning",
-    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 94,
@@ -9071,7 +9071,7 @@ export const spells = [
   {
     "id": "spell-0725",
     "name": "Celestial Summoning",
-    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 14,
@@ -9084,7 +9084,7 @@ export const spells = [
   {
     "id": "spell-0726",
     "name": "Divine Summoning",
-    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 108,
@@ -9096,7 +9096,7 @@ export const spells = [
   {
     "id": "spell-0727",
     "name": "Arcane Summoning",
-    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 87,
@@ -9108,7 +9108,7 @@ export const spells = [
   {
     "id": "spell-0728",
     "name": "Infernal Summoning",
-    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 107,
@@ -9121,7 +9121,7 @@ export const spells = [
   {
     "id": "spell-0729",
     "name": "Frozen Summoning",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 41,
@@ -9134,7 +9134,7 @@ export const spells = [
   {
     "id": "spell-0730",
     "name": "Thunder Summoning",
-    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 99,
@@ -9146,7 +9146,7 @@ export const spells = [
   {
     "id": "spell-0731",
     "name": "Holy Summoning",
-    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 57,
@@ -9158,7 +9158,7 @@ export const spells = [
   {
     "id": "spell-0732",
     "name": "Dark Summoning",
-    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 102,
@@ -9171,7 +9171,7 @@ export const spells = [
   {
     "id": "spell-0733",
     "name": "Shadow Binding",
-    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 62,
@@ -9184,7 +9184,7 @@ export const spells = [
   {
     "id": "spell-0734",
     "name": "Void Binding",
-    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 46,
@@ -9196,7 +9196,7 @@ export const spells = [
   {
     "id": "spell-0735",
     "name": "Abyssal Binding",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 29,
@@ -9208,7 +9208,7 @@ export const spells = [
   {
     "id": "spell-0736",
     "name": "Demonic Binding",
-    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 21,
@@ -9221,7 +9221,7 @@ export const spells = [
   {
     "id": "spell-0737",
     "name": "Celestial Binding",
-    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 35,
@@ -9234,7 +9234,7 @@ export const spells = [
   {
     "id": "spell-0738",
     "name": "Divine Binding",
-    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 101,
@@ -9246,7 +9246,7 @@ export const spells = [
   {
     "id": "spell-0739",
     "name": "Arcane Binding",
-    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 62,
@@ -9258,7 +9258,7 @@ export const spells = [
   {
     "id": "spell-0740",
     "name": "Infernal Binding",
-    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 16,
@@ -9271,7 +9271,7 @@ export const spells = [
   {
     "id": "spell-0741",
     "name": "Frozen Binding",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 31,
@@ -9284,7 +9284,7 @@ export const spells = [
   {
     "id": "spell-0742",
     "name": "Thunder Binding",
-    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 47,
@@ -9296,7 +9296,7 @@ export const spells = [
   {
     "id": "spell-0743",
     "name": "Holy Binding",
-    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 83,
@@ -9308,7 +9308,7 @@ export const spells = [
   {
     "id": "spell-0744",
     "name": "Dark Binding",
-    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 83,
@@ -9321,7 +9321,7 @@ export const spells = [
   {
     "id": "spell-0745",
     "name": "Shadow Teleportation",
-    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 64,
@@ -9334,7 +9334,7 @@ export const spells = [
   {
     "id": "spell-0746",
     "name": "Void Teleportation",
-    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 109,
@@ -9346,7 +9346,7 @@ export const spells = [
   {
     "id": "spell-0747",
     "name": "Abyssal Teleportation",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 90,
@@ -9358,7 +9358,7 @@ export const spells = [
   {
     "id": "spell-0748",
     "name": "Demonic Teleportation",
-    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 75,
@@ -9371,7 +9371,7 @@ export const spells = [
   {
     "id": "spell-0749",
     "name": "Celestial Teleportation",
-    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 79,
@@ -9384,7 +9384,7 @@ export const spells = [
   {
     "id": "spell-0750",
     "name": "Divine Teleportation",
-    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 73,
@@ -9396,7 +9396,7 @@ export const spells = [
   {
     "id": "spell-0751",
     "name": "Arcane Teleportation",
-    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 47,
@@ -9408,7 +9408,7 @@ export const spells = [
   {
     "id": "spell-0752",
     "name": "Infernal Teleportation",
-    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 50,
@@ -9421,7 +9421,7 @@ export const spells = [
   {
     "id": "spell-0753",
     "name": "Frozen Teleportation",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 57,
@@ -9434,7 +9434,7 @@ export const spells = [
   {
     "id": "spell-0754",
     "name": "Thunder Teleportation",
-    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 84,
@@ -9446,7 +9446,7 @@ export const spells = [
   {
     "id": "spell-0755",
     "name": "Holy Teleportation",
-    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 82,
@@ -9458,7 +9458,7 @@ export const spells = [
   {
     "id": "spell-0756",
     "name": "Dark Teleportation",
-    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 108,
@@ -9471,7 +9471,7 @@ export const spells = [
   {
     "id": "spell-0757",
     "name": "Shadow Transformation",
-    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 54,
@@ -9484,7 +9484,7 @@ export const spells = [
   {
     "id": "spell-0758",
     "name": "Void Transformation",
-    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 100,
@@ -9496,7 +9496,7 @@ export const spells = [
   {
     "id": "spell-0759",
     "name": "Abyssal Transformation",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 14,
@@ -9508,7 +9508,7 @@ export const spells = [
   {
     "id": "spell-0760",
     "name": "Demonic Transformation",
-    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 22,
@@ -9521,7 +9521,7 @@ export const spells = [
   {
     "id": "spell-0761",
     "name": "Celestial Transformation",
-    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 46,
@@ -9534,7 +9534,7 @@ export const spells = [
   {
     "id": "spell-0762",
     "name": "Divine Transformation",
-    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 81,
@@ -9546,7 +9546,7 @@ export const spells = [
   {
     "id": "spell-0763",
     "name": "Arcane Transformation",
-    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 17,
@@ -9558,7 +9558,7 @@ export const spells = [
   {
     "id": "spell-0764",
     "name": "Infernal Transformation",
-    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 29,
@@ -9571,7 +9571,7 @@ export const spells = [
   {
     "id": "spell-0765",
     "name": "Frozen Transformation",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 56,
@@ -9584,7 +9584,7 @@ export const spells = [
   {
     "id": "spell-0766",
     "name": "Thunder Transformation",
-    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 77,
@@ -9596,7 +9596,7 @@ export const spells = [
   {
     "id": "spell-0767",
     "name": "Holy Transformation",
-    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 84,
@@ -9608,7 +9608,7 @@ export const spells = [
   {
     "id": "spell-0768",
     "name": "Dark Transformation",
-    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 92,
@@ -9621,7 +9621,7 @@ export const spells = [
   {
     "id": "spell-0769",
     "name": "Shadow Bolt",
-    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 37,
@@ -9634,7 +9634,7 @@ export const spells = [
   {
     "id": "spell-0770",
     "name": "Void Bolt",
-    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 59,
@@ -9646,7 +9646,7 @@ export const spells = [
   {
     "id": "spell-0771",
     "name": "Abyssal Bolt",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 65,
@@ -9658,7 +9658,7 @@ export const spells = [
   {
     "id": "spell-0772",
     "name": "Demonic Bolt",
-    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 14,
@@ -9671,7 +9671,7 @@ export const spells = [
   {
     "id": "spell-0773",
     "name": "Celestial Bolt",
-    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 84,
@@ -9684,7 +9684,7 @@ export const spells = [
   {
     "id": "spell-0774",
     "name": "Divine Bolt",
-    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 17,
@@ -9696,7 +9696,7 @@ export const spells = [
   {
     "id": "spell-0775",
     "name": "Arcane Bolt",
-    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 71,
@@ -9708,7 +9708,7 @@ export const spells = [
   {
     "id": "spell-0776",
     "name": "Infernal Bolt",
-    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 45,
@@ -9721,7 +9721,7 @@ export const spells = [
   {
     "id": "spell-0777",
     "name": "Frozen Bolt",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 67,
@@ -9734,7 +9734,7 @@ export const spells = [
   {
     "id": "spell-0778",
     "name": "Thunder Bolt",
-    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 76,
@@ -9746,7 +9746,7 @@ export const spells = [
   {
     "id": "spell-0779",
     "name": "Holy Bolt",
-    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 102,
@@ -9758,7 +9758,7 @@ export const spells = [
   {
     "id": "spell-0780",
     "name": "Dark Bolt",
-    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 100,
@@ -9771,7 +9771,7 @@ export const spells = [
   {
     "id": "spell-0781",
     "name": "Shadow Blast",
-    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "D",
     "manaCost": 69,
@@ -9784,7 +9784,7 @@ export const spells = [
   {
     "id": "spell-0782",
     "name": "Void Blast",
-    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "C",
     "manaCost": 36,
@@ -9796,7 +9796,7 @@ export const spells = [
   {
     "id": "spell-0783",
     "name": "Abyssal Blast",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "B",
     "manaCost": 19,
@@ -9808,7 +9808,7 @@ export const spells = [
   {
     "id": "spell-0784",
     "name": "Demonic Blast",
-    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "A",
     "manaCost": 60,
@@ -9821,7 +9821,7 @@ export const spells = [
   {
     "id": "spell-0785",
     "name": "Celestial Blast",
-    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "S",
     "manaCost": 77,
@@ -9834,7 +9834,7 @@ export const spells = [
   {
     "id": "spell-0786",
     "name": "Divine Blast",
-    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "D",
     "manaCost": 94,
@@ -9846,7 +9846,7 @@ export const spells = [
   {
     "id": "spell-0787",
     "name": "Arcane Blast",
-    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "C",
     "manaCost": 104,
@@ -9858,7 +9858,7 @@ export const spells = [
   {
     "id": "spell-0788",
     "name": "Infernal Blast",
-    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "B",
     "manaCost": 109,
@@ -9871,7 +9871,7 @@ export const spells = [
   {
     "id": "spell-0789",
     "name": "Frozen Blast",
-    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that attack targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "A",
     "manaCost": 50,
@@ -9884,7 +9884,7 @@ export const spells = [
   {
     "id": "spell-0790",
     "name": "Thunder Blast",
-    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that defense targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "S",
     "manaCost": 100,
@@ -9896,7 +9896,7 @@ export const spells = [
   {
     "id": "spell-0791",
     "name": "Holy Blast",
-    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that utility targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "D",
     "manaCost": 85,
@@ -9908,7 +9908,7 @@ export const spells = [
   {
     "id": "spell-0792",
     "name": "Dark Blast",
-    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that healing targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "C",
     "manaCost": 91,
@@ -9921,7 +9921,7 @@ export const spells = [
   {
     "id": "spell-0793",
     "name": "Shadow Storm",
-    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that attack targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "B",
     "manaCost": 72,
@@ -9934,7 +9934,7 @@ export const spells = [
   {
     "id": "spell-0794",
     "name": "Void Storm",
-    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that defense targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "A",
     "manaCost": 45,
@@ -9946,7 +9946,7 @@ export const spells = [
   {
     "id": "spell-0795",
     "name": "Abyssal Storm",
-    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful abyssal spell that utility targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "S",
     "manaCost": 80,
@@ -9958,7 +9958,7 @@ export const spells = [
   {
     "id": "spell-0796",
     "name": "Demonic Storm",
-    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful demonic spell that healing targets with devastating force. This D rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "D",
     "manaCost": 25,
@@ -9971,7 +9971,7 @@ export const spells = [
   {
     "id": "spell-0797",
     "name": "Celestial Storm",
-    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful celestial spell that attack targets with devastating force. This C rank spell is favored by shadow mages and ascendants alike.",
     "type": "Attack",
     "rank": "C",
     "manaCost": 79,
@@ -9984,7 +9984,7 @@ export const spells = [
   {
     "id": "spell-0798",
     "name": "Divine Storm",
-    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful divine spell that defense targets with devastating force. This B rank spell is favored by shadow mages and ascendants alike.",
     "type": "Defense",
     "rank": "B",
     "manaCost": 81,
@@ -9996,7 +9996,7 @@ export const spells = [
   {
     "id": "spell-0799",
     "name": "Arcane Storm",
-    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful shadow spell that utility targets with devastating force. This A rank spell is favored by shadow mages and ascendants alike.",
     "type": "Utility",
     "rank": "A",
     "manaCost": 71,
@@ -10008,7 +10008,7 @@ export const spells = [
   {
     "id": "spell-0800",
     "name": "Infernal Storm",
-    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and hunters alike.",
+    "description": "A powerful void spell that healing targets with devastating force. This S rank spell is favored by shadow mages and ascendants alike.",
     "type": "Healing",
     "rank": "S",
     "manaCost": 35,
@@ -10059,3 +10059,4 @@ export const spells = [
 ];
 
 export default spells;
+

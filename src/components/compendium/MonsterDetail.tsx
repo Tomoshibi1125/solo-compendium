@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
 import { StatBlock, StatRow, StatSection } from '@/components/compendium/StatBlock';
 import { TableOfContents } from '@/components/compendium/TableOfContents';
+import { formatMonarchVernacular, MONARCH_LABEL } from '@/lib/vernacular';
 
 interface MonsterData {
   id: string;
@@ -67,7 +68,7 @@ interface MonsterTrait {
   description: string;
 }
 
-// Enhanced gate rank colors with Solo Leveling theme
+// Enhanced gate rank colors with System Ascendant theme
 const gateRankColors: Record<string, { bg: string; text: string; glow: string }> = {
   'E': { bg: 'bg-gate-e/20', text: 'text-gate-e', glow: '' },
   'D': { bg: 'bg-gate-d/20', text: 'text-gate-d', glow: '' },
@@ -130,7 +131,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 
   const gateStyle = data.gate_rank ? gateRankColors[data.gate_rank] : null;
   const isBossOrNamedNPC = data.is_boss || data.tags?.includes('named-npc') || data.tags?.includes('named-boss') || data.tags?.includes('monarch');
-  const displayName = data.display_name || data.name;
+  const displayName = formatMonarchVernacular(data.display_name || data.name);
 
   // Generate TOC items for long pages
   const tocItems = [
@@ -173,12 +174,12 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
         <div className="space-y-3">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-muted-foreground capitalize font-heading">
-              {data.size} {data.creature_type}
-              {data.alignment && `, ${data.alignment}`}
+              {formatMonarchVernacular(data.size)} {formatMonarchVernacular(data.creature_type)}
+              {data.alignment && `, ${formatMonarchVernacular(data.alignment)}`}
             </span>
             {data.gate_rank && gateStyle && (
               <Badge className={cn(gateStyle.bg, gateStyle.text, 'font-display tracking-wider', gateStyle.glow)}>
-                {data.gate_rank}-Rank Gate
+                {data.gate_rank}-Rank Rift
               </Badge>
             )}
             {data.is_boss && (
@@ -201,7 +202,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
             {data.tags?.includes('monarch') && (
               <Badge variant="outline" className="border-arise-violet/50 text-arise-violet font-heading shadow-[0_0_10px_hsl(var(--arise-violet)/0.4)]">
                 <Zap className="h-3 w-3 mr-1" />
-                Monarch
+                {MONARCH_LABEL}
               </Badge>
             )}
             {data.tags?.includes('guild-master') && (
@@ -212,7 +213,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
           </div>
           {data.lore && (
             <p className="text-muted-foreground italic border-l-2 border-shadow-purple/40 pl-4 mt-4 leading-relaxed">
-              {data.lore}
+              {formatMonarchVernacular(data.lore)}
             </p>
           )}
         </div>
@@ -226,7 +227,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
             <span className="font-display text-2xl">{data.armor_class}</span>
           </div>
           {data.armor_type && (
-            <span className="text-xs text-muted-foreground">{data.armor_type}</span>
+          <span className="text-xs text-muted-foreground">{formatMonarchVernacular(data.armor_type)}</span>
           )}
         </SystemWindow>
 
@@ -253,7 +254,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
           {data.xp && <span className="text-xs text-muted-foreground">{data.xp} XP</span>}
         </SystemWindow>
 
-        <SystemWindow title="GATE RANK" compact>
+        <SystemWindow title="RIFT RANK" compact>
           <div className="flex items-center gap-2">
             <Swords className="w-5 h-5 text-orange-400" />
             <span className="font-display text-2xl">{data.gate_rank || '—'}</span>
@@ -294,19 +295,19 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
               {data.damage_vulnerabilities && data.damage_vulnerabilities.length > 0 && (
                 <div>
                   <span className="text-red-400 font-heading text-sm">Vulnerabilities: </span>
-                  <span className="text-muted-foreground">{data.damage_vulnerabilities.join(', ')}</span>
+                  <span className="text-muted-foreground">{data.damage_vulnerabilities.map(formatMonarchVernacular).join(', ')}</span>
                 </div>
               )}
               {data.damage_resistances && data.damage_resistances.length > 0 && (
                 <div>
                   <span className="text-yellow-400 font-heading text-sm">Resistances: </span>
-                  <span className="text-muted-foreground">{data.damage_resistances.join(', ')}</span>
+                  <span className="text-muted-foreground">{data.damage_resistances.map(formatMonarchVernacular).join(', ')}</span>
                 </div>
               )}
               {data.damage_immunities && data.damage_immunities.length > 0 && (
                 <div>
                   <span className="text-black font-heading text-sm">Immunities: </span>
-                  <span className="text-muted-foreground">{data.damage_immunities.join(', ')}</span>
+                  <span className="text-muted-foreground">{data.damage_immunities.map(formatMonarchVernacular).join(', ')}</span>
                 </div>
               )}
             </div>
@@ -317,7 +318,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
           <SystemWindow title="CONDITION IMMUNITIES">
             <div className="flex flex-wrap gap-1">
               {data.condition_immunities.map((condition) => (
-                <Badge key={condition} variant="outline">{condition}</Badge>
+                <Badge key={condition} variant="outline">{formatMonarchVernacular(condition)}</Badge>
               ))}
             </div>
           </SystemWindow>
@@ -330,8 +331,8 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
           <StatSection title="">
             {traits.map((trait) => (
               <div key={trait.id} className="mb-4 last:mb-0">
-                <h4 className="font-heading font-semibold text-primary mb-1 text-base">{trait.name}</h4>
-                <p className="text-sm text-foreground leading-relaxed">{trait.description}</p>
+                <h4 className="font-heading font-semibold text-primary mb-1 text-base">{formatMonarchVernacular(trait.name)}</h4>
+                <p className="text-sm text-foreground leading-relaxed">{formatMonarchVernacular(trait.description)}</p>
               </div>
             ))}
           </StatSection>
@@ -345,13 +346,13 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
             {regularActions.map((action) => (
               <div key={action.id} className="mb-4 last:mb-0 pb-4 last:pb-0 border-b border-border/30 last:border-b-0">
                 <div className="flex items-center gap-2 mb-2">
-                  <h4 className="font-heading font-semibold text-primary text-base">{action.name}</h4>
+                  <h4 className="font-heading font-semibold text-primary text-base">{formatMonarchVernacular(action.name)}</h4>
                   {action.recharge && <Badge variant="secondary" className="text-xs">{action.recharge}</Badge>}
                 </div>
-                <p className="text-sm text-foreground leading-relaxed mb-1">{action.description}</p>
+                <p className="text-sm text-foreground leading-relaxed mb-1">{formatMonarchVernacular(action.description)}</p>
                 {action.damage && (
                   <p className="text-sm text-foreground font-medium mt-2">
-                    <span className="font-semibold">Damage:</span> {action.damage} {action.damage_type}
+                    <span className="font-semibold">Damage:</span> {action.damage} {action.damage_type ? formatMonarchVernacular(action.damage_type) : ''}
                     {action.attack_bonus !== null && action.attack_bonus !== undefined && (
                       <span className="ml-2 text-muted-foreground">({action.attack_bonus >= 0 ? '+' : ''}{action.attack_bonus} to hit)</span>
                     )}
@@ -373,12 +374,12 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
             {legendaryActions.map((action) => (
               <div key={action.id} className="mb-4 last:mb-0 pb-4 last:pb-0 border-b border-border/30 last:border-b-0">
                 <div className="flex items-center gap-2 mb-2">
-                  <h4 className="font-heading font-semibold text-amber-400 text-base">{action.name}</h4>
+                  <h4 className="font-heading font-semibold text-amber-400 text-base">{formatMonarchVernacular(action.name)}</h4>
                   {action.legendary_cost && action.legendary_cost > 1 && (
                     <Badge variant="outline" className="text-xs">Costs {action.legendary_cost}</Badge>
                   )}
                 </div>
-                <p className="text-sm text-foreground leading-relaxed">{action.description}</p>
+                <p className="text-sm text-foreground leading-relaxed">{formatMonarchVernacular(action.description)}</p>
               </div>
             ))}
           </StatSection>
@@ -387,7 +388,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 
       {data.description && (
         <StatBlock title="DESCRIPTION" id="monster-description">
-          <p className="text-foreground leading-relaxed text-base">{data.description}</p>
+          <p className="text-foreground leading-relaxed text-base">{formatMonarchVernacular(data.description)}</p>
         </StatBlock>
       )}
     </div>

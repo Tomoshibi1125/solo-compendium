@@ -1,6 +1,6 @@
 ﻿/**
  * Audio Player Service
- * Legal-safe sounds and music management for DMs
+ * Legal-safe sounds and music management for Wardens
  */
 
 import type { AudioTrack, Playlist, AudioPlayerState, AudioSettings } from './types';

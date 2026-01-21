@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Save, Plus, Trash2, Calendar, Clock, FileText, Users } from 'lucide-react';
@@ -11,6 +11,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useDebounce } from '@/hooks/useDebounce';
+import { buildToolStorageKey, readLocalToolState, useUserToolState, writeLocalToolState } from '@/hooks/useToolState';
+import { MONARCH_LABEL } from '@/lib/vernacular';
 
 interface SessionNote {
   id: string;
@@ -28,10 +31,16 @@ interface SessionPlan {
   postSessionNotes: string;
 }
 
+type SessionPlannerState = {
+  sessions: SessionPlan[];
+  currentSession: SessionPlan | null;
+};
+
 const SessionPlanner = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [sessions, setSessions] = useState<SessionPlan[]>([]);
+  const hydratedRef = useRef(false);
   
   const initialSessionId = useRef(Date.now().toString()).current;
   
@@ -43,31 +52,29 @@ const SessionPlanner = () => {
     postSessionNotes: '',
   });
   const [newNote, setNewNote] = useState<{ title: string; content: string; type: SessionNote['type'] }>({ title: '', content: '', type: 'other' });
+  const toolKey = 'session_planner';
+  const toolStorageKey = buildToolStorageKey(toolKey);
+  const legacyStorageKey = 'dm-sessions';
+  const { state: storedState, isLoading, saveNow } = useUserToolState<SessionPlannerState>(toolKey, {
+    initialState: { sessions: [], currentSession: null },
+    storageKey: toolStorageKey,
+  });
+  const savePayload = useMemo(
+    () => ({ sessions, currentSession }),
+    [currentSession, sessions]
+  );
+  const debouncedState = useDebounce(savePayload, 800);
 
   const saveSession = () => {
     const updated = sessions.filter(s => s.id !== currentSession.id);
     updated.push(currentSession);
     setSessions(updated);
-    
-    // Save to localStorage
-    localStorage.setItem('dm-sessions', JSON.stringify(updated));
-    
+    void saveNow({ sessions: updated, currentSession });
+
     toast({
       title: 'Saved!',
       description: 'Session plan saved successfully.',
     });
-  };
-
-  const loadSessions = () => {
-    const saved = localStorage.getItem('dm-sessions');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        setSessions(parsed);
-      } catch (e) {
-        // Invalid data
-      }
-    }
   };
 
   const addNote = () => {
@@ -120,10 +127,38 @@ const SessionPlanner = () => {
     }
   };
 
-  // Load sessions on mount
   useEffect(() => {
-    loadSessions();
-  }, []);
+    if (isLoading || hydratedRef.current) return;
+
+    const legacySessions = readLocalToolState<SessionPlan[]>(legacyStorageKey);
+    let nextSessions = storedState.sessions;
+    let nextCurrent = storedState.currentSession;
+
+    if ((!nextSessions || nextSessions.length === 0) && Array.isArray(legacySessions) && legacySessions.length > 0) {
+      nextSessions = legacySessions;
+      nextCurrent = legacySessions[legacySessions.length - 1] || null;
+      writeLocalToolState(toolStorageKey, { sessions: nextSessions, currentSession: nextCurrent });
+      void saveNow({ sessions: nextSessions, currentSession: nextCurrent });
+    }
+
+    if (!nextCurrent && Array.isArray(nextSessions) && nextSessions.length > 0) {
+      nextCurrent = nextSessions[nextSessions.length - 1] || null;
+    }
+
+    if (Array.isArray(nextSessions) && nextSessions.length > 0) {
+      setSessions(nextSessions);
+    }
+    if (nextCurrent) {
+      setCurrentSession(nextCurrent);
+    }
+
+    hydratedRef.current = true;
+  }, [isLoading, legacyStorageKey, saveNow, storedState.currentSession, storedState.sessions, toolStorageKey]);
+
+  useEffect(() => {
+    if (!hydratedRef.current) return;
+    void saveNow(debouncedState);
+  }, [debouncedState, saveNow]);
 
   return (
     <Layout>
@@ -135,7 +170,7 @@ const SessionPlanner = () => {
             className="mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to DM Tools
+            Back to Warden Tools
           </Button>
           <h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow">
             SESSION PLANNER
@@ -161,7 +196,7 @@ const SessionPlanner = () => {
                     id="title"
                     value={currentSession.title}
                     onChange={(e) => setCurrentSession({ ...currentSession, title: e.target.value })}
-                    placeholder="e.g., The Shadow Monarch's Return"
+                    placeholder={`e.g., The Umbral ${MONARCH_LABEL}'s Return`}
                   />
                 </div>
                 <div>
@@ -185,7 +220,7 @@ const SessionPlanner = () => {
                       id="note-title"
                       value={newNote.title}
                       onChange={(e) => setNewNote({ ...newNote, title: e.target.value })}
-                      placeholder="e.g., Boss Battle - Igris the Blood Red"
+                      placeholder="e.g., Boss Battle - Crimson Knight the Blood Red"
                     />
                   </div>
                   <div>
@@ -285,7 +320,7 @@ const SessionPlanner = () => {
         </Tabs>
 
         <div className="mt-6">
-          <Button onClick={saveSession} className="w-full btn-shadow-monarch" size="lg">
+          <Button onClick={saveSession} className="w-full btn-umbral" size="lg">
             <Save className="w-4 h-4 mr-2" />
             Save Session Plan
           </Button>
@@ -296,4 +331,7 @@ const SessionPlanner = () => {
 };
 
 export default SessionPlanner;
+
+
+
 

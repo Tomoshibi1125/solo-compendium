@@ -1,6 +1,6 @@
 /**
  * Unified Combat System
- * Merges Solo Leveling combat mechanics with D&D 5e rules
+ * Merges System Ascendant combat mechanics with SRD 5e rules
  */
 
 import { 
@@ -11,6 +11,7 @@ import {
   getUnifiedSkillModifier,
   getUnifiedSavingThrowModifier
 } from './rulesEngine';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 // Unified Combat Action Types
 export type UnifiedActionType = 
@@ -73,7 +74,7 @@ export interface UnifiedCombatAction {
   };
 }
 
-// Solo Leveling Techniques adapted to D&D 5e actions
+// System Ascendant Techniques adapted to SRD 5e actions
 export interface UnifiedTechnique extends UnifiedCombatAction {
   type: 'technique';
   style: 'unarmed' | 'weapon' | 'ranged' | 'dual-wielding' | 'two-handed' | 'shield' | 'any';
@@ -338,7 +339,7 @@ export function calculateUnifiedMovement(
   return movement;
 }
 
-// Apply System Favor (Solo Leveling mechanic adapted)
+// Apply System Favor (System Ascendant mechanic adapted)
 export function applySystemFavor(
   character: UnifiedCharacter,
   effect: 'reroll' | 'advantage' | 'bonus' | 'heal'
@@ -379,7 +380,7 @@ export function applySystemFavor(
   };
 }
 
-// Apply Monarch Power (Solo Leveling mechanic adapted for monarchs only)
+// Apply Monarch Power (System Ascendant mechanic adapted for monarchs only)
 export function applyMonarchPower(
   character: UnifiedCharacter,
   cost: number,
@@ -390,7 +391,7 @@ export function applyMonarchPower(
     return { 
       success: false, 
       newCharacter: character, 
-      effect: 'No active monarch - monarch power unavailable' 
+      effect: formatMonarchVernacular('No active monarch - monarch power unavailable')
     };
   }
   
@@ -400,7 +401,7 @@ export function applyMonarchPower(
     return { 
       success: false, 
       newCharacter: character, 
-      effect: 'Insufficient System Favor for monarch power' 
+      effect: formatMonarchVernacular('Insufficient System Favor for monarch power')
     };
   }
   
@@ -512,3 +513,4 @@ export function getUnifiedCombatStatus(
     status
   };
 }
+

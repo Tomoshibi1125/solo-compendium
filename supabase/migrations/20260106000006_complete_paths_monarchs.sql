@@ -3,7 +3,7 @@
 -- =============================================
 -- This migration adds features for all 78 paths at levels 3, 6, 10, 14
 -- Following the pattern established in the previous migration
--- Each path gets 4 features with D&D 5e-level detail
+-- Each path gets 4 features with SRD 5e-level detail
 
 -- =============================================
 -- ASSASSIN PATHS (6 paths) - Remaining 4 paths
@@ -268,7 +268,7 @@ WHERE j.name = 'Assassin' AND p.name = 'Path of the Silent Knife';
 -- - Level 14: Master path feature (capstone ability)
 
 -- Each feature includes:
--- - Detailed description (2-5+ sentences matching D&D 5e detail)
+-- - Detailed description (2-5+ sentences matching SRD 5e detail)
 -- - Action type where applicable
 -- - Uses formula where applicable
 -- - Prerequisites where applicable
@@ -283,59 +283,59 @@ WHERE j.name = 'Assassin' AND p.name = 'Path of the Silent Knife';
 -- Monarchs unlock at level 7 (except Destruction at 11)
 -- Features typically at levels 7, 9, 11, 13, 15, 17, 20
 
--- Shadow Monarch Features
+-- Umbral Monarch Features
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT 
   m.id,
   'Shadow Extraction',
   7,
-  'When you choose the Shadow Monarch overlay at 7th level, you gain the ability to extract the shadow of a creature you slay. As an action, you can extract the shadow of a creature that died within the last minute and is within 30 feet of you. The shadow rises as a shadow soldier under your command. The shadow soldier uses the statistics of the creature it was extracted from, but it is an undead creature with the shadow type. The shadow soldier is under your control and obeys your verbal commands. You can have a number of shadow soldiers equal to your proficiency bonus. If you extract a shadow when you already have the maximum number, the oldest shadow soldier is destroyed. Shadow soldiers last until they are destroyed or you dismiss them as a bonus action.',
+  'When you choose the Umbral Monarch overlay at 7th level, you gain the ability to extract the shadow of a creature you slay. As an action, you can extract the shadow of a creature that died within the last minute and is within 30 feet of you. The shadow rises as a Umbral Legionnaire under your command. The Umbral Legionnaire uses the statistics of the creature it was extracted from, but it is an undead creature with the shadow type. The Umbral Legionnaire is under your control and obeys your verbal commands. You can have a number of Umbral Legion equal to your proficiency bonus. If you extract a shadow when you already have the maximum number, the oldest Umbral Legionnaire is destroyed. Umbral Legion last until they are destroyed or you dismiss them as a bonus action.',
   'action',
   'proficiency bonus',
   NULL,
   NULL,
   true
-FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch';
+FROM compendium_monarchs m WHERE m.name = 'Umbral Monarch';
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT 
   m.id,
   'Shadow Exchange',
   9,
-  'At 9th level, you can use your action to swap places with one of your shadow soldiers within 60 feet. When you do so, you teleport to the shadow soldier''s space, and it teleports to your previous space. You can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.',
+  'At 9th level, you can use your action to swap places with one of your Umbral Legion within 60 feet. When you do so, you teleport to the Umbral Legionnaire''s space, and it teleports to your previous space. You can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.',
   'action',
   'proficiency bonus',
   'long-rest',
   'Shadow Extraction',
   false
-FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch';
+FROM compendium_monarchs m WHERE m.name = 'Umbral Monarch';
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT 
   m.id,
-  'Shadow Army',
+  'Umbral Legion',
   11,
-  'Starting at 11th level, you can command your shadow soldiers more effectively. As a bonus action, you can command all your shadow soldiers to take the same action (Attack, Dash, Disengage, Dodge, or Help). Additionally, the maximum number of shadow soldiers you can control increases to twice your proficiency bonus.',
+  'Starting at 11th level, you can command your Umbral Legion more effectively. As a bonus action, you can command all your Umbral Legion to take the same action (Attack, Dash, Disengage, Dodge, or Help). Additionally, the maximum number of Umbral Legion you can control increases to twice your proficiency bonus.',
   'bonus-action',
   NULL,
   NULL,
   'Shadow Exchange',
   false
-FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch';
+FROM compendium_monarchs m WHERE m.name = 'Umbral Monarch';
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT 
   m.id,
   'Shadow Domain',
   13,
-  'At 13th level, you can use your action to create a 30-foot-radius sphere of shadow centered on yourself. The sphere spreads around corners and is heavily obscured. It lasts for 1 minute or until you dismiss it as a bonus action. While the sphere is active, you and your shadow soldiers have advantage on attack rolls against creatures in the sphere, and creatures in the sphere have disadvantage on attack rolls against you and your shadow soldiers. You can use this feature once, and you regain the ability to use it when you finish a long rest.',
+  'At 13th level, you can use your action to create a 30-foot-radius sphere of shadow centered on yourself. The sphere spreads around corners and is heavily obscured. It lasts for 1 minute or until you dismiss it as a bonus action. While the sphere is active, you and your Umbral Legion have advantage on attack rolls against creatures in the sphere, and creatures in the sphere have disadvantage on attack rolls against you and your Umbral Legion. You can use this feature once, and you regain the ability to use it when you finish a long rest.',
   'action',
   '1',
   'long-rest',
-  'Shadow Army',
+  'Umbral Legion',
   false
-FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch';
+FROM compendium_monarchs m WHERE m.name = 'Umbral Monarch';
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT 
   m.id,
-  'Shadow Monarch''s Presence',
+  'Umbral Monarch''s Presence',
   15,
   'Starting at 15th level, your mere presence commands the undead. Undead creatures within 60 feet of you that have a challenge rating equal to or less than your level are under your control. They obey your verbal commands and act on your turn in initiative. If an undead creature''s challenge rating exceeds your level, it makes a Wisdom saving throw (DC = 8 + your proficiency bonus + your Presence modifier) to resist your control. On a success, it is immune to this feature for 24 hours.',
   'passive',
@@ -343,37 +343,37 @@ SELECT
   NULL,
   'Shadow Domain',
   false
-FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch';
+FROM compendium_monarchs m WHERE m.name = 'Umbral Monarch';
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT 
   m.id,
   'Eternal Army',
   17,
-  'At 17th level, your shadow soldiers become truly eternal. When a shadow soldier is reduced to 0 hit points, it doesn''t die. Instead, it becomes a shadowy mist and reforms at the start of your next turn with 1 hit point. A shadow soldier can only be permanently destroyed if it is reduced to 0 hit points by radiant damage or if you dismiss it. Additionally, the maximum number of shadow soldiers you can control increases to three times your proficiency bonus.',
+  'At 17th level, your Umbral Legion become truly eternal. When a Umbral Legionnaire is reduced to 0 hit points, it doesn''t die. Instead, it becomes a shadowy mist and reforms at the start of your next turn with 1 hit point. A Umbral Legionnaire can only be permanently destroyed if it is reduced to 0 hit points by radiant damage or if you dismiss it. Additionally, the maximum number of Umbral Legion you can control increases to three times your proficiency bonus.',
   'passive',
   NULL,
   NULL,
-  'Shadow Monarch''s Presence',
+  'Umbral Monarch''s Presence',
   false
-FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch';
+FROM compendium_monarchs m WHERE m.name = 'Umbral Monarch';
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT 
   m.id,
-  'Shadow Monarch''s Authority',
+  'Umbral Monarch''s Authority',
   20,
-  'At 20th level, you have achieved the full power of the Shadow Monarch. You can extract shadows from any creature you slay, regardless of its type or size. Additionally, you can use your action to command all undead creatures within 1 mile of you. They must make a Wisdom saving throw (DC = 8 + your proficiency bonus + your Presence modifier) or fall under your control for 24 hours. Once a creature succeeds on this saving throw, it is immune to this feature for 7 days.',
+  'At 20th level, you have achieved the full power of the Umbral Monarch. You can extract shadows from any creature you slay, regardless of its type or size. Additionally, you can use your action to command all undead creatures within 1 mile of you. They must make a Wisdom saving throw (DC = 8 + your proficiency bonus + your Presence modifier) or fall under your control for 24 hours. Once a creature succeeds on this saving throw, it is immune to this feature for 7 days.',
   'action',
   '1',
   'long-rest',
   'Eternal Army',
   true
-FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch';
+FROM compendium_monarchs m WHERE m.name = 'Umbral Monarch';
 -- =============================================
 -- NOTE: Monarch Features Pattern Established
 -- =============================================
--- Shadow Monarch features demonstrate the pattern for all 9 monarchs.
+-- Umbral Monarch features demonstrate the pattern for all 9 monarchs.
 -- Each monarch will have features at appropriate levels (typically 7, 9, 11, 13, 15, 17, 20)
--- with full D&D 5e-level detail.
+-- with full SRD 5e-level detail.
 
 -- Remaining monarchs to complete:
 -- - Beast Monarch
@@ -386,3 +386,5 @@ FROM compendium_monarchs m WHERE m.name = 'Shadow Monarch';
 -- - Transfiguration Monarch
 
 -- All will follow the same pattern with thematic features matching their descriptions.;
+
+

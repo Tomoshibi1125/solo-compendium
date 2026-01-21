@@ -5,7 +5,7 @@
 
 import type { Database } from '@/integrations/supabase/types';
 import { supabase } from '@/integrations/supabase/client';
-import { getProficiencyBonus, getSystemFavorDie } from '@/types/solo-leveling';
+import { getProficiencyBonus, getSystemFavorDie } from '@/types/system-rules';
 import { error as logError } from '@/lib/logger';
 
 function getSystemFavorMax(level: number): number {
@@ -321,4 +321,5 @@ export async function autoSuggestEquipment(
 
   return suggestions;
 }
+
 

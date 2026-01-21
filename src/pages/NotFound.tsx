@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { GatePortal } from '@/components/ui/GatePortal';
-import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
+import { SystemSigilLogo } from '@/components/ui/SystemSigilLogo';
 import { Skull, Home, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import './NotFound.css';
@@ -21,15 +21,15 @@ const NotFound = () => {
       
       <div className="text-center max-w-lg mx-auto px-4 relative z-10">
         <div className="mb-8">
-          {/* Shadow Monarch Logo above gate */}
+          {/* Umbral Ascendant Logo above rift */}
           <div className="flex justify-center mb-6">
-            <ShadowMonarchLogo size="lg" />
+            <SystemSigilLogo size="lg" />
           </div>
           
-          {/* Gate Portal Graphic - Corrupted/Broken */}
+          {/* Rift Portal Graphic - Corrupted/Broken */}
           <div className="flex justify-center mb-8 relative">
             <GatePortal rank="E" className="w-40 h-40 opacity-30 grayscale" animated={false} />
-            {/* Broken gate overlay */}
+            {/* Broken rift overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
               <Skull className="w-16 h-16 text-arise/50 animate-pulse" />
             </div>
@@ -46,11 +46,11 @@ const NotFound = () => {
           </div>
           
           <h2 className="mb-4 font-arise text-2xl font-bold text-foreground tracking-wide">
-            GATE NOT FOUND
+            RIFT NOT FOUND
           </h2>
           <p className="mb-8 text-lg text-muted-foreground font-heading leading-relaxed">
             This path does not exist in the System's records. 
-            Perhaps the <span className="text-arise font-semibold">Supreme Deity</span> has sealed this route, 
+            Perhaps the <span className="text-arise font-semibold">Prime Architect</span> has sealed this route, 
             or it was lost during the reset.
           </p>
           
@@ -87,3 +87,5 @@ const NotFound = () => {
 };
 
 export default NotFound;
+
+

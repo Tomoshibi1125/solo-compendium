@@ -2,6 +2,7 @@ import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Sparkles, Crown, Shield, Swords } from 'lucide-react';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface ArtifactAbility {
   name: string;
@@ -65,7 +66,7 @@ const rarityStyles: Record<string, string> = {
 };
 
 export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
-  const displayName = data.display_name || data.name;
+  const displayName = formatMonarchVernacular(data.display_name || data.name);
   const imageSrc = data.image_url || data.image || undefined;
   const rarityStyle = data.rarity ? rarityStyles[data.rarity] : undefined;
 
@@ -95,17 +96,17 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
       <SystemWindow title={displayName.toUpperCase()}>
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-2">
-            {data.artifact_type && <Badge variant="secondary">{data.artifact_type}</Badge>}
+            {data.artifact_type && <Badge variant="secondary">{formatMonarchVernacular(data.artifact_type)}</Badge>}
             {data.rarity && (
               <Badge variant="outline" className={rarityStyle}>
-                {data.rarity}
+                {formatMonarchVernacular(data.rarity)}
               </Badge>
             )}
             {data.attunement && <Badge variant="destructive">Requires Attunement</Badge>}
-            {data.source_book && <Badge variant="outline">{data.source_book}</Badge>}
+            {data.source_book && <Badge variant="outline">{formatMonarchVernacular(data.source_book)}</Badge>}
           </div>
           {data.description && (
-            <p className="text-muted-foreground leading-relaxed">{data.description}</p>
+            <p className="text-muted-foreground leading-relaxed">{formatMonarchVernacular(data.description)}</p>
           )}
         </div>
       </SystemWindow>
@@ -122,25 +123,25 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
             {data.requirements.class && (
               <li className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-muted-foreground" />
-                <span>Class: {data.requirements.class}</span>
+                <span>Class: {formatMonarchVernacular(data.requirements.class)}</span>
               </li>
             )}
             {data.requirements.ability && data.requirements.score !== undefined && (
               <li className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-muted-foreground" />
-                <span>{data.requirements.ability} {data.requirements.score}+</span>
+                <span>{formatMonarchVernacular(data.requirements.ability)} {data.requirements.score}+</span>
               </li>
             )}
             {data.requirements.alignment && (
               <li className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-muted-foreground" />
-                <span>Alignment: {data.requirements.alignment}</span>
+                <span>Alignment: {formatMonarchVernacular(data.requirements.alignment)}</span>
               </li>
             )}
             {data.requirements.quest && (
               <li className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-muted-foreground" />
-                <span>{data.requirements.quest}</span>
+                <span>{formatMonarchVernacular(data.requirements.quest)}</span>
               </li>
             )}
           </ul>
@@ -167,13 +168,13 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
                 <div key={label} className="space-y-1 border-l-2 border-primary/40 pl-3">
                   <div className="flex flex-wrap items-center gap-2">
                     <Sparkles className="w-4 h-4 text-primary" />
-                    <span className="font-heading font-semibold">{ability.name}</span>
+                    <span className="font-heading font-semibold">{formatMonarchVernacular(ability.name)}</span>
                     <Badge variant="outline" className="text-xs">{label}</Badge>
-                    <Badge variant="secondary" className="text-xs">{ability.type}</Badge>
-                    {ability.frequency && <Badge variant="outline" className="text-xs">{ability.frequency}</Badge>}
-                    {ability.action && <Badge variant="outline" className="text-xs">{ability.action}</Badge>}
+                    <Badge variant="secondary" className="text-xs">{formatMonarchVernacular(ability.type)}</Badge>
+                    {ability.frequency && <Badge variant="outline" className="text-xs">{formatMonarchVernacular(ability.frequency)}</Badge>}
+                    {ability.action && <Badge variant="outline" className="text-xs">{formatMonarchVernacular(ability.action)}</Badge>}
                   </div>
-                  <p className="text-sm text-muted-foreground">{ability.description}</p>
+                  <p className="text-sm text-muted-foreground">{formatMonarchVernacular(ability.description)}</p>
                 </div>
               ) : null
             ))}
@@ -185,16 +186,16 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
         <SystemWindow id="artifact-lore" title="LORE">
           <div className="space-y-3">
             {data.lore.origin && (
-              <p className="text-sm text-muted-foreground"><span className="text-foreground">Origin:</span> {data.lore.origin}</p>
+              <p className="text-sm text-muted-foreground"><span className="text-foreground">Origin:</span> {formatMonarchVernacular(data.lore.origin)}</p>
             )}
             {data.lore.history && (
-              <p className="text-sm text-muted-foreground"><span className="text-foreground">History:</span> {data.lore.history}</p>
+              <p className="text-sm text-muted-foreground"><span className="text-foreground">History:</span> {formatMonarchVernacular(data.lore.history)}</p>
             )}
             {data.lore.curse && (
-              <p className="text-sm text-muted-foreground"><span className="text-foreground">Curse:</span> {data.lore.curse}</p>
+              <p className="text-sm text-muted-foreground"><span className="text-foreground">Curse:</span> {formatMonarchVernacular(data.lore.curse)}</p>
             )}
             {data.lore.personality && (
-              <p className="text-sm text-muted-foreground"><span className="text-foreground">Personality:</span> {data.lore.personality}</p>
+              <p className="text-sm text-muted-foreground"><span className="text-foreground">Personality:</span> {formatMonarchVernacular(data.lore.personality)}</p>
             )}
           </div>
         </SystemWindow>
@@ -208,32 +209,32 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
                 <Swords className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="text-foreground">
-                    Bonus: {data.mechanics.bonus.type} +{data.mechanics.bonus.value}
+                    Bonus: {formatMonarchVernacular(data.mechanics.bonus.type || '')} +{data.mechanics.bonus.value}
                   </p>
                   {data.mechanics.bonus.ability && (
-                    <p className="text-muted-foreground">Ability: {data.mechanics.bonus.ability}</p>
+                    <p className="text-muted-foreground">Ability: {formatMonarchVernacular(data.mechanics.bonus.ability)}</p>
                   )}
                   {data.mechanics.bonus.skills && data.mechanics.bonus.skills.length > 0 && (
-                    <p className="text-muted-foreground">Skills: {data.mechanics.bonus.skills.join(', ')}</p>
+                    <p className="text-muted-foreground">Skills: {data.mechanics.bonus.skills.map(formatMonarchVernacular).join(', ')}</p>
                   )}
                 </div>
               </div>
             )}
             {data.mechanics.immunity && data.mechanics.immunity.length > 0 && (
-              <p><span className="text-foreground">Immunity:</span> {data.mechanics.immunity.join(', ')}</p>
+              <p><span className="text-foreground">Immunity:</span> {data.mechanics.immunity.map(formatMonarchVernacular).join(', ')}</p>
             )}
             {data.mechanics.resistance && data.mechanics.resistance.length > 0 && (
-              <p><span className="text-foreground">Resistance:</span> {data.mechanics.resistance.join(', ')}</p>
+              <p><span className="text-foreground">Resistance:</span> {data.mechanics.resistance.map(formatMonarchVernacular).join(', ')}</p>
             )}
             {data.mechanics.vulnerability && data.mechanics.vulnerability.length > 0 && (
-              <p><span className="text-foreground">Vulnerability:</span> {data.mechanics.vulnerability.join(', ')}</p>
+              <p><span className="text-foreground">Vulnerability:</span> {data.mechanics.vulnerability.map(formatMonarchVernacular).join(', ')}</p>
             )}
             {data.mechanics.special && data.mechanics.special.length > 0 && (
               <div>
                 <p className="text-foreground">Special:</p>
                 <ul className="list-disc list-inside text-muted-foreground">
                   {data.mechanics.special.map((entry) => (
-                    <li key={entry}>{entry}</li>
+                    <li key={entry}>{formatMonarchVernacular(entry)}</li>
                   ))}
                 </ul>
               </div>

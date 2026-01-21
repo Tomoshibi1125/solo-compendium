@@ -1,6 +1,6 @@
 /**
  * Player Tools Page
- * Role-based tools for players in Solo Compendium
+ * Role-based tools for players in System Ascendant
  */
 
 import React, { useMemo } from 'react';
@@ -23,17 +23,18 @@ import {
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
-import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
+import { SystemSigilLogo } from '@/components/ui/SystemSigilLogo';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { useActiveCharacter } from '@/hooks/useActiveCharacter';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 const playerTools = [
   {
     id: 'character-sheet',
     name: 'Character Sheet',
-    description: 'Manage your Hunter stats, abilities, equipment, and progression.',
+    description: 'Manage your Ascendant stats, abilities, equipment, and progression.',
     icon: User,
     status: 'available',
     color: 'from-blue-500/20 to-blue-600/10 border-blue-500/30 hover:border-blue-500/60',
@@ -63,7 +64,7 @@ const playerTools = [
   {
     id: 'character-art',
     name: 'Character Art Generator',
-    description: 'Generate custom artwork for your Hunter character.',
+    description: 'Generate custom artwork for your Ascendant character.',
     icon: Star,
     status: 'available',
     color: 'from-pink-500/20 to-pink-600/10 border-pink-500/30 hover:border-pink-500/60',
@@ -147,13 +148,13 @@ const PlayerTools = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <div className="flex items-center gap-4 mb-4">
-            <ShadowMonarchLogo size="md" />
+            <SystemSigilLogo size="md" />
             <div>
               <h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow tracking-wider">
-                HUNTER'S ARSENAL
+                ASCENDANT ARSENAL
               </h1>
               <p className="text-muted-foreground font-heading">
-                Your personal tools as a Hunter in the Shadow Army. 
+                Your personal tools as an Ascendant in the Umbral Legion. 
                 Track your journey, manage your powers, and rise through the ranks.
               </p>
             </div>
@@ -161,24 +162,24 @@ const PlayerTools = () => {
         </div>
 
         {/* Player Stats Overview */}
-        <SystemWindow title="HUNTER STATUS" className="mb-8 border-blue-500/30">
+        <SystemWindow title="ASCENDANT STATUS" className="mb-8 border-blue-500/30">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
             <div>
-              <h2 className="font-heading text-sm text-muted-foreground">Active Hunter</h2>
+              <h2 className="font-heading text-sm text-muted-foreground">Active Ascendant</h2>
               {activeCharacter ? (
                 <div className="text-lg font-semibold">
-                  {activeCharacter.name} - Level {activeCharacter.level} {activeCharacter.job || 'Unawakened'}
+                  {activeCharacter.name} - Level {activeCharacter.level} {formatMonarchVernacular(activeCharacter.job || 'Unawakened')}
                 </div>
               ) : (
                 <div className="text-sm text-muted-foreground">
-                  {isLoading ? 'Loading hunters...' : 'No hunters yet'}
+                  {isLoading ? 'Loading ascendants...' : 'No ascendants yet'}
                 </div>
               )}
             </div>
             {characters.length > 1 && (
               <Select value={activeCharacterId || ''} onValueChange={setActiveCharacter}>
                 <SelectTrigger className="w-64">
-                  <SelectValue placeholder="Select a hunter" />
+                  <SelectValue placeholder="Select an ascendant" />
                 </SelectTrigger>
                 <SelectContent>
                   {characters.map((character) => (
@@ -211,7 +212,7 @@ const PlayerTools = () => {
               <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-gradient-to-br from-purple-500/30 to-purple-600/20 flex items-center justify-center">
                 <Zap className="w-8 h-8 text-purple-400" />
               </div>
-              <h3 className="font-arise text-purple-400 text-lg mb-1">SHADOW ENERGY</h3>
+              <h3 className="font-arise text-purple-400 text-lg mb-1">UMBRAL ENERGY</h3>
               <p className="text-2xl font-bold text-white">
                 {activeCharacter ? `${energyCurrent}/${energyMax}` : '--'}
               </p>
@@ -227,7 +228,7 @@ const PlayerTools = () => {
               <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-gradient-to-br from-amber-500/30 to-amber-600/20 flex items-center justify-center">
                 <Star className="w-8 h-8 text-amber-400" />
               </div>
-              <h3 className="font-arise text-amber-400 text-lg mb-1">HUNTER RANK</h3>
+              <h3 className="font-arise text-amber-400 text-lg mb-1">ASCENDANT RANK</h3>
               <p className="text-2xl font-bold text-white">
                 {activeCharacter ? `${rankInfo.rank}-RANK` : '--'}
               </p>
@@ -328,18 +329,18 @@ const PlayerTools = () => {
         <div className="mt-12">
           <h2 className="font-arise text-2xl font-bold mb-4 gradient-text-system tracking-wide flex items-center gap-2">
             <Map className="w-5 h-5 text-blue-400" />
-            HUNTER'S REFERENCE
+            ASCENDANT REFERENCE
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <SystemWindow title="RANK PROGRESSION" className="border-blue-500/30">
               <div className="space-y-2 text-sm">
                 {[
-                  { rank: 'E-Rank', description: 'Beginner Hunter', color: 'text-gray-400' },
-                  { rank: 'D-Rank', description: 'Novice Hunter', color: 'text-green-400' },
-                  { rank: 'C-Rank', description: 'Apprentice Hunter', color: 'text-blue-400' },
-                  { rank: 'B-Rank', description: 'Elite Hunter', color: 'text-purple-400' },
-                  { rank: 'A-Rank', description: 'Master Hunter', color: 'text-orange-400' },
-                  { rank: 'S-Rank', description: 'Legendary Hunter', color: 'text-red-400' },
+                  { rank: 'E-Rank', description: 'Beginner Ascendant', color: 'text-gray-400' },
+                  { rank: 'D-Rank', description: 'Novice Ascendant', color: 'text-green-400' },
+                  { rank: 'C-Rank', description: 'Apprentice Ascendant', color: 'text-blue-400' },
+                  { rank: 'B-Rank', description: 'Elite Ascendant', color: 'text-purple-400' },
+                  { rank: 'A-Rank', description: 'Master Ascendant', color: 'text-orange-400' },
+                  { rank: 'S-Rank', description: 'Legendary Ascendant', color: 'text-red-400' },
                 ].map((item) => (
                   <div key={item.rank} className="flex justify-between items-center p-2 rounded bg-muted/30 hover:bg-muted/50 transition-colors">
                     <div>
@@ -379,3 +380,6 @@ const PlayerTools = () => {
 };
 
 export default PlayerTools;
+
+
+

@@ -1,5 +1,5 @@
 /**
- * Advanced Dice Engine - D&D Beyond Style
+ * Advanced Dice Engine - Digital Character Sheet Style
  * 
  * Comprehensive dice rolling with advantage, disadvantage, critical hits,
  * exploding dice, and advanced mechanics
@@ -529,3 +529,4 @@ export function validateDiceString(diceString: string): boolean {
   const pattern = /^\d+d\d+(?:[+-]\d+)?$/;
   return pattern.test(diceString);
 }
+

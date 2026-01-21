@@ -1,15 +1,15 @@
 -- =============================================
 -- COMPLETE REMAINING MONARCHS - FULL 1-20 PROGRESSIONS
 -- =============================================
--- Power level equal to Shadow Monarch
--- Based on actual Solo Leveling manhwa lore
+-- Power level equal to Umbral Monarch
+-- Based on System Ascendant canon lore
 -- All monarchs get full class progressions (1-20)
 
 -- =============================================
 -- IRON BODY MONARCH - Full Progression (1-20)
 -- =============================================
 -- Absolute physical resilience, unbreakable defense
--- Power level: Equal to Shadow Monarch
+-- Power level: Equal to Umbral Monarch
 
 -- Level 1: Iron Skin
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
@@ -128,14 +128,14 @@ FROM compendium_monarchs m WHERE m.name = 'Iron Body Monarch';
 -- Level 20: Iron Body Monarch''s Authority (Capstone)
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Iron Body Monarch''s Authority', 20,
-'At 20th level, you have achieved the full power of the Iron Body Monarch, matching the authority of the Shadow Monarch. You have permanent immunity to all damage except psychic damage, and you regenerate hit points equal to your level at the start of each of your turns. Additionally, once per long rest, you can use your action to create an iron fortress in a 100-foot radius. All allies within gain immunity to all damage for 1 hour, and all enemies have disadvantage on all attack rolls. You have become the true Monarch of Iron, with unbreakable power that protects all. Break your weapons upon my flesh.',
+'At 20th level, you have achieved the full power of the Iron Body Monarch, matching the authority of the Umbral Monarch. You have permanent immunity to all damage except psychic damage, and you regenerate hit points equal to your level at the start of each of your turns. Additionally, once per long rest, you can use your action to create an iron fortress in a 100-foot radius. All allies within gain immunity to all damage for 1 hour, and all enemies have disadvantage on all attack rolls. You have become the true Monarch of Iron, with unbreakable power that protects all. Break your weapons upon my flesh.',
 'action', '1 fortress per long rest', 'long-rest', 'Perfect Iron Body', true
 FROM compendium_monarchs m WHERE m.name = 'Iron Body Monarch';
 -- =============================================
 -- PLAGUE MONARCH - Full Progression (1-20)
 -- =============================================
 -- Corruption, disease, poison, debilitating afflictions
--- Power level: Equal to Shadow Monarch
+-- Power level: Equal to Umbral Monarch
 
 -- Level 1: Plague Touch
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
@@ -254,14 +254,14 @@ FROM compendium_monarchs m WHERE m.name = 'Plague Monarch';
 -- Level 20: Plague Monarch''s Authority (Capstone)
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Plague Monarch''s Authority', 20,
-'At 20th level, you have achieved the full power of the Plague Monarch, matching the authority of the Shadow Monarch. You can extract plague spirits from any creature you slay, regardless of size or type, and you can maintain an unlimited number of plague spirits. Additionally, once per long rest, you can use your action to spread a plague that affects all creatures of your choice within 1 mile. They must make a Constitution saving throw (DC = 8 + your proficiency bonus + your Intelligence modifier) or have their maximum hit points reduced to half and be poisoned permanently. You have become the true Monarch of Plagues, with power that corrupts all. All things rot. I merely hasten the inevitable.',
+'At 20th level, you have achieved the full power of the Plague Monarch, matching the authority of the Umbral Monarch. You can extract plague spirits from any creature you slay, regardless of size or type, and you can maintain an unlimited number of plague spirits. Additionally, once per long rest, you can use your action to spread a plague that affects all creatures of your choice within 1 mile. They must make a Constitution saving throw (DC = 8 + your proficiency bonus + your Intelligence modifier) or have their maximum hit points reduced to half and be poisoned permanently. You have become the true Monarch of Plagues, with power that corrupts all. All things rot. I merely hasten the inevitable.',
 'action', '1 mass plague per long rest', 'long-rest', 'Perfect Plague Form', true
 FROM compendium_monarchs m WHERE m.name = 'Plague Monarch';
 -- =============================================
 -- FROST MONARCH - Full Progression (1-20)
 -- =============================================
 -- Absolute cold, ice control, battlefield control, freezing enemies
--- Power level: Equal to Shadow Monarch
+-- Power level: Equal to Umbral Monarch
 
 -- Level 1: Frost Touch
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
@@ -380,14 +380,14 @@ FROM compendium_monarchs m WHERE m.name = 'Frost Monarch';
 -- Level 20: Frost Monarch''s Authority (Capstone)
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Frost Monarch''s Authority', 20,
-'At 20th level, you have achieved the full power of the Frost Monarch, matching the authority of the Shadow Monarch. You can extract ice golems from any creature you slay, regardless of size or type, and you can maintain an unlimited number of ice golems. Additionally, once per long rest, you can use your action to create an eternal winter in a 1-mile radius. All water freezes, all creatures take 8d8 cold damage and must make a Constitution saving throw (DC = 8 + your proficiency bonus + your Intelligence modifier) or be frozen solid permanently. You have become the true Monarch of Frost, with power that freezes all. In the end, all things freeze. Movement stops. Thought stops. Time itself surrenders to the cold.',
+'At 20th level, you have achieved the full power of the Frost Monarch, matching the authority of the Umbral Monarch. You can extract ice golems from any creature you slay, regardless of size or type, and you can maintain an unlimited number of ice golems. Additionally, once per long rest, you can use your action to create an eternal winter in a 1-mile radius. All water freezes, all creatures take 8d8 cold damage and must make a Constitution saving throw (DC = 8 + your proficiency bonus + your Intelligence modifier) or be frozen solid permanently. You have become the true Monarch of Frost, with power that freezes all. In the end, all things freeze. Movement stops. Thought stops. Time itself surrenders to the cold.',
 'action', '1 eternal winter per long rest', 'long-rest', 'Perfect Frost Form', true
 FROM compendium_monarchs m WHERE m.name = 'Frost Monarch';
 -- =============================================
 -- STONE MONARCH - Full Progression (1-20)
 -- =============================================
 -- Earth and stone manipulation, terrain control, barriers, battlefield reshaping
--- Power level: Equal to Shadow Monarch
+-- Power level: Equal to Umbral Monarch
 
 -- Level 1: Stone Touch
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
@@ -506,14 +506,14 @@ FROM compendium_monarchs m WHERE m.name = 'Stone Monarch';
 -- Level 20: Stone Monarch''s Authority (Capstone)
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Stone Monarch''s Authority', 20,
-'At 20th level, you have achieved the full power of the Stone Monarch, matching the authority of the Shadow Monarch. You can extract stone golems from any creature you slay, regardless of size or type, and you can maintain an unlimited number of stone golems. Additionally, once per long rest, you can use your action to reshape all terrain within 1 mile, creating mountains, valleys, or flattening everything. All creatures must make a Dexterity saving throw (DC = 8 + your proficiency bonus + your Strength modifier) or take 8d8 bludgeoning damage and be buried under stone. You have become the true Monarch of Stone, with power that shapes continents. Mountains bow. Continents shift. The earth itself is my weapon.',
+'At 20th level, you have achieved the full power of the Stone Monarch, matching the authority of the Umbral Monarch. You can extract stone golems from any creature you slay, regardless of size or type, and you can maintain an unlimited number of stone golems. Additionally, once per long rest, you can use your action to reshape all terrain within 1 mile, creating mountains, valleys, or flattening everything. All creatures must make a Dexterity saving throw (DC = 8 + your proficiency bonus + your Strength modifier) or take 8d8 bludgeoning damage and be buried under stone. You have become the true Monarch of Stone, with power that shapes continents. Mountains bow. Continents shift. The earth itself is my weapon.',
 'action', '1 reshape per long rest', 'long-rest', 'Perfect Stone Form', true
 FROM compendium_monarchs m WHERE m.name = 'Stone Monarch';
 -- =============================================
 -- DESTRUCTION MONARCH - Full Progression (1-20)
 -- =============================================
 -- Pure annihilating force, breaking defenses, area destruction
--- Power level: Equal to Shadow Monarch (Antares was the strongest)
+-- Power level: Equal to Umbral Monarch (Varkun was the strongest)
 -- Note: Unlocks at 11th level, but has full 1-20 progression
 
 -- Level 1: Destruction Touch
@@ -579,7 +579,7 @@ FROM compendium_monarchs m WHERE m.name = 'Destruction Monarch';
 -- Level 11: Destruction Extraction (Signature - Unlocks here)
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Destruction Extraction', 11,
-'At 11th level, when you unlock the Destruction Monarch overlay, you gain its signature power: the ability to extract and command destruction spirits from destroyed creatures. When you slay a creature with a challenge rating equal to or less than your level, you can use your reaction to extract its destructive essence. The essence manifests as a destruction spirit within 30 feet of you. The destruction spirit uses the statistics of the creature it was created from, but it deals force damage with all attacks and ignores all damage resistance. It obeys your commands and acts on your turn. You can have a number of destruction spirits equal to your proficiency bonus. If you extract another when at your limit, the oldest dissipates. This power allows you to command an army of pure destruction, like Antares, the Dragon King and true Monarch of Destruction.',
+'At 11th level, when you unlock the Destruction Monarch overlay, you gain its signature power: the ability to extract and command destruction spirits from destroyed creatures. When you slay a creature with a challenge rating equal to or less than your level, you can use your reaction to extract its destructive essence. The essence manifests as a destruction spirit within 30 feet of you. The destruction spirit uses the statistics of the creature it was created from, but it deals force damage with all attacks and ignores all damage resistance. It obeys your commands and acts on your turn. You can have a number of destruction spirits equal to your proficiency bonus. If you extract another when at your limit, the oldest dissipates. This power allows you to command an army of pure destruction, like Varkun, the Dragon King and true Monarch of Destruction.',
 'reaction', 'proficiency bonus limit', NULL, 'Destruction Storage', true
 FROM compendium_monarchs m WHERE m.name = 'Destruction Monarch';
 -- Level 12: Destruction Domain
@@ -591,13 +591,13 @@ FROM compendium_monarchs m WHERE m.name = 'Destruction Monarch';
 -- Level 13: Absolute Destruction Strike
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Absolute Destruction Strike', 13,
-'At 13th level, your strikes can destroy anything. When you hit a creature with a melee weapon attack, the attack ignores all damage resistance and immunity. Additionally, when you score a critical hit, you can choose to deal maximum damage instead of rolling. Your destruction spirits can also ignore all damage resistance with their attacks. Your destructive power breaks through everything, like Antares''s absolute offensive supremacy.',
+'At 13th level, your strikes can destroy anything. When you hit a creature with a melee weapon attack, the attack ignores all damage resistance and immunity. Additionally, when you score a critical hit, you can choose to deal maximum damage instead of rolling. Your destruction spirits can also ignore all damage resistance with their attacks. Your destructive power breaks through everything, like Varkun''s absolute offensive supremacy.',
 'passive', NULL, NULL, 'Destruction Domain', false
 FROM compendium_monarchs m WHERE m.name = 'Destruction Monarch';
 -- Level 14: Destruction Monarch''s Presence
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Destruction Monarch''s Presence', 14,
-'Starting at 14th level, your mere presence destroys defenses. All creatures within 30 feet of you have their AC reduced by 2, and all magical effects within 60 feet have a 25% chance to fail. Additionally, you can use your action to attempt to destroy a magical effect within 60 feet. Make a Strength check (DC = 10 + the effect''s level). On a success, the effect ends. You command absolute destruction, like the Dragon King Antares himself.',
+'Starting at 14th level, your mere presence destroys defenses. All creatures within 30 feet of you have their AC reduced by 2, and all magical effects within 60 feet have a 25% chance to fail. Additionally, you can use your action to attempt to destroy a magical effect within 60 feet. Make a Strength check (DC = 10 + the effect''s level). On a success, the effect ends. You command absolute destruction, like the Dragon King Varkun himself.',
 'action', NULL, NULL, 'Absolute Destruction Strike', false
 FROM compendium_monarchs m WHERE m.name = 'Destruction Monarch';
 -- Level 15: Destruction Regeneration
@@ -615,7 +615,7 @@ FROM compendium_monarchs m WHERE m.name = 'Destruction Monarch';
 -- Level 17: Eternal Destruction
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Eternal Destruction', 17,
-'At 17th level, your destruction spirits become eternal. When a destruction spirit is destroyed, it reforms from pure destructive energy at the start of your next turn unless it was destroyed by creation or healing magic. Additionally, your maximum active destruction spirits increases to three times your proficiency bonus. Your destruction never truly ends, only reforms. Your army of destruction becomes unstoppable, like Antares''s legendary power.',
+'At 17th level, your destruction spirits become eternal. When a destruction spirit is destroyed, it reforms from pure destructive energy at the start of your next turn unless it was destroyed by creation or healing magic. Additionally, your maximum active destruction spirits increases to three times your proficiency bonus. Your destruction never truly ends, only reforms. Your army of destruction becomes unstoppable, like Varkun''s legendary power.',
 'passive', NULL, NULL, 'Expanded Destruction Domain', false
 FROM compendium_monarchs m WHERE m.name = 'Destruction Monarch';
 -- Level 18: Destruction Overlord
@@ -627,20 +627,20 @@ FROM compendium_monarchs m WHERE m.name = 'Destruction Monarch';
 -- Level 19: Perfect Destruction Form
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Perfect Destruction Form', 19,
-'At 19th level, you become a being of perfect destruction. As an action, you can transform into pure destructive energy for 1 minute. While in this form, you are immune to all damage except force damage, your attacks ignore all resistance and immunity, and any creature that hits you with a melee attack takes force damage equal to twice your level. Additionally, your destruction spirits deal double damage while you are in this form. You can use this feature once per long rest. You become the perfect embodiment of destruction, like Antares''s ultimate form.',
+'At 19th level, you become a being of perfect destruction. As an action, you can transform into pure destructive energy for 1 minute. While in this form, you are immune to all damage except force damage, your attacks ignore all resistance and immunity, and any creature that hits you with a melee attack takes force damage equal to twice your level. Additionally, your destruction spirits deal double damage while you are in this form. You can use this feature once per long rest. You become the perfect embodiment of destruction, like Varkun''s ultimate form.',
 'action', '1 per long rest', 'long-rest', 'Destruction Overlord', false
 FROM compendium_monarchs m WHERE m.name = 'Destruction Monarch';
 -- Level 20: Destruction Monarch''s Authority (Capstone)
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Destruction Monarch''s Authority', 20,
-'At 20th level, you have achieved the full power of the Destruction Monarch, matching the authority of the Shadow Monarch and exceeding it in raw destructive force. You can extract destruction spirits from any creature you slay, regardless of size or type, and you can maintain an unlimited number of destruction spirits. Additionally, once per long rest, you can use your action to release a wave of absolute destruction that affects all creatures of your choice within 1 mile. They must make a Constitution saving throw (DC = 8 + your proficiency bonus + your Strength modifier) or take 10d10 force damage, have all magical effects dispelled, and have their AC permanently reduced by 2. You have become the true Monarch of Destruction, with power that rivals and potentially exceeds the Shadow Monarch. Nothing endures. Everything breaks.',
+'At 20th level, you have achieved the full power of the Destruction Monarch, matching the authority of the Umbral Monarch and exceeding it in raw destructive force. You can extract destruction spirits from any creature you slay, regardless of size or type, and you can maintain an unlimited number of destruction spirits. Additionally, once per long rest, you can use your action to release a wave of absolute destruction that affects all creatures of your choice within 1 mile. They must make a Constitution saving throw (DC = 8 + your proficiency bonus + your Strength modifier) or take 10d10 force damage, have all magical effects dispelled, and have their AC permanently reduced by 2. You have become the true Monarch of Destruction, with power that rivals and potentially exceeds the Umbral Monarch. Nothing endures. Everything breaks.',
 'action', '1 absolute destruction per long rest', 'long-rest', 'Perfect Destruction Form', true
 FROM compendium_monarchs m WHERE m.name = 'Destruction Monarch';
 -- =============================================
 -- WHITE FLAMES MONARCH - Full Progression (1-20)
 -- =============================================
 -- Soul-burning fire, demon command, hottest flames
--- Power level: Equal to Shadow Monarch (Baran commanded demons)
+-- Power level: Equal to Umbral Monarch (Solvyr commanded demons)
 
 -- Level 1: White Flame Touch
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
@@ -681,7 +681,7 @@ FROM compendium_monarchs m WHERE m.name = 'White Flames Monarch';
 -- Level 7: Demon Extraction (Signature)
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Demon Extraction', 7,
-'At 7th level, you gain the signature power of the White Flames Monarch: the ability to command demons and extract flame spirits. When you slay a fiend or demon with a challenge rating equal to or less than your level, you can use your reaction to bind its essence as a flame demon under your command. The flame demon appears within 30 feet of you and uses the statistics of the creature it was created from, but it deals additional fire damage equal to your proficiency bonus with all attacks. It obeys your commands and acts on your turn. You can have a number of flame demons equal to your proficiency bonus. If you bind another when at your limit, the oldest dissipates. This power allows you to command an army of demons, like Baran, the true Monarch of White Flames.',
+'At 7th level, you gain the signature power of the White Flames Monarch: the ability to command demons and extract flame spirits. When you slay a fiend or demon with a challenge rating equal to or less than your level, you can use your reaction to bind its essence as a flame demon under your command. The flame demon appears within 30 feet of you and uses the statistics of the creature it was created from, but it deals additional fire damage equal to your proficiency bonus with all attacks. It obeys your commands and acts on your turn. You can have a number of flame demons equal to your proficiency bonus. If you bind another when at your limit, the oldest dissipates. This power allows you to command an army of demons, like Solvyr, the true Monarch of White Flames.',
 'reaction', 'proficiency bonus limit', NULL, 'White Flame Aura', true
 FROM compendium_monarchs m WHERE m.name = 'White Flames Monarch';
 -- Level 8: Enhanced Flames
@@ -705,7 +705,7 @@ FROM compendium_monarchs m WHERE m.name = 'White Flames Monarch';
 -- Level 11: Demon Legion Command
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Demon Legion Command', 11,
-'At 11th level, you can command your entire demon legion simultaneously. As a bonus action, you can command all your flame demons within 120 feet to take the same action (Attack, Dash, Disengage, Dodge, or Help). Additionally, the maximum number of active flame demons you can control increases to twice your proficiency bonus. Your flame demons have advantage on attack rolls against creatures that are frightened or that have taken fire damage. Your demon legion becomes a coordinated force, like Baran''s army.',
+'At 11th level, you can command your entire demon legion simultaneously. As a bonus action, you can command all your flame demons within 120 feet to take the same action (Attack, Dash, Disengage, Dodge, or Help). Additionally, the maximum number of active flame demons you can control increases to twice your proficiency bonus. Your flame demons have advantage on attack rolls against creatures that are frightened or that have taken fire damage. Your demon legion becomes a coordinated force, like Solvyr''s army.',
 'bonus-action', NULL, NULL, 'Demon Storage', false
 FROM compendium_monarchs m WHERE m.name = 'White Flames Monarch';
 -- Level 12: White Flame Domain
@@ -717,7 +717,7 @@ FROM compendium_monarchs m WHERE m.name = 'White Flames Monarch';
 -- Level 13: Soul Burn Strike
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Soul Burn Strike', 13,
-'At 13th level, your flames burn souls directly. When you hit a creature with a melee weapon attack, the attack deals additional psychic damage equal to your level, representing soul burn. Additionally, when you reduce a creature to 0 hit points with fire damage, you can use your reaction to bind its soul as a flame demon. Your flames burn the very essence of life, like Baran''s white flames.',
+'At 13th level, your flames burn souls directly. When you hit a creature with a melee weapon attack, the attack deals additional psychic damage equal to your level, representing soul burn. Additionally, when you reduce a creature to 0 hit points with fire damage, you can use your reaction to bind its soul as a flame demon. Your flames burn the very essence of life, like Solvyr''s white flames.',
 'passive', NULL, NULL, 'White Flame Domain', false
 FROM compendium_monarchs m WHERE m.name = 'White Flames Monarch';
 -- Level 14: White Flames Monarch''s Presence
@@ -741,13 +741,13 @@ FROM compendium_monarchs m WHERE m.name = 'White Flames Monarch';
 -- Level 17: Eternal Flames
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Eternal Flames', 17,
-'At 17th level, your flame demons become eternal. When a flame demon is destroyed, it reforms from white flames at the start of your next turn unless it was destroyed by cold or water magic. Additionally, your maximum active flame demons increases to three times your proficiency bonus. Your flames never truly die, only reform. Your demon legion becomes unstoppable, like Baran''s eternal army of flame.',
+'At 17th level, your flame demons become eternal. When a flame demon is destroyed, it reforms from white flames at the start of your next turn unless it was destroyed by cold or water magic. Additionally, your maximum active flame demons increases to three times your proficiency bonus. Your flames never truly die, only reform. Your demon legion becomes unstoppable, like Solvyr''s eternal army of flame.',
 'passive', NULL, NULL, 'Expanded Flame Domain', false
 FROM compendium_monarchs m WHERE m.name = 'White Flames Monarch';
 -- Level 18: Flame Overlord
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Flame Overlord', 18,
-'Starting at 18th level, you become the true overlord of all flames and demons. You can bind demons and fiends of any challenge rating. Additionally, you can use your action to command all fiends and demons within 300 feet of you, forcing them to make a Wisdom saving throw (DC = 8 + your proficiency bonus + your Intelligence modifier) or fall under your control for 24 hours. Once a creature succeeds, it is immune for 7 days. Your authority extends to all demons, like Baran''s command.',
+'Starting at 18th level, you become the true overlord of all flames and demons. You can bind demons and fiends of any challenge rating. Additionally, you can use your action to command all fiends and demons within 300 feet of you, forcing them to make a Wisdom saving throw (DC = 8 + your proficiency bonus + your Intelligence modifier) or fall under your control for 24 hours. Once a creature succeeds, it is immune for 7 days. Your authority extends to all demons, like Solvyr''s command.',
 'action', NULL, NULL, 'Eternal Flames', false
 FROM compendium_monarchs m WHERE m.name = 'White Flames Monarch';
 -- Level 19: Perfect Flame Form
@@ -759,14 +759,14 @@ FROM compendium_monarchs m WHERE m.name = 'White Flames Monarch';
 -- Level 20: White Flames Monarch''s Authority (Capstone)
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'White Flames Monarch''s Authority', 20,
-'At 20th level, you have achieved the full power of the White Flames Monarch, matching the authority of the Shadow Monarch. You can bind demons and flame spirits from any creature you slay, regardless of size or type, and you can maintain an unlimited number of flame demons. Additionally, once per long rest, you can use your action to command all fiends and demons within 1 mile of you, with no limit on challenge rating. They must make a Wisdom saving throw (DC = 8 + your proficiency bonus + your Intelligence modifier) or fall under your control permanently until you release them. You can use this mass command once per long rest. You have become the true Monarch of White Flames, with power that commands all demons. My flames burn the soul itself.',
+'At 20th level, you have achieved the full power of the White Flames Monarch, matching the authority of the Umbral Monarch. You can bind demons and flame spirits from any creature you slay, regardless of size or type, and you can maintain an unlimited number of flame demons. Additionally, once per long rest, you can use your action to command all fiends and demons within 1 mile of you, with no limit on challenge rating. They must make a Wisdom saving throw (DC = 8 + your proficiency bonus + your Intelligence modifier) or fall under your control permanently until you release them. You can use this mass command once per long rest. You have become the true Monarch of White Flames, with power that commands all demons. My flames burn the soul itself.',
 'action', '1 mass command per long rest', 'long-rest', 'Perfect Flame Form', true
 FROM compendium_monarchs m WHERE m.name = 'White Flames Monarch';
 -- =============================================
 -- TRANFIGURATION MONARCH - Full Progression (1-20)
 -- =============================================
 -- Shapeshifting, transformation, reality manipulation, form changing
--- Power level: Equal to Shadow Monarch (Yogumunt could alter anything)
+-- Power level: Equal to Umbral Monarch (Vaelith could alter anything)
 
 -- Level 1: Transfiguration Touch
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
@@ -807,7 +807,7 @@ FROM compendium_monarchs m WHERE m.name = 'Transfiguration Monarch';
 -- Level 7: Transfiguration Extraction (Signature)
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Transfiguration Extraction', 7,
-'At 7th level, you gain the signature power of the Transfiguration Monarch: the ability to extract and command transformation spirits from transformed creatures. When you slay a creature with a challenge rating equal to or less than your level, you can use your reaction to extract its essence as a transformation spirit. The transformation spirit appears within 30 feet of you and can assume the form of the creature it was created from or any form you command. It uses the statistics of its current form, but it can change forms as a bonus action. It obeys your commands and acts on your turn. You can have a number of transformation spirits equal to your proficiency bonus. If you extract another when at your limit, the oldest returns to its true form and dissipates. This power allows you to command an army of shapeshifters, like Yogumunt, the true Monarch of Transfiguration.',
+'At 7th level, you gain the signature power of the Transfiguration Monarch: the ability to extract and command transformation spirits from transformed creatures. When you slay a creature with a challenge rating equal to or less than your level, you can use your reaction to extract its essence as a transformation spirit. The transformation spirit appears within 30 feet of you and can assume the form of the creature it was created from or any form you command. It uses the statistics of its current form, but it can change forms as a bonus action. It obeys your commands and acts on your turn. You can have a number of transformation spirits equal to your proficiency bonus. If you extract another when at your limit, the oldest returns to its true form and dissipates. This power allows you to command an army of shapeshifters, like Vaelith, the true Monarch of Transfiguration.',
 'reaction', 'proficiency bonus limit', NULL, 'Shapeshift Form', true
 FROM compendium_monarchs m WHERE m.name = 'Transfiguration Monarch';
 -- Level 8: Enhanced Transfiguration
@@ -831,7 +831,7 @@ FROM compendium_monarchs m WHERE m.name = 'Transfiguration Monarch';
 -- Level 11: Transformation Army Command
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Transformation Army Command', 11,
-'At 11th level, you can command your entire transformation army simultaneously. As a bonus action, you can command all your transformation spirits within 120 feet to take the same action or assume the same form. Additionally, the maximum number of active transformation spirits you can control increases to twice your proficiency bonus. Your transformation spirits have advantage on attack rolls when they outnumber their target or when they assume an advantageous form. Your shapeshifting legion becomes a coordinated force, like Yogumunt''s army.',
+'At 11th level, you can command your entire transformation army simultaneously. As a bonus action, you can command all your transformation spirits within 120 feet to take the same action or assume the same form. Additionally, the maximum number of active transformation spirits you can control increases to twice your proficiency bonus. Your transformation spirits have advantage on attack rolls when they outnumber their target or when they assume an advantageous form. Your shapeshifting legion becomes a coordinated force, like Vaelith''s army.',
 'bonus-action', NULL, NULL, 'Transformation Storage', false
 FROM compendium_monarchs m WHERE m.name = 'Transfiguration Monarch';
 -- Level 12: Transfiguration Domain
@@ -843,7 +843,7 @@ FROM compendium_monarchs m WHERE m.name = 'Transfiguration Monarch';
 -- Level 13: Perfect Transformation Strike
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Perfect Transformation Strike', 13,
-'At 13th level, you can transform enemies directly. When you hit a creature with a melee weapon attack, you can choose to transform them. The target must make a Wisdom saving throw (DC = 8 + your proficiency bonus + your Intelligence modifier). On a failure, the target is polymorphed into a harmless beast of your choice with a challenge rating of 1 or lower for 1 minute. The target can repeat the saving throw at the end of each of its turns. Additionally, your transformation spirits can transform enemies with their attacks. You reshape your enemies, like Yogumunt''s ultimate power.',
+'At 13th level, you can transform enemies directly. When you hit a creature with a melee weapon attack, you can choose to transform them. The target must make a Wisdom saving throw (DC = 8 + your proficiency bonus + your Intelligence modifier). On a failure, the target is polymorphed into a harmless beast of your choice with a challenge rating of 1 or lower for 1 minute. The target can repeat the saving throw at the end of each of its turns. Additionally, your transformation spirits can transform enemies with their attacks. You reshape your enemies, like Vaelith''s ultimate power.',
 'passive', NULL, NULL, 'Transfiguration Domain', false
 FROM compendium_monarchs m WHERE m.name = 'Transfiguration Monarch';
 -- Level 14: Transfiguration Monarch''s Presence
@@ -867,31 +867,31 @@ FROM compendium_monarchs m WHERE m.name = 'Transfiguration Monarch';
 -- Level 17: Eternal Transformation
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Eternal Transformation', 17,
-'At 17th level, your transformation spirits become eternal. When a transformation spirit is destroyed, it reforms from pure transformation energy at the start of your next turn in a new form of your choice, unless it was destroyed by antimagic or similar effects. Additionally, your maximum active transformation spirits increases to three times your proficiency bonus. Your transformations never truly end, only reform. Your shapeshifting army becomes unstoppable, like Yogumunt''s eternal legion of change.',
+'At 17th level, your transformation spirits become eternal. When a transformation spirit is destroyed, it reforms from pure transformation energy at the start of your next turn in a new form of your choice, unless it was destroyed by antimagic or similar effects. Additionally, your maximum active transformation spirits increases to three times your proficiency bonus. Your transformations never truly end, only reform. Your shapeshifting army becomes unstoppable, like Vaelith''s eternal legion of change.',
 'passive', NULL, NULL, 'Expanded Transfiguration Domain', false
 FROM compendium_monarchs m WHERE m.name = 'Transfiguration Monarch';
 -- Level 18: Transfiguration Overlord
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Transfiguration Overlord', 18,
-'Starting at 18th level, you become the true overlord of all transformation. You can extract transformation spirits from creatures of any challenge rating. Additionally, you can use your action to transform all creatures of your choice within 300 feet. They must make a Wisdom saving throw (DC = 8 + your proficiency bonus + your Intelligence modifier) or be transformed into a form of your choice for 24 hours. Once a creature succeeds, it is immune for 7 days. You can use this feature once per long rest. Your authority extends to all transformation, like Yogumunt''s ultimate power.',
+'Starting at 18th level, you become the true overlord of all transformation. You can extract transformation spirits from creatures of any challenge rating. Additionally, you can use your action to transform all creatures of your choice within 300 feet. They must make a Wisdom saving throw (DC = 8 + your proficiency bonus + your Intelligence modifier) or be transformed into a form of your choice for 24 hours. Once a creature succeeds, it is immune for 7 days. You can use this feature once per long rest. Your authority extends to all transformation, like Vaelith''s ultimate power.',
 'action', '1 per long rest', 'long-rest', 'Eternal Transformation', false
 FROM compendium_monarchs m WHERE m.name = 'Transfiguration Monarch';
 -- Level 19: Perfect Transformation Form
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Perfect Transformation Form', 19,
-'At 19th level, you become a being of perfect transformation. As an action, you can assume any form you have seen before for 1 minute. While in this form, you gain all abilities and statistics of that form, and you can change forms as a bonus action. Additionally, you can maintain multiple forms simultaneously, creating additional bodies. Your transformation spirits deal double damage while you are in this form. You can use this feature once per long rest. You become the perfect embodiment of change, like Yogumunt''s ultimate form.',
+'At 19th level, you become a being of perfect transformation. As an action, you can assume any form you have seen before for 1 minute. While in this form, you gain all abilities and statistics of that form, and you can change forms as a bonus action. Additionally, you can maintain multiple forms simultaneously, creating additional bodies. Your transformation spirits deal double damage while you are in this form. You can use this feature once per long rest. You become the perfect embodiment of change, like Vaelith''s ultimate form.',
 'action', '1 per long rest', 'long-rest', 'Transfiguration Overlord', false
 FROM compendium_monarchs m WHERE m.name = 'Transfiguration Monarch';
 -- Level 20: Transfiguration Monarch''s Authority (Capstone)
 INSERT INTO compendium_monarch_features (monarch_id, name, level, description, action_type, uses_formula, recharge, prerequisites, is_signature)
 SELECT m.id, 'Transfiguration Monarch''s Authority', 20,
-'At 20th level, you have achieved the full power of the Transfiguration Monarch, matching the authority of the Shadow Monarch. You can extract transformation spirits from any creature you slay, regardless of size or type, and you can maintain an unlimited number of transformation spirits. Additionally, once per long rest, you can use your action to transform all creatures of your choice within 1 mile into any form you choose. They must make a Wisdom saving throw (DC = 8 + your proficiency bonus + your Intelligence modifier) or be permanently transformed until you release them. You can use this mass transformation once per long rest. You have become the true Monarch of Transfiguration, with power that reshapes reality itself. Reality is merely suggestion. I am the exception.',
+'At 20th level, you have achieved the full power of the Transfiguration Monarch, matching the authority of the Umbral Monarch. You can extract transformation spirits from any creature you slay, regardless of size or type, and you can maintain an unlimited number of transformation spirits. Additionally, once per long rest, you can use your action to transform all creatures of your choice within 1 mile into any form you choose. They must make a Wisdom saving throw (DC = 8 + your proficiency bonus + your Intelligence modifier) or be permanently transformed until you release them. You can use this mass transformation once per long rest. You have become the true Monarch of Transfiguration, with power that reshapes reality itself. Reality is merely suggestion. I am the exception.',
 'action', '1 mass transformation per long rest', 'long-rest', 'Perfect Transformation Form', true
 FROM compendium_monarchs m WHERE m.name = 'Transfiguration Monarch';
 -- =============================================
 -- ALL 9 MONARCHS COMPLETE WITH FULL 1-20 PROGRESSIONS
 -- =============================================
--- ✅ Shadow Monarch (1-20) - Shadow extraction, army, domain
+-- ✅ Umbral Monarch (1-20) - Shadow extraction, army, domain
 -- ✅ Beast Monarch (1-20) - Beast transformation, pack command
 -- ✅ Iron Body Monarch (1-20) - Absolute defense, unbreakable
 -- ✅ Plague Monarch (1-20) - Disease, corruption, plague spirits
@@ -901,7 +901,9 @@ FROM compendium_monarchs m WHERE m.name = 'Transfiguration Monarch';
 -- ✅ White Flames Monarch (1-20) - Soul-burning fire, demon command
 -- ✅ Transfiguration Monarch (1-20) - Shapeshifting, transformation, reality change
 --
--- All monarchs have power levels equal to Shadow Monarch
--- All based on actual Solo Leveling manhwa lore
+-- All monarchs have power levels equal to Umbral Monarch
+-- All based on System Ascendant canon lore
 -- All with full class progressions (features at every level 1-20)
 -- =============================================;
+
+

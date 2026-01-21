@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { formatMonarchVernacular, MONARCH_LABEL } from '@/lib/vernacular';
 
 interface ResultCardEntry {
   id: string;
@@ -39,6 +40,9 @@ function ResultCardComponent({
   highlightText,
   onToggleFavorite,
 }: ResultCardProps) {
+  const displayName = formatMonarchVernacular(entry.name);
+  const displayType = formatMonarchVernacular(entry.type);
+  const displaySourceBook = entry.source_book ? formatMonarchVernacular(entry.source_book) : null;
   if (viewMode === 'grid') {
     return (
       <Link
@@ -48,7 +52,7 @@ function ResultCardComponent({
           "hover:shadow-lg hover:shadow-primary/10 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
           getRarityOrRankColor(entry)
         )}
-        aria-label={`View ${entry.name} details`}
+        aria-label={`View ${displayName} details`}
       >
         <button
           onClick={(e) => onToggleFavorite(e, entry)}
@@ -72,13 +76,13 @@ function ResultCardComponent({
             {getRarityOrRankLabel(entry)}
           </span>
           <div className="flex items-center gap-2">
-            {entry.source_book && (
+            {displaySourceBook && (
               <Badge variant="outline" className="text-xs">
-                {entry.source_book}
+                {displaySourceBook}
               </Badge>
             )}
             <span className="text-xs text-muted-foreground capitalize">
-              {entry.type}
+              {displayType}
             </span>
           </div>
         </div>
@@ -102,7 +106,7 @@ function ResultCardComponent({
             <Badge variant="outline" className="text-xs border-amber-500/50 text-amber-400">Named Boss</Badge>
           )}
           {entry.tags?.includes('monarch') && (
-            <Badge variant="outline" className="text-xs border-red-500/50 text-red-400">Monarch</Badge>
+            <Badge variant="outline" className="text-xs border-red-500/50 text-red-400">{MONARCH_LABEL}</Badge>
           )}
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             {entry.cr && (
@@ -125,7 +129,7 @@ function ResultCardComponent({
         "hover:shadow-lg hover:shadow-primary/10 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
         getRarityOrRankColor(entry)
       )}
-      aria-label={`View ${entry.name} details`}
+      aria-label={`View ${displayName} details`}
     >
       <button
         onClick={(e) => onToggleFavorite(e, entry)}
@@ -156,13 +160,13 @@ function ResultCardComponent({
         </p>
       </div>
       <div className="flex items-center gap-2 flex-shrink-0">
-        {entry.source_book && (
+        {displaySourceBook && (
           <Badge variant="outline" className="text-xs">
-            {entry.source_book}
+            {displaySourceBook}
           </Badge>
         )}
         <span className="text-xs text-muted-foreground capitalize">
-          {entry.type}
+          {displayType}
         </span>
       </div>
     </Link>

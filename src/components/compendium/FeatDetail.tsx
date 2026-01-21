@@ -1,6 +1,7 @@
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { CheckCircle, AlertCircle } from 'lucide-react';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface FeatData {
   id: string;
@@ -14,19 +15,19 @@ interface FeatData {
 }
 
 export const FeatDetail = ({ data }: { data: FeatData }) => {
-  const displayName = data.display_name || data.name;
+  const displayName = formatMonarchVernacular(data.display_name || data.name);
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <SystemWindow title={displayName.toUpperCase()}>
         <div className="space-y-4">
-          <p className="text-foreground">{data.description}</p>
+          <p className="text-foreground">{formatMonarchVernacular(data.description)}</p>
           
           {data.tags && data.tags.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {data.tags.map((tag) => (
-                <Badge key={tag} variant="secondary">{tag}</Badge>
+                <Badge key={tag} variant="secondary">{formatMonarchVernacular(tag)}</Badge>
               ))}
             </div>
           )}
@@ -38,7 +39,7 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
         <SystemWindow title="PREREQUISITES">
           <div className="flex items-center gap-3">
             <AlertCircle className="w-5 h-5 text-yellow-400 flex-shrink-0" />
-            <p className="text-foreground">{data.prerequisites}</p>
+            <p className="text-foreground">{formatMonarchVernacular(data.prerequisites)}</p>
           </div>
         </SystemWindow>
       )}
@@ -50,7 +51,7 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
             {data.benefits.map((benefit, i) => (
               <li key={i} className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                <span className="text-foreground">{benefit}</span>
+                <span className="text-foreground">{formatMonarchVernacular(benefit)}</span>
               </li>
             ))}
           </ul>
@@ -59,7 +60,7 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 
       {data.source_book && (
         <div className="flex justify-end">
-          <Badge variant="outline">{data.source_book}</Badge>
+          <Badge variant="outline">{formatMonarchVernacular(data.source_book)}</Badge>
         </div>
       )}
     </div>

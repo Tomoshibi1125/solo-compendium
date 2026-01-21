@@ -1,6 +1,6 @@
 /**
  * Daily Quest System Types
- * Solo Leveling inspired daily training quests
+ * System Ascendant inspired daily training quests
  */
 
 import { z } from 'zod';
@@ -210,3 +210,4 @@ export function calculateQuestReward(
     custom_rewards: template.base_rewards.custom_rewards,
   };
 }
+

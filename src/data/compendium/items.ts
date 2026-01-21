@@ -1,6 +1,6 @@
-// Comprehensive Items Compendium - D&D Beyond Scale
+// Comprehensive Items Compendium - Digital Character Sheet Scale
 // Generated with full admin privileges
-// Solo Leveling themed items with images
+// System Ascendant themed items with images
 
 export interface Item {
   id: string;
@@ -9,7 +9,7 @@ export interface Item {
   rarity: 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
   type: 'weapon' | 'armor' | 'consumable' | 'accessory' | 'scroll' | 'wondrous' | 'ring' | 'amulet' | 'staff' | 'wand';
   image: string;
-  // D&D 5e mechanics
+  // SRD 5e mechanics
   requirements?: {
     level?: number;
     class?: string[];
@@ -90,3 +90,4 @@ export const items = [
   ...itemsPart4,
   ...itemsPart5,
 ];
+

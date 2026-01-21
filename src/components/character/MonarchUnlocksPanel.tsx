@@ -15,20 +15,21 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Crown, Lock, Star, Scroll, CheckCircle, Sparkles, Unlock, Skull, Zap, Flame } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { formatMonarchVernacular, MONARCH_LABEL, MONARCH_LABEL_PLURAL } from '@/lib/vernacular';
 
 interface MonarchUnlocksPanelProps {
   characterId: string;
 }
 
-// Enhanced theme colors with Solo Leveling aesthetic
+// Enhanced theme colors with System Ascendant aesthetic
 const themeColors: Record<string, { bg: string; text: string; border: string; glow: string }> = {
   Shadow: { bg: 'bg-shadow-purple/15', text: 'text-shadow-purple', border: 'border-shadow-purple/40', glow: 'shadow-[0_0_12px_hsl(var(--shadow-purple)/0.3)]' },
   Frost: { bg: 'bg-mana-cyan/15', text: 'text-mana-cyan', border: 'border-mana-cyan/40', glow: 'shadow-[0_0_12px_hsl(var(--mana-cyan)/0.3)]' },
   Plague: { bg: 'bg-accent/15', text: 'text-accent', border: 'border-accent/40', glow: 'shadow-[0_0_12px_hsl(var(--accent)/0.3)]' },
   Stone: { bg: 'bg-gate-d/15', text: 'text-gate-d', border: 'border-gate-d/40', glow: '' },
-  Beast: { bg: 'bg-beru-gold/15', text: 'text-beru-gold', border: 'border-beru-gold/40', glow: 'shadow-[0_0_10px_hsl(var(--beru-gold)/0.3)]' },
-  Beasts: { bg: 'bg-beru-gold/15', text: 'text-beru-gold', border: 'border-beru-gold/40', glow: 'shadow-[0_0_10px_hsl(var(--beru-gold)/0.3)]' },
-  Iron: { bg: 'bg-bellion-silver/15', text: 'text-bellion-silver', border: 'border-bellion-silver/40', glow: '' },
+  Beast: { bg: 'bg-gilded-reaper/15', text: 'text-gilded-reaper', border: 'border-gilded-reaper/40', glow: 'shadow-[0_0_10px_hsl(var(--gilded-reaper)/0.3)]' },
+  Beasts: { bg: 'bg-gilded-reaper/15', text: 'text-gilded-reaper', border: 'border-gilded-reaper/40', glow: 'shadow-[0_0_10px_hsl(var(--gilded-reaper)/0.3)]' },
+  Iron: { bg: 'bg-silver-commander/15', text: 'text-silver-commander', border: 'border-silver-commander/40', glow: '' },
   Destruction: { bg: 'bg-gate-a/15', text: 'text-gate-a', border: 'border-gate-a/40', glow: 'shadow-[0_0_12px_hsl(var(--gate-a)/0.3)]' },
   'White Flames': { bg: 'bg-foreground/10', text: 'text-foreground', border: 'border-foreground/30', glow: 'shadow-[0_0_12px_hsl(var(--foreground)/0.2)]' },
   Transfiguration: { bg: 'bg-arise-violet/15', text: 'text-arise-violet', border: 'border-arise-violet/40', glow: 'shadow-[0_0_12px_hsl(var(--arise-violet)/0.3)]' },
@@ -100,7 +101,7 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
 
   return (
     <SystemWindow 
-      title="MONARCH UNLOCKS — DIVINE AUTHORITY" 
+      title={`${MONARCH_LABEL.toUpperCase()} UNLOCKS - DIVINE AUTHORITY`} 
       variant="monarch"
       className="border-monarch-gold/30"
     >
@@ -112,7 +113,7 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
               <Crown className="h-5 w-5 text-monarch-gold" />
             </div>
             <div>
-              <p className="font-heading text-sm text-muted-foreground">Monarchs Unlocked</p>
+              <p className="font-heading text-sm text-muted-foreground">{MONARCH_LABEL_PLURAL} Unlocked</p>
               <p className="font-display text-lg text-monarch-gold">{unlocks.length} / 2 Required</p>
             </div>
           </div>
@@ -135,6 +136,7 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
                 
                 const themeStyle = themeColors[monarch.theme] || themeColors['Shadow'];
                 const icon = themeIcons[monarch.theme] || <Crown className="h-4 w-4" />;
+                const displayTitle = formatMonarchVernacular(monarch.title || monarch.name);
                 
                 return (
                   <div
@@ -156,7 +158,7 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
                         <div>
                           <div className="flex items-center gap-2">
                             <span className={cn("font-heading font-semibold", themeStyle.text)}>
-                              {monarch.title}
+                              {displayTitle}
                             </span>
                             {unlock.is_primary && (
                               <Badge variant="outline" className="bg-monarch-gold/20 text-monarch-gold border-monarch-gold/40 text-xs">
@@ -186,12 +188,12 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
                     
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <Scroll className="h-3 w-3" />
-                      <span>Quest: {unlock.quest_name}</span>
+                      <span>Quest: {formatMonarchVernacular(unlock.quest_name)}</span>
                     </div>
                     
                     {unlock.dm_notes && (
                       <p className="text-xs text-muted-foreground mt-2 italic border-l-2 border-monarch-gold/30 pl-2">
-                        {unlock.dm_notes}
+                        {formatMonarchVernacular(unlock.dm_notes)}
                       </p>
                     )}
                   </div>
@@ -205,10 +207,10 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
           <div className="text-center py-6">
             <Lock className="h-10 w-10 text-monarch-gold/30 mx-auto mb-3" />
             <p className="text-sm text-muted-foreground font-heading">
-              No Monarchs unlocked yet
+              No {MONARCH_LABEL_PLURAL} unlocked yet
             </p>
             <p className="text-xs text-muted-foreground mt-1">
-              Complete Monarch quests marked by your DM to unlock divine power
+              Complete {MONARCH_LABEL} quests marked by your Warden to unlock divine power
             </p>
           </div>
         )}
@@ -221,7 +223,7 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
               <span className="font-display text-sm text-arise-violet tracking-wider">SOVEREIGN FUSION AVAILABLE</span>
             </div>
             <p className="text-xs text-muted-foreground">
-              With two Monarchs unlocked, use the <span className="text-arise-violet">Gemini Protocol</span> in the Compendium 
+              With two {MONARCH_LABEL_PLURAL} unlocked, use the <span className="text-arise-violet">Gemini Protocol</span> in the Compendium 
               to generate your unique Sovereign abilities.
             </p>
           </div>
@@ -236,30 +238,31 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
                 className="w-full border-monarch-gold/40 hover:border-monarch-gold hover:bg-monarch-gold/10 font-display tracking-wider"
               >
                 <Unlock className="h-4 w-4 mr-2 text-monarch-gold" />
-                UNLOCK MONARCH (DM Approved)
+                UNLOCK {MONARCH_LABEL.toUpperCase()} (Warden Approved)
               </Button>
             </DialogTrigger>
             <DialogContent className="bg-card border-monarch-gold/40">
               <DialogHeader>
                 <DialogTitle className="font-display text-xl gradient-text-monarch">
-                  Unlock Monarch Power
+                  Unlock {MONARCH_LABEL} Power
                 </DialogTitle>
               </DialogHeader>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label className="font-heading">Select Monarch</Label>
+                  <Label className="font-heading">Select {MONARCH_LABEL}</Label>
                   <Select value={selectedMonarchId} onValueChange={setSelectedMonarchId}>
                     <SelectTrigger className="bg-background">
-                      <SelectValue placeholder="Choose a Monarch..." />
+                      <SelectValue placeholder={`Choose a ${MONARCH_LABEL}...`} />
                     </SelectTrigger>
                     <SelectContent>
                       <ScrollArea className="max-h-60">
                         {lockedMonarchs.map((monarch) => {
                           const themeStyle = themeColors[monarch.theme] || themeColors['Shadow'];
+                          const displayTitle = formatMonarchVernacular(monarch.title || monarch.name);
                           return (
                             <SelectItem key={monarch.id} value={monarch.id}>
                               <div className="flex items-center gap-2">
-                                <span className="font-heading">{monarch.title}</span>
+                                <span className="font-heading">{displayTitle}</span>
                                 <Badge variant="outline" className={cn("text-xs", themeStyle.text, themeStyle.border)}>
                                   {monarch.theme}
                                 </Badge>
@@ -283,7 +286,7 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
                 </div>
 
                 <div className="space-y-2">
-                  <Label className="font-heading">DM Notes (optional)</Label>
+                  <Label className="font-heading">Warden Notes (optional)</Label>
                   <Textarea
                     placeholder="Notes about how the quest was completed..."
                     value={dmNotes}
@@ -299,7 +302,7 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
                   disabled={!selectedMonarchId || !questName.trim() || unlockMonarch.isPending}
                 >
                   <Crown className="h-4 w-4 mr-2" />
-                  UNLOCK MONARCH POWER
+                  UNLOCK {MONARCH_LABEL.toUpperCase()} POWER
                 </Button>
               </div>
             </DialogContent>
@@ -309,3 +312,5 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
     </SystemWindow>
   );
 }
+
+

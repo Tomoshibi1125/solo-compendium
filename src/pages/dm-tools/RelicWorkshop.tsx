@@ -10,7 +10,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import { cn } from '@/lib/utils';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useUserToolState } from '@/hooks/useToolState';
+import { MONARCH_LABEL } from '@/lib/vernacular';
 
 interface RelicProperty {
   id: string;
@@ -65,6 +67,7 @@ const BALANCE_GUIDELINES = {
 const RelicWorkshop = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const hydratedRef = useRef(false);
   const [relics, setRelics] = useState<Relic[]>([]);
   
   const initialRelicId = useRef(Date.now().toString()).current;
@@ -84,6 +87,11 @@ const RelicWorkshop = () => {
     description: '',
     type: 'passive',
   });
+  const { state: storedRelics, isLoading, saveNow } = useUserToolState<Relic[]>('relic_workshop', {
+    initialState: [],
+    storageKey: 'dm-relics',
+  });
+  const debouncedRelics = useDebounce(relics, 600);
 
   const addProperty = () => {
     if (!newProperty.name) return;
@@ -121,25 +129,12 @@ const RelicWorkshop = () => {
     const updated = relics.filter(r => r.id !== currentRelic.id);
     updated.push(currentRelic);
     setRelics(updated);
-    
-    localStorage.setItem('dm-relics', JSON.stringify(updated));
-    
+    void saveNow(updated);
+
     toast({
       title: 'Saved!',
       description: 'Relic saved successfully.',
     });
-  };
-
-  const loadRelics = () => {
-    const saved = localStorage.getItem('dm-relics');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        setRelics(parsed);
-      } catch (e) {
-        // Invalid data
-      }
-    }
   };
 
   const getTypeIcon = (type: string) => {
@@ -163,8 +158,17 @@ const RelicWorkshop = () => {
   };
 
   useEffect(() => {
-    loadRelics();
-  }, []);
+    if (isLoading || hydratedRef.current) return;
+    if (Array.isArray(storedRelics) && storedRelics.length > 0) {
+      setRelics(storedRelics);
+    }
+    hydratedRef.current = true;
+  }, [isLoading, storedRelics]);
+
+  useEffect(() => {
+    if (!hydratedRef.current) return;
+    void saveNow(debouncedRelics);
+  }, [debouncedRelics, saveNow]);
 
   const guideline = BALANCE_GUIDELINES[currentRelic.rarity];
 
@@ -178,13 +182,13 @@ const RelicWorkshop = () => {
             className="mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to DM Tools
+            Back to Warden Tools
           </Button>
           <h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow">
             RELIC WORKSHOP
           </h1>
           <p className="text-muted-foreground font-heading">
-            Design custom relics balanced within the Solo Leveling 5e system guidelines.
+            Design custom relics balanced within the System Ascendant 5e SRD system guidelines.
           </p>
         </div>
 
@@ -199,11 +203,11 @@ const RelicWorkshop = () => {
                       id="name"
                       value={currentRelic.name}
                       onChange={(e) => setCurrentRelic({ ...currentRelic, name: e.target.value })}
-                      placeholder="e.g., Shadow Monarch's Dagger"
+                      placeholder={`e.g., Umbral ${MONARCH_LABEL}'s Dagger`}
                     />
                   </div>
                   <div>
-                    <Label htmlFor="rank">Gate Rank</Label>
+                    <Label htmlFor="rank">Rift Rank</Label>
                     <Select
                       value={currentRelic.rank}
                       onValueChange={(value) => setCurrentRelic({ ...currentRelic, rank: value })}
@@ -425,7 +429,7 @@ const RelicWorkshop = () => {
         </div>
 
         <div className="mt-6">
-          <Button onClick={saveRelic} className="w-full btn-shadow-monarch" size="lg">
+          <Button onClick={saveRelic} className="w-full btn-umbral" size="lg">
             <Save className="w-4 h-4 mr-2" />
             Save Relic
           </Button>
@@ -436,4 +440,7 @@ const RelicWorkshop = () => {
 };
 
 export default RelicWorkshop;
+
+
+
 

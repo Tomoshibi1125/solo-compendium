@@ -2,6 +2,7 @@ import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Zap, Timer, Target, Shield, Swords, Footprints, Sparkles } from 'lucide-react';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface TechniqueData {
   id: string;
@@ -37,7 +38,7 @@ interface TechniqueData {
 }
 
 export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
-  const displayName = data.display_name || data.name;
+  const displayName = formatMonarchVernacular(data.display_name || data.name);
   const imageSrc = data.image_url || data.image || undefined;
 
   const prereq = data.prerequisites || undefined;
@@ -73,9 +74,9 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
       <SystemWindow title={displayName.toUpperCase()}>
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-2">
-            {data.technique_type && <Badge variant="secondary">{data.technique_type}</Badge>}
-            {data.style && <Badge variant="outline">{data.style}</Badge>}
-            {data.source_book && <Badge variant="outline">{data.source_book}</Badge>}
+            {data.technique_type && <Badge variant="secondary">{formatMonarchVernacular(data.technique_type)}</Badge>}
+            {data.style && <Badge variant="outline">{formatMonarchVernacular(data.style)}</Badge>}
+            {data.source_book && <Badge variant="outline">{formatMonarchVernacular(data.source_book)}</Badge>}
           </div>
         </div>
       </SystemWindow>
@@ -86,25 +87,25 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
             <SystemWindow title="ACTIVATION" compact>
               <div className="flex items-center gap-2">
                 <Zap className="w-5 h-5 text-primary" />
-                <span className="font-heading capitalize">{activation.type || 'action'}</span>
+                <span className="font-heading capitalize">{formatMonarchVernacular(activation.type || 'action')}</span>
               </div>
-              {activation.cost && <span className="text-xs text-muted-foreground">{activation.cost}</span>}
+              {activation.cost && <span className="text-xs text-muted-foreground">{formatMonarchVernacular(activation.cost)}</span>}
             </SystemWindow>
           )}
           {duration && (
             <SystemWindow title="DURATION" compact>
               <div className="flex items-center gap-2">
                 <Timer className="w-5 h-5 text-primary" />
-                <span className="font-heading capitalize">{duration.type || 'instant'}</span>
+                <span className="font-heading capitalize">{formatMonarchVernacular(duration.type || 'instant')}</span>
               </div>
-              {duration.time && <span className="text-xs text-muted-foreground">{duration.time}</span>}
+              {duration.time && <span className="text-xs text-muted-foreground">{formatMonarchVernacular(duration.time)}</span>}
             </SystemWindow>
           )}
           {range && (
             <SystemWindow title="RANGE" compact>
               <div className="flex items-center gap-2">
                 <Target className="w-5 h-5 text-primary" />
-                <span className="font-heading capitalize">{range.type || 'melee'}</span>
+                <span className="font-heading capitalize">{formatMonarchVernacular(range.type || 'melee')}</span>
               </div>
               {range.distance !== undefined && (
                 <span className="text-xs text-muted-foreground">{range.distance} ft</span>
@@ -118,7 +119,7 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
                 <span className="font-heading">{componentFlags.join(', ') || 'None'}</span>
               </div>
               {components.material_desc && (
-                <span className="text-xs text-muted-foreground">{components.material_desc}</span>
+                <span className="text-xs text-muted-foreground">{formatMonarchVernacular(components.material_desc)}</span>
               )}
             </SystemWindow>
           )}
@@ -137,25 +138,25 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
             {prereq.class && (
               <li className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-muted-foreground" />
-                <span>{prereq.class}</span>
+                <span>{formatMonarchVernacular(prereq.class)}</span>
               </li>
             )}
             {prereq.ability && prereq.score !== undefined && (
               <li className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-muted-foreground" />
-                <span>{prereq.ability} {prereq.score}+</span>
+                <span>{formatMonarchVernacular(prereq.ability)} {prereq.score}+</span>
               </li>
             )}
             {prereq.proficiency && prereq.proficiency.length > 0 && (
               <li className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-muted-foreground" />
-                <span>Proficiencies: {prereq.proficiency.join(', ')}</span>
+                <span>Proficiencies: {prereq.proficiency.map(formatMonarchVernacular).join(', ')}</span>
               </li>
             )}
             {prereq.technique && prereq.technique.length > 0 && (
               <li className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-muted-foreground" />
-                <span>Requires: {prereq.technique.join(', ')}</span>
+                <span>Requires: {prereq.technique.map(formatMonarchVernacular).join(', ')}</span>
               </li>
             )}
           </ul>
@@ -166,13 +167,13 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
         <SystemWindow id="technique-effects" title="EFFECTS">
           <div className="space-y-3">
             {effects.primary && (
-              <p className="text-foreground leading-relaxed">{effects.primary}</p>
+              <p className="text-foreground leading-relaxed">{formatMonarchVernacular(effects.primary)}</p>
             )}
             {effects.secondary && (
-              <p className="text-muted-foreground leading-relaxed">{effects.secondary}</p>
+              <p className="text-muted-foreground leading-relaxed">{formatMonarchVernacular(effects.secondary)}</p>
             )}
             {effects.tertiary && (
-              <p className="text-muted-foreground leading-relaxed">{effects.tertiary}</p>
+              <p className="text-muted-foreground leading-relaxed">{formatMonarchVernacular(effects.tertiary)}</p>
             )}
           </div>
         </SystemWindow>
@@ -185,10 +186,10 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
               <div className="flex items-start gap-2">
                 <Swords className="w-5 h-5 text-rose-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-heading capitalize">{mechanics.attack.type} attack</p>
+                  <p className="font-heading capitalize">{formatMonarchVernacular(mechanics.attack.type || '')} attack</p>
                   <p className="text-sm text-muted-foreground">
-                    {mechanics.attack.damage ? `Damage: ${mechanics.attack.damage}` : 'Damage varies'}
-                    {mechanics.attack.modifier ? ` | Modifier: ${mechanics.attack.modifier}` : ''}
+                    {mechanics.attack.damage ? formatMonarchVernacular(`Damage: ${mechanics.attack.damage}`) : 'Damage varies'}
+                    {mechanics.attack.modifier ? formatMonarchVernacular(` | Modifier: ${mechanics.attack.modifier}`) : ''}
                   </p>
                 </div>
               </div>
@@ -197,13 +198,13 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
               <div className="flex items-start gap-2">
                 <Shield className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-heading">{mechanics.saving_throw.ability} Save</p>
-                  <p className="text-sm text-muted-foreground">DC {mechanics.saving_throw.dc}</p>
+                  <p className="font-heading">{formatMonarchVernacular(mechanics.saving_throw.ability || '')} Save</p>
+                  <p className="text-sm text-muted-foreground">DC {formatMonarchVernacular(mechanics.saving_throw.dc || '')}</p>
                   {mechanics.saving_throw.success && (
-                    <p className="text-xs text-muted-foreground">Success: {mechanics.saving_throw.success}</p>
+                    <p className="text-xs text-muted-foreground">Success: {formatMonarchVernacular(mechanics.saving_throw.success)}</p>
                   )}
                   {mechanics.saving_throw.failure && (
-                    <p className="text-xs text-muted-foreground">Failure: {mechanics.saving_throw.failure}</p>
+                    <p className="text-xs text-muted-foreground">Failure: {formatMonarchVernacular(mechanics.saving_throw.failure)}</p>
                   )}
                 </div>
               </div>
@@ -212,7 +213,7 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
               <div className="flex items-start gap-2">
                 <Footprints className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-heading capitalize">{mechanics.movement.type} movement</p>
+                  <p className="font-heading capitalize">{formatMonarchVernacular(mechanics.movement.type || '')} movement</p>
                   {mechanics.movement.distance !== undefined && (
                     <p className="text-sm text-muted-foreground">{mechanics.movement.distance} ft</p>
                   )}
@@ -224,7 +225,7 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
                 <Shield className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-heading">Conditions</p>
-                  <p className="text-sm text-muted-foreground">{mechanics.condition.join(', ')}</p>
+                  <p className="text-sm text-muted-foreground">{mechanics.condition.map(formatMonarchVernacular).join(', ')}</p>
                 </div>
               </div>
             )}
@@ -238,25 +239,25 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
             {limitations.uses && (
               <li className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-muted-foreground" />
-                <span>Uses: {limitations.uses}</span>
+                <span>Uses: {formatMonarchVernacular(limitations.uses)}</span>
               </li>
             )}
             {limitations.cooldown && (
               <li className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-muted-foreground" />
-                <span>Cooldown: {limitations.cooldown}</span>
+                <span>Cooldown: {formatMonarchVernacular(limitations.cooldown)}</span>
               </li>
             )}
             {limitations.exhaustion && (
               <li className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-muted-foreground" />
-                <span>Exhaustion: {limitations.exhaustion}</span>
+                <span>Exhaustion: {formatMonarchVernacular(limitations.exhaustion)}</span>
               </li>
             )}
             {limitations.conditions && limitations.conditions.length > 0 && (
               <li className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-muted-foreground" />
-                <span>Conditions: {limitations.conditions.join(', ')}</span>
+                <span>Conditions: {limitations.conditions.map(formatMonarchVernacular).join(', ')}</span>
               </li>
             )}
           </ul>
@@ -267,10 +268,10 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
         <SystemWindow id="technique-description" title="DESCRIPTION">
           <div className="space-y-3">
             {data.description && (
-              <p className="text-foreground leading-relaxed">{data.description}</p>
+              <p className="text-foreground leading-relaxed">{formatMonarchVernacular(data.description)}</p>
             )}
             {data.flavor && (
-              <p className="text-sm text-muted-foreground italic">{data.flavor}</p>
+              <p className="text-sm text-muted-foreground italic">{formatMonarchVernacular(data.flavor)}</p>
             )}
           </div>
         </SystemWindow>

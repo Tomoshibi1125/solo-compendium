@@ -20,6 +20,8 @@ import { logger } from '@/lib/logger';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 import { listLocalCharacters, listLocalRollHistory } from '@/lib/guestStore';
+import { buildToolStorageKey, loadUserToolState, readLocalToolState } from '@/hooks/useToolState';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface CampaignAnalytics {
   campaignId: string;
@@ -115,6 +117,10 @@ type LocalSession = {
   date?: string;
 };
 
+type SessionPlannerState = {
+  sessions?: LocalSession[];
+};
+
 type CampaignDataSet = {
   members: CampaignMemberRow[];
   notes: CampaignNoteRow[];
@@ -138,6 +144,11 @@ const isWithinRange = (dateString: string, rangeStart: Date | null): boolean => 
 
 const parseLocalSessions = (): LocalSession[] => {
   if (typeof window === 'undefined') return [];
+  const toolKey = buildToolStorageKey('session_planner');
+  const toolState = readLocalToolState<SessionPlannerState>(toolKey);
+  const toolSessions = Array.isArray(toolState?.sessions) ? toolState?.sessions || [] : [];
+  if (toolSessions.length > 0) return toolSessions;
+
   const raw = window.localStorage.getItem('dm-sessions');
   if (!raw) return [];
   try {
@@ -402,9 +413,18 @@ const fetchCampaignData = async (campaignId: string, timeRange: TimeRange): Prom
   if (messagesResult.error) throw messagesResult.error;
   if (rollsResult.error) throw rollsResult.error;
 
+  let sessionPlannerNotes: CampaignNoteRow[] = [];
+  try {
+    const sessionPlannerState = await loadUserToolState<SessionPlannerState>(user.id, 'session_planner');
+    const sessions = Array.isArray(sessionPlannerState?.sessions) ? sessionPlannerState?.sessions || [] : [];
+    sessionPlannerNotes = localSessionsToNotes(sessions);
+  } catch (error) {
+    logger.warn('Failed to load session planner data for analytics', error);
+  }
+
   return {
     members: (membersResult.data || []) as CampaignMemberRow[],
-    notes: (notesResult.data || []) as CampaignNoteRow[],
+    notes: ([...(notesResult.data || []), ...sessionPlannerNotes]) as CampaignNoteRow[],
     messages: (messagesResult.data || []) as CampaignMessageRow[],
     rolls: (rollsResult.data || []) as RollRecord[],
   };
@@ -668,7 +688,7 @@ export function CampaignAnalyticsDashboard({ campaignId }: { campaignId: string 
                   <div className="space-y-2">
                     {analytics.combatStats.mostUsedAbilities.map((ability, index) => (
                       <div key={index} className="flex justify-between items-center">
-                        <span className="text-sm">{ability.name}</span>
+                        <span className="text-sm">{formatMonarchVernacular(ability.name)}</span>
                         <Badge variant="secondary">{ability.count}</Badge>
                       </div>
                     ))}

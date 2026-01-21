@@ -2,6 +2,7 @@ import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { MapPin, Skull, Gem } from 'lucide-react';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface LocationData {
   id: string;
@@ -26,7 +27,7 @@ const rankStyles: Record<string, string> = {
 };
 
 export const LocationDetail = ({ data }: { data: LocationData }) => {
-  const displayName = data.display_name || data.name;
+  const displayName = formatMonarchVernacular(data.display_name || data.name);
   const imageSrc = data.image_url || data.image || undefined;
   const rankStyle = data.rank ? rankStyles[data.rank] : undefined;
 
@@ -48,20 +49,20 @@ export const LocationDetail = ({ data }: { data: LocationData }) => {
       <SystemWindow title={displayName.toUpperCase()}>
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-2">
-            {data.location_type && <Badge variant="secondary">{data.location_type}</Badge>}
+            {data.location_type && <Badge variant="secondary">{formatMonarchVernacular(data.location_type)}</Badge>}
             {data.rank && (
               <Badge variant="outline" className={rankStyle}>
                 Rank {data.rank}
               </Badge>
             )}
-            {data.source_book && <Badge variant="outline">{data.source_book}</Badge>}
+            {data.source_book && <Badge variant="outline">{formatMonarchVernacular(data.source_book)}</Badge>}
           </div>
         </div>
       </SystemWindow>
 
       {data.description && (
         <SystemWindow id="location-details" title="DETAILS">
-          <p className="text-foreground leading-relaxed">{data.description}</p>
+          <p className="text-foreground leading-relaxed">{formatMonarchVernacular(data.description)}</p>
         </SystemWindow>
       )}
 
@@ -71,7 +72,7 @@ export const LocationDetail = ({ data }: { data: LocationData }) => {
             {data.encounters.map((encounter) => (
               <li key={encounter} className="flex items-center gap-2">
                 <Skull className="w-4 h-4 text-rose-400" />
-                <span className="text-muted-foreground">{encounter}</span>
+                <span className="text-muted-foreground">{formatMonarchVernacular(encounter)}</span>
               </li>
             ))}
           </ul>
@@ -84,7 +85,7 @@ export const LocationDetail = ({ data }: { data: LocationData }) => {
             {data.treasures.map((treasure) => (
               <li key={treasure} className="flex items-center gap-2">
                 <Gem className="w-4 h-4 text-amber-400" />
-                <span className="text-muted-foreground">{treasure}</span>
+                <span className="text-muted-foreground">{formatMonarchVernacular(treasure)}</span>
               </li>
             ))}
           </ul>

@@ -1,7 +1,7 @@
--- Create compendium tables for Solo Leveling 5e
+-- Create compendium tables for System Ascendant 5e SRD
 -- These are public read-only tables for browsing game content
 
--- Jobs (Hunter classes)
+-- Jobs (Ascendant classes)
 CREATE TABLE IF NOT EXISTS public.compendium_jobs (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL UNIQUE,
@@ -352,3 +352,4 @@ CREATE INDEX IF NOT EXISTS idx_compendium_jobs_search ON public.compendium_jobs 
 CREATE INDEX IF NOT EXISTS idx_compendium_powers_search ON public.compendium_powers USING GIN (to_tsvector('english', name || ' ' || COALESCE(description, '')));
 CREATE INDEX IF NOT EXISTS idx_compendium_relics_search ON public.compendium_relics USING GIN (to_tsvector('english', name || ' ' || COALESCE(description, '')));
 CREATE INDEX IF NOT EXISTS idx_compendium_monsters_search ON public.compendium_monsters USING GIN (to_tsvector('english', name || ' ' || COALESCE(description, '')));
+

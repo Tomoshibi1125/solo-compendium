@@ -1,11 +1,11 @@
--- Remove Shadow Monarch from jobs (it's a Monarch overlay, not a Job)
-DELETE FROM compendium_jobs WHERE name = 'Shadow Monarch';
+-- Remove Umbral Monarch from jobs (it's a Monarch overlay, not a Job)
+DELETE FROM compendium_jobs WHERE name = 'Umbral Monarch';
 -- Add Vanguard as a proper Job (Fighter analog)
 INSERT INTO compendium_jobs (name, description, flavor_text, primary_abilities, secondary_abilities, hit_die, armor_proficiencies, weapon_proficiencies, tool_proficiencies, saving_throw_proficiencies, skill_choices, skill_choice_count, source_book, tags)
 VALUES (
   'Vanguard',
-  'Vanguards are the frontline warriors who lead the charge into Gates. Masters of martial combat and tactical positioning, they excel at protecting allies while dealing devastating melee damage. Their training emphasizes adaptability—able to switch between offensive and defensive stances as the battle demands.',
-  'Where others hesitate, Vanguards advance. They are the first through the Gate and the last to leave.',
+  'Vanguards are the frontline warriors who lead the charge into Rifts. Masters of martial combat and tactical positioning, they excel at protecting allies while dealing devastating melee damage. Their training emphasizes adaptability—able to switch between offensive and defensive stances as the battle demands.',
+  'Where others hesitate, Vanguards advance. They are the first through the Rift and the last to leave.',
   ARRAY['STR', 'VIT']::ability_score[],
   ARRAY['AGI']::ability_score[],
   10,
@@ -22,7 +22,7 @@ VALUES (
 CREATE TABLE public.compendium_monarchs (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL UNIQUE,
-  title TEXT NOT NULL, -- e.g., "Monarch of Shadows", "Monarch of White Flames"
+  title TEXT NOT NULL, -- e.g., "Monarch of the Veil", "Monarch of White Flames"
   description TEXT NOT NULL,
   flavor_text TEXT,
   lore TEXT, -- Extended lore about the Monarch's history
@@ -125,7 +125,7 @@ CREATE TABLE public.compendium_sovereign_features (
   description TEXT NOT NULL,
   
   -- Origin tracking (what was fused to create this)
-  origin_sources TEXT[], -- e.g., ['Striker: Rapid Assault', 'Shadow Monarch: Shadow Extraction']
+  origin_sources TEXT[], -- e.g., ['Striker: Rapid Assault', 'Umbral Monarch: Shadow Extraction']
   
   -- Feature details
   level INTEGER NOT NULL,
@@ -153,25 +153,25 @@ CREATE INDEX idx_sovereigns_components ON public.compendium_sovereigns(job_id, p
 -- Insert the 9 Canon Monarchs
 INSERT INTO compendium_monarchs (name, title, description, flavor_text, lore, theme, damage_type, unlock_level, primary_abilities, manifestation_description, corruption_risk, tags) VALUES
 (
-  'Shadow Monarch',
-  'Monarch of Shadows',
-  'The Shadow Monarch commands an army of the dead, extracting shadows from slain creatures to serve eternally. This overlay grants necromantic powers focused on shadow extraction, shadow army command, and domain manipulation.',
-  'Arise.',
-  'The Shadow Monarch was once Ashborn, the greatest of the Rulers who defected to lead the army of the dead. The power passed through Sung Il-Hwan before finding its true inheritor in Sung Jin-Woo, who would become the most powerful Hunter in history.',
-  'Shadow',
+  'Umbral Monarch',
+  'Monarch of the Veil',
+  'The Umbral Monarch commands an army of the dead, extracting echoes from fallen creatures to serve eternally. This overlay grants necromantic powers focused on umbral extraction, legion command, and domain manipulation.',
+  'Ascend.',
+  'The Umbral Monarch was once the first Ascendant to master the veil, abandoning the founding accord to lead an army of the dead. The power passed through Edrin Voss before finding its inheritor in Kael Voss, who would become the most storied Ascendant in history.',
+  'Umbral',
   'Necrotic',
   7,
   ARRAY['PRE', 'INT']::ability_score[],
-  'Shadows pool beneath your feet, and fallen enemies stir with violet flame in their eyes before rising to serve.',
-  'The endless voices of your shadow soldiers whisper constantly. Some Hunters lose themselves in the legion.',
-  ARRAY['Necromancy', 'Summoner', 'Army', 'Shadow']
+  'Veil mist pools beneath your feet, and fallen enemies stir with violet flame in their eyes before rising to serve.',
+  'The endless voices of your legionnaires whisper constantly. Some Ascendants lose themselves in the legion.',
+  ARRAY['Necromancy', 'Summoner', 'Army', 'Umbral']
 ),
 (
   'Beast Monarch',
   'Monarch of Beasts',
   'The Beast Monarch embodies primal fury and bestial transformation. This overlay grants enhanced physical capabilities, partial or full beast transformations, and command over monstrous creatures.',
   'All beasts bow before the apex predator.',
-  'Antares, the Monarch of Destruction was the Dragon King, but the Beast Monarch represents the primal hierarchy of all creatures. Those who embrace this power become apex predators beyond human limits.',
+  'Varkun, the Monarch of Destruction was the Dragon King, but the Beast Monarch represents the primal hierarchy of all creatures. Those who embrace this power become apex predators beyond human limits.',
   'Beast',
   'Slashing',
   7,
@@ -183,7 +183,7 @@ INSERT INTO compendium_monarchs (name, title, description, flavor_text, lore, th
 (
   'Iron Body Monarch',
   'Monarch of Iron',
-  'The Iron Body Monarch represents absolute physical resilience. This overlay grants supernatural durability, damage reduction, and the ability to shrug off wounds that would kill lesser Hunters.',
+  'The Iron Body Monarch represents absolute physical resilience. This overlay grants supernatural durability, damage reduction, and the ability to shrug off wounds that would kill lesser Ascendants.',
   'Break your weapons upon my flesh.',
   'Iron Body represents the pinnacle of defensive power—a body that has transcended mortal fragility to become living armor.',
   'Iron',
@@ -199,7 +199,7 @@ INSERT INTO compendium_monarchs (name, title, description, flavor_text, lore, th
   'Monarch of Plagues',
   'The Plague Monarch spreads corruption and decay. This overlay grants control over disease, poison, and debilitating afflictions that weaken enemies while empowering the wielder through suffering.',
   'All things rot. I merely hasten the inevitable.',
-  'Querehsha, the Monarch of Plagues, was a being of pure corruption. Those who inherit this power become vectors of supernatural disease.',
+  'Vespara, the Monarch of Plagues, was a being of pure corruption. Those who inherit this power become vectors of supernatural disease.',
   'Plague',
   'Poison',
   7,
@@ -241,7 +241,7 @@ INSERT INTO compendium_monarchs (name, title, description, flavor_text, lore, th
   'Monarch of Destruction',
   'The Destruction Monarch embodies pure annihilating force. This overlay grants devastating offensive powers, area destruction, and the ability to break through any defense.',
   'Nothing endures. Everything breaks.',
-  'Antares, the Dragon King and Monarch of Destruction, was the most powerful of the Monarchs. His power represents absolute offensive supremacy.',
+  'Varkun, the Dragon King and Monarch of Destruction, was the most powerful of the Monarchs. His power represents absolute offensive supremacy.',
   'Destruction',
   'Force',
   11,
@@ -255,7 +255,7 @@ INSERT INTO compendium_monarchs (name, title, description, flavor_text, lore, th
   'Monarch of White Flames',
   'The White Flames Monarch wields the hottest fires—flames that burn beyond physical heat into the spiritual. This overlay grants devastating fire powers and demon-commanding abilities.',
   'My flames burn the soul itself.',
-  'Baran, the Monarch of White Flames, commanded demon legions and wielded fire hot enough to burn magic itself.',
+  'Solvyr, the Monarch of White Flames, commanded demon legions and wielded fire hot enough to burn magic itself.',
   'White Flames',
   'Fire',
   7,
@@ -269,7 +269,7 @@ INSERT INTO compendium_monarchs (name, title, description, flavor_text, lore, th
   'Monarch of Transfiguration',
   'The Transfiguration Monarch masters the changing of forms. This overlay grants shapeshifting, illusion powers, and the ability to transform enemies or environments.',
   'Reality is merely suggestion. I am the exception.',
-  'Yogumunt, the Monarch of Transfiguration, could alter anything—matter, magic, or memory. This power represents ultimate flexibility.',
+  'Vaelith, the Monarch of Transfiguration, could alter anything—matter, magic, or memory. This power represents ultimate flexibility.',
   'Transfiguration',
   'Psychic',
   7,
@@ -288,3 +288,5 @@ CREATE TRIGGER update_sovereigns_updated_at
 BEFORE UPDATE ON public.compendium_sovereigns
 FOR EACH ROW
 EXECUTE FUNCTION public.update_updated_at_column();
+
+

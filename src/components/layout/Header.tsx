@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -14,14 +14,13 @@ import {
   Settings, 
   LogOut, 
   User, 
-  Moon, 
-  Sun,
   Dice6,
   Heart
 } from 'lucide-react';
-import { ShadowMonarchLogo } from '@/components/ui/ShadowMonarchLogo';
+import { SystemSigilLogo } from '@/components/ui/SystemSigilLogo';
 import { logger } from '@/lib/logger';
 import { GlobalSearch } from '@/components/ui/GlobalSearch';
+import { cn } from '@/lib/utils';
 
 interface HeaderProps {
   user?: any;
@@ -29,8 +28,17 @@ interface HeaderProps {
 }
 
 export function Header({ user, onLogout }: HeaderProps) {
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const isActive = (path: string) =>
+    location.pathname === path || location.pathname.startsWith(`${path}/`);
+
+  const navLinkClass = (path: string) =>
+    cn(
+      "transition-colors hover:text-foreground/80",
+      isActive(path) ? "text-foreground" : "text-foreground/60"
+    );
 
   const handleLogout = () => {
     try {
@@ -41,64 +49,66 @@ export function Header({ user, onLogout }: HeaderProps) {
     }
   };
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    // Implement dark mode toggle logic
-  };
-
   return (
     <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-2">
-          <ShadowMonarchLogo className="h-8 w-8" />
+          <SystemSigilLogo className="h-8 w-8" />
           <span className="hidden font-bold sm:inline-block">
-            Solo Compendium
+            System Ascendant
           </span>
         </Link>
 
         {/* Navigation */}
         <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
           <Link
-            to="/dashboard"
-            className="transition-colors hover:text-foreground/80 text-foreground/60"
+            to="/player-tools"
+            className={navLinkClass("/player-tools")}
+            aria-current={isActive("/player-tools") ? "page" : undefined}
           >
-            Dashboard
+            Player Tools
           </Link>
           <Link
             to="/characters"
-            className="transition-colors hover:text-foreground/80 text-foreground/60"
+            className={navLinkClass("/characters")}
+            aria-current={isActive("/characters") ? "page" : undefined}
           >
-            Hunters
+            Ascendants
           </Link>
           <Link
             to="/compendium"
-            className="transition-colors hover:text-foreground/80 text-foreground/60"
+            className={navLinkClass("/compendium")}
+            aria-current={isActive("/compendium") ? "page" : undefined}
           >
             Compendium
           </Link>
           <Link
             to="/campaigns"
-            className="transition-colors hover:text-foreground/80 text-foreground/60"
+            className={navLinkClass("/campaigns")}
+            aria-current={isActive("/campaigns") ? "page" : undefined}
           >
             Campaigns
           </Link>
           <Link
             to="/dm-tools"
-            className="transition-colors hover:text-foreground/80 text-foreground/60"
+            className={navLinkClass("/dm-tools")}
+            aria-current={isActive("/dm-tools") ? "page" : undefined}
           >
-            DM Tools
+            Warden Tools
           </Link>
           <Link
             to="/dice"
-            className="transition-colors hover:text-foreground/80 text-foreground/60 flex items-center gap-1"
+            className={cn(navLinkClass("/dice"), "flex items-center gap-1")}
+            aria-current={isActive("/dice") ? "page" : undefined}
           >
             <Dice6 className="h-4 w-4" />
             Dice
           </Link>
           <Link
             to="/favorites"
-            className="transition-colors hover:text-foreground/80 text-foreground/60 flex items-center gap-1"
+            className={cn(navLinkClass("/favorites"), "flex items-center gap-1")}
+            aria-current={isActive("/favorites") ? "page" : undefined}
           >
             <Heart className="h-4 w-4" />
             Favorites
@@ -109,20 +119,6 @@ export function Header({ user, onLogout }: HeaderProps) {
         <div className="flex items-center space-x-4">
           {/* Global Search */}
           <GlobalSearch className="w-80" />
-          
-          {/* Dark Mode Toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleDarkMode}
-            aria-label="Toggle dark mode"
-          >
-            {isDarkMode ? (
-              <Sun className="h-4 w-4" />
-            ) : (
-              <Moon className="h-4 w-4" />
-            )}
-          </Button>
 
           {/* Notifications */}
           <div className="relative">
@@ -178,3 +174,6 @@ export function Header({ user, onLogout }: HeaderProps) {
     </header>
   );
 }
+
+
+

@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useEquipmentRunes } from '@/hooks/useRunes';
 import { cn } from '@/lib/utils';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 import type { Database } from '@/integrations/supabase/types';
 
 type Equipment = Database['public']['Tables']['character_equipment']['Row'];
@@ -27,6 +28,9 @@ function EquipmentItemComponent({
   canAttune,
 }: EquipmentItemProps) {
   const { data: runes = [] } = useEquipmentRunes(item.id);
+  const displayName = formatMonarchVernacular(item.name);
+  const displayDescription = item.description ? formatMonarchVernacular(item.description) : null;
+  const displayRarity = item.rarity ? formatMonarchVernacular(item.rarity) : null;
 
   return (
     <div
@@ -38,10 +42,10 @@ function EquipmentItemComponent({
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1">
-            <span className="font-heading font-semibold">{item.name}</span>
-            {item.rarity && (
+            <span className="font-heading font-semibold">{displayName}</span>
+            {displayRarity && (
               <Badge variant="secondary" className="text-xs">
-                {item.rarity}
+                {displayRarity}
               </Badge>
             )}
             {item.is_equipped && (
@@ -57,9 +61,9 @@ function EquipmentItemComponent({
               </Badge>
             )}
           </div>
-          {item.description && (
+          {displayDescription && (
             <p className="text-xs text-muted-foreground line-clamp-2">
-              {item.description}
+              {displayDescription}
             </p>
           )}
           {runes.length > 0 && (
@@ -71,7 +75,7 @@ function EquipmentItemComponent({
                   className="text-xs gap-1"
                 >
                   <Sparkles className="w-3 h-3" />
-                  {ri.rune.name}
+                  {formatMonarchVernacular(ri.rune.name)}
                 </Badge>
               ))}
             </div>
@@ -80,7 +84,7 @@ function EquipmentItemComponent({
             <div className="flex flex-wrap gap-1 mt-1">
               {item.properties.slice(0, 3).map((prop, i) => (
                 <Badge key={i} variant="outline" className="text-xs">
-                  {prop}
+                  {formatMonarchVernacular(prop)}
                 </Badge>
               ))}
             </div>
@@ -117,23 +121,23 @@ function EquipmentItemComponent({
                 </label>
               </div>
             )}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-6 text-xs gap-1"
-              onClick={onInscribeRune}
-              aria-label={`Inscribe rune on ${item.name}`}
-            >
-              <Sparkles className="w-3 h-3" />
-              Rune
-            </Button>
-          </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-6 text-xs gap-1"
+                onClick={onInscribeRune}
+                aria-label={`Inscribe rune on ${displayName}`}
+              >
+                <Sparkles className="w-3 h-3" />
+                Rune
+              </Button>
+            </div>
           <Button
             variant="ghost"
             size="icon"
             className="h-8 w-8"
             onClick={onRemove}
-            aria-label={`Remove ${item.name}`}
+            aria-label={`Remove ${displayName}`}
           >
             <Trash2 className="w-4 h-4" />
           </Button>

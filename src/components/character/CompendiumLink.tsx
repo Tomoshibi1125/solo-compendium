@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface CompendiumLinkProps {
   type: 'jobs' | 'paths' | 'powers' | 'relics' | 'monsters' | 'backgrounds' | 'conditions' | 'monarchs' | 'feats' | 'skills' | 'equipment' | 'shadow-soldiers';
@@ -13,6 +14,7 @@ interface CompendiumLinkProps {
 
 export function CompendiumLink({ type, id, name, className, variant = 'link' }: CompendiumLinkProps) {
   const href = `/compendium/${type}/${id}`;
+  const displayName = formatMonarchVernacular(name);
 
   if (variant === 'button') {
     return (
@@ -23,7 +25,7 @@ export function CompendiumLink({ type, id, name, className, variant = 'link' }: 
         className={cn("gap-2", className)}
       >
         <Link to={href}>
-          {name}
+          {displayName}
           <ExternalLink className="w-3 h-3" />
         </Link>
       </Button>
@@ -38,7 +40,7 @@ export function CompendiumLink({ type, id, name, className, variant = 'link' }: 
         className
       )}
     >
-      {name}
+      {displayName}
       <ExternalLink className="w-3 h-3" />
     </Link>
   );

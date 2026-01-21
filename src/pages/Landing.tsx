@@ -16,12 +16,12 @@ const Landing = () => {
         <div className="flex items-center gap-3">
           <OptimizedImage
             src="/ui-art/shadow-soldier-emblem.webp"
-            alt="Shadow Soldier Emblem"
+            alt="Umbral Legionnaire Emblem"
             className="h-10 w-10 rounded-full border border-purple-500/60 shadow-lg shadow-purple-500/40"
             size="thumbnail"
           />
           <div className="leading-tight">
-            <p className="text-xs uppercase tracking-[0.2em] text-purple-200/70">Solo Compendium</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-purple-200/70">System Ascendant</p>
             <p className="font-arise text-lg tracking-widest">The System</p>
           </div>
         </div>
@@ -32,7 +32,7 @@ const Landing = () => {
             </Button>
           </Link>
           <Link to="/compendium">
-            <Button className="btn-shadow-monarch">Browse Compendium</Button>
+            <Button className="btn-umbral">Browse Compendium</Button>
           </Link>
         </div>
       </header>
@@ -47,11 +47,11 @@ const Landing = () => {
               The System awaits your command.
             </h1>
             <p className="mt-4 text-lg text-gray-300">
-              Access the complete Solo Leveling compendium. Manage hunters, explore gates, and master the shadows.
+              Access the complete System Ascendant compendium. Manage ascendants, explore rifts, and master the shadows.
             </p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <Link to="/login">
-                <Button size="lg" className="btn-shadow-monarch">
+                <Button size="lg" className="btn-umbral">
                   Enter System
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -80,15 +80,15 @@ const Landing = () => {
           <div className="grid gap-8 md:grid-cols-3">
             <div className="rounded-lg border border-purple-500/20 bg-purple-950/20 p-6 backdrop-blur-sm">
               <h3 className="font-arise text-xl font-semibold text-purple-200">3,218+ Assets</h3>
-              <p className="mt-2 text-gray-400">Complete Solo Leveling compendium with monsters, items, spells, and more.</p>
+              <p className="mt-2 text-gray-400">Complete System Ascendant compendium with monsters, items, spells, and more.</p>
             </div>
             <div className="rounded-lg border border-purple-500/20 bg-purple-950/20 p-6 backdrop-blur-sm">
-              <h3 className="font-arise text-xl font-semibold text-purple-200">Hunter Management</h3>
-              <p className="mt-2 text-gray-400">Create and manage your hunters with full character sheets and progression.</p>
+              <h3 className="font-arise text-xl font-semibold text-purple-200">Ascendant Management</h3>
+              <p className="mt-2 text-gray-400">Create and manage your ascendants with full character sheets and progression.</p>
             </div>
             <div className="rounded-lg border border-purple-500/20 bg-purple-950/20 p-6 backdrop-blur-sm">
-              <h3 className="font-arise text-xl font-semibold text-purple-200">Gate Exploration</h3>
-              <p className="mt-2 text-gray-400">Explore dangerous gates and track your conquests in the shadow realm.</p>
+              <h3 className="font-arise text-xl font-semibold text-purple-200">Rift Exploration</h3>
+              <p className="mt-2 text-gray-400">Explore dangerous rifts and track your conquests in the shadow realm.</p>
             </div>
           </div>
         </section>
@@ -98,3 +98,7 @@ const Landing = () => {
 };
 
 export default Landing;
+
+
+
+

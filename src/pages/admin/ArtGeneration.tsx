@@ -1,5 +1,5 @@
 /**
- * Art Generation DM Tool
+ * Art Generation Warden Tool
  * Interface for managing AI-driven art generation
  */
 
@@ -116,7 +116,7 @@ export default function ArtGenerationAdmin() {
       entityId: 'test-shadow-beast',
       variant: 'portrait' as const,
       title: 'Test Shadow Beast',
-      tags: ['dark', 'manhwa', 'anime', 'solo leveling', 'test'],
+      tags: ['dark', 'manhwa', 'anime', 'system ascendant', 'test'],
       description: 'A test creature for art generation',
       rarityOrCR: 'CR 1',
       environment: 'dark realm',
@@ -207,7 +207,7 @@ export default function ArtGenerationAdmin() {
         entityId: 'goblin-shadow',
         variant: 'portrait' as const,
         title: 'Shadow Goblin',
-        tags: ['dark', 'manhwa', 'anime', 'solo leveling'],
+        tags: ['dark', 'manhwa', 'anime', 'system ascendant'],
         description: 'A menacing goblin with shadow abilities'
       },
       {
@@ -455,3 +455,4 @@ export default function ArtGenerationAdmin() {
     </div>
   );
 }
+

@@ -1,5 +1,5 @@
 /**
- * D&D 5e Death Saving Throws System
+ * SRD 5e Death Saving Throws System
  * Manages death saving throws and stabilization
  */
 
@@ -266,3 +266,4 @@ export function getDeathSaveProbability(
   
   return { survivalChance, deathChance };
 }
+

@@ -1,26 +1,26 @@
 /**
- * Solo Leveling Styled Hero Component (Simple Version)
+ * System Ascendant Styled Hero Component (Simple Version)
  * For landing and login pages with dramatic manhwa aesthetics
  */
 
 import { useState, useEffect } from 'react';
 import { Sparkles, Shield, Swords, Crown } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import './SoloLevelingHeroSimple.css';
+import './SystemHeroSimple.css';
 
-interface SoloLevelingHeroProps {
+interface SystemHeroProps {
   title?: string;
   subtitle?: string;
   showLogin?: boolean;
   className?: string;
 }
 
-export function SoloLevelingHeroSimple({ 
+export function SystemHeroSimple({ 
   title = "SOLO COMPENDIUM", 
-  subtitle = "Shadow Monarch's D&D Companion",
+  subtitle = "System Ascendant SRD Companion",
   showLogin = false,
   className 
-}: SoloLevelingHeroProps) {
+}: SystemHeroProps) {
   const [glowIntensity, setGlowIntensity] = useState(0.5);
 
   useEffect(() => {
@@ -61,7 +61,7 @@ export function SoloLevelingHeroSimple({
       {/* Shadow energy overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-purple-900/20 via-transparent to-blue-900/20" />
       
-      {/* Gate portal effect */}
+      {/* Rift portal effect */}
       <div 
         className="absolute inset-0 flex items-center justify-center pointer-events-none portal-effect"
       />
@@ -81,7 +81,7 @@ export function SoloLevelingHeroSimple({
           </div>
         </div>
 
-        {/* Main title with Solo Leveling styling */}
+        {/* Main title with System Ascendant styling */}
         <div className="text-center mb-8">
           <h1 
             className="text-6xl md:text-8xl font-black tracking-wider mb-4 solo-hero-title"
@@ -119,7 +119,7 @@ export function SoloLevelingHeroSimple({
             <div className="bg-black/60 backdrop-blur-md border border-purple-500/30 rounded-2xl p-8 shadow-2xl">
               <div className="text-center mb-6">
                 <h2 className="text-2xl font-bold text-purple-300 mb-2">SYSTEM ACCESS</h2>
-                <p className="text-gray-400 text-sm">Enter the Shadow Monarch's domain</p>
+                <p className="text-gray-400 text-sm">Enter the Umbral Dominion</p>
               </div>
               {/* Login form would go here */}
             </div>
@@ -150,7 +150,7 @@ export function SoloLevelingHeroSimple({
       {/* Bottom system message */}
       <div className="absolute bottom-8 left-0 right-0 text-center opacity-70">
         <p className="text-sm text-gray-500 font-mono">
-          SYSTEM ONLINE • SHADOW ENERGY STABLE • GATES MONITORED
+          SYSTEM ONLINE • UMBRAL ENERGY STABLE • RIFTS MONITORED
         </p>
       </div>
 
@@ -188,3 +188,5 @@ export function SoloLevelingHeroSimple({
     </div>
   );
 }
+
+

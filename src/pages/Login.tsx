@@ -1,6 +1,6 @@
 /**
  * Login Page - Main Entry Point
- * Solo Leveling styled authentication page
+ * System Ascendant styled authentication page
  */
 
 import React, { useState, useEffect } from 'react';
@@ -10,6 +10,7 @@ import { Eye, EyeOff, Shield, Sword, Users } from 'lucide-react';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import { OAuthButtons } from '@/components/auth/OAuthButton';
 import { OAuthProvider, useOAuth } from '@/hooks/useOAuth';
+import { setLocalGuestRole } from '@/lib/guestStore';
 
 export default function Login() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -27,6 +28,7 @@ export default function Login() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const oauthEnabled = import.meta.env.VITE_OAUTH_ENABLED === 'true';
+  const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== 'false';
 
   useEffect(() => {
     const authError = searchParams.get('error');
@@ -74,12 +76,19 @@ export default function Login() {
     await signInWithProvider(provider);
   };
 
+  const handleContinueAsGuest = () => {
+    setError('');
+    setNotice('');
+    setLocalGuestRole(role);
+    navigate(role === 'dm' ? '/dm-tools' : '/player-tools');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-4">
       {/* Background Art */}
       <div className="absolute inset-0 bg-cover bg-center opacity-20 login-page-bg" />
       
-      {/* Shadow Energy Effects */}
+      {/* Umbral Energy Effects */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full filter blur-3xl opacity-10 animate-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600 rounded-full filter blur-3xl opacity-10 animate-pulse" />
@@ -96,13 +105,13 @@ export default function Login() {
           <div className="flex justify-center mb-4">
             <OptimizedImage
               src="/ui-art/shadow-soldier-emblem.webp"
-              alt="Shadow Soldier Emblem"
+              alt="Umbral Legionnaire Emblem"
               className="w-20 h-20 rounded-full border-2 border-purple-500 shadow-lg shadow-purple-500/50"
               size="small"
             />
           </div>
           <h1 className="text-4xl font-bold text-white mb-2">
-            Solo Compendium
+            System Ascendant
           </h1>
           <p className="text-gray-400 text-lg">
             {isSignUp ? 'Join the Shadow Realm' : 'Enter the Shadow Realm'}
@@ -146,7 +155,7 @@ export default function Login() {
               <button
                 type="button"
                 onClick={() => setRole('dm')}
-                aria-label="Select Dungeon Master role"
+                aria-label="Select Protocol Warden role"
                 className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
                   role === 'dm'
                     ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/50'
@@ -154,7 +163,7 @@ export default function Login() {
                 }`}
               >
                 <Shield className="w-4 h-4" />
-                Dungeon Master
+                Protocol Warden
               </button>
             </div>
 
@@ -169,7 +178,7 @@ export default function Login() {
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
                   className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                  placeholder="Character name (e.g., Jinwoo Sung)"
+                  placeholder="Character name (e.g., Kael Voss)"
                   required
                 />
               </div>
@@ -185,7 +194,7 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                placeholder="hunter@solo-leveling.world"
+                placeholder="ascendant@system-ascendant.world"
                 required
               />
             </div>
@@ -201,7 +210,7 @@ export default function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent pr-12"
-                  placeholder="Shadow Monarch secret passcode"
+                  placeholder="Ascendant access code"
                   required
                 />
                 <button
@@ -247,6 +256,29 @@ export default function Login() {
                 </span>
               )}
             </button>
+
+            {guestEnabled && (
+              <div className="space-y-3">
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-gray-700"></div>
+                  </div>
+                  <div className="relative flex justify-center text-xs">
+                    <span className="bg-gray-800/60 px-2 text-gray-400">or continue as guest</span>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleContinueAsGuest}
+                  className="w-full border border-gray-600 text-gray-200 font-semibold py-3 px-4 rounded-lg hover:border-gray-500 hover:bg-gray-700/60 transition-all duration-200"
+                >
+                  Continue as Guest ({role === 'dm' ? 'Protocol Warden' : 'Player'})
+                </button>
+                <p className="text-xs text-gray-400 text-center">
+                  Guest mode saves data only in this browser.
+                </p>
+              </div>
+            )}
           </form>
 
           {/* Toggle Sign Up/In */}
@@ -267,10 +299,13 @@ export default function Login() {
 
         {/* Footer */}
         <div className="mt-8 text-center text-gray-500 text-sm">
-          <p>Solo Leveling D&D Companion</p>
-          <p className="mt-1">Enter the shadows, become the ultimate hunter</p>
+          <p>System Ascendant SRD Companion</p>
+          <p className="mt-1">Enter the shadows, become the ultimate ascendant</p>
         </div>
       </div>
     </div>
   );
 }
+
+
+

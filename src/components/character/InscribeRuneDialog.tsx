@@ -12,6 +12,7 @@ import { useEquipment } from '@/hooks/useEquipment';
 import { useToast } from '@/hooks/use-toast';
 import { BookOpen, AlertCircle, CheckCircle, Sparkles, Zap, Shield, Scroll } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
 
 const RUNE_TYPE_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   martial: Zap,
@@ -72,8 +73,13 @@ export function InscribeRuneDialog({
       }
 
       // Filter by search
-      if (searchQuery && !rune.name.toLowerCase().includes(searchQuery.toLowerCase())) {
-        return false;
+      const trimmedQuery = searchQuery.trim();
+      if (trimmedQuery) {
+        const canonicalQuery = normalizeMonarchSearch(trimmedQuery.toLowerCase());
+        const runeName = normalizeMonarchSearch(rune.name.toLowerCase());
+        if (!runeName.includes(canonicalQuery)) {
+          return false;
+        }
       }
 
       return true;
@@ -127,6 +133,9 @@ export function InscribeRuneDialog({
   };
 
   const selectedRuneData = allRunes.find(r => r.id === selectedRune);
+  const displayTargetEquipment = targetEquipment
+    ? formatMonarchVernacular(targetEquipment.name)
+    : 'equipment';
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -134,7 +143,7 @@ export function InscribeRuneDialog({
         <DialogHeader>
           <DialogTitle>Inscribe Rune</DialogTitle>
           <DialogDescription>
-            Select a rune to inscribe on {targetEquipment?.name || 'equipment'}
+            Select a rune to inscribe on {displayTargetEquipment}
           </DialogDescription>
         </DialogHeader>
 
@@ -156,6 +165,11 @@ export function InscribeRuneDialog({
                 const Icon = RUNE_TYPE_ICONS[rune.rune_type] || BookOpen;
                 const isKnown = knownRunes.some(kr => kr.rune_id === rune.id);
                 const isSelected = selectedRune === rune.id;
+                const displayName = formatMonarchVernacular(rune.name);
+                const displayDescription = rune.description ? formatMonarchVernacular(rune.description) : '';
+                const displayRarity = rune.rarity ? formatMonarchVernacular(rune.rarity) : '';
+                const displayType = formatMonarchVernacular(rune.rune_type);
+                const displayCategory = rune.rune_category ? formatMonarchVernacular(rune.rune_category) : '';
 
                 return (
                   <div
@@ -172,18 +186,20 @@ export function InscribeRuneDialog({
                         <Icon className="w-5 h-5 mt-0.5 text-primary" />
                         <div className="flex-1">
                           <div className="flex items-center gap-2">
-                            <h4 className="font-heading font-semibold">{rune.name}</h4>
+                            <h4 className="font-heading font-semibold">{displayName}</h4>
                             {isKnown && <Badge variant="outline" className="text-xs">Known</Badge>}
                           </div>
                           <div className="flex items-center gap-2 mt-1">
                             <Badge variant="secondary" className="text-xs">
-                              Level {rune.rune_level} {rune.rarity}
+                              Level {rune.rune_level} {displayRarity}
                             </Badge>
-                            <Badge variant="outline" className="text-xs">{rune.rune_type}</Badge>
-                            <Badge variant="outline" className="text-xs">{rune.rune_category}</Badge>
+                            <Badge variant="outline" className="text-xs">{displayType}</Badge>
+                            {displayCategory && (
+                              <Badge variant="outline" className="text-xs">{displayCategory}</Badge>
+                            )}
                           </div>
                           <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
-                            {rune.description}
+                            {displayDescription}
                           </p>
                         </div>
                       </div>
@@ -204,7 +220,9 @@ export function InscribeRuneDialog({
           {/* Selected Rune Details */}
           {selectedRuneData && requirementCheck && (
             <div className="border rounded-lg p-4 space-y-3">
-              <h4 className="font-heading font-semibold">{selectedRuneData.name}</h4>
+              <h4 className="font-heading font-semibold">
+                {formatMonarchVernacular(selectedRuneData.name)}
+              </h4>
               
               {/* Requirements Check */}
               {requirementCheck.canUse ? (
@@ -217,7 +235,7 @@ export function InscribeRuneDialog({
                         <p className="text-xs font-semibold">Cross-Learning Penalties:</p>
                         <ul className="text-xs list-disc list-inside mt-1">
                           {requirementCheck.penalties.map((penalty, i) => (
-                            <li key={i}>{penalty}</li>
+                            <li key={i}>{formatMonarchVernacular(penalty)}</li>
                           ))}
                         </ul>
                       </div>
@@ -228,7 +246,7 @@ export function InscribeRuneDialog({
                 <Alert variant="destructive">
                   <AlertCircle className="h-4 w-4" />
                   <AlertDescription>
-                    {requirementCheck.penalties.join(', ')}
+                    {requirementCheck.penalties.map(formatMonarchVernacular).join(', ')}
                   </AlertDescription>
                 </Alert>
               )}
@@ -237,14 +255,17 @@ export function InscribeRuneDialog({
               <div className="text-sm space-y-2">
                 <div>
                   <span className="font-semibold">Effect: </span>
-                  <span className="text-muted-foreground">{selectedRuneData.effect_description}</span>
+                  <span className="text-muted-foreground">
+                    {formatMonarchVernacular(selectedRuneData.effect_description || '')}
+                  </span>
                 </div>
                 {selectedRuneData.activation_action && (
                   <div>
                     <span className="font-semibold">Activation: </span>
                     <span className="text-muted-foreground">
-                      {selectedRuneData.activation_action} 
-                      {selectedRuneData.activation_cost && ` (${selectedRuneData.activation_cost})`}
+                      {formatMonarchVernacular(selectedRuneData.activation_action)} 
+                      {selectedRuneData.activation_cost &&
+                        ` (${formatMonarchVernacular(selectedRuneData.activation_cost)})`}
                     </span>
                   </div>
                 )}

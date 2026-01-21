@@ -7,7 +7,9 @@ import { formatModifier } from '@/lib/characterCalculations';
 import { useNavigate } from 'react-router-dom';
 import { rollDiceString, formatRollResult } from '@/lib/diceRoller';
 import { useToast } from '@/hooks/use-toast';
+import { useRecordRoll } from '@/hooks/useRollHistory';
 import { cn } from '@/lib/utils';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface ActionCardProps {
   name: string;
@@ -21,6 +23,7 @@ interface ActionCardProps {
   onRoll?: (rollType: 'attack' | 'damage' | 'check') => void;
   inscriptionId?: string;
   onUse?: () => void;
+  characterId?: string;
   className?: string;
 }
 
@@ -50,11 +53,23 @@ function ActionCardComponent({
   onRoll,
   inscriptionId,
   onUse,
+  characterId,
   className,
 }: ActionCardProps) {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const recordRoll = useRecordRoll();
   const Icon = TYPE_ICONS[type];
+  const displayName = formatMonarchVernacular(name);
+  const displayDescription = formatMonarchVernacular(description);
+  const displayRange = range ? formatMonarchVernacular(range) : undefined;
+  const displayRecharge = recharge ? formatMonarchVernacular(recharge) : undefined;
+  const displayDamage = damage ? formatMonarchVernacular(damage) : undefined;
+
+  const formatFormula = (base: string, modifier?: number) => {
+    if (!modifier) return base;
+    return `${base}${modifier >= 0 ? '+' : ''}${modifier}`;
+  };
 
   const handleRoll = (rollType: 'attack' | 'damage' | 'check') => {
     if (onRoll) {
@@ -65,22 +80,25 @@ function ActionCardComponent({
     try {
       let roll;
       let message = '';
+      let formula = '';
 
       if (rollType === 'attack' && attackBonus !== undefined) {
-        roll = rollDiceString(`1d20+${attackBonus}`);
-        message = `${name} Attack: ${formatRollResult(roll)}`;
+        formula = formatFormula('1d20', attackBonus);
+        roll = rollDiceString(formula);
+        message = `${displayName} Attack: ${formatRollResult(roll)}`;
         if (roll.result === 20 + attackBonus) {
-          message += ' 🎯 CRITICAL HIT!';
+          message += ' CRITICAL HIT!';
         } else if (roll.result === 1 + attackBonus) {
-          message += ' 💀 CRITICAL MISS!';
+          message += ' CRITICAL MISS!';
         }
       } else if (rollType === 'damage' && damage) {
         // Parse damage string (e.g., "1d8+3" or "2d6")
-        const damageMatch = damage.match(/(\d+)d(\d+)([+-]\d+)?/);
+        const sanitizedDamage = damage.replace(/\s+/g, '');
+        const damageMatch = sanitizedDamage.match(/(\d+)d(\d+)([+-]\d+)?/);
         if (damageMatch) {
-          const diceStr = `${damageMatch[1]}d${damageMatch[2]}${damageMatch[3] || ''}`;
-          roll = rollDiceString(diceStr);
-          message = `${name} Damage: ${formatRollResult(roll)}`;
+          formula = `${damageMatch[1]}d${damageMatch[2]}${damageMatch[3] || ''}`;
+          roll = rollDiceString(formula);
+          message = `${displayName} Damage: ${formatRollResult(roll)}`;
         } else {
           toast({
             title: 'Invalid damage',
@@ -104,6 +122,19 @@ function ActionCardComponent({
         title: 'Dice Roll',
         description: message,
       });
+
+      if (roll && formula) {
+        recordRoll.mutate({
+          dice_formula: formula,
+          result: roll.result,
+          rolls: roll.rolls,
+          roll_type: rollType === 'attack' ? 'attack' : 'damage',
+          context: rollType === 'attack' ? `${displayName} Attack` : `${displayName} Damage`,
+          modifiers: roll.modifier ? { modifier: roll.modifier } : null,
+          campaign_id: null,
+          character_id: characterId ?? null,
+        });
+      }
     } catch (error) {
       toast({
         title: 'Roll failed',
@@ -114,16 +145,16 @@ function ActionCardComponent({
   };
 
   return (
-    <SystemWindow title={name.toUpperCase()} className={cn("border-primary/30", className)}>
+    <SystemWindow title={displayName.toUpperCase()} className={cn("border-primary/30", className)}>
       <div className="space-y-3">
         <div className="flex items-center gap-2 flex-wrap">
           <Icon className="w-4 h-4 text-primary" />
           <Badge variant="secondary" className="text-xs">
             {TYPE_LABELS[type]}
           </Badge>
-          {range && (
+          {displayRange && (
             <Badge variant="outline" className="text-xs">
-              {range}
+              {displayRange}
             </Badge>
           )}
           {uses && (
@@ -141,14 +172,14 @@ function ActionCardComponent({
               Use
             </Button>
           )}
-          {recharge && (
+          {displayRecharge && (
             <Badge variant="outline" className="text-xs">
-              Recharge: {recharge}
+              Recharge: {displayRecharge}
             </Badge>
           )}
         </div>
 
-        <p className="text-sm text-muted-foreground">{description}</p>
+        <p className="text-sm text-muted-foreground">{displayDescription}</p>
 
         {(attackBonus !== undefined || damage) && (
           <div className="flex gap-2 pt-2 border-t border-border/50">
@@ -158,7 +189,7 @@ function ActionCardComponent({
                 size="sm"
                 onClick={() => handleRoll('attack')}
                 className="flex-1 gap-2"
-                aria-label={`Roll attack for ${name}`}
+                aria-label={`Roll attack for ${displayName}`}
               >
                 <Sword className="w-4 h-4" />
                 Attack: {formatModifier(attackBonus)}
@@ -170,10 +201,10 @@ function ActionCardComponent({
                 size="sm"
                 onClick={() => handleRoll('damage')}
                 className="flex-1 gap-2"
-                aria-label={`Roll damage for ${name}`}
+                aria-label={`Roll damage for ${displayName}`}
               >
                 <Zap className="w-4 h-4" />
-                Damage: {damage}
+                Damage: {displayDamage || damage}
               </Button>
             )}
           </div>
@@ -194,7 +225,8 @@ export const ActionCard = memo(ActionCardComponent, (prevProps, nextProps) => {
     prevProps.uses?.current === nextProps.uses?.current &&
     prevProps.uses?.max === nextProps.uses?.max &&
     prevProps.recharge === nextProps.recharge &&
-    prevProps.inscriptionId === nextProps.inscriptionId
+    prevProps.inscriptionId === nextProps.inscriptionId &&
+    prevProps.characterId === nextProps.characterId
   );
 });
 

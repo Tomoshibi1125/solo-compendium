@@ -29,7 +29,6 @@ import type { CharacterWithAbilities } from '@/hooks/useCharacters';
 import { useUpdateCharacter } from '@/hooks/useCharacters';
 import { useToast } from '@/hooks/use-toast';
 import { formatDistanceToNow } from 'date-fns';
-import { cn } from '@/lib/utils';
 
 interface CharacterBackupManagerProps {
   characterId: string;
@@ -43,7 +42,7 @@ export function CharacterBackupManager({ characterId, character }: CharacterBack
   const [deleteTarget, setDeleteTarget] = useState<CharacterBackup | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
-  const { backups, createBackup, deleteBackup, exportBackup, isLoading } = useCharacterBackups(characterId);
+  const { backups, createBackup, deleteBackup, exportBackup, importBackup, isLoading } = useCharacterBackups(characterId);
   const updateCharacter = useUpdateCharacter();
 
   const handleCreateBackup = async () => {
@@ -98,17 +97,8 @@ export function CharacterBackupManager({ characterId, character }: CharacterBack
 
     try {
       const backup = await importBackupFromFile(file);
-      
-      // Save imported backup to localStorage
-      const key = `character-backup-${characterId}`;
-      const existing = JSON.parse(localStorage.getItem(key) || '[]');
-      existing.unshift(backup);
-      localStorage.setItem(key, JSON.stringify(existing.slice(0, 10)));
 
-      toast({
-        title: 'Backup imported',
-        description: 'Backup file imported successfully.',
-      });
+      await importBackup(backup);
     } catch (error) {
       toast({
         title: 'Import failed',

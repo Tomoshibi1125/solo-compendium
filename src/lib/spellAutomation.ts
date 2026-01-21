@@ -1,5 +1,5 @@
 /**
- * Spell Automation System - D&D Beyond Style
+ * Spell Automation System - Digital Character Sheet Style
  * 
  * Advanced spell casting mechanics including spell slots, concentration,
  * spell attacks, saving throws, and magical effects
@@ -462,3 +462,4 @@ export function formatSpellSaveResult(save: SpellSaveResult): string {
   
   return `${save.ability} Save vs ${save.dc}: ${rollStr} = ${save.total} - ${successFail}${halfStr}`;
 }
+

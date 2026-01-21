@@ -6,12 +6,13 @@ import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
-const HUNTER_RANKS = ['E', 'D', 'C', 'B', 'A', 'S'];
+const ASCENDANT_RANKS = ['E', 'D', 'C', 'B', 'A', 'S'];
 const NPC_ROLES = [
-  'Hunter Association Official', 'Gate Researcher', 'Relic Merchant', 'Information Broker',
-  'Former S-Rank Hunter', 'Monarch Cultist', 'System Analyst', 'Gate Survivor',
-  'Monster Hunter', 'Core Collector', 'Shadow Network Agent', 'Independent Contractor'
+  'Awakened Council Official', 'Rift Researcher', 'Relic Merchant', 'Information Broker',
+  'Former S-Rank Ascendant', 'Monarch Cultist', 'System Analyst', 'Rift Survivor',
+  'Beast Slayer', 'Core Collector', 'Shadow Network Agent', 'Independent Contractor'
 ];
 const PERSONALITIES = [
   'Cautious and methodical', 'Bold and reckless', 'Mysterious and secretive',
@@ -20,21 +21,21 @@ const PERSONALITIES = [
   'Neutral and detached', 'Passionate and driven', 'Cynical and jaded'
 ];
 const MOTIVATIONS = [
-  'Seeking power through Gates', 'Protecting loved ones', 'Revenge against monsters',
-  'Researching Gate phenomena', 'Building a hunter organization', 'Seeking the Shadow Monarch',
+  'Seeking power through Rifts', 'Protecting loved ones', 'Revenge against monsters',
+  'Researching Rift phenomena', 'Building an ascendant organization', 'Seeking the Umbral Monarch',
   'Escaping past trauma', 'Proving their worth', 'Accumulating wealth',
   'Uncovering secrets', 'Protecting humanity', 'Achieving immortality'
 ];
 const SECRETS = [
-  'Former S-Rank hunter (lost power)', 'Working for a Monarch', 'Has a cursed relic',
+  'Former S-Rank ascendant (lost power)', 'Working for a Monarch', 'Has a cursed relic',
   'Knows about the reset', 'Is actually a monster', 'Has System favor debt',
-  'Betrayed their hunter team', 'Seeking forbidden knowledge', 'Has a hidden Gate',
-  'Is being hunted', 'Knows the Supreme Deity personally', 'Has a duplicate identity'
+  'Betrayed their ascendant team', 'Seeking forbidden knowledge', 'Has a hidden Rift',
+  'Is being hunted', 'Knows the Prime Architect personally', 'Has a duplicate identity'
 ];
 const QUIRKS = [
   'Always checks for traps', 'Collects monster cores obsessively', 'Speaks in riddles',
   'Has a telltale scar', 'Never removes their mask', 'Quotes the System',
-  'Tracks Gate statistics', 'Has a pet shadow', 'Wears outdated equipment',
+  'Tracks Rift statistics', 'Has a pet shadow', 'Wears outdated equipment',
   'Mentions the reset frequently', 'Avoids eye contact', 'Always has a backup plan'
 ];
 
@@ -57,11 +58,11 @@ const NAMES = [
 
 function generateNPC(): GeneratedNPC {
   const name = NAMES[Math.floor(Math.random() * NAMES.length)];
-  const rank = HUNTER_RANKS[Math.floor(Math.random() * HUNTER_RANKS.length)];
-  const role = NPC_ROLES[Math.floor(Math.random() * NPC_ROLES.length)];
+  const rank = ASCENDANT_RANKS[Math.floor(Math.random() * ASCENDANT_RANKS.length)];
+  const role = formatMonarchVernacular(NPC_ROLES[Math.floor(Math.random() * NPC_ROLES.length)]);
   const personality = PERSONALITIES[Math.floor(Math.random() * PERSONALITIES.length)];
-  const motivation = MOTIVATIONS[Math.floor(Math.random() * MOTIVATIONS.length)];
-  const secret = SECRETS[Math.floor(Math.random() * SECRETS.length)];
+  const motivation = formatMonarchVernacular(MOTIVATIONS[Math.floor(Math.random() * MOTIVATIONS.length)]);
+  const secret = formatMonarchVernacular(SECRETS[Math.floor(Math.random() * SECRETS.length)]);
   const quirk = QUIRKS[Math.floor(Math.random() * QUIRKS.length)];
 
   const description = `${name} is a ${rank}-Rank ${role}. They are ${personality} and are motivated by ${motivation.toLowerCase()}. Their secret: ${secret.toLowerCase()}. They have a quirk: ${quirk.toLowerCase()}.`;
@@ -118,7 +119,7 @@ const NPCGenerator = () => {
             NPC GENERATOR
           </h1>
           <p className="text-muted-foreground font-heading">
-            Generate NPCs with personalities, motivations, secrets, and quirks for your Solo Leveling campaign.
+            Generate NPCs with personalities, motivations, secrets, and quirks for your System Ascendant campaign.
           </p>
         </div>
 
@@ -205,4 +206,6 @@ const NPCGenerator = () => {
 };
 
 export default NPCGenerator;
+
+
 

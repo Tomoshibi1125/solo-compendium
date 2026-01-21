@@ -1,6 +1,6 @@
-// Comprehensive Feats Compendium - Authoritative Solo Leveling Content
+// Comprehensive Feats Compendium - Authoritative System Ascendant Content
 // ALL feats needed for the complete compendium system
-// Based on Solo Leveling canon with D&D 5e mechanics
+// Based on System Ascendant canon with SRD 5e mechanics
 
 export interface Feat {
   id: string;
@@ -53,7 +53,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'The shadows bend to your will, becoming extensions of your very essence.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'essence-absorption',
@@ -75,7 +75,7 @@ export const comprehensiveFeats: Feat[] = [
       action: 'free'
     },
     flavor: 'The life force of your foes becomes the fuel for your ascension.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'monarch-aura',
@@ -96,7 +96,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'The very presence of a Monarch commands respect and fear from the shadows.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'shadow-dance',
@@ -118,7 +118,7 @@ export const comprehensiveFeats: Feat[] = [
       action: 'reaction'
     },
     flavor: 'Like a dancer in the dark, you weave between strikes with impossible grace.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'critical-shadow',
@@ -141,7 +141,7 @@ export const comprehensiveFeats: Feat[] = [
       action: 'free'
     },
     flavor: 'Your strikes carry the weight of darkness itself, crushing all who oppose you.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'shadow-extraction-expert',
@@ -163,7 +163,7 @@ export const comprehensiveFeats: Feat[] = [
       action: 'action'
     },
     flavor: 'Every fallen foe becomes a potential ally in your growing shadow army.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'dimensional-awareness',
@@ -184,7 +184,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'The fabric of reality whispers its secrets to those who know how to listen.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'shadow-resilience',
@@ -206,7 +206,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'What would corrupt lesser beings only strengthens your resolve.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'monarchs-resilience',
@@ -227,7 +227,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'The essence of a Monarch cannot be easily extinguished.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'shadow-weapon-mastery',
@@ -249,7 +249,7 @@ export const comprehensiveFeats: Feat[] = [
       action: 'bonus-action'
     },
     flavor: 'Your will becomes steel, forged in the darkness of your soul.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'shadow-armor',
@@ -271,7 +271,7 @@ export const comprehensiveFeats: Feat[] = [
       action: 'bonus-action'
     },
     flavor: 'The shadows themselves become your shield against harm.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // COMBAT FEATS (Expanded)
@@ -294,7 +294,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your chosen weapon becomes an extension of your body and soul.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'two-weapon-fighting',
@@ -315,7 +315,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Two blades are better than one, especially when they dance in your hands.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'power-attack',
@@ -338,7 +338,7 @@ export const comprehensiveFeats: Feat[] = [
       action: 'action'
     },
     flavor: 'Sometimes raw power is more important than precision.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'precise-shot',
@@ -359,7 +359,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Every arrow finds its mark when guided by your steady hand.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'combat-reflexes',
@@ -380,7 +380,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Before others can react, you have already struck.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'cleave',
@@ -403,7 +403,7 @@ export const comprehensiveFeats: Feat[] = [
       action: 'free'
     },
     flavor: 'One strike can fell many foes when wielded with sufficient force.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'defensive-fighting',
@@ -425,7 +425,7 @@ export const comprehensiveFeats: Feat[] = [
       action: 'reaction'
     },
     flavor: 'A strong defense is often the best offense.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'critical-mastery',
@@ -447,7 +447,7 @@ export const comprehensiveFeats: Feat[] = [
       action: 'free'
     },
     flavor: 'When you find an opening, you exploit it to its fullest.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // DEFENSIVE FEATS (Expanded)
@@ -470,7 +470,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your body can withstand punishment that would fell lesser beings.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'dodge-training',
@@ -492,7 +492,7 @@ export const comprehensiveFeats: Feat[] = [
       action: 'reaction'
     },
     flavor: 'The best way to win a fight is to not get hit in the first place.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'damage-reduction',
@@ -513,7 +513,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your body has become as resilient as armor itself.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'regeneration',
@@ -534,7 +534,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Life flows through you, refusing to be extinguished.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // MAGICAL FEATS (Expanded)
@@ -557,7 +557,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Some spells have become as natural to you as breathing.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'metamagic-adept',
@@ -579,7 +579,7 @@ export const comprehensiveFeats: Feat[] = [
       action: 'bonus-action'
     },
     flavor: 'You don\'t just cast spells - you reshape them to your will.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'arcane-defense',
@@ -600,7 +600,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Magic flows around you, unable to find purchase.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'spell-penetration',
@@ -621,7 +621,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your magic cannot be contained by mortal defenses.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // SKILL FEATS (Expanded)
@@ -644,7 +644,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your chosen skill has become second nature to you.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'jack-of-all-trades',
@@ -664,7 +664,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'A little knowledge of everything is better than complete ignorance.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'skill-focus',
@@ -685,7 +685,7 @@ export const comprehensiveFeats: Feat[] = [
       action: 'free'
     },
     flavor: 'Sometimes a moment of concentration makes all the difference.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // SOCIAL FEATS (Expanded)
@@ -709,7 +709,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Others naturally look to you for guidance and inspiration.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'diplomacy',
@@ -730,7 +730,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Words can be more powerful than weapons when used wisely.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'intimidating-presence',
@@ -752,7 +752,7 @@ export const comprehensiveFeats: Feat[] = [
       action: 'action'
     },
     flavor: 'Your reputation precedes you, and even the braviest hesitate to cross your path.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // UTILITY FEATS (Expanded)
@@ -776,7 +776,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your mind is a sponge, absorbing knowledge wherever you go.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'eidetic-memory',
@@ -797,7 +797,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your mind is a perfect library of all you have experienced.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'adaptability',
@@ -817,7 +817,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'No matter the challenge, you find a way to overcome it.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // RACIAL FEATS (Expanded)
@@ -839,7 +839,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'The human spirit refuses to be extinguished.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'elven-grace',
@@ -859,7 +859,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Elven grace flows through your every movement.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'dwarven-resilience',
@@ -879,7 +879,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'The mountains themselves flow through your veins.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // DIVINE FEATS (Expanded)
@@ -903,7 +903,7 @@ export const comprehensiveFeats: Feat[] = [
       action: 'free'
     },
     flavor: 'Divine power flows through you, aiding the worthy.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'holy-warrior',
@@ -925,7 +925,7 @@ export const comprehensiveFeats: Feat[] = [
       action: 'bonus-action'
     },
     flavor: 'Your blade is guided by divine justice.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // EPIC FEATS (Expanded)
@@ -949,7 +949,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your words reshape the world around you.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'epic-strength',
@@ -971,7 +971,7 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your strength rivals that of the gods themselves.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'epic-intelligence',
@@ -993,7 +993,9 @@ export const comprehensiveFeats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your mind contains the knowledge of ages.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   }
 ];
+
+
 

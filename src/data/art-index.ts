@@ -1,7 +1,7 @@
 export const artIndex = {
   "generated": "2026-01-12T02:16:45.668Z",
   "version": "1.0.0",
-  "style": "Solo Leveling Dark Manhwa Anime",
+  "style": "System Ascendant Dark Manhwa-Inspired Fantasy",
   "categories": {
     "ui": {
       "path": "public/ui-art/",
@@ -30,7 +30,7 @@ export const artIndex = {
         {
           "id": "gate-portal-3d",
           "filename": "gate-portal-3d.webp",
-          "description": "Gate portal 3D scene"
+          "description": "Rift portal 3D scene"
         },
         {
           "id": "shadow-silhouette",
@@ -70,3 +70,4 @@ export const artIndex = {
     }
   }
 };
+

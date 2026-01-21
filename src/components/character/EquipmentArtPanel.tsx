@@ -160,10 +160,11 @@ export function EquipmentArtPanel({
         {/* Equipment Info */}
         <div className="text-xs text-muted-foreground space-y-1">
           <p>{equipmentData.item_type || 'Equipment'} art generation</p>
-          <p>Solo Leveling themed illustrations</p>
+          <p>System Ascendant themed illustrations</p>
           <p>Multiple variants available</p>
         </div>
       </CardContent>
     </Card>
   );
 }
+

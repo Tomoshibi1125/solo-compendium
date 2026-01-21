@@ -60,20 +60,20 @@ WHERE NOT EXISTS (
 INSERT INTO compendium_monster_traits (monster_id, name, description)
 SELECT
   m.id,
-  'Gate Adaptation',
-  m.name || ' is acclimated to Gate mana and has advantage on saving throws against environmental hazards while within a Gate.'
+  'Rift Adaptation',
+  m.name || ' is acclimated to Rift mana and has advantage on saving throws against environmental hazards while within a Rift.'
 FROM compendium_monsters m
 WHERE NOT EXISTS (
   SELECT 1
   FROM compendium_monster_traits t
-  WHERE t.monster_id = m.id AND t.name = 'Gate Adaptation'
+  WHERE t.monster_id = m.id AND t.name = 'Rift Adaptation'
 );
 -- ---------------------------------------------
 -- Sovereign templates (Gemini Protocol)
 -- ---------------------------------------------
 WITH monarchs AS (
   SELECT
-    (SELECT id FROM compendium_monarchs WHERE name = 'Shadow Monarch') AS shadow_id,
+    (SELECT id FROM compendium_monarchs WHERE name = 'Umbral Monarch') AS shadow_id,
     (SELECT id FROM compendium_monarchs WHERE name = 'White Flames Monarch') AS flame_id,
     (SELECT id FROM compendium_monarchs WHERE name = 'Frost Monarch') AS frost_id,
     (SELECT id FROM compendium_monarchs WHERE name = 'Beast Monarch') AS beast_id,
@@ -90,7 +90,7 @@ WITH monarchs AS (
     'Eclipse'::text AS fusion_theme,
     'Shadowfire coils around the sovereign, alternating between freezing darkness and searing white flame.'::text AS fusion_description,
     17::integer AS unlock_level,
-    'Requires Shadow Monarch and White Flames Monarch overlays.'::text AS prerequisites,
+    'Requires Umbral Monarch and White Flames Monarch overlays.'::text AS prerequisites,
     true AS is_template,
     'SL'::text AS source_book,
     ARRAY['gemini-protocol', 'shadow', 'fire']::text[] AS tags
@@ -193,7 +193,7 @@ SELECT
   s.id,
   'Eclipse Mantle',
   'You wreathe yourself in shadowfire, gaining resistance to fire and necrotic damage and dealing 1d6 necrotic damage to creatures that hit you in melee.',
-  ARRAY['Shadow Monarch: Shadow Domain', 'White Flames Monarch: White Fire'],
+  ARRAY['Umbral Monarch: Shadow Domain', 'White Flames Monarch: White Fire'],
   17,
   false,
   'passive',
@@ -217,7 +217,7 @@ SELECT
   s.id,
   'Shadowflame Surge',
   'As an action, unleash a 30-foot line of shadowfire. Creatures in the line make an Agility save (DC = 8 + proficiency bonus + PRE modifier) or take 6d8 fire damage plus 6d8 necrotic damage, half on success.',
-  ARRAY['Shadow Monarch: Shadow Extraction', 'White Flames Monarch: White Pyre'],
+  ARRAY['Umbral Monarch: Shadow Extraction', 'White Flames Monarch: White Pyre'],
   18,
   false,
   'action',
@@ -241,7 +241,7 @@ SELECT
   s.id,
   'Twilight Dominion',
   'Once per long rest, you create a 30-foot-radius twilight field for 1 minute. Enemies inside have disadvantage on saving throws against your powers, and allies gain temporary hit points equal to your level at the start of their turns.',
-  ARRAY['Shadow Monarch: Shadow Realm', 'White Flames Monarch: Radiant Dominion'],
+  ARRAY['Umbral Monarch: Shadow Realm', 'White Flames Monarch: Radiant Dominion'],
   20,
   true,
   'action',
@@ -466,3 +466,4 @@ SELECT
 FROM compendium_sovereigns s
 WHERE s.name = 'Mirrorbreak Sovereign'
 ON CONFLICT (sovereign_id, name) DO NOTHING;
+

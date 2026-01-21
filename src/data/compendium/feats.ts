@@ -1,6 +1,6 @@
-// Feats Compendium - Authoritative Solo Leveling Content
+// Feats Compendium - Authoritative System Ascendant Content
 // Character abilities and special powers that enhance capabilities
-// Based on Solo Leveling canon with D&D 5e mechanics
+// Based on System Ascendant canon with SRD 5e mechanics
 
 export interface Feat {
   id: string;
@@ -50,7 +50,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'The shadows bend to your will, becoming extensions of your very essence.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'essence-absorption',
@@ -72,7 +72,7 @@ export const feats: Feat[] = [
       action: 'free'
     },
     flavor: 'The life force of your foes becomes the fuel for your ascension.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'monarch-aura',
@@ -93,7 +93,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'The very presence of a Monarch commands respect and fear from the shadows.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // COMBAT FEATS
@@ -117,7 +117,7 @@ export const feats: Feat[] = [
       action: 'reaction'
     },
     flavor: 'Like a dancer in the dark, you weave between strikes with impossible grace.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'critical-shadow',
@@ -140,7 +140,7 @@ export const feats: Feat[] = [
       action: 'free'
     },
     flavor: 'Your strikes carry the weight of darkness itself, crushing all who oppose you.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // UTILITY FEATS
@@ -164,7 +164,7 @@ export const feats: Feat[] = [
       action: 'action'
     },
     flavor: 'Every fallen foe becomes a potential ally in your growing shadow army.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'dimensional-awareness',
@@ -185,7 +185,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'The fabric of reality whispers its secrets to those who know how to listen.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // DEFENSIVE FEATS
@@ -209,7 +209,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'What would corrupt lesser beings only strengthens your resolve.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'monarchs-resilience',
@@ -230,7 +230,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'The essence of a Monarch cannot be easily extinguished.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // SOCIAL FEATS
@@ -254,7 +254,7 @@ export const feats: Feat[] = [
       action: 'action'
     },
     flavor: 'Your reputation precedes you, and even the bravest hesitate to cross your path.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // SKILL FEATS
@@ -277,7 +277,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'When you choose to disappear, even the shadows themselves cannot find you.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // MAGICAL FEATS
@@ -301,7 +301,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Shadow magic responds to your will as naturally as breathing.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // ADVANCED COMBAT FEATS
@@ -325,7 +325,7 @@ export const feats: Feat[] = [
       action: 'reaction'
     },
     flavor: 'Time seems to slow down for you in moments of danger.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'weapon-mastery',
@@ -347,7 +347,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Every weapon feels like an extension of your body.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'berserker-rage',
@@ -370,7 +370,7 @@ export const feats: Feat[] = [
       action: 'bonus-action'
     },
     flavor: 'The beast within awakens when battle is joined.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'precision-strikes',
@@ -392,7 +392,7 @@ export const feats: Feat[] = [
       action: 'free'
     },
     flavor: 'Every strike finds its mark with surgical precision.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // ADVANCED MAGICAL FEATS
@@ -416,7 +416,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'The very fabric of magic responds to your thoughts.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'spell-resistance',
@@ -438,7 +438,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Magic flows around you like water around stone.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'metamagic-mastery',
@@ -452,7 +452,7 @@ export const feats: Feat[] = [
     benefits: [
       'Can apply two metamagic effects to one spell',
       'Sorcery points maximum increased by 3',
-      'Can create new metamagic effects with DM approval',
+      'Can create new metamagic effects with Warden approval',
       'Metamagic costs reduced by 1 sorcery point'
     ],
     mechanics: {
@@ -460,7 +460,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Spells are clay, and you are the master sculptor.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // ADVANCED DEFENSIVE FEATS
@@ -483,7 +483,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your mind is a fortress that no magic can breach.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'damage-reduction',
@@ -505,7 +505,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your body has become as resilient as enchanted armor.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'regeneration',
@@ -527,7 +527,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your life force flows like an endless river.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // ADVANCED UTILITY FEATS
@@ -551,7 +551,7 @@ export const feats: Feat[] = [
       action: 'action'
     },
     flavor: 'Identity is merely a costume you can change at will.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'enhanced-senses',
@@ -572,7 +572,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'The world reveals its secrets to those who truly listen.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'speed-enhancement',
@@ -593,10 +593,10 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your feet barely touch the ground as you move.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
-  // COMBAT FEATS (D&D 5e Style)
+  // COMBAT FEATS (SRD 5e Style)
   {
     id: 'great-weapon-master',
     name: 'Great Weapon Master',
@@ -616,7 +616,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Heavy weapons feel light in your hands, and each strike carries immense power.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'polearm-master',
@@ -637,7 +637,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your polearm creates an impenetrable zone of control around you.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'sharpshooter',
@@ -658,7 +658,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Distance and cover are meaningless obstacles to your marksmanship.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'crossbow-expert',
@@ -679,7 +679,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your crossbows sing with deadly rhythm, bolts flying faster than the eye can follow.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'dual-wielder',
@@ -700,7 +700,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Two weapons dance in your hands as extensions of your will.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'sentinel',
@@ -717,7 +717,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'You are the immovable object that stands between your allies and harm.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'tavern-brawler',
@@ -734,7 +734,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'In your hands, a tankard is as deadly as a sword.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'charger',
@@ -751,7 +751,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your charges carry the force of a thundering avalanche.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'grappler',
@@ -772,7 +772,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Once you grab hold, escape becomes impossible.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'shield-master',
@@ -789,10 +789,10 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your shield is both wall and weapon in equal measure.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
-  // MAGIC FEATS (D&D 5e Style)
+  // MAGIC FEATS (SRD 5e Style)
   {
     id: 'war-caster',
     name: 'War Caster',
@@ -808,7 +808,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Battle chaos cannot disrupt your magical focus.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'elemental-adept',
@@ -829,7 +829,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your chosen element bends to your will completely.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'telekinetic',
@@ -850,7 +850,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your mind extends beyond your body to touch the world.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'telepathic',
@@ -871,7 +871,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your thoughts reach out to touch the minds of others.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'skill-expert',
@@ -888,7 +888,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your chosen skill flows through you like second nature.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'keen-mind',
@@ -909,10 +909,10 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your mind is a perfect library of all you have experienced.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
-  // DEFENSIVE FEATS (D&D 5e Style)
+  // DEFENSIVE FEATS (SRD 5e Style)
   {
     id: 'tough',
     name: 'Tough',
@@ -928,7 +928,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your body is as tough as the hardest steel.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'resilient',
@@ -945,7 +945,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your chosen defense becomes unbreakable.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'durable',
@@ -966,7 +966,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your stamina seems endless, even in the most grueling conditions.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'heavy-armor-master',
@@ -987,7 +987,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Heavy armor becomes like a second skin to you.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'medium-armor-master',
@@ -1008,10 +1008,10 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Medium armor moves with you as if it were part of your body.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
-  // SKILL FEATS (D&D 5e Style)
+  // SKILL FEATS (SRD 5e Style)
   {
     id: 'actor',
     name: 'Actor',
@@ -1027,7 +1027,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'You can become anyone you wish to be.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'chef',
@@ -1044,7 +1044,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your cooking nourishes both body and soul.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'guild-artisan',
@@ -1061,7 +1061,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your craft is recognized and respected throughout the land.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'herbalist',
@@ -1078,7 +1078,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Nature\'s pharmacy opens its secrets to you.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'historian',
@@ -1095,7 +1095,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'History speaks to you, and you listen.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'investigator',
@@ -1112,7 +1112,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'No secret can remain hidden from your keen mind.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'medic',
@@ -1129,7 +1129,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your hands bring healing to those who need it most.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'musician',
@@ -1146,7 +1146,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your music moves the hearts and souls of all who hear it.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'navigator',
@@ -1163,7 +1163,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'The world unfolds before you like an open map.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'orator',
@@ -1180,7 +1180,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your words have the power to change the world.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'scribe',
@@ -1197,7 +1197,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your pen is mightier than any sword.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'scout',
@@ -1214,7 +1214,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'You move like a shadow, seeing all while remaining unseen.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'thief',
@@ -1231,10 +1231,10 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'You move through the world unseen, taking what you need.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
-  // RACIAL FEATS (D&D 5e Style - Adapted for Solo Leveling)
+  // RACIAL FEATS (SRD 5e Style - Adapted for System Ascendant)
   {
     id: 'shadow-heritage',
     name: 'Shadow Heritage',
@@ -1253,14 +1253,14 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Shadow blood flows through your veins, granting you power over darkness.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'hunter-born',
-    name: 'Hunter Born',
-    description: 'Your hunter heritage grants you exceptional tracking and survival skills.',
+    name: 'Ascendant Born',
+    description: 'Your ascendant heritage grants you exceptional tracking and survival skills.',
     prerequisites: {
-      background: 'Hunter'
+      background: 'Ascendant Academy Graduate'
     },
     benefits: [
       'Advantage on tracking and survival checks',
@@ -1273,7 +1273,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'The hunt is in your blood, and no prey can escape you.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'mage-scholar',
@@ -1293,7 +1293,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your magical knowledge sets you apart from lesser practitioners.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
 
   // EPIC FEATS (High Level)
@@ -1315,7 +1315,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'You are a fortress that no force can breach.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'epic-speed',
@@ -1335,7 +1335,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'You move faster than the eye can follow.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'epic-strength',
@@ -1357,7 +1357,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your strength is the stuff of legends.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'epic-intellect',
@@ -1379,7 +1379,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your intellect transcends mortal limitations.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'epic-wisdom',
@@ -1401,7 +1401,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your wisdom sees the truth that others miss.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'epic-charisma',
@@ -1423,7 +1423,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your presence inspires awe and devotion in all who witness it.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'epic-dexterity',
@@ -1445,7 +1445,7 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'You move with impossible grace and precision.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'epic-constitution',
@@ -1467,7 +1467,10 @@ export const feats: Feat[] = [
       frequency: 'at-will'
     },
     flavor: 'Your vitality is truly endless.',
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   }
 ];
+
+
+
 

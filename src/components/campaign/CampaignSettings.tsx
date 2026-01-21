@@ -7,13 +7,9 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useCampaign, useHasDMAccess } from '@/hooks/useCampaigns';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useCampaign, useHasDMAccess, useUpdateCampaign } from '@/hooks/useCampaigns';
 import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
 import type { Json } from '@/integrations/supabase/types';
-import { logger } from '@/lib/logger';
-import { AppError } from '@/lib/appError';
 import { getLevelingMode, type LevelingMode } from '@/lib/campaignSettings';
 
 interface CampaignSettingsProps {
@@ -22,7 +18,6 @@ interface CampaignSettingsProps {
 
 export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
   const { toast } = useToast();
-  const queryClient = useQueryClient();
   const { data: campaign } = useCampaign(campaignId);
   const { data: hasDMAccess, isLoading: loadingAccess } = useHasDMAccess(campaignId);
   const [name, setName] = useState(campaign?.name || '');
@@ -40,70 +35,7 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
     }
   }, [campaign]);
 
-  const updateCampaign = useMutation({
-    mutationFn: async (updates: {
-      name?: string;
-      description?: string | null;
-      is_active?: boolean;
-      settings?: Json;
-    }) => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        throw new AppError('You must be logged in to update campaigns', 'AUTH_REQUIRED');
-      }
-
-      // Verify user has DM access (RLS will also enforce this)
-      const { data: campaign, error: fetchError } = await supabase
-        .from('campaigns')
-        .select('dm_id')
-        .eq('id', campaignId)
-        .single();
-
-      if (fetchError) {
-        logger.error('Failed to fetch campaign for update:', fetchError);
-        throw new AppError('Failed to verify campaign access', 'UNKNOWN', fetchError);
-      }
-
-      if (!campaign || campaign.dm_id !== user.id) {
-        throw new AppError('Only the campaign DM can update settings', 'AUTH_REQUIRED');
-      }
-
-      // Perform the update
-      const { data, error } = await supabase
-        .from('campaigns')
-        .update({
-          name: updates.name,
-          description: updates.description,
-          is_active: updates.is_active,
-          settings: updates.settings,
-        })
-        .eq('id', campaignId)
-        .select()
-        .single();
-
-      if (error) {
-        logger.error('Failed to update campaign:', error);
-        throw new AppError(error.message || 'Failed to update campaign', 'UNKNOWN', error);
-      }
-
-      return data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['campaigns', campaignId] });
-      queryClient.invalidateQueries({ queryKey: ['campaigns'] });
-      toast({
-        title: 'Campaign updated',
-        description: 'Your changes have been saved.',
-      });
-    },
-    onError: (error: Error) => {
-      toast({
-        title: 'Failed to update campaign',
-        description: error.message,
-        variant: 'destructive',
-      });
-    },
-  });
+  const updateCampaign = useUpdateCampaign();
 
   const handleSave = () => {
     if (!name.trim()) {
@@ -131,10 +63,13 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
         : {};
 
     updateCampaign.mutate({
-      name: name.trim(),
-      description: description.trim() || null,
-      is_active: isActive,
-      settings: { ...baseSettings, leveling_mode: levelingMode },
+      campaignId,
+      updates: {
+        name: name.trim(),
+        description: description.trim() || null,
+        is_active: isActive,
+        settings: { ...baseSettings, leveling_mode: levelingMode },
+      },
     });
   };
 
@@ -157,7 +92,7 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
             Access Restricted
           </p>
           <p className="text-sm text-muted-foreground">
-            Only the Shadow Monarch (DM) can access campaign settings.
+            Only the Protocol Warden can access campaign settings.
           </p>
         </div>
       </SystemWindow>
@@ -241,3 +176,5 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
     </SystemWindow>
   );
 }
+
+

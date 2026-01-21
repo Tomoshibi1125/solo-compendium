@@ -1,6 +1,6 @@
-// Job Paths Compendium - Authoritative Solo Leveling Content
+// Job Paths Compendium - Authoritative System Ascendant Content
 // Paths are subclasses of base jobs - each job has 6 paths
-// Based on Solo Leveling canon with D&D 5e mechanics
+// Based on System Ascendant canon with SRD 5e mechanics
 
 export interface Path {
   id: string;
@@ -83,7 +83,7 @@ export const paths: Path[] = [
         constitution: 1
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'warrior--weapon-master',
@@ -122,7 +122,7 @@ export const paths: Path[] = [
         strength: 1
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   
   // MAGE PATHS
@@ -163,7 +163,7 @@ export const paths: Path[] = [
         wisdom: 1
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   
   // ASSASSIN PATHS
@@ -204,7 +204,7 @@ export const paths: Path[] = [
         wisdom: 1
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'assassin--distant-needle',
@@ -258,7 +258,7 @@ export const paths: Path[] = [
         wisdom: 1
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'assassin--masked-ghost',
@@ -312,7 +312,7 @@ export const paths: Path[] = [
         dexterity: 1
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'assassin--night-venom',
@@ -366,7 +366,7 @@ export const paths: Path[] = [
         intelligence: 1
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'assassin--red-sigil',
@@ -420,7 +420,7 @@ export const paths: Path[] = [
         intelligence: 1
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'assassin--shadow-net',
@@ -474,7 +474,7 @@ export const paths: Path[] = [
         charisma: 1
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'assassin--silent-knife',
@@ -528,7 +528,7 @@ export const paths: Path[] = [
         constitution: 1
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   
   // CONTRACTOR PATHS
@@ -584,7 +584,7 @@ export const paths: Path[] = [
         wisdom: 1
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'contractor--mirror-pact',
@@ -638,7 +638,7 @@ export const paths: Path[] = [
         intelligence: 1
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'contractor--monarch-pact',
@@ -692,7 +692,7 @@ export const paths: Path[] = [
         wisdom: 1
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'contractor--relic-pact',
@@ -746,7 +746,7 @@ export const paths: Path[] = [
         constitution: 1
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'contractor--shadow-pact',
@@ -800,7 +800,7 @@ export const paths: Path[] = [
         intelligence: 1
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   {
     id: 'contractor--weapon-pact',
@@ -854,7 +854,7 @@ export const paths: Path[] = [
         intelligence: 1
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   
   // DESTROYER PATHS
@@ -910,7 +910,7 @@ export const paths: Path[] = [
         constitution: 1
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   },
   
   // BARD PATHS
@@ -963,7 +963,9 @@ export const paths: Path[] = [
         intelligence: 1
       }
     },
-    source: 'Solo Compendium Canon'
+    source: 'System Ascendant Canon'
   }
 ];
+
+
 

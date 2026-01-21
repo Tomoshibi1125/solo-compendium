@@ -1,6 +1,6 @@
 /**
  * Unified Spell/Power System
- * Merges Solo Leveling powers with D&D 5e spells
+ * Merges System Ascendant powers with SRD 5e spells
  */
 
 import { 
@@ -11,8 +11,9 @@ import {
   getUnifiedAbilityModifier,
   getUnifiedProficiencyBonus
 } from './rulesEngine';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
-// Unified Spell/Power Schools (Solo Leveling adapted to D&D 5e)
+// Unified Spell/Power Schools (System Ascendant adapted to SRD 5e)
 export type UnifiedSchool = 
   | 'abjuration' | 'conjuration' | 'divination' | 'enchantment' | 'evocation'
   | 'illusion' | 'necromancy' | 'transmutation' | 'shadow' | 'technomancy'
@@ -38,7 +39,7 @@ export type UnifiedDuration =
   | 'instantaneous' | 'concentration' | '1 minute' | '10 minutes' | '1 hour'
   | '8 hours' | '24 hours' | 'until dispelled' | 'special';
 
-// Unified Spell/Power (Solo Leveling powers with D&D 5e structure)
+// Unified Spell/Power (System Ascendant powers with SRD 5e structure)
 export interface UnifiedSpell {
   id: string;
   name: string;
@@ -46,7 +47,7 @@ export interface UnifiedSpell {
   level: number; // 0-9 (0 = cantrip)
   school: UnifiedSchool;
   
-  // D&D 5e mechanics
+  // SRD 5e mechanics
   castingTime: string;
   range: UnifiedRange;
   components: UnifiedComponents;
@@ -54,7 +55,7 @@ export interface UnifiedSpell {
   concentration: boolean;
   ritual: boolean;
   
-  // Solo Leveling adaptations
+  // System Ascendant adaptations
   monarchPowerCost?: number; // Only available to monarchs and their chosen
   systemFavorCost?: number;
   monarchRequirement?: string;
@@ -91,7 +92,7 @@ export interface UnifiedSpell {
     effect: string;
   }[];
   
-  // Solo Leveling unique properties
+  // System Ascendant unique properties
   uniqueProperties?: string[];
   flavorText?: string;
 }
@@ -144,7 +145,7 @@ export function canCastUnifiedSpell(
   // Check monarch power cost (replaces shadow energy)
   if (spell.monarchPowerCost) {
     if (!character.activeMonarch || character.systemFavorCurrent < spell.monarchPowerCost) {
-      return { canCast: false, reason: `Insufficient Monarch Power (requires ${spell.monarchPowerCost})` };
+      return { canCast: false, reason: formatMonarchVernacular(`Insufficient Monarch Power (requires ${spell.monarchPowerCost})`) };
     }
   }
   
@@ -158,7 +159,7 @@ export function canCastUnifiedSpell(
   // Check monarch requirement
   if (spell.monarchRequirement) {
     if (!character.monarchUnlocks?.includes(spell.monarchRequirement)) {
-      return { canCast: false, reason: `Monarch unlock required: ${spell.monarchRequirement}` };
+      return { canCast: false, reason: formatMonarchVernacular(`Monarch unlock required: ${spell.monarchRequirement}`) };
     }
   }
   
@@ -209,7 +210,7 @@ export function castUnifiedSpell(
       ...newCharacter,
       systemFavorCurrent: newCharacter.systemFavorCurrent - spell.monarchPowerCost
     };
-    results.push(`Consumed ${spell.monarchPowerCost} Monarch Power`);
+    results.push(formatMonarchVernacular(`Consumed ${spell.monarchPowerCost} Monarch Power`));
   }
   
   // Consume system favor
@@ -410,12 +411,12 @@ export function getUnifiedSchoolDescription(school: UnifiedSchool): string {
     illusion: 'Spells that deceive the senses or minds of others',
     necromancy: 'Spells that manipulate life force, death, and undeath',
     transmutation: 'Spells that transform creatures or objects',
-    shadow: 'Solo Leveling shadow magic that manipulates darkness and shadow energy',
-    technomancy: 'Solo Leveling technological magic that combines arcane power with technology',
-    healing: 'Solo Leveling restorative magic that heals wounds and cures conditions',
-    destruction: 'Solo Leveling destructive magic that deals massive damage',
-    protection: 'Solo Leveling protective magic that wards against harm',
-    summoning: 'Solo Leveling summoning magic that calls forth creatures and allies'
+    shadow: 'System Ascendant shadow magic that manipulates darkness and shadow energy',
+    technomancy: 'System Ascendant technological magic that combines arcane power with technology',
+    healing: 'System Ascendant restorative magic that heals wounds and cures conditions',
+    destruction: 'System Ascendant destructive magic that deals massive damage',
+    protection: 'System Ascendant protective magic that wards against harm',
+    summoning: 'System Ascendant summoning magic that calls forth creatures and allies'
   };
   
   return descriptions[school] || 'Unknown school of magic';
@@ -431,8 +432,9 @@ export function getUnifiedComponentDescription(components: UnifiedComponents): s
     const materialDesc = components.materialDescription ? `Material (${components.materialDescription})` : 'Material (M)';
     descriptions.push(materialDesc);
   }
-  if (components.shadowEnergy) descriptions.push('Shadow Energy (SE)');
+  if (components.shadowEnergy) descriptions.push('Umbral Energy (UE)');
   if (components.systemFavor) descriptions.push('System Favor (SF)');
   
   return descriptions;
 }
+

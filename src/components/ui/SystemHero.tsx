@@ -1,5 +1,5 @@
 /**
- * Solo Leveling Styled Hero Component
+ * System Ascendant Styled Hero Component
  * For landing and login pages with dramatic manhwa aesthetics
  */
 
@@ -7,21 +7,21 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, Shield, Swords, Crown } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import './SoloLevelingHero.css';
+import './SystemHero.css';
 
-interface SoloLevelingHeroProps {
+interface SystemHeroProps {
   title?: string;
   subtitle?: string;
   showLogin?: boolean;
   className?: string;
 }
 
-export function SoloLevelingHero({ 
+export function SystemHero({ 
   title = "SOLO COMPENDIUM", 
-  subtitle = "Shadow Monarch's D&D Companion",
+  subtitle = "System Ascendant SRD Companion",
   showLogin = false,
   className 
-}: SoloLevelingHeroProps) {
+}: SystemHeroProps) {
   const [glowIntensity, setGlowIntensity] = useState(0.5);
   const [particleCount, setParticleCount] = useState(0);
 
@@ -82,7 +82,7 @@ export function SoloLevelingHero({
       {/* Shadow energy overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-purple-900/20 via-transparent to-blue-900/20" />
       
-      {/* Gate portal effect */}
+      {/* Rift portal effect */}
       <motion.div
         className="absolute inset-0 flex items-center justify-center pointer-events-none"
         animate={{
@@ -150,7 +150,7 @@ export function SoloLevelingHero({
           </motion.div>
         </motion.div>
 
-        {/* Main title with Solo Leveling styling */}
+        {/* Main title with System Ascendant styling */}
         <motion.div
           className="text-center mb-8"
           initial={{ opacity: 0, scale: 0.8 }}
@@ -219,7 +219,7 @@ export function SoloLevelingHero({
             <div className="bg-black/60 backdrop-blur-md border border-purple-500/30 rounded-2xl p-8 shadow-2xl">
               <div className="text-center mb-6">
                 <h2 className="text-2xl font-bold text-purple-300 mb-2">SYSTEM ACCESS</h2>
-                <p className="text-gray-400 text-sm">Enter the Shadow Monarch's domain</p>
+                <p className="text-gray-400 text-sm">Enter the Umbral Dominion</p>
               </div>
               {/* Login form would go here */}
             </div>
@@ -279,9 +279,11 @@ export function SoloLevelingHero({
         transition={{ duration: 2, delay: 2 }}
       >
         <p className="text-sm text-gray-500 font-mono">
-          SYSTEM ONLINE • SHADOW ENERGY STABLE • GATES MONITORED
+          SYSTEM ONLINE • UMBRAL ENERGY STABLE • RIFTS MONITORED
         </p>
       </motion.div>
     </div>
   );
 }
+
+

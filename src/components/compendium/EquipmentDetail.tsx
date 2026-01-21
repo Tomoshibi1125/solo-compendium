@@ -2,6 +2,7 @@ import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Coins, Weight, Sword, Shield } from 'lucide-react';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface EquipmentData {
   id: string;
@@ -30,13 +31,13 @@ const typeLabels: Record<string, string> = {
   shield: 'Shield',
   gear: 'Adventuring Gear',
   tools: 'Tools',
-  hunter_gear: 'Hunter Gear',
+  hunter_gear: 'Ascendant Gear',
 };
 
 export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
   const isWeapon = data.equipment_type.includes('melee') || data.equipment_type.includes('ranged');
   const isArmor = data.equipment_type.includes('armor') || data.equipment_type === 'shield';
-  const displayName = data.display_name || data.name;
+  const displayName = formatMonarchVernacular(data.display_name || data.name);
 
   return (
     <div className="space-y-6">
@@ -58,11 +59,11 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
       <SystemWindow title={displayName.toUpperCase()}>
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="secondary">{typeLabels[data.equipment_type] || data.equipment_type}</Badge>
-            {data.source_book && <Badge variant="outline">{data.source_book}</Badge>}
+            <Badge variant="secondary">{formatMonarchVernacular(typeLabels[data.equipment_type] || data.equipment_type)}</Badge>
+            {data.source_book && <Badge variant="outline">{formatMonarchVernacular(data.source_book)}</Badge>}
           </div>
           {data.description && (
-            <p className="text-muted-foreground leading-relaxed text-base">{data.description}</p>
+            <p className="text-muted-foreground leading-relaxed text-base">{formatMonarchVernacular(data.description)}</p>
           )}
         </div>
       </SystemWindow>
@@ -96,7 +97,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
               <span className="font-display text-xl">{data.damage || '—'}</span>
             </div>
             {data.damage_type && (
-              <span className="text-xs text-muted-foreground">{data.damage_type}</span>
+              <span className="text-xs text-muted-foreground">{formatMonarchVernacular(data.damage_type)}</span>
             )}
           </SystemWindow>
         )}
@@ -118,7 +119,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
         <SystemWindow title="PROPERTIES">
           <div className="flex flex-wrap gap-2">
             {data.properties.map((prop) => (
-              <Badge key={prop} variant="outline" className="capitalize">{prop}</Badge>
+              <Badge key={prop} variant="outline" className="capitalize">{formatMonarchVernacular(prop)}</Badge>
             ))}
           </div>
         </SystemWindow>

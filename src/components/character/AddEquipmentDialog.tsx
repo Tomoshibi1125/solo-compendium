@@ -15,6 +15,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useEquipment } from '@/hooks/useEquipment';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
 
 export function AddEquipmentDialog({
   open,
@@ -37,8 +38,10 @@ export function AddEquipmentDialog({
         .select('*')
         .limit(20);
 
-      if (searchQuery.trim()) {
-        query = query.ilike('name', `%${searchQuery}%`);
+      const trimmedQuery = searchQuery.trim();
+      if (trimmedQuery) {
+        const canonicalQuery = normalizeMonarchSearch(trimmedQuery);
+        query = query.ilike('name', `%${canonicalQuery}%`);
       }
 
       const { data, error } = await query;
@@ -49,6 +52,7 @@ export function AddEquipmentDialog({
   });
 
   const handleAdd = async (item: typeof equipment[0]) => {
+    const displayName = formatMonarchVernacular(item.name);
     try {
       await addEquipment({
         character_id: characterId,
@@ -62,7 +66,7 @@ export function AddEquipmentDialog({
 
       toast({
         title: 'Equipment added',
-        description: `${item.name} has been added to your inventory.`,
+        description: `${displayName} has been added to your inventory.`,
       });
 
       onOpenChange(false);
@@ -115,14 +119,16 @@ export function AddEquipmentDialog({
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="font-heading font-semibold">{item.name}</span>
+                        <span className="font-heading font-semibold">
+                          {formatMonarchVernacular(item.name)}
+                        </span>
                         <Badge variant="secondary" className="text-xs">
-                          {item.equipment_type}
+                          {formatMonarchVernacular(item.equipment_type || 'Equipment')}
                         </Badge>
                       </div>
                       {item.description && (
                         <p className="text-xs text-muted-foreground line-clamp-2">
-                          {item.description}
+                          {formatMonarchVernacular(item.description)}
                         </p>
                       )}
                     </div>

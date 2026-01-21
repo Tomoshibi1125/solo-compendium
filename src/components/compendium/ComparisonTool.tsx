@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface CompendiumItem {
   id: string;
@@ -60,7 +61,7 @@ export function ComparisonTool({ items, onAddItem, className }: ComparisonToolPr
     setSelectedItems([...selectedItems, item]);
     toast({
       title: 'Added to Comparison',
-      description: `${item.name} has been added to the comparison.`,
+      description: `${formatMonarchVernacular(item.name)} has been added to the comparison.`,
     });
   };
 
@@ -74,7 +75,14 @@ export function ComparisonTool({ items, onAddItem, className }: ComparisonToolPr
 
   const exportComparison = () => {
     const comparisonData = {
-      items: selectedItems,
+      items: selectedItems.map((item) => ({
+        ...item,
+        name: formatMonarchVernacular(item.name),
+        type: formatMonarchVernacular(item.type),
+        rarity: item.rarity ? formatMonarchVernacular(item.rarity) : item.rarity,
+        description: item.description ? formatMonarchVernacular(item.description) : item.description,
+        properties: item.properties ? item.properties.map(formatMonarchVernacular) : item.properties,
+      })),
       timestamp: new Date().toISOString(),
     };
     
@@ -98,14 +106,14 @@ export function ComparisonTool({ items, onAddItem, className }: ComparisonToolPr
     const comparisonData = {
       items: selectedItems.map(item => ({
         id: item.id,
-        name: item.name,
-        type: item.type,
+        name: formatMonarchVernacular(item.name),
+        type: formatMonarchVernacular(item.type),
       })),
       timestamp: new Date().toISOString(),
     };
     
     try {
-      const shareText = `Comparing ${selectedItems.map(item => item.name).join(', ')}`;
+      const shareText = `Comparing ${selectedItems.map(item => formatMonarchVernacular(item.name)).join(', ')}`;
       const shareData = {
         title: 'Compendium Comparison',
         text: shareText,
@@ -135,9 +143,9 @@ export function ComparisonTool({ items, onAddItem, className }: ComparisonToolPr
     
     const value = item.stats[statKey];
     if (typeof value === 'number') return value.toString();
-    if (typeof value === 'string') return value;
+    if (typeof value === 'string') return formatMonarchVernacular(value);
     if (typeof value === 'boolean') return value ? 'Yes' : 'No';
-    if (Array.isArray(value)) return value.join(', ');
+    if (Array.isArray(value)) return value.map((entry) => (typeof entry === 'string' ? formatMonarchVernacular(entry) : String(entry))).join(', ');
     return JSON.stringify(value);
   };
 
@@ -205,8 +213,8 @@ export function ComparisonTool({ items, onAddItem, className }: ComparisonToolPr
               <CardHeader className="pb-2">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <CardTitle className="text-sm">{item.name}</CardTitle>
-                    <p className="text-xs text-muted-foreground">{item.type}</p>
+                    <CardTitle className="text-sm">{formatMonarchVernacular(item.name)}</CardTitle>
+                    <p className="text-xs text-muted-foreground">{formatMonarchVernacular(item.type)}</p>
                   </div>
                   <Button
                     size="sm"
@@ -222,7 +230,7 @@ export function ComparisonTool({ items, onAddItem, className }: ComparisonToolPr
                 <div className="space-y-2">
                   {item.rarity && (
                     <Badge variant="outline" className="text-xs">
-                      {item.rarity}
+                      {formatMonarchVernacular(item.rarity)}
                     </Badge>
                   )}
                   {item.level && (
@@ -232,7 +240,7 @@ export function ComparisonTool({ items, onAddItem, className }: ComparisonToolPr
                   )}
                   {item.description && (
                     <p className="text-xs text-muted-foreground line-clamp-3">
-                      {item.description}
+                      {formatMonarchVernacular(item.description)}
                     </p>
                   )}
                 </div>
@@ -260,16 +268,16 @@ export function ComparisonTool({ items, onAddItem, className }: ComparisonToolPr
                   {selectedItems.map((item) => (
                     <Card key={`basic-${item.id}`}>
                       <CardHeader className="pb-2">
-                        <CardTitle className="text-base">{item.name}</CardTitle>
+                        <CardTitle className="text-base">{formatMonarchVernacular(item.name)}</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <div className="space-y-2 text-sm">
                           <div>
-                            <span className="font-medium">Type:</span> {item.type}
+                            <span className="font-medium">Type:</span> {formatMonarchVernacular(item.type)}
                           </div>
                           {item.rarity && (
                             <div>
-                              <span className="font-medium">Rarity:</span> {item.rarity}
+                              <span className="font-medium">Rarity:</span> {formatMonarchVernacular(item.rarity)}
                             </div>
                           )}
                           {item.level && (
@@ -302,7 +310,7 @@ export function ComparisonTool({ items, onAddItem, className }: ComparisonToolPr
                               key={`stat-${item.id}-${statKey}`}
                               className="p-3 border rounded-md"
                             >
-                              <div className="text-sm font-medium">{item.name}</div>
+                              <div className="text-sm font-medium">{formatMonarchVernacular(item.name)}</div>
                               <div className="text-lg">
                                 {getStatValue(item, statKey)}
                               </div>
@@ -324,14 +332,14 @@ export function ComparisonTool({ items, onAddItem, className }: ComparisonToolPr
                   {selectedItems.map((item) => (
                     <Card key={`props-${item.id}`}>
                       <CardHeader className="pb-2">
-                        <CardTitle className="text-base">{item.name}</CardTitle>
+                        <CardTitle className="text-base">{formatMonarchVernacular(item.name)}</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <div className="space-y-1">
                           {item.properties && item.properties.length > 0 ? (
                             item.properties.map((prop, index) => (
                               <Badge key={index} variant="outline" className="text-xs mr-1 mb-1">
-                                {prop}
+                                {formatMonarchVernacular(prop)}
                               </Badge>
                             ))
                           ) : (
@@ -353,11 +361,11 @@ export function ComparisonTool({ items, onAddItem, className }: ComparisonToolPr
                   {selectedItems.map((item) => (
                     <Card key={`desc-${item.id}`}>
                       <CardHeader className="pb-2">
-                        <CardTitle className="text-base">{item.name}</CardTitle>
+                        <CardTitle className="text-base">{formatMonarchVernacular(item.name)}</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <p className="text-sm text-muted-foreground">
-                          {item.description || 'No description available'}
+                          {item.description ? formatMonarchVernacular(item.description) : 'No description available'}
                         </p>
                       </CardContent>
                     </Card>

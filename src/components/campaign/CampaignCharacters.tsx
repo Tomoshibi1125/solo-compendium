@@ -16,6 +16,7 @@ import { useCharacters } from '@/hooks/useCharacters';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface CampaignCharactersProps {
   campaignId: string;
@@ -49,7 +50,7 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 
   return (
     <>
-      <SystemWindow title="SHARED HUNTERS" className="h-[400px] flex flex-col">
+      <SystemWindow title="SHARED ASCENDANTS" className="h-[400px] flex flex-col">
         <div className="flex justify-between items-center mb-4">
           <p className="text-sm text-muted-foreground">
             Characters visible to all campaign members
@@ -81,7 +82,7 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
                     </p>
                     {share.characters && (
                       <p className="text-xs text-muted-foreground">
-                        Level {share.characters.level} {share.characters.job}
+                        Level {share.characters.level} {formatMonarchVernacular(share.characters.job)}
                       </p>
                     )}
                   </div>
@@ -113,20 +114,20 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
       <Dialog open={shareDialogOpen} onOpenChange={setShareDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Share Hunter</DialogTitle>
+            <DialogTitle>Share Ascendant</DialogTitle>
             <DialogDescription>
-              Select a Hunter to share with all campaign members. They'll be able to view the Hunter's sheet.
+              Select an Ascendant to share with all campaign members. They'll be able to view the Ascendant's sheet.
             </DialogDescription>
           </DialogHeader>
           <div className="py-4">
             <Select value={selectedCharacter} onValueChange={setSelectedCharacter}>
               <SelectTrigger>
-                <SelectValue placeholder="Select a Hunter" />
+                <SelectValue placeholder="Select an Ascendant" />
               </SelectTrigger>
               <SelectContent>
                 {availableCharacters.map((char) => (
                   <SelectItem key={char.id} value={char.id}>
-                    {char.name} - Level {char.level} {char.job}
+                    {char.name} - Level {char.level} {formatMonarchVernacular(char.job)}
                   </SelectItem>
                 ))}
               </SelectContent>

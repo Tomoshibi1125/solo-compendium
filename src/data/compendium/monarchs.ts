@@ -3,7 +3,7 @@
 // This is the authoritative source for monarchs data - FULL ADMIN PRIVILEGES INTEGRATION
 // Generated on: 2026-01-13T22:03:39.610Z
 // POST-RESET TIMELINE: Monarchs are CLASS OVERLAYS, not NPC names
-// Sung Jinwoo is the Supreme God/DM in this timeline
+// Kael Voss is the Prime Architect/Warden in this timeline
 
 export interface Monarch {
   id: string;
@@ -17,12 +17,12 @@ export interface Monarch {
   tags?: string[];
   created_at?: string;
   source_book?: string;
-  // Solo Leveling progression mechanics
+  // System Ascendant progression mechanics
   requirements: {
     quest_completion: string;
     dm_verification: boolean;
     prerequisite_job?: string;
-    power_level: number; // 1-10 scale matching Solo Leveling power levels
+    power_level: number; // 1-10 scale matching System Ascendant power levels
   };
   abilities: {
     name: string;
@@ -68,82 +68,82 @@ export interface Monarch {
 
 export const monarchs = [
   {
-    "id": "shadow-monarch-overlay",
-    "name": "Shadow Monarch",
-    "title": "Shadow Sovereign Class",
-    "theme": "Shadows and Death",
-    "description": "The ultimate shadow manipulation class overlay, embodying Sung Jinwoo's mastery over shadows, death, and the ability to command shadow armies. This is the highest tier shadow-based class available to players, granting true monarch-level power over the shadow realm.",
+    "id": "umbral-monarch-overlay",
+    "name": "Umbral Monarch",
+    "title": "Umbral Monarch Class",
+    "theme": "Umbral and Death",
+    "description": "The ultimate umbral manipulation class overlay, embodying Kael Voss's mastery over the veil, death, and the ability to command the Umbral Legion. This is the highest tier veil-based class available to players, granting true Monarch-level power over the umbral realm.",
     "rank": "S",
-    "image": "/generated/compendium/monarchs/shadow-monarch.webp",
+    "image": "/generated/compendium/monarchs/umbral-sovereign.webp",
     "type": "class-overlay",
     "tags": [
       "monarch",
-      "shadow",
+      "umbral",
       "death",
-      "jinwoo",
+      "kael",
       "class-overlay"
     ],
     "created_at": "2026-01-13T22:03:39.601Z",
-    "source_book": "Solo Compendium Canon",
+    "source_book": "System Ascendant Canon",
     "requirements": {
-      "quest_completion": "Complete the Shadow Monarch Ascension quest series",
+      "quest_completion": "Complete the Umbral Monarch Ascension quest series",
       "dm_verification": true,
       "prerequisite_job": "Any base job",
       "power_level": 10
     },
     "abilities": [
       {
-        "name": "Shadow Command",
-        "description": "Command up to 20 shadow creatures as if they were your loyal followers. They obey your telepathic commands, just as Jinwoo commands his shadow army.",
+        "name": "Umbral Command",
+        "description": "Command up to 20 umbral creatures as if they were your loyal followers. They obey your telepathic commands, just as Kael commands the Umbral Legion.",
         "type": "action",
         "frequency": "at-will",
         "power_level": 1
       },
       {
-        "name": "Army of Shadows",
-        "description": "As an action, summon 2d6 shadow soldiers that fight for you for 1 hour. They have the stats of shadows but obey your commands, mirroring Jinwoo's shadow extraction ability.",
+        "name": "Legion of the Veil",
+        "description": "As an action, summon 2d6 umbral legionnaires that fight for you for 1 hour. They have the stats of shadows but obey your commands, mirroring Kael's veil extraction ability.",
         "type": "action",
         "frequency": "once-per-day",
         "power_level": 3
       },
       {
-        "name": "Shadow Step Supreme",
-        "description": "As a bonus action, teleport up to 120 feet to any unoccupied space in dim light or darkness. This mirrors Jinwoo's shadow movement mastery.",
+        "name": "Veilstep Supreme",
+        "description": "As a bonus action, teleport up to 120 feet to any unoccupied space in dim light or darkness. This mirrors Kael's veilstep mastery.",
         "type": "bonus-action",
         "frequency": "at-will",
         "power_level": 1
       },
       {
         "name": "Essence Harvest",
-        "description": "When a creature dies within 30 feet, you can harvest its essence to regain 2d10 hit points. This reflects Jinwoo's ability to extract power from defeated foes.",
+        "description": "When a creature dies within 30 feet, you can harvest its essence to regain 2d10 hit points. This reflects Kael's ability to extract power from defeated foes.",
         "type": "reaction",
         "frequency": "short-rest",
         "power_level": 2
       },
       {
-        "name": "Dimensional Ruler",
-        "description": "You can cast gate and plane shift without expending spell slots. You have advantage on saving throws against teleportation effects. This represents Jinwoo's mastery over dimensional travel.",
+        "name": "Dimensional Regent",
+        "description": "You can cast gate and plane shift without expending spell slots. You have advantage on saving throws against teleportation effects. This represents Kael's mastery over dimensional travel.",
         "type": "passive",
         "frequency": "at-will",
         "power_level": 5
       },
       {
-        "name": "Shadow Dominion",
-        "description": "As an action, create a 1-mile radius area of absolute shadow control. All shadow creatures within gain advantage on all attacks. This mirrors Jinwoo's domain control as Shadow Monarch.",
+        "name": "Umbral Dominion",
+        "description": "As an action, create a 1-mile radius area of absolute umbral control. All umbral creatures within gain advantage on all attacks. This mirrors Kael's domain control as Umbral Monarch.",
         "type": "action",
         "frequency": "once-per-day",
         "power_level": 7
       },
       {
         "name": "Death's Authority",
-        "description": "As an action, force all undead within 300 feet to make a Wisdom save (DC 20) or become your loyal servants. This reflects Jinwoo's command over death itself.",
+        "description": "As an action, force all undead within 300 feet to make a Wisdom save (DC 20) or become your loyal servants. This reflects Kael's command over death itself.",
         "type": "action",
         "frequency": "once-per-day",
         "power_level": 9
       },
       {
-        "name": "Shadow Sovereignty",
-        "description": "You become the ultimate master of shadows, gaining immunity to all damage and the ability to command any shadow creature anywhere in the multiverse. This represents Jinwoo's ultimate power as the true Shadow Monarch.",
+        "name": "Umbral Dominion",
+        "description": "You become the ultimate master of the veil, gaining immunity to all damage and the ability to command any umbral creature anywhere in the multiverse. This represents Kael's ultimate power as the true Umbral Monarch.",
         "type": "passive",
         "frequency": "at-will",
         "power_level": 10
@@ -151,8 +151,8 @@ export const monarchs = [
     ],
     "features": [
       {
-        "name": "Shadow Sovereignty",
-        "description": "You gain immunity to necrotic damage and advantage on all saving throws against shadow-based effects.",
+        "name": "Umbral Dominion",
+        "description": "You gain immunity to necrotic damage and advantage on all saving throws against umbral effects.",
         "power_level": 1
       },
       {
@@ -161,8 +161,8 @@ export const monarchs = [
         "power_level": 2
       },
       {
-        "name": "Shadow Mastery",
-        "description": "You can cast shadow-based spells at will without expending spell slots. This represents Jinwoo's complete mastery over shadow magic.",
+        "name": "Umbral Mastery",
+        "description": "You can cast umbral spells at will without expending spell slots. This represents Kael's complete mastery over umbral magic.",
         "power_level": 3
       },
       {
@@ -181,8 +181,8 @@ export const monarchs = [
         "power_level": 6
       },
       {
-        "name": "Shadow God",
-        "description": "You become a living embodiment of shadow, able to create and destroy shadows at will.",
+        "name": "Umbral God",
+        "description": "You become a living embodiment of the veil, able to shape umbral essence at will.",
         "power_level": 7
       },
       {
@@ -191,13 +191,13 @@ export const monarchs = [
         "power_level": 8
       },
       {
-        "name": "Shadow Emperor",
-        "description": "Your shadow powers extend across multiple planes, allowing you to affect shadows anywhere.",
+        "name": "Umbral Emperor",
+        "description": "Your umbral powers extend across multiple planes, allowing you to affect the veil anywhere.",
         "power_level": 9
       },
       {
-        "name": "Absolute Shadow",
-        "description": "You achieve the ultimate shadow power, becoming immune to all effects and able to reshape reality through shadows.",
+        "name": "Absolute Umbral",
+        "description": "You achieve the ultimate umbral power, becoming immune to all effects and able to reshape reality through the veil.",
         "power_level": 10
       },
       {
@@ -271,7 +271,7 @@ export const monarchs = [
         "power_level": 19
       },
       {
-        "name": "Death Sovereign",
+        "name": "Death Monarch",
         "description": "You become the ultimate authority over death and life, able to determine the fate of all existence.",
         "power_level": 19
       },
@@ -281,13 +281,13 @@ export const monarchs = [
         "power_level": 20
       },
       {
-        "name": "Absolute Shadow",
+        "name": "Absolute Umbral",
         "description": "You become the embodiment of absolute shadow, a force beyond comprehension that exists outside all laws of reality.",
         "power_level": 20
       },
       {
-        "name": "Jinwoo's Power",
-        "description": "You achieve the full power of Sung Jinwoo at his peak - the ability to command infinite shadow armies, reshape reality, control all dimensions, master death itself, and transcend to become a fundamental force of the multiverse. This is the ultimate power of the Shadow Monarch, surpassing all other beings in existence.",
+        "name": "Kael's Power",
+        "description": "You achieve the full power of Kael Voss at his peak - the ability to command infinite shadow armies, reshape reality, control all dimensions, master death itself, and transcend to become a fundamental force of the multiverse. This is the ultimate power of the Umbral Monarch, surpassing all other beings in existence.",
         "power_level": 20
       }
     ],
@@ -307,29 +307,29 @@ export const monarchs = [
         "Can communicate with shadows and shadow creatures"
       ],
       "restrictions": [
-        "Requires DM verification of quest completion",
-        "Once chosen, cannot be changed without DM approval"
+        "Requires Warden verification of quest completion",
+        "Once chosen, cannot be changed without Warden approval"
       ],
       "progression": {
-        "level_1": ["Shadow Command", "Shadow Step Supreme", "Shadow Sovereignty"],
+        "level_1": ["Shadow Command", "Shadow Step Supreme", "Shadow Dominion"],
         "level_3": ["Army of Shadows", "Shadow Mastery", "Monarch's Presence"],
-        "level_5": ["Dimensional Ruler", "Dimensional Authority", "Army of the Damned"],
+        "level_5": ["Dimensional Regent", "Dimensional Authority", "Army of the Damned"],
         "level_7": ["Shadow Dominion", "Shadow God", "Essence Lord"],
         "level_9": ["Death's Authority", "Death's Command", "Shadow Emperor"],
-        "level_10": ["Shadow Sovereignty", "Absolute Shadow"],
+        "level_10": ["Shadow Dominion", "Absolute Shadow"],
         "level_11": ["Shadow Ascendant", "Dimensional Lord", "Death God"],
         "level_13": ["Shadow Apocalypse", "Void Dominion", "Essence God"],
         "level_15": ["Shadow Reality", "Dimensional God", "Death Emperor"],
         "level_17": ["Shadow Transcendence", "Void God", "Essence Emperor"],
-        "level_19": ["Shadow Omnipotence", "Dimensional Emperor", "Death Sovereign"],
-        "level_20": ["Shadow Supremacy", "Absolute Shadow", "Jinwoo's Power"]
+        "level_19": ["Shadow Omnipotence", "Dimensional Emperor", "Death Monarch"],
+        "level_20": ["Shadow Supremacy", "Absolute Shadow", "Kael's Power"]
       }
     }
   },
   {
     "id": "flame-monarch-overlay",
     "name": "Flame Monarch",
-    "title": "Flame Sovereign Class",
+    "title": "Flame Monarch Class",
     "theme": "White Flames",
     "description": "A powerful fire-based class overlay that grants mastery over white flames and purification fire. Users can incinerate enemies and purify corruption with sacred flames, embodying the Monarch of White Flames' absolute control over fire.",
     "rank": "S",
@@ -343,7 +343,7 @@ export const monarchs = [
       "class-overlay"
     ],
     "created_at": "2026-01-13T22:03:39.601Z",
-    "source_book": "Solo Compendium Canon",
+    "source_book": "System Ascendant Canon",
     "requirements": {
       "quest_completion": "Complete the Flame Monarch Trials quest series",
       "dm_verification": true,
@@ -401,7 +401,7 @@ export const monarchs = [
         "power_level": 9
       },
       {
-        "name": "Flame Sovereignty",
+        "name": "Flame Dominion",
         "description": "You become the ultimate master of flames, gaining immunity to all damage and the ability to command any fire creature anywhere in the multiverse. This represents the Monarch of White Flames' ultimate power.",
         "type": "passive",
         "frequency": "at-will",
@@ -410,7 +410,7 @@ export const monarchs = [
     ],
     "features": [
       {
-        "name": "Flame Sovereignty",
+        "name": "Flame Dominion",
         "description": "You gain immunity to fire damage and resistance to radiant damage.",
         "power_level": 1
       },
@@ -525,12 +525,12 @@ export const monarchs = [
         "power_level": 19
       },
       {
-        "name": "Purification Sovereign",
+        "name": "Purification Monarch",
         "description": "Your purification power extends across the multiverse, allowing you to cleanse entire universes.",
         "power_level": 19
       },
       {
-        "name": "Fire Sovereign",
+        "name": "Fire Monarch",
         "description": "You become the ultimate authority over fire and purification, able to determine the fate of all existence.",
         "power_level": 19
       },
@@ -566,21 +566,21 @@ export const monarchs = [
         "Can purify corrupted areas and creatures"
       ],
       "restrictions": [
-        "Requires DM verification of quest completion",
-        "Once chosen, cannot be changed without DM approval"
+        "Requires Warden verification of quest completion",
+        "Once chosen, cannot be changed without Warden approval"
       ],
       "progression": {
-        "level_1": ["Flame Step", "Immolation Aura", "Flame Sovereignty"],
+        "level_1": ["Flame Step", "Immolation Aura", "Flame Dominion"],
         "level_3": ["White Flame Burst", "White Flame Mastery", "Purifying Presence"],
         "level_5": ["Flame Shield", "Flame Authority", "Phoenix Rebirth"],
         "level_7": ["Flame Dominion", "Flame God", "Purification Lord"],
         "level_9": ["Purification Authority", "Purification Command", "Flame Emperor"],
-        "level_10": ["Flame Sovereignty", "Absolute Flame"],
+        "level_10": ["Flame Dominion", "Absolute Flame"],
         "level_11": ["Flame Ascendant", "Purification Lord", "Fire God"],
         "level_13": ["Flame Apocalypse", "Purification Dominion", "Essence God"],
         "level_15": ["Flame Reality", "Purification God", "Fire Emperor"],
         "level_17": ["Flame Transcendence", "Purification Emperor", "Essence Emperor"],
-        "level_19": ["Flame Omnipotence", "Purification Sovereign", "Fire Sovereign"],
+        "level_19": ["Flame Omnipotence", "Purification Monarch", "Fire Monarch"],
         "level_20": ["Flame Supremacy", "Absolute Flame", "Monarch Power"]
       }
     }
@@ -588,7 +588,7 @@ export const monarchs = [
   {
     "id": "steel-flesh-monarch-overlay",
     "name": "Steel Monarch",
-    "title": "Steel Sovereign Class",
+    "title": "Steel Monarch Class",
     "theme": "Steel and Flesh",
     "description": "A defensive class overlay that grants control over flesh manipulation and steel enhancement. Users can reinforce their bodies and manipulate organic matter, embodying the Steel Monarch's absolute mastery over biological and metallic matter.",
     "rank": "S",
@@ -603,7 +603,7 @@ export const monarchs = [
       "class-overlay"
     ],
     "created_at": "2026-01-13T22:03:39.601Z",
-    "source_book": "Solo Compendium Canon",
+    "source_book": "System Ascendant Canon",
     "requirements": {
       "quest_completion": "Complete the Steel Monarch Ascension trials",
       "dm_verification": true,
@@ -661,7 +661,7 @@ export const monarchs = [
         "power_level": 9
       },
       {
-        "name": "Flesh Sovereignty",
+        "name": "Flesh Dominion",
         "description": "You become the ultimate master of flesh and steel, gaining immunity to all damage and the ability to reshape any organic matter anywhere in the multiverse. This represents the Steel Monarch's ultimate power.",
         "type": "passive",
         "frequency": "at-will",
@@ -670,7 +670,7 @@ export const monarchs = [
     ],
     "features": [
       {
-        "name": "Flesh Sovereignty",
+        "name": "Flesh Dominion",
         "description": "You gain immunity to poison damage and disease. You cannot be aged or polymorphed.",
         "power_level": 1
       },
@@ -785,12 +785,12 @@ export const monarchs = [
         "power_level": 19
       },
       {
-        "name": "Steel Sovereign",
+        "name": "Steel Monarch",
         "description": "Your metallic power extends across the multiverse, allowing you to reshape entire universes.",
         "power_level": 19
       },
       {
-        "name": "Regeneration Sovereign",
+        "name": "Regeneration Monarch",
         "description": "You become the ultimate authority over life and regeneration, able to determine the fate of all existence.",
         "power_level": 19
       },
@@ -826,11 +826,11 @@ export const monarchs = [
         "Steel and metal objects respond to your will"
       ],
       "restrictions": [
-        "Requires DM verification of quest completion",
-        "Once chosen, cannot be changed without DM approval"
+        "Requires Warden verification of quest completion",
+        "Once chosen, cannot be changed without Warden approval"
       ],
       "progression": {
-        "level_1": ["Regeneration Core", "Flesh Sovereignty", "Steel Presence"],
+        "level_1": ["Regeneration Core", "Flesh Dominion", "Steel Presence"],
         "level_3": ["Flesh Reconstruction", "Flesh Mastery", "Adaptive Defense"],
         "level_5": ["Steel Weaving", "Steel Authority", "Living Fortress"],
         "level_7": ["Organic Manipulation", "Flesh God", "Regeneration Lord"],
@@ -840,7 +840,7 @@ export const monarchs = [
         "level_13": ["Flesh Apocalypse", "Steel Dominion", "Essence God"],
         "level_15": ["Flesh Reality", "Steel God", "Regeneration Emperor"],
         "level_17": ["Flesh Transcendence", "Steel Emperor", "Essence Emperor"],
-        "level_19": ["Flesh Omnipotence", "Steel Sovereign", "Regeneration Sovereign"],
+        "level_19": ["Flesh Omnipotence", "Steel Monarch", "Regeneration Monarch"],
         "level_20": ["Flesh Supremacy", "Absolute Flesh", "Monarch Power"]
       }
     }
@@ -848,7 +848,7 @@ export const monarchs = [
   {
     "id": "frost-monarch-overlay",
     "name": "Frost Monarch",
-    "title": "Ice Sovereign Class",
+    "title": "Ice Monarch Class",
     "theme": "Ice and Cold",
     "description": "An ice-based class overlay that grants absolute control over cold and ice. Users can freeze enemies solid and create blizzards at will, embodying the Frost Monarch's complete mastery over the cold domain.",
     "rank": "S",
@@ -862,7 +862,7 @@ export const monarchs = [
       "class-overlay"
     ],
     "created_at": "2026-01-13T22:03:39.601Z",
-    "source_book": "Solo Compendium Canon",
+    "source_book": "System Ascendant Canon",
     "requirements": {
       "quest_completion": "Complete the Frost Monarch Trials quest series",
       "dm_verification": true,
@@ -920,7 +920,7 @@ export const monarchs = [
         "power_level": 9
       },
       {
-        "name": "Frost Sovereignty",
+        "name": "Frost Dominion",
         "description": "You become the ultimate master of cold, gaining immunity to all damage and the ability to command any ice creature anywhere in the multiverse. This represents the Frost Monarch's ultimate power.",
         "type": "passive",
         "frequency": "at-will",
@@ -929,7 +929,7 @@ export const monarchs = [
     ],
     "features": [
       {
-        "name": "Ice Sovereignty",
+        "name": "Ice Dominion",
         "description": "You gain immunity to cold damage and resistance to piercing damage.",
         "power_level": 1
       },
@@ -1044,12 +1044,12 @@ export const monarchs = [
         "power_level": 19
       },
       {
-        "name": "Ice Sovereign",
+        "name": "Ice Monarch",
         "description": "Your ice power extends across the multiverse, allowing you to reshape entire universes.",
         "power_level": 19
       },
       {
-        "name": "Winter Sovereign",
+        "name": "Winter Monarch",
         "description": "You become the ultimate authority over cold and winter, able to determine the fate of all existence.",
         "power_level": 19
       },
@@ -1085,11 +1085,11 @@ export const monarchs = [
         "Can create and control ice structures at will"
       ],
       "restrictions": [
-        "Requires DM verification of quest completion",
-        "Once chosen, cannot be changed without DM approval"
+        "Requires Warden verification of quest completion",
+        "Once chosen, cannot be changed without Warden approval"
       ],
       "progression": {
-        "level_1": ["Frost Step", "Winter's Grasp", "Ice Sovereignty"],
+        "level_1": ["Frost Step", "Winter's Grasp", "Ice Dominion"],
         "level_3": ["Absolute Zero", "Ice Mastery", "Frost Presence"],
         "level_5": ["Ice Shard Storm", "Ice Authority", "Glacial Rebirth"],
         "level_7": ["Cryo Shield", "Ice God", "Winter Lord"],
@@ -1099,7 +1099,7 @@ export const monarchs = [
         "level_13": ["Frost Apocalypse", "Ice Dominion", "Essence God"],
         "level_15": ["Frost Reality", "Ice God", "Winter Emperor"],
         "level_17": ["Frost Transcendence", "Ice Emperor", "Essence Emperor"],
-        "level_19": ["Frost Omnipotence", "Ice Sovereign", "Winter Sovereign"],
+        "level_19": ["Frost Omnipotence", "Ice Monarch", "Winter Monarch"],
         "level_20": ["Frost Supremacy", "Absolute Cold", "Monarch Power"]
       }
     }
@@ -1107,9 +1107,9 @@ export const monarchs = [
   {
     "id": "destruction-monarch-overlay",
     "name": "Destruction Monarch",
-    "title": "Destruction Sovereign Class",
+    "title": "Destruction Monarch Class",
     "theme": "Destruction",
-    "description": "A destructive class overlay focused on pure annihilation and devastation. Users can obliterate targets with overwhelming destructive force, embodying Antares' absolute power over destruction.",
+    "description": "A destructive class overlay focused on pure annihilation and devastation. Users can obliterate targets with overwhelming destructive force, embodying Varkun' absolute power over destruction.",
     "rank": "S",
     "image": "/generated/compendium/monarchs/destruction-monarch.webp",
     "type": "class-overlay",
@@ -1117,11 +1117,11 @@ export const monarchs = [
       "monarch",
       "destruction",
       "annihilation",
-      "antares",
+      "varkun",
       "class-overlay"
     ],
     "created_at": "2026-01-13T22:03:39.601Z",
-    "source_book": "Solo Compendium Canon",
+    "source_book": "System Ascendant Canon",
     "requirements": {
       "quest_completion": "Complete the Path of Destruction quest series",
       "dm_verification": true,
@@ -1131,7 +1131,7 @@ export const monarchs = [
     "abilities": [
       {
         "name": "Annihilation Wave",
-        "description": "As an action, unleash a wave of pure destructive force in a 60-foot line. Creatures take 15d10 force damage and objects are destroyed. This mirrors Antares' devastating destructive power.",
+        "description": "As an action, unleash a wave of pure destructive force in a 60-foot line. Creatures take 15d10 force damage and objects are destroyed. This mirrors Varkun' devastating destructive power.",
         "type": "action",
         "frequency": "once-per-day",
         "power_level": 3
@@ -1179,8 +1179,8 @@ export const monarchs = [
         "power_level": 9
       },
       {
-        "name": "Destruction Sovereignty",
-        "description": "You become the ultimate master of destruction, gaining immunity to all damage and the ability to destroy any object or creature anywhere in the multiverse. This represents Antares' ultimate destructive power.",
+        "name": "Destruction Dominion",
+        "description": "You become the ultimate master of destruction, gaining immunity to all damage and the ability to destroy any object or creature anywhere in the multiverse. This represents Varkun' ultimate destructive power.",
         "type": "passive",
         "frequency": "at-will",
         "power_level": 10
@@ -1188,7 +1188,7 @@ export const monarchs = [
     ],
     "features": [
       {
-        "name": "Destruction Sovereignty",
+        "name": "Destruction Dominion",
         "description": "You gain resistance to force damage and advantage on saving throws against being moved against your will.",
         "power_level": 1
       },
@@ -1303,12 +1303,12 @@ export const monarchs = [
         "power_level": 19
       },
       {
-        "name": "Annihilation Sovereign",
+        "name": "Annihilation Monarch",
         "description": "Your destructive power extends across the multiverse, allowing you to reshape entire universes.",
         "power_level": 19
       },
       {
-        "name": "Ruin Sovereign",
+        "name": "Ruin Monarch",
         "description": "You become the ultimate authority over destruction and ruin, able to determine the fate of all existence.",
         "power_level": 19
       },
@@ -1344,11 +1344,11 @@ export const monarchs = [
         "Can reshape terrain through destruction"
       ],
       "restrictions": [
-        "Requires DM verification of quest completion",
-        "Once chosen, cannot be changed without DM approval"
+        "Requires Warden verification of quest completion",
+        "Once chosen, cannot be changed without Warden approval"
       ],
       "progression": {
-        "level_1": ["Destruction Step", "Aura of Ruin", "Destruction Sovereignty"],
+        "level_1": ["Destruction Step", "Aura of Ruin", "Destruction Dominion"],
         "level_3": ["Annihilation Wave", "Destruction Mastery", "Annihilation Presence"],
         "level_5": ["Decimation Field", "Destruction Authority", "Cataclysmic Rebirth"],
         "level_7": ["Vortex Shield", "Destruction God", "Ruin Lord"],
@@ -1358,7 +1358,7 @@ export const monarchs = [
         "level_13": ["Destruction Apocalypse", "Annihilation Dominion", "Essence God"],
         "level_15": ["Destruction Reality", "Ruin God", "Annihilation Emperor"],
         "level_17": ["Destruction Transcendence", "Ruin Emperor", "Essence Emperor"],
-        "level_19": ["Destruction Omnipotence", "Annihilation Sovereign", "Ruin Sovereign"],
+        "level_19": ["Destruction Omnipotence", "Annihilation Monarch", "Ruin Monarch"],
         "level_20": ["Destruction Supremacy", "Absolute Destruction", "Monarch Power"]
       }
     }
@@ -1366,7 +1366,7 @@ export const monarchs = [
   {
     "id": "plague-monarch-overlay",
     "name": "Plague Monarch",
-    "title": "Plague Sovereign Class",
+    "title": "Plague Monarch Class",
     "theme": "Disease and Plague",
     "description": "A pestilence-based class overlay that grants control over diseases and plagues. Users can inflict devastating ailments and manipulate biological corruption, embodying the Monarch of Plagues' absolute mastery over disease.",
     "rank": "S",
@@ -1381,9 +1381,9 @@ export const monarchs = [
       "class-overlay"
     ],
     "created_at": "2026-01-13T22:03:39.601Z",
-    "source_book": "Solo Compendium Canon",
+    "source_book": "System Ascendant Canon",
     "requirements": {
-      "quest_completion": "Complete the Plague Sovereign Ascension trials",
+      "quest_completion": "Complete the Plague Monarch Ascension trials",
       "dm_verification": true,
       "prerequisite_job": "Any base job",
       "power_level": 10
@@ -1439,7 +1439,7 @@ export const monarchs = [
         "power_level": 9
       },
       {
-        "name": "Plague Sovereignty",
+        "name": "Plague Dominion",
         "description": "You become the ultimate master of disease, gaining immunity to all damage and the ability to command any disease anywhere in the multiverse. This represents the Monarch of Plagues' ultimate power.",
         "type": "passive",
         "frequency": "at-will",
@@ -1448,7 +1448,7 @@ export const monarchs = [
     ],
     "features": [
       {
-        "name": "Plague Sovereignty",
+        "name": "Plague Dominion",
         "description": "You gain immunity to disease, poison, and all negative conditions. You cannot be aged or poisoned.",
         "power_level": 1
       },
@@ -1563,12 +1563,12 @@ export const monarchs = [
         "power_level": 19
       },
       {
-        "name": "Disease Sovereign",
+        "name": "Disease Monarch",
         "description": "Your plague power extends across the multiverse, allowing you to reshape entire universes.",
         "power_level": 19
       },
       {
-        "name": "Pestilence Sovereign",
+        "name": "Pestilence Monarch",
         "description": "You become the ultimate authority over disease and plague, able to determine the fate of all existence.",
         "power_level": 19
       },
@@ -1604,11 +1604,11 @@ export const monarchs = [
         "Can diagnose and cure any disease"
       ],
       "restrictions": [
-        "Requires DM verification of quest completion",
-        "Once chosen, cannot be changed without DM approval"
+        "Requires Warden verification of quest completion",
+        "Once chosen, cannot be changed without Warden approval"
       ],
       "progression": {
-        "level_1": ["Plague Step", "Miasma Aura", "Plague Sovereignty"],
+        "level_1": ["Plague Step", "Miasma Aura", "Plague Dominion"],
         "level_3": ["Pandemic Wave", "Disease Mastery", "Pestilence Presence"],
         "level_5": ["Contagion Cloud", "Plague Authority", "Rebirth from Corruption"],
         "level_7": ["Disease Shield", "Plague God", "Disease Lord"],
@@ -1618,7 +1618,7 @@ export const monarchs = [
         "level_13": ["Plague Apocalypse", "Disease Dominion", "Essence God"],
         "level_15": ["Plague Reality", "Disease God", "Pestilence Emperor"],
         "level_17": ["Plague Transcendence", "Disease Emperor", "Essence Emperor"],
-        "level_19": ["Plague Omnipotence", "Disease Sovereign", "Pestilence Sovereign"],
+        "level_19": ["Plague Omnipotence", "Disease Monarch", "Pestilence Monarch"],
         "level_20": ["Plague Supremacy", "Absolute Plague", "Monarch Power"]
       }
     }
@@ -1626,7 +1626,7 @@ export const monarchs = [
   {
     "id": "blood-monarch-overlay",
     "name": "Blood Monarch",
-    "title": "Blood Sovereign Class",
+    "title": "Blood Monarch Class",
     "theme": "Blood Manipulation",
     "description": "A hemomancy-based class overlay that grants control over blood and life force. Users can manipulate blood in living beings and enhance their physical abilities, embodying the Monarch of Blood's absolute mastery over blood.",
     "rank": "S",
@@ -1641,9 +1641,9 @@ export const monarchs = [
       "class-overlay"
     ],
     "created_at": "2026-01-13T22:03:39.601Z",
-    "source_book": "Solo Compendium Canon",
+    "source_book": "System Ascendant Canon",
     "requirements": {
-      "quest_completion": "Complete the Blood Sovereign Ascension trials",
+      "quest_completion": "Complete the Blood Monarch Ascension trials",
       "dm_verification": true,
       "prerequisite_job": "Any base job",
       "power_level": 10
@@ -1699,7 +1699,7 @@ export const monarchs = [
         "power_level": 9
       },
       {
-        "name": "Blood Sovereignty",
+        "name": "Blood Dominion",
         "description": "You become the ultimate master of blood, gaining immunity to all damage and the ability to command any blood creature anywhere in the multiverse. This represents the Monarch of Blood's ultimate power.",
         "type": "passive",
         "frequency": "at-will",
@@ -1708,7 +1708,7 @@ export const monarchs = [
     ],
     "features": [
       {
-        "name": "Blood Sovereignty",
+        "name": "Blood Dominion",
         "description": "You gain immunity to necrotic damage and cannot be drained of life force. You regenerate 5 hit points per round.",
         "power_level": 1
       },
@@ -1823,12 +1823,12 @@ export const monarchs = [
         "power_level": 19
       },
       {
-        "name": "Life Sovereign",
+        "name": "Life Monarch",
         "description": "Your blood power extends across the multiverse, allowing you to reshape entire universes.",
         "power_level": 19
       },
       {
-        "name": "Hemomancy Sovereign",
+        "name": "Hemomancy Monarch",
         "description": "You become the ultimate authority over blood and life force, able to determine the fate of all existence.",
         "power_level": 19
       },
@@ -1864,11 +1864,11 @@ export const monarchs = [
         "Blood creatures are automatically friendly toward you"
       ],
       "restrictions": [
-        "Requires DM verification of quest completion",
-        "Once chosen, cannot be changed without DM approval"
+        "Requires Warden verification of quest completion",
+        "Once chosen, cannot be changed without Warden approval"
       ],
       "progression": {
-        "level_1": ["Blood Step", "Vampiric Aura", "Blood Sovereignty"],
+        "level_1": ["Blood Step", "Vampiric Aura", "Blood Dominion"],
         "level_3": ["Blood Boil", "Hemomancy Mastery", "Life Force Presence"],
         "level_5": ["Life Drain", "Blood Authority", "Rebirth from Blood"],
         "level_7": ["Hemomantic Shield", "Blood God", "Life Lord"],
@@ -1878,7 +1878,7 @@ export const monarchs = [
         "level_13": ["Blood Apocalypse", "Life Dominion", "Essence God"],
         "level_15": ["Blood Reality", "Life God", "Hemomancy Emperor"],
         "level_17": ["Blood Transcendence", "Life Emperor", "Essence Emperor"],
-        "level_19": ["Blood Omnipotence", "Life Sovereign", "Hemomancy Sovereign"],
+        "level_19": ["Blood Omnipotence", "Life Monarch", "Hemomancy Monarch"],
         "level_20": ["Blood Supremacy", "Absolute Blood", "Monarch Power"]
       }
     }
@@ -1886,7 +1886,7 @@ export const monarchs = [
   {
     "id": "berserk-monarch-overlay",
     "name": "Berserk Monarch",
-    "title": "Berserk Sovereign Class",
+    "title": "Berserk Monarch Class",
     "theme": "Berserker Rage",
     "description": "A rage-based class overlay that grants uncontrollable power through berserker fury. Users become unstoppable forces of destruction when enraged, embodying the Berserk Monarch's absolute mastery over rage.",
     "rank": "S",
@@ -1901,9 +1901,9 @@ export const monarchs = [
       "class-overlay"
     ],
     "created_at": "2026-01-13T22:03:39.601Z",
-    "source_book": "Solo Compendium Canon",
+    "source_book": "System Ascendant Canon",
     "requirements": {
-      "quest_completion": "Complete the Berserk Sovereign Ascension trials",
+      "quest_completion": "Complete the Berserk Monarch Ascension trials",
       "dm_verification": true,
       "prerequisite_job": "Any base job",
       "power_level": 10
@@ -1959,7 +1959,7 @@ export const monarchs = [
         "power_level": 9
       },
       {
-        "name": "Berserk Sovereignty",
+        "name": "Berserk Dominion",
         "description": "You become the ultimate master of rage, gaining immunity to all damage and the ability to command any berserk creature anywhere in the multiverse. This represents the Berserk Monarch's ultimate power.",
         "type": "passive",
         "frequency": "at-will",
@@ -1968,7 +1968,7 @@ export const monarchs = [
     ],
     "features": [
       {
-        "name": "Berserk Sovereignty",
+        "name": "Berserk Dominion",
         "description": "You gain immunity to being frightened and charmed. You cannot be knocked unconscious while raging. This reflects the Berserk Monarch's mental fortitude.",
         "power_level": 1
       },
@@ -2083,12 +2083,12 @@ export const monarchs = [
         "power_level": 19
       },
       {
-        "name": "Fury Sovereign",
+        "name": "Fury Monarch",
         "description": "Your rage power extends across the multiverse, allowing you to reshape entire universes.",
         "power_level": 19
       },
       {
-        "name": "Berserk Sovereign",
+        "name": "Berserk Monarch",
         "description": "You become the ultimate authority over rage and fury, able to determine the fate of all existence.",
         "power_level": 19
       },
@@ -2124,11 +2124,11 @@ export const monarchs = [
         "Berserk creatures are automatically friendly toward you"
       ],
       "restrictions": [
-        "Requires DM verification of quest completion",
-        "Once chosen, cannot be changed without DM approval"
+        "Requires Warden verification of quest completion",
+        "Once chosen, cannot be changed without Warden approval"
       ],
       "progression": {
-        "level_1": ["Rage Step", "Berserk Aura", "Berserk Sovereignty"],
+        "level_1": ["Rage Step", "Berserk Aura", "Berserk Dominion"],
         "level_3": ["Unstoppable Rage", "Rage Mastery", "Fury Presence"],
         "level_5": ["Fury Storm", "Rage Authority", "Rebirth from Fury"],
         "level_7": ["Fury Shield", "Berserk God", "Fury Lord"],
@@ -2138,7 +2138,7 @@ export const monarchs = [
         "level_13": ["Rage Apocalypse", "Fury Dominion", "Essence God"],
         "level_15": ["Rage Reality", "Fury God", "Berserk Emperor"],
         "level_17": ["Rage Transcendence", "Fury Emperor", "Essence Emperor"],
-        "level_19": ["Rage Omnipotence", "Fury Sovereign", "Berserk Sovereign"],
+        "level_19": ["Rage Omnipotence", "Fury Monarch", "Berserk Monarch"],
         "level_20": ["Rage Supremacy", "Absolute Rage", "Monarch Power"]
       }
     }
@@ -2146,7 +2146,7 @@ export const monarchs = [
   {
     "id": "dragonic-monarch-overlay",
     "name": "Dragonic Monarch",
-    "title": "Dragon Sovereign Class",
+    "title": "Dragon Monarch Class",
     "theme": "Dragon Fire",
     "description": "A draconic class overlay that grants dragon-like abilities and fire manipulation. Users can breathe fire and gain dragon physical traits, embodying the Dragonic Monarch's absolute mastery over draconic power.",
     "rank": "S",
@@ -2161,9 +2161,9 @@ export const monarchs = [
       "class-overlay"
     ],
     "created_at": "2026-01-13T22:03:39.601Z",
-    "source_book": "Solo Compendium Canon",
+    "source_book": "System Ascendant Canon",
     "requirements": {
-      "quest_completion": "Complete the Dragon Sovereign Ascension trials",
+      "quest_completion": "Complete the Dragon Monarch Ascension trials",
       "dm_verification": true,
       "prerequisite_job": "Any base job",
       "power_level": 10
@@ -2219,7 +2219,7 @@ export const monarchs = [
         "power_level": 9
       },
       {
-        "name": "Dragon Sovereignty",
+        "name": "Dragon Dominion",
         "description": "You become the ultimate master of dragons, gaining immunity to all damage and the ability to command any dragon anywhere in the multiverse. This represents the Dragonic Monarch's ultimate power.",
         "type": "passive",
         "frequency": "at-will",
@@ -2228,7 +2228,7 @@ export const monarchs = [
     ],
     "features": [
       {
-        "name": "Dragon Sovereignty",
+        "name": "Dragon Dominion",
         "description": "You gain immunity to fire damage and resistance to all other damage types. You grow dragon-like physical features. This reflects the Dragonic Monarch's draconic nature.",
         "power_level": 1
       },
@@ -2343,12 +2343,12 @@ export const monarchs = [
         "power_level": 19
       },
       {
-        "name": "Fire Sovereign",
+        "name": "Fire Monarch",
         "description": "Your draconic power extends across the multiverse, allowing you to reshape entire universes.",
         "power_level": 19
       },
       {
-        "name": "Draconic Sovereign",
+        "name": "Draconic Monarch",
         "description": "You become the ultimate authority over dragons and draconic power, able to determine the fate of all existence.",
         "power_level": 19
       },
@@ -2384,11 +2384,11 @@ export const monarchs = [
         "Dragon creatures are automatically friendly toward you"
       ],
       "restrictions": [
-        "Requires DM verification of quest completion",
-        "Once chosen, cannot be changed without DM approval"
+        "Requires Warden verification of quest completion",
+        "Once chosen, cannot be changed without Warden approval"
       ],
       "progression": {
-        "level_1": ["Dragon Flight", "Fire Aura", "Dragon Sovereignty"],
+        "level_1": ["Dragon Flight", "Fire Aura", "Dragon Dominion"],
         "level_3": ["Dragon Breath", "Dragon Mastery", "Draconic Presence"],
         "level_5": ["Dragon Scales", "Dragon Authority", "Dragon Rebirth"],
         "level_7": ["Draconic Presence", "Dragon God", "Draconic Lord"],
@@ -2398,7 +2398,7 @@ export const monarchs = [
         "level_13": ["Dragon Apocalypse", "Fire Dominion", "Essence God"],
         "level_15": ["Dragon Reality", "Fire God", "Draconic Emperor"],
         "level_17": ["Dragon Transcendence", "Fire Emperor", "Essence Emperor"],
-        "level_19": ["Dragon Omnipotence", "Fire Sovereign", "Draconic Sovereign"],
+        "level_19": ["Dragon Omnipotence", "Fire Monarch", "Draconic Monarch"],
         "level_20": ["Dragon Supremacy", "Absolute Dragon", "Monarch Power"]
       }
     }
@@ -2406,9 +2406,9 @@ export const monarchs = [
   {
     "id": "commander-monarch-overlay",
     "name": "Commander Monarch",
-    "title": "Command Sovereign Class",
+    "title": "Command Monarch Class",
     "theme": "Shadow Command",
-    "description": "A leadership-based class overlay that grants command over shadow armies and tactical supremacy. Users can lead legions of shadow soldiers, embodying the Commander Monarch's absolute mastery over shadow command.",
+    "description": "A leadership-based class overlay that grants command over shadow armies and tactical supremacy. Users can lead legions of umbral legionnaires, embodying the Commander Monarch's absolute mastery over shadow command.",
     "rank": "S",
     "image": "/generated/compendium/monarchs/shadow-command-monarch.webp",
     "type": "class-overlay",
@@ -2421,9 +2421,9 @@ export const monarchs = [
       "class-overlay"
     ],
     "created_at": "2026-01-13T22:03:39.601Z",
-    "source_book": "Solo Compendium Canon",
+    "source_book": "System Ascendant Canon",
     "requirements": {
-      "quest_completion": "Complete the Command Sovereign Ascension trials",
+      "quest_completion": "Complete the Command Monarch Ascension trials",
       "dm_verification": true,
       "prerequisite_job": "Any base job",
       "power_level": 10
@@ -2431,14 +2431,14 @@ export const monarchs = [
     "abilities": [
       {
         "name": "Army Command",
-        "description": "As an action, command up to 100 shadow soldiers as if they were your loyal followers. They obey your telepathic commands. This mirrors the Commander Monarch's ultimate shadow army control.",
+        "description": "As an action, command up to 100 umbral legionnaires as if they were your loyal followers. They obey your telepathic commands. This mirrors the Commander Monarch's ultimate umbral legion control.",
         "type": "action",
         "frequency": "at-will",
         "power_level": 1
       },
       {
         "name": "Legion Summon",
-        "description": "As an action, summon a legion of 4d10 shadow soldiers that fight for you for 1 hour. They have the stats of shadows but obey your commands. This reflects the Commander Monarch's legion summoning abilities.",
+        "description": "As an action, summon a legion of 4d10 umbral legionnaires that fight for you for 1 hour. They have the stats of shadows but obey your commands. This reflects the Commander Monarch's legion summoning abilities.",
         "type": "action",
         "frequency": "once-per-day",
         "power_level": 3
@@ -2479,7 +2479,7 @@ export const monarchs = [
         "power_level": 9
       },
       {
-        "name": "Command Sovereignty",
+        "name": "Command Dominion",
         "description": "You become the ultimate commander, gaining immunity to all damage and the ability to command any army anywhere in the multiverse. This represents the Commander Monarch's ultimate power.",
         "type": "passive",
         "frequency": "at-will",
@@ -2488,7 +2488,7 @@ export const monarchs = [
     ],
     "features": [
       {
-        "name": "Command Sovereignty",
+        "name": "Command Dominion",
         "description": "You gain immunity to being frightened and charmed. You cannot be compelled to act against your will. This reflects the Commander Monarch's mental fortitude.",
         "power_level": 1
       },
@@ -2602,12 +2602,12 @@ export const monarchs = [
         "power_level": 19
       },
       {
-        "name": "Tactical Sovereign",
+        "name": "Tactical Monarch",
         "description": "Your command power extends across the multiverse, allowing you to reshape entire universes.",
         "power_level": 19
       },
       {
-        "name": "Leadership Sovereign",
+        "name": "Leadership Monarch",
         "description": "You become the ultimate authority over command and leadership, able to determine the fate of all existence.",
         "power_level": 19
       },
@@ -2643,11 +2643,11 @@ export const monarchs = [
         "Commanders are automatically respectful toward you"
       ],
       "restrictions": [
-        "Requires DM verification of quest completion",
-        "Once chosen, cannot be changed without DM approval"
+        "Requires Warden verification of quest completion",
+        "Once chosen, cannot be changed without Warden approval"
       ],
       "progression": {
-        "level_1": ["Army Command", "Leadership Aura", "Command Sovereignty"],
+        "level_1": ["Army Command", "Leadership Aura", "Command Dominion"],
         "level_3": ["Legion Summon", "Tactical Mastery", "Leadership Presence"],
         "level_5": ["Tactical Step", "Command Authority", "Army Rebirth"],
         "level_7": ["Command Shield", "Command God", "Tactical Lord"],
@@ -2657,11 +2657,15 @@ export const monarchs = [
         "level_13": ["Command Apocalypse", "Tactical Dominion", "Essence God"],
         "level_15": ["Command Reality", "Tactical God", "Leadership Emperor"],
         "level_17": ["Command Transcendence", "Tactical Emperor", "Essence Emperor"],
-        "level_19": ["Command Omnipotence", "Tactical Sovereign", "Leadership Sovereign"],
+        "level_19": ["Command Omnipotence", "Tactical Monarch", "Leadership Monarch"],
         "level_20": ["Command Supremacy", "Absolute Command", "Monarch Power"]
       }
     }
   }
 ];
+
+
+
+
 
 

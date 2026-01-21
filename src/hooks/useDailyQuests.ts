@@ -12,7 +12,7 @@ import {
   getQuestProgress,
 } from '@/lib/dailyQuests/types';
 import { isLocalCharacterId } from '@/lib/guestStore';
-import { getProficiencyBonus } from '@/types/solo-leveling';
+import { getProficiencyBonus } from '@/types/system-rules';
 import { logger } from '@/lib/logger';
 
 type QuestConfigForm = Pick<
@@ -404,3 +404,4 @@ export function useDailyQuests(characterId: string | null, characterLevel?: numb
     getQuestProgress,
   };
 }
+

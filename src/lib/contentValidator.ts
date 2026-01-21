@@ -21,7 +21,7 @@ export const JobSchema = z.object({
   tags: z.array(z.string()).optional(),
   // Provenance
   source_kind: z.enum(['homebrew', 'srd', 'generated']).default('homebrew'),
-  source_name: z.string().default('Solo Compendium Homebrew'),
+  source_name: z.string().default('System Ascendant Homebrew'),
   license_note: z.string().optional(),
   generated_reason: z.string().optional(),
   theme_tags: z.array(z.string()).optional(),
@@ -37,7 +37,7 @@ export const JobPathSchema = z.object({
   source_book: z.string().optional(),
   tags: z.array(z.string()).optional(),
   source_kind: z.enum(['homebrew', 'srd', 'generated']).default('homebrew'),
-  source_name: z.string().default('Solo Compendium Homebrew'),
+  source_name: z.string().default('System Ascendant Homebrew'),
   license_note: z.string().optional(),
   generated_reason: z.string().optional(),
   theme_tags: z.array(z.string()).optional(),
@@ -74,7 +74,7 @@ export const PowerSchema = z.object({
   source_book: z.string().optional(),
   tags: z.array(z.string()).optional(),
   source_kind: z.enum(['homebrew', 'srd', 'generated']).default('homebrew'),
-  source_name: z.string().default('Solo Compendium Homebrew'),
+  source_name: z.string().default('System Ascendant Homebrew'),
   license_note: z.string().optional(),
   generated_reason: z.string().optional(),
   theme_tags: z.array(z.string()).optional(),
@@ -97,7 +97,7 @@ export const RelicSchema = z.object({
   source_book: z.string().optional(),
   tags: z.array(z.string()).optional(),
   source_kind: z.enum(['homebrew', 'srd', 'generated']).default('homebrew'),
-  source_name: z.string().default('Solo Compendium Homebrew'),
+  source_name: z.string().default('System Ascendant Homebrew'),
   license_note: z.string().optional(),
   generated_reason: z.string().optional(),
   theme_tags: z.array(z.string()).optional(),
@@ -142,7 +142,7 @@ export const MonsterSchema = z.object({
   source_book: z.string().optional(),
   tags: z.array(z.string()).optional(),
   source_kind: z.enum(['homebrew', 'srd', 'generated']).default('homebrew'),
-  source_name: z.string().default('Solo Compendium Homebrew'),
+  source_name: z.string().default('System Ascendant Homebrew'),
   license_note: z.string().optional(),
   generated_reason: z.string().optional(),
   theme_tags: z.array(z.string()).optional(),
@@ -167,7 +167,7 @@ export const BackgroundSchema = z.object({
   source_book: z.string().optional(),
   tags: z.array(z.string()).optional(),
   source_kind: z.enum(['homebrew', 'srd', 'generated']).default('homebrew'),
-  source_name: z.string().default('Solo Compendium Homebrew'),
+  source_name: z.string().default('System Ascendant Homebrew'),
   license_note: z.string().optional(),
   generated_reason: z.string().optional(),
   theme_tags: z.array(z.string()).optional(),
@@ -277,4 +277,5 @@ export function validateContentBundle(data: unknown): ValidationResult {
     return result;
   }
 }
+
 

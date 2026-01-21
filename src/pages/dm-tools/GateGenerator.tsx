@@ -9,29 +9,30 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { formatMonarchVernacular } from '@/lib/vernacular';
 
-const GATE_RANKS = ['E', 'D', 'C', 'B', 'A', 'S'];
-const GATE_THEMES = [
+const RIFT_RANKS = ['E', 'D', 'C', 'B', 'A', 'S'];
+const RIFT_THEMES = [
   'Shadow Realm', 'Elemental Chaos', 'Beast Domain', 'Construct Forge',
-  'Abyssal Depths', 'Celestial Spire', 'Supreme Deity\'s Domain', 'Necromantic Lab',
-  'Mana Nexus', 'Shadow Monarch\'s Memory', 'System Testing Ground', 'Post-Reset Fragment'
+  'Abyssal Depths', 'Celestial Spire', 'Prime Architect\'s Domain', 'Necromantic Lab',
+  'Mana Nexus', 'Umbral Monarch\'s Memory', 'System Testing Ground', 'Post-Reset Fragment'
 ];
-const GATE_BIOMES = [
+const RIFT_BIOMES = [
   'Urban ruins', 'Dark forest', 'Underground caverns', 'Floating platforms',
   'Crystal caves', 'Shadow wasteland', 'Mana-infused jungle', 'Frozen tundra',
   'Volcanic depths', 'Sky fortress', 'Underwater ruins', 'Dimensional pocket'
 ];
 const BOSS_TYPES = [
-  'Shadow Monarch Fragment', 'System Guardian', 'Corrupted Hunter', 'Ancient Gate Beast',
-  'Monarch\'s Shadow', 'Gate Core Manifestation', 'Time-Lost Entity', 'Dimensional Breach'
+  'Umbral Monarch Fragment', 'System Guardian', 'Corrupted Ascendant', 'Ancient Rift Beast',
+  'Monarch\'s Shadow', 'Rift Core Manifestation', 'Time-Lost Entity', 'Dimensional Breach'
 ];
 const COMPLICATIONS = [
-  'Mana surge causes random effects', 'Gate structure shifts', 'Monster reinforcements',
+  'Mana surge causes random effects', 'Rift structure shifts', 'Monster reinforcements',
   'Environmental hazard activates', 'Time distortion', 'Shadow corruption spreads',
   'Boss awakens early', 'Core instability', 'Mana depletion', 'Illusionary duplicates'
 ];
 
-interface GeneratedGate {
+interface GeneratedRift {
   rank: string;
   theme: string;
   biome: string;
@@ -40,19 +41,21 @@ interface GeneratedGate {
   description: string;
 }
 
-function generateGate(rank?: string): GeneratedGate {
-  const selectedRank = rank || GATE_RANKS[Math.floor(Math.random() * GATE_RANKS.length)];
-  const theme = GATE_THEMES[Math.floor(Math.random() * GATE_THEMES.length)];
-  const biome = GATE_BIOMES[Math.floor(Math.random() * GATE_BIOMES.length)];
-  const boss = BOSS_TYPES[Math.floor(Math.random() * BOSS_TYPES.length)];
+function generateRift(rank?: string): GeneratedRift {
+  const selectedRank = rank || RIFT_RANKS[Math.floor(Math.random() * RIFT_RANKS.length)];
+  const theme = formatMonarchVernacular(RIFT_THEMES[Math.floor(Math.random() * RIFT_THEMES.length)]);
+  const biome = RIFT_BIOMES[Math.floor(Math.random() * RIFT_BIOMES.length)];
+  const boss = formatMonarchVernacular(BOSS_TYPES[Math.floor(Math.random() * BOSS_TYPES.length)]);
   const numComplications = Math.floor(Math.random() * 3) + 1;
   const complications = [...new Set(
     Array.from({ length: numComplications }, () =>
       COMPLICATIONS[Math.floor(Math.random() * COMPLICATIONS.length)]
     )
-  )];
+  )].map(formatMonarchVernacular);
 
-  const description = `A ${selectedRank}-Rank Gate manifesting as ${biome} within the ${theme}. The Gate's core is protected by ${boss}. ${complications.length > 0 ? `Complications: ${complications.join(', ')}.` : ''}`;
+  const description = formatMonarchVernacular(
+    `A ${selectedRank}-Rank Rift manifesting as ${biome} within the ${theme}. The Rift's core is protected by ${boss}. ${complications.length > 0 ? `Complications: ${complications.join(', ')}.` : ''}`
+  );
 
   return {
     rank: selectedRank,
@@ -68,24 +71,24 @@ const GateGenerator = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [selectedRank, setSelectedRank] = useState<string>('');
-  const [gate, setGate] = useState<GeneratedGate | null>(null);
+  const [rift, setRift] = useState<GeneratedRift | null>(null);
 
   const handleGenerate = () => {
-    const newGate = generateGate(selectedRank || undefined);
-    setGate(newGate);
+    const newRift = generateRift(selectedRank || undefined);
+    setRift(newRift);
     toast({
-      title: 'Gate Generated',
-      description: `Generated a ${newGate.rank}-Rank Gate.`,
+      title: 'Rift Generated',
+      description: `Generated a ${newRift.rank}-Rank Rift.`,
     });
   };
 
   const handleCopy = () => {
-    if (!gate) return;
-    const text = `GATE DETAILS\nRank: ${gate.rank}\nTheme: ${gate.theme}\nBiome: ${gate.biome}\nBoss: ${gate.boss}\nComplications: ${gate.complications.join(', ')}\n\n${gate.description}`;
+    if (!rift) return;
+    const text = `RIFT DETAILS\nRank: ${rift.rank}\nTheme: ${rift.theme}\nBiome: ${rift.biome}\nBoss: ${rift.boss}\nComplications: ${rift.complications.join(', ')}\n\n${rift.description}`;
     navigator.clipboard.writeText(text);
     toast({
       title: 'Copied',
-      description: 'Gate details copied to clipboard.',
+      description: 'Rift details copied to clipboard.',
     });
   };
 
@@ -102,10 +105,10 @@ const GateGenerator = () => {
             Back to System Tools
           </Button>
           <h1 className="font-display text-4xl font-bold mb-2 gradient-text-shadow">
-            GATE GENERATOR
+            RIFT GENERATOR
           </h1>
           <p className="text-muted-foreground font-heading">
-            Generate random Gates with themes, biomes, bosses, and complications for your sessions.
+            Generate random rifts with themes, biomes, bosses, and complications for your sessions.
           </p>
         </div>
 
@@ -115,10 +118,10 @@ const GateGenerator = () => {
               <div className="space-y-4">
                 <div>
                   <Label className="text-xs font-display text-muted-foreground mb-2 block">
-                    GATE RANK (Optional)
+                    RIFT RANK (Optional)
                   </Label>
                   <div className="flex flex-wrap gap-2">
-                    {GATE_RANKS.map((rank) => (
+                    {RIFT_RANKS.map((rank) => (
                       <Button
                         key={rank}
                         size="sm"
@@ -139,41 +142,41 @@ const GateGenerator = () => {
                   size="lg"
                 >
                   <RefreshCw className="w-4 h-4" />
-                  Generate Gate
+                  Generate Rift
                 </Button>
               </div>
             </SystemWindow>
           </div>
 
           <div className="lg:col-span-2">
-            {gate ? (
+            {rift ? (
               <div className="space-y-4">
-                <SystemWindow title={`${gate.rank}-RANK GATE`}>
+                <SystemWindow title={`${rift.rank}-RANK RIFT`}>
                   <div className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <span className="text-xs font-display text-muted-foreground">THEME</span>
-                        <p className="font-heading text-lg">{gate.theme}</p>
+                        <p className="font-heading text-lg">{rift.theme}</p>
                       </div>
                       <div>
                         <span className="text-xs font-display text-muted-foreground">BIOME</span>
-                        <p className="font-heading text-lg">{gate.biome}</p>
+                        <p className="font-heading text-lg">{rift.biome}</p>
                       </div>
                       <div>
                         <span className="text-xs font-display text-muted-foreground">BOSS</span>
-                        <p className="font-heading text-lg">{gate.boss}</p>
+                        <p className="font-heading text-lg">{rift.boss}</p>
                       </div>
                       <div>
                         <span className="text-xs font-display text-muted-foreground">RANK</span>
-                        <Badge className="mt-1">{gate.rank}</Badge>
+                        <Badge className="mt-1">{rift.rank}</Badge>
                       </div>
                     </div>
 
-                    {gate.complications.length > 0 && (
+                    {rift.complications.length > 0 && (
                       <div>
                         <span className="text-xs font-display text-muted-foreground">COMPLICATIONS</span>
                         <div className="flex flex-wrap gap-2 mt-2">
-                          {gate.complications.map((comp, i) => (
+                          {rift.complications.map((comp, i) => (
                             <Badge key={i} variant="destructive">{comp}</Badge>
                           ))}
                         </div>
@@ -182,7 +185,7 @@ const GateGenerator = () => {
 
                     <div className="pt-4 border-t border-border">
                       <span className="text-xs font-display text-muted-foreground">DESCRIPTION</span>
-                      <p className="text-sm text-muted-foreground mt-2">{gate.description}</p>
+                      <p className="text-sm text-muted-foreground mt-2">{rift.description}</p>
                     </div>
 
                     <div className="flex gap-2 pt-4 border-t border-border">
@@ -207,9 +210,9 @@ const GateGenerator = () => {
                 </SystemWindow>
               </div>
             ) : (
-              <SystemWindow title="NO GATE GENERATED">
+              <SystemWindow title="NO RIFT GENERATED">
                 <div className="text-center py-12 text-muted-foreground">
-                  <p>Click "Generate Gate" to create a random Gate</p>
+                  <p>Click "Generate Rift" to create a random Rift</p>
                 </div>
               </SystemWindow>
             )}
@@ -221,4 +224,5 @@ const GateGenerator = () => {
 };
 
 export default GateGenerator;
+
 
