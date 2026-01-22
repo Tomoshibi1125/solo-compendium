@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, RefreshCw, Download, Copy } from 'lucide-react';
+import { ArrowLeft, RefreshCw, Copy } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { cn } from '@/lib/utils';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 
 const RIFT_RANKS = ['E', 'D', 'C', 'B', 'A', 'S'];

@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
-import { AppError } from '@/lib/appError';
 import { addLocalRollHistory, isLocalCharacterId, listLocalRollHistory } from '@/lib/guestStore';
 
 export type RollRecord = Database['public']['Tables']['roll_history']['Row'];

@@ -36,7 +36,7 @@ export function StatBlock({
         description: 'Stat block copied successfully.',
       });
       setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
+    } catch {
       toast({
         title: 'Copy failed',
         description: 'Could not copy to clipboard.',

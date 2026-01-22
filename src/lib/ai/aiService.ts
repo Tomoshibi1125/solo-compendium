@@ -22,7 +22,7 @@ const CUSTOM_AI_FALLBACK_MODEL = 'gpt-4o-mini';
 
 export class AIServiceManager {
   private config: AIConfiguration;
-  private cache: Map<string, any> = new Map();
+  private cache: Map<string, AIResponse> = new Map();
   private requestCount: number = 0;
   private lastResetTime: number = Date.now();
 
@@ -91,7 +91,7 @@ export class AIServiceManager {
   /**
    * Enhance a prompt for better art generation
    */
-  async enhancePrompt(originalPrompt: string, context?: any): Promise<PromptEnhancement> {
+  async enhancePrompt(originalPrompt: string, context?: Record<string, unknown>): Promise<PromptEnhancement> {
     const request: AIRequest = {
       service: this.config.defaultService,
       type: 'enhance-prompt',
@@ -326,7 +326,7 @@ export class AIServiceManager {
     };
   }
 
-  private parseJsonResponse(text: string): any | null {
+  private parseJsonResponse(text: string): unknown | null {
     const trimmed = text.trim();
     const fenced = trimmed.match(/```(?:json)?\s*([\s\S]*?)```/i);
     const candidate = fenced ? fenced[1].trim() : trimmed;
@@ -544,7 +544,7 @@ export class AIServiceManager {
       errors.push(`AI service is disabled: ${service.name}`);
     }
     
-    if (service && !service.capabilities.includes(request.type as any)) {
+    if (service && !service.capabilities.includes(request.type)) {
       errors.push(`Service ${service.name} doesn't support ${request.type}`);
     }
     

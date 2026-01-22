@@ -35,8 +35,8 @@ interface AIEnhancedAudioProps {
 
 export function AIEnhancedAudio({ onAnalysisComplete, className }: AIEnhancedAudioProps) {
   const { isAnalyzing, analysis, error, analyzeAudio } = useAIAudioAnalysis();
-  const { isGenerating: isGeneratingTags, tags: aiTags, generateTags } = useAITagGeneration();
-  const { isDetecting, mood: detectedMood, detectMood } = useAIMoodDetection();
+  const { tags: aiTags, generateTags } = useAITagGeneration();
+  const { detectMood } = useAIMoodDetection();
   
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [audioUrl, setAudioUrl] = useState<string>('');

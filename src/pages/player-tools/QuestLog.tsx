@@ -212,14 +212,15 @@ export function QuestLog({ characterId }: { characterId: string }) {
         await updateResource('relic_shards', reward.relic_shards);
       }
 
+      const grantedPayload: Record<string, unknown> = {
+        ...reward,
+        applied: true,
+        applied_at: new Date().toISOString(),
+      };
       await updateQuest({
         questId: quest.id,
         updates: {
-          rewards_granted: {
-            ...reward,
-            applied: true,
-            applied_at: new Date().toISOString(),
-          } as any,
+          rewards_granted: grantedPayload,
         },
       });
     } catch (error) {
@@ -238,6 +239,10 @@ export function QuestLog({ characterId }: { characterId: string }) {
     const completedAt = new Date().toISOString();
 
     try {
+      const rewardPayload: Record<string, unknown> = {
+        ...reward,
+        applied: false,
+      };
       await updateQuest({
         questId: quest.id,
         updates: {
@@ -249,10 +254,7 @@ export function QuestLog({ characterId }: { characterId: string }) {
             completed: true,
             last_updated: completedAt,
           },
-          rewards_granted: {
-            ...reward,
-            applied: false,
-          } as any,
+          rewards_granted: rewardPayload,
         },
       });
       await applyRewards(quest, reward);
@@ -419,14 +421,14 @@ export function QuestLog({ characterId }: { characterId: string }) {
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-xs text-muted-foreground">Difficulty</label>
+                <label htmlFor="quest-difficulty" className="text-xs text-muted-foreground">Difficulty</label>
                 <Select
                   value={configForm.difficulty_mode}
                   onValueChange={(value: QuestConfigForm['difficulty_mode']) =>
                     setConfigForm((prev) => ({ ...prev, difficulty_mode: value }))
                   }
                 >
-                  <SelectTrigger className="h-9">
+                  <SelectTrigger id="quest-difficulty" className="h-9">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -439,14 +441,14 @@ export function QuestLog({ characterId }: { characterId: string }) {
               </div>
 
               <div>
-                <label className="text-xs text-muted-foreground">Reward Mode</label>
+                <label htmlFor="quest-reward" className="text-xs text-muted-foreground">Reward Mode</label>
                 <Select
                   value={configForm.reward_mode}
                   onValueChange={(value: QuestConfigForm['reward_mode']) =>
                     setConfigForm((prev) => ({ ...prev, reward_mode: value }))
                   }
                 >
-                  <SelectTrigger className="h-9">
+                  <SelectTrigger id="quest-reward" className="h-9">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -460,14 +462,14 @@ export function QuestLog({ characterId }: { characterId: string }) {
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-xs text-muted-foreground">Penalty</label>
+                <label htmlFor="quest-penalty" className="text-xs text-muted-foreground">Penalty</label>
                 <Select
                   value={configForm.penalty_mode}
                   onValueChange={(value: QuestConfigForm['penalty_mode']) =>
                     setConfigForm((prev) => ({ ...prev, penalty_mode: value }))
                   }
                 >
-                  <SelectTrigger className="h-9">
+                  <SelectTrigger id="quest-penalty" className="h-9">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -479,8 +481,9 @@ export function QuestLog({ characterId }: { characterId: string }) {
               </div>
 
               <div>
-                <label className="text-xs text-muted-foreground">Max Active</label>
+                <label htmlFor="quest-max-active" className="text-xs text-muted-foreground">Max Active</label>
                 <Input
+                  id="quest-max-active"
                   type="number"
                   min={1}
                   max={5}
@@ -497,8 +500,9 @@ export function QuestLog({ characterId }: { characterId: string }) {
             </div>
 
             <div>
-              <label className="text-xs text-muted-foreground">Reroll Allowance</label>
+              <label htmlFor="quest-reroll" className="text-xs text-muted-foreground">Reroll Allowance</label>
               <Input
+                id="quest-reroll"
                 type="number"
                 min={0}
                 max={3}

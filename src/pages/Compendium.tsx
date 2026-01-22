@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Search, 
@@ -28,15 +28,12 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Pagination } from '@/components/ui/pagination';
 import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Separator } from '@/components/ui/separator';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
 import { logger } from '@/lib/logger';
-import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
+import { isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { useFavorites } from '@/hooks/useFavorites';
 import { CompendiumSidebar } from '@/components/compendium/CompendiumSidebar';
@@ -45,43 +42,17 @@ import { SearchHistoryDropdown } from '@/components/compendium/SearchHistoryDrop
 import { useDebounce } from '@/hooks/useDebounce';
 import { useSearchHistory } from '@/hooks/useSearchHistory';
 import { useFilterPersistence } from '@/hooks/useFilterPersistence';
-import { parseSearchQuery, applySearchOperators } from '@/lib/searchOperators';
+import { parseSearchQuery } from '@/lib/searchOperators';
 import { SkeletonLoader } from '@/components/compendium/SkeletonLoader';
 import { EmptyState } from '@/components/compendium/EmptyState';
-import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { useToast } from '@/hooks/use-toast';
-import { useToastAction } from '@/hooks/useToastAction';
-import { AnimatedList } from '@/components/ui/AnimatedList';
-import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { GeminiProtocolGenerator } from '@/components/compendium/GeminiProtocolGenerator';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
 import { staticDataProvider } from '@/data/compendium/staticDataProvider';
+import type { StaticCompendiumEntry } from '@/data/compendium/staticDataProvider';
 import { formatMonarchVernacular, MONARCH_LABEL, MONARCH_LABEL_PLURAL } from '@/lib/vernacular';
 
 import { CompendiumEntry } from '@/hooks/useStartupData';
-
-type JobSearchRow = {
-  id: string;
-  name: string;
-  display_name?: string | null;
-  description?: string | null;
-  created_at?: string;
-  tags?: string[] | null;
-  source_book?: string | null;
-  image_url?: string | null;
-};
-
-type PowerSearchRow = {
-  id: string;
-  name: string;
-  display_name?: string | null;
-  description?: string | null;
-  power_level?: number | null;
-  school?: string | null;
-  created_at?: string;
-  tags?: string[] | null;
-  source_book?: string | null;
-};
 
 type SortOption = 'name-asc' | 'name-desc' | 'level-asc' | 'level-desc' | 'rarity-asc' | 'rarity-desc' | 'date-desc';
 
@@ -144,11 +115,6 @@ const rarityOrder: Record<string, number> = {
   'legendary': 5,
 };
 
-const powerSchools = [
-  'Abjuration', 'Conjuration', 'Divination', 'Enchantment',
-  'Evocation', 'Illusion', 'Necromancy', 'Transmutation'
-];
-
 const gateRanks = ['E', 'D', 'C', 'B', 'A', 'S', 'SS'];
 
 const Compendium = () => {
@@ -158,7 +124,6 @@ const Compendium = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState<SortOption>('name-asc');
-  const [showFilters, setShowFilters] = useState(false);
   const [selectedRarities, setSelectedRarities] = useState<string[]>([]);
   const [minLevel, setMinLevel] = useState<number | ''>('');
   const [maxLevel, setMaxLevel] = useState<number | ''>('');
@@ -176,7 +141,8 @@ const Compendium = () => {
   
   const { favorites, toggleFavorite } = useFavorites();
   const { toast } = useToast();
-  const showSetup = !isSupabaseConfigured;
+  const isE2E = import.meta.env.VITE_E2E === 'true';
+  const showSetup = !isSupabaseConfigured && !isE2E;
 
   // Fetch compendium data (using comprehensive static data loading)
   const { data: entries = [], isLoading, error } = useQuery({
@@ -200,7 +166,7 @@ const Compendium = () => {
       for (const category of categories) {
         if (selectedCategory === 'all' || selectedCategory === category) {
           logger.debug(`Fetching ${category} data...`);
-          let data: any[] = [];
+          let data: StaticCompendiumEntry[] = [];
           
           try {
             switch (category) {
@@ -699,8 +665,7 @@ const Compendium = () => {
         title: 'Link copied',
         description: 'Shareable link copied to clipboard.',
       });
-    }).catch((err) => {
-      // Error handling already present
+    }).catch(() => {
       toast({
         title: 'Failed to copy',
         description: 'Could not copy link to clipboard.',

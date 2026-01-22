@@ -58,7 +58,7 @@ export class CampaignManager {
   /**
    * Get campaign by ID
    */
-  static async getCampaign(campaignId: string): Promise<Campaign | null> {
+  static async getCampaign(_campaignId: string): Promise<Campaign | null> {
     // Implementation would fetch from database
     return null;
   }
@@ -86,7 +86,7 @@ export class CampaignManager {
   /**
    * Delete campaign
    */
-  static async deleteCampaign(campaignId: string): Promise<void> {
+  static async deleteCampaign(_campaignId: string): Promise<void> {
     // Implementation would delete from database
   }
 
@@ -113,7 +113,7 @@ export class CampaignManager {
   /**
    * Remove member from campaign
    */
-  static async removeMember(campaignId: string, userId: string): Promise<void> {
+  static async removeMember(_campaignId: string, _userId: string): Promise<void> {
     // Implementation would remove from database
   }
 
@@ -121,9 +121,9 @@ export class CampaignManager {
    * Check if user has permission for campaign
    */
   static async hasPermission(
-    campaignId: string,
-    userId: string,
-    permission: keyof CampaignPermissions
+    _campaignId: string,
+    _userId: string,
+    _permission: keyof CampaignPermissions
   ): Promise<boolean> {
     // Implementation would check permissions in database
     return true;
@@ -132,7 +132,7 @@ export class CampaignManager {
   /**
    * Get campaign members
    */
-  static async getMembers(campaignId: string): Promise<CampaignMember[]> {
+  static async getMembers(_campaignId: string): Promise<CampaignMember[]> {
     // Implementation would fetch from database
     return [];
   }

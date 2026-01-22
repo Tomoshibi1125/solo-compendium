@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import type { Database } from '@/integrations/supabase/types';
 import { getSpellSlotsPerLevel, getCasterType } from '@/lib/characterCalculations';
 import {
   getLocalCharacterState,
@@ -11,9 +10,6 @@ import {
 } from '@/lib/guestStore';
 import { AppError } from '@/lib/appError';
 
-type SpellSlot = Database['public']['Tables']['character_spell_slots']['Row'];
-type SpellSlotInsert = Database['public']['Tables']['character_spell_slots']['Insert'];
-type SpellSlotUpdate = Database['public']['Tables']['character_spell_slots']['Update'];
 
 export interface SpellSlotData {
   level: number;

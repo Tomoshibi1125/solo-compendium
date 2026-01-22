@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Wand2, Plus, Trash2, Filter, AlertTriangle } from 'lucide-react';
+import { Wand2, Plus, Trash2, AlertTriangle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
@@ -89,7 +89,7 @@ export function PowersList({ characterId }: { characterId: string }) {
         display_order: index,
       }));
       await reorderPowers(updates);
-    } catch (error) {
+    } catch {
       // Error handled by hook
     }
   }, [reorderPowers]);
@@ -117,7 +117,7 @@ export function PowersList({ characterId }: { characterId: string }) {
         title: power.is_prepared ? 'Unprepared' : 'Prepared',
         description: `${displayName} has been ${power.is_prepared ? 'unprepared' : 'prepared'}.`,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Error',
         description: 'Failed to update power.',
@@ -159,7 +159,7 @@ export function PowersList({ characterId }: { characterId: string }) {
         title: 'Spell Cast',
         description: `${displayName} cast! Used 1 Tier ${power.power_level} spell slot.`,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Error',
         description: 'Failed to use spell slot.',
@@ -178,7 +178,7 @@ export function PowersList({ characterId }: { characterId: string }) {
         title: 'Removed',
         description: `${displayName} has been removed.`,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Error',
         description: 'Failed to remove power.',

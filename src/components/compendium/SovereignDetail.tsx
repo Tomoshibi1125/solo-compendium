@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Crown, Sparkles, Merge, Flame, Shield, Swords, GitBranch, Zap, Star } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { SystemWindow } from '@/components/ui/SystemWindow';
-import { Separator } from '@/components/ui/separator';
 import { supabase } from '@/integrations/supabase/client';
 import { formatMonarchVernacular, MONARCH_LABEL } from '@/lib/vernacular';
 

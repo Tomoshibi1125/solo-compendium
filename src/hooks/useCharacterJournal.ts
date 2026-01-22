@@ -53,7 +53,7 @@ export const useUpdateJournalEntry = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, characterId, ...updates }: { id: string; characterId: string } & Partial<JournalEntry>) => {
+    mutationFn: async ({ id, characterId: _characterId, ...updates }: { id: string; characterId: string } & Partial<JournalEntry>) => {
       const { data, error } = await supabase
         .from('character_journal')
         .update({ ...updates, updated_at: new Date().toISOString() })
@@ -74,7 +74,7 @@ export const useDeleteJournalEntry = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, characterId }: { id: string; characterId: string }) => {
+    mutationFn: async ({ id, characterId: _characterId }: { id: string; characterId: string }) => {
       const { error } = await supabase
         .from('character_journal')
         .delete()

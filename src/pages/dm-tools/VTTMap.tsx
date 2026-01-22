@@ -1,13 +1,12 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Save, Download, Upload, Grid, Plus, Minus, Move, RotateCw, Trash2, Layers } from 'lucide-react';
+import { ArrowLeft, Save, Download, Plus, Minus, RotateCw, Trash2, Lock, Unlock } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DEFAULT_TOKENS, mergeBaseTokens, normalizeLibraryTokens, type LibraryToken } from '@/data/tokenLibraryDefaults';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import { useDebounce } from '@/hooks/useDebounce';
@@ -17,6 +16,7 @@ interface PlacedToken {
   id: string;
   tokenId: string;
   name: string;
+  tokenType?: LibraryToken['type'];
   emoji?: string;
   imageUrl?: string;
   color?: string;
@@ -26,11 +26,12 @@ interface PlacedToken {
   rotation: number;
   layer: number;
   locked: boolean;
+  render?: LibraryToken['render'];
 }
 
 type MapToken = Pick<
   LibraryToken,
-  'id' | 'name' | 'emoji' | 'imageUrl' | 'color' | 'size' | 'category'
+  'id' | 'name' | 'emoji' | 'imageUrl' | 'color' | 'size' | 'category' | 'type' | 'render'
 >;
 
 type VTTMapState = {
@@ -90,6 +91,8 @@ const VTTMap = () => {
       color: t.color,
       size: t.size,
       category: t.category,
+      type: t.type,
+      render: t.render,
     }));
     setAvailableTokens(mapped);
     if (mergedTokens !== storedTokens) {
@@ -129,12 +132,12 @@ const VTTMap = () => {
     });
   };
 
-  const handleMapClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const placeTokenAt = (clientX: number, clientY: number) => {
     if (!mapRef.current || !selectedToken) return;
 
     const rect = mapRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
 
     // Snap to grid
     const gridX = Math.floor(x / (gridSize * zoom));
@@ -150,6 +153,8 @@ const VTTMap = () => {
           imageUrl: token.imageUrl,
           color: token.color,
           size: token.size,
+          tokenType: token.type,
+          render: token.render,
           x: gridX,
           y: gridY,
           rotation: 0,
@@ -159,6 +164,18 @@ const VTTMap = () => {
       setPlacedTokens([...placedTokens, placed]);
       setSelectedToken(null);
     }
+  };
+
+  const handleMapClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    placeTokenAt(e.clientX, e.clientY);
+  };
+
+  const handleMapKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    e.preventDefault();
+    if (!mapRef.current) return;
+    const rect = mapRef.current.getBoundingClientRect();
+    placeTokenAt(rect.left + rect.width / 2, rect.top + rect.height / 2);
   };
 
   const handleTokenDragStart = (token: PlacedToken, e: React.MouseEvent) => {
@@ -210,6 +227,23 @@ const VTTMap = () => {
     );
   };
 
+  const handleTokenKeyDown = (token: PlacedToken, e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleRotateToken(token.id);
+      return;
+    }
+    if (e.key === 'Delete' || e.key === 'Backspace') {
+      e.preventDefault();
+      handleDeleteToken(token.id);
+      return;
+    }
+    if (e.key.toLowerCase() === 'l') {
+      e.preventDefault();
+      handleToggleLock(token.id);
+    }
+  };
+
   const handleExport = () => {
     const exportData = {
       tokens: placedTokens,
@@ -229,7 +263,10 @@ const VTTMap = () => {
     });
   };
 
-  const visibleTokens = placedTokens.filter(t => t.layer === currentLayer);
+  const visibleTokens = useMemo(
+    () => placedTokens.filter((token) => token.layer === currentLayer),
+    [currentLayer, placedTokens]
+  );
   const mapWidth = 20;
   const mapHeight = 20;
 
@@ -258,7 +295,7 @@ const VTTMap = () => {
             <SystemWindow title="CONTROLS">
               <div className="space-y-4">
                 <div>
-                  <label className="text-sm font-heading mb-2 block">Zoom</label>
+                  <p className="text-sm font-heading mb-2">Zoom</p>
                   <div className="flex items-center gap-2">
                     <Button
                       variant="outline"
@@ -283,7 +320,7 @@ const VTTMap = () => {
                 </div>
 
                 <div>
-                  <label className="text-sm font-heading mb-2 block">Layer</label>
+                  <p className="text-sm font-heading mb-2">Layer</p>
                   <div className="flex items-center gap-2">
                     <Button
                       variant="outline"
@@ -342,6 +379,13 @@ const VTTMap = () => {
                 ) : (
                   availableTokens.map((token) => {
                     const size = SIZE_VALUES[token.size];
+                    const isOverlayPreview =
+                      token.render?.mode === 'overlay' ||
+                      token.type === 'effect' ||
+                      token.type === 'prop' ||
+                      (!!token.imageUrl &&
+                        (token.imageUrl.includes('/generated/props/') ||
+                          token.imageUrl.includes('/generated/effects/')));
                     return (
                       <button
                         key={token.id}
@@ -358,20 +402,24 @@ const VTTMap = () => {
                         <div className="flex items-center gap-2">
                           <div
                             className={cn(
-                              'rounded-full flex items-center justify-center text-lg border',
-                              token.color ? `border-[${token.color}]` : 'border-border'
+                              'flex items-center justify-center text-lg border border-border overflow-hidden',
+                              isOverlayPreview ? 'rounded-md bg-transparent' : 'rounded-full'
                             )}
                             style={{
                               width: `${Math.min(size / 2, 32)}px`,
                               height: `${Math.min(size / 2, 32)}px`,
-                              backgroundColor: token.color ? `${token.color}20` : undefined,
+                              borderColor: token.color ?? undefined,
+                              backgroundColor: isOverlayPreview ? 'transparent' : token.color ? `${token.color}20` : undefined,
                             }}
                           >
                             {token.imageUrl ? (
                               <OptimizedImage
                                 src={token.imageUrl}
                                 alt={token.name}
-                                className="w-full h-full object-cover rounded-full"
+                                className={cn(
+                                  'w-full h-full',
+                                  isOverlayPreview ? 'object-contain' : 'object-cover rounded-full'
+                                )}
                                 size="thumbnail"
                               />
                             ) : (
@@ -397,42 +445,66 @@ const VTTMap = () => {
 
             <SystemWindow title="PLACED TOKENS" variant="quest">
               <div className="space-y-2 max-h-64 overflow-y-auto text-xs">
-                {visibleTokens.map((token) => (
-                  <div
-                    key={token.id}
-                    className="p-2 rounded border border-border bg-muted/30 flex items-center justify-between"
-                  >
-                    <div className="flex items-center gap-2 flex-1 min-w-0">
-                      {token.imageUrl ? (
-                        <OptimizedImage
-                          src={token.imageUrl}
-                          alt={token.name}
-                          className="w-6 h-6 rounded-full object-cover border border-border"
-                          size="thumbnail"
-                        />
-                      ) : (
-                        <span>{token.emoji || '@'}</span>
-                      )}
-                      <span className="truncate">{token.name}</span>
+                {visibleTokens.map((token) => {
+                  const isOverlayPreview =
+                    token.render?.mode === 'overlay' ||
+                    token.tokenType === 'effect' ||
+                    token.tokenType === 'prop' ||
+                    (!!token.imageUrl &&
+                      (token.imageUrl.includes('/generated/props/') ||
+                        token.imageUrl.includes('/generated/effects/')));
+                  return (
+                    <div
+                      key={token.id}
+                      className="p-2 rounded border border-border bg-muted/30 flex items-center justify-between"
+                    >
+                      <div className="flex items-center gap-2 flex-1 min-w-0">
+                        {token.imageUrl ? (
+                          <OptimizedImage
+                            src={token.imageUrl}
+                            alt={token.name}
+                            className={cn(
+                              'w-6 h-6 border border-border',
+                              isOverlayPreview ? 'rounded-md object-contain' : 'rounded-full object-cover'
+                            )}
+                            size="thumbnail"
+                          />
+                        ) : (
+                          <span>{token.emoji || '@'}</span>
+                        )}
+                        <span className="truncate">{token.name}</span>
+                      </div>
+                      <div className="flex gap-1">
+                        <button
+                          onClick={() => handleToggleLock(token.id)}
+                          className="p-1 hover:bg-muted rounded"
+                          title={token.locked ? 'Unlock' : 'Lock'}
+                          aria-label={token.locked ? 'Unlock token' : 'Lock token'}
+                        >
+                          {token.locked ? (
+                            <Unlock className="w-3 h-3" />
+                          ) : (
+                            <Lock className="w-3 h-3" />
+                          )}
+                        </button>
+                        <button
+                          onClick={() => handleRotateToken(token.id)}
+                          className="p-1 hover:bg-muted rounded"
+                          title="Rotate"
+                        >
+                          <RotateCw className="w-3 h-3" />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteToken(token.id)}
+                          className="p-1 hover:bg-muted rounded text-destructive"
+                          title="Delete"
+                        >
+                          <Trash2 className="w-3 h-3" />
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex gap-1">
-                      <button
-                        onClick={() => handleRotateToken(token.id)}
-                        className="p-1 hover:bg-muted rounded"
-                        title="Rotate"
-                      >
-                        <RotateCw className="w-3 h-3" />
-                      </button>
-                      <button
-                        onClick={() => handleDeleteToken(token.id)}
-                        className="p-1 hover:bg-muted rounded text-destructive"
-                        title="Delete"
-                      >
-                        <Trash2 className="w-3 h-3" />
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
                 {visibleTokens.length === 0 && (
                   <p className="text-muted-foreground text-center py-2 text-xs">
                     No tokens on this layer. Select a token and click the map to place it.
@@ -444,11 +516,16 @@ const VTTMap = () => {
 
           <div className="lg:col-span-3">
             <SystemWindow title="MAP CANVAS">
+              {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
               <div
                 ref={mapRef}
                 onClick={handleMapClick}
                 onMouseMove={handleTokenDrag}
                 onMouseUp={handleTokenDragEnd}
+                onKeyDown={handleMapKeyDown}
+                role="application"
+                tabIndex={0}
+                aria-label="Map canvas. Click to place a selected token or press Enter to place at center."
                 data-testid="vtt-map"
                 className={cn(
                   'relative border-2 border-border rounded-lg bg-background overflow-auto',
@@ -484,6 +561,18 @@ const VTTMap = () => {
                   {/* Placed Tokens */}
                   {visibleTokens.map((token) => {
                     const size = SIZE_VALUES[token.size] * zoom;
+                    const isOverlayToken =
+                      token.render?.mode === 'overlay' ||
+                      token.tokenType === 'effect' ||
+                      token.tokenType === 'prop' ||
+                      (!!token.imageUrl &&
+                        (token.imageUrl.includes('/generated/props/') || token.imageUrl.includes('/generated/effects/')));
+                    const imageStyle = isOverlayToken
+                      ? {
+                          mixBlendMode: token.render?.blendMode ?? 'normal',
+                          opacity: token.render?.opacity ?? 1,
+                        }
+                      : undefined;
                     return (
                       <div
                         key={token.id}
@@ -494,6 +583,10 @@ const VTTMap = () => {
                           handleRotateToken(token.id);
                         }}
                         onClick={(e) => e.stopPropagation()}
+                        onKeyDown={(e) => handleTokenKeyDown(token, e)}
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`Token ${token.name}. Enter rotates, Delete removes, L toggles lock.`}
                         className={cn(
                           'absolute cursor-move transition-all',
                           token.locked && 'cursor-not-allowed opacity-75',
@@ -509,12 +602,14 @@ const VTTMap = () => {
                       >
                         <div
                           className={cn(
-                            'w-full h-full rounded-full flex items-center justify-center text-2xl border-2 transition-all hover:scale-110',
-                            token.color ? `border-[${token.color}]` : 'border-border',
+                            'w-full h-full flex items-center justify-center text-2xl border-2 border-border transition-all hover:scale-110',
+                            isOverlayToken ? 'border-transparent bg-transparent' : 'rounded-full',
+                            isOverlayToken ? 'hover:scale-100' : '',
                             token.locked && 'ring-2 ring-amber-400'
                           )}
                           style={{
-                            backgroundColor: token.color ? `${token.color}40` : undefined,
+                            backgroundColor: isOverlayToken ? 'transparent' : token.color ? `${token.color}40` : undefined,
+                            borderColor: isOverlayToken ? 'transparent' : token.color ?? undefined,
                             fontSize: `${size * 0.5}px`,
                           }}
                           title={`${token.name}${token.locked ? ' (Locked)' : ''}`}
@@ -523,8 +618,12 @@ const VTTMap = () => {
                             <OptimizedImage
                               src={token.imageUrl}
                               alt={token.name}
-                              className="w-full h-full object-cover rounded-full"
+                              className={cn(
+                                'w-full h-full',
+                                isOverlayToken ? 'object-contain' : 'object-cover rounded-full'
+                              )}
                               size="small"
+                              style={imageStyle}
                             />
                           ) : (
                             token.emoji || '@'

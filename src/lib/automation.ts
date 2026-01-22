@@ -80,7 +80,7 @@ function calculateShadowEnergyMax(level: number): number {
 export async function autoApplyCondition(
   characterId: string,
   condition: string,
-  duration?: number // in rounds/turns
+  _duration?: number // in rounds/turns
 ): Promise<void> {
   const { data: character } = await supabase
     .from('characters')
@@ -202,7 +202,7 @@ export async function autoUpdateFeatureUses(characterId: string): Promise<void> 
 /**
  * Auto-apply equipment modifiers to character stats
  */
-export async function autoApplyEquipmentModifiers(characterId: string): Promise<void> {
+export async function autoApplyEquipmentModifiers(_characterId: string): Promise<void> {
   // This would recalculate AC, speed, ability modifiers from equipment
   // Implementation would use equipmentModifiers.ts functions
   // Called when equipment is equipped/unequipped

@@ -56,11 +56,10 @@ export function CharacterResourcesPanel({
   onResourcesChange,
   onResourceRoll,
   hpCurrent,
-  hpMax,
+  hpMax: _hpMax,
   isDead = false
 }: CharacterResourcesPanelProps) {
   const { toast } = useToast();
-  const [deathSaveDialogOpen, setDeathSaveDialogOpen] = useState(false);
   const [tempHPDialogOpen, setTempHPDialogOpen] = useState(false);
   const [tempHPAmount, setTempHPAmount] = useState('');
   const [tempHPSource, setTempHPSource] = useState('');
@@ -112,7 +111,6 @@ export function CharacterResourcesPanel({
         });
     }
 
-    setDeathSaveDialogOpen(false);
   };
 
   const handleResetDeathSaves = () => {

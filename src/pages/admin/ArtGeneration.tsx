@@ -11,7 +11,9 @@ import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useArtPipeline, useArtQueueMonitor, useBatchArtGeneration } from '@/lib/artPipeline/hooks';
+import type { ArtRequest, GenerationResult } from '@/lib/artPipeline/types';
 import { Loader2, Play, Square, RefreshCw, CheckCircle, XCircle } from 'lucide-react';
+import { getRuntimeEnvValue } from '@/lib/runtimeEnv';
 
 export default function ArtGenerationAdmin() {
   const {
@@ -26,9 +28,15 @@ export default function ArtGenerationAdmin() {
   const { generateBatch, progress, results, isGenerating: isBatchGenerating } = useBatchArtGeneration();
   const queueMonitor = useArtQueueMonitor(enabled ? 2000 : 0);
 
-  const [testResult, setTestResult] = useState<any>(null);
+  const [testResult, setTestResult] = useState<GenerationResult | null>(null);
   const [isTestGenerating, setIsTestGenerating] = useState(false);
   const TEST_RESULT_KEY = 'solo-compendium.art-generation.test-result.v1';
+
+  type ArtAssetApiRow = {
+    id: string;
+    paths?: Record<string, string> | null;
+    metadata?: unknown;
+  };
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -66,9 +74,9 @@ export default function ArtGenerationAdmin() {
     }
   };
 
-  const fetchArtAsset = async (entityId: string, variant: string) => {
-    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-    const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+  const fetchArtAsset = async (entityId: string, variant: string): Promise<ArtAssetApiRow | null> => {
+    const supabaseUrl = getRuntimeEnvValue('VITE_SUPABASE_URL');
+    const supabaseKey = getRuntimeEnvValue('VITE_SUPABASE_PUBLISHABLE_KEY') || getRuntimeEnvValue('VITE_SUPABASE_ANON_KEY');
     if (!supabaseUrl || !supabaseKey) return null;
 
     const baseUrl = supabaseUrl.replace(/\/$/, '');
@@ -94,11 +102,14 @@ export default function ArtGenerationAdmin() {
       return null;
     }
 
-    const payload = await response.json();
+    const payload = (await response.json()) as unknown;
     if (Array.isArray(payload)) {
-      return payload[0] ?? null;
+      return (payload[0] as ArtAssetApiRow | undefined) ?? null;
     }
-    return payload ?? null;
+    if (payload && typeof payload === 'object') {
+      return payload as ArtAssetApiRow;
+    }
+    return null;
   };
 
   useEffect(() => {
@@ -109,9 +120,9 @@ export default function ArtGenerationAdmin() {
     setIsTestGenerating(true);
     setTestResult(null);
     const startedAt = Date.now();
-    let nextResult: any = null;
+    let nextResult: GenerationResult | null = null;
 
-    const testRequest = {
+    const testRequest: ArtRequest = {
       entityType: 'monster' as const,
       entityId: 'test-shadow-beast',
       variant: 'portrait' as const,
@@ -141,7 +152,7 @@ export default function ArtGenerationAdmin() {
         if (result && typeof result.success === 'boolean' && result.success) {
           nextResult = result;
         } else {
-          let fallbackAsset: { id: string; paths: Record<string, string>; metadata: any } | null = null;
+          let fallbackAsset: ArtAssetApiRow | null = null;
           for (let attempt = 0; attempt < 4; attempt += 1) {
             fallbackAsset = await fetchArtAsset(testRequest.entityId, testRequest.variant);
             if (fallbackAsset) {
@@ -429,13 +440,13 @@ export default function ArtGenerationAdmin() {
                     <div className="space-y-2">
                       <h4 className="font-medium">Queue Details:</h4>
                       <div className="space-y-1 text-sm">
-                        {queueMonitor.running?.map((item: any, i: number) => (
+                        {queueMonitor.running?.map((item, i) => (
                           <div key={i} className="flex justify-between">
                             <span>Running {i + 1}</span>
                             <Badge variant="default">Active</Badge>
                           </div>
                         ))}
-                        {queueMonitor.pending?.map((item: any, i: number) => (
+                        {queueMonitor.pending?.map((item, i) => (
                           <div key={i} className="flex justify-between">
                             <span>Pending {i + 1}</span>
                             <Badge variant="secondary">Queued</Badge>

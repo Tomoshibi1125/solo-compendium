@@ -22,6 +22,9 @@ supabase/functions/.env
 playwright-report/
 test-results/
 coverage/
+qa-artifacts/
+eslint-report.json
+public/runtime-env.js
 
 # Python
 __pycache__/

@@ -13,6 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { getBestImageFormat } from '@/lib/imageOptimization';
 import { useCampaignMembers, useCampaignRole } from '@/hooks/useCampaigns';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
@@ -25,10 +26,12 @@ import {
   normalizeLibraryTokens,
   type LibraryToken,
 } from '@/data/tokenLibraryDefaults';
+import PREMADE_MAPS, { type PremadeMap } from '@/data/premadeMaps';
 
 interface PlacedToken {
   id: string;
   characterId?: string;
+  tokenType?: LibraryToken['type'];
   name: string;
   emoji?: string;
   imageUrl?: string;
@@ -39,6 +42,7 @@ interface PlacedToken {
   rotation: number;
   layer: number;
   locked: boolean;
+  render?: LibraryToken['render'];
   // Character stats
   hp?: number;
   maxHp?: number;
@@ -111,6 +115,18 @@ type VTTScenesState = {
   scenes: Scene[];
   currentSceneId: string | null;
   savedAt?: string;
+};
+
+type LegacyVTTScenesState = {
+  scenes?: Scene[];
+  currentScene?: string | null;
+};
+
+type GridPosition = {
+  x: number;
+  y: number;
+  gridX: number;
+  gridY: number;
 };
 
 const SIZE_VALUES = {
@@ -202,8 +218,6 @@ const VTTEnhanced = () => {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [diceRolls, setDiceRolls] = useState<DiceRoll[]>([]);
   const [newMessage, setNewMessage] = useState('');
-  const [showInitiative, setShowInitiative] = useState(false);
-  const [showJournal, setShowJournal] = useState(false);
   const [measurementStart, setMeasurementStart] = useState<{ x: number; y: number } | null>(null);
   const [measurementEnd, setMeasurementEnd] = useState<{ x: number; y: number } | null>(null);
   const hydratedRef = useRef(false);
@@ -238,6 +252,9 @@ const VTTEnhanced = () => {
   const backgroundScale = currentScene?.backgroundScale ?? DEFAULT_SCENE_SETTINGS.backgroundScale;
   const backgroundOffsetX = currentScene?.backgroundOffsetX ?? DEFAULT_SCENE_SETTINGS.backgroundOffsetX;
   const backgroundOffsetY = currentScene?.backgroundOffsetY ?? DEFAULT_SCENE_SETTINGS.backgroundOffsetY;
+  const mapImageFormat = useMemo(() => getBestImageFormat(), []);
+  const sceneWidth = currentScene?.width ?? 20;
+  const sceneHeight = currentScene?.height ?? 20;
   const {
     state: libraryTokens,
     isLoading: libraryLoading,
@@ -287,7 +304,10 @@ const VTTEnhanced = () => {
     },
     enabled: !!campaignId && isAuthed && !loading,
   });
-  const resolvedCharacters = useLocalCharacters ? localCampaignCharacters : campaignCharacters || [];
+  const resolvedCharacters = useMemo(
+    () => (useLocalCharacters ? localCampaignCharacters : campaignCharacters || []),
+    [campaignCharacters, localCampaignCharacters, useLocalCharacters]
+  );
   const filteredLibraryTokens = useMemo(() => {
     const query = tokenSearch.trim().toLowerCase();
     if (!query) return libraryTokens;
@@ -314,7 +334,7 @@ const VTTEnhanced = () => {
   useEffect(() => {
     if (!currentScene) return;
     setFogOfWar(currentScene.fogOfWar ?? false);
-  }, [currentScene?.id]);
+  }, [currentScene]);
 
   const createNewScene = useCallback(() => {
     const scene: Scene = {
@@ -337,7 +357,7 @@ const VTTEnhanced = () => {
 
   useEffect(() => {
     if (!campaignId || isStateLoading || (hydratedRef.current && isGM)) return;
-    const legacyState = readLocalToolState<any>(legacyStorageKey);
+    const legacyState = readLocalToolState<LegacyVTTScenesState>(legacyStorageKey);
     const legacyScenes = Array.isArray(legacyState?.scenes) ? legacyState.scenes : [];
     const legacyCurrentId = typeof legacyState?.currentScene === 'string' ? legacyState.currentScene : null;
     const storedScenes = Array.isArray(storedState.scenes) ? storedState.scenes : [];
@@ -362,9 +382,13 @@ const VTTEnhanced = () => {
   }, [campaignId, createNewScene, isGM, isStateLoading, legacyStorageKey, saveNow, storedState.currentSceneId, storedState.scenes]);
 
   useEffect(() => {
-    if (!campaignId || isStateLoading || currentScene || !isGM) return;
+    if (!campaignId || isStateLoading || currentScene) return;
+    if (scenes.length > 0) {
+      setCurrentScene(scenes[0]);
+      return;
+    }
     createNewScene();
-  }, [campaignId, createNewScene, currentScene, isGM, isStateLoading]);
+  }, [campaignId, createNewScene, currentScene, isStateLoading, scenes]);
 
   useEffect(() => {
     if (!campaignId || !isHydrated || !isGM) return;
@@ -532,18 +556,26 @@ const VTTEnhanced = () => {
     return total;
   }, [addChatMessage]);
 
-  const getGridPosition = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!mapRef.current) return null;
-    const rect = mapRef.current.getBoundingClientRect();
-    const scrollLeft = mapRef.current.scrollLeft;
-    const scrollTop = mapRef.current.scrollTop;
-    const x = e.clientX - rect.left + scrollLeft;
-    const y = e.clientY - rect.top + scrollTop;
-    const size = gridSize * zoom;
-    const gridX = Math.floor(x / size);
-    const gridY = Math.floor(y / size);
-    return { x, y, gridX, gridY };
-  }, [gridSize, zoom]);
+  const getGridPositionFromPoint = useCallback(
+    (clientX: number, clientY: number): GridPosition | null => {
+      if (!mapRef.current) return null;
+      const rect = mapRef.current.getBoundingClientRect();
+      const scrollLeft = mapRef.current.scrollLeft;
+      const scrollTop = mapRef.current.scrollTop;
+      const x = clientX - rect.left + scrollLeft;
+      const y = clientY - rect.top + scrollTop;
+      const size = gridSize * zoom;
+      const gridX = Math.floor(x / size);
+      const gridY = Math.floor(y / size);
+      return { x, y, gridX, gridY };
+    },
+    [gridSize, zoom]
+  );
+
+  const getGridPosition = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => getGridPositionFromPoint(e.clientX, e.clientY),
+    [getGridPositionFromPoint]
+  );
 
   const buildFogData = useCallback((scene: Scene, revealed = false) => {
     return Array(scene.height)
@@ -619,7 +651,7 @@ const VTTEnhanced = () => {
         title: 'Map uploaded',
         description: 'Background image updated for this scene.',
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Upload failed',
         description: 'Could not upload the map. Please try again.',
@@ -645,10 +677,29 @@ const VTTEnhanced = () => {
     updateScene({ width: nextWidth, height: nextHeight, fogData: nextFog });
   }, [buildFogData, currentScene, updateScene]);
 
-  const handleMapClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const applyPremadeMap = useCallback(
+    (map: PremadeMap) => {
+      if (!currentScene) return;
+      const resolvedPath =
+        mapImageFormat === 'avif' && map.path.toLowerCase().endsWith('.webp')
+          ? map.path.replace(/\.webp$/i, '.avif')
+          : map.path;
+      if (currentScene.width !== map.grid.width || currentScene.height !== map.grid.height) {
+        resizeScene(map.grid.width, map.grid.height);
+      }
+      updateScene({
+        backgroundImage: resolvedPath,
+        backgroundScale: 1,
+        backgroundOffsetX: 0,
+        backgroundOffsetY: 0,
+        gridSize: map.grid.size,
+      });
+    },
+    [currentScene, mapImageFormat, resizeScene, updateScene]
+  );
+
+  const handleMapGridAction = useCallback((grid: GridPosition) => {
     if (!currentScene) return;
-    const grid = getGridPosition(e);
-    if (!grid) return;
 
     if (selectedTool === 'note' && isGM) {
       const text = noteText.trim();
@@ -755,6 +806,8 @@ const VTTEnhanced = () => {
         imageUrl: libraryToken.imageUrl,
         color: libraryToken.color,
         size: libraryToken.size,
+        tokenType: libraryToken.type,
+        render: libraryToken.render,
         x: grid.gridX,
         y: grid.gridY,
         rotation: 0,
@@ -769,7 +822,95 @@ const VTTEnhanced = () => {
     }
 
     setActiveTokenId(null);
-  };
+  }, [
+    appendToken,
+    currentLayer,
+    currentScene,
+    isGM,
+    libraryTokens,
+    measurementStart,
+    noteText,
+    resolvedCharacters,
+    selectedCharacterId,
+    selectedLibraryTokenId,
+    selectedTool,
+    setActiveTokenId,
+    setMeasurementEnd,
+    setMeasurementStart,
+    setSelectedCharacterId,
+    setSelectedLibraryTokenId,
+    toast,
+    updateScene,
+  ]);
+
+  const handleMapClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const grid = getGridPosition(e);
+      if (!grid) return;
+      handleMapGridAction(grid);
+    },
+    [getGridPosition, handleMapGridAction]
+  );
+
+  const handleMapKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      e.preventDefault();
+      if (!mapRef.current) return;
+      const rect = mapRef.current.getBoundingClientRect();
+      const grid = getGridPositionFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2);
+      if (!grid) return;
+      handleMapGridAction(grid);
+    },
+    [getGridPositionFromPoint, handleMapGridAction]
+  );
+
+  const removeAnnotation = useCallback(
+    (noteId: string) => {
+      if (!isGM) return;
+      updateScene({
+        annotations: (currentScene?.annotations ?? []).filter((entry) => entry.id !== noteId),
+      });
+    },
+    [currentScene?.annotations, isGM, updateScene]
+  );
+
+  const handleAnnotationKeyDown = useCallback(
+    (noteId: string, e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (!isGM) return;
+      if (e.key === 'Enter' || e.key === 'Delete' || e.key === 'Backspace') {
+        e.preventDefault();
+        e.stopPropagation();
+        removeAnnotation(noteId);
+      }
+    },
+    [isGM, removeAnnotation]
+  );
+
+  const handleTokenKeyDown = useCallback(
+    (token: PlacedToken, e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        setActiveTokenId(token.id);
+        return;
+      }
+      if ((e.key === 'Delete' || e.key === 'Backspace') && isGM) {
+        e.preventDefault();
+        removeToken(token.id);
+        return;
+      }
+      if ((e.key === 'l' || e.key === 'L') && isGM) {
+        e.preventDefault();
+        updateToken(token.id, { locked: !token.locked });
+        return;
+      }
+      if ((e.key === 'o' || e.key === 'O') && token.characterId) {
+        e.preventDefault();
+        window.open(`/characters/${token.characterId}`, '_blank');
+      }
+    },
+    [isGM, removeToken, setActiveTokenId, updateToken]
+  );
 
 
   const handleMapMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -852,21 +993,31 @@ const VTTEnhanced = () => {
     updateToken(tokenId, { initiative });
   };
 
-  const visibleTokens = currentScene?.tokens.filter((token) => {
-    const layerVisible = !!effectiveVisibleLayers[token.layer];
-    if (!layerVisible) return false;
-    return isGM ? true : token.visible;
-  }) || [];
-  const activeToken = currentScene?.tokens.find((token) => token.id === activeTokenId) ?? null;
+  const visibleTokens = useMemo(() => {
+    if (!currentScene?.tokens) return [];
+    return currentScene.tokens.filter((token) => {
+      const layerVisible = !!effectiveVisibleLayers[token.layer];
+      if (!layerVisible) return false;
+      return isGM ? true : token.visible;
+    });
+  }, [currentScene?.tokens, effectiveVisibleLayers, isGM]);
+  const activeToken = useMemo(
+    () => currentScene?.tokens.find((token) => token.id === activeTokenId) ?? null,
+    [activeTokenId, currentScene?.tokens]
+  );
   const drawingsToRender = useMemo(() => {
     const base = currentScene?.drawings ?? [];
     return activeDrawing ? [...base, activeDrawing] : base;
   }, [activeDrawing, currentScene?.drawings]);
-  const annotationsToRender = currentScene?.annotations ?? [];
+  const annotationsToRender = useMemo(() => currentScene?.annotations ?? [], [currentScene?.annotations]);
 
-  const tokensInInitiative = visibleTokens
-    .filter(t => t.initiative !== undefined && t.initiative !== null)
-    .sort((a, b) => (b.initiative || 0) - (a.initiative || 0));
+  const tokensInInitiative = useMemo(
+    () =>
+      [...visibleTokens]
+        .filter((token) => token.initiative !== undefined && token.initiative !== null)
+        .sort((a, b) => (b.initiative || 0) - (a.initiative || 0)),
+    [visibleTokens]
+  );
 
   return (
     <Layout>
@@ -901,9 +1052,14 @@ const VTTEnhanced = () => {
           </div>
         </div>
 
-        <div className={cn("grid grid-cols-12 gap-4 h-[calc(100vh-200px)]", isMapExpanded && "grid-cols-12")}>
+        <div
+          className={cn(
+            "grid grid-cols-1 md:grid-cols-12 gap-4 md:h-[calc(100vh-200px)]",
+            isMapExpanded && "md:grid-cols-12"
+          )}
+        >
           {/* Left Sidebar */}
-          <div className={cn("col-span-2 space-y-4 overflow-y-auto", isMapExpanded && "hidden")}>
+          <div className={cn("col-span-1 md:col-span-2 space-y-4 md:overflow-y-auto", isMapExpanded && "hidden")}>
             {isGM && (
               <>
                 <SystemWindow title="SCENES">
@@ -1284,6 +1440,38 @@ const VTTEnhanced = () => {
                     </div>
                   </div>
                 </SystemWindow>
+                {PREMADE_MAPS.length > 0 && (
+                  <SystemWindow title="PREMADE MAPS">
+                    <div className="grid grid-cols-2 gap-2">
+                      {PREMADE_MAPS.map((map) => (
+                        <button
+                          key={map.id}
+                          onClick={() => applyPremadeMap(map)}
+                          className="group rounded-lg border border-border bg-muted/20 p-2 text-left transition-all hover:bg-muted/40"
+                          aria-label={`Use ${map.name} map`}
+                        >
+                          <div className="h-20 w-full rounded-md border border-border/60 bg-muted/40 overflow-hidden">
+                            <OptimizedImage
+                              src={map.thumbnail}
+                              alt={`${map.name} thumbnail`}
+                              className="w-full h-full object-cover"
+                              size="small"
+                            />
+                          </div>
+                          <div className="mt-2 flex items-center justify-between gap-2">
+                            <span className="text-xs font-heading">{map.name}</span>
+                            <Badge variant="outline" className="text-[9px] uppercase tracking-wide">
+                              {map.theme}
+                            </Badge>
+                          </div>
+                          <div className="text-[10px] text-muted-foreground">
+                            {map.grid.width}x{map.grid.height} - {map.grid.size}px grid
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </SystemWindow>
+                )}
               </>
             )}
 
@@ -1346,41 +1534,58 @@ const VTTEnhanced = () => {
                       {filteredLibraryTokens.length === 0 && (
                         <p className="text-xs text-muted-foreground text-center py-4">No tokens match.</p>
                       )}
-                      {filteredLibraryTokens.map((token) => (
-                        <button
-                          key={token.id}
-                          onClick={() => {
-                            setSelectedLibraryTokenId(token.id);
-                            setSelectedCharacterId(null);
-                            setSelectedTool('select');
-                          }}
-                          className={cn(
-                            'w-full p-2 rounded border text-left text-xs transition-all flex items-center gap-2',
-                            selectedLibraryTokenId === token.id
-                              ? 'bg-primary/20 border-primary'
-                              : 'border-border hover:bg-muted/50'
-                          )}
-                        >
-                          <div className="w-8 h-8 rounded-full border border-border flex items-center justify-center bg-muted/40 overflow-hidden">
-                            {token.imageUrl ? (
-                              <OptimizedImage
-                                src={token.imageUrl}
-                                alt={token.name}
-                                className="w-full h-full object-cover"
-                                size="thumbnail"
-                              />
-                            ) : (
-                              <span className="text-sm">{token.emoji || '@'}</span>
+                      {filteredLibraryTokens.map((token) => {
+                        const isOverlayPreview =
+                          token.render?.mode === 'overlay' ||
+                          token.type === 'effect' ||
+                          token.type === 'prop' ||
+                          (!!token.imageUrl &&
+                            (token.imageUrl.includes('/generated/props/') ||
+                              token.imageUrl.includes('/generated/effects/')));
+                        return (
+                          <button
+                            key={token.id}
+                            onClick={() => {
+                              setSelectedLibraryTokenId(token.id);
+                              setSelectedCharacterId(null);
+                              setSelectedTool('select');
+                            }}
+                            className={cn(
+                              'w-full p-2 rounded border text-left text-xs transition-all flex items-center gap-2',
+                              selectedLibraryTokenId === token.id
+                                ? 'bg-primary/20 border-primary'
+                                : 'border-border hover:bg-muted/50'
                             )}
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="font-semibold truncate">{token.name}</div>
-                            <div className="text-muted-foreground capitalize">
-                              {token.category} | {token.size}
+                          >
+                            <div
+                              className={cn(
+                                'w-8 h-8 border border-border flex items-center justify-center overflow-hidden',
+                                isOverlayPreview ? 'rounded-md bg-transparent' : 'rounded-full bg-muted/40'
+                              )}
+                            >
+                              {token.imageUrl ? (
+                                <OptimizedImage
+                                  src={token.imageUrl}
+                                  alt={token.name}
+                                  className={cn(
+                                    'w-full h-full',
+                                    isOverlayPreview ? 'object-contain' : 'object-cover rounded-full'
+                                  )}
+                                  size="thumbnail"
+                                />
+                              ) : (
+                                <span className="text-sm">{token.emoji || '@'}</span>
+                              )}
                             </div>
-                          </div>
-                        </button>
-                      ))}
+                            <div className="flex-1 min-w-0">
+                              <div className="font-semibold truncate">{token.name}</div>
+                              <div className="text-muted-foreground capitalize">
+                                {token.category} | {token.size}
+                              </div>
+                            </div>
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
                 </TabsContent>
@@ -1389,10 +1594,11 @@ const VTTEnhanced = () => {
           </div>
 
           {/* Main Map Area */}
-          <div className={cn(isMapExpanded ? "col-span-12" : "col-span-7")}>
+          <div className={cn(isMapExpanded ? "col-span-1 md:col-span-12" : "col-span-1 md:col-span-7")}>
             <SystemWindow
               title="MAP"
-              className="h-full flex flex-col"
+              className="min-h-[60vh] md:h-full flex flex-col"
+              contentClassName="flex-1 flex flex-col"
               actions={(
                 <Button
                   variant="outline"
@@ -1404,6 +1610,7 @@ const VTTEnhanced = () => {
                 </Button>
               )}
             >
+              {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
               <div
                 ref={mapRef}
                 onClick={handleMapClick}
@@ -1411,45 +1618,53 @@ const VTTEnhanced = () => {
                 onMouseMove={handleMapMouseMove}
                 onMouseUp={handleMapMouseUp}
                 onMouseLeave={handleMapMouseUp}
+                onKeyDown={handleMapKeyDown}
+                role="application"
+                tabIndex={0}
+                aria-label="VTT map canvas. Click to place or interact with items, press Enter to act at center."
                 className={cn(
                   'flex-1 relative border-2 border-border rounded-lg bg-background overflow-auto',
                   selectedTool !== 'select' && 'cursor-crosshair',
                   selectedTool === 'select' && (selectedCharacterId || selectedLibraryTokenId) && 'cursor-crosshair'
                 )}
               >
-                {currentScene && (
-                  <div
-                    className="vtt-scene-container"
-                    style={{
-                      '--scene-width': `${currentScene.width * gridSize * zoom}px`,
-                      '--scene-height': `${currentScene.height * gridSize * zoom}px`,
-                    } as React.CSSProperties}
-                  >
-                    {/* Background */}
-                    {currentScene.backgroundImage && effectiveVisibleLayers[0] && (
-                      <div
-                        className="vtt-background"
-                        style={{
-                          backgroundImage: `url(${currentScene.backgroundImage})`,
-                          backgroundSize: `${backgroundScale * 100}%`,
-                          backgroundPosition: `${backgroundOffsetX * zoom}px ${backgroundOffsetY * zoom}px`,
-                        } as React.CSSProperties}
-                      />
-                    )}
+                <div
+                  className="vtt-scene-container"
+                  style={{
+                    '--scene-width': `${sceneWidth * gridSize * zoom}px`,
+                    '--scene-height': `${sceneHeight * gridSize * zoom}px`,
+                  } as React.CSSProperties}
+                >
+                  {!currentScene && (
+                    <div className="absolute inset-0 flex items-center justify-center text-xs text-muted-foreground pointer-events-none">
+                      Loading scene...
+                    </div>
+                  )}
+                  {/* Background */}
+                  {currentScene?.backgroundImage && effectiveVisibleLayers[0] && (
+                    <div
+                      className="vtt-background"
+                      style={{
+                        backgroundImage: `url(${currentScene.backgroundImage})`,
+                        backgroundSize: `${backgroundScale * 100}%`,
+                        backgroundPosition: `${backgroundOffsetX * zoom}px ${backgroundOffsetY * zoom}px`,
+                      } as React.CSSProperties}
+                    />
+                  )}
 
-                    {/* Grid */}
-                    {showGrid && (
-                      <div
-                        className="vtt-grid"
-                        style={{
-                          '--grid-image': `
+                  {/* Grid */}
+                  {showGrid && (
+                    <div
+                      className="vtt-grid"
+                      style={{
+                        '--grid-image': `
                             linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px),
                             linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px)
                           `,
-                          '--grid-size': `${gridSize * zoom}px ${gridSize * zoom}px`,
-                        } as React.CSSProperties}
-                      />
-                    )}
+                        '--grid-size': `${gridSize * zoom}px ${gridSize * zoom}px`,
+                      } as React.CSSProperties}
+                    />
+                  )}
 
                     {/* Drawings */}
                     {drawingsToRender.map((drawing) => {
@@ -1512,10 +1727,12 @@ const VTTEnhanced = () => {
                           onDoubleClick={(e) => {
                             if (!isGM) return;
                             e.stopPropagation();
-                            updateScene({
-                              annotations: (currentScene?.annotations ?? []).filter((entry) => entry.id !== note.id),
-                            });
+                            removeAnnotation(note.id);
                           }}
+                          onKeyDown={(e) => handleAnnotationKeyDown(note.id, e)}
+                          role="button"
+                          tabIndex={isGM ? 0 : -1}
+                          aria-label={isGM ? `Remove annotation ${note.text}` : `Annotation ${note.text}`}
                         >
                           {note.text}
                         </div>
@@ -1559,8 +1776,20 @@ const VTTEnhanced = () => {
 
                     {/* Tokens */}
                     {visibleTokens.map((token) => {
+                      const isOverlayToken =
+                        token.render?.mode === 'overlay' ||
+                        token.tokenType === 'effect' ||
+                        token.tokenType === 'prop' ||
+                        (!!token.imageUrl &&
+                          (token.imageUrl.includes('/generated/props/') || token.imageUrl.includes('/generated/effects/')));
                       const size = SIZE_VALUES[token.size] * zoom;
                       const hpPercentage = token.maxHp ? (token.hp || 0) / token.maxHp : 1;
+                      const imageStyle = isOverlayToken
+                        ? {
+                            mixBlendMode: token.render?.blendMode ?? 'normal',
+                            opacity: token.render?.opacity ?? 1,
+                          }
+                        : undefined;
                       return (
                         <div
                           key={token.id}
@@ -1576,8 +1805,13 @@ const VTTEnhanced = () => {
                               window.open(`/characters/${token.characterId}`, '_blank');
                             }
                           }}
+                          onKeyDown={(e) => handleTokenKeyDown(token, e)}
+                          role="button"
+                          tabIndex={0}
+                          aria-label={`Token ${token.name}. Enter selects, O opens, Delete removes, L locks.`}
                           className={cn(
                             'vtt-token group',
+                            isOverlayToken && 'is-overlay',
                             token.locked && 'locked',
                             activeTokenId === token.id && 'active',
                             draggedToken?.id === token.id && 'dragged'
@@ -1591,19 +1825,23 @@ const VTTEnhanced = () => {
                           } as React.CSSProperties}
                         >
                           <div
-                            className="vtt-token-inner"
+                            className={cn('vtt-token-inner', isOverlayToken && 'is-overlay')}
                             style={{
-                              '--token-bg-color': token.color ? `${token.color}40` : 'transparent',
+                              '--token-bg-color': isOverlayToken ? 'transparent' : token.color ? `${token.color}40` : 'transparent',
                               '--token-font-size': `${size * 0.4}px`,
-                              borderColor: token.color ?? undefined,
+                              borderColor: isOverlayToken ? 'transparent' : token.color ?? undefined,
                             } as React.CSSProperties}
                           >
                             {token.imageUrl ? (
                               <OptimizedImage
                                 src={token.imageUrl}
                                 alt={token.name}
-                                className="w-full h-full object-cover rounded-full"
+                                className={cn(
+                                  'w-full h-full',
+                                  isOverlayToken ? 'object-contain' : 'object-cover rounded-full'
+                                )}
                                 size="small"
+                                style={imageStyle}
                               />
                             ) : (
                               token.emoji || '@'
@@ -1677,14 +1915,13 @@ const VTTEnhanced = () => {
                       </div>
                     )}
 
-                  </div>
-                )}
+                </div>
               </div>
             </SystemWindow>
           </div>
 
           {/* Right Sidebar */}
-          <div className={cn("col-span-3 space-y-4 overflow-y-auto", isMapExpanded && "hidden")}>
+          <div className={cn("col-span-1 md:col-span-3 space-y-4 md:overflow-y-auto", isMapExpanded && "hidden")}>
             {activeToken && (
               <SystemWindow title="ACTIVE TOKEN">
                 <div className="space-y-3 text-xs">
@@ -1802,6 +2039,16 @@ const VTTEnhanced = () => {
                       disabled={!isGM}
                     />
                   </div>
+                  {activeToken.characterId && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full"
+                      onClick={() => window.open(`/characters/${activeToken.characterId}`, '_blank')}
+                    >
+                      Open Character Sheet
+                    </Button>
+                  )}
                   {isGM && (
                     <div className="flex gap-2">
                       <Button

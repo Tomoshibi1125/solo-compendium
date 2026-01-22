@@ -17,6 +17,7 @@ import { useArtPipeline, useArtAsset } from '@/lib/artPipeline/hooks';
 import { Loader2, Image, Sparkles, Settings } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import type { ArtRequest, GenerationResult } from '@/lib/artPipeline/types';
 
 interface ArtGeneratorProps {
   entityType?: 'character' | 'npc' | 'item' | 'monster' | 'location';
@@ -39,8 +40,8 @@ export function ArtGenerator({
   onArtGenerated,
   className 
 }: ArtGeneratorProps) {
-  const { generateArt, isAvailable, isGenerating } = useArtPipeline();
-  const pipelineEntityType =
+  const { generateArt, isAvailable } = useArtPipeline();
+  const pipelineEntityType: ArtRequest['entityType'] =
     entityType === 'item' ? 'item' : entityType === 'location' ? 'location' : 'monster';
   const { asset } = useArtAsset(pipelineEntityType, entityId || 'temp');
   
@@ -55,12 +56,10 @@ export function ArtGenerator({
     extraLore: '',
   });
   
-  const [generationResult, setGenerationResult] = useState<any>(null);
+  const [generationResult, setGenerationResult] = useState<GenerationResult | null>(null);
   const [isGeneratingArt, setIsGeneratingArt] = useState(false);
 
   // Map entity types to art pipeline types
-  const getEntityTypeForPipeline = () => pipelineEntityType;
-
   const handleGenerate = async () => {
     if (!isAvailable) {
       setGenerationResult({
@@ -73,8 +72,8 @@ export function ArtGenerator({
     setIsGeneratingArt(true);
     setGenerationResult(null);
 
-    const request = {
-      entityType: getEntityTypeForPipeline() as any,
+    const request: ArtRequest = {
+      entityType: pipelineEntityType,
       entityId: entityId || `custom-${Date.now()}`,
       variant: formData.variant,
       title: formData.name || 'Custom Art',
@@ -203,7 +202,7 @@ export function ArtGenerator({
             {/* Variant */}
             <div>
               <Label htmlFor="variant">Art Type</Label>
-              <Select value={formData.variant} onValueChange={(value: any) => setFormData(prev => ({ ...prev, variant: value }))}>
+              <Select value={formData.variant} onValueChange={(value) => setFormData(prev => ({ ...prev, variant: value as ArtRequest['variant'] }))}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>

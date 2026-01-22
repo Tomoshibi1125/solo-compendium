@@ -6,10 +6,7 @@
  */
 
 import { supabase } from '@/integrations/supabase/client';
-import type { Database } from '@/integrations/supabase/types';
 import { logger } from './logger';
-
-type Character = Database['public']['Tables']['characters']['Row'];
 
 /**
  * Effect types that can be applied to characters

@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Heart, Share2, Download, BookOpen, FileText } from 'lucide-react';

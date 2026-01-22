@@ -10,8 +10,6 @@ import {
   RollResult, 
   rollWithAdvantage, 
   rollCritical, 
-  applyAbilityModifier, 
-  applyProficiencyBonus,
   formatRollResult 
 } from './advancedDiceEngine';
 
@@ -347,7 +345,7 @@ export function rollInitiative(
 /**
  * Check if character is proficient with weapon
  */
-function checkWeaponProficiency(character: Character, weapon: Equipment): boolean {
+function checkWeaponProficiency(_character: Character, _weapon: Equipment): boolean {
   // This would check against character's weapon proficiencies
   // For now, assume proficiency with simple weapons
   return true;
@@ -359,7 +357,7 @@ function checkWeaponProficiency(character: Character, weapon: Equipment): boolea
 export function applyDamage(
   character: Character,
   damage: DamageResult,
-  damageType: string
+  _damageType: string
 ): Character {
   const currentHP = character.hp_current;
   const newHP = Math.max(0, currentHP - damage.totalDamage);
@@ -396,7 +394,7 @@ export function applyHealing(
 export function applyCondition(
   character: Character,
   condition: string,
-  duration?: number
+  _duration?: number
 ): Character {
   const existingConditions = character.conditions || [];
   const newConditions = [...existingConditions];

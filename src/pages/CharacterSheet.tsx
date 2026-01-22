@@ -85,7 +85,6 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { RichTextNotes } from '@/components/character/RichTextNotes';
 import { CharacterResourcesPanel } from '@/components/character/CharacterResourcesPanel';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
@@ -202,14 +201,14 @@ const CharacterSheet = () => {
         return acc;
       }, {} as Record<AbilityScore, string>),
     );
-  }, [character?.id, character?.abilities]);
+  }, [character]);
 
   useEffect(() => {
     if (!character) return;
     setArmorClassDraft(character.armor_class.toString());
     setSpeedDraft(character.speed.toString());
     setHpMaxDraft(character.hp_max.toString());
-  }, [character?.id, character?.armor_class, character?.speed, character?.hp_max]);
+  }, [character]);
 
   useEffect(() => {
     setCustomModifiersDraft(customModifiers);
@@ -262,7 +261,7 @@ const CharacterSheet = () => {
     if (!character) return;
     try {
       await generateShareToken.mutateAsync(character.id);
-    } catch (error) {
+    } catch {
       // Error handled by mutation
     }
   };
@@ -277,7 +276,7 @@ const CharacterSheet = () => {
         description: 'Share link copied to clipboard.',
       });
       setTimeout(() => setShareLinkCopied(false), 2000);
-    } catch (error) {
+    } catch {
       toast({
         title: 'Failed to copy',
         description: 'Could not copy link to clipboard.',
@@ -507,7 +506,7 @@ const CharacterSheet = () => {
     const nextResources = applyResourceRest(characterResources, restType);
     try {
       await saveSheetState({ resources: nextResources });
-    } catch (error) {
+    } catch {
       // Resource rest updates should not block completing rests.
     }
   };
@@ -526,7 +525,7 @@ const CharacterSheet = () => {
         title: 'Short rest completed',
         description: 'Hit dice restored. Short-rest features recharged.',
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Failed to rest',
         description: 'Could not complete short rest.',
@@ -557,7 +556,7 @@ const CharacterSheet = () => {
           variant: 'destructive',
         });
       }
-    } catch (error) {
+    } catch {
       toast({
         title: 'Failed to rest',
         description: 'Could not complete long rest.',
@@ -596,7 +595,7 @@ const CharacterSheet = () => {
         campaign_id: characterCampaign?.id ?? null,
         character_id: character.id,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Roll failed',
         description: 'Could not execute roll.',
@@ -641,7 +640,7 @@ const CharacterSheet = () => {
       });
       setHpEditOpen(false);
       setHpEditValue('');
-    } catch (error) {
+    } catch {
       toast({
         title: 'Failed to update HP',
         description: 'Could not update hit points.',
@@ -677,7 +676,7 @@ const CharacterSheet = () => {
         title: direction === 'damage' ? 'Damage applied' : 'Healed',
         description: `HP is now ${nextHp}/${character.hp_max}.`,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Failed to update HP',
         description: 'Could not update hit points.',
@@ -711,7 +710,7 @@ const CharacterSheet = () => {
           [ability]: parsed,
         },
       });
-    } catch (error) {
+    } catch {
       setAbilityDrafts((prev) => ({
         ...prev,
         [ability]: character.abilities[ability]?.toString() || '10',
@@ -737,7 +736,7 @@ const CharacterSheet = () => {
         id: character.id,
         data: { armor_class: parsed },
       });
-    } catch (error) {
+    } catch {
       setArmorClassDraft(character.armor_class.toString());
     }
   };
@@ -760,7 +759,7 @@ const CharacterSheet = () => {
         id: character.id,
         data: { speed: parsed },
       });
-    } catch (error) {
+    } catch {
       setSpeedDraft(character.speed.toString());
     }
   };
@@ -787,7 +786,7 @@ const CharacterSheet = () => {
           hp_current: nextCurrent,
         },
       });
-    } catch (error) {
+    } catch {
       setHpMaxDraft(character.hp_max.toString());
     }
   };
@@ -850,7 +849,7 @@ const CharacterSheet = () => {
     if (!character || isReadOnly) return;
     try {
       await saveSheetState({ resources: nextResources });
-    } catch (error) {
+    } catch {
       return;
     }
     const nextTempHp = calculateTotalTempHP(nextResources);
@@ -958,7 +957,7 @@ const CharacterSheet = () => {
         },
       });
       setProficiencyDialogOpen(false);
-    } catch (error) {
+    } catch {
       // Error handled by mutation
     }
   };
@@ -2188,7 +2187,7 @@ const CharacterSheet = () => {
                           id: character.id,
                           data: { notes: newValue },
                         });
-                      } catch (error) {
+                      } catch {
                         toast({
                           title: 'Failed to save',
                           description: 'Could not update notes.',

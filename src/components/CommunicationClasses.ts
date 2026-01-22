@@ -1,33 +1,14 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
-import { Slider } from '@/components/ui/slider';
-import { Input } from '@/components/ui/input';
-import {
-  Mic,
-  MicOff, 
-  Video, 
-  VideoOff, 
-  Phone, 
-  PhoneOff, 
-  Users, 
-  Volume2,
-  VolumeX,
-  Settings,
-  Wifi,
-  WifiOff,
-  MonitorSpeaker,
-  Headphones,
-  Share2,
-  MessageSquare,
-  MoreVertical
-} from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
 import { logger } from '@/lib/logger';
+
+type AudioContextConstructor = typeof AudioContext;
+type DisplayMediaCursor = 'always' | 'motion' | 'never';
+type DisplayMediaVideoConstraints = MediaTrackConstraints & { cursor?: DisplayMediaCursor };
+
+const resolveAudioContext = (): AudioContextConstructor | null => {
+  if (typeof window === 'undefined') return null;
+  const withWebkit = window as typeof window & { webkitAudioContext?: AudioContextConstructor };
+  return window.AudioContext || withWebkit.webkitAudioContext || null;
+};
 
 export interface VoiceChatUser {
   id: string;
@@ -82,7 +63,12 @@ export class VoiceChatManager {
 
   private initializeAudioContext() {
     try {
-      this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const AudioContextCtor = resolveAudioContext();
+      if (!AudioContextCtor) {
+        logger.warn('AudioContext is not available in this environment.');
+        return;
+      }
+      this.audioContext = new AudioContextCtor();
       this.analyser = this.audioContext.createAnalyser();
       this.analyser.fftSize = 256;
       this.analyser.smoothingTimeConstant = 0.8;
@@ -306,8 +292,8 @@ export class VideoConferenceManager {
     try {
       const stream = await navigator.mediaDevices.getDisplayMedia({
         video: {
-          cursor: 'always'
-        } as any,
+          cursor: 'always',
+        } as DisplayMediaVideoConstraints,
         audio: false
       });
 

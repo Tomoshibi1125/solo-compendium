@@ -3,7 +3,6 @@
  * Export characters, compendium entries, campaigns, etc.
  */
 
-import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 import { AppError } from '@/lib/appError';
 import { formatMonarchVernacular } from '@/lib/vernacular';

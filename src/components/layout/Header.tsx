@@ -22,8 +22,14 @@ import { logger } from '@/lib/logger';
 import { GlobalSearch } from '@/components/ui/GlobalSearch';
 import { cn } from '@/lib/utils';
 
+type HeaderUser = {
+  name?: string | null;
+  email?: string | null;
+  avatar?: string | null;
+};
+
 interface HeaderProps {
-  user?: any;
+  user?: HeaderUser;
   onLogout?: () => void;
 }
 

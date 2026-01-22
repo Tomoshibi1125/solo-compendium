@@ -8,8 +8,7 @@ import {
   UnifiedClass, 
   UnifiedAbilityScores,
   UnifiedSpellSlots,
-  getUnifiedAbilityModifier,
-  getUnifiedProficiencyBonus
+  getUnifiedAbilityModifier
 } from './rulesEngine';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 

@@ -5,7 +5,7 @@ import { VitePWA } from "vite-plugin-pwa";
 import wasm from "vite-plugin-wasm";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode: _mode }) => {
   const plugins = [
     react(),
     wasm(),
@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => {
       injectRegister: null,
       registerType: 'autoUpdate',
       workbox: {
-        maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
+        maximumFileSizeToCacheInBytes: 20 * 1024 * 1024,
         globPatterns: ['**/*.{js,css,html,ico,png,svg,webmanifest,wasm}'],
         globIgnores: ['**/generated/**'],
         runtimeCaching: [
@@ -160,6 +160,34 @@ export default defineConfig(({ mode }) => {
                 return 'react-vendor';
               }
               if (normalizedId.includes('/@radix-ui/')) return 'ui-vendor';
+              if (normalizedId.includes('/node_modules/@tsparticles/')) return 'particles-vendor';
+              if (normalizedId.includes('/node_modules/pixi.js/') || normalizedId.includes('/node_modules/pixi-filters/')) {
+                return 'pixi-vendor';
+              }
+              if (
+                normalizedId.includes('/node_modules/gsap/') ||
+                normalizedId.includes('/node_modules/lottie-web/') ||
+                normalizedId.includes('/node_modules/howler/')
+              ) {
+                return 'media-vendor';
+              }
+              if (
+                normalizedId.includes('/node_modules/@react-three/xr/') ||
+                normalizedId.includes('/node_modules/@pmndrs/xr/')
+              ) {
+                return 'xr-vendor';
+              }
+              if (
+                normalizedId.includes('/node_modules/@react-three/cannon/') ||
+                normalizedId.includes('/node_modules/cannon-es/')
+              ) {
+                return 'physics-vendor';
+              }
+              if (normalizedId.includes('/node_modules/three-mesh-bvh/')) return 'three-bvh-vendor';
+              if (normalizedId.includes('/node_modules/three.quarks/')) return 'three-particles-vendor';
+              if (normalizedId.includes('/node_modules/maath/')) return 'three-math-vendor';
+              if (normalizedId.includes('/node_modules/lamina/')) return 'three-shaders-vendor';
+              if (normalizedId.includes('/node_modules/@react-spring/')) return 'motion-vendor';
               if (normalizedId.includes('/node_modules/three/')) return 'three-vendor';
               if (normalizedId.includes('/node_modules/three-stdlib/')) return 'three-stdlib-vendor';
               if (normalizedId.includes('/node_modules/@react-three/')) return 'react-three-vendor';

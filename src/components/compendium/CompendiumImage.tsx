@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { ImageIcon, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
@@ -9,6 +9,7 @@ import {
   type ImageSize,
 } from '@/lib/imageOptimization';
 import { getAssetUrl } from '@/data/compendium/assetManifest';
+import { usePerformanceProfile } from '@/lib/performanceProfile';
 
 interface CompendiumImageProps {
   src?: string | null;
@@ -54,6 +55,10 @@ export function CompendiumImage({
   const [optimizedSrc, setOptimizedSrc] = useState<string | null>(null);
   const [srcSet, setSrcSet] = useState<string>('');
   const [bestFormat, setBestFormat] = useState<'avif' | 'webp' | 'original'>('original');
+  const { images } = usePerformanceProfile();
+  const resolvedQuality = images.quality;
+  const imgLoading = size === 'hero' && images.eagerHero ? 'eager' : 'lazy';
+  const fetchPriority = size === 'hero' && images.eagerHero ? 'high' : 'auto';
 
   // Determine the actual image source to use
   const getImageSource = () => {
@@ -70,12 +75,15 @@ export function CompendiumImage({
   };
 
   const imageSrc = getImageSource();
-  const responsiveSizes: ImageSize[] =
-    size === 'hero'
-      ? ['medium', 'large', 'xlarge', 'hero']
-      : size === 'large'
-      ? ['small', 'medium', 'large']
-      : ['thumbnail', 'small', 'medium'];
+  const responsiveSizes: ImageSize[] = useMemo(() => {
+    if (size === 'hero') {
+      return ['medium', 'large', 'xlarge', 'hero'];
+    }
+    if (size === 'large') {
+      return ['small', 'medium', 'large'];
+    }
+    return ['thumbnail', 'small', 'medium'];
+  }, [size]);
   const isSupabaseUrl = Boolean(imageSrc && imageSrc.includes('supabase.co/storage'));
   const isLocalWebp = Boolean(imageSrc && !isSupabaseUrl && imageSrc.toLowerCase().endsWith('.webp'));
   const localAvif = isLocalWebp && imageSrc ? imageSrc.replace(/\.webp$/i, '.avif') : null;
@@ -95,28 +103,44 @@ export function CompendiumImage({
     // Generate optimized URL
     const optimized = optimizeImageUrl(imageSrc, {
       width: size === 'hero' ? 1920 : size === 'large' ? 512 : size === 'medium' ? 256 : 128,
-      quality: 80,
+      quality: resolvedQuality,
       format: format === 'original' ? undefined : format,
     });
     setOptimizedSrc(optimized);
 
     // Generate srcset for responsive images
-    const webpSrcSet = generateSrcSet(imageSrc, responsiveSizes, 'webp');
-    const avifSrcSet = format === 'avif' ? generateSrcSet(imageSrc, responsiveSizes, 'avif') : '';
+    const webpSrcSet = generateSrcSet(imageSrc, responsiveSizes, 'webp', resolvedQuality);
+    const avifSrcSet =
+      format === 'avif' ? generateSrcSet(imageSrc, responsiveSizes, 'avif', resolvedQuality) : '';
     
     // Combine srcsets
     const combinedSrcSet = [avifSrcSet, webpSrcSet].filter(Boolean).join(', ');
     setSrcSet(combinedSrcSet);
-  }, [imageSrc, size]);
+  }, [imageSrc, resolvedQuality, responsiveSizes, size]);
 
-  const handleLoad = () => {
-    setLoading(false);
-  };
+  useEffect(() => {
+    if (!imageSrc) {
+      setLoading(false);
+      setError(false);
+      return;
+    }
 
-  const handleError = () => {
-    setLoading(false);
-    setError(true);
-  };
+    setLoading(true);
+    setError(false);
+    const preload = new Image();
+    const srcToLoad = optimizedSrc || imageSrc;
+    preload.onload = () => setLoading(false);
+    preload.onerror = () => {
+      setLoading(false);
+      setError(true);
+    };
+    preload.src = srcToLoad;
+
+    return () => {
+      preload.onload = null;
+      preload.onerror = null;
+    };
+  }, [imageSrc, optimizedSrc]);
 
   if (!imageSrc || error) {
     return (
@@ -155,7 +179,8 @@ export function CompendiumImage({
           <source
             srcSet={generateSrcSet(imageSrc || '', 
               responsiveSizes,
-              'avif'
+              'avif',
+              resolvedQuality
             )}
             sizes={generateSizes(size)}
             type="image/avif"
@@ -166,7 +191,8 @@ export function CompendiumImage({
           <source
             srcSet={generateSrcSet(imageSrc || '', 
               responsiveSizes,
-              'webp'
+              'webp',
+              resolvedQuality
             )}
             sizes={generateSizes(size)}
             type="image/webp"
@@ -184,10 +210,9 @@ export function CompendiumImage({
             aspectRatio === 'auto' ? '' : aspectRatioClasses[aspectRatio],
             loading ? 'opacity-0' : 'opacity-100'
           )}
-          onLoad={handleLoad}
-          onError={handleError}
-          loading="lazy"
+          loading={imgLoading}
           decoding="async"
+          fetchPriority={fetchPriority}
         />
       </picture>
     </div>

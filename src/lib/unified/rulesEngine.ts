@@ -56,6 +56,7 @@ export interface UnifiedPath {
 // Unified Character combining both systems
 export interface UnifiedCharacter {
   // Basic Info
+  name: string;
   level: number;
   class: UnifiedClass;
   path?: UnifiedPath;
@@ -324,8 +325,8 @@ export function getUnifiedHitPoints(
   character: UnifiedCharacter,
   hitDie: string,
   conMod?: number,
-  previousHP?: number,
-  rolledHP?: number
+  _previousHP?: number,
+  _rolledHP?: number
 ): number {
   const vitBonus = conMod ?? getUnifiedAbilityModifier('VIT', character.abilities.VIT);
   const hitDieNum = parseInt(hitDie.replace('d', ''));

@@ -2,9 +2,7 @@ import { Link } from 'react-router-dom';
 import { Clock, X, BookOpen, Users, Crown, Sparkles, Swords } from 'lucide-react';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { useRecentItems } from '@/hooks/useRecentItems';
-import { cn } from '@/lib/utils';
 
 const typeIcons: Record<string, React.ComponentType<{ className?: string }>> = {
   'jobs': Swords,

@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { cn } from '@/lib/utils';
 
 interface SystemSigilLogoProps {
@@ -33,6 +34,11 @@ export function SystemSigilLogo({ className, size = 'md', variant = 'default' }:
   };
 
   const styles = variantStyles[variant];
+  const idPrefix = useId().replace(/:/g, '');
+  const monarchGradientId = `monarchGradientSupreme-${idPrefix}`;
+  const shadowCoreId = `shadowCoreDeep-${idPrefix}`;
+  const ariseGlowId = `ariseGlow-${idPrefix}`;
+  const shadowGlowId = `shadowGlow-${idPrefix}`;
 
   return (
     <div className={cn('relative', sizeClasses[size], className)}>
@@ -46,23 +52,23 @@ export function SystemSigilLogo({ className, size = 'md', variant = 'default' }:
       >
         {/* Gradient Definitions - Prime Architect Palette */}
         <defs>
-          <linearGradient id="monarchGradientSupreme" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id={monarchGradientId} x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="hsl(220 100% 60%)" />
             <stop offset="30%" stopColor="hsl(265 75% 55%)" />
             <stop offset="60%" stopColor="hsl(280 85% 65%)" />
             <stop offset="100%" stopColor="hsl(42 100% 50%)" />
           </linearGradient>
-          <radialGradient id="shadowCoreDeep" cx="50%" cy="50%">
+          <radialGradient id={shadowCoreId} cx="50%" cy="50%">
             <stop offset="0%" stopColor="hsl(265 50% 25%)" stopOpacity="0.9" />
             <stop offset="50%" stopColor="hsl(228 40% 10%)" stopOpacity="0.7" />
             <stop offset="100%" stopColor="hsl(228 40% 2%)" stopOpacity="0.5" />
           </radialGradient>
-          <linearGradient id="ariseGlow" x1="50%" y1="100%" x2="50%" y2="0%">
+          <linearGradient id={ariseGlowId} x1="50%" y1="100%" x2="50%" y2="0%">
             <stop offset="0%" stopColor="hsl(280 85% 65%)" stopOpacity="0.8" />
             <stop offset="50%" stopColor="hsl(265 75% 55%)" stopOpacity="0.6" />
             <stop offset="100%" stopColor="hsl(220 100% 60%)" stopOpacity="0.4" />
           </linearGradient>
-          <filter id="shadowGlow">
+          <filter id={shadowGlowId}>
             <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
             <feMerge>
               <feMergeNode in="coloredBlur"/>
@@ -77,7 +83,7 @@ export function SystemSigilLogo({ className, size = 'md', variant = 'default' }:
           cy="50"
           r="46"
           fill="none"
-          stroke="url(#monarchGradientSupreme)"
+          stroke={`url(#${monarchGradientId})`}
           strokeWidth="1.5"
           opacity="0.5"
           className={styles.outerGlow}
@@ -90,7 +96,7 @@ export function SystemSigilLogo({ className, size = 'md', variant = 'default' }:
           cy="50"
           r="42"
           fill="none"
-          stroke="url(#monarchGradientSupreme)"
+          stroke={`url(#${monarchGradientId})`}
           strokeWidth="2"
           opacity="0.7"
           className={styles.outerGlow}
@@ -101,23 +107,23 @@ export function SystemSigilLogo({ className, size = 'md', variant = 'default' }:
           cx="50"
           cy="50"
           r="22"
-          fill="url(#shadowCoreDeep)"
+          fill={`url(#${shadowCoreId})`}
           className={styles.innerPulse}
         />
         
         {/* Ascendant's Seal - The Crown */}
         <path
           d="M 50 15 L 62 35 L 85 35 L 68 52 L 75 75 L 50 62 L 25 75 L 32 52 L 15 35 L 38 35 Z"
-          fill="url(#monarchGradientSupreme)"
+          fill={`url(#${monarchGradientId})`}
           opacity="0.85"
-          filter="url(#shadowGlow)"
+          filter={`url(#${shadowGlowId})`}
           className={styles.innerPulse}
         />
         
         {/* Inner Shadow Star */}
         <path
           d="M 50 28 L 55 42 L 70 42 L 58 52 L 62 66 L 50 58 L 38 66 L 42 52 L 30 42 L 45 42 Z"
-          fill="url(#ariseGlow)"
+          fill={`url(#${ariseGlowId})`}
           opacity="0.9"
           className={styles.corePulse}
         />
@@ -129,7 +135,7 @@ export function SystemSigilLogo({ className, size = 'md', variant = 'default' }:
           r="8"
           fill="hsl(220 100% 60%)"
           className={styles.corePulse}
-          filter="url(#shadowGlow)"
+          filter={`url(#${shadowGlowId})`}
         />
         
         {/* Inner Eye */}

@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import type { Database } from '@/integrations/supabase/types';
 
 // Zod schemas for content validation
 export const JobSchema = z.object({

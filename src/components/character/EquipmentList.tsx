@@ -1,20 +1,15 @@
 import { useState, useCallback } from 'react';
-import { Package, Plus, Trash2, Shield, Zap, Gem, Heart, Coins, Weight, AlertTriangle, Sparkles } from 'lucide-react';
+import { Package, Plus, Shield, Zap, Gem, Heart, Coins, Weight, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
-import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
-import { VirtualList } from '@/components/ui/VirtualList';
 import { SortableList } from '@/components/ui/SortableList';
 import { useEquipment } from '@/hooks/useEquipment';
 import { useCharacter } from '@/hooks/useCharacters';
-import { useEquipmentRunes, useInscribeRune } from '@/hooks/useRunes';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { AddEquipmentDialog } from './AddEquipmentDialog';
 import { InscribeRuneDialog } from './InscribeRuneDialog';
 import { EquipmentItem } from './EquipmentItem';
-import { CompendiumLink } from './CompendiumLink';
 import { calculateTotalWeight, calculateEncumbrance, calculateCarryingCapacity } from '@/lib/encumbrance';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 import type { Database } from '@/integrations/supabase/types';
@@ -68,7 +63,7 @@ export function EquipmentList({ characterId }: { characterId: string }) {
         display_order: index,
       }));
       await reorderEquipment(updates);
-    } catch (error) {
+    } catch {
       // Error handled by hook
     }
   }, [reorderEquipment]);
@@ -84,7 +79,7 @@ export function EquipmentList({ characterId }: { characterId: string }) {
         title: item.is_equipped ? 'Unequipped' : 'Equipped',
         description: `${displayName} has been ${item.is_equipped ? 'unequipped' : 'equipped'}.`,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Error',
         description: 'Failed to update equipment.',
@@ -113,7 +108,7 @@ export function EquipmentList({ characterId }: { characterId: string }) {
         title: item.is_attuned ? 'Attunement removed' : 'Attuned',
         description: `${displayName} has been ${item.is_attuned ? 'unattuned' : 'attuned'}.`,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Error',
         description: 'Failed to update attunement.',
@@ -132,7 +127,7 @@ export function EquipmentList({ characterId }: { characterId: string }) {
         title: 'Removed',
         description: `${displayName} has been removed.`,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Error',
         description: 'Failed to remove equipment.',

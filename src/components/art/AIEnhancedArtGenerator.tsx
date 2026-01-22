@@ -13,12 +13,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAIEnhancement, useAITagGeneration, useAIMoodDetection, useAIStyleSuggestions } from '@/lib/ai/hooks';
 import { useArtPipeline } from '@/lib/artPipeline/hooks';
 import { artPipeline } from '@/lib/artPipeline/service';
-import type { ArtAsset } from '@/lib/artPipeline/types';
+import type { ArtAsset, GenerationResult } from '@/lib/artPipeline/types';
 import { 
   Sparkles, 
   Brain, 
   RefreshCw, 
-  Lightbulb, 
   Tag, 
   Palette, 
   Zap,
@@ -98,7 +97,7 @@ export function AIEnhancedArtGenerator({
   const [selectedMood, setSelectedMood] = useState('');
   const [selectedStyle, setSelectedStyle] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
-  const [generationResult, setGenerationResult] = useState<any>(null);
+  const [generationResult, setGenerationResult] = useState<GenerationResult | null>(null);
 
   useEffect(() => {
     if (!finalPrompt.trim() && originalPrompt.trim() && !enhancedPrompt) {
@@ -151,8 +150,7 @@ export function AIEnhancedArtGenerator({
     if (!finalPrompt.trim()) return;
     
     try {
-      const suggestions = await suggestStyles('dark manhwa anime cinematic fantasy, System Ascendant');
-      // Style suggestions are now available
+      await suggestStyles('dark manhwa anime cinematic fantasy, System Ascendant');
     } catch (error) {
       logger.error('Failed to suggest styles:', error);
     }
@@ -171,12 +169,16 @@ export function AIEnhancedArtGenerator({
       const resolvedEntityType = entityType ?? 'monster';
       const resolvedEntityId = entityId ?? `ai-enhanced-${Date.now()}`;
       const resolvedTitle = title?.trim() || 'AI Enhanced Art';
+      const resolvedTags =
+        selectedStyle.trim().length > 0
+          ? Array.from(new Set([...selectedTags, selectedStyle.trim()]))
+          : selectedTags;
       const request = {
         entityType: resolvedEntityType,
         entityId: resolvedEntityId,
         variant: 'portrait' as const,
         title: resolvedTitle,
-        tags: selectedTags,
+        tags: resolvedTags,
         description: finalPrompt,
         mood: selectedMood,
         environment: 'fantasy world',
@@ -324,7 +326,7 @@ export function AIEnhancedArtGenerator({
             
             <TabsContent value="prompt" className="space-y-4">
               <div>
-                <label className="text-sm font-medium">Original Prompt</label>
+                <p className="text-sm font-medium">Original Prompt</p>
                 <Textarea
                   value={originalPrompt}
                   onChange={(e) => setOriginalPrompt(e.target.value)}
@@ -361,9 +363,9 @@ export function AIEnhancedArtGenerator({
               
               {(enhancedPrompt || finalPrompt || originalPrompt.trim()) && (
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">
+                  <p className="text-sm font-medium">
                     {enhancedPrompt ? 'Enhanced Prompt' : 'Final Prompt'}
-                  </label>
+                  </p>
                   <Textarea
                     value={finalPrompt || enhancedPrompt || originalPrompt}
                     onChange={(e) => setFinalPrompt(e.target.value)}
@@ -412,7 +414,7 @@ export function AIEnhancedArtGenerator({
               
               {aiTags.length > 0 && (
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">AI-Generated Tags</label>
+                  <p className="text-sm font-medium">AI-Generated Tags</p>
                   <div className="flex flex-wrap gap-2">
                     {aiTags.map(tag => (
                       <Badge
@@ -458,7 +460,7 @@ export function AIEnhancedArtGenerator({
               
               {detectedMood && (
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Detected Mood</label>
+                  <p className="text-sm font-medium">Detected Mood</p>
                   <Badge variant="secondary" className="text-lg">
                     {detectedMood}
                   </Badge>
@@ -495,12 +497,12 @@ export function AIEnhancedArtGenerator({
               
               {styleSuggestions.length > 0 && (
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Style Variations</label>
+                  <p className="text-sm font-medium">Style Variations</p>
                   <div className="space-y-2">
                     {styleSuggestions.map((style, index) => (
                       <Badge
                         key={index}
-                        variant="outline"
+                        variant={selectedStyle === style ? 'default' : 'outline'}
                         className="cursor-pointer hover:bg-primary/20"
                         onClick={() => setSelectedStyle(style)}
                       >
@@ -525,7 +527,7 @@ export function AIEnhancedArtGenerator({
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Summary */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
             <div>
               <span className="font-medium">Prompt:</span>
               <p className="text-muted-foreground truncate">
@@ -536,6 +538,12 @@ export function AIEnhancedArtGenerator({
               <span className="font-medium">Tags:</span>
               <p className="text-muted-foreground">
                 {selectedTags.length > 0 ? selectedTags.join(', ') : 'No tags selected'}
+              </p>
+            </div>
+            <div>
+              <span className="font-medium">Style:</span>
+              <p className="text-muted-foreground">
+                {selectedStyle || 'No style selected'}
               </p>
             </div>
             <div>

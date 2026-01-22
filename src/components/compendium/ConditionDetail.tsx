@@ -1,5 +1,4 @@
 import { SystemWindow } from '@/components/ui/SystemWindow';
-import { Badge } from '@/components/ui/badge';
 import { AlertTriangle } from 'lucide-react';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 

@@ -4,16 +4,22 @@
  * Provides functions for image optimization, WebP support, and responsive image generation.
  */
 
+let cachedBestFormat: 'avif' | 'webp' | 'original' | null = null;
+
 /**
  * Check if browser supports WebP
  */
 export function supportsWebP(): boolean {
   if (typeof window === 'undefined') return false;
   
-  const canvas = document.createElement('canvas');
-  canvas.width = 1;
-  canvas.height = 1;
-  return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+  try {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1;
+    canvas.height = 1;
+    return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+  } catch {
+    return false;
+  }
 }
 
 /**
@@ -22,19 +28,23 @@ export function supportsWebP(): boolean {
 export function supportsAVIF(): boolean {
   if (typeof window === 'undefined') return false;
   
-  const canvas = document.createElement('canvas');
-  canvas.width = 1;
-  canvas.height = 1;
-  return canvas.toDataURL('image/avif').indexOf('data:image/avif') === 0;
+  try {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1;
+    canvas.height = 1;
+    return canvas.toDataURL('image/avif').indexOf('data:image/avif') === 0;
+  } catch {
+    return false;
+  }
 }
 
 /**
  * Get the best image format for the browser
  */
 export function getBestImageFormat(): 'avif' | 'webp' | 'original' {
-  if (supportsAVIF()) return 'avif';
-  if (supportsWebP()) return 'webp';
-  return 'original';
+  if (cachedBestFormat) return cachedBestFormat;
+  cachedBestFormat = supportsAVIF() ? 'avif' : supportsWebP() ? 'webp' : 'original';
+  return cachedBestFormat;
 }
 
 /**
@@ -61,7 +71,8 @@ export const IMAGE_SIZES: Record<ImageSize, number> = {
 export function generateSrcSet(
   baseUrl: string,
   sizes: ImageSize[] = ['small', 'medium', 'large'],
-  format?: 'webp' | 'avif' | 'original'
+  format?: 'webp' | 'avif' | 'original',
+  quality = 80
 ): string {
   if (!baseUrl) return '';
   
@@ -70,14 +81,13 @@ export function generateSrcSet(
   
   if (isSupabaseUrl) {
     // Supabase supports image transformations via query params
-    const url = new URL(baseUrl);
     const srcset = sizes.map((size) => {
       const width = IMAGE_SIZES[size];
       const sizeUrl = new URL(baseUrl);
       
       // Add width parameter for Supabase transformations
       sizeUrl.searchParams.set('width', width.toString());
-      sizeUrl.searchParams.set('quality', '80'); // Compression
+      sizeUrl.searchParams.set('quality', quality.toString()); // Compression
       
       if (format === 'webp') {
         sizeUrl.searchParams.set('format', 'webp');

@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { SystemWindow } from '@/components/ui/SystemWindow';
-import { Sparkles, TrendingUp, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface QuickFilter {

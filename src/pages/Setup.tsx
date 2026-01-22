@@ -3,13 +3,15 @@ import { AlertTriangle, Copy, RefreshCw } from 'lucide-react';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { getRuntimeEnvValue } from '@/lib/runtimeEnv';
 
 function getMissingEnvVars(): string[] {
-  const required = ['VITE_SUPABASE_URL', 'VITE_SUPABASE_PUBLISHABLE_KEY'] as const;
   const missing: string[] = [];
-  for (const name of required) {
-    const value = import.meta.env[name];
-    if (!value || value.trim() === '') missing.push(name);
+  const url = getRuntimeEnvValue('VITE_SUPABASE_URL');
+  const key = getRuntimeEnvValue('VITE_SUPABASE_PUBLISHABLE_KEY') || getRuntimeEnvValue('VITE_SUPABASE_ANON_KEY');
+  if (!url || url.trim() === '') missing.push('VITE_SUPABASE_URL');
+  if (!key || key.trim() === '') {
+    missing.push('VITE_SUPABASE_PUBLISHABLE_KEY (or VITE_SUPABASE_ANON_KEY)');
   }
   return missing;
 }
@@ -23,6 +25,7 @@ export default function Setup() {
       '# Local development',
       'VITE_SUPABASE_URL=https://your-project.supabase.co',
       'VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-key',
+      '# Or: VITE_SUPABASE_ANON_KEY=your-anon-key',
       '',
       '# Optional',
       '# VITE_SENTRY_DSN=',
@@ -87,6 +90,7 @@ export default function Setup() {
                 <li>Create a Supabase project and set the env vars above.</li>
                 <li>Apply database migrations (Supabase CLI or Dashboard SQL editor).</li>
                 <li>Reload the app.</li>
+                <li>For runtime config, update <code>public/runtime-env.js</code> before serving.</li>
               </ol>
             </div>
 

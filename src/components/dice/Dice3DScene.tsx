@@ -31,7 +31,8 @@ import { cn } from '@/lib/utils';
 import { DICE_THEMES, type DiceTheme } from '@/components/dice/diceThemes';
 import { DiceAudioEngine } from '@/lib/dice/audio';
 import { getDieModel } from '@/components/dice/diceGeometry';
-import { useAccessibility } from '@/hooks/useAccessibility';
+import { usePerformanceProfile } from '@/lib/performanceProfile';
+import { initThreeLoaders } from '@/lib/three/loaders';
 
 interface Dice3DProps {
   sides: number;
@@ -58,6 +59,36 @@ type ImpactFX = {
   id: string;
   position: [number, number, number];
   intensity: number;
+};
+
+type DiceRenderQuality = {
+  dpr: [number, number];
+  antialias: boolean;
+  powerPreference: WebGLPowerPreference;
+  enableShadows: boolean;
+  shadowMapSize: number;
+  enableContactShadows: boolean;
+  contactShadowBlur: number;
+  contactShadowOpacity: number;
+  enableEnvironment: boolean;
+  enableBloomField: boolean;
+  enableFlair: boolean;
+  particleScale: number;
+};
+
+const DEFAULT_RENDER_QUALITY: DiceRenderQuality = {
+  dpr: [1, 1.5],
+  antialias: true,
+  powerPreference: 'high-performance',
+  enableShadows: true,
+  shadowMapSize: 1024,
+  enableContactShadows: true,
+  contactShadowBlur: 2.8,
+  contactShadowOpacity: 0.42,
+  enableEnvironment: true,
+  enableBloomField: true,
+  enableFlair: true,
+  particleScale: 1,
 };
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
@@ -798,6 +829,7 @@ interface DieProps extends Dice3DProps {
   bounds: DiceBounds;
   rollId: number;
   onImpact?: (position: [number, number, number], intensity: number) => void;
+  quality: DiceRenderQuality;
 }
 
 function Die({
@@ -813,6 +845,7 @@ function Die({
   bounds,
   rollId,
   onImpact,
+  quality,
 }: DieProps) {
   const bodyRef = useRef<RapierRigidBody>(null);
   const meshRef = useRef<Mesh>(null);
@@ -950,7 +983,8 @@ function Die({
 
   const isCritical = sides === 20 && value === 20;
   const isFumble = sides === 20 && value === 1;
-  const particleIntensity = (isCritical || isFumble ? 1.6 : 1) * (flairSpec.particleBoost ?? 1);
+  const particleIntensity =
+    (isCritical || isFumble ? 1.6 : 1) * (flairSpec.particleBoost ?? 1) * quality.particleScale;
 
   return (
     <RigidBody
@@ -964,7 +998,7 @@ function Die({
       ccd
       additionalSolverIterations={6}
     >
-      <mesh ref={meshRef} castShadow receiveShadow>
+      <mesh ref={meshRef} castShadow={quality.enableShadows} receiveShadow={quality.enableShadows}>
         <primitive object={dieModel.geometry} attach="geometry" />
         <meshPhysicalMaterial
           color={themeConfig.baseColor}
@@ -1037,7 +1071,9 @@ function Die({
         );
       })}
 
-      <DieFlair sides={sides} theme={theme} isActive={isAnimating || isCritical || isFumble} />
+      {quality.enableFlair && (
+        <DieFlair sides={sides} theme={theme} isActive={isAnimating || isCritical || isFumble} />
+      )}
 
       <DiceParticles
         position={[0, 0, 0]}
@@ -1057,6 +1093,7 @@ interface Dice3DSceneProps {
   theme?: DiceTheme;
   onDieImpact?: (position: [number, number, number], intensity: number) => void;
   reducedMotion?: boolean;
+  quality?: DiceRenderQuality;
 }
 
 function Dice3DScene({
@@ -1067,8 +1104,10 @@ function Dice3DScene({
   theme = 'umbral-ascendant',
   onDieImpact,
   reducedMotion = false,
+  quality,
 }: Dice3DSceneProps) {
   const themeConfig = DICE_THEMES[theme];
+  const resolvedQuality = quality ?? DEFAULT_RENDER_QUALITY;
   const cameraRef = useRef<PerspectiveCamera>(null);
   const shakeRef = useRef(0);
   const [impacts, setImpacts] = useState<ImpactFX[]>([]);
@@ -1178,9 +1217,9 @@ function Dice3DScene({
       <directionalLight
         position={[10, 12, 8]}
         intensity={1.35}
-        castShadow
-        shadow-mapSize-width={1024}
-        shadow-mapSize-height={1024}
+        castShadow={resolvedQuality.enableShadows}
+        shadow-mapSize-width={resolvedQuality.shadowMapSize}
+        shadow-mapSize-height={resolvedQuality.shadowMapSize}
       />
       <spotLight
         position={[-8, 12, -6]}
@@ -1190,19 +1229,23 @@ function Dice3DScene({
         color={themeConfig.emissiveColor}
       />
       <pointLight position={[6, 7, -8]} intensity={0.6} color={themeConfig.particleColor} />
-      <Environment preset="studio" />
+      {resolvedQuality.enableEnvironment && <Environment preset="studio" />}
 
-      <DiceBloomField width={layout.width} height={layout.height} theme={theme} />
+      {resolvedQuality.enableBloomField && (
+        <DiceBloomField width={layout.width} height={layout.height} theme={theme} />
+      )}
 
       <Physics gravity={[0, -28, 0]} interpolate colliders={false}>
         <DiceTrayColliders width={layout.width} height={layout.height} wallHeight={layout.wallHeight} />
-        <ContactShadows
-          position={[0, 0.02, 0]}
-          opacity={0.42}
-          scale={Math.max(layout.width, layout.height)}
-          blur={2.8}
-          far={10}
-        />
+        {resolvedQuality.enableContactShadows && (
+          <ContactShadows
+            position={[0, 0.02, 0]}
+            opacity={resolvedQuality.contactShadowOpacity}
+            scale={Math.max(layout.width, layout.height)}
+            blur={resolvedQuality.contactShadowBlur}
+            far={10}
+          />
+        )}
 
         {impacts.map((impact) => (
           <group key={impact.id}>
@@ -1232,6 +1275,7 @@ function Dice3DScene({
             bounds={bounds}
             rollId={rollId}
             onImpact={handleImpact}
+            quality={resolvedQuality}
           />
         ))}
       </Physics>
@@ -1259,11 +1303,19 @@ export interface Dice3DRollerProps {
 
 export function Dice3DRoller({ dice, isRolling, onRollComplete, theme = 'umbral-ascendant', className }: Dice3DRollerProps) {
   const themeConfig = DICE_THEMES[theme];
-  const { reducedMotion } = useAccessibility();
+  const { reducedMotion, dpr, three } = usePerformanceProfile();
   const audioEngine = useMemo(() => new DiceAudioEngine({ masterVolume: 0.35 }), []);
   const [audioEnabled, setAudioEnabled] = useState(true);
   const [rollId, setRollId] = useState(0);
   const rollingRef = useRef(false);
+  const quality = useMemo(
+    () => ({
+      ...DEFAULT_RENDER_QUALITY,
+      ...three,
+      dpr,
+    }),
+    [dpr, three]
+  );
   const themeStyle = useMemo(
     () => {
       const glowStrength = clamp(0.14 + themeConfig.glowIntensity * 0.18, 0.14, 0.32);
@@ -1279,6 +1331,10 @@ export function Dice3DRoller({ dice, isRolling, onRollComplete, theme = 'umbral-
     },
     [themeConfig]
   ) as CSSProperties;
+
+  useEffect(() => {
+    void initThreeLoaders();
+  }, []);
 
   useEffect(() => {
     audioEngine.setEnabled(audioEnabled);
@@ -1336,10 +1392,15 @@ export function Dice3DRoller({ dice, isRolling, onRollComplete, theme = 'umbral-
       </div>
 
       <Canvas
-        shadows
+        shadows={quality.enableShadows}
         className="relative z-10"
-        dpr={[1, 1.5]}
-        gl={{ alpha: true, antialias: true }}
+        dpr={quality.dpr}
+        gl={{
+          alpha: true,
+          antialias: quality.antialias,
+          powerPreference: quality.powerPreference,
+          preserveDrawingBuffer: false,
+        }}
         onCreated={({ gl }) => {
           gl.setClearColor(0x000000, 0);
           gl.toneMapping = ACESFilmicToneMapping;
@@ -1355,6 +1416,7 @@ export function Dice3DRoller({ dice, isRolling, onRollComplete, theme = 'umbral-
           onDieImpact={handleImpact}
           theme={theme}
           reducedMotion={reducedMotion}
+          quality={quality}
         />
       </Canvas>
 

@@ -61,7 +61,7 @@ const Campaigns = () => {
       setCampaignName('');
       setCampaignDescription('');
       navigate(`/campaigns/${campaignId}`);
-    } catch (error) {
+    } catch {
       // Error handled by mutation
     }
   };

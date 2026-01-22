@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
 import { supabase } from '@/integrations/supabase/client';
-import { Heart, Shield, Footprints, Skull, Swords, Crown, Zap, Flame } from 'lucide-react';
+import { Heart, Shield, Footprints, Skull, Swords, Crown, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
-import { StatBlock, StatRow, StatSection } from '@/components/compendium/StatBlock';
-import { TableOfContents } from '@/components/compendium/TableOfContents';
+import { StatBlock, StatSection } from '@/components/compendium/StatBlock';
 import { formatMonarchVernacular, MONARCH_LABEL } from '@/lib/vernacular';
 
 interface MonsterData {
@@ -130,20 +128,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
   const legendaryActions = actions.filter(a => a.action_type === 'legendary');
 
   const gateStyle = data.gate_rank ? gateRankColors[data.gate_rank] : null;
-  const isBossOrNamedNPC = data.is_boss || data.tags?.includes('named-npc') || data.tags?.includes('named-boss') || data.tags?.includes('monarch');
   const displayName = formatMonarchVernacular(data.display_name || data.name);
-
-  // Generate TOC items for long pages
-  const tocItems = [
-    { id: 'monster-header', title: displayName, level: 1 },
-    { id: 'monster-stats', title: 'Core Stats', level: 2 },
-    { id: 'monster-abilities', title: 'Ability Scores', level: 2 },
-  ];
-
-  if (traits.length > 0) tocItems.push({ id: 'monster-traits', title: 'Traits', level: 2 });
-  if (regularActions.length > 0) tocItems.push({ id: 'monster-actions', title: 'Actions', level: 2 });
-  if (legendaryActions.length > 0) tocItems.push({ id: 'monster-legendary', title: 'Legendary Actions', level: 2 });
-  if (data.description) tocItems.push({ id: 'monster-description', title: 'Description', level: 2 });
 
   return (
     <div className="space-y-6">
@@ -344,6 +329,56 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
         <StatBlock title="ACTIONS" id="monster-actions">
           <StatSection title="">
             {regularActions.map((action) => (
+              <div key={action.id} className="mb-4 last:mb-0 pb-4 last:pb-0 border-b border-border/30 last:border-b-0">
+                <div className="flex items-center gap-2 mb-2">
+                  <h4 className="font-heading font-semibold text-primary text-base">{formatMonarchVernacular(action.name)}</h4>
+                  {action.recharge && <Badge variant="secondary" className="text-xs">{action.recharge}</Badge>}
+                </div>
+                <p className="text-sm text-foreground leading-relaxed mb-1">{formatMonarchVernacular(action.description)}</p>
+                {action.damage && (
+                  <p className="text-sm text-foreground font-medium mt-2">
+                    <span className="font-semibold">Damage:</span> {action.damage} {action.damage_type ? formatMonarchVernacular(action.damage_type) : ''}
+                    {action.attack_bonus !== null && action.attack_bonus !== undefined && (
+                      <span className="ml-2 text-muted-foreground">({action.attack_bonus >= 0 ? '+' : ''}{action.attack_bonus} to hit)</span>
+                    )}
+                  </p>
+                )}
+              </div>
+            ))}
+          </StatSection>
+        </StatBlock>
+      )}
+
+      {/* Bonus Actions */}
+      {bonusActions.length > 0 && (
+        <StatBlock title="BONUS ACTIONS" id="monster-bonus-actions">
+          <StatSection title="">
+            {bonusActions.map((action) => (
+              <div key={action.id} className="mb-4 last:mb-0 pb-4 last:pb-0 border-b border-border/30 last:border-b-0">
+                <div className="flex items-center gap-2 mb-2">
+                  <h4 className="font-heading font-semibold text-primary text-base">{formatMonarchVernacular(action.name)}</h4>
+                  {action.recharge && <Badge variant="secondary" className="text-xs">{action.recharge}</Badge>}
+                </div>
+                <p className="text-sm text-foreground leading-relaxed mb-1">{formatMonarchVernacular(action.description)}</p>
+                {action.damage && (
+                  <p className="text-sm text-foreground font-medium mt-2">
+                    <span className="font-semibold">Damage:</span> {action.damage} {action.damage_type ? formatMonarchVernacular(action.damage_type) : ''}
+                    {action.attack_bonus !== null && action.attack_bonus !== undefined && (
+                      <span className="ml-2 text-muted-foreground">({action.attack_bonus >= 0 ? '+' : ''}{action.attack_bonus} to hit)</span>
+                    )}
+                  </p>
+                )}
+              </div>
+            ))}
+          </StatSection>
+        </StatBlock>
+      )}
+
+      {/* Reactions */}
+      {reactions.length > 0 && (
+        <StatBlock title="REACTIONS" id="monster-reactions">
+          <StatSection title="">
+            {reactions.map((action) => (
               <div key={action.id} className="mb-4 last:mb-0 pb-4 last:pb-0 border-b border-border/30 last:border-b-0">
                 <div className="flex items-center gap-2 mb-2">
                   <h4 className="font-heading font-semibold text-primary text-base">{formatMonarchVernacular(action.name)}</h4>

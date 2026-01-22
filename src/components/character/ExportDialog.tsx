@@ -1,4 +1,4 @@
-import { Download, FileText, FileJson } from 'lucide-react';
+import { FileText, FileJson } from 'lucide-react';
 import {
   Dialog,
   DialogContent,

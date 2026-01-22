@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, RefreshCw, Download, Copy, Grid, Plus, Minus, Save, Trash2, Square, Layout, DoorOpen, Crown, Gem, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, RefreshCw, Download, Grid, Plus, Minus, Square, Layout, DoorOpen, Crown, Gem, AlertTriangle } from 'lucide-react';
 import { Layout as PageLayout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
@@ -460,8 +460,9 @@ const DungeonMapGenerator = () => {
                             const label = (cell as Cell & { label?: string })?.label;
 
                             return (
-                              <div
+                              <button
                                 key={key}
+                                type="button"
                                 onClick={() => handleCellClick(x, y)}
                                 className={cn(
                                   'border border-border cursor-pointer relative transition-all hover:opacity-80',
@@ -474,13 +475,14 @@ const DungeonMapGenerator = () => {
                                   fontSize: `${Math.max(8, cellSize / 3)}px`,
                                 }}
                                 title={`${x},${y} - ${type}${label ? ` - ${label}` : ''}`}
+                                aria-label={`Cell ${x + 1}, ${y + 1} (${type})${label ? ` - ${label}` : ''}`}
                               >
                                 {label && (
                                   <div className="absolute inset-0 flex items-center justify-center text-[8px] font-bold p-0.5 text-center leading-tight">
                                     {label}
                                   </div>
                                 )}
-                              </div>
+                              </button>
                             );
                           })
                         )}

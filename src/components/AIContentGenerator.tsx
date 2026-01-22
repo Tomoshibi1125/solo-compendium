@@ -142,7 +142,7 @@ export function AIContentGenerator() {
     try {
       await generateContent(prompt.trim(), options);
       setPrompt('');
-    } catch (error) {
+    } catch {
       // Error already handled by hook
     }
   }, [prompt, options, generateContent]);
@@ -203,7 +203,7 @@ export function AIContentGenerator() {
             <div className="space-y-2">
               <Label htmlFor="tone">Tone</Label>
               <Select value={options.tone} onValueChange={(value) => 
-                setOptions(prev => ({ ...prev, tone: value as any }))
+                setOptions(prev => ({ ...prev, tone: value as ContentGenerationOptions['tone'] }))
               }>
                 <SelectTrigger>
                   <SelectValue />
@@ -221,7 +221,7 @@ export function AIContentGenerator() {
             <div className="space-y-2">
               <Label htmlFor="length">Length</Label>
               <Select value={options.length} onValueChange={(value) => 
-                setOptions(prev => ({ ...prev, length: value as any }))
+                setOptions(prev => ({ ...prev, length: value as ContentGenerationOptions['length'] }))
               }>
                 <SelectTrigger>
                   <SelectValue />
@@ -237,7 +237,7 @@ export function AIContentGenerator() {
             <div className="space-y-2">
               <Label htmlFor="complexity">Complexity</Label>
               <Select value={options.complexity} onValueChange={(value) => 
-                setOptions(prev => ({ ...prev, complexity: value as any }))
+                setOptions(prev => ({ ...prev, complexity: value as ContentGenerationOptions['complexity'] }))
               }>
                 <SelectTrigger>
                   <SelectValue />

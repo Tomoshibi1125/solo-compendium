@@ -14,7 +14,6 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useEquipment } from '@/hooks/useEquipment';
 import { useToast } from '@/hooks/use-toast';
-import { cn } from '@/lib/utils';
 import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
 
 export function AddEquipmentDialog({
@@ -71,7 +70,7 @@ export function AddEquipmentDialog({
 
       onOpenChange(false);
       setSearchQuery('');
-    } catch (error) {
+    } catch {
       toast({
         title: 'Error',
         description: 'Failed to add equipment.',

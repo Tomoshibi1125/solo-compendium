@@ -146,7 +146,7 @@ export function useCharacterBackups(characterId: string) {
         return loadLocalBackups(characterId);
       }
       const { data, error } = await supabase
-        .from('character_backups' as any)
+        .from('character_backups')
         .select('id, character_id, backup_data, backup_name, created_at, version')
         .eq('character_id', characterId)
         .eq('user_id', user.id)
@@ -163,7 +163,7 @@ export function useCharacterBackups(characterId: string) {
         return createLocalBackup(character, backupName);
       }
       const { data, error } = await supabase
-        .from('character_backups' as any)
+        .from('character_backups')
         .insert({
           user_id: user.id,
           character_id: character.id,
@@ -201,7 +201,7 @@ export function useCharacterBackups(characterId: string) {
         return;
       }
       const { error } = await supabase
-        .from('character_backups' as any)
+        .from('character_backups')
         .delete()
         .eq('id', backupId)
         .eq('user_id', user.id);
@@ -262,7 +262,7 @@ export function useCharacterBackups(characterId: string) {
       }
 
       const { data, error } = await supabase
-        .from('character_backups' as any)
+        .from('character_backups')
         .insert({
           user_id: user.id,
           character_id: backup.character_id,

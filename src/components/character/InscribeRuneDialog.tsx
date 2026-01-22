@@ -172,14 +172,16 @@ export function InscribeRuneDialog({
                 const displayCategory = rune.rune_category ? formatMonarchVernacular(rune.rune_category) : '';
 
                 return (
-                  <div
+                  <button
                     key={rune.id}
+                    type="button"
                     className={cn(
-                      'border rounded-lg p-3 cursor-pointer transition-colors',
+                      'border rounded-lg p-3 cursor-pointer transition-colors text-left w-full',
                       isSelected ? 'border-primary bg-primary/10' : 'border-primary/20 hover:border-primary/50',
                       !isKnown && 'opacity-75'
                     )}
                     onClick={() => setSelectedRune(rune.id)}
+                    aria-pressed={isSelected}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex items-start gap-2 flex-1">
@@ -204,7 +206,7 @@ export function InscribeRuneDialog({
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </button>
                 );
               })}
 

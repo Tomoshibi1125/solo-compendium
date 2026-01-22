@@ -8,11 +8,20 @@ import { aiService } from './aiService';
 import type { 
   AIConfiguration, 
   AIRequest,
+  AIResponse,
+  AIService,
   AudioAnalysis, 
   ImageAnalysis, 
   PromptEnhancement 
 } from './types';
 import { useFeatureFlag } from '@/lib/featureFlags';
+
+type BatchResult = {
+  index: number;
+  success: boolean;
+  data?: AIResponse['data'];
+  error?: string;
+};
 
 /**
  * Hook for AI service configuration and status
@@ -33,7 +42,7 @@ export function useAIService() {
     setConfig(aiService.getConfiguration());
   }, []);
 
-  const addService = useCallback((service: any) => {
+  const addService = useCallback((service: AIService) => {
     aiService.addService(service);
     setConfig(aiService.getConfiguration());
   }, []);
@@ -88,7 +97,7 @@ export function useAIEnhancement() {
   const [error, setError] = useState<string | null>(null);
   const isAvailable = useFeatureFlag('aiEnhancementEnabled');
 
-  const enhancePrompt = useCallback(async (originalPrompt: string, context?: any) => {
+  const enhancePrompt = useCallback(async (originalPrompt: string, context?: Record<string, unknown>) => {
     if (!isAvailable) {
       setError('AI enhancement is disabled');
       return;
@@ -402,7 +411,7 @@ export function useAIVariations() {
  */
 export function useAIBatchProcessor() {
   const [isProcessing, setIsProcessing] = useState(false);
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<BatchResult[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
   const isAvailable = useFeatureFlag('aiBatchProcessingEnabled');
@@ -419,7 +428,7 @@ export function useAIBatchProcessor() {
     setResults([]);
 
     try {
-      const batchResults = [];
+      const batchResults: BatchResult[] = [];
       const defaultService = aiService.getConfiguration().defaultService;
       
       for (let i = 0; i < requests.length; i++) {

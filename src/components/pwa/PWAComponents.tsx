@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 // PWA Install Prompt Component
 export function PWAInstallPrompt({ 
   isInstallable, 
@@ -37,7 +35,7 @@ export function PWAInstallPrompt({
 // Offline Status Component
 export function OfflineStatus({ 
   isOnline, 
-  connectionType, 
+  connectionType: _connectionType, 
   syncQueueLength 
 }: { 
   isOnline: boolean; 

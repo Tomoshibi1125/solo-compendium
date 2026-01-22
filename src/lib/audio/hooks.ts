@@ -10,9 +10,12 @@ import { AppError } from '@/lib/appError';
 import { logger } from '@/lib/logger';
 import { saveAudioFile, deleteAudioFile } from './storage';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 import { useAuth } from '@/lib/auth/authContext';
 
 type StoredAudioTrack = AudioTrack & { storagePath?: string };
+type AudioTrackRow = Database['public']['Tables']['audio_tracks']['Row'];
+type AudioPlaylistRow = Database['public']['Tables']['audio_playlists']['Row'];
 
 /**
  * Hook for accessing audio player state and controls
@@ -168,12 +171,12 @@ export function useAudioLibrary() {
 
       const [tracksResult, playlistsResult] = await Promise.all([
         supabase
-          .from('audio_tracks' as any)
+          .from('audio_tracks')
           .select('*')
           .eq('user_id', user.id)
           .order('created_at', { ascending: false }),
         supabase
-          .from('audio_playlists' as any)
+          .from('audio_playlists')
           .select('*')
           .eq('user_id', user.id)
           .order('created_at', { ascending: false }),
@@ -182,7 +185,7 @@ export function useAudioLibrary() {
       if (tracksResult.error) throw tracksResult.error;
       if (playlistsResult.error) throw playlistsResult.error;
 
-      const mappedTracks = (tracksResult.data || []).map((row: any) => {
+      const mappedTracks = (tracksResult.data || []).map((row: AudioTrackRow) => {
         let publicUrl = '';
         if (row.storage_path) {
           const { data: urlData } = supabase.storage
@@ -207,13 +210,13 @@ export function useAudioLibrary() {
           isLocal: false,
           fileSize: row.file_size ?? undefined,
           mimeType: row.mime_type ?? 'audio/mpeg',
-          createdAt: row.created_at,
-          updatedAt: row.updated_at,
+          createdAt: row.created_at ?? new Date().toISOString(),
+          updatedAt: row.updated_at ?? row.created_at ?? new Date().toISOString(),
           storagePath: row.storage_path,
         } as StoredAudioTrack;
       });
 
-      const mappedPlaylists = (playlistsResult.data || []).map((row: any) => ({
+      const mappedPlaylists = (playlistsResult.data || []).map((row: AudioPlaylistRow) => ({
         id: row.id,
         name: row.name,
         description: row.description ?? undefined,
@@ -224,8 +227,8 @@ export function useAudioLibrary() {
         repeat: row.repeat ?? 'none',
         crossfade: row.crossfade ?? 2,
         volume: row.volume ?? 0.7,
-        createdAt: row.created_at,
-        updatedAt: row.updated_at,
+        createdAt: row.created_at ?? new Date().toISOString(),
+        updatedAt: row.updated_at ?? row.created_at ?? new Date().toISOString(),
       })) as Playlist[];
 
       setTracks(mappedTracks);
@@ -289,7 +292,7 @@ export function useAudioLibrary() {
     const target = tracks.find((track) => track.id === trackId);
     const storagePath = target?.storagePath;
     const { error } = await supabase
-      .from('audio_tracks' as any)
+      .from('audio_tracks')
       .delete()
       .eq('id', trackId)
       .eq('user_id', user.id);
@@ -303,7 +306,7 @@ export function useAudioLibrary() {
       await Promise.all(
         playlistsWithTrack.map((playlist) =>
           supabase
-            .from('audio_playlists' as any)
+            .from('audio_playlists')
             .update({
               tracks: playlist.tracks.filter((id) => id !== trackId),
             })
@@ -342,7 +345,7 @@ export function useAudioLibrary() {
     }
 
     const { data, error } = await supabase
-      .from('audio_tracks' as any)
+      .from('audio_tracks')
       .update({
         title: updates.title,
         artist: updates.artist,
@@ -400,7 +403,7 @@ export function useAudioLibrary() {
     }
 
     const { data, error } = await supabase
-      .from('audio_playlists' as any)
+      .from('audio_playlists')
       .insert({
         user_id: user.id,
         name: playlist.name,
@@ -448,7 +451,7 @@ export function useAudioLibrary() {
     }
 
     const { error } = await supabase
-      .from('audio_playlists' as any)
+      .from('audio_playlists')
       .delete()
       .eq('id', playlistId)
       .eq('user_id', user.id);
@@ -470,7 +473,7 @@ export function useAudioLibrary() {
     }
 
     const { data, error } = await supabase
-      .from('audio_playlists' as any)
+      .from('audio_playlists')
       .update({
         name: updates.name,
         description: updates.description,
@@ -655,7 +658,7 @@ export function useAudioUpload() {
         .getPublicUrl(storagePath);
 
       const { data, error: insertError } = await supabase
-        .from('audio_tracks' as any)
+        .from('audio_tracks')
         .insert({
           user_id: user.id,
           title: metadata.title || file.name.replace(/\.[^/.]+$/, ''),
@@ -708,7 +711,7 @@ export function useAudioUpload() {
       setIsUploading(false);
       setUploadProgress(0);
     }
-  }, []);
+  }, [isAuthed, loading, user?.id]);
 
   return {
     isUploading,

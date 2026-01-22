@@ -1,8 +1,7 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
@@ -13,22 +12,13 @@ import {
   MicOff, 
   Video, 
   VideoOff, 
-  Phone, 
-  PhoneOff, 
   Users, 
   Volume2,
-  VolumeX,
-  Settings,
-  Wifi,
-  WifiOff,
   MonitorSpeaker,
-  Headphones,
-  Share2,
-  MessageSquare,
   MoreVertical
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { VoiceChatManager, VideoConferenceManager, VoiceChatUser, VoiceChatRoom, VideoConference } from './CommunicationClasses';
+import { VoiceChatManager, VideoConferenceManager, VoiceChatRoom, VideoConference } from './CommunicationClasses';
 import { logger } from '@/lib/logger';
 
 // React hook for voice chat functionality
@@ -62,14 +52,15 @@ export function useVoiceChat() {
     });
 
     // Listen for audio level changes
-    const handleAudioLevel = (event: any) => {
-      setAudioLevel(event.detail.level);
+    const handleAudioLevel = (event: Event) => {
+      const customEvent = event as CustomEvent<{ level: number }>;
+      setAudioLevel(customEvent.detail?.level ?? 0);
     };
     
-    window.addEventListener('audioLevel', handleAudioLevel);
+    window.addEventListener('audioLevel', handleAudioLevel as EventListener);
 
     return () => {
-      window.removeEventListener('audioLevel', handleAudioLevel);
+      window.removeEventListener('audioLevel', handleAudioLevel as EventListener);
       manager.cleanup();
     };
   }, [voiceChatManager, toast]);
@@ -85,6 +76,7 @@ export function useVoiceChat() {
         description: `Connected to ${room.name}`,
       });
     } catch (error) {
+      logger.error('Failed to join voice chat:', error);
       toast({
         title: 'Failed to Join',
         description: 'Could not connect to voice chat',
@@ -106,6 +98,7 @@ export function useVoiceChat() {
         description: 'Disconnected from voice chat',
       });
     } catch (error) {
+      logger.error('Failed to leave voice chat:', error);
       toast({
         title: 'Failed to Leave',
         description: 'Could not disconnect from voice chat',
@@ -184,6 +177,7 @@ export function useVideoConference() {
         description: `Created conference: ${conference.title}`,
       });
     } catch (error) {
+      logger.error('Failed to create video conference:', error);
       toast({
         title: 'Failed to Create',
         description: 'Could not create video conference',
@@ -203,6 +197,7 @@ export function useVideoConference() {
         description: `Connected to ${conference.title}`,
       });
     } catch (error) {
+      logger.error('Failed to join video conference:', error);
       toast({
         title: 'Failed to Join',
         description: 'Could not connect to video conference',
@@ -226,6 +221,7 @@ export function useVideoConference() {
         description: 'Disconnected from video conference',
       });
     } catch (error) {
+      logger.error('Failed to leave video conference:', error);
       toast({
         title: 'Failed to Leave',
         description: 'Could not disconnect from video conference',
@@ -311,6 +307,10 @@ export function VoiceChatControls() {
     toggleMute,
     handleVolumeChange
   } = useVoiceChat();
+  const normalizedAudioLevel = Math.min(
+    100,
+    Math.max(0, audioLevel <= 1 ? audioLevel * 100 : audioLevel)
+  );
 
   return (
     <Card>
@@ -381,10 +381,10 @@ export function VoiceChatControls() {
             <div className="audio-level-indicator">
               <Volume2 className="w-4 h-4" />
               <div className="audio-level-bar">
-                <div className="audio-level-fill" />
+                <div className="audio-level-fill" style={{ width: `${normalizedAudioLevel}%` }} />
               </div>
               <span className="audio-level-text">
-                Audio Level
+                {Math.round(normalizedAudioLevel)}%
               </span>
             </div>
           </div>
@@ -573,6 +573,18 @@ export function VideoConferenceControls() {
               }}
             >
               Create Conference
+            </Button>
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => {
+                const conferenceId = prompt('Enter conference ID:');
+                if (conferenceId) {
+                  joinConference(conferenceId);
+                }
+              }}
+            >
+              Join Conference
             </Button>
           </div>
         )}

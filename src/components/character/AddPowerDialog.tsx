@@ -75,7 +75,7 @@ export function AddPowerDialog({
 
       onOpenChange(false);
       setSearchQuery('');
-    } catch (error) {
+    } catch {
       toast({
         title: 'Error',
         description: 'Failed to add power.',

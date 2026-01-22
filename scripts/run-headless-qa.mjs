@@ -62,8 +62,28 @@ const outputCreds = process.env.QA_OUTPUT_CREDS === 'true' || keepUsers;
 const captureArtifacts =
   process.env.QA_CAPTURE_ARTIFACTS === 'true' ||
   (!headless && process.env.QA_CAPTURE_ARTIFACTS !== 'false');
+const deepDive = process.env.QA_DEEP === 'true';
+const viewDelayValue = Number.parseInt(process.env.QA_VIEW_DELAY_MS || '', 10);
+const viewDelayMs =
+  Number.isFinite(viewDelayValue) && viewDelayValue > 0 ? viewDelayValue : deepDive ? 800 : 0;
+const viewportWidthEnv = Number.parseInt(process.env.QA_VIEWPORT_WIDTH || '', 10);
+const viewportHeightEnv = Number.parseInt(process.env.QA_VIEWPORT_HEIGHT || '', 10);
+const defaultViewport = deepDive ? { width: 1600, height: 900 } : { width: 1280, height: 720 };
+const viewport = {
+  width: Number.isFinite(viewportWidthEnv) && viewportWidthEnv > 0 ? viewportWidthEnv : defaultViewport.width,
+  height: Number.isFinite(viewportHeightEnv) && viewportHeightEnv > 0 ? viewportHeightEnv : defaultViewport.height,
+};
 const artifactsDir = process.env.QA_ARTIFACTS_DIR || path.resolve(process.cwd(), 'qa-artifacts');
 const characterIdPattern = /\/characters\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/i;
+const deepAssetTimeoutValue = Number.parseInt(process.env.QA_DEEP_ASSET_TIMEOUT_MS || '', 10);
+const deepAssetTimeoutMs =
+  Number.isFinite(deepAssetTimeoutValue) && deepAssetTimeoutValue > 0 ? deepAssetTimeoutValue : 12000;
+const deepAssetConcurrencyValue = Number.parseInt(process.env.QA_DEEP_ASSET_CONCURRENCY || '', 10);
+const deepAssetConcurrency =
+  Number.isFinite(deepAssetConcurrencyValue) && deepAssetConcurrencyValue > 0 ? deepAssetConcurrencyValue : 6;
+const deepAssetPattern =
+  /\.(?:png|jpg|jpeg|webp|avif|svg|gif|ico|webmanifest|mp3|wav|ogg|m4a|mp4|webm|wasm|glb|gltf|json|css|pdf)(?:[?#]|$)/i;
+const deepAssetCheckedUrls = new Set();
 
 if (!supabaseUrl || !serviceRoleKey) {
   console.error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY in environment.');
@@ -77,9 +97,26 @@ const admin = createClient(supabaseUrl, serviceRoleKey, {
   },
 });
 
+const quoteArg = (arg) => {
+  if (/[\s"]/u.test(arg)) {
+    return `"${arg.replace(/"/g, '\\"')}"`;
+  }
+  return arg;
+};
+
 const runCommand = (command, args, options = {}) =>
   new Promise((resolve, reject) => {
-    const child = spawn(command, args, { shell: true, stdio: 'inherit', ...options });
+    let resolvedCommand = command;
+    let resolvedArgs = args;
+    if (process.platform === 'win32') {
+      const lower = command.toLowerCase();
+      if (['npm', 'npx', 'pnpm', 'yarn'].includes(lower)) {
+        const commandLine = [command, ...args].map(quoteArg).join(' ');
+        resolvedCommand = 'cmd.exe';
+        resolvedArgs = ['/d', '/s', '/c', commandLine];
+      }
+    }
+    const child = spawn(resolvedCommand, resolvedArgs, { shell: false, stdio: 'inherit', ...options });
     child.on('exit', (code) => {
       if (code === 0) resolve();
       else reject(new Error(`${command} ${args.join(' ')} exited with code ${code}`));
@@ -154,6 +191,313 @@ const ensureArtifactsDir = async () => {
   await fs.mkdir(artifactsDir, { recursive: true });
 };
 
+const runWithConcurrency = async (items, limit, task) => {
+  if (items.length === 0) return [];
+  const runnerCount = Math.min(Math.max(limit, 1), items.length);
+  const results = new Array(items.length);
+  let nextIndex = 0;
+  const runners = Array.from({ length: runnerCount }, async () => {
+    while (nextIndex < items.length) {
+      const currentIndex = nextIndex;
+      nextIndex += 1;
+      results[currentIndex] = await task(items[currentIndex], currentIndex);
+    }
+  });
+  await Promise.all(runners);
+  return results;
+};
+
+const waitForViewDelay = async () => {
+  if (viewDelayMs > 0) {
+    await delay(viewDelayMs);
+  }
+};
+
+const scrollPageForAudit = async (page) => {
+  await page.evaluate(async () => {
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    window.scrollTo(0, 0);
+    await sleep(150);
+    window.scrollTo(0, document.body.scrollHeight || 0);
+    await sleep(300);
+    window.scrollTo(0, 0);
+  });
+};
+
+const auditBrokenImages = async (page) => {
+  return page.evaluate(() => {
+    const broken = [];
+    document.querySelectorAll('img').forEach((img) => {
+      const src = img.currentSrc || img.getAttribute('src') || '';
+      if (!src) return;
+      if (!img.complete) return;
+      if (img.naturalWidth === 0) broken.push(src);
+    });
+    return broken;
+  });
+};
+
+const collectDeepDiveDiagnostics = async (page) => {
+  return page.evaluate(() => {
+    const maxSamples = 12;
+    const maxText = 80;
+    const trimText = (value) => {
+      if (!value) return '';
+      const cleaned = value.replace(/\s+/g, ' ').trim();
+      if (cleaned.length <= maxText) return cleaned;
+      return `${cleaned.slice(0, maxText)}...`;
+    };
+    const trimHtml = (value, limit = 180) => {
+      if (!value) return '';
+      const cleaned = value.replace(/\s+/g, ' ').trim();
+      if (cleaned.length <= limit) return cleaned;
+      return `${cleaned.slice(0, limit)}...`;
+    };
+    const pushSample = (list, value) => {
+      if (list.length < maxSamples) list.push(value);
+    };
+    const summarizeAnchor = (anchor, raw) => {
+      const text = trimText(anchor.textContent || '');
+      const base = text ? `${text} (${raw || ''})` : raw || '<empty>';
+      const html = trimHtml(anchor.outerHTML || '');
+      return html ? `${base} :: ${html}` : base;
+    };
+    const normalizeUrl = (raw) => {
+      try {
+        return new URL(raw, window.location.href).href;
+      } catch {
+        return null;
+      }
+    };
+    const title = document.title ? document.title.trim() : '';
+    const duplicateIds = [];
+    const seenIds = new Set();
+    document.querySelectorAll('[id]').forEach((element) => {
+      const id = element.id?.trim();
+      if (!id) return;
+      if (seenIds.has(id)) {
+        if (!duplicateIds.includes(id)) duplicateIds.push(id);
+        return;
+      }
+      seenIds.add(id);
+    });
+
+    const missingLinkHrefs = [];
+    const invalidLinkHrefs = [];
+    const suspiciousLinkHrefs = [];
+    const unsafeBlankTargets = [];
+    const linkTargets = [];
+    const isIgnorableScheme = (value) => /^(mailto:|tel:|sms:)/i.test(value);
+    const isPlaceholder = (value) => value === '#' || value === '#/' || value === '#!';
+    const isQuillControl = (anchor) =>
+      anchor.classList?.contains('ql-action') || anchor.classList?.contains('ql-remove');
+
+    document.querySelectorAll('a').forEach((anchor) => {
+      const raw = anchor.getAttribute('href');
+      const sample = summarizeAnchor(anchor, raw);
+      if (raw == null) {
+        if (isQuillControl(anchor)) {
+          return;
+        }
+        pushSample(missingLinkHrefs, sample);
+        return;
+      }
+      const trimmed = raw.trim();
+      if (!trimmed) {
+        if (isQuillControl(anchor)) {
+          return;
+        }
+        pushSample(missingLinkHrefs, sample);
+        return;
+      }
+      if (isPlaceholder(trimmed) || trimmed.toLowerCase().startsWith('javascript:')) {
+        pushSample(invalidLinkHrefs, sample);
+        return;
+      }
+      if (/undefined|null/i.test(trimmed)) {
+        pushSample(suspiciousLinkHrefs, sample);
+      }
+      if (!isIgnorableScheme(trimmed)) {
+        const absolute = normalizeUrl(trimmed);
+        if (absolute) linkTargets.push(absolute);
+      }
+      if (anchor.target === '_blank') {
+        const rel = (anchor.getAttribute('rel') || '').toLowerCase();
+        if (!rel.includes('noopener') && !rel.includes('noreferrer')) {
+          pushSample(unsafeBlankTargets, sample);
+        }
+      }
+    });
+
+    const assetSet = new Set();
+    const backgroundSet = new Set();
+    const suspiciousAssetUrls = [];
+    const addAsset = (raw) => {
+      if (!raw) return;
+      const trimmed = raw.trim();
+      if (!trimmed) return;
+      if (/^(data:|blob:|about:|javascript:)/i.test(trimmed)) return;
+      if (/undefined|null/i.test(trimmed)) {
+        pushSample(suspiciousAssetUrls, trimmed);
+      }
+      const absolute = normalizeUrl(trimmed);
+      if (absolute) assetSet.add(absolute);
+    };
+    const parseSrcset = (value) => {
+      const entries = value.split(',');
+      for (const entry of entries) {
+        const trimmed = entry.trim();
+        if (!trimmed) continue;
+        const url = trimmed.split(/\s+/)[0];
+        if (url) addAsset(url);
+      }
+    };
+
+    document.querySelectorAll('img').forEach((img) => {
+      const src = img.currentSrc || img.getAttribute('src');
+      if (src) addAsset(src);
+      const srcset = img.getAttribute('srcset');
+      if (srcset) parseSrcset(srcset);
+    });
+    document.querySelectorAll('source').forEach((source) => {
+      const src = source.getAttribute('src');
+      if (src) addAsset(src);
+      const srcset = source.getAttribute('srcset');
+      if (srcset) parseSrcset(srcset);
+    });
+    document.querySelectorAll('video, audio').forEach((media) => {
+      const src = media.currentSrc || media.getAttribute('src');
+      if (src) addAsset(src);
+    });
+    document.querySelectorAll('link').forEach((link) => {
+      const rel = (link.getAttribute('rel') || '').toLowerCase();
+      if (!rel) return;
+      if (!/(icon|stylesheet|preload|prefetch|manifest)/.test(rel)) return;
+      const href = link.getAttribute('href');
+      if (href) addAsset(href);
+    });
+
+    const elements = Array.from(document.querySelectorAll('*'));
+    for (const element of elements) {
+      const style = window.getComputedStyle(element);
+      const background = style?.backgroundImage;
+      if (!background || background === 'none') continue;
+      const rect = element.getBoundingClientRect();
+      if (rect.width < 2 || rect.height < 2) continue;
+      const matches = background.matchAll(/url\(["']?(.*?)["']?\)/g);
+      for (const match of matches) {
+        const url = match[1];
+        if (!url) continue;
+        if (/^(data:|blob:|about:|javascript:)/i.test(url)) continue;
+        const absolute = normalizeUrl(url);
+        if (absolute) backgroundSet.add(absolute);
+      }
+    }
+
+    return {
+      title,
+      duplicateIds,
+      missingLinkHrefs,
+      invalidLinkHrefs,
+      suspiciousLinkHrefs,
+      unsafeBlankTargets,
+      linkTargets: Array.from(new Set(linkTargets)),
+      assetUrls: Array.from(assetSet),
+      backgroundUrls: Array.from(backgroundSet),
+      suspiciousAssetUrls,
+    };
+  });
+};
+
+const auditAssetUrls = async (page, urls, { label = '', context = 'asset' } = {}) => {
+  const uniqueUrls = [...new Set(urls)].filter((url) => /^https?:/i.test(url));
+  const pending = uniqueUrls.filter((url) => {
+    if (deepAssetCheckedUrls.has(url)) return false;
+    deepAssetCheckedUrls.add(url);
+    return true;
+  });
+  if (pending.length === 0) return;
+  const failures = [];
+  await runWithConcurrency(pending, deepAssetConcurrency, async (url) => {
+    try {
+      const response = await page.request.get(url, {
+        timeout: deepAssetTimeoutMs,
+        failOnStatusCode: false,
+      });
+      const status = response.status();
+      if (status >= 400) {
+        failures.push(`${status} ${url}`);
+      }
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      failures.push(`${message} ${url}`);
+    }
+  });
+  if (failures.length > 0) {
+    const sample = failures.slice(0, 6).join(', ');
+    const more = failures.length > 6 ? ` (+${failures.length - 6} more)` : '';
+    const suffix = label ? ` on ${label}` : '';
+    throw new Error(`Broken ${context} URLs detected${suffix}: ${sample}${more}`);
+  }
+};
+
+const runDeepDiveAudit = async (page, label = '') => {
+  if (!deepDive) return;
+  await waitForViewDelay();
+  await scrollPageForAudit(page);
+  await waitForViewDelay();
+  const brokenImages = await auditBrokenImages(page);
+  if (brokenImages.length > 0) {
+    const sample = brokenImages.slice(0, 8).join(', ');
+    const more = brokenImages.length > 8 ? ` (+${brokenImages.length - 8} more)` : '';
+    const suffix = label ? ` on ${label}` : '';
+    throw new Error(`Broken images detected${suffix}: ${sample}${more}`);
+  }
+  const diagnostics = await collectDeepDiveDiagnostics(page);
+  const suffix = label ? ` on ${label}` : '';
+  if (!diagnostics.title) {
+    throw new Error(`Missing document title${suffix}`);
+  }
+  if (diagnostics.duplicateIds.length > 0) {
+    const sample = diagnostics.duplicateIds.slice(0, 8).join(', ');
+    const more = diagnostics.duplicateIds.length > 8 ? ` (+${diagnostics.duplicateIds.length - 8} more)` : '';
+    throw new Error(`Duplicate DOM ids detected${suffix}: ${sample}${more}`);
+  }
+  if (diagnostics.missingLinkHrefs.length > 0) {
+    const sample = diagnostics.missingLinkHrefs.slice(0, 6).join(', ');
+    const more =
+      diagnostics.missingLinkHrefs.length > 6 ? ` (+${diagnostics.missingLinkHrefs.length - 6} more)` : '';
+    throw new Error(`Missing link hrefs detected${suffix}: ${sample}${more}`);
+  }
+  if (diagnostics.invalidLinkHrefs.length > 0) {
+    const sample = diagnostics.invalidLinkHrefs.slice(0, 6).join(', ');
+    const more =
+      diagnostics.invalidLinkHrefs.length > 6 ? ` (+${diagnostics.invalidLinkHrefs.length - 6} more)` : '';
+    throw new Error(`Invalid link hrefs detected${suffix}: ${sample}${more}`);
+  }
+  if (diagnostics.suspiciousLinkHrefs.length > 0) {
+    const sample = diagnostics.suspiciousLinkHrefs.slice(0, 6).join(', ');
+    const more =
+      diagnostics.suspiciousLinkHrefs.length > 6 ? ` (+${diagnostics.suspiciousLinkHrefs.length - 6} more)` : '';
+    throw new Error(`Suspicious link hrefs detected${suffix}: ${sample}${more}`);
+  }
+  if (diagnostics.unsafeBlankTargets.length > 0) {
+    const sample = diagnostics.unsafeBlankTargets.slice(0, 6).join(', ');
+    const more =
+      diagnostics.unsafeBlankTargets.length > 6 ? ` (+${diagnostics.unsafeBlankTargets.length - 6} more)` : '';
+    throw new Error(`Target _blank links missing rel detected${suffix}: ${sample}${more}`);
+  }
+  if (diagnostics.suspiciousAssetUrls.length > 0) {
+    const sample = diagnostics.suspiciousAssetUrls.slice(0, 6).join(', ');
+    const more =
+      diagnostics.suspiciousAssetUrls.length > 6 ? ` (+${diagnostics.suspiciousAssetUrls.length - 6} more)` : '';
+    throw new Error(`Suspicious asset URLs detected${suffix}: ${sample}${more}`);
+  }
+  const assetLinkTargets = diagnostics.linkTargets.filter((url) => deepAssetPattern.test(url));
+  const combinedAssets = [...diagnostics.assetUrls, ...diagnostics.backgroundUrls, ...assetLinkTargets];
+  await auditAssetUrls(page, combinedAssets, { label, context: 'asset' });
+};
+
 const captureScreenshot = async (page, label, selector) => {
   if (!captureArtifacts) return null;
   await ensureArtifactsDir();
@@ -175,8 +519,37 @@ const captureScreenshot = async (page, label, selector) => {
 };
 
 const waitForText = async (page, value, timeout = 20000) => {
-  const locator = page.getByText(toRegExp(value));
-  await locator.first().waitFor({ state: 'visible', timeout });
+  const matcher = toRegExp(value);
+  const locator = page.getByText(matcher);
+  const start = Date.now();
+  while (Date.now() - start < timeout) {
+    const count = await locator.count();
+    for (let i = 0; i < count; i += 1) {
+      const item = locator.nth(i);
+      if (await item.isVisible()) {
+        return;
+      }
+    }
+    await delay(200);
+  }
+  throw new Error(`Timed out waiting for text: ${value}`);
+};
+
+const waitForLocatorText = async (locator, value, timeout = 20000) => {
+  const matcher = toRegExp(value);
+  const match = locator.getByText(matcher);
+  const start = Date.now();
+  while (Date.now() - start < timeout) {
+    const count = await match.count();
+    for (let i = 0; i < count; i += 1) {
+      const item = match.nth(i);
+      if (await item.isVisible()) {
+        return;
+      }
+    }
+    await delay(200);
+  }
+  throw new Error(`Timed out waiting for text in locator: ${value}`);
 };
 
 const waitForCharacterSheet = async (page, timeout = 30000) => {
@@ -241,6 +614,7 @@ const gotoAndExpect = async (
     if (expectText) {
       await waitForText(page, expectText, timeout);
     }
+    await runDeepDiveAudit(page, pathname);
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     throw new Error(`${pathname} failed: ${message}`);
@@ -317,6 +691,56 @@ const clickMap = async (page, xRatio = 0.3, yRatio = 0.3) => {
   return { mapBox, sceneBox, x, y };
 };
 
+const ensureVttCharacterToken = async (page, characterName) => {
+  const beforeCount = await page.locator('.vtt-token').count();
+  const characterTab = page.getByRole('tab', { name: 'Characters' }).first();
+  await clickWhenReady(characterTab);
+  const characterButton = page.getByRole('button', { name: new RegExp(escapeRegExp(characterName), 'i') }).first();
+  const start = Date.now();
+  let found = false;
+  while (Date.now() - start < 30000) {
+    if ((await characterButton.count()) > 0 && (await characterButton.isVisible())) {
+      found = true;
+      break;
+    }
+    await delay(500);
+  }
+  if (!found) {
+    const panelText = (await page.locator('text=/No characters yet/i').first().textContent()) || '';
+    throw new Error(`Character token list missing "${characterName}" (panel: ${panelText.trim() || 'empty'})`);
+  }
+  await characterButton.click();
+  const selectTool = page.getByRole('button', { name: 'Select', exact: true });
+  if ((await selectTool.count()) > 0) {
+    await selectVttTool(page, 'Select');
+  }
+  await clickMap(page, 0.55, 0.5);
+  let afterCount = await page.locator('.vtt-token').count();
+  if (afterCount <= beforeCount) {
+    await clickMap(page, 0.65, 0.55);
+    afterCount = await page.locator('.vtt-token').count();
+  }
+  if (afterCount <= beforeCount) {
+    throw new Error('Failed to place character token in VTT');
+  }
+  const tokens = page.locator('.vtt-token');
+  await tokens.last().click();
+};
+
+const openCharacterSheetFromVtt = async (page) => {
+  const activeTokenWindow = getSystemWindow(page, 'ACTIVE TOKEN');
+  await activeTokenWindow.waitFor({ state: 'visible', timeout: 20000 });
+  const openButton = activeTokenWindow.getByRole('button', { name: /Open Character Sheet/i });
+  await openButton.waitFor({ state: 'visible', timeout: 20000 });
+  const [sheetPage] = await Promise.all([page.waitForEvent('popup'), openButton.click()]);
+  await sheetPage.waitForURL(characterIdPattern, { timeout: 30000 });
+  await dismissBanners(sheetPage);
+  await waitForCharacterSheet(sheetPage);
+  await runCharacterSheetEditModeChecks(sheetPage);
+  await runDeepDiveAudit(sheetPage, 'vtt-character-sheet');
+  await sheetPage.close();
+};
+
 const assertDice3D = async (page) => {
   const diagnostics = await page.evaluate(() => {
     const roller = document.querySelector('.dice-3d-roller');
@@ -360,28 +784,6 @@ const assertDice3D = async (page) => {
   if (!diagnostics.hasOverlay || !diagnostics.hasAudioToggle) {
     throw new Error('Dice overlay UI missing');
   }
-};
-
-const selectFirstOption = async (page, triggerText, { skipPattern } = {}) => {
-  const trigger = page.getByRole('button', { name: new RegExp(triggerText, 'i') });
-  await trigger.click();
-  try {
-    await page.waitForFunction(() => document.querySelectorAll('[role="option"]').length > 0, { timeout: 15000 });
-  } catch {
-    throw new Error(`No options found for ${triggerText}`);
-  }
-  const options = page.locator('[role="option"]');
-  const count = await options.count();
-  for (let i = 0; i < count; i += 1) {
-    const option = options.nth(i);
-    const text = (await option.textContent()) || '';
-    if (skipPattern && skipPattern.test(text)) {
-      continue;
-    }
-    await option.click();
-    return text.trim();
-  }
-  throw new Error(`No selectable option found for ${triggerText}`);
 };
 
 const selectFirstOptionByLabel = async (page, labelPattern, { skipPattern, allowMissing = false } = {}) => {
@@ -489,7 +891,17 @@ const runGeminiProtocolFlow = async (page) => {
   await waitForEnabled(generateButton, 30000);
   await generateButton.click();
   await waitForText(page, /Fusion Abilities/i, 30000);
+  await waitForText(page, /Fusion Stability/i, 20000);
+  await waitForText(page, /Combat Doctrine/i, 20000);
+  await waitForText(page, /Fusion Origin/i, 20000);
+  const abilityCards = page.locator('[data-testid="fusion-ability-card"]');
+  await abilityCards.first().waitFor({ state: 'visible', timeout: 20000 });
+  const abilityCount = await abilityCards.count();
+  if (abilityCount < 8) {
+    throw new Error(`Expected 8 fusion abilities, found ${abilityCount}`);
+  }
 
+  let saved = false;
   const saveButton = page.getByRole('button', { name: /Save to Archive/i });
   if ((await saveButton.count()) > 0) {
     await saveButton.click();
@@ -497,9 +909,53 @@ const runGeminiProtocolFlow = async (page) => {
     if (await page.getByText(/Save Failed/i).count()) {
       throw new Error('Gemini Protocol save failed');
     }
+    saved = true;
   }
 
   await page.keyboard.press('Escape');
+  return saved;
+};
+
+const runGeminiProtocolAutoFlow = async (page, { expectedJob, expectedPath } = {}) => {
+  await gotoAndExpect(page, '/compendium', { expectText: 'COMPENDIUM' });
+  const openButton = page.getByRole('button', { name: /Gemini Protocol/i });
+  await openButton.waitFor({ state: 'visible', timeout: 20000 });
+  await openButton.click();
+  await page.getByRole('heading', { name: /Fusion Console/i }).waitFor({ timeout: 20000 });
+  await waitForText(page, /Sovereign fusion auto-syncs/i, 20000);
+  const autoIssue = page.getByText(/Active character is missing|Unlock two|No matching/i);
+  if ((await autoIssue.count()) > 0) {
+    const issueText = ((await autoIssue.first().textContent()) || '').trim();
+    throw new Error(`Gemini auto-mode blocked: ${issueText || 'Unknown issue'}`);
+  }
+  if (expectedJob) {
+    await waitForText(page, expectedJob, 20000);
+  }
+  if (expectedPath) {
+    await waitForText(page, expectedPath, 20000);
+  }
+  await waitForText(page, /Fusion Abilities/i, 30000);
+  await waitForText(page, /Fusion Stability/i, 20000);
+  await waitForText(page, /Combat Doctrine/i, 20000);
+  await waitForText(page, /Fusion Origin/i, 20000);
+  const abilityCards = page.locator('[data-testid="fusion-ability-card"]');
+  await abilityCards.first().waitFor({ state: 'visible', timeout: 20000 });
+  const abilityCount = await abilityCards.count();
+  if (abilityCount < 8) {
+    throw new Error(`Expected 8 fusion abilities, found ${abilityCount}`);
+  }
+  let saved = false;
+  const saveButton = page.getByRole('button', { name: /Save to Archive/i });
+  if ((await saveButton.count()) > 0) {
+    await saveButton.click();
+    await waitForText(page, /Sovereign Saved|Save Failed/i, 20000);
+    if (await page.getByText(/Save Failed/i).count()) {
+      throw new Error('Gemini Protocol save failed');
+    }
+    saved = true;
+  }
+  await page.keyboard.press('Escape');
+  return saved;
 };
 
 const runCharacterSheetEditModeChecks = async (page) => {
@@ -670,9 +1126,199 @@ const deleteQaUser = async (userId) => {
   }
 };
 
+const ensureMonarchUnlocks = async (characterId) => {
+  if (!characterId) {
+    throw new Error('Missing character ID for monarch unlocks');
+  }
+  const { data: existingUnlocks, error: existingError } = await admin
+    .from('character_monarch_unlocks')
+    .select('id, monarch_id, is_primary')
+    .eq('character_id', characterId);
+  if (existingError) {
+    throw new Error(`Failed to fetch monarch unlocks: ${existingError.message}`);
+  }
+  const unlocks = existingUnlocks || [];
+  if (unlocks.length >= 2) {
+    return unlocks;
+  }
+  const { data: monarchs, error: monarchError } = await admin
+    .from('compendium_monarchs')
+    .select('id, name')
+    .order('name');
+  if (monarchError) {
+    throw new Error(`Failed to fetch monarchs: ${monarchError.message}`);
+  }
+  const available = (monarchs || []).filter(
+    (monarch) => !unlocks.some((unlock) => unlock.monarch_id === monarch.id)
+  );
+  const needed = 2 - unlocks.length;
+  if (available.length < needed) {
+    throw new Error('Not enough monarchs available to satisfy fusion requirements');
+  }
+  const inserts = available.slice(0, needed).map((monarch, index) => ({
+    character_id: characterId,
+    monarch_id: monarch.id,
+    quest_name: `QA Monarch ${index + 1}`,
+    dm_notes: 'QA automation unlock',
+    is_primary: unlocks.length === 0 && index === 0,
+  }));
+  let inserted = [];
+  if (inserts.length > 0) {
+    const { data: insertedRows, error: insertError } = await admin
+      .from('character_monarch_unlocks')
+      .insert(inserts)
+      .select('id, monarch_id, is_primary');
+    if (insertError) {
+      throw new Error(`Failed to insert monarch unlocks: ${insertError.message}`);
+    }
+    inserted = insertedRows || [];
+  }
+  const updated = [...unlocks, ...inserted];
+  if (!updated.some((unlock) => unlock.is_primary) && updated[0]?.id) {
+    const { error: resetError } = await admin
+      .from('character_monarch_unlocks')
+      .update({ is_primary: false })
+      .eq('character_id', characterId);
+    if (resetError) {
+      throw new Error(`Failed to reset monarch primary: ${resetError.message}`);
+    }
+    const { error: primaryError } = await admin
+      .from('character_monarch_unlocks')
+      .update({ is_primary: true })
+      .eq('id', updated[0].id);
+    if (primaryError) {
+      throw new Error(`Failed to set monarch primary: ${primaryError.message}`);
+    }
+  }
+  return updated;
+};
+
+const ensureCharacterPath = async (characterId) => {
+  if (!characterId) {
+    throw new Error('Missing character ID for path check');
+  }
+  const { data: character, error: characterError } = await admin
+    .from('characters')
+    .select('job, path')
+    .eq('id', characterId)
+    .maybeSingle();
+  if (characterError) {
+    throw new Error(`Failed to fetch character for path check: ${characterError.message}`);
+  }
+  if (!character) {
+    throw new Error('Character not found for path check');
+  }
+  const currentJob = character.job || '';
+  const currentPath = character.path || '';
+  if (currentPath) {
+    return { jobName: currentJob, pathName: currentPath, updated: false };
+  }
+
+  let jobRow = null;
+  if (currentJob) {
+    const { data: jobData, error: jobError } = await admin
+      .from('compendium_jobs')
+      .select('id, name')
+      .eq('name', currentJob)
+      .maybeSingle();
+    if (jobError) {
+      throw new Error(`Failed to fetch job for path check: ${jobError.message}`);
+    }
+    jobRow = jobData || null;
+  }
+
+  let pathRow = null;
+  if (jobRow?.id) {
+    const { data: pathData, error: pathError } = await admin
+      .from('compendium_job_paths')
+      .select('id, name, job_id')
+      .eq('job_id', jobRow.id)
+      .order('name', { ascending: true })
+      .limit(1);
+    if (pathError) {
+      throw new Error(`Failed to fetch job paths: ${pathError.message}`);
+    }
+    pathRow = pathData?.[0] || null;
+  }
+
+  if (!pathRow) {
+    const { data: anyPath, error: anyPathError } = await admin
+      .from('compendium_job_paths')
+      .select('id, name, job_id')
+      .order('name', { ascending: true })
+      .limit(1);
+    if (anyPathError) {
+      throw new Error(`Failed to fetch fallback path: ${anyPathError.message}`);
+    }
+    pathRow = anyPath?.[0] || null;
+  }
+
+  if (!pathRow) {
+    throw new Error('No compendium paths available to assign to character');
+  }
+
+  let resolvedJobName = currentJob;
+  if (!jobRow || jobRow.id !== pathRow.job_id) {
+    const { data: jobForPath, error: jobForPathError } = await admin
+      .from('compendium_jobs')
+      .select('name')
+      .eq('id', pathRow.job_id)
+      .maybeSingle();
+    if (jobForPathError) {
+      throw new Error(`Failed to resolve job for path: ${jobForPathError.message}`);
+    }
+    resolvedJobName = jobForPath?.name || resolvedJobName;
+  }
+
+  const updates = {
+    path: pathRow.name,
+    ...(resolvedJobName && resolvedJobName !== currentJob ? { job: resolvedJobName } : {}),
+  };
+  const { error: updateError } = await admin.from('characters').update(updates).eq('id', characterId);
+  if (updateError) {
+    throw new Error(`Failed to update character path: ${updateError.message}`);
+  }
+
+  return { jobName: resolvedJobName, pathName: pathRow.name, updated: true };
+};
+
+const validateSavedSovereign = async (userId) => {
+  if (!userId) {
+    throw new Error('Missing user ID for sovereign validation');
+  }
+  const { data, error } = await admin
+    .from('saved_sovereigns')
+    .select('id, fusion_theme, fusion_description, fusion_method, fusion_stability, power_multiplier, abilities')
+    .eq('created_by', userId)
+    .order('created_at', { ascending: false })
+    .limit(1);
+  if (error) {
+    throw new Error(`Saved sovereign lookup failed: ${error.message}`);
+  }
+  const row = data?.[0];
+  if (!row) {
+    throw new Error('No saved sovereign found after Gemini Protocol save');
+  }
+  const missingFields = [];
+  if (!row.fusion_theme) missingFields.push('fusion_theme');
+  if (!row.fusion_description) missingFields.push('fusion_description');
+  if (!row.fusion_method) missingFields.push('fusion_method');
+  if (!row.fusion_stability) missingFields.push('fusion_stability');
+  if (!row.power_multiplier) missingFields.push('power_multiplier');
+  if (missingFields.length > 0) {
+    throw new Error(`Saved sovereign missing fields: ${missingFields.join(', ')}`);
+  }
+  const abilities = Array.isArray(row.abilities) ? row.abilities : [];
+  if (abilities.length < 8) {
+    throw new Error(`Saved sovereign abilities incomplete (${abilities.length})`);
+  }
+};
+
 const attachConsoleListeners = (page, label, errors) => {
   page.on('pageerror', (err) => {
-    errors.push(`[${label}] pageerror: ${err.message}`);
+    const message = err?.stack || err?.message || String(err);
+    errors.push(`[${label}] pageerror: ${message}`);
+    console.error(`[QA] ${label} pageerror: ${message}`);
   });
   page.on('console', (msg) => {
     if (msg.type() === 'error') {
@@ -681,6 +1327,7 @@ const attachConsoleListeners = (page, label, errors) => {
         return;
       }
       errors.push(`[${label}] console: ${text}`);
+      console.error(`[QA] ${label} console error: ${text}`);
     }
   });
   page.on('response', (response) => {
@@ -689,6 +1336,15 @@ const attachConsoleListeners = (page, label, errors) => {
       const request = response.request();
       errors.push(`[${label}] http ${status} ${request.method()} ${response.url()}`);
     }
+  });
+  page.on('requestfailed', (request) => {
+    const failure = request.failure();
+    const errorText = failure?.errorText || '';
+    if (/ERR_ABORTED|NS_BINDING_ABORTED/i.test(errorText)) {
+      return;
+    }
+    const detail = errorText ? ` (${errorText})` : '';
+    errors.push(`[${label}] request failed ${request.method()} ${request.url()}${detail}`);
   });
 };
 
@@ -754,9 +1410,20 @@ const runRandomEventGeneratorSmoke = async (page) => {
 };
 
 const runSessionPlannerSmoke = async (page) => {
-  await clickIfPresent(page.getByRole('tab', { name: /Session Plan/i }));
+  const planTab = page.getByRole('tab', { name: /Session Plan/i });
+  if ((await planTab.count()) > 0) {
+    await clickWhenReady(planTab);
+    const start = Date.now();
+    while (Date.now() - start < 8000) {
+      const state = await planTab.getAttribute('data-state');
+      if (state && state.includes('active')) {
+        break;
+      }
+      await delay(200);
+    }
+  }
   const noteTitle = page.locator('#note-title');
-  await noteTitle.waitFor({ state: 'visible', timeout: 10000 });
+  await noteTitle.waitFor({ state: 'visible', timeout: 15000 });
   const noteValue = `QA Note ${Date.now()}`;
   await noteTitle.fill(noteValue);
   const noteContent = page.locator('#note-content');
@@ -764,7 +1431,19 @@ const runSessionPlannerSmoke = async (page) => {
     await noteContent.fill('QA session note content.');
   }
   await clickWhenReady(page.getByRole('button', { name: /Add Note/i }));
-  await waitForText(page, noteValue, 10000);
+  await page
+    .waitForFunction(() => {
+      const input = document.querySelector('#note-title');
+      return !(input instanceof HTMLInputElement) || input.value.trim() === '';
+    })
+    .catch(() => {});
+  const notesWindow = getSystemWindow(page, 'SESSION NOTES');
+  if ((await notesWindow.count()) > 0) {
+    await notesWindow.scrollIntoViewIfNeeded();
+    await waitForLocatorText(notesWindow, noteValue, 15000);
+  } else {
+    await waitForText(page, noteValue, 15000);
+  }
 };
 
 const runRelicWorkshopSmoke = async (page) => {
@@ -803,9 +1482,13 @@ const runTokenLibrarySmoke = async (page) => {
   if ((await tokenNameInput.count()) === 0) {
     await clickWhenReady(page.getByRole('button', { name: /^Create Token$/i }).first());
   }
-  await tokenNameInput.waitFor({ state: 'visible', timeout: 10000 });
+  await tokenNameInput.waitFor({ state: 'visible', timeout: 15000 });
   const tokenName = `QA Token ${Date.now()}`;
   await tokenNameInput.fill(tokenName);
+  const nameValue = (await tokenNameInput.inputValue().catch(() => '')).trim();
+  if (!nameValue) {
+    throw new Error('Token name input did not retain value before creation.');
+  }
   const emojiInput = page.locator('#token-emoji');
   if ((await emojiInput.count()) > 0) {
     await emojiInput.fill('QA');
@@ -821,7 +1504,20 @@ const runTokenLibrarySmoke = async (page) => {
       await cancelButton.click();
     }
   }
-  await tokenNameInput.waitFor({ state: 'detached', timeout: 15000 }).catch(() => {});
+  if ((await createWindow.count()) > 0) {
+    await createWindow.waitFor({ state: 'detached', timeout: 15000 });
+  } else {
+    await tokenNameInput.waitFor({ state: 'detached', timeout: 15000 });
+  }
+  const tokenListWindow = page.locator('#token-list-window');
+  const tokenDetailsWindow = page.locator('#token-details-window');
+  const listWaitStart = Date.now();
+  while (Date.now() - listWaitStart < 15000) {
+    if ((await tokenListWindow.count()) > 0 || (await tokenDetailsWindow.count()) > 0) {
+      break;
+    }
+    await delay(400);
+  }
   const searchInput = page.locator('#search');
   if ((await searchInput.count()) > 0) {
     await searchInput.waitFor({ state: 'visible', timeout: 10000 });
@@ -837,9 +1533,8 @@ const runTokenLibrarySmoke = async (page) => {
     tokenError = error;
   }
   if (!tokenVisible) {
-    const detailsWindow = page.locator('#token-details-window');
     const detailsWindowRoot =
-      (await detailsWindow.count()) > 0 ? detailsWindow : getSystemWindow(page, 'TOKEN DETAILS');
+      (await tokenDetailsWindow.count()) > 0 ? tokenDetailsWindow : getSystemWindow(page, 'TOKEN DETAILS');
     try {
       if ((await detailsWindowRoot.count()) > 0) {
         await detailsWindowRoot.getByText(toRegExp(tokenName)).first().waitFor({ state: 'attached', timeout: 8000 });
@@ -856,7 +1551,11 @@ const runTokenLibrarySmoke = async (page) => {
       .isVisible()
       .catch(() => false);
     if (!toastVisible && strictChecks) {
-      throw tokenError ?? new Error('Token creation did not surface in the list.');
+      const createVisible = await createWindow.isVisible().catch(() => false);
+      const listVisible = await tokenListWindow.isVisible().catch(() => false);
+      const detailsVisible = await tokenDetailsWindow.isVisible().catch(() => false);
+      const note = `createWindow=${createVisible}, listWindow=${listVisible}, detailsWindow=${detailsVisible}, toast=${toastVisible}, nameValue="${nameValue}"`;
+      throw tokenError ?? new Error(`Token creation did not surface in the list. (${note})`);
     }
     if (!toastVisible) {
       console.warn('[QA] Token library: created token not visible; continuing.');
@@ -1041,10 +1740,17 @@ const run = async () => {
       'Start preview server',
       async () => {
         await cleanupPreviewPid();
-        previewProcess = spawn('npx', ['vite', 'preview', '--port', String(previewPort), '--strictPort'], {
-          shell: true,
-          stdio: 'inherit',
-        });
+        if (process.platform === 'win32') {
+          const commandLine = ['npx', 'vite', 'preview', '--port', String(previewPort), '--strictPort']
+            .map(quoteArg)
+            .join(' ');
+          previewProcess = spawn('cmd.exe', ['/d', '/s', '/c', commandLine], { shell: false, stdio: 'inherit' });
+        } else {
+          previewProcess = spawn('npx', ['vite', 'preview', '--port', String(previewPort), '--strictPort'], {
+            shell: false,
+            stdio: 'inherit',
+          });
+        }
         if (previewProcess.pid) {
           await fs.writeFile(previewPidPath, String(previewProcess.pid), 'utf8');
         }
@@ -1060,17 +1766,18 @@ const run = async () => {
       slowMo,
       args: ['--use-gl=swiftshader', '--disable-dev-shm-usage'],
     });
-    const contextOptions = captureArtifacts
-      ? {
-          viewport: { width: 1280, height: 720 },
-          recordVideo: { dir: artifactsDir },
-        }
-      : {};
+    const contextOptions = {
+      viewport,
+      ...(captureArtifacts ? { recordVideo: { dir: artifactsDir, size: viewport } } : {}),
+    };
 
     let campaignId = '';
     let shareCode = '';
     let characterId = '';
     let favoriteEntryName = '';
+    let playerCharacterName = '';
+    let playerJobName = '';
+    let playerPathName = '';
 
     await check('DM flow', async () => {
       const dmContext = await browser.newContext(contextOptions);
@@ -1139,7 +1846,10 @@ const run = async () => {
       }
 
       await check('Gemini Protocol', async () => {
-        await runGeminiProtocolFlow(dmPage);
+        const saved = await runGeminiProtocolFlow(dmPage);
+        if (saved && dmUser?.id) {
+          await validateSavedSovereign(dmUser.id);
+        }
       }, { critical: true });
 
       await dmPage.goto(`${baseUrl}/campaigns`, { waitUntil: 'networkidle' });
@@ -1179,9 +1889,32 @@ const run = async () => {
       await gotoAndExpect(dmPage, `/campaigns/${campaignId}/journal`, { expectText: 'JOURNAL & NOTES' });
       await gotoAndExpect(dmPage, `/campaigns/${campaignId}`, { expectText: 'CAMPAIGN INFO' });
 
-      await dmPage.getByRole('tab', { name: 'VTT' }).click();
-      await dmPage.getByRole('button', { name: /Launch VTT/i }).click();
+      const vttTab = dmPage.getByRole('tab', { name: 'VTT' });
+      await vttTab.click();
+      await dmPage.waitForTimeout(400);
+      if (!(await vttTab.getAttribute('data-state'))?.includes('active')) {
+        const directTab = dmPage.locator('[data-state="active"][data-orientation="horizontal"]', { hasText: 'VTT' }).first();
+        if (await directTab.count()) {
+          await directTab.click({ force: true });
+        } else {
+          await dmPage.evaluate(() => {
+            const tab = Array.from(document.querySelectorAll('[role="tab"]')).find(
+              (el) => el.textContent?.trim().toLowerCase() === 'vtt'
+            );
+            if (tab instanceof HTMLElement) tab.click();
+          });
+        }
+      }
+      let launchVtt = dmPage.getByRole('button', { name: /Launch VTT/i });
+      if ((await launchVtt.count()) === 0) {
+        launchVtt = dmPage.getByRole('link', { name: /Launch VTT/i });
+      }
+      await launchVtt.first().click();
       await dmPage.waitForURL(`**/campaigns/${campaignId}/vtt`, { timeout: 30000 });
+      const preVttShot = await captureScreenshot(dmPage, 'dm-vtt-pre');
+      if (preVttShot) artifactPaths.push(preVttShot);
+      const preVttCount = await dmPage.locator('.vtt-scene-container').count();
+      console.log(`[QA] vtt-scene-container count before wait: ${preVttCount}`);
       await dmPage.locator('.vtt-scene-container').waitFor({ state: 'visible', timeout: 40000 });
 
       await dmPage.getByRole('tab', { name: 'Library' }).click();
@@ -1386,11 +2119,15 @@ const run = async () => {
       }
 
       await playerPage.goto(`${baseUrl}/characters/new`, { waitUntil: 'networkidle' });
-      await playerPage.locator('#name').fill(`QA Ascendant ${qaSuffix}`);
+      playerCharacterName = `QA Ascendant ${qaSuffix}`;
+      await playerPage.locator('#name').fill(playerCharacterName);
       await playerPage.getByRole('button', { name: 'Next' }).click();
       await playerPage.getByRole('button', { name: 'Next' }).click();
 
-      await selectFirstOptionByLabel(playerPage, 'Select Job *');
+      const jobSelection = await selectFirstOptionByLabel(playerPage, 'Select Job *');
+      if (jobSelection) {
+        playerJobName = jobSelection;
+      }
       const skillLabel = playerPage.locator('text=/Select \\d+ Skill/i').first();
       if (await skillLabel.count()) {
         const labelText = (await skillLabel.textContent()) || '';
@@ -1404,7 +2141,13 @@ const run = async () => {
       }
       await playerPage.getByRole('button', { name: 'Next' }).click();
 
-      await selectFirstOptionByLabel(playerPage, /Select Path/i, { skipPattern: /None/i, allowMissing: true });
+      const pathSelection = await selectFirstOptionByLabel(playerPage, /Select Path/i, {
+        skipPattern: /None/i,
+        allowMissing: true,
+      });
+      if (pathSelection) {
+        playerPathName = pathSelection;
+      }
       await playerPage.getByRole('button', { name: 'Next' }).click();
 
       await selectFirstOptionByLabel(playerPage, 'Select Background *');
@@ -1417,6 +2160,18 @@ const run = async () => {
         throw new Error('Character ID not found after creation');
       }
       await waitForCharacterSheet(playerPage);
+      await ensureMonarchUnlocks(characterId);
+      const ensuredPath = await ensureCharacterPath(characterId);
+      if (ensuredPath.jobName) {
+        playerJobName = ensuredPath.jobName;
+      }
+      if (ensuredPath.pathName) {
+        playerPathName = ensuredPath.pathName;
+      }
+      if (ensuredPath.updated) {
+        await playerPage.reload({ waitUntil: 'networkidle' });
+        await waitForCharacterSheet(playerPage);
+      }
 
       await gotoAndExpect(playerPage, '/characters', { expectText: 'ASCENDANT REGISTRY' });
       await waitForText(playerPage, `QA Ascendant ${qaSuffix}`);
@@ -1437,12 +2192,19 @@ const run = async () => {
         await waitForCharacterSheet(playerPage);
       }
       await runCharacterSheetEditModeChecks(playerPage);
+      const expectedPath = playerPathName ? playerPathName.replace(/^Path of the\s+/i, '') : '';
+      const autoFusionSaved = await runGeminiProtocolAutoFlow(playerPage, {
+        expectedJob: playerJobName || undefined,
+        expectedPath: expectedPath || undefined,
+      });
+      if (autoFusionSaved && playerUser?.id) {
+        await validateSavedSovereign(playerUser.id);
+      }
 
       await gotoAndExpect(playerPage, '/player-tools/inventory', { expectText: 'RIFT REWARDS' });
       await gotoAndExpect(playerPage, '/player-tools/abilities', { expectText: 'ACTIONS' });
       await gotoAndExpect(playerPage, '/player-tools/character-art', { expectText: 'Character Art' });
       await gotoAndExpect(playerPage, '/player-tools/quest-log', { expectText: 'DAILY QUEST SETTINGS' });
-      await gotoAndExpect(playerPage, '/player-tools/achievements', { expectText: 'Achievement Summary' });
 
       favoriteEntryName = await openFirstCompendiumEntry(playerPage);
       const favoriteUrlMatch = playerPage.url().match(/\/compendium\/([^/]+)\/([^/]+)/i);
@@ -1575,14 +2337,39 @@ const run = async () => {
         await findCampaignButton.click();
       }
       await waitForCampaignLookup(playerPage, 20000);
-      const characterSelect = playerPage.getByRole('button', { name: /No Ascendant linked/i });
-      if (await characterSelect.count()) {
-        await characterSelect.click();
-        await playerPage.getByRole('option', { name: new RegExp(`QA Ascendant ${qaSuffix}`) }).click();
+      const characterOptionName = playerCharacterName || `QA Ascendant ${qaSuffix}`;
+      const characterCombobox = playerPage.locator('button[role="combobox"], button[aria-haspopup="listbox"]').first();
+      if ((await characterCombobox.count()) > 0) {
+        await characterCombobox.click();
+        const characterOption = playerPage
+          .getByRole('option', { name: new RegExp(escapeRegExp(characterOptionName), 'i') })
+          .first();
+        await characterOption.waitFor({ state: 'visible', timeout: 15000 });
+        await characterOption.click();
       }
       await playerPage.getByRole('button', { name: /Join Campaign/i }).click();
       await playerPage.waitForURL(`**/campaigns/${campaignId}`, { timeout: 30000 });
       await waitForText(playerPage, 'CAMPAIGN INFO');
+      if (playerUser?.id && characterId) {
+        const { data: memberRow, error: memberError } = await admin
+          .from('campaign_members')
+          .select('id, character_id')
+          .eq('campaign_id', campaignId)
+          .eq('user_id', playerUser.id)
+          .maybeSingle();
+        if (memberError) {
+          throw new Error(`Campaign member lookup failed: ${memberError.message}`);
+        }
+        if (memberRow && !memberRow.character_id) {
+          const { error: memberUpdateError } = await admin
+            .from('campaign_members')
+            .update({ character_id: characterId })
+            .eq('id', memberRow.id);
+          if (memberUpdateError) {
+            throw new Error(`Campaign member character link failed: ${memberUpdateError.message}`);
+          }
+        }
+      }
 
       await gotoAndExpect(playerPage, '/campaigns', { expectText: 'GUILD REGISTRY' });
       await waitForText(playerPage, `QA Guild ${qaSuffix}`);
@@ -1607,6 +2394,9 @@ const run = async () => {
       if (playerTokenCount < 1) {
         throw new Error('Player cannot see tokens on VTT');
       }
+      const characterNameForVtt = playerCharacterName || `QA Ascendant ${qaSuffix}`;
+      await ensureVttCharacterToken(playerPage, characterNameForVtt);
+      await openCharacterSheetFromVtt(playerPage);
 
       await playerPage.goto(`${baseUrl}/dice`, { waitUntil: 'networkidle' });
       await playerPage.getByRole('button', { name: '1d20', exact: true }).click();

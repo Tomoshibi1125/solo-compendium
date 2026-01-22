@@ -1,9 +1,6 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
 import { SystemWindow } from '@/components/ui/SystemWindow';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { Sparkles, Swords, Shield, Zap } from 'lucide-react';
@@ -102,9 +99,10 @@ export function CharacterTemplates({ onTemplateSelect, className }: CharacterTem
           const displayDescription = formatMonarchVernacular(template.description);
           const displayPath = template.path ? formatMonarchVernacular(template.path) : '';
           return (
-            <div
+            <button
               key={template.id}
-              className="p-4 rounded border bg-muted/30 hover:bg-muted/50 transition-colors cursor-pointer"
+              type="button"
+              className="w-full text-left p-4 rounded border bg-muted/30 hover:bg-muted/50 transition-colors"
               onClick={() => {
                 if (onTemplateSelect) {
                   onTemplateSelect(template);
@@ -135,7 +133,7 @@ export function CharacterTemplates({ onTemplateSelect, className }: CharacterTem
                   </Badge>
                 ))}
               </div>
-            </div>
+            </button>
           );
         })}
       </div>

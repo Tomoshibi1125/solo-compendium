@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Dice6, RefreshCw } from 'lucide-react';
+import { ArrowLeft, Dice6 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { cn } from '@/lib/utils';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 
 // System Ascendant themed reference tables
@@ -159,10 +158,6 @@ const TREASURE_TIERS = {
     'Monarch equipment',
   ],
 };
-
-function rollDice(sides: number): number {
-  return Math.floor(Math.random() * sides) + 1;
-}
 
 function rollTable<T>(table: T[]): T {
   return table[Math.floor(Math.random() * table.length)];

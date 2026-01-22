@@ -340,6 +340,7 @@ export function createUnifiedCharacter(options: UnifiedCharacterCreation): Unifi
   }));
   
   return {
+    name: options.name,
     level: 1,
     class: options.class,
     race: options.race,
@@ -368,7 +369,7 @@ export function createUnifiedCharacter(options: UnifiedCharacterCreation): Unifi
 }
 
 // Calculate unified spell slots based on class
-function calculateUnifiedSpellSlots(classType: UnifiedClass, level: number): UnifiedSpellSlots {
+function calculateUnifiedSpellSlots(classType: UnifiedClass, _level: number): UnifiedSpellSlots {
   // Simplified spell slot calculation
   const fullCasterSlots: UnifiedSpellSlots = {
     cantrips: 0,

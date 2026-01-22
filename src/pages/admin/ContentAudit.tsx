@@ -13,10 +13,6 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useContentAudit, type ContentAuditReport } from '@/hooks/useContentAudit';
 import { 
-  FileText, 
-  Image, 
-  Book, 
-  Tag, 
   AlertTriangle, 
   CheckCircle2, 
   RefreshCw,
@@ -27,16 +23,10 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useQueryClient, useQuery } from '@tanstack/react-query';
-import { checkAllLinkIntegrity, type BrokenLink } from '@/lib/linkIntegrity';
+import { checkAllLinkIntegrity } from '@/lib/linkIntegrity';
 import { logger } from '@/lib/logger';
 
 function AuditTable({ report }: { report: ContentAuditReport }) {
-  const getCompletenessColor = (completeness: number) => {
-    if (completeness >= 80) return 'text-green-400';
-    if (completeness >= 60) return 'text-yellow-400';
-    return 'text-red-400';
-  };
-
   const getCompletenessBadge = (completeness: number) => {
     if (completeness >= 80) return 'default';
     if (completeness >= 60) return 'secondary';

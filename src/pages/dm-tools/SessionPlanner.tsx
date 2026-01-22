@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Save, Plus, Trash2, Calendar, Clock, FileText, Users } from 'lucide-react';
+import { ArrowLeft, Save, Plus, Trash2 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
@@ -59,6 +59,7 @@ const SessionPlanner = () => {
     initialState: { sessions: [], currentSession: null },
     storageKey: toolStorageKey,
   });
+  const isHydrating = isLoading && !hydratedRef.current;
   const savePayload = useMemo(
     () => ({ sessions, currentSession }),
     [currentSession, sessions]
@@ -159,6 +160,18 @@ const SessionPlanner = () => {
     if (!hydratedRef.current) return;
     void saveNow(debouncedState);
   }, [debouncedState, saveNow]);
+
+  if (isHydrating) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-4 py-8 max-w-6xl">
+          <SystemWindow title="LOADING SESSION PLANNER">
+            <p className="text-sm text-muted-foreground">Loading session data...</p>
+          </SystemWindow>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>

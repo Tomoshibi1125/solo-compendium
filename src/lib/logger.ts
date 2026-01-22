@@ -24,8 +24,6 @@ type LoggerOptions = {
   sink: LoggerSink;
 };
 
-const noop = (..._args: unknown[]) => undefined;
-
 /**
  * Critical errors that should always be logged (even in production)
  */
@@ -76,20 +74,30 @@ export function createLogger(overrides: Partial<LoggerOptions> = {}): Logger {
     mode: overrides.mode ?? defaultOptions.mode,
   };
 
-  if (options.mode === 'development') {
-    return {
-      log: (...args) => options.sink.log(...args),
-      error: (...args) => options.sink.error(...args),
-      warn: (...args) => options.sink.warn(...args),
-      debug: (...args) => options.sink.debug(...args),
-    };
-  }
+  const shouldLog = (args: unknown[]) =>
+    options.mode === 'development' || isCriticalError(args, options.criticalPatterns);
 
   return {
-    log: noop,
-    error: noop,
-    warn: noop,
-    debug: noop,
+    log: (...args) => {
+      if (options.mode === 'development') {
+        options.sink.log(...args);
+      }
+    },
+    error: (...args) => {
+      if (shouldLog(args)) {
+        options.sink.error(...args);
+      }
+    },
+    warn: (...args) => {
+      if (shouldLog(args)) {
+        options.sink.warn(...args);
+      }
+    },
+    debug: (...args) => {
+      if (options.mode === 'development') {
+        options.sink.debug(...args);
+      }
+    },
   };
 }
 

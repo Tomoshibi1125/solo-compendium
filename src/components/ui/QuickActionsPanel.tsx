@@ -7,19 +7,11 @@ import {
   Dice1, 
   Crown, 
   Search,
-  Settings,
-  HelpCircle,
-  X,
-  Sparkles,
-  Zap,
-  FileText,
-  Download,
-  Upload
+  HelpCircle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import { GLOBAL_SHORTCUTS, formatShortcut } from '@/lib/globalShortcuts';
 import {

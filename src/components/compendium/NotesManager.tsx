@@ -16,12 +16,12 @@ import {
   Save, 
   X, 
   FileText, 
-  Calendar,
-  Tag
+  Calendar
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { logger } from '@/lib/logger';
+import type { Database } from '@/integrations/supabase/types';
 
 interface Note {
   id: string;
@@ -30,6 +30,8 @@ interface Note {
   updatedAt: Date;
   tags: string[];
 }
+
+type NoteRow = Database['public']['Tables']['compendium_notes']['Row'];
 
 interface NotesManagerProps {
   entryId: string;
@@ -64,11 +66,12 @@ export function NotesManager({
       const savedNotes = localStorage.getItem(storageKey);
       if (!savedNotes) return [];
       try {
-        return JSON.parse(savedNotes).map((note: any) => ({
+        const parsed = JSON.parse(savedNotes) as Array<Note & { createdAt: string; updatedAt: string }>;
+        return parsed.map((note) => ({
           ...note,
           createdAt: new Date(note.createdAt),
           updatedAt: new Date(note.updatedAt),
-        })) as Note[];
+        }));
       } catch (error) {
         logger.error('Failed to load notes:', error);
         return [];
@@ -78,7 +81,7 @@ export function NotesManager({
     const loadRemote = async () => {
       if (!user?.id) return [];
       const { data, error } = await supabase
-        .from('compendium_notes' as any)
+        .from('compendium_notes')
         .select('id, content, tags, created_at, updated_at')
         .eq('entry_type', entryType)
         .eq('entry_id', entryId)
@@ -88,13 +91,13 @@ export function NotesManager({
         logger.error('Failed to load notes:', error);
         return [];
       }
-      return (data || []).map((row: any) => ({
+      return (data || []).map((row: NoteRow) => ({
         id: row.id,
         content: row.content,
         tags: Array.isArray(row.tags) ? row.tags : [],
-        createdAt: new Date(row.created_at),
-        updatedAt: new Date(row.updated_at),
-      })) as Note[];
+        createdAt: new Date(row.created_at ?? Date.now()),
+        updatedAt: new Date(row.updated_at ?? row.created_at ?? Date.now()),
+      }));
     };
 
     const hydrate = async () => {
@@ -161,7 +164,7 @@ export function NotesManager({
 
     if (editingNote) {
       const { data, error } = await supabase
-        .from('compendium_notes' as any)
+        .from('compendium_notes')
         .update({
           content: noteContent.trim(),
           tags,
@@ -199,7 +202,7 @@ export function NotesManager({
     }
 
     const { data, error } = await supabase
-      .from('compendium_notes' as any)
+      .from('compendium_notes')
       .insert({
         user_id: user.id,
         entry_type: entryType,
@@ -251,7 +254,7 @@ export function NotesManager({
     }
 
     const { error } = await supabase
-      .from('compendium_notes' as any)
+      .from('compendium_notes')
       .delete()
       .eq('id', noteId)
       .eq('user_id', user.id);

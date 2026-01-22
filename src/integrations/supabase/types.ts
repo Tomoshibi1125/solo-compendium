@@ -3104,6 +3104,237 @@ export type Database = {
           },
         ]
       }
+      audio_playlists: {
+        Row: {
+          auto_play: boolean
+          category: string
+          created_at: string
+          crossfade: number
+          description: string | null
+          id: string
+          name: string
+          repeat: string
+          shuffle: boolean
+          tracks: string[]
+          updated_at: string
+          user_id: string
+          volume: number
+        }
+        Insert: {
+          auto_play?: boolean
+          category: string
+          created_at?: string
+          crossfade?: number
+          description?: string | null
+          id?: string
+          name: string
+          repeat?: string
+          shuffle?: boolean
+          tracks?: string[]
+          updated_at?: string
+          user_id: string
+          volume?: number
+        }
+        Update: {
+          auto_play?: boolean
+          category?: string
+          created_at?: string
+          crossfade?: number
+          description?: string | null
+          id?: string
+          name?: string
+          repeat?: string
+          shuffle?: boolean
+          tracks?: string[]
+          updated_at?: string
+          user_id?: string
+          volume?: number
+        }
+        Relationships: []
+      }
+      audio_tracks: {
+        Row: {
+          artist: string
+          category: string
+          created_at: string
+          duration: number
+          file_size: number | null
+          id: string
+          license: string
+          loop: boolean
+          mime_type: string | null
+          mood: string | null
+          source: string
+          storage_path: string
+          tags: string[]
+          title: string
+          updated_at: string
+          user_id: string
+          volume: number
+        }
+        Insert: {
+          artist: string
+          category: string
+          created_at?: string
+          duration: number
+          file_size?: number | null
+          id?: string
+          license?: string
+          loop?: boolean
+          mime_type?: string | null
+          mood?: string | null
+          source?: string
+          storage_path: string
+          tags?: string[]
+          title: string
+          updated_at?: string
+          user_id: string
+          volume?: number
+        }
+        Update: {
+          artist?: string
+          category?: string
+          created_at?: string
+          duration?: number
+          file_size?: number | null
+          id?: string
+          license?: string
+          loop?: boolean
+          mime_type?: string | null
+          mood?: string | null
+          source?: string
+          storage_path?: string
+          tags?: string[]
+          title?: string
+          updated_at?: string
+          user_id?: string
+          volume?: number
+        }
+        Relationships: []
+      }
+      campaign_tool_states: {
+        Row: {
+          campaign_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          state: Json
+          tool_key: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          campaign_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          state?: Json
+          tool_key: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          campaign_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          state?: Json
+          tool_key?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      character_backups: {
+        Row: {
+          backup_data: Json
+          backup_name: string | null
+          character_id: string
+          created_at: string
+          id: string
+          user_id: string
+          version: number
+        }
+        Insert: {
+          backup_data: Json
+          backup_name?: string | null
+          character_id: string
+          created_at?: string
+          id?: string
+          user_id: string
+          version?: number
+        }
+        Update: {
+          backup_data?: Json
+          backup_name?: string | null
+          character_id?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+          version?: number
+        }
+        Relationships: []
+      }
+      compendium_notes: {
+        Row: {
+          content: string
+          created_at: string
+          entry_id: string
+          entry_type: string
+          id: string
+          tags: string[]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          entry_id: string
+          entry_type: string
+          id?: string
+          tags?: string[]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          entry_id?: string
+          entry_type?: string
+          id?: string
+          tags?: string[]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_tool_states: {
+        Row: {
+          created_at: string
+          id: string
+          state: Json
+          tool_key: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          state?: Json
+          tool_key: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          state?: Json
+          tool_key?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_favorites: {
         Row: {
           created_at: string
@@ -3125,6 +3356,45 @@ export type Database = {
           entry_type?: string
           id?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      vtt_journal_entries: {
+        Row: {
+          campaign_id: string
+          category: string
+          content: string | null
+          created_at: string
+          id: string
+          tags: string[]
+          title: string
+          updated_at: string
+          user_id: string
+          visible_to_players: boolean
+        }
+        Insert: {
+          campaign_id: string
+          category?: string
+          content?: string | null
+          created_at?: string
+          id?: string
+          tags?: string[]
+          title: string
+          updated_at?: string
+          user_id: string
+          visible_to_players?: boolean
+        }
+        Update: {
+          campaign_id?: string
+          category?: string
+          content?: string | null
+          created_at?: string
+          id?: string
+          tags?: string[]
+          title?: string
+          updated_at?: string
+          user_id?: string
+          visible_to_players?: boolean
         }
         Relationships: []
       }

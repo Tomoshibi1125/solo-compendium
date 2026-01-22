@@ -4,27 +4,16 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   Sword, 
-  Shield, 
-  Heart, 
-  Star, 
-  Lock, 
-  Unlock, 
   Trophy,
   Zap,
-  Brain,
-  Users,
-  Eye,
   ArrowUp,
   Plus,
   Search
 } from 'lucide-react';
-import { CharacterProgressionSystem, useCharacterProgression } from './CharacterProgressionSystem';
+import { useCharacterProgression } from './CharacterProgressionSystem';
 import { type LevelingMode } from '@/lib/campaignSettings';
 
 interface CharacterLevelUpProps {
@@ -37,7 +26,6 @@ export function CharacterLevelUp({ characterId, onLevelUp, levelingMode }: Chara
   const [showModal, setShowModal] = useState(false);
   const [showSkillModal, setShowSkillModal] = useState(false);
   const [showEquipmentModal, setShowEquipmentModal] = useState(false);
-  const [selectedSkill, setSelectedSkill] = useState<string>('');
   const [equipmentSearch, setEquipmentSearch] = useState('');
   const mode = levelingMode ?? 'milestone';
   const isMilestone = mode === 'milestone';

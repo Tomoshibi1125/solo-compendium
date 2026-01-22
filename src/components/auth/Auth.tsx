@@ -161,7 +161,8 @@ export function Auth() {
                 </h2>
                 <p className="text-muted-foreground font-heading text-sm">
                   Set <span className="font-medium">VITE_SUPABASE_URL</span> and{' '}
-                  <span className="font-medium">VITE_SUPABASE_PUBLISHABLE_KEY</span> to enable authentication.
+                  <span className="font-medium">VITE_SUPABASE_PUBLISHABLE_KEY</span> (or{' '}
+                  <span className="font-medium">VITE_SUPABASE_ANON_KEY</span>) to enable authentication.
                 </p>
               </div>
               <Button onClick={() => navigate('/setup')} className="w-full" size="lg">

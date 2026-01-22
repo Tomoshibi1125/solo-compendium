@@ -32,13 +32,33 @@ import { TechniqueDetail } from '@/components/compendium/TechniqueDetail';
 import { ArtifactDetail } from '@/components/compendium/ArtifactDetail';
 import { LocationDetail } from '@/components/compendium/LocationDetail';
 import { ItemDetail } from '@/components/compendium/ItemDetail';
-import { resolveRef, type EntryType, isValidEntryType, entryTypes, listStaticEntries } from '@/lib/compendiumResolver';
+import { resolveRef, type EntryType, type CompendiumEntity, isValidEntryType, entryTypes, listStaticEntries } from '@/lib/compendiumResolver';
 import { formatMonarchVernacular, MONARCH_LABEL_PLURAL } from '@/lib/vernacular';
+
+type JobDetailData = Parameters<typeof JobDetail>[0]['data'];
+type PathDetailData = Parameters<typeof PathDetail>[0]['data'];
+type PowerDetailData = Parameters<typeof PowerDetail>[0]['data'];
+type RuneDetailData = Parameters<typeof RuneDetail>[0]['data'];
+type RelicDetailData = Parameters<typeof RelicDetail>[0]['data'];
+type MonsterDetailData = Parameters<typeof MonsterDetail>[0]['data'];
+type BackgroundDetailData = Parameters<typeof BackgroundDetail>[0]['data'];
+type ConditionDetailData = Parameters<typeof ConditionDetail>[0]['data'];
+type MonarchDetailData = Parameters<typeof MonarchDetail>[0]['data'];
+type FeatDetailData = Parameters<typeof FeatDetail>[0]['data'];
+type SkillDetailData = Parameters<typeof SkillDetail>[0]['data'];
+type EquipmentDetailData = Parameters<typeof EquipmentDetail>[0]['data'];
+type ShadowSoldierDetailData = Parameters<typeof ShadowSoldierDetail>[0]['data'];
+type ItemDetailData = Parameters<typeof ItemDetail>[0]['data'];
+type SpellDetailData = Parameters<typeof SpellDetail>[0]['data'];
+type TechniqueDetailData = Parameters<typeof TechniqueDetail>[0]['data'];
+type ArtifactDetailData = Parameters<typeof ArtifactDetail>[0]['data'];
+type LocationDetailData = Parameters<typeof LocationDetail>[0]['data'];
+type SovereignDetailData = Parameters<typeof SovereignDetail>[0]['data'];
 
 const CompendiumDetail = () => {
   const { type, id } = useParams<{ type: EntryType; id: string }>();
   const navigate = useNavigate();
-  const [entry, setEntry] = useState<Record<string, unknown> | null>(null);
+  const [entry, setEntry] = useState<CompendiumEntity | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { favorites, toggleFavorite } = useFavorites();
@@ -51,7 +71,7 @@ const CompendiumDetail = () => {
       if (!type || !id || !entry) return [];
       
       // Fetch entries with similar tags
-      const entryTags = ((entry as { tags?: string[] }).tags || []) as string[];
+      const entryTags = Array.isArray(entry.tags) ? entry.tags : [];
       if (entryTags.length === 0) return [];
 
       const related: Array<{ id: string; name: string; type: string; description?: string }> = [];
@@ -212,48 +232,47 @@ const CompendiumDetail = () => {
   const renderDetail = () => {
     if (!entry || !type) return null;
 
-    // Cast entry to any to avoid strict type checking for dynamic data
-    const data = entry as Record<string, unknown>;
+    const data = entry as unknown;
 
     switch (type) {
       case 'jobs':
-        return <JobDetail data={data as any} />;
+        return <JobDetail data={data as JobDetailData} />;
       case 'paths':
-        return <PathDetail data={data as any} />;
+        return <PathDetail data={data as PathDetailData} />;
       case 'powers':
-        return <PowerDetail data={data as any} />;
+        return <PowerDetail data={data as PowerDetailData} />;
       case 'runes':
-        return <RuneDetail data={data as any} />;
+        return <RuneDetail data={data as RuneDetailData} />;
       case 'relics':
-        return <RelicDetail data={data as any} />;
+        return <RelicDetail data={data as RelicDetailData} />;
       case 'monsters':
-        return <MonsterDetail data={data as any} />;
+        return <MonsterDetail data={data as MonsterDetailData} />;
       case 'backgrounds':
-        return <BackgroundDetail data={data as any} />;
+        return <BackgroundDetail data={data as BackgroundDetailData} />;
       case 'conditions':
-        return <ConditionDetail data={data as any} />;
+        return <ConditionDetail data={data as ConditionDetailData} />;
       case 'monarchs':
-        return <MonarchDetail data={data as any} />;
+        return <MonarchDetail data={data as MonarchDetailData} />;
       case 'feats':
-        return <FeatDetail data={data as any} />;
+        return <FeatDetail data={data as FeatDetailData} />;
       case 'skills':
-        return <SkillDetail data={data as any} />;
+        return <SkillDetail data={data as SkillDetailData} />;
       case 'equipment':
-        return <EquipmentDetail data={data as any} />;
+        return <EquipmentDetail data={data as EquipmentDetailData} />;
       case 'shadow-soldiers':
-        return <ShadowSoldierDetail data={data as any} />;
+        return <ShadowSoldierDetail data={data as ShadowSoldierDetailData} />;
       case 'items':
-        return <ItemDetail data={data as any} />;
+        return <ItemDetail data={data as ItemDetailData} />;
       case 'spells':
-        return <SpellDetail data={data as any} />;
+        return <SpellDetail data={data as SpellDetailData} />;
       case 'techniques':
-        return <TechniqueDetail data={data as any} />;
+        return <TechniqueDetail data={data as TechniqueDetailData} />;
       case 'artifacts':
-        return <ArtifactDetail data={data as any} />;
+        return <ArtifactDetail data={data as ArtifactDetailData} />;
       case 'locations':
-        return <LocationDetail data={data as any} />;
+        return <LocationDetail data={data as LocationDetailData} />;
       case 'sovereigns':
-        return <SovereignDetail data={data as any} />;
+        return <SovereignDetail data={data as SovereignDetailData} />;
       default:
         return <div>Unknown entry type</div>;
     }
@@ -290,7 +309,7 @@ const CompendiumDetail = () => {
     return null;
   }
 
-  const entryData = entry as Record<string, unknown> & {
+  const entryData = entry as CompendiumEntity & {
     name: string;
     display_name?: string | null;
     type: string;

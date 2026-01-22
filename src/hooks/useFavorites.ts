@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useAuth } from '@/lib/auth/authContext';
-import { warn as logWarn } from '@/lib/logger';
+import { warn as logWarn, error as logError } from '@/lib/logger';
 
 const LOCAL_STORAGE_KEY = 'solo-compendium-favorites';
 
@@ -17,7 +17,7 @@ const readLocalFavorites = (): Set<string> => {
       return new Set(parsed);
     }
   } catch (error) {
-    logWarn('Failed to load favorites from localStorage');
+    logWarn('Failed to load favorites from localStorage', error);
   }
   return new Set<string>();
 };
@@ -34,7 +34,6 @@ export const useFavorites = () => {
   const { user, session, loading } = useAuth();
   const sessionUserId = session?.user?.id;
   const authedUserId = user?.id || sessionUserId;
-  const isAuthed = isSupabaseConfigured && !!authedUserId;
   const debugEnabled = import.meta.env.VITE_QA_DEBUG === 'true';
 
   const pushDebug = (payload: Record<string, unknown>) => {
@@ -124,7 +123,7 @@ export const useFavorites = () => {
       queryClient.invalidateQueries({ queryKey: ['favorites'] });
     },
     onError: (error) => {
-      console.error('Favorites toggle failed:', error);
+      logError('Favorites toggle failed:', error);
     },
   });
 

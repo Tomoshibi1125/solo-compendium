@@ -29,7 +29,7 @@ const CampaignDetail = () => {
 
   const { data: campaign, isLoading: loadingCampaign } = useCampaign(id || '');
   const { data: members = [], isLoading: loadingMembers } = useCampaignMembers(id || '');
-  const { data: hasDMAccess = false, isLoading: loadingDMAccess } = useHasDMAccess(id || '');
+  const { data: hasDMAccess = false } = useHasDMAccess(id || '');
   const { data: userRole, isLoading: loadingRole } = useCampaignRole(id || '');
 
   // Real-time updates for campaign members
@@ -86,9 +86,9 @@ const CampaignDetail = () => {
         <div className="container mx-auto px-4 py-8">
           <SystemWindow title="CAMPAIGN NOT FOUND" variant="alert">
             <p className="text-destructive mb-4">This campaign does not exist or you don't have access to it.</p>
-            <Link to="/campaigns">
-              <Button>Back to Campaigns</Button>
-            </Link>
+            <Button asChild>
+              <Link to="/campaigns">Back to Campaigns</Link>
+            </Button>
           </SystemWindow>
         </div>
       </Layout>
@@ -98,12 +98,12 @@ const CampaignDetail = () => {
   return (
     <Layout>
       <div className="container mx-auto px-4 py-8">
-        <Link to="/campaigns">
-          <Button variant="ghost" className="mb-6">
+        <Button variant="ghost" className="mb-6" asChild>
+          <Link to="/campaigns">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Campaigns
-          </Button>
-        </Link>
+          </Link>
+        </Button>
 
         <div className="mb-8">
           <div className="flex items-center gap-4 mb-2">
@@ -158,27 +158,27 @@ const CampaignDetail = () => {
                   Access the complete Virtual Tabletop system with maps, tokens, initiative tracking, 
                   dice rolling, chat, fog of war, and more. Everything you need for running sessions online.
                 </p>
-                <Link to={`/campaigns/${id}/vtt`}>
-                  <Button className="btn-umbral" size="lg">
+                <Button className="btn-umbral" size="lg" asChild>
+                  <Link to={`/campaigns/${id}/vtt`}>
                     <Layers className="w-5 h-5 mr-2" />
                     Launch VTT
-                  </Button>
-                </Link>
+                  </Link>
+                </Button>
                 <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-left max-w-3xl mx-auto">
                   <div className="p-4 rounded-lg border border-border bg-muted/30">
-                    <h3 className="font-heading font-semibold mb-2">🎯 Token Management</h3>
+                    <h3 className="font-heading font-semibold mb-2">Token Management</h3>
                     <p className="text-xs text-muted-foreground">
                       Place character tokens, monsters, and NPCs. Drag, rotate, and manage HP directly on tokens.
                     </p>
                   </div>
                   <div className="p-4 rounded-lg border border-border bg-muted/30">
-                    <h3 className="font-heading font-semibold mb-2">⚔️ Initiative Tracking</h3>
+                    <h3 className="font-heading font-semibold mb-2">Initiative Tracking</h3>
                     <p className="text-xs text-muted-foreground">
                       Track combat initiative with automatic sorting. Manage turn order and combat flow.
                     </p>
                   </div>
                   <div className="p-4 rounded-lg border border-border bg-muted/30">
-                    <h3 className="font-heading font-semibold mb-2">🎲 Dice & Chat</h3>
+                    <h3 className="font-heading font-semibold mb-2">Dice & Chat</h3>
                     <p className="text-xs text-muted-foreground">
                       Roll dice with full notation support. Chat with party members in real-time.
                     </p>
@@ -299,6 +299,7 @@ const CampaignDetail = () => {
 };
 
 export default CampaignDetail;
+
 
 
 

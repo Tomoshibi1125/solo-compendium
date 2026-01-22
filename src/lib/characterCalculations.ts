@@ -24,7 +24,7 @@ export interface CalculatedStats {
 
 // Calculate all derived stats from base character data
 export function calculateCharacterStats(stats: CharacterStats): CalculatedStats {
-  const { level, abilities, savingThrowProficiencies, skillProficiencies, skillExpertise } = stats;
+  const { level, abilities, savingThrowProficiencies, skillProficiencies: _skillProficiencies, skillExpertise: _skillExpertise } = stats;
   
   const proficiencyBonus = getProficiencyBonus(level);
   const systemFavorDie = getSystemFavorDie(level);
@@ -109,7 +109,6 @@ export function getCasterType(job: string | null | undefined): CasterType {
   
   const fullCasters = ['Mage', 'Healer', 'Warden', 'Esper'];
   const halfCasters = ['Herald', 'Ranger', 'Techsmith', 'Holy Knight'];
-  const thirdCasters = ['Ranger']; // Some ranger subclasses are third casters
   
   if (fullCasters.includes(job)) return 'full';
   if (halfCasters.includes(job)) return 'half';

@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Plus, User, Settings, Trash2, Loader2, Crown, Skull, Shield, Zap, Heart, Users } from 'lucide-react';
+import { Plus, User, Settings, Trash2, Crown, Skull, Shield, Zap, Heart, Users } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
@@ -41,7 +41,7 @@ const Characters = () => {
         description: 'The Ascendant has been removed from your roster.',
       });
       setDeleteTarget(null);
-    } catch (error) {
+    } catch {
       toast({
         title: 'Failed to remove',
         description: 'Could not remove the Ascendant.',

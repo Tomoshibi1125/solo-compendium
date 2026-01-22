@@ -65,7 +65,7 @@ export class AudioService {
       this.handleTrackEnd();
     });
 
-    this.audio.addEventListener('error', (e) => {
+    this.audio.addEventListener('error', () => {
       this.updateState({ 
         isLoading: false,
         error: 'Failed to load audio',

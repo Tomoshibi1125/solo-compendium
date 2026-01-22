@@ -19,6 +19,16 @@ export interface SavedSearch {
 
 const STORAGE_KEY = 'solo-compendium-saved-searches';
 
+const parseSearchParams = (raw: unknown): { query: string; filters: SavedSearch['filters'] } => {
+  const params = raw && typeof raw === 'object' ? (raw as Record<string, unknown>) : {};
+  const query = typeof params.query === 'string' ? params.query : '';
+  const filters =
+    params.filters && typeof params.filters === 'object'
+      ? (params.filters as SavedSearch['filters'])
+      : {};
+  return { query, filters };
+};
+
 export function useSavedSearches() {
   const [savedSearches, setSavedSearches] = useState<SavedSearch[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -38,7 +48,7 @@ export function useSavedSearches() {
           ...s,
           createdAt: new Date(s.createdAt),
         }));
-      } catch (error) {
+      } catch {
         logWarn('Failed to load saved searches from localStorage');
         return [];
       }
@@ -56,12 +66,12 @@ export function useSavedSearches() {
         return [];
       }
       return (data || []).map((row) => {
-        const params = (row as { search_params?: any }).search_params || {};
+        const { query, filters } = parseSearchParams(row.search_params);
         return {
           id: row.id,
           name: row.name,
-          query: typeof params.query === 'string' ? params.query : '',
-          filters: typeof params.filters === 'object' && params.filters ? params.filters : {},
+          query,
+          filters,
           createdAt: new Date(row.created_at),
         } as SavedSearch;
       });
@@ -120,12 +130,12 @@ export function useSavedSearches() {
       return newSearch;
     }
 
-    const params = (data as { search_params?: any }).search_params || {};
+    const { query, filters } = parseSearchParams(data.search_params);
     const saved: SavedSearch = {
       id: data.id,
       name: data.name,
-      query: typeof params.query === 'string' ? params.query : search.query,
-      filters: typeof params.filters === 'object' && params.filters ? params.filters : search.filters,
+      query: query || search.query,
+      filters: Object.keys(filters).length ? filters : search.filters,
       createdAt: new Date(data.created_at),
     };
     setSavedSearches((prev) => [saved, ...prev]);

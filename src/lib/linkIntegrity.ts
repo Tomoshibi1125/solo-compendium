@@ -6,8 +6,7 @@
  */
 
 import { supabase } from '@/integrations/supabase/client';
-import { resolveRef, type EntryType } from './compendiumResolver';
-import type { Database } from '@/integrations/supabase/types';
+import { resolveRef } from './compendiumResolver';
 
 export interface BrokenLink {
   characterId: string;
@@ -165,7 +164,7 @@ export async function checkLinkIntegrity(characterId: string): Promise<BrokenLin
     .eq('character_id', characterId);
 
   if (features) {
-    for (const feature of features) {
+    for (const _feature of features) {
       // Check if source looks like a compendium reference
       // Format might be "Job: Feature Name" or "Path: Feature Name"
       // We can't reliably parse this without more structure, so skip for now

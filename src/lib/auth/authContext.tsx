@@ -253,7 +253,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       return { success: true };
-    } catch (error) {
+    } catch {
       return { error: 'An unexpected error occurred' };
     }
   };
@@ -302,7 +302,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       return { success: true };
-    } catch (error) {
+    } catch {
       return { error: 'An unexpected error occurred' };
     }
   };
@@ -344,7 +344,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Update local state
       setUser(prev => (prev ? { ...prev, ...updates } : null));
       return { success: true };
-    } catch (error) {
+    } catch {
       return { error: 'An unexpected error occurred' };
     }
   };
@@ -379,7 +379,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
@@ -389,9 +388,8 @@ export function useAuth() {
 }
 
 // Permission-based component wrapper
-// eslint-disable-next-line react-refresh/only-export-components
-export function withPermission(permission: string, Component: React.ComponentType<any>) {
-  return function PermissionWrapper(props: any) {
+export function withPermission<P extends object>(permission: string, Component: React.ComponentType<P>) {
+  return function PermissionWrapper(props: P) {
     const { hasPermission } = useAuth();
     
     if (!hasPermission(permission)) {

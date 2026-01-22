@@ -97,7 +97,7 @@ export function useOAuth(): UseOAuthReturn {
 
     try {
       const providerOptions = PROVIDER_OPTIONS[provider.id];
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: provider.id,
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,

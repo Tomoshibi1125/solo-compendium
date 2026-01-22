@@ -3,13 +3,9 @@ import { Coins, Plus, Minus, Edit2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { useEquipment } from '@/hooks/useEquipment';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import type { Database } from '@/integrations/supabase/types';
-
-type Equipment = Database['public']['Tables']['character_equipment']['Row'];
 
 const CURRENCY_TYPES = [
   { id: 'gold', name: 'Gold', symbol: 'GP', color: 'text-yellow-400' },
@@ -61,7 +57,7 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
           description: `Added ${amount} ${currencyType.symbol}`,
         });
       }
-    } catch (error) {
+    } catch {
       toast({
         title: 'Error',
         description: 'Failed to update currency.',
@@ -96,7 +92,7 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
         title: 'Currency updated',
         description: `Set to ${amount} ${currencyType.symbol}`,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Error',
         description: 'Failed to update currency.',

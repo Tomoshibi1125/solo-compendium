@@ -1,12 +1,25 @@
 ﻿import { useState, useEffect, useCallback } from 'react';
 import { logger } from '@/lib/logger';
 
+type BeforeInstallPromptEvent = Event & {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed'; platform: string }>;
+};
+
+type NavigatorConnection = Navigator & {
+  connection?: {
+    type?: string;
+    effectiveType?: string;
+  };
+};
+
 // PWA Service Worker Registration
 export function usePWA() {
   const [isInstallable, setIsInstallable] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
   const [isOnline, setIsOnline] = useState(true);
   const [swUpdate, setSwUpdate] = useState<ServiceWorker | null>(null);
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
 
   useEffect(() => {
     // Register service worker and listen for updates
@@ -53,6 +66,7 @@ export function usePWA() {
     // Listen for beforeinstallprompt event
     const handleBeforeInstallPrompt = (event: Event) => {
       event.preventDefault();
+      setDeferredPrompt(event as BeforeInstallPromptEvent);
       setIsInstallable(true);
     };
 
@@ -78,10 +92,8 @@ export function usePWA() {
     if (!isInstallable) return;
 
     try {
-      // Show install prompt
-      const deferredPrompt = (window as any).deferredPrompt;
       if (deferredPrompt) {
-        deferredPrompt.prompt();
+        await deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
         logger.debug(`User response to the install prompt: ${outcome}`);
         
@@ -89,11 +101,12 @@ export function usePWA() {
           setIsInstalled(true);
           setIsInstallable(false);
         }
+        setDeferredPrompt(null);
       }
     } catch (error) {
       logger.error('PWA installation failed:', error);
     }
-  }, [isInstallable]);
+  }, [deferredPrompt, isInstallable]);
 
   const updateServiceWorker = useCallback(async () => {
     if (!swUpdate) return;
@@ -135,7 +148,7 @@ export function useNetworkStatus() {
       setIsOnline(navigator.onLine);
       
       if ('connection' in navigator) {
-        const connection = (navigator as any).connection;
+        const connection = (navigator as NavigatorConnection).connection;
         setConnectionType(connection?.type || 'unknown');
         setEffectiveType(connection?.effectiveType || 'unknown');
       }

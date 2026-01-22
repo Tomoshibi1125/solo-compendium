@@ -135,7 +135,7 @@ function ActionCardComponent({
           character_id: characterId ?? null,
         });
       }
-    } catch (error) {
+    } catch {
       toast({
         title: 'Roll failed',
         description: 'Could not execute roll.',

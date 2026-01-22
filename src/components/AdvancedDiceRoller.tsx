@@ -4,8 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown, Save, Trash2, Copy, Play } from 'lucide-react';
+import { Save, Trash2, Copy, Play } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 export interface DiceMacro {
@@ -116,7 +115,7 @@ class AdvancedDiceEngine implements DiceFormulaParser {
     let breakdown = '';
 
     // Roll each dice group
-    parsed.dice.forEach((die, index) => {
+    parsed.dice.forEach((die) => {
       const dieRolls = this.rollMultiple(die.count, die.sides);
       rolls.push(...dieRolls);
       
@@ -320,7 +319,6 @@ export function useAdvancedDiceRoller() {
     deleteMacro,
     toggleFavorite,
     clearHistory,
-    engine,
   };
 }
 
@@ -338,7 +336,6 @@ export function AdvancedDiceRoller() {
     deleteMacro,
     toggleFavorite,
     clearHistory,
-    engine,
   } = useAdvancedDiceRoller();
 
   const handleRoll = useCallback(async () => {
@@ -572,7 +569,7 @@ export function AdvancedDiceRoller() {
                 </p>
               ) : (
                 <div className="space-y-2">
-                  {history.map((result, index) => (
+                  {history.map((result) => (
                     <Card key={result.timestamp} className="text-sm">
                       <CardContent className="pt-4 pb-4">
                         <div className="flex justify-between items-start">

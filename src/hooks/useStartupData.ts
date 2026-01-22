@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { isSupabaseConfigured, supabase } from '@/integrations/supabase/client';
 import { staticDataProvider } from '@/data/compendium/staticDataProvider';
+import type { StaticCompendiumEntry } from '@/data/compendium/staticDataProvider';
+import type { Database } from '@/integrations/supabase/types';
 import { logger } from '@/lib/logger';
 
 // Define the interface to match Compendium.tsx exactly
@@ -38,6 +40,24 @@ const STARTUP_CATEGORIES = [
   'backgrounds', 'conditions', 'monarchs', 'feats', 'skills', 
   'equipment', 'shadow-soldiers'
 ] as const;
+
+type StartupCategory = (typeof STARTUP_CATEGORIES)[number];
+
+const STARTUP_TABLES: Record<StartupCategory, keyof Database['public']['Tables']> = {
+  jobs: 'compendium_jobs',
+  paths: 'compendium_job_paths',
+  powers: 'compendium_powers',
+  runes: 'compendium_runes',
+  relics: 'compendium_relics',
+  monsters: 'compendium_monsters',
+  backgrounds: 'compendium_backgrounds',
+  conditions: 'compendium_conditions',
+  monarchs: 'compendium_monarchs',
+  feats: 'compendium_feats',
+  skills: 'compendium_skills',
+  equipment: 'compendium_equipment',
+  'shadow-soldiers': 'compendium_shadow_soldiers',
+};
 const STARTUP_LIMIT = 50; // Load more items per category for comprehensive display
 
 interface StartupData {
@@ -56,7 +76,7 @@ export const useStartupData = () => {
       if (!isSupabaseConfigured) {
         // Use static data for development/preview - load ALL categories with COMPLETE data
         for (const category of STARTUP_CATEGORIES) {
-          let data: any[] = [];
+          let data: StaticCompendiumEntry[] = [];
           
           switch (category) {
             case 'jobs':
@@ -258,12 +278,12 @@ export const useStartupData = () => {
           if (error || !data) return { entries: [], count: 0 };
 
           // Get total count for this category
-          const tableName = category === 'paths' ? 'compendium_job_paths' : `compendium_${category}` as any;
+          const tableName = STARTUP_TABLES[category];
           const { count } = await supabase
             .from(tableName)
             .select('*', { count: 'exact', head: true });
 
-          const transformedEntries = data.map((item: any) => ({
+          const transformedEntries = data.map((item) => ({
             id: item.id,
             name: item.display_name || item.name,
             type: category as CompendiumEntry['type'],

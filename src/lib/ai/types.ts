@@ -30,6 +30,7 @@ export const AIServiceSchema = z.object({
 });
 
 export type AIService = z.infer<typeof AIServiceSchema>;
+export type AICapability = AIService['capabilities'][number];
 
 // AI request types
 export const AIRequestSchema = z.object({
@@ -210,9 +211,9 @@ export function getAIServiceById(id: string, services: AIService[]): AIService |
   return services.find(service => service.id === id);
 }
 
-export function getAIServiceForCapability(capability: string, services: AIService[]): AIService | undefined {
+export function getAIServiceForCapability(capability: AICapability, services: AIService[]): AIService | undefined {
   return services.find(service => 
-    service.enabled && service.capabilities.includes(capability as any)
+    service.enabled && service.capabilities.includes(capability)
   );
 }
 
@@ -232,7 +233,7 @@ export function validateAIRequest(request: AIRequest): string[] {
     errors.push(`AI service is disabled: ${service.name}`);
   }
   
-  if (service && !service.capabilities.includes(request.type as any)) {
+  if (service && !service.capabilities.includes(request.type)) {
     errors.push(`Service ${service.name} doesn't support ${request.type}`);
   }
   

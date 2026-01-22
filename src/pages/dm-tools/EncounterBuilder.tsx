@@ -378,10 +378,11 @@ const EncounterBuilder = () => {
             <SystemWindow title="ENCOUNTER SUMMARY">
               <div className="space-y-4">
                 <div>
-                  <label className="text-xs font-display text-muted-foreground mb-1 block">
+                  <label htmlFor="encounter-hunter-level" className="text-xs font-display text-muted-foreground mb-1 block">
                     ASCENDANT LEVEL
                   </label>
                   <Input
+                    id="encounter-hunter-level"
                     type="number"
                     min="1"
                     max="20"
@@ -391,10 +392,11 @@ const EncounterBuilder = () => {
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-display text-muted-foreground mb-1 block">
+                  <label htmlFor="encounter-hunter-count" className="text-xs font-display text-muted-foreground mb-1 block">
                     ASCENDANT COUNT
                   </label>
                   <Input
+                    id="encounter-hunter-count"
                     type="number"
                     min="1"
                     max="10"
@@ -519,8 +521,9 @@ const EncounterBuilder = () => {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[600px] overflow-y-auto">
                   {monsters.map((monster) => (
-                    <div
+                    <button
                       key={monster.id}
+                      type="button"
                       className="p-3 rounded border bg-muted/30 hover:bg-muted/50 transition-colors cursor-pointer"
                       onClick={() => addMonster(monster)}
                       data-testid="encounter-monster-card"
@@ -553,7 +556,7 @@ const EncounterBuilder = () => {
                           {formatMonarchVernacular(monster.creature_type)}
                         </Badge>
                       )}
-                    </div>
+                    </button>
                   ))}
                 </div>
               )}

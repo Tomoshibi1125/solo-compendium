@@ -2,7 +2,6 @@ import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 import { logger } from './logger';
 
-type Character = Database['public']['Tables']['characters']['Row'];
 type Rune = Database['public']['Tables']['compendium_runes']['Row'];
 
 /**

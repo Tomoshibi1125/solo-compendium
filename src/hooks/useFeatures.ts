@@ -6,7 +6,6 @@ import { getErrorMessage, logErrorWithContext } from '@/lib/errorHandling';
 import { isLocalCharacterId, listLocalFeatures, updateLocalFeature } from '@/lib/guestStore';
 
 type Feature = Database['public']['Tables']['character_features']['Row'];
-type FeatureInsert = Database['public']['Tables']['character_features']['Insert'];
 type FeatureUpdate = Database['public']['Tables']['character_features']['Update'];
 
 export const useFeatures = (characterId: string) => {

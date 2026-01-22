@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -11,15 +11,10 @@ import {
   Zap, 
   Shield, 
   Sword, 
-  Heart, 
   Brain,
   Eye,
   Users,
-  Trophy,
-  ChevronRight,
-  ChevronDown,
-  CheckCircle,
-  Circle
+  Trophy
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { type LevelingMode } from '@/lib/campaignSettings';
@@ -557,7 +552,8 @@ export function SkillTreeVisualization({
                          progression.skillPoints >= node.cost.skillPoints;
 
     return (
-      <div
+      <button
+        type="button"
         key={node.id}
         className={cn(
           "skill-node",
@@ -588,7 +584,7 @@ export function SkillTreeVisualization({
             <Lock className="w-3 h-3 text-gray-400" />
           )}
         </div>
-      </div>
+      </button>
     );
   }, [progression, getNodePosition]);
 
@@ -712,10 +708,6 @@ export function SkillTreeVisualization({
 // Main character progression component
 export function CharacterProgressionSystem({ characterId, levelingMode }: CharacterProgressionSystemProps) {
   const [activeTree, setActiveTree] = useState<string>('combat');
-  const [selectedNode, setSelectedNode] = useState<string | null>(null);
-  const [showLevelUpModal, setShowLevelUpModal] = useState(false);
-  const [showSkillModal, setShowSkillModal] = useState(false);
-  const [showEquipmentModal, setShowEquipmentModal] = useState(false);
 
   const {
     progression,
@@ -723,9 +715,6 @@ export function CharacterProgressionSystem({ characterId, levelingMode }: Charac
     upgradeSkill,
     getTotalSkillPoints,
     getExperienceToNextLevel,
-    addExperience,
-    canLevelUp,
-    levelUp,
     getUnlockedSkills,
     getAvailableSkills
   } = useCharacterProgression(characterId, { levelingMode });

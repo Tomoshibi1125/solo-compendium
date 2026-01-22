@@ -1,4 +1,4 @@
-﻿import { useState, useCallback, useEffect } from 'react';
+﻿import { useState, useCallback, useEffect, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -11,36 +11,15 @@ import {
   AlertTriangle, 
   CheckCircle, 
   XCircle, 
-  Search, 
   Bug, 
-  Lock, 
-  Unlock, 
-  Key, 
-  Eye, 
-  EyeOff, 
-  FileText, 
-  Terminal, 
-  Network, 
-  Database, 
-  Globe, 
   Server, 
-  Code, 
-  Zap, 
-  Clock, 
   TrendingUp, 
-  Activity, 
-  Settings, 
   RefreshCw, 
   Download, 
-  Upload, 
-  Filter, 
-  ChevronRight, 
-  ChevronDown, 
   Info, 
   AlertCircle, 
   ShieldCheck, 
-  ShieldAlert, 
-  ShieldX
+  ShieldAlert
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -64,6 +43,14 @@ export interface SecurityVulnerability {
   exploitAvailable: boolean;
   priority: number;
 }
+
+type VulnerabilityFilters = {
+  severity?: SecurityVulnerability['severity'];
+  category?: SecurityVulnerability['category'];
+  status?: SecurityVulnerability['status'];
+  limit?: number;
+  offset?: number;
+};
 
 export interface SecurityScan {
   id: string;
@@ -212,13 +199,7 @@ export class SecurityAuditManager {
     }
   }
 
-  async getVulnerabilities(filters?: {
-    severity?: SecurityVulnerability['severity'];
-    category?: SecurityVulnerability['category'];
-    status?: SecurityVulnerability['status'];
-    limit?: number;
-    offset?: number;
-  }): Promise<SecurityVulnerability[]> {
+  async getVulnerabilities(filters?: VulnerabilityFilters): Promise<SecurityVulnerability[]> {
     const params = new URLSearchParams();
     
     if (filters) {
@@ -357,9 +338,13 @@ export function useSecurityAudit() {
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
 
-  const auditManager = new SecurityAuditManager(
-    process.env.SECURITY_API_URL || 'https://api.solo-compendium.com',
-    process.env.SECURITY_API_KEY || ''
+  const auditManager = useMemo(
+    () =>
+      new SecurityAuditManager(
+        process.env.SECURITY_API_URL || 'https://api.solo-compendium.com',
+        process.env.SECURITY_API_KEY || ''
+      ),
+    []
   );
 
   const fetchScans = useCallback(async () => {
@@ -370,6 +355,7 @@ export function useSecurityAudit() {
       const scanData = await auditManager.getScans();
       setScans(scanData);
     } catch (error) {
+      logger.error('Failed to fetch security scans:', error);
       setError('Failed to fetch security scans');
       toast({
         title: 'Error',
@@ -381,11 +367,12 @@ export function useSecurityAudit() {
     }
   }, [auditManager, toast]);
 
-  const fetchVulnerabilities = useCallback(async (filters?: any) => {
+  const fetchVulnerabilities = useCallback(async (filters?: VulnerabilityFilters) => {
     try {
       const vulnData = await auditManager.getVulnerabilities(filters);
       setVulnerabilities(vulnData);
     } catch (error) {
+      logger.error('Failed to fetch vulnerabilities:', error);
       toast({
         title: 'Error',
         description: 'Could not load vulnerabilities',
@@ -481,6 +468,7 @@ export function useSecurityAudit() {
         description: `Security report has been downloaded`,
       });
     } catch (error) {
+      logger.error('Failed to generate security report:', error);
       toast({
         title: 'Report Failed',
         description: 'Could not generate security report',
@@ -807,11 +795,9 @@ export function SecurityDashboard() {
 export function VulnerabilityManagement() {
   const {
     vulnerabilities,
-    updateVulnerability,
-    loading
+    updateVulnerability
   } = useSecurityAudit();
 
-  const [selectedVulnerability, setSelectedVulnerability] = useState<SecurityVulnerability | null>(null);
   const [filter, setFilter] = useState<{
     severity?: SecurityVulnerability['severity'];
     category?: SecurityVulnerability['category'];
@@ -829,7 +815,7 @@ export function VulnerabilityManagement() {
     try {
       await updateVulnerability(id, { status, resolvedAt: status === 'resolved' ? new Date() : undefined });
     } catch (error) {
-      // Error already handled by hook
+      logger.error('Failed to update vulnerability status:', error);
     }
   }, [updateVulnerability]);
 

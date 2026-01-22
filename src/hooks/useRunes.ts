@@ -283,7 +283,7 @@ export function useUseRune() {
       if (updateError) throw updateError;
       return { characterId: inscription.character_id, usesCurrent: newUses, usesMax: inscription.uses_max };
     },
-    onSuccess: (_data, variables) => {
+    onSuccess: (_data, _variables) => {
       // Invalidate broad queries (we don't always have equipmentId available here)
       queryClient.invalidateQueries({ queryKey: ['character-rune-inscriptions'] });
       queryClient.invalidateQueries({ queryKey: ['equipment-runes'] });
@@ -350,15 +350,14 @@ export function checkRuneRequirements(
   const isCaster = ['Mage', 'Esper', 'Healer', 'Herald'].includes(characterJob || '');
   const isMartial = !isCaster && characterJob !== null;
   
-  let needsCrossLearning = false;
-  if (isCaster && rune.rune_type === 'martial') {
-    needsCrossLearning = !isNaturalUser;
-    requirementMultiplier = Number(rune.caster_requirement_multiplier || 1.5);
-    if (rune.caster_penalty) penalties.push(rune.caster_penalty);
-  } else if (isMartial && rune.rune_type === 'caster') {
-    needsCrossLearning = !isNaturalUser;
-    requirementMultiplier = Number(rune.martial_requirement_multiplier || 1.5);
-    if (rune.martial_penalty) penalties.push(rune.martial_penalty);
+  if (!isNaturalUser) {
+    if (isCaster && rune.rune_type === 'martial') {
+      requirementMultiplier = Number(rune.caster_requirement_multiplier || 1.5);
+      if (rune.caster_penalty) penalties.push(rune.caster_penalty);
+    } else if (isMartial && rune.rune_type === 'caster') {
+      requirementMultiplier = Number(rune.martial_requirement_multiplier || 1.5);
+      if (rune.martial_penalty) penalties.push(rune.martial_penalty);
+    }
   }
 
   // Check ability score requirements

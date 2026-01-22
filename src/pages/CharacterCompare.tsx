@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Users, Loader2 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -8,8 +7,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useCharacters } from '@/hooks/useCharacters';
 import { useCharacter } from '@/hooks/useCharacters';
 import { calculateCharacterStats, formatModifier } from '@/lib/characterCalculations';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
 import { ABILITY_NAMES, type AbilityScore } from '@/types/system-rules';
 import { cn } from '@/lib/utils';
 import { formatMonarchVernacular } from '@/lib/vernacular';
@@ -141,9 +138,9 @@ const CharacterCompare = () => {
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="text-sm font-heading text-muted-foreground mb-2 block">
+                <p className="text-sm font-heading text-muted-foreground mb-2 block">
                   Ascendant 1
-                </label>
+                </p>
                 <Select value={char1Id} onValueChange={handleChar1Change}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select first ascendant" />
@@ -158,9 +155,9 @@ const CharacterCompare = () => {
                 </Select>
               </div>
               <div>
-                <label className="text-sm font-heading text-muted-foreground mb-2 block">
+                <p className="text-sm font-heading text-muted-foreground mb-2 block">
                   Ascendant 2
-                </label>
+                </p>
                 <Select value={char2Id} onValueChange={handleChar2Change}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select second ascendant" />

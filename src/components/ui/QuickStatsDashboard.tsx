@@ -1,10 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { SystemWindow } from '@/components/ui/SystemWindow';
-import { Badge } from '@/components/ui/badge';
-import { Users, TrendingUp, Heart, Shield, Zap, Crown } from 'lucide-react';
+import { Users, TrendingUp, Heart, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { cn } from '@/lib/utils';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface QuickStatsDashboardProps {
@@ -30,9 +28,6 @@ export function QuickStatsDashboard({ className }: QuickStatsDashboardProps) {
   const avgLevel = characters.length > 0 ? Math.round(totalLevels / characters.length) : 0;
   const totalHP = characters.reduce((sum, c) => sum + (c.hp_current || 0), 0);
   const totalMaxHP = characters.reduce((sum, c) => sum + (c.hp_max || 0), 0);
-  const avgAC = characters.length > 0
-    ? Math.round(characters.reduce((sum, c) => sum + (c.armor_class || 10), 0) / characters.length)
-    : 0;
 
   return (
     <SystemWindow title="QUICK STATS" className={className}>

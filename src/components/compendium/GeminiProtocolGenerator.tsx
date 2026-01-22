@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef } from 'react';
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { generateSovereign, type GeneratedSovereign, calculateTotalCombinations } from '@/lib/geminiProtocol';
@@ -166,7 +166,7 @@ export function GeminiProtocolGenerator() {
     }
   }, [autoMode, monarchs, monarchUnlocks, monarchUnlocksLoading, selectedMonarchA, selectedMonarchB]);
 
-  const handleGenerate = () => {
+  const handleGenerate = useCallback(() => {
     const job = jobs.find(j => j.id === selectedJob);
     const path = paths.find(p => p.id === selectedPath) || allPaths.find((p) => p.id === selectedPath);
     const monarchA = monarchs.find(m => m.id === selectedMonarchA);
@@ -176,7 +176,7 @@ export function GeminiProtocolGenerator() {
       const sovereign = generateSovereign(job, path, monarchA, monarchB);
       setGeneratedSovereign(sovereign);
     }
-  };
+  }, [allPaths, jobs, monarchs, paths, selectedJob, selectedMonarchA, selectedMonarchB, selectedPath]);
 
   const handleRandomize = async () => {
     if (jobs.length === 0 || monarchs.length < 2) return;
@@ -261,7 +261,7 @@ export function GeminiProtocolGenerator() {
     if (autoKey === lastAutoKey.current) return;
     handleGenerate();
     lastAutoKey.current = autoKey;
-  }, [autoKey, autoMode, dataReady, templateReady]);
+  }, [autoKey, autoMode, dataReady, handleGenerate, templateReady]);
 
   return (
     <div className="space-y-6">
@@ -340,7 +340,7 @@ export function GeminiProtocolGenerator() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Job Selection */}
               <div className="space-y-2">
-                <label className="text-sm font-medium">Job Class</label>
+                <p className="text-sm font-medium">Job Class</p>
                 <Select value={selectedJob} onValueChange={(v) => { setSelectedJob(v); setSelectedPath(''); }}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a Job..." />
@@ -357,7 +357,7 @@ export function GeminiProtocolGenerator() {
 
               {/* Path Selection */}
               <div className="space-y-2">
-                <label className="text-sm font-medium">Path Specialization</label>
+                <p className="text-sm font-medium">Path Specialization</p>
                 <Select value={selectedPath} onValueChange={setSelectedPath} disabled={!selectedJob}>
                   <SelectTrigger>
                     <SelectValue placeholder={selectedJob ? "Select a Path..." : "Select Job first"} />
@@ -374,7 +374,7 @@ export function GeminiProtocolGenerator() {
 
               {/* Monarch A Selection */}
               <div className="space-y-2">
-                <label className="text-sm font-medium">Primary {MONARCH_LABEL} (Dominant)</label>
+                <p className="text-sm font-medium">Primary {MONARCH_LABEL} (Dominant)</p>
                 <Select value={selectedMonarchA} onValueChange={setSelectedMonarchA}>
                   <SelectTrigger>
                     <SelectValue placeholder={`Select Primary ${MONARCH_LABEL}...`} />
@@ -391,7 +391,7 @@ export function GeminiProtocolGenerator() {
 
               {/* Monarch B Selection */}
               <div className="space-y-2">
-                <label className="text-sm font-medium">Secondary {MONARCH_LABEL} (Merged)</label>
+                <p className="text-sm font-medium">Secondary {MONARCH_LABEL} (Merged)</p>
                 <Select value={selectedMonarchB} onValueChange={setSelectedMonarchB}>
                   <SelectTrigger>
                     <SelectValue placeholder={`Select Secondary ${MONARCH_LABEL}...`} />
@@ -489,6 +489,7 @@ export function GeminiProtocolGenerator() {
                   {displaySovereign.abilities.map((ability, index) => (
                     <div
                       key={ability.name || `ability-${index}`}
+                      data-testid="fusion-ability-card"
                       className={`p-3 rounded-lg border ${
                         ability.is_capstone 
                           ? 'border-primary bg-primary/5' 

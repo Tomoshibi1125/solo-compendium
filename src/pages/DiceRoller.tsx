@@ -1,11 +1,10 @@
-import { lazy, Suspense, useState, useEffect } from 'react';
-import { Biohazard, Crown, Dice1, Dice2, Dice3, Dice4, Dice5, Dice6, Flame, Gem, History, Minus, Palette, PawPrint, Plus, RotateCcw, Shield, Snowflake, Sparkles, Swords, Zap, Zap as ZapIcon, type LucideIcon } from 'lucide-react';
+import { lazy, Suspense, useState } from 'react';
+import { Biohazard, Crown, Flame, Gem, Minus, Palette, PawPrint, Plus, RotateCcw, Shield, Snowflake, Sparkles, Swords, Zap, Zap as ZapIcon, type LucideIcon } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { cn } from '@/lib/utils';
 import { DICE_THEMES, type DiceTheme } from '@/components/dice/diceThemes';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { useRecordRoll } from '@/hooks/useRollHistory';
 import { logger } from '@/lib/logger';
@@ -341,7 +340,7 @@ const DiceRoller = () => {
                     dice={dice3D}
                     isRolling={isRolling}
                     theme={diceTheme}
-                    onRollComplete={(index, value) => {
+                    onRollComplete={(_index, _value) => {
                       // Handle individual die completion if needed
                     }}
                   />

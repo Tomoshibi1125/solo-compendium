@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Save, Plus, Trash2, Edit, FileText, Eye, EyeOff, Lock, Unlock } from 'lucide-react';
+import { ArrowLeft, Plus, Trash2, Edit, FileText } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
@@ -13,6 +13,7 @@ import { useCampaignRole } from '@/hooks/useCampaigns';
 import { cn } from '@/lib/utils';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useAuth } from '@/lib/auth/authContext';
+import type { Database } from '@/integrations/supabase/types';
 
 interface JournalEntry {
   id: string;
@@ -23,6 +24,8 @@ interface JournalEntry {
   createdAt: string;
   updatedAt: string;
 }
+
+type VttJournalRow = Database['public']['Tables']['vtt_journal_entries']['Row'];
 
 const VTTJournal = () => {
   const { campaignId } = useParams<{ campaignId: string }>();
@@ -63,21 +66,21 @@ const VTTJournal = () => {
       if (!saved) return [];
       try {
         return JSON.parse(saved) as JournalEntry[];
-      } catch (e) {
+      } catch {
         return [];
       }
     };
 
     const loadRemote = async () => {
       const { data, error } = await supabase
-        .from('vtt_journal_entries' as any)
+        .from('vtt_journal_entries')
         .select('id, title, content, category, visible_to_players, created_at, updated_at')
         .eq('campaign_id', campaignId)
         .order('created_at', { ascending: false });
       if (error) {
         return [];
       }
-      return (data || []).map((row: any) => ({
+      return (data || []).map((row: VttJournalRow) => ({
         id: row.id,
         title: row.title,
         content: row.content ?? '',
@@ -141,7 +144,7 @@ const VTTJournal = () => {
     }
 
     const { data, error } = await supabase
-      .from('vtt_journal_entries' as any)
+      .from('vtt_journal_entries')
       .insert({
         campaign_id: campaignId,
         user_id: user.id,
@@ -198,7 +201,7 @@ const VTTJournal = () => {
     }
 
     const { data, error } = await supabase
-      .from('vtt_journal_entries' as any)
+      .from('vtt_journal_entries')
       .update({
         title: selectedEntry.title,
         content: selectedEntry.content,
@@ -254,7 +257,7 @@ const VTTJournal = () => {
     }
 
     const { error } = await supabase
-      .from('vtt_journal_entries' as any)
+      .from('vtt_journal_entries')
       .delete()
       .eq('id', id);
     if (error) {

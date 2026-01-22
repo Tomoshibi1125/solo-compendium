@@ -3,10 +3,9 @@
  * Allows Wardens to generate art for monsters, NPCs, and homebrew content
  */
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { ArtGenerator } from '@/components/art/ArtGenerator';
@@ -16,14 +15,14 @@ import type { ArtAsset } from '@/lib/artPipeline/types';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Image, Camera, Sparkles, Sword, Shield, MapPin } from 'lucide-react';
+import { Camera, Sparkles, Sword, Shield, MapPin } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useUserToolState } from '@/hooks/useToolState';
+import { getRuntimeEnvValue } from '@/lib/runtimeEnv';
 
 type ContentType = 'monster' | 'npc' | 'item' | 'location';
 
@@ -33,7 +32,7 @@ interface GeneratedContent {
   name: string;
   artId?: string;
   artUrl?: string;
-  data: any;
+  data: Record<string, unknown>;
 }
 
 export default function ArtGeneratorDM() {
@@ -66,7 +65,7 @@ export default function ArtGeneratorDM() {
     void saveNow(debouncedContent);
   }, [debouncedContent, saveNow]);
 
-  const updateCurrentItem = (updates: Partial<GeneratedContent>) => {
+  const updateCurrentItem = useCallback((updates: Partial<GeneratedContent>) => {
     if (!currentEditItem) return;
     setGeneratedContent(prev =>
       prev.map(item =>
@@ -74,15 +73,15 @@ export default function ArtGeneratorDM() {
       )
     );
     setCurrentEditItem(prev => (prev ? { ...prev, ...updates } : prev));
-  };
+  }, [currentEditItem]);
 
-  const updateCurrentItemData = (updates: Record<string, unknown>) => {
+  const updateCurrentItemData = useCallback((updates: Record<string, unknown>) => {
     if (!currentEditItem) return;
     const nextData = { ...(currentEditItem.data || {}), ...updates };
     updateCurrentItem({ data: nextData });
-  };
+  }, [currentEditItem, updateCurrentItem]);
 
-  const getPreviewUrl = (asset: ArtAsset): string | undefined => {
+  const getPreviewUrl = useCallback((asset: ArtAsset): string | undefined => {
     const paths = asset.paths;
     if (!paths || typeof paths !== 'object') return undefined;
     const candidates = [
@@ -93,9 +92,9 @@ export default function ArtGeneratorDM() {
       (paths as Record<string, string>).token,
     ];
     return candidates.find((value) => typeof value === 'string' && value.length > 0);
-  };
+  }, []);
 
-  const withTimeout = async <T,>(promise: Promise<T>, timeoutMs: number, label: string): Promise<T> => {
+  const withTimeout = useCallback(async <T,>(promise: Promise<T>, timeoutMs: number, label: string): Promise<T> => {
     let timeoutId: ReturnType<typeof setTimeout> | undefined;
     const timeoutPromise = new Promise<T>((_, reject) => {
       timeoutId = setTimeout(() => reject(new Error(label)), timeoutMs);
@@ -105,11 +104,11 @@ export default function ArtGeneratorDM() {
     } finally {
       if (timeoutId) clearTimeout(timeoutId);
     }
-  };
+  }, []);
 
-  const fetchArtAsset = async (entityId: string) => {
-    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-    const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+  const fetchArtAsset = useCallback(async (entityId: string) => {
+    const supabaseUrl = getRuntimeEnvValue('VITE_SUPABASE_URL');
+    const supabaseKey = getRuntimeEnvValue('VITE_SUPABASE_PUBLISHABLE_KEY') || getRuntimeEnvValue('VITE_SUPABASE_ANON_KEY');
     if (!supabaseUrl || !supabaseKey) return null;
 
     const baseUrl = supabaseUrl.replace(/\/$/, '');
@@ -140,9 +139,9 @@ export default function ArtGeneratorDM() {
       return payload[0] ?? null;
     }
     return payload ?? null;
-  };
+  }, [withTimeout]);
 
-  const attemptAttachArt = async (): Promise<boolean> => {
+  const attemptAttachArt = useCallback(async (): Promise<boolean> => {
     if (!currentEditItem) {
       setIsAIArtPending(false);
       return false;
@@ -191,7 +190,7 @@ export default function ArtGeneratorDM() {
 
     setIsAIArtPending(false);
     return false;
-  };
+  }, [currentEditItem, fetchArtAsset, getPreviewUrl, updateCurrentItem]);
 
   useEffect(() => {
     if (!currentEditItem || isGeneratorOpen) return;
@@ -208,7 +207,7 @@ export default function ArtGeneratorDM() {
     return () => {
       isActive = false;
     };
-  }, [currentEditItem, isGeneratorOpen]);
+  }, [currentEditItem, isGeneratorOpen, attemptAttachArt]);
 
   const handleArtGenerated = (assetId: string, previewUrl?: string) => {
     const targetId = currentEditItem?.id ?? lastEditId;

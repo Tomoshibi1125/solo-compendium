@@ -9,14 +9,12 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useCampaignByShareCode, useJoinCampaign } from '@/hooks/useCampaigns';
 import { useCharacters } from '@/hooks/useCharacters';
-import { useToast } from '@/hooks/use-toast';
 import { Link } from 'react-router-dom';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 
 const CampaignJoin = () => {
   const { shareCode: urlShareCode } = useParams<{ shareCode: string }>();
   const navigate = useNavigate();
-  const { toast } = useToast();
   const [shareCode, setShareCode] = useState(urlShareCode?.toUpperCase() || '');
   const [selectedCharacter, setSelectedCharacter] = useState<string>('none');
 
@@ -33,7 +31,7 @@ const CampaignJoin = () => {
         characterId: selectedCharacter !== 'none' ? selectedCharacter : undefined,
       });
       navigate(`/campaigns/${campaign.id}`);
-    } catch (error) {
+    } catch {
       // Error handled by mutation
     }
   };

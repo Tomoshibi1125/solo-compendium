@@ -3,7 +3,6 @@ import { useEffect, useRef } from 'react';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import type { Json } from '@/integrations/supabase/types';
 import { useToast } from '@/hooks/use-toast';
-import { AppError } from '@/lib/appError';
 import type { RealtimeChannel } from '@supabase/supabase-js';
 import { getLocalUserId } from '@/lib/guestStore';
 import { useAuth } from '@/lib/auth/authContext';

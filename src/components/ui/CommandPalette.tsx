@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/command';
 import { supabase } from '@/integrations/supabase/client';
 import { useCharacters } from '@/hooks/useCharacters';
-import { FileText, User, BookOpen, Dice6, Settings, Home, Search } from 'lucide-react';
+import { FileText, User, BookOpen, Dice6, Settings, Home } from 'lucide-react';
 import { getTableName, type EntryType } from '@/lib/compendiumResolver';
 import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
 
@@ -71,7 +71,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
               });
             });
           }
-        } catch (err) {
+        } catch {
           // Continue to next type on error
         }
       }

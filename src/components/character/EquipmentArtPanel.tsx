@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { ArtGenerator } from '@/components/art/ArtGenerator';
-import { Image, Camera, RefreshCw, Sword } from 'lucide-react';
+import { Camera, RefreshCw, Sword } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
@@ -59,25 +59,6 @@ export function EquipmentArtPanel({
       if (properties.includes('light')) tags.push('light');
     }
     return tags;
-  };
-
-  const getVariantOptions = () => {
-    if (equipmentData.item_type === 'weapon') {
-      return [
-        { value: 'illustration', label: 'Full Art' },
-        { value: 'icon', label: 'Icon' },
-      ];
-    } else if (equipmentData.item_type === 'armor') {
-      return [
-        { value: 'illustration', label: 'Full Art' },
-        { value: 'icon', label: 'Icon' },
-      ];
-    } else {
-      return [
-        { value: 'icon', label: 'Icon' },
-        { value: 'illustration', label: 'Illustration' },
-      ];
-    }
   };
 
   return (

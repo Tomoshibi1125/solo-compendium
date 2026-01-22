@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Swords, Wand2, Sparkles, Star } from 'lucide-react';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -17,9 +16,6 @@ import { useToast } from '@/hooks/use-toast';
 import { normalizeCustomModifiers, sumCustomModifiers } from '@/lib/customModifiers';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 import type { AbilityScore } from '@/types/system-rules';
-import type { Database } from '@/integrations/supabase/types';
-
-type Rune = Database['public']['Tables']['compendium_runes']['Row'];
 
 export function ActionsList({ characterId }: { characterId: string }) {
   const { data: character } = useCharacter(characterId);

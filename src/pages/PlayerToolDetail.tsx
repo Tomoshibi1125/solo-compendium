@@ -14,7 +14,6 @@ import { FeaturesList } from '@/components/character/FeaturesList';
 import { CharacterArtPanel } from '@/components/character/CharacterArtPanel';
 import { useActiveCharacter } from '@/hooks/useActiveCharacter';
 import { QuestLog } from '@/pages/player-tools/QuestLog';
-import { Achievements } from '@/pages/player-tools/Achievements';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 
 const TOOL_TITLES: Record<string, { title: string; subtitle: string }> = {
@@ -46,14 +45,10 @@ const TOOL_TITLES: Record<string, { title: string; subtitle: string }> = {
     title: 'Dice Roller',
     subtitle: 'Roll checks, attacks, and saves.',
   },
-  achievements: {
-    title: 'Achievements',
-    subtitle: 'Monitor your milestones across the system.',
-  },
 };
 
 const requiresCharacter = (toolId: string) =>
-  ['character-sheet', 'inventory', 'abilities', 'character-art', 'quest-log', 'achievements'].includes(toolId);
+  ['character-sheet', 'inventory', 'abilities', 'character-art', 'quest-log'].includes(toolId);
 
 export default function PlayerToolDetail() {
   const navigate = useNavigate();
@@ -151,8 +146,6 @@ export default function PlayerToolDetail() {
         ) : null;
       case 'quest-log':
         return activeCharacter ? <QuestLog characterId={activeCharacter.id} /> : null;
-      case 'achievements':
-        return <Achievements characterId={activeCharacter?.id} />;
       default:
         return (
           <SystemWindow title="TOOL UNAVAILABLE">

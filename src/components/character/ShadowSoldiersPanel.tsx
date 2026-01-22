@@ -16,7 +16,7 @@ import {
   type ShadowSoldier 
 } from '@/hooks/useShadowSoldiers';
 import { useCharacterMonarchUnlocks } from '@/hooks/useMonarchUnlocks';
-import { Ghost, Sword, Shield, Heart, Zap, Plus, Minus, Crown, Skull, Flame, Wind, Bird, Dog, Mountain, Crosshair } from 'lucide-react';
+import { Ghost, Sword, Shield, Heart, Zap, Plus, Minus, Crown, Skull, Flame, Bird, Dog, Mountain, Crosshair } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { formatMonarchVernacular, MONARCH_LABEL, normalizeMonarchSearch } from '@/lib/vernacular';
 
@@ -32,14 +32,6 @@ const rankColors: Record<string, string> = {
   'Elite Knight Grade': 'bg-shadow-blue/20 text-shadow-blue border-shadow-blue/40 shadow-[0_0_6px_hsl(var(--shadow-blue)/0.3)]',
   'Knight Grade': 'bg-primary/20 text-primary border-primary/40',
   'Soldier Grade': 'bg-muted text-muted-foreground border-muted',
-};
-
-const rankGlow: Record<string, string> = {
-  'General Grade': 'shadow-general animate-pulse-2s',
-  'Marshal Grade': 'shadow-marshal',
-  'Elite Knight Grade': 'shadow-soldier',
-  'Knight Grade': '',
-  'Soldier Grade': '',
 };
 
 // Type icons with thematic styling

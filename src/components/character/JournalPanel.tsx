@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { BookOpen, Plus, Edit2, Trash2, Calendar, Tag, Save, X } from 'lucide-react';
+import { BookOpen, Plus, Trash2, Calendar, Tag, Save } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { useCharacterJournal, useCreateJournalEntry, useUpdateJournalEntry, useDeleteJournalEntry, JournalEntry } from '@/hooks/useCharacterJournal';
+import { useCharacterJournal, useCreateJournalEntry, useDeleteJournalEntry } from '@/hooks/useCharacterJournal';
 import { format } from 'date-fns';
 import { logger } from '@/lib/logger';
 
@@ -18,10 +17,8 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
   const [hasError, setHasError] = useState(false);
   const { data: entries = [], isLoading } = useCharacterJournal(characterId);
   const createEntry = useCreateJournalEntry();
-  const updateEntry = useUpdateJournalEntry();
   const deleteEntry = useDeleteJournalEntry();
   const [isCreating, setIsCreating] = useState(false);
-  const [editingId, setEditingId] = useState<string | null>(null);
   const [newTitle, setNewTitle] = useState('');
   const [newContent, setNewContent] = useState('');
   const [newTags, setNewTags] = useState('');
@@ -64,15 +61,6 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
       await deleteEntry.mutateAsync({ id, characterId });
     } catch (error) {
       logger.error('Failed to delete journal entry:', error);
-      setHasError(true);
-    }
-  };
-
-  const handleUpdate = async (id: string, updates: Partial<JournalEntry>) => {
-    try {
-      await updateEntry.mutateAsync({ id, characterId, ...updates });
-    } catch (error) {
-      logger.error('Failed to update journal entry:', error);
       setHasError(true);
     }
   };

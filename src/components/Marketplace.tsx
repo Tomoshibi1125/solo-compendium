@@ -10,24 +10,12 @@ import {
   Upload, 
   Download, 
   Star, 
-  Heart, 
-  MessageCircle, 
-  Share2, 
-  Filter, 
   Search,
   Clock,
   Users,
-  DollarSign,
   Package,
   Shield,
-  Eye,
-  Edit,
-  Trash2,
-  Plus,
-  ChevronDown,
-  TrendingUp,
-  Award,
-  Zap
+  TrendingUp
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { logger } from '@/lib/logger';
@@ -95,6 +83,34 @@ export interface MarketplaceStats {
   recentItems: MarketplaceItem[];
 }
 
+type MarketplaceFilters = {
+  type?: MarketplaceItem['type'];
+  category?: string;
+  tags?: string[];
+  priceType?: MarketplaceItem['price']['type'];
+  sortBy?: 'created' | 'updated' | 'downloads' | 'rating' | 'trending';
+  sortOrder?: 'asc' | 'desc';
+  search?: string;
+  limit?: number;
+  offset?: number;
+};
+
+type MarketplaceUploadForm = {
+  title: string;
+  description: string;
+  type: MarketplaceItem['type'];
+  category: string;
+  tags: string[];
+  price: {
+    type: MarketplaceItem['price']['type'];
+    amount?: number;
+    currency?: string;
+  };
+  requirements: string[];
+  compatibility: string[];
+  license: string;
+};
+
 export class MarketplaceManager {
   private apiBase: string;
   private apiKey: string;
@@ -141,17 +157,7 @@ export class MarketplaceManager {
     }
   }
 
-  async getItems(filters?: {
-    type?: MarketplaceItem['type'];
-    category?: string;
-    tags?: string[];
-    priceType?: MarketplaceItem['price']['type'];
-    sortBy?: 'created' | 'updated' | 'downloads' | 'rating' | 'trending';
-    sortOrder?: 'asc' | 'desc';
-    search?: string;
-    limit?: number;
-    offset?: number;
-  }): Promise<{ items: MarketplaceItem[]; total: number }> {
+  async getItems(filters?: MarketplaceFilters): Promise<{ items: MarketplaceItem[]; total: number }> {
     const params = new URLSearchParams();
     
     if (filters) {
@@ -320,7 +326,7 @@ export class MarketplaceManager {
     }
   }
 
-  async searchItems(query: string, filters?: any): Promise<MarketplaceItem[]> {
+  async searchItems(query: string, filters?: MarketplaceFilters): Promise<MarketplaceItem[]> {
     const result = await this.getItems({ ...filters, search: query });
     return result.items;
   }
@@ -351,15 +357,7 @@ export function useMarketplace() {
   const [stats, setStats] = useState<MarketplaceStats | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [filters, setFilters] = useState<{
-    type?: MarketplaceItem['type'];
-    category?: string;
-    tags?: string[];
-    priceType?: MarketplaceItem['price']['type'];
-    sortBy?: 'created' | 'updated' | 'downloads' | 'rating' | 'trending';
-    sortOrder?: 'asc' | 'desc';
-    search?: string;
-  }>({});
+  const [filters, setFilters] = useState<MarketplaceFilters>({});
   const { toast } = useToast();
 
   const marketplaceManager = useMemo(() => new MarketplaceManager(
@@ -375,6 +373,7 @@ export function useMarketplace() {
       const result = await marketplaceManager.getItems(filters);
       setItems(result.items);
     } catch (error) {
+      logger.error('Failed to fetch marketplace items:', error);
       setError('Failed to fetch marketplace items');
       toast({
         title: 'Error',
@@ -433,6 +432,7 @@ export function useMarketplace() {
         description: `Downloading ${title}`,
       });
     } catch (error) {
+      logger.error(`Failed to download marketplace item ${id}:`, error);
       toast({
         title: 'Download Failed',
         description: 'Could not download the item',
@@ -467,7 +467,7 @@ export function useMarketplace() {
     }
   }, [marketplaceManager, toast]);
 
-  const updateFilters = useCallback((newFilters: typeof filters) => {
+  const updateFilters = useCallback((newFilters: MarketplaceFilters) => {
     setFilters(newFilters);
   }, []);
 
@@ -476,6 +476,7 @@ export function useMarketplace() {
       const searchResults = await marketplaceManager.searchItems(query, filters);
       setItems(searchResults);
     } catch (error) {
+      logger.error('Failed to search marketplace items:', error);
       toast({
         title: 'Search Failed',
         description: 'Could not search items',
@@ -506,15 +507,15 @@ export function useMarketplace() {
 
 // React component for marketplace upload
 export function MarketplaceUpload() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<MarketplaceUploadForm>({
     title: '',
     description: '',
-    type: 'campaign' as MarketplaceItem['type'],
+    type: 'campaign',
     category: '',
-    tags: [] as string[],
-    price: { type: 'free' as MarketplaceItem['price']['type'] },
-    requirements: [] as string[],
-    compatibility: [] as string[],
+    tags: [],
+    price: { type: 'free', amount: 0, currency: 'USD' },
+    requirements: [],
+    compatibility: [],
     license: 'MIT',
   });
   const [file, setFile] = useState<File | null>(null);
@@ -546,7 +547,7 @@ export function MarketplaceUpload() {
         type: 'campaign',
         category: '',
         tags: [],
-        price: { type: 'free' },
+        price: { type: 'free', amount: 0, currency: 'USD' },
         requirements: [],
         compatibility: [],
         license: 'MIT',
@@ -558,7 +559,7 @@ export function MarketplaceUpload() {
         description: 'Your item has been uploaded to the marketplace',
       });
     } catch (error) {
-      // Error already handled by hook
+      logger.error('Marketplace upload failed:', error);
     } finally {
       setIsUploading(false);
     }
@@ -594,12 +595,12 @@ export function MarketplaceUpload() {
             </div>
             
             <div className="space-y-2">
-              <label htmlFor="type" className="text-sm font-medium">Type</label>
+              <label htmlFor="marketplace-upload-type" className="text-sm font-medium">Type</label>
               <Select
                 value={formData.type}
                 onValueChange={(value) => setFormData(prev => ({ ...prev, type: value as MarketplaceItem['type'] }))}
               >
-                <SelectTrigger>
+                <SelectTrigger id="marketplace-upload-type">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -638,7 +639,7 @@ export function MarketplaceUpload() {
             </div>
             
             <div className="space-y-2">
-              <label htmlFor="priceType" className="text-sm font-medium">Price Type</label>
+              <label htmlFor="marketplace-upload-price-type" className="text-sm font-medium">Price Type</label>
               <Select
                 value={formData.price.type}
                 onValueChange={(value) => setFormData(prev => ({ 
@@ -646,7 +647,7 @@ export function MarketplaceUpload() {
                   price: { ...prev.price, type: value as MarketplaceItem['price']['type'] }
                 }))}
               >
-                <SelectTrigger>
+                <SelectTrigger id="marketplace-upload-price-type">
                   <SelectValue placeholder="Select price type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -665,10 +666,10 @@ export function MarketplaceUpload() {
                 <Input
                   id="amount"
                   type="number"
-                  value={((formData.price as any).amount) || ''}
+                  value={formData.price.amount ?? ''}
                   onChange={(e) => setFormData(prev => ({ 
                     ...prev, 
-                    price: { ...prev.price, amount: parseFloat(e.target.value) || 0, currency: (prev.price as any).currency || 'USD' }
+                    price: { ...prev.price, amount: Number.parseFloat(e.target.value) || 0, currency: prev.price.currency || 'USD' }
                   }))}
                   placeholder="Enter amount"
                 />
@@ -678,7 +679,7 @@ export function MarketplaceUpload() {
                 <label htmlFor="currency" className="text-sm font-medium">Currency</label>
                 <Input
                   id="currency"
-                  value={(formData.price as any).currency || 'USD'}
+                  value={formData.price.currency ?? 'USD'}
                   onChange={(e) => setFormData(prev => ({ 
                     ...prev, 
                     price: { ...prev.price, currency: e.target.value }
@@ -792,8 +793,12 @@ export function MarketplaceBrowse() {
       updateFilters({ ...filters, sortBy: newSortBy, sortOrder: newSortOrder });
     }, [updateFilters, filters]);
 
-  const handleFilterChange = useCallback((key: string, value: any) => {
-      updateFilters({ ...filters, [key]: value });
+  const handleFilterChange = useCallback(<K extends keyof MarketplaceFilters>(
+    key: K,
+    value: MarketplaceFilters[K] | ''
+  ) => {
+      const normalizedValue = value === '' ? undefined : value;
+      updateFilters({ ...filters, [key]: normalizedValue } as MarketplaceFilters);
     }, [updateFilters, filters]);
 
   const categories = [
@@ -871,12 +876,12 @@ export function MarketplaceBrowse() {
           {/* Filters */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium">Type</label>
+              <label htmlFor="marketplace-filter-type" className="text-sm font-medium">Type</label>
               <Select
                 value={filters.type}
-                onValueChange={(value) => handleFilterChange('type', value)}
+                onValueChange={(value) => handleFilterChange('type', value as MarketplaceItem['type'])}
               >
-                <SelectTrigger>
+                <SelectTrigger id="marketplace-filter-type">
                   <SelectValue placeholder="All types" />
                 </SelectTrigger>
                 <SelectContent>
@@ -892,12 +897,12 @@ export function MarketplaceBrowse() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Category</label>
+              <label htmlFor="marketplace-filter-category" className="text-sm font-medium">Category</label>
               <Select
                 value={filters.category || ''}
                 onValueChange={(value) => handleFilterChange('category', value)}
               >
-                <SelectTrigger>
+                <SelectTrigger id="marketplace-filter-category">
                   <SelectValue placeholder="All categories" />
                 </SelectTrigger>
                 <SelectContent>
@@ -910,12 +915,12 @@ export function MarketplaceBrowse() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Price</label>
+              <label htmlFor="marketplace-filter-price" className="text-sm font-medium">Price</label>
               <Select
                 value={filters.priceType || ''}
-                onValueChange={(value) => handleFilterChange('priceType', value)}
+                onValueChange={(value) => handleFilterChange('priceType', value as MarketplaceItem['price']['type'])}
               >
-                <SelectTrigger>
+                <SelectTrigger id="marketplace-filter-price">
                   <SelectValue placeholder="All prices" />
                 </SelectTrigger>
                 <SelectContent>
@@ -928,7 +933,7 @@ export function MarketplaceBrowse() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Sort</label>
+              <label htmlFor="marketplace-filter-sort" className="text-sm font-medium">Sort</label>
               <Select
                 value={`${sortBy}-${sortOrder}`}
                 onValueChange={(value) => {
@@ -936,7 +941,7 @@ export function MarketplaceBrowse() {
                   handleSortChange(newSortBy, newSortOrder);
                 }}
               >
-                <SelectTrigger>
+                <SelectTrigger id="marketplace-filter-sort">
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent>

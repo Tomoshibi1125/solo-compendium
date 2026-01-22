@@ -10,15 +10,18 @@ import { DeathSaveState, initializeDeathSaves } from './deathSaves';
 
 export type RulesSystem = 'system-ascendant' | 'srd5e' | 'hybrid';
 
+export interface SystemAscendantCharacter {
+  level: number;
+  abilities: Record<string, number>;
+  job: string;
+  path?: string;
+}
+
+export type SystemAscendantCharacterInput = Partial<SystemAscendantCharacter>;
+
 export interface DualSystemCharacter {
   // System Ascendant system
-  systemAscendant: {
-    level: number;
-    abilities: Record<string, number>;
-    job: string;
-    path?: string;
-    // Other System Ascendant specific properties
-  };
+  systemAscendant: SystemAscendantCharacter;
   
   // SRD 5e system
   srd5e: Srd5eCharacter;
@@ -58,29 +61,36 @@ export function convertSrd5eToSystemAscendant(srdAbilities: Srd5eCharacter['abil
 
 // Initialize dual system character
 export function initializeDualSystemCharacter(
-  systemAscendantData: any,
+  systemAscendantData: SystemAscendantCharacterInput,
   rulesSystem: RulesSystem = 'system-ascendant'
 ): DualSystemCharacter {
-  const srd5eAbilities = convertSystemAscendantToSrd5e(systemAscendantData.abilities || {});
+  const normalizedSystemAscendant: SystemAscendantCharacter = {
+    level: systemAscendantData.level ?? 1,
+    abilities: systemAscendantData.abilities ?? {},
+    job: systemAscendantData.job ?? 'Adventurer',
+    path: systemAscendantData.path,
+  };
+
+  const srd5eAbilities = convertSystemAscendantToSrd5e(normalizedSystemAscendant.abilities);
   
   const srd5eCharacter: Srd5eCharacter = {
-    level: systemAscendantData.level || 1,
+    level: normalizedSystemAscendant.level,
     abilityScores: srd5eAbilities,
     skillProficiencies: [], // Would need to be mapped from System Ascendant skills
     savingThrowProficiencies: [], // Would need to be mapped from System Ascendant saves
-    proficiencyBonus: getSrd5eProficiencyBonus(systemAscendantData.level || 1),
-    class: systemAscendantData.job || 'Commoner',
-    subclass: systemAscendantData.path,
+    proficiencyBonus: getSrd5eProficiencyBonus(normalizedSystemAscendant.level),
+    class: normalizedSystemAscendant.job,
+    subclass: normalizedSystemAscendant.path,
     race: 'Human', // Default for System Ascendant
     background: 'Adventurer' // Default for System Ascendant
   };
 
   return {
-    systemAscendant: systemAscendantData,
+    systemAscendant: normalizedSystemAscendant,
     srd5e: srd5eCharacter,
     activeSystem: rulesSystem,
     concentration: initializeConcentration(),
-    spellSlots: initializeSpellSlots(systemAscendantData.level || 1, {
+    spellSlots: initializeSpellSlots(normalizedSystemAscendant.level, {
       name: 'Mage',
       spellcastingAbility: 'level3' as keyof SpellSlots,
       spellProgression: 'full'

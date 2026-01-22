@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { compressImage } from '@/lib/imageOptimization';
-import { cn } from '@/lib/utils';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 export function PortraitUpload({
@@ -102,7 +101,7 @@ export function PortraitUpload({
       });
 
       onUploadComplete?.(publicUrl);
-    } catch (error) {
+    } catch {
       // Error is handled by toast notification
       toast({
         title: 'Upload failed',
@@ -141,7 +140,7 @@ export function PortraitUpload({
       });
 
       onUploadComplete?.('');
-    } catch (error) {
+    } catch {
       // Error is handled by toast notification
       toast({
         title: 'Remove failed',

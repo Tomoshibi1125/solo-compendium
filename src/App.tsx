@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { Loader2 } from "lucide-react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -17,13 +17,14 @@ import { AnalyticsConsentBanner } from "@/components/ui/AnalyticsConsentBanner";
 import { PageViewTracker } from "@/components/analytics/PageViewTracker";
 import { RouteEffects } from "@/components/RouteEffects";
 import { setCommandPaletteOpener } from "@/lib/globalShortcuts";
-import { setSentryUser } from "@/lib/sentry";
-import { trackEvent, identifyUser, resetUser, AnalyticsEvents } from "@/lib/analytics";
 import { validateEnv } from "@/lib/envValidation";
-import { AuthProvider } from "@/lib/auth/authContext";
+import { AuthProvider, useAuth } from "@/lib/auth/authContext";
+import { getRuntimeEnvValue, normalizeBasePath } from "@/lib/runtimeEnv";
 import { warn as logWarn } from "@/lib/logger";
 import { isSupabaseConfigured } from "@/integrations/supabase/client";
 import GlobalEffects from "@/components/ui/GlobalEffects";
+import PerformancePreload from "@/components/PerformancePreload";
+import { PerformanceProvider } from "@/lib/performanceProfile";
 import Login from "./pages/Login";
 import PlayerTools from "./pages/PlayerTools";
 
@@ -78,8 +79,29 @@ const CharacterCompare = lazy(() => import("./pages/CharacterCompare"));
 const Auth = lazy(() => import("./pages/Auth"));
 const AuthCallback = lazy(() => import("./pages/AuthCallback"));
 const Landing = lazy(() => import("./pages/Landing"));
-const NotFound = lazy(() => import("./pages/NotFound"));
 const Setup = lazy(() => import("./pages/Setup"));
+
+const CatchAllRedirect = () => {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <PageLoader />;
+  }
+
+  if (!isSupabaseConfigured) {
+    return <Navigate to="/setup" replace />;
+  }
+
+  if (user?.role === 'dm') {
+    return <Navigate to="/dm-tools" replace />;
+  }
+
+  if (user) {
+    return <Navigate to="/player-tools" replace />;
+  }
+
+  return <Navigate to="/login" replace />;
+};
 const PlayerToolDetail = lazy(() => import("./pages/PlayerToolDetail"));
 
 // Configure React Query with better caching and error handling
@@ -371,6 +393,10 @@ const AppContent = () => {
         }
       />
       <Route
+        path="/dm-tools/campaign-manager"
+        element={<Navigate to="/dm-tools" replace />}
+      />
+      <Route
         path="/dm-tools/quest-generator"
         element={
           <ProtectedRoute requireDM>
@@ -470,6 +496,10 @@ const AppContent = () => {
           </ProtectedRoute>
         }
       />
+      <Route path="/dm-tools/vtt" element={<Navigate to="/campaigns" replace />} />
+      <Route path="/dm-tools/journal" element={<Navigate to="/campaigns" replace />} />
+      <Route path="/dm-tools/vtt-enhanced" element={<Navigate to="/campaigns" replace />} />
+      <Route path="/dm-tools/vtt-journal" element={<Navigate to="/campaigns" replace />} />
       <Route
         path="/campaigns/:campaignId/vtt"
         element={
@@ -527,14 +557,6 @@ const AppContent = () => {
         }
       />
       <Route
-        path="/campaigns/join/:shareCode"
-        element={
-          <Suspense fallback={<PageLoader />}>
-            <CampaignJoin />
-          </Suspense>
-        }
-      />
-      <Route
         path="/campaigns/:id"
         element={
           <Suspense fallback={<PageLoader />}>
@@ -561,9 +583,7 @@ const AppContent = () => {
       <Route
         path="*"
         element={
-          <Suspense fallback={<PageLoader />}>
-            <NotFound />
-          </Suspense>
+          <CatchAllRedirect />
         }
       />
         </>
@@ -574,25 +594,32 @@ const AppContent = () => {
 };
 
 const App = () => {
+  const routerBase = normalizeBasePath(
+    getRuntimeEnvValue('VITE_ROUTER_BASE') || getRuntimeEnvValue('VITE_BASE_PATH') || import.meta.env.BASE_URL
+  );
+
   return (
     <ErrorBoundary>
       <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" disableTransitionOnChange>
         <NetworkErrorBoundary>
           <QueryClientProvider client={queryClient}>
             <TooltipProvider>
-              <AuthProvider>
-                <GlobalEffects />
-                <Toaster />
-                <Sonner />
-                <BrowserRouter>
-                  <RouteEffects />
-                  <PageViewTracker />
-                  <AppContent />
-                </BrowserRouter>
-                <ServiceWorkerUpdatePrompt />
-                <OfflineIndicator />
-                <AnalyticsConsentBanner />
-              </AuthProvider>
+              <PerformanceProvider>
+                <AuthProvider>
+                  <GlobalEffects />
+                  <PerformancePreload />
+                  <Toaster />
+                  <Sonner />
+                  <BrowserRouter basename={routerBase}>
+                    <RouteEffects />
+                    <PageViewTracker />
+                    <AppContent />
+                  </BrowserRouter>
+                  <ServiceWorkerUpdatePrompt />
+                  <OfflineIndicator />
+                  <AnalyticsConsentBanner />
+                </AuthProvider>
+              </PerformanceProvider>
             </TooltipProvider>
           </QueryClientProvider>
         </NetworkErrorBoundary>

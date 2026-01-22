@@ -17,7 +17,7 @@ export default function AudioManagerDM() {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('player');
 
-  const { tracks, getTracksByCategory, getTracksByMood } = useAudioLibrary();
+  const { getTracksByCategory, getTracksByMood } = useAudioLibrary();
   const { loadTrack, play, loadPlaylist, repeat, shuffle, setRepeat, setShuffle, updateSettings, settings } = useAudioPlayer();
 
   const handleTrackSelect = async (track: AudioTrack) => {

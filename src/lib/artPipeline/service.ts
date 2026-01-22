@@ -9,9 +9,11 @@ import { getFeatureFlag } from '@/lib/featureFlags';
 import { logger } from '@/lib/logger';
 import { AppError } from '@/lib/appError';
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 
 type PendingItem = QueueStatus['pending'][number];
 type RunningItem = QueueStatus['running'][number];
+type ArtAssetRow = Database['public']['Tables']['art_assets']['Row'];
 
 export class ArtPipelineService {
   private enabled: boolean;
@@ -593,21 +595,26 @@ export class ArtPipelineService {
     }
   }
 
-  private toArtAsset(row: any): ArtAsset {
+  private toArtAsset(row: ArtAssetRow): ArtAsset {
+    const paths = row.paths as ArtAsset['paths'];
+    const dimensions = row.dimensions as ArtAsset['dimensions'];
+    const metadata = row.metadata as ArtMetadata;
+    const createdAt = row.created_at ?? new Date().toISOString();
+    const updatedAt = row.updated_at ?? createdAt;
     return {
       id: row.id,
       entityType: row.entity_type,
       entityId: row.entity_id,
       variant: row.variant,
-      paths: row.paths,
-      dimensions: row.dimensions,
+      paths,
+      dimensions,
       fileSize: row.file_size,
       mimeType: row.mime_type,
       metadataPath: row.metadata_path,
-      metadata: row.metadata,
+      metadata,
       hash: row.hash,
-      createdAt: row.created_at,
-      updatedAt: row.updated_at,
+      createdAt,
+      updatedAt,
     };
   }
 

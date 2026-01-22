@@ -1,20 +1,9 @@
-﻿import { useState, useEffect, useCallback, useMemo } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { 
-  TrendingUp, 
-  TrendingDown, 
-  Users, 
-  Target, 
-  Activity, 
-  Clock,
-  Award,
-  Zap,
-  Shield,
-  Sword
-} from 'lucide-react';
+import { Target, Activity, Clock, Sword } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 import { logger } from '@/lib/logger';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';

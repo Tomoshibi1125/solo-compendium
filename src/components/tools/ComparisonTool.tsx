@@ -4,10 +4,8 @@ import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { X, Users, Swords, Sparkles, Crown } from 'lucide-react';
-import { cn } from '@/lib/utils';
 
 interface ComparisonItem {
   id: string;

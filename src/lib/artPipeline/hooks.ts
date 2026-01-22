@@ -5,7 +5,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { artPipeline } from './service';
-import type { ArtRequest, GenerationResult, ArtAsset } from './types';
+import type { ArtRequest, GenerationResult, ArtAsset, QueueStatus } from './types';
 import { useFeatureFlag } from '@/lib/featureFlags';
 
 /**
@@ -14,7 +14,7 @@ import { useFeatureFlag } from '@/lib/featureFlags';
 export function useArtPipeline() {
   const [isAvailable, setIsAvailable] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [queueStatus, setQueueStatus] = useState<any>(null);
+  const [queueStatus, setQueueStatus] = useState<QueueStatus | null>(null);
   const enabled = useFeatureFlag('artGenerationEnabled');
 
   const checkAvailability = useCallback(async () => {
@@ -151,7 +151,11 @@ export function useArtPipeline() {
 /**
  * Hook for managing a specific art asset
  */
-export function useArtAsset(entityType: string, entityId: string, variant: string = 'portrait') {
+export function useArtAsset(
+  entityType: ArtRequest['entityType'],
+  entityId: string,
+  variant: ArtRequest['variant'] = 'portrait'
+) {
   const [asset, setAsset] = useState<ArtAsset | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -174,9 +178,9 @@ export function useArtAsset(entityType: string, entityId: string, variant: strin
 
   const createAsset = useCallback(async (title: string, options: Partial<ArtRequest> = {}) => {
     const request: ArtRequest = {
-      entityType: entityType as any,
+      entityType,
       entityId,
-      variant: variant as any,
+      variant,
       title,
       tags: options.tags || [],
       description: options.description,
@@ -213,7 +217,6 @@ export function useBatchArtGeneration() {
   const [progress, setProgress] = useState(0);
   const [results, setResults] = useState<GenerationResult[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
-  const { generateArt } = useArtPipeline();
 
   const generateBatch = useCallback(async (requests: ArtRequest[]) => {
     setIsGenerating(true);
@@ -249,7 +252,7 @@ export function useBatchArtGeneration() {
  * Hook for art generation queue monitoring
  */
 export function useArtQueueMonitor(interval: number = 2000) {
-  const [queueStatus, setQueueStatus] = useState<any>(null);
+  const [queueStatus, setQueueStatus] = useState<QueueStatus | null>(null);
   const { getQueueStatus } = useArtPipeline();
 
   useEffect(() => {

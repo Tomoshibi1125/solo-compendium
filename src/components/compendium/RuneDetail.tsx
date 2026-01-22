@@ -1,6 +1,5 @@
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
 import { Sparkles, Zap, Shield, Scroll, BookOpen, AlertCircle, CheckCircle } from 'lucide-react';
 import type { Database } from '@/integrations/supabase/types';
 import { formatMonarchVernacular } from '@/lib/vernacular';

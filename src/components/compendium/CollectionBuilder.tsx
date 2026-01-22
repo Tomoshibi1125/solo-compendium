@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Plus, X, Share2, Download, Users, Lock, Globe, Edit, Trash2, Copy } from 'lucide-react';
+import { Plus, X, Share2, Users, Lock, Globe, Edit, Trash2, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -7,7 +7,6 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { 
   Dialog, 
@@ -17,13 +16,6 @@ import {
   DialogHeader, 
   DialogTitle 
 } from '@/components/ui/dialog';
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
-} from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
@@ -156,7 +148,7 @@ export function CollectionBuilder({
         title: 'Link Copied',
         description: 'Share link copied to clipboard.',
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Copy Failed',
         description: 'Could not copy link to clipboard.',
@@ -166,7 +158,7 @@ export function CollectionBuilder({
   };
 
   const handleForkCollection = (collection: Collection) => {
-    const forked = onForkCollection(collection.id);
+    onForkCollection(collection.id);
     toast({
       title: 'Collection Forked',
       description: `You have forked "${formatMonarchVernacular(collection.name)}".`,
@@ -414,10 +406,12 @@ export function CollectionBuilder({
               <ScrollArea className="h-64 border rounded-md p-2">
                 <div className="space-y-2">
                   {filteredItems.map((item) => (
-                    <div
+                    <button
                       key={item.id}
-                      className="flex items-center justify-between p-2 border rounded hover:bg-muted cursor-pointer"
+                      type="button"
+                      className="flex w-full items-center justify-between p-2 border rounded hover:bg-muted cursor-pointer text-left"
                       onClick={() => addItem(item)}
+                      aria-label={`Add ${item.name} to collection`}
                     >
                       <div className="flex items-center gap-2">
                         <div className="w-8 h-8 bg-muted rounded flex items-center justify-center text-xs">
@@ -431,7 +425,7 @@ export function CollectionBuilder({
                         </div>
                       </div>
                       <Plus className="w-4 h-4" />
-                    </div>
+                    </button>
                   ))}
                 </div>
               </ScrollArea>

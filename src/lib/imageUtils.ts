@@ -1,3 +1,5 @@
+import { getRuntimeEnvValue } from './runtimeEnv';
+
 /**
  * Utility functions for handling compendium images
  */
@@ -32,7 +34,7 @@ export function getImagePath(type: string, entryId: string, name: string): strin
  */
 export function getPublicImageUrl(bucket: string, path: string, supabaseUrl?: string): string {
   if (!supabaseUrl) {
-    supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
+    supabaseUrl = getRuntimeEnvValue('VITE_SUPABASE_URL') || '';
   }
   return `${supabaseUrl}/storage/v1/object/public/${bucket}/${path}`;
 }

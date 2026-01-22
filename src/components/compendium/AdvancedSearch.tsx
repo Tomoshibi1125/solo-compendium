@@ -8,7 +8,6 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 
 interface AdvancedSearchFilters {
@@ -148,7 +147,7 @@ export function AdvancedSearch({ filters, onFiltersChange, className }: Advanced
     }));
   };
 
-  const updateFilter = (key: keyof AdvancedSearchFilters, value: any) => {
+  const updateFilter = <K extends keyof AdvancedSearchFilters>(key: K, value: AdvancedSearchFilters[K]) => {
     onFiltersChange({
       ...filters,
       [key]: value

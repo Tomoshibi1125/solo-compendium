@@ -1,11 +1,8 @@
 import { supabase } from '@/integrations/supabase/client';
-import { validateContentBundle, type ContentBundle, type ValidationResult } from './contentValidator';
+import { validateContentBundle, type ContentBundle } from './contentValidator';
 import type { Database } from '@/integrations/supabase/types';
 import { AppError } from '@/lib/appError';
 
-type Job = Database['public']['Tables']['compendium_jobs']['Row'];
-type JobPath = Database['public']['Tables']['compendium_job_paths']['Row'];
-type JobFeature = Database['public']['Tables']['compendium_job_features']['Row'];
 type JobInsert = Database['public']['Tables']['compendium_jobs']['Insert'];
 type JobPathInsert = Database['public']['Tables']['compendium_job_paths']['Insert'];
 type JobFeatureInsert = Database['public']['Tables']['compendium_job_features']['Insert'];

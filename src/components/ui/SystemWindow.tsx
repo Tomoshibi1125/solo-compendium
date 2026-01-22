@@ -6,13 +6,24 @@ interface SystemWindowProps {
   title?: string;
   actions?: ReactNode;
   className?: string;
+  contentClassName?: string;
   variant?: 'default' | 'alert' | 'quest' | 'monarch' | 'arise';
   compact?: boolean;
   animated?: boolean;
   id?: string;
 }
 
-export function SystemWindow({ children, title, actions, className, variant = 'default', compact = false, animated = false, id }: SystemWindowProps) {
+export function SystemWindow({
+  children,
+  title,
+  actions,
+  className,
+  contentClassName,
+  variant = 'default',
+  compact = false,
+  animated = false,
+  id,
+}: SystemWindowProps) {
   const variantStyles = {
     default: 'border-primary/30 from-primary/8 via-card to-void-black/80',
     alert: 'border-destructive/30 from-destructive/8 via-card to-void-black/80',
@@ -88,7 +99,7 @@ export function SystemWindow({ children, title, actions, className, variant = 'd
           )}
         </div>
       )}
-      <div className={compact ? "p-3" : "p-4"}>
+      <div className={cn(compact ? "p-3" : "p-4", contentClassName)}>
         {children}
       </div>
       

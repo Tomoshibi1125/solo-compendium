@@ -85,6 +85,7 @@ export function SystemHeroSimple({
         <div className="text-center mb-8">
           <h1 
             className="text-6xl md:text-8xl font-black tracking-wider mb-4 solo-hero-title"
+            style={titleStyle}
           >
             {title}
           </h1>

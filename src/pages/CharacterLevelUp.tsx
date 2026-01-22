@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Check, Loader2, Zap, Heart, TrendingUp, Crown, Sparkles, Star } from 'lucide-react';
+import { ArrowLeft, Loader2, Zap, Heart, TrendingUp, Crown, Sparkles, Star } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
@@ -13,7 +13,6 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { calculateHPMax } from '@/lib/characterCalculations';
 import { useInitializeSpellSlots } from '@/hooks/useSpellSlots';
 import { logger } from '@/lib/logger';
 import { formatMonarchVernacular } from '@/lib/vernacular';
@@ -21,7 +20,6 @@ import type { Database } from '@/integrations/supabase/types';
 import { useCampaignByCharacterId } from '@/hooks/useCampaigns';
 import { getLevelingMode } from '@/lib/campaignSettings';
 
-type JobFeature = Database['public']['Tables']['compendium_job_features']['Row'];
 
 function getExperienceForNextLevel(currentLevel: number): number {
   return currentLevel * 1000; // Simple progression formula
@@ -47,7 +45,6 @@ const CharacterLevelUp = () => {
   const currentExperience = character?.experience ?? 0;
   const experienceNeeded = character && !isMilestone ? getExperienceForNextLevel(character.level) : 0;
   const canLevelUp = !!character && (isMilestone || currentExperience >= experienceNeeded);
-  const currentProgress = experienceNeeded > 0 ? (currentExperience / experienceNeeded) * 100 : 0;
 
   // Fetch features for the new level
   const { data: newFeatures = [] } = useQuery({
@@ -312,7 +309,7 @@ const CharacterLevelUp = () => {
       });
 
       navigate(`/characters/${character.id}`);
-    } catch (error) {
+    } catch {
       toast({
         title: 'Failed to level up',
         description: 'Could not complete level up. Please try again.',

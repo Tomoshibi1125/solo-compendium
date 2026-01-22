@@ -142,8 +142,8 @@ export function getSrd5eHitPoints(
   character: Srd5eCharacter,
   hitDie: string,
   conMod?: number,
-  previousHP?: number,
-  rolledHP?: number
+  _previousHP?: number,
+  _rolledHP?: number
 ): number {
   const conBonus = conMod ?? getSrd5eAbilityModifier(character.abilityScores.constitution);
   const hitDieNum = parseInt(hitDie.replace('d', ''));

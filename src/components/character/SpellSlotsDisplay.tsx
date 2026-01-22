@@ -2,7 +2,6 @@ import { useSpellSlots, useUpdateSpellSlot } from '@/hooks/useSpellSlots';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Plus, Minus } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { logger } from '@/lib/logger';
 

@@ -8,6 +8,7 @@ import {
   DailyQuestInstance,
   DailyQuestTemplate,
   QuestReward,
+  QuestScalingSchema,
   calculateQuestReward,
   getQuestProgress,
 } from '@/lib/dailyQuests/types';
@@ -103,7 +104,8 @@ const buildLocalInstances = (
 ): DailyQuestInstance[] => {
   const now = new Date();
   const dateKey = formatDateKey(now);
-  const questSeed = hashString(`${characterId}-${dateKey}`);
+  const seedSource = forceNew ? `${characterId}-${dateKey}-${now.getTime()}` : `${characterId}-${dateKey}`;
+  const questSeed = hashString(seedSource);
   const proficiencyBonus = getProficiencyBonus(characterLevel);
 
   const difficultyAdjust = config.difficulty_mode === 'easy'
@@ -126,7 +128,8 @@ const buildLocalInstances = (
   const selectedTemplates = sortedTemplates.slice(0, Math.max(1, config.max_active_quests || 3));
 
   return selectedTemplates.map((template, index) => {
-    const scaling = config.custom_scaling?.type ? config.custom_scaling : template.default_scaling;
+    const customScaling = QuestScalingSchema.safeParse(config.custom_scaling);
+    const scaling = customScaling.success ? customScaling.data : template.default_scaling;
     const rawTarget = template.requirements.target || 1;
     const targetMultiplier = config.difficulty_mode === 'easy'
       ? 0.8
@@ -136,7 +139,7 @@ const buildLocalInstances = (
           ? 1.4
           : 1;
     const target = Math.max(1, Math.ceil(rawTarget * targetMultiplier));
-    const reward = calculateQuestReward(template, scaling as any, characterLevel, proficiencyBonus, config.reward_mode);
+    const reward = calculateQuestReward(template, scaling, characterLevel, proficiencyBonus, config.reward_mode);
     const scalingApplied = {
       multiplier: scaling.multiplier,
       base_multiplier: scaling.multiplier,
@@ -264,7 +267,7 @@ export function useDailyQuests(characterId: string | null, characterLevel?: numb
           .update({
             ...updates,
             updated_at: new Date().toISOString(),
-            custom_scaling: updates.custom_scaling as any,
+            custom_scaling: updates.custom_scaling as QuestConfigRow['custom_scaling'],
           })
           .eq('id', existing.id)
           .select()
@@ -283,7 +286,7 @@ export function useDailyQuests(characterId: string | null, characterLevel?: numb
         penalty_mode: updates.penalty_mode,
         reroll_allowance: updates.reroll_allowance,
         max_active_quests: updates.max_active_quests,
-        custom_scaling: updates.custom_scaling as any,
+        custom_scaling: updates.custom_scaling as QuestConfigRow['custom_scaling'],
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       };

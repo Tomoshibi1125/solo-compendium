@@ -7,11 +7,13 @@ import {
   optimizeImageUrl,
   type ImageSize,
 } from '@/lib/imageOptimization';
+import { usePerformanceProfile } from '@/lib/performanceProfile';
 
 type OptimizedImageProps = Omit<ImgHTMLAttributes<HTMLImageElement>, 'src'> & {
   src?: string | null;
   alt: string;
   size?: ImageSize;
+  quality?: number;
 };
 
 const sizeVariants: Record<ImageSize, ImageSize[]> = {
@@ -33,16 +35,35 @@ export function OptimizedImage({
   src,
   alt,
   size = 'medium',
+  quality,
   className,
   ...imgProps
 }: OptimizedImageProps) {
+  const { images } = usePerformanceProfile();
+  const resolvedQuality = typeof quality === 'number' ? quality : images.quality;
+  const loading = imgProps.loading ?? (size === 'hero' && images.eagerHero ? 'eager' : 'lazy');
+  const decoding = imgProps.decoding ?? 'async';
+  const fetchPriority =
+    (imgProps as ImgHTMLAttributes<HTMLImageElement> & { fetchPriority?: 'auto' | 'high' | 'low' })
+      .fetchPriority ?? (size === 'hero' && images.eagerHero ? 'high' : 'auto');
+
   if (!src) {
     return null;
   }
 
   const srcValue = src;
   if (isDataUrl(srcValue)) {
-    return <img src={srcValue} alt={alt} className={cn(className)} {...imgProps} />;
+    return (
+      <img
+        src={srcValue}
+        alt={alt}
+        className={cn(className)}
+        loading={loading}
+        decoding={decoding}
+        fetchPriority={fetchPriority}
+        {...imgProps}
+      />
+    );
   }
 
   const isSupabaseUrl = srcValue.includes('supabase.co/storage');
@@ -54,11 +75,11 @@ export function OptimizedImage({
     const bestFormat = getBestImageFormat();
     const optimized = optimizeImageUrl(srcValue, {
       width: size === 'hero' ? 1920 : size === 'large' ? 512 : size === 'medium' ? 256 : 128,
-      quality: 80,
+      quality: resolvedQuality,
       format: bestFormat === 'original' ? undefined : bestFormat,
     });
-    const avifSrcSet = generateSrcSet(srcValue, sizeSet, 'avif');
-    const webpSrcSet = generateSrcSet(srcValue, sizeSet, 'webp');
+    const avifSrcSet = generateSrcSet(srcValue, sizeSet, 'avif', resolvedQuality);
+    const webpSrcSet = generateSrcSet(srcValue, sizeSet, 'webp', resolvedQuality);
 
     return (
       <picture>
@@ -69,6 +90,9 @@ export function OptimizedImage({
           alt={alt}
           className={cn(className)}
           sizes={sizes}
+          loading={loading}
+          decoding={decoding}
+          fetchPriority={fetchPriority}
           {...imgProps}
         />
       </picture>
@@ -81,10 +105,28 @@ export function OptimizedImage({
       <picture>
         <source srcSet={avifSrc} type="image/avif" />
         <source srcSet={srcValue} type="image/webp" />
-        <img src={srcValue} alt={alt} className={cn(className)} {...imgProps} />
+        <img
+          src={srcValue}
+          alt={alt}
+          className={cn(className)}
+          loading={loading}
+          decoding={decoding}
+          fetchPriority={fetchPriority}
+          {...imgProps}
+        />
       </picture>
     );
   }
 
-  return <img src={srcValue} alt={alt} className={cn(className)} {...imgProps} />;
+  return (
+    <img
+      src={srcValue}
+      alt={alt}
+      className={cn(className)}
+      loading={loading}
+      decoding={decoding}
+      fetchPriority={fetchPriority}
+      {...imgProps}
+    />
+  );
 }

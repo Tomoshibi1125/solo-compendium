@@ -1,6 +1,6 @@
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
-import { Coins, BookOpen, Users, Wrench } from 'lucide-react';
+import { Coins } from 'lucide-react';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface BackgroundData {

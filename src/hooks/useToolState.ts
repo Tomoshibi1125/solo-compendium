@@ -14,7 +14,7 @@ export const readLocalToolState = <T,>(storageKey: string): T | null => {
     if (!raw) return null;
     return JSON.parse(raw) as T;
   } catch (error) {
-    logWarn(`Failed to read tool state from localStorage: ${storageKey}`);
+    logWarn(`Failed to read tool state from localStorage: ${storageKey}`, error);
     return null;
   }
 };
@@ -24,14 +24,14 @@ export const writeLocalToolState = <T,>(storageKey: string, state: T): void => {
   try {
     localStorage.setItem(storageKey, JSON.stringify(state));
   } catch (error) {
-    logWarn(`Failed to write tool state to localStorage: ${storageKey}`);
+    logWarn(`Failed to write tool state to localStorage: ${storageKey}`, error);
   }
 };
 
 export const loadUserToolState = async <T,>(userId: string, toolKey: string): Promise<T | null> => {
   if (!isSupabaseConfigured || !userId) return null;
   const { data, error } = await supabase
-    .from('user_tool_states' as any)
+    .from('user_tool_states')
     .select('state')
     .eq('user_id', userId)
     .eq('tool_key', toolKey)
@@ -46,7 +46,7 @@ export const loadUserToolState = async <T,>(userId: string, toolKey: string): Pr
 export const saveUserToolState = async <T,>(userId: string, toolKey: string, state: T): Promise<void> => {
   if (!isSupabaseConfigured || !userId) return;
   const { error } = await supabase
-    .from('user_tool_states' as any)
+    .from('user_tool_states')
     .upsert(
       {
         user_id: userId,
@@ -63,7 +63,7 @@ export const saveUserToolState = async <T,>(userId: string, toolKey: string, sta
 export const loadCampaignToolState = async <T,>(campaignId: string, toolKey: string): Promise<T | null> => {
   if (!isSupabaseConfigured || !campaignId) return null;
   const { data, error } = await supabase
-    .from('campaign_tool_states' as any)
+    .from('campaign_tool_states')
     .select('state')
     .eq('campaign_id', campaignId)
     .eq('tool_key', toolKey)
@@ -83,7 +83,7 @@ export const saveCampaignToolState = async <T,>(
 ): Promise<void> => {
   if (!isSupabaseConfigured || !campaignId || !userId) return;
   const { error } = await supabase
-    .from('campaign_tool_states' as any)
+    .from('campaign_tool_states')
     .upsert(
       {
         campaign_id: campaignId,

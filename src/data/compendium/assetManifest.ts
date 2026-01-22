@@ -50,7 +50,6 @@ export interface AssetManifest {
 
 // Base asset paths
 const ASSET_BASE_PATH = '/generated/compendium';
-const UI_ASSET_BASE_PATH = '/ui';
 
 // Default fallback assets
 const DEFAULT_FALLBACKS = {

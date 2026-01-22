@@ -39,7 +39,6 @@ const PLAYER_TOOL_LABELS: Record<string, string> = {
   'quest-log': 'Quest Log',
   'party-view': 'Party View',
   'dice-roller': 'Dice Roller',
-  achievements: 'Achievements',
 };
 
 const PLAYER_TOOLS_WITH_CHARACTER = new Set([
@@ -48,7 +47,6 @@ const PLAYER_TOOLS_WITH_CHARACTER = new Set([
   'abilities',
   'character-art',
   'quest-log',
-  'achievements',
 ]);
 
 const WARDEN_TOOL_LABELS: Record<string, string> = {

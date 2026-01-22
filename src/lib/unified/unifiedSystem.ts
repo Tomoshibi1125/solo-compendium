@@ -32,9 +32,6 @@ import {
 import {
   UnifiedSpell,
   castUnifiedSpell,
-  canCastUnifiedSpell,
-  calculateUnifiedSpellSaveDC,
-  performUnifiedSpellAttackRoll
 } from './spellSystem';
 
 // Main Unified System Class
@@ -149,7 +146,7 @@ export class UnifiedSystem {
   }
 
   // Take damage
-  takeDamage(damage: number, damageType?: string): void {
+  takeDamage(damage: number, _damageType?: string): void {
     const newHP = Math.max(0, this.character.hitPoints.current - damage);
     this.updateCharacter({
       hitPoints: {
@@ -235,7 +232,7 @@ export class UnifiedSystem {
   // Get character summary
   getCharacterSummary() {
     return {
-      name: (this.character as any).name || 'Unnamed Character',
+      name: this.character.name || 'Unnamed Character',
       level: this.character.level,
       class: this.character.class,
       race: this.character.race,

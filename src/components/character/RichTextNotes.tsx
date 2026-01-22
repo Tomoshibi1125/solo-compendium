@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import { cn } from '@/lib/utils';
+import { sanitizeRichText } from '@/lib/sanitize';
 
 interface RichTextNotesProps {
   value: string;
@@ -55,16 +56,18 @@ export function RichTextNotes({
     quill.on('text-change', () => {
       const html = quill.root.innerHTML;
       const normalized = html === '<p><br></p>' ? '' : html;
-      if (normalized !== lastValueRef.current) {
-        lastValueRef.current = normalized;
-        onChange(normalized);
+      const sanitized = sanitizeRichText(normalized);
+      if (sanitized !== lastValueRef.current) {
+        lastValueRef.current = sanitized;
+        onChange(sanitized);
       }
     });
 
     quillRef.current = quill;
 
     if (value) {
-      quill.clipboard.dangerouslyPasteHTML(value);
+      const sanitized = sanitizeRichText(value);
+      quill.clipboard.dangerouslyPasteHTML(sanitized);
       lastValueRef.current = quill.root.innerHTML;
     }
   }, [disabled, onChange, placeholderText, value]);
@@ -80,15 +83,16 @@ export function RichTextNotes({
     if (!quill) return;
 
     const normalized = value || '';
-    if (normalized === lastValueRef.current) return;
+    const sanitized = sanitizeRichText(normalized);
+    if (sanitized === lastValueRef.current) return;
 
     const selection = quill.getSelection();
-    if (normalized) {
-      quill.clipboard.dangerouslyPasteHTML(normalized);
+    if (sanitized) {
+      quill.clipboard.dangerouslyPasteHTML(sanitized);
     } else {
       quill.setText('');
     }
-    lastValueRef.current = normalized;
+    lastValueRef.current = sanitized;
     if (selection) {
       quill.setSelection(selection);
     }

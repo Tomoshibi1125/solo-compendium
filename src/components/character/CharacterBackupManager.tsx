@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Download, Upload, Trash2, History, Save, FileJson } from 'lucide-react';
+import { Download, Upload, Trash2, History, Save } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -52,7 +52,7 @@ export function CharacterBackupManager({ characterId, character }: CharacterBack
       await createBackup({ character, backupName: backupName.trim() || undefined });
       setBackupName('');
       setCreateDialogOpen(false);
-    } catch (error) {
+    } catch {
       // Error handled by mutation
     }
   };
@@ -82,7 +82,7 @@ export function CharacterBackupManager({ characterId, character }: CharacterBack
         description: `Restored from backup: ${restoreTarget.backup_name || 'Unnamed backup'}`,
       });
       setRestoreTarget(null);
-    } catch (error) {
+    } catch {
       toast({
         title: 'Failed to restore',
         description: 'Could not restore character from backup.',
@@ -99,7 +99,7 @@ export function CharacterBackupManager({ characterId, character }: CharacterBack
       const backup = await importBackupFromFile(file);
 
       await importBackup(backup);
-    } catch (error) {
+    } catch {
       toast({
         title: 'Import failed',
         description: 'Could not import backup file. Please check the file format.',

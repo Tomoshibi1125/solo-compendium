@@ -3,17 +3,12 @@
  * Handles short rest and long rest resource restoration
  */
 
-import type { Database } from '@/integrations/supabase/types';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from './logger';
 import { calculateRuneMaxUses } from './runeAutomation';
 import { getProficiencyBonus } from '@/types/system-rules';
 import { AppError } from './appError';
 
-type Character = Database['public']['Tables']['characters']['Row'];
-type Feature = Database['public']['Tables']['character_features']['Row'];
-type Rune = Database['public']['Tables']['compendium_runes']['Row'];
-type RuneInscription = Database['public']['Tables']['character_rune_inscriptions']['Row'];
 
 /**
  * Execute short rest

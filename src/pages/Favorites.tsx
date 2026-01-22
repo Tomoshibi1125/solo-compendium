@@ -110,7 +110,7 @@ const Favorites = () => {
 
         return matchesSearch && matchesType;
       }),
-    [favoriteItems, searchQuery, filterType]
+    [favoriteItems, searchQuery, filterType, canonicalQuery]
   );
 
   const types = useMemo(

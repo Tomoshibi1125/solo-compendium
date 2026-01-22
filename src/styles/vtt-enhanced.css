@@ -79,6 +79,15 @@
   transform: scale(1.1) rotate(var(--token-rotation, 0deg));
 }
 
+.vtt-token.is-overlay {
+  border: none;
+  background: transparent;
+}
+
+.vtt-token.is-overlay:hover {
+  transform: rotate(var(--token-rotation, 0deg));
+}
+
 .vtt-token.active {
   border-color: hsl(var(--accent));
   box-shadow: 0 0 0 2px hsl(var(--accent));
@@ -109,6 +118,16 @@
 
 .vtt-token-inner:hover {
   transform: scale(1.1);
+}
+
+.vtt-token-inner.is-overlay {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+}
+
+.vtt-token-inner.is-overlay:hover {
+  transform: none;
 }
 
 .vtt-hp-bar {

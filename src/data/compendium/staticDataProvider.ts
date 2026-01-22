@@ -108,7 +108,7 @@ export interface StaticDataProvider {
 }
 
 // Helper function to filter by search query
-function filterBySearch<T extends Record<string, any>>(
+function filterBySearch<T extends Record<string, unknown>>(
   items: T[], 
   search?: string,
   searchFields: (keyof T)[] = ['name', 'description']
@@ -125,15 +125,105 @@ function filterBySearch<T extends Record<string, any>>(
   );
 }
 
+type StaticMonsterSource = {
+  id?: string;
+  name: string;
+  description: string;
+  type?: string;
+  rank?: string;
+  image?: string;
+};
+
+type StaticItemSource = {
+  id?: string;
+  name: string;
+  description: string;
+  type?: string;
+  rarity?: string;
+  image?: string;
+  requirements?: string[];
+  properties?: string[];
+  effects?: string[];
+  attunement?: boolean | null;
+  cursed?: boolean | null;
+  charges?: number;
+  stats?: Record<string, number>;
+  effect?: string;
+  value?: number;
+  weight?: number;
+  source?: string;
+};
+
+type StaticJobSource = {
+  id?: string;
+  name: string;
+  description: string;
+  primary_abilities?: string[];
+  rank?: string;
+  image?: string;
+};
+
+type StaticSpellSource = {
+  id?: string;
+  name: string;
+  description: string;
+  type?: string;
+  rank?: string;
+  image?: string;
+  manaCost?: number;
+  damage?: string;
+  healing?: string;
+  effect?: string;
+  range?: string;
+  cooldown?: string;
+};
+
+type StaticLocationSource = {
+  id?: string;
+  name: string;
+  description: string;
+  type?: string;
+  rank?: string;
+  image?: string;
+  encounters?: string[];
+  treasures?: string[];
+};
+
+type StaticRuneSource = {
+  id?: string;
+  name: string;
+  description: string;
+  element?: string;
+  rarity?: string;
+  image?: string;
+};
+
+type StaticBackgroundSource = {
+  id?: string;
+  name: string;
+  description: string;
+  skills?: string[];
+  image?: string;
+};
+
+type StaticMonarchSource = {
+  id?: string;
+  name: string;
+  description: string;
+  title?: string;
+  theme?: string;
+  rank?: string;
+};
+
 // Transform static data to match UI interface
-function transformMonster(monster: any): StaticCompendiumEntry {
+function transformMonster(monster: StaticMonsterSource): StaticCompendiumEntry {
   return {
     id: monster.id,
     name: monster.name,
     display_name: monster.name,
     description: monster.description,
     created_at: new Date().toISOString(),
-    tags: [monster.type, monster.rank],
+    tags: [monster.type, monster.rank].filter(Boolean),
     source_book: 'System Ascendant Homebrew',
     image_url: monster.image,
     cr: monster.rank,
@@ -146,14 +236,14 @@ function transformMonster(monster: any): StaticCompendiumEntry {
   };
 }
 
-function transformItem(item: any): StaticCompendiumEntry {
+function transformItem(item: StaticItemSource): StaticCompendiumEntry {
   return {
     id: item.id,
     name: item.name,
     display_name: item.name,
     description: item.description,
     created_at: new Date().toISOString(),
-    tags: [item.type, item.rarity],
+    tags: [item.type, item.rarity].filter(Boolean),
     source_book: 'System Ascendant Homebrew',
     image_url: item.image,
     equipment_type: item.type,
@@ -174,7 +264,7 @@ function transformItem(item: any): StaticCompendiumEntry {
   };
 }
 
-function transformJob(job: any): StaticCompendiumEntry {
+function transformJob(job: StaticJobSource): StaticCompendiumEntry {
   return {
     id: job.id || job.name.toLowerCase().replace(/\s+/g, '-'),
     name: job.name,
@@ -192,14 +282,14 @@ function transformJob(job: any): StaticCompendiumEntry {
   };
 }
 
-function transformSpell(spell: any): StaticCompendiumEntry {
+function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
   return {
     id: spell.id || spell.name.toLowerCase().replace(/\s+/g, '-'),
     name: spell.name,
     display_name: spell.name,
     description: spell.description,
     created_at: new Date().toISOString(),
-    tags: [spell.type, spell.rank],
+    tags: [spell.type, spell.rank].filter(Boolean),
     source_book: 'System Ascendant Homebrew',
     image_url: spell.image,
     spell_type: spell.type,
@@ -219,14 +309,14 @@ function transformSpell(spell: any): StaticCompendiumEntry {
   };
 }
 
-function transformLocation(location: any): StaticCompendiumEntry {
+function transformLocation(location: StaticLocationSource): StaticCompendiumEntry {
   return {
     id: location.id || location.name.toLowerCase().replace(/\s+/g, '-'),
     name: location.name,
     display_name: location.name,
     description: location.description,
     created_at: new Date().toISOString(),
-    tags: [location.type, location.rank],
+    tags: [location.type, location.rank].filter(Boolean),
     source_book: 'System Ascendant Homebrew',
     image_url: location.image,
     location_type: location.type,
@@ -240,14 +330,14 @@ function transformLocation(location: any): StaticCompendiumEntry {
   };
 }
 
-function transformRune(rune: any): StaticCompendiumEntry {
+function transformRune(rune: StaticRuneSource): StaticCompendiumEntry {
   return {
     id: rune.id || rune.name.toLowerCase().replace(/\s+/g, '-'),
     name: rune.name,
     display_name: rune.name,
     description: rune.description,
     created_at: new Date().toISOString(),
-    tags: [rune.element, rune.rarity],
+    tags: [rune.element, rune.rarity].filter(Boolean),
     source_book: 'System Ascendant Homebrew',
     image_url: rune.image,
     rune_type: rune.element,
@@ -256,7 +346,7 @@ function transformRune(rune: any): StaticCompendiumEntry {
   };
 }
 
-function transformBackground(background: any): StaticCompendiumEntry {
+function transformBackground(background: StaticBackgroundSource): StaticCompendiumEntry {
   return {
     id: background.id || background.name.toLowerCase().replace(/\s+/g, '-'),
     name: background.name,
@@ -270,14 +360,14 @@ function transformBackground(background: any): StaticCompendiumEntry {
   };
 }
 
-function transformMonarch(monarch: any): StaticCompendiumEntry {
+function transformMonarch(monarch: StaticMonarchSource): StaticCompendiumEntry {
   return {
     id: monarch.id || monarch.name.toLowerCase().replace(/\s+/g, '-'),
     name: monarch.name,
     display_name: monarch.name,
     description: monarch.description,
     created_at: new Date().toISOString(),
-    tags: ['monarch', monarch.theme],
+    tags: ['monarch', monarch.theme].filter(Boolean),
     source_book: 'System Ascendant Canon',
     title: monarch.title,
     theme: monarch.theme,

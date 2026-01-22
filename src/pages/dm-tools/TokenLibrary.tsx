@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Upload, Download, Trash2, Plus, Search, Filter, Image as ImageIcon, Users, Skull, Crown, Gem, Shield, Sword, X } from 'lucide-react';
+import { ArrowLeft, Upload, Download, Trash2, Plus, Search, Image as ImageIcon, Users, Skull, Crown, Gem, Shield, Sword, X } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,6 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { supabase } from '@/integrations/supabase/client';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
@@ -42,13 +41,6 @@ const TOKEN_CATEGORIES: { value: TokenCategory; label: string; icon: LucideIcon;
   { value: 'other', label: 'Other', icon: ImageIcon, color: 'text-gray-400' },
 ];
 
-const SIZE_VALUES = {
-  small: 32,
-  medium: 48,
-  large: 64,
-  huge: 96,
-};
-
 const TokenLibrary = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -75,6 +67,7 @@ const TokenLibrary = () => {
     storageKey: 'vtt-tokens',
   });
   const debouncedTokens = useDebounce(tokens, 600);
+  const isHydrating = isLoading && !hydratedRef.current;
 
   useEffect(() => {
     if (isLoading || hydratedRef.current) return;
@@ -146,7 +139,7 @@ const TokenLibrary = () => {
         setImagePreview(e.target?.result as string);
       };
       reader.readAsDataURL(compressedBlob);
-    } catch (error) {
+    } catch {
       // Fallback to original file if compression fails
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -199,7 +192,7 @@ const TokenLibrary = () => {
         title: 'Image uploaded',
         description: 'Token image has been uploaded successfully.',
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Upload failed',
         description: 'Could not upload image. Please try again.',
@@ -312,7 +305,7 @@ const TokenLibrary = () => {
             description: `${imported.length} tokens imported.`,
           });
         }
-      } catch (err) {
+      } catch {
         toast({
           title: 'Error',
           description: 'Invalid file format.',
@@ -339,6 +332,18 @@ const TokenLibrary = () => {
     const cat = TOKEN_CATEGORIES.find(c => c.value === category);
     return cat?.label || category;
   };
+
+  if (isHydrating) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-4 py-8 max-w-7xl">
+          <SystemWindow title="LOADING TOKEN LIBRARY">
+            <p className="text-sm text-muted-foreground">Loading tokens and settings...</p>
+          </SystemWindow>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -379,7 +384,7 @@ const TokenLibrary = () => {
                 </div>
 
                 <div>
-                  <Label>Category</Label>
+                  <p className="text-sm font-heading">Category</p>
                   <div className="space-y-1 mt-2">
                     <button
                       onClick={() => setSelectedCategory('all')}
@@ -434,7 +439,7 @@ const TokenLibrary = () => {
                   <Download className="w-4 h-4 mr-2" />
                   Export Library
                 </Button>
-                <label className="w-full">
+                <label className="w-full" aria-label="Import token library">
                   <input
                     type="file"
                     accept=".json"
@@ -658,7 +663,6 @@ const TokenLibrary = () => {
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                       {filteredTokens.map((token) => {
                         const CategoryIcon = getCategoryIcon(token.category);
-                        const size = SIZE_VALUES[token.size];
                         const baseToken = isBaseToken(token);
                         
                         return (
@@ -671,6 +675,15 @@ const TokenLibrary = () => {
                             data-token-name={token.name}
                             aria-label={`Token ${token.name}`}
                             onClick={() => setSelectedToken(token)}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                setSelectedToken(token);
+                              }
+                            }}
+                            role="button"
+                            tabIndex={0}
+                            aria-pressed={selectedToken?.id === token.id}
                           >
                             <div className="flex flex-col items-center gap-3">
                               <div

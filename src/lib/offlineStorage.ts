@@ -1,5 +1,36 @@
 ﻿import { logger } from '@/lib/logger';
 
+type CompendiumCacheItem = {
+  id: string;
+  name?: string;
+  description?: string;
+  type?: string;
+  searchText?: string;
+  cachedAt?: number;
+  [key: string]: unknown;
+};
+
+type CharacterCacheItem = {
+  id: string;
+  userId?: string;
+  cachedAt?: number;
+  [key: string]: unknown;
+};
+
+type DiceRollCacheItem = {
+  id: string;
+  timestamp?: number;
+  cachedAt?: number;
+  [key: string]: unknown;
+};
+
+type SyncQueueItem = {
+  type: 'compendium' | 'character' | 'campaign' | 'diceRoll';
+  action: 'create' | 'update' | 'delete';
+  data: Record<string, unknown>;
+  timestamp: number;
+};
+
 // Offline Storage Manager
 export class OfflineStorageManager {
   private dbName = 'soloCompendiumOffline';
@@ -50,7 +81,7 @@ export class OfflineStorageManager {
     });
   }
 
-  async storeCompendiumItem(item: any): Promise<void> {
+  async storeCompendiumItem(item: CompendiumCacheItem): Promise<void> {
     if (!this.db) await this.init();
     
     return new Promise((resolve, reject) => {
@@ -67,7 +98,7 @@ export class OfflineStorageManager {
     });
   }
 
-  async getCompendiumItem(id: string): Promise<any> {
+  async getCompendiumItem(id: string): Promise<CompendiumCacheItem | null> {
     if (!this.db) await this.init();
     
     return new Promise((resolve, reject) => {
@@ -76,11 +107,11 @@ export class OfflineStorageManager {
       const request = store.get(id);
       
       request.onerror = () => reject(request.error);
-      request.onsuccess = () => resolve(request.result);
+      request.onsuccess = () => resolve((request.result as CompendiumCacheItem | null) ?? null);
     });
   }
 
-  async searchCompendium(query: string, type?: string): Promise<any[]> {
+  async searchCompendium(query: string, type?: string): Promise<CompendiumCacheItem[]> {
     if (!this.db) await this.init();
     
     return new Promise((resolve, reject) => {
@@ -98,16 +129,16 @@ export class OfflineStorageManager {
       
       request.onerror = () => reject(request.error);
       request.onsuccess = () => {
-        const results = request.result || [];
-        const filtered = results.filter((item: any) => 
-          item.searchText.includes(query.toLowerCase())
+        const results = (request.result as CompendiumCacheItem[] | undefined) ?? [];
+        const filtered = results.filter((item) =>
+          typeof item.searchText === 'string' && item.searchText.includes(query.toLowerCase())
         );
         resolve(filtered);
       };
     });
   }
 
-  async storeCharacter(character: any): Promise<void> {
+  async storeCharacter(character: CharacterCacheItem): Promise<void> {
     if (!this.db) await this.init();
     
     return new Promise((resolve, reject) => {
@@ -123,7 +154,7 @@ export class OfflineStorageManager {
     });
   }
 
-  async getCharacter(id: string): Promise<any> {
+  async getCharacter(id: string): Promise<CharacterCacheItem | null> {
     if (!this.db) await this.init();
     
     return new Promise((resolve, reject) => {
@@ -132,11 +163,11 @@ export class OfflineStorageManager {
       const request = store.get(id);
       
       request.onerror = () => reject(request.error);
-      request.onsuccess = () => resolve(request.result);
+      request.onsuccess = () => resolve((request.result as CharacterCacheItem | null) ?? null);
     });
   }
 
-  async getUserCharacters(userId: string): Promise<any[]> {
+  async getUserCharacters(userId: string): Promise<CharacterCacheItem[]> {
     if (!this.db) await this.init();
     
     return new Promise((resolve, reject) => {
@@ -146,11 +177,11 @@ export class OfflineStorageManager {
       const request = index.getAll(userId);
       
       request.onerror = () => reject(request.error);
-      request.onsuccess = () => resolve(request.result || []);
+      request.onsuccess = () => resolve((request.result as CharacterCacheItem[]) ?? []);
     });
   }
 
-  async storeDiceRoll(roll: any): Promise<void> {
+  async storeDiceRoll(roll: DiceRollCacheItem): Promise<void> {
     if (!this.db) await this.init();
     
     return new Promise((resolve, reject) => {
@@ -166,7 +197,7 @@ export class OfflineStorageManager {
     });
   }
 
-  async getDiceRolls(limit = 50): Promise<any[]> {
+  async getDiceRolls(limit = 50): Promise<DiceRollCacheItem[]> {
     if (!this.db) await this.init();
     
     return new Promise((resolve, reject) => {
@@ -175,14 +206,14 @@ export class OfflineStorageManager {
       const index = store.index('timestamp');
       const request = index.openCursor(null, 'prev');
       
-      const results: any[] = [];
+      const results: DiceRollCacheItem[] = [];
       
       request.onsuccess = (event: Event) => {
         if (!event) return;
         const successEvent = event.target as IDBRequest;
-        const cursor = successEvent.result;
+        const cursor = successEvent.result as IDBCursorWithValue | null;
         if (cursor && results.length < limit) {
-          results.push(cursor.value);
+          results.push(cursor.value as DiceRollCacheItem);
           cursor.continue();
         } else {
           resolve(results);
@@ -242,12 +273,7 @@ export class OfflineStorageManager {
 export class BackgroundSyncManager {
   private static instance: BackgroundSyncManager;
   private storage: OfflineStorageManager;
-  private syncQueue: Array<{
-    type: 'compendium' | 'character' | 'campaign' | 'diceRoll';
-    action: 'create' | 'update' | 'delete';
-    data: any;
-    timestamp: number;
-  }> = [];
+  private syncQueue: SyncQueueItem[] = [];
 
   constructor() {
     this.storage = new OfflineStorageManager();
@@ -265,7 +291,8 @@ export class BackgroundSyncManager {
     try {
       const stored = localStorage.getItem('syncQueue');
       if (stored) {
-        this.syncQueue = JSON.parse(stored);
+        const parsed = JSON.parse(stored) as unknown;
+        this.syncQueue = Array.isArray(parsed) ? (parsed as SyncQueueItem[]) : [];
       }
     } catch (error) {
       logger.error('Failed to load sync queue:', error);
@@ -281,7 +308,7 @@ export class BackgroundSyncManager {
     }
   }
 
-  addToQueue(type: any, action: any, data: any): void {
+  addToQueue(type: SyncQueueItem['type'], action: SyncQueueItem['action'], data: Record<string, unknown>): void {
     this.syncQueue.push({
       type,
       action,
@@ -311,7 +338,7 @@ export class BackgroundSyncManager {
     this.saveSyncQueue();
   }
 
-  private async processItem(item: any): Promise<void> {
+  private async processItem(item: SyncQueueItem): Promise<void> {
     // This would integrate with your actual API
     logger.debug('Processing sync item:', item);
     
@@ -324,13 +351,17 @@ export class BackgroundSyncManager {
         case 'compendium':
           // Would call API to delete, then remove from cache
           break;
-        case 'character':
-          await this.storage.getCharacter(item.data.id).then(character => {
-            if (character) {
-              // Delete from cache after successful API deletion
-            }
-          });
+        case 'character': {
+          const characterId = typeof item.data.id === 'string' ? item.data.id : null;
+          if (characterId) {
+            await this.storage.getCharacter(characterId).then((character) => {
+              if (character) {
+                // Delete from cache after successful API deletion
+              }
+            });
+          }
           break;
+        }
       }
     }
   }

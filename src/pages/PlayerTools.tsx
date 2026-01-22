@@ -7,7 +7,6 @@ import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   User, 
-  Sword, 
   Shield, 
   BookOpen,
   Heart,
@@ -17,14 +16,12 @@ import {
   Users,
   Map,
   Dice6,
-  Trophy,
   Sparkles,
   ChevronRight,
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { SystemSigilLogo } from '@/components/ui/SystemSigilLogo';
-import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { useActiveCharacter } from '@/hooks/useActiveCharacter';
@@ -110,16 +107,6 @@ const playerTools = [
     color: 'from-amber-500/20 to-amber-600/10 border-amber-500/30 hover:border-amber-500/60',
     iconColor: 'text-amber-400',
     glow: 'group-hover:shadow-amber-500/20',
-  },
-  {
-    id: 'achievements',
-    name: 'Achievements',
-    description: 'View your accomplishments, titles, and special rewards.',
-    icon: Trophy,
-    status: 'available',
-    color: 'from-yellow-500/20 to-yellow-600/10 border-yellow-500/30 hover:border-yellow-500/60',
-    iconColor: 'text-yellow-400',
-    glow: 'group-hover:shadow-yellow-500/20',
   },
 ];
 
@@ -278,8 +265,7 @@ const PlayerTools = () => {
                   tool.id === 'compendium-viewer' && "bg-indigo-500/30",
                   tool.id === 'quest-log' && "bg-orange-500/30",
                   tool.id === 'party-view' && "bg-cyan-500/30",
-                  tool.id === 'dice-roller' && "bg-amber-500/30",
-                  tool.id === 'achievements' && "bg-yellow-500/30"
+                  tool.id === 'dice-roller' && "bg-amber-500/30"
                 )} />
                 
                 {/* Icon */}

@@ -275,7 +275,7 @@ export function LaunchPad() {
                     to="/characters"
                     className="block mt-4 text-center text-sm text-primary font-heading hover:underline hover:text-shadow-purple transition-colors"
                   >
-                    View all Ascendants ->
+                    View all Ascendants {'->'}
                   </Link>
                 </div>
               ) : (
@@ -342,7 +342,7 @@ export function LaunchPad() {
                       to="/campaigns"
                       className="block mt-4 text-center text-sm text-primary font-heading hover:underline hover:text-shadow-purple transition-colors"
                     >
-                      Manage all Campaigns ->
+                      Manage all Campaigns {'->'}
                     </Link>
                   </div>
                 ) : (
@@ -397,7 +397,7 @@ export function LaunchPad() {
                     to="/campaigns"
                     className="block mt-2 text-center text-xs text-primary font-heading hover:underline"
                   >
-                    View all ->
+                    View all {'->'}
                   </Link>
                 </div>
               ) : (
@@ -445,7 +445,7 @@ export function LaunchPad() {
                     to="/campaigns"
                     className="block mt-2 text-center text-xs text-primary font-heading hover:underline"
                   >
-                    View all ->
+                    View all {'->'}
                   </Link>
                 </div>
               ) : (

@@ -60,7 +60,7 @@ export default function Login() {
           navigate('/player-tools');
         }
       }
-    } catch (error) {
+    } catch {
       setError('An unexpected error occurred');
     } finally {
       setLoading(false);
@@ -170,13 +170,14 @@ export default function Login() {
             {/* Sign Up Additional Fields */}
             {isSignUp && (
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Display Name
-                </label>
-                <input
-                  type="text"
-                  value={displayName}
-                  onChange={(e) => setDisplayName(e.target.value)}
+              <label htmlFor="display-name" className="block text-sm font-medium text-gray-300 mb-2">
+                Display Name
+              </label>
+              <input
+                id="display-name"
+                type="text"
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
                   className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="Character name (e.g., Kael Voss)"
                   required
@@ -186,10 +187,11 @@ export default function Login() {
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                 Email Address
               </label>
               <input
+                id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -201,11 +203,12 @@ export default function Login() {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
                 Password
               </label>
               <div className="relative">
                 <input
+                  id="password"
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

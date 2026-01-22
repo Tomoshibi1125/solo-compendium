@@ -5,7 +5,7 @@
  * Respects user privacy by requiring explicit opt-in.
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 const CONSENT_STORAGE_KEY = 'solo-compendium-analytics-consent';
 const CONSENT_VERSION = 1; // Increment to re-prompt users

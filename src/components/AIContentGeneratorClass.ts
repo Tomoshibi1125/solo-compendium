@@ -131,7 +131,7 @@ export class AIContentGenerator {
     const title = lines[0]?.replace(/^#+\s*/, '').trim() || `Generated ${options.type}`;
     
     // Extract metadata from content
-    const metadata: any = {
+    const metadata: GeneratedContent['metadata'] = {
       tone: options.tone,
       length: options.length,
       complexity: options.complexity,
@@ -140,8 +140,8 @@ export class AIContentGenerator {
     // Try to extract level/CR from content
     const levelMatch = text.match(/(?:level|cr)\s*(\d+)/i);
     if (levelMatch) {
-      metadata.level = parseInt(levelMatch[1]);
-      metadata.cr = parseInt(levelMatch[1]);
+      metadata.level = parseInt(levelMatch[1], 10);
+      metadata.cr = parseInt(levelMatch[1], 10);
     }
 
     // Extract tags based on content

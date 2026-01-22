@@ -5,7 +5,7 @@
  */
 
 // 1. Advanced Search & Filtering
-interface AdvancedSearchFeatures {
+export interface AdvancedSearchFeatures {
   // Content Type Filters
   contentTypes: string[];
   sourceBooks: string[];
@@ -32,15 +32,15 @@ interface AdvancedSearchFeatures {
 }
 
 // 2. Comparison Tool
-interface ComparisonTool {
+export interface ComparisonTool {
   compareItems: string[];
-  compareStats: Record<string, any>;
+  compareStats: Record<string, unknown>;
   sideBySideView: boolean;
   exportComparison: boolean;
 }
 
 // 3. Collection Builder
-interface CollectionBuilder {
+export interface CollectionBuilder {
   collections: Array<{
     id: string;
     name: string;
@@ -54,7 +54,7 @@ interface CollectionBuilder {
 }
 
 // 4. Homebrew Content Integration
-interface HomebrewIntegration {
+export interface HomebrewIntegration {
   createContent: boolean;
   editContent: boolean;
   publishContent: boolean;
@@ -63,7 +63,7 @@ interface HomebrewIntegration {
 }
 
 // 5. Cross-referencing System
-interface CrossReferenceSystem {
+export interface CrossReferenceSystem {
   relatedItems: string[];
   prerequisites: string[];
   references: string[];
@@ -71,7 +71,7 @@ interface CrossReferenceSystem {
 }
 
 // 6. Print & Export Features
-interface PrintExportFeatures {
+export interface PrintExportFeatures {
   printFriendly: boolean;
   exportPDF: boolean;
   exportMarkdown: boolean;
@@ -80,7 +80,7 @@ interface PrintExportFeatures {
 }
 
 // 7. Notes & Annotations
-interface NotesAnnotations {
+export interface NotesAnnotations {
   personalNotes: string;
   publicNotes: string;
   annotations: Array<{
@@ -92,7 +92,7 @@ interface NotesAnnotations {
 }
 
 // 8. Favorites & Bookmarks
-interface FavoritesSystem {
+export interface FavoritesSystem {
   favorites: string[];
   categories: Record<string, string[]>;
   shareFavorites: boolean;
@@ -100,7 +100,7 @@ interface FavoritesSystem {
 }
 
 // 9. Recent History
-interface RecentHistory {
+export interface RecentHistory {
   recentlyViewed: string[];
   recentlySearched: string[];
   recentlyEdited: string[];
@@ -108,7 +108,7 @@ interface RecentHistory {
 }
 
 // 10. Content Ratings & Feedback
-interface ContentRatings {
+export interface ContentRatings {
   ratings: Record<string, number>;
   reviews: Array<{
     item: string;
@@ -121,7 +121,7 @@ interface ContentRatings {
 }
 
 // 11. Advanced Sorting Options
-interface AdvancedSorting {
+export interface AdvancedSorting {
   sortBy: string[];
   sortOrder: 'asc' | 'desc';
   customSort: boolean;
@@ -129,7 +129,7 @@ interface AdvancedSorting {
 }
 
 // 12. Content Statistics
-interface ContentStatistics {
+export interface ContentStatistics {
   totalItems: number;
   itemsByType: Record<string, number>;
   itemsBySource: Record<string, number>;
@@ -138,7 +138,7 @@ interface ContentStatistics {
 }
 
 // 13. Search Autocomplete
-interface SearchAutocomplete {
+export interface SearchAutocomplete {
   suggestions: string[];
   recentSearches: string[];
   popularSearches: string[];
@@ -146,7 +146,7 @@ interface SearchAutocomplete {
 }
 
 // 14. Content Preview
-interface ContentPreview {
+export interface ContentPreview {
   quickPreview: boolean;
   detailedPreview: boolean;
   imagePreview: boolean;
@@ -154,7 +154,7 @@ interface ContentPreview {
 }
 
 // 15. Bulk Operations
-interface BulkOperations {
+export interface BulkOperations {
   bulkSelect: boolean;
   bulkExport: boolean;
   bulkFavorite: boolean;

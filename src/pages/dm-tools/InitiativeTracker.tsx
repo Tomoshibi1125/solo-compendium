@@ -159,12 +159,6 @@ const InitiativeTracker = () => {
     }
   };
 
-  const updateInitiative = (id: string, initiative: number) => {
-    setCombatants(combatants.map(c =>
-      c.id === id ? { ...c, initiative } : c
-    ));
-  };
-
   const updateHP = (id: string, hp: number) => {
     setCombatants(combatants.map(c => {
       if (c.id !== id) return c;

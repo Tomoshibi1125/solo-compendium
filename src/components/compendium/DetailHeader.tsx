@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-import { Heart, Share2, Copy, Check } from 'lucide-react';
+import { Heart, Share2, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useFavorites } from '@/hooks/useFavorites';
 import { useState } from 'react';
@@ -28,7 +27,7 @@ export const DetailHeader = ({ entryType, entryId, title, subtitle }: DetailHead
         description: 'Shareable link copied to clipboard',
       });
       setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
+    } catch {
       toast({
         title: 'Failed to copy',
         description: 'Could not copy link to clipboard',

@@ -18,7 +18,6 @@ import { calculateHPMax } from '@/lib/characterCalculations';
 import { ABILITY_NAMES, type AbilityScore } from '@/types/system-rules';
 import type { Database } from '@/integrations/supabase/types';
 import { isLocalCharacterId, setLocalAbilities } from '@/lib/guestStore';
-import { logger } from '@/lib/logger';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 
 type Job = Database['public']['Tables']['compendium_jobs']['Row'] & {
@@ -35,6 +34,9 @@ const STANDARD_ARRAY = [15, 14, 13, 12, 10, 8];
 const POINT_BUY_COST: Record<number, number> = {
   8: 0, 9: 1, 10: 2, 11: 3, 12: 4, 13: 5, 14: 7, 15: 9,
 };
+const POINT_BUY_TOTAL = 27;
+
+const getPointBuyCost = (score: number) => POINT_BUY_COST[score] ?? 0;
 
 const CharacterNew = () => {
   const navigate = useNavigate();
@@ -61,52 +63,13 @@ const CharacterNew = () => {
   const [selectedPath, setSelectedPath] = useState<string>('');
   const [selectedBackground, setSelectedBackground] = useState<string>('');
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
-  // Form validation
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-    
-    if (!name.trim()) {
-      newErrors.name = 'Character name is required';
-    }
-    
-    if (!selectedJob) {
-      newErrors.class = 'Character class is required';
-    }
-    
-    // Level validation would go here if we had a level state
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // Form submission handler
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
-    
-    try {
-      setIsSubmitting(true);
-      await createCharacter.mutateAsync({
-        name: name,
-        level: 1,
-      });
-      
-      // Redirect to character sheet
-      navigate('/characters');
-    } catch (error) {
-      logger.error('Failed to create character:', error);
-      setErrors({ submit: 'Failed to create character. Please try again.' });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const pointBuySpent =
+    abilityMethod === 'point-buy'
+      ? Object.values(abilities).reduce((sum, score) => sum + getPointBuyCost(score), 0)
+      : 0;
+  const pointBuyRemaining = POINT_BUY_TOTAL - pointBuySpent;
+  const isPointBuyValid = abilityMethod !== 'point-buy' || pointBuyRemaining >= 0;
 
   // Reset skills when job changes
   const handleJobChange = (jobId: string) => {
@@ -172,7 +135,6 @@ const CharacterNew = () => {
 
   const handleStandardArray = () => {
     const scores = [...STANDARD_ARRAY].sort((a, b) => b - a);
-    const abilityKeys: AbilityScore[] = ['STR', 'AGI', 'VIT', 'INT', 'SENSE', 'PRE'];
     const newAbilities: Record<AbilityScore, number> = {
       STR: scores[0] || 10,
       AGI: scores[1] || 10,
@@ -193,7 +155,6 @@ const CharacterNew = () => {
     };
     const newRolledStats = Array.from({ length: 6 }, () => roll4d6()).sort((a, b) => b - a);
     setRolledStats(newRolledStats);
-    const abilityKeys: AbilityScore[] = ['STR', 'AGI', 'VIT', 'INT', 'SENSE', 'PRE'];
     const newAbilities: Record<AbilityScore, number> = {
       STR: newRolledStats[0] || 10,
       AGI: newRolledStats[1] || 10,
@@ -202,19 +163,6 @@ const CharacterNew = () => {
       SENSE: newRolledStats[4] || 10,
       PRE: newRolledStats[5] || 10,
     };
-    setAbilities(newAbilities);
-  };
-
-  const handleManualStats = (stats: number[]) => {
-    if (stats.length !== 6) return;
-    // Don't auto-assign, let user assign manually
-    // Just store the rolled stats for display
-    setRolledStats(stats);
-  };
-
-  const assignRolledStat = (ability: AbilityScore, statIndex: number) => {
-    if (rolledStats[statIndex] === undefined) return;
-    const newAbilities = { ...abilities, [ability]: rolledStats[statIndex] };
     setAbilities(newAbilities);
   };
 
@@ -351,7 +299,7 @@ const CharacterNew = () => {
       });
 
       navigate(`/characters/${character.id}`);
-    } catch (error) {
+    } catch {
       // Error is handled by React Query's error state
       toast({
         title: 'Awakening Failed',
@@ -368,7 +316,7 @@ const CharacterNew = () => {
       case 'concept':
         return name.trim().length > 0;
       case 'abilities':
-        return true; // Always valid
+        return isPointBuyValid;
       case 'job':
         if (!selectedJob.length) return false;
         // Check if skill selection is required and complete
@@ -502,6 +450,16 @@ const CharacterNew = () => {
                   Manual/Rolled
                 </Button>
               </div>
+              {abilityMethod === 'point-buy' && (
+                <div
+                  className={cn(
+                    'text-sm font-heading',
+                    pointBuyRemaining < 0 ? 'text-destructive' : 'text-muted-foreground'
+                  )}
+                >
+                  Points remaining: {pointBuyRemaining} / {POINT_BUY_TOTAL}
+                </div>
+              )}
 
               {abilityMethod === 'manual' && (
                 <div className="space-y-4">
@@ -576,9 +534,25 @@ const CharacterNew = () => {
                       max={abilityMethod === 'point-buy' ? 15 : abilityMethod === 'manual' ? 18 : undefined}
                       value={abilities[ability]}
                       onChange={(e) => {
-                        const value = parseInt(e.target.value) || (abilityMethod === 'manual' ? 3 : 8);
-                        const newAbilities = { ...abilities, [ability]: value };
-                        setAbilities(newAbilities);
+                        const raw = parseInt(e.target.value, 10);
+                        const fallback = abilityMethod === 'manual' ? 3 : 8;
+                        let value = Number.isNaN(raw) ? fallback : raw;
+
+                        if (abilityMethod === 'point-buy') {
+                          value = Math.max(8, Math.min(15, value));
+                          const nextSpent =
+                            pointBuySpent - getPointBuyCost(abilities[ability]) + getPointBuyCost(value);
+                          if (nextSpent > POINT_BUY_TOTAL) {
+                            toast({
+                              title: 'Point-buy limit reached',
+                              description: 'You only have 27 points to spend.',
+                              variant: 'destructive',
+                            });
+                            return;
+                          }
+                        }
+
+                        setAbilities({ ...abilities, [ability]: value });
                       }}
                       className="mt-1"
                     />

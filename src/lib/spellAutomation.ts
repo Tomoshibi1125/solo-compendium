@@ -9,8 +9,6 @@ import { AppError } from '@/lib/appError';
 import { 
   RollResult, 
   rollWithAdvantage, 
-  applyAbilityModifier, 
-  applyProficiencyBonus,
   formatRollResult 
 } from './advancedDiceEngine';
 
@@ -106,7 +104,7 @@ function getAbilityModifier(score: number): number {
 /**
  * Calculate spell save DC
  */
-export function calculateSpellDC(character: Character, spell: Spell): number {
+export function calculateSpellDC(character: Character, _spell: Spell): number {
   if (!character.spellcasting_ability) {
     throw new AppError('Character has no spellcasting ability defined', 'INVALID_INPUT');
   }
@@ -120,7 +118,7 @@ export function calculateSpellDC(character: Character, spell: Spell): number {
 /**
  * Calculate spell attack bonus
  */
-export function calculateSpellAttack(character: Character, spell: Spell): number {
+export function calculateSpellAttack(character: Character, _spell: Spell): number {
   if (!character.spellcasting_ability) {
     throw new AppError('Character has no spellcasting ability defined', 'INVALID_INPUT');
   }

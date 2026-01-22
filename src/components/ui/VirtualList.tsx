@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react';
+import { useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { cn } from '@/lib/utils';
 
@@ -104,14 +104,6 @@ export function VirtualGrid<T>({
     getScrollElement: () => parentRef.current,
     estimateSize: () => estimateSize + gap,
     overscan,
-  });
-
-  const columnVirtualizer = useVirtualizer({
-    count: columns,
-    getScrollElement: () => parentRef.current,
-    estimateSize: () => estimateSize + gap,
-    overscan,
-    horizontal: true,
   });
 
   return (

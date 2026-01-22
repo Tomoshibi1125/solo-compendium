@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Share2, Eye, EyeOff, ExternalLink, Loader2 } from 'lucide-react';
+import { Share2, EyeOff, ExternalLink, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -13,9 +13,7 @@ import {
 } from '@/components/ui/dialog';
 import { useCampaignSharedCharacters, useShareCharacter, useUnshareCharacter } from '@/hooks/useCampaignCharacters';
 import { useCharacters } from '@/hooks/useCharacters';
-import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { cn } from '@/lib/utils';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface CampaignCharactersProps {
@@ -23,7 +21,6 @@ interface CampaignCharactersProps {
 }
 
 export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
-  const navigate = useNavigate();
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [selectedCharacter, setSelectedCharacter] = useState('');
 

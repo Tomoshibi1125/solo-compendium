@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { BookOpen, Sparkles, AlertCircle, CheckCircle, XCircle, Zap, Shield, Scroll, Plus } from 'lucide-react';
+import { BookOpen, Sparkles, CheckCircle, XCircle, Zap, Shield, Scroll, Plus } from 'lucide-react';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useCharacterRuneKnowledge, useCharacterRuneInscriptions, useRemoveRuneInscription, useToggleRuneActive } from '@/hooks/useRunes';
-import { useCharacter } from '@/hooks/useCharacters';
 import { useToast } from '@/hooks/use-toast';
 import { InscribeRuneDialog } from './InscribeRuneDialog';
 import { cn } from '@/lib/utils';
@@ -35,7 +34,6 @@ const RUNE_TYPE_ICONS: Record<string, React.ComponentType<{ className?: string }
 export function RunesList({ characterId }: { characterId: string }) {
   const { data: runeKnowledge = [] } = useCharacterRuneKnowledge(characterId);
   const { data: inscriptions = [] } = useCharacterRuneInscriptions(characterId);
-  const { data: character } = useCharacter(characterId);
   const { toast } = useToast();
   const [inscribeDialogOpen, setInscribeDialogOpen] = useState(false);
   const [selectedEquipment, setSelectedEquipment] = useState<string | null>(null);
@@ -51,7 +49,7 @@ export function RunesList({ characterId }: { characterId: string }) {
         title: 'Rune removed',
         description: `${displayName} has been removed from equipment.`,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Error',
         description: 'Failed to remove rune inscription.',
@@ -68,7 +66,7 @@ export function RunesList({ characterId }: { characterId: string }) {
         title: isActive ? 'Rune deactivated' : 'Rune activated',
         description: `${displayName} has been ${isActive ? 'deactivated' : 'activated'}.`,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Error',
         description: 'Failed to toggle rune status.',

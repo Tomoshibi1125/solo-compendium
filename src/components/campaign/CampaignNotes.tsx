@@ -224,9 +224,10 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
                   id="note-shared"
                   checked={isShared}
                   onCheckedChange={setIsShared}
+                  disabled={!hasDMAccess}
                 />
                 <Label htmlFor="note-shared" className="cursor-pointer">
-                  Share with campaign members
+                  {hasDMAccess ? 'Share with campaign members' : 'Share with campaign members (DM only)'}
                 </Label>
               </div>
             </div>

@@ -24,7 +24,7 @@ interface CompendiumItem {
   level?: number;
   description?: string;
   properties?: string[];
-  stats?: Record<string, any>;
+  stats?: Record<string, unknown>;
   image_url?: string;
 }
 
@@ -38,6 +38,9 @@ export function ComparisonTool({ items, onAddItem, className }: ComparisonToolPr
   const { toast } = useToast();
   const [compareDialogOpen, setCompareDialogOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState<CompendiumItem[]>([]);
+  const availableItems = items.filter(
+    (item) => !selectedItems.some((selected) => selected.id === item.id)
+  );
 
   const addToComparison = (item: CompendiumItem) => {
     if (selectedItems.length >= 4) {
@@ -63,6 +66,11 @@ export function ComparisonTool({ items, onAddItem, className }: ComparisonToolPr
       title: 'Added to Comparison',
       description: `${formatMonarchVernacular(item.name)} has been added to the comparison.`,
     });
+  };
+
+  const handleAddItem = (item: CompendiumItem) => {
+    addToComparison(item);
+    onAddItem?.(item);
   };
 
   const removeFromComparison = (itemId: string) => {
@@ -103,15 +111,6 @@ export function ComparisonTool({ items, onAddItem, className }: ComparisonToolPr
   };
 
   const shareComparison = async () => {
-    const comparisonData = {
-      items: selectedItems.map(item => ({
-        id: item.id,
-        name: formatMonarchVernacular(item.name),
-        type: formatMonarchVernacular(item.type),
-      })),
-      timestamp: new Date().toISOString(),
-    };
-    
     try {
       const shareText = `Comparing ${selectedItems.map(item => formatMonarchVernacular(item.name)).join(', ')}`;
       const shareData = {
@@ -129,7 +128,7 @@ export function ComparisonTool({ items, onAddItem, className }: ComparisonToolPr
           description: 'Comparison link copied to clipboard.',
         });
       }
-    } catch (error) {
+    } catch {
       toast({
         title: 'Share Failed',
         description: 'Could not share comparison.',
@@ -161,8 +160,33 @@ export function ComparisonTool({ items, onAddItem, className }: ComparisonToolPr
 
   if (selectedItems.length === 0) {
     return (
-      <div className={cn("text-center py-8", className)}>
-        <p className="text-muted-foreground">No items selected for comparison</p>
+      <div className={cn("space-y-4", className)}>
+        <div className="text-center py-6">
+          <p className="text-muted-foreground">No items selected for comparison</p>
+        </div>
+        {availableItems.length > 0 && (
+          <div className="space-y-2">
+            <h3 className="text-sm font-semibold">Add items to compare</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              {availableItems.slice(0, 6).map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className="flex items-center justify-between gap-2 p-3 rounded-md border bg-muted/20 hover:bg-muted/40 transition-colors text-left"
+                  onClick={() => handleAddItem(item)}
+                >
+                  <div className="min-w-0">
+                    <div className="font-medium truncate">{formatMonarchVernacular(item.name)}</div>
+                    <div className="text-xs text-muted-foreground truncate">
+                      {formatMonarchVernacular(item.type)}
+                    </div>
+                  </div>
+                  <Plus className="w-4 h-4 text-muted-foreground" />
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     );
   }

@@ -6,10 +6,10 @@
 
 import { logger } from './logger';
 import { AppError } from './appError';
+import { getRuntimeEnvValue } from './runtimeEnv';
 
 const REQUIRED_ENV_VARS = [
   'VITE_SUPABASE_URL',
-  'VITE_SUPABASE_PUBLISHABLE_KEY',
 ] as const;
 
 const OPTIONAL_ENV_VARS = [
@@ -36,10 +36,14 @@ export function validateEnv(): ValidationResult {
 
   // Check required vars
   for (const varName of REQUIRED_ENV_VARS) {
-    const value = import.meta.env[varName];
+    const value = getRuntimeEnvValue(varName);
     if (!value || value.trim() === '') {
       missing.push(varName);
     }
+  }
+  const hasSupabaseKey = Boolean(getRuntimeEnvValue('VITE_SUPABASE_PUBLISHABLE_KEY') || getRuntimeEnvValue('VITE_SUPABASE_ANON_KEY'));
+  if (!hasSupabaseKey) {
+    missing.push('VITE_SUPABASE_PUBLISHABLE_KEY (or VITE_SUPABASE_ANON_KEY)');
   }
 
   // Check optional vars (warn if partially configured)

@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Star, Filter, Minus, Plus } from 'lucide-react';
+import { Star, Minus, Plus } from 'lucide-react';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -8,7 +8,6 @@ import { SortableList } from '@/components/ui/SortableList';
 import { useFeatures } from '@/hooks/useFeatures';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 
@@ -38,7 +37,7 @@ export function FeaturesList({ characterId }: { characterId: string }) {
         display_order: index,
       }));
       await reorderFeatures(updates);
-    } catch (error) {
+    } catch {
       // Error handled by hook
     }
   }, [reorderFeatures]);
@@ -53,7 +52,7 @@ export function FeaturesList({ characterId }: { characterId: string }) {
         id: feature.id,
         updates: { uses_current: newUses },
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Failed to update',
         description: 'Could not update feature uses.',
@@ -68,7 +67,7 @@ export function FeaturesList({ characterId }: { characterId: string }) {
         id: feature.id,
         updates: { is_active: !feature.is_active },
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Failed to update',
         description: 'Could not toggle feature.',

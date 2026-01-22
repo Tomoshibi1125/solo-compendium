@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { 
-  Map, 
   Sword, 
   Clock, 
   Flame, 
@@ -28,7 +27,6 @@ import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { SystemSigilLogo } from '@/components/ui/SystemSigilLogo';
 import { GatePortal } from '@/components/ui/GatePortal';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 const tools = [
