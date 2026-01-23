@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { Biohazard, Crown, Flame, Gem, Minus, Palette, PawPrint, Plus, RotateCcw, Shield, Snowflake, Sparkles, Swords, Zap, Zap as ZapIcon, type LucideIcon } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -31,6 +31,18 @@ type Dice3DState = {
 type DiceSlot =
   | { kind: 'standard'; index: number }
   | { kind: 'percentile'; indices: [number, number] };
+
+type PendingRoll = {
+  id: string;
+  dice: string;
+  rolls: number[];
+  modifier: number;
+  total: number;
+  timestamp: Date;
+  type?: 'normal' | 'advantage' | 'disadvantage';
+  expectedDice: number;
+  completed: boolean[];
+};
 
 const diceTypes = [
   { sides: 4, label: 'd4' },
@@ -129,6 +141,86 @@ const DiceRoller = () => {
   const [show3D, setShow3D] = useState(true);
   const [diceTheme, setDiceTheme] = useState<DiceTheme>('umbral-ascendant');
   const recordRoll = useRecordRoll();
+  const pendingRollRef = useRef<PendingRoll | null>(null);
+  const rollTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (!show3D) return;
+    void import('@/lib/three/loaders').then(({ initThreeLoaders }) => initThreeLoaders());
+    void import('@/components/dice/Dice3DScene');
+  }, [show3D]);
+
+  useEffect(() => {
+    return () => {
+      if (rollTimeoutRef.current) {
+        window.clearTimeout(rollTimeoutRef.current);
+        rollTimeoutRef.current = null;
+      }
+    };
+  }, []);
+
+  const finalizeRoll = useCallback((pending: PendingRoll) => {
+    if (rollTimeoutRef.current) {
+      window.clearTimeout(rollTimeoutRef.current);
+      rollTimeoutRef.current = null;
+    }
+    const newRoll: DiceRoll = {
+      id: pending.id,
+      dice: pending.dice,
+      rolls: pending.rolls,
+      modifier: pending.modifier,
+      total: pending.total,
+      timestamp: pending.timestamp,
+      type: pending.type,
+    };
+
+    setLastRoll(newRoll);
+    setRollHistory(prev => [newRoll, ...prev.slice(0, 19)]);
+
+    recordRoll.mutate(
+      {
+        dice_formula: newRoll.dice,
+        result: newRoll.total,
+        rolls: newRoll.rolls,
+        roll_type: newRoll.type ?? 'normal',
+        context: 'dice',
+        modifiers: newRoll.modifier ? { modifier: newRoll.modifier } : null,
+        campaign_id: null,
+        character_id: null,
+      },
+      {
+        onError: (err) => {
+          logger.error('Failed to record roll:', err);
+        },
+      }
+    );
+
+    pendingRollRef.current = null;
+    setIsRolling(false);
+  }, [recordRoll]);
+
+  const startPendingRoll = useCallback((pending: PendingRoll) => {
+    pendingRollRef.current = pending;
+    if (rollTimeoutRef.current) {
+      window.clearTimeout(rollTimeoutRef.current);
+    }
+    rollTimeoutRef.current = window.setTimeout(() => {
+      if (pendingRollRef.current) {
+        finalizeRoll(pendingRollRef.current);
+      }
+    }, 5000);
+  }, [finalizeRoll]);
+
+  const handleDieComplete = useCallback((index: number) => {
+    const pending = pendingRollRef.current;
+    if (!pending) return;
+    if (!pending.completed[index]) {
+      pending.completed[index] = true;
+    }
+    if (pending.completed.every(Boolean)) {
+      finalizeRoll(pending);
+    }
+  }, [finalizeRoll]);
 
   const addDie = (sides: number) => {
     setSelectedDice(prev => {
@@ -150,12 +242,19 @@ const DiceRoller = () => {
 
   const rollDice = () => {
     if (selectedDice.length === 0) return;
+    if (rollTimeoutRef.current) {
+      window.clearTimeout(rollTimeoutRef.current);
+      rollTimeoutRef.current = null;
+    }
+    pendingRollRef.current = null;
 
-    setIsRolling(true);
-    
     // Prepare 3D dice array (percentile d100 uses two d10s)
     const { dice: diceArray, slots } = buildDice3DState(selectedDice);
     setDice3D(diceArray);
+    const shouldAnimate = show3D && diceArray.length > 0;
+    if (shouldAnimate) {
+      setIsRolling(true);
+    }
 
     // Calculate rolls after animation delay
     setTimeout(() => {
@@ -188,7 +287,7 @@ const DiceRoller = () => {
       const updatedDice = applyRollsToDice3D(diceArray, slots, rolls);
       setDice3D(updatedDice);
 
-      const newRoll: DiceRoll = {
+      const pending: PendingRoll = {
         id: crypto.randomUUID(),
         dice: diceString,
         rolls,
@@ -196,34 +295,16 @@ const DiceRoller = () => {
         total,
         timestamp: new Date(),
         type: rollType,
+        expectedDice: updatedDice.length,
+        completed: Array.from({ length: updatedDice.length }, () => false),
       };
 
-      setLastRoll(newRoll);
-      setRollHistory(prev => [newRoll, ...prev.slice(0, 19)]);
-
-      recordRoll.mutate(
-        {
-          dice_formula: newRoll.dice,
-          result: newRoll.total,
-          rolls: newRoll.rolls,
-          roll_type: newRoll.type ?? 'normal',
-          context: 'dice',
-          modifiers: newRoll.modifier ? { modifier: newRoll.modifier } : null,
-          campaign_id: null,
-          character_id: null,
-        },
-        {
-          onError: (err) => {
-            logger.error('Failed to record roll:', err);
-          },
-        }
-      );
-      
-      // Stop rolling animation after physics settle
-      setTimeout(() => {
-        setIsRolling(false);
-      }, 2000);
-    }, 100);
+      if (shouldAnimate) {
+        startPendingRoll(pending);
+      } else {
+        finalizeRoll(pending);
+      }
+    }, shouldAnimate ? 90 : 0);
   };
 
   const clearSelection = () => {
@@ -236,16 +317,23 @@ const DiceRoller = () => {
     // Parse simple dice notation like "1d20+5" or "2d6"
     const match = notation.match(/(\d+)d(\d+)([+-]\d+)?/);
     if (!match) return;
+    if (rollTimeoutRef.current) {
+      window.clearTimeout(rollTimeoutRef.current);
+      rollTimeoutRef.current = null;
+    }
+    pendingRollRef.current = null;
 
     const count = parseInt(match[1]);
     const sides = parseInt(match[2]);
     const mod = match[3] ? parseInt(match[3]) : 0;
 
-    setIsRolling(true);
-    
     // Prepare 3D dice array (percentile d100 uses two d10s)
     const { dice: diceArray, slots } = buildDice3DState([{ sides, count }]);
     setDice3D(diceArray);
+    const shouldAnimate = show3D && diceArray.length > 0;
+    if (shouldAnimate) {
+      setIsRolling(true);
+    }
 
     // Calculate rolls after animation delay
     setTimeout(() => {
@@ -260,41 +348,23 @@ const DiceRoller = () => {
       const updatedDice = applyRollsToDice3D(diceArray, slots, rolls);
       setDice3D(updatedDice);
 
-      const newRoll: DiceRoll = {
+      const pending: PendingRoll = {
         id: crypto.randomUUID(),
         dice: notation,
         rolls,
         modifier: mod,
         total,
         timestamp: new Date(),
+        expectedDice: updatedDice.length,
+        completed: Array.from({ length: updatedDice.length }, () => false),
       };
 
-      setLastRoll(newRoll);
-      setRollHistory(prev => [newRoll, ...prev.slice(0, 19)]);
-
-      recordRoll.mutate(
-        {
-          dice_formula: newRoll.dice,
-          result: newRoll.total,
-          rolls: newRoll.rolls,
-          roll_type: newRoll.type ?? 'normal',
-          context: 'dice',
-          modifiers: newRoll.modifier ? { modifier: newRoll.modifier } : null,
-          campaign_id: null,
-          character_id: null,
-        },
-        {
-          onError: (err) => {
-            logger.error('Failed to record roll:', err);
-          },
-        }
-      );
-      
-      // Stop rolling animation after physics settle
-      setTimeout(() => {
-        setIsRolling(false);
-      }, 2000);
-    }, 100);
+      if (shouldAnimate) {
+        startPendingRoll(pending);
+      } else {
+        finalizeRoll(pending);
+      }
+    }, shouldAnimate ? 90 : 0);
   };
 
   return (
@@ -340,8 +410,8 @@ const DiceRoller = () => {
                     dice={dice3D}
                     isRolling={isRolling}
                     theme={diceTheme}
-                    onRollComplete={(_index, _value) => {
-                      // Handle individual die completion if needed
+                    onRollComplete={(index) => {
+                      handleDieComplete(index);
                     }}
                   />
                 </Suspense>

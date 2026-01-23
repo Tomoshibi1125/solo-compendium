@@ -91,6 +91,25 @@ const DEFAULT_RENDER_QUALITY: DiceRenderQuality = {
   particleScale: 1,
 };
 
+const DICE_PHYSICS = {
+  maxRollDuration: 1.45,
+  calmLinear: 0.16,
+  calmAngular: 0.22,
+  calmTime: 0.32,
+  impulseBase: 8.0,
+  impulseJitter: 3.0,
+  torqueBase: 7.0,
+  torqueJitter: 3.0,
+  linearDamping: 0.5,
+  angularDamping: 0.55,
+  dieRestitution: 0.36,
+  dieFriction: 0.74,
+  floorRestitution: 0.22,
+  floorFriction: 0.9,
+  gravity: -30,
+  settleDelayMs: 70,
+};
+
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
 const hexToRgba = (hex: string, alpha: number) => {
@@ -108,13 +127,13 @@ const hexToRgba = (hex: string, alpha: number) => {
 type DiceDisplayMode = 'standard' | 'percentile-tens' | 'percentile-ones';
 
 const LABEL_SIZES: Record<number, number> = {
-  4: 0.62,
-  6: 0.6,
-  8: 0.56,
-  10: 0.54,
-  12: 0.52,
-  20: 0.46,
-  100: 0.54,
+  4: 0.66,
+  6: 0.64,
+  8: 0.6,
+  10: 0.58,
+  12: 0.56,
+  20: 0.5,
+  100: 0.58,
 };
 
 const UP = new Vector3(0, 1, 0);
@@ -359,23 +378,27 @@ const getLabelTexture = (label: string, style: LabelStyle) => {
   if (cached) return cached;
 
   const canvas = document.createElement('canvas');
-  canvas.width = 256;
-  canvas.height = 256;
+  const canvasSize = 320;
+  canvas.width = canvasSize;
+  canvas.height = canvasSize;
   const ctx = canvas.getContext('2d');
   if (!ctx) {
     throw new Error('Dice label canvas not supported');
   }
+  ctx.imageSmoothingEnabled = true;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- canvas optional API varies by browser
+  (ctx as any).imageSmoothingQuality = 'high';
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   const center = canvas.width / 2;
-  const plateRadius = 96;
-  const fontSize = label.length > 1 ? 118 : 148;
+  const plateRadius = canvasSize * 0.36;
+  const fontSize = label.length > 1 ? canvasSize * 0.44 : canvasSize * 0.54;
 
   ctx.fillStyle = style.plate;
   ctx.beginPath();
   ctx.arc(center, center, plateRadius, 0, Math.PI * 2);
   ctx.fill();
 
-  ctx.lineWidth = 8;
+  ctx.lineWidth = canvasSize * 0.035;
   ctx.strokeStyle = style.plateStroke;
   ctx.stroke();
 
@@ -387,36 +410,37 @@ const getLabelTexture = (label: string, style: LabelStyle) => {
   ctx.arc(center, center, plateRadius, 0, Math.PI * 2);
   ctx.fill();
 
-  ctx.font = `900 ${fontSize}px system-ui, sans-serif`;
+  ctx.font = `900 ${Math.round(fontSize)}px "Rajdhani", "Orbitron", system-ui, sans-serif`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.lineWidth = 16;
+  ctx.lineWidth = canvasSize * 0.06;
   ctx.strokeStyle = style.stroke;
   ctx.strokeText(label, center, center);
 
   ctx.fillStyle = style.fill;
   ctx.fillText(label, center, center);
 
-  ctx.shadowColor = 'rgba(0, 0, 0, 0.65)';
-  ctx.shadowBlur = 10;
-  ctx.shadowOffsetY = 3;
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.45)';
+  ctx.shadowBlur = canvasSize * 0.025;
+  ctx.shadowOffsetY = canvasSize * 0.01;
   ctx.fillText(label, center, center);
+  ctx.shadowBlur = 0;
 
   if (style.badge) {
-    const badgeOffsetX = style.badge === 'tens' ? 46 : -46;
-    const badgeOffsetY = 46;
+    const badgeOffsetX = style.badge === 'tens' ? canvasSize * 0.18 : -canvasSize * 0.18;
+    const badgeOffsetY = canvasSize * 0.18;
     ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
-    ctx.shadowBlur = 6;
-    ctx.shadowOffsetY = 2;
+    ctx.shadowBlur = canvasSize * 0.02;
+    ctx.shadowOffsetY = canvasSize * 0.008;
     ctx.fillStyle = style.badgeColor;
     ctx.beginPath();
-    ctx.arc(center + badgeOffsetX, center + badgeOffsetY, 8, 0, Math.PI * 2);
+    ctx.arc(center + badgeOffsetX, center + badgeOffsetY, canvasSize * 0.03, 0, Math.PI * 2);
     ctx.fill();
     ctx.shadowBlur = 0;
   }
 
   const texture = new CanvasTexture(canvas);
-  texture.anisotropy = 8;
+  texture.anisotropy = 12;
   texture.wrapS = ClampToEdgeWrapping;
   texture.wrapT = ClampToEdgeWrapping;
   texture.minFilter = LinearMipmapLinearFilter;
@@ -691,7 +715,7 @@ function DiceTrayColliders({
   const wallThickness = 0.4;
   const floorThickness = 0.2;
 
-  const colliderProps = { restitution: 0.32, friction: 0.75 };
+  const colliderProps = { restitution: DICE_PHYSICS.floorRestitution, friction: DICE_PHYSICS.floorFriction };
 
   return (
     <RigidBody type="fixed" colliders={false}>
@@ -862,21 +886,55 @@ function Die({
   const bloomScale = useMemo(() => 1.35 + flairSpec.ringScale * 0.7, [flairSpec.ringScale]);
   const timeRef = useRef(0);
   const settleTimerRef = useRef(0);
+  const rollStartRef = useRef(0);
   const settledRef = useRef(false);
   const lastImpactRef = useRef(0);
   const yawRef = useRef(new Quaternion());
 
   const resolvedValue = resolveDisplayValue(sides, displayValue ?? value, displayMode);
 
-  const alignToValue = useCallback(() => {
-    if (!bodyRef.current || resolvedValue === null) return;
-    const face = dieModel.faceByValue.get(resolvedValue);
+  const alignToValue = useCallback((targetValue: number) => {
+    if (!bodyRef.current) return;
+    const face = dieModel.faceByValue.get(targetValue);
     if (!face) return;
     const target = face.quaternion.clone().multiply(yawRef.current);
     bodyRef.current.setLinvel({ x: 0, y: 0, z: 0 }, true);
     bodyRef.current.setAngvel({ x: 0, y: 0, z: 0 }, true);
     bodyRef.current.setRotation({ x: target.x, y: target.y, z: target.z, w: target.w }, true);
-  }, [dieModel, resolvedValue]);
+  }, [dieModel]);
+
+  const getTopFaceValue = useCallback(() => {
+    if (!bodyRef.current) return null;
+    const rotation = bodyRef.current.rotation();
+    const quat = new Quaternion(rotation.x, rotation.y, rotation.z, rotation.w);
+    let bestValue: number | null = null;
+    let bestDot = -Infinity;
+    dieModel.faces.forEach((face) => {
+      const worldNormal = face.normal.clone().applyQuaternion(quat);
+      const dot = worldNormal.dot(UP);
+      if (dot > bestDot) {
+        bestDot = dot;
+        bestValue = face.value;
+      }
+    });
+    return bestValue;
+  }, [dieModel]);
+
+  const lockBody = useCallback(() => {
+    const body = bodyRef.current;
+    if (!body) return;
+    body.setEnabledTranslations(false, false, false, true);
+    body.setEnabledRotations(false, false, false, true);
+    body.sleep();
+  }, []);
+
+  const unlockBody = useCallback(() => {
+    const body = bodyRef.current;
+    if (!body) return;
+    body.setEnabledTranslations(true, true, true, true);
+    body.setEnabledRotations(true, true, true, true);
+    body.wakeUp();
+  }, []);
 
   const handleCollisionEnter = useCallback(() => {
     if (!bodyRef.current || !onImpact) return;
@@ -895,9 +953,11 @@ function Die({
   useEffect(() => {
     if (!isRolling || !bodyRef.current) return;
     const body = bodyRef.current;
+    unlockBody();
     setIsAnimating(true);
     settledRef.current = false;
     settleTimerRef.current = 0;
+    rollStartRef.current = performance.now();
     yawRef.current = new Quaternion().setFromAxisAngle(UP, Math.random() * Math.PI * 2);
 
     const spawnX = clamp(position[0] + (Math.random() - 0.5) * 1.4, bounds.minX, bounds.maxX);
@@ -915,19 +975,21 @@ function Die({
     body.setLinvel({ x: 0, y: 0, z: 0 }, true);
     body.setAngvel({ x: 0, y: 0, z: 0 }, true);
 
+    const impulseStrength = DICE_PHYSICS.impulseBase + Math.random() * DICE_PHYSICS.impulseJitter;
     const impulse = {
-      x: (Math.random() - 0.5) * 8,
-      y: 10 + Math.random() * 5,
-      z: (Math.random() - 0.5) * 8,
+      x: (Math.random() - 0.5) * 6,
+      y: impulseStrength,
+      z: (Math.random() - 0.5) * 6,
     };
+    const torqueStrength = DICE_PHYSICS.torqueBase + Math.random() * DICE_PHYSICS.torqueJitter;
     const torque = {
-      x: (Math.random() - 0.5) * 7,
-      y: (Math.random() - 0.5) * 7,
-      z: (Math.random() - 0.5) * 7,
+      x: (Math.random() - 0.5) * torqueStrength,
+      y: (Math.random() - 0.5) * torqueStrength,
+      z: (Math.random() - 0.5) * torqueStrength,
     };
     body.applyImpulse(impulse, true);
     body.applyTorqueImpulse(torque, true);
-  }, [bounds.maxX, bounds.maxZ, bounds.minX, bounds.minZ, bounds.spawnY, isRolling, position, rollId]);
+  }, [bounds.maxX, bounds.maxZ, bounds.minX, bounds.minZ, bounds.spawnY, isRolling, position, rollId, unlockBody]);
 
   useFrame((_state, delta) => {
     if (!meshRef.current || !bodyRef.current) return;
@@ -938,17 +1000,21 @@ function Die({
       const angvel = bodyRef.current.angvel();
       const speed = Math.hypot(linvel.x, linvel.y, linvel.z);
       const angSpeed = Math.hypot(angvel.x, angvel.y, angvel.z);
-      const isCalm = speed < 0.12 && angSpeed < 0.18;
+      const isCalm = speed < DICE_PHYSICS.calmLinear && angSpeed < DICE_PHYSICS.calmAngular;
+      const elapsed = (performance.now() - rollStartRef.current) / 1000;
+      const exceededMax = elapsed > DICE_PHYSICS.maxRollDuration;
 
       settleTimerRef.current = isCalm ? settleTimerRef.current + delta : 0;
-      if (!settledRef.current && settleTimerRef.current > 0.45) {
+      if (!settledRef.current && (settleTimerRef.current > DICE_PHYSICS.calmTime || exceededMax)) {
         settledRef.current = true;
         setIsAnimating(false);
-        if (resolvedValue !== null) {
-          alignToValue();
+        const finalValue = resolvedValue ?? getTopFaceValue();
+        if (finalValue !== null) {
+          alignToValue(finalValue);
         }
-        if (value !== null && onRollComplete) {
-          setTimeout(() => onRollComplete(value), 120);
+        lockBody();
+        if (finalValue !== null && onRollComplete) {
+          setTimeout(() => onRollComplete(finalValue), DICE_PHYSICS.settleDelayMs);
         }
       }
 
@@ -993,10 +1059,10 @@ function Die({
       colliders={false}
       position={position}
       rotation={rotation}
-      linearDamping={0.55}
-      angularDamping={0.55}
+      linearDamping={DICE_PHYSICS.linearDamping}
+      angularDamping={DICE_PHYSICS.angularDamping}
       ccd
-      additionalSolverIterations={6}
+      additionalSolverIterations={5}
     >
       <mesh ref={meshRef} castShadow={quality.enableShadows} receiveShadow={quality.enableShadows}>
         <primitive object={dieModel.geometry} attach="geometry" />
@@ -1037,15 +1103,15 @@ function Die({
 
       <ConvexHullCollider
         args={[dieModel.colliderVertices]}
-        restitution={0.4}
-        friction={0.65}
+        restitution={DICE_PHYSICS.dieRestitution}
+        friction={DICE_PHYSICS.dieFriction}
         onCollisionEnter={handleCollisionEnter}
       />
 
       {dieModel.faces.map((face) => {
         const label = formatFaceLabel(sides, face.value, displayMode);
         const texture = getLabelTexture(label, labelStyle);
-        const facePosition = face.center.clone().add(face.normal.clone().multiplyScalar(0.05));
+        const facePosition = face.center.clone().add(face.normal.clone().multiplyScalar(0.06));
         const faceQuaternion = new Quaternion().setFromUnitVectors(new Vector3(0, 0, 1), face.normal);
         return (
           <mesh
@@ -1058,11 +1124,12 @@ function Die({
             <meshStandardMaterial
               map={texture}
               transparent
-              opacity={0.95}
-              roughness={0.25}
-              metalness={0.2}
+              opacity={0.98}
+              roughness={0.15}
+              metalness={0.1}
               emissive={new Color(themeConfig.emissiveColor)}
-              emissiveIntensity={0.25}
+              emissiveIntensity={0.45}
+              toneMapped={false}
               depthWrite={false}
               polygonOffset
               polygonOffsetFactor={-2}
@@ -1235,7 +1302,7 @@ function Dice3DScene({
         <DiceBloomField width={layout.width} height={layout.height} theme={theme} />
       )}
 
-      <Physics gravity={[0, -28, 0]} interpolate colliders={false}>
+      <Physics gravity={[0, DICE_PHYSICS.gravity, 0]} interpolate colliders={false}>
         <DiceTrayColliders width={layout.width} height={layout.height} wallHeight={layout.wallHeight} />
         {resolvedQuality.enableContactShadows && (
           <ContactShadows
