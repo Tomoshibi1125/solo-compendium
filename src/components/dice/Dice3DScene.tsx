@@ -100,23 +100,23 @@ const DEFAULT_RENDER_QUALITY: DiceRenderQuality = {
 };
 
 const DICE_PHYSICS = {
-  maxRollDuration: 1.9,
-  calmLinear: 0.13,
-  calmAngular: 0.18,
-  calmTime: 0.38,
+  maxRollDuration: 2.4,
+  calmLinear: 0.12,
+  calmAngular: 0.16,
+  calmTime: 0.44,
   impulseBase: 8.0,
   impulseJitter: 3.0,
   torqueBase: 7.0,
   torqueJitter: 3.0,
-  linearDamping: 0.42,
-  angularDamping: 0.48,
-  dieRestitution: 0.36,
-  dieFriction: 0.74,
-  floorRestitution: 0.22,
-  floorFriction: 0.9,
-  gravity: -30,
+  linearDamping: 0.34,
+  angularDamping: 0.38,
+  dieRestitution: 0.4,
+  dieFriction: 0.62,
+  floorRestitution: 0.28,
+  floorFriction: 0.78,
+  gravity: -26,
   settleDelayMs: 70,
-  alignDurationMs: 220,
+  alignDurationMs: 260,
 };
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
@@ -908,7 +908,7 @@ function Die({
     (targetValue: number) => {
       const face = dieModel.faceByValue.get(targetValue);
       if (!face) return null;
-      return face.quaternion.clone().multiply(yawRef.current);
+      return yawRef.current.clone().multiply(face.quaternion);
     },
     [dieModel]
   );
