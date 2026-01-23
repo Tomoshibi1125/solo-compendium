@@ -4,6 +4,7 @@ import { spawn } from 'child_process';
 import { setTimeout as delay } from 'timers/promises';
 import fs from 'fs/promises';
 import path from 'path';
+import net from 'node:net';
 
 const loadLocalEnv = async () => {
   const envPath = path.resolve(process.cwd(), '.env.local');
@@ -33,9 +34,10 @@ await loadLocalEnv();
 
 const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_SERVICE_ROLE_KEY;
+const baseUrlEnv = process.env.QA_BASE_URL;
 const previewPortEnv = Number.parseInt(process.env.QA_PREVIEW_PORT || '', 10);
 const fallbackPreviewPort = Number.isFinite(previewPortEnv) && previewPortEnv > 0 ? previewPortEnv : 4173;
-const baseUrl = process.env.QA_BASE_URL || `http://localhost:${fallbackPreviewPort}`;
+let baseUrl = baseUrlEnv || `http://localhost:${fallbackPreviewPort}`;
 const resolvePreviewPort = (value, fallback) => {
   try {
     const parsed = new URL(value);
@@ -48,10 +50,36 @@ const resolvePreviewPort = (value, fallback) => {
   }
   return fallback;
 };
-const previewPort =
+let previewPort =
   Number.isFinite(previewPortEnv) && previewPortEnv > 0
     ? previewPortEnv
     : resolvePreviewPort(baseUrl, fallbackPreviewPort);
+const isPortAvailable = (port, host = '127.0.0.1') =>
+  new Promise((resolve) => {
+    const server = net.createServer();
+    server.once('error', () => resolve(false));
+    server.once('listening', () => {
+      server.close(() => resolve(true));
+    });
+    server.listen({ port, host });
+  });
+const findAvailablePort = async (startPort, { host = '127.0.0.1', attempts = 10 } = {}) => {
+  let port = startPort;
+  for (let i = 0; i < attempts; i += 1) {
+    const available = await isPortAvailable(port, host);
+    if (available) return port;
+    port += 1;
+  }
+  return startPort;
+};
+if (!baseUrlEnv) {
+  const availablePort = await findAvailablePort(previewPort);
+  if (availablePort !== previewPort) {
+    console.warn(`[QA] Preview port ${previewPort} in use. Using ${availablePort} instead.`);
+    previewPort = availablePort;
+    baseUrl = `http://localhost:${previewPort}`;
+  }
+}
 const headless = process.env.QA_HEADLESS !== 'false';
 const fullSweep = process.env.QA_FULL === 'true';
 const strictChecks = process.env.QA_STRICT === 'true';
@@ -639,7 +667,7 @@ const openFirstCompendiumEntry = async (page) => {
 };
 
 const dismissBanners = async (page) => {
-  const buttonNames = ['No Thanks', 'Dismiss'];
+  const buttonNames = ['No Thanks', 'Dismiss', 'Close', 'Not now', 'Got it', 'Okay'];
   for (const name of buttonNames) {
     const locator = page.getByRole('button', { name });
     try {
@@ -649,6 +677,21 @@ const dismissBanners = async (page) => {
     } catch {
       // banner not present
     }
+  }
+  try {
+    await page.evaluate(() => {
+      const blockers = document.querySelectorAll('.fixed.bottom-0.left-0.right-0.z-50');
+      blockers.forEach((blocker) => {
+        const text = (blocker.textContent || '').toLowerCase();
+        if (text.includes('analytics') || text.includes('offline') || text.includes('help improve system ascendant')) {
+          blocker.setAttribute('data-qa-dismissed', 'true');
+          blocker.style.pointerEvents = 'none';
+          blocker.style.display = 'none';
+        }
+      });
+    });
+  } catch {
+    // ignore eval errors
   }
 };
 
@@ -1917,7 +1960,9 @@ const run = async () => {
       console.log(`[QA] vtt-scene-container count before wait: ${preVttCount}`);
       await dmPage.locator('.vtt-scene-container').waitFor({ state: 'visible', timeout: 40000 });
 
-      await dmPage.getByRole('tab', { name: 'Library' }).click();
+      await dismissBanners(dmPage);
+      const libraryTab = dmPage.getByRole('tab', { name: 'Library' });
+      await clickWhenReady(libraryTab, { force: true });
       const libraryPanel = dmPage.getByRole('tabpanel', { name: 'Library' });
       await libraryPanel.waitFor({ state: 'visible', timeout: 20000 });
       const tokenButton = libraryPanel.locator('button').first();
