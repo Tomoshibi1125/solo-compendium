@@ -51,6 +51,7 @@ import { CompendiumImage } from '@/components/compendium/CompendiumImage';
 import { staticDataProvider } from '@/data/compendium/staticDataProvider';
 import type { StaticCompendiumEntry } from '@/data/compendium/staticDataProvider';
 import { formatMonarchVernacular, MONARCH_LABEL, MONARCH_LABEL_PLURAL } from '@/lib/vernacular';
+import { isSetupRouteEnabled } from '@/lib/setupAccess';
 
 import { CompendiumEntry } from '@/hooks/useStartupData';
 
@@ -142,7 +143,8 @@ const Compendium = () => {
   const { favorites, toggleFavorite } = useFavorites();
   const { toast } = useToast();
   const isE2E = import.meta.env.VITE_E2E === 'true';
-  const showSetup = !isSupabaseConfigured && !isE2E;
+  const setupRouteEnabled = isSetupRouteEnabled();
+  const showSetup = !isSupabaseConfigured && setupRouteEnabled && !isE2E;
 
   // Fetch compendium data (using comprehensive static data loading)
   const { data: entries = [], isLoading, error } = useQuery({

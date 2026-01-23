@@ -20,6 +20,7 @@ import { setCommandPaletteOpener } from "@/lib/globalShortcuts";
 import { validateEnv } from "@/lib/envValidation";
 import { AuthProvider, useAuth } from "@/lib/auth/authContext";
 import { getRuntimeEnvValue, normalizeBasePath } from "@/lib/runtimeEnv";
+import { isSetupRouteEnabled } from "@/lib/setupAccess";
 import { warn as logWarn } from "@/lib/logger";
 import { isSupabaseConfigured } from "@/integrations/supabase/client";
 import GlobalEffects from "@/components/ui/GlobalEffects";
@@ -83,13 +84,14 @@ const Setup = lazy(() => import("./pages/Setup"));
 
 const CatchAllRedirect = () => {
   const { user, loading } = useAuth();
+  const setupRouteEnabled = isSetupRouteEnabled();
 
   if (loading) {
     return <PageLoader />;
   }
 
   if (!isSupabaseConfigured) {
-    return <Navigate to="/setup" replace />;
+    return <Navigate to={setupRouteEnabled ? "/setup" : "/login"} replace />;
   }
 
   if (user?.role === 'dm') {
@@ -135,6 +137,7 @@ const PageLoader = () => (
 const AppContent = () => {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const isE2E = import.meta.env.VITE_E2E === 'true';
+  const setupRouteEnabled = isSetupRouteEnabled();
   
   // Enable global keyboard shortcuts (must be inside Router context)
   useGlobalShortcuts(true);
@@ -150,20 +153,6 @@ const AppContent = () => {
         <CommandPalette open={commandPaletteOpen} onOpenChange={setCommandPaletteOpen} />
       )}
       <Routes>
-      {(!isSupabaseConfigured && !isE2E) ? (
-        <>
-          <Route
-            path="/setup"
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <Setup />
-              </Suspense>
-            }
-          />
-          <Route path="*" element={<Navigate to="/setup" replace />} />
-        </>
-      ) : (
-        <>
       <Route 
         path="/" 
         element={
@@ -575,9 +564,13 @@ const AppContent = () => {
       <Route
         path="/setup"
         element={
-          <Suspense fallback={<PageLoader />}>
-            <Setup />
-          </Suspense>
+          setupRouteEnabled ? (
+            <Suspense fallback={<PageLoader />}>
+              <Setup />
+            </Suspense>
+          ) : (
+            <Navigate to="/login" replace />
+          )
         }
       />
       <Route
@@ -586,8 +579,6 @@ const AppContent = () => {
           <CatchAllRedirect />
         }
       />
-        </>
-      )}
     </Routes>
     </>
   );

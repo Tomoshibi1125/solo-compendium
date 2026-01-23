@@ -8,12 +8,13 @@ import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Crown, Sword, ArrowRight } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useUpdateProfile, useProfile } from '@/hooks/useProfile';
 import { cn } from '@/lib/utils';
 import { logger } from '@/lib/logger';
 import { OAuthButtons } from './OAuthButton';
 import { useOAuth } from '@/hooks/useOAuth';
+import { isSetupRouteEnabled } from '@/lib/setupAccess';
 
 export function Auth() {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ export function Auth() {
   const isE2E = import.meta.env.VITE_E2E === 'true';
   const { isLoading: oauthLoading, signInWithProvider } = useOAuth();
   const oauthEnabled = import.meta.env.VITE_OAUTH_ENABLED === 'true';
+  const setupRouteEnabled = isSetupRouteEnabled();
 
   // Check auth state and profile
   useEffect(() => {
@@ -147,6 +149,9 @@ export function Auth() {
   }
 
   if (!isConfigured) {
+    if (!setupRouteEnabled) {
+      return <Navigate to="/login" replace />;
+    }
     return (
       <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/5 flex items-center justify-center p-4">
         <div className="w-full max-w-md">

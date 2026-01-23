@@ -24,10 +24,12 @@ export function ProtectedRoute({ children, requireDM = false, allowGuest }: Prot
     return <>{children}</>;
   }
 
-  // If Supabase isn't configured, the app is running in setup mode.
-  // Redirect to setup instead of looping auth checks.
+  // If Supabase isn't configured, fall back to guest access (if enabled) or login.
   if (!isSupabaseConfigured) {
-    return <Navigate to="/setup" replace />;
+    if (guestAllowed) {
+      return <>{children}</>;
+    }
+    return <Navigate to="/login" replace />;
   }
 
   const shouldHoldForSession =
