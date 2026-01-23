@@ -61,6 +61,14 @@ type ImpactFX = {
   intensity: number;
 };
 
+type AlignmentState = {
+  start: Quaternion;
+  target: Quaternion;
+  startTime: number;
+  durationMs: number;
+  value: number;
+};
+
 type DiceRenderQuality = {
   dpr: [number, number];
   antialias: boolean;
@@ -92,25 +100,27 @@ const DEFAULT_RENDER_QUALITY: DiceRenderQuality = {
 };
 
 const DICE_PHYSICS = {
-  maxRollDuration: 1.45,
-  calmLinear: 0.16,
-  calmAngular: 0.22,
-  calmTime: 0.32,
+  maxRollDuration: 1.9,
+  calmLinear: 0.13,
+  calmAngular: 0.18,
+  calmTime: 0.38,
   impulseBase: 8.0,
   impulseJitter: 3.0,
   torqueBase: 7.0,
   torqueJitter: 3.0,
-  linearDamping: 0.5,
-  angularDamping: 0.55,
+  linearDamping: 0.42,
+  angularDamping: 0.48,
   dieRestitution: 0.36,
   dieFriction: 0.74,
   floorRestitution: 0.22,
   floorFriction: 0.9,
   gravity: -30,
   settleDelayMs: 70,
+  alignDurationMs: 220,
 };
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
+const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3);
 
 const hexToRgba = (hex: string, alpha: number) => {
   const clean = hex.replace('#', '');
@@ -890,18 +900,52 @@ function Die({
   const settledRef = useRef(false);
   const lastImpactRef = useRef(0);
   const yawRef = useRef(new Quaternion());
+  const alignmentRef = useRef<AlignmentState | null>(null);
 
   const resolvedValue = resolveDisplayValue(sides, displayValue ?? value, displayMode);
 
-  const alignToValue = useCallback((targetValue: number) => {
-    if (!bodyRef.current) return;
-    const face = dieModel.faceByValue.get(targetValue);
-    if (!face) return;
-    const target = face.quaternion.clone().multiply(yawRef.current);
-    bodyRef.current.setLinvel({ x: 0, y: 0, z: 0 }, true);
-    bodyRef.current.setAngvel({ x: 0, y: 0, z: 0 }, true);
-    bodyRef.current.setRotation({ x: target.x, y: target.y, z: target.z, w: target.w }, true);
-  }, [dieModel]);
+  const getTargetQuaternion = useCallback(
+    (targetValue: number) => {
+      const face = dieModel.faceByValue.get(targetValue);
+      if (!face) return null;
+      return face.quaternion.clone().multiply(yawRef.current);
+    },
+    [dieModel]
+  );
+
+  const snapToValue = useCallback(
+    (targetValue: number) => {
+      if (!bodyRef.current) return false;
+      const target = getTargetQuaternion(targetValue);
+      if (!target) return false;
+      bodyRef.current.setLinvel({ x: 0, y: 0, z: 0 }, true);
+      bodyRef.current.setAngvel({ x: 0, y: 0, z: 0 }, true);
+      bodyRef.current.setRotation({ x: target.x, y: target.y, z: target.z, w: target.w }, true);
+      return true;
+    },
+    [getTargetQuaternion]
+  );
+
+  const beginAlignment = useCallback(
+    (targetValue: number) => {
+      if (!bodyRef.current) return false;
+      const target = getTargetQuaternion(targetValue);
+      if (!target) return false;
+      const rotation = bodyRef.current.rotation();
+      const start = new Quaternion(rotation.x, rotation.y, rotation.z, rotation.w);
+      alignmentRef.current = {
+        start,
+        target,
+        startTime: performance.now(),
+        durationMs: DICE_PHYSICS.alignDurationMs,
+        value: targetValue,
+      };
+      bodyRef.current.setLinvel({ x: 0, y: 0, z: 0 }, true);
+      bodyRef.current.setAngvel({ x: 0, y: 0, z: 0 }, true);
+      return true;
+    },
+    [getTargetQuaternion]
+  );
 
   const getTopFaceValue = useCallback(() => {
     if (!bodyRef.current) return null;
@@ -956,6 +1000,7 @@ function Die({
     unlockBody();
     setIsAnimating(true);
     settledRef.current = false;
+    alignmentRef.current = null;
     settleTimerRef.current = 0;
     rollStartRef.current = performance.now();
     yawRef.current = new Quaternion().setFromAxisAngle(UP, Math.random() * Math.PI * 2);
@@ -991,9 +1036,50 @@ function Die({
     body.applyTorqueImpulse(torque, true);
   }, [bounds.maxX, bounds.maxZ, bounds.minX, bounds.minZ, bounds.spawnY, isRolling, position, rollId, unlockBody]);
 
+  useEffect(() => {
+    if (isRolling || isAnimating) return;
+    if (!bodyRef.current) return;
+    if (alignmentRef.current) return;
+    if (resolvedValue === null) return;
+    if (snapToValue(resolvedValue)) {
+      lockBody();
+    }
+  }, [isRolling, isAnimating, lockBody, resolvedValue, snapToValue]);
+
   useFrame((_state, delta) => {
     if (!meshRef.current || !bodyRef.current) return;
     timeRef.current += delta;
+
+    const alignment = alignmentRef.current;
+    if (alignment) {
+      const now = performance.now();
+      const progress = clamp((now - alignment.startTime) / alignment.durationMs, 0, 1);
+      const eased = easeOutCubic(progress);
+      const next = alignment.start.clone().slerp(alignment.target, eased);
+      bodyRef.current.setRotation({ x: next.x, y: next.y, z: next.z, w: next.w }, true);
+      bodyRef.current.setLinvel({ x: 0, y: 0, z: 0 }, true);
+      bodyRef.current.setAngvel({ x: 0, y: 0, z: 0 }, true);
+
+      const material = meshRef.current.material as MeshStandardMaterial;
+      material.emissiveIntensity = themeConfig.glowIntensity * 0.6;
+      material.emissive = new Color(themeConfig.emissiveColor).multiplyScalar(0.65);
+
+      if (edgeMaterialRef.current) {
+        edgeMaterialRef.current.opacity = flairSpec.edgeOpacity * 1.05;
+      }
+      if (bloomMaterialRef.current) {
+        bloomMaterialRef.current.opacity = clamp(0.2, 0.08, 0.35);
+      }
+
+      if (progress >= 1) {
+        alignmentRef.current = null;
+        lockBody();
+        if (onRollComplete) {
+          setTimeout(() => onRollComplete(alignment.value), DICE_PHYSICS.settleDelayMs);
+        }
+      }
+      return;
+    }
 
     if (isAnimating) {
       const linvel = bodyRef.current.linvel();
@@ -1010,11 +1096,16 @@ function Die({
         setIsAnimating(false);
         const finalValue = resolvedValue ?? getTopFaceValue();
         if (finalValue !== null) {
-          alignToValue(finalValue);
-        }
-        lockBody();
-        if (finalValue !== null && onRollComplete) {
-          setTimeout(() => onRollComplete(finalValue), DICE_PHYSICS.settleDelayMs);
+          const started = beginAlignment(finalValue);
+          if (!started) {
+            snapToValue(finalValue);
+            lockBody();
+            if (onRollComplete) {
+              setTimeout(() => onRollComplete(finalValue), DICE_PHYSICS.settleDelayMs);
+            }
+          }
+        } else {
+          lockBody();
         }
       }
 
