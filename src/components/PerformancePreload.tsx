@@ -26,17 +26,6 @@ const warmModules = () =>
     import('@/pages/dm-tools/VTTEnhanced'),
     import('@/pages/dm-tools/VTTMap'),
     import('@/pages/dm-tools/TokenLibrary'),
-    import('@react-three/postprocessing'),
-    import('@react-three/xr'),
-    import('@react-three/cannon'),
-    import('three-stdlib'),
-    import('three-mesh-bvh'),
-    import('three.quarks'),
-    import('pixi.js'),
-    import('pixi-filters'),
-    import('gsap'),
-    import('lottie-web'),
-    import('howler'),
   ]);
 
 export default function PerformancePreload() {

@@ -99,6 +99,7 @@ export default defineConfig(({ mode: _mode }) => {
     return false;
   };
 
+
   return {
     server: {
       host: "::",
@@ -140,6 +141,11 @@ export default defineConfig(({ mode: _mode }) => {
             if (normalizedId.includes('node_modules')) {
               if (isDiceDependency(id, getModuleInfo)) {
                 if (normalizedId.includes('/node_modules/three/examples/')) return 'dice-3d-three-examples';
+                if (normalizedId.includes('/node_modules/three-stdlib/controls/')) return 'dice-3d-stdlib-controls';
+                if (normalizedId.includes('/node_modules/three-stdlib/loaders/')) return 'dice-3d-stdlib-loaders';
+                if (normalizedId.includes('/node_modules/three-stdlib/shaders/')) return 'dice-3d-stdlib-shaders';
+                if (normalizedId.includes('/node_modules/three-stdlib/libs/')) return 'dice-3d-stdlib-libs';
+                if (normalizedId.includes('/node_modules/three-stdlib/utils/')) return 'dice-3d-stdlib-utils';
                 if (normalizedId.includes('/node_modules/three-stdlib/')) return 'dice-3d-stdlib';
                 if (normalizedId.includes('/node_modules/three/')) return 'dice-3d-three';
                 if (normalizedId.includes('/node_modules/@react-three/rapier/')) return 'dice-3d-rapier';
@@ -159,6 +165,22 @@ export default defineConfig(({ mode: _mode }) => {
               ) {
                 return 'react-vendor';
               }
+              if (normalizedId.includes('/node_modules/react-router/') || normalizedId.includes('/node_modules/react-router-dom/')) {
+                return 'router-vendor';
+              }
+              if (normalizedId.includes('/node_modules/@dnd-kit/')) return 'dnd-vendor';
+              if (normalizedId.includes('/node_modules/react-hook-form/') || normalizedId.includes('/node_modules/@hookform/')) {
+                return 'forms-vendor';
+              }
+              if (normalizedId.includes('/node_modules/zod/')) return 'validation-vendor';
+              if (normalizedId.includes('/node_modules/quill/')) return 'editor-vendor';
+              if (normalizedId.includes('/node_modules/recharts/')) return 'charts-vendor';
+              if (normalizedId.includes('/node_modules/date-fns/') || normalizedId.includes('/node_modules/react-day-picker/')) {
+                return 'date-vendor';
+              }
+              if (normalizedId.includes('/node_modules/embla-carousel-react/')) return 'carousel-vendor';
+              if (normalizedId.includes('/node_modules/lucide-react/')) return 'icons-vendor';
+              if (normalizedId.includes('/node_modules/dompurify/')) return 'sanitize-vendor';
               if (normalizedId.includes('/@radix-ui/')) return 'ui-vendor';
               if (normalizedId.includes('/node_modules/@tsparticles/')) return 'particles-vendor';
               if (normalizedId.includes('/node_modules/pixi.js/') || normalizedId.includes('/node_modules/pixi-filters/')) {
@@ -183,6 +205,7 @@ export default defineConfig(({ mode: _mode }) => {
               ) {
                 return 'physics-vendor';
               }
+              if (normalizedId.includes('/node_modules/framer-motion/')) return 'motion-vendor';
               if (normalizedId.includes('/node_modules/three-mesh-bvh/')) return 'three-bvh-vendor';
               if (normalizedId.includes('/node_modules/three.quarks/')) return 'three-particles-vendor';
               if (normalizedId.includes('/node_modules/maath/')) return 'three-math-vendor';

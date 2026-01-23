@@ -7,23 +7,38 @@
  * Authoritative source: internal compendium data packs already ingested into the app.
  */
 
-import { monsters } from './monsters';
-import { items } from './items';
-import { jobs } from './jobs';
-import { spells } from './spells';
-import { locations } from './locations';
-import { runesCompendium } from './runes';
-import { backgrounds } from './backgrounds';
-import { monarchs } from './monarchs';
-import { paths } from './paths';
-import { conditions } from './conditions';
-import { comprehensiveFeats } from './feats-comprehensive';
-import { comprehensiveSkills } from './skills-comprehensive';
-import { comprehensiveRelics } from './relics-comprehensive';
-import { powers } from './powers';
-import { techniques } from './techniques';
-import { artifacts } from './artifacts';
 import { normalizeMonarchSearch } from '@/lib/vernacular';
+
+type DataLoader<T> = () => Promise<T[]>;
+
+const dataLoaders = {
+  monsters: () => import('./monsters').then((module) => module.monsters),
+  items: () => import('./items').then((module) => module.items),
+  jobs: () => import('./jobs').then((module) => module.jobs),
+  spells: () => import('./spells').then((module) => module.spells),
+  locations: () => import('./locations').then((module) => module.locations),
+  runesCompendium: () => import('./runes').then((module) => module.runesCompendium),
+  backgrounds: () => import('./backgrounds').then((module) => module.backgrounds),
+  monarchs: () => import('./monarchs').then((module) => module.monarchs),
+  paths: () => import('./paths').then((module) => module.paths),
+  conditions: () => import('./conditions').then((module) => module.conditions),
+  comprehensiveFeats: () => import('./feats-comprehensive').then((module) => module.comprehensiveFeats),
+  comprehensiveSkills: () => import('./skills-comprehensive').then((module) => module.comprehensiveSkills),
+  comprehensiveRelics: () => import('./relics-comprehensive').then((module) => module.comprehensiveRelics),
+  powers: () => import('./powers').then((module) => module.powers),
+  techniques: () => import('./techniques').then((module) => module.techniques),
+  artifacts: () => import('./artifacts').then((module) => module.artifacts),
+} satisfies Record<string, DataLoader<unknown>>;
+
+type DataKey = keyof typeof dataLoaders;
+const dataCache: Partial<Record<DataKey, Promise<unknown[]>>> = {};
+
+const loadData = async <T>(key: DataKey): Promise<T[]> => {
+  if (!dataCache[key]) {
+    dataCache[key] = dataLoaders[key]();
+  }
+  return (await dataCache[key]) as T[];
+};
 
 // Type definitions matching the UI expectations
 export interface StaticCompendiumEntry {
@@ -381,11 +396,25 @@ function transformMonarch(monarch: StaticMonarchSource): StaticCompendiumEntry {
 // Create the provider
 export const staticDataProvider: StaticDataProvider = {
   getJobs: async (search?: string) => {
+    const jobs = await loadData<StaticJobSource>('jobs');
     const filtered = filterBySearch(jobs, search, ['name', 'description']);
     return filtered.map(transformJob);
   },
 
   getPaths: async (search?: string) => {
+    const paths = await loadData<
+      {
+        id: string;
+        name: string;
+        description: string;
+        jobId: string;
+        jobName: string;
+        tier: number;
+        source: string;
+        image?: string;
+        requirements: { level?: number; prerequisites?: string[]; skills?: string[] };
+      }
+    >('paths');
     const filtered = filterBySearch(paths, search, ['name', 'description']);
     return filtered.map(path => ({
       id: path.id,
@@ -406,36 +435,54 @@ export const staticDataProvider: StaticDataProvider = {
   },
 
   getMonsters: async (search?: string) => {
+    const monsters = await loadData<StaticMonsterSource>('monsters');
     const filtered = filterBySearch(monsters, search, ['name', 'description', 'type', 'rank']);
     return filtered.map(transformMonster);
   },
 
   getItems: async (search?: string) => {
+    const items = await loadData<StaticItemSource>('items');
     const filtered = filterBySearch(items, search, ['name', 'description', 'type', 'rarity']);
     return filtered.map(transformItem);
   },
 
   getSpells: async (search?: string) => {
+    const spells = await loadData<StaticSpellSource>('spells');
     const filtered = filterBySearch(spells, search, ['name', 'description', 'type']);
     return filtered.map(transformSpell);
   },
 
   getLocations: async (search?: string) => {
+    const locations = await loadData<StaticLocationSource>('locations');
     const filtered = filterBySearch(locations, search, ['name', 'description', 'type']);
     return filtered.map(transformLocation);
   },
 
   getRunes: async (search?: string) => {
+    const runesCompendium = await loadData<StaticRuneSource>('runesCompendium');
     const filtered = filterBySearch(runesCompendium, search, ['name', 'description', 'element']);
     return filtered.map(transformRune);
   },
 
   getBackgrounds: async (search?: string) => {
+    const backgrounds = await loadData<StaticBackgroundSource>('backgrounds');
     const filtered = filterBySearch(backgrounds, search, ['name', 'description']);
     return filtered.map(transformBackground);
   },
 
   getRelics: async (search?: string) => {
+    const comprehensiveRelics = await loadData<
+      {
+        id: string;
+        name: string;
+        description: string;
+        type?: string;
+        rarity?: string;
+        properties: { magical?: boolean };
+        source?: string;
+        image?: string;
+      }
+    >('comprehensiveRelics');
     const filtered = filterBySearch(comprehensiveRelics, search, ['name', 'description', 'type']);
     return filtered.map(relic => ({
       id: relic.id,
@@ -452,6 +499,16 @@ export const staticDataProvider: StaticDataProvider = {
   },
 
   getConditions: async (search?: string) => {
+    const conditions = await loadData<
+      {
+        id: string;
+        name: string;
+        description: string;
+        type?: string;
+        source?: string;
+        image?: string;
+      }
+    >('conditions');
     const filtered = filterBySearch(conditions, search, ['name', 'description', 'type']);
     return filtered.map(condition => ({
       id: condition.id,
@@ -466,11 +523,22 @@ export const staticDataProvider: StaticDataProvider = {
   },
 
   getMonarchs: async (search?: string) => {
+    const monarchs = await loadData<StaticMonarchSource>('monarchs');
     const filtered = filterBySearch(monarchs, search, ['name', 'description', 'title', 'theme']);
     return filtered.map(transformMonarch);
   },
 
   getFeats: async (search?: string) => {
+    const comprehensiveFeats = await loadData<
+      {
+        id: string;
+        name: string;
+        description: string;
+        benefits?: string;
+        prerequisites?: string | Record<string, string | number | boolean>;
+        source?: string;
+      }
+    >('comprehensiveFeats');
     const filtered = filterBySearch(comprehensiveFeats, search, ['name', 'description', 'benefits']);
     return filtered.map(feat => ({
       id: feat.id,
@@ -487,6 +555,9 @@ export const staticDataProvider: StaticDataProvider = {
   },
 
   getSkills: async (search?: string) => {
+    const comprehensiveSkills = await loadData<
+      { id: string; name: string; description: string; type?: string; ability?: string; source?: string }
+    >('comprehensiveSkills');
     const filtered = filterBySearch(comprehensiveSkills, search, ['name', 'description', 'type']);
     return filtered.map(skill => ({
       id: skill.id,
@@ -501,6 +572,18 @@ export const staticDataProvider: StaticDataProvider = {
   },
 
   getPowers: async (search?: string) => {
+    const powers = await loadData<
+      {
+        id: string;
+        name: string;
+        description: string;
+        type?: string;
+        rarity?: string;
+        image?: string;
+        requirements?: { level?: number } | null;
+        source?: string;
+      }
+    >('powers');
     const filtered = filterBySearch(powers, search, ['name', 'description', 'type']);
     return filtered.map(power => ({
       id: power.id,
@@ -522,6 +605,26 @@ export const staticDataProvider: StaticDataProvider = {
   },
 
   getTechniques: async (search?: string) => {
+    const techniques = await loadData<
+      {
+        id: string;
+        name: string;
+        description: string;
+        type?: string;
+        style?: string;
+        image?: string;
+        source?: string;
+        prerequisites?: { level?: number } | null;
+        activation?: Record<string, unknown> | null;
+        duration?: Record<string, unknown> | null;
+        range?: Record<string, unknown> | null;
+        components?: Record<string, unknown> | null;
+        effects?: Record<string, unknown> | null;
+        mechanics?: Record<string, unknown> | null;
+        limitations?: Record<string, unknown> | null;
+        flavor?: string | null;
+      }
+    >('techniques');
     const filtered = filterBySearch(techniques, search, ['name', 'description', 'type', 'style']);
     return filtered.map(technique => ({
       id: technique.id,
@@ -554,6 +657,23 @@ export const staticDataProvider: StaticDataProvider = {
   },
 
   getArtifacts: async (search?: string) => {
+    const artifacts = await loadData<
+      {
+        id: string;
+        name: string;
+        description: string;
+        type?: string;
+        rarity?: string;
+        source?: string;
+        image?: string;
+        attunement?: boolean | null;
+        requirements?: Record<string, unknown> | null;
+        properties?: Record<string, unknown> | null;
+        abilities?: Record<string, unknown> | null;
+        lore?: Record<string, unknown> | null;
+        mechanics?: Record<string, unknown> | null;
+      }
+    >('artifacts');
     const filtered = filterBySearch(artifacts, search, ['name', 'description', 'type', 'rarity']);
     return filtered.map(artifact => ({
       id: artifact.id,
