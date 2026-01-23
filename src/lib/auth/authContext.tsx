@@ -68,6 +68,46 @@ const buildFallbackUser = (authUser: User): AuthUser => {
   };
 };
 const toProfileRole = (role: UserRole): 'dm' | 'player' => role;
+
+const isEmailRateLimitError = (error: unknown): boolean => {
+  if (!error || typeof error !== 'object') return false;
+  const message = typeof (error as { message?: unknown }).message === 'string' ? (error as { message: string }).message : '';
+  const status = (error as { status?: unknown }).status;
+  if (typeof status === 'number' && status === 429) return true;
+  const normalized = message.toLowerCase();
+  return normalized.includes('rate limit') || normalized.includes('too many requests') || normalized.includes('email rate');
+};
+
+const signUpViaEdgeFunction = async (
+  email: string,
+  password: string,
+  displayName: string,
+  role: UserRole
+): Promise<{ error?: string; success?: boolean }> => {
+  try {
+    const { data, error } = await supabase.functions.invoke<{ userId?: string }>('signup', {
+      body: {
+        email,
+        password,
+        displayName,
+        role,
+      },
+    });
+
+    if (error) {
+      return { error: error.message };
+    }
+
+    if (!data?.userId) {
+      return { error: 'Signup failed (missing user id)' };
+    }
+
+    return { success: true };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    return { error: message };
+  }
+};
 const withTimeout = async <T,>(promise: PromiseLike<T>, timeoutMs: number, label: string): Promise<T> => {
   let timeoutId: ReturnType<typeof setTimeout> | null = null;
   const timeout = new Promise<never>((_, reject) => {
@@ -276,6 +316,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
 
       if (error) {
+        if (isEmailRateLimitError(error)) {
+          const fallback = await signUpViaEdgeFunction(email, password, displayName, role);
+          if (!fallback.error) {
+            return await signIn(email, password, role);
+          }
+          logError('Signup email rate limit fallback failed:', fallback.error);
+          return {
+            error: 'Signups are temporarily rate limited. Please try again in a few minutes.',
+          };
+        }
         return { error: error.message };
       }
 

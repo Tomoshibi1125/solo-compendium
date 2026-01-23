@@ -29,8 +29,6 @@ const isDataUrl = (value: string) => value.startsWith('data:') || value.startsWi
 
 const isRemoteUrl = (value: string) => /^https?:\/\//i.test(value);
 
-const toAvif = (value: string) => value.replace(/\.webp$/i, '.avif');
-
 export function OptimizedImage({
   src,
   alt,
@@ -100,21 +98,16 @@ export function OptimizedImage({
   }
 
   if (isLocalWebp) {
-    const avifSrc = toAvif(srcValue);
     return (
-      <picture>
-        <source srcSet={avifSrc} type="image/avif" />
-        <source srcSet={srcValue} type="image/webp" />
-        <img
-          src={srcValue}
-          alt={alt}
-          className={cn(className)}
-          loading={loading}
-          decoding={decoding}
-          fetchPriority={fetchPriority}
-          {...imgProps}
-        />
-      </picture>
+      <img
+        src={srcValue}
+        alt={alt}
+        className={cn(className)}
+        loading={loading}
+        decoding={decoding}
+        fetchPriority={fetchPriority}
+        {...imgProps}
+      />
     );
   }
 
