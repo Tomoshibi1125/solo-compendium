@@ -2,3 +2,10 @@ node_modules
 dist
 .env*
 .vercel
+supabase
+tests
+*.log
+coverage
+playwright-report
+test-results
+audit-artifacts

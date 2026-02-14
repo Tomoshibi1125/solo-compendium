@@ -1,4 +1,7 @@
 {
+  "version": 2,
+  "buildCommand": "npm run build:vercel",
+  "outputDirectory": "dist",
   "rewrites": [
     {
       "source": "/(.*)",
@@ -25,7 +28,7 @@
       ]
     },
     {
-      "source": "/(.*\\\\.(wasm|js|css|png|jpg|jpeg|gif|svg|ico|webp|avif))",
+      "source": "/(.*\\.(wasm|js|css|png|jpg|jpeg|gif|svg|ico|webp|avif))",
       "headers": [
         {
           "key": "Cache-Control",
@@ -48,6 +51,23 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
         }
       ]
     }

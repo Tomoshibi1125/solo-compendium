@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "vite --host --port 8080",
     "build": "node scripts/write-runtime-env.mjs && vite build",
+    "build:vercel": "node vercel-build.cjs && vite build",
     "preview": "vite preview --host",
     "test": "vitest",
     "test:ui": "vitest --ui",
