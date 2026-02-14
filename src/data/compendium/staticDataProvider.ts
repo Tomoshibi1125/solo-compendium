@@ -45,8 +45,8 @@ export interface StaticCompendiumEntry {
   id: string;
   name: string;
   display_name?: string | null;
-  description?: string | null;
-  created_at?: string;
+  description: string;
+  created_at: string;
   tags?: string[] | null;
   source_book?: string | null;
   image_url?: string | null;
@@ -62,11 +62,12 @@ export interface StaticCompendiumEntry {
   ability?: string | null;
   rune_type?: string | null;
   rune_category?: string | null;
-  cr?: string;
-  gate_rank?: string;
+  rune_level?: number | null;
+  cr?: string | null;
+  gate_rank?: string | null;
   is_boss?: boolean;
   rarity?: string;
-  level?: number;
+  level?: number | null;
   item_type?: string | null;
   artifact_type?: string | null;
   technique_type?: string | null;
@@ -356,8 +357,10 @@ function transformRune(rune: StaticRuneSource): StaticCompendiumEntry {
     source_book: 'System Ascendant Homebrew',
     image_url: rune.image,
     rune_type: rune.element,
-    rune_category: rune.rarity,
-    rarity: rune.rarity
+    rune_category: rune.element,
+    rune_level: rune.power,
+    rarity: rune.rarity,
+    level: rune.power,
   };
 }
 

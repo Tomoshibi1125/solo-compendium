@@ -4,11 +4,21 @@
   "version": "0.0.0",
   "type": "module",
   "engines": {
-    "node": "24.x"
+    "node": "25.x"
   },
   "scripts": {
+    "dev": "vite --host --port 8080",
     "build": "node scripts/write-runtime-env.mjs && vite build",
-    "preview": "vite preview --host"
+    "preview": "vite preview --host",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "test:coverage": "vitest --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:debug": "playwright test --debug",
+    "test:global-simulation": "tsx tests/e2e/run-global-simulation.ts",
+    "test:global-simulation:debug": "tsx tests/e2e/run-global-simulation.ts --headless=false --detailedLogging=true"
   },
   "dependencies": {
     "@dimforge/rapier3d": "^0.19.3",
@@ -80,6 +90,7 @@
     "next-themes": "^0.4.6",
     "pixi-filters": "^6.1.4",
     "pixi.js": "^8.13.2",
+    "playwright": "^1.58.2",
     "posthog-js": "^1.318.1",
     "postprocessing": "^6.38.2",
     "quill": "2.0.2",
@@ -103,15 +114,21 @@
     "zod": "^4.3.5"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@tailwindcss/postcss": "^4.1.18",
     "@tailwindcss/typography": "^0.5.19",
+    "@types/node": "^25.2.3",
     "@vitejs/plugin-react-swc": "^4.2.2",
+    "@vitest/ui": "^4.0.18",
     "autoprefixer": "^10.4.23",
+    "jsdom": "^28.0.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.18",
+    "tsx": "^4.19.2",
     "vite": "^7.3.1",
     "vite-plugin-pwa": "^1.2.0",
-    "vite-plugin-wasm": "^3.5.0"
+    "vite-plugin-wasm": "^3.5.0",
+    "vitest": "^4.0.18"
   },
   "overrides": {
     "preact": "^10.28.2",

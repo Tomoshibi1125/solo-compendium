@@ -28,6 +28,7 @@ import PerformancePreload from "@/components/PerformancePreload";
 import { PerformanceProvider } from "@/lib/performanceProfile";
 import Login from "./pages/Login";
 import PlayerTools from "./pages/PlayerTools";
+import TestUserSetup from "./pages/TestUserSetup";
 
 // Validate environment variables on app startup (non-blocking; setup mode is supported)
 const envResult = validateEnv();
@@ -77,6 +78,7 @@ const Campaigns = lazy(() => import("./pages/Campaigns"));
 const CampaignDetail = lazy(() => import("./pages/CampaignDetail"));
 const CampaignJoin = lazy(() => import("./pages/CampaignJoin"));
 const CharacterCompare = lazy(() => import("./pages/CharacterCompare"));
+const Homebrew = lazy(() => import("./pages/Homebrew"));
 const Auth = lazy(() => import("./pages/Auth"));
 const AuthCallback = lazy(() => import("./pages/AuthCallback"));
 const Landing = lazy(() => import("./pages/Landing"));
@@ -161,6 +163,18 @@ const AppContent = () => {
           </Suspense>
         } 
       />
+      
+      {/* E2E testing route - only available in E2E mode */}
+      {isE2E && (
+        <Route 
+          path="/e2e-login" 
+          element={
+            <Suspense fallback={<PageLoader />}>
+              <Login />
+            </Suspense>
+          } 
+        />
+      )}
       <Route
         path="/login"
         element={
@@ -182,6 +196,14 @@ const AppContent = () => {
         element={
           <Suspense fallback={<PageLoader />}>
             <Landing />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/homebrew"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <Homebrew />
           </Suspense>
         }
       />
@@ -558,6 +580,14 @@ const AppContent = () => {
         element={
           <Suspense fallback={<PageLoader />}>
             <Auth />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/test-setup"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <TestUserSetup />
           </Suspense>
         }
       />

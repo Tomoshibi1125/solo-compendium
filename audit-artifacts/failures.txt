@@ -1,0 +1,8 @@
+No dynamic test run was executed by the audit runner.
+
+Suggested commands (run locally):
+- npm ci
+- npm run build
+
+Suggested to add a test runner (Vitest) and run:
+- npm run test

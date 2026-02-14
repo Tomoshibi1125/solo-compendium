@@ -2,7 +2,7 @@
  * Combat Automation System - Digital Character Sheet Style
  * 
  * Advanced combat calculations including attacks, damage, saving throws,
- * critical hits, and combat flow automation
+ * critical hits, concentration checks, death saves, and combat flow automation
  */
 
 import { AppError } from '@/lib/appError';
@@ -36,6 +36,10 @@ interface Character {
   skill_proficiencies: string[];
   skill_expertise: string[];
   equipment: Equipment[];
+  concentration_spells?: string[];
+  death_save_successes?: number;
+  death_save_failures?: number;
+  stable?: boolean;
 }
 
 // Equipment interface
@@ -87,6 +91,22 @@ export interface InitiativeResult extends RollResult {
   dexterityBonus: number;
   otherBonuses: number[];
   surprised?: boolean;
+}
+
+export interface ConcentrationCheckResult extends RollResult {
+  dc: number;
+  damage: number;
+  success: boolean;
+  concentration_lost: boolean;
+}
+
+export interface DeathSaveResult extends RollResult {
+  type: 'success' | 'failure';
+  critical?: boolean;
+  total_successes: number;
+  total_failures: number;
+  stable?: boolean;
+  dead?: boolean;
 }
 
 /**

@@ -282,7 +282,7 @@ const PartyTracker = () => {
                   <Label htmlFor="name">Name</Label>
                   <Input
                     id="name"
-                    value={newMember.name}
+                    value={newMember.name || ''}
                     onChange={(e) => setNewMember({ ...newMember, name: e.target.value })}
                     placeholder="Character name"
                   />
@@ -293,7 +293,7 @@ const PartyTracker = () => {
                     <Input
                       id="level"
                       type="number"
-                      value={newMember.level}
+                      value={newMember.level || 1}
                       onChange={(e) => setNewMember({ ...newMember, level: parseInt(e.target.value) || 1 })}
                       min={1}
                       max={20}
@@ -304,7 +304,7 @@ const PartyTracker = () => {
                     <Input
                       id="ac"
                       type="number"
-                      value={newMember.ac}
+                      value={newMember.ac || 10}
                       onChange={(e) => setNewMember({ ...newMember, ac: parseInt(e.target.value) || 10 })}
                       min={1}
                     />
@@ -316,7 +316,7 @@ const PartyTracker = () => {
                     <Input
                       id="hp"
                       type="number"
-                      value={newMember.hp}
+                      value={newMember.hp || 0}
                       onChange={(e) => setNewMember({ ...newMember, hp: parseInt(e.target.value) || 0 })}
                       min={0}
                     />
@@ -326,7 +326,7 @@ const PartyTracker = () => {
                     <Input
                       id="maxHp"
                       type="number"
-                      value={newMember.maxHp}
+                      value={newMember.maxHp || 1}
                       onChange={(e) => setNewMember({ ...newMember, maxHp: parseInt(e.target.value) || 1 })}
                       min={1}
                     />
@@ -336,7 +336,7 @@ const PartyTracker = () => {
                   <Label htmlFor="notes">Notes (Optional)</Label>
                   <Input
                     id="notes"
-                    value={newMember.notes}
+                    value={newMember.notes || ''}
                     onChange={(e) => setNewMember({ ...newMember, notes: e.target.value })}
                     placeholder="Quick notes..."
                   />

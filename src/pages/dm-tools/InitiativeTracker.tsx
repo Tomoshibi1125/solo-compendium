@@ -368,7 +368,7 @@ const InitiativeTracker = () => {
                             id={`combatant-${combatant.id}-hp`}
                             type="number"
                             min={0}
-                            value={combatant.hp ?? ''}
+                            value={combatant.hp ?? 0}
                             onChange={(e) => updateHP(combatant.id, parseInt(e.target.value) || 0)}
                             aria-label={`HP for ${combatant.name}`}
                           />
@@ -379,7 +379,7 @@ const InitiativeTracker = () => {
                             id={`combatant-${combatant.id}-max-hp`}
                             type="number"
                             min={0}
-                            value={combatant.maxHp ?? ''}
+                            value={combatant.maxHp ?? 0}
                             onChange={(e) => updateMaxHP(combatant.id, parseInt(e.target.value) || 0)}
                             aria-label={`Max HP for ${combatant.name}`}
                           />
@@ -476,7 +476,7 @@ const InitiativeTracker = () => {
                   </Label>
                   <Input
                     id="combatant-name"
-                    value={newCombatant.name}
+                    value={newCombatant.name || ''}
                     onChange={(e) => setNewCombatant({ ...newCombatant, name: e.target.value })}
                     placeholder="Ascendant or Rift creature name"
                     className="font-display"
@@ -489,7 +489,7 @@ const InitiativeTracker = () => {
                   <Input
                     id="combatant-initiative"
                     type="number"
-                    value={newCombatant.initiative}
+                    value={newCombatant.initiative ?? 0}
                     onChange={(e) => setNewCombatant({ ...newCombatant, initiative: parseInt(e.target.value) || 0 })}
                     className="font-display"
                   />
@@ -502,7 +502,7 @@ const InitiativeTracker = () => {
                     <Input
                       id="combatant-hp"
                       type="number"
-                      value={newCombatant.hp}
+                      value={newCombatant.hp ?? 0}
                       onChange={(e) => setNewCombatant({ ...newCombatant, hp: parseInt(e.target.value) || 0 })}
                       className="font-display"
                     />
@@ -514,7 +514,7 @@ const InitiativeTracker = () => {
                     <Input
                       id="combatant-max-hp"
                       type="number"
-                      value={newCombatant.maxHp}
+                      value={newCombatant.maxHp ?? 0}
                       onChange={(e) => setNewCombatant({ ...newCombatant, maxHp: parseInt(e.target.value) || 0 })}
                       className="font-display"
                     />
@@ -527,7 +527,7 @@ const InitiativeTracker = () => {
                   <Input
                     id="combatant-ac"
                     type="number"
-                    value={newCombatant.ac}
+                    value={newCombatant.ac ?? 0}
                     onChange={(e) => setNewCombatant({ ...newCombatant, ac: parseInt(e.target.value) || 0 })}
                     className="font-display"
                   />

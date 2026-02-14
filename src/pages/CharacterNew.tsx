@@ -393,7 +393,8 @@ const CharacterNew = () => {
                 <Label htmlFor="name">Character Name *</Label>
                 <Input
                   id="name"
-                  value={name}
+                  data-testid="character-name"
+                  value={name || ''}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Enter Ascendant name"
                   className="mt-1"
@@ -403,7 +404,7 @@ const CharacterNew = () => {
                 <Label htmlFor="appearance">Appearance</Label>
                 <Input
                   id="appearance"
-                  value={appearance}
+                  value={appearance || ''}
                   onChange={(e) => setAppearance(e.target.value)}
                   placeholder="Brief physical description"
                   className="mt-1"
@@ -413,7 +414,7 @@ const CharacterNew = () => {
                 <Label htmlFor="backstory">Backstory</Label>
                 <Textarea
                   id="backstory"
-                  value={backstory}
+                  value={backstory || ''}
                   onChange={(e) => setBackstory(e.target.value)}
                   placeholder="Ascendant background and history in the post-reset world"
                   className="mt-1"
@@ -484,7 +485,7 @@ const CharacterNew = () => {
                           type="number"
                           min={3}
                           max={18}
-                          value={rolledStats[index] || ''}
+                          value={rolledStats[index] || 0}
                           onChange={(e) => {
                             const value = parseInt(e.target.value) || 0;
                             const newStats = [...rolledStats];
@@ -532,7 +533,7 @@ const CharacterNew = () => {
                       type="number"
                       min={abilityMethod === 'point-buy' ? 8 : abilityMethod === 'manual' ? 3 : undefined}
                       max={abilityMethod === 'point-buy' ? 15 : abilityMethod === 'manual' ? 18 : undefined}
-                      value={abilities[ability]}
+                      value={abilities[ability] || 8}
                       onChange={(e) => {
                         const raw = parseInt(e.target.value, 10);
                         const fallback = abilityMethod === 'manual' ? 3 : 8;
@@ -569,7 +570,7 @@ const CharacterNew = () => {
           {currentStep === 'job' && (
             <div className="space-y-4">
               <Label>Select Job *</Label>
-              <Select value={selectedJob} onValueChange={handleJobChange}>
+              <Select value={selectedJob} onValueChange={handleJobChange} data-testid="character-job">
                 <SelectTrigger>
                   <SelectValue placeholder="Choose a job..." />
                 </SelectTrigger>
@@ -675,7 +676,7 @@ const CharacterNew = () => {
           {currentStep === 'background' && (
             <div className="space-y-4">
               <Label>Select Background *</Label>
-              <Select value={selectedBackground} onValueChange={setSelectedBackground}>
+              <Select value={selectedBackground} onValueChange={setSelectedBackground} data-testid="character-background">
                 <SelectTrigger>
                   <SelectValue placeholder="Choose a background..." />
                 </SelectTrigger>

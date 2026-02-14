@@ -343,7 +343,7 @@ export function getUnifiedHitPoints(
 
 // Calculate unified proficiency bonus (SRD 5e formula)
 export function getUnifiedProficiencyBonus(level: number): number {
-  return Math.floor((level - 1) / 4) + 2;
+  return Math.ceil(level / 4) + 1;
 }
 
 // Calculate System Favor (System Ascendant mechanic adapted as inspiration)

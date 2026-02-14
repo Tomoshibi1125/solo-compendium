@@ -58,7 +58,7 @@ const fullCasterProgression: Record<number, SpellSlots> = {
 // Pact magic progression for Warlocks
 const pactMagicProgression: Record<number, { pactLevel: number; pactSlots: number }> = {
   1: { pactLevel: 1, pactSlots: 1 },
-  2: { pactLevel: 1, pactSlots: 1 },
+  2: { pactLevel: 1, pactSlots: 2 },
   3: { pactLevel: 2, pactSlots: 2 },
   4: { pactLevel: 2, pactSlots: 2 },
   5: { pactLevel: 3, pactSlots: 2 },
@@ -130,13 +130,13 @@ function createEmptySpellSlots(): SpellSlots {
 
 // Get half caster spell slots (Paladin, Ranger)
 function getHalfCasterSlots(level: number): SpellSlots {
-  const fullCasterLevel = Math.ceil(level / 2);
+  const fullCasterLevel = Math.floor(level / 2);
   return fullCasterProgression[fullCasterLevel] || createEmptySpellSlots();
 }
 
 // Get third caster spell slots (Eldritch Knight)
 function getThirdCasterSlots(level: number): SpellSlots {
-  const fullCasterLevel = Math.ceil(level / 3);
+  const fullCasterLevel = Math.floor(level / 3);
   return fullCasterProgression[fullCasterLevel] || createEmptySpellSlots();
 }
 

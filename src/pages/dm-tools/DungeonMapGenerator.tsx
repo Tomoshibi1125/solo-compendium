@@ -320,7 +320,7 @@ const DungeonMapGenerator = () => {
                     <Input
                       id="width"
                       type="number"
-                      value={mapSize.width}
+                      value={mapSize.width || 20}
                       onChange={(e) => setMapSize({ ...mapSize, width: parseInt(e.target.value) || 20 })}
                       min={10}
                       max={50}
@@ -331,7 +331,7 @@ const DungeonMapGenerator = () => {
                     <Input
                       id="height"
                       type="number"
-                      value={mapSize.height}
+                      value={mapSize.height || 20}
                       onChange={(e) => setMapSize({ ...mapSize, height: parseInt(e.target.value) || 20 })}
                       min={10}
                       max={50}

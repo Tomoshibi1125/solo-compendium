@@ -386,7 +386,7 @@ const EncounterBuilder = () => {
                     type="number"
                     min="1"
                     max="20"
-                    value={hunterLevel}
+                    value={hunterLevel || 1}
                     onChange={(e) => setHunterLevel(parseInt(e.target.value) || 1)}
                     className="font-display"
                   />
@@ -400,7 +400,7 @@ const EncounterBuilder = () => {
                     type="number"
                     min="1"
                     max="10"
-                    value={hunterCount}
+                    value={hunterCount || 1}
                     onChange={(e) => setHunterCount(parseInt(e.target.value) || 1)}
                     className="font-display"
                   />
@@ -441,22 +441,6 @@ const EncounterBuilder = () => {
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Button
-                            size="icon"
-                            variant="ghost"
-                            className="h-6 w-6"
-                            onClick={() => updateQuantity(em.id, em.quantity - 1)}
-                            aria-label={`Decrease quantity of ${formatMonarchVernacular(em.monster.name)}`}
-                          >
-                            <Trash2 className="w-3 h-3" />
-                          </Button>
-                          <Input
-                            type="number"
-                            min="1"
-                            value={em.quantity}
-                            onChange={(e) => updateQuantity(em.id, parseInt(e.target.value) || 1)}
-                            className="w-12 h-6 text-xs font-display"
-                          />
                           <Button
                             size="icon"
                             variant="ghost"
@@ -502,7 +486,7 @@ const EncounterBuilder = () => {
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
                     placeholder="Search Rift creatures..."
-                    value={searchQuery}
+                    value={searchQuery || ''}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="pl-10"
                   />
@@ -526,7 +510,6 @@ const EncounterBuilder = () => {
                       type="button"
                       className="p-3 rounded border bg-muted/30 hover:bg-muted/50 transition-colors cursor-pointer"
                       onClick={() => addMonster(monster)}
-                      data-testid="encounter-monster-card"
                     >
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex-1">

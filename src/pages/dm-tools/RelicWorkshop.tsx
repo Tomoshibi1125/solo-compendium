@@ -201,7 +201,7 @@ const RelicWorkshop = () => {
                     <Label htmlFor="name">Relic Name</Label>
                     <Input
                       id="name"
-                      value={currentRelic.name}
+                      value={currentRelic.name || ''}
                       onChange={(e) => setCurrentRelic({ ...currentRelic, name: e.target.value })}
                       placeholder={`e.g., Umbral ${MONARCH_LABEL}'s Dagger`}
                     />
@@ -209,7 +209,7 @@ const RelicWorkshop = () => {
                   <div>
                     <Label htmlFor="rank">Rift Rank</Label>
                     <Select
-                      value={currentRelic.rank}
+                      value={currentRelic.rank || ''}
                       onValueChange={(value) => setCurrentRelic({ ...currentRelic, rank: value })}
                     >
                       <SelectTrigger id="rank">
@@ -230,7 +230,7 @@ const RelicWorkshop = () => {
                   <div>
                     <Label htmlFor="type">Relic Type</Label>
                     <Select
-                      value={currentRelic.type}
+                      value={currentRelic.type || ''}
                       onValueChange={(value: Relic['type']) => setCurrentRelic({ ...currentRelic, type: value })}
                     >
                       <SelectTrigger id="type">
@@ -248,7 +248,7 @@ const RelicWorkshop = () => {
                   <div>
                     <Label htmlFor="rarity">Rarity</Label>
                     <Select
-                      value={currentRelic.rarity}
+                      value={currentRelic.rarity || ''}
                       onValueChange={(value: Relic['rarity']) => setCurrentRelic({ ...currentRelic, rarity: value })}
                     >
                       <SelectTrigger id="rarity">
@@ -269,7 +269,7 @@ const RelicWorkshop = () => {
                   <Label htmlFor="description">Description</Label>
                   <Textarea
                     id="description"
-                    value={currentRelic.description}
+                    value={currentRelic.description || ''}
                     onChange={(e) => setCurrentRelic({ ...currentRelic, description: e.target.value })}
                     placeholder="Describe the relic's appearance, history, and lore..."
                     rows={4}
@@ -298,7 +298,7 @@ const RelicWorkshop = () => {
                     <Label htmlFor="prop-name">Property Name</Label>
                     <Input
                       id="prop-name"
-                      value={newProperty.name}
+                      value={newProperty.name || ''}
                       onChange={(e) => setNewProperty({ ...newProperty, name: e.target.value })}
                       placeholder="e.g., +1 Attack Bonus"
                     />
@@ -306,7 +306,7 @@ const RelicWorkshop = () => {
                   <div>
                     <Label htmlFor="prop-type">Type</Label>
                     <Select
-                      value={newProperty.type}
+                      value={newProperty.type || ''}
                       onValueChange={(value: RelicProperty['type']) => setNewProperty({ ...newProperty, type: value })}
                     >
                       <SelectTrigger id="prop-type">
@@ -324,7 +324,7 @@ const RelicWorkshop = () => {
                   <Label htmlFor="prop-desc">Property Description</Label>
                   <Textarea
                     id="prop-desc"
-                    value={newProperty.description}
+                    value={newProperty.description || ''}
                     onChange={(e) => setNewProperty({ ...newProperty, description: e.target.value })}
                     placeholder="Describe what this property does..."
                     rows={3}

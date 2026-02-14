@@ -721,7 +721,7 @@ const Compendium = () => {
                 <Input
                   placeholder="Search... (e.g., fire damage, type:power, level:>3)"
                   aria-label="Search compendium"
-                  value={searchQuery}
+                  value={searchQuery || ''}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10 bg-card border-border focus:ring-2 focus:ring-primary"
                   autoComplete="off"

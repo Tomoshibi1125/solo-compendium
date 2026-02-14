@@ -361,8 +361,8 @@ export function useMarketplace() {
   const { toast } = useToast();
 
   const marketplaceManager = useMemo(() => new MarketplaceManager(
-    process.env.MARKETPLACE_API_URL || 'https://api.solo-compendium.com',
-    process.env.MARKETPLACE_API_KEY || ''
+    import.meta.env.VITE_MARKETPLACE_API_URL || 'https://api.solo-compendium.com',
+    import.meta.env.VITE_MARKETPLACE_API_KEY || ''
   ), []);
 
   const fetchItems = useCallback(async () => {
