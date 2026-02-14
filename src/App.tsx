@@ -18,6 +18,7 @@ import { PageViewTracker } from "@/components/analytics/PageViewTracker";
 import { RouteEffects } from "@/components/RouteEffects";
 import { setCommandPaletteOpener } from "@/lib/globalShortcuts";
 import { validateEnv } from "@/lib/envValidation";
+import { engineManager } from "@/lib/globalEngineManager";
 import { AuthProvider, useAuth } from "@/lib/auth/authContext";
 import { getRuntimeEnvValue, normalizeBasePath } from "@/lib/runtimeEnv";
 import { isSetupRouteEnabled } from "@/lib/setupAccess";
