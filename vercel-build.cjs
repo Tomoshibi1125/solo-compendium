@@ -15,7 +15,9 @@ let envContent = 'window.__RUNTIME_ENV__ = {\n';
 envVars.forEach(key => {
   const value = process.env[key];
   if (value !== undefined) {
-    envContent += `  ${key}: "${value}",\n`;
+    // Escape JSON strings properly
+    const escapedValue = value.replace(/"/g, '\\"');
+    envContent += `  ${key}: "${escapedValue}",\n`;
   }
 });
 
