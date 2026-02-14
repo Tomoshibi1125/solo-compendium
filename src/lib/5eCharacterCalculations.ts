@@ -1,0 +1,359 @@
+/**
+ * 5e Standard Character Calculations with System Ascendant Flavor
+ * All calculations follow SRD 5e rules exactly
+ */
+
+import type { AbilityScore, Character } from './5eRulesEngine';
+import { getAbilityModifier, getProficiencyBonus as getProficiencyBonusFromRules } from './5eRulesEngine';
+
+// Re-export for convenience
+export const getProficiencyBonus = getProficiencyBonusFromRules;
+
+export interface CharacterStats {
+  level: number;
+  abilities: Record<AbilityScore, number>;
+  savingThrowProficiencies: AbilityScore[];
+  skillProficiencies: string[];
+  skillExpertise: string[];
+  armorClass?: number;
+  speed?: number;
+}
+
+export interface CalculatedStats {
+  proficiencyBonus: number;
+  systemFavorDie: number;
+  systemFavorMax: number;
+  abilityModifiers: Record<AbilityScore, number>;
+  savingThrows: Record<AbilityScore, number>;
+  skills: Record<string, number>;
+  initiative: number;
+  armorClass: number;
+  speed: number;
+  passivePerception: number;
+  carryingCapacity: number;
+}
+
+// Calculate all derived stats using standard 5e formulas
+export function calculateCharacterStats(stats: CharacterStats): CalculatedStats {
+  const { level, abilities, savingThrowProficiencies, skillProficiencies, skillExpertise } = stats;
+  
+  const proficiencyBonus = getProficiencyBonus(level);
+  const systemFavorDie = getSystemFavorDie(level);
+  const systemFavorMax = getSystemFavorMax(level);
+
+  // Calculate ability modifiers (standard 5e formula)
+  const abilityModifiers: Record<AbilityScore, number> = {
+    STR: getAbilityModifier(abilities.STR),
+    DEX: getAbilityModifier(abilities.DEX),
+    CON: getAbilityModifier(abilities.CON),
+    INT: getAbilityModifier(abilities.INT),
+    WIS: getAbilityModifier(abilities.WIS),
+    CHA: getAbilityModifier(abilities.CHA),
+  };
+
+  // Calculate saving throws (standard 5e)
+  const savingThrows: Record<AbilityScore, number> = {
+    STR: abilityModifiers.STR + (savingThrowProficiencies.includes('STR') ? proficiencyBonus : 0),
+    DEX: abilityModifiers.DEX + (savingThrowProficiencies.includes('DEX') ? proficiencyBonus : 0),
+    CON: abilityModifiers.CON + (savingThrowProficiencies.includes('CON') ? proficiencyBonus : 0),
+    INT: abilityModifiers.INT + (savingThrowProficiencies.includes('INT') ? proficiencyBonus : 0),
+    WIS: abilityModifiers.WIS + (savingThrowProficiencies.includes('WIS') ? proficiencyBonus : 0),
+    CHA: abilityModifiers.CHA + (savingThrowProficiencies.includes('CHA') ? proficiencyBonus : 0),
+  };
+
+  // Calculate skills (standard 5e with System Ascendant skill names)
+  const skills: Record<string, number> = {};
+  
+  // Skill to ability mapping (standard 5e)
+  const skillAbilities: Record<string, AbilityScore> = {
+    'athletics': 'STR',
+    'acrobatics': 'DEX',
+    'sleight-of-hand': 'DEX',
+    'stealth': 'DEX',
+    'arcana': 'INT',
+    'history': 'INT',
+    'investigation': 'INT',
+    'nature': 'INT',
+    'religion': 'INT',
+    'animal-handling': 'WIS',
+    'insight': 'WIS',
+    'medicine': 'WIS',
+    'perception': 'WIS',
+    'survival': 'WIS',
+    'deception': 'CHA',
+    'intimidation': 'CHA',
+    'performance': 'CHA',
+    'persuasion': 'CHA',
+  };
+
+  Object.entries(skillAbilities).forEach(([skill, ability]) => {
+    const abilityMod = abilityModifiers[ability];
+    const isProficient = skillProficiencies.includes(skill);
+    const hasExpertise = skillExpertise.includes(skill);
+    
+    let bonus = abilityMod;
+    if (isProficient) bonus += proficiencyBonus;
+    if (hasExpertise) bonus += proficiencyBonus; // Expertise adds proficiency bonus again
+    
+    skills[skill] = bonus;
+  });
+
+  // Calculate initiative (standard 5e - Dexterity modifier)
+  const initiative = abilityModifiers.DEX;
+
+  // AC calculation (standard 5e base 10 + DEX, can be modified by armor)
+  const baseAC = 10 + abilityModifiers.DEX;
+  const armorClass = stats.armorClass ?? baseAC;
+
+  // Speed (standard 5e default 30, can be modified by race/features)
+  const speed = stats.speed ?? 30;
+
+  // Passive Perception (standard 5e: 10 + Perception skill)
+  const passivePerception = 10 + (skills['perception'] || 0);
+
+  // Carrying capacity (standard 5e: STR score × 15)
+  const carryingCapacity = abilities.STR * 15;
+
+  return {
+    proficiencyBonus,
+    systemFavorDie,
+    systemFavorMax,
+    abilityModifiers,
+    savingThrows,
+    skills,
+    initiative,
+    armorClass,
+    speed,
+    passivePerception,
+    carryingCapacity,
+  };
+}
+
+// Calculate HP max using standard 5e formula
+export function calculateHPMax(
+  level: number,
+  hitDieSize: number,
+  conModifier: number
+): number {
+  // First level: full hit die + CON modifier (standard 5e)
+  const firstLevelHP = hitDieSize + conModifier;
+  
+  // Subsequent levels: average roll + CON modifier
+  const subsequentLevels = level - 1;
+  const averagePerLevel = Math.floor(hitDieSize / 2) + 1 + conModifier;
+  const subsequentHP = subsequentLevels * averagePerLevel;
+  
+  return firstLevelHP + subsequentHP;
+}
+
+// Standard 5e spell slot calculations
+export type CasterType = 'full' | 'half' | 'third' | 'artificer' | 'none';
+
+export function getCasterType(job: string | null | undefined): CasterType {
+  if (!job) return 'none';
+  
+  // Full casters (standard 5e)
+  const fullCasters = ['Wizard', 'Cleric', 'Druid', 'Sorcerer'];
+  // Half casters (standard 5e)
+  const halfCasters = ['Paladin', 'Ranger'];
+  // Third casters (standard 5e)
+  const thirdCasters = ['Fighter (Eldritch Knight)', 'Rogue (Arcane Trickster)'];
+  // Artificer special case
+  const artificers = ['Artificer'];
+  
+  // Map System Ascendant jobs to 5e equivalents
+  const jobMapping: Record<string, string> = {
+    'Mage': 'Wizard',
+    'Healer': 'Cleric', 
+    'Warden': 'Druid',
+    'Esper': 'Sorcerer',
+    'Herald': 'Paladin',
+    'Ranger': 'Ranger',
+    'Warrior': 'Fighter (Eldritch Knight)',
+    'Assassin': 'Rogue (Arcane Trickster)',
+    'Techsmith': 'Artificer'
+  };
+  
+  const standardJob = jobMapping[job] || job;
+  
+  if (fullCasters.includes(standardJob)) return 'full';
+  if (halfCasters.includes(standardJob)) return 'half';
+  if (thirdCasters.includes(standardJob)) return 'artificer';
+  if (artificers.includes(standardJob)) return 'artificer';
+  return 'none';
+}
+
+export function getSpellSlotsPerLevel(casterType: CasterType, level: number): Record<number, number> {
+  const slots: Record<number, number> = {
+    1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0
+  };
+
+  if (casterType === 'none' || level === 0) {
+    return slots;
+  }
+
+  // Full caster progression (standard 5e PHB table)
+  if (casterType === 'full') {
+    const fullCasterTable: Record<number, number[]> = {
+      1: [2, 0, 0, 0, 0, 0, 0, 0, 0],
+      2: [3, 0, 0, 0, 0, 0, 0, 0, 0],
+      3: [4, 2, 0, 0, 0, 0, 0, 0, 0],
+      4: [4, 3, 0, 0, 0, 0, 0, 0, 0],
+      5: [4, 3, 2, 0, 0, 0, 0, 0, 0],
+      6: [4, 3, 3, 0, 0, 0, 0, 0, 0],
+      7: [4, 3, 3, 1, 0, 0, 0, 0, 0],
+      8: [4, 3, 3, 2, 0, 0, 0, 0, 0],
+      9: [4, 3, 3, 3, 1, 0, 0, 0, 0],
+      10: [4, 3, 3, 3, 2, 0, 0, 0, 0],
+      11: [4, 3, 3, 3, 2, 1, 0, 0, 0],
+      12: [4, 3, 3, 3, 2, 1, 0, 0, 0],
+      13: [4, 3, 3, 3, 2, 1, 1, 0, 0],
+      14: [4, 3, 3, 3, 2, 1, 1, 0, 0],
+      15: [4, 3, 3, 3, 2, 1, 1, 1, 0],
+      16: [4, 3, 3, 3, 2, 1, 1, 1, 0],
+      17: [4, 3, 3, 3, 2, 1, 1, 1, 1],
+      18: [4, 3, 3, 3, 3, 1, 1, 1, 1],
+      19: [4, 3, 3, 3, 3, 2, 1, 1, 1],
+      20: [4, 3, 3, 3, 3, 2, 2, 1, 1],
+    };
+    
+    const levelSlots = fullCasterTable[Math.min(level, 20)] || fullCasterTable[20];
+    for (let i = 0; i < 9; i++) {
+      slots[i + 1] = levelSlots[i];
+    }
+  }
+
+  // Half caster progression (standard 5e PHB table)
+  if (casterType === 'half') {
+    const halfCasterTable: Record<number, number[]> = {
+      1: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      2: [2, 0, 0, 0, 0, 0, 0, 0, 0],
+      3: [3, 0, 0, 0, 0, 0, 0, 0, 0],
+      4: [3, 0, 0, 0, 0, 0, 0, 0, 0],
+      5: [4, 2, 0, 0, 0, 0, 0, 0, 0],
+      6: [4, 2, 0, 0, 0, 0, 0, 0, 0],
+      7: [4, 3, 0, 0, 0, 0, 0, 0, 0],
+      8: [4, 3, 0, 0, 0, 0, 0, 0, 0],
+      9: [4, 3, 2, 0, 0, 0, 0, 0, 0],
+      10: [4, 3, 2, 0, 0, 0, 0, 0, 0],
+      11: [4, 3, 3, 0, 0, 0, 0, 0, 0],
+      12: [4, 3, 3, 0, 0, 0, 0, 0, 0],
+      13: [4, 3, 3, 1, 0, 0, 0, 0, 0],
+      14: [4, 3, 3, 1, 0, 0, 0, 0, 0],
+      15: [4, 3, 3, 2, 0, 0, 0, 0, 0],
+      16: [4, 3, 3, 2, 0, 0, 0, 0, 0],
+      17: [4, 3, 3, 3, 1, 0, 0, 0, 0],
+      18: [4, 3, 3, 3, 1, 0, 0, 0, 0],
+      19: [4, 3, 3, 3, 2, 0, 0, 0, 0],
+      20: [4, 3, 3, 3, 2, 0, 0, 0, 0],
+    };
+    
+    const levelSlots = halfCasterTable[Math.min(level, 20)] || halfCasterTable[20];
+    for (let i = 0; i < 9; i++) {
+      slots[i + 1] = levelSlots[i];
+    }
+  }
+
+  // Artificer progression (Tasha's Cauldron)
+  if (casterType === 'artificer') {
+    const artificerTable: Record<number, number[]> = {
+      1: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      2: [2, 0, 0, 0, 0, 0, 0, 0, 0],
+      3: [3, 0, 0, 0, 0, 0, 0, 0, 0],
+      4: [3, 0, 0, 0, 0, 0, 0, 0, 0],
+      5: [4, 2, 0, 0, 0, 0, 0, 0, 0],
+      6: [4, 2, 0, 0, 0, 0, 0, 0, 0],
+      7: [4, 3, 0, 0, 0, 0, 0, 0, 0],
+      8: [4, 3, 0, 0, 0, 0, 0, 0, 0],
+      9: [4, 3, 2, 0, 0, 0, 0, 0, 0],
+      10: [4, 3, 2, 0, 0, 0, 0, 0, 0],
+      11: [4, 3, 3, 0, 0, 0, 0, 0, 0],
+      12: [4, 3, 3, 0, 0, 0, 0, 0, 0],
+      13: [4, 3, 3, 1, 0, 0, 0, 0, 0],
+      14: [4, 3, 3, 1, 0, 0, 0, 0, 0],
+      15: [4, 3, 3, 2, 0, 0, 0, 0, 0],
+      16: [4, 3, 3, 2, 0, 0, 0, 0, 0],
+      17: [4, 3, 3, 3, 1, 0, 0, 0, 0],
+      18: [4, 3, 3, 3, 1, 0, 0, 0, 0],
+      19: [4, 3, 3, 3, 2, 0, 0, 0, 0],
+      20: [4, 3, 3, 3, 2, 0, 0, 0, 0],
+    };
+    
+    const levelSlots = artificerTable[Math.min(level, 20)] || artificerTable[20];
+    for (let i = 0; i < 9; i++) {
+      slots[i + 1] = levelSlots[i];
+    }
+  }
+
+  return slots;
+}
+
+// Get spellcasting ability (standard 5e)
+export function getSpellcastingAbility(job: string | null | undefined): AbilityScore | null {
+  if (!job) return null;
+  
+  // Map System Ascendant jobs to standard 5e spellcasting abilities
+  const jobAbilityMap: Record<string, AbilityScore> = {
+    'Mage': 'INT',
+    'Esper': 'CHA',
+    'Techsmith': 'INT',
+    'Healer': 'WIS',
+    'Warden': 'WIS',
+    'Ranger': 'WIS',
+    'Herald': 'CHA',
+    'Warrior': 'INT', // Eldritch Knight
+    'Assassin': 'INT', // Arcane Trickster
+  };
+  
+  return jobAbilityMap[job] || null;
+}
+
+// Calculate spells known limit (standard 5e)
+export function getSpellsKnownLimit(job: string | null | undefined, level: number): number | null {
+  if (!job) return null;
+  
+  // Known casters (Sorcerer, Warlock) have limits
+  if (job === 'Esper') { // Sorcerer equivalent
+    return level + 1; // Standard Sorcerer spells known
+  }
+  
+  // Other classes are prepared casters
+  return null;
+}
+
+// Calculate spells prepared limit (standard 5e)
+export function getSpellsPreparedLimit(
+  job: string | null | undefined,
+  level: number,
+  abilityModifier: number
+): number | null {
+  if (!job) return null;
+  
+  const spellcastingAbility = getSpellcastingAbility(job);
+  if (!spellcastingAbility) return null;
+  
+  // Prepared casters: ability modifier + level (minimum 1) - standard 5e
+  const preparedCasters = ['Mage', 'Healer', 'Warden', 'Herald', 'Ranger', 'Techsmith'];
+  if (preparedCasters.includes(job)) {
+    return Math.max(1, abilityModifier + level);
+  }
+  
+  return null;
+}
+
+// System Favor calculations (mapped to various 5e inspiration mechanics)
+export function getSystemFavorDie(level: number): number {
+  // Similar to Bardic Inspiration die progression
+  if (level <= 4) return 6;
+  if (level <= 10) return 8;
+  if (level <= 16) return 10;
+  return 12;
+}
+
+export function getSystemFavorMax(level: number): number {
+  // Similar to Bardic Inspiration uses
+  if (level <= 4) return 1;
+  if (level <= 10) return 2;
+  if (level <= 16) return 3;
+  return 4;
+}
