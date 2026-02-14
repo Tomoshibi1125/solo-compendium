@@ -64,7 +64,7 @@ export class GlobalEngineManager {
   }
 
   private initializeEngines(): void {
-    // 3D ENGINES
+    // ONLY BEST-IN-CLASS ENGINES - Simplified for default use
     this.engines.set('three', {
       name: 'Three.js',
       type: '3d',
@@ -87,29 +87,7 @@ export class GlobalEngineManager {
       license: 'Apache-2.0'
     });
 
-    this.engines.set('playcanvas', {
-      name: 'PlayCanvas',
-      type: '3d',
-      version: '1.68.0',
-      features: ['WebGL', 'Physics', 'Networking', 'Collaboration', 'Cloud Build'],
-      performance: 'high',
-      learningCurve: 'medium',
-      documentation: 'https://developer.playcanvas.com/',
-      license: 'MIT'
-    });
-
-    this.engines.set('zephyr3d', {
-      name: 'Zephyr3D',
-      type: '3d',
-      version: '0.3.0',
-      features: ['WebGPU', 'TypeScript', 'Modern Architecture', 'High Performance'],
-      performance: 'high',
-      learningCurve: 'medium',
-      documentation: 'https://zephyr3d.dev/',
-      license: 'MIT'
-    });
-
-    // GAME ENGINES
+    // BEST GAME ENGINE - Phaser (most features, easiest to use)
     this.engines.set('phaser', {
       name: 'Phaser',
       type: 'game',
@@ -121,51 +99,7 @@ export class GlobalEngineManager {
       license: 'MIT'
     });
 
-    this.engines.set('kaboom', {
-      name: 'Kaboom',
-      type: 'game',
-      version: '3000.0.0',
-      features: ['2D', 'Physics', 'Animation', 'Particles', 'Simple API'],
-      performance: 'medium',
-      learningCurve: 'easy',
-      documentation: 'https://kaboom.js/',
-      license: 'MIT'
-    });
-
-    this.engines.set('kontra', {
-      name: 'Kontra',
-      type: 'game',
-      version: '8.0.0',
-      features: ['2D', 'Lightweight', 'Functional', 'Game Loop', 'Rendering'],
-      performance: 'high',
-      learningCurve: 'easy',
-      documentation: 'https://straker.github.io/kontra/',
-      license: 'MIT'
-    });
-
-    this.engines.set('excalibur', {
-      name: 'Excalibur',
-      type: 'game',
-      version: '0.29.0',
-      features: ['2D/3D', 'Physics', 'Animation', 'Particles', 'TypeScript'],
-      performance: 'medium',
-      learningCurve: 'medium',
-      documentation: 'https://excaliburjs.com/',
-      license: 'Apache-2.0'
-    });
-
-    this.engines.set('melonjs', {
-      name: 'MelonJS',
-      type: 'game',
-      version: '2.0.0',
-      features: ['2D', 'Physics', 'Animation', 'Tiled Maps', 'Plugins'],
-      performance: 'medium',
-      learningCurve: 'medium',
-      documentation: 'https://melonjs.org/',
-      license: 'MIT'
-    });
-
-    // PHYSICS ENGINES
+    // BEST PHYSICS ENGINE - Cannon-ES (modern, industry standard)
     this.engines.set('cannon-es', {
       name: 'Cannon-ES',
       type: 'physics',
@@ -177,40 +111,7 @@ export class GlobalEngineManager {
       license: 'MIT'
     });
 
-    this.engines.set('ammo.js', {
-      name: 'Ammo.js',
-      type: 'physics',
-      version: '0.6.0',
-      features: ['3D Physics', 'Bullet Physics', 'Rigid Bodies', 'Collision Detection', 'High Performance'],
-      performance: 'high',
-      learningCurve: 'hard',
-      documentation: 'https://github.com/kripken/ammo.js/',
-      license: 'Zlib'
-    });
-
-    this.engines.set('box2d-wasm', {
-      name: 'Box2D-WASM',
-      type: 'physics',
-      version: '0.25.0',
-      features: ['2D Physics', 'WASM Performance', 'Collision Detection', 'Rigid Bodies'],
-      performance: 'high',
-      learningCurve: 'medium',
-      documentation: 'https://github.com/kripken/box2d-wasm',
-      license: 'MIT'
-    });
-
-    this.engines.set('planck-js', {
-      name: 'Planck-JS',
-      type: 'physics',
-      version: '0.3.0',
-      features: ['2D Physics', 'Box2D Port', 'Collision Detection', 'Performance'],
-      performance: 'medium',
-      learningCurve: 'medium',
-      documentation: 'https://github.com/shakiba/planck.js',
-      license: 'MIT'
-    });
-
-    // RENDERING ENGINES
+    // BEST DATA VISUALIZATION - D3.js (industry standard)
     this.engines.set('d3', {
       name: 'D3.js',
       type: 'rendering',
@@ -222,81 +123,15 @@ export class GlobalEngineManager {
       license: 'BSD'
     });
 
-    this.engines.set('p5', {
-      name: 'p5.js',
-      type: 'rendering',
-      version: '1.10.0',
-      features: ['2D/3D Graphics', 'Creative Coding', 'Animation', 'Interactive'],
-      performance: 'medium',
-      learningCurve: 'easy',
-      documentation: 'https://p5js.org/reference/',
-      license: 'LGPL'
-    });
-
-    this.engines.set('two.js', {
-      name: 'Two.js',
-      type: 'rendering',
-      version: '0.8.0',
-      features: ['2D Graphics', 'Animation', 'Vector Math', 'Scenes'],
+    // BEST WEBGPU ENGINE - Zephyr3D (modern, WebGPU-first)
+    this.engines.set('zephyr3d', {
+      name: 'Zephyr3D',
+      type: '3d',
+      version: '0.3.0',
+      features: ['WebGPU', 'TypeScript', 'Modern Architecture', 'High Performance'],
       performance: 'high',
       learningCurve: 'medium',
-      documentation: 'https://two.js.org/',
-      license: 'MIT'
-    });
-
-    this.engines.set('hilo', {
-      name: 'Hilo',
-      type: 'rendering',
-      version: '2.0.0',
-      features: ['2D/3D', 'Animation', 'Physics', 'Audio', 'Multi-platform'],
-      performance: 'medium',
-      learningCurve: 'medium',
-      documentation: 'https://hilointeractive.com/',
-      license: 'MIT'
-    });
-
-    this.engines.set('pixi.js', {
-      name: 'PixiJS',
-      type: 'rendering',
-      version: '8.13.2',
-      features: ['2D WebGL', 'High Performance', 'Particles', 'Filters', 'Interaction'],
-      performance: 'high',
-      learningCurve: 'medium',
-      documentation: 'https://pixijs.io/',
-      license: 'MIT'
-    });
-
-    // WEBGPU & WEBGL UTILITIES
-    this.engines.set('webgpu-utils', {
-      name: 'WebGPU Utils',
-      type: 'webgpu',
-      version: '0.2.0',
-      features: ['WebGPU', 'Modern Graphics', 'Cross-platform', 'High Performance'],
-      performance: 'high',
-      learningCurve: 'hard',
-      documentation: 'https://github.com/toji/webgpu-utils',
-      license: 'MIT'
-    });
-
-    this.engines.set('twgl.js', {
-      name: 'TWGL.js',
-      type: 'rendering',
-      version: '5.5.0',
-      features: ['WebGL', 'Matrix Math', 'Shaders', 'High Performance'],
-      performance: 'high',
-      learningCurve: 'hard',
-      documentation: 'https://twgljs.org/',
-      license: 'MIT'
-    });
-
-    this.engines.set('regl', {
-      name: 'REGL',
-      type: 'rendering',
-      version: '2.1.0',
-      features: ['WebGL', 'Functional', 'High Performance', 'React-like'],
-      performance: 'high',
-      learningCurve: 'hard',
-      documentation: 'https://regl.party/',
+      documentation: 'https://zephyr3d.dev/',
       license: 'MIT'
     });
   }
@@ -405,15 +240,15 @@ export class GlobalEngineManager {
     return new Map(this.activeEngines);
   }
 
-  public getBestEngineForUseCase(useCase: '3d-graphics' | '2d-game' | 'physics-simulation' | 'data-visualization' | 'webgpu-graphics'): EngineCapabilities | null {
+  public getBestEngineForUseCase(useCase: string): EngineCapabilities | null {
     switch (useCase) {
       case '3d-graphics':
         // Best for 3D graphics: Babylon.js (easiest) or Three.js (most flexible)
         return this.engines.get('babylonjs') || this.engines.get('three');
       
       case '2d-game':
-        // Best for 2D games: Kaboom (easiest) or Phaser (most features)
-        return this.engines.get('kaboom') || this.engines.get('phaser');
+        // Best for 2D games: Phaser (most features) or Kaboom (easiest)
+        return this.engines.get('phaser') || this.engines.get('kaboom');
       
       case 'physics-simulation':
         // Best for physics: Cannon-ES (modern) or Ammo.js (industry standard)

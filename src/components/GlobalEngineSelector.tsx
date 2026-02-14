@@ -210,17 +210,17 @@ export function GlobalEngineSelector({
         </CardContent>
       </Card>
 
-      {/* Engine Selection */}
+      {/* Engine Selection - Only Best Engines Shown */}
       <Card className="mb-6">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Globe className="w-5 h-5" />
-            Available Engines ({enginesByType.size})
+            <Star className="w-5 h-5 text-yellow-500" />
+            Best Available Engines
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {Array.from(enginesByType.values()).map((engine) => (
+            {Array.from(enginesByType.values()).filter(engine => engine.isBest).map((engine) => (
               <Card 
                 key={engine.name} 
                 className={`cursor-pointer transition-all hover:shadow-lg ${
