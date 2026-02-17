@@ -5,6 +5,7 @@ import { Loader2 } from 'lucide-react';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { SystemSigilLogo } from '@/components/ui/SystemSigilLogo';
 import { logger } from '@/lib/logger';
+import { isSafeNextPath } from '@/lib/campaignInviteUtils';
 
 export default function AuthCallback() {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ export default function AuthCallback() {
       const code = searchParams.get('code');
       const error = searchParams.get('error');
       const errorDescription = searchParams.get('error_description');
+      const queryNext = searchParams.get('next');
 
       if (error) {
         logger.error('Auth callback error:', error, errorDescription);
@@ -88,6 +90,22 @@ export default function AuthCallback() {
 
         if (!role) {
           navigate('/auth');
+          return;
+        }
+
+        const pendingNext =
+          typeof window !== 'undefined' ? localStorage.getItem('pending-auth-next') : null;
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('pending-auth-next');
+        }
+
+        const resumePath =
+          (isSafeNextPath(queryNext) && queryNext) ||
+          (isSafeNextPath(pendingNext) && pendingNext) ||
+          null;
+
+        if (resumePath) {
+          navigate(resumePath);
           return;
         }
 

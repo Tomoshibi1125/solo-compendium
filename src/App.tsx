@@ -16,6 +16,7 @@ import { OfflineIndicator } from "@/components/ui/OfflineIndicator";
 import { AnalyticsConsentBanner } from "@/components/ui/AnalyticsConsentBanner";
 import { PageViewTracker } from "@/components/analytics/PageViewTracker";
 import { RouteEffects } from "@/components/RouteEffects";
+import { OfflineStatus } from "@/components/pwa/PWAComponents";
 import { setCommandPaletteOpener } from "@/lib/globalShortcuts";
 import { validateEnv } from "@/lib/envValidation";
 import { engineManager } from "@/lib/globalEngineManager";
@@ -27,6 +28,8 @@ import { isSupabaseConfigured } from "@/integrations/supabase/client";
 import GlobalEffects from "@/components/ui/GlobalEffects";
 import PerformancePreload from "@/components/PerformancePreload";
 import { PerformanceProvider } from "@/lib/performanceProfile";
+import { useOfflineSyncStatus } from "@/hooks/useOfflineSyncStatus";
+import { useOfflineCacheWarmer } from "@/hooks/useOfflineCacheWarmer";
 import Login from "./pages/Login";
 import PlayerTools from "./pages/PlayerTools";
 import TestUserSetup from "./pages/TestUserSetup";
@@ -73,6 +76,7 @@ const AudioManagerDM = lazy(() => import("./pages/dm-tools/AudioManager"));
 const VTTMap = lazy(() => import("./pages/dm-tools/VTTMap"));
 const VTTEnhanced = lazy(() => import("./pages/dm-tools/VTTEnhanced"));
 const VTTJournal = lazy(() => import("./pages/dm-tools/VTTJournal"));
+const PlayerMapView = lazy(() => import("./pages/player-tools/PlayerMapView"));
 const DiceRoller = lazy(() => import("./pages/DiceRoller"));
 const Favorites = lazy(() => import("./pages/Favorites"));
 const Campaigns = lazy(() => import("./pages/Campaigns"));
@@ -80,6 +84,7 @@ const CampaignDetail = lazy(() => import("./pages/CampaignDetail"));
 const CampaignJoin = lazy(() => import("./pages/CampaignJoin"));
 const CharacterCompare = lazy(() => import("./pages/CharacterCompare"));
 const Homebrew = lazy(() => import("./pages/Homebrew"));
+const MarketplacePage = lazy(() => import("./pages/Marketplace"));
 const Auth = lazy(() => import("./pages/Auth"));
 const AuthCallback = lazy(() => import("./pages/AuthCallback"));
 const Landing = lazy(() => import("./pages/Landing"));
@@ -145,6 +150,9 @@ const AppContent = () => {
   // Enable global keyboard shortcuts (must be inside Router context)
   useGlobalShortcuts(true);
   
+  // Warm IndexedDB offline cache with compendium + character data
+  useOfflineCacheWarmer();
+  
   // Register command palette opener
   useEffect(() => {
     setCommandPaletteOpener(() => setCommandPaletteOpen(true));
@@ -209,10 +217,26 @@ const AppContent = () => {
         }
       />
       <Route
+        path="/marketplace"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <MarketplacePage />
+          </Suspense>
+        }
+      />
+      <Route
         path="/player-tools"
         element={
           <Suspense fallback={<PageLoader />}>
             <PlayerTools />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/player-tools/map"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <PlayerMapView />
           </Suspense>
         }
       />
@@ -619,6 +643,7 @@ const App = () => {
   const routerBase = normalizeBasePath(
     getRuntimeEnvValue('VITE_ROUTER_BASE') || getRuntimeEnvValue('VITE_BASE_PATH') || import.meta.env.BASE_URL
   );
+  const { isOnline, queueLength } = useOfflineSyncStatus();
 
   return (
     <ErrorBoundary>
@@ -639,6 +664,11 @@ const App = () => {
                   </BrowserRouter>
                   <ServiceWorkerUpdatePrompt />
                   <OfflineIndicator />
+                  <OfflineStatus
+                    isOnline={isOnline}
+                    connectionType="unknown"
+                    syncQueueLength={queueLength}
+                  />
                   <AnalyticsConsentBanner />
                 </AuthProvider>
               </PerformanceProvider>

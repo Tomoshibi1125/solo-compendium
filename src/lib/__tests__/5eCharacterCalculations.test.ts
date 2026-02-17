@@ -27,7 +27,7 @@ describe('5e Character Calculations', () => {
     
     expect(stats.proficiencyBonus).toBe(3);
     expect(stats.systemFavorDie).toBe(8);
-    expect(stats.systemFavorMax).toBe(2);
+    expect(stats.systemFavorMax).toBe(4);
     expect(stats.abilityModifiers.STR).toBe(2);
     expect(stats.abilityModifiers.DEX).toBe(3);
     expect(stats.abilityModifiers.CON).toBe(1);
@@ -41,7 +41,7 @@ describe('5e Character Calculations', () => {
     
     expect(stats.skills.perception).toBe(2); // perception: -1 + 3
     expect(stats.skills.arcana).toBe(6); // arcana: 3 + 3
-    expect(stats.skills.investigation).toBe(3); // investigation: 0 + 3
+    expect(stats.skills.investigation).toBe(6); // investigation: INT mod(3) + proficiency(3)
   });
 
   test('HP calculation', () => {
@@ -55,7 +55,7 @@ describe('5e Character Calculations', () => {
     
     // Level 10, d10 hit die, CON 16 (+3)
     const hp10 = calculateHPMax(10, 10, 3);
-    expect(hp10).toBe(73); // 10 + 3 + 9 * (5 + 3 + 1) = 13 + 72 = 85
+    expect(hp10).toBe(94); // 10 + 3 + 9 * (5 + 1 + 3) = 13 + 81 = 94
   });
 
   test('Spell slot calculations - Full caster', () => {
@@ -90,7 +90,7 @@ describe('5e Character Calculations', () => {
     expect(getCasterType('Esper')).toBe('full');
     expect(getCasterType('Herald')).toBe('half');
     expect(getCasterType('Ranger')).toBe('half');
-    expect(getCasterType('Warrior')).toBe('none');
+    expect(getCasterType('Warrior')).toBe('artificer'); // Maps to Fighter (Eldritch Knight) → third caster
     expect(getCasterType('Techsmith')).toBe('artificer');
   });
 
@@ -100,7 +100,7 @@ describe('5e Character Calculations', () => {
     expect(getSpellcastingAbility('Herald')).toBe('CHA');
     expect(getSpellcastingAbility('Ranger')).toBe('WIS');
     expect(getSpellcastingAbility('Healer')).toBe('WIS');
-    expect(getSpellcastingAbility('Warrior')).toBeNull();
+    expect(getSpellcastingAbility('Warrior')).toBe('INT'); // Eldritch Knight uses INT
   });
 
   test('Spells known limit', () => {

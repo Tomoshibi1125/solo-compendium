@@ -14,6 +14,7 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useEquipment } from '@/hooks/useEquipment';
 import { useToast } from '@/hooks/use-toast';
+import { filterRowsBySourcebookAccess, getCharacterCampaignId } from '@/lib/sourcebookAccess';
 import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
 
 export function AddEquipmentDialog({
@@ -30,7 +31,7 @@ export function AddEquipmentDialog({
   const { toast } = useToast();
 
   const { data: equipment = [], isLoading } = useQuery({
-    queryKey: ['compendium-equipment', searchQuery],
+    queryKey: ['compendium-equipment', characterId, searchQuery],
     queryFn: async () => {
       let query = supabase
         .from('compendium_equipment')
@@ -45,7 +46,13 @@ export function AddEquipmentDialog({
 
       const { data, error } = await query;
       if (error) throw error;
-      return data || [];
+
+      const campaignId = await getCharacterCampaignId(characterId);
+      return filterRowsBySourcebookAccess(
+        data || [],
+        (item) => item.source_book,
+        { campaignId }
+      );
     },
     enabled: open,
   });

@@ -27,45 +27,66 @@ export function ServiceWorkerUpdatePrompt() {
       return;
     }
 
+    let active = true;
+    let updateInterval: ReturnType<typeof setInterval> | null = null;
+    let removeWaitingListener: (() => void) | null = null;
+
     // Import workbox-window dynamically
-    import('workbox-window').then(({ Workbox }) => {
+    void import('workbox-window').then(({ Workbox }) => {
+      if (!active) return;
+
       const wb = new Workbox('/sw.js');
 
       // Listen for updates
-      wb.addEventListener('waiting', () => {
+      const handleWaiting = () => {
+        if (!active) return;
+
         setUpdateAvailable(true);
         // Store the waiting service worker
         if (navigator.serviceWorker.controller) {
-          navigator.serviceWorker.getRegistration().then((registration) => {
+          navigator.serviceWorker.getRegistration('/sw.js').then((registration) => {
+            if (!active) return;
             if (registration?.waiting) {
               setWaitingWorker(registration.waiting);
             }
           });
         }
-      });
+      };
+
+      wb.addEventListener('waiting', handleWaiting);
+      removeWaitingListener = () => wb.removeEventListener('waiting', handleWaiting);
 
       // Register the service worker
       wb.register()
         .then(() => {
+          if (!active) return;
+
           if (import.meta.env.DEV) {
             logger.debug('[SW] Service worker registered');
           }
+
           // Check for updates immediately
           wb.update();
+
+          // Check for updates periodically (every hour)
+          updateInterval = setInterval(() => {
+            void wb.update();
+          }, 60 * 60 * 1000);
         })
         .catch((error) => {
           logger.warn('[SW] Service worker registration failed:', error);
         });
-
-      // Check for updates periodically (every hour)
-      const updateInterval = setInterval(() => {
-        wb.update();
-      }, 60 * 60 * 1000);
-
-      return () => {
-        clearInterval(updateInterval);
-      };
     });
+
+    return () => {
+      active = false;
+      if (updateInterval) {
+        clearInterval(updateInterval);
+      }
+      if (removeWaitingListener) {
+        removeWaitingListener();
+      }
+    };
   }, []);
 
   const handleUpdate = () => {

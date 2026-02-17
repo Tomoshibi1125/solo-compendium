@@ -36,9 +36,9 @@ export default function TestUserSetup() {
             <br />
             <strong>Test Accounts:</strong>
             <br />
-            DM: dm@test.com / testpassword123
+            DM: dm@test.com / test1234
             <br />
-            Player: player@test.com / testpassword123
+            Player: player@test.com / test1234
           </div>
 
           <Button 

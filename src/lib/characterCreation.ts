@@ -11,6 +11,11 @@ import {
   addLocalPower,
   isLocalCharacterId,
 } from '@/lib/guestStore';
+import {
+  filterRowsBySourcebookAccess,
+  getCharacterCampaignId,
+  isSourcebookAccessible,
+} from '@/lib/sourcebookAccess';
 
 type Job = Database['public']['Tables']['compendium_jobs']['Row'];
 type Background = Database['public']['Tables']['compendium_backgrounds']['Row'];
@@ -23,6 +28,8 @@ export async function addLevel1Features(
   jobId: string,
   pathId?: string
 ): Promise<void> {
+  const campaignId = await getCharacterCampaignId(characterId);
+
   // Get level 1 job features
   const { data: jobFeatures } = await supabase
     .from('compendium_job_features')
@@ -31,8 +38,14 @@ export async function addLevel1Features(
     .eq('level', 1)
     .eq('is_path_feature', false);
 
-  if (jobFeatures) {
-    for (const feature of jobFeatures) {
+  const accessibleJobFeatures = await filterRowsBySourcebookAccess(
+    jobFeatures || [],
+    (feature) => feature.source_name,
+    { campaignId }
+  );
+
+  if (accessibleJobFeatures.length > 0) {
+    for (const feature of accessibleJobFeatures) {
       let usesMax: number | null = null;
       if (feature.uses_formula) {
         // Parse formula (e.g., "proficiency bonus", "level")
@@ -81,8 +94,14 @@ export async function addLevel1Features(
       .eq('level', 1)
       .eq('is_path_feature', true);
 
-    if (pathFeatures) {
-      for (const feature of pathFeatures) {
+    const accessiblePathFeatures = await filterRowsBySourcebookAccess(
+      pathFeatures || [],
+      (feature) => feature.source_name,
+      { campaignId }
+    );
+
+    if (accessiblePathFeatures.length > 0) {
+      for (const feature of accessiblePathFeatures) {
         let usesMax: number | null = null;
         if (feature.uses_formula) {
           if (feature.uses_formula.includes('proficiency')) {
@@ -161,6 +180,8 @@ export async function addStartingEquipment(
   job: Job,
   background?: Background
 ): Promise<void> {
+  const campaignId = await getCharacterCampaignId(characterId);
+
   // Jobs don't have starting_equipment column - skip job equipment for now
   // In a full implementation, job starting equipment would be defined elsewhere
 
@@ -176,7 +197,10 @@ export async function addStartingEquipment(
         .limit(1)
         .maybeSingle();
 
-      if (equipment) {
+      if (
+        equipment &&
+        (await isSourcebookAccessible(equipment.source_book, { campaignId }))
+      ) {
         if (isLocalCharacterId(characterId)) {
           addLocalEquipment(characterId, {
             name: equipment.name,
@@ -228,6 +252,8 @@ export async function addStartingPowers(
   characterId: string,
   job: Job
 ): Promise<void> {
+  const campaignId = await getCharacterCampaignId(characterId);
+
   // Get powers available to this job at level 1
   const { data: powers } = await supabase
     .from('compendium_powers')
@@ -235,8 +261,14 @@ export async function addStartingPowers(
     .contains('job_names', [job.name])
     .lte('power_level', 1); // Level 1 or cantrips
 
-  if (powers) {
-    for (const power of powers) {
+  const accessiblePowers = await filterRowsBySourcebookAccess(
+    powers || [],
+    (power) => power.source_book,
+    { campaignId }
+  );
+
+  if (accessiblePowers.length > 0) {
+    for (const power of accessiblePowers) {
       if (isLocalCharacterId(characterId)) {
         addLocalPower(characterId, {
           name: power.name,

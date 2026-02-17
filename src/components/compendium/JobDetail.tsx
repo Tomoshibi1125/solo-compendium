@@ -7,6 +7,7 @@ import { Swords, Shield, Heart, Zap, Wand2 } from 'lucide-react';
 import { DetailHeader } from './DetailHeader';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
 import { formatMonarchVernacular } from '@/lib/vernacular';
+import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 
 interface JobData {
   id: string;
@@ -55,36 +56,53 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 
   useEffect(() => {
     const fetchRelatedData = async () => {
-    const [featuresRes, pathsRes, powersRes] = await Promise.all([
-      supabase
-        .from('compendium_job_features')
-        .select('*')
-        .eq('job_id', data.id)
-        .eq('is_path_feature', false)
-        .order('level'),
-      supabase
-        .from('compendium_job_paths')
-        .select('*')
-        .eq('job_id', data.id)
-        .order('name'),
-      supabase
-        .from('compendium_powers')
-        .select('id, name, display_name, power_level')
-        .contains('job_names', [data.name])
-        .limit(10),
-    ]);
+      const [featuresRes, pathsRes, powersRes] = await Promise.all([
+        supabase
+          .from('compendium_job_features')
+          .select('*')
+          .eq('job_id', data.id)
+          .eq('is_path_feature', false)
+          .order('level'),
+        supabase
+          .from('compendium_job_paths')
+          .select('*')
+          .eq('job_id', data.id)
+          .order('name'),
+        supabase
+          .from('compendium_powers')
+          .select('id, name, display_name, power_level, source_book')
+          .contains('job_names', [data.name])
+          .limit(10),
+      ]);
 
-      if (featuresRes.data) setFeatures(featuresRes.data.map(feature => ({
+      const featureRows = (featuresRes.data || []) as Array<JobFeature & { source_name?: string | null }>;
+      const pathRows = (pathsRes.data || []) as Array<JobPath & { source_book?: string | null }>;
+      const powerRows = (powersRes.data || []) as Array<{
+        id: string;
+        name: string;
+        display_name?: string | null;
+        power_level: number;
+        source_book?: string | null;
+      }>;
+
+      const [accessibleFeatures, accessiblePaths, accessiblePowers] = await Promise.all([
+        filterRowsBySourcebookAccess(featureRows, (feature) => feature.source_name),
+        filterRowsBySourcebookAccess(pathRows, (path) => path.source_book),
+        filterRowsBySourcebookAccess(powerRows, (power) => power.source_book),
+      ]);
+
+      setFeatures(accessibleFeatures.map(feature => ({
         ...feature,
         action_type: feature.action_type ?? undefined,
         display_name: feature.display_name ?? undefined,
-        generated_reason: feature.generated_reason ?? undefined,
-        uses_formula: feature.uses_formula ?? undefined,
-        aliases: feature.aliases ?? undefined,
-        recharge: feature.recharge ?? undefined
       })));
-      if (pathsRes.data) setPaths(pathsRes.data);
-      if (powersRes.data) setRelatedPowers(powersRes.data);
+      setPaths(accessiblePaths);
+      setRelatedPowers(accessiblePowers.map((power) => ({
+        id: power.id,
+        name: power.name,
+        display_name: power.display_name ?? null,
+        power_level: power.power_level,
+      })));
     };
 
     fetchRelatedData();

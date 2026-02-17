@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { isSupabaseConfigured, supabase } from '@/integrations/supabase/client';
 import { staticDataProvider } from '@/data/compendium/staticDataProvider';
 import type { StaticCompendiumEntry } from '@/data/compendium/staticDataProvider';
-import type { Database } from '@/integrations/supabase/types';
 import { logger } from '@/lib/logger';
+import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 
 // Define the interface to match Compendium.tsx exactly
 export interface CompendiumEntry {
@@ -32,6 +32,8 @@ export interface CompendiumEntry {
   ability?: string | null;
   rune_type?: string | null;
   rune_category?: string | null;
+  role?: string | null;
+  rank?: string | null;
 }
 
 // ALL categories to preload at startup - comprehensive loading
@@ -43,21 +45,33 @@ const STARTUP_CATEGORIES = [
 
 type StartupCategory = (typeof STARTUP_CATEGORIES)[number];
 
-const STARTUP_TABLES: Record<StartupCategory, keyof Database['public']['Tables']> = {
-  jobs: 'compendium_jobs',
-  paths: 'compendium_job_paths',
-  powers: 'compendium_powers',
-  runes: 'compendium_runes',
-  relics: 'compendium_relics',
-  monsters: 'compendium_monsters',
-  backgrounds: 'compendium_backgrounds',
-  conditions: 'compendium_conditions',
-  monarchs: 'compendium_monarchs',
-  feats: 'compendium_feats',
-  skills: 'compendium_skills',
-  equipment: 'compendium_equipment',
-  'shadow-soldiers': 'compendium_shadow_soldiers',
+type StartupSupabaseEntry = {
+  id: string;
+  name: string;
+  display_name?: string | null;
+  description?: string | null;
+  created_at?: string;
+  tags?: string[] | null;
+  source_book?: string | null;
+  image_url?: string | null;
+  rarity?: string | null;
+  cr?: string | null;
+  gate_rank?: string | null;
+  is_boss?: boolean | null;
+  power_level?: number | null;
+  school?: string | null;
+  rune_type?: string | null;
+  rune_category?: string | null;
+  rune_level?: number | null;
+  equipment_type?: string | null;
+  ability?: string | null;
+  prerequisites?: string | Record<string, unknown> | null;
+  title?: string | null;
+  theme?: string | null;
+  role?: string | null;
+  rank?: string | null;
 };
+
 const STARTUP_LIMIT = 50; // Load more items per category for comprehensive display
 
 interface StartupData {
@@ -124,7 +138,11 @@ export const useStartupData = () => {
           }
 
           // Transform and limit to startup limit
-          const limitedData = data.slice(0, STARTUP_LIMIT);
+          const accessibleData = await filterRowsBySourcebookAccess(
+            data,
+            (item) => item.source_book
+          );
+          const limitedData = accessibleData.slice(0, STARTUP_LIMIT);
           allEntries.push(...limitedData.map(item => ({
             id: item.id,
             name: item.display_name || item.name,
@@ -132,15 +150,16 @@ export const useStartupData = () => {
             description: item.description || 'No description available', // Ensure description is always provided
             rarity: item.rarity || 'common',
             tags: item.tags || [],
+            level: item.level ?? undefined,
             created_at: item.created_at,
             source_book: item.source_book,
             image_url: item.image_url,
             isFavorite: false,
             // Include type-specific fields
             ...(category === 'monsters' && {
-              cr: item.cr,
-              gate_rank: item.gate_rank,
-              is_boss: item.is_boss,
+              cr: item.cr ?? undefined,
+              gate_rank: item.gate_rank ?? undefined,
+              is_boss: item.is_boss ?? undefined,
             }),
             ...(category === 'powers' && {
               power_level: item.power_level,
@@ -149,12 +168,10 @@ export const useStartupData = () => {
             ...(category === 'runes' && {
               rune_type: item.rune_type,
               rune_category: item.rune_category,
-              rarity: item.rarity,
+              level: item.rune_level ?? undefined,
             }),
             ...(category === 'equipment' && {
               equipment_type: item.equipment_type,
-              damage: item.damage,
-              armor_class: item.armor_class,
             }),
             ...(category === 'skills' && {
               ability: item.ability,
@@ -175,7 +192,7 @@ export const useStartupData = () => {
             }),
           })));
 
-          totalCounts[category] = data.length;
+          totalCounts[category] = accessibleData.length;
         }
 
         return {
@@ -277,28 +294,28 @@ export const useStartupData = () => {
           const { data, error } = await query;
           if (error || !data) return { entries: [], count: 0 };
 
-          // Get total count for this category
-          const tableName = STARTUP_TABLES[category];
-          const { count } = await supabase
-            .from(tableName)
-            .select('*', { count: 'exact', head: true });
+          const rows = data as StartupSupabaseEntry[];
+          const accessibleData = await filterRowsBySourcebookAccess(
+            rows,
+            (item) => item.source_book
+          );
 
-          const transformedEntries = data.map((item) => ({
+          const transformedEntries = accessibleData.map((item): CompendiumEntry => ({
             id: item.id,
             name: item.display_name || item.name,
             type: category as CompendiumEntry['type'],
             description: item.description || 'No description available', // Ensure description is always provided
             rarity: item.rarity || 'common',
-            tags: item.tags || [],
+            tags: Array.isArray(item.tags) ? item.tags : [],
             created_at: item.created_at,
             source_book: item.source_book,
             image_url: item.image_url,
             isFavorite: false,
             // Include type-specific fields
             ...(category === 'monsters' && {
-              cr: item.cr,
-              gate_rank: item.gate_rank,
-              is_boss: item.is_boss,
+              cr: item.cr ?? undefined,
+              gate_rank: item.gate_rank ?? undefined,
+              is_boss: item.is_boss ?? undefined,
             }),
             ...(category === 'powers' && {
               power_level: item.power_level,
@@ -307,12 +324,10 @@ export const useStartupData = () => {
             ...(category === 'runes' && {
               rune_type: item.rune_type,
               rune_category: item.rune_category,
-              level: item.rune_level,
+              level: item.rune_level ?? undefined,
             }),
             ...(category === 'equipment' && {
               equipment_type: item.equipment_type,
-              damage: item.damage,
-              armor_class: item.armor_class,
             }),
             ...(category === 'skills' && {
               ability: item.ability,
@@ -330,7 +345,7 @@ export const useStartupData = () => {
             }),
           }));
 
-          return { entries: transformedEntries, count: count || 0 };
+          return { entries: transformedEntries, count: accessibleData.length };
         });
 
         const results = await Promise.all(promises);
@@ -339,6 +354,42 @@ export const useStartupData = () => {
           allEntries.push(...result.entries);
           totalCounts[STARTUP_CATEGORIES[index]] = result.count;
         });
+
+        // Merge marketplace-entitled content
+        try {
+          const { data: { user } } = await supabase.auth.getUser();
+          if (user) {
+            const { data: entitlements } = await (supabase as any)
+              .from('user_marketplace_entitlements')
+              .select('item_id')
+              .eq('user_id', user.id);
+
+            if (entitlements && entitlements.length > 0) {
+              const entitledIds = entitlements.map((e: { item_id: string }) => e.item_id);
+              const { data: marketplaceItems } = await (supabase as any)
+                .from('marketplace_items')
+                .select('id, title, description, item_type, tags, content')
+                .in('id', entitledIds)
+                .eq('is_listed', true);
+
+              if (marketplaceItems) {
+                for (const item of marketplaceItems as Array<{ id: string; title: string; description: string; item_type: string; tags: string[]; content: Record<string, unknown> }>) {
+                  allEntries.push({
+                    id: `marketplace:${item.id}`,
+                    name: item.title,
+                    type: (item.item_type === 'item' ? 'equipment' : item.item_type) as CompendiumEntry['type'],
+                    description: item.description || 'Marketplace content',
+                    tags: [...(item.tags || []), 'marketplace'],
+                    source_book: 'Marketplace',
+                    isFavorite: false,
+                  });
+                }
+              }
+            }
+          }
+        } catch (marketplaceError) {
+          logger.warn('Failed to load marketplace content for startup data:', marketplaceError);
+        }
 
         return {
           entries: allEntries,

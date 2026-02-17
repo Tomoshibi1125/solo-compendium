@@ -10,6 +10,11 @@ import {
   removeLocalEquipment,
   updateLocalEquipment,
 } from '@/lib/guestStore';
+import {
+  filterRowsBySourcebookAccess,
+  getCharacterCampaignId,
+  isSourcebookAccessible,
+} from '@/lib/sourcebookAccess';
 
 type Equipment = Database['public']['Tables']['character_equipment']['Row'];
 type EquipmentInsert = Database['public']['Tables']['character_equipment']['Insert'];
@@ -38,7 +43,51 @@ export const useEquipment = (characterId: string) => {
         logErrorWithContext(error, 'useEquipment');
         throw error;
       }
-      return data as Equipment[];
+
+      const equipment = (data || []) as Equipment[];
+      if (equipment.length === 0) {
+        return equipment;
+      }
+
+      const uniqueNames = Array.from(new Set(equipment.map((item) => item.name).filter(Boolean)));
+      if (uniqueNames.length === 0) {
+        return equipment;
+      }
+
+      const { data: compendiumEquipment, error: compendiumError } = await supabase
+        .from('compendium_equipment')
+        .select('name, source_book')
+        .in('name', uniqueNames);
+
+      if (compendiumError) {
+        logErrorWithContext(compendiumError, 'useEquipment (compendium source lookup)');
+        return equipment;
+      }
+
+      const sourceBookByName = new Map<string, string | null>();
+      (compendiumEquipment || []).forEach((entry) => {
+        sourceBookByName.set(entry.name, entry.source_book ?? null);
+      });
+
+      if (sourceBookByName.size === 0) {
+        return equipment;
+      }
+
+      const campaignId = await getCharacterCampaignId(characterId);
+      const accessibleCompendiumEquipment = await filterRowsBySourcebookAccess(
+        (compendiumEquipment || []) as Array<{ name: string; source_book: string | null }>,
+        (entry) => entry.source_book,
+        { campaignId }
+      );
+      const accessibleNames = new Set(accessibleCompendiumEquipment.map((entry) => entry.name));
+
+      return equipment.filter((item) => {
+        if (!sourceBookByName.has(item.name)) {
+          return true;
+        }
+
+        return accessibleNames.has(item.name);
+      });
     },
     enabled: !!characterId,
   });
@@ -48,6 +97,25 @@ export const useEquipment = (characterId: string) => {
       if (isLocalCharacterId(characterId)) {
         addLocalEquipment(characterId, item as unknown as Omit<EquipmentInsert, 'character_id'>);
         return null;
+      }
+
+      const campaignId = await getCharacterCampaignId(characterId);
+      const { data: compendiumEquipment, error: compendiumError } = await supabase
+        .from('compendium_equipment')
+        .select('source_book')
+        .eq('name', item.name)
+        .limit(1)
+        .maybeSingle();
+
+      if (compendiumError) {
+        logErrorWithContext(compendiumError, 'useEquipment.addEquipment (compendium source lookup)');
+      }
+
+      if (
+        compendiumEquipment &&
+        !(await isSourcebookAccessible(compendiumEquipment.source_book, { campaignId }))
+      ) {
+        throw new Error('This equipment requires sourcebook access.');
       }
 
       const { data, error } = await supabase

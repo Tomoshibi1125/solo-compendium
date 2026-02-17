@@ -11,6 +11,7 @@ import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import { OAuthButtons } from '@/components/auth/OAuthButton';
 import { OAuthProvider, useOAuth } from '@/hooks/useOAuth';
 import { setLocalGuestRole } from '@/lib/guestStore';
+import { isSafeNextPath } from '@/lib/campaignInviteUtils';
 
 export default function Login() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -27,6 +28,8 @@ export default function Login() {
   const { isLoading: oauthLoading, signInWithProvider } = useOAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const requestedNext = searchParams.get('next');
+  const safeNext = isSafeNextPath(requestedNext) ? requestedNext : null;
   const oauthEnabled = import.meta.env.VITE_OAUTH_ENABLED === 'true';
   const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== 'false';
 
@@ -43,6 +46,14 @@ export default function Login() {
     setError('');
     setNotice('');
 
+    if (typeof window !== 'undefined') {
+      if (safeNext) {
+        localStorage.setItem('pending-auth-next', safeNext);
+      } else {
+        localStorage.removeItem('pending-auth-next');
+      }
+    }
+
     try {
       const result = isSignUp 
         ? await signUp(email, password, displayName, role)
@@ -53,8 +64,12 @@ export default function Login() {
       } else if (result.needsEmailConfirmation) {
         setNotice('Check your email to confirm your account, then sign in.');
       } else {
-        // Redirect based on role
-        if (role === 'dm') {
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('pending-auth-next');
+        }
+        if (safeNext) {
+          navigate(safeNext);
+        } else if (role === 'dm') {
           navigate('/dm-tools');
         } else {
           navigate('/player-tools');
@@ -72,6 +87,11 @@ export default function Login() {
     setNotice('');
     if (typeof window !== 'undefined') {
       localStorage.setItem('pending-oauth-role', role);
+      if (safeNext) {
+        localStorage.setItem('pending-auth-next', safeNext);
+      } else {
+        localStorage.removeItem('pending-auth-next');
+      }
     }
     await signInWithProvider(provider);
   };
@@ -79,6 +99,9 @@ export default function Login() {
   const handleContinueAsGuest = () => {
     setError('');
     setNotice('');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('pending-auth-next');
+    }
     setLocalGuestRole(role);
     navigate(role === 'dm' ? '/dm-tools' : '/player-tools');
   };

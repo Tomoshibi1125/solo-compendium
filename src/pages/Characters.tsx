@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Plus, User, Settings, Trash2, Crown, Skull, Shield, Zap, Heart, Users } from 'lucide-react';
+import { Plus, Upload, User, Settings, Trash2, Crown, Skull, Shield, Zap, Heart, Users } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
@@ -21,6 +21,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { useToast } from '@/hooks/use-toast';
 import { formatMonarchVernacular } from '@/lib/vernacular';
+import { ImportDialog } from '@/components/character/ImportDialog';
 
 const Characters = () => {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ const Characters = () => {
   const deleteCharacter = useDeleteCharacter();
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [importDialogOpen, setImportDialogOpen] = useState(false);
 
   const handleDelete = async () => {
     if (!deleteTarget) return;
@@ -78,6 +80,14 @@ const Characters = () => {
                 Compare Ascendants
               </Button>
             </Link>
+            <Button
+              variant="outline"
+              className="gap-2"
+              onClick={() => setImportDialogOpen(true)}
+            >
+              <Upload className="w-4 h-4" />
+              Import
+            </Button>
             <Link to="/characters/new">
               <Button className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple hover:shadow-arise/30 hover:shadow-lg transition-all">
                 <Plus className="w-4 h-4" />
@@ -85,6 +95,12 @@ const Characters = () => {
               </Button>
             </Link>
           </div>
+
+          <ImportDialog
+            open={importDialogOpen}
+            onOpenChange={setImportDialogOpen}
+            onImportSuccess={(id) => navigate(`/characters/${id}`)}
+          />
         </div>
 
         {isGuestMode && (
@@ -252,7 +268,7 @@ const Characters = () => {
                                 hpPercent < 50 ? "bg-gradient-to-r from-orange-500 to-amber-500" :
                                 "bg-gradient-to-r from-green-500 to-emerald-400"
                               )}
-                              style={{ width: `${hpPercent}%` }}
+                              ref={(el) => { if (el) el.style.width = `${hpPercent}%`; }}
                             />
                           </div>
                         </div>

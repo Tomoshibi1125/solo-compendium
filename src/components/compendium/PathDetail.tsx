@@ -4,6 +4,7 @@ import { Separator } from '@/components/ui/separator';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { GitBranch, Swords, Star, Shield, Zap } from 'lucide-react';
 import { formatMonarchVernacular } from '@/lib/vernacular';
+import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 
 interface PathData {
   id: string;
@@ -55,19 +56,30 @@ export const PathDetail = ({ data }: { data: PathData }) => {
         .eq('is_path_feature', true)
         .order('level');
 
+      const accessibleFeatures = await filterRowsBySourcebookAccess(
+        ((featuresRes.data as Array<PathFeature & { source_name?: string | null }>) || []),
+        (feature) => feature.source_name
+      );
+
       if (!isCancelled) {
-        setFeatures((featuresRes.data as PathFeature[]) || []);
+        setFeatures(accessibleFeatures);
       }
 
       if (!jobName && jobId) {
         const { data: jobData } = await supabase
           .from('compendium_jobs')
-          .select('name, display_name')
+          .select('name, display_name, source_book')
           .eq('id', jobId)
           .maybeSingle();
 
+        const accessibleJobs = await filterRowsBySourcebookAccess(
+          jobData ? [jobData] : [],
+          (job) => job.source_book
+        );
+        const accessibleJob = accessibleJobs[0];
+
         if (!isCancelled) {
-          setJobName(jobData?.display_name || jobData?.name || null);
+          setJobName(accessibleJob?.display_name || accessibleJob?.name || null);
         }
       }
     };

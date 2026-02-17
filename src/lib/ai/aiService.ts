@@ -17,8 +17,19 @@ import { AppError } from '@/lib/appError';
 import { buildCustomService, loadAIUserSettings } from './userSettings';
 
 const FREE_AI_FALLBACK_ENDPOINT = 'https://text.pollinations.ai';
+const OLLAMA_FALLBACK_ENDPOINT = 'http://localhost:11434/api/generate';
 const CUSTOM_AI_FALLBACK_ENDPOINT = 'https://api.openai.com/v1';
 const CUSTOM_AI_FALLBACK_MODEL = 'gpt-4o-mini';
+const REQUEST_TIMEOUT_MS = 15000;
+const OLLAMA_TAGS_TIMEOUT_MS = 2500;
+const OLLAMA_MODEL_PRIORITY = [
+  'qwen2.5:14b-instruct',
+  'qwen2.5:7b-instruct',
+  'llama3.1:8b-instruct',
+  'llama3.1:8b',
+  'mistral:7b-instruct',
+  'mixtral:8x7b',
+];
 
 export class AIServiceManager {
   private config: AIConfiguration;
@@ -58,7 +69,10 @@ export class AIServiceManager {
     // Check cache
     const cacheKey = this.getCacheKey(request);
     if (this.config.cacheResults && this.cache.has(cacheKey)) {
-      return this.cache.get(cacheKey);
+      const cached = this.cache.get(cacheKey);
+      if (cached) {
+        return cached;
+      }
     }
 
     // Get service
@@ -71,7 +85,36 @@ export class AIServiceManager {
     }
 
     try {
-      const response = await this.callService(service, request);
+      let response = await this.callService(service, request);
+
+      if (!response.success) {
+        const fallbacks = this.getFallbackServices(service.id, request.type);
+        const fallbackErrors: string[] = [];
+
+        if (response.error) {
+          fallbackErrors.push(`${service.name}: ${response.error}`);
+        }
+
+        for (const fallbackService of fallbacks) {
+          const fallbackResponse = await this.callService(fallbackService, request);
+          if (fallbackResponse.success) {
+            response = fallbackResponse;
+            break;
+          }
+
+          if (fallbackResponse.error) {
+            fallbackErrors.push(`${fallbackService.name}: ${fallbackResponse.error}`);
+          }
+        }
+
+        if (!response.success && fallbackErrors.length > 0) {
+          response = {
+            success: false,
+            error: fallbackErrors.join(' | '),
+          };
+        }
+      }
+
       const normalized = this.normalizeResponse(request, response);
       
       // Cache result
@@ -520,6 +563,7 @@ export class AIServiceManager {
       return { duration: 0, energy: 0.5 };
     }
   }
+
   private validateRequest(request: AIRequest): string[] {
     const errors: string[] = [];
     
@@ -568,6 +612,54 @@ export class AIServiceManager {
     return `${request.service}:${request.type}:${JSON.stringify(request.input)}`;
   }
 
+  private getFallbackServices(primaryServiceId: string, capability: AIRequest['type']): AIService[] {
+    const scoreService = (service: AIService): number => {
+      if (service.id === 'pollinations') return 0;
+      if (service.type === 'pollinations') return 1;
+      if (service.type === 'ollama') return 2;
+      if (service.type === 'custom') return 3;
+      return 4;
+    };
+
+    return this.config.services
+      .filter((service) => service.id !== primaryServiceId)
+      .filter((service) => service.enabled)
+      .filter((service) => service.capabilities.includes(capability))
+      .sort((a, b) => scoreService(a) - scoreService(b));
+  }
+
+  private async fetchWithTimeout(
+    input: RequestInfo | URL,
+    init?: RequestInit,
+    timeoutMs = REQUEST_TIMEOUT_MS
+  ): Promise<Response> {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      return await fetch(input, {
+        ...init,
+        signal: controller.signal,
+      });
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  private dedupeStrings(values: Array<string | undefined | null>): string[] {
+    const seen = new Set<string>();
+    const output: string[] = [];
+    for (const value of values) {
+      if (!value) continue;
+      const trimmed = value.trim();
+      if (!trimmed) continue;
+      const key = trimmed.toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
+      output.push(trimmed);
+    }
+    return output;
+  }
+
   private async callService(service: AIService, request: AIRequest): Promise<AIResponse> {
     this.requestCount++;
 
@@ -575,6 +667,8 @@ export class AIServiceManager {
     switch (service.type) {
       case 'pollinations':
         return this.callPollinations(service, request);
+      case 'ollama':
+        return this.callOllama(service, request);
       case 'custom':
         return this.callOpenAICompatible(service, request);
       default:
@@ -586,23 +680,167 @@ export class AIServiceManager {
     try {
       const baseUrl = (service.endpoint || import.meta.env.VITE_FREE_AI_API || FREE_AI_FALLBACK_ENDPOINT).replace(/\/+$/, '');
       const prompt = `${this.getSystemPrompt(request.type)}\n\n${this.formatInput(request)}`;
-      const url = `${baseUrl}/${encodeURIComponent(prompt)}`;
-      const response = await fetch(url);
+      const modelAttempts = this.dedupeStrings([service.model, ...(service.fallbackModels || [])]);
+      const attempts: Array<{ model?: string; label: string }> = [
+        ...modelAttempts.map((model) => ({ model, label: model })),
+        { label: 'default' },
+      ];
+      const errors: string[] = [];
 
-      if (!response.ok) {
-        throw new Error(`Free AI request failed: ${response.status}`);
+      for (const attempt of attempts) {
+        const query = attempt.model ? `?model=${encodeURIComponent(attempt.model)}` : '';
+        const url = `${baseUrl}/${encodeURIComponent(prompt)}${query}`;
+        let response: Response;
+        try {
+          response = await this.fetchWithTimeout(url);
+        } catch (error) {
+          errors.push(
+            `${attempt.label}:${error instanceof Error ? error.message : 'request error'}`
+          );
+          continue;
+        }
+
+        if (!response.ok) {
+          errors.push(`${attempt.label}:${response.status}`);
+          continue;
+        }
+
+        const text = await response.text();
+        if (!text?.trim()) {
+          errors.push(`${attempt.label}:empty response`);
+          continue;
+        }
+
+        return {
+          success: true,
+          data: text,
+          metadata: attempt.model ? { model: attempt.model } : { model: 'default' },
+        };
       }
 
-      const text = await response.text();
       return {
-        success: true,
-        data: text,
+        success: false,
+        error: errors.length > 0 ? `Free AI request failed (${errors.join(', ')})` : 'Free AI request failed',
       };
     } catch (error) {
       return {
         success: false,
         error: error instanceof Error ? error.message : 'Free AI error',
       };
+    }
+  }
+
+  private async callOllama(service: AIService, request: AIRequest): Promise<AIResponse> {
+    try {
+      const prompt = `${this.getSystemPrompt(request.type)}\n\n${this.formatInput(request)}`;
+      const endpoint = (service.endpoint || OLLAMA_FALLBACK_ENDPOINT).replace(/\/+$/, '');
+      const resolvedModel = await this.resolveOllamaModel(service);
+      const modelAttempts = this.dedupeStrings([
+        resolvedModel,
+        service.model,
+        ...(service.fallbackModels || []),
+        ...OLLAMA_MODEL_PRIORITY,
+      ]);
+      const errors: string[] = [];
+
+      for (const model of modelAttempts) {
+        try {
+          const response = await this.fetchWithTimeout(
+            endpoint,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                model,
+                prompt,
+                stream: false,
+                options: {
+                  temperature: service.temperature,
+                  num_predict: service.maxTokens,
+                },
+              }),
+            },
+            REQUEST_TIMEOUT_MS
+          );
+
+          const payload = await response.json();
+          if (!response.ok) {
+            errors.push(`${model}:${payload?.error || response.status}`);
+            continue;
+          }
+
+          const content = payload?.response || payload?.message?.content || '';
+          if (!content || !String(content).trim()) {
+            errors.push(`${model}:empty response`);
+            continue;
+          }
+
+          return {
+            success: true,
+            data: String(content),
+            metadata: { model },
+          };
+        } catch (error) {
+          errors.push(`${model}:${error instanceof Error ? error.message : 'request error'}`);
+        }
+      }
+
+      return {
+        success: false,
+        error: errors.length > 0 ? `Ollama request failed (${errors.join(', ')})` : 'Ollama request failed',
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Ollama AI error',
+      };
+    }
+  }
+
+  private async resolveOllamaModel(service: AIService): Promise<string> {
+    const configuredModels = this.dedupeStrings([
+      service.model,
+      ...(service.fallbackModels || []),
+      ...OLLAMA_MODEL_PRIORITY,
+    ]);
+
+    const endpoint = (service.endpoint || OLLAMA_FALLBACK_ENDPOINT).replace(/\/+$/, '');
+    const tagsUrl = endpoint.replace(/\/api\/generate$/i, '/api/tags');
+
+    try {
+      const response = await this.fetchWithTimeout(tagsUrl, undefined, OLLAMA_TAGS_TIMEOUT_MS);
+      if (!response.ok) {
+        return configuredModels[0] || OLLAMA_MODEL_PRIORITY[0];
+      }
+
+      const data = await response.json();
+      const availableModels = Array.isArray(data?.models)
+        ? data.models
+            .map((entry: { name?: unknown } | string) =>
+              typeof entry === 'string' ? entry : entry?.name
+            )
+            .filter((name: unknown): name is string => typeof name === 'string' && name.trim().length > 0)
+        : [];
+
+      if (availableModels.length === 0) {
+        return configuredModels[0] || OLLAMA_MODEL_PRIORITY[0];
+      }
+
+      const byExactMatch = configuredModels.find((candidate) =>
+        availableModels.some((available: string) => available.toLowerCase() === candidate.toLowerCase())
+      );
+      if (byExactMatch) return byExactMatch;
+
+      const byLooseMatch = configuredModels.find((candidate) =>
+        availableModels.some((available: string) => available.toLowerCase().includes(candidate.toLowerCase()))
+      );
+      if (byLooseMatch) return byLooseMatch;
+
+      return availableModels[0];
+    } catch {
+      return configuredModels[0] || OLLAMA_MODEL_PRIORITY[0];
     }
   }
 
@@ -616,22 +854,26 @@ export class AIServiceManager {
       const baseUrl = (service.endpoint || CUSTOM_AI_FALLBACK_ENDPOINT).replace(/\/+$/, '');
       const model = service.model || CUSTOM_AI_FALLBACK_MODEL;
 
-      const response = await fetch(`${baseUrl}/chat/completions`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${apiKey}`,
-          'Content-Type': 'application/json',
+      const response = await this.fetchWithTimeout(
+        `${baseUrl}/chat/completions`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            model,
+            messages: [
+              { role: 'system', content: this.getSystemPrompt(request.type) },
+              { role: 'user', content: this.formatInput(request) },
+            ],
+            temperature: service.temperature,
+            max_tokens: service.maxTokens,
+          }),
         },
-        body: JSON.stringify({
-          model,
-          messages: [
-            { role: 'system', content: this.getSystemPrompt(request.type) },
-            { role: 'user', content: this.formatInput(request) },
-          ],
-          temperature: service.temperature,
-          max_tokens: service.maxTokens,
-        }),
-      });
+        REQUEST_TIMEOUT_MS
+      );
 
       const data = await response.json();
       if (!response.ok) {
@@ -733,7 +975,10 @@ export class AIServiceManager {
   }
 
   applyUserSettings(settings: ReturnType<typeof loadAIUserSettings>): void {
-    const baseServices = DEFAULT_AI_SERVICES.map(service => ({ ...service }));
+    const baseServices = DEFAULT_AI_SERVICES.map((service) => ({
+      ...service,
+      fallbackModels: service.fallbackModels ? [...service.fallbackModels] : undefined,
+    }));
     if (settings.provider === 'custom' && settings.apiKey.trim()) {
       const customService = buildCustomService(settings);
       this.config = {

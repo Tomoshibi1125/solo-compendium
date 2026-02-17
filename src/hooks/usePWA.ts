@@ -22,11 +22,17 @@ export function usePWA() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
 
   useEffect(() => {
-    // Register service worker and listen for updates
+    // Read service worker registration state and listen for updates.
+    // Registration is centralized in ServiceWorkerUpdatePrompt to avoid duplicate registers.
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
+      navigator.serviceWorker.getRegistration()
         .then(registration => {
-          logger.debug('SW registered: ', registration);
+          if (!registration) {
+            logger.warn('[SW] No existing registration found. Ensure ServiceWorkerUpdatePrompt is mounted.');
+            return;
+          }
+
+          logger.debug('SW registration detected: ', registration);
 
           // Listen for updates
           registration.addEventListener('updatefound', () => {
@@ -47,7 +53,7 @@ export function usePWA() {
           }
         })
         .catch(error => {
-          logger.error('SW registration failed: ', error);
+          logger.error('SW registration lookup failed: ', error);
         });
     }
 
@@ -57,7 +63,25 @@ export function usePWA() {
     }
 
     // Listen for online/offline events
-    const handleOnline = () => setIsOnline(true);
+    const handleOnline = () => {
+      setIsOnline(true);
+      // Process offline sync queue when coming back online
+      import('@/lib/offlineSync').then(({ processOfflineSyncQueue }) => {
+        processOfflineSyncQueue().catch((err) =>
+          logger.warn('[SW] Failed to process offline queue on reconnect:', err)
+        );
+      });
+      // Register Background Sync tag if supported
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.ready.then((reg) => {
+          if ('sync' in reg) {
+            (reg as any).sync.register('offline-queue').catch((err: unknown) =>
+              logger.debug('[SW] Background Sync registration skipped:', err)
+            );
+          }
+        });
+      }
+    };
     const handleOffline = () => setIsOnline(false);
 
     window.addEventListener('online', handleOnline);

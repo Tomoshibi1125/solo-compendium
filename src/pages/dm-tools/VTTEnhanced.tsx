@@ -14,12 +14,14 @@ import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import { getBestImageFormat } from '@/lib/imageOptimization';
-import { useCampaignMembers, useCampaignRole } from '@/hooks/useCampaigns';
+import { VttPixiStage } from '@/components/vtt/VttPixiStage';
+import { useCampaignMembers, useCampaignRole, type CampaignMember } from '@/hooks/useCampaigns';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { useDebounce } from '@/hooks/useDebounce';
 import { readLocalToolState, useCampaignToolState, useUserToolState } from '@/hooks/useToolState';
 import { useAuth } from '@/lib/auth/authContext';
+
 import {
   DEFAULT_TOKENS,
   mergeBaseTokens,
@@ -122,6 +124,20 @@ type LegacyVTTScenesState = {
   currentScene?: string | null;
 };
 
+type CharacterSummary = {
+  id: string;
+  name: string;
+  hp_current?: number;
+  hp_max?: number;
+  armor_class?: number;
+  portrait_url?: string | null;
+  level?: number;
+  job?: string;
+};
+
+type CampaignMemberWithCharacters = CampaignMember & { characters?: CharacterSummary | Record<string, unknown> | null };
+type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
+
 type GridPosition = {
   x: number;
   y: number;
@@ -162,6 +178,11 @@ const toRgba = (hex: string, alpha: number) => {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
+const toSafeClassName = (value: string) => value.replace(/[^a-z0-9_-]/gi, '_');
+
+const isCharacterSummary = (value: Record<string, unknown>): value is CharacterSummary =>
+  typeof value.id === 'string' && typeof value.name === 'string';
+
 const normalizeScene = (scene: Scene): Scene => ({
   ...scene,
   gridSize: scene.gridSize ?? DEFAULT_SCENE_SETTINGS.gridSize,
@@ -187,6 +208,9 @@ const VTTEnhanced = () => {
   const { user, loading } = useAuth();
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInputRef = useRef<HTMLInputElement>(null);
+  const suppressNextMapActionRef = useRef(false);
+  const pixiDraggingTokenIdRef = useRef<string | null>(null);
+  const currentSceneRef = useRef<Scene | null>(null);
   const [zoom, setZoom] = useState(1);
   const [showGrid, setShowGrid] = useState(true);
   const [fogOfWar, setFogOfWar] = useState(false);
@@ -255,6 +279,20 @@ const VTTEnhanced = () => {
   const mapImageFormat = useMemo(() => getBestImageFormat(), []);
   const sceneWidth = currentScene?.width ?? 20;
   const sceneHeight = currentScene?.height ?? 20;
+  const sceneClass = useMemo(
+    () => `vtt-scene-${toSafeClassName(currentScene?.id ?? 'default')}`,
+    [currentScene?.id]
+  );
+
+  const handleRequestZoom = useCallback(
+    (nextZoom: number) => {
+      setZoom((prev) => {
+        if (Math.abs(prev - nextZoom) < 0.001) return prev;
+        return Math.max(0.5, Math.min(2, nextZoom));
+      });
+    },
+    [setZoom]
+  );
   const {
     state: libraryTokens,
     isLoading: libraryLoading,
@@ -264,10 +302,10 @@ const VTTEnhanced = () => {
     storageKey: 'vtt-tokens',
   });
 
-  const { data: members } = useCampaignMembers(campaignId || '');
+  const { data: members } = useCampaignMembers(campaignId || '') as { data?: CampaignMemberWithCharacters[] };
   const { data: role } = useCampaignRole(campaignId || '');
   const isGM = role === 'system' || role === 'co-system';
-  const effectiveVisibleLayers = useMemo(
+  const effectiveVisibleLayers: Record<number, boolean> = useMemo(
     () => ({
       ...visibleLayers,
       3: isGM ? visibleLayers[3] : false,
@@ -278,18 +316,21 @@ const VTTEnhanced = () => {
   const isE2E = import.meta.env.VITE_E2E === 'true';
   const isAuthed = isSupabaseConfigured && !!user?.id;
   const useLocalCharacters = !isSupabaseConfigured || isE2E || (guestEnabled && !user);
-  const localCampaignCharacters = useMemo(
+  const localCampaignCharacters = useMemo<CharacterSummary[]>(
     () =>
-      (members || [])
+      (members ?? [])
         .map((member) => member.characters)
-        .filter(Boolean) as Record<string, unknown>[],
+        .filter((entry): entry is CharacterSummary => {
+          if (!entry || typeof entry !== 'object') return false;
+          return isCharacterSummary(entry as Record<string, unknown>);
+        }),
     [members]
   );
 
   // Load campaign characters via members
-  const { data: campaignCharacters } = useQuery({
+  const { data: campaignCharacters } = useQuery<CharacterSummary[]>({
     queryKey: ['campaign-characters', campaignId],
-    queryFn: async () => {
+    queryFn: async (): Promise<CharacterSummary[]> => {
       if (!campaignId) return [];
       const { data: membersData } = await supabase
         .from('campaign_members')
@@ -299,21 +340,24 @@ const VTTEnhanced = () => {
       
       if (!membersData) return [];
       return membersData
-        .filter((m: { character_id: string | null; characters: unknown | null }) => m.characters)
-        .map((m: { characters: Record<string, unknown> | null }) => m.characters || {});
+        .map((m: { characters: unknown | null }) => m.characters)
+        .filter((entry): entry is CharacterSummary => {
+          if (!entry || typeof entry !== 'object') return false;
+          return isCharacterSummary(entry as Record<string, unknown>);
+        });
     },
     enabled: !!campaignId && isAuthed && !loading,
   });
-  const resolvedCharacters = useMemo(
-    () => (useLocalCharacters ? localCampaignCharacters : campaignCharacters || []),
-    [campaignCharacters, localCampaignCharacters, useLocalCharacters]
-  );
+  const resolvedCharacters = useMemo<CharacterSummary[]>(() => {
+    const raw = useLocalCharacters ? localCampaignCharacters : campaignCharacters || [];
+    return raw.filter((entry): entry is CharacterSummary => isCharacterSummary(entry));
+  }, [campaignCharacters, localCampaignCharacters, useLocalCharacters]);
   const filteredLibraryTokens = useMemo(() => {
     const query = tokenSearch.trim().toLowerCase();
     if (!query) return libraryTokens;
-    return libraryTokens.filter((token) => {
+    return libraryTokens.filter((token: LibraryToken) => {
       const nameMatch = token.name.toLowerCase().includes(query);
-      const tagMatch = token.tags?.some((tag) => tag.toLowerCase().includes(query));
+      const tagMatch = token.tags?.some((tag: string) => tag.toLowerCase().includes(query));
       return nameMatch || tagMatch;
     });
   }, [libraryTokens, tokenSearch]);
@@ -335,6 +379,23 @@ const VTTEnhanced = () => {
     if (!currentScene) return;
     setFogOfWar(currentScene.fogOfWar ?? false);
   }, [currentScene]);
+
+  useEffect(() => {
+    currentSceneRef.current = currentScene;
+  }, [currentScene]);
+
+  useEffect(() => {
+    const handler = () => {
+      suppressNextMapActionRef.current = true;
+      window.setTimeout(() => {
+        suppressNextMapActionRef.current = false;
+      }, 250);
+    };
+    window.addEventListener('vtt:token-pointerdown', handler as EventListener);
+    return () => {
+      window.removeEventListener('vtt:token-pointerdown', handler as EventListener);
+    };
+  }, []);
 
   const createNewScene = useCallback(() => {
     const scene: Scene = {
@@ -484,7 +545,9 @@ const VTTEnhanced = () => {
       const next = { ...prev, tokens: nextTokens };
       setScenes((prevScenes) => {
         const nextScenes = upsertScene(prevScenes, next);
-        if (!draggedToken || draggedToken.id !== tokenId) {
+        const isDraggingToken =
+          (draggedToken && draggedToken.id === tokenId) || pixiDraggingTokenIdRef.current === tokenId;
+        if (!isDraggingToken) {
           persistSceneState(nextScenes, next.id);
         }
         return nextScenes;
@@ -492,6 +555,23 @@ const VTTEnhanced = () => {
       return next;
     });
   }, [draggedToken, persistSceneState]);
+
+  const handlePixiTokenDragStart = useCallback((tokenId: string) => {
+    pixiDraggingTokenIdRef.current = tokenId;
+  }, []);
+
+  const handlePixiTokenDragEnd = useCallback((tokenId: string) => {
+    if (pixiDraggingTokenIdRef.current === tokenId) {
+      pixiDraggingTokenIdRef.current = null;
+    }
+    const scene = currentSceneRef.current;
+    if (!scene) return;
+    setScenes((prevScenes) => {
+      const nextScenes = upsertScene(prevScenes, scene);
+      persistSceneState(nextScenes, scene.id);
+      return nextScenes;
+    });
+  }, [persistSceneState]);
 
   const removeToken = useCallback((tokenId: string) => {
     setCurrentScene((prev) => {
@@ -764,14 +844,14 @@ const VTTEnhanced = () => {
     if (selectedTool !== 'select') return;
 
     if (selectedCharacterId && resolvedCharacters) {
-      const character = resolvedCharacters.find((c: Record<string, unknown> & { id: string }) => c.id === selectedCharacterId);
+      const character = resolvedCharacters.find((c) => c.id === selectedCharacterId);
       if (character) {
-        const characterName = typeof character.name === 'string' ? character.name : 'Unknown';
+        const characterName = character.name || 'Unknown';
         const hpCurrent = typeof character.hp_current === 'number' ? character.hp_current : 0;
         const hpMax = typeof character.hp_max === 'number' ? character.hp_max : 0;
         const ac = typeof character.armor_class === 'number' ? character.armor_class : 10;
         const portraitUrl = typeof character.portrait_url === 'string' ? character.portrait_url : undefined;
-        const characterId = typeof character.id === 'string' ? character.id : '';
+        const characterId = character.id;
         const placed: PlacedToken = {
           id: `token-${Date.now()}`,
           characterId: characterId,
@@ -840,17 +920,53 @@ const VTTEnhanced = () => {
     setSelectedCharacterId,
     setSelectedLibraryTokenId,
     toast,
-    updateScene,
   ]);
 
   const handleMapClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
+      if (suppressNextMapActionRef.current) {
+        e.stopPropagation();
+        return;
+      }
       const grid = getGridPosition(e);
       if (!grid) return;
       handleMapGridAction(grid);
     },
     [getGridPosition, handleMapGridAction]
   );
+
+  const handleMapMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (suppressNextMapActionRef.current) {
+      e.stopPropagation();
+      return;
+    }
+    if (!currentScene) return;
+    const grid = getGridPosition(e);
+    if (!grid) return;
+
+    if (selectedTool === 'fog' && fogOfWar && isGM) {
+      setIsFogPainting(true);
+      applyFogAt(grid.gridX, grid.gridY);
+      return;
+    }
+
+    if (selectedTool === 'draw' && isGM) {
+      const fill = drawingMode === 'line' ? undefined : toRgba(drawingColor, 0.18);
+      const drawing: VTTDrawing = {
+        id: `draw-${Date.now()}`,
+        type: drawingMode,
+        color: drawingColor,
+        width: drawingWidth,
+        fill,
+        x1: grid.gridX,
+        y1: grid.gridY,
+        x2: grid.gridX,
+        y2: grid.gridY,
+        layer: currentLayer,
+      };
+      setActiveDrawing(drawing);
+    }
+  };
 
   const handleMapKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -911,36 +1027,6 @@ const VTTEnhanced = () => {
     },
     [isGM, removeToken, setActiveTokenId, updateToken]
   );
-
-
-  const handleMapMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!currentScene) return;
-    const grid = getGridPosition(e);
-    if (!grid) return;
-
-    if (selectedTool === 'fog' && fogOfWar && isGM) {
-      setIsFogPainting(true);
-      applyFogAt(grid.gridX, grid.gridY);
-      return;
-    }
-
-    if (selectedTool === 'draw' && isGM) {
-      const fill = drawingMode === 'line' ? undefined : toRgba(drawingColor, 0.18);
-      const drawing: VTTDrawing = {
-        id: `draw-${Date.now()}`,
-        type: drawingMode,
-        color: drawingColor,
-        width: drawingWidth,
-        fill,
-        x1: grid.gridX,
-        y1: grid.gridY,
-        x2: grid.gridX,
-        y2: grid.gridY,
-        layer: currentLayer,
-      };
-      setActiveDrawing(drawing);
-    }
-  };
 
   const handleMapMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const grid = getGridPosition(e);
@@ -1010,6 +1096,64 @@ const VTTEnhanced = () => {
     return activeDrawing ? [...base, activeDrawing] : base;
   }, [activeDrawing, currentScene?.drawings]);
   const annotationsToRender = useMemo(() => currentScene?.annotations ?? [], [currentScene?.annotations]);
+
+  const overlayStyles = useMemo(() => {
+    const parts: string[] = [];
+    const sceneWidthPx = sceneWidth * gridSize * zoom;
+    const sceneHeightPx = sceneHeight * gridSize * zoom;
+    parts.push(`.${sceneClass} { --scene-width: ${sceneWidthPx}px; --scene-height: ${sceneHeightPx}px; }`);
+
+    drawingsToRender.forEach((drawing) => {
+      if (!effectiveVisibleLayers[drawing.layer]) return;
+      const safeId = toSafeClassName(drawing.id);
+      if (drawing.type === 'line') {
+        const startX = (drawing.x1 + 0.5) * gridSize * zoom;
+        const startY = (drawing.y1 + 0.5) * gridSize * zoom;
+        const endX = (drawing.x2 + 0.5) * gridSize * zoom;
+        const endY = (drawing.y2 + 0.5) * gridSize * zoom;
+        const length = Math.hypot(endX - startX, endY - startY);
+        const angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
+        parts.push(
+          `.vtt-drawing-line-${safeId} { left: ${startX}px; top: ${startY}px; width: ${length}px; height: ${drawing.width}px; background-color: ${drawing.color}; transform: rotate(${angle}deg); }`
+        );
+        return;
+      }
+
+      const left = Math.min(drawing.x1, drawing.x2) * gridSize * zoom;
+      const top = Math.min(drawing.y1, drawing.y2) * gridSize * zoom;
+      const width = (Math.abs(drawing.x2 - drawing.x1) + 1) * gridSize * zoom;
+      const height = (Math.abs(drawing.y2 - drawing.y1) + 1) * gridSize * zoom;
+      const fill = drawing.fill ?? 'transparent';
+      parts.push(
+        `.vtt-drawing-shape-${safeId} { left: ${left}px; top: ${top}px; width: ${width}px; height: ${height}px; border-color: ${drawing.color}; border-width: ${drawing.width}px; background-color: ${fill}; }`
+      );
+    });
+
+    annotationsToRender.forEach((note) => {
+      if (!effectiveVisibleLayers[note.layer]) return;
+      const safeId = toSafeClassName(note.id);
+      parts.push(
+        `.vtt-annotation-${safeId} { left: ${note.x * gridSize * zoom}px; top: ${note.y * gridSize * zoom}px; }`
+      );
+    });
+
+    if (selectedTool === 'measure' && measurementStart && measurementEnd) {
+      const startX = (measurementStart.x + 0.5) * gridSize * zoom;
+      const startY = (measurementStart.y + 0.5) * gridSize * zoom;
+      const endX = (measurementEnd.x + 0.5) * gridSize * zoom;
+      const endY = (measurementEnd.y + 0.5) * gridSize * zoom;
+      const length = Math.hypot(endX - startX, endY - startY);
+      const angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
+      parts.push(
+        `.vtt-measurement-line-active { left: ${startX}px; top: ${startY}px; width: ${length}px; transform: rotate(${angle}deg); }`
+      );
+      parts.push(
+        `.vtt-measurement-label-active { left: ${(startX + endX) / 2}px; top: ${(startY + endY) / 2}px; }`
+      );
+    }
+
+    return parts.join('\n');
+  }, [annotationsToRender, drawingsToRender, effectiveVisibleLayers, gridSize, measurementEnd, measurementStart, sceneClass, sceneHeight, sceneWidth, selectedTool, zoom]);
 
   const tokensInInitiative = useMemo(
     () =>
@@ -1161,7 +1305,7 @@ const VTTEnhanced = () => {
                     {fogOfWar && isGM && currentScene && (
                       <div className="space-y-2 border-t border-border/50 pt-2">
                         <div>
-                          <Label className="text-xs mb-1 block">Fog Mode</Label>
+                          <Label className="text-xs">Fog Mode</Label>
                           <div className="flex gap-2">
                             <Button
                               variant={fogMode === 'reveal' ? 'default' : 'outline'}
@@ -1182,7 +1326,7 @@ const VTTEnhanced = () => {
                           </div>
                         </div>
                         <div>
-                          <Label className="text-xs mb-1 block">Brush Size</Label>
+                          <Label className="text-xs">Brush Size</Label>
                           <input
                             type="range"
                             min={1}
@@ -1190,6 +1334,7 @@ const VTTEnhanced = () => {
                             step={1}
                             value={fogBrushSize}
                             onChange={(e) => setFogBrushSize(Number(e.target.value))}
+                            aria-label="Fog brush size"
                             className="w-full"
                           />
                           <div className="text-[10px] text-muted-foreground">Size: {fogBrushSize}</div>
@@ -1317,6 +1462,7 @@ const VTTEnhanced = () => {
                       ref={mapInputRef}
                       type="file"
                       accept="image/*"
+                      aria-label="Upload map image"
                       onChange={(e) => {
                         const file = e.target.files?.[0];
                         if (file) {
@@ -1486,7 +1632,7 @@ const VTTEnhanced = () => {
                     {resolvedCharacters.length === 0 && (
                       <p className="text-xs text-muted-foreground text-center py-4">No characters yet.</p>
                     )}
-                    {resolvedCharacters.map((char: Record<string, unknown> & { id: string; name: string; hp_current?: number; hp_max?: number; armor_class?: number; portrait_url?: string | null }) => {
+                    {resolvedCharacters.map((char) => {
                       const portraitUrl = typeof char.portrait_url === 'string' ? char.portrait_url : null;
                       return (
                         <button
@@ -1628,293 +1774,92 @@ const VTTEnhanced = () => {
                   selectedTool === 'select' && (selectedCharacterId || selectedLibraryTokenId) && 'cursor-crosshair'
                 )}
               >
-                <div
-                  className="vtt-scene-container"
-                  style={{
-                    '--scene-width': `${sceneWidth * gridSize * zoom}px`,
-                    '--scene-height': `${sceneHeight * gridSize * zoom}px`,
-                  } as React.CSSProperties}
-                >
-                  {!currentScene && (
-                    <div className="absolute inset-0 flex items-center justify-center text-xs text-muted-foreground pointer-events-none">
-                      Loading scene...
-                    </div>
-                  )}
-                  {/* Background */}
-                  {currentScene?.backgroundImage && effectiveVisibleLayers[0] && (
-                    <div
-                      className="vtt-background"
-                      style={{
-                        backgroundImage: `url(${currentScene.backgroundImage})`,
-                        backgroundSize: `${backgroundScale * 100}%`,
-                        backgroundPosition: `${backgroundOffsetX * zoom}px ${backgroundOffsetY * zoom}px`,
-                      } as React.CSSProperties}
-                    />
-                  )}
+                <div className={cn('vtt-scene-container', sceneClass)}>
+                  <style>{overlayStyles}</style>
+                  <VttPixiStage
+                    containerRef={mapRef}
+                    scene={currentScene}
+                    tokens={currentScene?.tokens ?? []}
+                    gridSize={gridSize}
+                    zoom={zoom}
+                    showGrid={showGrid}
+                    isGM={isGM}
+                    effectiveVisibleLayers={effectiveVisibleLayers}
+                    activeTokenId={activeTokenId}
+                    setActiveTokenId={setActiveTokenId}
+                    updateToken={updateToken}
+                    onRequestZoom={handleRequestZoom}
+                    onTokenDragStart={handlePixiTokenDragStart}
+                    onTokenDragEnd={handlePixiTokenDragEnd}
+                  />
 
-                  {/* Grid */}
-                  {showGrid && (
-                    <div
-                      className="vtt-grid"
-                      style={{
-                        '--grid-image': `
-                            linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px),
-                            linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px)
-                          `,
-                        '--grid-size': `${gridSize * zoom}px ${gridSize * zoom}px`,
-                      } as React.CSSProperties}
-                    />
-                  )}
-
-                    {/* Drawings */}
-                    {drawingsToRender.map((drawing) => {
-                      if (!effectiveVisibleLayers[drawing.layer]) return null;
-                      if (drawing.type === 'line') {
-                        const startX = (drawing.x1 + 0.5) * gridSize * zoom;
-                        const startY = (drawing.y1 + 0.5) * gridSize * zoom;
-                        const endX = (drawing.x2 + 0.5) * gridSize * zoom;
-                        const endY = (drawing.y2 + 0.5) * gridSize * zoom;
-                        const length = Math.hypot(endX - startX, endY - startY);
-                        const angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
+                  {/* TEMP: keep these DOM overlays until they are migrated to Pixi in follow-up commits */}
+                  {drawingsToRender.length > 0 && (
+                    <div className="absolute inset-0 pointer-events-none">
+                      {drawingsToRender.map((drawing) => {
+                        if (!effectiveVisibleLayers[drawing.layer]) return null;
+                        if (drawing.type === 'line') {
+                          return (
+                            <div
+                              key={drawing.id}
+                              className={cn('vtt-drawing-line', `vtt-drawing-line-${toSafeClassName(drawing.id)}`)}
+                            />
+                          );
+                        }
                         return (
                           <div
                             key={drawing.id}
-                            className="vtt-drawing-line"
-                            style={{
-                              left: `${startX}px`,
-                              top: `${startY}px`,
-                              width: `${length}px`,
-                              height: `${drawing.width}px`,
-                              backgroundColor: drawing.color,
-                              transform: `rotate(${angle}deg)`,
-                            } as React.CSSProperties}
+                            className={cn(
+                              'vtt-drawing-shape',
+                              drawing.type === 'circle' && 'is-circle',
+                              `vtt-drawing-shape-${toSafeClassName(drawing.id)}`
+                            )}
                           />
                         );
-                      }
-
-                      const left = Math.min(drawing.x1, drawing.x2) * gridSize * zoom;
-                      const top = Math.min(drawing.y1, drawing.y2) * gridSize * zoom;
-                      const width = (Math.abs(drawing.x2 - drawing.x1) + 1) * gridSize * zoom;
-                      const height = (Math.abs(drawing.y2 - drawing.y1) + 1) * gridSize * zoom;
-                      return (
+                      })}
+                    </div>
+                  )}
+                  {annotationsToRender.length > 0 && (
+                    <div className="absolute inset-0">
+                      {annotationsToRender.map((note) => {
+                        if (!effectiveVisibleLayers[note.layer]) return null;
+                        return (
+                          <div
+                            key={note.id}
+                            className={cn('vtt-annotation', `vtt-annotation-${toSafeClassName(note.id)}`)}
+                            onDoubleClick={(e) => {
+                              if (!isGM) return;
+                              e.stopPropagation();
+                              removeAnnotation(note.id);
+                            }}
+                            onKeyDown={(e) => handleAnnotationKeyDown(note.id, e)}
+                            role="button"
+                            tabIndex={isGM ? 0 : -1}
+                            aria-label={isGM ? `Remove annotation ${note.text}` : `Annotation ${note.text}`}
+                          >
+                            {note.text}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                  {selectedTool === 'measure' && measurementStart && measurementEnd && (() => {
+                    const dx = Math.abs(measurementEnd.x - measurementStart.x);
+                    const dy = Math.abs(measurementEnd.y - measurementStart.y);
+                    const distance = Math.max(dx, dy) + Math.min(dx, dy) * 0.5;
+                    return (
+                      <div className="vtt-measurement">
                         <div
-                          key={drawing.id}
-                          className={cn('vtt-drawing-shape', drawing.type === 'circle' && 'is-circle')}
-                          style={{
-                            left: `${left}px`,
-                            top: `${top}px`,
-                            width: `${width}px`,
-                            height: `${height}px`,
-                            borderColor: drawing.color,
-                            borderWidth: `${drawing.width}px`,
-                            backgroundColor: drawing.fill ?? 'transparent',
-                          } as React.CSSProperties}
+                          className={cn('vtt-measurement-line', 'vtt-measurement-line-active')}
                         />
-                      );
-                    })}
-
-                    {/* Annotations */}
-                    {annotationsToRender.map((note) => {
-                      if (!effectiveVisibleLayers[note.layer]) return null;
-                      return (
                         <div
-                          key={note.id}
-                          className="vtt-annotation"
-                          style={{
-                            left: `${note.x * gridSize * zoom}px`,
-                            top: `${note.y * gridSize * zoom}px`,
-                          } as React.CSSProperties}
-                          onDoubleClick={(e) => {
-                            if (!isGM) return;
-                            e.stopPropagation();
-                            removeAnnotation(note.id);
-                          }}
-                          onKeyDown={(e) => handleAnnotationKeyDown(note.id, e)}
-                          role="button"
-                          tabIndex={isGM ? 0 : -1}
-                          aria-label={isGM ? `Remove annotation ${note.text}` : `Annotation ${note.text}`}
+                          className={cn('vtt-measurement-label', 'vtt-measurement-label-active')}
                         >
-                          {note.text}
+                          {distance.toFixed(1)}u ({(distance * 5).toFixed(0)} ft)
                         </div>
-                      );
-                    })}
-
-                    {/* Measurement Line */}
-                    {selectedTool === 'measure' && measurementStart && measurementEnd && (() => {
-                      const startX = (measurementStart.x + 0.5) * gridSize * zoom;
-                      const startY = (measurementStart.y + 0.5) * gridSize * zoom;
-                      const endX = (measurementEnd.x + 0.5) * gridSize * zoom;
-                      const endY = (measurementEnd.y + 0.5) * gridSize * zoom;
-                      const length = Math.hypot(endX - startX, endY - startY);
-                      const angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
-                      const dx = Math.abs(measurementEnd.x - measurementStart.x);
-                      const dy = Math.abs(measurementEnd.y - measurementStart.y);
-                      const distance = Math.max(dx, dy) + Math.min(dx, dy) * 0.5;
-                      return (
-                        <div className="vtt-measurement">
-                          <div
-                            className="vtt-measurement-line"
-                            style={{
-                              left: `${startX}px`,
-                              top: `${startY}px`,
-                              width: `${length}px`,
-                              transform: `rotate(${angle}deg)`,
-                            } as React.CSSProperties}
-                          />
-                          <div
-                            className="vtt-measurement-label"
-                            style={{
-                              left: `${(startX + endX) / 2}px`,
-                              top: `${(startY + endY) / 2}px`,
-                            } as React.CSSProperties}
-                          >
-                            {distance.toFixed(1)}u ({(distance * 5).toFixed(0)} ft)
-                          </div>
-                        </div>
-                      );
-                    })()}
-
-                    {/* Tokens */}
-                    {visibleTokens.map((token) => {
-                      const isOverlayToken =
-                        token.render?.mode === 'overlay' ||
-                        token.tokenType === 'effect' ||
-                        token.tokenType === 'prop' ||
-                        (!!token.imageUrl &&
-                          (token.imageUrl.includes('/generated/props/') || token.imageUrl.includes('/generated/effects/')));
-                      const size = SIZE_VALUES[token.size] * zoom;
-                      const hpPercentage = token.maxHp ? (token.hp || 0) / token.maxHp : 1;
-                      const imageStyle = isOverlayToken
-                        ? {
-                            mixBlendMode: token.render?.blendMode ?? 'normal',
-                            opacity: token.render?.opacity ?? 1,
-                          }
-                        : undefined;
-                      return (
-                        <div
-                          key={token.id}
-                          draggable={!token.locked && isGM}
-                          onDragStart={(e) => handleTokenDragStart(token, e)}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setActiveTokenId(token.id);
-                          }}
-                          onDoubleClick={(e) => {
-                            e.stopPropagation();
-                            if (token.characterId) {
-                              window.open(`/characters/${token.characterId}`, '_blank');
-                            }
-                          }}
-                          onKeyDown={(e) => handleTokenKeyDown(token, e)}
-                          role="button"
-                          tabIndex={0}
-                          aria-label={`Token ${token.name}. Enter selects, O opens, Delete removes, L locks.`}
-                          className={cn(
-                            'vtt-token group',
-                            isOverlayToken && 'is-overlay',
-                            token.locked && 'locked',
-                            activeTokenId === token.id && 'active',
-                            draggedToken?.id === token.id && 'dragged'
-                          )}
-                          style={{
-                            '--token-x': `${token.x * gridSize * zoom}px`,
-                            '--token-y': `${token.y * gridSize * zoom}px`,
-                            '--token-size': `${size}px`,
-                            '--token-rotation': `${token.rotation}deg`,
-                            zIndex: token.layer * 10 + 10,
-                          } as React.CSSProperties}
-                        >
-                          <div
-                            className={cn('vtt-token-inner', isOverlayToken && 'is-overlay')}
-                            style={{
-                              '--token-bg-color': isOverlayToken ? 'transparent' : token.color ? `${token.color}40` : 'transparent',
-                              '--token-font-size': `${size * 0.4}px`,
-                              borderColor: isOverlayToken ? 'transparent' : token.color ?? undefined,
-                            } as React.CSSProperties}
-                          >
-                            {token.imageUrl ? (
-                              <OptimizedImage
-                                src={token.imageUrl}
-                                alt={token.name}
-                                className={cn(
-                                  'w-full h-full',
-                                  isOverlayToken ? 'object-contain' : 'object-cover rounded-full'
-                                )}
-                                size="small"
-                                style={imageStyle}
-                              />
-                            ) : (
-                              token.emoji || '@'
-                            )}
-                            {token.hp !== undefined && token.maxHp !== undefined && (
-                              <div className="absolute -bottom-1 left-0 right-0 h-1 bg-black/50 rounded-full overflow-hidden">
-                                <div
-                                  className="vtt-hp-bar"
-                                  style={{ '--hp-percentage': `${hpPercentage * 100}%` } as React.CSSProperties}
-                                />
-                              </div>
-                            )}
-                            {isGM && (
-                              <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                                {token.hp !== undefined && `${token.hp}/${token.maxHp}`}
-                                {token.ac !== undefined && ` AC ${token.ac}`}
-                              </div>
-                            )}
-                          </div>
-                          {isGM && (
-                            <div className="absolute top-full left-0 right-0 mt-1 flex justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                className="h-6 px-2 text-xs"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  updateTokenHP(token.id, -1);
-                                }}
-                              >
-                                -1
-                              </Button>
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                className="h-6 px-2 text-xs"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  updateTokenHP(token.id, 1);
-                                }}
-                              >
-                                +1
-                              </Button>
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
-
-                    {/* Fog of War */}
-                    {fogOfWar && currentScene.fogData && (
-                      <div
-                        className="vtt-fog-of-war pointer-events-none"
-                        style={{ opacity: isGM ? 0.5 : 0.85 } as React.CSSProperties}
-                      >
-                        {currentScene.fogData.map((row, y) =>
-                          row.map((revealed, x) => (
-                            !revealed && (
-                              <div
-                                key={`${x}-${y}`}
-                                className="vtt-fog-tile"
-                                style={{
-                                  '--tile-x': `${x * gridSize * zoom}px`,
-                                  '--tile-y': `${y * gridSize * zoom}px`,
-                                  '--tile-size': `${gridSize * zoom}px`,
-                                } as React.CSSProperties}
-                              />
-                            )
-                          ))
-                        )}
                       </div>
-                    )}
-
+                    );
+                  })()}
                 </div>
               </div>
             </SystemWindow>
@@ -1984,6 +1929,7 @@ const VTTEnhanced = () => {
                           type="number"
                           value={activeToken.hp ?? 0}
                           onChange={(e) => updateToken(activeToken.id, { hp: Number(e.target.value) || 0 })}
+                          aria-label="Hit points"
                           className="h-8 text-xs"
                         />
                       </div>
@@ -1993,6 +1939,7 @@ const VTTEnhanced = () => {
                           type="number"
                           value={activeToken.maxHp ?? 0}
                           onChange={(e) => updateToken(activeToken.id, { maxHp: Number(e.target.value) || 0 })}
+                          aria-label="Max hit points"
                           className="h-8 text-xs"
                         />
                       </div>
@@ -2002,6 +1949,7 @@ const VTTEnhanced = () => {
                           type="number"
                           value={activeToken.ac ?? 10}
                           onChange={(e) => updateToken(activeToken.id, { ac: Number(e.target.value) || 10 })}
+                          aria-label="Armor class"
                           className="h-8 text-xs"
                         />
                       </div>
@@ -2013,6 +1961,7 @@ const VTTEnhanced = () => {
                         type="checkbox"
                         checked={activeToken.visible}
                         onChange={(e) => updateToken(activeToken.id, { visible: e.target.checked })}
+                        aria-label="Toggle token visibility"
                         className="w-4 h-4"
                         disabled={!isGM}
                       />
@@ -2023,6 +1972,7 @@ const VTTEnhanced = () => {
                         type="checkbox"
                         checked={activeToken.locked}
                         onChange={(e) => updateToken(activeToken.id, { locked: e.target.checked })}
+                        aria-label="Toggle token lock"
                         className="w-4 h-4"
                         disabled={!isGM}
                       />

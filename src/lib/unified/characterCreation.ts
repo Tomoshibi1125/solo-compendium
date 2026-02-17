@@ -317,7 +317,7 @@ export function createUnifiedCharacter(options: UnifiedCharacterCreation): Unifi
   
   // Calculate hit points
   const vitMod = getUnifiedAbilityModifier('VIT', options.abilities.VIT);
-  const maxHP = parseInt(classPackage.hitDie.replace('d', '')) + vitMod;
+  const maxHP = parseInt(classPackage.hitDie.split('d')[1]) + vitMod;
   
   // Calculate armor class
   const agiMod = getUnifiedAbilityModifier('AGI', options.abilities.AGI);
@@ -368,73 +368,91 @@ export function createUnifiedCharacter(options: UnifiedCharacterCreation): Unifi
   };
 }
 
-// Calculate unified spell slots based on class
-function calculateUnifiedSpellSlots(classType: UnifiedClass, _level: number): UnifiedSpellSlots {
-  // Simplified spell slot calculation
-  const fullCasterSlots: UnifiedSpellSlots = {
-    cantrips: 0,
-    level1: 2,
-    level2: 0,
-    level3: 0,
-    level4: 0,
-    level5: 0,
-    level6: 0,
-    level7: 0,
-    level8: 0,
-    level9: 0
+// Full caster spell slot table (SRD 5e PHB)
+const FULL_CASTER_TABLE: Record<number, number[]> = {
+  1: [2,0,0,0,0,0,0,0,0], 2: [3,0,0,0,0,0,0,0,0],
+  3: [4,2,0,0,0,0,0,0,0], 4: [4,3,0,0,0,0,0,0,0],
+  5: [4,3,2,0,0,0,0,0,0], 6: [4,3,3,0,0,0,0,0,0],
+  7: [4,3,3,1,0,0,0,0,0], 8: [4,3,3,2,0,0,0,0,0],
+  9: [4,3,3,3,1,0,0,0,0], 10:[4,3,3,3,2,0,0,0,0],
+  11:[4,3,3,3,2,1,0,0,0], 12:[4,3,3,3,2,1,0,0,0],
+  13:[4,3,3,3,2,1,1,0,0], 14:[4,3,3,3,2,1,1,0,0],
+  15:[4,3,3,3,2,1,1,1,0], 16:[4,3,3,3,2,1,1,1,0],
+  17:[4,3,3,3,2,1,1,1,1], 18:[4,3,3,3,3,1,1,1,1],
+  19:[4,3,3,3,3,2,1,1,1], 20:[4,3,3,3,3,2,2,1,1],
+};
+
+// Half caster spell slot table (SRD 5e PHB)
+const HALF_CASTER_TABLE: Record<number, number[]> = {
+  1: [0,0,0,0,0,0,0,0,0], 2: [2,0,0,0,0,0,0,0,0],
+  3: [3,0,0,0,0,0,0,0,0], 4: [3,0,0,0,0,0,0,0,0],
+  5: [4,2,0,0,0,0,0,0,0], 6: [4,2,0,0,0,0,0,0,0],
+  7: [4,3,0,0,0,0,0,0,0], 8: [4,3,0,0,0,0,0,0,0],
+  9: [4,3,2,0,0,0,0,0,0], 10:[4,3,2,0,0,0,0,0,0],
+  11:[4,3,3,0,0,0,0,0,0], 12:[4,3,3,0,0,0,0,0,0],
+  13:[4,3,3,1,0,0,0,0,0], 14:[4,3,3,1,0,0,0,0,0],
+  15:[4,3,3,2,0,0,0,0,0], 16:[4,3,3,2,0,0,0,0,0],
+  17:[4,3,3,3,1,0,0,0,0], 18:[4,3,3,3,1,0,0,0,0],
+  19:[4,3,3,3,2,0,0,0,0], 20:[4,3,3,3,2,0,0,0,0],
+};
+
+// Warlock pact slot table (SRD 5e PHB)
+const PACT_CASTER_TABLE: Record<number, { slots: number; level: number }> = {
+  1: { slots: 1, level: 1 }, 2: { slots: 2, level: 1 },
+  3: { slots: 2, level: 2 }, 4: { slots: 2, level: 2 },
+  5: { slots: 2, level: 3 }, 6: { slots: 2, level: 3 },
+  7: { slots: 2, level: 4 }, 8: { slots: 2, level: 4 },
+  9: { slots: 2, level: 5 }, 10:{ slots: 2, level: 5 },
+  11:{ slots: 3, level: 5 }, 12:{ slots: 3, level: 5 },
+  13:{ slots: 3, level: 5 }, 14:{ slots: 3, level: 5 },
+  15:{ slots: 3, level: 5 }, 16:{ slots: 3, level: 5 },
+  17:{ slots: 4, level: 5 }, 18:{ slots: 4, level: 5 },
+  19:{ slots: 4, level: 5 }, 20:{ slots: 4, level: 5 },
+};
+
+// Calculate unified spell slots based on class and level
+export function calculateUnifiedSpellSlots(classType: UnifiedClass, level: number): UnifiedSpellSlots {
+  const empty: UnifiedSpellSlots = {
+    cantrips: 0, level1: 0, level2: 0, level3: 0, level4: 0,
+    level5: 0, level6: 0, level7: 0, level8: 0, level9: 0
   };
-  
-  const halfCasterSlots: UnifiedSpellSlots = {
-    cantrips: 0,
-    level1: 0,
-    level2: 0,
-    level3: 0,
-    level4: 0,
-    level5: 0,
-    level6: 0,
-    level7: 0,
-    level8: 0,
-    level9: 0
-  };
-  
-  const pactSlots: UnifiedSpellSlots = {
-    cantrips: 0,
-    level1: 1,
-    level2: 0,
-    level3: 0,
-    level4: 0,
-    level5: 0,
-    level6: 0,
-    level7: 0,
-    level8: 0,
-    level9: 0
-  };
-  
+
+  const clampedLevel = Math.min(Math.max(level, 1), 20);
+
   // Determine spell slot progression based on class
-  const spellcasters: UnifiedClass[] = ['mage', 'warlock', 'necromancer', 'technomancer'];
+  const fullCasters: UnifiedClass[] = ['mage', 'necromancer', 'technomancer', 'healer', 'bard', 'summoner'];
   const halfCasters: UnifiedClass[] = ['paladin', 'ranger'];
   const pactCasters: UnifiedClass[] = ['warlock'];
-  
+
   if (pactCasters.includes(classType)) {
-    return pactSlots;
-  } else if (halfCasters.includes(classType)) {
-    return halfCasterSlots;
-  } else if (spellcasters.includes(classType)) {
-    return fullCasterSlots;
-  } else {
+    const pact = PACT_CASTER_TABLE[clampedLevel];
+    const slots = { ...empty };
+    const slotKey = `level${pact.level}` as keyof UnifiedSpellSlots;
+    slots[slotKey] = pact.slots;
+    return slots;
+  }
+
+  if (fullCasters.includes(classType)) {
+    const row = FULL_CASTER_TABLE[clampedLevel];
     return {
       cantrips: 0,
-      level1: 0,
-      level2: 0,
-      level3: 0,
-      level4: 0,
-      level5: 0,
-      level6: 0,
-      level7: 0,
-      level8: 0,
-      level9: 0
+      level1: row[0], level2: row[1], level3: row[2],
+      level4: row[3], level5: row[4], level6: row[5],
+      level7: row[6], level8: row[7], level9: row[8],
     };
   }
+
+  if (halfCasters.includes(classType)) {
+    const row = HALF_CASTER_TABLE[clampedLevel];
+    return {
+      cantrips: 0,
+      level1: row[0], level2: row[1], level3: row[2],
+      level4: row[3], level5: row[4], level6: row[5],
+      level7: row[6], level8: row[7], level9: row[8],
+    };
+  }
+
+  return empty;
 }
 
 // Validate unified character creation

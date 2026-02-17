@@ -16,12 +16,15 @@ import {
   Users,
   Map,
   Dice6,
+  Store,
+  FlaskConical,
   Sparkles,
   ChevronRight,
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { SystemSigilLogo } from '@/components/ui/SystemSigilLogo';
+import { Progress } from '@/components/ui/progress';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { useActiveCharacter } from '@/hooks/useActiveCharacter';
@@ -108,6 +111,26 @@ const playerTools = [
     iconColor: 'text-amber-400',
     glow: 'group-hover:shadow-amber-500/20',
   },
+  {
+    id: 'homebrew-studio',
+    name: 'Homebrew Studio',
+    description: 'Create and publish custom jobs, relics, powers, and campaign content.',
+    icon: FlaskConical,
+    status: 'available',
+    color: 'from-emerald-500/20 to-emerald-600/10 border-emerald-500/30 hover:border-emerald-500/60',
+    iconColor: 'text-emerald-400',
+    glow: 'group-hover:shadow-emerald-500/20',
+  },
+  {
+    id: 'marketplace',
+    name: 'Marketplace',
+    description: 'Browse and share campaign assets with entitlement-aware downloads and ratings.',
+    icon: Store,
+    status: 'available',
+    color: 'from-cyan-500/20 to-cyan-600/10 border-cyan-500/30 hover:border-cyan-500/60',
+    iconColor: 'text-cyan-400',
+    glow: 'group-hover:shadow-cyan-500/20',
+  },
 ];
 
 const PlayerTools = () => {
@@ -187,12 +210,7 @@ const PlayerTools = () => {
               <p className="text-2xl font-bold text-white">
                 {activeCharacter ? `${hpCurrent}/${hpMax}` : '--'}
               </p>
-              <div className="w-full bg-gray-700 rounded-full h-2 mt-2">
-                <div
-                  className="bg-blue-500 h-2 rounded-full"
-                  style={{ width: `${hpPercent}%` }}
-                />
-              </div>
+              <Progress value={hpPercent} className="h-2 mt-2 bg-gray-700 [&>div]:bg-blue-500" />
             </div>
             
             <div className="text-center">
@@ -203,12 +221,7 @@ const PlayerTools = () => {
               <p className="text-2xl font-bold text-white">
                 {activeCharacter ? `${energyCurrent}/${energyMax}` : '--'}
               </p>
-              <div className="w-full bg-gray-700 rounded-full h-2 mt-2">
-                <div
-                  className="bg-purple-500 h-2 rounded-full"
-                  style={{ width: `${energyPercent}%` }}
-                />
-              </div>
+              <Progress value={energyPercent} className="h-2 mt-2 bg-gray-700 [&>div]:bg-purple-500" />
             </div>
             
             <div className="text-center">
@@ -265,7 +278,9 @@ const PlayerTools = () => {
                   tool.id === 'compendium-viewer' && "bg-indigo-500/30",
                   tool.id === 'quest-log' && "bg-orange-500/30",
                   tool.id === 'party-view' && "bg-cyan-500/30",
-                  tool.id === 'dice-roller' && "bg-amber-500/30"
+                  tool.id === 'dice-roller' && "bg-amber-500/30",
+                  tool.id === 'homebrew-studio' && "bg-emerald-500/30",
+                  tool.id === 'marketplace' && "bg-cyan-500/30"
                 )} />
                 
                 {/* Icon */}

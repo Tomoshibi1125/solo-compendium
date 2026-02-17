@@ -171,7 +171,9 @@ export function getCasterType(job: string | null | undefined): CasterType {
     'Ranger': 'Ranger',
     'Warrior': 'Fighter (Eldritch Knight)',
     'Assassin': 'Rogue (Arcane Trickster)',
-    'Techsmith': 'Artificer'
+    'Techsmith': 'Artificer',
+    'Technomancer': 'Wizard',
+    'technomancer': 'Wizard'
   };
   
   const standardJob = jobMapping[job] || job;
@@ -297,6 +299,8 @@ export function getSpellcastingAbility(job: string | null | undefined): AbilityS
     'Mage': 'INT',
     'Esper': 'CHA',
     'Techsmith': 'INT',
+    'Technomancer': 'INT',
+    'technomancer': 'INT',
     'Healer': 'WIS',
     'Warden': 'WIS',
     'Ranger': 'WIS',
@@ -351,9 +355,9 @@ export function getSystemFavorDie(level: number): number {
 }
 
 export function getSystemFavorMax(level: number): number {
-  // Similar to Bardic Inspiration uses
-  if (level <= 4) return 1;
-  if (level <= 10) return 2;
-  if (level <= 16) return 3;
-  return 4;
+  // Aligned with unified engine: 3/4/5/6 by tier (System Ascendant canonical formula)
+  if (level <= 4) return 3;
+  if (level <= 10) return 4;
+  if (level <= 16) return 5;
+  return 6;
 }

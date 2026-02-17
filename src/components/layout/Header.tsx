@@ -97,6 +97,20 @@ export function Header({ user, onLogout }: HeaderProps) {
             Campaigns
           </Link>
           <Link
+            to="/homebrew"
+            className={navLinkClass("/homebrew")}
+            aria-current={isActive("/homebrew") ? "page" : undefined}
+          >
+            Homebrew
+          </Link>
+          <Link
+            to="/marketplace"
+            className={navLinkClass("/marketplace")}
+            aria-current={isActive("/marketplace") ? "page" : undefined}
+          >
+            Marketplace
+          </Link>
+          <Link
             to="/dm-tools"
             className={navLinkClass("/dm-tools")}
             aria-current={isActive("/dm-tools") ? "page" : undefined}
@@ -140,7 +154,7 @@ export function Header({ user, onLogout }: HeaderProps) {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src={user.avatar} alt={user.name} />
+                    <AvatarImage src={user.avatar ?? undefined} alt={user.name ?? undefined} />
                     <AvatarFallback>
                       {user.email?.split('@')[0] || 'User'}
                     </AvatarFallback>

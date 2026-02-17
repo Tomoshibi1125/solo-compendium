@@ -2,6 +2,11 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { MONARCH_LABEL, formatMonarchVernacular } from '@/lib/vernacular';
+import {
+  filterRowsBySourcebookAccess,
+  getCharacterCampaignId,
+  isSourcebookAccessible,
+} from '@/lib/sourcebookAccess';
 
 export interface MonarchUnlock {
   id: string;
@@ -16,6 +21,7 @@ export interface MonarchUnlock {
     name: string;
     title: string;
     theme: string;
+    source_book?: string | null;
   };
 }
 
@@ -29,13 +35,19 @@ export function useCharacterMonarchUnlocks(characterId: string | undefined) {
         .from('character_monarch_unlocks')
         .select(`
           *,
-          monarch:compendium_monarchs(id, name, title, theme)
+          monarch:compendium_monarchs(id, name, title, theme, source_book)
         `)
         .eq('character_id', characterId)
         .order('unlocked_at', { ascending: true });
       
       if (error) throw error;
-      return data as MonarchUnlock[];
+
+      const campaignId = await getCharacterCampaignId(characterId);
+      return filterRowsBySourcebookAccess(
+        (data || []) as MonarchUnlock[],
+        (unlock) => unlock.monarch?.source_book,
+        { campaignId }
+      );
     },
     enabled: !!characterId,
   });
@@ -53,6 +65,21 @@ export function useUnlockMonarch() {
       dmNotes?: string;
       isPrimary?: boolean;
     }) => {
+      const campaignId = await getCharacterCampaignId(params.characterId);
+      const { data: monarch, error: monarchError } = await supabase
+        .from('compendium_monarchs')
+        .select('source_book')
+        .eq('id', params.monarchId)
+        .maybeSingle();
+
+      if (monarchError) throw monarchError;
+      if (
+        monarch &&
+        !(await isSourcebookAccessible(monarch.source_book, { campaignId }))
+      ) {
+        throw new Error('This monarch requires sourcebook access.');
+      }
+
       const { data, error } = await supabase
         .from('character_monarch_unlocks')
         .insert({

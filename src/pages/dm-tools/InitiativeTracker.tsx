@@ -1,16 +1,25 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Plus, Trash2, ArrowUp, ArrowDown, RotateCcw } from 'lucide-react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { ArrowLeft, Plus, Trash2, ArrowUp, ArrowDown, RotateCcw, ExternalLink } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useDebounce } from '@/hooks/useDebounce';
-import { useUserToolState } from '@/hooks/useToolState';
+import { useCampaignToolState, useUserToolState } from '@/hooks/useToolState';
+import { useJoinedCampaigns, useMyCampaigns } from '@/hooks/useCampaigns';
+import {
+  useCampaignCombatSession,
+  useUpdateCombatSession,
+  useUpsertCombatants,
+  type Combatant as CampaignCombatantRow,
+} from '@/hooks/useCampaignCombat';
+import { supabase } from '@/integrations/supabase/client';
 
 interface Combatant {
   id: string;
@@ -22,6 +31,45 @@ interface Combatant {
   conditions: string[];
   isHunter: boolean;
 }
+
+type CampaignWithRole = {
+  id: string;
+  name: string;
+  access: 'owner' | 'co-system';
+};
+
+const toNumber = (value: unknown): number | undefined => {
+  if (typeof value === 'number' && Number.isFinite(value)) return value;
+  return undefined;
+};
+
+const toRecord = (value: unknown): Record<string, unknown> => {
+  if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+    return value as Record<string, unknown>;
+  }
+  return {};
+};
+
+const toConditionArray = (value: unknown): string[] => {
+  if (!Array.isArray(value)) return [];
+  return value.filter((entry): entry is string => typeof entry === 'string');
+};
+
+const mapCampaignCombatantToTracker = (combatant: CampaignCombatantRow): Combatant => {
+  const stats = toRecord(combatant.stats);
+  const flags = toRecord(combatant.flags);
+
+  return {
+    id: combatant.id,
+    name: combatant.name,
+    initiative: combatant.initiative,
+    hp: toNumber(stats.hp),
+    maxHp: toNumber(stats.max_hp ?? stats.maxHp),
+    ac: toNumber(stats.ac),
+    conditions: toConditionArray(combatant.conditions),
+    isHunter: typeof flags.isHunter === 'boolean' ? flags.isHunter : Boolean(combatant.member_id),
+  };
+};
 
 const STORAGE_KEY = 'solo-compendium.dm-tools.initiative.v1';
 
@@ -45,8 +93,17 @@ const CONDITION_OPTIONS = [
 
 const InitiativeTracker = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
-  const hydratedRef = useRef(false);
+  const hydratedContextRef = useRef<string | null>(null);
+  const hydratedCombatSessionRef = useRef<string | null>(null);
+  const skipNextCombatSyncRef = useRef(false);
+  const { data: myCampaigns = [], isLoading: myCampaignsLoading } = useMyCampaigns();
+  const { data: joinedCampaigns = [], isLoading: joinedCampaignsLoading } = useJoinedCampaigns();
+  const campaignId = searchParams.get('campaignId')?.trim() || null;
+  const sessionId = searchParams.get('sessionId')?.trim() || null;
+  const isCampaignScoped = !!campaignId;
+  const persistenceContext = campaignId ? `campaign:${campaignId}` : 'user';
   const [combatants, setCombatants] = useState<Combatant[]>([]);
   const [currentTurn, setCurrentTurn] = useState(0);
   const [round, setRound] = useState(1);
@@ -59,7 +116,69 @@ const InitiativeTracker = () => {
     isHunter: true,
   });
 
-  const { state: storedState, isLoading, saveNow } = useUserToolState<{
+  const manageableCampaigns = useMemo<CampaignWithRole[]>(() => {
+    const byId = new Map<string, CampaignWithRole>();
+
+    for (const campaign of myCampaigns) {
+      byId.set(campaign.id, {
+        id: campaign.id,
+        name: campaign.name,
+        access: 'owner',
+      });
+    }
+
+    for (const campaign of joinedCampaigns) {
+      if (campaign.member_role !== 'co-system') continue;
+      if (!byId.has(campaign.id)) {
+        byId.set(campaign.id, {
+          id: campaign.id,
+          name: campaign.name,
+          access: 'co-system',
+        });
+      }
+    }
+
+    return Array.from(byId.values()).sort((a, b) => a.name.localeCompare(b.name));
+  }, [joinedCampaigns, myCampaigns]);
+
+  const campaignsLoading = myCampaignsLoading || joinedCampaignsLoading;
+  const selectedCampaign = campaignId
+    ? manageableCampaigns.find((campaign) => campaign.id === campaignId) ?? null
+    : null;
+
+  const { data: combatSessionData } = useCampaignCombatSession(campaignId || '', sessionId);
+  const updateCombatSession = useUpdateCombatSession();
+  const upsertCombatants = useUpsertCombatants();
+  const activeCombatSession = combatSessionData?.session ?? null;
+  const activeCombatants = combatSessionData?.combatants ?? [];
+  const combatSessionContext = activeCombatSession ? `${campaignId}:${activeCombatSession.id}` : null;
+  const isSyncingCombatSession = isCampaignScoped && !!activeCombatSession && !!sessionId;
+
+  useEffect(() => {
+    if (campaignsLoading || manageableCampaigns.length === 0) {
+      return;
+    }
+
+    const hasValidCampaign = campaignId
+      ? manageableCampaigns.some((campaign) => campaign.id === campaignId)
+      : false;
+
+    if (!hasValidCampaign) {
+      const nextParams = new URLSearchParams(searchParams);
+      nextParams.set('campaignId', manageableCampaigns[0].id);
+      nextParams.delete('sessionId');
+      setSearchParams(nextParams, { replace: true });
+    }
+  }, [campaignId, campaignsLoading, manageableCampaigns, searchParams, setSearchParams]);
+
+  const handleCampaignChange = (nextCampaignId: string) => {
+    const nextParams = new URLSearchParams(searchParams);
+    nextParams.set('campaignId', nextCampaignId);
+    nextParams.delete('sessionId');
+    setSearchParams(nextParams, { replace: true });
+  };
+
+  const userToolState = useUserToolState<{
     combatants: Combatant[];
     currentTurn: number;
     round: number;
@@ -68,7 +187,24 @@ const InitiativeTracker = () => {
   }>('initiative_tracker', {
     initialState: { combatants: [], currentTurn: 0, round: 1 },
     storageKey: STORAGE_KEY,
+    enabled: !isCampaignScoped,
   });
+
+  const campaignToolState = useCampaignToolState<{
+    combatants: Combatant[];
+    currentTurn: number;
+    round: number;
+    version?: number;
+    savedAt?: string;
+  }>(campaignId, 'initiative_tracker', {
+    initialState: { combatants: [], currentTurn: 0, round: 1 },
+    storageKey: campaignId ? `${STORAGE_KEY}.${campaignId}` : STORAGE_KEY,
+    enabled: isCampaignScoped,
+  });
+
+  const { state: storedState, isLoading, saveNow } = isCampaignScoped
+    ? campaignToolState
+    : userToolState;
 
   const savePayload = useMemo(
     () => ({
@@ -80,9 +216,28 @@ const InitiativeTracker = () => {
   );
   const debouncedState = useDebounce(savePayload, 600);
 
+  useEffect(() => {
+    if (!isSyncingCombatSession || !activeCombatSession || !combatSessionContext) {
+      hydratedCombatSessionRef.current = null;
+      return;
+    }
+
+    if (hydratedCombatSessionRef.current === combatSessionContext) {
+      return;
+    }
+
+    setCombatants(activeCombatants.map(mapCampaignCombatantToTracker));
+    setCurrentTurn(activeCombatSession.current_turn ?? 0);
+    setRound(activeCombatSession.round ?? 1);
+    hydratedCombatSessionRef.current = combatSessionContext;
+    hydratedContextRef.current = null;
+    skipNextCombatSyncRef.current = true;
+  }, [activeCombatSession, activeCombatants, combatSessionContext, isSyncingCombatSession]);
+
   // Load persisted state (best-effort)
   useEffect(() => {
-    if (isLoading || hydratedRef.current) return;
+    if (isSyncingCombatSession) return;
+    if (isLoading || hydratedContextRef.current === persistenceContext) return;
     if (Array.isArray(storedState.combatants)) {
       setCombatants(storedState.combatants);
     }
@@ -92,18 +247,70 @@ const InitiativeTracker = () => {
     if (typeof storedState.round === 'number') {
       setRound(storedState.round);
     }
-    hydratedRef.current = true;
-  }, [isLoading, storedState.combatants, storedState.currentTurn, storedState.round]);
+    hydratedContextRef.current = persistenceContext;
+  }, [isLoading, isSyncingCombatSession, persistenceContext, storedState.combatants, storedState.currentTurn, storedState.round]);
 
   // Persist state (best-effort)
   useEffect(() => {
-    if (!hydratedRef.current) return;
+    if (isSyncingCombatSession && activeCombatSession && campaignId) {
+      if (skipNextCombatSyncRef.current) {
+        skipNextCombatSyncRef.current = false;
+        return;
+      }
+
+      upsertCombatants.mutate({
+        campaignId,
+        sessionId: activeCombatSession.id,
+        combatants: debouncedState.combatants.map((combatant) => ({
+          id: combatant.id,
+          name: combatant.name,
+          initiative: combatant.initiative,
+          stats: {
+            hp: combatant.hp ?? null,
+            max_hp: combatant.maxHp ?? null,
+            ac: combatant.ac ?? null,
+          },
+          conditions: combatant.conditions,
+          flags: {
+            isHunter: combatant.isHunter,
+          },
+          member_id: null,
+        })),
+      });
+
+      updateCombatSession.mutate({
+        campaignId,
+        sessionId: activeCombatSession.id,
+        updates: {
+          current_turn: debouncedState.currentTurn,
+          round: debouncedState.round,
+        },
+      });
+
+      void saveNow({
+        ...debouncedState,
+        version: 1,
+        savedAt: new Date().toISOString(),
+      });
+      return;
+    }
+
+    if (hydratedContextRef.current !== persistenceContext) return;
     void saveNow({
       ...debouncedState,
       version: 1,
       savedAt: new Date().toISOString(),
     });
-  }, [debouncedState, saveNow]);
+  }, [
+    activeCombatSession,
+    campaignId,
+    debouncedState,
+    isSyncingCombatSession,
+    persistenceContext,
+    saveNow,
+    updateCombatSession,
+    upsertCombatants,
+  ]);
 
   const sortedCombatants = [...combatants].sort((a, b) => {
     if (b.initiative !== a.initiative) {
@@ -156,6 +363,22 @@ const InitiativeTracker = () => {
     setCombatants(combatants.filter(c => c.id !== id));
     if (currentTurn >= combatants.length - 1) {
       setCurrentTurn(0);
+    }
+
+    if (isSyncingCombatSession) {
+      void supabase
+        .from('campaign_combatants')
+        .delete()
+        .eq('id', id)
+        .then(({ error }) => {
+          if (error) {
+            toast({
+              title: 'Failed to remove combatant',
+              description: error.message,
+              variant: 'destructive',
+            });
+          }
+        });
     }
   };
 
@@ -229,6 +452,21 @@ const InitiativeTracker = () => {
     setCombatants([]);
     setCurrentTurn(0);
     setRound(1);
+
+    if (isSyncingCombatSession && activeCombatSession) {
+      void supabase
+        .from('campaign_combatants')
+        .delete()
+        .eq('session_id', activeCombatSession.id);
+      updateCombatSession.mutate({
+        sessionId: activeCombatSession.id,
+        updates: {
+          current_turn: 0,
+          round: 1,
+        },
+      });
+    }
+
     toast({
       title: 'Combat reset',
       description: 'All combatants cleared from the tracker.',
@@ -239,7 +477,7 @@ const InitiativeTracker = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8" data-testid="initiative-tracker">
         <div className="mb-6">
           <Button
             variant="ghost"
@@ -256,6 +494,41 @@ const InitiativeTracker = () => {
             Track initiative, HP, and conditions during Rift combat encounters.
           </p>
         </div>
+
+        {!campaignsLoading && manageableCampaigns.length > 0 && (
+          <SystemWindow title="ACTIVE CAMPAIGN" className="mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_auto] gap-3 items-end">
+              <div className="space-y-2">
+                <Label htmlFor="initiative-campaign">Campaign</Label>
+                <Select value={campaignId ?? ''} onValueChange={handleCampaignChange}>
+                  <SelectTrigger id="initiative-campaign">
+                    <SelectValue placeholder="Select campaign" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {manageableCampaigns.map((campaign) => (
+                      <SelectItem key={campaign.id} value={campaign.id}>
+                        {campaign.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              {selectedCampaign && (
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge variant={selectedCampaign.access === 'owner' ? 'default' : 'outline'}>
+                    {selectedCampaign.access === 'owner' ? 'Owner' : 'Co-System'}
+                  </Badge>
+                  <Button variant="outline" asChild>
+                    <Link to={`/campaigns/${selectedCampaign.id}`}>
+                      Open Campaign
+                      <ExternalLink className="w-4 h-4 ml-2" />
+                    </Link>
+                  </Button>
+                </div>
+              )}
+            </div>
+          </SystemWindow>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Initiative Order */}
@@ -281,6 +554,7 @@ const InitiativeTracker = () => {
                     onClick={previousTurn}
                     disabled={sortedCombatants.length === 0}
                     aria-label="Previous turn"
+                    data-testid="initiative-prev-turn"
                   >
                     <ArrowUp className="w-4 h-4" />
                   </Button>
@@ -290,6 +564,7 @@ const InitiativeTracker = () => {
                     onClick={nextTurn}
                     disabled={sortedCombatants.length === 0}
                     aria-label="Next turn"
+                    data-testid="initiative-next-turn"
                   >
                     <ArrowDown className="w-4 h-4" />
                   </Button>
@@ -297,6 +572,7 @@ const InitiativeTracker = () => {
                     size="sm"
                     variant="destructive"
                     onClick={resetCombat}
+                    data-testid="initiative-reset"
                   >
                     <RotateCcw className="w-4 h-4 mr-2" />
                     Reset
@@ -536,6 +812,7 @@ const InitiativeTracker = () => {
                   onClick={addCombatant}
                   className="w-full"
                   disabled={!newCombatant.name}
+                  data-testid="initiative-add-combatant"
                 >
                   <Plus className="w-4 h-4 mr-2" />
                   Add to Initiative

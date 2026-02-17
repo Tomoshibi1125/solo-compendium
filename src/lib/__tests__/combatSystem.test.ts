@@ -5,11 +5,11 @@ describe('5e Combat System Calculations', () => {
   test('Armor class calculation - no armor', () => {
     const character = {
       name: 'Test',
-      class: 'Warrior',
+      class: 'warrior' as const,
       race: 'Human',
       background: 'Soldier',
       level: 5,
-      abilities: { STR: 14, DEX: 16, CON: 12, INT: 10, WIS: 8, CHA: 8 },
+      abilities: { STR: 14, AGI: 16, VIT: 12, INT: 10, SENSE: 8, PRE: 8 },
       hp: 45,
       maxHp: 45,
       ac: 10,
@@ -21,35 +21,35 @@ describe('5e Combat System Calculations', () => {
       spellSlots: {},
       preparedSpells: []
     };
-    const ac = getUnifiedArmorClass(character, 'none');
-    expect(ac).toBe(13); // 10 + DEX mod (3)
+    const ac = getUnifiedArmorClass(character as any, 'none');
+    expect(ac).toBe(13); // 10 + AGI mod (3)
   });
   
   test('Armor class calculation - heavy armor', () => {
     const character = {
       level: 5,
-      abilities: { STR: 14, DEX: 16, CON: 12, INT: 10, WIS: 8, CHA: 8 }
+      abilities: { STR: 14, AGI: 16, VIT: 12, INT: 10, SENSE: 8, PRE: 8 }
     };
-    const ac = getUnifiedArmorClass(character, 'heavy');
-    expect(ac).toBe(10); // Base AC only, no DEX bonus
+    const ac = getUnifiedArmorClass(character as any, 'heavy');
+    expect(ac).toBe(10); // Base AC only, no AGI bonus
   });
   
   test('Hit points calculation - level 1', () => {
     const character = {
       level: 1,
-      abilities: { STR: 14, DEX: 16, CON: 14, INT: 10, WIS: 8, CHA: 8 }
+      abilities: { STR: 14, AGI: 16, VIT: 14, INT: 10, SENSE: 8, PRE: 8 }
     };
-    const hp = getUnifiedHitPoints(character, '8');
-    expect(hp).toBe(10); // 8 + CON mod (2)
+    const hp = getUnifiedHitPoints(character as any, 'd8');
+    expect(hp).toBe(10); // 8 + VIT mod (2)
   });
   
   test('Hit points calculation - level 5', () => {
     const character = {
       level: 5,
-      abilities: { STR: 14, DEX: 16, CON: 14, INT: 10, WIS: 8, CHA: 8 }
+      abilities: { STR: 14, AGI: 16, VIT: 14, INT: 10, SENSE: 8, PRE: 8 }
     };
-    const hp = getUnifiedHitPoints(character, '8');
-    expect(hp).toBe(38); // 8 + 2 + 4 * (4 + 2 + 1) = 10 + 28 = 38
+    const hp = getUnifiedHitPoints(character as any, 'd8');
+    expect(hp).toBe(38); // 8 + 2 + 4 * (4 + 1 + 2) = 10 + 28 = 38
   });
   
   test('Proficiency bonus matches 5e standard', () => {

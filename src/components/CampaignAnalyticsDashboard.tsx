@@ -100,6 +100,14 @@ type CampaignMessageRow = {
   created_at: string;
 };
 
+type CampaignSessionRow = {
+  id: string;
+  scheduled_for: string | null;
+  created_at: string;
+  updated_at: string;
+  status: string;
+};
+
 type LocalSession = {
   id: string;
   title: string;
@@ -115,6 +123,7 @@ type CampaignDataSet = {
   notes: CampaignNoteRow[];
   messages: CampaignMessageRow[];
   rolls: RollRecord[];
+  sessions: CampaignSessionRow[];
 };
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -158,6 +167,20 @@ const localSessionsToNotes = (sessions: LocalSession[]): CampaignNoteRow[] => {
   }));
 };
 
+const localSessionsToSessionRows = (sessions: LocalSession[]): CampaignSessionRow[] => {
+  const now = new Date().toISOString();
+  return sessions.map((session) => {
+    const timestamp = session.date ? new Date(session.date).toISOString() : now;
+    return {
+      id: session.id,
+      scheduled_for: session.date ? new Date(session.date).toISOString() : null,
+      created_at: timestamp,
+      updated_at: timestamp,
+      status: 'completed',
+    };
+  });
+};
+
 const buildAnalytics = (
   campaignId: string,
   timeRange: TimeRange,
@@ -167,10 +190,13 @@ const buildAnalytics = (
   const notes = data.notes.filter((note) => isWithinRange(note.created_at, rangeStart));
   const messages = data.messages.filter((msg) => isWithinRange(msg.created_at, rangeStart));
   const rolls = data.rolls.filter((roll) => isWithinRange(roll.created_at, rangeStart));
+  const sessions = data.sessions.filter((session) =>
+    isWithinRange(session.scheduled_for || session.created_at, rangeStart)
+  );
 
   const sessionNotes = notes.filter((note) => (note.category || '').toLowerCase() === 'session');
   const questNotes = notes.filter((note) => (note.category || '').toLowerCase() === 'quest');
-  const totalSessions = sessionNotes.length;
+  const totalSessions = sessions.length > 0 ? sessions.length : sessionNotes.length;
   const totalPlaytime = 0;
   const averageSessionDuration = totalSessions > 0 ? totalPlaytime / totalSessions : 0;
 
@@ -275,10 +301,16 @@ const buildAnalytics = (
   }));
 
   const timeBuckets = new Map<number, { sessions: number; totalDuration: number }>();
-  const timeSources = rolls.length > 0 ? rolls.map((roll) => roll.created_at) : sessionNotes.map((note) => note.created_at);
+  const timeSources =
+    rolls.length > 0
+      ? rolls.map((roll) => roll.created_at)
+      : sessions.length > 0
+        ? sessions.map((session) => session.scheduled_for || session.created_at)
+        : sessionNotes.map((note) => note.created_at);
   for (const timestamp of timeSources) {
     const hour = new Date(timestamp).getHours();
     const entry = timeBuckets.get(hour) || { sessions: 0, totalDuration: 0 };
+
     entry.sessions += 1;
     timeBuckets.set(hour, entry);
   }
@@ -353,12 +385,13 @@ const fetchCampaignData = async (campaignId: string, timeRange: TimeRange): Prom
       notes: localSessionsToNotes(sessions),
       messages: [],
       rolls: listLocalRollHistory(),
+      sessions: localSessionsToSessionRows(sessions),
     };
   }
 
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) {
-    return { members: [], notes: [], messages: [], rolls: [] };
+    return { members: [], notes: [], messages: [], rolls: [], sessions: [] };
   }
 
   const rangeStart = getRangeStart(timeRange);
@@ -384,38 +417,54 @@ const fetchCampaignData = async (campaignId: string, timeRange: TimeRange): Prom
     .select('*')
     .eq('campaign_id', campaignId);
 
+  const sessionsQuery = supabase
+    .from('campaign_sessions')
+    .select('id, scheduled_for, created_at, updated_at, status')
+    .eq('campaign_id', campaignId);
+
   if (rangeIso) {
     notesQuery.gte('created_at', rangeIso);
     messagesQuery.gte('created_at', rangeIso);
     rollsQuery.gte('created_at', rangeIso);
   }
 
-  const [membersResult, notesResult, messagesResult, rollsResult] = await Promise.all([
+  const [membersResult, notesResult, messagesResult, rollsResult, sessionsResult] = await Promise.all([
     membersQuery,
     notesQuery,
     messagesQuery,
     rollsQuery,
+    sessionsQuery,
   ]);
 
   if (membersResult.error) throw membersResult.error;
   if (notesResult.error) throw notesResult.error;
   if (messagesResult.error) throw messagesResult.error;
   if (rollsResult.error) throw rollsResult.error;
+  if (sessionsResult.error) throw sessionsResult.error;
 
   let sessionPlannerNotes: CampaignNoteRow[] = [];
+  let sessionPlannerSessions: CampaignSessionRow[] = [];
   try {
     const sessionPlannerState = await loadUserToolState<SessionPlannerState>(user.id, 'session_planner');
     const sessions = Array.isArray(sessionPlannerState?.sessions) ? sessionPlannerState?.sessions || [] : [];
     sessionPlannerNotes = localSessionsToNotes(sessions);
+    sessionPlannerSessions = localSessionsToSessionRows(sessions);
   } catch (error) {
     logger.warn('Failed to load session planner data for analytics', error);
   }
 
+  const remoteSessions = (sessionsResult.data || []) as CampaignSessionRow[];
+  const mergedSessions = remoteSessions.length > 0 ? remoteSessions : sessionPlannerSessions;
+  const mergedNotes = remoteSessions.length > 0
+    ? (notesResult.data || [])
+    : ([...(notesResult.data || []), ...sessionPlannerNotes] as CampaignNoteRow[]);
+
   return {
     members: (membersResult.data || []) as CampaignMemberRow[],
-    notes: ([...(notesResult.data || []), ...sessionPlannerNotes]) as CampaignNoteRow[],
+    notes: mergedNotes,
     messages: (messagesResult.data || []) as CampaignMessageRow[],
     rolls: (rollsResult.data || []) as RollRecord[],
+    sessions: mergedSessions,
   };
 };
 
@@ -431,7 +480,7 @@ export function useCampaignAnalytics(campaignId: string) {
       setAnalytics(buildAnalytics(campaignId, timeRange, data));
     } catch (error) {
       logger.error('Failed to fetch analytics:', error);
-      setAnalytics(buildAnalytics(campaignId, timeRange, { members: [], notes: [], messages: [], rolls: [] }));
+      setAnalytics(buildAnalytics(campaignId, timeRange, { members: [], notes: [], messages: [], rolls: [], sessions: [] }));
     } finally {
       setLoading(false);
     }

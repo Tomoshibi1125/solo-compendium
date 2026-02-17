@@ -1,350 +1,141 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
-import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Save, Plus, Trash2 } from 'lucide-react';
+import { useEffect, useMemo } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
-import { SystemWindow } from '@/components/ui/SystemWindow';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
+import { CampaignSessionsPanel } from '@/components/campaign/CampaignSessionsPanel';
 import { Badge } from '@/components/ui/badge';
-import { useToast } from '@/hooks/use-toast';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useDebounce } from '@/hooks/useDebounce';
-import { buildToolStorageKey, readLocalToolState, useUserToolState, writeLocalToolState } from '@/hooks/useToolState';
-import { MONARCH_LABEL } from '@/lib/vernacular';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { SystemWindow } from '@/components/ui/SystemWindow';
+import { useJoinedCampaigns, useMyCampaigns } from '@/hooks/useCampaigns';
 
-interface SessionNote {
+type CampaignWithRole = {
   id: string;
-  title: string;
-  content: string;
-  type: 'encounter' | 'npc' | 'location' | 'plot' | 'other';
-}
-
-interface SessionPlan {
-  id: string;
-  title: string;
-  date?: string;
-  notes: SessionNote[];
-  prepNotes: string;
-  postSessionNotes: string;
-}
-
-type SessionPlannerState = {
-  sessions: SessionPlan[];
-  currentSession: SessionPlan | null;
+  name: string;
+  access: 'owner' | 'co-system';
 };
 
 const SessionPlanner = () => {
   const navigate = useNavigate();
-  const { toast } = useToast();
-  const [sessions, setSessions] = useState<SessionPlan[]>([]);
-  const hydratedRef = useRef(false);
-  
-  const initialSessionId = useRef(Date.now().toString()).current;
-  
-  const [currentSession, setCurrentSession] = useState<SessionPlan>({
-    id: initialSessionId,
-    title: 'New Session',
-    notes: [],
-    prepNotes: '',
-    postSessionNotes: '',
-  });
-  const [newNote, setNewNote] = useState<{ title: string; content: string; type: SessionNote['type'] }>({ title: '', content: '', type: 'other' });
-  const toolKey = 'session_planner';
-  const toolStorageKey = buildToolStorageKey(toolKey);
-  const legacyStorageKey = 'dm-sessions';
-  const { state: storedState, isLoading, saveNow } = useUserToolState<SessionPlannerState>(toolKey, {
-    initialState: { sessions: [], currentSession: null },
-    storageKey: toolStorageKey,
-  });
-  const isHydrating = isLoading && !hydratedRef.current;
-  const savePayload = useMemo(
-    () => ({ sessions, currentSession }),
-    [currentSession, sessions]
-  );
-  const debouncedState = useDebounce(savePayload, 800);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { data: myCampaigns = [], isLoading: myCampaignsLoading } = useMyCampaigns();
+  const { data: joinedCampaigns = [], isLoading: joinedCampaignsLoading } = useJoinedCampaigns();
+  const activeCampaignId = searchParams.get('campaignId')?.trim() || '';
 
-  const saveSession = () => {
-    const updated = sessions.filter(s => s.id !== currentSession.id);
-    updated.push(currentSession);
-    setSessions(updated);
-    void saveNow({ sessions: updated, currentSession });
+  const manageableCampaigns = useMemo<CampaignWithRole[]>(() => {
+    const byId = new Map<string, CampaignWithRole>();
 
-    toast({
-      title: 'Saved!',
-      description: 'Session plan saved successfully.',
-    });
-  };
-
-  const addNote = () => {
-    if (!newNote.title) return;
-    
-    const note: SessionNote = {
-      id: Date.now().toString(),
-      title: newNote.title,
-      content: newNote.content,
-      type: newNote.type,
-    };
-    
-    setCurrentSession({
-      ...currentSession,
-      notes: [...currentSession.notes, note],
-    });
-    
-    setNewNote({ title: '', content: '', type: 'other' });
-    
-    toast({
-      title: 'Note Added',
-      description: 'Session note added successfully.',
-    });
-  };
-
-  const deleteNote = (noteId: string) => {
-    setCurrentSession({
-      ...currentSession,
-      notes: currentSession.notes.filter(n => n.id !== noteId),
-    });
-  };
-
-  const getNoteIcon = (type: string) => {
-    switch (type) {
-      case 'encounter': return '⚔️';
-      case 'npc': return '👤';
-      case 'location': return '📍';
-      case 'plot': return '📖';
-      default: return '📝';
+    for (const campaign of myCampaigns) {
+      byId.set(campaign.id, {
+        id: campaign.id,
+        name: campaign.name,
+        access: 'owner',
+      });
     }
-  };
 
-  const getNoteColor = (type: string) => {
-    switch (type) {
-      case 'encounter': return 'border-red-400/30 bg-red-400/10';
-      case 'npc': return 'border-blue-400/30 bg-blue-400/10';
-      case 'location': return 'border-green-400/30 bg-green-400/10';
-      case 'plot': return 'border-purple-400/30 bg-purple-400/10';
-      default: return 'border-muted';
+    for (const campaign of joinedCampaigns) {
+      if (campaign.member_role !== 'co-system') continue;
+      if (!byId.has(campaign.id)) {
+        byId.set(campaign.id, {
+          id: campaign.id,
+          name: campaign.name,
+          access: 'co-system',
+        });
+      }
     }
-  };
+
+    return Array.from(byId.values()).sort((a, b) => a.name.localeCompare(b.name));
+  }, [joinedCampaigns, myCampaigns]);
 
   useEffect(() => {
-    if (isLoading || hydratedRef.current) return;
-
-    const legacySessions = readLocalToolState<SessionPlan[]>(legacyStorageKey);
-    let nextSessions = storedState.sessions;
-    let nextCurrent = storedState.currentSession;
-
-    if ((!nextSessions || nextSessions.length === 0) && Array.isArray(legacySessions) && legacySessions.length > 0) {
-      nextSessions = legacySessions;
-      nextCurrent = legacySessions[legacySessions.length - 1] || null;
-      writeLocalToolState(toolStorageKey, { sessions: nextSessions, currentSession: nextCurrent });
-      void saveNow({ sessions: nextSessions, currentSession: nextCurrent });
+    if (manageableCampaigns.length === 0) {
+      return;
     }
 
-    if (!nextCurrent && Array.isArray(nextSessions) && nextSessions.length > 0) {
-      nextCurrent = nextSessions[nextSessions.length - 1] || null;
+    const isSelectedValid = manageableCampaigns.some((campaign) => campaign.id === activeCampaignId);
+    if (!isSelectedValid) {
+      const nextParams = new URLSearchParams(searchParams);
+      nextParams.set('campaignId', manageableCampaigns[0].id);
+      setSearchParams(nextParams, { replace: true });
     }
+  }, [activeCampaignId, manageableCampaigns, searchParams, setSearchParams]);
 
-    if (Array.isArray(nextSessions) && nextSessions.length > 0) {
-      setSessions(nextSessions);
-    }
-    if (nextCurrent) {
-      setCurrentSession(nextCurrent);
-    }
+  const handleCampaignChange = (nextCampaignId: string) => {
+    const nextParams = new URLSearchParams(searchParams);
+    nextParams.set('campaignId', nextCampaignId);
+    setSearchParams(nextParams, { replace: true });
+  };
 
-    hydratedRef.current = true;
-  }, [isLoading, legacyStorageKey, saveNow, storedState.currentSession, storedState.sessions, toolStorageKey]);
-
-  useEffect(() => {
-    if (!hydratedRef.current) return;
-    void saveNow(debouncedState);
-  }, [debouncedState, saveNow]);
-
-  if (isHydrating) {
-    return (
-      <Layout>
-        <div className="container mx-auto px-4 py-8 max-w-6xl">
-          <SystemWindow title="LOADING SESSION PLANNER">
-            <p className="text-sm text-muted-foreground">Loading session data...</p>
-          </SystemWindow>
-        </div>
-      </Layout>
-    );
-  }
+  const isLoading = myCampaignsLoading || joinedCampaignsLoading;
+  const selectedCampaign = manageableCampaigns.find((campaign) => campaign.id === activeCampaignId) ?? null;
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
-        <div className="mb-6">
-          <Button
-            variant="ghost"
-            onClick={() => navigate('/dm-tools')}
-            className="mb-4"
-          >
+      <div className="container mx-auto px-4 py-8 max-w-6xl space-y-6">
+        <div>
+          <Button variant="ghost" onClick={() => navigate('/dm-tools')} className="mb-4">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Warden Tools
           </Button>
-          <h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow">
-            SESSION PLANNER
-          </h1>
+          <h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow">SESSION PLANNER</h1>
           <p className="text-muted-foreground font-heading">
-            Plan and organize your sessions. Track encounters, NPCs, locations, and plot points.
+            Campaign-backed session schedule and session logs with offline sync.
           </p>
         </div>
 
-        <Tabs defaultValue="plan" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="plan">Session Plan</TabsTrigger>
-            <TabsTrigger value="prep">Prep Notes</TabsTrigger>
-            <TabsTrigger value="post">Post-Session</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="plan" className="space-y-6">
-            <SystemWindow title="SESSION INFO">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="title">Session Title</Label>
-                  <Input
-                    id="title"
-                    value={currentSession.title}
-                    onChange={(e) => setCurrentSession({ ...currentSession, title: e.target.value })}
-                    placeholder={`e.g., The Umbral ${MONARCH_LABEL}'s Return`}
-                  />
+        {isLoading ? (
+          <SystemWindow title="LOADING CAMPAIGNS">
+            <p className="text-sm text-muted-foreground">Loading campaigns...</p>
+          </SystemWindow>
+        ) : manageableCampaigns.length === 0 ? (
+          <SystemWindow title="NO CAMPAIGNS AVAILABLE">
+            <div className="space-y-3 text-sm text-muted-foreground">
+              <p>Create or join a campaign with Protocol Warden access to plan sessions.</p>
+              <Button onClick={() => navigate('/campaigns')}>Open Campaigns</Button>
+            </div>
+          </SystemWindow>
+        ) : (
+          <>
+            <SystemWindow title="ACTIVE CAMPAIGN">
+              <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_auto] gap-3 items-end">
+                <div className="space-y-2">
+                  <Label htmlFor="session-planner-campaign">Campaign</Label>
+                  <Select value={activeCampaignId} onValueChange={handleCampaignChange}>
+                    <SelectTrigger id="session-planner-campaign">
+                      <SelectValue placeholder="Select campaign" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {manageableCampaigns.map((campaign) => (
+                        <SelectItem key={campaign.id} value={campaign.id}>
+                          {campaign.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
-                <div>
-                  <Label htmlFor="date">Date (Optional)</Label>
-                  <Input
-                    id="date"
-                    type="date"
-                    value={currentSession.date || ''}
-                    onChange={(e) => setCurrentSession({ ...currentSession, date: e.target.value })}
-                  />
-                </div>
+                {selectedCampaign && (
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Badge variant={selectedCampaign.access === 'owner' ? 'default' : 'outline'}>
+                      {selectedCampaign.access === 'owner' ? 'Owner' : 'Co-System'}
+                    </Badge>
+                    <Button variant="outline" asChild>
+                      <Link to={`/campaigns/${selectedCampaign.id}`}>
+                        Open Campaign
+                        <ExternalLink className="w-4 h-4 ml-2" />
+                      </Link>
+                    </Button>
+                  </div>
+                )}
               </div>
             </SystemWindow>
 
-            <SystemWindow title="ADD NOTE">
-              <div className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="note-title">Note Title</Label>
-                    <Input
-                      id="note-title"
-                      value={newNote.title}
-                      onChange={(e) => setNewNote({ ...newNote, title: e.target.value })}
-                      placeholder="e.g., Boss Battle - Crimson Knight the Blood Red"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="note-type">Type</Label>
-                    <select
-                      id="note-type"
-                      value={newNote.type}
-                      onChange={(e) => setNewNote({ ...newNote, type: e.target.value as SessionNote['type'] })}
-                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                    >
-                      <option value="encounter">Encounter</option>
-                      <option value="npc">NPC</option>
-                      <option value="location">Location</option>
-                      <option value="plot">Plot</option>
-                      <option value="other">Other</option>
-                    </select>
-                  </div>
-                </div>
-                <div>
-                  <Label htmlFor="note-content">Content</Label>
-                  <Textarea
-                    id="note-content"
-                    value={newNote.content}
-                    onChange={(e) => setNewNote({ ...newNote, content: e.target.value })}
-                    placeholder="Describe the encounter, NPC details, location description, or plot points..."
-                    rows={4}
-                  />
-                </div>
-                <Button onClick={addNote} className="w-full">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add Note
-                </Button>
-              </div>
-            </SystemWindow>
-
-            <SystemWindow title="SESSION NOTES">
-              {currentSession.notes.length === 0 ? (
-                <p className="text-muted-foreground text-center py-8">
-                  No notes yet. Add notes to organize your session.
-                </p>
-              ) : (
-                <div className="space-y-3">
-                  {currentSession.notes.map((note) => (
-                    <div
-                      key={note.id}
-                      className={`p-4 rounded-lg border ${getNoteColor(note.type)}`}
-                    >
-                      <div className="flex items-start justify-between mb-2">
-                        <div className="flex items-center gap-2">
-                          <span className="text-2xl">{getNoteIcon(note.type)}</span>
-                          <h3 className="font-heading font-semibold">{note.title}</h3>
-                          <Badge variant="outline" className="text-xs">
-                            {note.type}
-                          </Badge>
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => deleteNote(note.id)}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                      <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                        {note.content}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </SystemWindow>
-          </TabsContent>
-
-          <TabsContent value="prep">
-            <SystemWindow title="PREPARATION NOTES">
-              <Textarea
-                value={currentSession.prepNotes}
-                onChange={(e) => setCurrentSession({ ...currentSession, prepNotes: e.target.value })}
-                placeholder="Preparation notes, ideas, reminders..."
-                rows={15}
-                className="font-mono text-sm"
-              />
-            </SystemWindow>
-          </TabsContent>
-
-          <TabsContent value="post">
-            <SystemWindow title="POST-SESSION NOTES">
-              <Textarea
-                value={currentSession.postSessionNotes}
-                onChange={(e) => setCurrentSession({ ...currentSession, postSessionNotes: e.target.value })}
-                placeholder="What happened? What needs to be followed up? Player actions and reactions..."
-                rows={15}
-                className="font-mono text-sm"
-              />
-            </SystemWindow>
-          </TabsContent>
-        </Tabs>
-
-        <div className="mt-6">
-          <Button onClick={saveSession} className="w-full btn-umbral" size="lg">
-            <Save className="w-4 h-4 mr-2" />
-            Save Session Plan
-          </Button>
-        </div>
+            {activeCampaignId && <CampaignSessionsPanel campaignId={activeCampaignId} canManage />}
+          </>
+        )}
       </div>
     </Layout>
   );
 };
 
 export default SessionPlanner;
-
-
-
-

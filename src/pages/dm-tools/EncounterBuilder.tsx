@@ -1,11 +1,13 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Plus, Trash2, Search, Sword } from 'lucide-react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { ArrowLeft, ExternalLink, Plus, Trash2, Search, Sword } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
@@ -15,9 +17,18 @@ import type { Database } from '@/integrations/supabase/types';
 import { monsters as staticMonsters } from '@/data/compendium/monsters';
 import { getCRXP } from '@/lib/experience';
 import { useDebounce } from '@/hooks/useDebounce';
-import { saveUserToolState, useUserToolState, writeLocalToolState } from '@/hooks/useToolState';
+import { useSaveCampaignEncounter } from '@/hooks/useCampaignEncounters';
+import {
+  saveCampaignToolState,
+  saveUserToolState,
+  useCampaignToolState,
+  useUserToolState,
+  writeLocalToolState,
+} from '@/hooks/useToolState';
+import { useJoinedCampaigns, useMyCampaigns } from '@/hooks/useCampaigns';
 import { useAuth } from '@/lib/auth/authContext';
 import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
+import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 
 type Monster = Database['public']['Tables']['compendium_monsters']['Row'];
 
@@ -27,9 +38,16 @@ interface EncounterMonster {
   quantity: number;
 }
 
+type CampaignWithRole = {
+  id: string;
+  name: string;
+  access: 'owner' | 'co-system';
+};
+
 const ENCOUNTER_STORAGE_KEY = 'solo-compendium.dm-tools.encounter-builder.v1';
 const INITIATIVE_STORAGE_KEY = 'solo-compendium.dm-tools.initiative.v1';
 const MONSTER_QUERY_TIMEOUT_MS = 8000;
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const RANK_CR_MAP: Record<string, string> = {
   D: '1/2',
   C: '1',
@@ -165,16 +183,80 @@ const buildFallbackMonsters = (searchQuery: string) => {
 
 const EncounterBuilder = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
   const { user } = useAuth();
+  const { data: myCampaigns = [], isLoading: myCampaignsLoading } = useMyCampaigns();
+  const { data: joinedCampaigns = [], isLoading: joinedCampaignsLoading } = useJoinedCampaigns();
+  const campaignId = searchParams.get('campaignId')?.trim() || null;
+  const isCampaignScoped = !!campaignId;
+  const persistenceContext = campaignId ? `campaign:${campaignId}` : 'user';
   const isAuthed = isSupabaseConfigured && !!user?.id;
-  const hydratedRef = useRef(false);
+  const hydratedContextRef = useRef<string | null>(null);
+  const hasUserInteractedRef = useRef(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [hunterLevel, setHunterLevel] = useState(1);
   const [hunterCount, setHunterCount] = useState(4);
   const [encounterMonsters, setEncounterMonsters] = useState<EncounterMonster[]>([]);
+  const [encounterName, setEncounterName] = useState('');
+  const [encounterDescription, setEncounterDescription] = useState('');
+  const encounterStorageKey = campaignId ? `${ENCOUNTER_STORAGE_KEY}.${campaignId}` : ENCOUNTER_STORAGE_KEY;
+  const initiativeStorageKey = campaignId ? `${INITIATIVE_STORAGE_KEY}.${campaignId}` : INITIATIVE_STORAGE_KEY;
+  const saveEncounter = useSaveCampaignEncounter();
 
-  const { state: storedState, isLoading: isToolStateLoading, saveNow } = useUserToolState<{
+  const manageableCampaigns = useMemo<CampaignWithRole[]>(() => {
+    const byId = new Map<string, CampaignWithRole>();
+
+    for (const campaign of myCampaigns) {
+      byId.set(campaign.id, {
+        id: campaign.id,
+        name: campaign.name,
+        access: 'owner',
+      });
+    }
+
+    for (const campaign of joinedCampaigns) {
+      if (campaign.member_role !== 'co-system') continue;
+      if (!byId.has(campaign.id)) {
+        byId.set(campaign.id, {
+          id: campaign.id,
+          name: campaign.name,
+          access: 'co-system',
+        });
+      }
+    }
+
+    return Array.from(byId.values()).sort((a, b) => a.name.localeCompare(b.name));
+  }, [joinedCampaigns, myCampaigns]);
+
+  const campaignsLoading = myCampaignsLoading || joinedCampaignsLoading;
+  const selectedCampaign = campaignId
+    ? manageableCampaigns.find((campaign) => campaign.id === campaignId) ?? null
+    : null;
+
+  useEffect(() => {
+    if (campaignsLoading || manageableCampaigns.length === 0) {
+      return;
+    }
+
+    const hasValidCampaign = campaignId
+      ? manageableCampaigns.some((campaign) => campaign.id === campaignId)
+      : false;
+
+    if (!hasValidCampaign) {
+      const nextParams = new URLSearchParams(searchParams);
+      nextParams.set('campaignId', manageableCampaigns[0].id);
+      setSearchParams(nextParams, { replace: true });
+    }
+  }, [campaignId, campaignsLoading, manageableCampaigns, searchParams, setSearchParams]);
+
+  const handleCampaignChange = (nextCampaignId: string) => {
+    const nextParams = new URLSearchParams(searchParams);
+    nextParams.set('campaignId', nextCampaignId);
+    setSearchParams(nextParams, { replace: true });
+  };
+
+  const userToolState = useUserToolState<{
     hunterLevel: number;
     hunterCount: number;
     encounterMonsters: EncounterMonster[];
@@ -183,7 +265,24 @@ const EncounterBuilder = () => {
   }>('encounter_builder', {
     initialState: { hunterLevel: 1, hunterCount: 4, encounterMonsters: [] },
     storageKey: ENCOUNTER_STORAGE_KEY,
+    enabled: !isCampaignScoped,
   });
+
+  const campaignToolState = useCampaignToolState<{
+    hunterLevel: number;
+    hunterCount: number;
+    encounterMonsters: EncounterMonster[];
+    version?: number;
+    savedAt?: string;
+  }>(campaignId, 'encounter_builder', {
+    initialState: { hunterLevel: 1, hunterCount: 4, encounterMonsters: [] },
+    storageKey: encounterStorageKey,
+    enabled: isCampaignScoped,
+  });
+
+  const { state: storedState, isLoading: isToolStateLoading, saveNow } = isCampaignScoped
+    ? campaignToolState
+    : userToolState;
 
   const savePayload = useMemo(
     () => ({
@@ -195,30 +294,48 @@ const EncounterBuilder = () => {
   );
   const debouncedState = useDebounce(savePayload, 600);
 
+  useEffect(() => {
+    hasUserInteractedRef.current = false;
+  }, [persistenceContext]);
+
   // Load persisted encounter (best-effort)
   useEffect(() => {
-    if (isToolStateLoading || hydratedRef.current) return;
-    if (typeof storedState.hunterLevel === 'number') setHunterLevel(storedState.hunterLevel);
-    if (typeof storedState.hunterCount === 'number') setHunterCount(storedState.hunterCount);
-    if (Array.isArray(storedState.encounterMonsters)) setEncounterMonsters(storedState.encounterMonsters);
-    hydratedRef.current = true;
-  }, [isToolStateLoading, storedState.encounterMonsters, storedState.hunterCount, storedState.hunterLevel]);
+    if (isToolStateLoading || hydratedContextRef.current === persistenceContext) return;
+
+    if (!hasUserInteractedRef.current) {
+      if (typeof storedState.hunterLevel === 'number') setHunterLevel(storedState.hunterLevel);
+      if (typeof storedState.hunterCount === 'number') setHunterCount(storedState.hunterCount);
+      if (Array.isArray(storedState.encounterMonsters)) setEncounterMonsters(storedState.encounterMonsters);
+    }
+
+    hydratedContextRef.current = persistenceContext;
+  }, [isToolStateLoading, persistenceContext, storedState.encounterMonsters, storedState.hunterCount, storedState.hunterLevel]);
 
   // Persist encounter (best-effort)
   useEffect(() => {
-    if (!hydratedRef.current) return;
+    if (hydratedContextRef.current !== persistenceContext) return;
     void saveNow({
       ...debouncedState,
       version: 1,
       savedAt: new Date().toISOString(),
     });
-  }, [debouncedState, saveNow]);
+  }, [debouncedState, persistenceContext, saveNow]);
 
   const { data: monsters = [], isLoading } = useQuery({
-    queryKey: ['monsters', searchQuery],
+    queryKey: ['monsters', campaignId ?? 'none', searchQuery],
     queryFn: async () => {
+      const fallbackMonsters = buildFallbackMonsters(searchQuery);
+      const resolveFallbackMonsters = async () => {
+        const filteredFallback = await filterRowsBySourcebookAccess(
+          fallbackMonsters,
+          (monster) => monster.source_book,
+          { campaignId }
+        );
+        return filteredFallback.length > 0 ? filteredFallback : fallbackMonsters;
+      };
+
       if (!isSupabaseConfigured) {
-        return buildFallbackMonsters(searchQuery);
+        return resolveFallbackMonsters();
       }
 
       const withTimeout = async <T,>(promise: PromiseLike<T>, timeoutMs: number): Promise<T> => {
@@ -246,14 +363,25 @@ const EncounterBuilder = () => {
       try {
         const { data, error } = await withTimeout(query, MONSTER_QUERY_TIMEOUT_MS);
         if (error) {
-          return buildFallbackMonsters(searchQuery);
+          return resolveFallbackMonsters();
         }
         if (!data || data.length === 0) {
-          return buildFallbackMonsters(searchQuery);
+          return resolveFallbackMonsters();
         }
-        return data as Monster[];
+
+        const filteredRemoteMonsters = await filterRowsBySourcebookAccess(
+          data as Monster[],
+          (monster) => monster.source_book,
+          { campaignId }
+        );
+
+        if (filteredRemoteMonsters.length > 0) {
+          return filteredRemoteMonsters;
+        }
+
+        return resolveFallbackMonsters();
       } catch {
-        return buildFallbackMonsters(searchQuery);
+        return resolveFallbackMonsters();
       }
     },
     placeholderData: buildFallbackMonsters(searchQuery),
@@ -262,7 +390,12 @@ const EncounterBuilder = () => {
   const totalXP = encounterMonsters.reduce((sum, em) => sum + calculateXP(em.monster, em.quantity), 0);
   const difficulty = calculateDifficulty(totalXP, hunterLevel, hunterCount);
 
+  const markUserInteraction = () => {
+    hasUserInteractedRef.current = true;
+  };
+
   const addMonster = (monster: Monster) => {
+    markUserInteraction();
     const displayName = formatMonarchVernacular(monster.name);
     const existing = encounterMonsters.find(em => em.monster.id === monster.id);
     if (existing) {
@@ -283,10 +416,12 @@ const EncounterBuilder = () => {
   };
 
   const removeMonster = (id: string) => {
+    markUserInteraction();
     setEncounterMonsters(encounterMonsters.filter(em => em.id !== id));
   };
 
   const updateQuantity = (id: string, quantity: number) => {
+    markUserInteraction();
     if (quantity <= 0) {
       removeMonster(id);
       return;
@@ -297,10 +432,68 @@ const EncounterBuilder = () => {
   };
 
   const clearEncounter = () => {
+    markUserInteraction();
     setEncounterMonsters([]);
+    setEncounterName('');
+    setEncounterDescription('');
     toast({
       title: 'Encounter cleared',
       description: 'Encounter builder state cleared.',
+    });
+  };
+
+  const handleSaveEncounter = async () => {
+    if (!campaignId) return;
+    if (!encounterName.trim()) {
+      toast({
+        title: 'Name required',
+        description: 'Give this encounter a name before saving.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    if (encounterMonsters.length === 0) {
+      toast({
+        title: 'Add monsters first',
+        description: 'Include at least one monster before saving the encounter.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    const entries = encounterMonsters.map((entry) => ({
+      entry_kind: 'monster',
+      monster_id: UUID_PATTERN.test(entry.monster.id) ? entry.monster.id : null,
+      name: formatMonarchVernacular(entry.monster.name),
+      quantity: entry.quantity,
+      stats: {
+        hp: entry.monster.hit_points_average,
+        max_hp: entry.monster.hit_points_average,
+        ac: entry.monster.armor_class,
+        cr: entry.monster.cr,
+        xp: entry.monster.xp,
+        gate_rank: entry.monster.gate_rank,
+        is_boss: entry.monster.is_boss,
+      },
+      source: {
+        type: 'compendium_monsters',
+        id: entry.monster.id,
+        name: entry.monster.name,
+      },
+    }));
+
+    await saveEncounter.mutateAsync({
+      campaignId,
+      name: encounterName.trim(),
+      description: encounterDescription.trim() || null,
+      difficulty: {
+        difficulty,
+        total_xp: totalXP,
+        hunter_level: hunterLevel,
+        hunter_count: hunterCount,
+      },
+      entries,
+      loot: [],
     });
   };
 
@@ -330,17 +523,123 @@ const EncounterBuilder = () => {
       round: 1,
     };
 
-    if (isAuthed && user?.id) {
-      await saveUserToolState(user.id, 'initiative_tracker', initiativeState);
-    } else {
-      writeLocalToolState(INITIATIVE_STORAGE_KEY, initiativeState);
+    const combatantsForSession = combatants.map((combatant) => ({
+      id: combatant.id,
+      name: combatant.name,
+      initiative: combatant.initiative,
+      stats: {
+        hp: combatant.hp ?? null,
+        max_hp: combatant.maxHp ?? null,
+        ac: combatant.ac ?? null,
+      },
+      conditions: combatant.conditions,
+      flags: {
+        isHunter: combatant.isHunter,
+      },
+      member_id: null,
+    }));
+
+    let destination =
+      isCampaignScoped && campaignId
+        ? `/dm-tools/initiative-tracker?campaignId=${campaignId}`
+        : '/dm-tools/initiative-tracker';
+
+    if (isCampaignScoped && campaignId && isAuthed && user?.id) {
+      try {
+        const { data: activeSession, error: activeSessionError } = await supabase
+          .from('campaign_combat_sessions')
+          .select('id')
+          .eq('campaign_id', campaignId)
+          .eq('status', 'active')
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        if (activeSessionError) {
+          throw activeSessionError;
+        }
+
+        let targetSessionId = activeSession?.id ?? null;
+
+        if (!targetSessionId) {
+          const { data: createdSession, error: createSessionError } = await supabase
+            .from('campaign_combat_sessions')
+            .insert({
+              campaign_id: campaignId,
+              created_by: user.id,
+              status: 'active',
+              current_turn: 0,
+              round: 1,
+            })
+            .select('id')
+            .single();
+
+          if (createSessionError) {
+            throw createSessionError;
+          }
+
+          targetSessionId = createdSession.id;
+        }
+
+        const { error: clearCombatantsError } = await supabase
+          .from('campaign_combatants')
+          .delete()
+          .eq('session_id', targetSessionId);
+
+        if (clearCombatantsError) {
+          throw clearCombatantsError;
+        }
+
+        const { error: upsertCombatantsError } = await supabase
+          .from('campaign_combatants')
+          .upsert(
+            combatantsForSession.map((combatant) => ({
+              ...combatant,
+              campaign_id: campaignId,
+              session_id: targetSessionId,
+            })),
+            { onConflict: 'id' }
+          );
+
+        if (upsertCombatantsError) {
+          throw upsertCombatantsError;
+        }
+
+        const { error: resetSessionError } = await supabase
+          .from('campaign_combat_sessions')
+          .update({ current_turn: 0, round: 1, status: 'active' })
+          .eq('id', targetSessionId);
+
+        if (resetSessionError) {
+          throw resetSessionError;
+        }
+
+        destination = `/dm-tools/initiative-tracker?campaignId=${campaignId}&sessionId=${targetSessionId}`;
+      } catch (error) {
+        const description = error instanceof Error ? error.message : 'Unable to sync to campaign combat session.';
+        toast({
+          title: 'Live combat sync unavailable',
+          description: `${description} Falling back to local tracker state.`,
+          variant: 'destructive',
+        });
+      }
+    }
+
+    if (!destination.includes('sessionId=')) {
+      if (isCampaignScoped && campaignId && isAuthed && user?.id) {
+        await saveCampaignToolState(campaignId, user.id, 'initiative_tracker', initiativeState);
+      } else if (isAuthed && user?.id) {
+        await saveUserToolState(user.id, 'initiative_tracker', initiativeState);
+      } else {
+        writeLocalToolState(initiativeStorageKey, initiativeState);
+      }
     }
 
     toast({
       title: 'Sent to tracker',
       description: 'Encounter monsters loaded into the initiative tracker.',
     });
-    navigate('/dm-tools/initiative-tracker');
+    navigate(destination);
   };
 
   const difficultyColors = {
@@ -354,7 +653,7 @@ const EncounterBuilder = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8" data-testid="encounter-builder">
         <div className="mb-6">
           <Button
             variant="ghost"
@@ -372,6 +671,41 @@ const EncounterBuilder = () => {
           </p>
         </div>
 
+        {!campaignsLoading && manageableCampaigns.length > 0 && (
+          <SystemWindow title="ACTIVE CAMPAIGN" className="mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_auto] gap-3 items-end">
+              <div className="space-y-2">
+                <Label htmlFor="encounter-campaign">Campaign</Label>
+                <Select value={campaignId ?? ''} onValueChange={handleCampaignChange}>
+                  <SelectTrigger id="encounter-campaign">
+                    <SelectValue placeholder="Select campaign" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {manageableCampaigns.map((campaign) => (
+                      <SelectItem key={campaign.id} value={campaign.id}>
+                        {campaign.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              {selectedCampaign && (
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge variant={selectedCampaign.access === 'owner' ? 'default' : 'outline'}>
+                    {selectedCampaign.access === 'owner' ? 'Owner' : 'Co-System'}
+                  </Badge>
+                  <Button variant="outline" asChild>
+                    <Link to={`/campaigns/${selectedCampaign.id}`}>
+                      Open Campaign
+                      <ExternalLink className="w-4 h-4 ml-2" />
+                    </Link>
+                  </Button>
+                </div>
+              )}
+            </div>
+          </SystemWindow>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Encounter Summary */}
           <div className="lg:col-span-1 space-y-4">
@@ -387,7 +721,10 @@ const EncounterBuilder = () => {
                     min="1"
                     max="20"
                     value={hunterLevel || 1}
-                    onChange={(e) => setHunterLevel(parseInt(e.target.value) || 1)}
+                    onChange={(e) => {
+                      markUserInteraction();
+                      setHunterLevel(parseInt(e.target.value) || 1);
+                    }}
                     className="font-display"
                   />
                 </div>
@@ -401,7 +738,10 @@ const EncounterBuilder = () => {
                     min="1"
                     max="10"
                     value={hunterCount || 1}
-                    onChange={(e) => setHunterCount(parseInt(e.target.value) || 1)}
+                    onChange={(e) => {
+                      markUserInteraction();
+                      setHunterCount(parseInt(e.target.value) || 1);
+                    }}
                     className="font-display"
                   />
                 </div>
@@ -456,12 +796,64 @@ const EncounterBuilder = () => {
                   </div>
                 )}
 
+                {isCampaignScoped && (
+                  <div className="pt-4 border-t border-border space-y-3">
+                    <div>
+                      <label
+                        htmlFor="encounter-name"
+                        className="text-xs font-display text-muted-foreground mb-1 block"
+                      >
+                        ENCOUNTER NAME
+                      </label>
+                      <Input
+                        id="encounter-name"
+                        value={encounterName}
+                        onChange={(e) => {
+                          markUserInteraction();
+                          setEncounterName(e.target.value);
+                        }}
+                        placeholder="Echo Rift skirmish"
+                        className="font-display"
+                        data-testid="encounter-name"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="encounter-notes"
+                        className="text-xs font-display text-muted-foreground mb-1 block"
+                      >
+                        ENCOUNTER NOTES
+                      </label>
+                      <Input
+                        id="encounter-notes"
+                        value={encounterDescription}
+                        onChange={(e) => {
+                          markUserInteraction();
+                          setEncounterDescription(e.target.value);
+                        }}
+                        placeholder="Optional context for the encounter"
+                        className="font-display"
+                        data-testid="encounter-notes"
+                      />
+                    </div>
+                    <Button
+                      onClick={handleSaveEncounter}
+                      className="w-full"
+                      disabled={saveEncounter.isPending}
+                      data-testid="encounter-save"
+                    >
+                      {saveEncounter.isPending ? 'Saving...' : 'Save Encounter to Campaign'}
+                    </Button>
+                  </div>
+                )}
+
                 <div className="pt-4 border-t border-border space-y-2">
                   <Button
                     variant="outline"
                     className="w-full"
                     onClick={sendToInitiativeTracker}
                     disabled={encounterMonsters.length === 0}
+                    data-testid="encounter-send-to-tracker"
                   >
                     Send to Initiative Tracker
                   </Button>
@@ -470,6 +862,7 @@ const EncounterBuilder = () => {
                     className="w-full"
                     onClick={clearEncounter}
                     disabled={encounterMonsters.length === 0}
+                    data-testid="encounter-clear"
                   >
                     Clear Encounter
                   </Button>

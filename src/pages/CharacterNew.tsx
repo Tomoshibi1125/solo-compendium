@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Check, Loader2 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -19,6 +19,10 @@ import { ABILITY_NAMES, type AbilityScore } from '@/types/system-rules';
 import type { Database } from '@/integrations/supabase/types';
 import { isLocalCharacterId, setLocalAbilities } from '@/lib/guestStore';
 import { formatMonarchVernacular } from '@/lib/vernacular';
+import { isSafeNextPath } from '@/lib/campaignInviteUtils';
+import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
+import { usePublishedHomebrew } from '@/hooks/useHomebrewContent';
+import { Badge } from '@/components/ui/badge';
 
 type Job = Database['public']['Tables']['compendium_jobs']['Row'] & {
   display_name?: string | null;
@@ -40,6 +44,9 @@ const getPointBuyCost = (score: number) => POINT_BUY_COST[score] ?? 0;
 
 const CharacterNew = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const requestedNext = searchParams.get('next');
+  const safeNext = isSafeNextPath(requestedNext) ? requestedNext : null;
   const { toast } = useToast();
   const createCharacter = useCreateCharacter();
   const [currentStep, setCurrentStep] = useState<Step>('concept');
@@ -86,7 +93,13 @@ const CharacterNew = () => {
         .select('*')
         .order('name');
       if (error) throw error;
-      return data as Job[];
+
+      const filteredJobs = await filterRowsBySourcebookAccess(
+        (data || []) as Job[],
+        (job) => job.source_book
+      );
+
+      return filteredJobs;
     },
   });
 
@@ -101,7 +114,8 @@ const CharacterNew = () => {
         .eq('job_id', selectedJob)
         .order('name');
       if (error) throw error;
-      return data;
+
+      return filterRowsBySourcebookAccess(data || [], (path) => path.source_book);
     },
     enabled: !!selectedJob,
   });
@@ -115,12 +129,52 @@ const CharacterNew = () => {
         .select('*')
         .order('name');
       if (error) throw error;
-      return data as Background[];
+
+      const filteredBackgrounds = await filterRowsBySourcebookAccess(
+        (data || []) as Background[],
+        (background) => background.source_book
+      );
+
+      return filteredBackgrounds;
     },
   });
 
+  // Merge published homebrew jobs and backgrounds into picker arrays
+  const { data: homebrewJobs = [] } = usePublishedHomebrew('job');
+  const { data: homebrewBackgrounds = [] } = usePublishedHomebrew('item');
+
+  const allJobs = [
+    ...jobs,
+    ...homebrewJobs.map((hb) => ({
+      id: `homebrew:${hb.id}`,
+      name: hb.name,
+      display_name: hb.name,
+      description: hb.description,
+      hit_die: (hb.data.hit_die as number) || 8,
+      primary_abilities: (hb.data.primary_abilities as string[]) || [],
+      skill_choices: (hb.data.skill_choices as string[]) || [],
+      skill_choice_count: (hb.data.skill_choice_count as number) || 2,
+      source_book: hb.source_book,
+      _homebrew: true,
+    } as Job & { _homebrew?: boolean })),
+  ];
+
+  const allBackgrounds = [
+    ...backgrounds,
+    ...homebrewBackgrounds
+      .filter((hb) => hb.content_type === 'item' && (hb.data.sub_type === 'background' || hb.tags?.includes('background')))
+      .map((hb) => ({
+        id: `homebrew:${hb.id}`,
+        name: hb.name,
+        display_name: hb.name,
+        description: hb.description,
+        source_book: hb.source_book,
+        _homebrew: true,
+      } as Background & { _homebrew?: boolean })),
+  ];
+
   // Get selected job data
-  const jobData = jobs.find(j => j.id === selectedJob);
+  const jobData = allJobs.find(j => j.id === selectedJob) as (Job & { _homebrew?: boolean }) | undefined;
 
   const steps: { id: Step; name: string }[] = [
     { id: 'concept', name: 'Concept' },
@@ -218,6 +272,16 @@ const CharacterNew = () => {
         return;
       }
 
+      const selectedBackgroundData = backgrounds.find((background) => background.id === selectedBackground);
+      if (!selectedBackgroundData) {
+        toast({
+          title: 'Background not found',
+          description: 'Please re-select your background before continuing.',
+          variant: 'destructive',
+        });
+        return;
+      }
+
       // Calculate initial stats
       const level = 1;
       const proficiencyBonus = Math.ceil(level / 4) + 1;
@@ -234,7 +298,7 @@ const CharacterNew = () => {
         level: 1,
         job: job.name,
         path: paths.find(p => p.id === selectedPath)?.name || null,
-        background: backgrounds.find(b => b.id === selectedBackground)?.name || null,
+        background: selectedBackgroundData.name,
         appearance: appearance.trim() || null,
         backstory: backstory.trim() || null,
         proficiency_bonus: proficiencyBonus,
@@ -253,7 +317,7 @@ const CharacterNew = () => {
         saving_throw_proficiencies: job.saving_throw_proficiencies || [],
         skill_proficiencies: [
           ...selectedSkills,
-          ...(selectedBackground ? (backgrounds.find(b => b.id === selectedBackground)?.skill_proficiencies || []) : []),
+          ...(selectedBackgroundData.skill_proficiencies || []),
         ],
         skill_expertise: [],
         armor_proficiencies: job.armor_proficiencies || [],
@@ -282,13 +346,8 @@ const CharacterNew = () => {
       await addLevel1Features(character.id, job.id, selectedPath ? paths.find(p => p.id === selectedPath)?.id : undefined);
 
       // Add background features and equipment (background is required)
-      const background = backgrounds.find(b => b.id === selectedBackground);
-      if (background) {
-        await addBackgroundFeatures(character.id, background);
-        await addStartingEquipment(character.id, job, background);
-      } else {
-        await addStartingEquipment(character.id, job);
-      }
+      await addBackgroundFeatures(character.id, selectedBackgroundData);
+      await addStartingEquipment(character.id, job, selectedBackgroundData);
 
       // Add starting powers from job
       await addStartingPowers(character.id, job);
@@ -298,7 +357,7 @@ const CharacterNew = () => {
         description: `${name} has awakened successfully. The System has granted features and equipment.`,
       });
 
-      navigate(`/characters/${character.id}`);
+      navigate(safeNext ?? `/characters/${character.id}`);
     } catch {
       // Error is handled by React Query's error state
       toast({
@@ -340,7 +399,7 @@ const CharacterNew = () => {
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <Button
           variant="ghost"
-          onClick={() => navigate('/characters')}
+          onClick={() => navigate(safeNext ?? '/characters')}
           className="mb-6"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
@@ -575,9 +634,12 @@ const CharacterNew = () => {
                   <SelectValue placeholder="Choose a job..." />
                 </SelectTrigger>
                 <SelectContent>
-                  {jobs.map((job) => (
+                  {allJobs.map((job) => (
                     <SelectItem key={job.id} value={job.id}>
                       {formatMonarchVernacular(job.display_name || job.name)}
+                      {(job as Job & { _homebrew?: boolean })._homebrew && (
+                        <Badge variant="outline" className="ml-2 text-xs">Homebrew</Badge>
+                      )}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -681,9 +743,12 @@ const CharacterNew = () => {
                   <SelectValue placeholder="Choose a background..." />
                 </SelectTrigger>
                 <SelectContent>
-                  {backgrounds.map((bg) => (
+                  {allBackgrounds.map((bg) => (
                     <SelectItem key={bg.id} value={bg.id}>
-                      {formatMonarchVernacular(bg.display_name || bg.name)}
+                      {formatMonarchVernacular((bg as Background & { display_name?: string | null }).display_name || bg.name)}
+                      {(bg as Background & { _homebrew?: boolean })._homebrew && (
+                        <Badge variant="outline" className="ml-2 text-xs">Homebrew</Badge>
+                      )}
                     </SelectItem>
                   ))}
                 </SelectContent>

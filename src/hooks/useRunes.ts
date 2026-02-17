@@ -5,6 +5,11 @@ import { calculateRuneMaxUses } from '@/lib/runeAutomation';
 import { getProficiencyBonus } from '@/types/system-rules';
 import { isLocalCharacterId } from '@/lib/guestStore';
 import { AppError } from '@/lib/appError';
+import {
+  filterRowsBySourcebookAccess,
+  getCharacterCampaignId,
+  isSourcebookAccessible,
+} from '@/lib/sourcebookAccess';
 
 type Rune = Database['public']['Tables']['compendium_runes']['Row'];
 type RuneInscription = Database['public']['Tables']['character_rune_inscriptions']['Row'];
@@ -12,9 +17,9 @@ type RuneKnowledge = Database['public']['Tables']['character_rune_knowledge']['R
 type Equipment = Database['public']['Tables']['character_equipment']['Row'];
 
 // Fetch all compendium runes
-export function useCompendiumRunes() {
+export function useCompendiumRunes(characterId?: string) {
   return useQuery({
-    queryKey: ['compendium-runes'],
+    queryKey: ['compendium-runes', characterId ?? 'global'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('compendium_runes')
@@ -23,7 +28,10 @@ export function useCompendiumRunes() {
         .order('name', { ascending: true });
 
       if (error) throw error;
-      return data as Rune[];
+
+      const runes = (data || []) as Rune[];
+      const campaignId = characterId ? await getCharacterCampaignId(characterId) : null;
+      return filterRowsBySourcebookAccess(runes, (rune) => rune.source_book, { campaignId });
     },
   });
 }
@@ -45,10 +53,17 @@ export function useCharacterRuneKnowledge(characterId: string | undefined) {
         .eq('character_id', characterId);
 
       if (error) throw error;
-      return data.map(rk => ({
+      const knowledgeEntries = data.map(rk => ({
         ...rk,
         rune: rk.rune as Rune,
       })) as Array<RuneKnowledge & { rune: Rune }>;
+
+      const campaignId = await getCharacterCampaignId(characterId);
+      return filterRowsBySourcebookAccess(
+        knowledgeEntries,
+        (entry) => entry.rune?.source_book,
+        { campaignId }
+      );
     },
     enabled: !!characterId,
   });
@@ -73,20 +88,27 @@ export function useCharacterRuneInscriptions(characterId: string | undefined) {
         .eq('is_active', true);
 
       if (error) throw error;
-      return data.map(ri => ({
+      const inscriptions = data.map(ri => ({
         ...ri,
         rune: ri.rune as Rune,
         equipment: ri.equipment as Equipment,
       })) as Array<RuneInscription & { rune: Rune; equipment: Equipment }>;
+
+      const campaignId = await getCharacterCampaignId(characterId);
+      return filterRowsBySourcebookAccess(
+        inscriptions,
+        (entry) => entry.rune?.source_book,
+        { campaignId }
+      );
     },
     enabled: !!characterId,
   });
 }
 
 // Fetch runes on specific equipment
-export function useEquipmentRunes(equipmentId: string | undefined) {
+export function useEquipmentRunes(equipmentId: string | undefined, characterId?: string) {
   return useQuery({
-    queryKey: ['equipment-runes', equipmentId],
+    queryKey: ['equipment-runes', equipmentId, characterId ?? 'none'],
     queryFn: async () => {
       if (!equipmentId) return [];
       if (equipmentId.startsWith('local_')) return [];
@@ -101,10 +123,18 @@ export function useEquipmentRunes(equipmentId: string | undefined) {
         .eq('is_active', true);
 
       if (error) throw error;
-      return data.map(ri => ({
+      const equipmentRunes = data.map(ri => ({
         ...ri,
         rune: ri.rune as Rune,
       })) as Array<RuneInscription & { rune: Rune }>;
+
+      const resolvedCharacterId = characterId || equipmentRunes[0]?.character_id || null;
+      const campaignId = resolvedCharacterId ? await getCharacterCampaignId(resolvedCharacterId) : null;
+      return filterRowsBySourcebookAccess(
+        equipmentRunes,
+        (entry) => entry.rune?.source_book,
+        { campaignId }
+      );
     },
     enabled: !!equipmentId,
   });
@@ -140,6 +170,11 @@ export function useInscribeRune() {
         .single();
 
       if (runeError || !rune) throw new AppError('Rune not found', 'NOT_FOUND', runeError);
+
+      const campaignId = await getCharacterCampaignId(characterId);
+      if (!(await isSourcebookAccessible(rune.source_book, { campaignId }))) {
+        throw new AppError('This rune requires sourcebook access.', 'INVALID_INPUT');
+      }
 
       // Calculate max uses
       const proficiencyBonus = getProficiencyBonus(characterLevel);

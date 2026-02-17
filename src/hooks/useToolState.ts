@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
+import type { Database, Json } from '@/integrations/supabase/types';
 import { useAuth } from '@/lib/auth/authContext';
 import { warn as logWarn } from '@/lib/logger';
 
@@ -45,16 +46,14 @@ export const loadUserToolState = async <T,>(userId: string, toolKey: string): Pr
 
 export const saveUserToolState = async <T,>(userId: string, toolKey: string, state: T): Promise<void> => {
   if (!isSupabaseConfigured || !userId) return;
+  const payload: Database['public']['Tables']['user_tool_states']['Insert'] = {
+    user_id: userId,
+    tool_key: toolKey,
+    state: state as unknown as Json,
+  };
   const { error } = await supabase
     .from('user_tool_states')
-    .upsert(
-      {
-        user_id: userId,
-        tool_key: toolKey,
-        state,
-      },
-      { onConflict: 'user_id,tool_key' }
-    );
+    .upsert(payload, { onConflict: 'user_id,tool_key' });
   if (error) {
     logWarn(`Failed to save user tool state: ${toolKey}`);
   }
@@ -82,18 +81,16 @@ export const saveCampaignToolState = async <T,>(
   state: T
 ): Promise<void> => {
   if (!isSupabaseConfigured || !campaignId || !userId) return;
+  const payload: Database['public']['Tables']['campaign_tool_states']['Insert'] = {
+    campaign_id: campaignId,
+    tool_key: toolKey,
+    state: state as unknown as Json,
+    created_by: userId,
+    updated_by: userId,
+  };
   const { error } = await supabase
     .from('campaign_tool_states')
-    .upsert(
-      {
-        campaign_id: campaignId,
-        tool_key: toolKey,
-        state,
-        created_by: userId,
-        updated_by: userId,
-      },
-      { onConflict: 'campaign_id,tool_key' }
-    );
+    .upsert(payload, { onConflict: 'campaign_id,tool_key' });
   if (error) {
     logWarn(`Failed to save campaign tool state: ${toolKey}`);
   }
@@ -102,6 +99,7 @@ export const saveCampaignToolState = async <T,>(
 type ToolStateOptions<T> = {
   storageKey?: string;
   initialState: T;
+  enabled?: boolean;
 };
 
 type ToolStateResult<T> = {
@@ -115,16 +113,22 @@ type ToolStateResult<T> = {
 export const useUserToolState = <T,>(toolKey: string, options: ToolStateOptions<T>): ToolStateResult<T> => {
   const { user, loading } = useAuth();
   const [state, setState] = useState<T>(options.initialState);
-  const [isLoading, setIsLoading] = useState(true);
+  const isEnabled = options.enabled !== false;
+  const [isLoading, setIsLoading] = useState(isEnabled);
   const isAuthed = isSupabaseConfigured && !!user?.id;
   const storageKey = options.storageKey ?? buildToolStorageKey(toolKey);
+  const allowLocalFallback = true;
 
   useEffect(() => {
+    if (!isEnabled) {
+      setIsLoading(false);
+      return;
+    }
     if (loading) return;
     let active = true;
     const loadState = async () => {
       setIsLoading(true);
-      const fallback = readLocalToolState<T>(storageKey);
+      const fallback = allowLocalFallback ? readLocalToolState<T>(storageKey) : null;
       if (!isAuthed || !user?.id) {
         if (active && fallback !== null) setState(fallback);
         setIsLoading(false);
@@ -135,6 +139,9 @@ export const useUserToolState = <T,>(toolKey: string, options: ToolStateOptions<
       if (!active) return;
       if (remote !== null) {
         setState(remote);
+        if (allowLocalFallback) {
+          writeLocalToolState(storageKey, remote);
+        }
       } else if (fallback !== null) {
         setState(fallback);
       }
@@ -144,21 +151,24 @@ export const useUserToolState = <T,>(toolKey: string, options: ToolStateOptions<
     return () => {
       active = false;
     };
-  }, [isAuthed, loading, storageKey, toolKey, user?.id]);
+  }, [isAuthed, isEnabled, loading, storageKey, toolKey, user?.id]);
 
   const saveNow = useCallback(
     async (nextState?: T) => {
+      if (!isEnabled) return;
       const payload = nextState ?? state;
-      if (!isAuthed || !user?.id) {
+      if (allowLocalFallback) {
         writeLocalToolState(storageKey, payload);
+      }
+      if (!isAuthed || !user?.id) {
         return;
       }
       await saveUserToolState(user.id, toolKey, payload);
     },
-    [isAuthed, state, storageKey, toolKey, user?.id]
+    [allowLocalFallback, isAuthed, isEnabled, state, storageKey, toolKey, user?.id]
   );
 
-  return { state, setState, isLoading, saveNow, isAuthed };
+  return { state, setState, isLoading: isEnabled ? isLoading : false, saveNow, isAuthed };
 };
 
 export const useCampaignToolState = <T,>(
@@ -168,11 +178,17 @@ export const useCampaignToolState = <T,>(
 ): ToolStateResult<T> => {
   const { user, loading } = useAuth();
   const [state, setState] = useState<T>(options.initialState);
-  const [isLoading, setIsLoading] = useState(true);
+  const isEnabled = options.enabled !== false;
+  const [isLoading, setIsLoading] = useState(isEnabled);
   const isAuthed = isSupabaseConfigured && !!user?.id;
   const storageKey = options.storageKey ?? buildToolStorageKey(`${toolKey}.${campaignId || 'unknown'}`);
+  const allowLocalFallback = true;
 
   useEffect(() => {
+    if (!isEnabled) {
+      setIsLoading(false);
+      return;
+    }
     if (loading) return;
     let active = true;
     const loadState = async () => {
@@ -181,7 +197,7 @@ export const useCampaignToolState = <T,>(
         return;
       }
       setIsLoading(true);
-      const fallback = readLocalToolState<T>(storageKey);
+      const fallback = allowLocalFallback ? readLocalToolState<T>(storageKey) : null;
       if (!isAuthed) {
         if (active && fallback !== null) setState(fallback);
         setIsLoading(false);
@@ -192,6 +208,9 @@ export const useCampaignToolState = <T,>(
       if (!active) return;
       if (remote !== null) {
         setState(remote);
+        if (allowLocalFallback) {
+          writeLocalToolState(storageKey, remote);
+        }
       } else if (fallback !== null) {
         setState(fallback);
       }
@@ -201,20 +220,23 @@ export const useCampaignToolState = <T,>(
     return () => {
       active = false;
     };
-  }, [campaignId, isAuthed, loading, storageKey, toolKey]);
+  }, [campaignId, isAuthed, isEnabled, loading, storageKey, toolKey]);
 
   const saveNow = useCallback(
     async (nextState?: T) => {
+      if (!isEnabled) return;
       const payload = nextState ?? state;
+      if (allowLocalFallback) {
+        writeLocalToolState(storageKey, payload);
+      }
       if (!campaignId) return;
       if (!isAuthed) {
-        writeLocalToolState(storageKey, payload);
         return;
       }
       await saveCampaignToolState(campaignId, user?.id ?? null, toolKey, payload);
     },
-    [campaignId, isAuthed, state, storageKey, toolKey, user?.id]
+    [allowLocalFallback, campaignId, isAuthed, isEnabled, state, storageKey, toolKey, user?.id]
   );
 
-  return { state, setState, isLoading, saveNow, isAuthed };
+  return { state, setState, isLoading: isEnabled ? isLoading : false, saveNow, isAuthed };
 };

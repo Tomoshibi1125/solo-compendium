@@ -3,6 +3,7 @@ import { User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
 import { toast } from '@/hooks/use-toast';
+import { isSafeNextPath } from '@/lib/campaignInviteUtils';
 
 export interface OAuthProvider {
   id: 'google' | 'apple';
@@ -97,10 +98,18 @@ export function useOAuth(): UseOAuthReturn {
 
     try {
       const providerOptions = PROVIDER_OPTIONS[provider.id];
+      const pendingNext =
+        typeof window !== 'undefined' ? window.localStorage.getItem('pending-auth-next') : null;
+      const safeNext = isSafeNextPath(pendingNext) ? pendingNext : null;
+      const redirectUrl = new URL(`${window.location.origin}/auth/callback`);
+      if (safeNext) {
+        redirectUrl.searchParams.set('next', safeNext);
+      }
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: provider.id,
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo: redirectUrl.toString(),
           ...(providerOptions?.queryParams ? { queryParams: providerOptions.queryParams } : {}),
           ...(providerOptions?.scopes ? { scopes: providerOptions.scopes } : {}),
         },

@@ -10,6 +10,11 @@ import {
   removeLocalPower,
   updateLocalPower,
 } from '@/lib/guestStore';
+import {
+  filterRowsBySourcebookAccess,
+  getCharacterCampaignId,
+  isSourcebookAccessible,
+} from '@/lib/sourcebookAccess';
 
 type Power = Database['public']['Tables']['character_powers']['Row'];
 type PowerInsert = Database['public']['Tables']['character_powers']['Insert'];
@@ -38,7 +43,51 @@ export const usePowers = (characterId: string) => {
         logErrorWithContext(error, 'usePowers');
         throw error;
       }
-      return data as Power[];
+
+      const powers = (data || []) as Power[];
+      if (powers.length === 0) {
+        return powers;
+      }
+
+      const uniqueNames = Array.from(new Set(powers.map((power) => power.name).filter(Boolean)));
+      if (uniqueNames.length === 0) {
+        return powers;
+      }
+
+      const { data: compendiumPowers, error: compendiumError } = await supabase
+        .from('compendium_powers')
+        .select('name, source_book')
+        .in('name', uniqueNames);
+
+      if (compendiumError) {
+        logErrorWithContext(compendiumError, 'usePowers (compendium source lookup)');
+        return powers;
+      }
+
+      const sourceBookByName = new Map<string, string | null>();
+      (compendiumPowers || []).forEach((power) => {
+        sourceBookByName.set(power.name, power.source_book ?? null);
+      });
+
+      if (sourceBookByName.size === 0) {
+        return powers;
+      }
+
+      const campaignId = await getCharacterCampaignId(characterId);
+      const accessibleCompendiumPowers = await filterRowsBySourcebookAccess(
+        (compendiumPowers || []) as Array<{ name: string; source_book: string | null }>,
+        (power) => power.source_book,
+        { campaignId }
+      );
+      const accessibleNames = new Set(accessibleCompendiumPowers.map((power) => power.name));
+
+      return powers.filter((power) => {
+        if (!sourceBookByName.has(power.name)) {
+          return true;
+        }
+
+        return accessibleNames.has(power.name);
+      });
     },
     enabled: !!characterId,
   });
@@ -48,6 +97,25 @@ export const usePowers = (characterId: string) => {
       if (isLocalCharacterId(characterId)) {
         addLocalPower(characterId, power as unknown as Omit<PowerInsert, 'character_id'>);
         return null;
+      }
+
+      const campaignId = await getCharacterCampaignId(characterId);
+      const { data: compendiumPower, error: compendiumError } = await supabase
+        .from('compendium_powers')
+        .select('source_book')
+        .eq('name', power.name)
+        .limit(1)
+        .maybeSingle();
+
+      if (compendiumError) {
+        logErrorWithContext(compendiumError, 'usePowers.addPower (compendium source lookup)');
+      }
+
+      if (
+        compendiumPower &&
+        !(await isSourcebookAccessible(compendiumPower.source_book, { campaignId }))
+      ) {
+        throw new Error('This power requires sourcebook access.');
       }
 
       const { data, error } = await supabase
@@ -77,6 +145,39 @@ export const usePowers = (characterId: string) => {
       if (isLocalCharacterId(characterId)) {
         updateLocalPower(id, updates);
         return null;
+      }
+
+      if (Object.prototype.hasOwnProperty.call(updates, 'is_prepared')) {
+        const campaignId = await getCharacterCampaignId(characterId);
+        const { data: existingPower, error: existingPowerError } = await supabase
+          .from('character_powers')
+          .select('name')
+          .eq('id', id)
+          .maybeSingle();
+
+        if (existingPowerError) {
+          logErrorWithContext(existingPowerError, 'usePowers.updatePower (power lookup)');
+        }
+
+        if (existingPower?.name) {
+          const { data: compendiumPower, error: compendiumError } = await supabase
+            .from('compendium_powers')
+            .select('source_book')
+            .eq('name', existingPower.name)
+            .limit(1)
+            .maybeSingle();
+
+          if (compendiumError) {
+            logErrorWithContext(compendiumError, 'usePowers.updatePower (compendium source lookup)');
+          }
+
+          if (
+            compendiumPower &&
+            !(await isSourcebookAccessible(compendiumPower.source_book, { campaignId }))
+          ) {
+            throw new Error('This power requires sourcebook access.');
+          }
+        }
       }
 
       const { data, error } = await supabase

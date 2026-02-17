@@ -19,8 +19,11 @@ interface AIProviderSettingsProps {
   className?: string;
 }
 
-const FREE_PROVIDER_LABEL = 'Pollinations (Free)';
+const FREE_PROVIDER_LABEL = 'Pollinations (Free, No Key)';
 const FREE_PROVIDER_ENDPOINT = 'https://text.pollinations.ai';
+const FREE_PROVIDER_MODEL = 'openai-large';
+const LOCAL_FALLBACK_LABEL = 'Ollama (Local Fallback)';
+const LOCAL_FALLBACK_MODEL = 'qwen2.5:14b-instruct';
 
 export function AIProviderSettings({ className }: AIProviderSettingsProps) {
   const [settings, setSettings] = useState<AIUserSettings>(DEFAULT_AI_USER_SETTINGS);
@@ -62,7 +65,12 @@ export function AIProviderSettings({ className }: AIProviderSettingsProps) {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="text-sm text-muted-foreground">
-          Free provider: {FREE_PROVIDER_LABEL} ({FREE_PROVIDER_ENDPOINT})
+          Default AI: {FREE_PROVIDER_LABEL} ({FREE_PROVIDER_ENDPOINT})
+          <br />
+          Model priority: <code className="text-xs">{FREE_PROVIDER_MODEL}</code> (hosted) -&gt;{' '}
+          <code className="text-xs">{LOCAL_FALLBACK_MODEL}</code> (local fallback when available).
+          <br />
+          Fallback runtime: {LOCAL_FALLBACK_LABEL} at <code className="text-xs">http://localhost:11434</code>.
         </div>
 
         <RadioGroup
@@ -72,7 +80,7 @@ export function AIProviderSettings({ className }: AIProviderSettingsProps) {
         >
           <div className="flex items-center space-x-2">
             <RadioGroupItem id="ai-provider-free" value="free" />
-            <Label htmlFor="ai-provider-free">Use free provider</Label>
+            <Label htmlFor="ai-provider-free">Use hosted free provider (recommended)</Label>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem id="ai-provider-custom" value="custom" />
@@ -139,7 +147,7 @@ export function AIProviderSettings({ className }: AIProviderSettingsProps) {
             Save settings
           </Button>
           <Button type="button" variant="outline" onClick={handleUseFree}>
-            Use free provider
+            Use hosted free provider
           </Button>
           {saved && <span className="text-xs text-emerald-600">Saved.</span>}
         </div>

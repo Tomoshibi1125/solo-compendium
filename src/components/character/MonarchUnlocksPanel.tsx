@@ -10,11 +10,13 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { useCharacterMonarchUnlocks, useUnlockMonarch, useSetPrimaryMonarch } from '@/hooks/useMonarchUnlocks';
+import { useCampaignByCharacterId } from '@/hooks/useCampaigns';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Crown, Lock, Star, Scroll, CheckCircle, Sparkles, Unlock, Skull, Zap, Flame } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { formatMonarchVernacular, MONARCH_LABEL, MONARCH_LABEL_PLURAL } from '@/lib/vernacular';
+import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 
 interface MonarchUnlocksPanelProps {
   characterId: string;
@@ -58,17 +60,24 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
   const { data: unlocks = [] } = useCharacterMonarchUnlocks(characterId);
   const unlockMonarch = useUnlockMonarch();
   const setPrimary = useSetPrimaryMonarch();
+  const { data: characterCampaign } = useCampaignByCharacterId(characterId);
+  const campaignId = characterCampaign?.id ?? null;
 
   // Fetch all monarchs
   const { data: allMonarchs = [] } = useQuery({
-    queryKey: ['all-monarchs'],
+    queryKey: ['all-monarchs', characterId, campaignId],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('compendium_monarchs')
-        .select('id, name, title, theme')
+        .select('id, name, title, theme, source_book')
         .order('name');
       if (error) throw error;
-      return data;
+
+      return filterRowsBySourcebookAccess(
+        data || [],
+        (monarch) => monarch.source_book,
+        { campaignId }
+      );
     },
   });
 

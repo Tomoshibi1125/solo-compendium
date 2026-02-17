@@ -35,14 +35,14 @@ describe('5e Rules Engine', () => {
   });
 
   test('System Favor calculations', () => {
-    expect(getSystemFavorMax(1)).toBe(1);
-    expect(getSystemFavorMax(4)).toBe(1);
-    expect(getSystemFavorMax(5)).toBe(2);
-    expect(getSystemFavorMax(10)).toBe(2);
-    expect(getSystemFavorMax(11)).toBe(3);
-    expect(getSystemFavorMax(16)).toBe(3);
-    expect(getSystemFavorMax(17)).toBe(4);
-    expect(getSystemFavorMax(20)).toBe(4);
+    expect(getSystemFavorMax(1)).toBe(3);
+    expect(getSystemFavorMax(4)).toBe(3);
+    expect(getSystemFavorMax(5)).toBe(4);
+    expect(getSystemFavorMax(10)).toBe(4);
+    expect(getSystemFavorMax(11)).toBe(5);
+    expect(getSystemFavorMax(16)).toBe(5);
+    expect(getSystemFavorMax(17)).toBe(6);
+    expect(getSystemFavorMax(20)).toBe(6);
 
     expect(getSystemFavorDie(1)).toBe(6);
     expect(getSystemFavorDie(4)).toBe(6);
@@ -94,7 +94,7 @@ describe('5e Rules Engine', () => {
 
   test('Ability display names completeness', () => {
     const abilities = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'] as const;
-    const expectedNames = ['Strength (STR)', 'Agility (AGI)', 'Vitality (VIT)', 'Intellect (INT)', 'Sense (SEN)', 'Presence (PRE)'];
+    const expectedNames = ['Strength (STR)', 'Agility (AGI)', 'Vitality (VIT)', 'Intelligence (INT)', 'Sense (SENSE)', 'Presence (PRE)'];
     
     abilities.forEach((ability, index) => {
       expect(ABILITY_DISPLAY_NAMES[ability]).toBeDefined();

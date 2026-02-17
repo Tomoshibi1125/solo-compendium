@@ -213,8 +213,8 @@ export function performUnifiedAttack(
   disadvantage: boolean = false,
   criticalThreshold: number = 20
 ): UnifiedAttackResult {
-  // Calculate attack bonus
-  const attackBonus = calculateUnifiedAttackRoll(attacker, attackType);
+  // Calculate attack bonus (proficiency=true for weapon/spell attacks by default)
+  const attackBonus = calculateUnifiedAttackRoll(attacker, attackType, true);
   
   // Get target AC
   const targetAC = 'hitPoints' in target ? target.armorClass : (target as UnifiedCreature).armorClass;
@@ -280,10 +280,10 @@ export function calculateUnifiedDamage(
   // Add bonuses
   total += damageBonusNum + abilityMod + damageBonus;
   
-  // Critical hit - double damage dice
+  // Critical hit - double only the dice portion (not static bonuses)
   if (criticalHit) {
-    const critTotal = total + (total - damageBonusNum - abilityMod - damageBonus);
-    total = critTotal;
+    const diceTotal = total - damageBonusNum - abilityMod - damageBonus;
+    total += Math.max(0, diceTotal);
     rolls.push('Critical hit: Double damage dice');
   }
   
@@ -435,16 +435,14 @@ export function calculateUnifiedInitiative(
 export function checkOpportunityAttack(
   movingCharacter: UnifiedCharacter,
   threateningCharacter: UnifiedCharacter,
-  movementDistance: number
+  movementDistance: number,
+  isDisengaging: boolean = false
 ): boolean {
-  // Check if moving character is within threatening character's reach
+  // Opportunity attack triggers when a creature LEAVES reach (moves beyond 5 ft)
   const threateningReach = 5; // Standard reach
-  const isWithinReach = movementDistance <= threateningReach;
+  const isLeavingReach = movementDistance > threateningReach;
   
-  // Check if moving character is using disengage action
-  const isDisengaging = false; // Would need to track this in combat state
-  
-  return isWithinReach && !isDisengaging;
+  return isLeavingReach && !isDisengaging;
 }
 
 // Perform opportunity attack
@@ -452,7 +450,7 @@ export function performOpportunityAttack(
   attacker: UnifiedCharacter,
   target: UnifiedCharacter
 ): UnifiedAttackResult {
-  // Opportunity attacks are melee attacks with disadvantage
+  // RAW 5e: opportunity attacks are normal melee attacks (no disadvantage)
   return performUnifiedAttack(
     attacker,
     target,
@@ -460,7 +458,7 @@ export function performOpportunityAttack(
     undefined,
     undefined,
     false,
-    true // disadvantage
+    false
   );
 }
 

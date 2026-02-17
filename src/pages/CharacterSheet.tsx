@@ -58,6 +58,7 @@ import { RunesList } from '@/components/character/RunesList';
 import { SpellSlotsDisplay } from '@/components/character/SpellSlotsDisplay';
 import { ActionsList } from '@/components/character/ActionsList';
 import { FeaturesList } from '@/components/character/FeaturesList';
+import { HomebrewFeatureApplicator } from '@/components/character/HomebrewFeatureApplicator';
 import { RollHistoryPanel } from '@/components/character/RollHistoryPanel';
 import { ExportDialog } from '@/components/character/ExportDialog';
 import { PortraitUpload } from '@/components/character/PortraitUpload';
@@ -75,6 +76,8 @@ import { isLocalCharacterId } from '@/lib/guestStore';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useCampaignByCharacterId } from '@/hooks/useCampaigns';
 import { getLevelingMode } from '@/lib/campaignSettings';
+import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
+import { useRealtimeCollaboration } from '@/hooks/useRealtimeCollaboration';
 import {
   Dialog,
   DialogContent,
@@ -106,45 +109,82 @@ const CharacterSheet = () => {
   const isLocal = !!character && isLocalCharacterId(character.id);
   const { data: characterCampaign } = useCampaignByCharacterId(character?.id || '');
   const levelingMode = getLevelingMode(characterCampaign?.settings);
+  const campaignId = characterCampaign?.id ?? null;
 
   const { data: jobDisplayRow } = useQuery({
-    queryKey: ['compendium-display-job', character?.job],
+    queryKey: ['compendium-display-job', character?.job, campaignId],
     queryFn: async () => {
       if (!character?.job) return null;
       const { data } = await supabase
         .from('compendium_jobs')
-        .select('name, display_name')
+        .select('name, display_name, source_book')
         .eq('name', character.job)
         .maybeSingle();
-      return data as { name: string; display_name?: string | null } | null;
+
+      const accessibleRows = await filterRowsBySourcebookAccess(
+        data ? [data] : [],
+        (row) => row.source_book,
+        { campaignId }
+      );
+      const accessible = accessibleRows[0];
+      if (!accessible) return null;
+
+      return {
+        name: accessible.name,
+        display_name: accessible.display_name ?? null,
+      };
     },
     enabled: isSupabaseConfigured && Boolean(character?.job) && !isLocal,
   });
 
   const { data: pathDisplayRow } = useQuery({
-    queryKey: ['compendium-display-path', character?.path],
+    queryKey: ['compendium-display-path', character?.path, campaignId],
     queryFn: async () => {
       if (!character?.path) return null;
       const { data } = await supabase
         .from('compendium_job_paths')
-        .select('name, display_name')
+        .select('name, display_name, source_book')
         .eq('name', character.path)
         .maybeSingle();
-      return data as { name: string; display_name?: string | null } | null;
+
+      const accessibleRows = await filterRowsBySourcebookAccess(
+        data ? [data] : [],
+        (row) => row.source_book,
+        { campaignId }
+      );
+      const accessible = accessibleRows[0];
+      if (!accessible) return null;
+
+      return {
+        name: accessible.name,
+        display_name: accessible.display_name ?? null,
+      };
     },
     enabled: isSupabaseConfigured && Boolean(character?.path) && !isLocal,
   });
 
   const { data: backgroundDisplayRow } = useQuery({
-    queryKey: ['compendium-display-background', character?.background],
+    queryKey: ['compendium-display-background', character?.background, campaignId],
     queryFn: async () => {
       if (!character?.background) return null;
       const { data } = await supabase
         .from('compendium_backgrounds')
-        .select('name, display_name')
+        .select('name, display_name, source_book')
         .eq('name', character.background)
         .maybeSingle();
-      return data as { name: string; display_name?: string | null } | null;
+
+      const accessibleRows = await filterRowsBySourcebookAccess(
+        data ? [data] : [],
+        (row) => row.source_book,
+        { campaignId }
+      );
+      const accessible = accessibleRows[0];
+      if (!accessible) return null;
+
+      return {
+        name: accessible.name,
+        display_name: accessible.display_name ?? null,
+      };
     },
     enabled: isSupabaseConfigured && Boolean(character?.background) && !isLocal,
   });
@@ -570,6 +610,8 @@ const CharacterSheet = () => {
     return `${base}${modifier >= 0 ? '+' : ''}${modifier}`;
   };
 
+  const { broadcastDiceRoll, isConnected: isCampaignConnected } = useRealtimeCollaboration(campaignId || '');
+
   const rollAndRecord = (options: {
     title: string;
     formula: string;
@@ -580,7 +622,8 @@ const CharacterSheet = () => {
     if (!character) return;
     try {
       const roll = rollDiceString(options.formula);
-      const message = `${options.title}: ${formatRollResult(roll)}`;
+      const scope = campaignId && isCampaignConnected ? 'campaign' : 'local';
+      const message = `${options.title}: ${formatRollResult(roll)}${scope === 'campaign' ? ' (shared)' : ''}`;
       toast({
         title: 'Dice Roll',
         description: message,
@@ -595,6 +638,16 @@ const CharacterSheet = () => {
         campaign_id: characterCampaign?.id ?? null,
         character_id: character.id,
       });
+
+      // Broadcast to campaign channel if connected
+      if (scope === 'campaign') {
+        broadcastDiceRoll(options.formula, roll.result, {
+          characterName: character.name,
+          rollType: options.rollType,
+          context: options.context,
+          rolls: roll.rolls,
+        });
+      }
     } catch {
       toast({
         title: 'Roll failed',
@@ -1454,20 +1507,12 @@ const CharacterSheet = () => {
                           disabled={updateAbilities.isPending}
                         />
                       )}
-                      <div className={cn(
-                        "text-sm font-heading",
-                        modifier >= 0 ? "text-green-400" : "text-red-400"
-                      )}>
-                        {formatModifier(modifier)}
-                      </div>
-                      {isProficient && (
-                        <Badge variant="secondary" className="mt-1 text-xs">Prof</Badge>
-                      )}
-                      <Button
+                      <button
                         type="button"
-                        variant="ghost"
-                        size="sm"
-                        className="mx-auto mt-2 h-7 w-7 p-0 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
+                        className={cn(
+                          "text-sm font-heading cursor-pointer hover:underline inline-flex items-center gap-1",
+                          modifier >= 0 ? "text-green-400" : "text-red-400"
+                        )}
                         onClick={() => rollAndRecord({
                           title: `${ABILITY_NAMES[ability]} Check`,
                           formula: formatRollFormula('1d20', modifier),
@@ -1477,8 +1522,12 @@ const CharacterSheet = () => {
                         })}
                         aria-label={`Roll ${ABILITY_NAMES[ability]} check`}
                       >
-                        <Dice6 className="w-4 h-4" />
-                      </Button>
+                        {formatModifier(modifier)}
+                        <Dice6 className="w-3 h-3 opacity-50" />
+                      </button>
+                      {isProficient && (
+                        <Badge variant="secondary" className="mt-1 text-xs">Prof</Badge>
+                      )}
                     </div>
                   );
                 })}
@@ -2103,6 +2152,9 @@ const CharacterSheet = () => {
 
             {/* Features */}
             <FeaturesList characterId={character.id} />
+
+            {/* Homebrew Features */}
+            <HomebrewFeatureApplicator characterId={character.id} />
 
             {/* Equipment */}
             <EquipmentList characterId={character.id} />

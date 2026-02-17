@@ -4,7 +4,8 @@
  */
 
 import type { AbilityScore, Character } from './5eRulesEngine';
-import { calculateCharacterStats, calculateHPMax, getSpellSlotsPerLevel, getCasterType } from './5eCharacterCalculations';
+import { getAbilityModifier } from './5eRulesEngine';
+import { calculateCharacterStats, calculateHPMax, getSpellSlotsPerLevel, getCasterType, getSpellcastingAbility } from './5eCharacterCalculations';
 import { getCharacterSpellSlots, prepareSpells, type PreparedSpell } from './5eSpellSystem';
 import { Formatters } from './5eUIIntegration';
 
@@ -140,18 +141,18 @@ function calculateSpellcastingInfo(character: Character) {
  * Calculate spell save DC
  */
 function calculateSpellSaveDC(character: Character): number {
-  // This would use the character's spellcasting ability
-  // For now, return a default based on proficiency bonus
-  return 8 + character.proficiencyBonus + 2; // Assuming +2 ability modifier
+  const spellAbility = getSpellcastingAbility(character.job);
+  const abilityMod = spellAbility ? getAbilityModifier(character.abilities[spellAbility]) : 0;
+  return 8 + character.proficiencyBonus + abilityMod;
 }
 
 /**
  * Calculate spell attack bonus
  */
 function calculateSpellAttackBonus(character: Character): number {
-  // This would use the character's spellcasting ability
-  // For now, return a default based on proficiency bonus
-  return character.proficiencyBonus + 2; // Assuming +2 ability modifier
+  const spellAbility = getSpellcastingAbility(character.job);
+  const abilityMod = spellAbility ? getAbilityModifier(character.abilities[spellAbility]) : 0;
+  return character.proficiencyBonus + abilityMod;
 }
 
 /**

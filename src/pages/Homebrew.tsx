@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout } from '@/components/layout/Layout';
-import HomebrewCreator from '@/components/homebrew/HomebrewCreator';
+import { HomebrewWorkbench } from '@/components/homebrew/HomebrewWorkbench';
 
 const Homebrew = () => {
   return (
@@ -8,14 +8,14 @@ const Homebrew = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-4">
-            Homebrew Creator
+            Homebrew Studio
           </h1>
           <p className="text-muted-foreground mb-6">
-            Create custom content for your System Ascendant campaigns.
+            Create, version, publish, and share custom content for your campaigns.
           </p>
         </div>
-        
-        <HomebrewCreator />
+
+        <HomebrewWorkbench />
       </div>
     </Layout>
   );

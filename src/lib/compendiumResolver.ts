@@ -10,6 +10,10 @@ import type { Database } from '@/integrations/supabase/types';
 import { logger } from '@/lib/logger';
 import { AppError } from '@/lib/appError';
 import type { StaticCompendiumEntry } from '@/data/compendium/staticDataProvider';
+import {
+  filterRowsBySourcebookAccess,
+  isSourcebookAccessible,
+} from '@/lib/sourcebookAccess';
 
 export const entryTypes = [
   'jobs',
@@ -102,44 +106,69 @@ const getStaticEntries = async (
   search?: string
 ): Promise<StaticCompendiumEntry[] | null> => {
   const provider = await loadStaticProvider();
+  let entries: StaticCompendiumEntry[] | null;
   switch (type) {
     case 'jobs':
-      return provider.getJobs(search);
+      entries = await provider.getJobs(search);
+      break;
     case 'paths':
-      return provider.getPaths(search);
+      entries = await provider.getPaths(search);
+      break;
     case 'powers':
-      return provider.getPowers(search);
+      entries = await provider.getPowers(search);
+      break;
     case 'runes':
-      return provider.getRunes(search);
+      entries = await provider.getRunes(search);
+      break;
     case 'relics':
-      return provider.getRelics(search);
+      entries = await provider.getRelics(search);
+      break;
     case 'monsters':
-      return provider.getMonsters(search);
+      entries = await provider.getMonsters(search);
+      break;
     case 'backgrounds':
-      return provider.getBackgrounds(search);
+      entries = await provider.getBackgrounds(search);
+      break;
     case 'conditions':
-      return provider.getConditions(search);
+      entries = await provider.getConditions(search);
+      break;
     case 'monarchs':
-      return provider.getMonarchs(search);
+      entries = await provider.getMonarchs(search);
+      break;
     case 'feats':
-      return provider.getFeats(search);
+      entries = await provider.getFeats(search);
+      break;
     case 'skills':
-      return provider.getSkills(search);
+      entries = await provider.getSkills(search);
+      break;
     case 'shadow-soldiers':
-      return provider.getShadowSoldiers(search);
+      entries = await provider.getShadowSoldiers(search);
+      break;
     case 'items':
-      return provider.getItems(search);
+      entries = await provider.getItems(search);
+      break;
     case 'spells':
-      return provider.getSpells(search);
+      entries = await provider.getSpells(search);
+      break;
     case 'techniques':
-      return provider.getTechniques(search);
+      entries = await provider.getTechniques(search);
+      break;
     case 'artifacts':
-      return provider.getArtifacts(search);
+      entries = await provider.getArtifacts(search);
+      break;
     case 'locations':
-      return provider.getLocations(search);
+      entries = await provider.getLocations(search);
+      break;
     default:
-      return null;
+      entries = null;
+      break;
   }
+
+  if (!entries) {
+    return null;
+  }
+
+  return filterRowsBySourcebookAccess(entries, (entry) => entry.source_book);
 };
 
 export async function listStaticEntries(type: EntryType): Promise<StaticCompendiumEntry[] | null> {
@@ -189,6 +218,13 @@ export async function resolveRef(
         if (typeof entityData.id !== 'string' || typeof entityData.name !== 'string') {
           return null;
         }
+
+        const sourceBook =
+          typeof entityData.source_book === 'string' ? entityData.source_book : null;
+        if (!(await isSourcebookAccessible(sourceBook))) {
+          return null;
+        }
+
         const displayName =
           typeof entityData.display_name === 'string' && entityData.display_name.trim().length > 0
             ? entityData.display_name

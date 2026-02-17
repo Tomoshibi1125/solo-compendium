@@ -1,14 +1,18 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Plus, Trash2, Heart, Shield } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { ArrowLeft, ExternalLink, Plus, Trash2, Heart, Shield } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Progress } from '@/components/ui/progress';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { useCampaignToolState } from '@/hooks/useToolState';
+import { useJoinedCampaigns, useMyCampaigns } from '@/hooks/useCampaigns';
 
 interface PartyMember {
   id: string;
@@ -20,6 +24,16 @@ interface PartyMember {
   conditions: string[];
   notes: string;
 }
+
+type PartyTrackerState = {
+  members: PartyMember[];
+};
+
+type CampaignWithRole = {
+  id: string;
+  name: string;
+  access: 'owner' | 'co-system';
+};
 
 const CONDITION_OPTIONS = [
   'Blinded',
@@ -41,8 +55,11 @@ const CONDITION_OPTIONS = [
 
 const PartyTracker = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
-  const [members, setMembers] = useState<PartyMember[]>([]);
+  const { data: myCampaigns = [], isLoading: myCampaignsLoading } = useMyCampaigns();
+  const { data: joinedCampaigns = [], isLoading: joinedCampaignsLoading } = useJoinedCampaigns();
+  const activeCampaignId = searchParams.get('campaignId')?.trim() || '';
   const [newMember, setNewMember] = useState({
     name: '',
     level: 1,
@@ -53,7 +70,87 @@ const PartyTracker = () => {
     notes: '',
   });
 
+  const manageableCampaigns = useMemo<CampaignWithRole[]>(() => {
+    const byId = new Map<string, CampaignWithRole>();
+
+    for (const campaign of myCampaigns) {
+      byId.set(campaign.id, {
+        id: campaign.id,
+        name: campaign.name,
+        access: 'owner',
+      });
+    }
+
+    for (const campaign of joinedCampaigns) {
+      if (campaign.member_role !== 'co-system') continue;
+      if (!byId.has(campaign.id)) {
+        byId.set(campaign.id, {
+          id: campaign.id,
+          name: campaign.name,
+          access: 'co-system',
+        });
+      }
+    }
+
+    return Array.from(byId.values()).sort((a, b) => a.name.localeCompare(b.name));
+  }, [joinedCampaigns, myCampaigns]);
+
+  useEffect(() => {
+    if (manageableCampaigns.length === 0) {
+      return;
+    }
+
+    const isSelectedValid = manageableCampaigns.some((campaign) => campaign.id === activeCampaignId);
+    if (!isSelectedValid) {
+      const nextParams = new URLSearchParams(searchParams);
+      nextParams.set('campaignId', manageableCampaigns[0].id);
+      setSearchParams(nextParams, { replace: true });
+    }
+  }, [activeCampaignId, manageableCampaigns, searchParams, setSearchParams]);
+
+  const handleCampaignChange = (nextCampaignId: string) => {
+    const nextParams = new URLSearchParams(searchParams);
+    nextParams.set('campaignId', nextCampaignId);
+    setSearchParams(nextParams, { replace: true });
+  };
+
+  const {
+    state: trackerState,
+    setState: setTrackerState,
+    isLoading: trackerLoading,
+    saveNow,
+  } = useCampaignToolState<PartyTrackerState>(activeCampaignId || null, 'party_tracker', {
+    initialState: { members: [] },
+    enabled: Boolean(activeCampaignId),
+  });
+
+  const members = trackerState.members || [];
+  const campaignsLoading = myCampaignsLoading || joinedCampaignsLoading;
+  const selectedCampaign = manageableCampaigns.find((campaign) => campaign.id === activeCampaignId) ?? null;
+
+  const persistMembers = (nextMembers: PartyMember[]) => {
+    const nextState = { members: nextMembers };
+    setTrackerState(nextState);
+    void saveNow(nextState);
+  };
+
+  const generateMemberId = () => {
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+      return crypto.randomUUID();
+    }
+    return `party-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  };
+
   const addMember = () => {
+    if (!activeCampaignId) {
+      toast({
+        title: 'Select a campaign first',
+        description: 'Choose an active campaign before adding party members.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     if (!newMember.name) {
       toast({
         title: 'Error',
@@ -64,11 +161,11 @@ const PartyTracker = () => {
     }
 
     const member: PartyMember = {
-      id: Date.now().toString(),
+      id: generateMemberId(),
       ...newMember,
     };
 
-    setMembers([...members, member]);
+    persistMembers([...members, member]);
     setNewMember({
       name: '',
       level: 1,
@@ -86,32 +183,32 @@ const PartyTracker = () => {
   };
 
   const removeMember = (id: string) => {
-    setMembers(members.filter(m => m.id !== id));
+    persistMembers(members.filter((member) => member.id !== id));
   };
 
   const updateHp = (id: string, delta: number) => {
-    setMembers(members.map(m => {
-      if (m.id === id) {
-        const newHp = Math.max(0, Math.min(m.maxHp, m.hp + delta));
-        return { ...m, hp: newHp };
-      }
-      return m;
-    }));
+    persistMembers(
+      members.map((member) => {
+        if (member.id !== id) return member;
+        const nextHp = Math.max(0, Math.min(member.maxHp, member.hp + delta));
+        return { ...member, hp: nextHp };
+      })
+    );
   };
 
   const toggleCondition = (memberId: string, condition: string) => {
-    setMembers(members.map(m => {
-      if (m.id === memberId) {
-        const hasCondition = m.conditions.includes(condition);
+    persistMembers(
+      members.map((member) => {
+        if (member.id !== memberId) return member;
+        const hasCondition = member.conditions.includes(condition);
         return {
-          ...m,
+          ...member,
           conditions: hasCondition
-            ? m.conditions.filter(c => c !== condition)
-            : [...m.conditions, condition],
+            ? member.conditions.filter((entry) => entry !== condition)
+            : [...member.conditions, condition],
         };
-      }
-      return m;
-    }));
+      })
+    );
   };
 
   const getHpColor = (hp: number, maxHp: number) => {
@@ -120,6 +217,14 @@ const PartyTracker = () => {
     if (percentage > 50) return 'text-yellow-400';
     if (percentage > 25) return 'text-orange-400';
     return 'text-red-400';
+  };
+
+  const getHpBarClass = (hp: number, maxHp: number) => {
+    const percentage = (hp / maxHp) * 100;
+    if (percentage > 75) return '[&>div]:bg-green-400';
+    if (percentage > 50) return '[&>div]:bg-yellow-400';
+    if (percentage > 25) return '[&>div]:bg-orange-400';
+    return '[&>div]:bg-red-400';
   };
 
   return (
@@ -138,144 +243,169 @@ const PartyTracker = () => {
             PARTY TRACKER
           </h1>
           <p className="text-muted-foreground font-heading">
-            Track your party's status, HP, conditions, and notes during sessions.
+            Track campaign party status, HP, conditions, and quick notes with shared persistence.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 space-y-6">
-            {members.length === 0 ? (
-              <SystemWindow title="NO PARTY MEMBERS">
-                <p className="text-muted-foreground text-center py-8">
-                  Add party members to start tracking.
-                </p>
-              </SystemWindow>
-            ) : (
-              members.map((member) => (
-                <SystemWindow key={member.id} title={member.name}>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <Badge variant="outline">Level {member.level}</Badge>
-                        <Badge variant="outline" className="flex items-center gap-1">
-                          <Shield className="w-3 h-3" />
-                          AC {member.ac}
-                        </Badge>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => removeMember(member.id)}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <Label className="flex items-center gap-2">
-                          <Heart className="w-4 h-4" />
-                          Hit Points
-                        </Label>
-                        <span className={cn('font-arise text-lg font-bold', getHpColor(member.hp, member.maxHp))}>
-                          {member.hp} / {member.maxHp}
-                        </span>
-                      </div>
-                      <div className="flex gap-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => updateHp(member.id, -1)}
-                        >
-                          -1
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => updateHp(member.id, -5)}
-                        >
-                          -5
-                        </Button>
-                        <div className="flex-1 bg-muted rounded h-2 relative overflow-hidden">
-                          <div
-                            className={cn(
-                              'h-full transition-all',
-                              getHpColor(member.hp, member.maxHp).replace('text-', 'bg-')
-                            )}
-                            style={{ width: `${(member.hp / member.maxHp) * 100}%` }}
-                          />
-                        </div>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => updateHp(member.id, 5)}
-                        >
-                          +5
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => updateHp(member.id, 1)}
-                        >
-                          +1
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => updateHp(member.id, member.maxHp)}
-                        >
-                          Full
-                        </Button>
-                      </div>
-                    </div>
-
-                    {member.conditions.length > 0 && (
-                      <div>
-                        <Label className="mb-2 block">Conditions</Label>
-                        <div className="flex flex-wrap gap-2">
-                          {member.conditions.map((condition) => (
-                            <Badge
-                              key={condition}
-                              variant="destructive"
-                              className="cursor-pointer"
-                              onClick={() => toggleCondition(member.id, condition)}
-                            >
-                              {condition} ×
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    <div>
-                      <Label className="mb-2 block">Add Condition</Label>
-                      <div className="flex flex-wrap gap-2">
-                        {CONDITION_OPTIONS.filter(c => !member.conditions.includes(c)).map((condition) => (
-                          <Badge
-                            key={condition}
-                            variant="outline"
-                            className="cursor-pointer hover:bg-muted"
-                            onClick={() => toggleCondition(member.id, condition)}
-                          >
-                            + {condition}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-
-                    {member.notes && (
-                      <div className="p-3 rounded-lg bg-muted/30 border border-border">
-                        <Label className="mb-1 block text-xs">Notes</Label>
-                        <p className="text-sm text-muted-foreground">{member.notes}</p>
-                      </div>
-                    )}
+        {campaignsLoading ? (
+          <SystemWindow title="LOADING CAMPAIGNS">
+            <p className="text-sm text-muted-foreground">Loading campaigns...</p>
+          </SystemWindow>
+        ) : manageableCampaigns.length === 0 ? (
+          <SystemWindow title="NO CAMPAIGNS AVAILABLE">
+            <div className="space-y-3 text-sm text-muted-foreground">
+              <p>Create or join a campaign with Protocol Warden access to track party state.</p>
+              <Button onClick={() => navigate('/campaigns')}>Open Campaigns</Button>
+            </div>
+          </SystemWindow>
+        ) : (
+          <>
+            <SystemWindow title="ACTIVE CAMPAIGN" className="mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_auto] gap-3 items-end">
+                <div className="space-y-2">
+                  <Label htmlFor="party-tracker-campaign">Campaign</Label>
+                  <Select value={activeCampaignId} onValueChange={handleCampaignChange}>
+                    <SelectTrigger id="party-tracker-campaign">
+                      <SelectValue placeholder="Select campaign" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {manageableCampaigns.map((campaign) => (
+                        <SelectItem key={campaign.id} value={campaign.id}>
+                          {campaign.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                {selectedCampaign && (
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Badge variant={selectedCampaign.access === 'owner' ? 'default' : 'outline'}>
+                      {selectedCampaign.access === 'owner' ? 'Owner' : 'Co-System'}
+                    </Badge>
+                    <Button variant="outline" asChild>
+                      <Link to={`/campaigns/${selectedCampaign.id}`}>
+                        Open Campaign
+                        <ExternalLink className="w-4 h-4 ml-2" />
+                      </Link>
+                    </Button>
                   </div>
-                </SystemWindow>
-              ))
-            )}
-          </div>
+                )}
+              </div>
+            </SystemWindow>
 
-          <div className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2 space-y-6">
+                {trackerLoading ? (
+                  <SystemWindow title="LOADING PARTY DATA">
+                    <p className="text-sm text-muted-foreground">Loading party state...</p>
+                  </SystemWindow>
+                ) : members.length === 0 ? (
+                  <SystemWindow title="NO PARTY MEMBERS">
+                    <p className="text-muted-foreground text-center py-8">
+                      Add party members to start tracking.
+                    </p>
+                  </SystemWindow>
+                ) : (
+                  members.map((member) => (
+                    <SystemWindow key={member.id} title={member.name}>
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <Badge variant="outline">Level {member.level}</Badge>
+                            <Badge variant="outline" className="flex items-center gap-1">
+                              <Shield className="w-3 h-3" />
+                              AC {member.ac}
+                            </Badge>
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => removeMember(member.id)}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+
+                        <div>
+                          <div className="flex items-center justify-between mb-2">
+                            <Label className="flex items-center gap-2">
+                              <Heart className="w-4 h-4" />
+                              Hit Points
+                            </Label>
+                            <span className={cn('font-arise text-lg font-bold', getHpColor(member.hp, member.maxHp))}>
+                              {member.hp} / {member.maxHp}
+                            </span>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button variant="outline" size="sm" onClick={() => updateHp(member.id, -1)}>
+                              -1
+                            </Button>
+                            <Button variant="outline" size="sm" onClick={() => updateHp(member.id, -5)}>
+                              -5
+                            </Button>
+                            <Progress
+                              value={member.maxHp > 0 ? (member.hp / member.maxHp) * 100 : 0}
+                              className={cn('flex-1 h-2 bg-muted', getHpBarClass(member.hp, member.maxHp))}
+                            />
+                            <Button variant="outline" size="sm" onClick={() => updateHp(member.id, 5)}>
+                              +5
+                            </Button>
+                            <Button variant="outline" size="sm" onClick={() => updateHp(member.id, 1)}>
+                              +1
+                            </Button>
+                            <Button variant="outline" size="sm" onClick={() => updateHp(member.id, member.maxHp)}>
+                              Full
+                            </Button>
+                          </div>
+                        </div>
+
+                        {member.conditions.length > 0 && (
+                          <div>
+                            <Label className="mb-2 block">Conditions</Label>
+                            <div className="flex flex-wrap gap-2">
+                              {member.conditions.map((condition) => (
+                                <Badge
+                                  key={condition}
+                                  variant="destructive"
+                                  className="cursor-pointer"
+                                  onClick={() => toggleCondition(member.id, condition)}
+                                >
+                                  {condition} ×
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        <div>
+                          <Label className="mb-2 block">Add Condition</Label>
+                          <div className="flex flex-wrap gap-2">
+                            {CONDITION_OPTIONS.filter((condition) => !member.conditions.includes(condition)).map((condition) => (
+                              <Badge
+                                key={condition}
+                                variant="outline"
+                                className="cursor-pointer hover:bg-muted"
+                                onClick={() => toggleCondition(member.id, condition)}
+                              >
+                                + {condition}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+
+                        {member.notes && (
+                          <div className="p-3 rounded-lg bg-muted/30 border border-border">
+                            <Label className="mb-1 block text-xs">Notes</Label>
+                            <p className="text-sm text-muted-foreground">{member.notes}</p>
+                          </div>
+                        )}
+                      </div>
+                    </SystemWindow>
+                  ))
+                )}
+              </div>
+
+              <div className="space-y-6">
             <SystemWindow title="ADD PARTY MEMBER">
               <div className="space-y-4">
                 <div>
@@ -376,8 +506,10 @@ const PartyTracker = () => {
                 </div>
               </SystemWindow>
             )}
-          </div>
-        </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </Layout>
   );

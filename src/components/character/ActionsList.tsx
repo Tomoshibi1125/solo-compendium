@@ -14,6 +14,7 @@ import { applyRuneBonuses } from '@/lib/runeAutomation';
 import { logger } from '@/lib/logger';
 import { useToast } from '@/hooks/use-toast';
 import { normalizeCustomModifiers, sumCustomModifiers } from '@/lib/customModifiers';
+import { useCharacterFeatures, featureModifiersToCustomModifiers } from '@/hooks/useCharacterFeatures';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 import type { AbilityScore } from '@/types/system-rules';
 
@@ -24,7 +25,10 @@ export function ActionsList({ characterId }: { characterId: string }) {
   const { features } = useFeatures(characterId);
   const { data: activeRunes = [] } = useCharacterRuneInscriptions(characterId);
   const { state: sheetState } = useCharacterSheetState(characterId);
-  const customModifiers = normalizeCustomModifiers(sheetState.customModifiers);
+  const { data: charFeatures = [] } = useCharacterFeatures(characterId);
+  const baseModifiers = normalizeCustomModifiers(sheetState.customModifiers);
+  const homebrewModifiers = featureModifiersToCustomModifiers(charFeatures);
+  const customModifiers = [...baseModifiers, ...homebrewModifiers];
   const useRune = useUseRune();
   const { toast } = useToast();
 

@@ -52,6 +52,7 @@ import { staticDataProvider } from '@/data/compendium/staticDataProvider';
 import type { StaticCompendiumEntry } from '@/data/compendium/staticDataProvider';
 import { formatMonarchVernacular, MONARCH_LABEL, MONARCH_LABEL_PLURAL } from '@/lib/vernacular';
 import { isSetupRouteEnabled } from '@/lib/setupAccess';
+import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 
 import { CompendiumEntry } from '@/hooks/useStartupData';
 
@@ -234,14 +235,15 @@ const Compendium = () => {
               description: item.description || 'No description available',
               rarity: item.rarity || 'common',
               tags: item.tags || [],
+              level: item.level ?? undefined,
               created_at: item.created_at,
               source_book: item.source_book,
               image_url: item.image_url,
               isFavorite: favorites.has(`${category}:${item.id}`) || false,
               // Include type-specific fields
               ...(category === 'monsters' && {
-                cr: item.cr,
-                gate_rank: item.gate_rank,
+                cr: item.cr ?? undefined,
+                gate_rank: item.gate_rank ?? undefined,
                 is_boss: item.is_boss,
               }),
               ...(category === 'powers' && {
@@ -251,7 +253,7 @@ const Compendium = () => {
               ...(category === 'runes' && {
                 rune_type: item.rune_type,
                 rune_category: item.rune_category,
-                level: item.rune_level,
+                level: item.rune_level ?? undefined,
               }),
               ...(category === 'skills' && {
                 ability: item.ability,
@@ -270,8 +272,13 @@ const Compendium = () => {
         }
       }
 
-      logger.debug('=== TOTAL ENTRIES LOADED ===:', allEntries.length);
-      return allEntries;
+      const accessibleEntries = await filterRowsBySourcebookAccess(
+        allEntries,
+        (entry) => entry.source_book
+      );
+
+      logger.debug('=== TOTAL ENTRIES LOADED ===:', accessibleEntries.length);
+      return accessibleEntries;
     },
     enabled: true, // Always enable this query since we have both Supabase and static data fallback
   });

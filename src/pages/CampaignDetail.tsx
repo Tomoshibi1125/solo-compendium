@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Users, Copy, Loader2, Crown, MessageSquare, FileText, Share2, Settings, Layers } from 'lucide-react';
+import { ArrowLeft, Users, Copy, Loader2, Crown, MessageSquare, FileText, Share2, Settings, Layers, CalendarClock } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
@@ -15,6 +15,9 @@ import { CampaignChat } from '@/components/campaign/CampaignChat';
 import { CampaignNotes } from '@/components/campaign/CampaignNotes';
 import { CampaignCharacters } from '@/components/campaign/CampaignCharacters';
 import { CampaignSettings } from '@/components/campaign/CampaignSettings';
+import { CampaignProtocolControls } from '@/components/campaign/CampaignProtocolControls';
+import { CampaignSessionsPanel } from '@/components/campaign/CampaignSessionsPanel';
+import { CampaignRollFeed } from '@/components/campaign/CampaignRollFeed';
 import { useAuth } from '@/lib/auth/authContext';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 
@@ -120,7 +123,7 @@ const CampaignDetail = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className={hasDMAccess ? "grid w-full grid-cols-6" : "grid w-full grid-cols-5"}>
+          <TabsList className={hasDMAccess ? "grid w-full grid-cols-7" : "grid w-full grid-cols-6"}>
             <TabsTrigger value="overview" className="gap-2">
               <Users className="w-4 h-4" />
               Overview
@@ -128,6 +131,10 @@ const CampaignDetail = () => {
             <TabsTrigger value="vtt" className="gap-2">
               <Layers className="w-4 h-4" />
               VTT
+            </TabsTrigger>
+            <TabsTrigger value="sessions" className="gap-2">
+              <CalendarClock className="w-4 h-4" />
+              Sessions
             </TabsTrigger>
             <TabsTrigger value="chat" className="gap-2">
               <MessageSquare className="w-4 h-4" />
@@ -227,6 +234,11 @@ const CampaignDetail = () => {
                 </div>
               </SystemWindow>
 
+              {/* Live Roll Feed (DM only) */}
+              {hasDMAccess && (
+                <CampaignRollFeed campaignId={id || ''} />
+              )}
+
               {/* Campaign Members */}
               <SystemWindow title="MEMBERS">
                 {loadingMembers ? (
@@ -279,6 +291,10 @@ const CampaignDetail = () => {
             <CampaignChat campaignId={id || ''} />
           </TabsContent>
 
+          <TabsContent value="sessions">
+            <CampaignSessionsPanel campaignId={id || ''} canManage={hasDMAccess} />
+          </TabsContent>
+
           <TabsContent value="notes">
             <CampaignNotes campaignId={id || ''} />
           </TabsContent>
@@ -288,8 +304,9 @@ const CampaignDetail = () => {
           </TabsContent>
 
           {hasDMAccess && (
-            <TabsContent value="settings">
+            <TabsContent value="settings" className="space-y-6">
               <CampaignSettings campaignId={id || ''} />
+              <CampaignProtocolControls campaignId={id || ''} />
             </TabsContent>
           )}
         </Tabs>

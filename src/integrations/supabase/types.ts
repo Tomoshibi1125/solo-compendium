@@ -231,6 +231,481 @@ export type Database = {
           },
         ]
       }
+      campaign_invites: {
+        Row: {
+          campaign_id: string
+          created_at: string
+          created_by: string | null
+          expires_at: string | null
+          id: string
+          last_used_at: string | null
+          max_uses: number
+          role: string
+          token: string
+          updated_at: string
+          used_count: number
+        }
+        Insert: {
+          campaign_id: string
+          created_at?: string
+          created_by?: string | null
+          expires_at?: string | null
+          id?: string
+          last_used_at?: string | null
+          max_uses?: number
+          role?: string
+          token: string
+          updated_at?: string
+          used_count?: number
+        }
+        Update: {
+          campaign_id?: string
+          created_at?: string
+          created_by?: string | null
+          expires_at?: string | null
+          id?: string
+          last_used_at?: string | null
+          max_uses?: number
+          role?: string
+          token?: string
+          updated_at?: string
+          used_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_invites_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaign_rules: {
+        Row: {
+          campaign_id: string
+          created_at: string
+          created_by: string | null
+          rules: Json
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          campaign_id: string
+          created_at?: string
+          created_by?: string | null
+          rules?: Json
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          campaign_id?: string
+          created_at?: string
+          created_by?: string | null
+          rules?: Json
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_rules_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: true
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaign_rule_events: {
+        Row: {
+          campaign_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          kind: string
+          payload: Json
+        }
+        Insert: {
+          campaign_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          kind: string
+          payload?: Json
+        }
+        Update: {
+          campaign_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          kind?: string
+          payload?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_rule_events_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaign_encounters: {
+        Row: {
+          campaign_id: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          difficulty: Json
+          id: string
+          loot_summary: Json
+          name: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          campaign_id: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          difficulty?: Json
+          id?: string
+          loot_summary?: Json
+          name: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          campaign_id?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          difficulty?: Json
+          id?: string
+          loot_summary?: Json
+          name?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_encounters_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaign_encounter_entries: {
+        Row: {
+          campaign_id: string
+          created_at: string
+          encounter_id: string
+          entry_kind: string
+          id: string
+          monster_id: string | null
+          name: string
+          quantity: number
+          source: Json
+          stats: Json
+        }
+        Insert: {
+          campaign_id: string
+          created_at?: string
+          encounter_id: string
+          entry_kind?: string
+          id?: string
+          monster_id?: string | null
+          name: string
+          quantity?: number
+          source?: Json
+          stats?: Json
+        }
+        Update: {
+          campaign_id?: string
+          created_at?: string
+          encounter_id?: string
+          entry_kind?: string
+          id?: string
+          monster_id?: string | null
+          name?: string
+          quantity?: number
+          source?: Json
+          stats?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_encounter_entries_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_encounter_entries_encounter_id_fkey"
+            columns: ["encounter_id"]
+            isOneToOne: false
+            referencedRelation: "campaign_encounters"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_encounter_entries_monster_id_fkey"
+            columns: ["monster_id"]
+            isOneToOne: false
+            referencedRelation: "compendium_monsters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaign_combat_sessions: {
+        Row: {
+          campaign_id: string
+          created_at: string
+          created_by: string | null
+          current_turn: number
+          encounter_id: string | null
+          id: string
+          round: number
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          campaign_id: string
+          created_at?: string
+          created_by?: string | null
+          current_turn?: number
+          encounter_id?: string | null
+          id?: string
+          round?: number
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          campaign_id?: string
+          created_at?: string
+          created_by?: string | null
+          current_turn?: number
+          encounter_id?: string | null
+          id?: string
+          round?: number
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_combat_sessions_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_combat_sessions_encounter_id_fkey"
+            columns: ["encounter_id"]
+            isOneToOne: false
+            referencedRelation: "campaign_encounters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaign_combatants: {
+        Row: {
+          campaign_id: string
+          conditions: Json
+          created_at: string
+          flags: Json
+          id: string
+          initiative: number
+          member_id: string | null
+          name: string
+          session_id: string
+          stats: Json
+          updated_at: string
+        }
+        Insert: {
+          campaign_id: string
+          conditions?: Json
+          created_at?: string
+          flags?: Json
+          id?: string
+          initiative?: number
+          member_id?: string | null
+          name: string
+          session_id: string
+          stats?: Json
+          updated_at?: string
+        }
+        Update: {
+          campaign_id?: string
+          conditions?: Json
+          created_at?: string
+          flags?: Json
+          id?: string
+          initiative?: number
+          member_id?: string | null
+          name?: string
+          session_id?: string
+          stats?: Json
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_combatants_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_combatants_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "campaign_members"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_combatants_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "campaign_combat_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaign_loot_drops: {
+        Row: {
+          assigned_to_member_id: string | null
+          campaign_id: string
+          created_at: string
+          created_by: string | null
+          encounter_id: string | null
+          id: string
+          items: Json
+          session_id: string | null
+          total_value: number
+        }
+        Insert: {
+          assigned_to_member_id?: string | null
+          campaign_id: string
+          created_at?: string
+          created_by?: string | null
+          encounter_id?: string | null
+          id?: string
+          items?: Json
+          session_id?: string | null
+          total_value?: number
+        }
+        Update: {
+          assigned_to_member_id?: string | null
+          campaign_id?: string
+          created_at?: string
+          created_by?: string | null
+          encounter_id?: string | null
+          id?: string
+          items?: Json
+          session_id?: string | null
+          total_value?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_loot_drops_assigned_to_member_id_fkey"
+            columns: ["assigned_to_member_id"]
+            isOneToOne: false
+            referencedRelation: "campaign_members"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_loot_drops_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_loot_drops_encounter_id_fkey"
+            columns: ["encounter_id"]
+            isOneToOne: false
+            referencedRelation: "campaign_encounters"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_loot_drops_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "campaign_combat_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaign_relic_instances: {
+        Row: {
+          assigned_at: string | null
+          bound_to_member_id: string | null
+          campaign_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          name: string
+          properties: Json
+          rarity: string | null
+          relic_id: string | null
+          tradeable: boolean
+          value_credits: number | null
+        }
+        Insert: {
+          assigned_at?: string | null
+          bound_to_member_id?: string | null
+          campaign_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          name: string
+          properties?: Json
+          rarity?: string | null
+          relic_id?: string | null
+          tradeable?: boolean
+          value_credits?: number | null
+        }
+        Update: {
+          assigned_at?: string | null
+          bound_to_member_id?: string | null
+          campaign_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          name?: string
+          properties?: Json
+          rarity?: string | null
+          relic_id?: string | null
+          tradeable?: boolean
+          value_credits?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_relic_instances_bound_to_member_id_fkey"
+            columns: ["bound_to_member_id"]
+            isOneToOne: false
+            referencedRelation: "campaign_members"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_relic_instances_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_relic_instances_relic_id_fkey"
+            columns: ["relic_id"]
+            isOneToOne: false
+            referencedRelation: "compendium_relics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       campaigns: {
         Row: {
           created_at: string
@@ -3410,6 +3885,29 @@ export type Database = {
           }
         | { Args: { p_path: string }; Returns: boolean }
       assign_daily_quests: { Args: { p_character_id: string }; Returns: undefined }
+      assign_campaign_loot: {
+        Args: {
+          p_campaign_id: string
+          p_items: Json
+          p_encounter_id?: string
+          p_session_id?: string
+          p_assigned_to_member_id?: string
+        }
+        Returns: string
+      }
+      assign_campaign_relic: {
+        Args: {
+          p_campaign_id: string
+          p_relic_id?: string
+          p_name: string
+          p_rarity?: string
+          p_properties?: Json
+          p_value_credits?: number
+          p_bound_to_member_id?: string
+          p_tradeable?: boolean
+        }
+        Returns: string
+      }
       calculate_shadow_energy_max:
         | { Args: { character_level: number }; Returns: number }
         | { Args: { p_character_id: string }; Returns: number }
@@ -3417,12 +3915,48 @@ export type Database = {
         Args: { p_description: string; p_dm_id: string; p_name: string }
         Returns: string
       }
+      create_campaign_invite: {
+        Args: {
+          p_campaign_id: string
+          p_role?: string
+          p_expires_at?: string
+          p_max_uses?: number
+        }
+        Returns: {
+          id: string
+          token: string
+          role: string
+          expires_at: string | null
+          max_uses: number
+          used_count: number
+        }[]
+      }
+      deploy_campaign_encounter: {
+        Args: { p_encounter_id: string }
+        Returns: string
+      }
+      export_campaign_bundle: {
+        Args: { p_campaign_id: string }
+        Returns: Json
+      }
       generate_character_share_token: { Args: never; Returns: string }
       generate_character_share_token_for_character: {
         Args: { p_character_id: string }
         Returns: string
       }
       generate_share_code: { Args: never; Returns: string }
+      get_campaign_invite_by_token: {
+        Args: { p_token: string }
+        Returns: {
+          campaign_id: string
+          campaign_name: string
+          campaign_description: string | null
+          role: string
+          expires_at: string | null
+          max_uses: number
+          used_count: number
+        }[]
+      }
       get_campaign_by_share_code: {
         Args: { p_share_code: string }
         Returns: {
@@ -3457,6 +3991,22 @@ export type Database = {
       get_campaign_member_count: {
         Args: { p_campaign_id: string }
         Returns: number
+      }
+      redeem_campaign_invite: {
+        Args: { p_token: string; p_character_id?: string }
+        Returns: string
+      }
+      save_campaign_encounter: {
+        Args: {
+          p_campaign_id: string
+          p_encounter_id?: string
+          p_name: string
+          p_description?: string
+          p_difficulty?: Json
+          p_entries?: Json
+          p_loot?: Json
+        }
+        Returns: string
       }
       get_character_by_share_token:
         | {

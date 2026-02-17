@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Auth as SupabaseAuth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
@@ -15,6 +15,7 @@ import { logger } from '@/lib/logger';
 import { OAuthButtons } from './OAuthButton';
 import { useOAuth } from '@/hooks/useOAuth';
 import { isSetupRouteEnabled } from '@/lib/setupAccess';
+import { isSafeNextPath } from '@/lib/campaignInviteUtils';
 
 export function Auth() {
   const navigate = useNavigate();
@@ -29,6 +30,13 @@ export function Auth() {
   const { isLoading: oauthLoading, signInWithProvider } = useOAuth();
   const oauthEnabled = import.meta.env.VITE_OAUTH_ENABLED === 'true';
   const setupRouteEnabled = isSetupRouteEnabled();
+
+  const consumePendingNext = useCallback(() => {
+    if (typeof window === 'undefined') return null;
+    const pendingNext = localStorage.getItem('pending-auth-next');
+    localStorage.removeItem('pending-auth-next');
+    return isSafeNextPath(pendingNext) ? pendingNext : null;
+  }, []);
 
   // Check auth state and profile
   useEffect(() => {
@@ -55,7 +63,7 @@ export function Auth() {
               setIsSignup(false);
             } else {
               // User has profile and doesn't want to change - redirect to home
-              navigate('/');
+              navigate(consumePendingNext() ?? '/');
             }
           }
         }
@@ -94,7 +102,7 @@ export function Auth() {
           setIsSignup(false);
         } else {
           // Has profile - redirect to home (don't show role selection for existing users)
-          navigate('/');
+          navigate(consumePendingNext() ?? '/');
         }
       } else if (event === 'SIGNED_OUT') {
         setShowRoleSelection(false);
@@ -106,7 +114,7 @@ export function Auth() {
     return () => {
       subscription.unsubscribe();
     };
-  }, [profile, profileLoading, navigate, authView, isConfigured, isE2E]);
+  }, [profile, profileLoading, navigate, authView, isConfigured, isE2E, consumePendingNext]);
 
   // Handle role selection
   const handleRoleSelect = async () => {

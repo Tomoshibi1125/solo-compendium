@@ -38,7 +38,7 @@ export function InscribeRuneDialog({
   onOpenChange,
   onSuccess,
 }: InscribeRuneDialogProps) {
-  const { data: allRunes = [] } = useCompendiumRunes();
+  const { data: allRunes = [] } = useCompendiumRunes(characterId);
   const { data: knownRunes = [] } = useCharacterRuneKnowledge(characterId);
   const { data: character } = useCharacter(characterId);
   const { equipment } = useEquipment(characterId);
@@ -181,7 +181,6 @@ export function InscribeRuneDialog({
                       !isKnown && 'opacity-75'
                     )}
                     onClick={() => setSelectedRune(rune.id)}
-                    aria-pressed={isSelected}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex items-start gap-2 flex-1">

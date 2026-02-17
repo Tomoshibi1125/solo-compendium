@@ -27,7 +27,7 @@ function EquipmentItemComponent({
   onInscribeRune,
   canAttune,
 }: EquipmentItemProps) {
-  const { data: runes = [] } = useEquipmentRunes(item.id);
+  const { data: runes = [] } = useEquipmentRunes(item.id, item.character_id ?? undefined);
   const displayName = formatMonarchVernacular(item.name);
   const displayDescription = item.description ? formatMonarchVernacular(item.description) : null;
   const displayRarity = item.rarity ? formatMonarchVernacular(item.rarity) : null;

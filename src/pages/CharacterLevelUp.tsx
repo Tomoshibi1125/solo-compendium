@@ -19,6 +19,7 @@ import { formatMonarchVernacular } from '@/lib/vernacular';
 import type { Database } from '@/integrations/supabase/types';
 import { useCampaignByCharacterId } from '@/hooks/useCampaigns';
 import { getLevelingMode } from '@/lib/campaignSettings';
+import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 
 
 function getExperienceForNextLevel(currentLevel: number): number {
@@ -31,6 +32,7 @@ const CharacterLevelUp = () => {
   const { toast } = useToast();
   const { data: character, isLoading } = useCharacter(id || '');
   const { data: characterCampaign } = useCampaignByCharacterId(id || '');
+  const campaignId = characterCampaign?.id ?? null;
   const levelingMode = getLevelingMode(characterCampaign?.settings);
   const isMilestone = levelingMode === 'milestone';
   const updateCharacter = useUpdateCharacter();
@@ -48,7 +50,7 @@ const CharacterLevelUp = () => {
 
   // Fetch features for the new level
   const { data: newFeatures = [] } = useQuery({
-    queryKey: ['job-features', character?.job, newLevel],
+    queryKey: ['job-features', character?.job, newLevel, campaignId],
     queryFn: async () => {
       if (!character?.job) return [];
 
@@ -71,6 +73,12 @@ const CharacterLevelUp = () => {
 
       if (error) throw error;
 
+      const accessibleJobFeatures = await filterRowsBySourcebookAccess(
+        features || [],
+        (feature) => feature.source_name,
+        { campaignId }
+      );
+
       // If character has a path, get path features too
       if (character.path) {
         const { data: path } = await supabase
@@ -88,12 +96,18 @@ const CharacterLevelUp = () => {
             .eq('is_path_feature', true);
 
           if (!pathError && pathFeatures) {
-            return [...(features || []), ...pathFeatures];
+            const accessiblePathFeatures = await filterRowsBySourcebookAccess(
+              pathFeatures,
+              (feature) => feature.source_name,
+              { campaignId }
+            );
+
+            return [...accessibleJobFeatures, ...accessiblePathFeatures];
           }
         }
       }
 
-      return features || [];
+      return accessibleJobFeatures;
     },
     enabled: !!character && !!newLevel,
   });
@@ -273,6 +287,12 @@ const CharacterLevelUp = () => {
             .contains('job_names', [character.job])
             .lte('power_level', Math.floor(newLevel / 2));
 
+          const accessiblePowers = await filterRowsBySourcebookAccess(
+            availablePowers || [],
+            (power) => power.source_book,
+            { campaignId }
+          );
+
           const { data: existingPowers } = await supabase
             .from('character_powers')
             .select('name')
@@ -280,24 +300,22 @@ const CharacterLevelUp = () => {
 
           const existingPowerNames = new Set(existingPowers?.map(p => p.name) || []);
 
-          if (availablePowers) {
-            for (const power of availablePowers) {
-              if (!existingPowerNames.has(power.name)) {
-                await supabase.from('character_powers').insert({
-                  character_id: character.id,
-                  name: power.name,
-                  power_level: power.power_level,
-                  source: `Job: ${character.job}`,
-                  casting_time: power.casting_time || null,
-                  range: power.range || null,
-                  duration: power.duration || null,
-                  concentration: power.concentration || false,
-                  description: power.description || null,
-                  higher_levels: power.higher_levels || null,
-                  is_prepared: false,
-                  is_known: true,
-                });
-              }
+          for (const power of accessiblePowers) {
+            if (!existingPowerNames.has(power.name)) {
+              await supabase.from('character_powers').insert({
+                character_id: character.id,
+                name: power.name,
+                power_level: power.power_level,
+                source: `Job: ${character.job}`,
+                casting_time: power.casting_time || null,
+                range: power.range || null,
+                duration: power.duration || null,
+                concentration: power.concentration || false,
+                description: power.description || null,
+                higher_levels: power.higher_levels || null,
+                is_prepared: false,
+                is_known: true,
+              });
             }
           }
         }

@@ -9,7 +9,7 @@ import { z } from 'zod';
 export const AIServiceSchema = z.object({
   id: z.string(),
   name: z.string(),
-  type: z.enum(['pollinations', 'custom']),
+  type: z.enum(['pollinations', 'ollama', 'custom']),
   capabilities: z.array(z.enum([
     'enhance-prompt',
     'analyze-image',
@@ -24,6 +24,7 @@ export const AIServiceSchema = z.object({
   apiKey: z.string().optional(),
   endpoint: z.string().optional(),
   model: z.string().optional(),
+  fallbackModels: z.array(z.string()).optional(),
   maxTokens: z.number().default(2048),
   temperature: z.number().min(0).max(2).default(0.7),
   enabled: z.boolean().default(true),
@@ -155,7 +156,7 @@ export interface AIConfiguration {
 export const DEFAULT_AI_SERVICES: AIService[] = [
   {
     id: 'pollinations',
-    name: 'Pollinations (Free)',
+    name: 'Pollinations (Free, No Key)',
     type: 'pollinations',
     capabilities: [
       'enhance-prompt',
@@ -169,8 +170,31 @@ export const DEFAULT_AI_SERVICES: AIService[] = [
       'generate-content',
     ],
     endpoint: 'https://text.pollinations.ai',
-    model: 'openai',
+    model: 'openai-large',
+    fallbackModels: ['openai', 'mistral', 'llama'],
     maxTokens: 1024,
+    temperature: 0.7,
+    enabled: true,
+  },
+  {
+    id: 'ollama-fallback',
+    name: 'Ollama Local Fallback',
+    type: 'ollama',
+    capabilities: [
+      'enhance-prompt',
+      'analyze-image',
+      'analyze-audio',
+      'generate-tags',
+      'detect-mood',
+      'suggest-style',
+      'filter-content',
+      'create-variation',
+      'generate-content',
+    ],
+    endpoint: 'http://localhost:11434/api/generate',
+    model: 'qwen2.5:14b-instruct',
+    fallbackModels: ['qwen2.5:7b-instruct', 'llama3.1:8b-instruct', 'mistral:7b-instruct'],
+    maxTokens: 1536,
     temperature: 0.7,
     enabled: true,
   },

@@ -237,12 +237,12 @@ export function getProficiencyBonus(level: number): number {
 }
 
 // System Favor (mapped to various 5e inspiration mechanics)
+// Aligned with unified engine: 3/4/5/6 by tier (System Ascendant canonical formula)
 export function getSystemFavorMax(level: number): number {
-  // Similar to Bardic Inspiration progression
-  if (level <= 4) return 1;
-  if (level <= 10) return 2;
-  if (level <= 16) return 3;
-  return 4;
+  if (level <= 4) return 3;
+  if (level <= 10) return 4;
+  if (level <= 16) return 5;
+  return 6;
 }
 
 export function getSystemFavorDie(level: number): number {

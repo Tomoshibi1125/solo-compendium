@@ -15,6 +15,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { usePowers } from '@/hooks/usePowers';
 import { useToast } from '@/hooks/use-toast';
 import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
+import { useCampaignByCharacterId } from '@/hooks/useCampaigns';
+import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 
 export function AddPowerDialog({
   open,
@@ -28,9 +30,11 @@ export function AddPowerDialog({
   const [searchQuery, setSearchQuery] = useState('');
   const { addPower } = usePowers(characterId);
   const { toast } = useToast();
+  const { data: characterCampaign } = useCampaignByCharacterId(characterId);
+  const campaignId = characterCampaign?.id ?? null;
 
   const { data: powers = [], isLoading } = useQuery({
-    queryKey: ['compendium-powers', searchQuery],
+    queryKey: ['compendium-powers', characterId, campaignId, searchQuery],
     queryFn: async () => {
       let query = supabase
         .from('compendium_powers')
@@ -45,7 +49,12 @@ export function AddPowerDialog({
 
       const { data, error } = await query;
       if (error) throw error;
-      return data || [];
+
+      return filterRowsBySourcebookAccess(
+        data || [],
+        (power) => power.source_book,
+        { campaignId }
+      );
     },
     enabled: open,
   });

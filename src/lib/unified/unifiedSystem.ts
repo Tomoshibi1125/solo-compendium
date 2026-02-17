@@ -7,6 +7,7 @@ import {
   UnifiedCharacter, 
   UnifiedClass, 
   UnifiedAbilityScores,
+  UnifiedEquipment,
   getUnifiedAbilityModifier,
   getUnifiedProficiencyBonus,
   getSystemFavorMax
@@ -16,7 +17,8 @@ import {
   UnifiedCharacterCreation,
   createUnifiedCharacter,
   validateUnifiedCharacter,
-  unifiedClassPackages
+  unifiedClassPackages,
+  calculateUnifiedSpellSlots
 } from './characterCreation';
 
 import {
@@ -190,14 +192,10 @@ export class UnifiedSystem {
 
     // Restore spell slots for pact casters
     if (this.character.class === 'warlock') {
-      // Warlocks restore all pact slots on short rest
-      const pactLevel = Math.ceil(this.character.level / 2);
-      const slotKey = `level${pactLevel}` as keyof typeof this.character.spellSlots;
+      // Warlocks restore all pact slots on short rest — use the level table
+      const fullPactSlots = calculateUnifiedSpellSlots('warlock', this.character.level);
       this.updateCharacter({
-        spellSlots: {
-          ...this.character.spellSlots,
-          [slotKey]: 2 // Warlocks get 2 pact slots
-        }
+        spellSlots: fullPactSlots
       });
     }
   }
@@ -223,10 +221,7 @@ export class UnifiedSystem {
 
   // Get full spell slots for character
   private getFullSpellSlots() {
-    const slots = this.character.spellSlots;
-    // This would need to be calculated based on class and level
-    // For now, just return current slots (would need proper calculation)
-    return slots;
+    return calculateUnifiedSpellSlots(this.character.class, this.character.level);
   }
 
   // Get character summary
@@ -279,6 +274,54 @@ export class UnifiedSystem {
       monarchPowerUsed: this.combatState.monarchPowerUsed
     };
   }
+};
+
+// Bug #11: Equipment slot enforcement
+export function validateEquipmentSlots(
+  character: UnifiedCharacter,
+  newItem: UnifiedEquipment
+): { allowed: boolean; reason?: string } {
+  if (character.equipment.length >= UNIFIED_CONFIG.MAX_EQUIPMENT_SLOTS) {
+    return { allowed: false, reason: `Equipment limit reached (${UNIFIED_CONFIG.MAX_EQUIPMENT_SLOTS} items max)` };
+  }
+  return { allowed: true };
+}
+
+// Bug #12: Relic / equipment requirement validation
+export function validateEquipmentRequirements(
+  character: UnifiedCharacter,
+  item: UnifiedEquipment
+): { allowed: boolean; reason?: string } {
+  if (!item.requirements) return { allowed: true };
+
+  if (item.requirements.level && character.level < item.requirements.level) {
+    return { allowed: false, reason: `Requires level ${item.requirements.level} (current: ${character.level})` };
+  }
+  if (item.requirements.class && character.class !== item.requirements.class) {
+    return { allowed: false, reason: `Requires class ${item.requirements.class}` };
+  }
+  if (item.requirements.ability && item.requirements.score) {
+    const abilityKey = item.requirements.ability as keyof UnifiedAbilityScores;
+    const score = character.abilities[abilityKey];
+    if (score < item.requirements.score) {
+      return { allowed: false, reason: `Requires ${item.requirements.ability} ${item.requirements.score} (current: ${score})` };
+    }
+  }
+  return { allowed: true };
+}
+
+// Bug #13: Attunement limit enforcement (SRD 5e max 3)
+const MAX_ATTUNED_ITEMS = 3;
+
+export function validateAttunement(
+  character: UnifiedCharacter,
+  _item: UnifiedEquipment
+): { allowed: boolean; reason?: string } {
+  const attunedCount = character.equipment.filter(e => e.rarity !== 'common').length;
+  if (attunedCount >= MAX_ATTUNED_ITEMS) {
+    return { allowed: false, reason: `Attunement limit reached (max ${MAX_ATTUNED_ITEMS} attuned items)` };
+  }
+  return { allowed: true };
 }
 
 // Factory function to create unified character from creation options

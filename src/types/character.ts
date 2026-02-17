@@ -3,8 +3,18 @@ export interface Character {
   id: string;
   name: string;
   class: string;
+  job?: string;
+  path?: string;
   level: number;
   experience: number;
+  abilities?: {
+    STR: number;
+    DEX: number;
+    CON: number;
+    INT: number;
+    WIS: number;
+    CHA: number;
+  };
   abilityScores: {
     strength: number;
     dexterity: number;

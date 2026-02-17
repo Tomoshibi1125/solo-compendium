@@ -15,10 +15,14 @@ import { useSaveSovereign } from '@/hooks/useSavedSovereigns';
 import { useAuth } from '@/lib/auth/authContext';
 import { useActiveCharacter } from '@/hooks/useActiveCharacter';
 import { useCharacterMonarchUnlocks } from '@/hooks/useMonarchUnlocks';
+import { useCampaignByCharacterId } from '@/hooks/useCampaigns';
+import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 
 export function GeminiProtocolGenerator() {
   const { isPlayer } = useAuth();
   const { activeCharacter } = useActiveCharacter();
+  const { data: characterCampaign } = useCampaignByCharacterId(activeCharacter?.id || '');
+  const campaignId = characterCampaign?.id ?? null;
   const { data: monarchUnlocks = [], isLoading: monarchUnlocksLoading } = useCharacterMonarchUnlocks(activeCharacter?.id);
   const [selectedJob, setSelectedJob] = useState<string>('');
   const [selectedPath, setSelectedPath] = useState<string>('');
@@ -30,20 +34,25 @@ export function GeminiProtocolGenerator() {
 
   // Fetch all jobs
   const { data: jobs = [], isLoading: jobsLoading } = useQuery({
-    queryKey: ['gemini-jobs'],
+    queryKey: ['gemini-jobs', campaignId],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('compendium_jobs')
         .select('*')
         .order('name');
       if (error) throw error;
-      return data;
+
+      return filterRowsBySourcebookAccess(
+        data || [],
+        (job) => job.source_book,
+        { campaignId }
+      );
     },
   });
 
   // Fetch paths for selected job
   const { data: paths = [], isLoading: pathsLoading } = useQuery({
-    queryKey: ['gemini-paths', selectedJob],
+    queryKey: ['gemini-paths', selectedJob, campaignId],
     queryFn: async () => {
       if (!selectedJob) return [];
       const { data, error } = await supabase
@@ -52,33 +61,48 @@ export function GeminiProtocolGenerator() {
         .eq('job_id', selectedJob)
         .order('name');
       if (error) throw error;
-      return data;
+
+      return filterRowsBySourcebookAccess(
+        data || [],
+        (path) => path.source_book,
+        { campaignId }
+      );
     },
     enabled: !!selectedJob,
   });
 
   const { data: allPaths = [], isLoading: allPathsLoading } = useQuery({
-    queryKey: ['gemini-paths-all'],
+    queryKey: ['gemini-paths-all', campaignId],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('compendium_job_paths')
         .select('*')
         .order('name');
       if (error) throw error;
-      return data || [];
+
+      return filterRowsBySourcebookAccess(
+        data || [],
+        (path) => path.source_book,
+        { campaignId }
+      );
     },
   });
 
   // Fetch all monarchs
   const { data: monarchs = [], isLoading: monarchsLoading } = useQuery({
-    queryKey: ['gemini-monarchs'],
+    queryKey: ['gemini-monarchs', campaignId],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('compendium_monarchs')
         .select('*')
         .order('name');
       if (error) throw error;
-      return data;
+
+      return filterRowsBySourcebookAccess(
+        data || [],
+        (monarch) => monarch.source_book,
+        { campaignId }
+      );
     },
   });
 
@@ -279,6 +303,9 @@ export function GeminiProtocolGenerator() {
         </p>
         <p className="text-xs text-muted-foreground">
           Fusion cues are thematic guides, not literal procedures.
+        </p>
+        <p className="text-xs text-muted-foreground">
+          Gemini Protocol is this world&apos;s sovereign fusion system name and is separate from external AI providers.
         </p>
       </div>
 

@@ -24,12 +24,23 @@ type DiceRollCacheItem = {
   [key: string]: unknown;
 };
 
-type SyncQueueItem = {
-  type: 'compendium' | 'character' | 'campaign' | 'diceRoll';
+export type SyncQueueItem = {
+  id: string;
+  type: 'compendium' | 'character' | 'campaign' | 'diceRoll' | 'homebrew' | 'marketplace' | 'campaign_session' | 'campaign_combat';
   action: 'create' | 'update' | 'delete';
   data: Record<string, unknown>;
   timestamp: number;
+  retryCount: number;
 };
+
+export type SyncQueueProcessor = (item: SyncQueueItem) => Promise<void>;
+
+type SyncQueueSnapshot = {
+  queueLength: number;
+  isProcessing: boolean;
+};
+
+type SyncQueueListener = (snapshot: SyncQueueSnapshot) => void;
 
 // Offline Storage Manager
 export class OfflineStorageManager {
@@ -274,6 +285,9 @@ export class BackgroundSyncManager {
   private static instance: BackgroundSyncManager;
   private storage: OfflineStorageManager;
   private syncQueue: SyncQueueItem[] = [];
+  private processors = new Map<string, SyncQueueProcessor>();
+  private listeners = new Set<SyncQueueListener>();
+  private isProcessing = false;
 
   constructor() {
     this.storage = new OfflineStorageManager();
@@ -292,12 +306,31 @@ export class BackgroundSyncManager {
       const stored = localStorage.getItem('syncQueue');
       if (stored) {
         const parsed = JSON.parse(stored) as unknown;
-        this.syncQueue = Array.isArray(parsed) ? (parsed as SyncQueueItem[]) : [];
+        this.syncQueue = Array.isArray(parsed)
+          ? parsed
+              .filter((item): item is Record<string, unknown> => typeof item === 'object' && item !== null)
+              .map((item, index) => {
+                const data = typeof item.data === 'object' && item.data !== null ? (item.data as Record<string, unknown>) : {};
+                const timestamp = typeof item.timestamp === 'number' ? item.timestamp : Date.now();
+                const retryCount = typeof item.retryCount === 'number' ? item.retryCount : 0;
+                const id = typeof item.id === 'string' ? item.id : `legacy-${timestamp}-${index}`;
+
+                return {
+                  id,
+                  type: item.type as SyncQueueItem['type'],
+                  action: item.action as SyncQueueItem['action'],
+                  data,
+                  timestamp,
+                  retryCount,
+                };
+              })
+          : [];
       }
     } catch (error) {
       logger.error('Failed to load sync queue:', error);
       this.syncQueue = [];
     }
+    this.emitChange();
   }
 
   private saveSyncQueue(): void {
@@ -306,20 +339,68 @@ export class BackgroundSyncManager {
     } catch (error) {
       logger.error('Failed to save sync queue:', error);
     }
+    this.emitChange();
   }
 
-  addToQueue(type: SyncQueueItem['type'], action: SyncQueueItem['action'], data: Record<string, unknown>): void {
-    this.syncQueue.push({
+  private buildProcessorKey(type: SyncQueueItem['type'], action: SyncQueueItem['action']): string {
+    return `${type}:${action}`;
+  }
+
+  private emitChange(): void {
+    const snapshot = this.getSnapshot();
+    for (const listener of this.listeners) {
+      listener(snapshot);
+    }
+  }
+
+  registerProcessor(
+    type: SyncQueueItem['type'],
+    action: SyncQueueItem['action'],
+    processor: SyncQueueProcessor
+  ): void {
+    this.processors.set(this.buildProcessorKey(type, action), processor);
+  }
+
+  unregisterProcessor(type: SyncQueueItem['type'], action: SyncQueueItem['action']): void {
+    this.processors.delete(this.buildProcessorKey(type, action));
+  }
+
+  subscribe(listener: SyncQueueListener): () => void {
+    this.listeners.add(listener);
+    listener(this.getSnapshot());
+    return () => {
+      this.listeners.delete(listener);
+    };
+  }
+
+  getSnapshot(): SyncQueueSnapshot {
+    return {
+      queueLength: this.syncQueue.length,
+      isProcessing: this.isProcessing,
+    };
+  }
+
+  addToQueue(type: SyncQueueItem['type'], action: SyncQueueItem['action'], data: Record<string, unknown>): SyncQueueItem {
+    const queueItem: SyncQueueItem = {
+      id: typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+        ? crypto.randomUUID()
+        : `queue-${Date.now()}-${Math.random().toString(16).slice(2)}`,
       type,
       action,
       data,
       timestamp: Date.now(),
-    });
+      retryCount: 0,
+    };
+    this.syncQueue.push(queueItem);
     this.saveSyncQueue();
+    return queueItem;
   }
 
   async processQueue(): Promise<void> {
-    if (this.syncQueue.length === 0) return;
+    if (this.isProcessing || this.syncQueue.length === 0) return;
+
+    this.isProcessing = true;
+    this.emitChange();
 
     const itemsToProcess = [...this.syncQueue];
     this.syncQueue = [];
@@ -331,14 +412,24 @@ export class BackgroundSyncManager {
       } catch (error) {
         logger.error('Failed to process sync item:', error);
         // Re-add to queue to retry later
-        this.syncQueue.push(item);
+        this.syncQueue.push({
+          ...item,
+          retryCount: item.retryCount + 1,
+        });
       }
     }
-    
+
+    this.isProcessing = false;
     this.saveSyncQueue();
   }
 
   private async processItem(item: SyncQueueItem): Promise<void> {
+    const processor = this.processors.get(this.buildProcessorKey(item.type, item.action));
+    if (processor) {
+      await processor(item);
+      return;
+    }
+
     // This would integrate with your actual API
     logger.debug('Processing sync item:', item);
     
@@ -368,6 +459,10 @@ export class BackgroundSyncManager {
 
   getQueueLength(): number {
     return this.syncQueue.length;
+  }
+
+  isProcessingQueue(): boolean {
+    return this.isProcessing;
   }
 }
 

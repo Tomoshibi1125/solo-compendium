@@ -6,7 +6,7 @@ export async function createTestUsers() {
     // Create DM user
     const { data: dmData, error: dmError } = await supabase.auth.signUp({
       email: 'dm@test.com',
-      password: 'testpassword123',
+      password: 'test1234',
       options: {
         data: {
           role: 'dm',
@@ -24,7 +24,7 @@ export async function createTestUsers() {
     // Create Player user
     const { data: playerData, error: playerError } = await supabase.auth.signUp({
       email: 'player@test.com',
-      password: 'testpassword123',
+      password: 'test1234',
       options: {
         data: {
           role: 'player',
@@ -79,11 +79,11 @@ export async function setupTestAccounts() {
   
   // Test DM login
   console.log('Testing DM login...');
-  const dmLoginResult = await testLogin('dm@test.com', 'testpassword123');
+  const dmLoginResult = await testLogin('dm@test.com', 'test1234');
   
   // Test Player login
   console.log('Testing Player login...');
-  const playerLoginResult = await testLogin('player@test.com', 'testpassword123');
+  const playerLoginResult = await testLogin('player@test.com', 'test1234');
   
   return {
     createResult,

@@ -55,7 +55,7 @@ describe('5e Spell Slot System', () => {
       classes: ['Mage']
     };
 
-    expect(canCastSpell(mockCharacter, mockSpell, slots, [])).toBe(true);
+    expect(canCastSpell(mockCharacter, mockSpell, slots, [{ spellId: 'firebolt', prepared: true }])).toBe(true);
   });
 
   test('Cannot cast spell if no slot available', () => {
@@ -97,7 +97,8 @@ describe('5e Spell Slot System', () => {
       classes: ['Mage']
     };
 
-    const result = castSpell(mockCharacter, mockSpell, slots, []);
+    const prepared = [{ spellId: 'magic-missile', prepared: true }];
+    const result = castSpell(mockCharacter, mockSpell, slots, prepared);
     expect(result.success).toBe(true);
     expect(result.newSlots.level1).toBe(3); // Consumed 1 slot
   });

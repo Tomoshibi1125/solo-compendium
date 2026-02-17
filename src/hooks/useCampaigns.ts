@@ -95,8 +95,21 @@ const createShareCode = () => {
   return code;
 };
 
-const isLocalMode = () => !isSupabaseConfigured || import.meta.env.VITE_E2E === 'true';
+const isLocalMode = () => !isSupabaseConfigured;
 const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== 'false';
+
+const supabaseAny = supabase as unknown as {
+  rpc: (fn: string, args?: Record<string, unknown>) => Promise<{ data: unknown; error: { message?: string } | null }>;
+};
+
+const isMissingAddCharacterRpc = (error: unknown): boolean => {
+  if (!error || typeof error !== 'object') return false;
+  const message = String((error as { message?: unknown }).message ?? '').toLowerCase();
+  return (
+    message.includes('add_player_character_to_campaign') &&
+    (message.includes('does not exist') || message.includes('no function matches'))
+  );
+};
 
 // Fetch campaigns where user is System (Protocol Warden)
 export const useMyCampaigns = () => {
@@ -257,10 +270,7 @@ export const useCampaignByShareCode = (shareCode: string) => {
       if (isLocalMode()) {
         return loadLocalCampaigns().find((campaign) => campaign.share_code === shareCode.toUpperCase()) || null;
       }
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user && guestEnabled) {
-        return loadLocalCampaigns().find((campaign) => campaign.share_code === shareCode.toUpperCase()) || null;
-      }
+      await supabase.auth.getUser();
       const { data, error } = await supabase.rpc('get_campaign_by_share_code', {
         p_share_code: shareCode.toUpperCase(),
       });
@@ -501,10 +511,10 @@ export const useJoinCampaign = () => {
       if (isLocalMode()) {
         const userId = getLocalUserId();
         const members = loadLocalMembers();
-        const alreadyMember = members.some(
+        const existingMemberIndex = members.findIndex(
           (member) => member.campaign_id === campaignId && member.user_id === userId
         );
-        if (!alreadyMember) {
+        if (existingMemberIndex === -1) {
           members.push({
             id: crypto.randomUUID(),
             campaign_id: campaignId,
@@ -513,8 +523,13 @@ export const useJoinCampaign = () => {
             role: 'hunter',
             joined_at: new Date().toISOString(),
           });
-          saveLocalMembers(members);
+        } else if (characterId) {
+          members[existingMemberIndex] = {
+            ...members[existingMemberIndex],
+            character_id: characterId,
+          };
         }
+        saveLocalMembers(members);
         return;
       }
 
@@ -523,10 +538,10 @@ export const useJoinCampaign = () => {
         if (guestEnabled) {
           const userId = getLocalUserId();
           const members = loadLocalMembers();
-          const alreadyMember = members.some(
+          const existingMemberIndex = members.findIndex(
             (member) => member.campaign_id === campaignId && member.user_id === userId
           );
-          if (!alreadyMember) {
+          if (existingMemberIndex === -1) {
             members.push({
               id: crypto.randomUUID(),
               campaign_id: campaignId,
@@ -535,26 +550,64 @@ export const useJoinCampaign = () => {
               role: 'hunter',
               joined_at: new Date().toISOString(),
             });
-            saveLocalMembers(members);
+          } else if (characterId) {
+            members[existingMemberIndex] = {
+              ...members[existingMemberIndex],
+              character_id: characterId,
+            };
           }
+          saveLocalMembers(members);
           return;
         }
         throw new AppError('Not authenticated', 'AUTH_REQUIRED');
       }
 
-      const { error } = await supabase
+      const { data: existingMember, error: existingMemberError } = await supabase
         .from('campaign_members')
-        .insert({
-          campaign_id: campaignId,
-          user_id: user.id,
-          character_id: characterId || null,
-          role: 'hunter',
+        .select('id')
+        .eq('campaign_id', campaignId)
+        .eq('user_id', user.id)
+        .maybeSingle();
+
+      if (existingMemberError) throw existingMemberError;
+
+      if (!existingMember) {
+        const { error } = await supabase
+          .from('campaign_members')
+          .insert({
+            campaign_id: campaignId,
+            user_id: user.id,
+            character_id: null,
+            role: 'hunter',
+          });
+
+        if (error) throw error;
+      }
+
+      if (characterId) {
+        const attachResult = await supabaseAny.rpc('add_player_character_to_campaign', {
+          p_campaign_id: campaignId,
+          p_character_id: characterId,
         });
 
-      if (error) throw error;
+        if (attachResult.error) {
+          if (!isMissingAddCharacterRpc(attachResult.error)) {
+            throw attachResult.error as Error;
+          }
+
+          const { error: legacyError } = await supabase
+            .from('campaign_members')
+            .update({ character_id: characterId })
+            .eq('campaign_id', campaignId)
+            .eq('user_id', user.id);
+
+          if (legacyError) throw legacyError;
+        }
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['campaigns'] });
+      queryClient.invalidateQueries({ queryKey: ['characters'] });
       toast({
         title: 'Joined Campaign',
         description: 'You have successfully joined the campaign.',

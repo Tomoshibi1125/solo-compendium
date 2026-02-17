@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { RealtimeChannel } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/lib/auth/authContext';
 import '@/styles/realtime-collaboration.css';
 
 type CursorPosition = { x: number; y: number };
@@ -69,6 +70,9 @@ export function useRealtimeCollaboration(campaignId: string) {
   const [activeUsers, setActiveUsers] = useState<Map<string, ActiveUser>>(new Map());
   const [isConnected, setIsConnected] = useState(false);
   const { toast } = useToast();
+  const { user } = useAuth();
+  const currentUserId = user?.id || 'anonymous';
+  const currentUserName = user?.email?.split('@')[0] || 'Anonymous';
 
   const updateCursorPosition = useCallback((userId: string, position: { x: number; y: number }) => {
     setActiveUsers(prev => {
@@ -187,10 +191,10 @@ export function useRealtimeCollaboration(campaignId: string) {
         handleCollaborationEvent(payload.payload as CollaborationEvent);
       })
       .on('presence', { event: 'join' }, ({ key, newPresences }) => {
-        handleUserJoin(key, newPresences);
+        handleUserJoin(key, newPresences as unknown as PresencePayload[]);
       })
       .on('presence', { event: 'leave' }, ({ key, leftPresences }) => {
-        handleUserLeave(key, leftPresences);
+        handleUserLeave(key, leftPresences as unknown as PresencePayload[]);
       })
       .on('presence', { event: 'sync' }, () => {
         // Handle initial sync
@@ -228,8 +232,8 @@ export function useRealtimeCollaboration(campaignId: string) {
       event: 'collaboration',
       payload: {
         type: 'cursor_move',
-        userId: 'current_user_id', // Get from auth context
-        userName: 'current_user_name', // Get from auth context
+        userId: currentUserId,
+        userName: currentUserName,
         data: position,
         timestamp: Date.now(),
         campaignId,
@@ -245,8 +249,8 @@ export function useRealtimeCollaboration(campaignId: string) {
       event: 'collaboration',
       payload: {
         type: 'text_change',
-        userId: 'current_user_id',
-        userName: 'current_user_name',
+        userId: currentUserId,
+        userName: currentUserName,
         data: { elementId, content, cursorPosition },
         timestamp: Date.now(),
         campaignId,
@@ -262,8 +266,8 @@ export function useRealtimeCollaboration(campaignId: string) {
       event: 'collaboration',
       payload: {
         type: 'character_update',
-        userId: 'current_user_id',
-        userName: 'current_user_name',
+        userId: currentUserId,
+        userName: currentUserName,
         data: { characterId, updates },
         timestamp: Date.now(),
         campaignId,
@@ -279,8 +283,8 @@ export function useRealtimeCollaboration(campaignId: string) {
       event: 'collaboration',
       payload: {
         type: 'dice_roll',
-        userId: 'current_user_id',
-        userName: 'current_user_name',
+        userId: currentUserId,
+        userName: currentUserName,
         data: { formula, result, details },
         timestamp: Date.now(),
         campaignId,
@@ -296,8 +300,8 @@ export function useRealtimeCollaboration(campaignId: string) {
       event: 'collaboration',
       payload: {
         type: 'map_update',
-        userId: 'current_user_id',
-        userName: 'current_user_name',
+        userId: currentUserId,
+        userName: currentUserName,
         data: mapData,
         timestamp: Date.now(),
         campaignId,
@@ -313,8 +317,8 @@ export function useRealtimeCollaboration(campaignId: string) {
       event: 'collaboration',
       payload: {
         type: 'combat_state',
-        userId: 'current_user_id',
-        userName: 'current_user_name',
+        userId: currentUserId,
+        userName: currentUserName,
         data: combatState,
         timestamp: Date.now(),
         campaignId,
@@ -327,8 +331,8 @@ export function useRealtimeCollaboration(campaignId: string) {
     if (!channel || !isConnected) return;
 
     channel.track({
-      user_id: 'current_user_id',
-      user_name: 'current_user_name',
+      user_id: currentUserId,
+      user_name: currentUserName,
       ...state,
     });
   }, [channel, isConnected]);
@@ -370,6 +374,13 @@ export function ActiveUsersList({ activeUsers }: { activeUsers: ActiveUser[] }) 
 
 // React component for collaborative cursors
 export function CollaborativeCursors({ activeUsers }: { activeUsers: ActiveUser[] }) {
+  const setCursorVars = (el: HTMLDivElement | null, cursor: { x: number; y: number }, userId: string) => {
+    if (!el) return;
+    el.style.setProperty('--cursor-x', `${cursor.x}px`);
+    el.style.setProperty('--cursor-y', `${cursor.y}px`);
+    el.style.setProperty('--cursor-color', getUserColor(userId));
+  };
+
   return (
     <>
       {activeUsers.map((user) => (
@@ -377,11 +388,7 @@ export function CollaborativeCursors({ activeUsers }: { activeUsers: ActiveUser[
           <div
             key={user.id}
             className="cursor-indicator"
-            style={{
-              '--cursor-x': `${user.cursor.x}px`,
-              '--cursor-y': `${user.cursor.y}px`,
-              '--cursor-color': getUserColor(user.id),
-            } as React.CSSProperties}
+            ref={(el) => setCursorVars(el, user.cursor!, user.id)}
           >
             <div className="cursor-indicator-inner" />
             <div className="cursor-indicator-info">{user.name}</div>

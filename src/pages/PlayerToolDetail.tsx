@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, BookOpen, Dice6, ScrollText, Sparkles } from 'lucide-react';
+import { ArrowLeft, BookOpen, Dice6, FlaskConical, ScrollText, Sparkles, Store } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -45,6 +45,14 @@ const TOOL_TITLES: Record<string, { title: string; subtitle: string }> = {
     title: 'Dice Roller',
     subtitle: 'Roll checks, attacks, and saves.',
   },
+  'homebrew-studio': {
+    title: 'Homebrew Studio',
+    subtitle: 'Create and publish custom content for your campaigns.',
+  },
+  marketplace: {
+    title: 'Marketplace',
+    subtitle: 'Browse, download, and review community listings.',
+  },
 };
 
 const requiresCharacter = (toolId: string) =>
@@ -61,6 +69,8 @@ export default function PlayerToolDetail() {
     if (!toolId) return null;
     if (toolId === 'compendium-viewer') return '/compendium';
     if (toolId === 'dice-roller') return '/dice';
+    if (toolId === 'homebrew-studio') return '/homebrew';
+    if (toolId === 'marketplace') return '/marketplace';
     if (toolId === 'character-sheet' && activeCharacter?.id) {
       return `/characters/${activeCharacter.id}`;
     }
@@ -183,6 +193,18 @@ export default function PlayerToolDetail() {
             <Button onClick={() => navigate('/dm-tools/art-generator')} variant="outline" className="gap-2">
               <Sparkles className="w-4 h-4" />
               Warden Art Tools
+            </Button>
+          )}
+          {toolId === 'homebrew-studio' && (
+            <Button onClick={() => navigate('/homebrew')} className="gap-2">
+              <FlaskConical className="w-4 h-4" />
+              Open Homebrew Studio
+            </Button>
+          )}
+          {toolId === 'marketplace' && (
+            <Button onClick={() => navigate('/marketplace')} className="gap-2">
+              <Store className="w-4 h-4" />
+              Open Marketplace
             </Button>
           )}
         </div>

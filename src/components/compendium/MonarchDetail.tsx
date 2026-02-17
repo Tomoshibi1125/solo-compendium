@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
 import { Crown, Flame, Skull, Sparkles, AlertTriangle } from 'lucide-react';
 import { formatMonarchVernacular, MONARCH_LABEL } from '@/lib/vernacular';
+import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 
 interface MonarchData {
   id: string;
@@ -49,14 +50,16 @@ export const MonarchDetail = ({ data }: { data: MonarchData }) => {
         .select('*')
         .eq('monarch_id', data.id)
         .order('level');
+
+      const accessibleFeatures = await filterRowsBySourcebookAccess(
+        ((featureData as Array<MonarchFeature & { source_name?: string | null }>) || []),
+        (feature) => feature.source_name
+      );
       
-      if (featureData) setFeatures(featureData.map(feature => ({
+      if (accessibleFeatures) setFeatures(accessibleFeatures.map(feature => ({
         ...feature,
         action_type: feature.action_type ?? undefined,
         display_name: feature.display_name ?? undefined,
-        generated_reason: feature.generated_reason ?? undefined,
-        uses_formula: feature.uses_formula ?? undefined,
-        aliases: feature.aliases ?? undefined,
         recharge: feature.recharge ?? undefined
       })));
     };

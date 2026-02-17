@@ -14,6 +14,7 @@ import { cn } from '@/lib/utils';
 import { normalizeSearchText } from '@/lib/fullTextSearch';
 import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
 import { error as logError } from '@/lib/logger';
+import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 
 interface SearchResult {
   id: string;
@@ -28,6 +29,7 @@ type SearchRow = {
   name: string;
   display_name?: string | null;
   description?: string | null;
+  source_book?: string | null;
 };
 
 export function GlobalSearch({ className }: { className?: string }) {
@@ -45,95 +47,75 @@ export function GlobalSearch({ className }: { className?: string }) {
       const allResults: SearchResult[] = [];
       const canonicalQuery = normalizeMonarchSearch(debouncedQuery);
       const searchTerms = canonicalQuery === debouncedQuery ? [debouncedQuery] : [debouncedQuery, canonicalQuery];
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      const canUseRpc = Boolean(session?.user);
 
       // Search across all compendium types
       const tables = [
-        { table: 'compendium_jobs', type: 'jobs' },
-        { table: 'compendium_job_paths', type: 'paths' },
-        { table: 'compendium_powers', type: 'powers' },
-        { table: 'compendium_runes', type: 'runes' },
-        { table: 'compendium_relics', type: 'relics' },
-        { table: 'compendium_equipment', type: 'equipment' },
-        { table: 'compendium_monsters', type: 'monsters' },
-        { table: 'compendium_monarchs', type: 'monarchs' },
-        { table: 'compendium_sovereigns', type: 'sovereigns' },
-        { table: 'compendium_backgrounds', type: 'backgrounds' },
-        { table: 'compendium_conditions', type: 'conditions' },
-        { table: 'compendium_shadow_soldiers', type: 'shadow-soldiers' },
-        { table: 'compendium_feats', type: 'feats' },
-        { table: 'compendium_skills', type: 'skills' },
+        { table: 'compendium_jobs', type: 'jobs', hasSourceBook: true },
+        { table: 'compendium_job_paths', type: 'paths', hasSourceBook: true },
+        { table: 'compendium_powers', type: 'powers', hasSourceBook: true },
+        { table: 'compendium_runes', type: 'runes', hasSourceBook: true },
+        { table: 'compendium_relics', type: 'relics', hasSourceBook: true },
+        { table: 'compendium_equipment', type: 'equipment', hasSourceBook: true },
+        { table: 'compendium_monsters', type: 'monsters', hasSourceBook: true },
+        { table: 'compendium_monarchs', type: 'monarchs', hasSourceBook: true },
+        { table: 'compendium_sovereigns', type: 'sovereigns', hasSourceBook: true },
+        { table: 'compendium_backgrounds', type: 'backgrounds', hasSourceBook: true },
+        { table: 'compendium_conditions', type: 'conditions', hasSourceBook: false },
+        { table: 'compendium_shadow_soldiers', type: 'shadow-soldiers', hasSourceBook: false },
+        { table: 'compendium_feats', type: 'feats', hasSourceBook: true },
+        { table: 'compendium_skills', type: 'skills', hasSourceBook: true },
       ] as const satisfies ReadonlyArray<{
         table: keyof Database['public']['Tables'];
         type: string;
+        hasSourceBook: boolean;
       }>;
 
-      // Use full-text search RPC functions when available, fallback to ILIKE
-      const searchFunctions: Record<string, 'jobs' | 'powers' | 'relics' | 'monsters' | 'paths' | 'monarchs'> = {
-        'compendium_jobs': 'jobs',
-        'compendium_job_paths': 'paths',
-        'compendium_powers': 'powers',
-        'compendium_relics': 'relics',
-        'compendium_monsters': 'monsters',
-        'compendium_monarchs': 'monarchs',
-      };
-
-      for (const { table, type } of tables) {
+      for (const { table, type, hasSourceBook } of tables) {
         try {
-          // Try full-text search via RPC if available
-          const rpcType = searchFunctions[table];
-          let data: SearchRow[] | null = null;
-
-          if (rpcType && debouncedQuery.length > 2 && canUseRpc) {
-            try {
-              const preparedQuery = normalizeSearchText(debouncedQuery);
-              if (!preparedQuery) {
-                continue;
-              }
-              const { data: rpcData } = await supabase.rpc(`search_compendium_${rpcType}`, {
-                p_query: preparedQuery,
-                p_limit: 5,
-                p_offset: 0,
-              });
-              if (rpcData) {
-                data = rpcData.slice(0, 5);
-              }
-            } catch (rpcError) {
-              logError('RPC search failed, falling back to ILIKE:', rpcError);
-            }
+          const preparedQuery = normalizeSearchText(debouncedQuery);
+          if (!preparedQuery) {
+            continue;
           }
 
-          // Fallback to ILIKE if RPC not available or failed
-          if (!data) {
-            const ilikeFilters = searchTerms
-              .map((term) =>
-                `name.ilike.%${term}%,display_name.ilike.%${term}%,description.ilike.%${term}%`
-              )
-              .join(',');
-            const { data: ilikeData } = await supabase
-              .from(table)
-              .select('id, name, display_name, description')
-              .or(ilikeFilters)
-              .limit(5);
-            // Type guard to filter out error objects
-            if (ilikeData && Array.isArray(ilikeData)) {
-              const items = ilikeData as unknown[];
-              const validItems = items.filter((item): item is SearchRow => {
-                if (typeof item !== 'object' || item === null) return false;
-                const obj = item as Record<string, unknown>;
-                if (!('id' in obj) || !('name' in obj)) return false;
-                if (typeof obj.id !== 'string' || typeof obj.name !== 'string') return false;
-                return true;
-              });
-              data = validItems.length > 0 ? validItems : null;
-            }
+          const ilikeFilters = searchTerms
+            .map((term) =>
+              `name.ilike.%${term}%,display_name.ilike.%${term}%,description.ilike.%${term}%`
+            )
+            .join(',');
+          const selectColumns = hasSourceBook
+            ? 'id, name, display_name, description, source_book'
+            : 'id, name, display_name, description';
+
+          const { data: ilikeData, error: ilikeError } = await supabase
+            .from(table)
+            .select(selectColumns)
+            .or(ilikeFilters)
+            .limit(5);
+
+          if (ilikeError) {
+            logError(`Error searching ${table}:`, ilikeError);
+            continue;
           }
 
-          if (data && Array.isArray(data)) {
-            allResults.push(...data.map((item: SearchRow) => ({
+          if (!ilikeData || !Array.isArray(ilikeData)) {
+            continue;
+          }
+
+          const items = ilikeData as unknown[];
+          const validItems = items.filter((item): item is SearchRow => {
+            if (typeof item !== 'object' || item === null) return false;
+            const obj = item as Record<string, unknown>;
+            if (!('id' in obj) || !('name' in obj)) return false;
+            if (typeof obj.id !== 'string' || typeof obj.name !== 'string') return false;
+            return true;
+          });
+
+          const filteredItems = hasSourceBook
+            ? await filterRowsBySourcebookAccess(validItems, (item) => item.source_book)
+            : validItems;
+
+          if (filteredItems.length > 0) {
+            allResults.push(...filteredItems.map((item: SearchRow) => ({
               id: item.id,
               name: item.display_name || item.name,
               type,
