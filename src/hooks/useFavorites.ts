@@ -3,35 +3,17 @@ import { useCallback } from 'react';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useAuth } from '@/lib/auth/authContext';
 import { warn as logWarn, error as logError } from '@/lib/logger';
+import { useUserLocalState } from '@/hooks/useToolState';
 
-const LOCAL_STORAGE_KEY = 'solo-compendium-favorites';
-
-const readLocalFavorites = (): Set<string> => {
-  if (typeof window === 'undefined') {
-    return new Set<string>();
-  }
-  try {
-    const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (stored) {
-      const parsed = JSON.parse(stored) as string[];
-      return new Set(parsed);
-    }
-  } catch (error) {
-    logWarn('Failed to load favorites from localStorage', error);
-  }
-  return new Set<string>();
-};
-
-const writeLocalFavorites = (favorites: Set<string>) => {
-  if (typeof window === 'undefined') {
-    return;
-  }
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(Array.from(favorites)));
-};
+const STORAGE_KEY = 'favorites';
 
 export const useFavorites = () => {
   const queryClient = useQueryClient();
   const { user, session, loading } = useAuth();
+  const { state: localFavorites, setState: setLocalFavorites } = useUserLocalState<Set<string>>(
+    STORAGE_KEY,
+    { initialState: new Set<string>() }
+  );
   const sessionUserId = session?.user?.id;
   const authedUserId = user?.id || sessionUserId;
   const debugEnabled = import.meta.env.VITE_QA_DEBUG === 'true';
@@ -68,7 +50,7 @@ export const useFavorites = () => {
         return new Set((data || []).map((row) => `${row.entry_type}:${row.entry_id}`));
       }
 
-      return readLocalFavorites();
+      return localFavorites;
     },
     staleTime: 30000,
     enabled: !loading || !!sessionUserId,
@@ -115,7 +97,7 @@ export const useFavorites = () => {
         currentFavorites.add(key);
       }
 
-      writeLocalFavorites(currentFavorites);
+      setLocalFavorites(currentFavorites);
       pushDebug({ stage: 'localstorage-write', size: currentFavorites.size });
       return currentFavorites;
     },

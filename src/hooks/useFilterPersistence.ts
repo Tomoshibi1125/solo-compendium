@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { logger } from '@/lib/logger';
+import { useUserLocalState } from '@/hooks/useToolState';
 
-const STORAGE_KEY_PREFIX = 'solo-compendium-filters-';
+const STORAGE_KEY_PREFIX = 'filters-';
 
 /**
  * Hook for persisting filter state to localStorage
@@ -11,14 +12,17 @@ export function useFilterPersistence<T extends Record<string, unknown>>(
   defaultFilters: T
 ): [T, (filters: T | ((prev: T) => T)) => void] {
   const storageKey = `${STORAGE_KEY_PREFIX}${key}`;
+  const { state: allFilters, setState: setAllFilters } = useUserLocalState<Record<string, T>>(
+    storageKey,
+    { initialState: {} }
+  );
 
   const [filters, setFilters] = useState<T>(() => {
+    const stored = allFilters[key];
+    if (!stored) return defaultFilters;
     try {
-      const stored = localStorage.getItem(storageKey);
-      if (!stored) return defaultFilters;
-      const parsed = JSON.parse(stored) as T;
       // Merge with defaults to handle new filter options
-      return { ...defaultFilters, ...parsed };
+      return { ...defaultFilters, ...stored };
     } catch (error) {
       logger.error(`Failed to load filters for ${key}:`, error);
       return defaultFilters;
@@ -27,12 +31,11 @@ export function useFilterPersistence<T extends Record<string, unknown>>(
 
   // Save filters whenever they change
   useEffect(() => {
-    try {
-      localStorage.setItem(storageKey, JSON.stringify(filters));
-    } catch (error) {
-      logger.error(`Failed to save filters for ${key}:`, error);
-    }
-  }, [filters, storageKey, key]);
+    setAllFilters(prev => ({
+      ...prev,
+      [key]: filters,
+    }));
+  }, [filters, key, setAllFilters]);
 
   const updateFilters = useCallback((newFilters: T | ((prev: T) => T)) => {
     setFilters(prev => {
@@ -48,10 +51,9 @@ export function useFilterPersistence<T extends Record<string, unknown>>(
  * Clear persisted filters for a specific key
  */
 export function clearPersistedFilters(key: string): void {
-  try {
-    localStorage.removeItem(`${STORAGE_KEY_PREFIX}${key}`);
-  } catch (error) {
-    logger.error(`Failed to clear filters for ${key}:`, error);
-  }
+  // Note: This function is now a no-op since filters are managed internally
+  // by the useFilterPersistence hook using useUserLocalState
+  // Individual filter clearing would need to be done through the hook's interface
+  logger.warn(`clearPersistedFilters is deprecated. Use the hook's interface to clear filters.`);
 }
 

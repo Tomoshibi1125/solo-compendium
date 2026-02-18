@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -64,9 +64,14 @@ const CompendiumDetail = () => {
   const { favorites, toggleFavorite } = useFavorites();
   const { toast } = useToast();
 
+  const entryTagsKey = useMemo(() => {
+    if (!entry?.tags || !Array.isArray(entry.tags)) return '';
+    return entry.tags.map((tag) => String(tag).toLowerCase()).sort().join('|');
+  }, [entry?.tags]);
+
   // Fetch related content (must be before early returns per React hooks rules)
   const { data: relatedEntries = [] } = useQuery({
-    queryKey: ['related-content', type, id, entry],
+    queryKey: ['related-content', type, id, entryTagsKey],
     queryFn: async () => {
       if (!type || !id || !entry) return [];
       
@@ -105,7 +110,7 @@ const CompendiumDetail = () => {
 
       return related.slice(0, 6);
     },
-    enabled: !!type && !!id && !!entry,
+    enabled: !!type && !!id && !!entry && entryTagsKey.length > 0,
   });
 
   useEffect(() => {
@@ -144,10 +149,9 @@ const CompendiumDetail = () => {
     }
   }, [type, id]);
 
-  // Generate TOC items based on entry type
-  const getTocItems = () => {
+  const tocItems = useMemo(() => {
     if (!entry || !type) return [];
-    
+
     const entryNameRaw = (entry as { display_name?: string | null; name?: string }).display_name || (entry as { name?: string }).name || '';
     const entryName = formatMonarchVernacular(entryNameRaw);
     const items: Array<{ id: string; title: string; level: number }> = [
@@ -227,9 +231,9 @@ const CompendiumDetail = () => {
     }
     
     return items;
-  };
+  }, [entry, type]);
 
-  const renderDetail = () => {
+  const detailNode = useMemo(() => {
     if (!entry || !type) return null;
 
     const data = entry as unknown;
@@ -274,9 +278,15 @@ const CompendiumDetail = () => {
       case 'sovereigns':
         return <SovereignDetail data={data as SovereignDetailData} />;
       default:
-        return <div>Unknown entry type</div>;
+        return (
+          <SystemWindow title="NOT IMPLEMENTED" variant="alert">
+            <p className="text-sm text-muted-foreground">
+              Detail view for {type} is not yet implemented.
+            </p>
+          </SystemWindow>
+        );
     }
-  };
+  }, [entry, type]);
 
   if (!entry || !type) {
     if (loading) {
@@ -413,7 +423,7 @@ const CompendiumDetail = () => {
         <span id="entry-header" className="scroll-mt-4" />
 
         <DetailLayout
-          main={renderDetail()}
+          main={detailNode}
           sidebar={
             <>
               <QuickReference
@@ -423,8 +433,8 @@ const CompendiumDetail = () => {
                 onShare={handleShare}
                 onExport={handleExport}
               />
-              {getTocItems().length > 2 && (
-                <TableOfContents items={getTocItems()} />
+              {tocItems.length > 2 && (
+                <TableOfContents items={tocItems} />
               )}
               {relatedEntries.length > 0 && (
                 <RelatedContent

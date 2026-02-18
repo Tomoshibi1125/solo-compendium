@@ -6,8 +6,9 @@
  */
 
 import { useState, useCallback } from 'react';
+import { useUserLocalState } from '@/hooks/useToolState';
 
-const CONSENT_STORAGE_KEY = 'solo-compendium-analytics-consent';
+const CONSENT_STORAGE_KEY = 'analytics-consent';
 const CONSENT_VERSION = 1; // Increment to re-prompt users
 
 export type ConsentStatus = 'pending' | 'accepted' | 'rejected';
@@ -19,73 +20,50 @@ interface ConsentData {
 }
 
 /**
- * Load consent status from localStorage
- */
-function loadConsent(): ConsentData | null {
-  try {
-    const stored = localStorage.getItem(CONSENT_STORAGE_KEY);
-    if (!stored) return null;
-    return JSON.parse(stored) as ConsentData;
-  } catch {
-    return null;
-  }
-}
-
-/**
- * Save consent status to localStorage
- */
-function saveConsent(status: ConsentStatus): void {
-  const data: ConsentData = {
-    status,
-    version: CONSENT_VERSION,
-    timestamp: Date.now(),
-  };
-  localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(data));
-}
-
-/**
- * Check if consent is needed (not set or version mismatch)
- */
-function isConsentNeeded(): boolean {
-  const consent = loadConsent();
-  if (!consent) return true;
-  if (consent.version !== CONSENT_VERSION) return true;
-  return false;
-}
-
-/**
  * Get current consent status
  */
 export function getConsentStatus(): ConsentStatus {
-  const consent = loadConsent();
-  if (!consent || consent.version !== CONSENT_VERSION) return 'pending';
-  return consent.status;
+  // This function is now deprecated as consent is managed per user
+  // Use the hook instead
+  return 'pending';
 }
 
 /**
  * Hook to manage analytics consent
  */
 export function useAnalyticsConsent() {
-  const [consentStatus, setConsentStatus] = useState<ConsentStatus>(() => getConsentStatus());
-  const [showBanner, setShowBanner] = useState(() => isConsentNeeded());
+  const { state: consentData, setState: setConsentData } = useUserLocalState<ConsentData | null>(
+    CONSENT_STORAGE_KEY,
+    { initialState: null }
+  );
+
+  const consentStatus = consentData && consentData.version === CONSENT_VERSION
+    ? consentData.status
+    : 'pending';
+
+  const showBanner = !consentData || consentData.version !== CONSENT_VERSION;
 
   const acceptConsent = useCallback(() => {
-    saveConsent('accepted');
-    setConsentStatus('accepted');
-    setShowBanner(false);
-  }, []);
+    const data: ConsentData = {
+      status: 'accepted',
+      version: CONSENT_VERSION,
+      timestamp: Date.now(),
+    };
+    setConsentData(data);
+  }, [setConsentData]);
 
   const rejectConsent = useCallback(() => {
-    saveConsent('rejected');
-    setConsentStatus('rejected');
-    setShowBanner(false);
-  }, []);
+    const data: ConsentData = {
+      status: 'rejected',
+      version: CONSENT_VERSION,
+      timestamp: Date.now(),
+    };
+    setConsentData(data);
+  }, [setConsentData]);
 
   const resetConsent = useCallback(() => {
-    localStorage.removeItem(CONSENT_STORAGE_KEY);
-    setConsentStatus('pending');
-    setShowBanner(true);
-  }, []);
+    setConsentData(null);
+  }, [setConsentData]);
 
   return {
     consentStatus,
@@ -94,7 +72,6 @@ export function useAnalyticsConsent() {
     acceptConsent,
     rejectConsent,
     resetConsent,
-    dismissBanner: () => setShowBanner(false),
+    dismissBanner: () => setConsentData(consentData), // No-op since banner state is derived
   };
 }
-

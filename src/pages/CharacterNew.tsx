@@ -716,6 +716,12 @@ const CharacterNew = () => {
                       {paths.map((path) => (
                         <SelectItem key={path.id} value={path.id}>
                           {formatMonarchVernacular((path as { display_name?: string | null }).display_name || path.name)}
+                          {(path as any)._marketplace && (
+                            <Badge variant="outline" className="ml-2 text-xs">Marketplace</Badge>
+                          )}
+                          {(path as any)._homebrew && (
+                            <Badge variant="outline" className="ml-2 text-xs">Homebrew</Badge>
+                          )}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -746,6 +752,9 @@ const CharacterNew = () => {
                   {allBackgrounds.map((bg) => (
                     <SelectItem key={bg.id} value={bg.id}>
                       {formatMonarchVernacular((bg as Background & { display_name?: string | null }).display_name || bg.name)}
+                      {(bg as Background & { _marketplace?: boolean })._marketplace && (
+                        <Badge variant="outline" className="ml-2 text-xs">Marketplace</Badge>
+                      )}
                       {(bg as Background & { _homebrew?: boolean })._homebrew && (
                         <Badge variant="outline" className="ml-2 text-xs">Homebrew</Badge>
                       )}

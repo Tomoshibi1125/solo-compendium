@@ -13,7 +13,27 @@ export const enqueueOfflineSync = (
   type: OfflineSyncType,
   action: OfflineSyncAction,
   data: Record<string, unknown>
+<<<<<<< Updated upstream
 ): SyncQueueItem => syncManager.addToQueue(type, action, data);
+=======
+): SyncQueueItem => {
+  const item = syncManager.addToQueue(type, action, data);
+
+  // Register background sync if supported
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.ready.then(reg => {
+      const sync = (reg as any)?.sync;
+      if (sync?.register) {
+        sync.register('offline-queue').catch((err: unknown) => {
+          console.warn('[Background Sync] Registration failed:', err);
+        });
+      }
+    });
+  }
+
+  return item;
+};
+>>>>>>> Stashed changes
 
 export const processOfflineSyncQueue = (): Promise<void> => syncManager.processQueue();
 

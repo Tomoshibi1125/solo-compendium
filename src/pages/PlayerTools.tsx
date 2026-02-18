@@ -155,7 +155,7 @@ const PlayerTools = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8" data-testid="player-tools">
         <div className="mb-8">
           <div className="flex items-center gap-4 mb-4">
             <SystemSigilLogo size="md" />

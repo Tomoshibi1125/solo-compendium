@@ -15,6 +15,18 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 hover:shadow-[0_0_20px_hsl(var(--secondary)/0.4)] hover:-translate-y-0.5 shadow-extraction",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline hover:text-primary/80",
+        // Sovereign power variants
+        monarch: "bg-monarch-gold text-white hover:bg-monarch-gold/90 hover:shadow-[0_0_25px_hsl(var(--monarch-gold)/0.5),0_0_50px_hsl(var(--shadow-purple)/0.3)] hover:-translate-y-1 monarch-seal",
+        arise: "bg-arise-violet text-white hover:bg-arise-violet/90 hover:shadow-[0_0_30px_hsl(var(--arise-violet)/0.6),0_0_60px_hsl(var(--shadow-purple)/0.4)] hover:-translate-y-1 arise",
+        // Gate-tier variants
+        "gate-e": "bg-gate-e text-white hover:bg-gate-e/90 hover:shadow-[0_0_20px_hsl(var(--gate-e-glow)/0.5)] hover:-translate-y-0.5 gate-energy-flow",
+        "gate-d": "bg-gate-d text-white hover:bg-gate-d/90 hover:shadow-[0_0_22px_hsl(var(--gate-d-glow)/0.5)] hover:-translate-y-0.5 gate-energy-flow",
+        "gate-c": "bg-gate-c text-white hover:bg-gate-c/90 hover:shadow-[0_0_24px_hsl(var(--gate-c-glow)/0.5)] hover:-translate-y-0.5 gate-energy-flow",
+        "gate-b": "bg-gate-b text-white hover:bg-gate-b/90 hover:shadow-[0_0_26px_hsl(var(--gate-b-glow)/0.5)] hover:-translate-y-0.5 gate-energy-flow",
+        "gate-a": "bg-gate-a text-white hover:bg-gate-a/90 hover:shadow-[0_0_28px_hsl(var(--gate-a-glow)/0.5)] hover:-translate-y-0.5 gate-energy-flow",
+        "gate-s": "bg-gate-s text-white hover:bg-gate-s/90 hover:shadow-[0_0_30px_hsl(var(--gate-s-glow)/0.5)] hover:-translate-y-1 gate-energy-flow dimensional-pulse",
+        "gate-ss": "bg-gate-ss text-white hover:bg-gate-ss/90 hover:shadow-[0_0_35px_hsl(var(--gate-ss-glow)/0.6)] hover:-translate-y-1 gate-energy-flow dimensional-pulse",
+        "gate-national": "bg-gate-national text-white hover:bg-gate-national/90 hover:shadow-[0_0_40px_hsl(var(--gate-national-glow)/0.7)] hover:-translate-y-1 gate-energy-flow dimensional-pulse rift-portal",
       },
       size: {
         default: "h-10 px-4 py-2 min-h-[44px] sm:min-h-[40px]",

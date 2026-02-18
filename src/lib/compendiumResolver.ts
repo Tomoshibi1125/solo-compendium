@@ -313,3 +313,88 @@ export async function validateRef(type: EntryType, id: string): Promise<boolean>
 export function isValidEntryType(value: string): value is EntryType {
   return entryTypes.includes(value as EntryType);
 }
+<<<<<<< Updated upstream
+=======
+
+/**
+ * Map homebrew content_type to compendium EntryType.
+ */
+const homebrewTypeToEntryType: Record<string, EntryType> = {
+  job: 'jobs',
+  path: 'paths',
+  relic: 'relics',
+  spell: 'spells',
+  item: 'items',
+};
+
+/**
+ * Merge published homebrew content into a compendium entry list.
+ * Returns combined array with homebrew entries tagged with `source: 'homebrew'`.
+ *
+ * @param type - The compendium entry type to merge for
+ * @param userId - Current user id
+ * @param campaignId - Optional campaign id
+ */
+export async function mergeHomebrewEntries(
+  type: EntryType,
+  userId?: string | null,
+  campaignId?: string | null,
+): Promise<CompendiumEntity[]> {
+  if (!isSupabaseConfigured || !userId) return [];
+
+  const supabaseAny = supabase as any;
+
+  // Map EntryType → homebrew content_type
+  const homebrewContentType = Object.keys(homebrewTypeToEntryType).find(
+    (key) => homebrewTypeToEntryType[key] === type,
+  );
+
+  if (!homebrewContentType) return [];
+
+  try {
+    // Get user's published homebrew + campaign-scoped homebrew
+    const visibilityConditions = [
+      { visibility_scope: 'public', status: 'published' },
+      { visibility_scope: 'private', status: 'published', user_id: userId },
+    ];
+
+    if (campaignId) {
+      visibilityConditions.push({
+        visibility_scope: 'campaign',
+        status: 'published',
+        campaign_id: campaignId,
+      } as any);
+    }
+
+    const homebrewItems: any[] = [];
+
+    for (const condition of visibilityConditions) {
+      const { data: items } = await supabaseAny
+        .from('homebrew_content')
+        .select('id, name, description, content, source_book')
+        .eq('content_type', homebrewContentType)
+        .eq('visibility_scope', condition.visibility_scope)
+        .eq('status', condition.status)
+        .eq('user_id', (condition as any).user_id || (condition as any).campaign_id || '')
+        .neq('user_id', userId); // Don't include user's own content twice
+
+      if (items) {
+        homebrewItems.push(...items);
+      }
+    }
+
+    return homebrewItems.map((item: any) => ({
+      id: `homebrew:${item.id}`,
+      name: item.name,
+      type,
+      description: item.description || null,
+      source: 'homebrew' as const,
+      homebrew_id: item.id,
+      ...((item.content as Record<string, unknown>) || {}),
+    }));
+  } catch (err) {
+    logger.warn(`[mergeHomebrewEntries] Exception for ${type}:`, err);
+    return [];
+  }
+}
+>>>>>>> Stashed changes

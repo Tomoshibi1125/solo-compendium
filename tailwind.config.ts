@@ -99,6 +99,15 @@ export default {
           s: "hsl(var(--gate-s))",
           ss: "hsl(var(--gate-ss))",
           national: "hsl(var(--gate-national))",
+          // Additional gate energy colors
+          "e-glow": "hsl(var(--gate-e-glow))",
+          "d-glow": "hsl(var(--gate-d-glow))",
+          "c-glow": "hsl(var(--gate-c-glow))",
+          "b-glow": "hsl(var(--gate-b-glow))",
+          "a-glow": "hsl(var(--gate-a-glow))",
+          "s-glow": "hsl(var(--gate-s-glow))",
+          "ss-glow": "hsl(var(--gate-ss-glow))",
+          "national-glow": "hsl(var(--gate-national-glow))",
         },
         hunter: {
           blue: "hsl(var(--hunter-blue))",
@@ -165,9 +174,46 @@ export default {
           "0%, 100%": { boxShadow: "0 0 20px hsl(var(--shadow-blue) / 0.3), 0 0 40px hsl(var(--shadow-purple) / 0.2)" },
           "50%": { boxShadow: "0 0 30px hsl(var(--shadow-blue) / 0.5), 0 0 60px hsl(var(--shadow-purple) / 0.3)" },
         },
-        "monarch-seal": {
-          "0%, 100%": { opacity: "0.5", backgroundPosition: "0% 50%" },
-          "50%": { opacity: "0.9", backgroundPosition: "100% 50%" },
+        "float": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-20px)" },
+        },
+        "gate-energy-flow": {
+          "0%, 100%": {
+            transform: "translateX(-100%) scaleX(0)",
+            opacity: "0"
+          },
+          "50%": {
+            transform: "translateX(0%) scaleX(1)",
+            opacity: "1"
+          },
+        },
+        "rift-portal": {
+          "0%": {
+            transform: "scale(0) rotate(0deg)",
+            opacity: "0",
+            filter: "blur(10px)"
+          },
+          "50%": {
+            transform: "scale(1.2) rotate(180deg)",
+            opacity: "0.8",
+            filter: "blur(2px)"
+          },
+          "100%": {
+            transform: "scale(1) rotate(360deg)",
+            opacity: "1",
+            filter: "blur(0px)"
+          },
+        },
+        "dimensional-pulse": {
+          "0%, 100%": {
+            boxShadow: "0 0 20px hsl(var(--gate-e-glow) / 0.3)",
+            transform: "scale(1)"
+          },
+          "50%": {
+            boxShadow: "0 0 40px hsl(var(--gate-s-glow) / 0.6), 0 0 80px hsl(var(--gate-ss-glow) / 0.4)",
+            transform: "scale(1.05)"
+          },
         },
       },
       animation: {
@@ -179,7 +225,18 @@ export default {
         shimmer: "shimmer 2s linear infinite",
         "arise": "arise 1s ease-out forwards",
         "shadow-pulse": "shadow-pulse 3s ease-in-out infinite",
-        "monarch-seal": "monarch-seal 4s ease-in-out infinite",
+        "float": "float 6s ease-in-out infinite",
+        "gate-energy-flow": "gate-energy-flow 3s ease-in-out infinite",
+        "rift-portal": "rift-portal 2s ease-out",
+        "dimensional-pulse": "dimensional-pulse 4s ease-in-out infinite",
+      },
+      textShadow: {
+        'system': '0 0 10px hsl(var(--system-green) / 0.8), 0 0 20px hsl(var(--system-green) / 0.4)',
+        'arise': '0 0 10px hsl(var(--arise-violet) / 0.8), 0 0 20px hsl(var(--arise-violet) / 0.4)',
+        'sovereign': '0 0 15px hsl(var(--monarch-gold) / 0.9), 0 0 30px hsl(var(--monarch-gold) / 0.5), 0 0 45px hsl(var(--shadow-purple) / 0.3)',
+        'rift': '0 0 12px hsl(var(--gate-national-glow) / 0.8), 0 0 24px hsl(var(--gate-national-glow) / 0.4), 0 0 36px hsl(var(--void-black) / 0.6)',
+        'gate': '0 0 10px hsl(var(--gate-s-glow) / 0.7), 0 0 20px hsl(var(--gate-s-glow) / 0.4)',
+        'shadow': '0 0 8px hsl(var(--shadow-deep) / 0.8), 0 0 16px hsl(var(--shadow-deep) / 0.4), 0 0 24px hsl(var(--void-black) / 0.6)',
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

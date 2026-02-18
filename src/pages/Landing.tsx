@@ -1,15 +1,24 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Zap, Shield, Sword } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { CosmicBackground } from '@/components/ui/CosmicBackground';
+import { SystemHologram } from '@/components/ui/SystemHologram';
+import EnhancedCard from '@/components/ui/EnhancedCard';
+import { SystemHeading, SystemText, DataStreamText } from '@/components/ui/SystemText';
+import { RiftStatusIndicator } from '@/components/ui/RiftStatusIndicator';
+import { SovereignAuthorityDisplay } from '@/components/ui/SovereignAuthorityDisplay';
 
 const Landing = () => {
   return (
     <div className="relative min-h-screen overflow-hidden bg-black text-white">
+      {/* System Ascendant Cosmic Background */}
+      <CosmicBackground variant="gate" intensity="medium" animated />
+
+      {/* Enhanced Background Effects */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-cover bg-center opacity-30 landing-hero-bg" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/70 to-black" />
-        <div className="absolute -top-40 left-1/2 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-purple-600/20 blur-[140px]" />
+        <div className="absolute inset-0 bg-cover bg-center opacity-20 landing-hero-bg" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/75 to-black" />
       </div>
 
       <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
@@ -17,22 +26,28 @@ const Landing = () => {
           <OptimizedImage
             src="/ui-art/shadow-soldier-emblem.webp"
             alt="Umbral Legionnaire Emblem"
-            className="h-10 w-10 rounded-full border border-purple-500/60 shadow-lg shadow-purple-500/40"
+            className="h-10 w-10 rounded-full border border-gate-s/60 shadow-lg shadow-gate-s/40"
             size="thumbnail"
           />
           <div className="leading-tight">
-            <p className="text-xs uppercase tracking-[0.2em] text-purple-200/70">System Ascendant</p>
-            <p className="font-arise text-lg tracking-widest">The System</p>
+            <SystemText variant="system" size="xs" className="uppercase tracking-[0.2em] opacity-80">
+              System Ascendant
+            </SystemText>
+            <SystemText variant="sovereign" size="lg" dimensional>
+              The System
+            </SystemText>
           </div>
         </div>
         <div className="flex items-center gap-3">
           <Link to="/login">
-            <Button variant="outline" className="border-purple-500/60 text-purple-100 hover:border-purple-400">
+            <Button variant="gate-e" className="border-gate-e/60 text-gate-e hover:border-gate-e">
               Login
             </Button>
           </Link>
           <Link to="/compendium">
-            <Button className="btn-umbral">Browse Compendium</Button>
+            <Button variant="arise" className="font-semibold">
+              Browse Compendium
+            </Button>
           </Link>
         </div>
       </header>
@@ -40,24 +55,26 @@ const Landing = () => {
       <main className="relative z-10">
         <section className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-16 pt-10 lg:flex-row lg:items-center">
           <div className="flex-1">
-            <p className="mb-4 text-sm font-display uppercase tracking-[0.3em] text-purple-200/70">
-              System status: online
-            </p>
-            <h1 className="font-arise text-4xl font-black leading-tight sm:text-5xl lg:text-6xl">
+            <div className="mb-6">
+              <DataStreamText variant="system" speed="slow" className="text-sm uppercase tracking-[0.3em] opacity-80">
+                System status: online
+              </DataStreamText>
+            </div>
+            <SystemHeading level={1} variant="sovereign" dimensional className="leading-tight">
               The System awaits your command.
-            </h1>
-            <p className="mt-4 text-lg text-gray-300">
+            </SystemHeading>
+            <SystemText variant="body" size="lg" className="mt-4 text-gray-300">
               Access the complete System Ascendant compendium. Manage ascendants, explore rifts, and master the shadows.
-            </p>
+            </SystemText>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <Link to="/login">
-                <Button size="lg" className="btn-umbral">
+                <Button variant="arise" size="lg" className="font-semibold">
                   Enter System
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
               <Link to="/compendium">
-                <Button size="lg" variant="outline" className="border-purple-500/60 text-purple-100 hover:border-purple-400">
+                <Button variant="gate-s" size="lg" className="border-gate-s/60 text-gate-s hover:border-gate-s">
                   Browse Compendium
                 </Button>
               </Link>
@@ -65,30 +82,137 @@ const Landing = () => {
           </div>
           <div className="flex-1">
             <div className="relative">
-              <div className="absolute inset-0 bg-purple-600/20 blur-3xl" />
-              <OptimizedImage
-                src="/ui-art/system-interface.webp"
-                alt="System Interface"
-                className="relative rounded-lg border border-purple-500/30 shadow-2xl shadow-purple-500/20"
-                size="large"
-              />
+              {/* System Hologram Display */}
+              <SystemHologram
+                variant="sovereign"
+                title="SYSTEM CORE"
+                className="mb-6"
+              >
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <SystemText variant="system" size="sm">Rift Stability</SystemText>
+                    <SystemText variant="gate" size="sm">98.7%</SystemText>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <SystemText variant="system" size="sm">Authority Level</SystemText>
+                    <SystemText variant="sovereign" size="sm">MONARCH</SystemText>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <SystemText variant="system" size="sm">Active Ascendants</SystemText>
+                    <SystemText variant="rift" size="sm">1,247</SystemText>
+                  </div>
+                </div>
+              </SystemHologram>
+
+              {/* Enhanced Image Display */}
+              <div className="relative">
+                <div className="absolute inset-0 bg-gate-national/20 blur-3xl animate-dimensional-pulse" />
+                <OptimizedImage
+                  src="/ui-art/system-interface.webp"
+                  alt="System Interface"
+                  className="relative rounded-lg border border-gate-s/30 shadow-2xl shadow-gate-s/20"
+                  size="large"
+                />
+              </div>
             </div>
           </div>
         </section>
 
         <section className="mx-auto max-w-6xl px-6 pb-16">
           <div className="grid gap-8 md:grid-cols-3">
-            <div className="rounded-lg border border-purple-500/20 bg-purple-950/20 p-6 backdrop-blur-sm">
-              <h3 className="font-arise text-xl font-semibold text-purple-200">3,218+ Assets</h3>
-              <p className="mt-2 text-gray-400">Complete System Ascendant compendium with monsters, items, spells, and more.</p>
+            <EnhancedCard
+              variant="gate"
+              title="3,218+ Assets"
+              description="Complete System Ascendant compendium with monsters, items, spells, and more."
+              icon={<Sword className="h-6 w-6" />}
+              interactive
+              onClick={() => {/* Navigate to compendium */}}
+              className="hover:scale-[1.03] transition-all duration-300"
+            />
+            <EnhancedCard
+              variant="sovereign"
+              title="Ascendant Management"
+              description="Create and manage your ascendants with full character sheets and progression."
+              icon={<Shield className="h-6 w-6" />}
+              interactive
+              onClick={() => {/* Navigate to characters */}}
+              className="hover:scale-[1.03] transition-all duration-300"
+            />
+            <EnhancedCard
+              variant="rift"
+              title="Rift Exploration"
+              description="Explore dangerous rifts and track your conquests in the shadow realm."
+              icon={<Zap className="h-6 w-6" />}
+              interactive
+              onClick={() => {/* Navigate to campaigns */}}
+              className="hover:scale-[1.03] transition-all duration-300"
+            />
+          </div>
+        </section>
+
+        {/* Sovereign Authority Showcase */}
+        <section className="mx-auto max-w-6xl px-6 pb-16">
+          <div className="text-center mb-12">
+            <SystemHeading level={2} variant="sovereign" dimensional>
+              Experience True Power
+            </SystemHeading>
+            <SystemText variant="body" size="lg" className="mt-4 text-gray-300 max-w-2xl mx-auto">
+              Ascend to sovereignty, master dimensional rifts, and command the shadows in the ultimate tabletop RPG experience.
+            </SystemText>
+          </div>
+
+          <div className="grid gap-8 lg:grid-cols-2">
+            {/* Rift Status Display */}
+            <div className="space-y-4">
+              <SystemHeading level={3} variant="gate" className="text-center">
+                Dimensional Control
+              </SystemHeading>
+              <RiftStatusIndicator
+                stability={87}
+                tier="s"
+                coordinates={{
+                  x: 42.7,
+                  y: -13.8,
+                  z: 8.2,
+                  dimension: 'SHADOW PRIME'
+                }}
+                showCoordinates
+                className="w-full"
+              />
             </div>
-            <div className="rounded-lg border border-purple-500/20 bg-purple-950/20 p-6 backdrop-blur-sm">
-              <h3 className="font-arise text-xl font-semibold text-purple-200">Ascendant Management</h3>
-              <p className="mt-2 text-gray-400">Create and manage your ascendants with full character sheets and progression.</p>
+
+            {/* Sovereign Authority Display */}
+            <div className="space-y-4">
+              <SystemHeading level={3} variant="sovereign" className="text-center">
+                Sovereign Dominion
+              </SystemHeading>
+              <SovereignAuthorityDisplay
+                authority={94}
+                tier="monarch"
+                domain="UMBRAL EMPIRE"
+                decrees={47}
+                vassals={128}
+                className="w-full"
+              />
             </div>
-            <div className="rounded-lg border border-purple-500/20 bg-purple-950/20 p-6 backdrop-blur-sm">
-              <h3 className="font-arise text-xl font-semibold text-purple-200">Rift Exploration</h3>
-              <p className="mt-2 text-gray-400">Explore dangerous rifts and track your conquests in the shadow realm.</p>
+          </div>
+
+          {/* Call to Action */}
+          <div className="text-center mt-12">
+            <SystemText variant="system" size="sm" className="mb-6 opacity-80">
+              Join the ranks of sovereigns and rift masters
+            </SystemText>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/login">
+                <Button variant="monarch" size="lg" className="font-semibold px-8">
+                  Claim Your Sovereignty
+                </Button>
+              </Link>
+              <Link to="/compendium">
+                <Button variant="gate-national" size="lg" className="border-gate-national/60 text-gate-national hover:border-gate-national px-8">
+                  Explore the System
+                </Button>
+              </Link>
             </div>
           </div>
         </section>

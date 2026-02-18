@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { logger } from '@/lib/logger';
+import { useUserLocalState } from '@/hooks/useToolState';
 
-const STORAGE_KEY = 'solo-compendium-search-history';
+const STORAGE_KEY = 'search-history';
 const MAX_HISTORY_ITEMS = 20;
 
 export interface SearchHistoryItem {
@@ -15,28 +16,10 @@ export interface SearchHistoryItem {
  * Hook for managing search history
  */
 export function useSearchHistory() {
-  const [history, setHistory] = useState<SearchHistoryItem[]>(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (!stored) return [];
-      return JSON.parse(stored) as SearchHistoryItem[];
-    } catch (error) {
-      logger.error('Failed to load search history:', error);
-      return [];
-    }
-  });
-
-  // Save history whenever it changes
-  useEffect(() => {
-    try {
-      const toSave = history
-        .sort((a, b) => b.timestamp - a.timestamp)
-        .slice(0, MAX_HISTORY_ITEMS);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
-    } catch (error) {
-      logger.error('Failed to save search history:', error);
-    }
-  }, [history]);
+  const { state: history, setState: setHistory } = useUserLocalState<SearchHistoryItem[]>(
+    STORAGE_KEY,
+    { initialState: [] }
+  );
 
   const addToHistory = useCallback((query: string, filters?: Record<string, unknown>, resultCount?: number) => {
     if (!query.trim()) return;
@@ -44,7 +27,7 @@ export function useSearchHistory() {
     setHistory(prev => {
       // Remove duplicate (if exists)
       const filtered = prev.filter(item => item.query.toLowerCase() !== query.toLowerCase());
-      
+
       // Add new item at the beginning
       return [
         {
@@ -56,15 +39,15 @@ export function useSearchHistory() {
         ...filtered,
       ].slice(0, MAX_HISTORY_ITEMS);
     });
-  }, []);
+  }, [setHistory]);
 
   const removeFromHistory = useCallback((query: string) => {
     setHistory(prev => prev.filter(item => item.query !== query));
-  }, []);
+  }, [setHistory]);
 
   const clearHistory = useCallback(() => {
     setHistory([]);
-  }, []);
+  }, [setHistory]);
 
   const getRecentSearches = useCallback((limit: number = 10) => {
     return history

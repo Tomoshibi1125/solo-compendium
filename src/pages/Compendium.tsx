@@ -356,17 +356,33 @@ const Compendium = () => {
   ]);
 
   // Extract unique source books
-  const sourceBooks = useMemo(() => {
+  const { sourceBooks, counts, favoriteCount } = useMemo(() => {
     const books = new Set<string>();
-    entries.forEach(e => {
-      if (e.source_book) books.add(e.source_book);
-    });
-    return Array.from(books).sort();
+    const nextCounts: Record<string, number> = { all: 0 };
+    let nextFavoriteCount = 0;
+
+    for (const entry of entries) {
+      nextCounts.all += 1;
+      nextCounts[entry.type] = (nextCounts[entry.type] || 0) + 1;
+      if (entry.isFavorite) nextFavoriteCount += 1;
+      if (entry.source_book) books.add(entry.source_book);
+    }
+
+    return {
+      sourceBooks: Array.from(books).sort(),
+      counts: nextCounts,
+      favoriteCount: nextFavoriteCount,
+    };
   }, [entries]);
 
   // Filter and sort entries
   const filteredAndSortedEntries = useMemo(() => {
     let filtered = [...entries];
+
+    const selectedSourceBooksSet = selectedSourceBooks.length > 0 ? new Set(selectedSourceBooks) : null;
+    const selectedSchoolsSet = selectedSchools.length > 0 ? new Set(selectedSchools) : null;
+    const selectedGateRanksSet = selectedGateRanks.length > 0 ? new Set(selectedGateRanks) : null;
+    const selectedRaritiesSet = selectedRarities.length > 0 ? new Set(selectedRarities) : null;
 
     // Filter by favorites
     if (showFavoritesOnly) {
@@ -374,23 +390,23 @@ const Compendium = () => {
     }
 
     // Filter by source books
-    if (selectedSourceBooks.length > 0) {
-      filtered = filtered.filter(e => e.source_book && selectedSourceBooks.includes(e.source_book));
+    if (selectedSourceBooksSet) {
+      filtered = filtered.filter(e => e.source_book && selectedSourceBooksSet.has(e.source_book));
     }
 
     // Filter by power schools (for powers)
-    if (selectedSchools.length > 0) {
-      filtered = filtered.filter(e => e.school && selectedSchools.includes(e.school));
+    if (selectedSchoolsSet) {
+      filtered = filtered.filter(e => e.school && selectedSchoolsSet.has(e.school));
     }
 
     // Filter by gate ranks (for monsters)
-    if (selectedGateRanks.length > 0) {
-      filtered = filtered.filter(e => e.gate_rank && selectedGateRanks.includes(e.gate_rank));
+    if (selectedGateRanksSet) {
+      filtered = filtered.filter(e => e.gate_rank && selectedGateRanksSet.has(e.gate_rank));
     }
 
     // Filter by rarity
-    if (selectedRarities.length > 0) {
-      filtered = filtered.filter(e => e.rarity && selectedRarities.includes(e.rarity));
+    if (selectedRaritiesSet) {
+      filtered = filtered.filter(e => e.rarity && selectedRaritiesSet.has(e.rarity));
     }
 
     // Filter by level
@@ -478,23 +494,7 @@ const Compendium = () => {
     }
   }, []);
 
-  // Get counts
-  const counts = useMemo(() => {
-    const counts: Record<string, number> = {};
-    categories.forEach(cat => {
-      if (cat.id === 'all') {
-        counts.all = entries.length;
-      } else {
-        counts[cat.id] = entries.filter(e => e.type === cat.id).length;
-      }
-    });
-    return counts;
-  }, [entries]);
-
-  // Get favorite count
-  const favoriteCount = useMemo(() => {
-    return entries.filter(e => e.isFavorite).length;
-  }, [entries]);
+  // counts + favoriteCount are derived above in a single pass
 
   // Build filter chips
   const filterChips = useMemo(() => {
@@ -918,7 +918,7 @@ const Compendium = () => {
                     key={`${entry.type}-${entry.id}`}
                     to={`/compendium/${entry.type}/${entry.id}`}
                     className={cn(
-                      "glass-card border hover:border-primary/30 transition-all duration-200 group relative",
+                      "glass-card border hover:border-primary/30 hover:scale-[1.02] transition-all duration-200 group relative",
                       "hover:shadow-lg hover:shadow-primary/10 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
                       viewMode === 'grid' ? "p-4" : "p-3 flex items-center gap-4",
                       getRarityOrRankColor(entry)

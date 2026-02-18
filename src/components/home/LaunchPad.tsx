@@ -21,6 +21,8 @@ import { SystemSigilLogo } from '@/components/ui/SystemSigilLogo';
 import { GatePortal } from '@/components/ui/GatePortal';
 import { HunterBadge } from '@/components/ui/HunterBadge';
 import { CompendiumQuickStats } from '@/components/compendium/CompendiumQuickStats';
+import { Leaderboards } from '@/components/dashboard/Leaderboards';
+import { FeedbackDialog } from '@/components/FeedbackDialog';
 import { useCharacters } from '@/hooks/useCharacters';
 import { useMyCampaigns, useJoinedCampaigns, useIsDM } from '@/hooks/useCampaigns';
 import { RoleBadge } from '@/components/ui/RoleBadge';
@@ -39,6 +41,9 @@ export function LaunchPad() {
   
   // DM/Player mode selector - default to DM mode if user is a DM
   const [viewMode, setViewMode] = useState<ViewMode>(isDM ? 'dm' : 'player');
+
+  // Feedback dialog
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
 
   const recentCharacters = characters?.slice(0, 3) || [];
   const recentMyCampaigns = myCampaigns?.slice(0, 2) || [];
@@ -114,6 +119,15 @@ export function LaunchPad() {
             ) : (
               <RoleBadge role="hunter" />
             )}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setFeedbackOpen(true)}
+              className="ml-4 text-xs hover:bg-primary/10"
+            >
+              <MessageSquare className="w-4 h-4 mr-2" />
+              Feedback
+            </Button>
           </div>
           <p className="text-muted-foreground font-heading max-w-2xl mx-auto leading-relaxed mb-6">
             {isDM ? (
@@ -494,6 +508,11 @@ export function LaunchPad() {
           <CompendiumQuickStats />
         </div>
 
+        {/* Leaderboards */}
+        <div className="mt-12 mb-8">
+          <Leaderboards />
+        </div>
+
         {/* Additional Quick Links */}
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4">
           <Link
@@ -554,6 +573,9 @@ export function LaunchPad() {
           </Link>
         </div>
       </div>
+
+      {/* Feedback Dialog */}
+      <FeedbackDialog open={feedbackOpen} onOpenChange={setFeedbackOpen} />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useAuth } from '@/lib/auth/authContext';
 import { useToast } from '@/hooks/use-toast';
 import { isLocalCharacterId } from '@/lib/guestStore';
+import { useUserLocalState } from '@/hooks/useToolState';
 import type { CustomModifier, CustomModifierType } from '@/lib/customModifiers';
 
 export interface CharacterFeature {
@@ -30,41 +31,18 @@ export interface FeatureModifier {
   source: string;
 }
 
-const LOCAL_FEATURES_KEY = 'solo-compendium.character-features.v1';
+const LOCAL_FEATURES_KEY = 'character-features';
 
-const loadLocalFeatures = (characterId: string): CharacterFeature[] => {
-  if (typeof window === 'undefined') return [];
-  const raw = window.localStorage.getItem(LOCAL_FEATURES_KEY);
-  if (!raw) return [];
-  try {
-    const all = JSON.parse(raw) as CharacterFeature[];
-    return Array.isArray(all) ? all.filter((f) => f.character_id === characterId) : [];
-  } catch {
-    return [];
-  }
-};
-
-const saveLocalFeature = (feature: CharacterFeature) => {
-  if (typeof window === 'undefined') return;
-  const raw = window.localStorage.getItem(LOCAL_FEATURES_KEY);
-  const all: CharacterFeature[] = raw ? JSON.parse(raw) : [];
-  all.push(feature);
-  window.localStorage.setItem(LOCAL_FEATURES_KEY, JSON.stringify(all));
-};
-
-const removeLocalFeature = (featureId: string) => {
-  if (typeof window === 'undefined') return;
-  const raw = window.localStorage.getItem(LOCAL_FEATURES_KEY);
-  if (!raw) return;
-  const all: CharacterFeature[] = JSON.parse(raw);
-  window.localStorage.setItem(
+const useLocalFeatures = () => {
+  return useUserLocalState<Record<string, CharacterFeature[]>>(
     LOCAL_FEATURES_KEY,
-    JSON.stringify(all.filter((f) => f.id !== featureId)),
+    { initialState: {} }
   );
 };
 
 export const useCharacterFeatures = (characterId: string) => {
   const { user } = useAuth();
+  const { state: localFeatures } = useLocalFeatures();
 
   return useQuery({
     queryKey: ['character-features', characterId],
@@ -72,11 +50,11 @@ export const useCharacterFeatures = (characterId: string) => {
       if (!characterId) return [];
 
       if (!isSupabaseConfigured || isLocalCharacterId(characterId)) {
-        return loadLocalFeatures(characterId);
+        return localFeatures[characterId] || [];
       }
 
       if (!user) {
-        return loadLocalFeatures(characterId);
+        return localFeatures[characterId] || [];
       }
 
       const { data, error } = await supabase
@@ -96,6 +74,7 @@ export const useApplyHomebrewFeature = () => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const { user } = useAuth();
+  const { state: localFeatures, setState: setLocalFeatures } = useLocalFeatures();
 
   return useMutation({
     mutationFn: async (params: {
@@ -123,12 +102,18 @@ export const useApplyHomebrewFeature = () => {
       };
 
       if (!isSupabaseConfigured || isLocalCharacterId(params.characterId)) {
-        saveLocalFeature(feature);
+        setLocalFeatures({
+          ...localFeatures,
+          [params.characterId]: [...(localFeatures[params.characterId] || []), feature],
+        });
         return feature;
       }
 
       if (!user) {
-        saveLocalFeature(feature);
+        setLocalFeatures({
+          ...localFeatures,
+          [params.characterId]: [...(localFeatures[params.characterId] || []), feature],
+        });
         return feature;
       }
 
@@ -171,11 +156,16 @@ export const useApplyHomebrewFeature = () => {
 export const useRemoveCharacterFeature = () => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const { user } = useAuth();
+  const { state: localFeatures, setState: setLocalFeatures } = useLocalFeatures();
 
   return useMutation({
     mutationFn: async (params: { featureId: string; characterId: string }) => {
       if (!isSupabaseConfigured || isLocalCharacterId(params.characterId)) {
-        removeLocalFeature(params.featureId);
+        setLocalFeatures({
+          ...localFeatures,
+          [params.characterId]: (localFeatures[params.characterId] || []).filter(f => f.id !== params.featureId),
+        });
         return;
       }
 

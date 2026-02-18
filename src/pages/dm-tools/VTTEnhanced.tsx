@@ -1,8 +1,9 @@
-import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import { useNavigate, useParams, Link, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Eye, EyeOff, FileText, Maximize2, Minus, Plus, Save, Upload } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -10,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import '@/styles/vtt-enhanced.css';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { QuestGenerator } from '@/components/dm-tools/QuestGenerator';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
@@ -20,6 +22,7 @@ import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { useDebounce } from '@/hooks/useDebounce';
 import { readLocalToolState, useCampaignToolState, useUserToolState } from '@/hooks/useToolState';
+import PlayerMapView from '@/pages/player-tools/PlayerMapView';
 import { useAuth } from '@/lib/auth/authContext';
 
 import {
@@ -204,8 +207,10 @@ const upsertScene = (scenes: Scene[], nextScene: Scene): Scene[] => {
 const VTTEnhanced = () => {
   const { campaignId } = useParams<{ campaignId: string }>();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { toast } = useToast();
   const { user, loading } = useAuth();
+  const sessionId = searchParams.get('sessionId')?.trim() || null;
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInputRef = useRef<HTMLInputElement>(null);
   const suppressNextMapActionRef = useRef(false);
@@ -220,6 +225,8 @@ const VTTEnhanced = () => {
   const [selectedCharacterId, setSelectedCharacterId] = useState<string | null>(null);
   const [selectedLibraryTokenId, setSelectedLibraryTokenId] = useState<string | null>(null);
   const [activeTokenId, setActiveTokenId] = useState<string | null>(null);
+  const [damageDialogOpen, setDamageDialogOpen] = useState(false);
+  const [damageAmount, setDamageAmount] = useState('');
   const [currentScene, setCurrentScene] = useState<Scene | null>(null);
   const [scenes, setScenes] = useState<Scene[]>([]);
   const [draggedToken, setDraggedToken] = useState<PlacedToken | null>(null);
@@ -246,8 +253,10 @@ const VTTEnhanced = () => {
   const [measurementEnd, setMeasurementEnd] = useState<{ x: number; y: number } | null>(null);
   const hydratedRef = useRef(false);
   const [isHydrated, setIsHydrated] = useState(false);
-  const toolKey = 'vtt_scenes';
-  const legacyStorageKey = campaignId ? `vtt-scenes-${campaignId}` : 'vtt-scenes';
+  const toolKey = sessionId ? `vtt_scenes:${sessionId}` : 'vtt_scenes';
+  const legacyStorageKey = campaignId
+    ? `vtt-scenes-${campaignId}${sessionId ? `-${sessionId}` : ''}`
+    : 'vtt-scenes';
   const { state: storedState, isLoading: isStateLoading, saveNow } = useCampaignToolState<VTTScenesState>(
     campaignId || null,
     toolKey,
@@ -272,6 +281,16 @@ const VTTEnhanced = () => {
     [currentScene?.id, mergedScenes]
   );
   const debouncedState = useDebounce(savePayload, 800);
+  const fogPublishPayload = useDebounce(
+    {
+      sceneId: currentScene?.id ?? null,
+      fogData: currentScene?.fogData ?? null,
+      tokens: currentScene?.tokens ?? [],
+      gridSize: currentScene?.gridSize ?? DEFAULT_SCENE_SETTINGS.gridSize,
+      backgroundUrl: currentScene?.backgroundImage ?? null,
+    },
+    700
+  );
   const gridSize = currentScene?.gridSize ?? DEFAULT_SCENE_SETTINGS.gridSize;
   const backgroundScale = currentScene?.backgroundScale ?? DEFAULT_SCENE_SETTINGS.backgroundScale;
   const backgroundOffsetX = currentScene?.backgroundOffsetX ?? DEFAULT_SCENE_SETTINGS.backgroundOffsetX;
@@ -489,6 +508,46 @@ const VTTEnhanced = () => {
       supabase.removeChannel(channel);
     };
   }, [campaignId, isAuthed, toolKey, user?.id]);
+
+  useEffect(() => {
+    if (!campaignId) return;
+    if (!sessionId) return;
+    if (!isGM) return;
+    if (!isAuthed) return;
+    if (!fogPublishPayload.sceneId) return;
+
+    const publish = async () => {
+      try {
+        const { error } = await (supabase as any)
+          .from('vtt_fog_state')
+          .upsert(
+            {
+              campaign_id: campaignId,
+              session_id: sessionId,
+              scene_id: fogPublishPayload.sceneId,
+              fog_data: fogPublishPayload.fogData ?? [],
+              tokens: fogPublishPayload.tokens ?? [],
+              grid_size: fogPublishPayload.gridSize,
+              background_url: fogPublishPayload.backgroundUrl,
+              updated_by: user?.id ?? null,
+              updated_at: new Date().toISOString(),
+            },
+            {
+              onConflict: 'campaign_id,session_id,scene_id',
+            }
+          );
+
+        if (error) {
+          // Best-effort publish; VTT still works via campaign_tool_states.
+          return;
+        }
+      } catch {
+        // Best-effort publish.
+      }
+    };
+
+    void publish();
+  }, [campaignId, fogPublishPayload, isAuthed, isGM, sessionId, user?.id]);
 
   const persistSceneState = useCallback(
     (nextScenes: Scene[], currentSceneId: string | null) => {
@@ -1091,6 +1150,9 @@ const VTTEnhanced = () => {
     () => currentScene?.tokens.find((token) => token.id === activeTokenId) ?? null,
     [activeTokenId, currentScene?.tokens]
   );
+
+  const MemoizedVttPixiStage = React.memo(VttPixiStage);
+
   const drawingsToRender = useMemo(() => {
     const base = currentScene?.drawings ?? [];
     return activeDrawing ? [...base, activeDrawing] : base;
@@ -1165,8 +1227,15 @@ const VTTEnhanced = () => {
 
   return (
     <Layout>
+      {/* Test detection element */}
+      <div data-testid="vtt-interface" aria-hidden="true">VTT</div>
+
       <div className="container mx-auto px-4 py-8 max-w-[1920px]">
-        <div className="mb-4 flex items-center justify-between">
+        {!isGM ? (
+          <PlayerMapView campaignId={campaignId || ''} sessionId={sessionId || undefined} />
+        ) : (
+          <>
+            <div className="mb-4 flex items-center justify-between">
           <div>
             <Button
               variant="ghost"
@@ -1179,6 +1248,7 @@ const VTTEnhanced = () => {
             <h1 className="font-arise text-3xl font-bold gradient-text-shadow">
               VTT - {currentScene?.name || 'No Scene'}
             </h1>
+            <h2 className="text-2xl font-bold text-green-500">SESSION ACTIVE</h2>
           </div>
           <div className="flex gap-2">
             {isGM && (
@@ -1776,10 +1846,10 @@ const VTTEnhanced = () => {
               >
                 <div className={cn('vtt-scene-container', sceneClass)}>
                   <style>{overlayStyles}</style>
-                  <VttPixiStage
+                  <MemoizedVttPixiStage
                     containerRef={mapRef}
                     scene={currentScene}
-                    tokens={currentScene?.tokens ?? []}
+                    tokens={visibleTokens}
                     gridSize={gridSize}
                     zoom={zoom}
                     showGrid={showGrid}
@@ -2013,6 +2083,14 @@ const VTTEnhanced = () => {
                         variant="outline"
                         size="sm"
                         className="flex-1"
+                        onClick={() => setDamageDialogOpen(true)}
+                      >
+                        Damage
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1"
                         onClick={() => updateToken(activeToken.id, { hp: activeToken.maxHp ?? activeToken.hp ?? 0 })}
                       >
                         Heal
@@ -2022,11 +2100,66 @@ const VTTEnhanced = () => {
                 </div>
               </SystemWindow>
             )}
+            <Dialog open={damageDialogOpen} onOpenChange={setDamageDialogOpen}>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Apply Damage to {activeToken?.name}</DialogTitle>
+                  <DialogDescription>
+                    Enter the damage amount to apply to this token.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="damage-amount" className="text-right">
+                      Damage
+                    </Label>
+                    <Input
+                      id="damage-amount"
+                      type="number"
+                      min="0"
+                      value={damageAmount}
+                      onChange={(e) => setDamageAmount(e.target.value)}
+                      className="col-span-3"
+                      placeholder="Enter damage amount"
+                      autoFocus
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button variant="outline" onClick={() => {
+                    setDamageDialogOpen(false);
+                    setDamageAmount('');
+                  }}>
+                    Cancel
+                  </Button>
+                  <Button onClick={() => {
+                    if (activeToken && damageAmount) {
+                      const damage = parseInt(damageAmount, 10);
+                      if (!isNaN(damage) && damage > 0) {
+                        const currentHP = activeToken.hp ?? 0;
+                        const newHP = Math.max(0, currentHP - damage);
+                        updateToken(activeToken.id, { hp: newHP });
+                        toast({
+                          title: 'Damage Applied',
+                          description: `${damage} damage applied to ${activeToken.name}. HP: ${currentHP} → ${newHP}`,
+                        });
+                      }
+                    }
+                    setDamageDialogOpen(false);
+                    setDamageAmount('');
+                  }}>
+                    Apply Damage
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+
             <Tabs defaultValue="initiative" className="w-full">
-              <TabsList className="grid w-full grid-cols-4">
+              <TabsList className="grid w-full grid-cols-5">
                 <TabsTrigger value="initiative">Initiative</TabsTrigger>
                 <TabsTrigger value="chat">Chat</TabsTrigger>
                 <TabsTrigger value="dice">Dice</TabsTrigger>
+                <TabsTrigger value="ai">AI</TabsTrigger>
                 <TabsTrigger value="journal">Journal</TabsTrigger>
               </TabsList>
 
@@ -2214,9 +2347,14 @@ const VTTEnhanced = () => {
                   </Link>
                 </SystemWindow>
               </TabsContent>
+
+              <TabsContent value="ai" className="space-y-2">
+                <QuestGenerator />
+              </TabsContent>
             </Tabs>
           </div>
         </div>
+        </> ) }
       </div>
     </Layout>
   );

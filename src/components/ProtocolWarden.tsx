@@ -162,12 +162,17 @@ export const ProtocolWarden: React.FC<ProtocolWardenProps> = ({
               </p>
               
               <div className="mb-4">
-                <label className="block text-sm font-medium text-purple-300 mb-2">
+                <label
+                  htmlFor="protocolwarden-complete-quest-character"
+                  className="block text-sm font-medium text-purple-300 mb-2"
+                >
                   Select Character to Complete Quest For:
                 </label>
                 <select
+                  id="protocolwarden-complete-quest-character"
                   value={selectedCharacter}
                   onChange={(e) => setSelectedCharacter(e.target.value)}
+                  aria-label="Select character to complete quest for"
                   className="w-full p-2 bg-purple-700 text-white rounded border border-purple-600 focus:border-yellow-400 focus:outline-none"
                 >
                   <option value="">Choose a character...</option>

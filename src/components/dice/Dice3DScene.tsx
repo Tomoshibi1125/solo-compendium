@@ -1462,10 +1462,11 @@ export interface Dice3DRollerProps {
 export function Dice3DRoller({ dice, isRolling, onRollComplete, theme = 'umbral-ascendant', className }: Dice3DRollerProps) {
   const themeConfig = DICE_THEMES[theme];
   const { reducedMotion, dpr, three } = usePerformanceProfile();
-  const audioEngine = useMemo(() => new DiceAudioEngine({ masterVolume: 0.35 }), []);
+  const audioEngine = useMemo(() => new DiceAudioEngine(), []);
   const [audioEnabled, setAudioEnabled] = useState(true);
   const [rollId, setRollId] = useState(0);
   const rollingRef = useRef(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const quality = useMemo(
     () => ({
       ...DEFAULT_RENDER_QUALITY,
@@ -1513,6 +1514,11 @@ export function Dice3DRoller({ dice, isRolling, onRollComplete, theme = 'umbral-
     }
   }, [audioEnabled, audioEngine, isRolling]);
 
+  useEffect(() => {
+    if (!containerRef.current) return;
+    containerRef.current.style.setProperty('--dice-bg', theme.backgroundColor);
+  }, [theme.backgroundColor]);
+
   const handleImpact = useCallback(
     (_position: [number, number, number], intensity: number) => {
       if (!audioEnabled) return;
@@ -1538,8 +1544,8 @@ export function Dice3DRoller({ dice, isRolling, onRollComplete, theme = 'umbral-
 
   return (
     <div
+      ref={containerRef}
       className={cn("dice-3d-roller", className)}
-      style={themeStyle}
       onPointerDown={() => {
         void audioEngine.resume();
       }}
@@ -1593,7 +1599,7 @@ export function Dice3DRoller({ dice, isRolling, onRollComplete, theme = 'umbral-
         className="dice-audio-toggle"
         onClick={() => setAudioEnabled((prev) => !prev)}
         aria-label={audioEnabled ? 'Mute dice audio' : 'Enable dice audio'}
-        aria-pressed={!audioEnabled}
+        aria-pressed={audioEnabled}
       >
         {audioEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
       </button>

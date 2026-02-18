@@ -32,10 +32,11 @@ const SIZE_VALUES = {
   huge: 96,
 };
 
-const PlayerMapView = () => {
+const PlayerMapView = ({ campaignId, sessionId }: { campaignId?: string; sessionId?: string } = {}) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const campaignId = searchParams.get('campaign') || '';
+  const effectiveCampaignId = (campaignId || searchParams.get('campaign') || '') as string;
+  const effectiveSessionId = (sessionId || searchParams.get('sessionId') || '') as string;
   const mapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLDivElement>(null);
   const [zoom, setZoom] = useState(1);
@@ -49,8 +50,75 @@ const PlayerMapView = () => {
     isConnected,
     activeUsers,
     broadcastMapUpdate,
-  } = useRealtimeCollaboration(campaignId);
+  } = useRealtimeCollaboration(effectiveCampaignId);
 
+<<<<<<< Updated upstream
+=======
+  // Subscribe to vtt_fog_state via Supabase realtime for authoritative fog data
+  useEffect(() => {
+    if (!effectiveCampaignId || !isSupabaseConfigured) return;
+
+    // Initial fetch
+    let query = (supabase as any)
+      .from('vtt_fog_state')
+      .select('*')
+      .eq('campaign_id', effectiveCampaignId);
+
+    if (effectiveSessionId) {
+      query = query.eq('session_id', effectiveSessionId);
+    }
+
+    query
+      .order('updated_at', { ascending: false })
+      .limit(1)
+      .then(({ data }: { data: any[] | null }) => {
+        if (data && data.length > 0) {
+          const row = data[0];
+          setMapState((prev) => ({
+            ...prev,
+            fogData: row.fog_data || undefined,
+            tokens: (row.tokens as MapToken[]) || prev.tokens,
+            gridSize: row.grid_size || prev.gridSize,
+            backgroundUrl: row.background_url || prev.backgroundUrl,
+          }));
+        }
+      })
+      .catch((err: unknown) => logger.warn('[PlayerMap] Initial fog fetch failed:', err));
+
+    // Realtime subscription
+    const channel = supabase
+      .channel(`vtt-fog-${effectiveCampaignId}-${effectiveSessionId || 'campaign'}`)
+      .on(
+        'postgres_changes' as any,
+        {
+          event: '*',
+          schema: 'public',
+          table: 'vtt_fog_state',
+          filter: effectiveSessionId
+            ? `campaign_id=eq.${effectiveCampaignId},session_id=eq.${effectiveSessionId}`
+            : `campaign_id=eq.${effectiveCampaignId}`,
+        },
+        (payload: any) => {
+          const row = payload.new;
+          if (row) {
+            setMapState((prev) => ({
+              ...prev,
+              fogData: row.fog_data || undefined,
+              tokens: (row.tokens as MapToken[]) || prev.tokens,
+              gridSize: row.grid_size || prev.gridSize,
+              backgroundUrl: row.background_url || prev.backgroundUrl,
+            }));
+          }
+        },
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [effectiveCampaignId, effectiveSessionId]);
+
+>>>>>>> Stashed changes
   // Listen for map update events from DM
   useEffect(() => {
     const handleMapUpdate = (event: CustomEvent) => {

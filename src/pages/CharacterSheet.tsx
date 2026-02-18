@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useParams, useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { 
@@ -371,177 +371,194 @@ const CharacterSheet = () => {
     );
   }
 
-  const baseStats = calculateCharacterStats({
-    level: character.level,
-    abilities: character.abilities,
-    savingThrowProficiencies: character.saving_throw_proficiencies || [],
-    skillProficiencies: character.skill_proficiencies || [],
-    skillExpertise: character.skill_expertise || [],
-    armorClass: character.armor_class,
-    speed: character.speed,
-  });
+  const { calculatedStats, skills, encumbranceBarClass, encumbranceValue, encumbranceMax, finalAbilities, customAbilityBonuses, allSkills, equipmentMods, runeBonuses, finalSpeed, baseStats } = useMemo(() => {
+    const baseStats = calculateCharacterStats({
+      level: character.level,
+      abilities: character.abilities,
+      savingThrowProficiencies: character.saving_throw_proficiencies || [],
+      skillProficiencies: character.skill_proficiencies || [],
+      skillExpertise: character.skill_expertise || [],
+      armorClass: character.armor_class,
+      speed: character.speed,
+    });
 
-  // Apply equipment modifiers
-  const equipmentMods = applyEquipmentModifiers(
-    baseStats.armorClass,
-    character.speed,
-    character.abilities,
-    equipment?.map(item => ({
-      ...item,
-      properties: item.properties || undefined,
-      is_equipped: item.is_equipped || false,
-      is_attuned: item.is_attuned || false,
-      requires_attunement: item.requires_attunement || false,
-    })) || []
-  );
-
-  // Combine ability modifiers from equipment
-  const equipmentModifiedAbilities = { ...character.abilities };
-  Object.entries(equipmentMods.abilityModifiers || {}).forEach(([key, value]) => {
-    if (value !== 0) {
-      const ability = key.toUpperCase() as keyof typeof equipmentModifiedAbilities;
-      if (ability in equipmentModifiedAbilities) {
-        equipmentModifiedAbilities[ability] = (equipmentModifiedAbilities[ability] || 0) + value;
-      }
-    }
-  });
-
-  // Apply rune bonuses from equipped items
-  const equippedActiveRunes = activeRunes.filter(ri => 
-    ri.equipment?.is_equipped && 
-    (!ri.equipment.requires_attunement || ri.equipment.is_attuned) &&
-    ri.is_active
-  );
-  
-  const runeBonuses = applyRuneBonuses(
-    {
-      ac: equipmentMods.armorClass,
-      speed: equipmentMods.speed,
-      abilities: equipmentModifiedAbilities,
-      attackBonus: equipmentMods.attackBonus,
-      damageBonus: typeof equipmentMods.damageBonus === 'number' 
-        ? (equipmentMods.damageBonus > 0 ? `+${equipmentMods.damageBonus}` : '') 
-        : (equipmentMods.damageBonus || ''),
-    },
-    equippedActiveRunes.map(ri => ({ rune: ri.rune, is_active: ri.is_active }))
-  );
-
-  // Final abilities with all modifiers
-  const finalAbilities = { ...equipmentModifiedAbilities };
-  Object.entries(runeBonuses.abilities).forEach(([ability, value]) => {
-    if (ability in finalAbilities && value > (equipmentModifiedAbilities[ability as keyof typeof equipmentModifiedAbilities] || 0)) {
-      finalAbilities[ability as keyof typeof finalAbilities] = value;
-    }
-  });
-  const customAbilityBonuses = ABILITY_KEYS.reduce((acc, ability) => {
-    acc[ability] = sumCustomModifiers(customModifiers, 'ability', ability);
-    return acc;
-  }, {} as Record<AbilityScore, number>);
-  ABILITY_KEYS.forEach((ability) => {
-    const bonus = customAbilityBonuses[ability];
-    if (bonus !== 0) {
-      finalAbilities[ability] = (finalAbilities[ability] || 0) + bonus;
-    }
-  });
-
-  // Recalculate base stats with modified abilities
-  const modifiedBaseStats = calculateCharacterStats({
-    level: character.level,
-    abilities: finalAbilities,
-    savingThrowProficiencies: character.saving_throw_proficiencies || [],
-    skillProficiencies: character.skill_proficiencies || [],
-    skillExpertise: character.skill_expertise || [],
-    armorClass: character.armor_class,
-    speed: character.speed,
-  });
-
-  // Recalculate saving throws with modified abilities
-  const customSaveBonuses = ABILITY_KEYS.reduce((acc, ability) => {
-    acc[ability] = sumCustomModifiers(customModifiers, 'save', ability);
-    return acc;
-  }, {} as Record<AbilityScore, number>);
-  const finalSavingThrows: Record<AbilityScore, number> = {
-    STR: getAbilityModifier(finalAbilities.STR) + (character.saving_throw_proficiencies?.includes('STR') ? modifiedBaseStats.proficiencyBonus : 0) + customSaveBonuses.STR,
-    AGI: getAbilityModifier(finalAbilities.AGI) + (character.saving_throw_proficiencies?.includes('AGI') ? modifiedBaseStats.proficiencyBonus : 0) + customSaveBonuses.AGI,
-    VIT: getAbilityModifier(finalAbilities.VIT) + (character.saving_throw_proficiencies?.includes('VIT') ? modifiedBaseStats.proficiencyBonus : 0) + customSaveBonuses.VIT,
-    INT: getAbilityModifier(finalAbilities.INT) + (character.saving_throw_proficiencies?.includes('INT') ? modifiedBaseStats.proficiencyBonus : 0) + customSaveBonuses.INT,
-    SENSE: getAbilityModifier(finalAbilities.SENSE) + (character.saving_throw_proficiencies?.includes('SENSE') ? modifiedBaseStats.proficiencyBonus : 0) + customSaveBonuses.SENSE,
-    PRE: getAbilityModifier(finalAbilities.PRE) + (character.saving_throw_proficiencies?.includes('PRE') ? modifiedBaseStats.proficiencyBonus : 0) + customSaveBonuses.PRE,
-  };
-
-  // Calculate encumbrance
-  const totalWeight = calculateTotalWeight(equipment);
-  const carryingCapacity = calculateCarryingCapacity(finalAbilities.STR);
-  const encumbrance = calculateEncumbrance(totalWeight, carryingCapacity);
-  
-  // Apply speed penalty from encumbrance
-  let finalSpeed = runeBonuses.speed;
-  if (encumbrance.status === 'heavy') {
-    finalSpeed = Math.max(0, finalSpeed - 10);
-  } else if (encumbrance.status === 'overloaded') {
-    finalSpeed = Math.max(0, finalSpeed - 20);
-  }
-
-  // Apply condition-based speed modifiers (e.g., grappled/restrained → 0)
-  const conditionEffects = getActiveConditionEffects(character.conditions || []);
-  if (conditionEffects.speedModifier === 'zero') {
-    finalSpeed = 0;
-  } else if (typeof conditionEffects.speedModifier === 'number') {
-    finalSpeed = Math.max(0, finalSpeed + conditionEffects.speedModifier);
-  }
-
-  const customAcBonus = sumCustomModifiers(customModifiers, 'ac');
-  const customSpeedBonus = sumCustomModifiers(customModifiers, 'speed');
-  const customInitiativeBonus = sumCustomModifiers(customModifiers, 'initiative');
-
-  const calculatedStats = {
-    ...modifiedBaseStats,
-    initiative: modifiedBaseStats.initiative + customInitiativeBonus,
-    savingThrows: finalSavingThrows,
-    armorClass: runeBonuses.ac + customAcBonus,
-    speed: Math.max(0, finalSpeed + customSpeedBonus),
-    encumbrance,
-  };
-
-  const encumbranceMax = Math.max(calculatedStats.encumbrance.carryingCapacity, 1);
-  const encumbranceValue = Math.min(calculatedStats.encumbrance.totalWeight, encumbranceMax);
-  const encumbranceBarClass = {
-    unencumbered: 'character-sheet-encumbrance--unencumbered',
-    light: 'character-sheet-encumbrance--light',
-    medium: 'character-sheet-encumbrance--medium',
-    heavy: 'character-sheet-encumbrance--heavy',
-    overloaded: 'character-sheet-encumbrance--overloaded',
-  }[calculatedStats.encumbrance.status];
-
-  // Calculate skills with modified abilities
-  const allSkills = getAllSkills();
-  const skills = allSkills.reduce((acc, skill) => {
-    const baseModifier = calculateSkillModifier(
-      skill.name,
-      finalAbilities,
-      character.skill_proficiencies || [],
-      character.skill_expertise || [],
-      calculatedStats.proficiencyBonus
+    // Apply equipment modifiers
+    const equipmentMods = applyEquipmentModifiers(
+      baseStats.armorClass,
+      character.speed,
+      character.abilities,
+      equipment?.map(item => ({
+        ...item,
+        properties: item.properties || undefined,
+        is_equipped: item.is_equipped || false,
+        is_attuned: item.is_attuned || false,
+        requires_attunement: item.requires_attunement || false,
+      })) || []
     );
-    const customSkillBonus = sumCustomModifiers(customModifiers, 'skill', skill.name);
-    const modifier = baseModifier + customSkillBonus;
-    acc[skill.name] = {
-      modifier,
-      passive: 10 + modifier,
-      ability: skill.ability,
-      proficient: (character.skill_proficiencies || []).includes(skill.name),
-      expertise: (character.skill_expertise || []).includes(skill.name),
-    };
-    return acc;
-  }, {} as Record<string, {
-    modifier: number;
-    passive: number;
-    ability: AbilityScore;
-    proficient: boolean;
-    expertise: boolean;
-  }>);
 
-  const applyRestResourceUpdates = async (restType: 'short' | 'long') => {
+    // Combine ability modifiers from equipment
+    const equipmentModifiedAbilities = { ...character.abilities };
+    Object.entries(equipmentMods.abilityModifiers || {}).forEach(([key, value]) => {
+      if (value !== 0) {
+        const ability = key.toUpperCase() as keyof typeof equipmentModifiedAbilities;
+        if (ability in equipmentModifiedAbilities) {
+          equipmentModifiedAbilities[ability] = (equipmentModifiedAbilities[ability] || 0) + value;
+        }
+      }
+    });
+
+    // Apply rune bonuses from equipped items
+    const equippedActiveRunes = activeRunes.filter(ri => 
+      ri.equipment?.is_equipped && 
+      (!ri.equipment.requires_attunement || ri.equipment.is_attuned) &&
+      ri.is_active
+    );
+    
+    const runeBonuses = applyRuneBonuses(
+      {
+        ac: equipmentMods.armorClass,
+        speed: equipmentMods.speed,
+        abilities: equipmentModifiedAbilities,
+        attackBonus: equipmentMods.attackBonus,
+        damageBonus: typeof equipmentMods.damageBonus === 'number' 
+          ? (equipmentMods.damageBonus > 0 ? `+${equipmentMods.damageBonus}` : '') 
+          : (equipmentMods.damageBonus || ''),
+      },
+      equippedActiveRunes.map(ri => ({ rune: ri.rune, is_active: ri.is_active }))
+    );
+
+    // Final abilities with all modifiers
+    const finalAbilities = { ...equipmentModifiedAbilities };
+    Object.entries(runeBonuses.abilities).forEach(([ability, value]) => {
+      if (ability in finalAbilities && value > (equipmentModifiedAbilities[ability as keyof typeof equipmentModifiedAbilities] || 0)) {
+        finalAbilities[ability as keyof typeof finalAbilities] = value;
+      }
+    });
+    const customAbilityBonuses = ABILITY_KEYS.reduce((acc, ability) => {
+      acc[ability] = sumCustomModifiers(customModifiers, 'ability', ability);
+      return acc;
+    }, {} as Record<AbilityScore, number>);
+    ABILITY_KEYS.forEach((ability) => {
+      const bonus = customAbilityBonuses[ability];
+      if (bonus !== 0) {
+        finalAbilities[ability] = (finalAbilities[ability] || 0) + bonus;
+      }
+    });
+
+    // Recalculate base stats with modified abilities
+    const modifiedBaseStats = calculateCharacterStats({
+      level: character.level,
+      abilities: finalAbilities,
+      savingThrowProficiencies: character.saving_throw_proficiencies || [],
+      skillProficiencies: character.skill_proficiencies || [],
+      skillExpertise: character.skill_expertise || [],
+      armorClass: character.armor_class,
+      speed: character.speed,
+    });
+
+    // Recalculate saving throws with modified abilities
+    const customSaveBonuses = ABILITY_KEYS.reduce((acc, ability) => {
+      acc[ability] = sumCustomModifiers(customModifiers, 'save', ability);
+      return acc;
+    }, {} as Record<AbilityScore, number>);
+    const finalSavingThrows: Record<AbilityScore, number> = {
+      STR: getAbilityModifier(finalAbilities.STR) + (character.saving_throw_proficiencies?.includes('STR') ? modifiedBaseStats.proficiencyBonus : 0) + customSaveBonuses.STR,
+      AGI: getAbilityModifier(finalAbilities.AGI) + (character.saving_throw_proficiencies?.includes('AGI') ? modifiedBaseStats.proficiencyBonus : 0) + customSaveBonuses.AGI,
+      VIT: getAbilityModifier(finalAbilities.VIT) + (character.saving_throw_proficiencies?.includes('VIT') ? modifiedBaseStats.proficiencyBonus : 0) + customSaveBonuses.VIT,
+      INT: getAbilityModifier(finalAbilities.INT) + (character.saving_throw_proficiencies?.includes('INT') ? modifiedBaseStats.proficiencyBonus : 0) + customSaveBonuses.INT,
+      SENSE: getAbilityModifier(finalAbilities.SENSE) + (character.saving_throw_proficiencies?.includes('SENSE') ? modifiedBaseStats.proficiencyBonus : 0) + customSaveBonuses.SENSE,
+      PRE: getAbilityModifier(finalAbilities.PRE) + (character.saving_throw_proficiencies?.includes('PRE') ? modifiedBaseStats.proficiencyBonus : 0) + customSaveBonuses.PRE,
+    };
+
+    // Calculate encumbrance
+    const totalWeight = calculateTotalWeight(equipment);
+    const carryingCapacity = calculateCarryingCapacity(finalAbilities.STR);
+    const encumbrance = calculateEncumbrance(totalWeight, carryingCapacity);
+    
+    // Apply speed penalty from encumbrance
+    let finalSpeed = runeBonuses.speed;
+    if (encumbrance.status === 'heavy') {
+      finalSpeed = Math.max(0, finalSpeed - 10);
+    } else if (encumbrance.status === 'overloaded') {
+      finalSpeed = Math.max(0, finalSpeed - 20);
+    }
+
+    // Apply condition-based speed modifiers (e.g., grappled/restrained → 0)
+    const conditionEffects = getActiveConditionEffects(character.conditions || []);
+    if (conditionEffects.speedModifier === 'zero') {
+      finalSpeed = 0;
+    } else if (typeof conditionEffects.speedModifier === 'number') {
+      finalSpeed = Math.max(0, finalSpeed + conditionEffects.speedModifier);
+    }
+
+    const customAcBonus = sumCustomModifiers(customModifiers, 'ac');
+    const customSpeedBonus = sumCustomModifiers(customModifiers, 'speed');
+    const customInitiativeBonus = sumCustomModifiers(customModifiers, 'initiative');
+
+    const calculatedStats = {
+      ...modifiedBaseStats,
+      initiative: modifiedBaseStats.initiative + customInitiativeBonus,
+      savingThrows: finalSavingThrows,
+      armorClass: runeBonuses.ac + customAcBonus,
+      speed: Math.max(0, finalSpeed + customSpeedBonus),
+      encumbrance,
+    };
+
+    const encumbranceMax = Math.max(calculatedStats.encumbrance.carryingCapacity, 1);
+    const encumbranceValue = Math.min(calculatedStats.encumbrance.totalWeight, encumbranceMax);
+    const encumbranceBarClass = {
+      unencumbered: 'character-sheet-encumbrance--unencumbered',
+      light: 'character-sheet-encumbrance--light',
+      medium: 'character-sheet-encumbrance--medium',
+      heavy: 'character-sheet-encumbrance--heavy',
+      overloaded: 'character-sheet-encumbrance--overloaded',
+    }[calculatedStats.encumbrance.status];
+
+    // Calculate skills with modified abilities
+    const allSkills = getAllSkills();
+    const skills = allSkills.reduce((acc, skill) => {
+      const baseModifier = calculateSkillModifier(
+        skill.name,
+        finalAbilities,
+        character.skill_proficiencies || [],
+        character.skill_expertise || [],
+        calculatedStats.proficiencyBonus
+      );
+      const customSkillBonus = sumCustomModifiers(customModifiers, 'skill', skill.name);
+      const modifier = baseModifier + customSkillBonus;
+      acc[skill.name] = {
+        modifier,
+        passive: 10 + modifier,
+        ability: skill.ability,
+        proficient: (character.skill_proficiencies || []).includes(skill.name),
+        expertise: (character.skill_expertise || []).includes(skill.name),
+      };
+      return acc;
+    }, {} as Record<string, {
+      modifier: number;
+      passive: number;
+      ability: AbilityScore;
+      proficient: boolean;
+      expertise: boolean;
+    }>);
+
+    return {
+      calculatedStats,
+      skills,
+      encumbranceBarClass,
+      encumbranceValue,
+      encumbranceMax,
+      finalAbilities,
+      customAbilityBonuses,
+      allSkills,
+      equipmentMods,
+      runeBonuses,
+      finalSpeed,
+      baseStats,
+    };
+  }, [character, equipment, activeRunes, customModifiers]);
+
+  const applyRestResourceUpdates = useCallback(async (restType: 'short' | 'long') => {
     if (isReadOnly) return;
     const nextResources = applyResourceRest(characterResources, restType);
     try {
@@ -549,9 +566,9 @@ const CharacterSheet = () => {
     } catch {
       // Resource rest updates should not block completing rests.
     }
-  };
+  }, [isReadOnly, characterResources, saveSheetState]);
 
-  const handleShortRest = async () => {
+  const handleShortRest = useCallback(async () => {
     try {
       const { executeShortRest } = await import('@/lib/restSystem');
       await executeShortRest(character.id);
@@ -572,7 +589,7 @@ const CharacterSheet = () => {
         variant: 'destructive',
       });
     }
-  };
+  }, [character.id, queryClient, applyRestResourceUpdates, toast]);
 
   const handleLongRest = async () => {
     try {

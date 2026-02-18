@@ -1,25 +1,28 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useCharacters } from '@/hooks/useCharacters';
+import { useUserLocalState } from '@/hooks/useToolState';
 
-const STORAGE_KEY = 'solo-compendium.active-character';
+const STORAGE_KEY = 'active-character';
 
 export function useActiveCharacter() {
   const { data: characters = [], isLoading } = useCharacters();
-  const [activeCharacterId, setActiveCharacterId] = useState<string | null>(null);
+  const { state: activeCharacterId, setState: setActiveCharacterId, isAuthed } = useUserLocalState<string | null>(
+    STORAGE_KEY,
+    { initialState: null }
+  );
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored && characters.some((character) => character.id === stored)) {
-      setActiveCharacterId(stored);
+    if (characters.length === 0) return;
+
+    // If we have a stored active character and it exists in the list, keep it
+    if (activeCharacterId && characters.some((character) => character.id === activeCharacterId)) {
       return;
     }
-    if (characters.length > 0) {
-      const nextId = characters[0].id;
-      setActiveCharacterId(nextId);
-      window.localStorage.setItem(STORAGE_KEY, nextId);
-    }
-  }, [characters]);
+
+    // Otherwise, select the first character
+    const nextId = characters[0].id;
+    setActiveCharacterId(nextId);
+  }, [characters, activeCharacterId, setActiveCharacterId]);
 
   const activeCharacter = useMemo(
     () => characters.find((character) => character.id === activeCharacterId) || null,
@@ -28,9 +31,6 @@ export function useActiveCharacter() {
 
   const setActiveCharacter = (characterId: string) => {
     setActiveCharacterId(characterId);
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem(STORAGE_KEY, characterId);
-    }
   };
 
   return {

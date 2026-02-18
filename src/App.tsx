@@ -25,6 +25,7 @@ import { getRuntimeEnvValue, normalizeBasePath } from "@/lib/runtimeEnv";
 import { isSetupRouteEnabled } from "@/lib/setupAccess";
 import { warn as logWarn } from "@/lib/logger";
 import { isSupabaseConfigured } from "@/integrations/supabase/client";
+import { CosmicBackground } from "@/components/ui/CosmicBackground";
 import GlobalEffects from "@/components/ui/GlobalEffects";
 import PerformancePreload from "@/components/PerformancePreload";
 import { PerformanceProvider } from "@/lib/performanceProfile";
@@ -82,6 +83,7 @@ const Favorites = lazy(() => import("./pages/Favorites"));
 const Campaigns = lazy(() => import("./pages/Campaigns"));
 const CampaignDetail = lazy(() => import("./pages/CampaignDetail"));
 const CampaignJoin = lazy(() => import("./pages/CampaignJoin"));
+const CampaignSessionPlay = lazy(() => import("./pages/CampaignSessionPlay"));
 const CharacterCompare = lazy(() => import("./pages/CharacterCompare"));
 const Homebrew = lazy(() => import("./pages/Homebrew"));
 const MarketplacePage = lazy(() => import("./pages/Marketplace"));
@@ -553,6 +555,14 @@ const AppContent = () => {
         }
       />
       <Route
+        path="/campaigns/:campaignId/play/:sessionId"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <CampaignSessionPlay />
+          </Suspense>
+        }
+      />
+      <Route
         path="/dice"
         element={
           <Suspense fallback={<PageLoader />}>
@@ -653,6 +663,7 @@ const App = () => {
             <TooltipProvider>
               <PerformanceProvider>
                 <AuthProvider>
+                  <CosmicBackground variant="default" intensity="medium" />
                   <GlobalEffects />
                   <PerformancePreload />
                   <Toaster />

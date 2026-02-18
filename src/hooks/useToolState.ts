@@ -240,3 +240,37 @@ export const useCampaignToolState = <T,>(
 
   return { state, setState, isLoading: isEnabled ? isLoading : false, saveNow, isAuthed };
 };
+
+export const useUserLocalState = <T,>(
+  key: string,
+  options: { initialState: T; storageKey?: string }
+): { state: T; setState: React.Dispatch<React.SetStateAction<T>>; isAuthed: boolean } => {
+  const { user } = useAuth();
+  const [state, setState] = useState<T>(options.initialState);
+  const isAuthed = isSupabaseConfigured && !!user?.id;
+  const baseStorageKey = options.storageKey ?? `solo-compendium.${key}`;
+  const storageKey = isAuthed ? `solo-compendium.user.${user.id}.${key}` : baseStorageKey;
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const stored = window.localStorage.getItem(storageKey);
+      if (stored) {
+        setState(JSON.parse(stored) as T);
+      }
+    } catch (error) {
+      logWarn(`Failed to load user local state: ${key}`, error);
+    }
+  }, [storageKey, key]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      window.localStorage.setItem(storageKey, JSON.stringify(state));
+    } catch (error) {
+      logWarn(`Failed to save user local state: ${key}`, error);
+    }
+  }, [state, storageKey, key]);
+
+  return { state, setState, isAuthed };
+};

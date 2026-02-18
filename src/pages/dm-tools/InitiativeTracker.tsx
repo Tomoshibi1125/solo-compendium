@@ -19,7 +19,12 @@ import {
   useUpsertCombatants,
   type Combatant as CampaignCombatantRow,
 } from '@/hooks/useCampaignCombat';
+import { useCampaignCombatRealtime } from '@/hooks/useCampaignCombatRealtime';
 import { supabase } from '@/integrations/supabase/client';
+<<<<<<< Updated upstream
+=======
+import { EncounterRewards } from '@/components/combat/EncounterRewards';
+>>>>>>> Stashed changes
 
 interface Combatant {
   id: string;
@@ -147,6 +152,11 @@ const InitiativeTracker = () => {
     : null;
 
   const { data: combatSessionData } = useCampaignCombatSession(campaignId || '', sessionId);
+<<<<<<< Updated upstream
+=======
+  useCampaignCombatRealtime(campaignId, sessionId);
+  const { data: campaignMembers = [] } = useCampaignMembers(campaignId || '');
+>>>>>>> Stashed changes
   const updateCombatSession = useUpdateCombatSession();
   const upsertCombatants = useUpsertCombatants();
   const activeCombatSession = combatSessionData?.session ?? null;
@@ -742,6 +752,20 @@ const InitiativeTracker = () => {
             </SystemWindow>
           </div>
 
+<<<<<<< Updated upstream
+=======
+          {/* Encounter Rewards (shown after End Combat) */}
+          {showRewards && campaignId && sessionId && (
+            <div className="lg:col-span-2">
+              <EncounterRewards
+                campaignId={campaignId}
+                sessionId={sessionId}
+                onComplete={() => setShowRewards(false)}
+              />
+            </div>
+          )}
+
+>>>>>>> Stashed changes
           {/* Add Combatant */}
           <div className="lg:col-span-1 space-y-4">
             <SystemWindow title="ADD COMBATANT">

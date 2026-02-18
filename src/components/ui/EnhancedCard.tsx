@@ -23,7 +23,7 @@ interface EnhancedCardProps extends React.HTMLAttributes<HTMLDivElement> {
   badge?: string;
   actions?: React.ReactNode;
   footer?: React.ReactNode;
-  variant?: 'default' | 'character' | 'campaign' | 'item' | 'tool';
+  variant?: 'default' | 'character' | 'campaign' | 'item' | 'tool' | 'sovereign' | 'gate' | 'rift' | 'shadow';
   interactive?: boolean;
   loading?: boolean;
   onClick?: () => void;
@@ -40,7 +40,12 @@ const cardVariants = {
   character: "bg-gradient-to-br from-primary/10 to-primary/5 text-primary-foreground border-primary/30 shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300",
   campaign: "bg-gradient-to-br from-purple-10 to-blue-10 text-white border-purple/30 shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300",
   item: "bg-gradient-to-br from-amber-10 to-orange-10 text-white border-amber/30 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300",
-  tool: "bg-gradient-to-br from-green-10 to-emerald-10 text-white border-green/30 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300"
+  tool: "bg-gradient-to-br from-green-10 to-emerald-10 text-white border-green/30 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300",
+  // System Ascendant variants with dimensional effects
+  sovereign: "bg-gradient-to-br from-monarch-gold/20 via-shadow-purple/15 to-void-black/90 text-white border-monarch-gold/40 shadow-[0_0_25px_hsl(var(--monarch-gold)/0.3)] hover:shadow-[0_0_40px_hsl(var(--monarch-gold)/0.5)] hover:scale-[1.03] transition-all duration-500 monarch-seal",
+  gate: "bg-gradient-to-br from-gate-s/20 via-gate-ss/15 to-void-black/90 text-white border-gate-s/40 shadow-[0_0_20px_hsl(var(--gate-s-glow)/0.3)] hover:shadow-[0_0_35px_hsl(var(--gate-s-glow)/0.5)] hover:scale-[1.03] transition-all duration-500 dimensional-pulse",
+  rift: "bg-gradient-to-br from-gate-national/20 via-void-black/80 to-shadow-deep/90 text-white border-gate-national/50 shadow-[0_0_30px_hsl(var(--gate-national-glow)/0.4)] hover:shadow-[0_0_50px_hsl(var(--gate-national-glow)/0.6)] hover:scale-[1.03] transition-all duration-500 rift-portal",
+  shadow: "bg-gradient-to-br from-shadow-deep/30 via-void-black/80 to-shadow-dark/90 text-white border-shadow-deep/40 shadow-[0_0_20px_hsl(var(--shadow-deep)/0.3)] hover:shadow-[0_0_35px_hsl(var(--shadow-deep)/0.5)] hover:scale-[1.02] transition-all duration-500 shadow-pulse"
 };
 
 const EnhancedCard = ({
@@ -162,6 +167,42 @@ const EnhancedCard = ({
       onMouseLeave={() => setIsHovered(false)}
       {...props}
     >
+      {/* Dimensional Rift Edges for System Ascendant variants */}
+      {(variant === 'sovereign' || variant === 'gate' || variant === 'rift' || variant === 'shadow') && (
+        <>
+          {/* Rift Edge Overlay */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute inset-0 rounded-xl border-2 border-transparent bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          </div>
+
+          {/* Energy Glow Layers */}
+          <div className="absolute -inset-1 rounded-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none">
+            {variant === 'sovereign' && (
+              <div className="absolute inset-0 bg-gradient-to-r from-monarch-gold/20 via-shadow-purple/30 to-monarch-gold/20 blur-sm"></div>
+            )}
+            {variant === 'gate' && (
+              <div className="absolute inset-0 bg-gradient-to-r from-gate-s/20 via-gate-ss/30 to-gate-s/20 blur-sm"></div>
+            )}
+            {variant === 'rift' && (
+              <div className="absolute inset-0 bg-gradient-to-r from-gate-national/25 via-void-black/40 to-gate-national/25 blur-sm"></div>
+            )}
+            {variant === 'shadow' && (
+              <div className="absolute inset-0 bg-gradient-to-r from-shadow-deep/20 via-void-black/30 to-shadow-deep/20 blur-sm"></div>
+            )}
+          </div>
+
+          {/* Dimensional Depth Layers */}
+          <div className="absolute inset-0 rounded-xl pointer-events-none overflow-hidden">
+            {/* Primary depth layer */}
+            <div className="absolute inset-1 bg-gradient-to-br from-transparent via-transparent to-black/20 rounded-lg"></div>
+            {/* Secondary depth layer for rift effect */}
+            {(variant === 'rift' || variant === 'gate') && (
+              <div className="absolute inset-2 bg-gradient-to-tl from-transparent via-transparent to-white/5 rounded-md"></div>
+            )}
+          </div>
+        </>
+      )}
+
       {/* Badge */}
       {badge && (
         <div className="absolute top-3 right-3 z-10">

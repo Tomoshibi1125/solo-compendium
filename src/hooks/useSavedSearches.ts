@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useAuth } from '@/lib/auth/authContext';
 import { warn as logWarn } from '@/lib/logger';
+import { useUserLocalState } from '@/hooks/useToolState';
 
 export interface SavedSearch {
   id: string;
@@ -17,7 +18,7 @@ export interface SavedSearch {
   createdAt: Date;
 }
 
-const STORAGE_KEY = 'solo-compendium-saved-searches';
+const STORAGE_KEY = 'saved-searches';
 
 const parseSearchParams = (raw: unknown): { query: string; filters: SavedSearch['filters'] } => {
   const params = raw && typeof raw === 'object' ? (raw as Record<string, unknown>) : {};
@@ -30,6 +31,10 @@ const parseSearchParams = (raw: unknown): { query: string; filters: SavedSearch[
 };
 
 export function useSavedSearches() {
+  const { state: localSavedSearches, setState: setLocalSavedSearches } = useUserLocalState<SavedSearch[]>(
+    STORAGE_KEY,
+    { initialState: [] }
+  );
   const [savedSearches, setSavedSearches] = useState<SavedSearch[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user, loading } = useAuth();
@@ -40,18 +45,7 @@ export function useSavedSearches() {
     let active = true;
 
     const loadLocal = () => {
-      try {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (!stored) return [];
-        const parsed = JSON.parse(stored) as Array<Omit<SavedSearch, 'id' | 'createdAt'> & { id: string; createdAt: string }>;
-        return parsed.map((s) => ({
-          ...s,
-          createdAt: new Date(s.createdAt),
-        }));
-      } catch {
-        logWarn('Failed to load saved searches from localStorage');
-        return [];
-      }
+      return localSavedSearches;
     };
 
     const loadRemote = async () => {
@@ -79,16 +73,15 @@ export function useSavedSearches() {
 
     const hydrate = async () => {
       setIsLoading(true);
-      const local = loadLocal();
       if (!isAuthed) {
-        if (active) setSavedSearches(local);
+        if (active) setSavedSearches(localSavedSearches);
         setIsLoading(false);
         return;
       }
 
       const remote = await loadRemote();
       if (!active) return;
-      setSavedSearches(remote.length > 0 ? remote : local);
+      setSavedSearches(remote.length > 0 ? remote : localSavedSearches);
       setIsLoading(false);
     };
 
@@ -96,7 +89,7 @@ export function useSavedSearches() {
     return () => {
       active = false;
     };
-  }, [isAuthed, loading, user?.id]);
+  }, [isAuthed, loading, user?.id, localSavedSearches]);
 
   const saveSearch = async (search: Omit<SavedSearch, 'id' | 'createdAt'>) => {
     const newSearch: SavedSearch = {
@@ -108,7 +101,7 @@ export function useSavedSearches() {
     if (!isAuthed || !user?.id) {
       const updated = [...savedSearches, newSearch];
       setSavedSearches(updated);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      setLocalSavedSearches(updated);
       return newSearch;
     }
 
@@ -146,7 +139,7 @@ export function useSavedSearches() {
     if (!isAuthed || !user?.id) {
       const updated = savedSearches.filter(s => s.id !== id);
       setSavedSearches(updated);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      setLocalSavedSearches(updated);
       return;
     }
 
