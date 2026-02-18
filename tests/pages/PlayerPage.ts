@@ -88,7 +88,11 @@ export class PlayerPage {
       await expect(btn).toBeEnabled({ timeout: 10_000 });
       await btn.click();
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       await this.page.waitForTimeout(600);
+=======
+      await this.page.waitForTimeout(500);
+>>>>>>> Stashed changes
 =======
       await this.page.waitForTimeout(500);
 >>>>>>> Stashed changes
@@ -170,12 +174,16 @@ export class PlayerPage {
     // Step 3: JOB — select first available, exercise skill checkboxes
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     const jobSelected = await this.selectFirstOption(3); // Reduce retries
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     if (!jobSelected) {
       // No compendium jobs available — cannot complete character creation
       return null;
     }
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     // Some jobs require skill selection — check if skill checkboxes appeared
     const skillCheckboxes = this.page.locator('button[role="checkbox"]');
@@ -193,12 +201,18 @@ export class PlayerPage {
     }
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
     await clickNext();
 
     // ── Step 4: Path — optional, select first if available, or just proceed
     const pathTrigger = this.page.locator('button[role="combobox"]').first();
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     if (await pathTrigger.isVisible().catch(() => false)) {
+=======
+    if (await pathTrigger.isVisible({ timeout: 3_000 }).catch(() => false)) {
+>>>>>>> Stashed changes
 =======
     if (await pathTrigger.isVisible({ timeout: 3_000 }).catch(() => false)) {
 >>>>>>> Stashed changes
@@ -792,5 +806,8 @@ export class PlayerPage {
     // Wait for level up completion and navigation back to character sheet
     await this.page.waitForURL(/\/characters\/[a-z0-9-]+$/i, { timeout: 15_000 });
   }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 }

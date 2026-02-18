@@ -225,6 +225,7 @@ export function MarketplaceWorkbench() {
     }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     await recordDownload.mutateAsync({ itemId: item.id });
     if (item.file_url) {
       window.open(item.file_url, '_blank', 'noopener,noreferrer');
@@ -235,6 +236,8 @@ export function MarketplaceWorkbench() {
       });
     }
 =======
+=======
+>>>>>>> Stashed changes
     const accepted = !!licenseAcceptedByItemId[item.id];
     if (!accepted) {
       setLicenseDialogItem(item);
@@ -243,6 +246,9 @@ export function MarketplaceWorkbench() {
     }
 
     await proceedDownload(item);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   };
 
@@ -576,10 +582,13 @@ export function MarketplaceWorkbench() {
             </Button>
           </div>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         </SystemWindow>
       </TabsContent>
     </Tabs>
 =======
+=======
+>>>>>>> Stashed changes
           </SystemWindow>
         </TabsContent>
       </Tabs>
@@ -598,6 +607,9 @@ export function MarketplaceWorkbench() {
         }}
       />
     </>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   );
 }

@@ -22,6 +22,10 @@ import {
 import { useCampaignCombatRealtime } from '@/hooks/useCampaignCombatRealtime';
 import { supabase } from '@/integrations/supabase/client';
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+import { EncounterRewards } from '@/components/combat/EncounterRewards';
+>>>>>>> Stashed changes
 =======
 import { EncounterRewards } from '@/components/combat/EncounterRewards';
 >>>>>>> Stashed changes
@@ -153,7 +157,10 @@ const InitiativeTracker = () => {
 
   const { data: combatSessionData } = useCampaignCombatSession(campaignId || '', sessionId);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
   useCampaignCombatRealtime(campaignId, sessionId);
   const { data: campaignMembers = [] } = useCampaignMembers(campaignId || '');
 >>>>>>> Stashed changes
