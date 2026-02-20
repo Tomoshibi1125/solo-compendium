@@ -7,7 +7,9 @@ import { getRuntimeEnvValue } from '@/lib/runtimeEnv';
 
 const SUPABASE_URL = getRuntimeEnvValue('VITE_SUPABASE_URL');
 const SUPABASE_PUBLISHABLE_KEY =
-  getRuntimeEnvValue('VITE_SUPABASE_PUBLISHABLE_KEY') || getRuntimeEnvValue('VITE_SUPABASE_ANON_KEY');
+  getRuntimeEnvValue('VITE_SUPABASE_PUBLISHABLE_KEY') || 
+  getRuntimeEnvValue('VITE_SUPABASE_ANON_KEY') ||
+  getRuntimeEnvValue('VITE_SUPABASE_PUBLISHABLE');
 
 export const isSupabaseConfigured = Boolean(SUPABASE_URL) && Boolean(SUPABASE_PUBLISHABLE_KEY);
 
