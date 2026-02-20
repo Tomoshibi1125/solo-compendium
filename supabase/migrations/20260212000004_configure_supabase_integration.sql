@@ -24,7 +24,7 @@ SELECT
   up.display_name as user_name,
   up.role as user_role
 FROM public.characters c
-JOIN public.user_profiles up ON c.user_id = up.id;
+JOIN public.profiles up ON c.user_id = up.id;
 
 CREATE OR REPLACE VIEW public.campaign_details AS
 SELECT 
@@ -32,7 +32,7 @@ SELECT
   up.email as dm_email,
   up.display_name as dm_name
 FROM public.campaigns cam
-JOIN public.user_profiles up ON cam.dm_id = up.id;
+JOIN public.profiles up ON cam.dm_id = up.id;
 
 -- Create helper functions for character calculations
 CREATE OR REPLACE FUNCTION public.calculate_character_hp(
@@ -69,8 +69,8 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 CREATE INDEX IF NOT EXISTS idx_characters_user_id ON public.characters(user_id);
 CREATE INDEX IF NOT EXISTS idx_characters_name ON public.characters(name);
 CREATE INDEX IF NOT EXISTS idx_campaigns_dm_id ON public.campaigns(dm_id);
-CREATE INDEX IF NOT EXISTS idx_user_profiles_role ON public.user_profiles(role);
-CREATE INDEX IF NOT EXISTS idx_user_profiles_email ON public.user_profiles(email);
+CREATE INDEX IF NOT EXISTS idx_profiles_role ON public.profiles(role);
+CREATE INDEX IF NOT EXISTS idx_profiles_email ON public.profiles(email);
 
 -- Create storage buckets for user-generated content
 INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
@@ -93,7 +93,7 @@ CREATE POLICY "DMs can upload homebrew content" ON storage.objects
   FOR ALL WITH CHECK (
     bucket_id = 'homebrew-content' AND
     EXISTS (
-      SELECT 1 FROM public.user_profiles 
+      SELECT 1 FROM public.profiles 
       WHERE id = auth.uid() AND role IN ('dm', 'admin')
     )
   );
@@ -101,7 +101,7 @@ CREATE POLICY "DMs can upload homebrew content" ON storage.objects
 -- Create a table for user-generated homebrew content that references static data
 CREATE TABLE IF NOT EXISTS public.homebrew_content (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  user_id UUID REFERENCES public.user_profiles(id) ON DELETE CASCADE,
+  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
   content_type TEXT NOT NULL CHECK (content_type IN ('job', 'path', 'relic', 'spell', 'item')),
   name TEXT NOT NULL,
   description TEXT NOT NULL,
@@ -127,7 +127,7 @@ CREATE POLICY "Users can manage their own homebrew" ON public.homebrew_content
 CREATE POLICY "DMs can manage any homebrew" ON public.homebrew_content
   FOR ALL USING (
     EXISTS (
-      SELECT 1 FROM public.user_profiles 
+      SELECT 1 FROM public.profiles 
       WHERE id = auth.uid() AND role IN ('dm', 'admin')
     )
   );
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS public.campaign_content (
   name TEXT NOT NULL,
   description TEXT,
   data JSONB NOT NULL,
-  created_by UUID REFERENCES public.user_profiles(id),
+  created_by UUID REFERENCES public.profiles(id),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
