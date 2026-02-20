@@ -73,56 +73,24 @@ export function maintainConcentration(state: ConcentrationState): ConcentrationS
   };
 }
 
-// Take damage while concentrating
+// Take damage while concentrating (SRD 5e: sets the DC for a required Constitution save)
 export function takeConcentrationDamage(
   state: ConcentrationState,
   damage: number
 ): ConcentrationState {
-  if (!state.isConcentrating) {
+  if (!state.isConcentrating || damage <= 0) {
     return state;
   }
 
   const totalDamage = state.damageTakenThisRound + damage;
-  
-  // Check if concentration breaks
-  const breaksConcentration = checkConcentrationBreak(state, totalDamage);
-  
-  if (breaksConcentration) {
-    return {
-      ...state,
-      isConcentrating: false,
-      currentEffect: null,
-      damageTakenThisRound: 0
-    };
-  }
+  // SRD 5e: DC = max(10, floor(damage / 2)) — per-hit, not cumulative
+  const dc = Math.max(10, Math.floor(damage / 2));
 
   return {
     ...state,
-    damageTakenThisRound: totalDamage
+    damageTakenThisRound: totalDamage,
+    concentrationCheckDC: dc,
   };
-}
-
-// Check if concentration breaks from damage
-function checkConcentrationBreak(state: ConcentrationState, damage: number): boolean {
-  // If damage is 0 or less, concentration doesn't break
-  if (damage <= 0) {
-    return false;
-  }
-
-  // If damage is 10 or half of max HP (rounded down), concentration breaks
-  // For simplicity, we'll use a fixed threshold of 10 damage
-  if (damage >= 10) {
-    return true;
-  }
-
-  // If there's a concentration DC, make a Constitution saving throw
-  if (state.concentrationCheckDC) {
-    // This would need to be resolved by the character's Constitution save
-    // For now, we'll return false and let the calling code handle the save
-    return false;
-  }
-
-  return false;
 }
 
 // End concentration voluntarily

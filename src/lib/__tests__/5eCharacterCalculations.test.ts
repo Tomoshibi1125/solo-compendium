@@ -26,7 +26,7 @@ describe('5e Character Calculations', () => {
     const stats = calculateCharacterStats(mockCharacterStats);
     
     expect(stats.proficiencyBonus).toBe(3);
-    expect(stats.systemFavorDie).toBe(8);
+    expect(stats.systemFavorDie).toBe(6);
     expect(stats.systemFavorMax).toBe(4);
     expect(stats.abilityModifiers.STR).toBe(2);
     expect(stats.abilityModifiers.AGI).toBe(3);

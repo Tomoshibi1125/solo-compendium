@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, RefreshCw, Copy, User } from 'lucide-react';
+import { ArrowLeft, RefreshCw, Copy, User, Sparkles, Loader2 } from 'lucide-react';
+import { useAIEnhance } from '@/hooks/useAIEnhance';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
@@ -109,13 +110,42 @@ const NPCGenerator = () => {
     void saveNow(debouncedPayload);
   }, [debouncedPayload, isLoading, saveNow]);
 
+  const { isEnhancing, enhancedText, enhance, clearEnhanced } = useAIEnhance();
+
   const handleGenerate = () => {
+    clearEnhanced();
     const newNPC = generateNPC();
     setNpc(newNPC);
     toast({
       title: 'NPC Generated',
       description: `Generated ${newNPC.name}.`,
     });
+  };
+
+  const handleAIEnhance = async () => {
+    if (!npc) return;
+    const seed = `Generate a complete, detailed NPC dossier for a System Ascendant TTRPG campaign.
+
+SEED DATA:
+- Name: ${npc.name}
+- Rank: ${npc.rank}
+- Role: ${npc.role}
+- Personality: ${npc.personality}
+- Motivation: ${npc.motivation}
+- Secret: ${npc.secret}
+- Quirk: ${npc.quirk}
+
+Provide ALL of the following sections with full detail:
+
+1. STAT BLOCK: Ability scores (STR/AGI/VIT/INT/SENSE/PRE), AC, HP, CR, saves, skills, proficiency bonus
+2. COMBAT: Attack actions (to-hit, damage, range), spells/powers known, tactical behavior
+3. LORE: Full backstory (2-3 paragraphs) set in the System Ascendant world (Rifts, Regents, Ascendants, the System)
+4. PERSONALITY: 3 personality traits, 1 ideal, 1 bond, 1 flaw
+5. DIALOGUE: 3-5 sample dialogue lines in-character
+6. PLOT HOOKS: 2-3 quest/story hooks involving this NPC
+7. EQUIPMENT: Notable gear, relics, consumables they carry with stats
+8. DESCRIPTION: Read-aloud boxed text for when players first encounter this NPC`;
+    await enhance('npc', seed);
   };
 
   const handleCopy = () => {
@@ -159,6 +189,17 @@ const NPCGenerator = () => {
                 <RefreshCw className="w-4 h-4" />
                 Generate NPC
               </Button>
+              {npc && (
+                <Button
+                  onClick={handleAIEnhance}
+                  className="w-full gap-2 mt-2 btn-umbral"
+                  size="lg"
+                  disabled={isEnhancing}
+                >
+                  {isEnhancing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
+                  {isEnhancing ? 'Enhancing...' : 'Enhance with AI'}
+                </Button>
+              )}
             </SystemWindow>
           </div>
 
@@ -195,6 +236,18 @@ const NPCGenerator = () => {
                     <span className="text-xs font-display text-muted-foreground">DESCRIPTION</span>
                     <p className="text-sm text-muted-foreground mt-2">{npc.description}</p>
                   </div>
+
+                  {enhancedText && (
+                    <div className="pt-4 border-t border-primary/30">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Sparkles className="w-4 h-4 text-primary" />
+                        <span className="text-xs font-display text-primary">AI-ENHANCED DETAILS</span>
+                      </div>
+                      <div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
+                        {enhancedText}
+                      </div>
+                    </div>
+                  )}
 
                   <div className="flex gap-2 pt-4 border-t border-border">
                     <Button

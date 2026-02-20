@@ -369,11 +369,7 @@ const VisualPolish: React.FC<VisualPolishProps> = ({
               }}
             >
               <span 
-                className="absolute inline-block h-full w-full rounded-full bg-white/30 animate-ping"
-                style={{
-                  transform: 'scale(0)',
-                  opacity: 0
-                }}
+                className="absolute inline-block h-full w-full rounded-full bg-white/30 animate-ping scale-0 opacity-0"
               />
             </span>
           ))}
@@ -569,6 +565,7 @@ const VisualPolish: React.FC<VisualPolishProps> = ({
               </div>
               <button
                 onClick={handleClose}
+                aria-label="Dismiss notification"
                 className="ml-auto p-1 text-muted-foreground hover:bg-muted hover:text-muted-foreground"
               >
                 <X className="h-4 w-4" />
@@ -611,7 +608,7 @@ const VisualPolish: React.FC<VisualPolishProps> = ({
       const rect = e.currentTarget.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      console.log('Ripple at:', x, y);
+      // ripple effect applied at (x, y)
     },
     magnetic: (e: React.MouseEvent<HTMLDivElement>) => {
       // Magnetic effect implementation
@@ -620,7 +617,7 @@ const VisualPolish: React.FC<VisualPolishProps> = ({
       const centerY = rect.top + rect.height / 2;
       const deltaX = (e.clientX - centerX) / 8;
       const deltaY = (e.clientY - centerY) / 8;
-      console.log('Magnetic position:', deltaX, deltaY);
+      // magnetic effect applied at (deltaX, deltaY)
     },
     shimmer: () => null,
     glow: () => null

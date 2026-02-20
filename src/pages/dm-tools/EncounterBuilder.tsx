@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, ExternalLink, Plus, Trash2, Search, Sword } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Plus, Trash2, Search, Sword, Sparkles, Loader2 } from 'lucide-react';
+import { useAIEnhance } from '@/hooks/useAIEnhance';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
@@ -870,6 +871,14 @@ const EncounterBuilder = () => {
                 )}
 
                 <div className="pt-4 border-t border-border space-y-2">
+                  <EncounterAIEnhanceButton
+                    encounterMonsters={encounterMonsters}
+                    hunterLevel={hunterLevel}
+                    hunterCount={hunterCount}
+                    difficulty={difficulty}
+                    totalXP={totalXP}
+                    encounterName={encounterName}
+                  />
                   <Button
                     variant="outline"
                     className="w-full"
@@ -965,6 +974,66 @@ const EncounterBuilder = () => {
     </Layout>
   );
 };
+
+function EncounterAIEnhanceButton({ encounterMonsters, hunterLevel, hunterCount, difficulty, totalXP, encounterName }: {
+  encounterMonsters: Array<{ monster: { name: string; cr?: string | number | null; creature_type?: string | null }; quantity: number }>;
+  hunterLevel: number;
+  hunterCount: number;
+  difficulty: string;
+  totalXP: number;
+  encounterName: string;
+}) {
+  const { isEnhancing, enhancedText, enhance } = useAIEnhance();
+
+  if (encounterMonsters.length === 0) return null;
+
+  const handleAIEnhance = async () => {
+    const monsterList = encounterMonsters.map(em => `${em.quantity}x ${em.monster.name} (CR ${em.monster.cr || '?'})`).join(', ');
+    const seed = `Generate a complete, detailed encounter for a System Ascendant TTRPG campaign.
+
+SEED DATA:
+- Encounter Name: ${encounterName || 'Unnamed Encounter'}
+- Party: ${hunterCount} Ascendants at Level ${hunterLevel}
+- Difficulty: ${difficulty} (${totalXP} XP)
+- Monsters: ${monsterList}
+
+Provide ALL of the following sections with full detail:
+
+1. MONSTERS: Full stat references for each monster (AC, HP, key abilities, attacks with to-hit and damage)
+2. DIFFICULTY ANALYSIS: XP budget breakdown, adjusted difficulty, deadly threshold analysis
+3. TERRAIN: Map layout description with cover positions, hazard zones, elevation, choke points
+4. TACTICS: Round-by-round monster strategy, retreat conditions, reinforcement triggers
+5. NARRATIVE: Read-aloud intro text, mid-combat events, victory/defeat narration
+6. REWARDS: XP per player, loot table with full item stats, story consequences
+7. LORE: Why these monsters are here, connection to Rift/Regent activity
+8. VARIATIONS: Easy/hard variants with monster swaps`;
+    await enhance('encounter', seed);
+  };
+
+  return (
+    <>
+      <Button
+        onClick={handleAIEnhance}
+        className="w-full gap-2 btn-umbral"
+        disabled={isEnhancing}
+      >
+        {isEnhancing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
+        {isEnhancing ? 'Generating...' : 'AI Encounter Details'}
+      </Button>
+      {enhancedText && (
+        <div className="pt-3 border-t border-primary/30">
+          <div className="flex items-center gap-2 mb-2">
+            <Sparkles className="w-4 h-4 text-primary" />
+            <span className="text-xs font-display text-primary">AI-ENHANCED ENCOUNTER</span>
+          </div>
+          <div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-3 max-h-[400px] overflow-y-auto">
+            {enhancedText}
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
 
 export default EncounterBuilder;
 

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, RefreshCw, Copy, Target, Clock, Users, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, RefreshCw, Copy, Target, Clock, Users, AlertTriangle, Sparkles, Loader2 } from 'lucide-react';
+import { useAIEnhance } from '@/hooks/useAIEnhance';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
@@ -217,10 +218,42 @@ const QuestGenerator = () => {
     void saveNow(debouncedPayload);
   }, [debouncedPayload, isLoading, saveNow]);
 
+  const { isEnhancing, enhancedText, enhance, clearEnhanced } = useAIEnhance();
+
   const handleGenerate = () => {
+    clearEnhanced();
     const rank = selectedRank === 'random' ? undefined : selectedRank;
     const result = generateQuest(rank);
     setQuest(result);
+  };
+
+  const handleAIEnhance = async () => {
+    if (!quest) return;
+    const seed = `Generate a complete, detailed quest briefing for a System Ascendant TTRPG campaign.
+
+SEED DATA:
+- Title: ${quest.title}
+- Type: ${quest.type}
+- Rank: ${quest.rank}
+- Location: ${quest.location}
+- Description: ${quest.description}
+- Objectives: ${quest.objectives.join('; ')}
+- Complications: ${quest.complications.join('; ') || 'None'}
+- Rewards: ${quest.rewards.join('; ')}
+- Time Limit: ${quest.timeLimit || 'None'}
+
+Provide ALL of the following sections with full detail:
+
+1. OVERVIEW: Quest giver NPC (name, rank, motivation), premise, stakes, urgency
+2. OBJECTIVES: Primary + secondary + hidden objectives with success/fail conditions and DCs
+3. ENCOUNTERS: 2-3 encounter sketches with monster types, CR, terrain, tactics
+4. COMPLICATIONS: Twists, betrayals, moral dilemmas with mechanical consequences
+5. REWARDS: XP amount, gold (specific GP by rank), items with full stats, faction reputation
+6. LORE: How the quest connects to Rifts, Regents, the Awakened Council, or the System
+7. TIMELINE: Session count estimate, time pressure mechanics, milestone triggers
+8. KEY NPCs: 2-3 NPCs with brief stat blocks (AC/HP/CR) and motivations
+9. READ-ALOUD: Boxed text for quest briefing scene`;
+    await enhance('quest', seed);
   };
 
   const handleCopy = () => {
@@ -305,6 +338,18 @@ ${quest.rewards.map((r) => `- ${r}`).join('\n')}`;
               <Target className="w-4 h-4 mr-2" />
               Generate Quest
             </Button>
+            {quest && (
+              <Button
+                onClick={handleAIEnhance}
+                className="w-full gap-2 mt-2"
+                variant="outline"
+                size="lg"
+                disabled={isEnhancing}
+              >
+                {isEnhancing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
+                {isEnhancing ? 'Enhancing...' : 'Enhance with AI'}
+              </Button>
+            )}
           </div>
         </SystemWindow>
 
@@ -373,6 +418,18 @@ ${quest.rewards.map((r) => `- ${r}`).join('\n')}`;
                   </div>
                 </div>
               </div>
+
+              {enhancedText && (
+                <div className="pt-4 border-t border-primary/30">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Sparkles className="w-4 h-4 text-primary" />
+                    <span className="text-xs font-display text-primary">AI-ENHANCED BRIEFING</span>
+                  </div>
+                  <div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
+                    {enhancedText}
+                  </div>
+                </div>
+              )}
 
               <div className="flex gap-2 pt-4 border-t border-border">
                 <Button

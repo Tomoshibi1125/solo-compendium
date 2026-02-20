@@ -9,7 +9,7 @@ import { z } from 'zod';
 export const AIServiceSchema = z.object({
   id: z.string(),
   name: z.string(),
-  type: z.enum(['pollinations', 'ollama', 'custom']),
+  type: z.enum(['gemini-proxy', 'pollinations', 'ollama', 'custom']),
   capabilities: z.array(z.enum([
     'enhance-prompt',
     'analyze-image',
@@ -155,9 +155,9 @@ export interface AIConfiguration {
 // Default AI services configuration
 export const DEFAULT_AI_SERVICES: AIService[] = [
   {
-    id: 'pollinations',
-    name: 'Pollinations (Free, No Key)',
-    type: 'pollinations',
+    id: 'gemini-proxy',
+    name: 'Google Gemini 2.0 Flash (Server)',
+    type: 'gemini-proxy',
     capabilities: [
       'enhance-prompt',
       'analyze-image',
@@ -169,11 +169,10 @@ export const DEFAULT_AI_SERVICES: AIService[] = [
       'create-variation',
       'generate-content',
     ],
-    endpoint: 'https://text.pollinations.ai',
-    model: 'openai-large',
-    fallbackModels: ['openai', 'mistral', 'llama'],
-    maxTokens: 1024,
-    temperature: 0.7,
+    endpoint: '/api/ai',
+    model: 'gemini-2.0-flash',
+    maxTokens: 4096,
+    temperature: 0.8,
     enabled: true,
   },
   {
@@ -221,7 +220,7 @@ const parseNumberEnv = (value: unknown, fallback: number) => {
 
 export const DEFAULT_AI_CONFIG: AIConfiguration = {
   services: DEFAULT_AI_SERVICES,
-  defaultService: 'pollinations',
+  defaultService: 'gemini-proxy',
   autoEnhancePrompts: true,
   autoAnalyzeAudio: true,
   autoAnalyzeImages: true,

@@ -16,6 +16,7 @@ import {
   getCharacterCampaignId,
   isSourcebookAccessible,
 } from '@/lib/sourcebookAccess';
+import { calculateFeatureUses } from '@/lib/automation';
 import { jobs as staticJobs } from '@/data/compendium/jobs';
 
 type Job = Database['public']['Tables']['compendium_jobs']['Row'];
@@ -56,29 +57,15 @@ function getSpellProgressionForJob(jobName: string | null | undefined): SpellPro
   const normalized = normalizeJobName(jobName);
 
   // Full casters
-  if (
-    normalized === 'mage' ||
-    normalized === 'necromancer' ||
-    normalized === 'technomancer' ||
-    normalized === 'oracle' || // rethemed healer
-    normalized === 'resonant' || // rethemed bard
-    normalized === 'invoker' // rethemed summoner
-  ) {
-    return 'full';
-  }
+  const fullCasters = ['mage', 'necromancer', 'technomancer', 'oracle', 'resonant', 'invoker', 'healer', 'warden', 'esper', 'revenant'];
+  if (fullCasters.includes(normalized)) return 'full';
 
   // Half casters
-  if (
-    normalized === 'crusader' || // rethemed paladin
-    normalized === 'stalker' // rethemed ranger
-  ) {
-    return 'half';
-  }
+  const halfCasters = ['crusader', 'stalker', 'herald', 'ranger', 'techsmith', 'holy knight'];
+  if (halfCasters.includes(normalized)) return 'half';
 
   // Pact caster
-  if (normalized === 'contractor') {
-    return 'pact';
-  }
+  if (normalized === 'contractor') return 'pact';
 
   return 'none';
 }
@@ -127,7 +114,8 @@ export function getMaxPowerLevelForJobAtLevel(
 
 async function getExistingFeatureNames(characterId: string): Promise<Set<string>> {
   if (isLocalCharacterId(characterId)) {
-    return new Set();
+    const { listLocalFeatures } = await import('@/lib/guestStore');
+    return new Set(listLocalFeatures(characterId).map((f) => f.name));
   }
 
   const { data } = await supabase
@@ -228,15 +216,7 @@ export async function addLevel1Features(
 
   if (accessibleJobFeatures.length > 0) {
     for (const feature of accessibleJobFeatures) {
-      let usesMax: number | null = null;
-      if (feature.uses_formula) {
-        // Parse formula (e.g., "proficiency bonus", "level")
-        if (feature.uses_formula.includes('proficiency')) {
-          usesMax = 2; // Level 1 proficiency bonus
-        } else if (feature.uses_formula.includes('level')) {
-          usesMax = 1;
-        }
-      }
+      const usesMax = calculateFeatureUses(feature.uses_formula, 1, 2);
 
       if (isLocalCharacterId(characterId)) {
         addLocalFeature(characterId, {
@@ -294,14 +274,7 @@ export async function addLevel1Features(
 
     if (accessiblePathFeatures.length > 0) {
       for (const feature of accessiblePathFeatures) {
-        let usesMax: number | null = null;
-        if (feature.uses_formula) {
-          if (feature.uses_formula.includes('proficiency')) {
-            usesMax = 2;
-          } else if (feature.uses_formula.includes('level')) {
-            usesMax = 1;
-          }
-        }
+        const usesMax = calculateFeatureUses(feature.uses_formula, 1, 2);
 
         if (isLocalCharacterId(characterId)) {
           addLocalFeature(characterId, {
@@ -374,8 +347,32 @@ export async function addStartingEquipment(
 ): Promise<void> {
   const campaignId = await getCharacterCampaignId(characterId);
 
-  // Jobs don't have starting_equipment column - skip job equipment for now
-  // In a full implementation, job starting equipment would be defined elsewhere
+  // Add job starting equipment from static data
+  const staticJob = findStaticJobByName(job.name);
+  if (staticJob?.startingEquipment) {
+    for (const equipmentGroup of staticJob.startingEquipment) {
+      // Each group is a choice array; grant the first option by default
+      const itemName = equipmentGroup[0];
+      if (!itemName) continue;
+
+      if (isLocalCharacterId(characterId)) {
+        addLocalEquipment(characterId, {
+          name: itemName,
+          item_type: 'gear',
+          quantity: 1,
+          is_equipped: false,
+        });
+      } else {
+        await supabase.from('character_equipment').insert({
+          character_id: characterId,
+          name: itemName,
+          item_type: 'gear',
+          quantity: 1,
+          is_equipped: false,
+        });
+      }
+    }
+  }
 
   // Add background starting equipment
   if (background?.starting_equipment) {

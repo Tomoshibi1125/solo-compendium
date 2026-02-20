@@ -3,6 +3,7 @@ import {
   type SyncQueueItem,
   type SyncQueueProcessor,
 } from '@/lib/offlineStorage';
+import { warn } from '@/lib/logger';
 
 const syncManager = BackgroundSyncManager.getInstance();
 
@@ -22,7 +23,7 @@ export const enqueueOfflineSync = (
       const sync = (reg as any)?.sync;
       if (sync?.register) {
         sync.register('offline-queue').catch((err: unknown) => {
-          console.warn('[Background Sync] Registration failed:', err);
+          warn('[Background Sync] Registration failed:', err);
         });
       }
     });

@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, RefreshCw, Copy, Sparkles, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, RefreshCw, Copy, Sparkles, AlertTriangle, Loader2 } from 'lucide-react';
+import { useAIEnhance } from '@/hooks/useAIEnhance';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
@@ -153,6 +154,8 @@ const RandomEventGenerator = () => {
     });
   };
 
+  const { isEnhancing, enhancedText, enhance, clearEnhanced } = useAIEnhance();
+
   const getEventColor = (type: string) => {
     switch (type) {
       case 'world':
@@ -213,13 +216,45 @@ const RandomEventGenerator = () => {
             </div>
 
             <Button
-              onClick={handleGenerate}
+              onClick={() => { clearEnhanced(); handleGenerate(); }}
               className="w-full btn-umbral"
               size="lg"
             >
               <Sparkles className="w-4 h-4 mr-2" />
               Generate {eventType === 'world' ? 'World Event' : eventType === 'encounter' ? 'NPC Encounter' : 'Complication'}
             </Button>
+            {event && (
+              <Button
+                onClick={async () => {
+                  if (!event) return;
+                  const seed = `Generate a complete, detailed random event for a System Ascendant TTRPG campaign.
+
+SEED DATA:
+- Type: ${event.type}
+- Title: ${event.title}
+- Description: ${event.description}
+- Impact: ${event.impact}
+
+Provide ALL of the following sections with full detail:
+
+1. DESCRIPTION: Read-aloud boxed text (2-3 paragraphs) with sensory details
+2. MECHANICS: Skill checks required (DCs), combat triggers, environmental effects
+3. CONSEQUENCES: Success/failure/partial outcomes with mechanical effects (HP, conditions, items)
+4. NPCs INVOLVED: Brief stat blocks (AC/HP/CR) or compendium references
+5. LORE: How the event ties to Rift activity, Regent domains, System anomalies
+6. FOLLOW-UP: 2-3 sequel hooks this event creates for future sessions
+7. TACTICAL OPTIONS: What clever players might do, alternative approaches`;
+                  await enhance('event', seed);
+                }}
+                className="w-full gap-2 mt-2"
+                variant="outline"
+                size="lg"
+                disabled={isEnhancing}
+              >
+                {isEnhancing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
+                {isEnhancing ? 'Enhancing...' : 'Enhance with AI'}
+              </Button>
+            )}
           </div>
         </SystemWindow>
 
@@ -243,6 +278,18 @@ const RandomEventGenerator = () => {
                 </div>
               </div>
 
+              {enhancedText && (
+                <div className="pt-4 border-t border-primary/30">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Sparkles className="w-4 h-4 text-primary" />
+                    <span className="text-xs font-display text-primary">AI-ENHANCED DETAILS</span>
+                  </div>
+                  <div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
+                    {enhancedText}
+                  </div>
+                </div>
+              )}
+
               <div className="flex gap-2 pt-2">
                 <Button
                   onClick={handleCopy}
@@ -253,7 +300,7 @@ const RandomEventGenerator = () => {
                   Copy Event
                 </Button>
                 <Button
-                  onClick={handleGenerate}
+                  onClick={() => { clearEnhanced(); handleGenerate(); }}
                   variant="outline"
                   className="flex-1"
                 >

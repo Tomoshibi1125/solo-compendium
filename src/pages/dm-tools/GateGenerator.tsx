@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, RefreshCw, Copy } from 'lucide-react';
+import { ArrowLeft, RefreshCw, Copy, Sparkles, Loader2 } from 'lucide-react';
+import { useAIEnhance } from '@/hooks/useAIEnhance';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
@@ -111,7 +112,10 @@ const GateGenerator = () => {
     void saveNow(debouncedPayload);
   }, [debouncedPayload, isLoading, saveNow]);
 
+  const { isEnhancing, enhancedText, enhance, clearEnhanced } = useAIEnhance();
+
   const handleGenerate = () => {
+    clearEnhanced();
     userInteractedRef.current = true;
     const newRift = generateRift(selectedRank || undefined);
     setRift(newRift);
@@ -120,6 +124,31 @@ const GateGenerator = () => {
       title: 'Rift Generated',
       description: `Generated a ${newRift.rank}-Rank Rift.`,
     });
+  };
+
+  const handleAIEnhance = async () => {
+    if (!rift) return;
+    const seed = `Generate a complete, detailed Rift dossier for a System Ascendant TTRPG campaign.
+
+SEED DATA:
+- Rank: ${rift.rank}
+- Theme: ${rift.theme}
+- Biome: ${rift.biome}
+- Boss: ${rift.boss}
+- Complications: ${rift.complications.join('; ') || 'None'}
+- Description: ${rift.description}
+
+Provide ALL of the following sections with full detail:
+
+1. DESCRIPTION: Rift appearance, sensory details (sight/sound/smell), entry conditions, environmental hazards
+2. MONSTERS: 3-5 monsters with CR, type, HP, key abilities, tactical behavior
+3. BOSS: Full stat block for ${rift.boss} (AC, HP, abilities, legendary actions, lair actions, tactics)
+4. ENVIRONMENT: Terrain features, traps (DCs, damage, triggers), hazard zones, cover positions
+5. LORE: Rift origin, which Regent domain it connects to, System classification, historical significance
+6. REWARDS: Rift cores, materials, XP, rare drops with full item stats
+7. MAP NOTES: Room/area descriptions for DM to populate on VTT
+8. READ-ALOUD: Boxed text for when players enter the Rift`;
+    await enhance('rift', seed);
   };
 
   const handleCopy = () => {
@@ -189,6 +218,17 @@ const GateGenerator = () => {
                   <RefreshCw className="w-4 h-4" />
                   Generate Rift
                 </Button>
+                {rift && (
+                  <Button
+                    onClick={handleAIEnhance}
+                    className="w-full gap-2 mt-2 btn-umbral"
+                    size="lg"
+                    disabled={isEnhancing}
+                  >
+                    {isEnhancing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
+                    {isEnhancing ? 'Enhancing...' : 'Enhance with AI'}
+                  </Button>
+                )}
               </div>
             </SystemWindow>
           </div>
@@ -232,6 +272,18 @@ const GateGenerator = () => {
                       <span className="text-xs font-display text-muted-foreground">DESCRIPTION</span>
                       <p className="text-sm text-muted-foreground mt-2">{rift.description}</p>
                     </div>
+
+                    {enhancedText && (
+                      <div className="pt-4 border-t border-primary/30">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Sparkles className="w-4 h-4 text-primary" />
+                          <span className="text-xs font-display text-primary">AI-ENHANCED DOSSIER</span>
+                        </div>
+                        <div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
+                          {enhancedText}
+                        </div>
+                      </div>
+                    )}
 
                     <div className="flex gap-2 pt-4 border-t border-border">
                       <Button

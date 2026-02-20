@@ -79,7 +79,7 @@ export function canCastSpell(
   preparedSpells: PreparedSpell[]
 ): boolean {
   // Check if spell is prepared (for prepared casters)
-  const isPreparedCaster = ['Mage', 'Healer', 'Warden', 'Herald', 'Ranger', 'Techsmith'].includes(character.job);
+  const isPreparedCaster = ['Mage', 'Oracle', 'Technomancer', 'Revenant', 'Resonant', 'Healer', 'Warden', 'Crusader', 'Stalker', 'Herald', 'Holy Knight', 'Ranger', 'Techsmith'].includes(character.job);
   if (isPreparedCaster) {
     const prepared = preparedSpells.find(p => p.spellId === spell.id);
     if (!prepared?.prepared) return false;
@@ -119,7 +119,7 @@ export function castSpell(
   }
   
   // Mark as cast today (for prepared casters)
-  const isPreparedCaster = ['Mage', 'Healer', 'Warden', 'Herald', 'Ranger', 'Techsmith'].includes(character.job);
+  const isPreparedCaster = ['Mage', 'Oracle', 'Technomancer', 'Revenant', 'Resonant', 'Healer', 'Warden', 'Crusader', 'Stalker', 'Herald', 'Holy Knight', 'Ranger', 'Techsmith'].includes(character.job);
   if (isPreparedCaster) {
     const preparedIndex = updatedPrepared.findIndex(p => p.spellId === spell.id);
     if (preparedIndex >= 0) {
@@ -136,6 +136,9 @@ export function castSpell(
     updatedPrepared: isPreparedCaster ? updatedPrepared : undefined
   };
 }
+
+// Shared prepared caster list for consistent checks
+const PREPARED_CASTERS = ['Mage', 'Oracle', 'Technomancer', 'Revenant', 'Resonant', 'Healer', 'Warden', 'Crusader', 'Stalker', 'Herald', 'Holy Knight', 'Ranger', 'Techsmith'];
 
 /**
  * Calculate spell save DC for a character
@@ -168,7 +171,7 @@ export function getPreparableSpells(
   );
   
   // For prepared casters, return all spells they could prepare
-  const isPreparedCaster = ['Mage', 'Healer', 'Warden', 'Herald', 'Ranger', 'Techsmith'].includes(character.job);
+  const isPreparedCaster = PREPARED_CASTERS.includes(character.job);
   if (isPreparedCaster) {
     return knownSpells;
   }
@@ -190,7 +193,7 @@ export function prepareSpells(
   preparedSpells: PreparedSpell[];
   message?: string;
 } {
-  const isPreparedCaster = ['Mage', 'Healer', 'Warden', 'Herald', 'Ranger', 'Techsmith'].includes(character.job);
+  const isPreparedCaster = PREPARED_CASTERS.includes(character.job);
   if (!isPreparedCaster) {
     return { 
       success: false, 

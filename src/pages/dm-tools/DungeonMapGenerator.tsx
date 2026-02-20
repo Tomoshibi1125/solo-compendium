@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, RefreshCw, Download, Grid, Plus, Minus, Square, Layout, DoorOpen, Crown, Gem, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, RefreshCw, Download, Grid, Plus, Minus, Square, Layout, DoorOpen, Crown, Gem, AlertTriangle, Sparkles, Loader2 } from 'lucide-react';
+import { useAIEnhance } from '@/hooks/useAIEnhance';
 import { Layout as PageLayout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
@@ -326,13 +327,41 @@ const DungeonMapGenerator = () => {
     void saveNow(debouncedSavePayload);
   }, [debouncedSavePayload, isLoading, saveNow]);
 
+  const { isEnhancing, enhancedText, enhance, clearEnhanced } = useAIEnhance();
+
   const handleGenerate = () => {
+    clearEnhanced();
     const newMap = generateMap(mapSize.width, mapSize.height, selectedRank);
     setDungeonMap(newMap);
     toast({
       title: 'Map Generated!',
       description: `Created a Rank ${selectedRank} Rift with ${newMap.rooms.length} rooms.`,
     });
+  };
+
+  const handleAIEnhance = async () => {
+    if (!dungeonMap) return;
+    const roomSummary = dungeonMap.rooms.map((r, i) => `Room ${i + 1}: ${r.type} (${r.width}x${r.height})`).join('; ');
+    const seed = `Generate a complete dungeon key for a System Ascendant TTRPG Rift dungeon.
+
+SEED DATA:
+- Rift Rank: ${selectedRank}
+- Map Size: ${mapSize.width}x${mapSize.height}
+- Rooms: ${dungeonMap.rooms.length}
+- Room Layout: ${roomSummary}
+
+Provide ALL of the following sections with full detail:
+
+1. ROOM DESCRIPTIONS: Read-aloud text + DM notes for each room/area
+2. TRAPS: Full trap stat blocks (trigger, DC, damage, reset, detection DC) for trap rooms
+3. ENCOUNTERS: Monster placement per room with CR, type, HP, tactics
+4. SECRETS: Hidden passages (Investigation DC), secret doors, hidden treasure
+5. PUZZLES: Puzzle mechanics with solution, hints, failure consequences
+6. BOSS ROOM: Final encounter with lair actions, legendary actions, full stat block
+7. LORE: Dungeon history, builder, purpose, connection to Regent domains or System
+8. TREASURE: Room-by-room loot with full item stats and GP values
+9. ENVIRONMENTAL HAZARDS: Per-room environmental effects (lighting, terrain, hazards)`;
+    await enhance('dungeon', seed);
   };
 
   const handleCellClick = (x: number, y: number) => {
@@ -463,6 +492,18 @@ const DungeonMapGenerator = () => {
                   <RefreshCw className="w-4 h-4 mr-2" />
                   Generate Map
                 </Button>
+                {dungeonMap && (
+                  <Button
+                    onClick={handleAIEnhance}
+                    className="w-full gap-2 mt-2"
+                    variant="outline"
+                    size="lg"
+                    disabled={isEnhancing}
+                  >
+                    {isEnhancing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
+                    {isEnhancing ? 'Generating Key...' : 'AI Dungeon Key'}
+                  </Button>
+                )}
               </div>
             </SystemWindow>
 
@@ -641,6 +682,18 @@ const DungeonMapGenerator = () => {
                     <RefreshCw className="w-4 h-4 mr-2" />
                     Generate Your First Map
                   </Button>
+                </div>
+              </SystemWindow>
+            )}
+
+            {enhancedText && (
+              <SystemWindow title="AI DUNGEON KEY">
+                <div className="flex items-center gap-2 mb-2">
+                  <Sparkles className="w-4 h-4 text-primary" />
+                  <span className="text-xs font-display text-primary">AI-GENERATED DUNGEON KEY</span>
+                </div>
+                <div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[600px] overflow-y-auto">
+                  {enhancedText}
                 </div>
               </SystemWindow>
             )}

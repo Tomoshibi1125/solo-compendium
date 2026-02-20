@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { error as logError } from '@/lib/logger';
 import { Character } from '../types/character';
 import { 
   RegentGeminiSystem, 
@@ -45,7 +46,7 @@ export const RegentSelection: React.FC<RegentSelectionProps> = ({
       const choices = await RegentGeminiSystem.generateRegentChoices(character);
       setRegentChoices(choices);
     } catch (error) {
-      console.error('Failed to generate regent choices:', error);
+      logError('Failed to generate regent choices:', error);
     } finally {
       setLoading(false);
     }
@@ -84,7 +85,7 @@ export const RegentSelection: React.FC<RegentSelectionProps> = ({
         );
         onGeminiActivated(sovereign);
       } catch (error) {
-        console.error('Failed to activate Gemini Protocol:', error);
+        logError('Failed to activate Gemini Protocol:', error);
       } finally {
         setLoading(false);
       }

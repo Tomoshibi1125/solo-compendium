@@ -28,18 +28,8 @@ export async function executeShortRest(characterId: string): Promise<void> {
 
   if (!character) throw new AppError('Ascendant not found', 'NOT_FOUND');
 
-  // Restore hit dice (up to half of max, rounded up)
-  const hitDiceToRestore = Math.ceil(character.hit_dice_max / 2);
-  const newHitDiceCurrent = Math.min(
-    character.hit_dice_current + hitDiceToRestore,
-    character.hit_dice_max
-  );
-
-  // Update character
-  await supabase
-    .from('characters')
-    .update({ hit_dice_current: newHitDiceCurrent })
-    .eq('id', characterId);
+  // Short rest does NOT auto-restore hit dice per 5e SRD.
+  // Players may *spend* hit dice to heal (handled by ShortRestDialog/useHitDiceSpending).
 
   // Reset short-rest recharge features
   const { data: features } = await supabase
@@ -135,19 +125,22 @@ export async function executeLongRest(characterId: string): Promise<{ questAssig
     .from('characters')
     .update({
       hp_current: character.hp_max,
-      hit_dice_current: character.hit_dice_max,
+      hit_dice_current: Math.min(
+        character.hit_dice_max,
+        character.hit_dice_current + Math.max(1, Math.floor(character.hit_dice_max / 2))
+      ),
       system_favor_current: character.system_favor_max,
       exhaustion_level: Math.max(0, character.exhaustion_level - 1),
       conditions: [],
     })
     .eq('id', characterId);
 
-  // Reset long-rest recharge features
+  // Reset long-rest AND short-rest recharge features (per 5e SRD, long rest also restores short-rest resources)
   const { data: features } = await supabase
     .from('character_features')
     .select('*')
     .eq('character_id', characterId)
-    .eq('recharge', 'long-rest');
+    .in('recharge', ['long-rest', 'short-rest']);
 
   if (features && features.length > 0) {
     for (const feature of features) {

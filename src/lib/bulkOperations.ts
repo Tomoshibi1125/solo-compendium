@@ -172,7 +172,7 @@ export async function bulkLevelUp(
     try {
       const { data: character } = await supabase
         .from('characters')
-        .select('level, hp_max, hit_dice_max')
+        .select('level, hp_max, hit_dice_max, job')
         .eq('id', id)
         .single();
 
@@ -180,19 +180,42 @@ export async function bulkLevelUp(
 
       const newLevel = character.level + 1;
       const hpIncrease = Math.floor((character.hp_max / character.level) || 5);
+      const newProficiencyBonus = Math.ceil(newLevel / 4) + 1;
+      const newSystemFavorDie = newLevel <= 4 ? 4 : newLevel <= 10 ? 6 : newLevel <= 16 ? 8 : 10;
+      const newSystemFavorMax = newLevel <= 4 ? 3 : newLevel <= 10 ? 4 : newLevel <= 16 ? 5 : 6;
 
       const { error } = await supabase
         .from('characters')
         .update({
           level: newLevel,
+          proficiency_bonus: newProficiencyBonus,
           hp_max: character.hp_max + hpIncrease,
           hp_current: character.hp_max + hpIncrease, // Full heal on level up
           hit_dice_max: newLevel,
           hit_dice_current: newLevel,
+          system_favor_die: newSystemFavorDie,
+          system_favor_max: newSystemFavorMax,
         })
         .eq('id', id);
 
       if (error) throw error;
+
+      // Grant job awakening benefits at the new level
+      try {
+        const { addJobAwakeningBenefitsForLevel } = await import('@/lib/characterCreation');
+        await addJobAwakeningBenefitsForLevel(id, character.job, newLevel);
+      } catch {
+        // Best-effort
+      }
+
+      // Auto-update existing feature uses (proficiency-based features scale with level)
+      try {
+        const { autoUpdateFeatureUses } = await import('@/lib/automation');
+        await autoUpdateFeatureUses(id);
+      } catch {
+        // Best-effort
+      }
+
       success++;
     } catch (error) {
       logError(`Failed to level up character ${id}:`, error);

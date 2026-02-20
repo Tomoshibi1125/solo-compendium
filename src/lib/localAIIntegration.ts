@@ -1,6 +1,8 @@
 // LOCAL AI INTEGRATION WITH OLLAMA
 // Uses Mistral 7B/Mixtral 8x7B for regent and gemini systems
 
+import { log, error as logError } from '@/lib/logger';
+
 export class LocalAIIntegration {
   private static ollamaEndpoint = 'http://localhost:11434/api/generate';
   private static model = 'mixtral:8x7b'; // Best free model available
@@ -15,15 +17,15 @@ export class LocalAIIntegration {
       
       if (data.models && data.models.length > 0) {
         this.isAvailable = true;
-        console.log('✅ Local AI (Ollama) connected with Mixtral 8x7B');
+        log('✅ Local AI (Ollama) connected with Mixtral 8x7B');
         return true;
       }
       
       this.isAvailable = false;
-      console.log('⚠️ Ollama not available, using fallback logic');
+      log('⚠️ Ollama not available, using fallback logic');
       return false;
     } catch (error: any) {
-      console.error('AI initialization failed, using fallback:', error);
+      logError('AI initialization failed, using fallback:', error);
       this.isAvailable = false;
       return false;
     }
@@ -79,7 +81,7 @@ Focus on: stat synergy, class compatibility, and playstyle enhancement.
         return this.parseAIResponse(choices);
         
       } catch (error: unknown) {
-        console.error('AI generation failed:', error);
+        logError('AI generation failed:', error);
         return this.generateFallbackChoices(character, availableRegents, highestStat);
       }
     } else {
@@ -150,7 +152,7 @@ Be creative and make it feel like an epic DBZ fusion with unique mechanics!
         return this.parseAIResponse(fusion);
         
       } catch (error: any) {
-        console.error('Fusion generation failed:', error);
+        logError('Fusion generation failed:', error);
         return this.generateFallbackFusion(character, regent1, regent2);
       }
     } else {
@@ -207,7 +209,7 @@ Focus on: level appropriateness, class synergy, and character strengths.
         return this.parseAIResponse(recommendations);
         
       } catch (error: any) {
-        console.error('Quest recommendations failed:', error);
+        logError('Quest recommendations failed:', error);
         return this.generateFallbackQuests(character, availableQuests);
       }
     } else {
@@ -243,7 +245,7 @@ Focus on: level appropriateness, class synergy, and character strengths.
       return data.response || data.content || '';
       
     } catch (error: any) {
-      console.error('Local AI call failed:', error);
+      logError('Local AI call failed:', error);
       throw error;
     }
   }
@@ -260,7 +262,7 @@ Focus on: level appropriateness, class synergy, and character strengths.
       // Fallback: try to parse entire response
       return JSON.parse(response);
     } catch (error: any) {
-      console.error('Failed to parse AI response:', error);
+      logError('Failed to parse AI response:', error);
       return null;
     }
   }
@@ -432,7 +434,7 @@ Focus on maximizing character effectiveness and synergy.
         return this.parseAIResponse(suggestions);
         
       } catch (error: any) {
-        console.error('Optimization suggestions failed:', error);
+        logError('Optimization suggestions failed:', error);
         return this.generateFallbackOptimizations(character);
       }
     } else {

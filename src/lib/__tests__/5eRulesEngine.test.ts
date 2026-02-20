@@ -44,14 +44,14 @@ describe('5e Rules Engine', () => {
     expect(getSystemFavorMax(17)).toBe(6);
     expect(getSystemFavorMax(20)).toBe(6);
 
-    expect(getSystemFavorDie(1)).toBe(6);
-    expect(getSystemFavorDie(4)).toBe(6);
-    expect(getSystemFavorDie(5)).toBe(8);
-    expect(getSystemFavorDie(10)).toBe(8);
-    expect(getSystemFavorDie(11)).toBe(10);
-    expect(getSystemFavorDie(16)).toBe(10);
-    expect(getSystemFavorDie(17)).toBe(12);
-    expect(getSystemFavorDie(20)).toBe(12);
+    expect(getSystemFavorDie(1)).toBe(4);
+    expect(getSystemFavorDie(4)).toBe(4);
+    expect(getSystemFavorDie(5)).toBe(6);
+    expect(getSystemFavorDie(10)).toBe(6);
+    expect(getSystemFavorDie(11)).toBe(8);
+    expect(getSystemFavorDie(16)).toBe(8);
+    expect(getSystemFavorDie(17)).toBe(10);
+    expect(getSystemFavorDie(20)).toBe(10);
   });
 
   test('Ability normalization', () => {

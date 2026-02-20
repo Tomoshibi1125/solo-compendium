@@ -665,6 +665,8 @@ export class AIServiceManager {
 
     // Route to appropriate service handler
     switch (service.type) {
+      case 'gemini-proxy':
+        return this.callGeminiProxy(service, request);
       case 'pollinations':
         return this.callPollinations(service, request);
       case 'ollama':
@@ -672,7 +674,69 @@ export class AIServiceManager {
       case 'custom':
         return this.callOpenAICompatible(service, request);
       default:
-        return this.callPollinations(service, request);
+        return this.callGeminiProxy(service, request);
+    }
+  }
+
+  private async callGeminiProxy(service: AIService, request: AIRequest): Promise<AIResponse> {
+    try {
+      const endpoint = service.endpoint || '/api/ai';
+      const systemPrompt = this.getSystemPrompt(request.type);
+      const prompt = this.formatInput(request);
+
+      const response = await this.fetchWithTimeout(
+        endpoint,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt,
+            systemPrompt,
+            maxTokens: service.maxTokens,
+          }),
+        },
+        REQUEST_TIMEOUT_MS
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        // If the proxy reports service not configured, mark as unavailable
+        if (data?.available === false) {
+          return {
+            success: false,
+            error: data?.error || 'Gemini proxy not configured',
+          };
+        }
+        return {
+          success: false,
+          error: data?.error || `Gemini proxy error: ${response.status}`,
+        };
+      }
+
+      const text = data?.text || '';
+      if (!text.trim()) {
+        return {
+          success: false,
+          error: 'Gemini proxy returned empty response',
+        };
+      }
+
+      return {
+        success: true,
+        data: text,
+        metadata: { model: data?.model || 'gemini-2.0-flash' },
+        usage: data?.usage ? {
+          promptTokens: data.usage.promptTokens,
+          completionTokens: data.usage.completionTokens,
+          totalTokens: data.usage.totalTokens,
+        } : undefined,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Gemini proxy error',
+      };
     }
   }
 

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { error as logError } from '@/lib/logger';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, RefreshCw, Copy, Trash2, Plus, Upload, Search, ImageIcon, Download } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -161,7 +162,7 @@ const TokenLibrary = () => {
       };
       img.src = URL.createObjectURL(file);
     } catch (error) {
-      console.error('Failed to process image:', error);
+      logError('Failed to process image:', error);
       toast({
         title: 'Upload failed',
         description: 'Could not upload image. Please try again.',
@@ -493,7 +494,7 @@ const TokenLibrary = () => {
                             }}
                             role="button"
                             tabIndex={0}
-                            aria-pressed={selectedToken?.id === token.id ? 'true' : 'false'}
+                            aria-pressed={selectedToken?.id === token.id ? "true" : "false"}
                           >
                             <div className="flex flex-col items-center gap-3">
                               <div

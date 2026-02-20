@@ -92,7 +92,7 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
     }
 
     // Saving throw modifiers: "+1 to saving throws", "+2 to all saves"
-    const saveMatch = lowerProp.match(/(\+?\d+)\s+to\s+(?:all\\s+)?(?:saving\\s+)?throws?/i);
+    const saveMatch = lowerProp.match(/(\+?\d+)\s+to\s+(?:all\s+)?(?:saving\s+)?throws?/i);
     if (saveMatch) {
       const value = parseInt(saveMatch[1] || '0');
       if (!modifiers.savingThrows) modifiers.savingThrows = {};
@@ -106,7 +106,7 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
     }
 
     // Skill modifiers: "+2 to Stealth", "+1 to all skills"
-    const skillMatch = lowerProp.match(/(\+?\d+)\s+to\s+(?:all\\s+)?skills?/i);
+    const skillMatch = lowerProp.match(/(\+?\d+)\s+to\s+(?:all\s+)?skills?/i);
     if (skillMatch) {
       const value = parseInt(skillMatch[1] || '0');
       if (!modifiers.skills) modifiers.skills = {};

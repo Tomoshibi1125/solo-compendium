@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { error as logError } from '@/lib/logger';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { CheckCircle, Coins, Swords, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -175,7 +176,7 @@ export const EncounterRewards = ({ campaignId, sessionId, onComplete }: Encounte
         description: 'Failed to distribute rewards. Please try again.',
         variant: 'destructive',
       });
-      console.error('Reward distribution error:', error);
+      logError('Reward distribution error:', error);
     },
   });
 

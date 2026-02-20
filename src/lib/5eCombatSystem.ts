@@ -473,10 +473,29 @@ export function performMultiattack(
 
 /**
  * Check weapon proficiency (standard 5e)
+ * Characters are proficient with a weapon when:
+ * - They have the weapon name in their skill_proficiencies
+ * - They have the weapon's category (e.g. "Simple Weapons", "Martial Weapons")
+ * - The weapon has no proficiency requirements (unarmed/improvised)
  */
 function checkWeaponProficiency(character: Character, weapon: Equipment): boolean {
-  // Simple implementation - would check character's weapon proficiencies
-  return true; // Placeholder
+  if (weapon.type !== 'weapon') return false;
+
+  const profList = (character.skill_proficiencies ?? []).map(p => p.toLowerCase());
+
+  // Proficient if character has the specific weapon name
+  if (profList.includes(weapon.name.toLowerCase())) return true;
+
+  // Proficient if character has the weapon's category tag (e.g. "simple weapons")
+  const tags = (weapon.system_tags ?? []).map(t => t.toLowerCase());
+  if (tags.some(t => profList.includes(t))) return true;
+
+  // Broad category checks: "simple weapons" covers all simple, "martial weapons" all martial
+  if (tags.includes('simple') && profList.includes('simple weapons')) return true;
+  if (tags.includes('martial') && profList.includes('martial weapons')) return true;
+
+  // Default: not proficient
+  return false;
 }
 
 /**

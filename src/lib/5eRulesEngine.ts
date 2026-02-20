@@ -379,11 +379,10 @@ export function getSystemFavorMax(level: number): number {
 }
 
 export function getSystemFavorDie(level: number): number {
-  // Similar to Bardic Inspiration die size
-  if (level <= 4) return 6;
-  if (level <= 10) return 8;
-  if (level <= 16) return 10;
-  return 12;
+  if (level <= 4) return 4;
+  if (level <= 10) return 6;
+  if (level <= 16) return 8;
+  return 10;
 }
 
 // Normalize any ability string (including legacy 5e) to System Ascendant

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, RefreshCw, Copy, Gem, Coins, Sparkles } from 'lucide-react';
+import { ArrowLeft, RefreshCw, Copy, Gem, Coins, Sparkles, Loader2 } from 'lucide-react';
+import { useAIEnhance } from '@/hooks/useAIEnhance';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
@@ -55,12 +56,38 @@ const TreasureGenerator = () => {
     void saveNow(debouncedPayload);
   }, [debouncedPayload, isLoading, saveNow]);
 
+  const { isEnhancing, enhancedText, enhance, clearEnhanced } = useAIEnhance();
+
   const handleGenerate = () => {
+    clearEnhanced();
     const result = generateTreasure(selectedRank);
     setTreasure(result);
     if (!isLoading) {
       void saveNow({ selectedRank, treasure: result });
     }
+  };
+
+  const handleAIEnhance = async () => {
+    if (!treasure) return;
+    const seed = `Generate fully detailed treasure for a System Ascendant TTRPG Rift clearance.
+
+SEED DATA:
+- Rift Rank: ${treasure.rank}
+- Gold: ${treasure.gold}
+- Items: ${treasure.items.join(', ') || 'None'}
+- Materials: ${treasure.materials.join(', ') || 'None'}
+- Relics: ${treasure.relics.join(', ') || 'None'}
+
+Provide ALL of the following sections with full detail:
+
+1. ITEMS: Full stat blocks for each item (type, rarity, attunement, properties, damage/AC/bonuses, weight)
+2. MAGICAL PROPERTIES: Activation rules, charges, recharge conditions, side effects, cursed variants
+3. LORE: Item history, creator, previous owners, legendary status within System Ascendant world
+4. VALUE: GP value, trade value, faction value for each item
+5. MATERIALS: Weight, composition, crafting uses, what can be forged from them
+6. RELICS: Full relic stat block with attunement requirements, abilities at dormant/awakened/exalted tiers
+7. DESCRIPTION: Read-aloud boxed text for when players discover this treasure hoard`;
+    await enhance('treasure', seed);
   };
 
   const handleCopy = () => {
@@ -145,6 +172,18 @@ ${treasure.description}`;
               <Sparkles className="w-4 h-4 mr-2" />
               Generate Treasure
             </Button>
+            {treasure && (
+              <Button
+                onClick={handleAIEnhance}
+                className="w-full gap-2 mt-2"
+                variant="outline"
+                size="lg"
+                disabled={isEnhancing}
+              >
+                {isEnhancing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
+                {isEnhancing ? 'Enhancing...' : 'Enhance with AI'}
+              </Button>
+            )}
           </div>
         </SystemWindow>
 
@@ -214,6 +253,18 @@ ${treasure.description}`;
                   {treasure.description}
                 </p>
               </div>
+
+              {enhancedText && (
+                <div className="pt-4 border-t border-primary/30">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Sparkles className="w-4 h-4 text-primary" />
+                    <span className="text-xs font-display text-primary">AI-ENHANCED DETAILS</span>
+                  </div>
+                  <div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
+                    {enhancedText}
+                  </div>
+                </div>
+              )}
 
               <div className="flex gap-2 pt-2">
                 <Button

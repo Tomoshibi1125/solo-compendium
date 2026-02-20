@@ -1029,8 +1029,7 @@ export const staticDataProvider: StaticDataProvider = {
 // Export a hook to check if we should use static data
 export const useStaticDataFallback = () => {
   // Use static data when Supabase is not configured or fails
-  // @ts-expect-error - Global variable from Supabase integration
-  return !window.supabaseConfigured || false;
+  return !(window as unknown as Record<string, unknown>).supabaseConfigured || false;
 };
 
 

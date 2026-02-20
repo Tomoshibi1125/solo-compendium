@@ -57,6 +57,7 @@ export const useSpellSlots = (characterId: string, job: string | null, character
         // Local: ensure slots exist based on derived caster progression.
         const casterType = getCasterType(job);
         const expectedSlots = getSpellSlotsPerLevel(casterType, characterLevel);
+        const isPactCaster = casterType === 'pact';
 
         const existing = listLocalSpellSlots(characterId);
         const byLevel = new Map(existing.map((s) => [s.spell_level, s]));
@@ -70,7 +71,7 @@ export const useSpellSlots = (characterId: string, job: string | null, character
             spell_level: spellLevel,
             slots_max: maxSlots,
             slots_current: maxSlots,
-            slots_recovered_on_short_rest: 0,
+            slots_recovered_on_short_rest: isPactCaster ? 1 : 0,
             slots_recovered_on_long_rest: 1,
           });
           byLevel.set(spellLevel, row);
@@ -179,7 +180,7 @@ export const useUpdateSpellSlot = () => {
             spell_level: spellLevel,
             slots_max: maxSlots,
             slots_current: Math.max(0, current),
-            slots_recovered_on_short_rest: 0,
+            slots_recovered_on_short_rest: casterType === 'pact' ? 1 : 0,
             slots_recovered_on_long_rest: 1,
           });
         }
@@ -272,6 +273,7 @@ export const useInitializeSpellSlots = () => {
       if (isLocalCharacterId(characterId)) {
         const casterType = getCasterType(job);
         const expectedSlots = getSpellSlotsPerLevel(casterType, level);
+        const isPactCaster = casterType === 'pact';
 
         const existing = listLocalSpellSlots(characterId);
         for (let spellLevel = 1; spellLevel <= 9; spellLevel++) {
@@ -285,7 +287,7 @@ export const useInitializeSpellSlots = () => {
             spell_level: spellLevel,
             slots_max: maxSlots,
             slots_current: newCurrent,
-            slots_recovered_on_short_rest: existingSlot?.slots_recovered_on_short_rest ?? 0,
+            slots_recovered_on_short_rest: isPactCaster ? 1 : (existingSlot?.slots_recovered_on_short_rest ?? 0),
             slots_recovered_on_long_rest: existingSlot?.slots_recovered_on_long_rest ?? 1,
           });
         }
@@ -298,6 +300,7 @@ export const useInitializeSpellSlots = () => {
 
       const casterType = getCasterType(job);
       const expectedSlots = getSpellSlotsPerLevel(casterType, level);
+      const isPactCaster = casterType === 'pact';
 
       // Get existing slots
       const { data: existing, error: existingError } = await supabase
@@ -335,7 +338,7 @@ export const useInitializeSpellSlots = () => {
               spell_level: spellLevel,
               slots_max: maxSlots,
               slots_current: nextCurrent,
-              slots_recovered_on_short_rest: 0,
+              slots_recovered_on_short_rest: isPactCaster ? 1 : 0,
               slots_recovered_on_long_rest: 1,
             });
           if (insertError) throw insertError;

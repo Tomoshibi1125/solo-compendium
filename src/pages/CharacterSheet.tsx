@@ -1932,6 +1932,7 @@ const CharacterSheet = () => {
               characterId={character.id} 
               job={character.job}
               level={character.level}
+              abilities={character.abilities as Record<string, number>}
             />
 
             {/* Powers */}

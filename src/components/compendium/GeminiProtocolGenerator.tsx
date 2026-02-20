@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { generateSovereign, type GeneratedSovereign, calculateTotalCombinations } from '@/lib/geminiProtocol';
+import { generateSovereign, generateSovereignWithAI, type GeneratedSovereign, calculateTotalCombinations } from '@/lib/geminiProtocol';
 import { formatMonarchVernacular, MONARCH_LABEL, MONARCH_LABEL_PLURAL } from '@/lib/vernacular';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -209,15 +209,25 @@ export function GeminiProtocolGenerator() {
     }
   }, [autoMode, regents, regentUnlocks, regentUnlocksLoading, selectedRegentA, selectedRegentB]);
 
-  const handleGenerate = useCallback(() => {
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const handleGenerate = useCallback(async () => {
     const job = jobs.find(j => j.id === selectedJob);
     const path = paths.find(p => p.id === selectedPath) || allPaths.find((p) => p.id === selectedPath);
     const regentA = regents.find((r) => r.id === selectedRegentA);
     const regentB = regents.find((r) => r.id === selectedRegentB);
 
     if (job && path && regentA && regentB) {
-      const sovereign = generateSovereign(job, path, regentA as any, regentB as any);
-      setGeneratedSovereign(sovereign);
+      setIsGenerating(true);
+      try {
+        const sovereign = await generateSovereignWithAI(job, path, regentA as any, regentB as any);
+        setGeneratedSovereign(sovereign);
+      } catch {
+        const sovereign = generateSovereign(job, path, regentA as any, regentB as any);
+        setGeneratedSovereign(sovereign);
+      } finally {
+        setIsGenerating(false);
+      }
     }
   }, [allPaths, jobs, paths, regents, selectedJob, selectedPath, selectedRegentA, selectedRegentB]);
 
@@ -456,11 +466,11 @@ export function GeminiProtocolGenerator() {
 
           <Button
             onClick={handleGenerate}
-            disabled={!canGenerate || (autoMode && !templateReady)}
+            disabled={!canGenerate || (autoMode && !templateReady) || isGenerating}
             className="w-full"
           >
-            <Dna className="h-4 w-4 mr-2" />
-            {autoMode ? 'Generate Sovereign Overlay' : 'Initiate Gemini Protocol Fusion'}
+            {isGenerating ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Dna className="h-4 w-4 mr-2" />}
+            {isGenerating ? 'Fusing with AI...' : autoMode ? 'Generate Sovereign Overlay' : 'Initiate Gemini Protocol Fusion'}
           </Button>
         </CardContent>
       </Card>

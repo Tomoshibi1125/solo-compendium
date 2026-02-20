@@ -154,16 +154,12 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
     // Handle swipe actions based on direction
     switch (direction) {
       case 'left':
-        console.log('Swipe left detected');
         break;
       case 'right':
-        console.log('Swipe right detected');
         break;
       case 'up':
-        console.log('Swipe up detected');
         break;
       case 'down':
-        console.log('Swipe down detected');
         break;
     }
   }, []);

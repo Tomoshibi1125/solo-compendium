@@ -1,6 +1,7 @@
 // GLOBAL ENGINE INTEGRATION SYSTEM
 // Best-in-class free rendering engines, 3D engines, physics engines, and game engines
 
+import { log, error as logError } from '@/lib/logger';
 import * as THREE from 'three';
 import * as BABYLON from 'babylonjs';
 import * as CANNON from 'cannon-es';
@@ -160,7 +161,7 @@ export class GlobalEngineManager {
   public async initializeEngine(name: string): Promise<boolean> {
     const engine = this.engines.get(name);
     if (!engine) {
-      console.error(`Engine ${name} not found`);
+      logError(`Engine ${name} not found`);
       return false;
     }
 
@@ -201,11 +202,11 @@ export class GlobalEngineManager {
           return true;
 
         default:
-          console.log(`Engine ${name} initialization not yet implemented`);
+          log(`Engine ${name} initialization not yet implemented`);
           return false;
       }
     } catch (error) {
-      console.error(`Failed to initialize ${name}:`, error);
+      logError(`Failed to initialize ${name}:`, error);
       return false;
     }
   }
@@ -359,6 +360,6 @@ export const getBestWebGPUEngine = () => engineManager.getBestEngineForUseCase('
 
 // Initialize all engines on import
 if (typeof window !== 'undefined') {
-  console.log('🚀 Global Engine Manager initialized with', engineManager.getEngineStatistics().totalEngines, 'engines');
-  console.log('📊 Engine breakdown:', engineManager.getEngineStatistics().byType);
+  log('🚀 Global Engine Manager initialized with', engineManager.getEngineStatistics().totalEngines, 'engines');
+  log('📊 Engine breakdown:', engineManager.getEngineStatistics().byType);
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { error as logError } from '@/lib/logger';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   Menu, 
@@ -130,7 +131,7 @@ const EnhancedNavigation = () => {
       await signOut();
       navigate('/login');
     } catch (error) {
-      console.error('Sign out error:', error);
+      logError('Sign out error:', error);
     }
   };
 

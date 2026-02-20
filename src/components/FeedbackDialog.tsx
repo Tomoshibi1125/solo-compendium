@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { log } from '@/lib/logger';
 import { MessageSquare, Send, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -31,7 +32,7 @@ export function FeedbackDialog({ open, onOpenChange }: FeedbackDialogProps) {
     setIsSubmitting(true);
     try {
       // For demo purposes, just log to console instead of database
-      console.log('User feedback:', {
+      log('User feedback:', {
         feedback: feedback.trim(),
         rating,
         timestamp: new Date().toISOString(),

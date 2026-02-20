@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Dice6 } from 'lucide-react';
+import { ArrowLeft, Dice6, Sparkles, Loader2 } from 'lucide-react';
+import { useAIEnhance } from '@/hooks/useAIEnhance';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
@@ -210,6 +211,25 @@ const RollableTables = () => {
     if (!hydratedRef.current) return;
     void saveNow(debouncedPayload);
   }, [debouncedPayload, isLoading, saveNow]);
+
+  const { isEnhancing, enhancedText, enhance } = useAIEnhance();
+
+  const handleAIEnhance = async () => {
+    const filledResults = Object.entries(results).filter(([, v]) => v);
+    if (filledResults.length === 0) return;
+    const seed = `Expand these rollable table results into fully detailed TTRPG content for a System Ascendant campaign.
+
+ROLLED RESULTS:
+${filledResults.map(([key, value]) => `- ${key}: ${value}`).join('\n')}
+
+For EACH result, provide:
+1. Full description (2-3 sentences) with sensory details and atmosphere
+2. Mechanical effects: DCs, damage, conditions, durations, saves as applicable
+3. Lore context: How it connects to Rifts, Regents, the System, Ascendants
+4. Tactical implications: How players/DM should use this in play
+5. Follow-up hooks: What this result leads to next`;
+    await enhance('table-results', seed);
+  };
 
   const roll = (key: string, table: string[]) => {
     const result = formatMonarchVernacular(rollTable(table));
@@ -428,6 +448,31 @@ const RollableTables = () => {
             </SystemWindow>
           </TabsContent>
         </Tabs>
+
+        {Object.values(results).some(Boolean) && (
+          <div className="mt-6 space-y-4">
+            <Button
+              onClick={handleAIEnhance}
+              className="w-full gap-2 btn-umbral"
+              size="lg"
+              disabled={isEnhancing}
+            >
+              {isEnhancing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
+              {isEnhancing ? 'Enhancing All Results...' : 'Enhance All Results with AI'}
+            </Button>
+            {enhancedText && (
+              <SystemWindow title="AI-ENHANCED RESULTS">
+                <div className="flex items-center gap-2 mb-2">
+                  <Sparkles className="w-4 h-4 text-primary" />
+                  <span className="text-xs font-display text-primary">AI-ENHANCED DETAILS</span>
+                </div>
+                <div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
+                  {enhancedText}
+                </div>
+              </SystemWindow>
+            )}
+          </div>
+        )}
       </div>
     </Layout>
   );

@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { log, error as logError } from '@/lib/logger';
 import { isSupabaseConfigured, supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { AppError } from '@/lib/appError';
@@ -230,7 +231,7 @@ export class VTTAudioManager {
       // Update track status
       await this.updateTrackStatus(track.id, true);
     } catch (error) {
-      console.error('Failed to play audio track:', error);
+      logError('Failed to play audio track:', error);
       throw error;
     }
   }
@@ -272,7 +273,7 @@ export class VTTAudioManager {
   private async updateTrackStatus(trackId: string, isPlaying: boolean): Promise<void> {
     // This would typically update the database
     // For now, we'll just update the local state
-    console.log(`Track ${trackId} ${isPlaying ? 'playing' : 'stopped'}`);
+    log(`Track ${trackId} ${isPlaying ? 'playing' : 'stopped'}`);
   }
 
   cleanup(): void {

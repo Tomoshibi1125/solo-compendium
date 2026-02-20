@@ -99,7 +99,7 @@ export function formatModifier(modifier: number): string {
 // Spell slot tables for different caster types
 // Based on SRD 5e spell slot progression
 
-export type CasterType = 'full' | 'half' | 'third' | 'none';
+export type CasterType = 'full' | 'half' | 'pact' | 'third' | 'none';
 
 /**
  * Determine caster type based on job name
@@ -107,11 +107,13 @@ export type CasterType = 'full' | 'half' | 'third' | 'none';
 export function getCasterType(job: string | null | undefined): CasterType {
   if (!job) return 'none';
   
-  const fullCasters = ['Mage', 'Healer', 'Warden', 'Esper'];
-  const halfCasters = ['Herald', 'Ranger', 'Techsmith', 'Holy Knight'];
+  const fullCasters = ['Mage', 'Oracle', 'Invoker', 'Resonant', 'Technomancer', 'Revenant', 'Healer', 'Warden', 'Esper'];
+  const halfCasters = ['Crusader', 'Stalker', 'Herald', 'Ranger', 'Techsmith', 'Holy Knight'];
+  const pactCasters = ['Contractor'];
   
   if (fullCasters.includes(job)) return 'full';
   if (halfCasters.includes(job)) return 'half';
+  if (pactCasters.includes(job)) return 'pact';
   return 'none';
 }
 
@@ -159,6 +161,20 @@ export function getSpellSlotsPerLevel(casterType: CasterType, level: number): Re
     }
   }
 
+  // Pact caster progression (Warlock-style: few slots, all same level, recharge on short rest)
+  if (casterType === 'pact') {
+    const pactSlotTable: Record<number, [number, number]> = {
+      // [slot count, slot level]
+      1: [1, 1], 2: [2, 1], 3: [2, 2], 4: [2, 2], 5: [2, 3],
+      6: [2, 3], 7: [2, 4], 8: [2, 4], 9: [2, 5], 10: [2, 5],
+      11: [3, 5], 12: [3, 5], 13: [3, 5], 14: [3, 5], 15: [3, 5],
+      16: [3, 5], 17: [4, 5], 18: [4, 5], 19: [4, 5], 20: [4, 5],
+    };
+    const [count, slotLevel] = pactSlotTable[Math.min(level, 20)] || pactSlotTable[20];
+    slots[slotLevel] = count;
+    return slots;
+  }
+
   // Half caster progression (Paladin, Ranger, Artificer)
   if (casterType === 'half') {
     const halfCasterTable: Record<number, number[]> = {
@@ -200,13 +216,13 @@ export function getSpellcastingAbility(job: string | null | undefined): AbilityS
   if (!job) return null;
   
   // INT casters
-  if (['Mage', 'Esper', 'Techsmith'].includes(job)) return 'INT';
+  if (['Mage', 'Technomancer', 'Revenant', 'Techsmith', 'Warrior', 'Assassin'].includes(job)) return 'INT';
   
   // SENSE casters
-  if (['Healer', 'Warden', 'Ranger'].includes(job)) return 'SENSE';
+  if (['Oracle', 'Stalker', 'Healer', 'Warden', 'Ranger'].includes(job)) return 'SENSE';
   
-  // PRE casters
-  if (['Herald', 'Holy Knight'].includes(job)) return 'PRE';
+  // PRE casters (Esper = Sorcerer equivalent, uses PRE)
+  if (['Esper', 'Invoker', 'Resonant', 'Crusader', 'Contractor', 'Herald', 'Holy Knight'].includes(job)) return 'PRE';
   
   return null;
 }
@@ -219,8 +235,8 @@ export function getSpellsKnownLimit(job: string | null | undefined, level: numbe
   
   // Prepared casters don't have a "known" limit, they prepare from their list
   // Known casters (Sorcerer, Warlock, etc.) have limits
-  if (job === 'Esper') {
-    // Sorcerer: level + 1
+  if (job === 'Esper' || job === 'Invoker' || job === 'Contractor') {
+    // Known casters: level + 1
     return level + 1;
   }
   
@@ -235,19 +251,19 @@ export function getCantripsKnownLimit(job: string | null | undefined, level: num
   if (!job) return null;
 
   // Non-casters and most half-casters in this system do not learn cantrips by default.
-  if (['Warrior', 'Assassin', 'Ranger', 'Herald', 'Holy Knight'].includes(job)) {
+  if (['Warrior', 'Assassin', 'Berserker', 'Striker', 'Bulwark', 'Ranger', 'Stalker', 'Herald', 'Crusader', 'Holy Knight'].includes(job)) {
     return null;
   }
 
   // Full prepared casters (Wizard/Cleric/Druid equivalents)
-  if (['Mage', 'Healer', 'Warden'].includes(job)) {
+  if (['Mage', 'Oracle', 'Technomancer', 'Revenant', 'Resonant', 'Healer', 'Warden'].includes(job)) {
     if (level >= 10) return 5;
     if (level >= 4) return 4;
     return 3;
   }
 
-  // Known caster (Sorcerer equivalent)
-  if (job === 'Esper') {
+  // Known caster (Sorcerer/Warlock equivalent)
+  if (['Esper', 'Invoker', 'Contractor'].includes(job)) {
     if (level >= 10) return 6;
     if (level >= 4) return 5;
     return 4;
@@ -276,7 +292,7 @@ export function getSpellsPreparedLimit(
   if (!spellcastingAbility) return null;
   
   // Prepared casters: ability modifier + level (minimum 1)
-  if (['Mage', 'Healer', 'Warden', 'Herald', 'Holy Knight', 'Ranger', 'Techsmith'].includes(job)) {
+  if (['Mage', 'Oracle', 'Technomancer', 'Revenant', 'Resonant', 'Crusader', 'Stalker', 'Healer', 'Warden', 'Herald', 'Holy Knight', 'Ranger', 'Techsmith'].includes(job)) {
     return Math.max(1, abilityModifier + level);
   }
   
@@ -284,14 +300,6 @@ export function getSpellsPreparedLimit(
 }
 
 // Re-export utility functions for convenience
-
-// Calculate character hit points
-export function calculateHitPoints(level: number, constitution: number): number {
-  const baseHP = 8 + constitution; // SRD 5e style base
-  const levelHP = (level - 1) * 5 + constitution; // 5 HP per level + CON mod
-  return Math.max(1, baseHP + levelHP);
-}
-
 export { getAbilityModifier, getProficiencyBonus, getSystemFavorDie } from '@/types/system-rules';
 
 

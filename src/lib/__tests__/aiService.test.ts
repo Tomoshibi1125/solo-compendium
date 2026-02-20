@@ -49,9 +49,9 @@ describe('AIServiceManager free-first integration', () => {
     manager.applyUserSettings(freeSettings);
     const config = manager.getConfiguration();
 
-    expect(config.defaultService).toBe('pollinations');
+    expect(config.defaultService).toBe('gemini-proxy');
     expect(config.services.map((service) => service.id)).toEqual(
-      expect.arrayContaining(['pollinations', 'ollama-fallback'])
+      expect.arrayContaining(['gemini-proxy', 'ollama-fallback'])
     );
   });
 
@@ -69,7 +69,7 @@ describe('AIServiceManager free-first integration', () => {
     const ids = config.services.map((service) => service.id);
 
     expect(config.defaultService).toBe('user-custom');
-    expect(ids).toEqual(expect.arrayContaining(['user-custom', 'pollinations', 'ollama-fallback']));
+    expect(ids).toEqual(expect.arrayContaining(['user-custom', 'gemini-proxy', 'ollama-fallback']));
   });
 
   it('tries configured pollinations models then a no-model default request', async () => {

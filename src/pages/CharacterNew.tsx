@@ -346,7 +346,10 @@ const CharacterNew = () => {
         skill_expertise: [],
         armor_proficiencies: job.armor_proficiencies || [],
         weapon_proficiencies: job.weapon_proficiencies || [],
-        tool_proficiencies: job.tool_proficiencies || [],
+        tool_proficiencies: [
+          ...(job.tool_proficiencies || []),
+          ...(selectedBackgroundData.tool_proficiencies || []),
+        ],
         conditions: [],
         exhaustion_level: 0,
       });
@@ -370,6 +373,7 @@ const CharacterNew = () => {
         addLevel1Features,
         addBackgroundFeatures,
         addStartingEquipment,
+        addStartingPowers,
         addJobAwakeningBenefitsForLevel,
       } = await import('@/lib/characterCreation');
       await addLevel1Features(character.id, job.id, selectedPathRow?.id);
@@ -378,6 +382,9 @@ const CharacterNew = () => {
       // Add background features and equipment (background is required)
       await addBackgroundFeatures(character.id, selectedBackgroundData);
       await addStartingEquipment(character.id, job, selectedBackgroundData);
+
+      // Add starting powers/cantrips for caster jobs
+      await addStartingPowers(character.id, job);
 
       // If any level-1 features require selections, prompt the player to complete them.
       try {

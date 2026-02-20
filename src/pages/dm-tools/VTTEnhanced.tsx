@@ -2281,7 +2281,7 @@ const VTTEnhanced = () => {
 
                   {/* Ping overlay */}
                   {vttRealtime.pings.length > 0 && (
-                    <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 70 }}>
+                    <div className="absolute inset-0 pointer-events-none vtt-ping-layer">
                       {vttRealtime.pings.map((ping) => (
                         <div
                           key={ping.timestamp}
@@ -2303,7 +2303,7 @@ const VTTEnhanced = () => {
 
                   {/* Remote cursors overlay */}
                   {vttRealtime.activeUsers.filter((u) => u.cursor).length > 0 && (
-                    <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 65 }}>
+                    <div className="absolute inset-0 pointer-events-none vtt-cursor-layer">
                       {vttRealtime.activeUsers
                         .filter((u) => u.cursor)
                         .map((u) => (

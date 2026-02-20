@@ -147,7 +147,7 @@ export function calculateHPMax(
 }
 
 // Standard 5e spell slot calculations
-export type CasterType = 'full' | 'half' | 'third' | 'artificer' | 'none';
+export type CasterType = 'full' | 'half' | 'pact' | 'third' | 'artificer' | 'none';
 
 export function getCasterType(job: string | null | undefined): CasterType {
   if (!job) return 'none';
@@ -173,13 +173,27 @@ export function getCasterType(job: string | null | undefined): CasterType {
     'Assassin': 'Rogue (Arcane Trickster)',
     'Techsmith': 'Artificer',
     'Technomancer': 'Wizard',
-    'technomancer': 'Wizard'
+    'technomancer': 'Wizard',
+    'Oracle': 'Cleric',
+    'Invoker': 'Sorcerer',
+    'Resonant': 'Sorcerer',
+    'Revenant': 'Wizard',
+    'Crusader': 'Paladin',
+    'Stalker': 'Ranger',
+    'Contractor': 'Warlock',
+    'Striker': 'Fighter (Eldritch Knight)',
+    'Bulwark': 'Fighter (Eldritch Knight)',
+    'Berserker': 'Fighter (Eldritch Knight)',
+    'Holy Knight': 'Paladin',
   };
   
+  const pactCasters = ['Warlock'];
+
   const standardJob = jobMapping[job] || job;
   
   if (fullCasters.includes(standardJob)) return 'full';
   if (halfCasters.includes(standardJob)) return 'half';
+  if (pactCasters.includes(standardJob)) return 'pact';
   if (thirdCasters.includes(standardJob)) return 'artificer';
   if (artificers.includes(standardJob)) return 'artificer';
   return 'none';
@@ -223,6 +237,20 @@ export function getSpellSlotsPerLevel(casterType: CasterType, level: number): Re
     for (let i = 0; i < 9; i++) {
       slots[i + 1] = levelSlots[i];
     }
+  }
+
+  // Pact caster progression (Warlock-style: few slots, all same level, recharge on short rest)
+  if (casterType === 'pact') {
+    const pactSlotTable: Record<number, [number, number]> = {
+      // [slot count, slot level]
+      1: [1, 1], 2: [2, 1], 3: [2, 2], 4: [2, 2], 5: [2, 3],
+      6: [2, 3], 7: [2, 4], 8: [2, 4], 9: [2, 5], 10: [2, 5],
+      11: [3, 5], 12: [3, 5], 13: [3, 5], 14: [3, 5], 15: [3, 5],
+      16: [3, 5], 17: [4, 5], 18: [4, 5], 19: [4, 5], 20: [4, 5],
+    };
+    const [count, slotLevel] = pactSlotTable[Math.min(level, 20)] || pactSlotTable[20];
+    slots[slotLevel] = count;
+    return slots;
   }
 
   // Half caster progression (standard 5e PHB table)
@@ -301,11 +329,18 @@ export function getSpellcastingAbility(job: string | null | undefined): AbilityS
     'Techsmith': 'INT',
     'Technomancer': 'INT',
     'technomancer': 'INT',
+    'Revenant': 'INT',
     'Healer': 'SENSE',
     'Warden': 'SENSE',
     'Ranger': 'SENSE',
+    'Oracle': 'SENSE',
+    'Stalker': 'SENSE',
     'Herald': 'PRE',
     'Holy Knight': 'PRE',
+    'Invoker': 'PRE',
+    'Resonant': 'PRE',
+    'Crusader': 'PRE',
+    'Contractor': 'PRE',
     'Warrior': 'INT',
     'Assassin': 'INT',
   };
@@ -318,8 +353,8 @@ export function getSpellsKnownLimit(job: string | null | undefined, level: numbe
   if (!job) return null;
   
   // Known casters (Sorcerer, Warlock) have limits
-  if (job === 'Esper') { // Sorcerer equivalent
-    return level + 1; // Standard Sorcerer spells known
+  if (job === 'Esper' || job === 'Invoker' || job === 'Contractor') {
+    return level + 1; // Known casters: level + 1
   }
   
   // Other classes are prepared casters
@@ -338,7 +373,7 @@ export function getSpellsPreparedLimit(
   if (!spellcastingAbility) return null;
   
   // Prepared casters: ability modifier + level (minimum 1) - standard 5e
-  const preparedCasters = ['Mage', 'Healer', 'Warden', 'Herald', 'Ranger', 'Techsmith'];
+  const preparedCasters = ['Mage', 'Oracle', 'Technomancer', 'Revenant', 'Resonant', 'Crusader', 'Stalker', 'Healer', 'Warden', 'Herald', 'Ranger', 'Techsmith'];
   if (preparedCasters.includes(job)) {
     return Math.max(1, abilityModifier + level);
   }
@@ -348,11 +383,10 @@ export function getSpellsPreparedLimit(
 
 // System Favor calculations (mapped to various 5e inspiration mechanics)
 export function getSystemFavorDie(level: number): number {
-  // Similar to Bardic Inspiration die progression
-  if (level <= 4) return 6;
-  if (level <= 10) return 8;
-  if (level <= 16) return 10;
-  return 12;
+  if (level <= 4) return 4;
+  if (level <= 10) return 6;
+  if (level <= 16) return 8;
+  return 10;
 }
 
 export function getSystemFavorMax(level: number): number {

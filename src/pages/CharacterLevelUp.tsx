@@ -22,6 +22,7 @@ import { getLevelingMode } from '@/lib/campaignSettings';
 import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 import { isASILevel, isPathUnlockLevel, type PathUnlockMeta } from '@/lib/levelGating';
 import { DomainEventBus, buildCorePayload, type CharacterLevelUpEvent } from '@/lib/domainEvents';
+import { calculateFeatureUses, autoUpdateFeatureUses } from '@/lib/automation';
 
 function getExperienceForNextLevel(currentLevel: number): number {
   return currentLevel * 1000; // Simple progression formula
@@ -311,14 +312,7 @@ const CharacterLevelUp = () => {
 
       // Add new features (5e/D&D Beyond-style: features are granted automatically at the level)
       for (const feature of newFeatures) {
-        let usesMax: number | null = null;
-        if (feature.uses_formula) {
-          if (feature.uses_formula.includes('proficiency')) {
-            usesMax = newProficiencyBonus;
-          } else if (feature.uses_formula.includes('level')) {
-            usesMax = newLevel;
-          }
-        }
+        const usesMax = calculateFeatureUses(feature.uses_formula, newLevel, newProficiencyBonus);
 
         await supabase
           .from('character_features')
@@ -375,6 +369,13 @@ const CharacterLevelUp = () => {
         await addJobAwakeningBenefitsForLevel(character.id, character.job, newLevel);
       } catch (error) {
         logger.error('Failed to grant job awakening benefits:', error);
+      }
+
+      // Auto-update existing feature uses (proficiency-based features scale with level)
+      try {
+        await autoUpdateFeatureUses(character.id);
+      } catch (error) {
+        logger.error('Failed to auto-update feature uses:', error);
       }
 
       // Emit domain event

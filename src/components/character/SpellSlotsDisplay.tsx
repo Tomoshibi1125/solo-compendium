@@ -4,17 +4,30 @@ import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Plus, Minus } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { logger } from '@/lib/logger';
+import { getSpellcastingAbility, getCasterType } from '@/lib/characterCalculations';
+import { getAbilityModifier, getProficiencyBonus } from '@/types/system-rules';
 
 interface SpellSlotsDisplayProps {
   characterId: string;
   job: string | null;
   level: number;
+  abilities?: Record<string, number>;
   className?: string;
 }
 
-export function SpellSlotsDisplay({ characterId, job, level, className }: SpellSlotsDisplayProps) {
+export function SpellSlotsDisplay({ characterId, job, level, abilities, className }: SpellSlotsDisplayProps) {
   const { data: slots = [], isLoading } = useSpellSlots(characterId, job, level);
   const updateSlot = useUpdateSpellSlot();
+
+  const casterType = getCasterType(job);
+  const castingAbility = getSpellcastingAbility(job);
+  const profBonus = getProficiencyBonus(level);
+  const castingAbilityScore = castingAbility && abilities
+    ? abilities[castingAbility] ?? 10
+    : 10;
+  const castingMod = getAbilityModifier(castingAbilityScore);
+  const spellSaveDC = 8 + profBonus + castingMod;
+  const spellAttackBonus = profBonus + castingMod;
 
   if (isLoading) {
     return (
@@ -87,9 +100,27 @@ export function SpellSlotsDisplay({ characterId, job, level, className }: SpellS
             </div>
           </div>
         ))}
+        {castingAbility && (
+          <div className="grid grid-cols-3 gap-2 p-2 rounded border border-primary/20 bg-primary/5">
+            <div className="text-center">
+              <div className="text-[10px] text-muted-foreground uppercase">Ability</div>
+              <div className="text-sm font-heading font-bold">{castingAbility}</div>
+            </div>
+            <div className="text-center">
+              <div className="text-[10px] text-muted-foreground uppercase">Save DC</div>
+              <div className="text-sm font-heading font-bold">{spellSaveDC}</div>
+            </div>
+            <div className="text-center">
+              <div className="text-[10px] text-muted-foreground uppercase">Attack</div>
+              <div className="text-sm font-heading font-bold">{spellAttackBonus >= 0 ? '+' : ''}{spellAttackBonus}</div>
+            </div>
+          </div>
+        )}
         {slots.length > 0 && (
           <div className="text-xs text-muted-foreground pt-2 border-t border-border">
-            Slots recover on long rest. Some classes recover slots on short rest.
+            {casterType === 'pact'
+              ? 'Pact slots recover on short rest.'
+              : 'Slots recover on long rest. Some classes recover slots on short rest.'}
           </div>
         )}
       </div>

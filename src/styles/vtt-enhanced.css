@@ -374,7 +374,6 @@
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 .vtt-mobile-toolbar button {
@@ -521,6 +520,10 @@
     height: 14px;
   }
 }
+
+/* ── Overlay z-index layers ───────────────────────────────────────────── */
+.vtt-cursor-layer { z-index: 65; }
+.vtt-ping-layer   { z-index: 70; }
 
 /* ── Tablet ───────────────────────────────────────────────────────────── */
 @media (min-width: 769px) and (max-width: 1024px) {

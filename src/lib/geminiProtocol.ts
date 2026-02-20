@@ -417,6 +417,133 @@ export function generateSovereign(
   };
 }
 
+/**
+ * AI-powered sovereign generation using Gemini 2.0 Flash.
+ * Falls back to deterministic generateSovereign() if AI is unavailable.
+ */
+export async function generateSovereignWithAI(
+  job: Job,
+  path: Path,
+  regentA: Regent,
+  regentB: Regent
+): Promise<GeneratedSovereign> {
+  try {
+    const { aiService } = await import('@/lib/ai/aiService');
+    const config = aiService.getConfiguration();
+
+    const pathShortName = path.name.replace(/^Path of the\s*/i, '').replace(/\s*Path$/i, '');
+    const prompt = `You are the Gemini Protocol — the sovereign fusion engine of System Ascendant. Generate a UNIQUE and CREATIVE sovereign class overlay by fusing two Regents with a Job and Path.
+
+FUSION INPUTS:
+- Job: ${job.name} (${job.hit_die} hit die, ${(job.primary_abilities || []).join('/')} primary)
+- Path: ${pathShortName}
+- Regent A (Dominant): ${regentA.name} — Theme: ${regentA.theme}, Damage: ${regentA.damage_type || 'Force'}
+- Regent B (Merged): ${regentB.name} — Theme: ${regentB.theme}, Damage: ${regentB.damage_type || 'Force'}
+
+Generate a COMPLETE sovereign with these EXACT sections. Be creative — every sovereign must feel unique:
+
+1. FUSION NAME: A creative, evocative name (NOT just splicing the two regent names mechanically)
+2. TITLE: "Sovereign of [theme]" — a dramatic title
+3. FUSION THEME: The combined elemental/conceptual theme (e.g., "Eclipse Flame", "Cryogenic Plague")
+4. FUSION ORIGIN: 2-3 paragraphs describing how this fusion occurred, the experience of merging, and what the sovereign became
+5. COMBAT DOCTRINE: How this sovereign fights — their strategic philosophy, signature moves, battlefield role
+6. POWER MULTIPLIER: Narrative description of their power scale relative to standard ascendants
+7. FUSION STABILITY: Assessment of fusion stability (Stable/Unstable/Volatile) and why
+
+8. ABILITIES (exactly 8, one per level milestone):
+For EACH ability provide ALL of these fields:
+- Name: Creative ability name
+- Level: (use levels 1, 3, 5, 7, 10, 14, 17, 20)
+- Action Type: (1 action / 1 bonus action / 1 reaction / Passive)
+- Recharge: (At will / Short Rest / Long Rest / null)
+- Is Capstone: (true for levels 17 and 20 only)
+- Description: 2-3 sentences with SPECIFIC mechanical effects (damage dice, DCs, durations, ranges, conditions)
+- Origin Sources: Which inputs (job name, path name, regent names) contributed to this ability
+
+Return as plain text with clear section headers. Do NOT use JSON or code fences.`;
+
+    const response = await aiService.processRequest({
+      service: config.defaultService,
+      type: 'generate-content',
+      input: prompt,
+      context: {
+        contentType: 'sovereign',
+        universe: 'System Ascendant',
+      },
+    });
+
+    if (response.success && response.data) {
+      const text = typeof response.data === 'string' ? response.data : String(response.data);
+      if (text.trim().length > 200) {
+        // Parse AI text into GeneratedSovereign structure
+        const deterministic = generateSovereign(job, path, regentA, regentB);
+        return parseAISovereignText(text, deterministic, job, path, regentA, regentB);
+      }
+    }
+  } catch {
+    // AI unavailable — fall through to deterministic
+  }
+
+  return generateSovereign(job, path, regentA, regentB);
+}
+
+function parseAISovereignText(
+  text: string,
+  fallback: GeneratedSovereign,
+  job: Job,
+  path: Path,
+  regentA: Regent,
+  regentB: Regent
+): GeneratedSovereign {
+  const extractSection = (header: string): string => {
+    const pattern = new RegExp(`(?:^|\\n)\\s*\\d*\\.?\\s*${header}[:\\s]*([\\s\\S]*?)(?=\\n\\s*\\d+\\.\\s+[A-Z]|$)`, 'i');
+    const match = text.match(pattern);
+    return match?.[1]?.trim() || '';
+  };
+
+  const fusionName = extractSection('FUSION NAME') || fallback.name;
+  const title = extractSection('TITLE') || fallback.title;
+  const fusionTheme = extractSection('FUSION THEME') || fallback.fusion_theme;
+  const description = extractSection('FUSION ORIGIN') || fallback.description;
+  const fusionDescription = extractSection('COMBAT DOCTRINE') || fallback.fusion_description;
+  const powerMultiplier = extractSection('POWER MULTIPLIER') || fallback.power_multiplier;
+  const fusionStability = extractSection('FUSION STABILITY') || fallback.fusion_stability;
+
+  // Try to parse abilities from the AI text; fall back to deterministic abilities
+  const abilities = fallback.abilities.map((ability, index) => {
+    // Look for ability descriptions in the AI text that match the level
+    const levelPattern = new RegExp(`Level\\s*${ability.level}[:\\s]*([\\s\\S]*?)(?=Level\\s*\\d|$)`, 'i');
+    const abilityMatch = text.match(levelPattern);
+    if (abilityMatch?.[1]?.trim()) {
+      const abilityText = abilityMatch[1].trim();
+      const nameMatch = abilityText.match(/^(?:[-•*]\s*)?(?:Name:\s*)?([^\n]+)/i);
+      const descMatch = abilityText.match(/Description:\s*([^\n](?:[\s\S]*?)?)(?=\n\s*(?:Action|Recharge|Origin|Level|Is Capstone)|$)/i);
+      return {
+        ...ability,
+        name: formatMonarchVernacular(nameMatch?.[1]?.replace(/^Name:\s*/i, '').trim() || ability.name),
+        description: formatMonarchVernacular(descMatch?.[1]?.trim() || abilityText.slice(0, 300)),
+      };
+    }
+    return ability;
+  });
+
+  return {
+    name: formatMonarchVernacular(fusionName.replace(/^["']|["']$/g, '')),
+    title: formatMonarchVernacular(title.replace(/^["']|["']$/g, '')),
+    description: formatMonarchVernacular(description),
+    fusion_theme: formatMonarchVernacular(fusionTheme),
+    fusion_description: formatMonarchVernacular(fusionDescription),
+    fusion_method: 'Gemini Protocol (AI-Enhanced Fusion)',
+    abilities,
+    job,
+    path,
+    regentA,
+    regentB,
+    power_multiplier: formatMonarchVernacular(powerMultiplier),
+    fusion_stability: formatMonarchVernacular(fusionStability),
+  };
+}
+
 // Calculate the total number of possible combinations
 export function calculateTotalCombinations(
   jobCount: number,
