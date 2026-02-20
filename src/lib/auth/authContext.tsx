@@ -5,7 +5,7 @@
 
 import React, { createContext, useCallback, useContext, useEffect, useState, ReactNode } from 'react';
 import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { AppError } from '@/lib/appError';
 import { error as logError } from '@/lib/logger';
 
@@ -241,6 +241,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [session, user]);
 
   const signIn = async (email: string, password: string, role: UserRole) => {
+    if (!isSupabaseConfigured) {
+      return { error: 'Backend is not configured. Please check your Supabase environment variables.' };
+    }
+
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
@@ -248,7 +252,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
 
       if (error) {
-        return { error: error.message };
+        const msg = error.message;
+        // Guard against numeric-only or empty error messages (e.g. status codes)
+        if (!msg || /^\d+$/.test(msg)) {
+          return { error: 'Unable to sign in. Please check your credentials and try again.' };
+        }
+        return { error: msg };
       }
 
       if (data.user) {
@@ -299,6 +308,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signUp = async (email: string, password: string, displayName: string, role: UserRole) => {
+    if (!isSupabaseConfigured) {
+      return { error: 'Backend is not configured. Please check your Supabase environment variables.' };
+    }
+
     try {
       // Create auth user
       const redirectTo =
