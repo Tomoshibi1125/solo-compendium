@@ -2,8 +2,8 @@ node_modules
 dist
 .env*
 .vercel
-supabase
-tests
+/supabase
+/tests
 *.log
 coverage
 playwright-report
