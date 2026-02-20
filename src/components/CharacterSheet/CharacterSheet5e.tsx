@@ -18,6 +18,8 @@ import { useConcentration } from '@/hooks/useConcentration';
 import { calculateAC, type EquippedArmor, type EquippedShield } from '@/hooks/useArmorClass';
 import { useHitDiceSpending } from '@/hooks/useHitDiceSpending';
 import { useAttunement, MAX_ATTUNEMENT_SLOTS, type AttunableItem } from '@/hooks/useAttunement';
+import { useCharacterRoll } from '@/hooks/useCharacterRoll';
+import { RollButton } from '@/components/character/RollButton';
 import { resolveRollModifiers, getEffectiveSpeed, getEffectiveHPMax } from '@/lib/conditionEffects';
 import { calculateEncumbrance, calculateCarryingCapacity, calculateTotalWeight } from '@/lib/encumbrance';
 import { getCantripDiceCount } from '@/lib/cantripScaling';
@@ -57,6 +59,15 @@ export function CharacterSheet5e({ characterId, character, onUpdate }: Character
 
   // ── Hooks ──────────────────────────────────────────────────────────────
   const deathSaves = useDeathSaves();
+
+  const { roll } = useCharacterRoll({
+    characterId,
+    characterName: character.name,
+    abilities: character.abilities as Record<string, number>,
+    proficiencyBonus: character.proficiencyBonus,
+    savingThrowProficiencies: character.savingThrowProficiencies as string[],
+    skillProficiencies: character.skillProficiencies,
+  });
 
   const concentration = useConcentration(
     character.abilities.VIT,
@@ -151,6 +162,8 @@ export function CharacterSheet5e({ characterId, character, onUpdate }: Character
   );
 
   const handleAbilityChange = (ability: string, value: number) => {
+    if (!isEditing) return;
+    
     setTempCharacter((prev) => ({
       ...prev,
       abilities: { ...prev.abilities, [ability]: Math.max(1, Math.min(30, value)) },
@@ -429,6 +442,15 @@ export function CharacterSheet5e({ characterId, character, onUpdate }: Character
                 <span className={cn('text-sm font-mono', mod >= 0 ? 'text-green-600' : 'text-red-500')}>
                   {formatModifier(mod)}
                 </span>
+                {!isEditing && (
+                  <RollButton
+                    label={`${ability} Check`}
+                    modifier={mod}
+                    kind="ability"
+                    rollKey={ability}
+                    onRoll={roll}
+                  />
+                )}
                 {isEditing && (
                   <input
                     type="number"
@@ -640,6 +662,14 @@ export function CharacterSheet5e({ characterId, character, onUpdate }: Character
                 <div className="text-[10px] text-muted-foreground">{getAbilityDisplayName(ability as AbilityScore)}</div>
                 <div className="font-bold">{formatModifier(bonus)}</div>
                 {isProficient && <div className="text-[9px] text-green-600">●</div>}
+                <RollButton
+                  label={`${ability} Save`}
+                  modifier={bonus}
+                  kind="save"
+                  rollKey={ability}
+                  onRoll={roll}
+                  compact
+                />
               </div>
             );
           })}
@@ -659,7 +689,17 @@ export function CharacterSheet5e({ characterId, character, onUpdate }: Character
                   {isExpertise ? '◆ ' : isProficient ? '● ' : '○ '}
                   {skill.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}
                 </span>
-                <span className="font-mono text-xs">{formatModifier(bonus)}</span>
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-xs">{formatModifier(bonus)}</span>
+                  <RollButton
+                    label={skill}
+                    modifier={bonus}
+                    kind="skill"
+                    rollKey={skill}
+                    onRoll={roll}
+                    compact
+                  />
+                </div>
               </div>
             );
           })}

@@ -114,8 +114,9 @@ CREATE POLICY "DMs can manage own campaigns" ON public.campaigns
 
 CREATE POLICY "Players can view campaigns they're in" ON public.campaigns
   FOR SELECT USING (
-    auth.uid() = ANY(
-      (SELECT jsonb_array_elements_text(player_characters)::uuid)
+    auth.uid() IN (
+      SELECT user_id FROM public.campaign_members
+      WHERE campaign_id = campaigns.id
     )
   );
 
@@ -165,35 +166,80 @@ ALTER TABLE public.compendium_paths ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.compendium_relics ENABLE ROW LEVEL SECURITY;
 
 -- Compendium policies - everyone can read, only DMs can create/edit
-CREATE POLICY "Anyone can view jobs" ON public.compendium_jobs
-  FOR SELECT USING (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies 
+    WHERE tablename = 'compendium_jobs' AND policyname = 'Anyone can view jobs'
+  ) THEN
+    CREATE POLICY "Anyone can view jobs" ON public.compendium_jobs FOR SELECT USING (true);
+  END IF;
+END $$;
 
-CREATE POLICY "DMs can manage jobs" ON public.compendium_jobs
-  FOR ALL USING (
-    EXISTS (
-      SELECT 1 FROM public.user_profiles 
-      WHERE id = auth.uid() AND role IN ('dm', 'admin')
-    )
-  );
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies 
+    WHERE tablename = 'compendium_jobs' AND policyname = 'DMs can manage jobs'
+  ) THEN
+    CREATE POLICY "DMs can manage jobs" ON public.compendium_jobs
+      FOR ALL USING (
+        EXISTS (
+          SELECT 1 FROM public.user_profiles 
+          WHERE id = auth.uid() AND role IN ('dm', 'admin')
+        )
+      );
+  END IF;
+END $$;
 
-CREATE POLICY "Anyone can view paths" ON public.compendium_paths
-  FOR SELECT USING (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies 
+    WHERE tablename = 'compendium_paths' AND policyname = 'Anyone can view paths'
+  ) THEN
+    CREATE POLICY "Anyone can view paths" ON public.compendium_paths FOR SELECT USING (true);
+  END IF;
+END $$;
 
-CREATE POLICY "DMs can manage paths" ON public.compendium_paths
-  FOR ALL USING (
-    EXISTS (
-      SELECT 1 FROM public.user_profiles 
-      WHERE id = auth.uid() AND role IN ('dm', 'admin')
-    )
-  );
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies 
+    WHERE tablename = 'compendium_paths' AND policyname = 'DMs can manage paths'
+  ) THEN
+    CREATE POLICY "DMs can manage paths" ON public.compendium_paths
+      FOR ALL USING (
+        EXISTS (
+          SELECT 1 FROM public.user_profiles 
+          WHERE id = auth.uid() AND role IN ('dm', 'admin')
+        )
+      );
+  END IF;
+END $$;
 
-CREATE POLICY "Anyone can view relics" ON public.compendium_relics
-  FOR SELECT USING (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies 
+    WHERE tablename = 'compendium_relics' AND policyname = 'Anyone can view relics'
+  ) THEN
+    CREATE POLICY "Anyone can view relics" ON public.compendium_relics FOR SELECT USING (true);
+  END IF;
+END $$;
 
-CREATE POLICY "DMs can manage relics" ON public.compendium_relics
-  FOR ALL USING (
-    EXISTS (
-      SELECT 1 FROM public.user_profiles 
-      WHERE id = auth.uid() AND role IN ('dm', 'admin')
-    )
-  );
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies 
+    WHERE tablename = 'compendium_relics' AND policyname = 'DMs can manage relics'
+  ) THEN
+    CREATE POLICY "DMs can manage relics" ON public.compendium_relics
+      FOR ALL USING (
+        EXISTS (
+          SELECT 1 FROM public.user_profiles 
+          WHERE id = auth.uid() AND role IN ('dm', 'admin')
+        )
+      );
+  END IF;
+END $$;

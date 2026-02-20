@@ -18,8 +18,20 @@ COMMENT ON FUNCTION public.search_compendium_monarchs(TEXT, INTEGER, INTEGER) IS
 DO $$
 DECLARE
   properly_configured INTEGER := 0;
+  total_functions INTEGER := 0;
 BEGIN
-  SELECT COUNT(*) INTO properly_configured
+  -- Count total distinct functions (prevent double-count due to overloads)
+  SELECT COUNT(DISTINCT proname) INTO total_functions
+  FROM pg_proc 
+  WHERE proname IN (
+    'on_long_rest_assign_quests', 'get_asset_paths', 'asset_exists',
+    'search_compendium_jobs', 'get_entity_assets', 'calculate_shadow_energy_max',
+    'get_character_by_share_token', 'search_compendium_relics', 'search_compendium_powers',
+    'search_compendium_monsters', 'search_compendium_paths', 'search_compendium_monarchs'
+  );
+  
+  -- Count properly configured functions (distinct by name)
+  SELECT COUNT(DISTINCT proname) INTO properly_configured
   FROM pg_proc 
   WHERE proname IN (
     'on_long_rest_assign_quests', 'get_asset_paths', 'asset_exists',
@@ -27,9 +39,12 @@ BEGIN
     'get_character_by_share_token', 'search_compendium_relics', 'search_compendium_powers',
     'search_compendium_monsters', 'search_compendium_paths', 'search_compendium_monarchs'
   )
-  AND array_to_string(proconfig, ', ') LIKE '%search_path=pg_catalog, public, extensions%';
+  AND EXISTS (
+    SELECT 1 FROM unnest(proconfig) cfg 
+    WHERE cfg::text LIKE '%search_path=pg_catalog, public, extensions%'
+  );
   
-  IF properly_configured = 12 THEN
+  IF properly_configured = 12 AND total_functions = 12 THEN
     RAISE NOTICE '';
     RAISE NOTICE '🎉 FINAL VERIFICATION SUCCESSFUL';
     RAISE NOTICE '✅ All 12 functions have proper search_path configuration';
@@ -37,6 +52,7 @@ BEGIN
     RAISE NOTICE '⏰ Dashboard refresh: May take up to 10 minutes for Security Advisor to update';
     RAISE NOTICE '';
   ELSE
+    RAISE NOTICE 'DEBUG: total_functions=%, properly_configured=%', total_functions, properly_configured;
     RAISE EXCEPTION '❌ Configuration issue: Only % of 12 functions properly configured', properly_configured;
   END IF;
 END $$;

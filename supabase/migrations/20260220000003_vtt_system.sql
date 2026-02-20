@@ -274,9 +274,9 @@ CREATE OR REPLACE FUNCTION public.create_vtt_map_element(
     p_element_type TEXT,
     p_x INTEGER,
     p_y INTEGER,
+    p_color TEXT,
     p_width INTEGER DEFAULT NULL,
     p_height INTEGER DEFAULT NULL,
-    p_color TEXT,
     p_stroke_width INTEGER DEFAULT 2,
     p_opacity DECIMAL(3,2) DEFAULT 1.00,
     p_data JSONB DEFAULT '{}',
@@ -294,9 +294,9 @@ BEGIN
 
     -- Create map element
     INSERT INTO public.vtt_map_elements (
-        session_id, element_type, x, y, width, height, color, stroke_width, opacity, data, visible_to_players, created_by
+        session_id, element_type, x, y, color, width, height, stroke_width, opacity, data, visible_to_players, created_by
     ) VALUES (
-        p_session_id, p_element_type, p_x, p_y, p_width, p_height, p_color, p_stroke_width, p_opacity, p_data, p_visible_to_players, v_user_id
+        p_session_id, p_element_type, p_x, p_y, p_color, p_width, p_height, p_stroke_width, p_opacity, p_data, p_visible_to_players, v_user_id
     ) RETURNING id INTO v_element_id;
 
     RETURN v_element_id;

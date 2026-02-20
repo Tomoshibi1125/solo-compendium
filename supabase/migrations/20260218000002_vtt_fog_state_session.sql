@@ -1,6 +1,17 @@
 -- Extend VTT fog-of-war state to be session-scoped
 -- Allows multiple concurrent/archived sessions per campaign without overwriting fog/tokens.
 
+-- Create table if it doesn't exist
+CREATE TABLE IF NOT EXISTS public.vtt_fog_state (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  campaign_id UUID REFERENCES public.campaigns(id) ON DELETE CASCADE,
+  scene_id TEXT NOT NULL,
+  fog_data JSONB DEFAULT '{}',
+  token_data JSONB DEFAULT '{}',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
 ALTER TABLE public.vtt_fog_state
   ADD COLUMN IF NOT EXISTS session_id uuid;
 

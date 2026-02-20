@@ -88,6 +88,7 @@ export function FeaturesList({ characterId }: { characterId: string }) {
               <SelectItem value="all">All Sources</SelectItem>
               <SelectItem value="Job">Job</SelectItem>
               <SelectItem value="Path">Path</SelectItem>
+              <SelectItem value="Awakening">Awakening</SelectItem>
               <SelectItem value="Background">Background</SelectItem>
             </SelectContent>
           </Select>

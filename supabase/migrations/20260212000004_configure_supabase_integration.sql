@@ -155,7 +155,10 @@ CREATE POLICY "Campaign members can view content" ON public.campaign_content
       SELECT 1 FROM public.campaigns cam
       WHERE cam.id = campaign_id AND (
         cam.dm_id = auth.uid() OR
-        auth.uid() = ANY((SELECT jsonb_array_elements_text(cam.player_characters))::uuid[])
+        auth.uid() IN (
+          SELECT user_id FROM public.campaign_members 
+          WHERE campaign_id = cam.id
+        )
       )
     )
   );

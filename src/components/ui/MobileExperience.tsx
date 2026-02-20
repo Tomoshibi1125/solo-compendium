@@ -29,7 +29,7 @@ interface TouchGesture {
   type: 'swipe' | 'pinch' | 'longPress' | 'doubleTap' | 'drag' | 'tap';
   direction?: 'left' | 'right' | 'up' | 'down';
   distance?: number;
-  velocity?: { x: number; y: number };
+  velocity?: number;
   timestamp?: Date;
 }
 
@@ -131,7 +131,7 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
         type: gestureType,
         direction,
         distance,
-        velocity: { x: velocity, y: velocity },
+        velocity,
         timestamp: new Date(),
       };
 
