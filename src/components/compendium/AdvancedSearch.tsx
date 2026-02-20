@@ -80,7 +80,7 @@ const FILTER_OPTIONS = {
     'Self', 'Touch', '5 feet', '10 feet', '30 feet', '60 feet', '90 feet', 
     '120 feet', '150 feet', '300 feet', '500 feet', '1 mile', 'Sight', 'Unlimited'
   ],
-  savingThrows: ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'],
+  savingThrows: ['STR', 'AGI', 'VIT', 'INT', 'SENSE', 'PRE'],
   monsterTypes: [
     'Aberration', 'Beast', 'Celestial', 'Construct', 'Dragon', 'Elemental',
     'Fey', 'Fiend', 'Giant', 'Humanoid', 'Monstrosity', 'Ooze', 'Plant', 'Undead'
@@ -107,7 +107,7 @@ const FILTER_OPTIONS = {
     'Special', 'Thrown', 'Two-Handed', 'Versatile', 'Monk', 'Silvered'
   ],
   armorTypes: ['Light Armor', 'Medium Armor', 'Heavy Armor', 'Shield'],
-  abilities: ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'],
+  abilities: ['STR', 'AGI', 'VIT', 'INT', 'SENSE', 'PRE'],
   skills: [
     'Athletics', 'Acrobatics', 'Sleight of Hand', 'Stealth', 'Arcana', 'History',
     'Investigation', 'Nature', 'Religion', 'Insight', 'Medicine', 'Perception',

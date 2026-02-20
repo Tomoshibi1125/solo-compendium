@@ -53,6 +53,12 @@ export function useCampaignRollFeed(campaignId: string) {
   const [isConnected, setIsConnected] = useState(false);
   const { user } = useAuth();
 
+  const untypedSupabase = supabase as unknown as {
+    from: (table: string) => any;
+    channel: (name: string) => any;
+    removeChannel: (channel: unknown) => any;
+  };
+
   // Load initial events
   useEffect(() => {
     if (!campaignId) return;
@@ -63,7 +69,7 @@ export function useCampaignRollFeed(campaignId: string) {
         return;
       }
 
-      const { data, error } = await supabase
+      const { data, error } = await untypedSupabase
         .from('campaign_roll_events')
         .select('*')
         .eq('campaign_id', campaignId)
@@ -87,7 +93,7 @@ export function useCampaignRollFeed(campaignId: string) {
     let channel: RealtimeChannel | null = null;
 
     const subscribe = () => {
-      channel = supabase
+      channel = untypedSupabase
         .channel(`campaign-rolls:${campaignId}`)
         .on(
           'postgres_changes',
@@ -97,12 +103,12 @@ export function useCampaignRollFeed(campaignId: string) {
             table: 'campaign_roll_events',
             filter: `campaign_id=eq.${campaignId}`,
           },
-          (payload) => {
+          (payload: { new: unknown }) => {
             const newEvent = payload.new as unknown as CampaignRollEvent;
             setEvents((prev) => [newEvent, ...prev].slice(0, 50));
           },
         )
-        .subscribe((status) => {
+        .subscribe((status: string) => {
           setIsConnected(status === 'SUBSCRIBED');
         });
     };
@@ -111,7 +117,7 @@ export function useCampaignRollFeed(campaignId: string) {
 
     return () => {
       if (channel) {
-        supabase.removeChannel(channel);
+        untypedSupabase.removeChannel(channel);
       }
     };
   }, [campaignId, user]);
@@ -141,7 +147,7 @@ export function useCampaignRollFeed(campaignId: string) {
         return;
       }
 
-      const { error } = await supabase
+      const { error } = await untypedSupabase
         .from('campaign_roll_events')
         .insert({
           campaign_id: event.campaign_id,

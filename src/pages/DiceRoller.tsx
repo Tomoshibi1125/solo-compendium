@@ -8,6 +8,16 @@ import { DICE_THEMES, type DiceTheme } from '@/components/dice/diceThemes';
 import { Label } from '@/components/ui/label';
 import { useRecordRoll } from '@/hooks/useRollHistory';
 import { logger } from '@/lib/logger';
+import {
+  clearPendingResolution,
+  getPendingResolution,
+  resolveAttack,
+  resolveDamage,
+  resolveHealing,
+  resolveSave,
+  type ActionResolutionPayload,
+  type ResolutionOutcome,
+} from '@/lib/actionResolution';
 
 interface DiceRoll {
   id: string;
@@ -68,6 +78,22 @@ const THEME_ICONS: Partial<Record<DiceTheme, LucideIcon>> = {
   'system-interface': Sparkles,
   'arise-violet': Gem,
   'monarch-gold': Crown,
+};
+
+const THEME_SWATCH_CLASSES: Partial<Record<DiceTheme, { icon: string; bar: string }>> = {
+  'umbral-ascendant': { icon: 'text-shadow-purple', bar: 'bg-shadow-purple/40' },
+  'frost-monarch': { icon: 'text-shadow-blue', bar: 'bg-shadow-blue/40' },
+  'flame-monarch': { icon: 'text-orange-400', bar: 'bg-orange-400/40' },
+  'beast-monarch': { icon: 'text-lime-400', bar: 'bg-lime-400/40' },
+  'plague-monarch': { icon: 'text-emerald-400', bar: 'bg-emerald-400/40' },
+  'iron-monarch': { icon: 'text-muted-foreground', bar: 'bg-muted-foreground/40' },
+  'dragon-monarch': { icon: 'text-pink-400', bar: 'bg-pink-400/40' },
+  'regent-monarch': { icon: 'text-monarch-gold', bar: 'bg-monarch-gold/40' },
+  'supreme-deity': { icon: 'text-shadow-blue', bar: 'bg-shadow-blue/40' },
+  'gate-portal': { icon: 'text-red-400', bar: 'bg-red-400/40' },
+  'system-interface': { icon: 'text-emerald-400', bar: 'bg-emerald-400/40' },
+  'arise-violet': { icon: 'text-arise-violet', bar: 'bg-arise-violet/40' },
+  'monarch-gold': { icon: 'text-monarch-gold', bar: 'bg-monarch-gold/40' },
 };
 
 const Dice3DRoller = lazy(() =>
@@ -140,6 +166,8 @@ const DiceRoller = () => {
   const [dice3D, setDice3D] = useState<Dice3DState[]>([]);
   const [show3D, setShow3D] = useState(true);
   const [diceTheme, setDiceTheme] = useState<DiceTheme>('umbral-ascendant');
+  const [pendingResolution, setPendingResolutionState] = useState<ActionResolutionPayload | null>(null);
+  const [resolutionOutcome, setResolutionOutcome] = useState<ResolutionOutcome | null>(null);
   const recordRoll = useRecordRoll();
   const pendingRollRef = useRef<PendingRoll | null>(null);
   const rollTimeoutRef = useRef<number | null>(null);
@@ -157,6 +185,42 @@ const DiceRoller = () => {
         rollTimeoutRef.current = null;
       }
     };
+  }, []);
+
+  useEffect(() => {
+    const pending = getPendingResolution();
+    setPendingResolutionState(pending);
+  }, []);
+
+  const rollPendingResolution = useCallback(() => {
+    const pending = getPendingResolution();
+    if (!pending) {
+      setPendingResolutionState(null);
+      setResolutionOutcome(null);
+      return;
+    }
+
+    try {
+      const outcome =
+        pending.kind === 'attack'
+          ? resolveAttack(pending, 10)
+          : pending.kind === 'save'
+            ? resolveSave(pending)
+            : pending.kind === 'healing'
+              ? resolveHealing(pending)
+              : resolveDamage(pending);
+
+      setPendingResolutionState(pending);
+      setResolutionOutcome(outcome);
+    } catch (err) {
+      logger.error('Failed to resolve pending action:', err);
+    }
+  }, []);
+
+  const clearResolution = useCallback(() => {
+    clearPendingResolution();
+    setPendingResolutionState(null);
+    setResolutionOutcome(null);
   }, []);
 
   const finalizeRoll = useCallback((pending: PendingRoll) => {
@@ -376,7 +440,7 @@ const DiceRoller = () => {
               <h1 className="font-arise text-4xl font-black mb-2 gradient-text-system text-glow flex items-center gap-3">
                 <Sparkles className="w-8 h-8 text-shadow-purple animate-pulse" />
                 DICE ROLLER
-                <Zap className="w-8 h-8 text-shadow-blue animate-pulse" style={{ animationDelay: '0.5s' }} />
+                <Zap className="w-8 h-8 text-shadow-blue animate-pulse" />
               </h1>
               <p className="text-muted-foreground font-heading">
                 Roll dice with the <span className="text-primary">System's</span> guidance - may the Prime Architect's favor be with you
@@ -396,6 +460,51 @@ const DiceRoller = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Dice Selection */}
           <div className="lg:col-span-2 space-y-6">
+            {pendingResolution && (
+              <SystemWindow title="PENDING RESOLUTION" variant="default">
+                <div className="space-y-3">
+                  <div className="text-sm text-muted-foreground">
+                    {pendingResolution.name}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <Button variant="outline" onClick={rollPendingResolution}>
+                      Roll Resolution
+                    </Button>
+                    <Button variant="outline" onClick={clearResolution}>
+                      Clear
+                    </Button>
+                  </div>
+                  {resolutionOutcome && (
+                    <div className="text-sm">
+                      {resolutionOutcome.kind === 'attack' && (
+                        <div>
+                          <div>Attack total: {resolutionOutcome.attackTotal} vs AC {resolutionOutcome.targetAC}</div>
+                          <div>{resolutionOutcome.hit ? 'Hit' : 'Miss'}</div>
+                          {resolutionOutcome.hit && resolutionOutcome.damageTotal !== undefined && (
+                            <div>Damage: {resolutionOutcome.damageTotal}</div>
+                          )}
+                        </div>
+                      )}
+                      {resolutionOutcome.kind === 'save' && (
+                        <div>
+                          <div>Save total: {resolutionOutcome.saveTotal} vs DC {resolutionOutcome.dc}</div>
+                          <div>{resolutionOutcome.success ? 'Success' : 'Failure'}</div>
+                          {resolutionOutcome.damageTotal !== undefined && (
+                            <div>Damage: {resolutionOutcome.damageTotal}</div>
+                          )}
+                        </div>
+                      )}
+                      {resolutionOutcome.kind === 'healing' && (
+                        <div>Healing: {resolutionOutcome.healingTotal}</div>
+                      )}
+                      {resolutionOutcome.kind === 'damage' && (
+                        <div>Damage: {resolutionOutcome.damageTotal}</div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </SystemWindow>
+            )}
             {/* 3D Dice Roller */}
             {show3D && dice3D.length > 0 && (
               <SystemWindow title={`SYSTEM DICE CHAMBER - ${DICE_THEMES[diceTheme].name.toUpperCase()}`} variant="arise" className="overflow-hidden">
@@ -426,6 +535,7 @@ const DiceRoller = () => {
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                     {Object.entries(DICE_THEMES).map(([key, theme]) => {
                       const Icon = THEME_ICONS[key as DiceTheme] ?? Palette;
+                      const swatch = THEME_SWATCH_CLASSES[key as DiceTheme];
                       return (
                         <button
                           key={key}
@@ -438,13 +548,10 @@ const DiceRoller = () => {
                           )}
                         >
                           <div className="flex items-center gap-2 mb-1">
-                            <Icon className="w-4 h-4" style={{ color: theme.baseColor }} />
+                            <Icon className={cn('w-4 h-4', swatch?.icon)} />
                             <span className="font-heading text-sm font-semibold">{theme.name}</span>
                           </div>
-                          <div 
-                            className="w-full h-2 rounded-full"
-                            style={{ backgroundColor: theme.baseColor, opacity: 0.3 }}
-                          />
+                          <div className={cn('w-full h-2 rounded-full opacity-30', swatch?.bar)} />
                         </button>
                       );
                     })}
@@ -486,19 +593,12 @@ const DiceRoller = () => {
                             "w-16 h-16 font-display text-lg transition-all",
                             selected && "shadow-lg"
                           )}
-                          style={selected ? {
-                            boxShadow: `0 0 20px ${DICE_THEMES[diceTheme].baseColor}40, 0 0 10px ${DICE_THEMES[diceTheme].baseColor}20`,
-                          } : {}}
                         >
                           {label}
                         </Button>
                         {selected && selected.count > 0 && (
                           <span 
                             className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white"
-                            style={{ 
-                              backgroundColor: DICE_THEMES[diceTheme].baseColor,
-                              boxShadow: `0 0 10px ${DICE_THEMES[diceTheme].baseColor}60`,
-                            }}
                           >
                             {selected.count}
                           </span>
@@ -507,6 +607,8 @@ const DiceRoller = () => {
                           <button
                             onClick={(e) => { e.stopPropagation(); removeDie(sides); }}
                             className="absolute -bottom-2 -right-2 w-5 h-5 bg-destructive text-destructive-foreground rounded-full flex items-center justify-center hover:scale-110 transition-transform"
+                            aria-label={`Remove ${label}`}
+                            title={`Remove ${label}`}
                           >
                             <Minus className="w-3 h-3" />
                           </button>
@@ -573,11 +675,6 @@ const DiceRoller = () => {
                       "hover:shadow-[0_0_30px_hsl(var(--primary)/0.5)]",
                       "transition-all duration-300"
                     )}
-                    style={{
-                      boxShadow: selectedDice.length > 0 
-                        ? `0 0 20px ${DICE_THEMES[diceTheme].baseColor}40` 
-                        : undefined,
-                    }}
                   >
                     {isRolling ? (
                       <span className="flex items-center gap-2">
@@ -610,7 +707,7 @@ const DiceRoller = () => {
                 {/* System Ascendant background effects */}
                 <div className="absolute inset-0 pointer-events-none">
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-gradient-radial from-shadow-blue/20 via-shadow-purple/10 to-transparent rounded-full blur-3xl animate-pulse" />
-                  <div className="absolute bottom-0 right-0 w-48 h-48 bg-gradient-radial from-arise-violet/15 to-transparent rounded-full blur-2xl animate-pulse" style={{ animationDelay: '0.5s' }} />
+                  <div className="absolute bottom-0 right-0 w-48 h-48 bg-gradient-radial from-arise-violet/15 to-transparent rounded-full blur-2xl animate-pulse" />
                 </div>
                 
                 <div className="text-center py-6 relative z-10">

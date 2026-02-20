@@ -162,7 +162,7 @@ const EnhancedInput: React.FC<EnhancedInputProps> = ({
   const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
   const [copied, setCopied] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const debounceRef = useRef<NodeJS.Timeout | undefined>(undefined);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const inputType = type === 'password' && showPassword ? 'text' : type;
   const currentValue = typeof value === 'string' ? value : String(value || '');
@@ -594,12 +594,11 @@ const EnhancedForm: React.FC<EnhancedFormProps> = ({
 
         {showProgress && (
           <div className="flex items-center space-x-2">
-            <div className="w-32 bg-muted rounded-full h-2">
-              <div 
-                className="bg-primary h-2 rounded-full transition-all duration-300"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
+            <progress
+              className="w-32 h-2"
+              value={progress}
+              max={100}
+            />
             <span className="text-xs text-muted-foreground">{progress}%</span>
           </div>
         )}

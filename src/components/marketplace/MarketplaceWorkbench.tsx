@@ -19,8 +19,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/lib/auth/authContext';
-import { supabase } from '@/integrations/supabase/client';
-import { logger } from '@/lib/logger';
 import {
   useDeleteMarketplaceItem,
   useMarketplaceItems,
@@ -31,7 +29,6 @@ import {
   type MarketplaceItemType,
   type MarketplacePriceType,
 } from '@/hooks/useMarketplaceData';
-import { useAuth } from '@/lib/auth/authContext';
 
 const ITEM_TYPES: MarketplaceItemType[] = ['campaign', 'character', 'item', 'map', 'module', 'template'];
 
@@ -63,14 +60,6 @@ export function MarketplaceWorkbench() {
 
   const [ratingByItem, setRatingByItem] = useState<Record<string, number>>({});
   const [commentByItem, setCommentByItem] = useState<Record<string, string>>({});
-
-<<<<<<< Updated upstream
-=======
-  const [licenseDialogItem, setLicenseDialogItem] = useState<MarketplaceItemRecord | null>(null);
-  const [showLicenseDialog, setShowLicenseDialog] = useState(false);
-  const [licenseAcceptedByItemId, setLicenseAcceptedByItemId] = useState<Record<string, boolean>>({});
-
->>>>>>> Stashed changes
   const { data: items = [], isLoading, error } = useMarketplaceItems({
     scope,
     search,
@@ -81,34 +70,6 @@ export function MarketplaceWorkbench() {
   const deleteItem = useDeleteMarketplaceItem();
   const recordDownload = useRecordMarketplaceDownload();
   const submitReview = useUpsertMarketplaceReview();
-
-  useEffect(() => {
-    if (!user?.id) return;
-    if (!items || items.length === 0) return;
-
-    const ids = items.map((item) => item.id);
-    void (supabase as any)
-      .from('user_marketplace_entitlements')
-      .select('marketplace_item_id, license_accepted_at')
-      .eq('user_id', user.id)
-      .in('marketplace_item_id', ids)
-      .then(({ data, error }: { data: any[] | null; error: any }) => {
-        if (error) {
-          logger.warn('[Marketplace] Failed to prefetch entitlements:', error);
-          return;
-        }
-        const next: Record<string, boolean> = {};
-        for (const row of data || []) {
-          if (typeof row?.marketplace_item_id === 'string') {
-            next[row.marketplace_item_id] = !!row.license_accepted_at;
-          }
-        }
-        setLicenseAcceptedByItemId((prev) => ({ ...prev, ...next }));
-      })
-      .catch((err: unknown) => {
-        logger.warn('[Marketplace] Failed to prefetch entitlements:', err);
-      });
-  }, [items, user?.id]);
 
   const resetForm = () => {
     setEditingId(null);
@@ -224,32 +185,7 @@ export function MarketplaceWorkbench() {
       return;
     }
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    await recordDownload.mutateAsync({ itemId: item.id });
-    if (item.file_url) {
-      window.open(item.file_url, '_blank', 'noopener,noreferrer');
-    } else {
-      toast({
-        title: 'Download recorded',
-        description: 'No file URL is attached to this listing yet.',
-      });
-    }
-=======
-=======
->>>>>>> Stashed changes
-    const accepted = !!licenseAcceptedByItemId[item.id];
-    if (!accepted) {
-      setLicenseDialogItem(item);
-      setShowLicenseDialog(true);
-      return;
-    }
-
     await proceedDownload(item);
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
   };
 
   const handleReview = async (itemId: string) => {
@@ -362,9 +298,6 @@ export function MarketplaceWorkbench() {
                       </Badge>
                       {item.is_verified && <Badge>verified</Badge>}
                       {!item.has_access && <Badge variant="destructive">locked</Badge>}
-                      {item.has_access && licenseAcceptedByItemId[item.id] && (
-                        <Badge variant="secondary">license accepted</Badge>
-                      )}
                     </div>
 
                     {item.tags.length > 0 && (
@@ -385,9 +318,7 @@ export function MarketplaceWorkbench() {
                         disabled={recordDownload.isPending}
                       >
                         <Download className="w-4 h-4 mr-2" />
-                        {item.has_access
-                          ? (licenseAcceptedByItemId[item.id] ? 'Download' : 'Review License')
-                          : 'Download'}
+                        Download
                       </Button>
                       {isOwner && (
                         <>
@@ -581,35 +512,9 @@ export function MarketplaceWorkbench() {
               Reset Form
             </Button>
           </div>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
         </SystemWindow>
       </TabsContent>
     </Tabs>
-=======
-=======
->>>>>>> Stashed changes
-          </SystemWindow>
-        </TabsContent>
-      </Tabs>
-
-      <LicenseDialog
-        open={showLicenseDialog}
-        onOpenChange={setShowLicenseDialog}
-        itemId={licenseDialogItem?.id || ''}
-        itemName={licenseDialogItem?.title || ''}
-        licenseText={licenseDialogItem?.license}
-        onAccepted={() => {
-          const item = licenseDialogItem;
-          if (!item) return;
-          setLicenseAcceptedByItemId((prev) => ({ ...prev, [item.id]: true }));
-          void proceedDownload(item);
-        }}
-      />
     </>
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
   );
 }

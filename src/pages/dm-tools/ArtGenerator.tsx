@@ -26,13 +26,20 @@ import { getRuntimeEnvValue } from '@/lib/runtimeEnv';
 
 type ContentType = 'monster' | 'npc' | 'item' | 'location';
 
+type GeneratedContentData = {
+  description?: string;
+  tags?: string[];
+  rarity?: string;
+  environment?: string;
+};
+
 interface GeneratedContent {
   id: string;
   type: ContentType;
   name: string;
   artId?: string;
   artUrl?: string;
-  data: Record<string, unknown>;
+  data: GeneratedContentData;
 }
 
 export default function ArtGeneratorDM() {
@@ -75,7 +82,7 @@ export default function ArtGeneratorDM() {
     setCurrentEditItem(prev => (prev ? { ...prev, ...updates } : prev));
   }, [currentEditItem]);
 
-  const updateCurrentItemData = useCallback((updates: Record<string, unknown>) => {
+  const updateCurrentItemData = useCallback((updates: GeneratedContentData) => {
     if (!currentEditItem) return;
     const nextData = { ...(currentEditItem.data || {}), ...updates };
     updateCurrentItem({ data: nextData });
@@ -230,7 +237,7 @@ export default function ArtGeneratorDM() {
       name: 'Generated Art',
       artId: assetId,
       artUrl: previewUrl,
-      data: {},
+      data: { tags: [], description: '', rarity: '', environment: '' },
     };
     setGeneratedContent(prev => [...prev, fallbackItem]);
     setIsAIArtPending(false);
@@ -241,7 +248,7 @@ export default function ArtGeneratorDM() {
       id: `${type}-${Date.now()}`,
       type,
       name: '',
-      data: {},
+      data: { tags: [], description: '', rarity: '', environment: '' },
     };
     setGeneratedContent(prev => [...prev, newItem]);
     setCurrentEditItem(newItem);
@@ -300,7 +307,7 @@ export default function ArtGeneratorDM() {
         </div>
 
         {/* Content Type Tabs */}
-        <Tabs value={contentType} onValueChange={(value: ContentType) => setContentType(value)}>
+        <Tabs value={contentType} onValueChange={(value) => setContentType(value as ContentType)}>
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="monster" className="flex items-center gap-2">
               <Sword className="w-4 h-4" />
@@ -532,10 +539,10 @@ export default function ArtGeneratorDM() {
                     entityId={currentEditItem.id}
                     existingData={{
                       name: currentEditItem.name,
-                      description: currentEditItem.data.description,
-                      tags: currentEditItem.data.tags,
-                      rarity: currentEditItem.data.rarity,
-                      environment: currentEditItem.data.environment,
+                      description: currentEditItem.data.description ?? '',
+                      tags: currentEditItem.data.tags ?? [],
+                      rarity: currentEditItem.data.rarity ?? '',
+                      environment: currentEditItem.data.environment ?? '',
                     }}
                     onArtGenerated={handleArtGenerated}
                   />

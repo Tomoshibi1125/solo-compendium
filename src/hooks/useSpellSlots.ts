@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 import { getSpellSlotsPerLevel, getCasterType } from '@/lib/characterCalculations';
 import {
   getLocalCharacterState,
@@ -10,7 +11,6 @@ import {
 } from '@/lib/guestStore';
 import { AppError } from '@/lib/appError';
 
-
 export interface SpellSlotData {
   level: number;
   max: number;
@@ -18,6 +18,33 @@ export interface SpellSlotData {
   recoveredOnShortRest: boolean;
   recoveredOnLongRest: boolean;
 }
+
+type SpellSlotRow = Database['public']['Tables']['character_spell_slots']['Row'];
+
+const buildSpellSlotsCacheKey = (userId: string, characterId: string) => {
+  return `solo-compendium.cache.spell-slots.${userId}.character:${characterId}.v1`;
+};
+
+const readCachedSpellSlots = (key: string): SpellSlotData[] | null => {
+  try {
+    if (typeof window === 'undefined') return null;
+    const raw = window.localStorage.getItem(key);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as unknown;
+    return Array.isArray(parsed) ? (parsed as SpellSlotData[]) : null;
+  } catch {
+    return null;
+  }
+};
+
+const writeCachedSpellSlots = (key: string, slots: SpellSlotData[]) => {
+  try {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem(key, JSON.stringify(slots));
+  } catch {
+    // ignore
+  }
+};
 
 /**
  * Fetch spell slots for a character
@@ -69,13 +96,22 @@ export const useSpellSlots = (characterId: string, job: string | null, character
         return slots;
       }
 
+      const { data: { user } } = await supabase.auth.getUser();
+      const cacheKey = user?.id ? buildSpellSlotsCacheKey(user.id, characterId) : null;
+
       const { data, error } = await supabase
         .from('character_spell_slots')
         .select('*')
         .eq('character_id', characterId)
         .order('spell_level', { ascending: true });
 
-      if (error) throw error;
+      if (error) {
+        if (cacheKey) {
+          const cached = readCachedSpellSlots(cacheKey);
+          if (cached) return cached;
+        }
+        throw error;
+      }
 
       // Get expected slots based on caster type and level
       const casterType = getCasterType(job);
@@ -83,13 +119,13 @@ export const useSpellSlots = (characterId: string, job: string | null, character
 
       // Create array of spell slot data
       const slots: SpellSlotData[] = [];
-      
+
       for (let spellLevel = 1; spellLevel <= 9; spellLevel++) {
         const maxSlots = expectedSlots[spellLevel];
-        
+
         // Find existing slot record
-        const existing = data?.find(s => s.spell_level === spellLevel);
-        
+        const existing = data?.find((s) => s.spell_level === spellLevel);
+
         if (maxSlots > 0 || existing) {
           slots.push({
             level: spellLevel,
@@ -101,6 +137,9 @@ export const useSpellSlots = (characterId: string, job: string | null, character
         }
       }
 
+      if (cacheKey) {
+        writeCachedSpellSlots(cacheKey, slots);
+      }
       return slots;
     },
     enabled: !!characterId,
@@ -145,6 +184,21 @@ export const useUpdateSpellSlot = () => {
           });
         }
         return;
+      }
+
+      const { data: { user } } = await supabase.auth.getUser();
+      const cacheKey = user?.id ? buildSpellSlotsCacheKey(user.id, characterId) : null;
+      if (cacheKey) {
+        const cached = readCachedSpellSlots(cacheKey);
+        const seed = (cached ??
+          (queryClient.getQueryData(['spell-slots', characterId]) as SpellSlotData[] | undefined) ??
+          null);
+        if (seed) {
+          const nextCached = seed.map((slot) =>
+            slot.level === spellLevel ? { ...slot, current: Math.max(0, current) } : slot
+          );
+          writeCachedSpellSlots(cacheKey, nextCached);
+        }
       }
 
       // Check if slot exists
@@ -239,61 +293,79 @@ export const useInitializeSpellSlots = () => {
         return;
       }
 
+      const { data: { user } } = await supabase.auth.getUser();
+      const cacheKey = user?.id ? buildSpellSlotsCacheKey(user.id, characterId) : null;
+
       const casterType = getCasterType(job);
       const expectedSlots = getSpellSlotsPerLevel(casterType, level);
 
       // Get existing slots
-      const { data: existing } = await supabase
+      const { data: existing, error: existingError } = await supabase
         .from('character_spell_slots')
         .select('*')
         .eq('character_id', characterId);
 
-      const operations: Array<PromiseLike<unknown>> = [];
+      if (existingError) throw existingError;
 
       for (let spellLevel = 1; spellLevel <= 9; spellLevel++) {
         const maxSlots = expectedSlots[spellLevel];
-        const existingSlot = existing?.find(s => s.spell_level === spellLevel);
+        if (maxSlots <= 0) continue;
 
-        if (maxSlots > 0) {
-          if (existingSlot) {
-            // Update max, preserve current if it's valid
-            const newCurrent = Math.min(existingSlot.slots_current, maxSlots);
-            operations.push(
-              supabase
-                .from('character_spell_slots')
-                .update({
-                  slots_max: maxSlots,
-                  slots_current: newCurrent,
-                })
-                .eq('id', existingSlot.id)
-            );
-          } else {
-            // Create new slot
-            operations.push(
-              supabase
-                .from('character_spell_slots')
-                .insert({
-                  character_id: characterId,
-                  spell_level: spellLevel,
-                  slots_max: maxSlots,
-                  slots_current: maxSlots,
-                  slots_recovered_on_short_rest: 0,
-                  slots_recovered_on_long_rest: 1,
-                })
-            );
-          }
-        } else if (existingSlot) {
-          // Remove slot if no longer needed
-          operations.push(
-            supabase
-              .from('character_spell_slots')
-              .delete()
-              .eq('id', existingSlot.id)
-          );
+        // Find existing slot record
+        const existingSlot = existing?.find((s) => s.spell_level === spellLevel) as SpellSlotRow | undefined;
+
+        const nextCurrent = existingSlot
+          ? Math.min(existingSlot.slots_current ?? maxSlots, maxSlots)
+          : maxSlots;
+
+        if (existingSlot?.id) {
+          const { error: updateError } = await supabase
+            .from('character_spell_slots')
+            .update({
+              slots_max: maxSlots,
+              slots_current: nextCurrent,
+            })
+            .eq('id', existingSlot.id);
+          if (updateError) throw updateError;
+        } else {
+          const { error: insertError } = await supabase
+            .from('character_spell_slots')
+            .insert({
+              character_id: characterId,
+              spell_level: spellLevel,
+              slots_max: maxSlots,
+              slots_current: nextCurrent,
+              slots_recovered_on_short_rest: 0,
+              slots_recovered_on_long_rest: 1,
+            });
+          if (insertError) throw insertError;
         }
       }
 
-      await Promise.all(operations);
+      if (cacheKey) {
+        const { data: refreshed, error: refreshError } = await supabase
+          .from('character_spell_slots')
+          .select('*')
+          .eq('character_id', characterId)
+          .order('spell_level', { ascending: true });
+        if (refreshError) throw refreshError;
+
+        const slots: SpellSlotData[] = [];
+        for (let spellLevel = 1; spellLevel <= 9; spellLevel++) {
+          const expectedMax = expectedSlots[spellLevel];
+          const row = (refreshed || []).find((s) => s.spell_level === spellLevel) as SpellSlotRow | undefined;
+          if (expectedMax <= 0 && !row) continue;
+
+          slots.push({
+            level: spellLevel,
+            max: row?.slots_max ?? expectedMax,
+            current: row?.slots_current ?? row?.slots_max ?? expectedMax,
+            recoveredOnShortRest: row?.slots_recovered_on_short_rest === 1,
+            recoveredOnLongRest: row?.slots_recovered_on_long_rest === 1,
+          });
+        }
+        writeCachedSpellSlots(cacheKey, slots);
+      }
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: ['spell-slots', variables.characterId] });
@@ -328,6 +400,24 @@ export const useRecoverSpellSlots = () => {
           }
         }
         return;
+      }
+
+      const { data: { user } } = await supabase.auth.getUser();
+      const cacheKey = user?.id ? buildSpellSlotsCacheKey(user.id, characterId) : null;
+      if (cacheKey) {
+        const cached = readCachedSpellSlots(cacheKey);
+        const seed = (cached ??
+          (queryClient.getQueryData(['spell-slots', characterId]) as SpellSlotData[] | undefined) ??
+          null);
+        if (seed) {
+          const nextCached = seed.map((slot) => {
+            if (restType === 'long') {
+              return { ...slot, current: slot.max };
+            }
+            return slot.recoveredOnShortRest ? { ...slot, current: slot.max } : slot;
+          });
+          writeCachedSpellSlots(cacheKey, nextCached);
+        }
       }
 
       const { data: slots } = await supabase

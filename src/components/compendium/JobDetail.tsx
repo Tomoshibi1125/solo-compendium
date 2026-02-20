@@ -27,6 +27,13 @@ interface JobData {
   tags?: string[];
   source_book?: string;
   image_url?: string | null;
+  // DDB-parity fields (from static data fallback)
+  starting_equipment?: string[][] | null;
+  hit_points_at_first_level?: string | null;
+  hit_points_at_higher_levels?: string | null;
+  multiclass_prerequisites?: string | null;
+  spellcasting_ability?: string | null;
+  spellcasting_focus?: string | null;
 }
 
 interface JobFeature {
@@ -181,6 +188,26 @@ export const JobDetail = ({ data }: { data: JobData }) => {
         </SystemWindow>
       </div>
 
+      {/* Hit Points */}
+      {(data.hit_points_at_first_level || data.hit_points_at_higher_levels) && (
+        <SystemWindow title="HIT POINTS">
+          <div className="space-y-2">
+            {data.hit_points_at_first_level && (
+              <div>
+                <span className="text-sm text-muted-foreground">At 1st Level: </span>
+                <span className="font-heading">{data.hit_points_at_first_level}</span>
+              </div>
+            )}
+            {data.hit_points_at_higher_levels && (
+              <div>
+                <span className="text-sm text-muted-foreground">At Higher Levels: </span>
+                <span className="font-heading">{data.hit_points_at_higher_levels}</span>
+              </div>
+            )}
+          </div>
+        </SystemWindow>
+      )}
+
       {/* Proficiencies */}
       <SystemWindow title="PROFICIENCIES">
         <div className="grid md:grid-cols-3 gap-4">
@@ -204,6 +231,45 @@ export const JobDetail = ({ data }: { data: JobData }) => {
           </div>
         )}
       </SystemWindow>
+
+      {/* Starting Equipment */}
+      {data.starting_equipment && data.starting_equipment.length > 0 && (
+        <SystemWindow title="STARTING EQUIPMENT">
+          <ul className="space-y-2">
+            {data.starting_equipment.map((choice, i) => (
+              <li key={i} className="flex items-start gap-2">
+                <span className="text-primary font-heading">({String.fromCharCode(97 + i)})</span>
+                <span className="font-heading">{choice.join(' or ')}</span>
+              </li>
+            ))}
+          </ul>
+        </SystemWindow>
+      )}
+
+      {/* Spellcasting */}
+      {data.spellcasting_ability && (
+        <SystemWindow title="SPELLCASTING">
+          <div className="space-y-2">
+            <div>
+              <span className="text-sm text-muted-foreground">Spellcasting Ability: </span>
+              <span className="font-heading font-semibold">{formatMonarchVernacular(data.spellcasting_ability)}</span>
+            </div>
+            {data.spellcasting_focus && (
+              <div>
+                <span className="text-sm text-muted-foreground">Spellcasting Focus: </span>
+                <span className="font-heading">{formatMonarchVernacular(data.spellcasting_focus)}</span>
+              </div>
+            )}
+          </div>
+        </SystemWindow>
+      )}
+
+      {/* Multiclass Prerequisites */}
+      {data.multiclass_prerequisites && (
+        <SystemWindow title="MULTICLASS PREREQUISITES">
+          <p className="font-heading">{data.multiclass_prerequisites}</p>
+        </SystemWindow>
+      )}
 
       {/* Paths */}
       {paths.length > 0 && (

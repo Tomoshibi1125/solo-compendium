@@ -115,7 +115,7 @@ class AdvancedDiceEngine implements DiceFormulaParser {
     let breakdown = '';
 
     // Roll each dice group
-    parsed.dice.forEach((die) => {
+    parsed.dice.forEach((die, index) => {
       const dieRolls = this.rollMultiple(die.count, die.sides);
       rolls.push(...dieRolls);
       

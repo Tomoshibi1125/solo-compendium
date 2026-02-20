@@ -8,6 +8,10 @@ import { logger } from './logger';
 import { calculateRuneMaxUses } from './runeAutomation';
 import { getProficiencyBonus } from '@/types/system-rules';
 import { AppError } from './appError';
+import type { Database } from '@/integrations/supabase/types';
+import { DomainEventBus, buildCorePayload, type RestShortEvent, type RestLongEvent } from '@/lib/domainEvents';
+
+type CompendiumRuneRow = Database['public']['Tables']['compendium_runes']['Row'];
 
 
 /**
@@ -64,6 +68,7 @@ export async function executeShortRest(characterId: string): Promise<void> {
   }
 
   // Recover spell slots on short rest (only for slots marked for short rest recovery)
+  const recoveredSlotLevels: number[] = [];
   try {
     const { data: slots } = await supabase
       .from('character_spell_slots')
@@ -77,11 +82,33 @@ export async function executeShortRest(characterId: string): Promise<void> {
           .from('character_spell_slots')
           .update({ slots_current: slot.slots_max })
           .eq('id', slot.id);
+        recoveredSlotLevels.push(slot.spell_level);
       }
     }
   } catch (error) {
     logger.error('Failed to recover spell slots:', error);
     // Continue even if spell slot recovery fails
+  }
+
+  // Emit domain event
+  try {
+    const shortRestEvent: RestShortEvent = {
+      ...buildCorePayload({
+        characterId: character.id,
+        characterName: character.name,
+        className: character.job,
+        pathName: character.path,
+        level: character.level,
+      }),
+      type: 'rest:short',
+      hitDiceSpent: 0,
+      hpRecovered: 0,
+      featuresRecharged: (features || []).map((f) => f.name),
+      slotsRecovered: recoveredSlotLevels,
+    };
+    DomainEventBus.emit(shortRestEvent);
+  } catch {
+    // Best-effort event emission
   }
 }
 
@@ -190,7 +217,60 @@ export async function executeLongRest(characterId: string): Promise<{ questAssig
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Daily quests could not be assigned';
     logger.error('Failed to assign daily quests after long rest:', error);
+
+    // Emit domain event even on partial failure
+    try {
+      const longRestEvent: RestLongEvent = {
+        ...buildCorePayload({
+          characterId: character.id,
+          characterName: character.name,
+          className: character.job,
+          pathName: character.path,
+          level: character.level,
+        }),
+        type: 'rest:long',
+        hpRecovered: character.hp_max - character.hp_current,
+        hitDiceRecovered: character.hit_dice_max - character.hit_dice_current,
+        featuresRecharged: [
+          ...(features || []).map((f) => f.name),
+          ...(encounterFeatures || []).map((f) => f.name),
+        ],
+        slotsRecovered: [],
+        exhaustionReduced: character.exhaustion_level > 0,
+        conditionsCleared: character.conditions || [],
+      };
+      DomainEventBus.emit(longRestEvent);
+    } catch {
+      // Best-effort
+    }
+
     return { questAssignmentError: message };
+  }
+
+  // Emit domain event
+  try {
+    const longRestEvent: RestLongEvent = {
+      ...buildCorePayload({
+        characterId: character.id,
+        characterName: character.name,
+        className: character.job,
+        pathName: character.path,
+        level: character.level,
+      }),
+      type: 'rest:long',
+      hpRecovered: character.hp_max - character.hp_current,
+      hitDiceRecovered: character.hit_dice_max - character.hit_dice_current,
+      featuresRecharged: [
+        ...(features || []).map((f) => f.name),
+        ...(encounterFeatures || []).map((f) => f.name),
+      ],
+      slotsRecovered: [],
+      exhaustionReduced: character.exhaustion_level > 0,
+      conditionsCleared: character.conditions || [],
+    };
+    DomainEventBus.emit(longRestEvent);
+  } catch {
+    // Best-effort
   }
 
   return {};
@@ -226,7 +306,7 @@ async function resetRuneUses(characterId: string, restType: 'short' | 'long'): P
 
   // Process each inscription
   for (const inscription of inscriptions) {
-    const rune = inscription.rune as Rune;
+    const rune = inscription.rune as unknown as CompendiumRuneRow;
     
     // Skip if no uses_per_rest (at-will or passive)
     if (!rune.uses_per_rest || rune.uses_per_rest === 'at-will') {

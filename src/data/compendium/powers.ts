@@ -6,12 +6,12 @@ export interface Power {
   id: string;
   name: string;
   description: string;
-  type: 'innate' | 'racial' | 'class' | 'monstrous' | 'divine';
+  type: 'innate' | 'awakening' | 'class' | 'monstrous' | 'divine';
   rarity: 'common' | 'uncommon' | 'rare' | 'very_rare' | 'legendary';
   requirements?: {
     level?: number;
     class?: string;
-    race?: string;
+    job?: string;
     ability?: string;
     score?: number;
   };
@@ -172,15 +172,15 @@ export const powers: Power[] = [
     image: '/generated/compendium/powers/shadow-essence.webp'
   },
 
-  // RACIAL POWERS
+  // AWAKENING POWERS (Job-linked)
   {
     id: 'dragon-breath',
     name: 'Dragon Breath',
-    description: 'The ability to exhale destructive energy.',
-    type: 'racial',
+    description: 'The ability to exhale destructive energy, channeled through combat training.',
+    type: 'awakening',
     rarity: 'rare',
     requirements: {
-      race: 'Dragonborn'
+      job: 'Berserker'
     },
     activation: {
       type: 'action'
@@ -200,18 +200,18 @@ export const powers: Power[] = [
       uses: 'Once per short or long rest',
       cooldown: 'Short rest'
     },
-    flavor: 'The draconic blood flows through your veins, granting you the breath of your ancestors.',
+    flavor: 'Primal fury builds within you until it erupts as raw destructive energy.',
     source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/dragon-breath.webp'
   },
   {
-    id: 'fey-charm',
-    name: 'Fey Charm',
-    description: 'Natural charm and magical influence over others.',
-    type: 'racial',
+    id: 'arcane-charm',
+    name: 'Arcane Charm',
+    description: 'Magical influence woven through words and gestures, honed by arcane study.',
+    type: 'awakening',
     rarity: 'uncommon',
     requirements: {
-      race: 'Elf'
+      job: 'Resonant'
     },
     activation: {
       type: 'action'
@@ -232,18 +232,18 @@ export const powers: Power[] = [
       uses: 'Once per day',
       cooldown: 'Long rest'
     },
-    flavor: 'The fey magic of your ancestors flows through your words and gestures.',
+    flavor: 'Your harmonic attunement lets you weave enchantment into every word.',
     source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/fey-charm.webp'
   },
   {
-    id: 'dwarven-resilience',
-    name: 'Dwarven Resilience',
-    description: 'Innate resistance to poison and magic.',
-    type: 'racial',
+    id: 'bulwark-resilience',
+    name: 'Bulwark Resilience',
+    description: 'Innate resistance to poison and magic, forged by crystallized mana conditioning.',
+    type: 'awakening',
     rarity: 'common',
     requirements: {
-      race: 'Dwarf'
+      job: 'Bulwark'
     },
     activation: {
       type: 'passive'
@@ -253,18 +253,18 @@ export const powers: Power[] = [
       secondary: 'Resistance to poison damage.',
       tertiary: 'Advantage on saving throws against spells and magical effects.'
     },
-    flavor: 'The mountain blood of your ancestors grants you unbreakable resilience.',
+    flavor: 'Your crystallized mana body shrugs off toxins and hostile magic alike.',
     source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/dwarven-resilience.webp'
   },
   {
-    id: 'halfling-luck',
-    name: 'Halfling Luck',
-    description: 'Supernatural luck that bends fate in your favor.',
-    type: 'racial',
+    id: 'assassin-luck',
+    name: 'Assassin\'s Luck',
+    description: 'Supernatural luck honed by split-second reflexes and shadow instinct.',
+    type: 'awakening',
     rarity: 'common',
     requirements: {
-      race: 'Halfling'
+      job: 'Assassin'
     },
     activation: {
       type: 'reaction'
@@ -275,18 +275,18 @@ export const powers: Power[] = [
     limitations: {
       uses: 'Once per turn'
     },
-    flavor: 'Fortune smiles upon the small and nimble, turning disaster into opportunity.',
+    flavor: 'The shadows favour you, turning disaster into opportunity.',
     source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/halfling-luck.webp'
   },
   {
-    id: 'orcish-rage',
-    name: 'Orcish Rage',
-    description: 'Primal fury that enhances combat abilities.',
-    type: 'racial',
+    id: 'warrior-rage',
+    name: 'Warrior\'s Rage',
+    description: 'Primal fury that enhances combat abilities, unlocked through martial awakening.',
+    type: 'awakening',
     rarity: 'uncommon',
     requirements: {
-      race: 'Orc'
+      job: 'Warrior'
     },
     activation: {
       type: 'bonus-action'
@@ -304,7 +304,7 @@ export const powers: Power[] = [
       uses: '3 times per day',
       cooldown: 'Long rest'
     },
-    flavor: 'The primal rage of your ancestors surges through your veins in battle.',
+    flavor: 'Battle fury surges through your veins, unleashing your full martial potential.',
     source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/orcish-rage.webp'
   },

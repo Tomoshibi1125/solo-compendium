@@ -164,7 +164,7 @@ export function levelUpCharacter(character: Character, newLevel: number): Charac
     level: newLevel,
     hitPoints: {
       ...character.hitPoints,
-      max: calculateHPMax(newLevel, 8, Math.floor((character.abilities.CON - 10) / 2))
+      max: calculateHPMax(newLevel, 8, Math.floor((character.abilities.VIT - 10) / 2))
     }
   };
 
@@ -212,14 +212,35 @@ export function applyHealing(characterSheet: CharacterSheet, healing: number): C
  * Update character sheet after long rest
  */
 export function longRest(characterSheet: CharacterSheet): CharacterSheet {
-  const updatedCharacter = {
-    ...characterSheet.character,
+  const char = characterSheet.character;
+
+  // Hit dice recovery: regain up to half max (min 1)
+  const hitDiceRecovery = Math.max(1, Math.floor(char.hitDice.max / 2));
+  const newHitDiceCurrent = Math.min(char.hitDice.max, char.hitDice.current + hitDiceRecovery);
+
+  // Spell slot recovery: all slots restored to max
+  const maxSlots = getCharacterSpellSlots(char);
+  const restoredSlots: Record<number, number> = {};
+  for (let lvl = 1; lvl <= 9; lvl++) {
+    const key = `level${lvl}` as keyof typeof maxSlots;
+    const max = maxSlots[key] as number;
+    if (max > 0) restoredSlots[lvl] = max;
+  }
+
+  const updatedCharacter: Character = {
+    ...char,
     hitPoints: {
-      ...characterSheet.character.hitPoints,
-      current: characterSheet.character.hitPoints.max
+      ...char.hitPoints,
+      current: char.hitPoints.max,
+      temp: 0,
     },
+    hitDice: {
+      ...char.hitDice,
+      current: newHitDiceCurrent,
+    },
+    spellSlots: restoredSlots,
     conditions: [],
-    exhaustionLevel: Math.max(0, characterSheet.character.exhaustionLevel - 1)
+    exhaustionLevel: Math.max(0, char.exhaustionLevel - 1),
   };
 
   return createCharacterSheet(updatedCharacter);
@@ -234,11 +255,11 @@ export function formatCharacterSheet(sheet: CharacterSheet): string {
     '',
     '**Ability Scores**',
     Formatters.abilityScore('STR', sheet.character.abilities.STR),
-    Formatters.abilityScore('DEX', sheet.character.abilities.DEX),
-    Formatters.abilityScore('CON', sheet.character.abilities.CON),
+    Formatters.abilityScore('AGI', sheet.character.abilities.AGI),
+    Formatters.abilityScore('VIT', sheet.character.abilities.VIT),
     Formatters.abilityScore('INT', sheet.character.abilities.INT),
-    Formatters.abilityScore('WIS', sheet.character.abilities.WIS),
-    Formatters.abilityScore('CHA', sheet.character.abilities.CHA),
+    Formatters.abilityScore('SENSE', sheet.character.abilities.SENSE),
+    Formatters.abilityScore('PRE', sheet.character.abilities.PRE),
     '',
     '**Combat Stats**',
     Formatters.hitPoints(sheet.character),

@@ -13,12 +13,7 @@ export function HeroSection() {
       <div className="absolute inset-0 overflow-hidden">
         {/* Background image with painterly System Ascendant style */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
-          style={{
-            backgroundImage:
-              "image-set(url('/ui/landing-page-hero.avif') type('image/avif'), url('/ui/landing-page-hero.webp') type('image/webp'))",
-            filter: 'brightness(0.3) saturate(1.2) contrast(1.1)',
-          }}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 hero-bg-image"
         />
         {/* Overlay gradient for System Ascendant dark fantasy aesthetic */}
         <div className="absolute inset-0 bg-gradient-to-b from-void-black/90 via-shadow-deep/80 to-void-black/90" />
@@ -31,10 +26,7 @@ export function HeroSection() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[600px] md:h-[600px] lg:w-[800px] lg:h-[800px] bg-gradient-radial from-primary/8 via-shadow-purple/4 to-transparent rounded-full" />
         
         {/* Subtle grid overlay - System interface */}
-        <div className="absolute inset-0 opacity-[0.02]" style={{
-          backgroundImage: `linear-gradient(hsl(var(--shadow-blue)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--shadow-blue)) 1px, transparent 1px)`,
-          backgroundSize: '50px 50px'
-        }} />
+        <div className="absolute inset-0 opacity-[0.02] system-grid-overlay-50" />
       </div>
 
       {/* Shadow particles - Ascend effect */}
@@ -47,16 +39,16 @@ export function HeroSection() {
           <div
             key={i}
             className="shadow-particle"
-            style={{
-              '--particle-top': `${top}%`,
-              '--particle-left': `${left}%`,
-              '--particle-delay': `${delay}s`,
-              '--particle-size': `${size}px`,
-            } as React.CSSProperties & {
-              '--particle-top': string;
-              '--particle-left': string;
-              '--particle-delay': string;
-              '--particle-size': string;
+            data-top={top}
+            data-left={left}
+            data-delay={delay}
+            data-size={size}
+            ref={(node) => {
+              if (!node) return;
+              node.style.setProperty('--particle-top', `${top}%`);
+              node.style.setProperty('--particle-left', `${left}%`);
+              node.style.setProperty('--particle-delay', `${delay}s`);
+              node.style.setProperty('--particle-size', `${size}px`);
             }}
           />
         );

@@ -36,13 +36,9 @@ test.describe('DM campaign controls flow', () => {
 
     await page.getByRole('tab', { name: /Settings/i }).click();
     await page.getByTestId('campaign-invite-create').click();
-    await page.waitForResponse(
-      (response) => response.url().includes('create_campaign_invite') && response.ok()
-    );
-    await page.waitForResponse(
-      (response) => response.url().includes('campaign_invites') && response.ok()
-    );
-    await expect(page.getByTestId('campaign-invite-copy').first()).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Active Invites/i })).toBeVisible({ timeout: 15000 });
+    await expect(page.getByText(/Join code/i)).toBeVisible({ timeout: 15000 });
+    await expect(page.getByTestId('campaign-invite-copy').first()).toBeVisible({ timeout: 15000 });
 
     await page.fill('#failure-rate', '10');
     await page.fill('#failure-note', 'Test injection');
@@ -60,17 +56,36 @@ test.describe('DM campaign controls flow', () => {
     await expect(page.getByTestId('encounter-add-button').first()).toBeVisible({ timeout: 10000 });
     const sendToTrackerButton = page.getByTestId('encounter-send-to-tracker');
 
-    for (let attempt = 0; attempt < 3 && await sendToTrackerButton.isDisabled(); attempt += 1) {
-      await page.getByTestId('encounter-add-button').first().click({ force: true });
-      await page.waitForTimeout(200);
+    const analyticsDismiss = page.getByRole('button', { name: /No Thanks|Dismiss/i }).first();
+    if (await analyticsDismiss.isVisible({ timeout: 2_000 }).catch(() => false)) {
+      await analyticsDismiss.click();
+      await page.waitForTimeout(300);
     }
 
-    await expect(sendToTrackerButton).toBeEnabled({ timeout: 10000 });
+    const addMonsterBtn = page.getByTestId('encounter-add-button').first();
+    await addMonsterBtn.scrollIntoViewIfNeeded();
+
+    const monstersSummary = page.getByText(/MONSTERS \(\d+\)/i).first();
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      await addMonsterBtn.click({ timeout: 15_000, force: true });
+      if (await monstersSummary.isVisible({ timeout: 1_500 }).catch(() => false)) break;
+      await page.waitForTimeout(250);
+    }
+
+    await expect(monstersSummary).toBeVisible({ timeout: 15_000 });
+    await expect(sendToTrackerButton).toBeEnabled({ timeout: 15_000 });
     await page.fill('#encounter-name', 'Rift Skirmish');
     await page.fill('#encounter-notes', 'Saved during E2E verification.');
     const saveEncounterButton = page.getByTestId('encounter-save');
     await saveEncounterButton.click();
     await expect(saveEncounterButton).toBeEnabled({ timeout: 15000 });
+
+    if (await sendToTrackerButton.isDisabled()) {
+      await addMonsterBtn.scrollIntoViewIfNeeded();
+      await addMonsterBtn.click({ timeout: 15_000, force: true });
+    }
+
+    await expect(sendToTrackerButton).toBeEnabled({ timeout: 15_000 });
     await page.getByTestId('encounter-send-to-tracker').click();
 
     await page.waitForURL(/\/dm-tools\/initiative-tracker/i, { timeout: 15000 });

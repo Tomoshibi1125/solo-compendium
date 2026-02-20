@@ -20,6 +20,31 @@ type Power = Database['public']['Tables']['character_powers']['Row'];
 type PowerInsert = Database['public']['Tables']['character_powers']['Insert'];
 type PowerUpdate = Database['public']['Tables']['character_powers']['Update'];
 
+const buildPowersCacheKey = (userId: string, characterId: string) => {
+  return `solo-compendium.cache.powers.${userId}.character:${characterId}.v1`;
+};
+
+const readCachedPowers = (key: string): Power[] | null => {
+  try {
+    if (typeof window === 'undefined') return null;
+    const raw = window.localStorage.getItem(key);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as unknown;
+    return Array.isArray(parsed) ? (parsed as Power[]) : null;
+  } catch {
+    return null;
+  }
+};
+
+const writeCachedPowers = (key: string, powers: Power[]) => {
+  try {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem(key, JSON.stringify(powers));
+  } catch {
+    // ignore
+  }
+};
+
 export const usePowers = (characterId: string) => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -31,6 +56,9 @@ export const usePowers = (characterId: string) => {
         return listLocalPowers(characterId) as Power[];
       }
 
+      const { data: { user } } = await supabase.auth.getUser();
+      const cacheKey = user?.id ? buildPowersCacheKey(user.id, characterId) : null;
+
       const { data, error } = await supabase
         .from('character_powers')
         .select('*')
@@ -41,11 +69,18 @@ export const usePowers = (characterId: string) => {
 
       if (error) {
         logErrorWithContext(error, 'usePowers');
+        if (cacheKey) {
+          const cached = readCachedPowers(cacheKey);
+          if (cached) return cached;
+        }
         throw error;
       }
 
       const powers = (data || []) as Power[];
       if (powers.length === 0) {
+        if (cacheKey) {
+          writeCachedPowers(cacheKey, powers);
+        }
         return powers;
       }
 
@@ -61,6 +96,9 @@ export const usePowers = (characterId: string) => {
 
       if (compendiumError) {
         logErrorWithContext(compendiumError, 'usePowers (compendium source lookup)');
+        if (cacheKey) {
+          writeCachedPowers(cacheKey, powers);
+        }
         return powers;
       }
 
@@ -70,6 +108,9 @@ export const usePowers = (characterId: string) => {
       });
 
       if (sourceBookByName.size === 0) {
+        if (cacheKey) {
+          writeCachedPowers(cacheKey, powers);
+        }
         return powers;
       }
 
@@ -81,13 +122,19 @@ export const usePowers = (characterId: string) => {
       );
       const accessibleNames = new Set(accessibleCompendiumPowers.map((power) => power.name));
 
-      return powers.filter((power) => {
+      const filtered = powers.filter((power) => {
         if (!sourceBookByName.has(power.name)) {
           return true;
         }
 
         return accessibleNames.has(power.name);
       });
+
+      if (cacheKey) {
+        writeCachedPowers(cacheKey, filtered);
+      }
+
+      return filtered;
     },
     enabled: !!characterId,
   });
@@ -97,6 +144,33 @@ export const usePowers = (characterId: string) => {
       if (isLocalCharacterId(characterId)) {
         addLocalPower(characterId, power as unknown as Omit<PowerInsert, 'character_id'>);
         return null;
+      }
+
+      const { data: { user } } = await supabase.auth.getUser();
+      const cacheKey = user?.id ? buildPowersCacheKey(user.id, characterId) : null;
+      if (cacheKey) {
+        const cached = readCachedPowers(cacheKey);
+        if (cached) {
+          const now = new Date().toISOString();
+          const optimistic: Power = {
+            id: `optimistic_${Date.now()}`,
+            character_id: characterId,
+            created_at: now,
+            display_order: cached.length,
+            name: power.name,
+            power_level: power.power_level ?? 0,
+            source: power.source ?? null,
+            description: power.description ?? null,
+            higher_levels: power.higher_levels ?? null,
+            casting_time: power.casting_time ?? null,
+            range: power.range ?? null,
+            duration: power.duration ?? null,
+            concentration: power.concentration ?? false,
+            is_prepared: power.is_prepared ?? false,
+            is_known: power.is_known ?? true,
+          };
+          writeCachedPowers(cacheKey, [...cached, optimistic]);
+        }
       }
 
       const campaignId = await getCharacterCampaignId(characterId);
@@ -145,6 +219,18 @@ export const usePowers = (characterId: string) => {
       if (isLocalCharacterId(characterId)) {
         updateLocalPower(id, updates);
         return null;
+      }
+
+      const { data: { user } } = await supabase.auth.getUser();
+      const cacheKey = user?.id ? buildPowersCacheKey(user.id, characterId) : null;
+      if (cacheKey) {
+        const cached = readCachedPowers(cacheKey);
+        if (cached) {
+          writeCachedPowers(
+            cacheKey,
+            cached.map((row) => (row.id === id ? ({ ...row, ...updates } as Power) : row))
+          );
+        }
       }
 
       if (Object.prototype.hasOwnProperty.call(updates, 'is_prepared')) {
@@ -210,6 +296,15 @@ export const usePowers = (characterId: string) => {
         return;
       }
 
+      const { data: { user } } = await supabase.auth.getUser();
+      const cacheKey = user?.id ? buildPowersCacheKey(user.id, characterId) : null;
+      if (cacheKey) {
+        const cached = readCachedPowers(cacheKey);
+        if (cached) {
+          writeCachedPowers(cacheKey, cached.filter((row) => row.id !== id));
+        }
+      }
+
       const { error } = await supabase
         .from('character_powers')
         .delete()
@@ -239,6 +334,21 @@ export const usePowers = (characterId: string) => {
           updateLocalPower(id, { display_order });
         }
         return;
+      }
+
+      const { data: { user } } = await supabase.auth.getUser();
+      const cacheKey = user?.id ? buildPowersCacheKey(user.id, characterId) : null;
+      if (cacheKey) {
+        const cached = readCachedPowers(cacheKey);
+        if (cached) {
+          const next = cached
+            .map((row) => {
+              const nextOrder = newOrder.find((o) => o.id === row.id);
+              return nextOrder ? { ...row, display_order: nextOrder.display_order } : row;
+            })
+            .sort((a, b) => (a.display_order ?? 0) - (b.display_order ?? 0));
+          writeCachedPowers(cacheKey, next);
+        }
       }
 
       const updates = newOrder.map(({ id, display_order }) =>

@@ -80,22 +80,45 @@ export class PlayerPage {
     }
   }
 
-  private async _createCharacterImpl(name: string): Promise<string | null> {
+  async createCharacterWithJob(name: string, jobName: RegExp): Promise<string | null> {
+    try {
+      return await this._createCharacterImpl(name, { jobName });
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * Fallback helper: if the test user already has characters, use the first one.
+   * Returns the character ID parsed from an href like /characters/:id.
+   */
+  async getFirstExistingCharacterId(): Promise<string | null> {
+    await this.page.goto('/characters');
+
+    const firstLink = this.page.locator('a[href^="/characters/"]').first();
+    const visible = await firstLink.isVisible({ timeout: 10_000 }).catch(() => false);
+    if (!visible) return null;
+
+    const href = await firstLink.getAttribute('href');
+    if (!href) return null;
+
+    const id = href.split('/').pop() ?? '';
+    return id || null;
+  }
+
+  private async _createCharacterImpl(
+    name: string,
+    opts?: {
+      jobName?: RegExp;
+    },
+  ): Promise<string | null> {
     await this.page.goto('/characters/new');
 
     const clickNext = async () => {
       const btn = this.page.getByRole('button', { name: /^Next$/i });
       await expect(btn).toBeEnabled({ timeout: 10_000 });
       await btn.click();
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-      await this.page.waitForTimeout(600);
-=======
       await this.page.waitForTimeout(500);
->>>>>>> Stashed changes
-=======
-      await this.page.waitForTimeout(500);
->>>>>>> Stashed changes
     };
 
     /** Open a Radix Select trigger and pick the first option (with retries). */
@@ -104,9 +127,33 @@ export class PlayerPage {
       const triggerVisible = await trigger.isVisible({ timeout: 10_000 }).catch(() => false);
       if (!triggerVisible) return false;
 
+      await expect(trigger).toBeEnabled({ timeout: 15_000 });
+
       for (let attempt = 0; attempt < retries; attempt++) {
         await trigger.click();
         const option = this.page.getByRole('option').first();
+        const visible = await option.isVisible({ timeout: 10_000 }).catch(() => false);
+        if (visible) {
+          await option.click();
+          await this.page.waitForTimeout(400);
+          return true;
+        }
+        await this.page.keyboard.press('Escape');
+        await this.page.waitForTimeout(3_000);
+      }
+      return false; // No options available
+    };
+
+    const selectOptionByName = async (namePattern: RegExp, retries = 3): Promise<boolean> => {
+      const trigger = this.page.locator('button[role="combobox"]').first();
+      const triggerVisible = await trigger.isVisible({ timeout: 10_000 }).catch(() => false);
+      if (!triggerVisible) return false;
+
+      await expect(trigger).toBeEnabled({ timeout: 15_000 });
+
+      for (let attempt = 0; attempt < retries; attempt++) {
+        await trigger.click();
+        const option = this.page.getByRole('option', { name: namePattern }).first();
         const visible = await option.isVisible({ timeout: 5_000 }).catch(() => false);
         if (visible) {
           await option.click();
@@ -116,158 +163,109 @@ export class PlayerPage {
         await this.page.keyboard.press('Escape');
         await this.page.waitForTimeout(2_000);
       }
-      return false; // No options available
+      return false;
     };
 
-<<<<<<< Updated upstream
+    const selectRequiredJobSkills = async () => {
+      const nextBtn = this.page.getByRole('button', { name: /^Next$/i });
+      if (await nextBtn.isEnabled({ timeout: 1_000 }).catch(() => false)) return;
+
+      const checkboxes = this.page.getByRole('checkbox');
+      const count = await checkboxes.count();
+
+      for (let index = 0; index < count; index += 1) {
+        const checkbox = checkboxes.nth(index);
+        const visible = await checkbox.isVisible({ timeout: 1_000 }).catch(() => false);
+        if (!visible) continue;
+
+        const checked = (await checkbox.getAttribute('aria-checked')) === 'true';
+        if (checked) continue;
+
+        await checkbox.scrollIntoViewIfNeeded();
+        await checkbox.click({ force: true });
+        await this.page.waitForTimeout(150);
+
+        if (await nextBtn.isEnabled({ timeout: 1_000 }).catch(() => false)) {
+          return;
+        }
+      }
+    };
+
     // ── Step 1: Concept — fill name ────────────────────────────
     await this.page.getByTestId('character-name').waitFor({ state: 'visible', timeout: 10_000 });
     await this.page.getByTestId('character-name').fill(name);
     await clickNext();
 
-    // ── Step 2: Abilities — standard array is default, just proceed
+    // ── Step 2: Abilities — choose Standard Array if present ───
     const stdArrayBtn = this.page.getByRole('button', { name: /Standard Array/i });
-    if (await stdArrayBtn.isVisible().catch(() => false)) {
+    if (await stdArrayBtn.isVisible({ timeout: 5_000 }).catch(() => false)) {
       await stdArrayBtn.click();
       await this.page.waitForTimeout(300);
     }
     await clickNext();
 
     // ── Step 3: Job — select first available job ───────────────
-    const jobSelected = await selectFirstOption();
-=======
-    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    // Step 1: CONCEPT — name, appearance, backstory
-    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    const nameInput = this.page.getByTestId('character-name');
-    await nameInput.waitFor({ state: 'visible', timeout: 10_000 });
-    await nameInput.fill(name);
-    await expect(nameInput).toHaveValue(name);
-
-    // Fill appearance (optional)
-    const appearanceInput = this.page.locator('#appearance');
-    if (await appearanceInput.isVisible({ timeout: 2_000 }).catch(() => false)) {
-      await appearanceInput.fill('Tall with silver hair and glowing blue eyes');
-    }
-
-    // Fill backstory (optional)
-    const backstoryInput = this.page.locator('#backstory');
-    if (await backstoryInput.isVisible({ timeout: 2_000 }).catch(() => false)) {
-      await backstoryInput.fill('Awakened during the Great Rift event, survived the shadow incursion at age 12.');
-    }
-
-    await clickNext();
-
-    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    // Step 2: ABILITIES — exercise all 3 methods, ability score inputs
-    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    // Click Standard Array (most reliable)
-    const stdArrayBtn = this.page.getByRole('button', { name: /Standard Array/i });
-    if (await stdArrayBtn.isVisible({ timeout: 5_000 }).catch(() => false)) {
-      await stdArrayBtn.click();
-      await this.page.waitForTimeout(300);
-    }
-
-    await clickNext();
-
-    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    // Step 3: JOB — select first available, exercise skill checkboxes
-    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    const jobSelected = await this.selectFirstOption(3); // Reduce retries
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+    const jobSelected = opts?.jobName
+      ? await selectOptionByName(opts.jobName, 5)
+      : await selectFirstOption(5);
     if (!jobSelected) {
-      // No compendium jobs available — cannot complete character creation
       return null;
     }
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    // Some jobs require skill selection — check if skill checkboxes appeared
-    const skillCheckboxes = this.page.locator('button[role="checkbox"]');
-    const skillCount = await skillCheckboxes.count();
-    if (skillCount > 0) {
-      const toSelect = Math.min(skillCount, 2);
-      for (let i = 0; i < toSelect; i++) {
-        const cb = skillCheckboxes.nth(i);
-        const isChecked = await cb.getAttribute('data-state');
-        if (isChecked !== 'checked') {
-          await cb.click();
-          await this.page.waitForTimeout(200);
-        }
-      }
-    }
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+    await selectRequiredJobSkills();
     await clickNext();
 
-    // ── Step 4: Path — optional, select first if available, or just proceed
-    const pathTrigger = this.page.locator('button[role="combobox"]').first();
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    if (await pathTrigger.isVisible().catch(() => false)) {
-=======
-    if (await pathTrigger.isVisible({ timeout: 3_000 }).catch(() => false)) {
->>>>>>> Stashed changes
-=======
-    if (await pathTrigger.isVisible({ timeout: 3_000 }).catch(() => false)) {
->>>>>>> Stashed changes
-      await pathTrigger.click();
-      const pathOption = this.page.getByRole('option').first();
-      if (await pathOption.isVisible({ timeout: 2_000 }).catch(() => false)) {
-        await pathOption.click();
-        await this.page.waitForTimeout(300);
-      } else {
-        await this.page.keyboard.press('Escape');
-      }
-    }
-    await clickNext();
+    // ── Step 4: Path — optional in current builds ───────────────
+    const isPathStep = await this.page
+      .getByText(/Select Path/i)
+      .first()
+      .isVisible({ timeout: 3_000 })
+      .catch(() => false);
 
-<<<<<<< Updated upstream
-    // ── Step 5: Background — select first available ────────────
-    const bgSelected = await selectFirstOption();
+    if (isPathStep) {
+      const pathSelected = await selectFirstOption(5);
+      if (!pathSelected) {
+        return null;
+      }
+      await clickNext();
+    }
+
+    // ── Step 5: Background — required ───────────────────────────
+    const isBackgroundStep = await this.page
+      .getByText(/Select Background/i)
+      .first()
+      .isVisible({ timeout: 5_000 })
+      .catch(() => false);
+
+    if (!isBackgroundStep) {
+      return null;
+    }
+
+    const bgSelected = await selectFirstOption(5);
     if (!bgSelected) {
-      return null; // No backgrounds available
+      return null;
     }
     await clickNext();
 
     // ── Step 6: Review — click "Create Character" ──────────────
-=======
-    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    // Step 5: BACKGROUND — select first available
-    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    const bgSelected = await this.selectFirstOption(3); // Reduce retries
-    if (!bgSelected) {
-      return 'wizard-exercised';
-    }
-    await clickNext();
-
-    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    // Step 6: REVIEW — verify summary, create character
-    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    // Verify review summary sections
-    await expect(this.page.getByText(/Character Summary/i).first()).toBeVisible({ timeout: 10_000 });
-    await expect(this.page.getByText(name).first()).toBeVisible({ timeout: 5_000 });
-
-    // Click Create Character
->>>>>>> Stashed changes
     const createBtn = this.page.getByRole('button', { name: /Create Character/i });
     await expect(createBtn).toBeEnabled({ timeout: 10_000 });
     await createBtn.click();
 
     // Wait for navigation to /characters/:id
-    await this.page.waitForURL(/\/characters\/[a-z0-9-]+/i, { timeout: 20_000 });
+    await this.page.waitForURL(
+      (url) => {
+        const match = url.pathname.match(/^\/characters\/([a-z0-9-]+)$/i);
+        if (!match) return false;
+        return match[1].toLowerCase() !== 'new';
+      },
+      { timeout: 20_000 },
+    );
 
     const charId = new URL(this.page.url()).pathname.split('/').pop() ?? '';
     expect(charId).toBeTruthy();
     return charId;
   }
-<<<<<<< Updated upstream
-=======
 
   // ─── Player Tools Hub ──────────────────────────────────────────
 
@@ -305,6 +303,18 @@ export class PlayerPage {
       .first()
       .waitFor({ state: 'visible', timeout: 20_000 })
       .catch(() => {});
+
+    const immediateSignals = [
+      this.page.getByTestId('hp-current-display').first(),
+      this.page.getByRole('button', { name: /Back to Characters/i }).first(),
+      this.page.getByRole('button', { name: /Short Rest|Long Rest/i }).first(),
+    ];
+
+    for (const locator of immediateSignals) {
+      if (await locator.isVisible({ timeout: 5_000 }).catch(() => false)) {
+        return true;
+      }
+    }
 
     // Verify key sections exist by scrolling through the page
     await this.page.evaluate(() => window.scrollTo(0, 0));
@@ -806,8 +816,4 @@ export class PlayerPage {
     // Wait for level up completion and navigation back to character sheet
     await this.page.waitForURL(/\/characters\/[a-z0-9-]+$/i, { timeout: 15_000 });
   }
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 }

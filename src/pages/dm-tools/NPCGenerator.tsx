@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, RefreshCw, Copy, User } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { formatMonarchVernacular } from '@/lib/vernacular';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useUserToolState } from '@/hooks/useToolState';
 
 const ASCENDANT_RANKS = ['E', 'D', 'C', 'B', 'A', 'S'];
 const NPC_ROLES = [
@@ -82,7 +84,30 @@ function generateNPC(): GeneratedNPC {
 const NPCGenerator = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { state: storedState, isLoading, saveNow } = useUserToolState<{ npc: GeneratedNPC | null }>('npc_generator', {
+    initialState: { npc: null },
+    storageKey: 'solo-compendium.dm-tools.npc-generator.v1',
+  });
+
   const [npc, setNpc] = useState<GeneratedNPC | null>(null);
+
+  const hydrated = useMemo(() => ({ npc: storedState.npc ?? null }), [storedState.npc]);
+  const hydratedRef = useRef(false);
+
+  useEffect(() => {
+    if (isLoading) return;
+    if (hydratedRef.current) return;
+    setNpc(hydrated.npc);
+    hydratedRef.current = true;
+  }, [hydrated.npc, isLoading]);
+
+  const debouncedPayload = useDebounce({ npc }, 350);
+
+  useEffect(() => {
+    if (isLoading) return;
+    if (!hydratedRef.current) return;
+    void saveNow(debouncedPayload);
+  }, [debouncedPayload, isLoading, saveNow]);
 
   const handleGenerate = () => {
     const newNPC = generateNPC();

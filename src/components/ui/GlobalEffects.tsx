@@ -17,6 +17,8 @@ export const GlobalEffects = () => {
   const [hasFinePointer, setHasFinePointer] = useState(false);
   const [ParticlesComponent, setParticlesComponent] = useState<ComponentType<IParticlesProps> | null>(null);
   const glowRef = useRef<HTMLDivElement | null>(null);
+  const fxOpacityRef = useRef<HTMLDivElement | null>(null);
+  const ambientRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number | null>(null);
   const targetRef = useRef({ x: 0, y: 0 });
   const { reducedMotion, fx, tier } = usePerformanceProfile();
@@ -113,7 +115,7 @@ export const GlobalEffects = () => {
       interactivity: {
         events: {
           onHover: { enable: enablePointerGlow, mode: 'repulse' },
-          resize: true,
+          resize: { delay: 0 },
         },
         modes: {
           repulse: { distance: 120, duration: 0.4 },
@@ -176,6 +178,14 @@ export const GlobalEffects = () => {
     };
   }, [enablePointerGlow]);
 
+  useEffect(() => {
+    if (fxOpacityRef.current) {
+      fxOpacityRef.current.style.setProperty('--ambient-opacity', String(fx.ambientOpacity));
+    }
+    if (!ambientRef.current) return;
+    ambientRef.current.style.setProperty('--ambient-opacity', String(fx.ambientOpacity));
+  }, [fx.ambientOpacity]);
+
   return (
     <>
       {/* Shadow Particles */}
@@ -185,25 +195,35 @@ export const GlobalEffects = () => {
             <div
               key={particle.id}
               className="shadow-particle"
-              style={{
-                '--particle-x': `${particle.x}%`,
-                '--particle-y': `${particle.y}%`,
-                '--particle-size': `${particle.size}px`,
-                '--particle-duration': `${particle.duration}s`,
-                '--particle-delay': `${particle.delay}s`,
-              } as React.CSSProperties}
+              data-x={particle.x}
+              data-y={particle.y}
+              data-size={particle.size}
+              data-duration={particle.duration}
+              data-delay={particle.delay}
+              ref={(node) => {
+                if (!node) return;
+                node.style.setProperty('--particle-x', `${particle.x}%`);
+                node.style.setProperty('--particle-y', `${particle.y}%`);
+                node.style.setProperty('--particle-size', `${particle.size}px`);
+                node.style.setProperty('--particle-duration', `${particle.duration}s`);
+                node.style.setProperty('--particle-delay', `${particle.delay}s`);
+              }}
             />
           ))}
         </div>
       )}
 
       {enableAdvancedParticles && ParticlesComponent && (
-        <ParticlesComponent
-          id="global-fx-particles"
-          options={particlesOptions}
-          className="pointer-events-none fixed inset-0 z-0"
-          style={{ opacity: fx.ambientOpacity }}
-        />
+        <div
+          ref={fxOpacityRef}
+          className="pointer-events-none fixed inset-0 z-0 ambient-opacity"
+        >
+          <ParticlesComponent
+            id="global-fx-particles"
+            options={particlesOptions}
+            className="w-full h-full"
+          />
+        </div>
       )}
 
       {/* Mouse Follow Effect */}
@@ -216,8 +236,8 @@ export const GlobalEffects = () => {
 
       {/* Ambient Glow Effects */}
       <div
+        ref={ambientRef}
         className="fixed top-0 left-0 w-full h-full pointer-events-none z-0 ambient-glow-container"
-        style={{ opacity: fx.ambientOpacity }}
       >
         <div className="ambient-glow-purple ambient-glow-1" />
         <div className="ambient-glow-blue ambient-glow-2" />

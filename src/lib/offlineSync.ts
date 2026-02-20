@@ -13,9 +13,6 @@ export const enqueueOfflineSync = (
   type: OfflineSyncType,
   action: OfflineSyncAction,
   data: Record<string, unknown>
-<<<<<<< Updated upstream
-): SyncQueueItem => syncManager.addToQueue(type, action, data);
-=======
 ): SyncQueueItem => {
   const item = syncManager.addToQueue(type, action, data);
 
@@ -33,7 +30,6 @@ export const enqueueOfflineSync = (
 
   return item;
 };
->>>>>>> Stashed changes
 
 export const processOfflineSyncQueue = (): Promise<void> => syncManager.processQueue();
 

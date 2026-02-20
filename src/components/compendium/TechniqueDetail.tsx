@@ -1,8 +1,11 @@
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Zap, Timer, Target, Shield, Swords, Footprints, Sparkles } from 'lucide-react';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
 import { formatMonarchVernacular } from '@/lib/vernacular';
+import { useNavigate } from 'react-router-dom';
+import { setPendingResolution, type ActionResolutionPayload } from '@/lib/actionResolution';
 
 interface TechniqueData {
   id: string;
@@ -38,6 +41,7 @@ interface TechniqueData {
 }
 
 export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
+  const navigate = useNavigate();
   const displayName = formatMonarchVernacular(data.display_name || data.name);
   const imageSrc = data.image_url || data.image || undefined;
 
@@ -55,6 +59,68 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
     components?.somatic ? 'S' : null,
     components?.material ? 'M' : null,
   ].filter(Boolean);
+
+  const buildResolutionPayload = (): ActionResolutionPayload | null => {
+    const id = crypto.randomUUID();
+    const name = displayName;
+
+    const parseBonus = (value: unknown): number | null => {
+      if (typeof value !== 'string') return null;
+      const trimmed = value.trim();
+      const match = trimmed.match(/^([+-]?\d+)$/);
+      if (!match) return null;
+      return parseInt(match[1], 10);
+    };
+
+    const parseDc = (value: unknown): number | null => {
+      if (typeof value === 'number' && Number.isFinite(value)) return value;
+      if (typeof value !== 'string') return null;
+      const match = value.trim().match(/^(\d+)$/);
+      if (!match) return null;
+      return parseInt(match[1], 10);
+    };
+
+    const conditions = Array.isArray(mechanics?.condition) ? mechanics?.condition : undefined;
+
+    if (mechanics?.attack) {
+      const bonus = parseBonus(mechanics.attack.modifier);
+      const attackRoll = bonus !== null ? `1d20${bonus >= 0 ? '+' : ''}${bonus}` : '1d20';
+      const damageRoll = typeof mechanics.attack.damage === 'string' ? mechanics.attack.damage : undefined;
+      return {
+        version: 1,
+        id,
+        name,
+        source: { type: 'technique', entryId: data.id },
+        kind: 'attack',
+        attack: { roll: attackRoll },
+        damage: damageRoll ? { roll: String(damageRoll) } : undefined,
+        appliesConditions: conditions,
+      };
+    }
+
+    if (mechanics?.saving_throw) {
+      const dc = parseDc(mechanics.saving_throw.dc) ?? 10;
+      const ability = typeof mechanics.saving_throw.ability === 'string' ? mechanics.saving_throw.ability : undefined;
+      return {
+        version: 1,
+        id,
+        name,
+        source: { type: 'technique', entryId: data.id },
+        kind: 'save',
+        save: { dc, ability, roll: '1d20' },
+        appliesConditions: conditions,
+      };
+    }
+
+    return null;
+  };
+
+  const queueResolutionAndNavigate = (path: string) => {
+    const payload = buildResolutionPayload();
+    if (!payload) return;
+    setPendingResolution(payload);
+    navigate(path);
+  };
 
   return (
     <div className="space-y-6">
@@ -78,6 +144,17 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
             {data.style && <Badge variant="outline">{formatMonarchVernacular(data.style)}</Badge>}
             {data.source_book && <Badge variant="outline">{formatMonarchVernacular(data.source_book)}</Badge>}
           </div>
+
+          {(mechanics?.attack || mechanics?.saving_throw) && (
+            <div className="flex flex-wrap gap-2">
+              <Button variant="outline" onClick={() => queueResolutionAndNavigate('/dice')}>
+                Roll
+              </Button>
+              <Button variant="outline" onClick={() => queueResolutionAndNavigate('/dm-tools/initiative-tracker')}>
+                Resolve in Initiative
+              </Button>
+            </div>
+          )}
         </div>
       </SystemWindow>
 

@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Loader2, Zap, Heart, TrendingUp, Crown, Sparkles, Star } from 'lucide-react';
+import { ArrowLeft, Loader2, Zap, Heart, TrendingUp, Crown, Sparkles, Star, Shield, Swords } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useCharacter, useUpdateCharacter } from '@/hooks/useCharacters';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -20,7 +20,8 @@ import type { Database } from '@/integrations/supabase/types';
 import { useCampaignByCharacterId } from '@/hooks/useCampaigns';
 import { getLevelingMode } from '@/lib/campaignSettings';
 import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
-
+import { isASILevel, isPathUnlockLevel, type PathUnlockMeta } from '@/lib/levelGating';
+import { DomainEventBus, buildCorePayload, type CharacterLevelUpEvent } from '@/lib/domainEvents';
 
 function getExperienceForNextLevel(currentLevel: number): number {
   return currentLevel * 1000; // Simple progression formula
@@ -39,14 +40,50 @@ const CharacterLevelUp = () => {
   const initializeSpellSlots = useInitializeSpellSlots();
   const [newLevel, setNewLevel] = useState(1);
   const [hpIncrease, setHpIncrease] = useState<number | null>(null);
-  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [isRolling, setIsRolling] = useState(false);
+  const [selectedPath, setSelectedPath] = useState<string>('');
+  const [asiChoices, setAsiChoices] = useState<Record<string, number>>({});
 
   // Level progression logic
   const currentExperience = character?.experience ?? 0;
   const experienceNeeded = character && !isMilestone ? getExperienceForNextLevel(character.level) : 0;
   const canLevelUp = !!character && (isMilestone || currentExperience >= experienceNeeded);
+
+  // Path selection: fetch available paths if character has no path and this is a path unlock level
+  const needsPathSelection = !!character && !character.path;
+  const { data: availablePaths = [] } = useQuery({
+    queryKey: ['level-up-paths', character?.job, newLevel, campaignId],
+    queryFn: async () => {
+      if (!character?.job) return [];
+      const { data: job } = await supabase
+        .from('compendium_jobs')
+        .select('id')
+        .eq('name', character.job)
+        .maybeSingle();
+      if (!job) return [];
+      const { data, error } = await supabase
+        .from('compendium_job_paths')
+        .select('*')
+        .eq('job_id', job.id)
+        .order('name');
+      if (error) throw error;
+      const accessible = await filterRowsBySourcebookAccess(
+        data || [],
+        (path) => path.source_book,
+        { campaignId }
+      );
+      // Only return paths whose path_level <= newLevel
+      return accessible.filter((p) => {
+        const pathLevel = (p as { path_level?: number | null }).path_level;
+        return typeof pathLevel === 'number' && pathLevel <= newLevel;
+      });
+    },
+    enabled: needsPathSelection && !!newLevel,
+  });
+
+  const showPathSelection = needsPathSelection && availablePaths.length > 0;
+  const showASISection = !!character && isASILevel(newLevel, character?.job);
 
   // Fetch features for the new level
   const { data: newFeatures = [] } = useQuery({
@@ -218,6 +255,38 @@ const CharacterLevelUp = () => {
         system_favor_current: newSystemFavorMax,
       };
 
+      // Apply path selection if chosen during this level-up
+      if (showPathSelection && selectedPath) {
+        const chosenPath = availablePaths.find((p) => p.id === selectedPath);
+        if (chosenPath) {
+          characterUpdates.path = chosenPath.name;
+        }
+      }
+
+      // Apply ASI ability score changes if this is an ASI level
+      if (showASISection && Object.keys(asiChoices).length > 0) {
+        const totalPoints = Object.values(asiChoices).reduce((sum, v) => sum + v, 0);
+        if (totalPoints <= 2) {
+          type AbilityKey = 'STR' | 'AGI' | 'VIT' | 'INT' | 'SENSE' | 'PRE';
+          const abilityUpdates: Array<{ character_id: string; ability: AbilityKey; score: number }> = [];
+          for (const [ability, bonus] of Object.entries(asiChoices)) {
+            if (bonus > 0) {
+              const currentScore = (character.abilities as Record<string, number>)[ability] ?? 10;
+              abilityUpdates.push({
+                character_id: character.id,
+                ability: ability as AbilityKey,
+                score: Math.min(20, currentScore + bonus),
+              });
+            }
+          }
+          if (abilityUpdates.length > 0) {
+            await supabase
+              .from('character_abilities')
+              .upsert(abilityUpdates, { onConflict: 'character_id,ability' });
+          }
+        }
+      }
+
       if (!isMilestone) {
         characterUpdates.experience = Math.max(0, currentExperience - experienceNeeded);
       }
@@ -240,85 +309,96 @@ const CharacterLevelUp = () => {
         logger.error('Failed to initialize spell slots:', error);
       }
 
-      // Add new features
-      for (const featureId of selectedFeatures) {
-        const feature = newFeatures.find(f => f.id === featureId);
-        if (feature) {
-          let usesMax: number | null = null;
-          if (feature.uses_formula) {
-            if (feature.uses_formula.includes('proficiency')) {
-              usesMax = newProficiencyBonus;
-            } else if (feature.uses_formula.includes('level')) {
-              usesMax = newLevel;
-            }
+      // Add new features (5e/D&D Beyond-style: features are granted automatically at the level)
+      for (const feature of newFeatures) {
+        let usesMax: number | null = null;
+        if (feature.uses_formula) {
+          if (feature.uses_formula.includes('proficiency')) {
+            usesMax = newProficiencyBonus;
+          } else if (feature.uses_formula.includes('level')) {
+            usesMax = newLevel;
           }
-
-          await supabase
-            .from('character_features')
-            .insert({
-              character_id: character.id,
-              name: feature.name,
-              source: feature.is_path_feature 
-                ? `Path: ${character.path || 'Unknown'}`
-                : `Job: ${character.job}`,
-              level_acquired: newLevel,
-              description: feature.description,
-              action_type: feature.action_type || null,
-              uses_max: usesMax,
-              uses_current: usesMax,
-              recharge: feature.recharge || null,
-              is_active: true,
-            });
         }
+
+        await supabase
+          .from('character_features')
+          .insert({
+            character_id: character.id,
+            name: feature.name,
+            source: feature.is_path_feature
+              ? `Path: ${character.path || 'Unknown'}`
+              : `Job: ${character.job}`,
+            level_acquired: newLevel,
+            description: feature.description,
+            action_type: feature.action_type || null,
+            uses_max: usesMax,
+            uses_current: usesMax,
+            recharge: feature.recharge || null,
+            is_active: true,
+          });
       }
 
-      // Check for new powers
-      if (character.job) {
-        const { data: job } = await supabase
-          .from('compendium_jobs')
-          .select('id, name')
-          .eq('name', character.job)
-          .maybeSingle();
+      // If any newly-unlocked features require selections, prompt the player to complete them.
+      try {
+        const featureIds = newFeatures.map((f) => f.id).filter(Boolean);
+        if (featureIds.length > 0) {
+          const { data: groups } = await (supabase as any)
+            .from('compendium_feature_choice_groups')
+            .select('id')
+            .in('feature_id', featureIds);
 
-        if (job) {
-          const { data: availablePowers } = await supabase
-            .from('compendium_powers')
-            .select('*')
-            .contains('job_names', [character.job])
-            .lte('power_level', Math.floor(newLevel / 2));
+          const groupIds = ((groups || []) as Array<{ id: string }>).map((g) => g.id);
+          if (groupIds.length > 0) {
+            const { data: chosen } = await (supabase as any)
+              .from('character_feature_choices')
+              .select('group_id')
+              .eq('character_id', character.id)
+              .in('group_id', groupIds);
 
-          const accessiblePowers = await filterRowsBySourcebookAccess(
-            availablePowers || [],
-            (power) => power.source_book,
-            { campaignId }
-          );
-
-          const { data: existingPowers } = await supabase
-            .from('character_powers')
-            .select('name')
-            .eq('character_id', character.id);
-
-          const existingPowerNames = new Set(existingPowers?.map(p => p.name) || []);
-
-          for (const power of accessiblePowers) {
-            if (!existingPowerNames.has(power.name)) {
-              await supabase.from('character_powers').insert({
-                character_id: character.id,
-                name: power.name,
-                power_level: power.power_level,
-                source: `Job: ${character.job}`,
-                casting_time: power.casting_time || null,
-                range: power.range || null,
-                duration: power.duration || null,
-                concentration: power.concentration || false,
-                description: power.description || null,
-                higher_levels: power.higher_levels || null,
-                is_prepared: false,
-                is_known: true,
+            const chosenSet = new Set(((chosen || []) as Array<{ group_id: string }>).map((c) => c.group_id));
+            const pendingCount = groupIds.filter((id) => !chosenSet.has(id)).length;
+            if (pendingCount > 0) {
+              toast({
+                title: 'Selection Protocol Required',
+                description: `The System detected ${pendingCount} pending selection${pendingCount === 1 ? '' : 's'}. Open your Ascendant sheet to bind them.`,
               });
             }
           }
         }
+      } catch {
+        // Best-effort only; do not block level up if metadata is missing.
+      }
+
+      // Grant job awakening benefits (awakening features + job traits) at this level
+      try {
+        const { addJobAwakeningBenefitsForLevel } = await import('@/lib/characterCreation');
+        await addJobAwakeningBenefitsForLevel(character.id, character.job, newLevel);
+      } catch (error) {
+        logger.error('Failed to grant job awakening benefits:', error);
+      }
+
+      // Emit domain event
+      try {
+        const levelUpEvent: CharacterLevelUpEvent = {
+          ...buildCorePayload({
+            characterId: character.id,
+            characterName: character.name,
+            className: character.job,
+            pathName: character.path,
+            level: newLevel,
+            campaignId,
+          }),
+          type: 'character:levelup',
+          previousLevel: character.level,
+          newLevel,
+          hpIncrease: hpIncrease!,
+          newFeatures: newFeatures.map((f) => f.name),
+          isPathUnlockLevel: showPathSelection,
+          isASILevel: isASILevel(newLevel, character.job),
+        };
+        DomainEventBus.emit(levelUpEvent);
+      } catch {
+        // Best-effort event emission
       }
 
       toast({
@@ -490,6 +570,97 @@ const CharacterLevelUp = () => {
               </div>
             </div>
 
+            {/* Path Selection (shown when character has no path and paths are available at this level) */}
+            {showPathSelection && (
+              <div className="p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-transparent border border-purple-500/20">
+                <Label className="font-arise text-purple-400 tracking-wide flex items-center gap-2 mb-4">
+                  <Swords className="w-4 h-4" />
+                  PATH SPECIALIZATION UNLOCKED
+                </Label>
+                <p className="text-sm text-muted-foreground mb-3 font-heading">
+                  Choose your specialization path. This permanently defines your combat doctrine.
+                </p>
+                <Select value={selectedPath} onValueChange={setSelectedPath}>
+                  <SelectTrigger className="border-purple-500/30 focus:border-purple-500">
+                    <SelectValue placeholder="Choose a path..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {availablePaths.map((path) => (
+                      <SelectItem key={path.id} value={path.id}>
+                        {formatMonarchVernacular((path as { display_name?: string | null }).display_name || path.name)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {selectedPath && (
+                  <div className="mt-3 p-3 rounded-lg bg-muted/30 border border-purple-500/10">
+                    <h4 className="font-heading font-semibold text-purple-400 mb-1">
+                      {formatMonarchVernacular((availablePaths.find((p) => p.id === selectedPath) as { display_name?: string | null } | undefined)?.display_name || availablePaths.find((p) => p.id === selectedPath)?.name || '')}
+                    </h4>
+                    <p className="text-sm text-muted-foreground">
+                      {formatMonarchVernacular(availablePaths.find((p) => p.id === selectedPath)?.description || '')}
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* ASI / Feat Selection (shown at ASI levels: 4, 8, 12, 16, 19) */}
+            {showASISection && (
+              <div className="p-4 rounded-lg bg-gradient-to-r from-green-500/10 to-transparent border border-green-500/20">
+                <Label className="font-arise text-green-400 tracking-wide flex items-center gap-2 mb-4">
+                  <Shield className="w-4 h-4" />
+                  ABILITY SCORE IMPROVEMENT
+                </Label>
+                <p className="text-sm text-muted-foreground mb-3 font-heading">
+                  Distribute 2 points among your ability scores (max +2 to one, or +1 to two).
+                </p>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  {(['STR', 'AGI', 'VIT', 'INT', 'SENSE', 'PRE'] as const).map((ability) => {
+                    const currentScore = (character.abilities as Record<string, number>)[ability] ?? 10;
+                    const bonus = asiChoices[ability] || 0;
+                    const totalSpent = Object.values(asiChoices).reduce((s, v) => s + v, 0);
+                    const canIncrease = totalSpent < 2 && bonus < 2 && (currentScore + bonus) < 20;
+                    const canDecrease = bonus > 0;
+                    return (
+                      <div key={ability} className="flex items-center justify-between p-2 rounded-lg bg-background/50 border border-green-500/10">
+                        <div>
+                          <span className="font-arise text-sm text-green-400">{ability}</span>
+                          <span className="text-xs text-muted-foreground ml-2 font-heading">{currentScore}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-6 w-6 p-0 text-red-400"
+                            disabled={!canDecrease}
+                            onClick={() => setAsiChoices((prev) => ({ ...prev, [ability]: Math.max(0, (prev[ability] || 0) - 1) }))}
+                          >
+                            -
+                          </Button>
+                          <span className={cn("font-arise text-sm w-6 text-center", bonus > 0 ? "text-green-400" : "text-muted-foreground")}>
+                            {bonus > 0 ? `+${bonus}` : '0'}
+                          </span>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-6 w-6 p-0 text-green-400"
+                            disabled={!canIncrease}
+                            onClick={() => setAsiChoices((prev) => ({ ...prev, [ability]: Math.min(2, (prev[ability] || 0) + 1) }))}
+                          >
+                            +
+                          </Button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+                <p className="text-xs text-muted-foreground mt-2 font-heading">
+                  Points remaining: {2 - Object.values(asiChoices).reduce((s, v) => s + v, 0)}
+                </p>
+              </div>
+            )}
+
             {/* New Features */}
             {newFeatures.length > 0 && (
               <div className="p-4 rounded-lg bg-gradient-to-r from-amber-500/10 to-transparent border border-amber-500/20">
@@ -503,24 +674,10 @@ const CharacterLevelUp = () => {
                       key={feature.id}
                       className={cn(
                         "p-4 rounded-lg border transition-all duration-300",
-                        selectedFeatures.includes(feature.id)
-                          ? "border-amber-500/50 bg-amber-500/10 shadow-lg shadow-amber-500/10"
-                          : "border-border bg-muted/30 hover:border-amber-500/30"
+                        "border-border bg-muted/30"
                       )}
                     >
                       <div className="flex items-start gap-3">
-                        <Checkbox
-                          id={`feature-${feature.id}`}
-                          checked={selectedFeatures.includes(feature.id)}
-                          onCheckedChange={(checked) => {
-                            if (checked) {
-                              setSelectedFeatures([...selectedFeatures, feature.id]);
-                            } else {
-                              setSelectedFeatures(selectedFeatures.filter(id => id !== feature.id));
-                            }
-                          }}
-                          className="mt-1 border-amber-500/50 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
-                        />
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1 flex-wrap">
                             <Label

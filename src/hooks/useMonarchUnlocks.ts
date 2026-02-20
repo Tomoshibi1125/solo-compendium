@@ -8,15 +8,15 @@ import {
   isSourcebookAccessible,
 } from '@/lib/sourcebookAccess';
 
-export interface MonarchUnlock {
+export interface RegentUnlock {
   id: string;
   character_id: string;
-  monarch_id: string;
+  regent_id: string;
   unlocked_at: string;
   quest_name: string;
   dm_notes: string | null;
   is_primary: boolean;
-  monarch?: {
+  regent?: {
     id: string;
     name: string;
     title: string;
@@ -25,17 +25,17 @@ export interface MonarchUnlock {
   };
 }
 
-export function useCharacterMonarchUnlocks(characterId: string | undefined) {
+export function useCharacterRegentUnlocks(characterId: string | undefined) {
   return useQuery({
-    queryKey: ['monarch-unlocks', characterId],
+    queryKey: ['regent-unlocks', characterId],
     queryFn: async () => {
       if (!characterId) return [];
       
-      const { data, error } = await supabase
-        .from('character_monarch_unlocks')
+      const { data, error } = await (supabase as any)
+        .from('character_regent_unlocks')
         .select(`
           *,
-          monarch:compendium_monarchs(id, name, title, theme, source_book)
+          regent:compendium_regents(id, name, title, theme, source_book)
         `)
         .eq('character_id', characterId)
         .order('unlocked_at', { ascending: true });
@@ -44,8 +44,8 @@ export function useCharacterMonarchUnlocks(characterId: string | undefined) {
 
       const campaignId = await getCharacterCampaignId(characterId);
       return filterRowsBySourcebookAccess(
-        (data || []) as MonarchUnlock[],
-        (unlock) => unlock.monarch?.source_book,
+        ((data || []) as unknown as RegentUnlock[]),
+        (unlock) => unlock.regent?.source_book,
         { campaignId }
       );
     },
@@ -53,45 +53,45 @@ export function useCharacterMonarchUnlocks(characterId: string | undefined) {
   });
 }
 
-export function useUnlockMonarch() {
+export function useUnlockRegent() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
   return useMutation({
     mutationFn: async (params: {
       characterId: string;
-      monarchId: string;
+      regentId: string;
       questName: string;
       dmNotes?: string;
       isPrimary?: boolean;
     }) => {
       const campaignId = await getCharacterCampaignId(params.characterId);
-      const { data: monarch, error: monarchError } = await supabase
-        .from('compendium_monarchs')
+      const { data: regent, error: regentError } = await (supabase as any)
+        .from('compendium_regents')
         .select('source_book')
-        .eq('id', params.monarchId)
+        .eq('id', params.regentId)
         .maybeSingle();
 
-      if (monarchError) throw monarchError;
+      if (regentError) throw regentError;
       if (
-        monarch &&
-        !(await isSourcebookAccessible(monarch.source_book, { campaignId }))
+        regent &&
+        !(await isSourcebookAccessible((regent as any).source_book, { campaignId }))
       ) {
-        throw new Error('This monarch requires sourcebook access.');
+        throw new Error('This regent requires sourcebook access.');
       }
 
-      const { data, error } = await supabase
-        .from('character_monarch_unlocks')
+      const { data, error } = await (supabase as any)
+        .from('character_regent_unlocks')
         .insert({
           character_id: params.characterId,
-          monarch_id: params.monarchId,
+          regent_id: params.regentId,
           quest_name: params.questName,
           dm_notes: params.dmNotes || null,
           is_primary: params.isPrimary || false,
         })
         .select(`
           *,
-          monarch:compendium_monarchs(id, name, title, theme)
+          regent:compendium_regents(id, name, title, theme)
         `)
         .single();
 
@@ -99,10 +99,10 @@ export function useUnlockMonarch() {
       return data;
     },
     onSuccess: (data, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['monarch-unlocks', variables.characterId] });
+      queryClient.invalidateQueries({ queryKey: ['regent-unlocks', variables.characterId] });
       toast({
         title: `${MONARCH_LABEL} Unlocked!`,
-        description: formatMonarchVernacular(`Quest "${variables.questName}" complete. Monarch power awakened!`),
+        description: formatMonarchVernacular(`Quest "${variables.questName}" complete. Regent power awakened!`),
       });
     },
     onError: (error) => {
@@ -115,21 +115,21 @@ export function useUnlockMonarch() {
   });
 }
 
-export function useSetPrimaryMonarch() {
+export function useSetPrimaryRegent() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
   return useMutation({
     mutationFn: async (params: { characterId: string; unlockId: string }) => {
       // First, unset all primary flags for this character
-      await supabase
-        .from('character_monarch_unlocks')
+      await (supabase as any)
+        .from('character_regent_unlocks')
         .update({ is_primary: false })
         .eq('character_id', params.characterId);
 
       // Then set the new primary
-      const { data, error } = await supabase
-        .from('character_monarch_unlocks')
+      const { data, error } = await (supabase as any)
+        .from('character_regent_unlocks')
         .update({ is_primary: true })
         .eq('id', params.unlockId)
         .select()
@@ -139,7 +139,7 @@ export function useSetPrimaryMonarch() {
       return data;
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['monarch-unlocks', variables.characterId] });
+      queryClient.invalidateQueries({ queryKey: ['regent-unlocks', variables.characterId] });
       toast({
         title: `Primary ${MONARCH_LABEL} Set`,
         description: `This ${MONARCH_LABEL} is now your dominant power source.`,
@@ -149,8 +149,20 @@ export function useSetPrimaryMonarch() {
 }
 
 export function useCanUnlockSovereign(characterId: string | undefined) {
-  const { data: unlocks = [] } = useCharacterMonarchUnlocks(characterId);
-  
-  // Sovereign requires 2 monarch unlocks
+  const { data: unlocks = [] } = useCharacterRegentUnlocks(characterId);
   return unlocks.length >= 2;
+}
+
+export type MonarchUnlock = RegentUnlock;
+
+export function useCharacterMonarchUnlocks(characterId: string | undefined) {
+  return useCharacterRegentUnlocks(characterId);
+}
+
+export function useUnlockMonarch() {
+  return useUnlockRegent();
+}
+
+export function useSetPrimaryMonarch() {
+  return useSetPrimaryRegent();
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, RefreshCw, Copy, Target, Clock, Users, AlertTriangle } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -10,6 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { formatMonarchVernacular } from '@/lib/vernacular';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useUserToolState } from '@/hooks/useToolState';
 
 const QUEST_TYPES = [
   'Rift Clearance',
@@ -83,10 +85,10 @@ function generateQuest(rank?: string): GeneratedQuest {
   const selectedRank = rank || QUEST_RANKS[Math.floor(Math.random() * QUEST_RANKS.length)];
   const type = QUEST_TYPES[Math.floor(Math.random() * QUEST_TYPES.length)];
   const location = QUEST_LOCATIONS[Math.floor(Math.random() * QUEST_LOCATIONS.length)];
-  
+
   // Generate title
   const title = `${type} at ${location}`;
-  
+
   // Generate description based on type
   const descriptions: Record<string, string> = {
     'Rift Clearance': `Clear the ${location} and eliminate all threats. The Awakened Council has marked this Rift for immediate clearance.`,
@@ -100,14 +102,14 @@ function generateQuest(rank?: string): GeneratedQuest {
     'Assassination': `Eliminate a specific high-value target within the ${location}. Mission is classified and off the books.`,
     'Delivery': `Deliver supplies or information through dangerous territory to the ${location}. Time-sensitive cargo.`,
   };
-  
+
   const description = descriptions[type] || `Complete the ${type} mission at ${location}.`;
-  
+
   // Generate objectives (2-4 objectives)
   const numObjectives = 2 + Math.floor(Math.random() * 3);
   const objectives: string[] = [];
   objectives.push(`Reach the ${location}`);
-  
+
   switch (type) {
     case 'Rift Clearance':
       objectives.push('Eliminate all monsters', 'Clear the Rift boss', 'Secure the Rift core');
@@ -140,7 +142,7 @@ function generateQuest(rank?: string): GeneratedQuest {
       objectives.push('Collect cargo', 'Navigate route', 'Deliver to destination');
       break;
   }
-  
+
   // Generate complications (0-2 complications)
   const numComplications = Math.floor(Math.random() * 3);
   const complications: string[] = [];
@@ -148,7 +150,7 @@ function generateQuest(rank?: string): GeneratedQuest {
   for (let i = 0; i < numComplications && i < shuffled.length; i++) {
     complications.push(shuffled[i]);
   }
-  
+
   // Generate rewards (1-3 rewards)
   const numRewards = 1 + Math.floor(Math.random() * 3);
   const rewards: string[] = [];
@@ -156,10 +158,10 @@ function generateQuest(rank?: string): GeneratedQuest {
   for (let i = 0; i < numRewards && i < shuffledRewards.length; i++) {
     rewards.push(shuffledRewards[i]);
   }
-  
+
   // Time limit for some quests
   const timeLimit = Math.random() < 0.4 ? `${4 + Math.floor(Math.random() * 20)} hours` : undefined;
-  
+
   return {
     type,
     title: formatMonarchVernacular(title),
@@ -176,11 +178,48 @@ function generateQuest(rank?: string): GeneratedQuest {
 const QuestGenerator = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [selectedRank, setSelectedRank] = useState<string>('C');
+  const { state: storedState, isLoading, saveNow } = useUserToolState<{
+    selectedRank: string;
+    quest: GeneratedQuest | null;
+  }>('quest_generator', {
+    initialState: {
+      selectedRank: 'random',
+      quest: null,
+    },
+    storageKey: 'solo-compendium.dm-tools.quest-generator.v1',
+  });
+
+  const [selectedRank, setSelectedRank] = useState<string>('random');
   const [quest, setQuest] = useState<GeneratedQuest | null>(null);
 
+  const hydrated = useMemo(() => {
+    return {
+      selectedRank: storedState.selectedRank ?? 'random',
+      quest: storedState.quest ?? null,
+    };
+  }, [storedState.quest, storedState.selectedRank]);
+
+  const hydratedRef = useRef(false);
+  useEffect(() => {
+    if (isLoading) return;
+    if (hydratedRef.current) return;
+    setSelectedRank(hydrated.selectedRank);
+    setQuest(hydrated.quest);
+    hydratedRef.current = true;
+  }, [hydrated.quest, hydrated.selectedRank, isLoading]);
+
+  const savePayload = useMemo(() => ({ selectedRank, quest }), [quest, selectedRank]);
+  const debouncedPayload = useDebounce(savePayload, 350);
+
+  useEffect(() => {
+    if (isLoading) return;
+    if (!hydratedRef.current) return;
+    void saveNow(debouncedPayload);
+  }, [debouncedPayload, isLoading, saveNow]);
+
   const handleGenerate = () => {
-    const result = generateQuest(selectedRank);
+    const rank = selectedRank === 'random' ? undefined : selectedRank;
+    const result = generateQuest(rank);
     setQuest(result);
   };
 

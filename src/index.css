@@ -1,5 +1,149 @@
 @import "tailwindcss";
 
+/* ============================================================
+   System Ascendant — Amethyst & Obsidian Color Palette
+   ============================================================
+   Primary: Amethyst Purple   (#9b6dff / hsl 262 100% 71%)
+   Secondary: Obsidian Black  (#0d0a14 / hsl 262 25% 6%)
+   ============================================================ */
+
+:root,
+.dark {
+  /* ── Core UI tokens ──────────────────────────────────────── */
+  --background:      262 30% 5%;      /* Deep obsidian */
+  --foreground:      260 15% 90%;     /* Soft lavender white */
+
+  --card:            262 25% 8%;      /* Slightly lighter obsidian */
+  --card-foreground: 260 15% 90%;
+
+  --popover:         262 25% 8%;
+  --popover-foreground: 260 15% 90%;
+
+  --primary:         262 100% 71%;    /* Amethyst purple */
+  --primary-foreground: 262 10% 98%;  /* Near-white on purple */
+
+  --secondary:       262 25% 10%;     /* Obsidian charcoal */
+  --secondary-foreground: 260 15% 85%;
+
+  --muted:           262 18% 16%;     /* Purple-tinted dark gray */
+  --muted-foreground: 262 10% 55%;
+
+  --accent:          280 60% 65%;     /* Lighter orchid purple */
+  --accent-foreground: 280 10% 98%;
+
+  --destructive:     0 72% 51%;       /* Crimson red */
+  --destructive-foreground: 0 0% 98%;
+
+  --success:         160 60% 42%;     /* Emerald green */
+  --success-foreground: 160 10% 98%;
+
+  --warning:         43 96% 56%;      /* Amber gold */
+  --warning-foreground: 43 10% 10%;
+
+  --border:          262 20% 16%;     /* Purple-tinted border */
+  --input:           262 20% 16%;
+  --ring:            262 80% 65%;     /* Amethyst focus ring */
+  --radius:          0.5rem;
+
+  /* ── Sidebar ─────────────────────────────────────────────── */
+  --sidebar-background:         262 30% 6%;
+  --sidebar-foreground:         260 15% 85%;
+  --sidebar-primary:            262 100% 71%;
+  --sidebar-primary-foreground: 262 10% 98%;
+  --sidebar-accent:             280 50% 55%;
+  --sidebar-accent-foreground:  280 10% 98%;
+  --sidebar-border:             262 20% 14%;
+  --sidebar-ring:               262 80% 65%;
+
+  /* ── System Ascendant: Protocol Palette ──────────────────── */
+  --shadow-blue:     230 65% 55%;     /* Deep indigo */
+  --shadow-purple:   275 60% 55%;     /* Rich violet */
+  --shadow-deep:     270 50% 25%;     /* Purple abyss */
+  --shadow-dark:     268 40% 10%;     /* Near-black purple */
+
+  --monarch-gold:    43 90% 58%;      /* Warm sovereign gold */
+  --monarch-silver:  220 12% 72%;     /* Cool silver */
+
+  /* ── Gate rank colors (E → National) ─────────────────────── */
+  --gate-red:        0 75% 50%;
+  --gate-e:          0 0% 50%;        /* Gray */
+  --gate-d:          145 50% 42%;     /* Green */
+  --gate-c:          210 65% 52%;     /* Blue */
+  --gate-b:          270 55% 58%;     /* Purple */
+  --gate-a:          350 72% 52%;     /* Red */
+  --gate-s:          43 88% 56%;      /* Gold */
+  --gate-ss:         38 55% 70%;      /* Platinum */
+  --gate-national:   330 80% 48%;     /* Crimson-violet */
+
+  /* Gate glow variants (brighter / more saturated) */
+  --gate-e-glow:     0 0% 60%;
+  --gate-d-glow:     145 60% 50%;
+  --gate-c-glow:     210 75% 60%;
+  --gate-b-glow:     270 65% 65%;
+  --gate-a-glow:     350 80% 58%;
+  --gate-s-glow:     43 95% 62%;
+  --gate-ss-glow:    38 65% 78%;
+  --gate-national-glow: 330 85% 55%;
+
+  /* ── Entity accent colors ────────────────────────────────── */
+  --hunter-blue:     210 72% 55%;     /* Cool hunter blue */
+  --mana-cyan:       185 80% 52%;     /* Arcane cyan */
+  --arise-violet:    275 75% 62%;     /* Arise / ascension violet */
+  --system-green:    155 80% 42%;     /* System matrix green */
+  --system-glow:     155 90% 52%;     /* Bright system pulse */
+  --void-black:      270 30% 3%;      /* True void */
+
+  /* ── Named Shadow Soldiers ───────────────────────────────── */
+  --crimson-knight:  350 70% 48%;
+  --gilded-reaper:   43 85% 55%;
+  --silver-commander: 220 15% 65%;
+}
+
+
+.system-grid-overlay {
+  background-image:
+    linear-gradient(hsl(var(--shadow-blue)) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--shadow-blue)) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.system-grid-overlay-50 {
+  background-image:
+    linear-gradient(hsl(var(--shadow-blue)) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--shadow-blue)) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+.hero-bg-image {
+  background-image:
+    -webkit-image-set(
+      url('/ui/landing-page-hero.avif') type('image/avif'),
+      url('/ui/landing-page-hero.webp') type('image/webp')
+    );
+  background-image:
+    image-set(
+      url('/ui/landing-page-hero.avif') type('image/avif'),
+      url('/ui/landing-page-hero.webp') type('image/webp')
+    );
+  filter: brightness(0.3) saturate(1.2) contrast(1.1);
+}
+
+.ambient-opacity {
+  opacity: var(--ambient-opacity, 1);
+}
+
+.anim-delay-0 { animation-delay: 0s; }
+.anim-delay-1 { animation-delay: 0.1s; }
+.anim-delay-2 { animation-delay: 0.2s; }
+.anim-delay-3 { animation-delay: 0.3s; }
+.anim-delay-4 { animation-delay: 0.4s; }
+.anim-delay-5 { animation-delay: 0.5s; }
+.anim-delay-6 { animation-delay: 0.6s; }
+.anim-delay-7 { animation-delay: 0.7s; }
+.anim-delay-8 { animation-delay: 0.8s; }
+.anim-delay-9 { animation-delay: 0.9s; }
+.anim-delay-10 { animation-delay: 1s; }
+
 
 
 /* Print Styles - Chronicle of Ascendants */

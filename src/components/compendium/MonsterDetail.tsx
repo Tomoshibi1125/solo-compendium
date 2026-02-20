@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { Heart, Shield, Footprints, Skull, Swords, Crown, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
 import { StatBlock, StatSection } from '@/components/compendium/StatBlock';
 import { formatMonarchVernacular, MONARCH_LABEL } from '@/lib/vernacular';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
+import { setPendingResolution, type ActionResolutionPayload } from '@/lib/actionResolution';
 
 interface MonsterData {
   id: string;
@@ -14,24 +17,24 @@ interface MonsterData {
   display_name?: string | null;
   description?: string;
   lore?: string;
-  size: string;
-  creature_type: string;
+  size?: string | null;
+  creature_type?: string | null;
   alignment?: string;
-  armor_class: number;
+  armor_class?: number | null;
   armor_type?: string;
-  hit_points_average: number;
-  hit_points_formula: string;
+  hit_points_average?: number | null;
+  hit_points_formula?: string | null;
   speed_walk?: number;
   speed_fly?: number;
   speed_swim?: number;
   speed_climb?: number;
   speed_burrow?: number;
-  str: number;
-  agi: number;
-  vit: number;
-  int: number;
-  sense: number;
-  pre: number;
+  str?: number | null;
+  agi?: number | null;
+  vit?: number | null;
+  int?: number | null;
+  sense?: number | null;
+  pre?: number | null;
   saving_throws?: Record<string, number>;
   skills?: Record<string, number>;
   damage_vulnerabilities?: string[];
@@ -40,12 +43,14 @@ interface MonsterData {
   condition_immunities?: string[];
   senses?: Record<string, string>;
   languages?: string[];
-  cr: string;
+  cr?: string | null;
   xp?: number;
   gate_rank?: string;
-  is_boss: boolean;
+  is_boss?: boolean;
   tags?: string[];
   image_url?: string | null;
+  monster_actions?: Record<string, unknown>[] | null;
+  monster_traits?: Record<string, unknown>[] | null;
 }
 
 interface MonsterAction {
@@ -83,32 +88,152 @@ const getModifier = (score: number) => {
 };
 
 export const MonsterDetail = ({ data }: { data: MonsterData }) => {
+  const navigate = useNavigate();
   const [actions, setActions] = useState<MonsterAction[]>([]);
   const [traits, setTraits] = useState<MonsterTrait[]>([]);
 
+  const mapStaticAction = (a: Record<string, unknown>, idx: number): MonsterAction => {
+    const name = typeof a.name === 'string' ? a.name : `Action ${idx + 1}`;
+    const actionTypeRaw =
+      (typeof a.action_type === 'string' ? a.action_type : null) ??
+      (typeof a.action === 'string' ? a.action : null);
+
+    const action_type =
+      actionTypeRaw === 'bonus-action'
+        ? 'bonus'
+        : actionTypeRaw === 'reaction'
+          ? 'reaction'
+          : actionTypeRaw === 'legendary'
+            ? 'legendary'
+            : 'action';
+
+    const attack_bonus =
+      typeof a.attack_bonus === 'number'
+        ? a.attack_bonus
+        : typeof a.attackBonus === 'number'
+          ? a.attackBonus
+          : undefined;
+
+    const damage = typeof a.damage === 'string' ? a.damage : undefined;
+    const damage_type =
+      typeof a.damage_type === 'string'
+        ? a.damage_type
+        : typeof a.damageType === 'string'
+          ? a.damageType
+          : undefined;
+
+    const recharge =
+      typeof a.recharge === 'string'
+        ? a.recharge
+        : typeof a.usage === 'string'
+          ? a.usage
+          : undefined;
+
+    const legendary_cost =
+      typeof a.legendary_cost === 'number'
+        ? a.legendary_cost
+        : typeof a.legendaryCost === 'number'
+          ? a.legendaryCost
+          : undefined;
+
+    return {
+      id: `${data.id}:static-action:${idx}`,
+      name,
+      description: typeof a.description === 'string' ? a.description : '',
+      action_type,
+      attack_bonus,
+      damage,
+      damage_type,
+      recharge,
+      legendary_cost,
+    };
+  };
+
+  const mapStaticTrait = (t: Record<string, unknown>, idx: number): MonsterTrait => {
+    const name = typeof t.name === 'string' ? t.name : `Trait ${idx + 1}`;
+    return {
+      id: `${data.id}:static-trait:${idx}`,
+      name,
+      description: typeof t.description === 'string' ? t.description : '',
+    };
+  };
+
   useEffect(() => {
     const fetchRelatedData = async () => {
+      const staticActions = Array.isArray(data.monster_actions)
+        ? data.monster_actions
+        : null;
+      const staticTraits = Array.isArray(data.monster_traits)
+        ? data.monster_traits
+        : null;
+
+      // If Supabase isn't configured, rely entirely on embedded static data.
+      if (!isSupabaseConfigured) {
+        if (staticActions) {
+          setActions(
+            staticActions
+              .map((a, idx) => mapStaticAction(a as Record<string, unknown>, idx))
+              .filter((a) => a.description.trim().length > 0),
+          );
+        }
+
+        if (staticTraits) {
+          setTraits(
+            staticTraits
+              .map((t, idx) => mapStaticTrait(t as Record<string, unknown>, idx))
+              .filter((t) => t.description.trim().length > 0),
+          );
+        }
+
+        return;
+      }
+
       const [actionsRes, traitsRes] = await Promise.all([
         supabase.from('compendium_monster_actions').select('*').eq('monster_id', data.id),
         supabase.from('compendium_monster_traits').select('*').eq('monster_id', data.id),
       ]);
 
-      if (actionsRes.data) setActions(actionsRes.data.map(action => ({
-        ...action,
-        attack_bonus: action.attack_bonus ?? undefined,
-        damage: action.damage ?? undefined,
-        damage_type: action.damage_type ?? undefined,
-        recharge: action.recharge ?? undefined,
-        legendary_cost: action.legendary_cost ?? undefined,
-        action_type: action.action_type ?? undefined,
-        aliases: action.aliases ?? undefined,
-        display_name: action.display_name ?? undefined
-      })));
-      if (traitsRes.data) setTraits(traitsRes.data.map(trait => ({
-        ...trait,
-        display_name: trait.display_name ?? undefined,
-        aliases: trait.aliases ?? undefined
-      })));
+      const remoteActions = actionsRes.data || [];
+      const remoteTraits = traitsRes.data || [];
+
+      if (remoteActions.length > 0) {
+        setActions(
+          remoteActions.map((action: any) => ({
+            ...action,
+            attack_bonus: action.attack_bonus ?? undefined,
+            damage: action.damage ?? undefined,
+            damage_type: action.damage_type ?? undefined,
+            recharge: action.recharge ?? undefined,
+            legendary_cost: action.legendary_cost ?? undefined,
+            action_type: action.action_type ?? undefined,
+            aliases: action.aliases ?? undefined,
+            display_name: action.display_name ?? undefined,
+          })),
+        );
+      } else if (staticActions) {
+        // Remote not present; fallback to static embedded data.
+        setActions(
+          staticActions
+            .map((a, idx) => mapStaticAction(a as Record<string, unknown>, idx))
+            .filter((a) => a.description.trim().length > 0),
+        );
+      }
+
+      if (remoteTraits.length > 0) {
+        setTraits(
+          remoteTraits.map((trait: any) => ({
+            ...trait,
+            display_name: trait.display_name ?? undefined,
+            aliases: trait.aliases ?? undefined,
+          })),
+        );
+      } else if (staticTraits) {
+        setTraits(
+          staticTraits
+            .map((t, idx) => mapStaticTrait(t as Record<string, unknown>, idx))
+            .filter((t) => t.description.trim().length > 0),
+        );
+      }
     };
 
     fetchRelatedData();
@@ -129,6 +254,41 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 
   const gateStyle = data.gate_rank ? gateRankColors[data.gate_rank] : null;
   const displayName = formatMonarchVernacular(data.display_name || data.name);
+  const monsterSize = formatMonarchVernacular(data.size || 'Medium');
+  const monsterType = formatMonarchVernacular(data.creature_type || 'Unknown');
+  const armorClass = data.armor_class ?? 0;
+  const hitPointsAverage = data.hit_points_average ?? 0;
+  const hitPointsFormula = data.hit_points_formula ?? '';
+  const cr = data.cr ?? '—';
+  const isBoss = Boolean(data.is_boss);
+
+  const queueMonsterActionResolution = (action: MonsterAction, path: string) => {
+    const id = crypto.randomUUID();
+    const damageRoll = action.damage ? String(action.damage) : null;
+    const toHit = typeof action.attack_bonus === 'number' ? action.attack_bonus : null;
+
+    const payload: ActionResolutionPayload = toHit !== null
+      ? {
+          version: 1,
+          id,
+          name: `${displayName}: ${formatMonarchVernacular(action.name)}`,
+          source: { type: 'monster_action', entryId: data.id },
+          kind: 'attack',
+          attack: { roll: `1d20+${toHit}` },
+          damage: damageRoll ? { roll: damageRoll, type: action.damage_type } : undefined,
+        }
+      : {
+          version: 1,
+          id,
+          name: `${displayName}: ${formatMonarchVernacular(action.name)}`,
+          source: { type: 'monster_action', entryId: data.id },
+          kind: 'damage',
+          damage: { roll: damageRoll ?? '1d6', type: action.damage_type },
+        };
+
+    setPendingResolution(payload);
+    navigate(path);
+  };
 
   return (
     <div className="space-y-6">
@@ -149,9 +309,9 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
       {/* Header */}
       <SystemWindow
         title={displayName.toUpperCase()}
-        variant={data.is_boss ? 'alert' : data.tags?.includes('monarch') ? 'arise' : 'default'}
+        variant={isBoss ? 'alert' : data.tags?.includes('monarch') ? 'arise' : 'default'}
         className={cn(
-          data.is_boss && 'border-gate-a/50 border-2',
+          isBoss && 'border-gate-a/50 border-2',
           data.tags?.includes('monarch') && 'border-arise-violet/50 border-2',
           gateStyle?.glow
         )}
@@ -159,7 +319,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
         <div className="space-y-3">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-muted-foreground capitalize font-heading">
-              {formatMonarchVernacular(data.size)} {formatMonarchVernacular(data.creature_type)}
+              {monsterSize} {monsterType}
               {data.alignment && `, ${formatMonarchVernacular(data.alignment)}`}
             </span>
             {data.gate_rank && gateStyle && (
@@ -167,7 +327,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
                 {data.gate_rank}-Rank Rift
               </Badge>
             )}
-            {data.is_boss && (
+            {isBoss && (
               <Badge variant="destructive" className="font-display tracking-wider shadow-[0_0_10px_hsl(var(--destructive)/0.5)]">
                 <Skull className="h-3 w-3 mr-1" />
                 BOSS
@@ -209,7 +369,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
         <SystemWindow title="ARMOR CLASS" compact>
           <div className="flex items-center gap-2">
             <Shield className="w-5 h-5 text-blue-400" />
-            <span className="font-display text-2xl">{data.armor_class}</span>
+            <span className="font-display text-2xl">{armorClass}</span>
           </div>
           {data.armor_type && (
           <span className="text-xs text-muted-foreground">{formatMonarchVernacular(data.armor_type)}</span>
@@ -219,9 +379,11 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
         <SystemWindow title="HIT POINTS" compact>
           <div className="flex items-center gap-2">
             <Heart className="w-5 h-5 text-red-400" />
-            <span className="font-display text-2xl">{data.hit_points_average}</span>
+            <span className="font-display text-2xl">{hitPointsAverage}</span>
           </div>
-          <span className="text-xs text-muted-foreground">{data.hit_points_formula}</span>
+          {hitPointsFormula.length > 0 && (
+            <span className="text-xs text-muted-foreground">{hitPointsFormula}</span>
+          )}
         </SystemWindow>
 
         <SystemWindow title="SPEED" compact>
@@ -234,7 +396,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
         <SystemWindow title="CR" compact>
           <div className="flex items-center gap-2">
             <Skull className="w-5 h-5 text-purple-400" />
-            <span className="font-display text-2xl">{data.cr}</span>
+            <span className="font-display text-2xl">{cr}</span>
           </div>
           {data.xp && <span className="text-xs text-muted-foreground">{data.xp} XP</span>}
         </SystemWindow>
@@ -251,17 +413,17 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
       <StatBlock
         title="ABILITY SCORES"
         copyable
-        copyContent={`${displayName} - Ability Scores: STR ${data.str} (${getModifier(data.str)}), AGI ${data.agi} (${getModifier(data.agi)}), VIT ${data.vit} (${getModifier(data.vit)}), INT ${data.int} (${getModifier(data.int)}), SENSE ${data.sense} (${getModifier(data.sense)}), PRE ${data.pre} (${getModifier(data.pre)})`}
+        copyContent={`${displayName} - Ability Scores: STR ${data.str ?? 10} (${getModifier(data.str ?? 10)}), AGI ${data.agi ?? 10} (${getModifier(data.agi ?? 10)}), VIT ${data.vit ?? 10} (${getModifier(data.vit ?? 10)}), INT ${data.int ?? 10} (${getModifier(data.int ?? 10)}), SENSE ${data.sense ?? 10} (${getModifier(data.sense ?? 10)}), PRE ${data.pre ?? 10} (${getModifier(data.pre ?? 10)})`}
         id="monster-abilities"
       >
         <div className="grid grid-cols-3 md:grid-cols-6 gap-4 text-center">
           {[
-            { name: 'STR', value: data.str },
-            { name: 'AGI', value: data.agi },
-            { name: 'VIT', value: data.vit },
-            { name: 'INT', value: data.int },
-            { name: 'SENSE', value: data.sense },
-            { name: 'PRE', value: data.pre },
+            { name: 'STR', value: data.str ?? 10 },
+            { name: 'AGI', value: data.agi ?? 10 },
+            { name: 'VIT', value: data.vit ?? 10 },
+            { name: 'INT', value: data.int ?? 10 },
+            { name: 'SENSE', value: data.sense ?? 10 },
+            { name: 'PRE', value: data.pre ?? 10 },
           ].map((stat) => (
             <div key={stat.name} className="glass-card p-3">
               <div className="font-display text-xs text-muted-foreground mb-1">{stat.name}</div>
@@ -333,6 +495,22 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
                 <div className="flex items-center gap-2 mb-2">
                   <h4 className="font-heading font-semibold text-primary text-base">{formatMonarchVernacular(action.name)}</h4>
                   {action.recharge && <Badge variant="secondary" className="text-xs">{action.recharge}</Badge>}
+                </div>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => queueMonsterActionResolution(action, '/dice')}
+                  >
+                    Roll
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => queueMonsterActionResolution(action, '/dm-tools/initiative-tracker')}
+                  >
+                    Resolve in Initiative
+                  </Button>
                 </div>
                 <p className="text-sm text-foreground leading-relaxed mb-1">{formatMonarchVernacular(action.description)}</p>
                 {action.damage && (

@@ -74,7 +74,7 @@ const CharacterSheet5e = () => {
   const updateCharacter = useUpdateCharacter();
 
   const [isEditing, setIsEditing] = useState(false);
-  const [tempCharacter, setTempCharacter] = useState(character);
+  const [tempCharacter, setTempCharacter] = useState<any>(character);
   const [exportDialogOpen, setExportDialogOpen] = useState(false);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
@@ -126,12 +126,12 @@ const CharacterSheet5e = () => {
   }
 
   // Create 5e character sheet
-  const [sheet, setSheet] = useState(() => createCharacterSheet(character));
+  const [sheet, setSheet] = useState(() => createCharacterSheet(character as any));
 
   useEffect(() => {
     if (character) {
-      setSheet(createCharacterSheet(character));
-      setTempCharacter(character);
+      setSheet(createCharacterSheet(character as any));
+      setTempCharacter(character as any);
     }
   }, [character]);
 
@@ -178,8 +178,8 @@ const CharacterSheet5e = () => {
   const handleSave = async () => {
     if (!tempCharacter) return;
     try {
-      await updateCharacter.mutateAsync(tempCharacter);
-      setSheet(createCharacterSheet(tempCharacter));
+      await updateCharacter.mutateAsync({ id: tempCharacter.id, data: tempCharacter as any });
+      setSheet(createCharacterSheet(tempCharacter as any));
       setIsEditing(false);
       toast({
         title: 'Character saved',
@@ -203,7 +203,7 @@ const CharacterSheet5e = () => {
     if (!character || isReadOnly) return;
     const updatedSheet = CharacterSheetSystem.applyDamage(sheet, damage);
     if (updateCharacter) {
-      updateCharacter.mutateAsync(updatedSheet.character);
+      void updateCharacter.mutateAsync({ id: updatedSheet.character.id, data: updatedSheet.character as any });
     }
   };
 
@@ -211,7 +211,7 @@ const CharacterSheet5e = () => {
     if (!character || isReadOnly) return;
     const updatedSheet = CharacterSheetSystem.applyHealing(sheet, healing);
     if (updateCharacter) {
-      updateCharacter.mutateAsync(updatedSheet.character);
+      void updateCharacter.mutateAsync({ id: updatedSheet.character.id, data: updatedSheet.character as any });
     }
   };
 
@@ -219,7 +219,7 @@ const CharacterSheet5e = () => {
     if (!character || isReadOnly) return;
     const updatedSheet = CharacterSheetSystem.longRest(sheet);
     if (updateCharacter) {
-      updateCharacter.mutateAsync(updatedSheet.character);
+      void updateCharacter.mutateAsync({ id: updatedSheet.character.id, data: updatedSheet.character as any });
     }
     toast({
       title: 'Long rest completed',
@@ -241,10 +241,11 @@ const CharacterSheet5e = () => {
 
   const handleHPChange = (type: 'current' | 'temp', value: number) => {
     if (!tempCharacter) return;
+    const hitPoints = (tempCharacter as any).hitPoints ?? { current: 0, max: 0, temp: 0 };
     const updated = {
       ...tempCharacter,
       hitPoints: {
-        ...tempCharacter.hitPoints,
+        ...hitPoints,
         [type]: Math.max(0, value)
       }
     };
@@ -252,7 +253,7 @@ const CharacterSheet5e = () => {
   };
 
   // Get spell slots display
-  const spellSlots = SpellSystem.getCharacterSpellSlots(character);
+  const spellSlots = SpellSystem.getCharacterSpellSlots(sheet.character);
   const spellSlotDisplay = Object.entries(spellSlots)
     .filter(([_, count]) => count > 0)
     .map(([level, count]) => {
@@ -495,8 +496,8 @@ const CharacterSheet5e = () => {
             </div>
           </div>
         </div>
+      </div>
       </Layout>
-    );
   );
 };
 

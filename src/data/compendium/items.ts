@@ -13,7 +13,7 @@ export interface Item {
   requirements?: {
     level?: number;
     class?: string[];
-    race?: string[];
+    job?: string[];
     alignment?: string[];
   };
   properties?: {

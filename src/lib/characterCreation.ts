@@ -16,9 +16,191 @@ import {
   getCharacterCampaignId,
   isSourcebookAccessible,
 } from '@/lib/sourcebookAccess';
+import { jobs as staticJobs } from '@/data/compendium/jobs';
 
 type Job = Database['public']['Tables']['compendium_jobs']['Row'];
 type Background = Database['public']['Tables']['compendium_backgrounds']['Row'];
+
+type StaticJob = (typeof staticJobs)[number];
+
+function findStaticJobByName(jobName: string | null | undefined): StaticJob | null {
+  if (!jobName) return null;
+  const normalized = jobName.trim().toLowerCase();
+  return staticJobs.find((j) => j.name.trim().toLowerCase() === normalized) ?? null;
+}
+
+function isChoiceFeatureText(value: string | null | undefined): boolean {
+  if (!value) return false;
+  return /\b(choose|select|pick)\b/i.test(value);
+}
+
+function isChoiceFeatureRow(feature: {
+  name?: string | null;
+  description?: string | null;
+  prerequisites?: string | null;
+}): boolean {
+  return (
+    isChoiceFeatureText(feature.name ?? null) ||
+    isChoiceFeatureText(feature.description ?? null) ||
+    isChoiceFeatureText(feature.prerequisites ?? null)
+  );
+}
+
+type SpellProgression = 'none' | 'full' | 'half' | 'pact';
+
+function normalizeJobName(jobName: string | null | undefined): string {
+  return (jobName || '').trim().toLowerCase();
+}
+
+function getSpellProgressionForJob(jobName: string | null | undefined): SpellProgression {
+  const normalized = normalizeJobName(jobName);
+
+  // Full casters
+  if (
+    normalized === 'mage' ||
+    normalized === 'necromancer' ||
+    normalized === 'technomancer' ||
+    normalized === 'oracle' || // rethemed healer
+    normalized === 'resonant' || // rethemed bard
+    normalized === 'invoker' // rethemed summoner
+  ) {
+    return 'full';
+  }
+
+  // Half casters
+  if (
+    normalized === 'crusader' || // rethemed paladin
+    normalized === 'stalker' // rethemed ranger
+  ) {
+    return 'half';
+  }
+
+  // Pact caster
+  if (normalized === 'contractor') {
+    return 'pact';
+  }
+
+  return 'none';
+}
+
+/**
+ * 5e-accurate max spell level unlocked for a class at a given level.
+ * We use this to gate compendium powers (treating `power_level` like spell level).
+ */
+export function getMaxPowerLevelForJobAtLevel(
+  jobName: string | null | undefined,
+  level: number
+): number {
+  const clamped = Math.min(Math.max(level, 1), 20);
+  const progression = getSpellProgressionForJob(jobName);
+
+  if (progression === 'none') return 0;
+
+  if (progression === 'pact') {
+    if (clamped >= 9) return 5;
+    if (clamped >= 7) return 4;
+    if (clamped >= 5) return 3;
+    if (clamped >= 3) return 2;
+    return 1;
+  }
+
+  if (progression === 'half') {
+    if (clamped >= 17) return 5;
+    if (clamped >= 13) return 4;
+    if (clamped >= 9) return 3;
+    if (clamped >= 5) return 2;
+    if (clamped >= 2) return 1;
+    return 0;
+  }
+
+  // full caster
+  if (clamped >= 17) return 9;
+  if (clamped >= 15) return 8;
+  if (clamped >= 13) return 7;
+  if (clamped >= 11) return 6;
+  if (clamped >= 9) return 5;
+  if (clamped >= 7) return 4;
+  if (clamped >= 5) return 3;
+  if (clamped >= 3) return 2;
+  return 1;
+}
+
+async function getExistingFeatureNames(characterId: string): Promise<Set<string>> {
+  if (isLocalCharacterId(characterId)) {
+    return new Set();
+  }
+
+  const { data } = await supabase
+    .from('character_features')
+    .select('name')
+    .eq('character_id', characterId);
+
+  return new Set((data || []).map((row) => row.name));
+}
+
+async function insertCharacterFeature(
+  characterId: string,
+  payload: Omit<Database['public']['Tables']['character_features']['Insert'], 'character_id'>
+): Promise<void> {
+  if (isLocalCharacterId(characterId)) {
+    addLocalFeature(characterId, {
+      name: payload.name,
+      source: payload.source ?? undefined,
+      level_acquired: payload.level_acquired ?? undefined,
+      description: payload.description ?? undefined,
+      action_type: payload.action_type ?? null,
+      uses_max: payload.uses_max ?? null,
+      uses_current: payload.uses_current ?? null,
+      recharge: payload.recharge ?? null,
+      is_active: payload.is_active ?? true,
+    });
+    return;
+  }
+
+  await supabase.from('character_features').insert({
+    character_id: characterId,
+    ...payload,
+  });
+}
+
+/**
+ * Grant job awakening benefits (awakening features + job traits) at a specific level.
+ */
+export async function addJobAwakeningBenefitsForLevel(
+  characterId: string,
+  jobName: string | null | undefined,
+  level: number
+): Promise<void> {
+  const job = findStaticJobByName(jobName);
+  if (!job) return;
+
+  const existingNames = await getExistingFeatureNames(characterId);
+
+  const awakeningAtLevel = (job.awakeningFeatures || []).filter((f) => f.level === level);
+  for (const feature of awakeningAtLevel) {
+    if (existingNames.has(feature.name)) continue;
+    await insertCharacterFeature(characterId, {
+      name: feature.name,
+      source: `Job Awakening: ${job.name}`,
+      level_acquired: level,
+      description: feature.description,
+      is_active: true,
+    });
+  }
+
+  if (level === 1) {
+    for (const trait of job.jobTraits || []) {
+      if (existingNames.has(trait.name)) continue;
+      await insertCharacterFeature(characterId, {
+        name: trait.name,
+        source: `Job Trait: ${job.name}`,
+        level_acquired: 1,
+        description: trait.description,
+        is_active: true,
+      });
+    }
+  }
+}
 
 /**
  * Add level 1 features from job to character
@@ -87,6 +269,16 @@ export async function addLevel1Features(
 
   // Get level 1 path features if path selected
   if (pathId) {
+    const { data: pathRow } = await supabase
+      .from('compendium_job_paths')
+      .select('path_level')
+      .eq('id', pathId)
+      .maybeSingle();
+
+    if (!pathRow || pathRow.path_level !== 1) {
+      return;
+    }
+
     const { data: pathFeatures } = await supabase
       .from('compendium_job_features')
       .select('*')
@@ -254,12 +446,14 @@ export async function addStartingPowers(
 ): Promise<void> {
   const campaignId = await getCharacterCampaignId(characterId);
 
+  const maxPowerLevel = getMaxPowerLevelForJobAtLevel(job.name, 1);
+
   // Get powers available to this job at level 1
   const { data: powers } = await supabase
     .from('compendium_powers')
     .select('*')
     .contains('job_names', [job.name])
-    .lte('power_level', 1); // Level 1 or cantrips
+    .lte('power_level', maxPowerLevel); // 5e-accurate max spell level (includes cantrips at 0)
 
   const accessiblePowers = await filterRowsBySourcebookAccess(
     powers || [],

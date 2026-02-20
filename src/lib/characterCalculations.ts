@@ -229,6 +229,40 @@ export function getSpellsKnownLimit(job: string | null | undefined, level: numbe
 }
 
 /**
+ * Calculate cantrips known limit for a job and level
+ */
+export function getCantripsKnownLimit(job: string | null | undefined, level: number): number | null {
+  if (!job) return null;
+
+  // Non-casters and most half-casters in this system do not learn cantrips by default.
+  if (['Warrior', 'Assassin', 'Ranger', 'Herald', 'Holy Knight'].includes(job)) {
+    return null;
+  }
+
+  // Full prepared casters (Wizard/Cleric/Druid equivalents)
+  if (['Mage', 'Healer', 'Warden'].includes(job)) {
+    if (level >= 10) return 5;
+    if (level >= 4) return 4;
+    return 3;
+  }
+
+  // Known caster (Sorcerer equivalent)
+  if (job === 'Esper') {
+    if (level >= 10) return 6;
+    if (level >= 4) return 5;
+    return 4;
+  }
+
+  // Artificer-ish caster
+  if (job === 'Techsmith') {
+    if (level >= 10) return 3;
+    return 2;
+  }
+
+  return null;
+}
+
+/**
  * Calculate spells prepared limit for a job and level
  */
 export function getSpellsPreparedLimit(

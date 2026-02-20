@@ -13,7 +13,8 @@ import {
   Zap,
   Skull,
   UsersRound,
-  Map
+  Map,
+  MessageSquare
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
@@ -85,10 +86,7 @@ export function LaunchPad() {
         <div className="absolute bottom-1/4 right-1/4 w-[150px] h-[150px] sm:w-[250px] sm:h-[250px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px] bg-gradient-radial from-arise-violet/6 via-shadow-purple/3 to-transparent rounded-full blur-3xl animate-pulse-glow-delay-1s" />
         
         {/* Subtle grid overlay - System interface */}
-        <div className="absolute inset-0 opacity-[0.015]" style={{
-          backgroundImage: `linear-gradient(hsl(var(--shadow-blue)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--shadow-blue)) 1px, transparent 1px)`,
-          backgroundSize: '60px 60px'
-        }} />
+        <div className="absolute inset-0 opacity-[0.015] system-grid-overlay" />
       </div>
 
       <div className="container mx-auto px-4 py-12 relative z-10 max-w-full overflow-x-hidden">
@@ -263,9 +261,9 @@ export function LaunchPad() {
                       to={`/characters/${character.id}`}
                       className={cn(
                         "block p-4 rounded-lg border border-border bg-background/50 hover:bg-muted/50 hover:border-shadow-purple/40 transition-all group card-shadow-energy",
-                        index === 0 && "animate-arise"
+                        index === 0 && "animate-arise",
+                        `anim-delay-${Math.min(index, 10)}`
                       )}
-                      style={{ animationDelay: `${index * 0.1}s` }}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex-1">
@@ -330,9 +328,9 @@ export function LaunchPad() {
                         to={`/campaigns/${campaign.id}`}
                         className={cn(
                           "block p-4 rounded-lg border border-border bg-background/50 hover:bg-muted/50 hover:border-primary/40 transition-all group card-shadow-energy",
-                          index === 0 && "animate-arise"
+                          index === 0 && "animate-arise",
+                          `anim-delay-${Math.min(index, 10)}`
                         )}
-                        style={{ animationDelay: `${index * 0.1}s` }}
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex-1">
@@ -661,10 +659,7 @@ function UnauthenticatedWelcomeScreen() {
         <div className="absolute bottom-1/4 right-1/4 w-[150px] h-[150px] sm:w-[250px] sm:h-[250px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px] bg-gradient-radial from-arise-violet/6 via-shadow-purple/3 to-transparent rounded-full blur-3xl animate-pulse-glow-delay-1s" />
 
         {/* Subtle grid overlay - System interface */}
-        <div className="absolute inset-0 opacity-[0.015]" style={{
-          backgroundImage: `linear-gradient(hsl(var(--shadow-blue)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--shadow-blue)) 1px, transparent 1px)`,
-          backgroundSize: '60px 60px'
-        }} />
+        <div className="absolute inset-0 opacity-[0.015] system-grid-overlay" />
       </div>
 
       <div className="container mx-auto px-4 py-12 relative z-10 max-w-full overflow-x-hidden">

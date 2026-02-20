@@ -11,7 +11,7 @@ describe('Compendium Validation', () => {
         description: 'A martial combat expert',
         hitDie: 'd10',
         primaryAbility: 'STR',
-        savingThrows: ['STR', 'CON'],
+        savingThrows: ['STR', 'VIT'],
         features: []
       }
     ];

@@ -1,8 +1,11 @@
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Sparkles, Crown, Shield, Swords } from 'lucide-react';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
 import { formatMonarchVernacular } from '@/lib/vernacular';
+import { useNavigate } from 'react-router-dom';
+import { setPendingResolution, type ActionResolutionPayload } from '@/lib/actionResolution';
 
 interface ArtifactAbility {
   name: string;
@@ -66,6 +69,7 @@ const rarityStyles: Record<string, string> = {
 };
 
 export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
+  const navigate = useNavigate();
   const displayName = formatMonarchVernacular(data.display_name || data.name);
   const imageSrc = data.image_url || data.image || undefined;
   const rarityStyle = data.rarity ? rarityStyles[data.rarity] : undefined;
@@ -77,6 +81,66 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
     { label: 'Tertiary', ability: abilities?.tertiary },
     { label: 'Ultimate', ability: abilities?.ultimate },
   ];
+
+  const parseDiceFromText = (text: string): string | null => {
+    const match = text.match(/\b(\d+d\d+(?:\s*[+-]\s*\d+)?)\b/i);
+    return match ? match[1].replace(/\s+/g, '') : null;
+  };
+
+  const parseDcFromText = (text: string): number | null => {
+    const match = text.match(/\bDC\s*(\d{1,2})\b/i);
+    if (!match) return null;
+    const parsed = parseInt(match[1], 10);
+    return Number.isFinite(parsed) ? parsed : null;
+  };
+
+  const buildAbilityPayload = (ability: ArtifactAbility): ActionResolutionPayload | null => {
+    const description = ability.description || '';
+    const dice = parseDiceFromText(description);
+    const dc = parseDcFromText(description);
+    const payloadName = `${displayName}: ${formatMonarchVernacular(ability.name)}`;
+
+    if (dc !== null) {
+      return {
+        version: 1,
+        id: crypto.randomUUID(),
+        name: payloadName,
+        source: { type: 'artifact', entryId: data.id },
+        kind: 'save',
+        save: { dc, roll: '1d20' },
+        damage: dice ? { roll: dice } : undefined,
+      };
+    }
+
+    if (!dice) return null;
+
+    const healingHint = /\b(heal|heals|healing|regain|restore)\b/i.test(description);
+
+    if (healingHint) {
+      return {
+        version: 1,
+        id: crypto.randomUUID(),
+        name: payloadName,
+        source: { type: 'artifact', entryId: data.id },
+        kind: 'healing',
+        healing: { roll: dice },
+      };
+    }
+
+    return {
+      version: 1,
+      id: crypto.randomUUID(),
+      name: payloadName,
+      source: { type: 'artifact', entryId: data.id },
+      kind: 'damage',
+      damage: { roll: dice },
+    };
+  };
+
+  const queueResolutionAndNavigate = (payload: ActionResolutionPayload, path: string) => {
+    setPendingResolution(payload);
+    navigate(path);
+  };
 
   return (
     <div className="space-y-6">
@@ -163,8 +227,11 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
       {abilities && (
         <SystemWindow id="artifact-abilities" title="ABILITIES">
           <div className="space-y-4">
-            {abilityList.map(({ label, ability }) => (
-              ability ? (
+            {abilityList.map(({ label, ability }) => {
+              if (!ability) return null;
+              const payload = buildAbilityPayload(ability);
+
+              return (
                 <div key={label} className="space-y-1 border-l-2 border-primary/40 pl-3">
                   <div className="flex flex-wrap items-center gap-2">
                     <Sparkles className="w-4 h-4 text-primary" />
@@ -175,9 +242,28 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
                     {ability.action && <Badge variant="outline" className="text-xs">{formatMonarchVernacular(ability.action)}</Badge>}
                   </div>
                   <p className="text-sm text-muted-foreground">{formatMonarchVernacular(ability.description)}</p>
+
+                  {payload && (
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => queueResolutionAndNavigate(payload, '/dice')}
+                      >
+                        Roll
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => queueResolutionAndNavigate(payload, '/dm-tools/initiative-tracker')}
+                      >
+                        Resolve in Initiative
+                      </Button>
+                    </div>
+                  )}
                 </div>
-              ) : null
-            ))}
+              );
+            })}
           </div>
         </SystemWindow>
       )}

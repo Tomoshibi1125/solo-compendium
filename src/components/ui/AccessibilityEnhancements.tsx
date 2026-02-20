@@ -185,6 +185,12 @@ export const useFocusManagement = () => {
     };
   };
 
+  return {
+    focusedElement,
+    trapFocus,
+  };
+};
+
 // Color contrast utilities
 export const getContrastColor = (hexColor: string): string => {
   // Convert hex to RGB

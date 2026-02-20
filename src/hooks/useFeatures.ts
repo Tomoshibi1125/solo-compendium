@@ -8,6 +8,31 @@ import { isLocalCharacterId, listLocalFeatures, updateLocalFeature } from '@/lib
 type Feature = Database['public']['Tables']['character_features']['Row'];
 type FeatureUpdate = Database['public']['Tables']['character_features']['Update'];
 
+const buildFeaturesCacheKey = (userId: string, characterId: string) => {
+  return `solo-compendium.cache.features.${userId}.character:${characterId}.v1`;
+};
+
+const readCachedFeatures = (key: string): Feature[] | null => {
+  try {
+    if (typeof window === 'undefined') return null;
+    const raw = window.localStorage.getItem(key);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as unknown;
+    return Array.isArray(parsed) ? (parsed as Feature[]) : null;
+  } catch {
+    return null;
+  }
+};
+
+const writeCachedFeatures = (key: string, features: Feature[]) => {
+  try {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem(key, JSON.stringify(features));
+  } catch {
+    // ignore
+  }
+};
+
 export const useFeatures = (characterId: string) => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -19,6 +44,9 @@ export const useFeatures = (characterId: string) => {
         return listLocalFeatures(characterId) as Feature[];
       }
 
+      const { data: { user } } = await supabase.auth.getUser();
+      const cacheKey = user?.id ? buildFeaturesCacheKey(user.id, characterId) : null;
+
       const { data, error } = await supabase
         .from('character_features')
         .select('*')
@@ -29,9 +57,18 @@ export const useFeatures = (characterId: string) => {
 
       if (error) {
         logErrorWithContext(error, 'useFeatures');
+        if (cacheKey) {
+          const cached = readCachedFeatures(cacheKey);
+          if (cached) return cached;
+        }
         throw error;
       }
-      return data as Feature[];
+
+      const next = (data || []) as Feature[];
+      if (cacheKey) {
+        writeCachedFeatures(cacheKey, next);
+      }
+      return next;
     },
   });
 
@@ -42,10 +79,23 @@ export const useFeatures = (characterId: string) => {
         return null;
       }
 
+      const { data: { user } } = await supabase.auth.getUser();
+      const cacheKey = user?.id ? buildFeaturesCacheKey(user.id, characterId) : null;
+      if (cacheKey) {
+        const cached = readCachedFeatures(cacheKey);
+        if (cached) {
+          writeCachedFeatures(
+            cacheKey,
+            cached.map((row) => (row.id === id ? ({ ...row, ...updates } as Feature) : row))
+          );
+        }
+      }
+
       const { data, error } = await supabase
         .from('character_features')
         .update(updates)
         .eq('id', id);
+
       if (error) {
         logErrorWithContext(error, 'useFeatures.updateFeature');
         throw error;
@@ -74,16 +124,31 @@ export const useFeatures = (characterId: string) => {
         return;
       }
 
+      const { data: { user } } = await supabase.auth.getUser();
+      const cacheKey = user?.id ? buildFeaturesCacheKey(user.id, characterId) : null;
+      if (cacheKey) {
+        const cached = readCachedFeatures(cacheKey);
+        if (cached) {
+          const next = cached
+            .map((row) => {
+              const nextOrder = newOrder.find((o) => o.id === row.id);
+              return nextOrder ? { ...row, display_order: nextOrder.display_order } : row;
+            })
+            .sort((a, b) => (a.display_order ?? 0) - (b.display_order ?? 0));
+          writeCachedFeatures(cacheKey, next);
+        }
+      }
+
       const updates = newOrder.map(({ id, display_order }) =>
         supabase
           .from('character_features')
           .update({ display_order })
           .eq('id', id)
       );
-      
+
       const results = await Promise.all(updates);
-      const errors = results.filter(r => r.error).map(r => r.error);
-      
+      const errors = results.filter((r) => r.error).map((r) => r.error);
+
       if (errors.length > 0) {
         const error = errors[0];
         logErrorWithContext(error, 'useFeatures.reorderFeatures');

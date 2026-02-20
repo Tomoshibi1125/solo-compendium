@@ -149,9 +149,9 @@ const PlayerTools = () => {
   const hpCurrent = activeCharacter?.hp_current ?? 0;
   const hpMax = activeCharacter?.hp_max ?? 0;
   const hpPercent = hpMax > 0 ? Math.min(100, (hpCurrent / hpMax) * 100) : 0;
-  const energyCurrent = activeCharacter?.shadow_energy_current ?? 0;
-  const energyMax = activeCharacter?.shadow_energy_max ?? 0;
-  const energyPercent = energyMax > 0 ? Math.min(100, (energyCurrent / energyMax) * 100) : 0;
+  const favorCurrent = activeCharacter?.system_favor_current ?? 0;
+  const favorMax = activeCharacter?.system_favor_max ?? 0;
+  const favorPercent = favorMax > 0 ? Math.min(100, (favorCurrent / favorMax) * 100) : 0;
 
   return (
     <Layout>
@@ -217,11 +217,11 @@ const PlayerTools = () => {
               <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-gradient-to-br from-purple-500/30 to-purple-600/20 flex items-center justify-center">
                 <Zap className="w-8 h-8 text-purple-400" />
               </div>
-              <h3 className="font-arise text-purple-400 text-lg mb-1">UMBRAL ENERGY</h3>
+              <h3 className="font-arise text-purple-400 text-lg mb-1">SYSTEM FAVOR</h3>
               <p className="text-2xl font-bold text-white">
-                {activeCharacter ? `${energyCurrent}/${energyMax}` : '--'}
+                {activeCharacter ? `${favorCurrent}/${favorMax}` : '--'}
               </p>
-              <Progress value={energyPercent} className="h-2 mt-2 bg-gray-700 [&>div]:bg-purple-500" />
+              <Progress value={favorPercent} className="h-2 mt-2 bg-gray-700 [&>div]:bg-purple-500" />
             </div>
             
             <div className="text-center">

@@ -2,7 +2,6 @@ import { useRef, useState, useEffect, useMemo, useCallback, type CSSProperties }
 import { Canvas, useFrame } from '@react-three/fiber';
 import { ContactShadows, Environment, OrbitControls, PerspectiveCamera as DreiPerspectiveCamera, Sparkles } from '@react-three/drei';
 import { Physics, RigidBody, CuboidCollider, ConvexHullCollider, type RapierRigidBody } from '@react-three/rapier';
-import { init as initRapier } from '@dimforge/rapier3d-compat';
 import {
   ACESFilmicToneMapping,
   AdditiveBlending,
@@ -168,7 +167,6 @@ if (typeof window !== 'undefined') {
       originalWarn(...args);
     };
   }
-  void initRapier().catch(() => undefined);
 }
 
 type LabelBadge = 'tens' | 'ones' | null;
@@ -1516,8 +1514,8 @@ export function Dice3DRoller({ dice, isRolling, onRollComplete, theme = 'umbral-
 
   useEffect(() => {
     if (!containerRef.current) return;
-    containerRef.current.style.setProperty('--dice-bg', theme.backgroundColor);
-  }, [theme.backgroundColor]);
+    containerRef.current.style.setProperty('--dice-bg', themeConfig.baseColor);
+  }, [themeConfig.baseColor]);
 
   const handleImpact = useCallback(
     (_position: [number, number, number], intensity: number) => {
@@ -1599,7 +1597,7 @@ export function Dice3DRoller({ dice, isRolling, onRollComplete, theme = 'umbral-
         className="dice-audio-toggle"
         onClick={() => setAudioEnabled((prev) => !prev)}
         aria-label={audioEnabled ? 'Mute dice audio' : 'Enable dice audio'}
-        aria-pressed={audioEnabled}
+        aria-pressed={audioEnabled ? 'true' : 'false'}
       >
         {audioEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
       </button>

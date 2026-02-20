@@ -18,8 +18,10 @@ const dataLoaders = {
   spells: () => import('./spells').then((module) => module.spells),
   locations: () => import('./locations').then((module) => module.locations),
   runesCompendium: () => import('./runes').then((module) => module.runesCompendium),
+  soloLevelingRunes: () => import('./runes').then((module) => module.soloLevelingRunes),
   backgrounds: () => import('./backgrounds').then((module) => module.backgrounds),
   monarchs: () => import('./monarchs').then((module) => module.monarchs),
+  regents: () => import('./regents').then((module) => module.regents),
   paths: () => import('./paths').then((module) => module.paths),
   conditions: () => import('./conditions').then((module) => module.conditions),
   comprehensiveFeats: () => import('./feats-comprehensive').then((module) => module.comprehensiveFeats),
@@ -90,6 +92,8 @@ export interface StaticCompendiumEntry {
   mechanics?: Record<string, unknown> | null;
   limitations?: Record<string, unknown> | null;
   flavor?: string | null;
+  higher_levels?: string | null;
+  atHigherLevels?: string | null;
   properties?: Record<string, unknown> | null;
   abilities?: Record<string, unknown> | null;
   lore?: Record<string, unknown> | null;
@@ -101,6 +105,36 @@ export interface StaticCompendiumEntry {
   role?: string | null;
   value?: number | null;
   weight?: number | null;
+  // Monster detail support (static fallback)
+  size?: string | null;
+  creature_type?: string | null;
+  alignment?: string | null;
+  armor_class?: number | null;
+  armor_type?: string | null;
+  hit_points_average?: number | null;
+  hit_points_formula?: string | null;
+  speed_walk?: number | null;
+  speed_fly?: number | null;
+  speed_swim?: number | null;
+  speed_climb?: number | null;
+  speed_burrow?: number | null;
+  str?: number | null;
+  agi?: number | null;
+  vit?: number | null;
+  int?: number | null;
+  sense?: number | null;
+  pre?: number | null;
+  saving_throws?: Record<string, number> | null;
+  skills?: Record<string, number> | null;
+  damage_vulnerabilities?: string[] | null;
+  damage_resistances?: string[] | null;
+  damage_immunities?: string[] | null;
+  condition_immunities?: string[] | null;
+  senses?: Record<string, string> | null;
+  languages?: string[] | null;
+  xp?: number | null;
+  monster_actions?: Record<string, unknown>[] | null;
+  monster_traits?: Record<string, unknown>[] | null;
 }
 
 export interface StaticDataProvider {
@@ -114,6 +148,7 @@ export interface StaticDataProvider {
   getBackgrounds: (search?: string) => Promise<StaticCompendiumEntry[]>;
   getRelics: (search?: string) => Promise<StaticCompendiumEntry[]>;
   getConditions: (search?: string) => Promise<StaticCompendiumEntry[]>;
+  getRegents: (search?: string) => Promise<StaticCompendiumEntry[]>;
   getMonarchs: (search?: string) => Promise<StaticCompendiumEntry[]>;
   getFeats: (search?: string) => Promise<StaticCompendiumEntry[]>;
   getSkills: (search?: string) => Promise<StaticCompendiumEntry[]>;
@@ -148,6 +183,21 @@ type StaticMonsterSource = {
   type?: string;
   rank?: string;
   image?: string;
+  stats?: Record<string, unknown>;
+  skills?: unknown;
+  damageResistances?: unknown;
+  damageImmunities?: unknown;
+  damageVulnerabilities?: unknown;
+  conditionImmunities?: unknown;
+  senses?: unknown;
+  languages?: unknown;
+  traits?: unknown;
+  actions?: unknown;
+  legendary?: unknown;
+  alignment?: unknown;
+  source?: unknown;
+  xp?: unknown;
+  size?: unknown;
 };
 
 type StaticItemSource = {
@@ -157,13 +207,13 @@ type StaticItemSource = {
   type?: string;
   rarity?: string;
   image?: string;
-  requirements?: string[];
-  properties?: string[];
-  effects?: string[];
+  requirements?: Record<string, unknown>;
+  properties?: Record<string, unknown>;
+  effects?: Record<string, unknown>;
   attunement?: boolean | null;
   cursed?: boolean | null;
-  charges?: number;
-  stats?: Record<string, number>;
+  charges?: Record<string, unknown>;
+  stats?: Record<string, unknown>;
   effect?: string;
   value?: number;
   weight?: number;
@@ -190,8 +240,17 @@ type StaticSpellSource = {
   damage?: string;
   healing?: string;
   effect?: string;
-  range?: string;
-  cooldown?: string;
+  range?: number | Record<string, unknown>;
+  cooldown?: number;
+  activation?: Record<string, unknown>;
+  duration?: Record<string, unknown>;
+  components?: Record<string, unknown>;
+  effects?: Record<string, unknown>;
+  mechanics?: Record<string, unknown>;
+  limitations?: Record<string, unknown>;
+  flavor?: string;
+  higher_levels?: string;
+  atHigherLevels?: string;
 };
 
 type StaticLocationSource = {
@@ -212,6 +271,23 @@ type StaticRuneSource = {
   element?: string;
   rarity?: string;
   image?: string;
+  power?: number;
+  // Solo Leveling fields
+  effect_description?: string;
+  rune_type?: string;
+  rune_category?: string;
+  rune_level?: number;
+  effect_type?: string;
+  activation_action?: string;
+  uses_per_rest?: string;
+  recharge?: string;
+  range?: string;
+  duration?: string;
+  higher_levels?: string;
+  lore?: string;
+  discovery_lore?: string;
+  tags?: string[];
+  requires_level?: number;
 };
 
 type StaticBackgroundSource = {
@@ -233,43 +309,115 @@ type StaticMonarchSource = {
 
 // Transform static data to match UI interface
 function transformMonster(monster: StaticMonsterSource): StaticCompendiumEntry {
+  const rawRank = typeof monster.rank === 'string' ? monster.rank : undefined;
+  const rank = rawRank && rawRank.length > 0 ? rawRank : undefined;
+
+  const statsObj = (monster.stats && typeof monster.stats === 'object') ? (monster.stats as Record<string, unknown>) : null;
+  const abilityScores = (statsObj && statsObj.abilityScores && typeof statsObj.abilityScores === 'object')
+    ? (statsObj.abilityScores as Record<string, unknown>)
+    : null;
+
+  const armorClass = typeof statsObj?.armorClass === 'number' ? (statsObj.armorClass as number) : null;
+  const hitPoints = typeof statsObj?.hitPoints === 'number' ? (statsObj.hitPoints as number) : null;
+  const speed = typeof statsObj?.speed === 'number' ? (statsObj.speed as number) : null;
+  const crNumber = typeof statsObj?.challengeRating === 'number' ? (statsObj.challengeRating as number) : null;
+  const proficiencyBonus = typeof statsObj?.proficiencyBonus === 'number' ? (statsObj.proficiencyBonus as number) : null;
+  const savingThrows = (statsObj && statsObj.savingThrows && typeof statsObj.savingThrows === 'object')
+    ? (statsObj.savingThrows as Record<string, unknown>)
+    : null;
+
+  const normalizeStringArray = (value: unknown): string[] | null => {
+    if (Array.isArray(value)) {
+      return value.map((v) => String(v)).filter((s) => s.trim().length > 0);
+    }
+    if (typeof value === 'string' && value.trim().length > 0) {
+      return value.split(',').map((s) => s.trim()).filter(Boolean);
+    }
+    return null;
+  };
+
+  const traits = Array.isArray(monster.traits)
+    ? (monster.traits as Record<string, unknown>[])
+    : null;
+  const actions = Array.isArray(monster.actions)
+    ? (monster.actions as Record<string, unknown>[])
+    : null;
+
+  const skillNames = normalizeStringArray(monster.skills);
+  const skillMap = skillNames
+    ? Object.fromEntries(skillNames.map((name) => [name, proficiencyBonus ?? 0]))
+    : null;
+
   return {
-    id: monster.id,
+    id: monster.id || monster.name.toLowerCase().replace(/\s+/g, '-'),
     name: monster.name,
     display_name: monster.name,
     description: monster.description,
     created_at: new Date().toISOString(),
-    tags: [monster.type, monster.rank].filter(Boolean),
+    tags: [monster.type, rank].filter(Boolean) as string[],
     source_book: 'System Ascendant Homebrew',
     image_url: monster.image,
-    cr: monster.rank,
-    gate_rank: monster.rank,
-    is_boss: monster.rank === 'S' || monster.rank === 'A',
-    rarity: monster.rank === 'S' ? 'legendary' : 
-            monster.rank === 'A' ? 'epic' :
-            monster.rank === 'B' ? 'rare' :
-            monster.rank === 'C' ? 'uncommon' : 'common'
+    cr: crNumber !== null ? String(crNumber) : (rank ?? null),
+    gate_rank: rank ?? null,
+    is_boss: rank === 'S' || rank === 'A',
+    rarity: rank === 'S' ? 'legendary' :
+            rank === 'A' ? 'epic' :
+            rank === 'B' ? 'rare' :
+            rank === 'C' ? 'uncommon' : 'common',
+
+    size: typeof monster.size === 'string' ? monster.size : 'Medium',
+    creature_type: monster.type ?? null,
+    alignment: typeof monster.alignment === 'string' ? monster.alignment : null,
+    armor_class: armorClass,
+    hit_points_average: hitPoints,
+    hit_points_formula: null,
+    speed_walk: speed,
+    str: typeof abilityScores?.strength === 'number' ? (abilityScores.strength as number) : null,
+    agi: typeof abilityScores?.dexterity === 'number' ? (abilityScores.dexterity as number) : null,
+    vit: typeof abilityScores?.constitution === 'number' ? (abilityScores.constitution as number) : null,
+    int: typeof abilityScores?.intelligence === 'number' ? (abilityScores.intelligence as number) : null,
+    sense: typeof abilityScores?.wisdom === 'number' ? (abilityScores.wisdom as number) : null,
+    pre: typeof abilityScores?.charisma === 'number' ? (abilityScores.charisma as number) : null,
+    saving_throws: savingThrows
+      ? (Object.fromEntries(
+          Object.entries(savingThrows)
+            .filter(([, v]) => typeof v === 'number')
+            .map(([k, v]) => [k, v as number]),
+        ) as Record<string, number>)
+      : null,
+    skills: skillMap,
+    damage_resistances: normalizeStringArray(monster.damageResistances) ?? null,
+    damage_immunities: normalizeStringArray(monster.damageImmunities) ?? null,
+    damage_vulnerabilities: normalizeStringArray(monster.damageVulnerabilities) ?? null,
+    condition_immunities: normalizeStringArray(monster.conditionImmunities) ?? null,
+    senses: typeof monster.senses === 'string'
+      ? { text: monster.senses }
+      : null,
+    languages: normalizeStringArray(monster.languages) ?? null,
+    xp: typeof monster.xp === 'number' ? monster.xp : null,
+    monster_traits: traits,
+    monster_actions: actions,
   };
 }
 
 function transformItem(item: StaticItemSource): StaticCompendiumEntry {
   return {
-    id: item.id,
+    id: item.id || item.name.toLowerCase().replace(/\s+/g, '-'),
     name: item.name,
     display_name: item.name,
     description: item.description,
     created_at: new Date().toISOString(),
-    tags: [item.type, item.rarity].filter(Boolean),
+    tags: [item.type, item.rarity].filter(Boolean) as string[],
     source_book: 'System Ascendant Homebrew',
     image_url: item.image,
     equipment_type: item.type,
     item_type: item.type,
-    requirements: item.requirements,
-    properties: item.properties,
-    effects: item.effects,
+    requirements: item.requirements ?? null,
+    properties: item.properties ?? null,
+    effects: item.effects ?? null,
     attunement: item.attunement ?? null,
     cursed: item.cursed ?? null,
-    charges: item.charges,
+    charges: item.charges ?? null,
     stats: item.stats,
     effect: item.effect,
     value: item.value,
@@ -299,25 +447,90 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
 }
 
 function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
+  const rangeValue = typeof spell.range === 'number'
+    ? spell.range
+    : (spell.range && typeof spell.range === 'object' ? (spell.range as Record<string, unknown>) : null);
+  const cooldownValue = typeof spell.cooldown === 'number' ? spell.cooldown : null;
+  const manaCostValue = typeof spell.manaCost === 'number' ? spell.manaCost : null;
+  const rankValue = typeof spell.rank === 'string' ? spell.rank : null;
+  const primaryEffect = typeof spell.effect === 'string' ? spell.effect : '';
+
+  const derivedActivation = cooldownValue !== null && cooldownValue <= 1
+    ? { type: 'action' }
+    : cooldownValue !== null && cooldownValue <= 3
+      ? { type: 'bonus-action' }
+      : { type: 'action' };
+
+  const derivedDuration = { type: 'instantaneous' };
+  const derivedComponents = { verbal: true, somatic: true, material: false };
+  const derivedEffects = { primary: primaryEffect };
+
+  const damageNumber = typeof (spell as any).damage === 'number' ? ((spell as any).damage as number) : null;
+  const healingNumber = typeof (spell as any).healing === 'number' ? ((spell as any).healing as number) : null;
+
+  const estimateDice = (value: number): string => {
+    const die = 8;
+    const diceCount = Math.max(1, Math.round(value / die));
+    return `${diceCount}d${die}`;
+  };
+
+  const derivedMechanics = damageNumber !== null
+    ? {
+        attack: { type: 'ranged', modifier: 'Intelligence', damage: estimateDice(damageNumber) },
+      }
+    : healingNumber !== null
+      ? {
+          saving_throw: {
+            ability: 'Wisdom',
+            dc: '8 + proficiency bonus + Intelligence modifier',
+            success: 'Half effect',
+            failure: 'Full effect',
+          },
+        }
+      : null;
+
+  const derivedLimitations = cooldownValue !== null
+    ? { cooldown: `${cooldownValue} rounds` }
+    : null;
+
   return {
     id: spell.id || spell.name.toLowerCase().replace(/\s+/g, '-'),
     name: spell.name,
     display_name: spell.name,
     description: spell.description,
     created_at: new Date().toISOString(),
-    tags: [spell.type, spell.rank].filter(Boolean),
+    tags: [spell.type, spell.rank].filter(Boolean) as string[],
     source_book: 'System Ascendant Homebrew',
     image_url: spell.image,
     spell_type: spell.type,
-    rank: spell.rank,
-    mana_cost: spell.manaCost,
-    damage: spell.damage,
-    healing: spell.healing,
+    rank: rankValue,
+    mana_cost: manaCostValue,
+    damage: undefined,
+    healing: undefined,
     effect: spell.effect,
-    range: spell.range,
-    cooldown: spell.cooldown,
+    range: rangeValue,
+    cooldown: cooldownValue,
     school: spell.type,
     power_level: undefined,
+    activation:
+      (spell.activation && typeof spell.activation === 'object' ? spell.activation : derivedActivation) as Record<string, unknown>,
+    duration:
+      (spell.duration && typeof spell.duration === 'object' ? spell.duration : derivedDuration) as Record<string, unknown>,
+    components:
+      (spell.components && typeof spell.components === 'object' ? spell.components : derivedComponents) as Record<string, unknown>,
+    effects:
+      (spell.effects && typeof spell.effects === 'object' ? spell.effects : derivedEffects) as Record<string, unknown>,
+    mechanics:
+      (spell.mechanics && typeof spell.mechanics === 'object'
+        ? spell.mechanics
+        : derivedMechanics) as Record<string, unknown> | null,
+    limitations:
+      (spell.limitations && typeof spell.limitations === 'object'
+        ? spell.limitations
+        : derivedLimitations) as Record<string, unknown> | null,
+    flavor: typeof spell.flavor === 'string' ? spell.flavor : null,
+    higher_levels: spell.higher_levels || spell.atHigherLevels || null,
+    atHigherLevels: spell.atHigherLevels || spell.higher_levels || null,
     rarity: spell.rank === 'S' ? 'legendary' :
             spell.rank === 'A' ? 'epic' :
             spell.rank === 'B' ? 'rare' :
@@ -332,7 +545,7 @@ function transformLocation(location: StaticLocationSource): StaticCompendiumEntr
     display_name: location.name,
     description: location.description,
     created_at: new Date().toISOString(),
-    tags: [location.type, location.rank].filter(Boolean),
+    tags: [location.type, location.rank].filter(Boolean) as string[],
     source_book: 'System Ascendant Homebrew',
     image_url: location.image,
     location_type: location.type,
@@ -351,16 +564,21 @@ function transformRune(rune: StaticRuneSource): StaticCompendiumEntry {
     id: rune.id || rune.name.toLowerCase().replace(/\s+/g, '-'),
     name: rune.name,
     display_name: rune.name,
-    description: rune.description,
+    description: rune.effect_description || rune.description,
     created_at: new Date().toISOString(),
-    tags: [rune.element, rune.rarity].filter(Boolean),
-    source_book: 'System Ascendant Homebrew',
+    tags: (rune.tags || [rune.element || rune.rune_type, rune.rarity]).filter(Boolean) as string[],
+    source_book: 'System Ascendant Canon',
     image_url: rune.image,
-    rune_type: rune.element,
-    rune_category: rune.element,
-    rune_level: rune.power,
+    rune_type: rune.rune_type || rune.element || null,
+    rune_category: rune.rune_category || rune.element || null,
+    rune_level: rune.rune_level ?? rune.power ?? undefined,
     rarity: rune.rarity,
-    level: rune.power,
+    level: rune.requires_level ?? rune.rune_level ?? rune.power ?? undefined,
+    effect: rune.effect_description || null,
+    activation: rune.activation_action ? { type: rune.activation_action } as Record<string, unknown> : null,
+    duration: rune.duration ? { type: rune.duration } as Record<string, unknown> : null,
+    flavor: rune.lore || null,
+    lore: rune.lore ? { origin: rune.lore, discovery: rune.discovery_lore } as Record<string, unknown> : null,
   };
 }
 
@@ -385,7 +603,7 @@ function transformMonarch(monarch: StaticMonarchSource): StaticCompendiumEntry {
     display_name: monarch.name,
     description: monarch.description,
     created_at: new Date().toISOString(),
-    tags: ['monarch', monarch.theme].filter(Boolean),
+    tags: ['monarch', monarch.theme].filter(Boolean) as string[],
     source_book: 'System Ascendant Canon',
     title: monarch.title,
     theme: monarch.theme,
@@ -425,7 +643,7 @@ export const staticDataProvider: StaticDataProvider = {
       display_name: path.name,
       description: path.description,
       created_at: new Date().toISOString(),
-      tags: [path.jobId, `tier-${path.tier}`, ...path.requirements.skills || []],
+      tags: [path.jobId, `tier-${path.tier}`, ...(path.requirements.skills || [])].filter(Boolean) as string[],
       source_book: path.source,
       image_url: path.image,
       level: path.requirements.level,
@@ -462,8 +680,12 @@ export const staticDataProvider: StaticDataProvider = {
   },
 
   getRunes: async (search?: string) => {
-    const runesCompendium = await loadData<StaticRuneSource>('runesCompendium');
-    const filtered = filterBySearch(runesCompendium, search, ['name', 'description', 'element']);
+    const [legacyRunes, slRunes] = await Promise.all([
+      loadData<StaticRuneSource>('runesCompendium'),
+      loadData<StaticRuneSource>('soloLevelingRunes'),
+    ]);
+    const combined = [...slRunes, ...legacyRunes];
+    const filtered = filterBySearch(combined, search, ['name', 'description']);
     return filtered.map(transformRune);
   },
 
@@ -481,7 +703,12 @@ export const staticDataProvider: StaticDataProvider = {
         description: string;
         type?: string;
         rarity?: string;
-        properties: { magical?: boolean };
+        attunement?: boolean;
+        requirements?: Record<string, unknown> | null;
+        properties?: Record<string, unknown> | null;
+        abilities?: Record<string, unknown> | null;
+        lore?: Record<string, unknown> | null;
+        mechanics?: Record<string, unknown> | null;
         source?: string;
         image?: string;
       }
@@ -493,11 +720,18 @@ export const staticDataProvider: StaticDataProvider = {
       display_name: relic.name,
       description: relic.description,
       created_at: new Date().toISOString(),
-      tags: [relic.type, relic.rarity, ...relic.properties.magical ? ['magical'] : []],
+      tags: [relic.type, relic.rarity].filter(Boolean) as string[],
       source_book: relic.source,
       image_url: relic.image,
       rarity: relic.rarity,
-      equipment_type: relic.type
+      item_type: relic.type,
+      equipment_type: relic.type,
+      attunement: relic.attunement ?? null,
+      requirements: relic.requirements ?? null,
+      properties: relic.properties ?? null,
+      abilities: relic.abilities ?? null,
+      lore: relic.lore ?? null,
+      mechanics: relic.mechanics ?? null,
     }));
   },
 
@@ -508,6 +742,14 @@ export const staticDataProvider: StaticDataProvider = {
         name: string;
         description: string;
         type?: string;
+        effects?: string[];
+        duration?: string;
+        removal?: string[];
+        save?: {
+          type?: string;
+          dc?: number;
+          description?: string;
+        };
         source?: string;
         image?: string;
       }
@@ -519,10 +761,20 @@ export const staticDataProvider: StaticDataProvider = {
       display_name: condition.name,
       description: condition.description,
       created_at: new Date().toISOString(),
-      tags: [condition.type, 'condition'],
+      tags: [condition.type, 'condition'].filter(Boolean) as string[],
       source_book: condition.source,
-      image_url: condition.image
+      image_url: condition.image,
+      condition_effects: Array.isArray(condition.effects) ? condition.effects : undefined,
+      condition_duration: typeof condition.duration === 'string' ? condition.duration : undefined,
+      condition_removal: Array.isArray(condition.removal) ? condition.removal : undefined,
+      condition_save: condition.save && typeof condition.save === 'object' ? condition.save : undefined,
     }));
+  },
+
+  getRegents: async (search?: string) => {
+    const regents = await loadData<StaticMonarchSource>('regents');
+    const filtered = filterBySearch(regents, search, ['name', 'description', 'title', 'theme']);
+    return filtered.map(transformMonarch);
   },
 
   getMonarchs: async (search?: string) => {
@@ -549,7 +801,13 @@ export const staticDataProvider: StaticDataProvider = {
       display_name: feat.name,
       description: feat.description,
       created_at: new Date().toISOString(),
-      tags: ['feat', 'ability', ...(feat.prerequisites?.feats || [])],
+      tags: [
+        'feat',
+        'ability',
+        ...((typeof feat.prerequisites !== 'string' && Array.isArray((feat.prerequisites as any).feats))
+          ? ((feat.prerequisites as any).feats as string[])
+          : []),
+      ].filter(Boolean) as string[],
       source_book: feat.source,
       prerequisites: feat.prerequisites ? 
         (typeof feat.prerequisites === 'string' ? feat.prerequisites :
@@ -568,7 +826,7 @@ export const staticDataProvider: StaticDataProvider = {
       display_name: skill.name,
       description: skill.description,
       created_at: new Date().toISOString(),
-      tags: [skill.type, 'skill', skill.ability],
+      tags: [skill.type, 'skill', skill.ability].filter(Boolean) as string[],
       source_book: skill.source,
       ability: skill.ability
     }));
@@ -594,7 +852,7 @@ export const staticDataProvider: StaticDataProvider = {
       display_name: power.name,
       description: power.description,
       created_at: new Date().toISOString(),
-      tags: ['power', power.type, power.rarity],
+      tags: ['power', power.type, power.rarity].filter(Boolean) as string[],
       source_book: power.source,
       image_url: power.image,
       power_level: power.type === 'divine' ? 10 : power.type === 'monstrous' ? 8 : 5,
@@ -635,7 +893,7 @@ export const staticDataProvider: StaticDataProvider = {
       display_name: technique.name,
       description: technique.description,
       created_at: new Date().toISOString(),
-      tags: ['technique', technique.type, technique.style],
+      tags: ['technique', technique.type, technique.style].filter(Boolean) as string[],
       source_book: technique.source,
       image_url: technique.image,
       technique_type: technique.type,
@@ -684,7 +942,7 @@ export const staticDataProvider: StaticDataProvider = {
       display_name: artifact.name,
       description: artifact.description,
       created_at: new Date().toISOString(),
-      tags: ['artifact', artifact.type, artifact.rarity],
+      tags: ['artifact', artifact.type, artifact.rarity].filter(Boolean) as string[],
       source_book: artifact.source,
       image_url: artifact.image,
       artifact_type: artifact.type,
@@ -700,7 +958,7 @@ export const staticDataProvider: StaticDataProvider = {
       title: artifact.type,
       theme: artifact.rarity,
       rarity: artifact.rarity,
-      level: artifact.requirements?.level
+      level: typeof (artifact.requirements as any)?.level === 'number' ? ((artifact.requirements as any).level as number) : undefined
     }));
   },
 

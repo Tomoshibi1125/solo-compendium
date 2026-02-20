@@ -169,6 +169,8 @@ export function CharacterBackupManager({ characterId, character }: CharacterBack
               accept=".json"
               onChange={handleImport}
               className="hidden"
+              aria-label="Import character backup file"
+              title="Import character backup file"
             />
             <Button
               variant="outline"
@@ -199,6 +201,13 @@ export function CharacterBackupManager({ characterId, character }: CharacterBack
                   className="p-3 rounded-lg border bg-muted/30 flex items-center justify-between gap-2"
                 >
                   <div className="flex-1 min-w-0">
+                    {(() => {
+                      const snapshot = backup.backup_data as any;
+                      const level = snapshot?.level;
+                      const hpCurrent = snapshot?.hp_current;
+                      const hpMax = snapshot?.hp_max;
+                      return (
+                        <>
                     <div className="flex items-center gap-2 mb-1">
                       <span className="font-semibold text-sm">
                         {backup.backup_name || 'Unnamed Backup'}
@@ -210,10 +219,13 @@ export function CharacterBackupManager({ characterId, character }: CharacterBack
                     <p className="text-xs text-muted-foreground">
                       {formatDistanceToNow(new Date(backup.created_at), { addSuffix: true })}
                       {' • '}
-                      Level {backup.backup_data.level}
+                      Level {typeof level === 'number' ? level : 0}
                       {' • '}
-                      {backup.backup_data.hp_current}/{backup.backup_data.hp_max} HP
+                      {typeof hpCurrent === 'number' ? hpCurrent : 0}/{typeof hpMax === 'number' ? hpMax : 0} HP
                     </p>
+                        </>
+                      );
+                    })()}
                   </div>
                   <div className="flex items-center gap-1">
                     <Button

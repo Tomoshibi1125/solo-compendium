@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -11,11 +11,36 @@ import { ArrowLeft, Music, Volume2, Settings, PlayCircle, Sparkles } from 'lucid
 import { useAudioLibrary, useAudioPlayer } from '@/lib/audio/hooks';
 import { useToast } from '@/hooks/use-toast';
 import type { AudioTrack, Playlist } from '@/lib/audio/types';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useUserToolState } from '@/hooks/useToolState';
 
 export default function AudioManagerDM() {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { state: storedState, isLoading, saveNow } = useUserToolState<{ activeTab: string }>('audio_manager', {
+    initialState: { activeTab: 'player' },
+    storageKey: 'solo-compendium.dm-tools.audio-manager.v1',
+  });
+
   const [activeTab, setActiveTab] = useState('player');
+
+  const hydrated = useMemo(() => ({ activeTab: storedState.activeTab ?? 'player' }), [storedState.activeTab]);
+  const hydratedRef = useRef(false);
+
+  useEffect(() => {
+    if (isLoading) return;
+    if (hydratedRef.current) return;
+    setActiveTab(hydrated.activeTab);
+    hydratedRef.current = true;
+  }, [hydrated.activeTab, isLoading]);
+
+  const debouncedPayload = useDebounce({ activeTab }, 250);
+
+  useEffect(() => {
+    if (isLoading) return;
+    if (!hydratedRef.current) return;
+    void saveNow(debouncedPayload);
+  }, [debouncedPayload, isLoading, saveNow]);
 
   const { getTracksByCategory, getTracksByMood } = useAudioLibrary();
   const { loadTrack, play, loadPlaylist, repeat, shuffle, setRepeat, setShuffle, updateSettings, settings } = useAudioPlayer();

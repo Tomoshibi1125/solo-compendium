@@ -341,8 +341,8 @@ export function useSecurityAudit() {
   const auditManager = useMemo(
     () =>
       new SecurityAuditManager(
-        process.env.SECURITY_API_URL || 'https://api.solo-compendium.com',
-        process.env.SECURITY_API_KEY || ''
+        (import.meta as any).env?.VITE_SECURITY_API_URL || 'https://api.solo-compendium.com',
+        (import.meta as any).env?.VITE_SECURITY_API_KEY || ''
       ),
     []
   );
@@ -797,6 +797,8 @@ export function VulnerabilityManagement() {
     vulnerabilities,
     updateVulnerability
   } = useSecurityAudit();
+
+  const [selectedVulnerability, setSelectedVulnerability] = useState<SecurityVulnerability | null>(null);
 
   const [filter, setFilter] = useState<{
     severity?: SecurityVulnerability['severity'];

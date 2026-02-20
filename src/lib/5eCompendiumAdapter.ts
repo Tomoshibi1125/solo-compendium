@@ -4,7 +4,7 @@
  */
 
 import type { AbilityScore, Job, Power, Relic } from './5eRulesEngine';
-import { normalizeAbility, getSystemAbilityName } from './5eRulesEngine';
+import { normalizeAbility, getAbilityDisplayName } from './5eRulesEngine';
 
 // Adapter functions to convert System Ascendant compendium data to 5e standard
 

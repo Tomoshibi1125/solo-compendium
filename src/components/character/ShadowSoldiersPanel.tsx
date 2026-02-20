@@ -51,16 +51,16 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
   const [selectedSoldier, setSelectedSoldier] = useState<ShadowSoldier | null>(null);
   const { data: mySoldiers = [] } = useCharacterShadowSoldiers(characterId);
   const { data: allSoldiers = [] } = useCompendiumShadowSoldiers();
-  const { data: monarchUnlocks = [] } = useCharacterMonarchUnlocks(characterId);
+  const { data: regentUnlocks = [] } = useCharacterMonarchUnlocks(characterId);
   const extractSoldier = useExtractShadowSoldier();
   const toggleSummon = useToggleSummon();
   const updateHP = useUpdateSoldierHP();
 
   // Check if character has Umbral Monarch unlock
-  const hasUmbralMonarch = monarchUnlocks.some((unlock) => {
-    const theme = unlock.monarch?.theme?.toLowerCase() || '';
-    const name = normalizeMonarchSearch(unlock.monarch?.name || '').toLowerCase();
-    return theme.includes('umbral') || name.includes('umbral monarch');
+  const hasUmbralMonarch = regentUnlocks.some((unlock: any) => {
+    const theme = unlock.regent?.theme?.toLowerCase() || '';
+    const name = normalizeMonarchSearch(unlock.regent?.name || '').toLowerCase();
+    return theme.includes('umbral') || name.includes('umbral regent') || name.includes('umbral monarch');
   });
   const umbralTitle = `Umbral ${MONARCH_LABEL}`;
   
@@ -144,7 +144,6 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                       : "border-border bg-background/50 hover:border-shadow-purple/30",
                     index < 3 && "animate-arise"
                   )}
-                  style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-3">
@@ -193,13 +192,6 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                           <Progress 
                             value={hpPercent} 
                             className="h-2 bg-muted"
-                          />
-                          <div 
-                            className="absolute inset-0 rounded-full opacity-30"
-                            style={{
-                              background: `linear-gradient(90deg, hsl(var(--gate-a)) 0%, hsl(var(--shadow-purple)) ${hpPercent}%, transparent ${hpPercent}%)`,
-                              filter: 'blur(4px)'
-                            }}
                           />
                         </div>
                         <div className="flex items-center gap-1">

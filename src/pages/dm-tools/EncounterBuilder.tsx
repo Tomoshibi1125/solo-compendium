@@ -29,6 +29,7 @@ import { useJoinedCampaigns, useMyCampaigns } from '@/hooks/useCampaigns';
 import { useAuth } from '@/lib/auth/authContext';
 import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
 import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
+import { useHydratedPreferredCampaignId } from '@/hooks/usePreferredCampaignSelection';
 
 type Monster = Database['public']['Tables']['compendium_monsters']['Row'];
 
@@ -229,26 +230,22 @@ const EncounterBuilder = () => {
     return Array.from(byId.values()).sort((a, b) => a.name.localeCompare(b.name));
   }, [joinedCampaigns, myCampaigns]);
 
+  useHydratedPreferredCampaignId({
+    toolKey: 'encounter_builder',
+    campaigns: manageableCampaigns,
+    urlCampaignId: campaignId,
+    isCampaignIdValid: (id) => manageableCampaigns.some((campaign) => campaign.id === id),
+    onResolveCampaignId: (id) => {
+      const nextParams = new URLSearchParams(searchParams);
+      nextParams.set('campaignId', id);
+      setSearchParams(nextParams, { replace: true });
+    },
+  });
+
   const campaignsLoading = myCampaignsLoading || joinedCampaignsLoading;
   const selectedCampaign = campaignId
     ? manageableCampaigns.find((campaign) => campaign.id === campaignId) ?? null
     : null;
-
-  useEffect(() => {
-    if (campaignsLoading || manageableCampaigns.length === 0) {
-      return;
-    }
-
-    const hasValidCampaign = campaignId
-      ? manageableCampaigns.some((campaign) => campaign.id === campaignId)
-      : false;
-
-    if (!hasValidCampaign) {
-      const nextParams = new URLSearchParams(searchParams);
-      nextParams.set('campaignId', manageableCampaigns[0].id);
-      setSearchParams(nextParams, { replace: true });
-    }
-  }, [campaignId, campaignsLoading, manageableCampaigns, searchParams, setSearchParams]);
 
   const handleCampaignChange = (nextCampaignId: string) => {
     const nextParams = new URLSearchParams(searchParams);
@@ -544,8 +541,21 @@ const EncounterBuilder = () => {
         ? `/dm-tools/initiative-tracker?campaignId=${campaignId}`
         : '/dm-tools/initiative-tracker';
 
-    if (isCampaignScoped && campaignId && isAuthed && user?.id) {
+    if (isCampaignScoped && campaignId && isSupabaseConfigured) {
       try {
+        const {
+          data: { user: authUser },
+          error: authError,
+        } = await supabase.auth.getUser();
+
+        if (authError) {
+          throw authError;
+        }
+
+        if (!authUser?.id) {
+          throw new Error('Not authenticated');
+        }
+
         const { data: activeSession, error: activeSessionError } = await supabase
           .from('campaign_combat_sessions')
           .select('id')
@@ -566,7 +576,7 @@ const EncounterBuilder = () => {
             .from('campaign_combat_sessions')
             .insert({
               campaign_id: campaignId,
-              created_by: user.id,
+              created_by: authUser.id,
               status: 'active',
               current_turn: 0,
               round: 1,
@@ -584,7 +594,8 @@ const EncounterBuilder = () => {
         const { error: clearCombatantsError } = await supabase
           .from('campaign_combatants')
           .delete()
-          .eq('session_id', targetSessionId);
+          .eq('session_id', targetSessionId)
+          .eq('campaign_id', campaignId);
 
         if (clearCombatantsError) {
           throw clearCombatantsError;
@@ -608,7 +619,8 @@ const EncounterBuilder = () => {
         const { error: resetSessionError } = await supabase
           .from('campaign_combat_sessions')
           .update({ current_turn: 0, round: 1, status: 'active' })
-          .eq('id', targetSessionId);
+          .eq('id', targetSessionId)
+          .eq('campaign_id', campaignId);
 
         if (resetSessionError) {
           throw resetSessionError;
@@ -626,10 +638,20 @@ const EncounterBuilder = () => {
     }
 
     if (!destination.includes('sessionId=')) {
-      if (isCampaignScoped && campaignId && isAuthed && user?.id) {
-        await saveCampaignToolState(campaignId, user.id, 'initiative_tracker', initiativeState);
-      } else if (isAuthed && user?.id) {
-        await saveUserToolState(user.id, 'initiative_tracker', initiativeState);
+      if (isCampaignScoped && campaignId && isSupabaseConfigured) {
+        const { data: { user: authUser } } = await supabase.auth.getUser();
+        if (authUser?.id) {
+          await saveCampaignToolState(campaignId, authUser.id, 'initiative_tracker', initiativeState);
+        } else {
+          writeLocalToolState(initiativeStorageKey, initiativeState);
+        }
+      } else if (isSupabaseConfigured) {
+        const { data: { user: authUser } } = await supabase.auth.getUser();
+        if (authUser?.id) {
+          await saveUserToolState(authUser.id, 'initiative_tracker', initiativeState);
+        } else {
+          writeLocalToolState(initiativeStorageKey, initiativeState);
+        }
       } else {
         writeLocalToolState(initiativeStorageKey, initiativeState);
       }

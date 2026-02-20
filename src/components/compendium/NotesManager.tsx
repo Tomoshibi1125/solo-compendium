@@ -82,7 +82,7 @@ export function NotesManager({
       if (!user?.id) return [];
       const { data, error } = await supabase
         .from('compendium_notes')
-        .select('id, content, tags, created_at, updated_at')
+        .select('id, content, tags, created_at, updated_at, entry_id, entry_type, user_id')
         .eq('entry_type', entryType)
         .eq('entry_id', entryId)
         .eq('user_id', user.id)
@@ -91,7 +91,7 @@ export function NotesManager({
         logger.error('Failed to load notes:', error);
         return [];
       }
-      return (data || []).map((row: NoteRow) => ({
+      return (data || []).map((row) => ({
         id: row.id,
         content: row.content,
         tags: Array.isArray(row.tags) ? row.tags : [],

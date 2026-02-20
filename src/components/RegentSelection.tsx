@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Character, AbilityScore } from '../types/character';
+import { Character } from '../types/character';
 import { 
   RegentGeminiSystem, 
   RegentChoice, 
@@ -7,6 +7,8 @@ import {
   GeminiSovereign,
   RegentQuestManager 
 } from '../lib/regentGeminiSystem';
+
+type AbilityScore = 'STR' | 'AGI' | 'VIT' | 'INT' | 'SENSE' | 'PRE';
 
 interface RegentSelectionProps {
   character: Character;
@@ -92,11 +94,11 @@ export const RegentSelection: React.FC<RegentSelectionProps> = ({
   const getStatColor = (stat: AbilityScore): string => {
     const colors: Record<AbilityScore, string> = {
       'STR': 'text-red-600',
-      'DEX': 'text-green-600', 
-      'CON': 'text-orange-600',
+      'AGI': 'text-green-600', 
+      'VIT': 'text-orange-600',
       'INT': 'text-blue-600',
-      'WIS': 'text-purple-600',
-      'CHA': 'text-pink-600'
+      'SENSE': 'text-purple-600',
+      'PRE': 'text-pink-600'
     };
     return colors[stat];
   };
@@ -104,18 +106,27 @@ export const RegentSelection: React.FC<RegentSelectionProps> = ({
   const getStatIcon = (stat: AbilityScore): string => {
     const icons: Record<AbilityScore, string> = {
       'STR': '💪',
-      'DEX': '🏃',
-      'CON': '🛡️',
+      'AGI': '🏃',
+      'VIT': '🛡️',
       'INT': '🧠',
-      'WIS': '👁️',
-      'CHA': '✨'
+      'SENSE': '👁️',
+      'PRE': '✨'
     };
     return icons[stat];
   };
 
-  const highestStat = Object.entries(character.abilities).reduce((highest, [stat, value]) => 
-    value > character.abilities[highest[0] as AbilityScore] ? stat as AbilityScore : highest[0] as AbilityScore, 
-    'STR' as AbilityScore
+  const abilities: Record<AbilityScore, number> = (character.abilities as Record<AbilityScore, number> | undefined) ?? {
+    STR: 10,
+    AGI: 10,
+    VIT: 10,
+    INT: 10,
+    SENSE: 10,
+    PRE: 10,
+  };
+
+  const highestStat = (Object.entries(abilities) as Array<[AbilityScore, number]>).reduce(
+    (highest, [stat, value]) => (value > abilities[highest] ? stat : highest),
+    'STR' as AbilityScore,
   );
 
   return (
@@ -128,7 +139,7 @@ export const RegentSelection: React.FC<RegentSelectionProps> = ({
         <div className="text-purple-200 mb-4">
           Based on your highest stat: 
           <span className={`font-bold ml-2 ${getStatColor(highestStat)}`}>
-            {getStatIcon(highestStat)} {highestStat} ({character.abilities[highestStat]})
+            {getStatIcon(highestStat)} {highestStat} ({abilities[highestStat]})
           </span>
         </div>
         <div className="text-purple-300 text-sm">

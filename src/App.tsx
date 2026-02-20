@@ -58,6 +58,7 @@ const CharacterLevelUp = lazy(() => import("./pages/CharacterLevelUp"));
 const Admin = lazy(() => import("./pages/Admin"));
 const ContentAudit = lazy(() => import("./pages/admin/ContentAudit"));
 const ArtGeneration = lazy(() => import("./pages/admin/ArtGeneration"));
+const FeatureChoicesAdmin = lazy(() => import("./pages/admin/FeatureChoicesAdmin"));
 const DMTools = lazy(() => import("./pages/DMTools"));
 const EncounterBuilder = lazy(() => import("./pages/dm-tools/EncounterBuilder"));
 const InitiativeTracker = lazy(() => import("./pages/dm-tools/InitiativeTracker"));
@@ -115,6 +116,15 @@ const CatchAllRedirect = () => {
   return <Navigate to="/login" replace />;
 };
 const PlayerToolDetail = lazy(() => import("./pages/PlayerToolDetail"));
+
+const CompendiumLegacyMonarchRedirect = () => {
+  const params = new URLSearchParams(window.location.search);
+  const path = window.location.pathname;
+  const parts = path.split('/').filter(Boolean);
+  const id = parts.length >= 3 ? parts[2] : '';
+  const suffix = params.toString() ? `?${params.toString()}` : '';
+  return <Navigate to={`/compendium/regents/${id}${suffix}`} replace />;
+};
 
 // Configure React Query with better caching and error handling
 const queryClient = new QueryClient({
@@ -258,6 +268,7 @@ const AppContent = () => {
           </Suspense>
         }
       />
+      <Route path="/compendium/monarchs/:id" element={<CompendiumLegacyMonarchRedirect />} />
       <Route
         path="/compendium/:type/:id"
         element={
@@ -313,6 +324,17 @@ const AppContent = () => {
           <Suspense fallback={<PageLoader />}>
             <Admin />
           </Suspense>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/dm-tools/selection-protocols"
+        element={
+          <ProtectedRoute requireDM allowGuest={false}>
+            <Suspense fallback={<PageLoader />}>
+              <FeatureChoicesAdmin />
+            </Suspense>
           </ProtectedRoute>
         }
       />

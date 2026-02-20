@@ -176,7 +176,6 @@ export function GlobalEngineSelector({
       </Card>
 
       {/* Hidden Advanced Options - Removed for Simplicity */}
-      <input type="hidden" value={selectedUseCase} />
     </div>
   );
 }

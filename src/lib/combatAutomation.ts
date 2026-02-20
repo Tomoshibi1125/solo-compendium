@@ -20,11 +20,11 @@ interface Character {
   level: number;
   abilities: {
     STR: number;
-    DEX: number;
-    CON: number;
+    AGI: number;
+    VIT: number;
     INT: number;
-    WIS: number;
-    CHA: number;
+    SENSE: number;
+    PRE: number;
   };
   proficiency_bonus: number;
   armor_class: number;
@@ -131,7 +131,7 @@ export function calculateAttackBonus(
   const isRanged = weapon.properties?.includes('Range') || weapon.properties?.includes('Ammunition');
   
   if (isRanged || isFinesse) {
-    bonus += getAbilityModifier(character.abilities.DEX);
+    bonus += getAbilityModifier(character.abilities.AGI);
   } else {
     bonus += getAbilityModifier(character.abilities.STR);
   }
@@ -218,7 +218,7 @@ export function calculateWeaponDamage(
     if (isFinesse) {
       abilityMod = Math.max(
         getAbilityModifier(character.abilities.STR),
-        getAbilityModifier(character.abilities.DEX)
+        getAbilityModifier(character.abilities.AGI)
       );
     } else if (!isRanged) {
       abilityMod = getAbilityModifier(character.abilities.STR);
@@ -347,8 +347,8 @@ export function rollInitiative(
   character: Character,
   advantage: 'advantage' | 'disadvantage' | 'normal' = 'normal'
 ): InitiativeResult {
-  const dexBonus = getAbilityModifier(character.abilities.DEX);
-  const initiativeBonus = calculateInitiative(character, dexBonus);
+  const agiBonus = getAbilityModifier(character.abilities.AGI);
+  const initiativeBonus = calculateInitiative(character, agiBonus);
   
   const initiativeRoll = rollWithAdvantage('1d20', advantage);
   const totalInitiative = initiativeRoll.total + initiativeBonus;
@@ -356,8 +356,8 @@ export function rollInitiative(
   return {
     ...initiativeRoll,
     initiative: totalInitiative,
-    dexterityBonus: dexBonus,
-    otherBonuses: [initiativeBonus - dexBonus],
+    dexterityBonus: agiBonus,
+    otherBonuses: [initiativeBonus - agiBonus],
     surprised: false,
   };
 }
@@ -365,10 +365,30 @@ export function rollInitiative(
 /**
  * Check if character is proficient with weapon
  */
-function checkWeaponProficiency(_character: Character, _weapon: Equipment): boolean {
-  // This would check against character's weapon proficiencies
-  // For now, assume proficiency with simple weapons
-  return true;
+function checkWeaponProficiency(character: Character, weapon: Equipment): boolean {
+  const weaponName = weapon.name.toLowerCase();
+  const weaponType = weapon.type;
+
+  // Characters are proficient with weapons they have equipped (they chose them).
+  // The Character interface here doesn't carry weapon_proficiencies from the job,
+  // so we use equipped-weapon matching plus a simple-weapon fallback.
+  if (weaponType === 'weapon') {
+    // Equipped weapons are assumed proficient (the character chose them)
+    const isEquipped = character.equipment.some(
+      (e) => e.name === weapon.name
+    );
+    if (isEquipped) return true;
+  }
+
+  // Fallback: simple weapons are always proficient
+  const simpleWeapons = [
+    'club', 'dagger', 'greatclub', 'handaxe', 'javelin', 'light hammer',
+    'mace', 'quarterstaff', 'sickle', 'spear', 'dart', 'shortbow', 'sling',
+    'light crossbow',
+  ];
+  if (simpleWeapons.some((sw) => weaponName.includes(sw))) return true;
+
+  return false;
 }
 
 /**

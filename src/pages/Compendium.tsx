@@ -65,7 +65,7 @@ const categories = [
   { id: 'backgrounds', name: 'Backgrounds', icon: Users },
   { id: 'jobs', name: 'Classes', icon: Swords },
   { id: 'paths', name: 'Paths', icon: GitBranch },
-  { id: 'monarchs', name: MONARCH_LABEL_PLURAL, icon: Crown },
+  { id: 'regents', name: MONARCH_LABEL_PLURAL, icon: Crown },
   
   // Abilities & Skills
   { id: 'feats', name: 'Feats', icon: Sparkles },
@@ -164,7 +164,7 @@ const Compendium = () => {
       logger.debug('Using comprehensive static data provider');
       
       // Use static data provider - fetch ALL categories for comprehensive loading
-      const categories = ['backgrounds', 'jobs', 'paths', 'monarchs', 'feats', 'skills', 'powers', 'techniques', 'spells', 'runes', 'relics', 'artifacts', 'monsters', 'locations', 'conditions', 'shadow-soldiers', 'items'] as const;
+      const categories = ['backgrounds', 'jobs', 'paths', 'regents', 'feats', 'skills', 'powers', 'techniques', 'spells', 'runes', 'relics', 'artifacts', 'monsters', 'locations', 'conditions', 'shadow-soldiers', 'items'] as const;
       
       for (const category of categories) {
         if (selectedCategory === 'all' || selectedCategory === category) {
@@ -182,8 +182,8 @@ const Compendium = () => {
               case 'paths':
                 data = await staticDataProvider.getPaths(parsedQuery.text);
                 break;
-              case 'monarchs':
-                data = await staticDataProvider.getMonarchs(parsedQuery.text);
+              case 'regents':
+                data = await staticDataProvider.getRegents(parsedQuery.text);
                 break;
               case 'feats':
                 data = await staticDataProvider.getFeats(parsedQuery.text);
@@ -261,7 +261,7 @@ const Compendium = () => {
               ...(category === 'feats' && {
                 prerequisites: item.prerequisites,
               }),
-              ...(category === 'monarchs' && {
+              ...(category === 'regents' && {
                 title: item.title,
                 theme: item.theme,
               }),

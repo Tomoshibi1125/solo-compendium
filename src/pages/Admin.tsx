@@ -130,6 +130,12 @@ const Admin = () => {
                   Content Audit
                 </Button>
               </Link>
+              <Link to="/dm-tools/selection-protocols">
+                <Button variant="outline" className="gap-2 border-arise/30 hover:bg-arise/10 hover:border-arise/50">
+                  <Shield className="w-4 h-4" />
+                  Selection Protocols
+                </Button>
+              </Link>
               <Link to="/dm-tools/art-generation">
                 <Button variant="outline" className="gap-2 border-arise/30 hover:bg-arise/10 hover:border-arise/50">
                   <Image className="w-4 h-4" />

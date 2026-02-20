@@ -144,7 +144,7 @@ export default function ArtGenerationAdmin() {
           success: true,
           assetId: cachedAsset.id,
           paths: pathValues,
-          metadata: cachedAsset.metadata,
+          metadata: cachedAsset.metadata as GenerationResult['metadata'],
           duration: Date.now() - startedAt,
         };
       } else {
@@ -171,7 +171,7 @@ export default function ArtGenerationAdmin() {
               success: true,
               assetId: fallbackAsset.id,
               paths: pathValues,
-              metadata: fallbackAsset.metadata,
+              metadata: fallbackAsset.metadata as any,
               duration: Date.now() - startedAt,
             };
           } else if (result && typeof result.success === 'boolean') {

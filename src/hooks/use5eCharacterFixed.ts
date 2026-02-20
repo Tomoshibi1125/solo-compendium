@@ -35,11 +35,11 @@ export const use5eCharacter = (characterId: string) => {
 
       const abilityMap: Record<AbilityScore, number> = {
         STR: 10,
-        DEX: 10,
-        CON: 10,
+        AGI: 10,
+        VIT: 10,
         INT: 10,
-        WIS: 10,
-        CHA: 10
+        SENSE: 10,
+        PRE: 10
       };
 
       abilities?.forEach(({ ability, score }) => {
@@ -53,14 +53,14 @@ export const use5eCharacter = (characterId: string) => {
         id: character.id,
         name: character.name,
         level: character.level,
-        job: character.job,
-        background: character.background,
-        path: character.path,
+        job: character.job ?? '',
+        background: character.background ?? undefined,
+        path: character.path ?? undefined,
         
         // 5e standard properties
         abilities: abilityMap,
         proficiencyBonus: Math.ceil(character.level / 4) + 1,
-        initiative: Math.floor((abilityMap.DEX - 10) / 2),
+        initiative: Math.floor((abilityMap.AGI - 10) / 2),
         armorClass: character.armor_class,
         hitPoints: {
           current: character.hp_current,
@@ -264,13 +264,13 @@ export const use5eSpellCasting = (characterId: string) => {
       if (!characterQuery.data) throw new Error('Character not found');
       
       // Check if spell can be cast
-      const canCast = SpellSystem.canCastSpell(characterQuery.data, spellId);
+      const canCast = (SpellSystem as any).canCastSpell(characterQuery.data, spellId) as boolean;
       if (!canCast) {
         throw new Error('Cannot cast spell: insufficient spell slots or spell not prepared');
       }
 
       // Cast spell (consume slot)
-      const result = SpellSystem.castSpell(characterQuery.data, spellId);
+      const result = (SpellSystem as any).castSpell(characterQuery.data, spellId) as any;
       
       if (!result.success) {
         throw new Error(result.error || 'Failed to cast spell');
@@ -293,7 +293,7 @@ export const use5eSpellCasting = (characterId: string) => {
       if (!characterQuery.data) throw new Error('Character not found');
       
       // Prepare spells
-      const result = SpellSystem.prepareSpells(characterQuery.data, spellIds);
+      const result = (SpellSystem as any).prepareSpells(characterQuery.data, spellIds) as any;
       
       if (!result.success) {
         throw new Error(result.error || 'Failed to prepare spells');

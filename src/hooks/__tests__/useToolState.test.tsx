@@ -1,5 +1,4 @@
 import React, { act, useEffect } from 'react';
-// @ts-expect-error test-only import; react-dom subpath types are unavailable in this repo.
 import { createRoot } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -17,6 +16,7 @@ vi.mock('@/integrations/supabase/client', () => ({
 import { useAuth } from '@/lib/auth/authContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useCampaignToolState, useUserToolState } from '@/hooks/useToolState';
+import { usePreferredCampaignSelection } from '@/hooks/usePreferredCampaignSelection';
 
 type ProbeState = {
   value: number;
@@ -172,6 +172,24 @@ const CampaignProbe = ({
       state: result.state,
       isLoading: result.isLoading,
       saveNow: result.saveNow,
+    });
+  });
+
+  return null;
+};
+
+const PreferredCampaignProbe = ({
+  onSnapshot,
+}: {
+  onSnapshot: (snapshot: { campaignId: string | null; isLoading: boolean; set: (id: string | null) => Promise<void> }) => void;
+}) => {
+  const result = usePreferredCampaignSelection('test_tool');
+
+  useEffect(() => {
+    onSnapshot({
+      campaignId: result.campaignId,
+      isLoading: result.isLoading,
+      set: result.setPreferredCampaignId,
     });
   });
 
@@ -390,6 +408,41 @@ describe('useToolState local fallback behavior', () => {
       const campaignUpserts = upsertCalls.filter((call) => call.table === 'campaign_tool_states');
       expect(campaignUpserts).toHaveLength(1);
       expect((campaignUpserts[0].payload as { state: ProbeState }).state).toEqual({ value: 15 });
+    } finally {
+      unmount();
+    }
+  });
+
+  it('persists preferred campaign selection in user tool state and mirrors to local storage', async () => {
+    const storageKey = 'solo-compendium.preferred-campaign.test_tool.v1';
+
+    let latest: {
+      campaignId: string | null;
+      isLoading: boolean;
+      set: (id: string | null) => Promise<void>;
+    } | null = null;
+
+    const unmount = mount(
+      <PreferredCampaignProbe
+        onSnapshot={(snapshot) => {
+          latest = snapshot;
+        }}
+      />
+    );
+
+    try {
+      await waitUntil(() => !!latest && !latest.isLoading);
+
+      await act(async () => {
+        await (latest as NonNullable<typeof latest>).set('campaign-xyz');
+      });
+
+      expect(JSON.parse(storage.getItem(storageKey) || 'null')).toEqual({ campaignId: 'campaign-xyz' });
+
+      const userUpserts = upsertCalls.filter((call) => call.table === 'user_tool_states');
+      expect(userUpserts).toHaveLength(1);
+      expect((userUpserts[0].payload as { tool_key: string }).tool_key).toBe('preferred_campaign:test_tool');
+      expect((userUpserts[0].payload as { state: { campaignId: string } }).state).toEqual({ campaignId: 'campaign-xyz' });
     } finally {
       unmount();
     }

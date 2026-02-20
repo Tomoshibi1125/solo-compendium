@@ -363,7 +363,11 @@ const buildAnalytics = (
   };
 };
 
-const fetchCampaignData = async (campaignId: string, timeRange: TimeRange): Promise<CampaignDataSet> => {
+const fetchCampaignData = async (
+  campaignId: string,
+  timeRange: TimeRange,
+): Promise<CampaignDataSet> => {
+  const untypedSupabase = supabase as unknown as { from: (table: string) => any };
   if (!isSupabaseConfigured || isE2E) {
     const localCharacters = listLocalCharacters();
     const members: CampaignMemberRow[] = localCharacters.map((character) => ({
@@ -417,7 +421,7 @@ const fetchCampaignData = async (campaignId: string, timeRange: TimeRange): Prom
     .select('*')
     .eq('campaign_id', campaignId);
 
-  const sessionsQuery = supabase
+  const sessionsQuery = untypedSupabase
     .from('campaign_sessions')
     .select('id, scheduled_for, created_at, updated_at, status')
     .eq('campaign_id', campaignId);
@@ -453,7 +457,7 @@ const fetchCampaignData = async (campaignId: string, timeRange: TimeRange): Prom
     logger.warn('Failed to load session planner data for analytics', error);
   }
 
-  const remoteSessions = (sessionsResult.data || []) as CampaignSessionRow[];
+  const remoteSessions = (sessionsResult.data || []) as unknown as CampaignSessionRow[];
   const mergedSessions = remoteSessions.length > 0 ? remoteSessions : sessionPlannerSessions;
   const mergedNotes = remoteSessions.length > 0
     ? (notesResult.data || [])

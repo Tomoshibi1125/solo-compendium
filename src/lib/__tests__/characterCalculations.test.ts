@@ -1,5 +1,6 @@
 import { describe, test, expect } from 'vitest';
 import { getProficiencyBonus, getSpellSlotsPerLevel, getCasterType } from '../5eCharacterCalculations';
+import { getCantripsKnownLimit } from '../characterCalculations';
 
 describe('5e Proficiency Bonus Calculation', () => {
   test('Level 1 should have +2 proficiency bonus', () => {
@@ -57,5 +58,24 @@ describe('System Ascendant Job to 5e Caster Type', () => {
   
   test('Esper should be full caster (Sorcerer)', () => {
     expect(getCasterType('Esper')).toBe('full');
+  });
+});
+
+describe('Cantrips Known Limit', () => {
+  test('Mage cantrips scale 3/4/5', () => {
+    expect(getCantripsKnownLimit('Mage', 1)).toBe(3);
+    expect(getCantripsKnownLimit('Mage', 4)).toBe(4);
+    expect(getCantripsKnownLimit('Mage', 10)).toBe(5);
+  });
+
+  test('Esper cantrips scale 4/5/6', () => {
+    expect(getCantripsKnownLimit('Esper', 1)).toBe(4);
+    expect(getCantripsKnownLimit('Esper', 4)).toBe(5);
+    expect(getCantripsKnownLimit('Esper', 10)).toBe(6);
+  });
+
+  test('Non-casters return null', () => {
+    expect(getCantripsKnownLimit('Warrior', 5)).toBeNull();
+    expect(getCantripsKnownLimit('Assassin', 5)).toBeNull();
   });
 });

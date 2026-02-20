@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, RefreshCw, Download, Grid, Plus, Minus, Square, Layout, DoorOpen, Crown, Gem, AlertTriangle } from 'lucide-react';
 import { Layout as PageLayout } from '@/components/layout/Layout';
@@ -10,6 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useUserToolState } from '@/hooks/useToolState';
 
 type CellType = 'empty' | 'room' | 'corridor' | 'entrance' | 'boss' | 'treasure' | 'trap' | 'puzzle' | 'secret';
 
@@ -36,6 +38,68 @@ interface DungeonMap {
   rooms: Room[];
   seed: number;
 }
+
+type SerializedCell = {
+  type: CellType;
+  label?: string;
+  connections: string[];
+};
+
+type SerializedDungeonMap = {
+  width: number;
+  height: number;
+  cells: Array<[string, SerializedCell]>;
+  rooms: Room[];
+  seed: number;
+};
+
+type DungeonMapGeneratorState = {
+  selectedRank: string;
+  mapSize: { width: number; height: number };
+  dungeonMap: SerializedDungeonMap | null;
+  selectedCellType: CellType;
+  zoom: number;
+};
+
+const serializeDungeonMap = (map: DungeonMap | null): SerializedDungeonMap | null => {
+  if (!map) return null;
+
+  return {
+    width: map.width,
+    height: map.height,
+    seed: map.seed,
+    rooms: map.rooms,
+    cells: Array.from(map.cells.entries()).map(([key, cell]) => [
+      key,
+      {
+        type: cell.type,
+        label: cell.label,
+        connections: Array.from(cell.connections),
+      },
+    ]),
+  };
+};
+
+const deserializeDungeonMap = (map: SerializedDungeonMap | null): DungeonMap | null => {
+  if (!map) return null;
+
+  const cells = new Map<string, Cell>();
+  for (const [key, cell] of map.cells) {
+    cells.set(key, {
+      type: cell.type,
+      label: cell.label,
+      connections: new Set(cell.connections),
+    });
+  }
+
+  return {
+    width: map.width,
+    height: map.height,
+    seed: map.seed,
+    rooms: map.rooms,
+    cells,
+  };
+};
 
 const GATE_RANKS = ['E', 'D', 'C', 'B', 'A', 'S'] as const;
 import type { LucideIcon } from 'lucide-react';
@@ -209,6 +273,58 @@ const DungeonMapGenerator = () => {
   const [dungeonMap, setDungeonMap] = useState<DungeonMap | null>(null);
   const [selectedCellType, setSelectedCellType] = useState<CellType>('room');
   const [zoom, setZoom] = useState(1);
+
+  const { state: storedState, isLoading, saveNow } = useUserToolState<DungeonMapGeneratorState>('dungeon_map_generator', {
+    initialState: {
+      selectedRank: 'C',
+      mapSize: { width: 20, height: 20 },
+      dungeonMap: null,
+      selectedCellType: 'room',
+      zoom: 1,
+    },
+    storageKey: 'solo-compendium.dm-tools.dungeon-map-generator.v1',
+  });
+
+  const hydratedState = useMemo(() => {
+    return {
+      selectedRank: typeof storedState.selectedRank === 'string' ? storedState.selectedRank : 'C',
+      mapSize: storedState.mapSize ?? { width: 20, height: 20 },
+      dungeonMap: deserializeDungeonMap(storedState.dungeonMap ?? null),
+      selectedCellType: (storedState.selectedCellType as CellType) ?? 'room',
+      zoom: typeof storedState.zoom === 'number' ? storedState.zoom : 1,
+    };
+  }, [storedState]);
+
+  const hasHydratedRef = useRef(false);
+  useEffect(() => {
+    if (isLoading) return;
+    if (hasHydratedRef.current) return;
+    setSelectedRank(hydratedState.selectedRank);
+    setMapSize(hydratedState.mapSize);
+    setDungeonMap(hydratedState.dungeonMap);
+    setSelectedCellType(hydratedState.selectedCellType);
+    setZoom(hydratedState.zoom);
+    hasHydratedRef.current = true;
+  }, [hydratedState, isLoading]);
+
+  const savePayload = useMemo(
+    () =>
+      ({
+        selectedRank,
+        mapSize,
+        dungeonMap: serializeDungeonMap(dungeonMap),
+        selectedCellType,
+        zoom,
+      }) satisfies DungeonMapGeneratorState,
+    [dungeonMap, mapSize, selectedCellType, selectedRank, zoom]
+  );
+
+  const debouncedSavePayload = useDebounce(savePayload, 500);
+  useEffect(() => {
+    if (isLoading) return;
+    if (!hasHydratedRef.current) return;
+    void saveNow(debouncedSavePayload);
+  }, [debouncedSavePayload, isLoading, saveNow]);
 
   const handleGenerate = () => {
     const newMap = generateMap(mapSize.width, mapSize.height, selectedRank);

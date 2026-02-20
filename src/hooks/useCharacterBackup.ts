@@ -7,11 +7,12 @@ import { logger } from '@/lib/logger';
 import { AppError } from '@/lib/appError';
 import { useAuth } from '@/lib/auth/authContext';
 import type { CharacterWithAbilities } from './useCharacters';
+import type { Database } from '@/integrations/supabase/types';
 
 export interface CharacterBackup {
   id: string;
   character_id: string;
-  backup_data: CharacterWithAbilities;
+  backup_data: Database['public']['Tables']['character_backups']['Row']['backup_data'];
   backup_name?: string;
   created_at: string;
   version: number;
@@ -72,7 +73,7 @@ export function loadLocalBackups(characterId: string): CharacterBackup[] {
  * Restore a character from backup
  */
 export function restoreFromBackup(backup: CharacterBackup): CharacterWithAbilities {
-  return backup.backup_data;
+  return backup.backup_data as unknown as CharacterWithAbilities;
 }
 
 /**
@@ -167,7 +168,7 @@ export function useCharacterBackups(characterId: string) {
         .insert({
           user_id: user.id,
           character_id: character.id,
-          backup_data: JSON.parse(JSON.stringify(character)),
+          backup_data: JSON.parse(JSON.stringify(character)) as Database['public']['Tables']['character_backups']['Insert']['backup_data'],
           backup_name: backupName,
           version: 1,
         })
@@ -266,7 +267,7 @@ export function useCharacterBackups(characterId: string) {
         .insert({
           user_id: user.id,
           character_id: backup.character_id,
-          backup_data: backup.backup_data,
+          backup_data: backup.backup_data as Database['public']['Tables']['character_backups']['Insert']['backup_data'],
           backup_name: backup.backup_name,
           version: backup.version ?? 1,
           created_at: backup.created_at,

@@ -6,11 +6,14 @@ import { isLocalCharacterId, setLocalAbilities } from '@/lib/guestStore';
 import type { AbilityScore, Character } from '@/lib/5eRulesEngine';
 import { createCharacterSheet, CharacterSheetSystem } from '@/lib/5eCharacterSheet';
 import { SpellSystem } from '@/lib/5eSpellSystem';
-import { CombatSystem } from '@/lib/5eCombatSystem';
 
 export interface CharacterWithAbilities extends Character {
   abilities: Record<AbilityScore, number>;
 }
+
+const untypedSupabase = supabase as unknown as {
+  from: (table: string) => any;
+};
 
 export const use5eCharacter = (characterId: string) => {
   return useQuery({
@@ -36,11 +39,11 @@ export const use5eCharacter = (characterId: string) => {
 
       const abilityMap: Record<AbilityScore, number> = {
         STR: 10,
-        DEX: 10,
-        CON: 10,
+        AGI: 10,
+        VIT: 10,
         INT: 10,
-        WIS: 10,
-        CHA: 10
+        SENSE: 10,
+        PRE: 10
       };
 
       abilities?.forEach(({ ability, score }) => {
@@ -51,8 +54,8 @@ export const use5eCharacter = (characterId: string) => {
 
       return {
         ...character,
-        abilities: abilityMap
-      };
+        abilities: abilityMap,
+      } as unknown as CharacterWithAbilities;
     },
   });
 };
@@ -184,7 +187,7 @@ export const use5eCombatActions = (characterId: string) => {
       const spellSlots = SpellSystem.getCharacterSpellSlots(updatedSheet.character);
       for (const [level, slots] of Object.entries(spellSlots)) {
         if (level !== 'cantrips') {
-          await supabase
+          await untypedSupabase
             .from('spell_slots')
             .update({ slots_current: slots })
             .eq('character_id', characterId)
@@ -222,19 +225,19 @@ export const use5eSpellCasting = (characterId: string) => {
       if (!characterQuery.data) throw new Error('Character not found');
       
       // Check if spell can be cast
-      const canCast = SpellSystem.canCastSpell(characterQuery.data, spellId);
+      const canCast = (SpellSystem as any).canCastSpell(characterQuery.data, spellId) as boolean;
       if (!canCast) {
         throw new Error('Cannot cast spell: insufficient spell slots or spell not prepared');
       }
 
       // Cast spell (consume slot)
-      const updatedCharacter = SpellSystem.castSpell(characterQuery.data, spellId);
+      const updatedCharacter = (SpellSystem as any).castSpell(characterQuery.data, spellId) as any;
       
       // Update spell slots in database
-      const spellSlots = SpellSystem.getCharacterSpellSlots(updatedCharacter);
+      const spellSlots = SpellSystem.getCharacterSpellSlots(updatedCharacter as Character);
       for (const [level, slots] of Object.entries(spellSlots)) {
         if (level !== 'cantrips') {
-          await supabase
+          await untypedSupabase
             .from('spell_slots')
             .update({ slots_current: slots })
             .eq('character_id', characterId)
@@ -259,10 +262,10 @@ export const use5eSpellCasting = (characterId: string) => {
       if (!characterQuery.data) throw new Error('Character not found');
       
       // Prepare spells
-      const updatedCharacter = SpellSystem.prepareSpells(characterQuery.data, spellIds);
+      const updatedCharacter = (SpellSystem as any).prepareSpells(characterQuery.data, spellIds) as any;
       
       // Update prepared spells in database
-      const { error } = await supabase
+      const { error } = await untypedSupabase
         .from('character_prepared_spells')
         .delete()
         .eq('character_id', characterId);
@@ -278,7 +281,7 @@ export const use5eSpellCasting = (characterId: string) => {
         prepared: true
       }));
 
-      const { error: insertError } = await supabase
+      const { error: insertError } = await untypedSupabase
         .from('character_prepared_spells')
         .insert(preparedRows);
 

@@ -9,19 +9,19 @@ export interface Character {
   experience: number;
   abilities?: {
     STR: number;
-    DEX: number;
-    CON: number;
+    AGI: number;
+    VIT: number;
     INT: number;
-    WIS: number;
-    CHA: number;
+    SENSE: number;
+    PRE: number;
   };
   abilityScores: {
     strength: number;
-    dexterity: number;
-    constitution: number;
+    agility: number;
+    vitality: number;
     intelligence: number;
-    wisdom: number;
-    charisma: number;
+    sense: number;
+    presence: number;
   };
   hitPoints: number;
   armorClass: number;
@@ -33,11 +33,11 @@ export interface Character {
 
 export interface CharacterStats {
   strength: number;
-  dexterity: number;
-  constitution: number;
+  agility: number;
+  vitality: number;
   intelligence: number;
-  wisdom: number;
-  charisma: number;
+  sense: number;
+  presence: number;
 }
 
 export interface CharacterCreateRequest {

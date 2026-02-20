@@ -1,23 +1,28 @@
 import { describe, test, expect } from 'vitest';
-import { normalizeAbility, getSystemAbilityName } from '../5eRulesEngine';
+import { normalizeAbility, getAbilityDisplayName } from '../5eRulesEngine';
 
 describe('5e Homebrew Compatibility', () => {
-  test('System Ascendant abilities map to 5e', () => {
+  test('System Ascendant abilities normalize correctly', () => {
     expect(normalizeAbility('STR')).toBe('STR');
-    expect(normalizeAbility('AGI')).toBe('DEX'); 
-    expect(normalizeAbility('VIT')).toBe('CON');
+    expect(normalizeAbility('AGI')).toBe('AGI'); 
+    expect(normalizeAbility('VIT')).toBe('VIT');
     expect(normalizeAbility('INT')).toBe('INT');
-    expect(normalizeAbility('SENSE')).toBe('WIS');
-    expect(normalizeAbility('PRE')).toBe('CHA');
+    expect(normalizeAbility('SENSE')).toBe('SENSE');
+    expect(normalizeAbility('PRE')).toBe('PRE');
+    // Legacy 5e names still normalize to SA
+    expect(normalizeAbility('DEX')).toBe('AGI');
+    expect(normalizeAbility('CON')).toBe('VIT');
+    expect(normalizeAbility('WIS')).toBe('SENSE');
+    expect(normalizeAbility('CHA')).toBe('PRE');
   });
   
-  test('5e abilities display with System Ascendant names', () => {
-    expect(getSystemAbilityName('STR')).toBe('Strength (STR)');
-    expect(getSystemAbilityName('DEX')).toBe('Agility (AGI)');
-    expect(getSystemAbilityName('CON')).toBe('Vitality (VIT)');
-    expect(getSystemAbilityName('INT')).toBe('Intelligence (INT)');
-    expect(getSystemAbilityName('WIS')).toBe('Sense (SENSE)');
-    expect(getSystemAbilityName('CHA')).toBe('Presence (PRE)');
+  test('System Ascendant ability display names', () => {
+    expect(getAbilityDisplayName('STR')).toBe('Strength');
+    expect(getAbilityDisplayName('AGI')).toBe('Agility');
+    expect(getAbilityDisplayName('VIT')).toBe('Vitality');
+    expect(getAbilityDisplayName('INT')).toBe('Intelligence');
+    expect(getAbilityDisplayName('SENSE')).toBe('Sense');
+    expect(getAbilityDisplayName('PRE')).toBe('Presence');
   });
   
   test('Job compatibility with 5e classes', () => {

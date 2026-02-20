@@ -215,6 +215,27 @@ export default {
             transform: "scale(1.05)"
           },
         },
+        "system-materialize": {
+          "0%": { opacity: "0", transform: "translateY(12px) scale(0.97)", filter: "blur(6px) brightness(1.8)" },
+          "40%": { opacity: "0.6", filter: "blur(2px) brightness(1.3)" },
+          "100%": { opacity: "1", transform: "translateY(0) scale(1)", filter: "blur(0) brightness(1)" },
+        },
+        "hologram-flicker": {
+          "0%, 100%": { opacity: "1" },
+          "3%": { opacity: "0.85" },
+          "6%": { opacity: "1" },
+          "42%": { opacity: "0.92" },
+          "44%": { opacity: "1" },
+        },
+        "hud-glow-pulse": {
+          "0%, 100%": { boxShadow: "0 0 10px hsl(var(--primary) / 0.15), inset 0 0 10px hsl(var(--primary) / 0.05)" },
+          "50%": { boxShadow: "0 0 20px hsl(var(--primary) / 0.25), inset 0 0 15px hsl(var(--primary) / 0.08)" },
+        },
+        "system-boot": {
+          "0%": { opacity: "0", transform: "translateY(20px)", filter: "blur(8px)" },
+          "50%": { opacity: "0.7", filter: "blur(2px)" },
+          "100%": { opacity: "1", transform: "translateY(0)", filter: "blur(0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -229,6 +250,10 @@ export default {
         "gate-energy-flow": "gate-energy-flow 3s ease-in-out infinite",
         "rift-portal": "rift-portal 2s ease-out",
         "dimensional-pulse": "dimensional-pulse 4s ease-in-out infinite",
+        "system-materialize": "system-materialize 0.6s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "hologram-flicker": "hologram-flicker 4s ease-in-out infinite",
+        "hud-glow-pulse": "hud-glow-pulse 3s ease-in-out infinite",
+        "system-boot": "system-boot 0.8s ease-out both",
       },
       textShadow: {
         'system': '0 0 10px hsl(var(--system-green) / 0.8), 0 0 20px hsl(var(--system-green) / 0.4)',

@@ -91,7 +91,9 @@ export function ComparisonTool({ type, className }: ComparisonToolProps) {
                 <SelectValue placeholder={`Select ${type.slice(0, -1)} to compare...`} />
               </SelectTrigger>
               <SelectContent>
-                {items.filter((item: { id: string; name?: string }) => item.name).map((item: { id: string; name: string }) => (
+                {items
+                  .filter((item): item is { id: string; name: string } => typeof item.name === 'string' && item.name.length > 0)
+                  .map((item) => (
                   <SelectItem key={item.id} value={item.id}>
                     {item.name}
                   </SelectItem>
@@ -120,8 +122,9 @@ export function ComparisonTool({ type, className }: ComparisonToolProps) {
             </SelectTrigger>
             <SelectContent>
               {items
-                .filter((item: { id: string; name?: string }) => item.name && !selectedItems.find(si => si.id === item.id))
-                .map((item: { id: string; name: string }) => (
+                .filter((item): item is { id: string; name: string } => typeof item.name === 'string' && item.name.length > 0)
+                .filter((item) => !selectedItems.find(si => si.id === item.id))
+                .map((item) => (
                   <SelectItem key={item.id} value={item.id}>
                     {item.name}
                   </SelectItem>

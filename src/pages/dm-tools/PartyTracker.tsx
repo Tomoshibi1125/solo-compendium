@@ -13,6 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useCampaignToolState } from '@/hooks/useToolState';
 import { useJoinedCampaigns, useMyCampaigns } from '@/hooks/useCampaigns';
+import { useHydratedPreferredCampaignId } from '@/hooks/usePreferredCampaignSelection';
 
 interface PartyMember {
   id: string;
@@ -95,18 +96,17 @@ const PartyTracker = () => {
     return Array.from(byId.values()).sort((a, b) => a.name.localeCompare(b.name));
   }, [joinedCampaigns, myCampaigns]);
 
-  useEffect(() => {
-    if (manageableCampaigns.length === 0) {
-      return;
-    }
-
-    const isSelectedValid = manageableCampaigns.some((campaign) => campaign.id === activeCampaignId);
-    if (!isSelectedValid) {
+  useHydratedPreferredCampaignId({
+    toolKey: 'party_tracker',
+    campaigns: manageableCampaigns,
+    urlCampaignId: activeCampaignId || null,
+    isCampaignIdValid: (id) => manageableCampaigns.some((campaign) => campaign.id === id),
+    onResolveCampaignId: (id) => {
       const nextParams = new URLSearchParams(searchParams);
-      nextParams.set('campaignId', manageableCampaigns[0].id);
+      nextParams.set('campaignId', id);
       setSearchParams(nextParams, { replace: true });
-    }
-  }, [activeCampaignId, manageableCampaigns, searchParams, setSearchParams]);
+    },
+  });
 
   const handleCampaignChange = (nextCampaignId: string) => {
     const nextParams = new URLSearchParams(searchParams);

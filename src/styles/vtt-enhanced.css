@@ -1,4 +1,17 @@
-/* VTT Enhanced Styles */
+/* ═══════════════════════════════════════════════════════════════════════
+   VTT Enhanced — System Ascendant Theme
+   ───────────────────────────────────────────────────────────────────────
+   COLOR PALETTE (each element type is visually distinct):
+     Token borders .... amethyst   #9b6dff
+     Active/Turn ...... gold       #f59e0b  (high-vis focus)
+     Measurement ...... cyan       #38bdf8  (tool)
+     Drawing .......... emerald    #34d399  (creative)
+     Grid ............. slate      #94a3b8  (neutral)
+     Annotations ...... amber      #fbbf24  (warm notes)
+     Fog .............. obsidian   #0f0a19  (darkness)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Scene container ─────────────────────────────────────────────────── */
 .vtt-scene-container {
   position: relative;
   min-width: 100%;
@@ -7,42 +20,39 @@
   height: var(--scene-height, auto);
 }
 
+/* ── Background ──────────────────────────────────────────────────────── */
 .vtt-background {
   position: absolute;
   inset: 0;
   background-repeat: no-repeat;
   background-position: center;
-  filter: saturate(1.05);
+  filter: saturate(1.05) contrast(1.02);
   opacity: 0.95;
   z-index: 1;
 }
 
+/* ── Grid — SLATE (neutral, never competes) ──────────────────────────── */
 .vtt-grid {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  opacity: 0.2;
+  inset: 0;
+  opacity: 0.18;
   background-image: var(--grid-image, none);
   background-size: var(--grid-size, 20px 20px);
   z-index: 2;
 }
 
+/* ── Fog — OBSIDIAN (deep black-purple, opaque) ──────────────────────── */
 .vtt-fog-of-war {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+  inset: 0;
+  background: radial-gradient(circle, transparent 0%, rgba(10, 6, 18, 0.9) 100%);
   z-index: 60;
 }
 
 .vtt-fog-tile {
   position: absolute;
-  background: rgba(0, 0, 0, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  background: rgba(10, 6, 18, 0.92);
+  border: 1px solid rgba(30, 20, 50, 0.4);
   left: var(--tile-x, 0);
   top: var(--tile-y, 0);
   width: var(--tile-size, 20px);
@@ -50,11 +60,12 @@
   pointer-events: none;
 }
 
+/* ── Tokens — AMETHYST borders (identity color) ──────────────────────── */
 .vtt-token {
   position: absolute;
   border-radius: 50%;
-  border: 2px solid hsl(var(--primary));
-  background: hsl(var(--primary));
+  border: 2px solid rgba(155, 109, 255, 0.75);
+  background: rgba(20, 14, 35, 0.6);
   color: white;
   display: flex;
   align-items: center;
@@ -63,10 +74,8 @@
   font-weight: bold;
   cursor: move;
   -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
-  transition: transform 0.1s ease;
+  transition: transform 0.1s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   left: var(--token-x, 0);
   top: var(--token-y, 0);
   width: var(--token-size, 40px);
@@ -77,6 +86,8 @@
 
 .vtt-token:hover {
   transform: scale(1.1) rotate(var(--token-rotation, 0deg));
+  border-color: rgba(155, 109, 255, 1);
+  box-shadow: 0 0 12px rgba(155, 109, 255, 0.4);
 }
 
 .vtt-token.is-overlay {
@@ -86,22 +97,29 @@
 
 .vtt-token.is-overlay:hover {
   transform: rotate(var(--token-rotation, 0deg));
+  box-shadow: none;
 }
 
+/* Active selection — GOLD (unmistakable focus, distinct from purple) */
 .vtt-token.active {
-  border-color: hsl(var(--accent));
-  box-shadow: 0 0 0 2px hsl(var(--accent));
+  border-color: #f59e0b;
+  box-shadow:
+    0 0 0 2px rgba(245, 158, 11, 0.5),
+    0 0 16px rgba(245, 158, 11, 0.25);
 }
 
 .vtt-token.locked {
   cursor: not-allowed;
-  opacity: 0.75;
+  opacity: 0.65;
+  border-style: dashed;
+  border-color: rgba(148, 163, 184, 0.5);
 }
 
 .vtt-token.dragged {
-  opacity: 0.5;
+  opacity: 0.45;
 }
 
+/* ── Token inner ─────────────────────────────────────────────────────── */
 .vtt-token-inner {
   width: 100%;
   height: 100%;
@@ -111,13 +129,13 @@
   align-items: center;
   justify-content: center;
   border: 2px solid;
-  transition: all 0.1s ease;
+  transition: all 0.15s ease;
   background: var(--token-bg-color, transparent);
   font-size: var(--token-font-size, 16px);
 }
 
 .vtt-token-inner:hover {
-  transform: scale(1.1);
+  transform: scale(1.08);
 }
 
 .vtt-token-inner.is-overlay {
@@ -130,27 +148,27 @@
   transform: none;
 }
 
+/* ── HP bar (red / amber / green — standard, high contrast) ──────────── */
 .vtt-hp-bar {
   height: 100%;
   transition: all 0.3s ease;
   width: var(--hp-percentage, 100%);
-  background: linear-gradient(to right, 
-    hsl(var(--destructive)) 0%, 
-    hsl(var(--destructive)) 25%, 
-    hsl(var(--warning)) 25%, 
-    hsl(var(--warning)) 50%, 
-    hsl(var(--success)) 50%, 
-    hsl(var(--success)) 100%
+  background: linear-gradient(to right,
+    #ef4444 0%, #ef4444 25%,
+    #eab308 25%, #eab308 50%,
+    #22c55e 50%, #22c55e 100%
   );
 }
 
+/* ── Drawing tools — EMERALD (creative, distinct from all others) ────── */
 .vtt-drawing-line {
   position: absolute;
-  background: hsl(var(--accent));
+  background: rgba(52, 211, 153, 0.85);
   border-radius: 2px;
   pointer-events: none;
   transform-origin: 0 50%;
   z-index: 30;
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.35);
 }
 
 .vtt-drawing-shape {
@@ -158,13 +176,14 @@
   border-style: solid;
   pointer-events: none;
   z-index: 30;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 12px rgba(52, 211, 153, 0.2);
 }
 
 .vtt-drawing-shape.is-circle {
   border-radius: 50%;
 }
 
+/* ── Measurement ruler — CYAN (tool, clearly different) ──────────────── */
 .vtt-measurement {
   position: absolute;
   inset: 0;
@@ -175,32 +194,338 @@
 .vtt-measurement-line {
   position: absolute;
   height: 2px;
-  background: #fbbf24;
-  box-shadow: 0 0 10px rgba(251, 191, 36, 0.8);
+  background: #38bdf8;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
   transform-origin: 0 50%;
 }
 
 .vtt-measurement-label {
   position: absolute;
   transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.75);
-  color: #fbbf24;
-  border: 1px solid rgba(251, 191, 36, 0.6);
+  background: rgba(10, 6, 18, 0.92);
+  color: #7dd3fc;
+  border: 1px solid rgba(56, 189, 248, 0.5);
   border-radius: 999px;
-  padding: 2px 8px;
+  padding: 2px 10px;
   font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-heading, inherit);
+  letter-spacing: 0.03em;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
 }
 
+/* ── Annotations — AMBER (warm, note-like, stands out from map) ──────── */
 .vtt-annotation {
   position: absolute;
-  background: hsl(var(--background));
-  border: 1px solid hsl(var(--border));
+  background: rgba(10, 6, 18, 0.92);
+  border: 1px solid rgba(251, 191, 36, 0.4);
   border-radius: 4px;
-  padding: 4px 8px;
-  font-size: 12px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-heading, inherit);
+  color: #fde68a;
   pointer-events: auto;
   z-index: 60;
   white-space: nowrap;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vtt-annotation:hover {
+  border-color: rgba(251, 191, 36, 0.7);
+  box-shadow:
+    0 2px 16px rgba(251, 191, 36, 0.15),
+    0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Ping pulse — white (visible on any background) ──────────────────── */
+.vtt-ping-pulse {
+  animation: vtt-ping-ring 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes vtt-ping-ring {
+  0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+  75% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
+}
+
+/* Current turn — GOLD ring (pulsing, unmissable "it's your turn") */
+.vtt-turn-active {
+  box-shadow:
+    0 0 0 3px rgba(245, 158, 11, 0.6),
+    0 0 20px rgba(245, 158, 11, 0.3);
+  animation: vtt-turn-pulse 2s ease-in-out infinite;
+}
+
+@keyframes vtt-turn-pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.6), 0 0 20px rgba(245, 158, 11, 0.3); }
+  50% { box-shadow: 0 0 0 5px rgba(245, 158, 11, 0.8), 0 0 28px rgba(245, 158, 11, 0.5); }
+}
+
+/* ── AoE Templates — CYAN (same family as measurement ruler) ─────────── */
+.vtt-aoe-circle {
+  position: absolute;
+  border: 2px solid rgba(56, 189, 248, 0.7);
+  border-radius: 50%;
+  background: rgba(56, 189, 248, 0.12);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.25), inset 0 0 20px rgba(56, 189, 248, 0.08);
+  pointer-events: none;
+  z-index: 55;
+}
+
+.vtt-aoe-cone {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(56, 189, 248, 0.15);
+  border: none;
+  pointer-events: none;
+  z-index: 55;
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.3));
+}
+
+.vtt-aoe-cube {
+  position: absolute;
+  border: 2px solid rgba(56, 189, 248, 0.7);
+  background: rgba(56, 189, 248, 0.12);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.25), inset 0 0 20px rgba(56, 189, 248, 0.08);
+  pointer-events: none;
+  z-index: 55;
+}
+
+/* ── Token context menu ──────────────────────────────────────────────── */
+.vtt-context-menu {
+  position: fixed;
+  z-index: 100;
+  min-width: 160px;
+  background: rgba(10, 6, 18, 0.96);
+  border: 1px solid rgba(155, 109, 255, 0.3);
+  border-radius: 8px;
+  padding: 4px 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  animation: vtt-ctx-in 0.12s ease-out;
+}
+
+@keyframes vtt-ctx-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.vtt-context-menu button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 14px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.1s;
+}
+
+.vtt-context-menu button:hover {
+  background: rgba(155, 109, 255, 0.15);
+  color: white;
+}
+
+.vtt-context-menu .ctx-danger:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+}
+
+.vtt-context-menu .ctx-separator {
+  height: 1px;
+  margin: 4px 8px;
+  background: rgba(155, 109, 255, 0.15);
+}
+
+/* ── Status indicators ───────────────────────────────────────────────── */
+.vtt-connected { color: #22c55e; }
+.vtt-disconnected { color: #ef4444; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   MOBILE VTT — Full responsive support for touch devices
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Mobile floating toolbar ─────────────────────────────────────────── */
+.vtt-mobile-toolbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 8px;
+  padding-bottom: max(6px, env(safe-area-inset-bottom));
+  background: rgba(10, 6, 18, 0.96);
+  border-top: 1px solid rgba(155, 109, 255, 0.2);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.vtt-mobile-toolbar button {
+  flex-shrink: 0;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 9px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.vtt-mobile-toolbar button.active {
+  background: rgba(155, 109, 255, 0.2);
+  border-color: rgba(155, 109, 255, 0.4);
+  color: #c4b5fd;
+}
+
+.vtt-mobile-toolbar button svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Mobile bottom sheet (sidebar replacement) ───────────────────────── */
+.vtt-bottom-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 85;
+  max-height: 65vh;
+  background: rgba(10, 6, 18, 0.98);
+  border-top: 2px solid rgba(155, 109, 255, 0.3);
+  border-radius: 16px 16px 0 0;
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  overflow: hidden;
+  padding-bottom: max(0px, env(safe-area-inset-bottom));
+}
+
+.vtt-bottom-sheet.open {
+  transform: translateY(0);
+}
+
+.vtt-bottom-sheet-handle {
+  width: 40px;
+  height: 4px;
+  margin: 8px auto;
+  border-radius: 2px;
+  background: rgba(155, 109, 255, 0.3);
+}
+
+.vtt-bottom-sheet-content {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  max-height: calc(65vh - 20px);
+  padding: 0 12px 12px;
+}
+
+/* ── Touch-friendly token sizing ─────────────────────────────────────── */
+@media (pointer: coarse) {
+  .vtt-token {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .vtt-token:hover {
+    transform: none; /* Disable hover zoom on touch */
+  }
+  .vtt-token-inner:hover {
+    transform: none;
+  }
+  .vtt-annotation {
+    padding: 8px 14px;
+    font-size: 13px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* ── Small screen breakpoints ────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Map fills the screen */
+  .vtt-mobile-map-fullscreen {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 40;
+    border-radius: 0 !important;
+    border: none !important;
+    height: 100dvh !important;
+    width: 100vw !important;
+  }
+
+  /* Tokens are larger for touch */
+  .vtt-token {
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  /* Measurement label larger */
+  .vtt-measurement-label {
+    font-size: 13px;
+    padding: 4px 14px;
+  }
+
+  /* Context menu touch-friendly */
+  .vtt-context-menu button {
+    padding: 12px 16px;
+    font-size: 14px;
+    min-height: 44px;
+  }
+
+  .vtt-context-menu {
+    min-width: 200px;
+  }
+}
+
+/* ── Landscape phone optimization ─────────────────────────────────────── */
+@media (max-width: 768px) and (orientation: landscape) {
+  .vtt-bottom-sheet {
+    max-height: 55vh;
+  }
+  .vtt-mobile-toolbar {
+    padding: 4px 8px;
+  }
+  .vtt-mobile-toolbar button {
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 8px;
+  }
+  .vtt-mobile-toolbar button svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* ── Tablet ───────────────────────────────────────────────────────────── */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .vtt-token {
+    min-width: 32px;
+    min-height: 32px;
+  }
 }

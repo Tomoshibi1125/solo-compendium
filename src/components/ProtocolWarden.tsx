@@ -24,7 +24,7 @@ export const ProtocolWarden: React.FC<ProtocolWardenProps> = ({
   }, [wardenId]);
 
   const loadQuests = () => {
-    const allQuests = RegentQuestManager.QUEST_DATABASE;
+    const allQuests = (RegentQuestManager as any).QUEST_DATABASE as RegentQuest[];
     const completed = allQuests.filter(quest => quest.completed);
     const available = allQuests.filter(quest => !quest.completed);
     

@@ -47,7 +47,7 @@ export default defineConfig(({ mode: _mode }) => {
         name: 'System Ascendant',
         short_name: 'Ascendant',
         description: 'System Ascendant 5e SRD Companion - Compendium and Character Tool',
-        theme_color: '#3b82f6',
+        theme_color: '#9b6dff',
         background_color: '#0a0a0a',
         display: 'standalone',
         orientation: 'portrait-primary',

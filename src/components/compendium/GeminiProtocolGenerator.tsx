@@ -14,20 +14,29 @@ import { Crown, Swords, Shield, Zap, Sparkles, RefreshCw, Dna, Save, Loader2 } f
 import { useSaveSovereign } from '@/hooks/useSavedSovereigns';
 import { useAuth } from '@/lib/auth/authContext';
 import { useActiveCharacter } from '@/hooks/useActiveCharacter';
-import { useCharacterMonarchUnlocks } from '@/hooks/useMonarchUnlocks';
+import { useCharacterRegentUnlocks } from '@/hooks/useMonarchUnlocks';
 import { useCampaignByCharacterId } from '@/hooks/useCampaigns';
 import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
+
+type RegentOption = {
+  id: string;
+  name: string;
+  title?: string | null;
+  theme?: string | null;
+  source_book?: string | null;
+  [key: string]: unknown;
+};
 
 export function GeminiProtocolGenerator() {
   const { isPlayer } = useAuth();
   const { activeCharacter } = useActiveCharacter();
   const { data: characterCampaign } = useCampaignByCharacterId(activeCharacter?.id || '');
   const campaignId = characterCampaign?.id ?? null;
-  const { data: monarchUnlocks = [], isLoading: monarchUnlocksLoading } = useCharacterMonarchUnlocks(activeCharacter?.id);
+  const { data: regentUnlocks = [], isLoading: regentUnlocksLoading } = useCharacterRegentUnlocks(activeCharacter?.id);
   const [selectedJob, setSelectedJob] = useState<string>('');
   const [selectedPath, setSelectedPath] = useState<string>('');
-  const [selectedMonarchA, setSelectedMonarchA] = useState<string>('');
-  const [selectedMonarchB, setSelectedMonarchB] = useState<string>('');
+  const [selectedRegentA, setSelectedRegentA] = useState<string>('');
+  const [selectedRegentB, setSelectedRegentB] = useState<string>('');
   const [generatedSovereign, setGeneratedSovereign] = useState<GeneratedSovereign | null>(null);
   
   const saveSovereign = useSaveSovereign();
@@ -88,41 +97,51 @@ export function GeminiProtocolGenerator() {
     },
   });
 
-  // Fetch all monarchs
-  const { data: monarchs = [], isLoading: monarchsLoading } = useQuery({
-    queryKey: ['gemini-monarchs', campaignId],
+  // Fetch all regents
+  const { data: regents = [], isLoading: regentsLoading } = useQuery<RegentOption[]>({
+    queryKey: ['gemini-regents', campaignId],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('compendium_monarchs')
+      const supabaseAny = supabase as any;
+      const canonicalResult = await supabaseAny
+        .from('compendium_regents')
         .select('*')
         .order('name');
-      if (error) throw error;
+
+      let data = (canonicalResult.data as RegentOption[] | null) || [];
+      if (canonicalResult.error) {
+        const fallbackResult = await supabase
+          .from('compendium_monarchs')
+          .select('*')
+          .order('name');
+        if (fallbackResult.error) throw fallbackResult.error;
+        data = (fallbackResult.data as unknown as RegentOption[]) || [];
+      }
 
       return filterRowsBySourcebookAccess(
-        data || [],
-        (monarch) => monarch.source_book,
+        data,
+        (regent) => regent.source_book,
         { campaignId }
       );
     },
   });
 
   const totalCombinations = useMemo(() => {
-    if (!jobs.length || !monarchs.length) return 0;
+    if (!jobs.length || !regents.length) return 0;
     const avgPathsPerJob = 4;
-    return calculateTotalCombinations(jobs.length, jobs.length * avgPathsPerJob, monarchs.length);
-  }, [jobs.length, monarchs.length]);
+    return calculateTotalCombinations(jobs.length, jobs.length * avgPathsPerJob, regents.length);
+  }, [jobs.length, regents.length]);
 
   const autoMode = isPlayer() && !!activeCharacter;
 
   const canRandomize =
     !jobsLoading &&
-    !monarchsLoading &&
+    !regentsLoading &&
     !allPathsLoading &&
     jobs.length > 0 &&
-    monarchs.length > 1 &&
+    regents.length > 1 &&
     (allPaths.length > 0 || paths.length > 0) &&
     !autoMode;
-  const canGenerate = selectedJob && selectedPath && selectedMonarchA && selectedMonarchB && selectedMonarchA !== selectedMonarchB;
+  const canGenerate = selectedJob && selectedPath && selectedRegentA && selectedRegentB && selectedRegentA !== selectedRegentB;
 
   useEffect(() => {
     if (autoMode) {
@@ -167,43 +186,43 @@ export function GeminiProtocolGenerator() {
 
   useEffect(() => {
     if (autoMode) {
-      if (monarchUnlocksLoading) return;
-      const primary = monarchUnlocks.find((unlock) => unlock.is_primary) || monarchUnlocks[0];
-      const secondary = monarchUnlocks.find((unlock) => unlock.id !== primary?.id);
-      if (primary && selectedMonarchA !== primary.monarch_id) {
-        setSelectedMonarchA(primary.monarch_id);
+      if (regentUnlocksLoading) return;
+      const primary = regentUnlocks.find((unlock) => unlock.is_primary) || regentUnlocks[0];
+      const secondary = regentUnlocks.find((unlock) => unlock.id !== primary?.id);
+      if (primary && selectedRegentA !== primary.regent_id) {
+        setSelectedRegentA(primary.regent_id);
       }
-      if (secondary && selectedMonarchB !== secondary.monarch_id) {
-        setSelectedMonarchB(secondary.monarch_id);
+      if (secondary && selectedRegentB !== secondary.regent_id) {
+        setSelectedRegentB(secondary.regent_id);
       }
       return;
     }
 
-    if (!selectedMonarchA && monarchs.length > 0) {
-      setSelectedMonarchA(monarchs[0].id);
+    if (!selectedRegentA && regents.length > 0) {
+      setSelectedRegentA(regents[0].id);
     }
-    if ((!selectedMonarchB || selectedMonarchB === selectedMonarchA) && monarchs.length > 1) {
-      const fallback = monarchs.find((monarch) => monarch.id !== selectedMonarchA) || monarchs[1];
+    if ((!selectedRegentB || selectedRegentB === selectedRegentA) && regents.length > 1) {
+      const fallback = regents.find((regent) => regent.id !== selectedRegentA) || regents[1];
       if (fallback) {
-        setSelectedMonarchB(fallback.id);
+        setSelectedRegentB(fallback.id);
       }
     }
-  }, [autoMode, monarchs, monarchUnlocks, monarchUnlocksLoading, selectedMonarchA, selectedMonarchB]);
+  }, [autoMode, regents, regentUnlocks, regentUnlocksLoading, selectedRegentA, selectedRegentB]);
 
   const handleGenerate = useCallback(() => {
     const job = jobs.find(j => j.id === selectedJob);
     const path = paths.find(p => p.id === selectedPath) || allPaths.find((p) => p.id === selectedPath);
-    const monarchA = monarchs.find(m => m.id === selectedMonarchA);
-    const monarchB = monarchs.find(m => m.id === selectedMonarchB);
+    const regentA = regents.find((r) => r.id === selectedRegentA);
+    const regentB = regents.find((r) => r.id === selectedRegentB);
 
-    if (job && path && monarchA && monarchB) {
-      const sovereign = generateSovereign(job, path, monarchA, monarchB);
+    if (job && path && regentA && regentB) {
+      const sovereign = generateSovereign(job, path, regentA as any, regentB as any);
       setGeneratedSovereign(sovereign);
     }
-  }, [allPaths, jobs, monarchs, paths, selectedJob, selectedMonarchA, selectedMonarchB, selectedPath]);
+  }, [allPaths, jobs, paths, regents, selectedJob, selectedPath, selectedRegentA, selectedRegentB]);
 
   const handleRandomize = async () => {
-    if (jobs.length === 0 || monarchs.length < 2) return;
+    if (jobs.length === 0 || regents.length < 2) return;
 
     const pathPool = allPaths.length > 0 ? allPaths : paths;
     if (pathPool.length === 0) return;
@@ -215,12 +234,12 @@ export function GeminiProtocolGenerator() {
     setSelectedJob(jobId);
     setSelectedPath(randomPath.id);
 
-    const shuffledMonarchs = [...monarchs].sort(() => Math.random() - 0.5);
-    const primaryMonarch = shuffledMonarchs[0];
-    const secondaryMonarch = shuffledMonarchs.find((monarch) => monarch.id !== primaryMonarch?.id);
-    if (!primaryMonarch || !secondaryMonarch) return;
-    setSelectedMonarchA(primaryMonarch.id);
-    setSelectedMonarchB(secondaryMonarch.id);
+    const shuffledRegents = [...regents].sort(() => Math.random() - 0.5);
+    const primaryRegent = shuffledRegents[0];
+    const secondaryRegent = shuffledRegents.find((regent) => regent.id !== primaryRegent?.id);
+    if (!primaryRegent || !secondaryRegent) return;
+    setSelectedRegentA(primaryRegent.id);
+    setSelectedRegentB(secondaryRegent.id);
   };
 
   const getActionIcon = (actionType: string | null) => {
@@ -235,17 +254,17 @@ export function GeminiProtocolGenerator() {
   const selectedPathEntry = paths.find((path) => path.id === selectedPath)
     || allPaths.find((path) => path.id === selectedPath)
     || null;
-  const selectedMonarchAEntry = monarchs.find((monarch) => monarch.id === selectedMonarchA) || null;
-  const selectedMonarchBEntry = monarchs.find((monarch) => monarch.id === selectedMonarchB) || null;
-  const dataReady = !jobsLoading && !monarchsLoading && !allPathsLoading;
+  const selectedRegentAEntry = regents.find((regent) => regent.id === selectedRegentA) || null;
+  const selectedRegentBEntry = regents.find((regent) => regent.id === selectedRegentB) || null;
+  const dataReady = !jobsLoading && !regentsLoading && !allPathsLoading;
   const templateReady = Boolean(
     selectedJobEntry &&
       selectedPathEntry &&
-      selectedMonarchAEntry &&
-      selectedMonarchBEntry &&
-      selectedMonarchA !== selectedMonarchB
+      selectedRegentAEntry &&
+      selectedRegentBEntry &&
+      selectedRegentA !== selectedRegentB
   );
-  const autoKey = `${selectedJobEntry?.id || ''}:${selectedPathEntry?.id || ''}:${selectedMonarchAEntry?.id || ''}:${selectedMonarchBEntry?.id || ''}`;
+  const autoKey = `${selectedJobEntry?.id || ''}:${selectedPathEntry?.id || ''}:${selectedRegentAEntry?.id || ''}:${selectedRegentBEntry?.id || ''}`;
   const lastAutoKey = useRef<string>('');
   const displaySovereign = generatedSovereign
     ? {
@@ -253,8 +272,8 @@ export function GeminiProtocolGenerator() {
         title: formatMonarchVernacular(generatedSovereign.title),
         jobName: formatMonarchVernacular(generatedSovereign.job.name),
         pathName: formatMonarchVernacular(generatedSovereign.path.name.replace('Path of the ', '')),
-        monarchATheme: formatMonarchVernacular(generatedSovereign.monarchA.theme),
-        monarchBTheme: formatMonarchVernacular(generatedSovereign.monarchB.theme),
+        regentATheme: formatMonarchVernacular((generatedSovereign as any).regentA.theme),
+        regentBTheme: formatMonarchVernacular((generatedSovereign as any).regentB.theme),
         fusionTheme: formatMonarchVernacular(generatedSovereign.fusion_theme),
         powerMultiplier: formatMonarchVernacular(generatedSovereign.power_multiplier),
         fusionStability: formatMonarchVernacular(generatedSovereign.fusion_stability),
@@ -275,7 +294,7 @@ export function GeminiProtocolGenerator() {
   if (autoMode) {
     if (!activeCharacter?.job) autoIssues.push('Active character is missing a Job.');
     if (!activeCharacter?.path) autoIssues.push('Active character is missing a Path.');
-    if (monarchUnlocks.length < 2) autoIssues.push(`Unlock two ${MONARCH_LABEL_PLURAL} to auto-generate a Sovereign.`);
+    if (regentUnlocks.length < 2) autoIssues.push(`Unlock two ${MONARCH_LABEL_PLURAL} to auto-generate a Sovereign.`);
     if (activeCharacter?.job && !selectedJobEntry) autoIssues.push('No matching Job found in the compendium.');
     if (activeCharacter?.path && !selectedPathEntry) autoIssues.push('No matching Path found in the compendium.');
   }
@@ -317,7 +336,7 @@ export function GeminiProtocolGenerator() {
             {!autoMode && (
               <Button variant="outline" size="sm" onClick={handleRandomize} disabled={!canRandomize}>
                 <RefreshCw className="h-4 w-4 mr-2" />
-                {jobsLoading || monarchsLoading || pathsLoading ? 'Loading...' : 'Randomize'}
+                {jobsLoading || regentsLoading || pathsLoading ? 'Loading...' : 'Randomize'}
               </Button>
             )}
           </CardTitle>
@@ -341,16 +360,16 @@ export function GeminiProtocolGenerator() {
                 <div className="space-y-1">
                   <div className="text-xs uppercase tracking-wide text-muted-foreground">Primary {MONARCH_LABEL}</div>
                   <div className="font-medium">
-                    {selectedMonarchAEntry
-                      ? `${formatMonarchVernacular(selectedMonarchAEntry.title || selectedMonarchAEntry.name)} (${selectedMonarchAEntry.theme})`
+                    {selectedRegentAEntry
+                      ? `${formatMonarchVernacular(selectedRegentAEntry.title || selectedRegentAEntry.name)} (${selectedRegentAEntry.theme})`
                       : 'Not set'}
                   </div>
                 </div>
                 <div className="space-y-1">
                   <div className="text-xs uppercase tracking-wide text-muted-foreground">Secondary {MONARCH_LABEL}</div>
                   <div className="font-medium">
-                    {selectedMonarchBEntry
-                      ? `${formatMonarchVernacular(selectedMonarchBEntry.title || selectedMonarchBEntry.name)} (${selectedMonarchBEntry.theme})`
+                    {selectedRegentBEntry
+                      ? `${formatMonarchVernacular(selectedRegentBEntry.title || selectedRegentBEntry.name)} (${selectedRegentBEntry.theme})`
                       : 'Not set'}
                   </div>
                 </div>
@@ -399,34 +418,34 @@ export function GeminiProtocolGenerator() {
                 </Select>
               </div>
 
-              {/* Monarch A Selection */}
+              {/* Regent A Selection */}
               <div className="space-y-2">
                 <p className="text-sm font-medium">Primary {MONARCH_LABEL} (Dominant)</p>
-                <Select value={selectedMonarchA} onValueChange={setSelectedMonarchA}>
+                <Select value={selectedRegentA} onValueChange={setSelectedRegentA}>
                   <SelectTrigger>
                     <SelectValue placeholder={`Select Primary ${MONARCH_LABEL}...`} />
                   </SelectTrigger>
                   <SelectContent>
-                    {monarchs.map((monarch) => (
-                      <SelectItem key={monarch.id} value={monarch.id} disabled={monarch.id === selectedMonarchB}>
-                        {formatMonarchVernacular(monarch.title || monarch.name)} ({monarch.theme})
+                    {regents.map((regent) => (
+                      <SelectItem key={regent.id} value={regent.id} disabled={regent.id === selectedRegentB}>
+                        {formatMonarchVernacular(regent.title || regent.name)} ({regent.theme})
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
 
-              {/* Monarch B Selection */}
+              {/* Regent B Selection */}
               <div className="space-y-2">
                 <p className="text-sm font-medium">Secondary {MONARCH_LABEL} (Merged)</p>
-                <Select value={selectedMonarchB} onValueChange={setSelectedMonarchB}>
+                <Select value={selectedRegentB} onValueChange={setSelectedRegentB}>
                   <SelectTrigger>
                     <SelectValue placeholder={`Select Secondary ${MONARCH_LABEL}...`} />
                   </SelectTrigger>
                   <SelectContent>
-                    {monarchs.map((monarch) => (
-                      <SelectItem key={monarch.id} value={monarch.id} disabled={monarch.id === selectedMonarchA}>
-                        {formatMonarchVernacular(monarch.title || monarch.name)} ({monarch.theme})
+                    {regents.map((regent) => (
+                      <SelectItem key={regent.id} value={regent.id} disabled={regent.id === selectedRegentA}>
+                        {formatMonarchVernacular(regent.title || regent.name)} ({regent.theme})
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -476,8 +495,8 @@ export function GeminiProtocolGenerator() {
               <div className="flex flex-wrap gap-2">
                 <Badge variant="outline">{displaySovereign.jobName}</Badge>
                 <Badge variant="outline">{displaySovereign.pathName}</Badge>
-                <Badge variant="secondary">{displaySovereign.monarchATheme}</Badge>
-                <Badge variant="secondary">{displaySovereign.monarchBTheme}</Badge>
+                <Badge variant="secondary">{displaySovereign.regentATheme}</Badge>
+                <Badge variant="secondary">{displaySovereign.regentBTheme}</Badge>
                 <Badge className="bg-primary/20 text-primary">{displaySovereign.fusionTheme}</Badge>
               </div>
             </div>

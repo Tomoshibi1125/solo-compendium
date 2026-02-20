@@ -15,7 +15,7 @@ export interface Relic {
     class?: string;
     ability?: string;
     score?: number;
-    race?: string;
+    job?: string;
     background?: string;
   };
   properties: {

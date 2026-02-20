@@ -1,17 +1,12 @@
-import { useState } from 'react';
-import { BookOpen, Sparkles, CheckCircle, XCircle, Zap, Shield, Scroll, Plus } from 'lucide-react';
+import { BookOpen, Sparkles, CheckCircle, Zap, Shield, Scroll, Flame } from 'lucide-react';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { useCharacterRuneKnowledge, useCharacterRuneInscriptions, useRemoveRuneInscription, useToggleRuneActive } from '@/hooks/useRunes';
+import { useCharacterRuneKnowledge, useAbsorbRune } from '@/hooks/useRunes';
+import { useFeatures } from '@/hooks/useFeatures';
 import { useToast } from '@/hooks/use-toast';
-import { InscribeRuneDialog } from './InscribeRuneDialog';
 import { cn } from '@/lib/utils';
 import { formatMonarchVernacular } from '@/lib/vernacular';
-import type { Database } from '@/integrations/supabase/types';
-
-type Rune = Database['public']['Tables']['compendium_runes']['Row'];
-type RuneInscription = Database['public']['Tables']['character_rune_inscriptions']['Row'];
 
 const RUNE_TYPE_COLORS: Record<string, string> = {
   martial: 'bg-red-500/20 text-red-400 border-red-500/30',
@@ -33,165 +28,134 @@ const RUNE_TYPE_ICONS: Record<string, React.ComponentType<{ className?: string }
 
 export function RunesList({ characterId }: { characterId: string }) {
   const { data: runeKnowledge = [] } = useCharacterRuneKnowledge(characterId);
-  const { data: inscriptions = [] } = useCharacterRuneInscriptions(characterId);
+  const { features = [] } = useFeatures(characterId);
+  const absorbRune = useAbsorbRune();
   const { toast } = useToast();
-  const [inscribeDialogOpen, setInscribeDialogOpen] = useState(false);
-  const [selectedEquipment, setSelectedEquipment] = useState<string | null>(null);
-  
-  const removeInscription = useRemoveRuneInscription();
-  const toggleActive = useToggleRuneActive();
 
-  const handleRemoveInscription = async (inscriptionId: string, runeName: string) => {
+  // Split runes into unabsorbed (available to consume) and absorbed (mastery_level 5)
+  const unabsorbedRunes = runeKnowledge.filter((rk) => (rk.mastery_level || 0) < 5);
+  const absorbedFeatures = features.filter((f) => f.source?.startsWith('Rune:'));
+
+  const handleAbsorb = async (runeId: string, runeName: string) => {
     const displayName = formatMonarchVernacular(runeName);
     try {
-      await removeInscription.mutateAsync({ inscriptionId });
+      const result = await absorbRune.mutateAsync({ characterId, runeId });
       toast({
-        title: 'Rune removed',
-        description: `${displayName} has been removed from equipment.`,
+        title: 'Rune Absorbed!',
+        description: `${displayName} permanently learned. ${result.absorption.adaptationNote}`,
       });
-    } catch {
+    } catch (error) {
       toast({
-        title: 'Error',
-        description: 'Failed to remove rune inscription.',
+        title: 'Absorption Failed',
+        description: error instanceof Error ? error.message : 'Could not absorb rune.',
         variant: 'destructive',
       });
     }
   };
-
-  const handleToggleActive = async (inscriptionId: string, isActive: boolean, runeName: string) => {
-    const displayName = formatMonarchVernacular(runeName);
-    try {
-      await toggleActive.mutateAsync({ inscriptionId, isActive: !isActive });
-      toast({
-        title: isActive ? 'Rune deactivated' : 'Rune activated',
-        description: `${displayName} has been ${isActive ? 'deactivated' : 'activated'}.`,
-      });
-    } catch {
-      toast({
-        title: 'Error',
-        description: 'Failed to toggle rune status.',
-        variant: 'destructive',
-      });
-    }
-  };
-
-  const inscriptionsByEquipment = inscriptions.reduce((acc, ins) => {
-    const equipName = ins.equipment?.name || 'Unknown';
-    if (!acc[equipName]) acc[equipName] = [];
-    acc[equipName].push(ins);
-    return acc;
-  }, {} as Record<string, Array<RuneInscription & { rune: Rune; equipment: Database['public']['Tables']['character_equipment']['Row'] }>>);
 
   return (
-    <SystemWindow title="RUNES">
+    <SystemWindow title="RUNES" variant="arise">
       <div className="space-y-4">
-        {/* Rune Knowledge */}
-        {runeKnowledge.length > 0 && (
+        {/* Unabsorbed Runes — available to consume */}
+        {unabsorbedRunes.length > 0 && (
           <div>
-            <h3 className="text-sm font-heading text-muted-foreground mb-2">KNOWN RUNES</h3>
-            <div className="flex flex-wrap gap-2">
-              {runeKnowledge.map((rk) => {
+            <h3 className="text-sm font-heading text-muted-foreground mb-2">AVAILABLE RUNES</h3>
+            <div className="space-y-2">
+              {unabsorbedRunes.map((rk) => {
                 const Icon = RUNE_TYPE_ICONS[rk.rune.rune_type] || BookOpen;
+                const displayName = formatMonarchVernacular(rk.rune.name);
+                const displayDesc = rk.rune.effect_description
+                  ? formatMonarchVernacular(rk.rune.effect_description)
+                  : rk.rune.description
+                    ? formatMonarchVernacular(rk.rune.description)
+                    : '';
                 return (
-                  <Badge
+                  <div
                     key={rk.id}
-                    variant="outline"
-                    className={cn(RUNE_TYPE_COLORS[rk.rune.rune_type] || '', 'gap-1')}
+                    className="border border-primary/20 rounded-lg p-3 space-y-2"
                   >
-                    <Icon className="w-3 h-3" />
-                    {formatMonarchVernacular(rk.rune.name)}
-                    {rk.mastery_level && rk.mastery_level >= 3 && (
-                      <CheckCircle className="w-3 h-3 text-amber-400" />
-                    )}
-                  </Badge>
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-start gap-2 flex-1">
+                        <Icon className={cn('w-5 h-5 mt-0.5', RUNE_TYPE_COLORS[rk.rune.rune_type]?.split(' ')[1] || 'text-primary')} />
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <span className="font-heading font-semibold text-sm">{displayName}</span>
+                            <Badge variant="outline" className={cn('text-xs', RUNE_TYPE_COLORS[rk.rune.rune_type] || '')}>
+                              {rk.rune.rune_type}
+                            </Badge>
+                            <Badge variant="secondary" className="text-xs">
+                              Lv.{rk.rune.rune_level}
+                            </Badge>
+                          </div>
+                          {displayDesc && (
+                            <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{displayDesc}</p>
+                          )}
+                        </div>
+                      </div>
+                      <Button
+                        size="sm"
+                        variant="default"
+                        onClick={() => handleAbsorb(rk.rune_id, rk.rune.name)}
+                        disabled={absorbRune.isPending}
+                        className="font-arise tracking-wider bg-arise-violet hover:bg-arise-violet/80 shadow-[0_0_10px_hsl(var(--arise-violet)/0.3)]"
+                      >
+                        <Flame className="w-3 h-3 mr-1" />
+                        Absorb
+                      </Button>
+                    </div>
+                  </div>
                 );
               })}
             </div>
           </div>
         )}
 
-        {/* Inscribed Runes */}
-        {Object.keys(inscriptionsByEquipment).length > 0 && (
+        {/* Absorbed Rune Abilities — permanent features */}
+        {absorbedFeatures.length > 0 && (
           <div>
-            <h3 className="text-sm font-heading text-muted-foreground mb-2">INSCRIBED RUNES</h3>
-            <div className="space-y-3">
-              {Object.entries(inscriptionsByEquipment).map(([equipName, runes]) => (
-                <div key={equipName} className="border border-primary/20 rounded-lg p-3 space-y-2">
+            <h3 className="text-sm font-heading text-muted-foreground mb-2">ABSORBED ABILITIES</h3>
+            <div className="space-y-2">
+              {absorbedFeatures.map((feature) => (
+                <div key={feature.id} className="border border-arise-violet/20 rounded-lg p-3 bg-arise-violet/5">
                   <div className="flex items-center justify-between">
-                    <h4 className="font-heading font-semibold text-sm">
-                      {formatMonarchVernacular(equipName)}
-                    </h4>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => {
-                        setSelectedEquipment(runes[0].equipment_id);
-                        setInscribeDialogOpen(true);
-                      }}
-                      className="h-6 text-xs"
-                    >
-                      <Plus className="w-3 h-3 mr-1" />
-                      Add Rune
-                    </Button>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {runes.map((ins) => {
-                      const Icon = RUNE_TYPE_ICONS[ins.rune.rune_type] || BookOpen;
-                      const displayRuneName = formatMonarchVernacular(ins.rune.name);
-                      return (
-                        <Badge
-                          key={ins.id}
-                          variant={ins.is_active ? 'default' : 'secondary'}
-                          className={cn(
-                            'gap-1 cursor-pointer',
-                            ins.is_active && RUNE_TYPE_COLORS[ins.rune.rune_type]
-                          )}
-                          onClick={() => handleToggleActive(ins.id, ins.is_active, ins.rune.name)}
-                        >
-                          <Icon className="w-3 h-3" />
-                          {displayRuneName}
-                          {ins.is_active ? (
-                            <CheckCircle className="w-3 h-3" />
-                          ) : (
-                            <XCircle className="w-3 h-3" />
-                          )}
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleRemoveInscription(ins.id, ins.rune.name);
-                            }}
-                            className="ml-1 hover:text-red-400"
-                          >
-                            ×
-                          </button>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-arise-violet" />
+                      <span className="font-heading font-semibold text-sm">{formatMonarchVernacular(feature.name)}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {feature.uses_max !== null && feature.uses_max !== undefined && (
+                        <Badge variant="outline" className="text-xs">
+                          {feature.uses_current ?? feature.uses_max}/{feature.uses_max} uses
                         </Badge>
-                      );
-                    })}
+                      )}
+                      {feature.recharge && feature.recharge !== 'none' && (
+                        <Badge variant="secondary" className="text-xs">
+                          {feature.recharge}
+                        </Badge>
+                      )}
+                      {!feature.uses_max && (
+                        <Badge variant="outline" className="text-xs text-green-400 border-green-400/30">
+                          At-will
+                        </Badge>
+                      )}
+                    </div>
                   </div>
+                  {feature.description && (
+                    <p className="text-xs text-muted-foreground mt-1">{formatMonarchVernacular(feature.description)}</p>
+                  )}
                 </div>
               ))}
             </div>
           </div>
         )}
 
-        {/* No runes message */}
-        {runeKnowledge.length === 0 && inscriptions.length === 0 && (
+        {/* Empty state */}
+        {unabsorbedRunes.length === 0 && absorbedFeatures.length === 0 && (
           <div className="text-center py-8 text-muted-foreground">
             <BookOpen className="w-12 h-12 mx-auto mb-2 opacity-50" />
-            <p>No runes learned or inscribed yet.</p>
-            <p className="text-xs mt-1">Learn runes from the Compendium or inscribe them on equipment.</p>
+            <p>No runes discovered yet.</p>
+            <p className="text-xs mt-1">Runes drop from gates and encounters. Absorb them to permanently learn their abilities.</p>
           </div>
-        )}
-
-        {/* Inscribe Dialog */}
-        {inscribeDialogOpen && selectedEquipment && (
-          <InscribeRuneDialog
-            characterId={characterId}
-            equipmentId={selectedEquipment}
-            open={inscribeDialogOpen}
-            onOpenChange={setInscribeDialogOpen}
-            onSuccess={() => setInscribeDialogOpen(false)}
-          />
         )}
       </div>
     </SystemWindow>

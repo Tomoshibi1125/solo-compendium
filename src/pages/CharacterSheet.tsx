@@ -41,13 +41,14 @@ import { useUpdateCharacterAbilities } from '@/hooks/useCharacterAbilities';
 import { useCharacterSheetState } from '@/hooks/useCharacterSheetState';
 import { useRecordRoll } from '@/hooks/useRollHistory';
 import { calculateCharacterStats, formatModifier } from '@/lib/characterCalculations';
+import { getAvailableFavorOptions } from '@/lib/5eRulesEngine';
 import { getAbilityModifier } from '@/types/system-rules';
 import { applyEquipmentModifiers } from '@/lib/equipmentModifiers';
 import { applyRuneBonuses } from '@/lib/runeAutomation';
 import { getActiveConditionEffects, getAllConditions } from '@/lib/conditions';
 import { calculateEncumbrance, calculateTotalWeight, calculateCarryingCapacity } from '@/lib/encumbrance';
 import { useCharacterRuneInscriptions } from '@/hooks/useRunes';
-import { getAllSkills, calculateSkillModifier } from '@/lib/skills';
+import { getAllSkills, calculateSkillModifier, type SkillDefinition } from '@/lib/skills';
 import { rollDiceString, formatRollResult } from '@/lib/diceRoller';
 import { calculateTotalTempHP, addTemporaryHP, applyResourceRest, type CustomResource } from '@/lib/characterResources';
 import { sumCustomModifiers, type CustomModifier, CUSTOM_MODIFIER_TYPES } from '@/lib/customModifiers';
@@ -58,6 +59,7 @@ import { RunesList } from '@/components/character/RunesList';
 import { SpellSlotsDisplay } from '@/components/character/SpellSlotsDisplay';
 import { ActionsList } from '@/components/character/ActionsList';
 import { FeaturesList } from '@/components/character/FeaturesList';
+import { FeatureChoicesPanel } from '@/components/character/FeatureChoicesPanel';
 import { HomebrewFeatureApplicator } from '@/components/character/HomebrewFeatureApplicator';
 import { RollHistoryPanel } from '@/components/character/RollHistoryPanel';
 import { ExportDialog } from '@/components/character/ExportDialog';
@@ -90,11 +92,23 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RichTextNotes } from '@/components/character/RichTextNotes';
 import { CharacterResourcesPanel } from '@/components/character/CharacterResourcesPanel';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { BookOpen, Backpack, Scroll, User, Sparkles } from 'lucide-react';
 import './CharacterSheet.css';
 
 const ABILITY_KEYS = Object.keys(ABILITY_NAMES) as AbilityScore[];
 const ALL_CONDITIONS = getAllConditions();
+
+type SheetSkill = {
+  modifier: number;
+  passive: number;
+  ability: AbilityScore;
+  proficient: boolean;
+  expertise: boolean;
+};
+
+type SheetSkillMap = Record<string, SheetSkill>;
 
 const CharacterSheet = () => {
   const { id } = useParams<{ id: string }>();
@@ -110,6 +124,8 @@ const CharacterSheet = () => {
   const { data: characterCampaign } = useCampaignByCharacterId(character?.id || '');
   const levelingMode = getLevelingMode(characterCampaign?.settings);
   const campaignId = characterCampaign?.id ?? null;
+
+  const { broadcastDiceRoll, isConnected: isCampaignConnected } = useRealtimeCollaboration(campaignId || '');
 
   const { data: jobDisplayRow } = useQuery({
     queryKey: ['compendium-display-job', character?.job, campaignId],
@@ -230,7 +246,7 @@ const CharacterSheet = () => {
   const undoRedo = useCharacterUndoRedo(character ?? null);
   const { data: activeRunes = [] } = useCharacterRuneInscriptions(id);
   const hasTriggeredPrintRef = useRef(false);
-  const notesSaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const notesSaveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const characterResources = sheetState.resources;
 
   useEffect(() => {
@@ -325,53 +341,8 @@ const CharacterSheet = () => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <Layout>
-        <div className="container mx-auto px-4 py-8 max-w-7xl">
-          <div className="space-y-6">
-            <div className="flex items-center justify-between">
-              <Skeleton className="h-8 w-48" />
-              <div className="flex gap-2">
-                <Skeleton className="h-10 w-24" />
-                <Skeleton className="h-10 w-24" />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div className="lg:col-span-2 space-y-6">
-                <Skeleton className="h-32 w-full" />
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {Array.from({ length: 4 }).map((_, i) => (
-                    <Skeleton key={i} className="h-24 w-full" />
-                  ))}
-                </div>
-                <Skeleton className="h-64 w-full" />
-              </div>
-              <div className="space-y-6">
-                <Skeleton className="h-48 w-full" />
-                <Skeleton className="h-48 w-full" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </Layout>
-    );
-  }
-
-  if (!character) {
-    return (
-      <Layout>
-        <div className="container mx-auto px-4 py-8">
-          <SystemWindow title="ASCENDANT NOT FOUND" className="max-w-lg mx-auto">
-            <p className="text-muted-foreground mb-4">The Ascendant you're looking for doesn't exist or you don't have access to it.</p>
-            <Button onClick={() => navigate('/characters')}>Back to Ascendants</Button>
-          </SystemWindow>
-        </div>
-      </Layout>
-    );
-  }
-
-  const { calculatedStats, skills, encumbranceBarClass, encumbranceValue, encumbranceMax, finalAbilities, customAbilityBonuses, allSkills, equipmentMods, runeBonuses, finalSpeed, baseStats } = useMemo(() => {
+  const memoizedStats = useMemo(() => {
+    if (!character) return null;
     const baseStats = calculateCharacterStats({
       level: character.level,
       abilities: character.abilities,
@@ -483,7 +454,7 @@ const CharacterSheet = () => {
       finalSpeed = Math.max(0, finalSpeed - 20);
     }
 
-    // Apply condition-based speed modifiers (e.g., grappled/restrained → 0)
+    // Apply condition-based speed modifiers (e.g., grappled/restrained â†’ 0)
     const conditionEffects = getActiveConditionEffects(character.conditions || []);
     if (conditionEffects.speedModifier === 'zero') {
       finalSpeed = 0;
@@ -515,8 +486,8 @@ const CharacterSheet = () => {
     }[calculatedStats.encumbrance.status];
 
     // Calculate skills with modified abilities
-    const allSkills = getAllSkills();
-    const skills = allSkills.reduce((acc, skill) => {
+    const allSkills: SkillDefinition[] = getAllSkills();
+    const skills = allSkills.reduce<SheetSkillMap>((acc, skill) => {
       const baseModifier = calculateSkillModifier(
         skill.name,
         finalAbilities,
@@ -534,13 +505,7 @@ const CharacterSheet = () => {
         expertise: (character.skill_expertise || []).includes(skill.name),
       };
       return acc;
-    }, {} as Record<string, {
-      modifier: number;
-      passive: number;
-      ability: AbilityScore;
-      proficient: boolean;
-      expertise: boolean;
-    }>);
+    }, {});
 
     return {
       calculatedStats,
@@ -569,6 +534,7 @@ const CharacterSheet = () => {
   }, [isReadOnly, characterResources, saveSheetState]);
 
   const handleShortRest = useCallback(async () => {
+    if (!character) return;
     try {
       const { executeShortRest } = await import('@/lib/restSystem');
       await executeShortRest(character.id);
@@ -589,7 +555,74 @@ const CharacterSheet = () => {
         variant: 'destructive',
       });
     }
-  }, [character.id, queryClient, applyRestResourceUpdates, toast]);
+  }, [character?.id, queryClient, applyRestResourceUpdates, toast]);
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-4 py-8 max-w-7xl">
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <Skeleton className="h-8 w-48" />
+              <div className="flex gap-2">
+                <Skeleton className="h-10 w-24" />
+                <Skeleton className="h-10 w-24" />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2 space-y-6">
+                <Skeleton className="h-32 w-full" />
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {Array.from({ length: 4 }).map((_, i) => (
+                    <Skeleton key={i} className="h-24 w-full" />
+                  ))}
+                </div>
+                <Skeleton className="h-64 w-full" />
+              </div>
+              <div className="space-y-6">
+                <Skeleton className="h-48 w-full" />
+                <Skeleton className="h-48 w-full" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (!character) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-4 py-8">
+          <SystemWindow title="ASCENDANT NOT FOUND" className="max-w-lg mx-auto">
+            <p className="text-muted-foreground mb-4">The Ascendant you're looking for doesn't exist or you don't have access to it.</p>
+            <Button onClick={() => navigate('/characters')}>Back to Ascendants</Button>
+          </SystemWindow>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (!memoizedStats) {
+    return null;
+  }
+
+  const memoizedStatsValue = memoizedStats;
+
+  const {
+    calculatedStats,
+    skills,
+    encumbranceBarClass,
+    encumbranceValue,
+    encumbranceMax,
+    finalAbilities,
+    customAbilityBonuses,
+    allSkills,
+    equipmentMods,
+    runeBonuses,
+    finalSpeed,
+    baseStats,
+  } = memoizedStatsValue;
 
   const handleLongRest = async () => {
     try {
@@ -626,8 +659,6 @@ const CharacterSheet = () => {
     if (!modifier) return base;
     return `${base}${modifier >= 0 ? '+' : ''}${modifier}`;
   };
-
-  const { broadcastDiceRoll, isConnected: isCampaignConnected } = useRealtimeCollaboration(campaignId || '');
 
   const rollAndRecord = (options: {
     title: string;
@@ -932,29 +963,19 @@ const CharacterSheet = () => {
   };
 
   const handleResourceAdjust = (
-    field: 'hit_dice_current' | 'system_favor_current' | 'shadow_energy_current',
+    field: 'hit_dice_current' | 'system_favor_current',
     delta: number,
   ) => {
     if (!character || isReadOnly) return;
     const maxLookup = {
       hit_dice_current: character.hit_dice_max,
       system_favor_current: character.system_favor_max,
-      shadow_energy_current: character.shadow_energy_max,
     };
     const currentValue = character[field];
     const nextValue = Math.max(0, Math.min(maxLookup[field], currentValue + delta));
-    const updates = {
-      hit_dice_current: undefined,
-      system_favor_current: undefined,
-      shadow_energy_current: undefined,
-    } as {
-      hit_dice_current?: number;
-      system_favor_current?: number;
-      shadow_energy_current?: number;
-    };
+    const updates: { hit_dice_current?: number; system_favor_current?: number } = {};
     if (field === 'hit_dice_current') updates.hit_dice_current = nextValue;
     if (field === 'system_favor_current') updates.system_favor_current = nextValue;
-    if (field === 'shadow_energy_current') updates.shadow_energy_current = nextValue;
     updateCharacter.mutate({
       id: character.id,
       data: updates,
@@ -1045,11 +1066,11 @@ const CharacterSheet = () => {
   };
 
   const handleAddCustomModifier = async () => {
-    const next = [
+    const next: CustomModifier[] = [
       ...customModifiersDraft,
       {
         id: createModifierId(),
-        type: 'ability',
+        type: 'ability' as const,
         target: 'STR',
         value: 1,
         source: 'Custom',
@@ -1214,40 +1235,99 @@ const CharacterSheet = () => {
           </SystemWindow>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column - Main Stats */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Character Info */}
-            <SystemWindow title={character.name.toUpperCase()} className="border-primary/50">
-              {character.portrait_url && (
-                <div className="mb-4 flex justify-center">
-                  <OptimizedImage
-                    src={character.portrait_url}
-                    alt={character.name}
-                    className="w-32 h-32 rounded-lg object-cover border border-primary/30"
-                    size="small"
-                  />
-                </div>
+        {/* â”€â”€ DDB-Style Character Header (always visible) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        <div className="flex flex-col sm:flex-row items-start gap-4 mb-6 p-4 rounded-xl bg-card border border-border">
+          {character.portrait_url && (
+            <OptimizedImage
+              src={character.portrait_url}
+              alt={character.name}
+              className="w-20 h-20 sm:w-24 sm:h-24 rounded-lg object-cover border border-primary/30 flex-shrink-0"
+              size="small"
+            />
+          )}
+          <div className="flex-1 min-w-0">
+            <h1 className="font-display text-2xl sm:text-3xl font-bold truncate">{character.name}</h1>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1 text-sm text-muted-foreground">
+              <span className="font-heading">Level <span className="text-foreground font-bold">{character.level}</span></span>
+              <span className="text-border">â€¢</span>
+              <span className="font-heading text-foreground">{jobDisplayName || 'Unassigned'}</span>
+              {pathDisplayName && (
+                <>
+                  <span className="text-border">â€¢</span>
+                  <span className="font-heading">{pathDisplayName}</span>
+                </>
               )}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                <div>
-                  <span className="text-xs text-muted-foreground block">Level</span>
-                  <span className="font-display text-2xl font-bold">{character.level}</span>
-                </div>
-                <div>
-                  <span className="text-xs text-muted-foreground block">Job</span>
-                  <span className="font-heading">{jobDisplayName || 'Unassigned'}</span>
-                </div>
-                <div>
-                  <span className="text-xs text-muted-foreground block">Path</span>
-                  <span className="font-heading">{pathDisplayName || 'None'}</span>
-                </div>
-                <div>
-                  <span className="text-xs text-muted-foreground block">Background</span>
-                  <span className="font-heading">{backgroundDisplayName || 'None'}</span>
-                </div>
-              </div>
-            </SystemWindow>
+              {backgroundDisplayName && (
+                <>
+                  <span className="text-border">â€¢</span>
+                  <span className="font-heading">{backgroundDisplayName}</span>
+                </>
+              )}
+            </div>
+            {/* Quick Actions Row */}
+            <div className="flex flex-wrap gap-2 mt-3">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleShortRest}
+                className="gap-1.5 h-8"
+                disabled={updateCharacter.isPending}
+              >
+                <Moon className="w-3.5 h-3.5" />
+                Short Rest
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleLongRest}
+                className="gap-1.5 h-8"
+                disabled={updateCharacter.isPending}
+              >
+                <Sun className="w-3.5 h-3.5" />
+                Long Rest
+              </Button>
+              {character.level < 20 && !isReadOnly && (
+                <Button
+                  variant="default"
+                  size="sm"
+                  onClick={() => navigate(`/characters/${character.id}/level-up`)}
+                  className="gap-1.5 h-8"
+                >
+                  <Zap className="w-3.5 h-3.5" />
+                  Level Up
+                </Button>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* â”€â”€ DDB-Style Tabbed Content â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        <Tabs defaultValue="overview" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-5 h-auto p-1">
+            <TabsTrigger value="overview" className="gap-1.5 text-xs sm:text-sm py-2">
+              <User className="w-4 h-4 hidden sm:block" />
+              Overview
+            </TabsTrigger>
+            <TabsTrigger value="actions" className="gap-1.5 text-xs sm:text-sm py-2">
+              <Swords className="w-4 h-4 hidden sm:block" />
+              Actions
+            </TabsTrigger>
+            <TabsTrigger value="inventory" className="gap-1.5 text-xs sm:text-sm py-2">
+              <Backpack className="w-4 h-4 hidden sm:block" />
+              Inventory
+            </TabsTrigger>
+            <TabsTrigger value="features" className="gap-1.5 text-xs sm:text-sm py-2">
+              <Sparkles className="w-4 h-4 hidden sm:block" />
+              Features
+            </TabsTrigger>
+            <TabsTrigger value="bio" className="gap-1.5 text-xs sm:text-sm py-2">
+              <BookOpen className="w-4 h-4 hidden sm:block" />
+              Bio
+            </TabsTrigger>
+          </TabsList>
+
+          {/* â”€â”€ TAB: Overview â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+          <TabsContent value="overview" className="space-y-6 mt-0">
 
             {/* Character Level Up */}
             {!isReadOnly && (
@@ -1255,7 +1335,6 @@ const CharacterSheet = () => {
                 characterId={character.id}
                 levelingMode={levelingMode}
                 onLevelUp={() => {
-                  // Refresh character data after level up
                   queryClient.invalidateQueries({ queryKey: ['character', character.id] });
                 }}
               />
@@ -1263,7 +1342,7 @@ const CharacterSheet = () => {
 
             {/* Core Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <SystemWindow title="HIT POINTS" compact>
+            <SystemWindow title="HIT POINTS" compact data-testid="hp-section">
                 <div className="flex items-center justify-between mb-2">
                   <Heart className={cn(
                     "w-6 h-6",
@@ -1280,6 +1359,7 @@ const CharacterSheet = () => {
                       setHpEditOpen(true);
                     }}
                     aria-label="Edit hit points"
+                    data-testid="hp-edit-button"
                   >
                     <Edit className="w-3 h-3" />
                   </Button>
@@ -1288,10 +1368,10 @@ const CharacterSheet = () => {
                   <div className={cn(
                     "font-display text-3xl font-bold mb-1",
                     character.hp_current < character.hp_max * 0.5 && "text-destructive"
-                  )}>
+                  )} data-testid="hp-current-display">
                     {character.hp_current}
                   </div>
-                  <div className="text-xs text-muted-foreground">
+                  <div className="text-xs text-muted-foreground" data-testid="hp-max-display">
                     / {character.hp_max}
                     {effectiveTempHp > 0 && ` + ${effectiveTempHp} temp`}
                   </div>
@@ -1311,6 +1391,7 @@ const CharacterSheet = () => {
                         }
                       }}
                       aria-label="Set max hit points"
+                      data-testid="hp-max-input"
                       disabled={updateCharacter.isPending}
                     />
                   </div>
@@ -1326,6 +1407,7 @@ const CharacterSheet = () => {
                       className="h-7 text-xs"
                       disabled={updateCharacter.isPending}
                       aria-label="HP adjustment amount"
+                      data-testid="hp-delta-input"
                     />
                     <Button
                       type="button"
@@ -1334,6 +1416,7 @@ const CharacterSheet = () => {
                       className="h-7 px-2"
                       onClick={() => applyHpDelta('damage')}
                       disabled={updateCharacter.isPending}
+                      data-testid="hp-damage-button"
                     >
                       Damage
                     </Button>
@@ -1344,6 +1427,7 @@ const CharacterSheet = () => {
                       className="h-7 px-2"
                       onClick={() => applyHpDelta('heal')}
                       disabled={updateCharacter.isPending}
+                      data-testid="hp-heal-button"
                     >
                       Heal
                     </Button>
@@ -1665,84 +1749,89 @@ const CharacterSheet = () => {
                     {character.system_favor_current}/{character.system_favor_max}
                   </div>
                   <div className="text-xs text-muted-foreground">d{character.system_favor_die}</div>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="mx-auto mt-2 h-7 w-7 p-0"
-                    onClick={() => rollAndRecord({
-                      title: 'System Favor',
-                      formula: `1d${character.system_favor_die}`,
-                      rollType: 'default',
-                      context: `System Favor d${character.system_favor_die}`,
-                    })}
-                    aria-label="Roll system favor"
-                  >
-                    <Dice6 className="w-4 h-4" />
-                  </Button>
-                  {!isReadOnly && (
-                    <div className="mt-2 flex items-center justify-center gap-2">
-                      <Button
+                  <div className="mt-2 flex items-center justify-center gap-2">
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="h-7 w-7 p-0"
+                      onClick={() => rollAndRecord({
+                        title: 'System Favor',
+                        formula: `1d${character.system_favor_die}`,
+                        rollType: 'default',
+                        context: `System Favor d${character.system_favor_die}`,
+                      })}
+                      aria-label="Roll system favor die"
+                    >
+                      <Dice6 className="w-4 h-4" />
+                    </Button>
+                    {!isReadOnly && (
+                      <>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          className="h-6 w-6 p-0"
+                          onClick={() => handleResourceAdjust('system_favor_current', -1)}
+                          disabled={character.system_favor_current <= 0}
+                          aria-label="Spend system favor"
+                        >
+                          -
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          className="h-6 w-6 p-0"
+                          onClick={() => handleResourceAdjust('system_favor_current', 1)}
+                          disabled={character.system_favor_current >= character.system_favor_max}
+                          aria-label="Recover system favor"
+                        >
+                          +
+                        </Button>
+                      </>
+                    )}
+                  </div>
+                  {/* System Favor Usage Options */}
+                  <div className="mt-3 space-y-1 text-left">
+                    {getAvailableFavorOptions(character.level).map((opt) => (
+                      <button
+                        key={opt.id}
                         type="button"
-                        variant="outline"
-                        size="sm"
-                        className="h-6 w-6 p-0"
-                        onClick={() => handleResourceAdjust('system_favor_current', -1)}
-                        disabled={character.system_favor_current <= 0}
-                        aria-label="Spend system favor"
+                        className={cn(
+                          "w-full text-left rounded px-2 py-1 text-xs transition-colors",
+                          character.system_favor_current >= opt.cost && !isReadOnly
+                            ? "hover:bg-primary/10 cursor-pointer text-foreground"
+                            : "opacity-40 cursor-not-allowed text-muted-foreground"
+                        )}
+                        disabled={character.system_favor_current < opt.cost || isReadOnly}
+                        onClick={() => {
+                          if (character.system_favor_current < opt.cost) return;
+                          handleResourceAdjust('system_favor_current', -opt.cost);
+                          if (opt.id === 'favor-inspiration') {
+                            rollAndRecord({
+                              title: opt.name,
+                              formula: `1d${character.system_favor_die}`,
+                              rollType: 'default',
+                              context: opt.description,
+                            });
+                          }
+                          toast({
+                            title: opt.name,
+                            description: opt.rulesText,
+                          });
+                        }}
+                        title={opt.rulesText}
                       >
-                        -
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        className="h-6 w-6 p-0"
-                        onClick={() => handleResourceAdjust('system_favor_current', 1)}
-                        disabled={character.system_favor_current >= character.system_favor_max}
-                        aria-label="Recover system favor"
-                      >
-                        +
-                      </Button>
-                    </div>
-                  )}
+                        <span className="font-heading font-semibold">{opt.name}</span>
+                        {opt.cost > 1 && <span className="text-muted-foreground ml-1">({opt.cost})</span>}
+                        <span className="block text-muted-foreground leading-tight">{opt.description}</span>
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </SystemWindow>
 
-              <SystemWindow title="UMBRAL ENERGY" compact>
-                <div className="text-center">
-                  <div className="font-display text-2xl font-bold">
-                    {character.shadow_energy_current}/{character.shadow_energy_max}
-                  </div>
-                  <div className="text-xs text-muted-foreground">Reserve</div>
-                  {!isReadOnly && (
-                    <div className="mt-2 flex items-center justify-center gap-2">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        className="h-6 w-6 p-0"
-                        onClick={() => handleResourceAdjust('shadow_energy_current', -1)}
-                        disabled={character.shadow_energy_current <= 0}
-                        aria-label="Spend umbral energy"
-                      >
-                        -
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        className="h-6 w-6 p-0"
-                        onClick={() => handleResourceAdjust('shadow_energy_current', 1)}
-                        disabled={character.shadow_energy_current >= character.shadow_energy_max}
-                        aria-label="Recover umbral energy"
-                      >
-                        +
-                      </Button>
-                    </div>
-                  )}
-                </div>
-              </SystemWindow>
             </div>
 
             {/* Conditions */}
@@ -1830,354 +1919,13 @@ const CharacterSheet = () => {
               />
             )}
 
-            {/* Actions */}
-            <div className="grid grid-cols-3 gap-4">
-              <Button
-                variant="outline"
-                onClick={handleShortRest}
-                className="gap-2"
-                disabled={updateCharacter.isPending}
-              >
-                <Moon className="w-4 h-4" />
-                Short Rest
-              </Button>
-              <Button
-                variant="outline"
-                onClick={handleLongRest}
-                className="gap-2"
-                disabled={updateCharacter.isPending}
-              >
-                <Sun className="w-4 h-4" />
-                Long Rest
-              </Button>
-              {character.level < 20 && (
-                <Button
-                  variant="default"
-                  onClick={() => navigate(`/characters/${character.id}/level-up`)}
-                  className="gap-2"
-                >
-                  <Zap className="w-4 h-4" />
-                  Level Up
-                </Button>
-              )}
-            </div>
-          </div>
-
-          {/* Right Column - Secondary Info */}
-          <div className="space-y-6">
             {/* Proficiencies */}
-            <SystemWindow
-              title="PROFICIENCIES"
-              actions={
-                !isReadOnly && isEditMode ? (
-                  <Button variant="outline" size="sm" onClick={openProficiencyDialog}>
-                    Manage
-                  </Button>
-                ) : null
-              }
-            >
-              <div className="space-y-3">
-                {character.armor_proficiencies && character.armor_proficiencies.length > 0 && (
-                  <div>
-                    <span className="text-xs text-muted-foreground block mb-1">Armor</span>
-                    <div className="flex flex-wrap gap-1">
-                      {character.armor_proficiencies.map((prof) => (
-                        <Badge key={prof} variant="secondary" className="text-xs">{prof}</Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {character.weapon_proficiencies && character.weapon_proficiencies.length > 0 && (
-                  <div>
-                    <span className="text-xs text-muted-foreground block mb-1">Weapons</span>
-                    <div className="flex flex-wrap gap-1">
-                      {character.weapon_proficiencies.map((prof) => (
-                        <Badge key={prof} variant="secondary" className="text-xs">{prof}</Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {character.tool_proficiencies && character.tool_proficiencies.length > 0 && (
-                  <div>
-                    <span className="text-xs text-muted-foreground block mb-1">Tools</span>
-                    <div className="flex flex-wrap gap-1">
-                      {character.tool_proficiencies.map((prof) => (
-                        <Badge key={prof} variant="secondary" className="text-xs">{prof}</Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {character.skill_proficiencies && character.skill_proficiencies.length > 0 && (
-                  <div>
-                    <span className="text-xs text-muted-foreground block mb-1">Skills</span>
-                    <div className="flex flex-wrap gap-1">
-                      {character.skill_proficiencies.map((prof) => (
-                        <Badge key={prof} variant="secondary" className="text-xs">{prof}</Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </SystemWindow>
+            </TabsContent>
 
-            <RollHistoryPanel characterId={character.id} />
-
-            {(isEditMode || customModifiersDraft.length > 0) && (
-              <SystemWindow
-                title="CUSTOM MODIFIERS"
-                actions={
-                  modifiersEditable ? (
-                    <Button size="sm" className="gap-2" onClick={handleAddCustomModifier}>
-                      <Plus className="w-3 h-3" />
-                      Add
-                    </Button>
-                  ) : null
-                }
-              >
-                <div className="space-y-4">
-                  {customModifiersDraft.length === 0 ? (
-                    <div className="text-xs text-muted-foreground">No custom modifiers yet.</div>
-                  ) : (
-                    customModifiersDraft.map((modifier) => {
-                      const needsTarget = ['ability', 'save', 'skill', 'attack', 'damage'].includes(modifier.type);
-                      return (
-                        <div key={modifier.id} className="space-y-2 rounded border border-border bg-muted/20 p-3">
-                          <div className="grid gap-2 md:grid-cols-[160px_1fr_90px_auto_auto] items-center">
-                            <Select
-                              value={modifier.type}
-                              onValueChange={(value) => {
-                                const nextType = value as CustomModifier['type'];
-                                const defaultTarget = nextType === 'ability' || nextType === 'save'
-                                  ? 'STR'
-                                  : nextType === 'skill'
-                                    ? 'Athletics'
-                                    : nextType === 'attack' || nextType === 'damage'
-                                      ? 'all'
-                                      : '';
-                                handleUpdateCustomModifier(modifier.id, { type: nextType, target: defaultTarget }, true);
-                              }}
-                              disabled={!modifiersEditable}
-                            >
-                              <SelectTrigger className="h-8 text-xs">
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent>
-                                {CUSTOM_MODIFIER_TYPES.map((type) => (
-                                  <SelectItem key={type} value={type}>
-                                    {type}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-
-                            {needsTarget ? (
-                              modifier.type === 'skill' ? (
-                                <Select
-                                  value={modifier.target || ''}
-                                  onValueChange={(value) => handleUpdateCustomModifier(modifier.id, { target: value }, true)}
-                                  disabled={!modifiersEditable}
-                                >
-                                  <SelectTrigger className="h-8 text-xs">
-                                    <SelectValue placeholder="Target" />
-                                  </SelectTrigger>
-                                  <SelectContent>
-                                    {allSkills.map((skill) => (
-                                      <SelectItem key={skill.name} value={skill.name}>
-                                        {skill.name}
-                                      </SelectItem>
-                                    ))}
-                                    <SelectItem value="all">all</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              ) : modifier.type === 'attack' || modifier.type === 'damage' ? (
-                                <Select
-                                  value={modifier.target || 'all'}
-                                  onValueChange={(value) => handleUpdateCustomModifier(modifier.id, { target: value }, true)}
-                                  disabled={!modifiersEditable}
-                                >
-                                  <SelectTrigger className="h-8 text-xs">
-                                    <SelectValue placeholder="Target" />
-                                  </SelectTrigger>
-                                  <SelectContent>
-                                    <SelectItem value="all">all</SelectItem>
-                                    <SelectItem value="melee">melee</SelectItem>
-                                    <SelectItem value="ranged">ranged</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              ) : (
-                                <Select
-                                  value={modifier.target || 'STR'}
-                                  onValueChange={(value) => handleUpdateCustomModifier(modifier.id, { target: value }, true)}
-                                  disabled={!modifiersEditable}
-                                >
-                                  <SelectTrigger className="h-8 text-xs">
-                                    <SelectValue placeholder="Target" />
-                                  </SelectTrigger>
-                                  <SelectContent>
-                                    {ABILITY_KEYS.map((ability) => (
-                                      <SelectItem key={ability} value={ability}>
-                                        {ability}
-                                      </SelectItem>
-                                    ))}
-                                  </SelectContent>
-                                </Select>
-                              )
-                            ) : (
-                              <Input
-                                value="n/a"
-                                readOnly
-                                className="h-8 text-xs text-muted-foreground"
-                              />
-                            )}
-
-                            <Input
-                              type="number"
-                              value={modifier.value}
-                              onChange={(event) => {
-                                const parsed = parseInt(event.target.value, 10);
-                                handleUpdateCustomModifier(modifier.id, { value: Number.isNaN(parsed) ? 0 : parsed });
-                              }}
-                              onBlur={() => handleUpdateCustomModifier(modifier.id, { value: modifier.value }, true)}
-                              className="h-8 text-xs text-right"
-                              disabled={!modifiersEditable}
-                            />
-
-                            <Switch
-                              checked={modifier.enabled}
-                              onCheckedChange={(checked) => handleUpdateCustomModifier(modifier.id, { enabled: checked }, true)}
-                              aria-label="Toggle modifier"
-                              disabled={!modifiersEditable}
-                            />
-
-                            {modifiersEditable && (
-                              <Button
-                                type="button"
-                                variant="ghost"
-                                size="icon"
-                                className="h-8 w-8"
-                                onClick={() => handleRemoveCustomModifier(modifier.id)}
-                                aria-label="Remove modifier"
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </Button>
-                            )}
-                          </div>
-
-                          <div className="grid gap-2 md:grid-cols-2">
-                            <Input
-                              value={modifier.source}
-                              onChange={(event) => handleUpdateCustomModifier(modifier.id, { source: event.target.value })}
-                              onBlur={() => handleUpdateCustomModifier(modifier.id, { source: modifier.source }, true)}
-                              className="h-8 text-xs"
-                              placeholder="Source"
-                              disabled={!modifiersEditable}
-                            />
-                            <Input
-                              value={modifier.condition || ''}
-                              onChange={(event) => handleUpdateCustomModifier(modifier.id, { condition: event.target.value })}
-                              onBlur={() => handleUpdateCustomModifier(modifier.id, { condition: modifier.condition || '' }, true)}
-                              className="h-8 text-xs"
-                              placeholder="Condition (optional)"
-                              disabled={!modifiersEditable}
-                            />
-                          </div>
-                        </div>
-                      );
-                    })
-                  )}
-                </div>
-              </SystemWindow>
-            )}
-
-            {/* Skills */}
-            <SystemWindow title="SKILLS">
-              <div className="space-y-1 max-h-[400px] overflow-y-auto">
-                {Object.entries(skills).map(([skillName, skill]) => {
-                  const handleSkillRoll = () => {
-                    rollAndRecord({
-                      title: `${skillName} Check`,
-                      formula: formatRollFormula('1d20', skill.modifier),
-                      rollType: 'skill',
-                      context: `${skillName} Check`,
-                      modifier: skill.modifier,
-                    });
-                  };
-
-                  const isEditingSkill = isEditMode && !isReadOnly;
-
-                  return (
-                    <div
-                      key={skillName}
-                      className="flex items-center justify-between p-2 rounded bg-muted/30 text-sm hover:bg-muted/50 transition-colors group"
-                    >
-                      <div className="flex items-center gap-2 flex-1">
-                        <span className="font-heading">{skillName}</span>
-                        <span className="text-xs text-muted-foreground">({ABILITY_NAMES[skill.ability]})</span>
-                        {!isEditingSkill && skill.expertise && <Badge variant="default" className="text-xs">E</Badge>}
-                        {!isEditingSkill && skill.proficient && !skill.expertise && <Badge variant="secondary" className="text-xs">P</Badge>}
-                      </div>
-                      <div className="flex items-center gap-3">
-                        {isEditingSkill && (
-                          <div className="flex items-center gap-1">
-                            <Button
-                              type="button"
-                              variant={skill.proficient ? 'default' : 'outline'}
-                              size="sm"
-                              className="h-6 px-2 text-xs"
-                              onClick={() => handleToggleSkillProficiency(skillName)}
-                              aria-pressed={skill.proficient}
-                            >
-                              P
-                            </Button>
-                            <Button
-                              type="button"
-                              variant={skill.expertise ? 'default' : 'outline'}
-                              size="sm"
-                              className="h-6 px-2 text-xs"
-                              onClick={() => handleToggleSkillExpertise(skillName)}
-                              aria-pressed={skill.expertise}
-                            >
-                              E
-                            </Button>
-                          </div>
-                        )}
-                        <span className="text-xs text-muted-foreground">Passive: {skill.passive}</span>
-                        <span className={cn(
-                          "font-display font-bold min-w-[3rem] text-right",
-                          skill.modifier >= 0 ? "text-green-400" : "text-red-400"
-                        )}>
-                          {formatModifier(skill.modifier)}
-                        </span>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={handleSkillRoll}
-                          className="h-7 w-7 p-0 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
-                          title={`Roll ${skillName} check`}
-                        >
-                          <Dice6 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </SystemWindow>
-
+          {/* â”€â”€ TAB: Actions & Spells â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+          <TabsContent value="actions" className="space-y-6 mt-0">
             {/* Actions */}
             <ActionsList characterId={character.id} />
-
-            {/* Features */}
-            <FeaturesList characterId={character.id} />
-
-            {/* Homebrew Features */}
-            <HomebrewFeatureApplicator characterId={character.id} />
-
-            {/* Equipment */}
-            <EquipmentList characterId={character.id} />
-
-            {/* Currency */}
-            <CurrencyManager characterId={character.id} />
 
             {/* Spell Slots */}
             <SpellSlotsDisplay 
@@ -2188,6 +1936,25 @@ const CharacterSheet = () => {
 
             {/* Powers */}
             <PowersList characterId={character.id} />
+          </TabsContent>
+
+          {/* â”€â”€ TAB: Inventory â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+          <TabsContent value="inventory" className="space-y-6 mt-0">
+            {/* Equipment */}
+            <EquipmentList characterId={character.id} />
+
+            {/* Currency */}
+            <CurrencyManager characterId={character.id} />
+          </TabsContent>
+
+          {/* â”€â”€ TAB: Features â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+          <TabsContent value="features" className="space-y-6 mt-0">
+            {/* Feature Choices */}
+            <FeatureChoicesPanel characterId={character.id} />
+            <FeaturesList characterId={character.id} />
+
+            {/* Homebrew Features */}
+            <HomebrewFeatureApplicator characterId={character.id} />
 
             {/* Runes */}
             {isLocal ? (
@@ -2221,7 +1988,10 @@ const CharacterSheet = () => {
             ) : (
               <ShadowSoldiersPanel characterId={character.id} characterLevel={character.level} />
             )}
+          </TabsContent>
 
+          {/* â”€â”€ TAB: Bio & Notes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+          <TabsContent value="bio" className="space-y-6 mt-0">
             {/* Portrait Upload */}
             <SystemWindow title="PORTRAIT" variant={isLocal ? 'alert' : 'default'}>
               {isLocal ? (
@@ -2233,7 +2003,6 @@ const CharacterSheet = () => {
                   characterId={character.id}
                   currentPortraitUrl={character.portrait_url}
                   onUploadComplete={() => {
-                    // Refresh character data
                     window.location.reload();
                   }}
                 />
@@ -2246,7 +2015,6 @@ const CharacterSheet = () => {
                 <RichTextNotes
                   value={character.notes || ''}
                   onChange={async (newValue) => {
-                    // Auto-save with debounce
                     if (notesSaveTimeoutRef.current) {
                       clearTimeout(notesSaveTimeoutRef.current);
                     }
@@ -2273,9 +2041,15 @@ const CharacterSheet = () => {
                 </div>
               </div>
             </SystemWindow>
-          </div>
-        </div>
+
+            {/* Roll History */}
+            <RollHistoryPanel characterId={character.id} />
+          </TabsContent>
+        </Tabs>
+
       </div>
+
+      {/* â”€â”€ Dialogs (rendered outside scroll content) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
 
       {/* HP Edit Dialog */}
       <Dialog open={hpEditOpen} onOpenChange={setHpEditOpen}>
@@ -2324,68 +2098,23 @@ const CharacterSheet = () => {
           </DialogHeader>
           <div className="space-y-4">
             {!shareLink ? (
-              <div className="space-y-2">
-                <p className="text-sm text-muted-foreground">
-                  No share link generated yet. Click the button below to create one.
-                </p>
-                <Button
-                  onClick={handleGenerateShareLink}
-                  disabled={generateShareToken.isPending}
-                  className="w-full"
-                >
-                  {generateShareToken.isPending ? (
-                    <>
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Generating...
-                    </>
-                  ) : (
-                    <>
-                      <Share2 className="w-4 h-4 mr-2" />
-                      Generate Share Link
-                    </>
-                  )}
-                </Button>
-              </div>
+              <Button
+                onClick={handleGenerateShareLink}
+                disabled={generateShareToken.isPending}
+                className="w-full"
+              >
+                {generateShareToken.isPending ? 'Generating...' : 'Generate Share Link'}
+              </Button>
             ) : (
               <div className="space-y-2">
                 <Label>Share Link</Label>
                 <div className="flex gap-2">
-                  <Input
-                    value={shareLink}
-                    readOnly
-                    className="font-mono text-sm"
-                  />
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={handleCopyShareLink}
-                    aria-label="Copy share link"
-                  >
-                    {shareLinkCopied ? (
-                      <Check className="w-4 h-4 text-green-500" />
-                    ) : (
-                      <Copy className="w-4 h-4" />
-                    )}
+                  <Input value={shareLink} readOnly className="font-mono text-sm" />
+                  <Button variant="outline" size="icon" onClick={handleCopyShareLink}>
+                    {shareLinkCopied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
                   </Button>
                 </div>
-                <p className="text-xs text-muted-foreground">
-                  Anyone with this link can view your character in read-only mode.
-                </p>
-                <Button
-                  variant="outline"
-                  onClick={handleGenerateShareLink}
-                  disabled={generateShareToken.isPending}
-                  className="w-full"
-                >
-                  {generateShareToken.isPending ? (
-                    <>
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Regenerating...
-                    </>
-                  ) : (
-                    'Regenerate Link'
-                  )}
-                </Button>
+                <p className="text-xs text-muted-foreground">Anyone with this link can view your character in read-only mode.</p>
               </div>
             )}
           </div>
@@ -2402,39 +2131,20 @@ const CharacterSheet = () => {
           <div className="space-y-4">
             <div>
               <Label htmlFor="armor-proficiencies">Armor Proficiencies</Label>
-              <Input
-                id="armor-proficiencies"
-                value={armorProficienciesDraft}
-                onChange={(e) => setArmorProficienciesDraft(e.target.value)}
-                placeholder="Light armor, Shields"
-              />
+              <Input id="armor-proficiencies" value={armorProficienciesDraft} onChange={(e) => setArmorProficienciesDraft(e.target.value)} placeholder="Light armor, Shields" />
             </div>
             <div>
               <Label htmlFor="weapon-proficiencies">Weapon Proficiencies</Label>
-              <Input
-                id="weapon-proficiencies"
-                value={weaponProficienciesDraft}
-                onChange={(e) => setWeaponProficienciesDraft(e.target.value)}
-                placeholder="Simple weapons, Martial weapons"
-              />
+              <Input id="weapon-proficiencies" value={weaponProficienciesDraft} onChange={(e) => setWeaponProficienciesDraft(e.target.value)} placeholder="Simple weapons, Martial weapons" />
             </div>
             <div>
               <Label htmlFor="tool-proficiencies">Tool Proficiencies</Label>
-              <Input
-                id="tool-proficiencies"
-                value={toolProficienciesDraft}
-                onChange={(e) => setToolProficienciesDraft(e.target.value)}
-                placeholder="Thieves' tools, Smith's tools"
-              />
+              <Input id="tool-proficiencies" value={toolProficienciesDraft} onChange={(e) => setToolProficienciesDraft(e.target.value)} placeholder="Thieves' tools, Smith's tools" />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setProficiencyDialogOpen(false)}>
-              Cancel
-            </Button>
-            <Button onClick={handleSaveProficiencies} disabled={updateCharacter.isPending}>
-              Save
-            </Button>
+            <Button variant="outline" onClick={() => setProficiencyDialogOpen(false)}>Cancel</Button>
+            <Button onClick={handleSaveProficiencies} disabled={updateCharacter.isPending}>Save</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -2456,5 +2166,9 @@ const CharacterSheet = () => {
 
 export default CharacterSheet;
 
-
-
+// Dead code reference removed â€” old right-column content (custom modifiers, skills,
+// actions, features, equipment, currency, spells, powers, runes, monarch unlocks,
+// shadow soldiers, portrait, notes) is now in the tabbed layout above.
+// The following was a no-op block that has been cleaned up.
+/* eslint-disable @typescript-eslint/no-unused-vars */
+const _DEAD_CODE_REMOVED = true;

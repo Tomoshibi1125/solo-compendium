@@ -124,7 +124,7 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
               <SelectContent>
                 {availableCharacters.map((char) => (
                   <SelectItem key={char.id} value={char.id}>
-                    {char.name} - Level {char.level} {formatMonarchVernacular(char.job)}
+                    {char.name} - Level {char.level} {formatMonarchVernacular(char.job ?? '')}
                   </SelectItem>
                 ))}
               </SelectContent>

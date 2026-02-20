@@ -42,36 +42,11 @@ export async function autoCalculateCharacterStats(characterId: string): Promise<
   updates.system_favor_die = getSystemFavorDie(character.level);
   updates.system_favor_max = getSystemFavorMax(character.level);
 
-  // Auto-calculate shadow energy max (if applicable)
-  const shadowEnergyMax = (character as Character & { shadow_energy_max?: number | null }).shadow_energy_max;
-  if (shadowEnergyMax !== null && shadowEnergyMax !== undefined) {
-    const calculatedMax = calculateShadowEnergyMax(character.level);
-    if (shadowEnergyMax !== calculatedMax) {
-      (updates as Partial<Character & { shadow_energy_max?: number; shadow_energy_current?: number }>).shadow_energy_max = calculatedMax;
-      // If current is higher than new max, cap it
-      const shadowEnergyCurrent = (character as Character & { shadow_energy_current?: number | null }).shadow_energy_current;
-      if ((shadowEnergyCurrent ?? 0) > calculatedMax) {
-        (updates as Partial<Character & { shadow_energy_current?: number }>).shadow_energy_current = calculatedMax;
-      }
-    }
-  }
-
   // Update character
   await supabase
     .from('characters')
     .update(updates)
     .eq('id', characterId);
-}
-
-/**
- * Calculate shadow energy max based on level
- */
-function calculateShadowEnergyMax(level: number): number {
-  if (level <= 4) return 10;
-  if (level <= 8) return 25;
-  if (level <= 12) return 50;
-  if (level <= 16) return 100;
-  return 200;
 }
 
 /**
@@ -212,7 +187,7 @@ export async function autoApplyEquipmentModifiers(_characterId: string): Promise
  * Auto-save character data with debouncing
  * Uses a Map to track timeouts per character to avoid conflicts
  */
-const saveTimeouts = new Map<string, NodeJS.Timeout>();
+const saveTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
 
 export function autoSaveCharacter(
   characterId: string,

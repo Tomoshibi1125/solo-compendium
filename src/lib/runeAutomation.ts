@@ -250,6 +250,87 @@ export function applyRuneBonuses(
   return modifiedStats;
 }
 
+// ---------------------------------------------------------------------------
+// Solo Leveling Rune Absorption — cross-type resolution
+// ---------------------------------------------------------------------------
+
+const CASTER_JOBS = ['Mage', 'Esper', 'Healer', 'Herald', 'Necromancer', 'Warlock', 'Technomancer'];
+const MARTIAL_JOBS = ['Warrior', 'Assassin', 'Berserker', 'Tank', 'Ranger', 'Monk', 'Paladin'];
+// Hybrid jobs (Summoner, Bard) are considered compatible with both types.
+
+export type RuneAbsorptionResult = {
+  /** True if the character's archetype doesn't match the rune type */
+  isCrossType: boolean;
+  /** Recharge cadence for the learned ability */
+  recharge: 'at-will' | 'short-rest' | 'long-rest';
+  /** Max uses per rest period (null = unlimited / at-will) */
+  usesMax: number | null;
+  /** Description of how the ability was adapted */
+  adaptationNote: string;
+};
+
+/**
+ * Determine how a rune's ability should be adapted when absorbed.
+ *
+ * Same-type (martial absorbs martial, caster absorbs caster): ability works
+ * as defined by the rune (at-will or its native uses).
+ *
+ * Cross-type (caster absorbs martial, or martial absorbs caster): ability
+ * becomes proficiency-bonus uses per long rest.
+ */
+export function resolveRuneAbsorption(
+  runeType: string | null,
+  runeUsesPerRest: string | null | undefined,
+  characterJob: string | null,
+  characterLevel: number,
+  proficiencyBonus: number,
+): RuneAbsorptionResult {
+  const job = characterJob || '';
+  const isCaster = CASTER_JOBS.includes(job);
+  const isMartial = MARTIAL_JOBS.includes(job);
+  // Hybrid jobs are never cross-type
+  const isHybrid = !isCaster && !isMartial;
+
+  const runeIsMartial = runeType === 'martial' || runeType === 'offensive' || runeType === 'defensive';
+  const runeIsCaster = runeType === 'caster';
+
+  const isCrossType =
+    !isHybrid &&
+    ((isCaster && runeIsMartial) || (isMartial && runeIsCaster));
+
+  if (isCrossType) {
+    // Cross-type: limited uses per long rest = proficiency bonus
+    return {
+      isCrossType: true,
+      recharge: 'long-rest',
+      usesMax: proficiencyBonus,
+      adaptationNote: `Cross-type absorption: ${proficiencyBonus} uses per long rest`,
+    };
+  }
+
+  // Same-type: use the rune's native cadence
+  const nativeUses = calculateRuneMaxUses(runeUsesPerRest, characterLevel, proficiencyBonus);
+  if (nativeUses === -1) {
+    return {
+      isCrossType: false,
+      recharge: 'at-will',
+      usesMax: null,
+      adaptationNote: 'Natural absorption: at-will',
+    };
+  }
+
+  // Determine recharge from rune data — default to long-rest
+  const recharge: 'short-rest' | 'long-rest' =
+    runeUsesPerRest?.toLowerCase().includes('short') ? 'short-rest' : 'long-rest';
+
+  return {
+    isCrossType: false,
+    recharge,
+    usesMax: nativeUses,
+    adaptationNote: `Natural absorption: ${nativeUses} uses per ${recharge}`,
+  };
+}
+
 /**
  * Calculate max uses from uses_per_rest string
  * Examples: 'at-will', '1', '2', 'proficiency bonus', 'level', 'proficiency bonus + level'

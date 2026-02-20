@@ -17,6 +17,7 @@ const COMPENDIUM_LABELS: Record<EntryType, string> = {
   monsters: 'Monsters',
   backgrounds: 'Backgrounds',
   conditions: 'Conditions',
+  regents: MONARCH_LABEL_PLURAL,
   monarchs: MONARCH_LABEL_PLURAL,
   feats: 'Feats',
   skills: 'Skills',

@@ -14,6 +14,21 @@ import { Page, expect } from '@playwright/test';
 export class DMPage {
   constructor(public page: Page) {}
 
+  /** Dismiss the analytics consent banner if it overlays interactive elements. */
+  private async dismissAnalyticsBanner() {
+    await this.page.evaluate(() => {
+      localStorage.setItem(
+        'solo-compendium-analytics-consent',
+        JSON.stringify({ status: 'rejected', version: 1, timestamp: Date.now() }),
+      );
+    });
+    const bannerBtn = this.page.locator('.fixed.bottom-0 button').first();
+    if (await bannerBtn.isVisible({ timeout: 2_000 }).catch(() => false)) {
+      await bannerBtn.click({ force: true });
+      await this.page.waitForTimeout(300);
+    }
+  }
+
   // ─── Campaign creation ───────────────────────────────────────────
 
   /**
@@ -633,6 +648,8 @@ export class DMPage {
   }) {
     await this.page.goto('/homebrew');
 
+    await this.dismissAnalyticsBanner();
+
     // Wait for the workbench to load
     await this.page.getByTestId('homebrew-workbench').waitFor({ state: 'visible', timeout: 15_000 });
 
@@ -652,7 +669,9 @@ export class DMPage {
     }
 
     // Save (button text is "Create Draft" for new, "Update Draft" for existing)
-    await this.page.getByRole('button', { name: /Create Draft|Update Draft/i }).click();
+    await this.dismissAnalyticsBanner();
+    const saveBtn = this.page.getByRole('button', { name: /Create Draft|Update Draft/i }).first();
+    await saveBtn.click({ force: true });
 
     // Wait for success toast — use the toast container's title element to avoid strict-mode violation
     // (multiple elements can match the text; the toast title is inside a div with specific classes)

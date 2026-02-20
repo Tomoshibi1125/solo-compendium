@@ -181,6 +181,7 @@ export function PerformanceProvider({ children }: { children: ReactNode }) {
     const handleChange = () => setNetworkInfo(readNetworkInfo());
     connection.addEventListener('change', handleChange);
     return () => {
+      if (typeof connection.removeEventListener !== 'function') return;
       connection.removeEventListener('change', handleChange);
     };
   }, []);

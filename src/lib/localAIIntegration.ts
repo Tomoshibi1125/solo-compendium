@@ -443,8 +443,12 @@ Focus on maximizing character effectiveness and synergy.
   // Fallback optimizations (when AI unavailable)
   private static generateFallbackOptimizations(character: any): any {
     const abilities = character.abilities;
-    const lowestStats = Object.entries(abilities)
-      .sort(([,a], [,b]) => a - b)
+    const lowestStats = (Object.entries(abilities) as Array<[string, unknown]>)
+      .sort(([, a], [, b]) => {
+        const aNum = typeof a === 'number' ? a : Number(a);
+        const bNum = typeof b === 'number' ? b : Number(b);
+        return aNum - bNum;
+      })
       .slice(0, 3)
       .map(([stat]) => stat);
 

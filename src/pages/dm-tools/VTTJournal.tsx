@@ -27,6 +27,13 @@ interface JournalEntry {
 
 type VttJournalRow = Database['public']['Tables']['vtt_journal_entries']['Row'];
 
+const JOURNAL_CATEGORIES = ['session', 'note', 'lore', 'handout'] as const;
+const toJournalCategory = (value: unknown): JournalEntry['category'] => {
+  return (JOURNAL_CATEGORIES as readonly string[]).includes(String(value))
+    ? (value as JournalEntry['category'])
+    : 'note';
+};
+
 const VTTJournal = () => {
   const { campaignId } = useParams<{ campaignId: string }>();
   const navigate = useNavigate();
@@ -71,6 +78,10 @@ const VTTJournal = () => {
       }
     };
 
+    const saveLocal = (nextEntries: JournalEntry[]) => {
+      localStorage.setItem(`vtt-journal-${campaignId}`, JSON.stringify(nextEntries));
+    };
+
     const loadRemote = async () => {
       const { data, error } = await supabase
         .from('vtt_journal_entries')
@@ -78,13 +89,13 @@ const VTTJournal = () => {
         .eq('campaign_id', campaignId)
         .order('created_at', { ascending: false });
       if (error) {
-        return [];
+        return null;
       }
-      return (data || []).map((row: VttJournalRow) => ({
+      return (data || []).map((row) => ({
         id: row.id,
         title: row.title,
         content: row.content ?? '',
-        category: row.category,
+        category: toJournalCategory(row.category),
         visibleToPlayers: !!row.visible_to_players,
         createdAt: row.created_at,
         updatedAt: row.updated_at,
@@ -101,7 +112,9 @@ const VTTJournal = () => {
       }
       const remoteEntries = await loadRemote();
       if (!active) return;
-      setEntries(remoteEntries.length > 0 ? remoteEntries : localEntries);
+      const nextEntries = remoteEntries === null ? localEntries : remoteEntries;
+      setEntries(nextEntries);
+      saveLocal(nextEntries);
       setIsLoading(false);
     };
 
@@ -168,11 +181,13 @@ const VTTJournal = () => {
       title: data.title,
       content: data.content ?? '',
       visibleToPlayers: !!data.visible_to_players,
-      category: data.category,
+      category: toJournalCategory(data.category),
       createdAt: data.created_at,
       updatedAt: data.updated_at,
     };
-    setEntries([entry, ...entries]);
+    const updated = [entry, ...entries];
+    setEntries(updated);
+    localStorage.setItem(`vtt-journal-${campaignId}`, JSON.stringify(updated));
     setNewEntry({ title: '', content: '', visibleToPlayers: false, category: 'note' });
     setIsEditing(false);
     toast({
@@ -223,7 +238,7 @@ const VTTJournal = () => {
       id: data.id,
       title: data.title,
       content: data.content ?? '',
-      category: data.category,
+      category: toJournalCategory(data.category),
       visibleToPlayers: !!data.visible_to_players,
       createdAt: data.created_at,
       updatedAt: data.updated_at,
@@ -233,6 +248,7 @@ const VTTJournal = () => {
     );
     setEntries(updated);
     setSelectedEntry(updatedEntry);
+    localStorage.setItem(`vtt-journal-${campaignId}`, JSON.stringify(updated));
     setIsEditing(false);
     toast({
       title: 'Updated!',
@@ -268,7 +284,9 @@ const VTTJournal = () => {
       });
       return;
     }
-    setEntries(entries.filter(e => e.id !== id));
+    const updated = entries.filter(e => e.id !== id);
+    setEntries(updated);
+    localStorage.setItem(`vtt-journal-${campaignId}`, JSON.stringify(updated));
     if (selectedEntry?.id === id) {
       setSelectedEntry(null);
     }

@@ -4,6 +4,7 @@ import { DMPage } from './pages/DMPage';
 import { DMToolsPage } from './pages/DMToolsPage';
 import { PlayerPage } from './pages/PlayerPage';
 import { DiceRollerPage } from './pages/DiceRollerPage';
+
 import { CompendiumPage } from './pages/CompendiumPage';
 import { SharedPage } from './pages/SharedPage';
 
@@ -231,7 +232,7 @@ test.describe.serial('Global App-Wide E2E: DM + Player full functionality', () =
     // ── 26. Character Creation (DM) ─────────────────────────────
     test('26. Character Creation: full 6-step wizard with all form elements', async () => {
       const player = new PlayerPage(dmPage);
-      dmCharacterId = await player.createCharacter('DM Test Ascendant');
+      dmCharacterId = (await player.createCharacter('DM Test Ascendant')) ?? '';
       expect(dmCharacterId).toBeTruthy();
       test.info().attach('dm-character-id', {
         contentType: 'text/plain',
@@ -438,7 +439,7 @@ test.describe.serial('Global App-Wide E2E: DM + Player full functionality', () =
     // ── 40. Character Creation (Player) ─────────────────────────
     test('40. Player Character Creation: full wizard with all form elements', async () => {
       const player = new PlayerPage(playerPage);
-      playerCharacterId = await player.createCharacter('Player Test Ascendant');
+      playerCharacterId = (await player.createCharacter('Player Test Ascendant')) ?? '';
       expect(playerCharacterId).toBeTruthy();
       test.info().attach('player-character-id', {
         contentType: 'text/plain',

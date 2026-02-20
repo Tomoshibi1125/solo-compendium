@@ -8,7 +8,7 @@ export const items: Item[] = [
   {
     "id": "item-0801",
     "name": "Shadow Essence of the Umbral Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened weapon recovered from a legendary hunter's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0801.webp",
@@ -16,12 +16,26 @@ export const items: Item[] = [
       "attack": 243
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 76525
+    "value": 76525,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Glows faintly when enemies are within 60 feet"
+      ],
+      "value": 76525
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0802",
     "name": "Eternal Essence of the Umbral Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued armor recovered from a fallen gate boss. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0802.webp",
@@ -29,12 +43,28 @@ export const items: Item[] = [
       "defense": 197
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 87481
+    "value": 87481,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants advantage on saving throws against one damage type",
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage"
+      ],
+      "value": 87481
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0803",
     "name": "Void Essence of the Umbral Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued consumable recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0803.webp",
@@ -42,12 +72,23 @@ export const items: Item[] = [
       "health": 516
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 88139
+    "value": 88139,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants advantage on ability checks for 1 hour",
+        "Restores 2d4+2 hit points when consumed",
+        "Allows the user to see invisible creatures for 10 minutes"
+      ],
+      "value": 88139
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0804",
     "name": "Abyssal Essence of the Umbral Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened accessory recovered from the depths of an A-rank gate. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0804.webp",
@@ -55,12 +96,23 @@ export const items: Item[] = [
       "mana": 79
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 47112
+    "value": 47112,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 47112
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0805",
     "name": "Demonic Essence of the Umbral Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed scroll recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0805.webp",
@@ -68,12 +120,23 @@ export const items: Item[] = [
       "mana": 202
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 29893
+    "value": 29893,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "You can cast Detect Magic at will while wearing this",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 29893
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0806",
     "name": "Celestial Essence of the Umbral Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed weapon recovered from a legendary hunter's collection. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0806.webp",
@@ -81,12 +144,26 @@ export const items: Item[] = [
       "attack": 58
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 2472
+    "value": 2472,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Glows faintly when enemies are within 60 feet"
+      ],
+      "value": 2472
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0807",
     "name": "Divine Essence of the Umbral Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed armor recovered from a fallen gate boss. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0807.webp",
@@ -94,12 +171,28 @@ export const items: Item[] = [
       "defense": 61
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 70891
+    "value": 70891,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants resistance to one elemental damage type while attuned",
+        "Reduces damage from critical hits by your proficiency bonus"
+      ],
+      "value": 70891
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0808",
     "name": "Ancient Essence of the Umbral Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued consumable recovered from a master artificer. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0808.webp",
@@ -107,12 +200,23 @@ export const items: Item[] = [
       "health": 231
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 19876
+    "value": 19876,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Removes one condition affecting the user",
+        "Grants advantage on ability checks for 1 hour",
+        "Grants temporary hit points equal to your level for 1 hour"
+      ],
+      "value": 19876
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0809",
     "name": "Forgotten Essence of the Umbral Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted accessory recovered from a fallen gate boss. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0809.webp",
@@ -120,12 +224,23 @@ export const items: Item[] = [
       "mana": 116
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 37313
+    "value": 37313,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Grants +1 to one ability score while attuned",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 37313
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0810",
     "name": "Cursed Essence of the Umbral Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued scroll recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0810.webp",
@@ -133,12 +248,23 @@ export const items: Item[] = [
       "mana": 234
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 28244
+    "value": 28244,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Grants +1 to one ability score while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 28244
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0811",
     "name": "Blessed Essence of the Umbral Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued weapon recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0811.webp",
@@ -146,12 +272,26 @@ export const items: Item[] = [
       "attack": 59
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 91578
+    "value": 91578,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Glows faintly when enemies are within 60 feet"
+      ],
+      "value": 91578
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0812",
     "name": "Sacred Essence of the Umbral Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued armor recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0812.webp",
@@ -159,12 +299,28 @@ export const items: Item[] = [
       "defense": 97
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 32644
+    "value": 32644,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage",
+        "Grants resistance to one elemental damage type while attuned"
+      ],
+      "value": 32644
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0813",
     "name": "Profane Essence of the Umbral Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient consumable recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0813.webp",
@@ -172,12 +328,23 @@ export const items: Item[] = [
       "health": 589
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 38965
+    "value": 38965,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Removes one condition affecting the user",
+        "Grants advantage on ability checks for 1 hour",
+        "Restores 2d4+2 hit points when consumed"
+      ],
+      "value": 38965
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0814",
     "name": "Mystic Essence of the Umbral Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient accessory recovered from a master artificer. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0814.webp",
@@ -185,12 +352,23 @@ export const items: Item[] = [
       "mana": 125
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 62565
+    "value": 62565,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 62565
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0815",
     "name": "Arcane Essence of the Umbral Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed scroll recovered from a fallen gate boss. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0815.webp",
@@ -198,12 +376,23 @@ export const items: Item[] = [
       "mana": 242
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 17702
+    "value": 17702,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "Grants darkvision 60 feet if you don't already have it",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 17702
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0816",
     "name": "Infernal Essence of the Umbral Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued weapon recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0816.webp",
@@ -211,12 +400,26 @@ export const items: Item[] = [
       "attack": 89
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 25843
+    "value": 25843,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Deals an extra 1d6 elemental damage on a critical hit"
+      ],
+      "value": 25843
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0817",
     "name": "Frozen Essence of the Umbral Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted armor recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0817.webp",
@@ -224,12 +427,28 @@ export const items: Item[] = [
       "defense": 107
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 25748
+    "value": 25748,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "You can cast Shield once per long rest while wearing this armor",
+        "Grants advantage on saving throws against one damage type"
+      ],
+      "value": 25748
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0818",
     "name": "Thunder Essence of the Umbral Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened consumable recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0818.webp",
@@ -237,12 +456,23 @@ export const items: Item[] = [
       "health": 582
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 97732
+    "value": 97732,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Restores 2d4+2 hit points when consumed",
+        "Removes one condition affecting the user",
+        "Allows the user to see invisible creatures for 10 minutes"
+      ],
+      "value": 97732
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0819",
     "name": "Holy Essence of the Umbral Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued accessory recovered from a legendary hunter's collection. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0819.webp",
@@ -250,12 +480,23 @@ export const items: Item[] = [
       "mana": 74
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 84895
+    "value": 84895,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "Once per day, reroll a failed saving throw",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 84895
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0820",
     "name": "Dark Essence of the Umbral Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed scroll recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0820.webp",
@@ -263,12 +504,23 @@ export const items: Item[] = [
       "mana": 186
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 34013
+    "value": 34013,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "Once per day, reroll a failed saving throw",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 34013
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0821",
     "name": "Shadow Heart of the Umbral Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted weapon recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0821.webp",
@@ -276,12 +528,26 @@ export const items: Item[] = [
       "attack": 131
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 16611
+    "value": 16611,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Deals an extra 1d6 elemental damage on a critical hit"
+      ],
+      "value": 16611
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0822",
     "name": "Eternal Heart of the Umbral Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened armor recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0822.webp",
@@ -289,12 +555,28 @@ export const items: Item[] = [
       "defense": 111
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 95498
+    "value": 95498,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants advantage on saving throws against one damage type",
+        "Grants resistance to one elemental damage type while attuned"
+      ],
+      "value": 95498
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0823",
     "name": "Void Heart of the Umbral Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued consumable recovered from a master artificer. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0823.webp",
@@ -302,12 +584,23 @@ export const items: Item[] = [
       "health": 457
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 7190
+    "value": 7190,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Removes one condition affecting the user",
+        "Grants advantage on ability checks for 1 hour",
+        "Restores 2d4+2 hit points when consumed"
+      ],
+      "value": 7190
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0824",
     "name": "Abyssal Heart of the Umbral Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed accessory recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0824.webp",
@@ -315,12 +608,23 @@ export const items: Item[] = [
       "mana": 216
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 35554
+    "value": 35554,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "Once per day, reroll a failed saving throw",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 35554
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0825",
     "name": "Demonic Heart of the Umbral Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened scroll recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0825.webp",
@@ -328,12 +632,23 @@ export const items: Item[] = [
       "mana": 99
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 92857
+    "value": 92857,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Grants +1 to one ability score while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 92857
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0826",
     "name": "Celestial Heart of the Umbral Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed weapon recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0826.webp",
@@ -341,12 +656,26 @@ export const items: Item[] = [
       "attack": 169
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 61515
+    "value": 61515,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "The weapon returns to your hand when thrown (range 20/60)"
+      ],
+      "value": 61515
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0827",
     "name": "Divine Heart of the Umbral Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued armor recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0827.webp",
@@ -354,12 +683,28 @@ export const items: Item[] = [
       "defense": 80
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 10902
+    "value": 10902,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Reduces damage from critical hits by your proficiency bonus",
+        "Grants advantage on saving throws against one damage type"
+      ],
+      "value": 10902
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0828",
     "name": "Ancient Heart of the Umbral Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted consumable recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0828.webp",
@@ -367,12 +712,23 @@ export const items: Item[] = [
       "health": 117
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 92784
+    "value": 92784,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Removes one condition affecting the user",
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Allows the user to see invisible creatures for 10 minutes"
+      ],
+      "value": 92784
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0829",
     "name": "Forgotten Heart of the Umbral Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged accessory recovered from a legendary hunter's collection. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0829.webp",
@@ -380,12 +736,23 @@ export const items: Item[] = [
       "mana": 158
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 21621
+    "value": 21621,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 21621
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0830",
     "name": "Cursed Heart of the Umbral Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed scroll recovered from the depths of an A-rank gate. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0830.webp",
@@ -393,12 +760,23 @@ export const items: Item[] = [
       "mana": 125
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 18266
+    "value": 18266,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "Once per day, reroll a failed saving throw",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 18266
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0831",
     "name": "Blessed Heart of the Umbral Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened weapon recovered from a legendary hunter's collection. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0831.webp",
@@ -406,12 +784,26 @@ export const items: Item[] = [
       "attack": 78
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 25938
+    "value": 25938,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Glows faintly when enemies are within 60 feet"
+      ],
+      "value": 25938
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0832",
     "name": "Sacred Heart of the Umbral Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened armor recovered from a master artificer. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0832.webp",
@@ -419,12 +811,28 @@ export const items: Item[] = [
       "defense": 71
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 30925
+    "value": 30925,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "You can cast Shield once per long rest while wearing this armor",
+        "Grants resistance to one elemental damage type while attuned"
+      ],
+      "value": 30925
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0833",
     "name": "Profane Heart of the Umbral Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged consumable recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0833.webp",
@@ -432,12 +840,23 @@ export const items: Item[] = [
       "health": 396
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 68585
+    "value": 68585,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Restores 2d4+2 hit points when consumed",
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Allows the user to see invisible creatures for 10 minutes"
+      ],
+      "value": 68585
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0834",
     "name": "Mystic Heart of the Umbral Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted accessory recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0834.webp",
@@ -445,12 +864,23 @@ export const items: Item[] = [
       "mana": 78
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 5802
+    "value": 5802,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "You gain proficiency in one saving throw while attuned",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 5802
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0835",
     "name": "Arcane Heart of the Umbral Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged scroll recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0835.webp",
@@ -458,12 +888,23 @@ export const items: Item[] = [
       "mana": 120
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 23349
+    "value": 23349,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Once per day, reroll a failed saving throw",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 23349
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0836",
     "name": "Infernal Heart of the Umbral Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient weapon recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0836.webp",
@@ -471,12 +912,26 @@ export const items: Item[] = [
       "attack": 238
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 94894
+    "value": 94894,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Once per day, the weapon can cast a cantrip-level effect"
+      ],
+      "value": 94894
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0837",
     "name": "Frozen Heart of the Umbral Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened armor recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0837.webp",
@@ -484,12 +939,28 @@ export const items: Item[] = [
       "defense": 241
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 98551
+    "value": 98551,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Reduces damage from critical hits by your proficiency bonus",
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage"
+      ],
+      "value": 98551
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0838",
     "name": "Thunder Heart of the Umbral Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed consumable recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0838.webp",
@@ -497,12 +968,23 @@ export const items: Item[] = [
       "health": 184
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 44994
+    "value": 44994,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Restores 2d4+2 hit points when consumed"
+      ],
+      "value": 44994
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0839",
     "name": "Holy Heart of the Umbral Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued accessory recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0839.webp",
@@ -510,12 +992,23 @@ export const items: Item[] = [
       "mana": 205
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 38403
+    "value": 38403,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "You can cast Detect Magic at will while wearing this",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 38403
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0840",
     "name": "Dark Heart of the Umbral Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened scroll recovered from a legendary hunter's collection. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0840.webp",
@@ -523,12 +1016,23 @@ export const items: Item[] = [
       "mana": 87
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 48924
+    "value": 48924,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "Once per day, reroll a failed saving throw",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 48924
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0841",
     "name": "Shadow Soul of the Umbral Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed weapon recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0841.webp",
@@ -536,12 +1040,26 @@ export const items: Item[] = [
       "attack": 109
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 83917
+    "value": 83917,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "You gain +1 to initiative while carrying this weapon"
+      ],
+      "value": 83917
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0842",
     "name": "Eternal Soul of the Umbral Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed armor recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0842.webp",
@@ -549,12 +1067,28 @@ export const items: Item[] = [
       "defense": 240
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 93773
+    "value": 93773,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants resistance to one elemental damage type while attuned",
+        "You can cast Shield once per long rest while wearing this armor"
+      ],
+      "value": 93773
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0843",
     "name": "Void Soul of the Umbral Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged consumable recovered from a legendary hunter's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0843.webp",
@@ -562,12 +1096,23 @@ export const items: Item[] = [
       "health": 415
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 20834
+    "value": 20834,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants advantage on ability checks for 1 hour",
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Grants temporary hit points equal to your level for 1 hour"
+      ],
+      "value": 20834
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0844",
     "name": "Abyssal Soul of the Umbral Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient accessory recovered from a master artificer. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0844.webp",
@@ -575,12 +1120,23 @@ export const items: Item[] = [
       "mana": 103
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 72567
+    "value": 72567,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "You can cast Detect Magic at will while wearing this",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 72567
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0845",
     "name": "Demonic Soul of the Umbral Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted scroll recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0845.webp",
@@ -588,12 +1144,23 @@ export const items: Item[] = [
       "mana": 97
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 75202
+    "value": 75202,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "You gain proficiency in one saving throw while attuned",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 75202
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0846",
     "name": "Celestial Soul of the Umbral Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued weapon recovered from a master artificer. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0846.webp",
@@ -601,12 +1168,26 @@ export const items: Item[] = [
       "attack": 196
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 86302
+    "value": 86302,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "You gain +1 to initiative while carrying this weapon"
+      ],
+      "value": 86302
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0847",
     "name": "Divine Soul of the Umbral Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued armor recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0847.webp",
@@ -614,12 +1195,28 @@ export const items: Item[] = [
       "defense": 238
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 45058
+    "value": 45058,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "You can cast Shield once per long rest while wearing this armor",
+        "Reduces damage from critical hits by your proficiency bonus"
+      ],
+      "value": 45058
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0848",
     "name": "Ancient Soul of the Umbral Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened consumable recovered from a forgotten dungeon. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0848.webp",
@@ -627,12 +1224,23 @@ export const items: Item[] = [
       "health": 279
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 5207
+    "value": 5207,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Restores 2d4+2 hit points when consumed",
+        "Removes one condition affecting the user",
+        "Grants temporary hit points equal to your level for 1 hour"
+      ],
+      "value": 5207
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0849",
     "name": "Forgotten Soul of the Umbral Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed accessory recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0849.webp",
@@ -640,12 +1248,23 @@ export const items: Item[] = [
       "mana": 206
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 16526
+    "value": 16526,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 16526
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0850",
     "name": "Cursed Soul of the Umbral Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued scroll recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0850.webp",
@@ -653,12 +1272,23 @@ export const items: Item[] = [
       "mana": 213
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 81243
+    "value": 81243,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 81243
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0851",
     "name": "Blessed Soul of the Umbral Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened weapon recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0851.webp",
@@ -666,12 +1296,26 @@ export const items: Item[] = [
       "attack": 185
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 42767
+    "value": 42767,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "You gain +1 to initiative while carrying this weapon"
+      ],
+      "value": 42767
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0852",
     "name": "Sacred Soul of the Umbral Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient armor recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0852.webp",
@@ -679,12 +1323,28 @@ export const items: Item[] = [
       "defense": 119
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 48367
+    "value": 48367,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants advantage on saving throws against one damage type",
+        "Grants resistance to one elemental damage type while attuned"
+      ],
+      "value": 48367
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0853",
     "name": "Profane Soul of the Umbral Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed consumable recovered from a fallen gate boss. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0853.webp",
@@ -692,12 +1352,23 @@ export const items: Item[] = [
       "health": 563
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 23443
+    "value": 23443,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Restores 2d4+2 hit points when consumed",
+        "Removes one condition affecting the user",
+        "Grants advantage on ability checks for 1 hour"
+      ],
+      "value": 23443
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0854",
     "name": "Mystic Soul of the Umbral Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued accessory recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0854.webp",
@@ -705,12 +1376,23 @@ export const items: Item[] = [
       "mana": 188
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 59032
+    "value": 59032,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "You gain proficiency in one saving throw while attuned",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 59032
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0855",
     "name": "Arcane Soul of the Umbral Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient scroll recovered from a fallen gate boss. Infused with thunder energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0855.webp",
@@ -718,12 +1400,23 @@ export const items: Item[] = [
       "mana": 117
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 100577
+    "value": 100577,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Once per day, reroll a failed saving throw",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 100577
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0856",
     "name": "Infernal Soul of the Umbral Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued weapon recovered from a master artificer. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0856.webp",
@@ -731,12 +1424,26 @@ export const items: Item[] = [
       "attack": 156
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 91317
+    "value": 91317,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Deals an extra 1d6 elemental damage on a critical hit"
+      ],
+      "value": 91317
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0857",
     "name": "Frozen Soul of the Umbral Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged armor recovered from a master artificer. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0857.webp",
@@ -744,12 +1451,28 @@ export const items: Item[] = [
       "defense": 230
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 23900
+    "value": 23900,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants resistance to one elemental damage type while attuned",
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage"
+      ],
+      "value": 23900
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0858",
     "name": "Thunder Soul of the Umbral Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged consumable recovered from a fallen gate boss. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0858.webp",
@@ -757,12 +1480,23 @@ export const items: Item[] = [
       "health": 130
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 81488
+    "value": 81488,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Restores 2d4+2 hit points when consumed",
+        "Grants advantage on ability checks for 1 hour",
+        "Grants temporary hit points equal to your level for 1 hour"
+      ],
+      "value": 81488
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0859",
     "name": "Holy Soul of the Umbral Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened accessory recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0859.webp",
@@ -770,12 +1504,23 @@ export const items: Item[] = [
       "mana": 188
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 83943
+    "value": 83943,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Grants +1 to one ability score while attuned",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 83943
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0860",
     "name": "Dark Soul of the Umbral Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued scroll recovered from a master artificer. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0860.webp",
@@ -783,12 +1528,23 @@ export const items: Item[] = [
       "mana": 166
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 40354
+    "value": 40354,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 40354
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0861",
     "name": "Shadow Core of the Umbral Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued weapon recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0861.webp",
@@ -796,12 +1552,26 @@ export const items: Item[] = [
       "attack": 75
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 1266
+    "value": 1266,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Deals an extra 1d6 elemental damage on a critical hit"
+      ],
+      "value": 1266
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0862",
     "name": "Eternal Core of the Umbral Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged armor recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0862.webp",
@@ -809,12 +1579,28 @@ export const items: Item[] = [
       "defense": 81
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 3094
+    "value": 3094,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Reduces damage from critical hits by your proficiency bonus",
+        "You can cast Shield once per long rest while wearing this armor"
+      ],
+      "value": 3094
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0863",
     "name": "Void Core of the Umbral Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient consumable recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0863.webp",
@@ -822,12 +1608,23 @@ export const items: Item[] = [
       "health": 494
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 88419
+    "value": 88419,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Restores 2d4+2 hit points when consumed",
+        "Removes one condition affecting the user",
+        "Grants temporary hit points equal to your level for 1 hour"
+      ],
+      "value": 88419
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0864",
     "name": "Abyssal Core of the Umbral Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened accessory recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0864.webp",
@@ -835,12 +1632,23 @@ export const items: Item[] = [
       "mana": 76
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 66034
+    "value": 66034,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "You can cast Detect Magic at will while wearing this",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 66034
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0865",
     "name": "Demonic Core of the Umbral Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened scroll recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0865.webp",
@@ -848,12 +1656,23 @@ export const items: Item[] = [
       "mana": 169
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 22829
+    "value": 22829,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Grants +1 to one ability score while attuned",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 22829
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0866",
     "name": "Celestial Core of the Umbral Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted weapon recovered from a legendary hunter's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0866.webp",
@@ -861,12 +1680,26 @@ export const items: Item[] = [
       "attack": 72
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 11306
+    "value": 11306,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Glows faintly when enemies are within 60 feet"
+      ],
+      "value": 11306
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0867",
     "name": "Divine Core of the Umbral Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged armor recovered from a master artificer. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0867.webp",
@@ -874,12 +1707,28 @@ export const items: Item[] = [
       "defense": 60
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 46605
+    "value": 46605,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants resistance to one elemental damage type while attuned",
+        "You can cast Shield once per long rest while wearing this armor"
+      ],
+      "value": 46605
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0868",
     "name": "Ancient Core of the Umbral Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued consumable recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0868.webp",
@@ -887,12 +1736,23 @@ export const items: Item[] = [
       "health": 216
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 54773
+    "value": 54773,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants advantage on ability checks for 1 hour",
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Restores 2d4+2 hit points when consumed"
+      ],
+      "value": 54773
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0869",
     "name": "Forgotten Core of the Umbral Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient accessory recovered from a legendary hunter's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0869.webp",
@@ -900,12 +1760,23 @@ export const items: Item[] = [
       "mana": 169
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 1072
+    "value": 1072,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You gain proficiency in one saving throw while attuned",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 1072
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0870",
     "name": "Cursed Core of the Umbral Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted scroll recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0870.webp",
@@ -913,12 +1784,23 @@ export const items: Item[] = [
       "mana": 93
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 45761
+    "value": 45761,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "Grants +1 to one ability score while attuned",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 45761
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0871",
     "name": "Blessed Core of the Umbral Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed weapon recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0871.webp",
@@ -926,12 +1808,26 @@ export const items: Item[] = [
       "attack": 232
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 35857
+    "value": 35857,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Glows faintly when enemies are within 60 feet"
+      ],
+      "value": 35857
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0872",
     "name": "Sacred Core of the Umbral Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient armor recovered from a master artificer. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0872.webp",
@@ -939,12 +1835,28 @@ export const items: Item[] = [
       "defense": 224
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 96602
+    "value": 96602,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants resistance to one elemental damage type while attuned",
+        "Reduces damage from critical hits by your proficiency bonus"
+      ],
+      "value": 96602
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0873",
     "name": "Profane Core of the Umbral Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient consumable recovered from a legendary hunter's collection. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0873.webp",
@@ -952,12 +1864,23 @@ export const items: Item[] = [
       "health": 212
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 24040
+    "value": 24040,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Removes one condition affecting the user",
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Restores 2d4+2 hit points when consumed"
+      ],
+      "value": 24040
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0874",
     "name": "Mystic Core of the Umbral Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged accessory recovered from a legendary hunter's collection. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0874.webp",
@@ -965,12 +1888,23 @@ export const items: Item[] = [
       "mana": 180
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 40713
+    "value": 40713,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 40713
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0875",
     "name": "Arcane Core of the Umbral Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient scroll recovered from a master artificer. Infused with lightning energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0875.webp",
@@ -978,12 +1912,23 @@ export const items: Item[] = [
       "mana": 86
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 97000
+    "value": 97000,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You can cast Detect Magic at will while wearing this",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 97000
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0876",
     "name": "Infernal Core of the Umbral Monarch",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted weapon recovered from a legendary hunter's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0876.webp",
@@ -991,12 +1936,26 @@ export const items: Item[] = [
       "attack": 175
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 63826
+    "value": 63826,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Glows faintly when enemies are within 60 feet"
+      ],
+      "value": 63826
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0877",
     "name": "Frozen Core of the Umbral Monarch",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed armor recovered from a master artificer. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0877.webp",
@@ -1004,12 +1963,28 @@ export const items: Item[] = [
       "defense": 58
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 15268
+    "value": 15268,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Reduces damage from critical hits by your proficiency bonus",
+        "Grants advantage on saving throws against one damage type"
+      ],
+      "value": 15268
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0878",
     "name": "Thunder Core of the Umbral Monarch",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued consumable recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0878.webp",
@@ -1017,12 +1992,23 @@ export const items: Item[] = [
       "health": 582
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 28731
+    "value": 28731,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants advantage on ability checks for 1 hour",
+        "Restores 2d4+2 hit points when consumed",
+        "Removes one condition affecting the user"
+      ],
+      "value": 28731
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0879",
     "name": "Holy Core of the Umbral Monarch",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted accessory recovered from a fallen gate boss. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0879.webp",
@@ -1030,12 +2016,23 @@ export const items: Item[] = [
       "mana": 145
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 76081
+    "value": 76081,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "Once per day, reroll a failed saving throw",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 76081
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0880",
     "name": "Dark Core of the Umbral Monarch",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient scroll recovered from a master artificer. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0880.webp",
@@ -1043,12 +2040,23 @@ export const items: Item[] = [
       "mana": 196
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 76127
+    "value": 76127,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Grants +1 to one ability score while attuned",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 76127
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0881",
     "name": "Shadow Blade of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted weapon recovered from a legendary hunter's collection. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0881.webp",
@@ -1056,12 +2064,26 @@ export const items: Item[] = [
       "attack": 63
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 64080
+    "value": 64080,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "You gain +1 to initiative while carrying this weapon"
+      ],
+      "value": 64080
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0882",
     "name": "Eternal Blade of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened armor recovered from a master artificer. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0882.webp",
@@ -1069,12 +2091,28 @@ export const items: Item[] = [
       "defense": 148
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 52459
+    "value": 52459,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Reduces damage from critical hits by your proficiency bonus",
+        "You can cast Shield once per long rest while wearing this armor"
+      ],
+      "value": 52459
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0883",
     "name": "Void Blade of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged consumable recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0883.webp",
@@ -1082,12 +2120,23 @@ export const items: Item[] = [
       "health": 591
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 10105
+    "value": 10105,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Removes one condition affecting the user",
+        "Grants advantage on ability checks for 1 hour",
+        "Restores 2d4+2 hit points when consumed"
+      ],
+      "value": 10105
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0884",
     "name": "Abyssal Blade of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened accessory recovered from a legendary hunter's collection. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0884.webp",
@@ -1095,12 +2144,23 @@ export const items: Item[] = [
       "mana": 52
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 52872
+    "value": 52872,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 52872
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0885",
     "name": "Demonic Blade of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted scroll recovered from a master artificer. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0885.webp",
@@ -1108,12 +2168,23 @@ export const items: Item[] = [
       "mana": 249
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 71135
+    "value": 71135,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "You gain proficiency in one saving throw while attuned",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 71135
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0886",
     "name": "Celestial Blade of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged weapon recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0886.webp",
@@ -1121,12 +2192,26 @@ export const items: Item[] = [
       "attack": 103
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 96226
+    "value": 96226,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Deals an extra 1d6 elemental damage on a critical hit"
+      ],
+      "value": 96226
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0887",
     "name": "Divine Blade of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted armor recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0887.webp",
@@ -1134,12 +2219,28 @@ export const items: Item[] = [
       "defense": 108
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 47346
+    "value": 47346,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants resistance to one elemental damage type while attuned",
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage"
+      ],
+      "value": 47346
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0888",
     "name": "Ancient Blade of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted consumable recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0888.webp",
@@ -1147,12 +2248,23 @@ export const items: Item[] = [
       "health": 267
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 98101
+    "value": 98101,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants advantage on ability checks for 1 hour",
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Restores 2d4+2 hit points when consumed"
+      ],
+      "value": 98101
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0889",
     "name": "Forgotten Blade of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed accessory recovered from a legendary hunter's collection. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0889.webp",
@@ -1160,12 +2272,23 @@ export const items: Item[] = [
       "mana": 106
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 82446
+    "value": 82446,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "Grants darkvision 60 feet if you don't already have it",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 82446
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0890",
     "name": "Cursed Blade of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted scroll recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0890.webp",
@@ -1173,12 +2296,23 @@ export const items: Item[] = [
       "mana": 236
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 86159
+    "value": 86159,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Grants +1 to one ability score while attuned",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 86159
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0891",
     "name": "Blessed Blade of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted weapon recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0891.webp",
@@ -1186,12 +2320,26 @@ export const items: Item[] = [
       "attack": 152
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 46368
+    "value": 46368,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Glows faintly when enemies are within 60 feet"
+      ],
+      "value": 46368
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0892",
     "name": "Sacred Blade of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient armor recovered from a master artificer. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0892.webp",
@@ -1199,12 +2347,28 @@ export const items: Item[] = [
       "defense": 162
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 37269
+    "value": 37269,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants advantage on saving throws against one damage type",
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage"
+      ],
+      "value": 37269
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0893",
     "name": "Profane Blade of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed consumable recovered from a legendary hunter's collection. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0893.webp",
@@ -1212,12 +2376,23 @@ export const items: Item[] = [
       "health": 360
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 16234
+    "value": 16234,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Grants advantage on ability checks for 1 hour",
+        "Allows the user to see invisible creatures for 10 minutes"
+      ],
+      "value": 16234
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0894",
     "name": "Mystic Blade of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed accessory recovered from a fallen gate boss. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0894.webp",
@@ -1225,12 +2400,23 @@ export const items: Item[] = [
       "mana": 151
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 28643
+    "value": 28643,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Grants darkvision 60 feet if you don't already have it",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 28643
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0895",
     "name": "Arcane Blade of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed scroll recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0895.webp",
@@ -1238,12 +2424,23 @@ export const items: Item[] = [
       "mana": 206
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 99117
+    "value": 99117,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "You can cast Detect Magic at will while wearing this",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 99117
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0896",
     "name": "Infernal Blade of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted weapon recovered from a legendary hunter's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0896.webp",
@@ -1251,12 +2448,26 @@ export const items: Item[] = [
       "attack": 147
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 40709
+    "value": 40709,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Deals an extra 1d6 elemental damage on a critical hit"
+      ],
+      "value": 40709
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0897",
     "name": "Frozen Blade of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient armor recovered from a master artificer. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0897.webp",
@@ -1264,12 +2475,28 @@ export const items: Item[] = [
       "defense": 189
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 93830
+    "value": 93830,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants resistance to one elemental damage type while attuned",
+        "You can cast Shield once per long rest while wearing this armor"
+      ],
+      "value": 93830
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0898",
     "name": "Thunder Blade of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted consumable recovered from a legendary hunter's collection. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0898.webp",
@@ -1277,12 +2504,23 @@ export const items: Item[] = [
       "health": 213
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 60072
+    "value": 60072,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Restores 2d4+2 hit points when consumed"
+      ],
+      "value": 60072
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0899",
     "name": "Holy Blade of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient accessory recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0899.webp",
@@ -1290,12 +2528,23 @@ export const items: Item[] = [
       "mana": 61
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 17695
+    "value": 17695,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "You can cast Detect Magic at will while wearing this",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 17695
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0900",
     "name": "Dark Blade of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened scroll recovered from a master artificer. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0900.webp",
@@ -1303,12 +2552,23 @@ export const items: Item[] = [
       "mana": 222
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 67825
+    "value": 67825,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "You can cast Detect Magic at will while wearing this",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 67825
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0901",
     "name": "Shadow Sword of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted weapon recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0901.webp",
@@ -1316,12 +2576,26 @@ export const items: Item[] = [
       "attack": 196
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 60046
+    "value": 60046,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "You gain +1 to initiative while carrying this weapon"
+      ],
+      "value": 60046
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0902",
     "name": "Eternal Sword of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued armor recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0902.webp",
@@ -1329,12 +2603,28 @@ export const items: Item[] = [
       "defense": 137
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 74100
+    "value": 74100,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants resistance to one elemental damage type while attuned",
+        "You can cast Shield once per long rest while wearing this armor"
+      ],
+      "value": 74100
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0903",
     "name": "Void Sword of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed consumable recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0903.webp",
@@ -1342,12 +2632,23 @@ export const items: Item[] = [
       "health": 123
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 35706
+    "value": 35706,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Removes one condition affecting the user",
+        "Grants advantage on ability checks for 1 hour"
+      ],
+      "value": 35706
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0904",
     "name": "Abyssal Sword of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient accessory recovered from a master artificer. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0904.webp",
@@ -1355,12 +2656,23 @@ export const items: Item[] = [
       "mana": 177
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 100567
+    "value": 100567,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Once per day, reroll a failed saving throw",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 100567
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0905",
     "name": "Demonic Sword of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued scroll recovered from a master artificer. Infused with poison energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0905.webp",
@@ -1368,12 +2680,23 @@ export const items: Item[] = [
       "mana": 117
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 74200
+    "value": 74200,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 74200
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0906",
     "name": "Celestial Sword of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed weapon recovered from a master artificer. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0906.webp",
@@ -1381,12 +2704,26 @@ export const items: Item[] = [
       "attack": 95
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 58028
+    "value": 58028,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Glows faintly when enemies are within 60 feet"
+      ],
+      "value": 58028
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0907",
     "name": "Divine Sword of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed armor recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0907.webp",
@@ -1394,12 +2731,28 @@ export const items: Item[] = [
       "defense": 51
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 71827
+    "value": 71827,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage",
+        "Reduces damage from critical hits by your proficiency bonus"
+      ],
+      "value": 71827
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0908",
     "name": "Ancient Sword of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued consumable recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0908.webp",
@@ -1407,12 +2760,23 @@ export const items: Item[] = [
       "health": 437
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 63863
+    "value": 63863,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Removes one condition affecting the user"
+      ],
+      "value": 63863
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0909",
     "name": "Forgotten Sword of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted accessory recovered from a legendary hunter's collection. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0909.webp",
@@ -1420,12 +2784,23 @@ export const items: Item[] = [
       "mana": 222
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 79602
+    "value": 79602,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 79602
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0910",
     "name": "Cursed Sword of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed scroll recovered from a master artificer. Infused with thunder energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0910.webp",
@@ -1433,12 +2808,23 @@ export const items: Item[] = [
       "mana": 65
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 19446
+    "value": 19446,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "Once per day, reroll a failed saving throw",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 19446
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0911",
     "name": "Blessed Sword of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged weapon recovered from a legendary hunter's collection. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0911.webp",
@@ -1446,12 +2832,26 @@ export const items: Item[] = [
       "attack": 59
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 10443
+    "value": 10443,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Deals an extra 1d6 elemental damage on a critical hit"
+      ],
+      "value": 10443
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0912",
     "name": "Sacred Sword of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted armor recovered from a master artificer. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0912.webp",
@@ -1459,12 +2859,28 @@ export const items: Item[] = [
       "defense": 108
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 91490
+    "value": 91490,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage",
+        "Reduces damage from critical hits by your proficiency bonus"
+      ],
+      "value": 91490
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0913",
     "name": "Profane Sword of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged consumable recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0913.webp",
@@ -1472,12 +2888,23 @@ export const items: Item[] = [
       "health": 568
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 3805
+    "value": 3805,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Removes one condition affecting the user"
+      ],
+      "value": 3805
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0914",
     "name": "Mystic Sword of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted accessory recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0914.webp",
@@ -1485,12 +2912,23 @@ export const items: Item[] = [
       "mana": 218
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 42449
+    "value": 42449,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You gain proficiency in one saving throw while attuned",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 42449
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0915",
     "name": "Arcane Sword of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened scroll recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0915.webp",
@@ -1498,12 +2936,23 @@ export const items: Item[] = [
       "mana": 73
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 11806
+    "value": 11806,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 11806
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0916",
     "name": "Infernal Sword of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed weapon recovered from a fallen gate boss. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0916.webp",
@@ -1511,12 +2960,26 @@ export const items: Item[] = [
       "attack": 55
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 58457
+    "value": 58457,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "You gain +1 to initiative while carrying this weapon"
+      ],
+      "value": 58457
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0917",
     "name": "Frozen Sword of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed armor recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0917.webp",
@@ -1524,12 +2987,28 @@ export const items: Item[] = [
       "defense": 166
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 43807
+    "value": 43807,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants resistance to one elemental damage type while attuned",
+        "Grants advantage on saving throws against one damage type"
+      ],
+      "value": 43807
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0918",
     "name": "Thunder Sword of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged consumable recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0918.webp",
@@ -1537,12 +3016,23 @@ export const items: Item[] = [
       "health": 538
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 46066
+    "value": 46066,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Restores 2d4+2 hit points when consumed"
+      ],
+      "value": 46066
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0919",
     "name": "Holy Sword of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened accessory recovered from a fallen gate boss. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0919.webp",
@@ -1550,12 +3040,23 @@ export const items: Item[] = [
       "mana": 87
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 14637
+    "value": 14637,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You can cast Detect Magic at will while wearing this",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 14637
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0920",
     "name": "Dark Sword of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged scroll recovered from a legendary hunter's collection. Infused with poison energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0920.webp",
@@ -1563,12 +3064,23 @@ export const items: Item[] = [
       "mana": 209
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 55639
+    "value": 55639,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "Grants +1 to one ability score while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 55639
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0921",
     "name": "Shadow Dagger of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged weapon recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0921.webp",
@@ -1576,12 +3088,27 @@ export const items: Item[] = [
       "attack": 109
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 4326
+    "value": 4326,
+    "weight": 1,
+    "properties": {
+      "weapon": {
+        "damage": "1d4",
+        "damageType": "piercing",
+        "finesse": true
+      }
+    },
+    "effects": {
+      "passive": [
+        "You gain +1 to initiative while carrying this weapon"
+      ],
+      "value": 4326
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0922",
     "name": "Eternal Dagger of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient armor recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0922.webp",
@@ -1589,12 +3116,28 @@ export const items: Item[] = [
       "defense": 141
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 93922
+    "value": 93922,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants advantage on saving throws against one damage type",
+        "Grants resistance to one elemental damage type while attuned"
+      ],
+      "value": 93922
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0923",
     "name": "Void Dagger of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened consumable recovered from a fallen gate boss. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0923.webp",
@@ -1602,12 +3145,23 @@ export const items: Item[] = [
       "health": 187
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 7287
+    "value": 7287,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Restores 2d4+2 hit points when consumed",
+        "Removes one condition affecting the user",
+        "Grants temporary hit points equal to your level for 1 hour"
+      ],
+      "value": 7287
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0924",
     "name": "Abyssal Dagger of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged accessory recovered from a master artificer. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0924.webp",
@@ -1615,12 +3169,23 @@ export const items: Item[] = [
       "mana": 106
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 68245
+    "value": 68245,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You can cast Detect Magic at will while wearing this",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 68245
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0925",
     "name": "Demonic Dagger of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged scroll recovered from a fallen gate boss. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0925.webp",
@@ -1628,12 +3193,23 @@ export const items: Item[] = [
       "mana": 206
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 84060
+    "value": 84060,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "Grants darkvision 60 feet if you don't already have it",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 84060
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0926",
     "name": "Celestial Dagger of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed weapon recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0926.webp",
@@ -1641,12 +3217,27 @@ export const items: Item[] = [
       "attack": 77
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 90917
+    "value": 90917,
+    "weight": 1,
+    "properties": {
+      "weapon": {
+        "damage": "1d4",
+        "damageType": "piercing",
+        "finesse": true
+      }
+    },
+    "effects": {
+      "passive": [
+        "The weapon returns to your hand when thrown (range 20/60)"
+      ],
+      "value": 90917
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0927",
     "name": "Divine Dagger of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed armor recovered from a master artificer. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0927.webp",
@@ -1654,12 +3245,28 @@ export const items: Item[] = [
       "defense": 133
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 23611
+    "value": 23611,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Reduces damage from critical hits by your proficiency bonus",
+        "Grants resistance to one elemental damage type while attuned"
+      ],
+      "value": 23611
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0928",
     "name": "Ancient Dagger of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed consumable recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0928.webp",
@@ -1667,12 +3274,23 @@ export const items: Item[] = [
       "health": 318
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 79178
+    "value": 79178,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Grants advantage on ability checks for 1 hour"
+      ],
+      "value": 79178
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0929",
     "name": "Forgotten Dagger of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted accessory recovered from a legendary hunter's collection. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0929.webp",
@@ -1680,12 +3298,23 @@ export const items: Item[] = [
       "mana": 231
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 75896
+    "value": 75896,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Grants +1 to one ability score while attuned",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 75896
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0930",
     "name": "Cursed Dagger of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged scroll recovered from a legendary hunter's collection. Infused with lightning energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0930.webp",
@@ -1693,12 +3322,23 @@ export const items: Item[] = [
       "mana": 76
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 52803
+    "value": 52803,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "Grants +1 to one ability score while attuned",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 52803
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0931",
     "name": "Blessed Dagger of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed weapon recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0931.webp",
@@ -1706,12 +3346,27 @@ export const items: Item[] = [
       "attack": 168
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 100782
+    "value": 100782,
+    "weight": 1,
+    "properties": {
+      "weapon": {
+        "damage": "1d4",
+        "damageType": "piercing",
+        "finesse": true
+      }
+    },
+    "effects": {
+      "passive": [
+        "Once per day, the weapon can cast a cantrip-level effect"
+      ],
+      "value": 100782
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0932",
     "name": "Sacred Dagger of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged armor recovered from a fallen gate boss. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0932.webp",
@@ -1719,12 +3374,28 @@ export const items: Item[] = [
       "defense": 137
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 15223
+    "value": 15223,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage",
+        "Reduces damage from critical hits by your proficiency bonus"
+      ],
+      "value": 15223
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0933",
     "name": "Profane Dagger of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted consumable recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0933.webp",
@@ -1732,12 +3403,23 @@ export const items: Item[] = [
       "health": 542
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 61501
+    "value": 61501,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Removes one condition affecting the user",
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Restores 2d4+2 hit points when consumed"
+      ],
+      "value": 61501
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0934",
     "name": "Mystic Dagger of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed accessory recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0934.webp",
@@ -1745,12 +3427,23 @@ export const items: Item[] = [
       "mana": 58
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 16904
+    "value": 16904,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 16904
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0935",
     "name": "Arcane Dagger of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged scroll recovered from a master artificer. Infused with poison energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0935.webp",
@@ -1758,12 +3451,23 @@ export const items: Item[] = [
       "mana": 163
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 18095
+    "value": 18095,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "Grants darkvision 60 feet if you don't already have it",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 18095
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0936",
     "name": "Infernal Dagger of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient weapon recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0936.webp",
@@ -1771,12 +3475,27 @@ export const items: Item[] = [
       "attack": 126
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 32948
+    "value": 32948,
+    "weight": 1,
+    "properties": {
+      "weapon": {
+        "damage": "1d4",
+        "damageType": "piercing",
+        "finesse": true
+      }
+    },
+    "effects": {
+      "passive": [
+        "The weapon returns to your hand when thrown (range 20/60)"
+      ],
+      "value": 32948
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0937",
     "name": "Frozen Dagger of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient armor recovered from a legendary hunter's collection. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0937.webp",
@@ -1784,12 +3503,28 @@ export const items: Item[] = [
       "defense": 159
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 77369
+    "value": 77369,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage",
+        "Grants resistance to one elemental damage type while attuned"
+      ],
+      "value": 77369
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0938",
     "name": "Thunder Dagger of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted consumable recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0938.webp",
@@ -1797,12 +3532,23 @@ export const items: Item[] = [
       "health": 245
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 91560
+    "value": 91560,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants advantage on ability checks for 1 hour",
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Removes one condition affecting the user"
+      ],
+      "value": 91560
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0939",
     "name": "Holy Dagger of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued accessory recovered from a legendary hunter's collection. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0939.webp",
@@ -1810,12 +3556,23 @@ export const items: Item[] = [
       "mana": 113
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 16556
+    "value": 16556,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You can cast Detect Magic at will while wearing this",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 16556
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0940",
     "name": "Dark Dagger of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged scroll recovered from a master artificer. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0940.webp",
@@ -1823,12 +3580,23 @@ export const items: Item[] = [
       "mana": 71
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 33538
+    "value": 33538,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 33538
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0941",
     "name": "Shadow Axe of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed weapon recovered from a master artificer. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0941.webp",
@@ -1836,12 +3604,26 @@ export const items: Item[] = [
       "attack": 104
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 76102
+    "value": 76102,
+    "weight": 4,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Deals an extra 1d6 elemental damage on a critical hit"
+      ],
+      "value": 76102
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0942",
     "name": "Eternal Axe of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed armor recovered from a master artificer. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0942.webp",
@@ -1849,12 +3631,28 @@ export const items: Item[] = [
       "defense": 213
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 60496
+    "value": 60496,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "You can cast Shield once per long rest while wearing this armor",
+        "Grants advantage on saving throws against one damage type"
+      ],
+      "value": 60496
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0943",
     "name": "Void Axe of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed consumable recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0943.webp",
@@ -1862,12 +3660,23 @@ export const items: Item[] = [
       "health": 204
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 78043
+    "value": 78043,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Grants advantage on ability checks for 1 hour",
+        "Removes one condition affecting the user"
+      ],
+      "value": 78043
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0944",
     "name": "Abyssal Axe of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued accessory recovered from a legendary hunter's collection. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0944.webp",
@@ -1875,12 +3684,23 @@ export const items: Item[] = [
       "mana": 100
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 92496
+    "value": 92496,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 92496
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0945",
     "name": "Demonic Axe of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed scroll recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0945.webp",
@@ -1888,12 +3708,23 @@ export const items: Item[] = [
       "mana": 211
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 73941
+    "value": 73941,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You can cast Detect Magic at will while wearing this",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 73941
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0946",
     "name": "Celestial Axe of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed weapon recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0946.webp",
@@ -1901,12 +3732,26 @@ export const items: Item[] = [
       "attack": 77
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 9301
+    "value": 9301,
+    "weight": 4,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Deals an extra 1d6 elemental damage on a critical hit"
+      ],
+      "value": 9301
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0947",
     "name": "Divine Axe of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened armor recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0947.webp",
@@ -1914,12 +3759,28 @@ export const items: Item[] = [
       "defense": 155
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 71124
+    "value": 71124,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants resistance to one elemental damage type while attuned",
+        "Grants advantage on saving throws against one damage type"
+      ],
+      "value": 71124
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0948",
     "name": "Ancient Axe of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued consumable recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0948.webp",
@@ -1927,12 +3788,23 @@ export const items: Item[] = [
       "health": 177
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 46042
+    "value": 46042,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Removes one condition affecting the user",
+        "Grants advantage on ability checks for 1 hour"
+      ],
+      "value": 46042
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0949",
     "name": "Forgotten Axe of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged accessory recovered from a forgotten dungeon. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0949.webp",
@@ -1940,12 +3812,23 @@ export const items: Item[] = [
       "mana": 239
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 99274
+    "value": 99274,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You can cast Detect Magic at will while wearing this",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 99274
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0950",
     "name": "Cursed Axe of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient scroll recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0950.webp",
@@ -1953,12 +3836,23 @@ export const items: Item[] = [
       "mana": 131
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 20496
+    "value": 20496,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "You gain proficiency in one saving throw while attuned",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 20496
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0951",
     "name": "Blessed Axe of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged weapon recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0951.webp",
@@ -1966,12 +3860,26 @@ export const items: Item[] = [
       "attack": 114
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 8386
+    "value": 8386,
+    "weight": 4,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "You gain +1 to initiative while carrying this weapon"
+      ],
+      "value": 8386
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0952",
     "name": "Sacred Axe of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged armor recovered from a fallen gate boss. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0952.webp",
@@ -1979,12 +3887,28 @@ export const items: Item[] = [
       "defense": 168
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 59015
+    "value": 59015,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage",
+        "Grants resistance to one elemental damage type while attuned"
+      ],
+      "value": 59015
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0953",
     "name": "Profane Axe of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued consumable recovered from a master artificer. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0953.webp",
@@ -1992,12 +3916,23 @@ export const items: Item[] = [
       "health": 520
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 14910
+    "value": 14910,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Restores 2d4+2 hit points when consumed",
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Allows the user to see invisible creatures for 10 minutes"
+      ],
+      "value": 14910
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0954",
     "name": "Mystic Axe of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted accessory recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0954.webp",
@@ -2005,12 +3940,23 @@ export const items: Item[] = [
       "mana": 59
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 69774
+    "value": 69774,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "Grants darkvision 60 feet if you don't already have it",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 69774
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0955",
     "name": "Arcane Axe of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted scroll recovered from a legendary hunter's collection. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0955.webp",
@@ -2018,12 +3964,23 @@ export const items: Item[] = [
       "mana": 175
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 55607
+    "value": 55607,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "Once per day, reroll a failed saving throw",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 55607
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0956",
     "name": "Infernal Axe of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued weapon recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0956.webp",
@@ -2031,12 +3988,26 @@ export const items: Item[] = [
       "attack": 218
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 18075
+    "value": 18075,
+    "weight": 4,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Glows faintly when enemies are within 60 feet"
+      ],
+      "value": 18075
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0957",
     "name": "Frozen Axe of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient armor recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0957.webp",
@@ -2044,12 +4015,28 @@ export const items: Item[] = [
       "defense": 60
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 2195
+    "value": 2195,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "You can cast Shield once per long rest while wearing this armor",
+        "Reduces damage from critical hits by your proficiency bonus"
+      ],
+      "value": 2195
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0958",
     "name": "Thunder Axe of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened consumable recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0958.webp",
@@ -2057,12 +4044,23 @@ export const items: Item[] = [
       "health": 217
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 84181
+    "value": 84181,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Removes one condition affecting the user",
+        "Grants advantage on ability checks for 1 hour",
+        "Grants temporary hit points equal to your level for 1 hour"
+      ],
+      "value": 84181
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0959",
     "name": "Holy Axe of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient accessory recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0959.webp",
@@ -2070,12 +4068,23 @@ export const items: Item[] = [
       "mana": 242
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 46697
+    "value": 46697,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Once per day, reroll a failed saving throw",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 46697
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0960",
     "name": "Dark Axe of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted scroll recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0960.webp",
@@ -2083,12 +4092,23 @@ export const items: Item[] = [
       "mana": 185
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 49210
+    "value": 49210,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 49210
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0961",
     "name": "Shadow Hammer of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged weapon recovered from the depths of an A-rank gate. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0961.webp",
@@ -2096,12 +4116,26 @@ export const items: Item[] = [
       "attack": 217
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 96828
+    "value": 96828,
+    "weight": 5,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "bludgeoning"
+      }
+    },
+    "effects": {
+      "passive": [
+        "You gain +1 to initiative while carrying this weapon"
+      ],
+      "value": 96828
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0962",
     "name": "Eternal Hammer of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient armor recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0962.webp",
@@ -2109,12 +4143,28 @@ export const items: Item[] = [
       "defense": 208
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 57406
+    "value": 57406,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants advantage on saving throws against one damage type",
+        "You can cast Shield once per long rest while wearing this armor"
+      ],
+      "value": 57406
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0963",
     "name": "Void Hammer of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed consumable recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0963.webp",
@@ -2122,12 +4172,23 @@ export const items: Item[] = [
       "health": 500
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 61681
+    "value": 61681,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Grants advantage on ability checks for 1 hour",
+        "Grants temporary hit points equal to your level for 1 hour"
+      ],
+      "value": 61681
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0964",
     "name": "Abyssal Hammer of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged accessory recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0964.webp",
@@ -2135,12 +4196,23 @@ export const items: Item[] = [
       "mana": 179
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 54889
+    "value": 54889,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "Grants darkvision 60 feet if you don't already have it",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 54889
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0965",
     "name": "Demonic Hammer of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient scroll recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0965.webp",
@@ -2148,12 +4220,23 @@ export const items: Item[] = [
       "mana": 166
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 49991
+    "value": 49991,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "You can cast Detect Magic at will while wearing this",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 49991
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0966",
     "name": "Celestial Hammer of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted weapon recovered from a legendary hunter's collection. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0966.webp",
@@ -2161,12 +4244,26 @@ export const items: Item[] = [
       "attack": 193
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 64626
+    "value": 64626,
+    "weight": 5,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "bludgeoning"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Once per day, the weapon can cast a cantrip-level effect"
+      ],
+      "value": 64626
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0967",
     "name": "Divine Hammer of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted armor recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0967.webp",
@@ -2174,12 +4271,28 @@ export const items: Item[] = [
       "defense": 187
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 61251
+    "value": 61251,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage",
+        "Grants advantage on saving throws against one damage type"
+      ],
+      "value": 61251
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0968",
     "name": "Ancient Hammer of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged consumable recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0968.webp",
@@ -2187,12 +4300,23 @@ export const items: Item[] = [
       "health": 370
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 7986
+    "value": 7986,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Removes one condition affecting the user",
+        "Grants advantage on ability checks for 1 hour"
+      ],
+      "value": 7986
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0969",
     "name": "Forgotten Hammer of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient accessory recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0969.webp",
@@ -2200,12 +4324,23 @@ export const items: Item[] = [
       "mana": 62
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 81818
+    "value": 81818,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "You can cast Detect Magic at will while wearing this",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 81818
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0970",
     "name": "Cursed Hammer of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed scroll recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0970.webp",
@@ -2213,12 +4348,23 @@ export const items: Item[] = [
       "mana": 115
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 61236
+    "value": 61236,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "You can cast Detect Magic at will while wearing this",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 61236
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0971",
     "name": "Blessed Hammer of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued weapon recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0971.webp",
@@ -2226,12 +4372,26 @@ export const items: Item[] = [
       "attack": 244
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 1961
+    "value": 1961,
+    "weight": 5,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "bludgeoning"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Deals an extra 1d6 elemental damage on a critical hit"
+      ],
+      "value": 1961
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0972",
     "name": "Sacred Hammer of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted armor recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0972.webp",
@@ -2239,12 +4399,28 @@ export const items: Item[] = [
       "defense": 129
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 38412
+    "value": 38412,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants resistance to one elemental damage type while attuned",
+        "Reduces damage from critical hits by your proficiency bonus"
+      ],
+      "value": 38412
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0973",
     "name": "Profane Hammer of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted consumable recovered from a forgotten dungeon. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0973.webp",
@@ -2252,12 +4428,23 @@ export const items: Item[] = [
       "health": 184
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 13707
+    "value": 13707,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Restores 2d4+2 hit points when consumed",
+        "Grants advantage on ability checks for 1 hour",
+        "Removes one condition affecting the user"
+      ],
+      "value": 13707
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0974",
     "name": "Mystic Hammer of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted accessory recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0974.webp",
@@ -2265,12 +4452,23 @@ export const items: Item[] = [
       "mana": 209
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 74178
+    "value": 74178,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Once per day, reroll a failed saving throw",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 74178
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0975",
     "name": "Arcane Hammer of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened scroll recovered from the depths of an A-rank gate. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0975.webp",
@@ -2278,12 +4476,23 @@ export const items: Item[] = [
       "mana": 157
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 94233
+    "value": 94233,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 94233
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0976",
     "name": "Infernal Hammer of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued weapon recovered from a legendary hunter's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0976.webp",
@@ -2291,12 +4500,26 @@ export const items: Item[] = [
       "attack": 85
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 10629
+    "value": 10629,
+    "weight": 5,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "bludgeoning"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Glows faintly when enemies are within 60 feet"
+      ],
+      "value": 10629
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0977",
     "name": "Frozen Hammer of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted armor recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0977.webp",
@@ -2304,12 +4527,28 @@ export const items: Item[] = [
       "defense": 148
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 82941
+    "value": 82941,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "You can cast Shield once per long rest while wearing this armor",
+        "Grants advantage on saving throws against one damage type"
+      ],
+      "value": 82941
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0978",
     "name": "Thunder Hammer of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed consumable recovered from a fallen gate boss. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0978.webp",
@@ -2317,12 +4556,23 @@ export const items: Item[] = [
       "health": 304
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 89282
+    "value": 89282,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Removes one condition affecting the user",
+        "Restores 2d4+2 hit points when consumed",
+        "Grants advantage on ability checks for 1 hour"
+      ],
+      "value": 89282
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0979",
     "name": "Holy Hammer of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued accessory recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0979.webp",
@@ -2330,12 +4580,23 @@ export const items: Item[] = [
       "mana": 189
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 35093
+    "value": 35093,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 35093
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0980",
     "name": "Dark Hammer of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued scroll recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0980.webp",
@@ -2343,12 +4604,23 @@ export const items: Item[] = [
       "mana": 159
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 80973
+    "value": 80973,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Grants +1 to one ability score while attuned",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 80973
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0981",
     "name": "Shadow Staff of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged weapon recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0981.webp",
@@ -2356,12 +4628,27 @@ export const items: Item[] = [
       "attack": 247
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 84320
+    "value": 84320,
+    "weight": 4,
+    "properties": {
+      "weapon": {
+        "damage": "1d6",
+        "damageType": "bludgeoning",
+        "versatile": "1d8"
+      }
+    },
+    "effects": {
+      "passive": [
+        "The weapon returns to your hand when thrown (range 20/60)"
+      ],
+      "value": 84320
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0982",
     "name": "Eternal Staff of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted armor recovered from a legendary hunter's collection. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0982.webp",
@@ -2369,12 +4656,28 @@ export const items: Item[] = [
       "defense": 209
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 88995
+    "value": 88995,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage",
+        "You can cast Shield once per long rest while wearing this armor"
+      ],
+      "value": 88995
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0983",
     "name": "Void Staff of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted consumable recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0983.webp",
@@ -2382,12 +4685,23 @@ export const items: Item[] = [
       "health": 571
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 47644
+    "value": 47644,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Restores 2d4+2 hit points when consumed",
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Grants advantage on ability checks for 1 hour"
+      ],
+      "value": 47644
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0984",
     "name": "Abyssal Staff of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened accessory recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0984.webp",
@@ -2395,12 +4709,23 @@ export const items: Item[] = [
       "mana": 154
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 60152
+    "value": 60152,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "You can cast Detect Magic at will while wearing this",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 60152
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0985",
     "name": "Demonic Staff of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened scroll recovered from a legendary hunter's collection. Infused with ice energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0985.webp",
@@ -2408,12 +4733,23 @@ export const items: Item[] = [
       "mana": 58
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 78475
+    "value": 78475,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 78475
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0986",
     "name": "Celestial Staff of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened weapon recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0986.webp",
@@ -2421,12 +4757,27 @@ export const items: Item[] = [
       "attack": 143
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 17832
+    "value": 17832,
+    "weight": 4,
+    "properties": {
+      "weapon": {
+        "damage": "1d6",
+        "damageType": "bludgeoning",
+        "versatile": "1d8"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Once per day, the weapon can cast a cantrip-level effect"
+      ],
+      "value": 17832
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0987",
     "name": "Divine Staff of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened armor recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0987.webp",
@@ -2434,12 +4785,28 @@ export const items: Item[] = [
       "defense": 231
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 47041
+    "value": 47041,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage",
+        "Grants advantage on saving throws against one damage type"
+      ],
+      "value": 47041
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0988",
     "name": "Ancient Staff of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued consumable recovered from a legendary hunter's collection. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0988.webp",
@@ -2447,12 +4814,23 @@ export const items: Item[] = [
       "health": 388
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 30225
+    "value": 30225,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants advantage on ability checks for 1 hour",
+        "Restores 2d4+2 hit points when consumed",
+        "Allows the user to see invisible creatures for 10 minutes"
+      ],
+      "value": 30225
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0989",
     "name": "Forgotten Staff of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted accessory recovered from a legendary hunter's collection. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0989.webp",
@@ -2460,12 +4838,23 @@ export const items: Item[] = [
       "mana": 96
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 19162
+    "value": 19162,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "Grants darkvision 60 feet if you don't already have it",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 19162
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0990",
     "name": "Cursed Staff of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient scroll recovered from a legendary hunter's collection. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0990.webp",
@@ -2473,12 +4862,23 @@ export const items: Item[] = [
       "mana": 217
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 55142
+    "value": 55142,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "You gain proficiency in one saving throw while attuned",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 55142
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0991",
     "name": "Blessed Staff of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged weapon recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0991.webp",
@@ -2486,12 +4886,27 @@ export const items: Item[] = [
       "attack": 143
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 65445
+    "value": 65445,
+    "weight": 4,
+    "properties": {
+      "weapon": {
+        "damage": "1d6",
+        "damageType": "bludgeoning",
+        "versatile": "1d8"
+      }
+    },
+    "effects": {
+      "passive": [
+        "The weapon returns to your hand when thrown (range 20/60)"
+      ],
+      "value": 65445
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0992",
     "name": "Sacred Staff of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued armor recovered from a legendary hunter's collection. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0992.webp",
@@ -2499,12 +4914,28 @@ export const items: Item[] = [
       "defense": 222
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 54521
+    "value": 54521,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage",
+        "Grants advantage on saving throws against one damage type"
+      ],
+      "value": 54521
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0993",
     "name": "Profane Staff of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged consumable recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0993.webp",
@@ -2512,12 +4943,23 @@ export const items: Item[] = [
       "health": 455
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 65836
+    "value": 65836,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Restores 2d4+2 hit points when consumed",
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Allows the user to see invisible creatures for 10 minutes"
+      ],
+      "value": 65836
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0994",
     "name": "Mystic Staff of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed accessory recovered from a fallen gate boss. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0994.webp",
@@ -2525,12 +4967,23 @@ export const items: Item[] = [
       "mana": 194
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 45089
+    "value": 45089,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 45089
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0995",
     "name": "Arcane Staff of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued scroll recovered from a master artificer. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0995.webp",
@@ -2538,12 +4991,23 @@ export const items: Item[] = [
       "mana": 149
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 65444
+    "value": 65444,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "Grants +1 to one ability score while attuned",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 65444
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0996",
     "name": "Infernal Staff of Supreme Power",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed weapon recovered from a fallen gate boss. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0996.webp",
@@ -2551,12 +5015,27 @@ export const items: Item[] = [
       "attack": 192
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 35693
+    "value": 35693,
+    "weight": 4,
+    "properties": {
+      "weapon": {
+        "damage": "1d6",
+        "damageType": "bludgeoning",
+        "versatile": "1d8"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Glows faintly when enemies are within 60 feet"
+      ],
+      "value": 35693
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0997",
     "name": "Frozen Staff of Supreme Power",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted armor recovered from a legendary hunter's collection. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0997.webp",
@@ -2564,12 +5043,28 @@ export const items: Item[] = [
       "defense": 189
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 7969
+    "value": 7969,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Reduces damage from critical hits by your proficiency bonus",
+        "You can cast Shield once per long rest while wearing this armor"
+      ],
+      "value": 7969
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0998",
     "name": "Thunder Staff of Supreme Power",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient consumable recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0998.webp",
@@ -2577,12 +5072,23 @@ export const items: Item[] = [
       "health": 487
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 3653
+    "value": 3653,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Restores 2d4+2 hit points when consumed",
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Grants advantage on ability checks for 1 hour"
+      ],
+      "value": 3653
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0999",
     "name": "Holy Staff of Supreme Power",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed accessory recovered from a legendary hunter's collection. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0999.webp",
@@ -2590,12 +5096,23 @@ export const items: Item[] = [
       "mana": 174
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 68095
+    "value": 68095,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 68095
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-1000",
     "name": "Dark Staff of Supreme Power",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted scroll recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-1000.webp",
@@ -2603,8 +5120,17 @@ export const items: Item[] = [
       "mana": 213
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 50685
+    "value": 50685,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "You gain proficiency in one saving throw while attuned",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 50685
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   }
 ];
-
-

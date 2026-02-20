@@ -20,6 +20,31 @@ type Equipment = Database['public']['Tables']['character_equipment']['Row'];
 type EquipmentInsert = Database['public']['Tables']['character_equipment']['Insert'];
 type EquipmentUpdate = Database['public']['Tables']['character_equipment']['Update'];
 
+const buildEquipmentCacheKey = (userId: string, characterId: string) => {
+  return `solo-compendium.cache.equipment.${userId}.character:${characterId}.v1`;
+};
+
+const readCachedEquipment = (key: string): Equipment[] | null => {
+  try {
+    if (typeof window === 'undefined') return null;
+    const raw = window.localStorage.getItem(key);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as unknown;
+    return Array.isArray(parsed) ? (parsed as Equipment[]) : null;
+  } catch {
+    return null;
+  }
+};
+
+const writeCachedEquipment = (key: string, equipment: Equipment[]) => {
+  try {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem(key, JSON.stringify(equipment));
+  } catch {
+    // ignore
+  }
+};
+
 export const useEquipment = (characterId: string) => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -31,6 +56,9 @@ export const useEquipment = (characterId: string) => {
         return listLocalEquipment(characterId) as Equipment[];
       }
 
+      const { data: { user } } = await supabase.auth.getUser();
+      const cacheKey = user?.id ? buildEquipmentCacheKey(user.id, characterId) : null;
+
       const { data, error } = await supabase
         .from('character_equipment')
         .select('*')
@@ -41,11 +69,18 @@ export const useEquipment = (characterId: string) => {
 
       if (error) {
         logErrorWithContext(error, 'useEquipment');
+        if (cacheKey) {
+          const cached = readCachedEquipment(cacheKey);
+          if (cached) return cached;
+        }
         throw error;
       }
 
       const equipment = (data || []) as Equipment[];
       if (equipment.length === 0) {
+        if (cacheKey) {
+          writeCachedEquipment(cacheKey, equipment);
+        }
         return equipment;
       }
 
@@ -61,6 +96,9 @@ export const useEquipment = (characterId: string) => {
 
       if (compendiumError) {
         logErrorWithContext(compendiumError, 'useEquipment (compendium source lookup)');
+        if (cacheKey) {
+          writeCachedEquipment(cacheKey, equipment);
+        }
         return equipment;
       }
 
@@ -70,6 +108,9 @@ export const useEquipment = (characterId: string) => {
       });
 
       if (sourceBookByName.size === 0) {
+        if (cacheKey) {
+          writeCachedEquipment(cacheKey, equipment);
+        }
         return equipment;
       }
 
@@ -81,13 +122,19 @@ export const useEquipment = (characterId: string) => {
       );
       const accessibleNames = new Set(accessibleCompendiumEquipment.map((entry) => entry.name));
 
-      return equipment.filter((item) => {
+      const filtered = equipment.filter((item) => {
         if (!sourceBookByName.has(item.name)) {
           return true;
         }
 
         return accessibleNames.has(item.name);
       });
+
+      if (cacheKey) {
+        writeCachedEquipment(cacheKey, filtered);
+      }
+
+      return filtered;
     },
     enabled: !!characterId,
   });
@@ -97,6 +144,36 @@ export const useEquipment = (characterId: string) => {
       if (isLocalCharacterId(characterId)) {
         addLocalEquipment(characterId, item as unknown as Omit<EquipmentInsert, 'character_id'>);
         return null;
+      }
+
+      const { data: { user } } = await supabase.auth.getUser();
+      const cacheKey = user?.id ? buildEquipmentCacheKey(user.id, characterId) : null;
+      if (cacheKey) {
+        const cached = readCachedEquipment(cacheKey);
+        if (cached) {
+          const now = new Date().toISOString();
+          const optimistic: Equipment = {
+            id: `optimistic_${Date.now()}`,
+            character_id: characterId,
+            created_at: now,
+            display_order: cached.length,
+            name: item.name,
+            item_type: item.item_type,
+            quantity: item.quantity ?? 1,
+            is_equipped: item.is_equipped ?? false,
+            is_attuned: item.is_attuned ?? false,
+            requires_attunement: item.requires_attunement ?? false,
+            description: item.description ?? null,
+            properties: item.properties ?? null,
+            weight: item.weight ?? null,
+            value_credits: item.value_credits ?? null,
+            rarity: item.rarity ?? null,
+            relic_tier: item.relic_tier ?? null,
+            charges_current: item.charges_current ?? null,
+            charges_max: item.charges_max ?? null,
+          };
+          writeCachedEquipment(cacheKey, [...cached, optimistic]);
+        }
       }
 
       const campaignId = await getCharacterCampaignId(characterId);
@@ -147,6 +224,18 @@ export const useEquipment = (characterId: string) => {
         return null;
       }
 
+      const { data: { user } } = await supabase.auth.getUser();
+      const cacheKey = user?.id ? buildEquipmentCacheKey(user.id, characterId) : null;
+      if (cacheKey) {
+        const cached = readCachedEquipment(cacheKey);
+        if (cached) {
+          writeCachedEquipment(
+            cacheKey,
+            cached.map((row) => (row.id === id ? ({ ...row, ...updates } as Equipment) : row))
+          );
+        }
+      }
+
       const { data, error } = await supabase
         .from('character_equipment')
         .update(updates)
@@ -176,6 +265,15 @@ export const useEquipment = (characterId: string) => {
       if (isLocalCharacterId(characterId)) {
         removeLocalEquipment(id);
         return;
+      }
+
+      const { data: { user } } = await supabase.auth.getUser();
+      const cacheKey = user?.id ? buildEquipmentCacheKey(user.id, characterId) : null;
+      if (cacheKey) {
+        const cached = readCachedEquipment(cacheKey);
+        if (cached) {
+          writeCachedEquipment(cacheKey, cached.filter((row) => row.id !== id));
+        }
       }
 
       const { error } = await supabase
@@ -208,6 +306,21 @@ export const useEquipment = (characterId: string) => {
           updateLocalEquipment(id, { display_order });
         }
         return;
+      }
+
+      const { data: { user } } = await supabase.auth.getUser();
+      const cacheKey = user?.id ? buildEquipmentCacheKey(user.id, characterId) : null;
+      if (cacheKey) {
+        const cached = readCachedEquipment(cacheKey);
+        if (cached) {
+          const next = cached
+            .map((row) => {
+              const nextOrder = newOrder.find((o) => o.id === row.id);
+              return nextOrder ? { ...row, display_order: nextOrder.display_order } : row;
+            })
+            .sort((a, b) => (a.display_order ?? 0) - (b.display_order ?? 0));
+          writeCachedEquipment(cacheKey, next);
+        }
       }
 
       // Batch update all items with their new order

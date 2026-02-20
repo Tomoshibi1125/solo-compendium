@@ -7,7 +7,7 @@ import { formatMonarchVernacular, MONARCH_LABEL, MONARCH_LABEL_PLURAL } from '@/
 
 type Job = Tables<'compendium_jobs'>;
 type Path = Tables<'compendium_job_paths'>;
-type Monarch = Tables<'compendium_monarchs'>;
+type Regent = Tables<'compendium_monarchs'>;
 
 export interface FusionAbility {
   name: string;
@@ -30,8 +30,8 @@ export interface GeneratedSovereign {
   abilities: FusionAbility[];
   job: Job;
   path: Path;
-  monarchA: Monarch;
-  monarchB: Monarch;
+  regentA: Regent;
+  regentB: Regent;
   power_multiplier: string;
   fusion_stability: string;
 }
@@ -53,9 +53,9 @@ const generateUnifiedFusionName = (a: string, b: string): string => {
 };
 
 // Generate fusion name based on unified approach
-function generateFusionName(monarchA: Monarch, monarchB: Monarch): string {
-  const nameA = stripMonarchTerm(monarchA.name);
-  const nameB = stripMonarchTerm(monarchB.name);
+function generateFusionName(regentA: Regent, regentB: Regent): string {
+  const nameA = stripMonarchTerm(regentA.name);
+  const nameB = stripMonarchTerm(regentB.name);
   
   return generateUnifiedFusionName(nameA, nameB);
 }
@@ -163,9 +163,9 @@ const themeMatrix: Record<string, Record<string, { theme: string; element: strin
   },
 };
 
-function getFusionTheme(monarchA: Monarch, monarchB: Monarch): { theme: string; element: string; concept: string } {
-  const themeA = monarchA.theme;
-  const themeB = monarchB.theme;
+function getFusionTheme(regentA: Regent, regentB: Regent): { theme: string; element: string; concept: string } {
+  const themeA = regentA.theme;
+  const themeB = regentB.theme;
   
   const result = themeMatrix[themeA]?.[themeB] || themeMatrix[themeB]?.[themeA];
   if (result) return result;
@@ -196,7 +196,7 @@ const abilityTemplates: Record<string, AbilityTemplate> = {
   // LEVEL 1: Fusion Awakening - First taste of combined power
   fusionAwakening: {
     name: '{fusionName} Strike',
-    desc: '[UNIFIED FUSION TECHNIQUE] Channel the merged essence of {monarchA} and {monarchB}. Your attacks manifest as {element} energy, dealing [{damageA}+{damageB}] damage. This strike exists in two states simultaneously--like the fusion itself, it is both and neither.',
+    desc: '[UNIFIED FUSION TECHNIQUE] Channel the merged essence of {regentA} and {regentB}. Your attacks manifest as {element} energy, dealing [{damageA}+{damageB}] damage. This strike exists in two states simultaneously--like the fusion itself, it is both and neither.',
     action: '1 action',
   },
 
@@ -241,7 +241,7 @@ const abilityTemplates: Record<string, AbilityTemplate> = {
   // LEVEL 17: Perfect Fusion - Capstone ability
   perfectFusion: {
     name: 'Perfect Fusion: {fusionName}',
-    desc: `[ULTIMATE UNIFIED FUSION] Achieve complete integration of {job}, {path}, {monarchA}, and {monarchB} into a single being. For 1 minute: double proficiency on all rolls, all damage becomes [{damageA}+{damageB}], immune to {damageA} and {damageB} damage, and you may use any class, path, or ${MONARCH_LABEL.toLowerCase()} ability as a bonus action.`,
+    desc: `[ULTIMATE UNIFIED FUSION] Achieve complete integration of {job}, {path}, {regentA}, and {regentB} into a single being. For 1 minute: double proficiency on all rolls, all damage becomes [{damageA}+{damageB}], immune to {damageA} and {damageB} damage, and you may use any class, path, or ${MONARCH_LABEL.toLowerCase()} ability as a bonus action.`,
     action: '1 action',
     recharge: 'Long Rest',
     isCapstone: true,
@@ -302,45 +302,44 @@ function mergeSources(primary: string[], required: string[]): string[] {
 export function generateSovereign(
   job: Job,
   path: Path,
-  monarchA: Monarch,
-  monarchB: Monarch
+  regentA: Regent,
+  regentB: Regent
 ): GeneratedSovereign {
-  const fusionThemeData = getFusionTheme(monarchA, monarchB);
-  const fusionName = generateFusionName(monarchA, monarchB);
+  const fusionName = generateFusionName(regentA, regentB);
+  const fusionTheme = getFusionTheme(regentA, regentB);
   const powerMultiplier = getPowerMultiplier();
+  const fusionStability = 'Stable (Unified, Sovereign-Grade)';
   
   const pathShortName = path.name.replace(/^Path of the\s*/i, '').replace(/\s*Path$/i, '');
-  const displayMonarchAName = formatMonarchVernacular(monarchA.name);
-  const displayMonarchBName = formatMonarchVernacular(monarchB.name);
-  const displayMonarchATitle = formatMonarchVernacular(monarchA.title || monarchA.name);
-  const displayMonarchBTitle = formatMonarchVernacular(monarchB.title || monarchB.name);
+  const displayRegentAName = formatMonarchVernacular(regentA.name);
+  const displayRegentBName = formatMonarchVernacular(regentB.name);
+  const displayRegentATitle = formatMonarchVernacular(regentA.title || regentA.name);
+  const displayRegentBTitle = formatMonarchVernacular(regentB.title || regentB.name);
   
   const context: Record<string, string> = {
     fusionName,
-    fusionTheme: fusionThemeData.theme,
-    theme: fusionThemeData.theme,
-    element: fusionThemeData.element,
-    concept: fusionThemeData.concept,
-    themeA: monarchA.theme,
-    themeB: monarchB.theme,
-    damageA: monarchA.damage_type || 'necrotic',
-    damageB: monarchB.damage_type || 'force',
-    monarchA: displayMonarchAName,
-    monarchB: displayMonarchBName,
-    job: job.name,
-    path: pathShortName,
-    profMod: 'proficiency modifier',
+    fusionTheme: fusionTheme.theme,
+    element: fusionTheme.element,
+    themeA: formatMonarchVernacular(regentA.theme),
+    themeB: formatMonarchVernacular(regentB.theme),
+    damageA: formatMonarchVernacular(regentA.damage_type || 'Force'),
+    damageB: formatMonarchVernacular(regentB.damage_type || 'Force'),
+    job: formatMonarchVernacular(job.name),
+    path: formatMonarchVernacular(path.name.replace('Path of the ', '')),
+    regentA: formatMonarchVernacular(regentA.name),
+    regentB: formatMonarchVernacular(regentB.name),
+    profMod: '2',
   };
 
   const abilities: FusionAbility[] = [];
-  const requiredSources = [job.name, path.name, displayMonarchAName, displayMonarchBName];
+  const requiredSources = [job.name, path.name, displayRegentAName, displayRegentBName];
   
   // Level 1: Fusion Awakening
   abilities.push(generateAbilityFromTemplate(
     abilityTemplates.fusionAwakening,
     context,
     1,
-    mergeSources([monarchA.name, monarchB.name], requiredSources)
+    mergeSources([regentA.name, regentB.name], requiredSources)
   ));
 
   // Level 3: Class Integration
@@ -348,7 +347,7 @@ export function generateSovereign(
     abilityTemplates.classIntegration,
     context,
     3,
-    mergeSources([job.name, monarchA.name, monarchB.name], requiredSources)
+    mergeSources([job.name, regentA.name, regentB.name], requiredSources)
   ));
 
   // Level 5: Defensive Resonance
@@ -356,7 +355,7 @@ export function generateSovereign(
     abilityTemplates.defensiveResonance,
     context,
     5,
-    mergeSources([monarchA.name, monarchB.name], requiredSources)
+    mergeSources([regentA.name, regentB.name], requiredSources)
   ));
 
   // Level 7: Domain Overlap
@@ -364,7 +363,7 @@ export function generateSovereign(
     abilityTemplates.domainOverlap,
     context,
     7,
-    mergeSources([monarchA.name, monarchB.name], requiredSources)
+    mergeSources([regentA.name, regentB.name], requiredSources)
   ));
 
   // Level 10: Path Synthesis
@@ -372,7 +371,7 @@ export function generateSovereign(
     abilityTemplates.pathSynthesis,
     context,
     10,
-    mergeSources([path.name, monarchA.name, monarchB.name], requiredSources)
+    mergeSources([path.name, regentA.name, regentB.name], requiredSources)
   ));
 
   // Level 14: Resonant Burst
@@ -380,7 +379,7 @@ export function generateSovereign(
     abilityTemplates.resonantBurst,
     context,
     14,
-    mergeSources([monarchA.name, monarchB.name], requiredSources)
+    mergeSources([regentA.name, regentB.name], requiredSources)
   ));
 
   // Level 17: Perfect Fusion (Capstone)
@@ -388,7 +387,7 @@ export function generateSovereign(
     abilityTemplates.perfectFusion,
     context,
     17,
-    mergeSources([job.name, path.name, monarchA.name, monarchB.name], requiredSources)
+    mergeSources([job.name, path.name, regentA.name, regentB.name], requiredSources)
   ));
 
   // Level 20: Sovereign Transcendence (Ultimate Capstone)
@@ -396,33 +395,25 @@ export function generateSovereign(
     abilityTemplates.sovereignTranscendence,
     context,
     20,
-    mergeSources([job.name, path.name, monarchA.name, monarchB.name], requiredSources)
+    mergeSources([job.name, path.name, regentA.name, regentB.name], requiredSources)
   ));
 
   return {
-    name: `${fusionName} Sovereign`,
-    title: `The ${fusionThemeData.theme} ${job.name}`,
-    description: `[GEMINI PROTOCOL: SUBCLASS OVERLAY]
-    
-A permanent subclass overlay combining ${job.name} (${pathShortName}) with the merged essence of ${displayMonarchATitle} and ${displayMonarchBTitle}. Through the Gemini Protocol - blessed by the Prime Architect in the post-reset timeline - this Sovereign embodies ${fusionThemeData.concept}. The overlay is permanent and stabilized by sovereign power.
-
-Unlike temporary boosts or conditional fusions, this overlay rewrites the base class. The four components (Job, Path, ${MONARCH_LABEL} A, ${MONARCH_LABEL} B) do not merely cooperate - they become ONE sovereign identity with new capabilities.
-
-This Sovereign wields ${fusionThemeData.theme} power, a force that neither ${displayMonarchAName} nor ${displayMonarchBName} could manifest alone.`,
-    fusion_theme: fusionThemeData.theme,
-    fusion_description: `The ${fusionThemeData.theme} overlay represents ${fusionThemeData.concept}. This combines ${monarchA.theme}'s mastery of ${monarchA.damage_type || 'necrotic'} with ${monarchB.theme}'s control over ${monarchB.damage_type || 'force'}, filtered through ${job.name} combat doctrine and ${pathShortName} techniques.
-
-In system terms: this is a permanent subclass overlay, not multi-classing or a temporary fusion. Every Sovereign is a unique overlay that never exists again in exactly the same form.
-
-The overlay is greater than the sum of its parts. ${fusionName} is not "${displayMonarchAName} + ${displayMonarchBName}" - ${fusionName} is a NEW SOVEREIGN with NEW POWER.`,
-    fusion_method: 'Gemini Protocol',
+    name: formatMonarchVernacular(`${fusionName} Sovereign`),
+    title: formatMonarchVernacular(`Sovereign of ${fusionTheme.theme}`),
+    description: formatMonarchVernacular(
+      `Born from the Gemini Protocol fusion of ${regentA.name} and ${regentB.name}, this Sovereign represents a permanent evolution beyond standard ascendant progression.`
+    ),
+    fusion_theme: formatMonarchVernacular(fusionTheme.theme),
+    fusion_description: formatMonarchVernacular(`A permanent fusion of ${fusionTheme.concept}.`),
+    fusion_method: 'Gemini Protocol (Unified Fusion)',
     abilities,
     job,
     path,
-    monarchA,
-    monarchB,
+    regentA,
+    regentB,
     power_multiplier: powerMultiplier,
-    fusion_stability: 'Permanent - Sovereign subclass overlay',
+    fusion_stability: fusionStability,
   };
 }
 
@@ -430,12 +421,12 @@ The overlay is greater than the sum of its parts. ${fusionName} is not "${displa
 export function calculateTotalCombinations(
   jobCount: number,
   pathCount: number,
-  monarchCount: number
+  regentCount: number
 ): number {
-  // Monarchs are selected as pairs (A and B, order matters for naming)
-  const monarchPairs = monarchCount * (monarchCount - 1);
+  // Regents are selected as pairs (A and B, order matters for naming)
+  const regentPairs = regentCount * (regentCount - 1);
   // Each path belongs to a specific job, so we use path count directly
-  return pathCount * monarchPairs;
+  return pathCount * regentPairs;
 }
 
 // Get fusion description for display

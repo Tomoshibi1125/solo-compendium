@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, RefreshCw, Copy } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -8,6 +8,8 @@ import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { formatMonarchVernacular } from '@/lib/vernacular';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useUserToolState } from '@/hooks/useToolState';
 
 const RIFT_RANKS = ['E', 'D', 'C', 'B', 'A', 'S'];
 const RIFT_THEMES = [
@@ -68,12 +70,52 @@ function generateRift(rank?: string): GeneratedRift {
 const GateGenerator = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { state: storedState, isLoading, saveNow } = useUserToolState<{
+    selectedRank: string;
+    rift: GeneratedRift | null;
+  }>('gate_generator', {
+    initialState: {
+      selectedRank: '',
+      rift: null,
+    },
+    storageKey: 'solo-compendium.dm-tools.gate-generator.v1',
+  });
+
   const [selectedRank, setSelectedRank] = useState<string>('');
   const [rift, setRift] = useState<GeneratedRift | null>(null);
+  const userInteractedRef = useRef(false);
+
+  const hydrated = useMemo(() => {
+    return {
+      selectedRank: storedState.selectedRank ?? '',
+      rift: storedState.rift ?? null,
+    };
+  }, [storedState.rift, storedState.selectedRank]);
+
+  const hydratedRef = useRef(false);
+  useEffect(() => {
+    if (isLoading) return;
+    if (hydratedRef.current) return;
+    if (userInteractedRef.current) return;
+    setSelectedRank(hydrated.selectedRank);
+    setRift(hydrated.rift);
+    hydratedRef.current = true;
+  }, [hydrated.rift, hydrated.selectedRank, isLoading]);
+
+  const savePayload = useMemo(() => ({ selectedRank, rift }), [rift, selectedRank]);
+  const debouncedPayload = useDebounce(savePayload, 350);
+
+  useEffect(() => {
+    if (isLoading) return;
+    if (!hydratedRef.current) return;
+    void saveNow(debouncedPayload);
+  }, [debouncedPayload, isLoading, saveNow]);
 
   const handleGenerate = () => {
+    userInteractedRef.current = true;
     const newRift = generateRift(selectedRank || undefined);
     setRift(newRift);
+    void saveNow({ selectedRank, rift: newRift });
     toast({
       title: 'Rift Generated',
       description: `Generated a ${newRift.rank}-Rank Rift.`,
@@ -124,7 +166,12 @@ const GateGenerator = () => {
                         key={rank}
                         size="sm"
                         variant={selectedRank === rank ? 'default' : 'outline'}
-                        onClick={() => setSelectedRank(selectedRank === rank ? '' : rank)}
+                        onClick={() => {
+                          userInteractedRef.current = true;
+                          const nextRank = selectedRank === rank ? '' : rank;
+                          setSelectedRank(nextRank);
+                          void saveNow({ selectedRank: nextRank, rift });
+                        }}
                       >
                         {rank}
                       </Button>

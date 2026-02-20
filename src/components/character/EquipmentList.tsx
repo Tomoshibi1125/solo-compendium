@@ -8,7 +8,6 @@ import { useCharacter } from '@/hooks/useCharacters';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { AddEquipmentDialog } from './AddEquipmentDialog';
-import { InscribeRuneDialog } from './InscribeRuneDialog';
 import { EquipmentItem } from './EquipmentItem';
 import { calculateTotalWeight, calculateEncumbrance, calculateCarryingCapacity } from '@/lib/encumbrance';
 import { formatMonarchVernacular } from '@/lib/vernacular';
@@ -39,8 +38,6 @@ export function EquipmentList({ characterId }: { characterId: string }) {
   const { data: character } = useCharacter(characterId);
   const { toast } = useToast();
   const [addDialogOpen, setAddDialogOpen] = useState(false);
-  const [inscribeDialogOpen, setInscribeDialogOpen] = useState(false);
-  const [selectedEquipmentId, setSelectedEquipmentId] = useState<string | null>(null);
 
   // Calculate weight and encumbrance
   const strScore = character?.abilities?.STR || 10;
@@ -162,9 +159,8 @@ export function EquipmentList({ characterId }: { characterId: string }) {
                     encumbrance.status === 'heavy' && "bg-orange-500",
                     encumbrance.status === 'overloaded' && "bg-red-500"
                   )}
-                  style={{
-                    width: `${Math.min((totalWeight / carryingCapacity) * 100, 100)}%`,
-                  }}
+                  // eslint-disable-next-line react/forbid-dom-props -- dynamic width requires inline style
+                  style={{ width: `${Math.min((totalWeight / carryingCapacity) * 100, 100)}%` }}
                 />
               </div>
             </div>
@@ -229,10 +225,6 @@ export function EquipmentList({ characterId }: { characterId: string }) {
                       onToggleEquipped={() => handleToggleEquipped(item)}
                       onToggleAttuned={() => handleToggleAttuned(item)}
                       onRemove={() => handleRemove(item)}
-                      onInscribeRune={() => {
-                        setSelectedEquipmentId(item.id);
-                        setInscribeDialogOpen(true);
-                      }}
                       canAttune={canAttune}
                     />
                   )}
@@ -250,18 +242,6 @@ export function EquipmentList({ characterId }: { characterId: string }) {
         characterId={characterId}
       />
 
-      {inscribeDialogOpen && selectedEquipmentId && (
-        <InscribeRuneDialog
-          characterId={characterId}
-          equipmentId={selectedEquipmentId}
-          open={inscribeDialogOpen}
-          onOpenChange={setInscribeDialogOpen}
-          onSuccess={() => {
-            setInscribeDialogOpen(false);
-            setSelectedEquipmentId(null);
-          }}
-        />
-      )}
     </SystemWindow>
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, RefreshCw, Copy, Gem, Coins, Sparkles } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -10,16 +10,57 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/hooks/use-toast';
 import { GATE_RANKS, TREASURE_TABLES, generateTreasure, type TreasureResult } from '@/lib/treasureGenerator';
 import { cn } from '@/lib/utils';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useUserToolState } from '@/hooks/useToolState';
 
 const TreasureGenerator = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { state: storedState, isLoading, saveNow } = useUserToolState<{
+    selectedRank: string;
+    treasure: TreasureResult | null;
+  }>('treasure_generator', {
+    initialState: {
+      selectedRank: 'C',
+      treasure: null,
+    },
+    storageKey: 'solo-compendium.dm-tools.treasure-generator.v1',
+  });
+
   const [selectedRank, setSelectedRank] = useState<string>('C');
   const [treasure, setTreasure] = useState<TreasureResult | null>(null);
+
+  const hydrated = useMemo(() => {
+    return {
+      selectedRank: storedState.selectedRank ?? 'C',
+      treasure: storedState.treasure ?? null,
+    };
+  }, [storedState.selectedRank, storedState.treasure]);
+
+  const hydratedRef = useRef(false);
+  useEffect(() => {
+    if (isLoading) return;
+    if (hydratedRef.current) return;
+    setSelectedRank(hydrated.selectedRank);
+    setTreasure(hydrated.treasure);
+    hydratedRef.current = true;
+  }, [hydrated.selectedRank, hydrated.treasure, isLoading]);
+
+  const savePayload = useMemo(() => ({ selectedRank, treasure }), [selectedRank, treasure]);
+  const debouncedPayload = useDebounce(savePayload, 350);
+
+  useEffect(() => {
+    if (isLoading) return;
+    if (!hydratedRef.current) return;
+    void saveNow(debouncedPayload);
+  }, [debouncedPayload, isLoading, saveNow]);
 
   const handleGenerate = () => {
     const result = generateTreasure(selectedRank);
     setTreasure(result);
+    if (!isLoading) {
+      void saveNow({ selectedRank, treasure: result });
+    }
   };
 
   const handleCopy = () => {
@@ -74,7 +115,15 @@ ${treasure.description}`;
               <Label htmlFor="rank" className="mb-2 block">
                 Rift Rank
               </Label>
-              <Select value={selectedRank} onValueChange={setSelectedRank}>
+              <Select
+                value={selectedRank}
+                onValueChange={(value) => {
+                  setSelectedRank(value);
+                  if (!isLoading) {
+                    void saveNow({ selectedRank: value, treasure });
+                  }
+                }}
+              >
                 <SelectTrigger id="rank">
                   <SelectValue />
                 </SelectTrigger>

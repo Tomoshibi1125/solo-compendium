@@ -24,6 +24,7 @@ export const entryTypes = [
   'monsters',
   'backgrounds',
   'conditions',
+  'regents',
   'monarchs',
   'feats',
   'skills',
@@ -56,7 +57,8 @@ const supabaseTableMap: Partial<Record<EntryType, keyof Database['public']['Tabl
   monsters: 'compendium_monsters',
   backgrounds: 'compendium_backgrounds',
   conditions: 'compendium_conditions',
-  monarchs: 'compendium_monarchs',
+  regents: 'compendium_regents' as any,
+  monarchs: 'compendium_regents' as any,
   feats: 'compendium_feats',
   skills: 'compendium_skills',
   equipment: 'compendium_equipment',
@@ -65,6 +67,9 @@ const supabaseTableMap: Partial<Record<EntryType, keyof Database['public']['Tabl
 };
 
 const legacyIdMap: Partial<Record<EntryType, Record<string, string>>> = {
+  regents: {
+    'umbral-sovereign-overlay': 'umbral-monarch-overlay',
+  },
   monarchs: {
     'umbral-sovereign-overlay': 'umbral-monarch-overlay',
   },
@@ -79,6 +84,7 @@ type StaticDataProvider = {
   getMonsters: (search?: string) => Promise<StaticCompendiumEntry[]>;
   getBackgrounds: (search?: string) => Promise<StaticCompendiumEntry[]>;
   getConditions: (search?: string) => Promise<StaticCompendiumEntry[]>;
+  getRegents: (search?: string) => Promise<StaticCompendiumEntry[]>;
   getMonarchs: (search?: string) => Promise<StaticCompendiumEntry[]>;
   getFeats: (search?: string) => Promise<StaticCompendiumEntry[]>;
   getSkills: (search?: string) => Promise<StaticCompendiumEntry[]>;
@@ -132,8 +138,11 @@ const getStaticEntries = async (
     case 'conditions':
       entries = await provider.getConditions(search);
       break;
+    case 'regents':
+      entries = await provider.getRegents(search);
+      break;
     case 'monarchs':
-      entries = await provider.getMonarchs(search);
+      entries = await provider.getRegents(search);
       break;
     case 'feats':
       entries = await provider.getFeats(search);
@@ -313,8 +322,6 @@ export async function validateRef(type: EntryType, id: string): Promise<boolean>
 export function isValidEntryType(value: string): value is EntryType {
   return entryTypes.includes(value as EntryType);
 }
-<<<<<<< Updated upstream
-=======
 
 /**
  * Map homebrew content_type to compendium EntryType.
@@ -397,4 +404,3 @@ export async function mergeHomebrewEntries(
     return [];
   }
 }
->>>>>>> Stashed changes

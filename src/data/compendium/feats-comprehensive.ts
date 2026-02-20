@@ -15,7 +15,7 @@ export interface Feat {
     background?: string;
     skill?: string;
     alignment?: string;
-    race?: string;
+    job?: string;
   };
   benefits: string[];
   mechanics: {
@@ -820,13 +820,13 @@ export const comprehensiveFeats: Feat[] = [
     source: 'System Ascendant Canon'
   },
 
-  // RACIAL FEATS (Expanded)
+  // JOB FEATS (Expanded)
   {
-    id: 'human-determination',
-    name: 'Human Determination',
-    description: 'Your human spirit gives you exceptional determination and resilience.',
+    id: 'warrior-determination',
+    name: 'Warrior\'s Determination',
+    description: 'Your martial awakening grants you exceptional determination and resilience.',
     prerequisites: {
-      race: 'Human'
+      job: 'Warrior'
     },
     benefits: [
       'Advantage on saving throws against fear and charm',
@@ -838,15 +838,15 @@ export const comprehensiveFeats: Feat[] = [
       type: 'passive',
       frequency: 'at-will'
     },
-    flavor: 'The human spirit refuses to be extinguished.',
+    flavor: 'The warrior\'s spirit refuses to be extinguished.',
     source: 'System Ascendant Canon'
   },
   {
-    id: 'elven-grace',
-    name: 'Elven Grace',
-    description: 'Your elven heritage grants you supernatural grace and perception.',
+    id: 'stalker-grace',
+    name: 'Stalker\'s Grace',
+    description: 'Your rift-tracking instincts grant you supernatural grace and perception.',
     prerequisites: {
-      race: 'Elf'
+      job: 'Stalker'
     },
     benefits: [
       'Advantage on Dexterity checks',
@@ -858,27 +858,27 @@ export const comprehensiveFeats: Feat[] = [
       type: 'passive',
       frequency: 'at-will'
     },
-    flavor: 'Elven grace flows through your every movement.',
+    flavor: 'Dimensional awareness flows through your every movement.',
     source: 'System Ascendant Canon'
   },
   {
-    id: 'dwarven-resilience',
-    name: 'Dwarven Resilience',
-    description: 'Your dwarven heritage grants you exceptional toughness and stone-sense.',
+    id: 'bulwark-fortitude',
+    name: 'Bulwark Fortitude',
+    description: 'Your crystallized mana body grants you exceptional toughness and resilience.',
     prerequisites: {
-      race: 'Dwarf'
+      job: 'Bulwark'
     },
     benefits: [
       'Advantage on Constitution saving throws',
       'Resistance to poison damage',
-      'Can determine depth underground',
-      'Advantage on checks related to stonework'
+      'Can sense structural weaknesses in objects',
+      'Advantage on checks to resist being moved or knocked prone'
     ],
     mechanics: {
       type: 'passive',
       frequency: 'at-will'
     },
-    flavor: 'The mountains themselves flow through your veins.',
+    flavor: 'Your mana-crystallized body is an unbreakable fortress.',
     source: 'System Ascendant Canon'
   },
 

@@ -13,6 +13,7 @@ import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { Link } from 'react-router-dom';
 import { CampaignChat } from '@/components/campaign/CampaignChat';
 import { CampaignNotes } from '@/components/campaign/CampaignNotes';
+import { CampaignHandouts } from '@/components/campaign/CampaignHandouts';
 import { CampaignCharacters } from '@/components/campaign/CampaignCharacters';
 import { CampaignSettings } from '@/components/campaign/CampaignSettings';
 import { CampaignProtocolControls } from '@/components/campaign/CampaignProtocolControls';
@@ -123,7 +124,7 @@ const CampaignDetail = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className={hasDMAccess ? "grid w-full grid-cols-7" : "grid w-full grid-cols-6"}>
+          <TabsList className={hasDMAccess ? "grid w-full grid-cols-8" : "grid w-full grid-cols-7"}>
             <TabsTrigger value="overview" className="gap-2">
               <Users className="w-4 h-4" />
               Overview
@@ -143,6 +144,10 @@ const CampaignDetail = () => {
             <TabsTrigger value="notes" className="gap-2">
               <FileText className="w-4 h-4" />
               Notes
+            </TabsTrigger>
+            <TabsTrigger value="handouts" className="gap-2">
+              <FileText className="w-4 h-4" />
+              Handouts
             </TabsTrigger>
             <TabsTrigger value="characters" className="gap-2">
               <Share2 className="w-4 h-4" />
@@ -297,6 +302,10 @@ const CampaignDetail = () => {
 
           <TabsContent value="notes">
             <CampaignNotes campaignId={id || ''} />
+          </TabsContent>
+
+          <TabsContent value="handouts">
+            <CampaignHandouts campaignId={id || ''} />
           </TabsContent>
 
           <TabsContent value="characters">

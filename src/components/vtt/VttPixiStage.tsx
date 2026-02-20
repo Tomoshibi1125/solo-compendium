@@ -125,17 +125,25 @@ export function VttPixiStage({
     let destroyed = false;
 
     (async () => {
-      await app.init({
-        backgroundAlpha: 0,
-        antialias: true,
-        resolution: Math.min(window.devicePixelRatio || 1, 2),
-        autoDensity: true,
-        width: Math.max(1, Math.floor(worldSize.w)),
-        height: Math.max(1, Math.floor(worldSize.h)),
-      });
+      try {
+        await app.init({
+          backgroundAlpha: 0,
+          antialias: true,
+          resolution: Math.min(window.devicePixelRatio || 1, 2),
+          autoDensity: true,
+          width: Math.max(1, Math.floor(worldSize.w)),
+          height: Math.max(1, Math.floor(worldSize.h)),
+        });
+      } catch {
+        return;
+      }
 
       if (destroyed) {
-        app.destroy();
+        try {
+          app.destroy();
+        } catch {
+          // ignore
+        }
         return;
       }
 
@@ -150,7 +158,11 @@ export function VttPixiStage({
     return () => {
       destroyed = true;
       if (appRef.current) {
-        appRef.current.destroy(true);
+        try {
+          appRef.current.destroy(true);
+        } catch {
+          // ignore
+        }
         appRef.current = null;
       }
     };

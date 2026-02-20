@@ -17,7 +17,8 @@ export interface DiceRoll {
  * Parse a dice string (e.g., "1d20+3", "2d6", "1d8-1")
  */
 function parseDiceString(diceStr: string): { count: number; sides: number; modifier: number } {
-  const match = diceStr.match(/(\d+)d(\d+)([+-]\d+)?/);
+  const normalized = diceStr.replace(/\s+/g, '');
+  const match = normalized.match(/(\d+)d(\d+)([+-]\d+)?/);
   if (!match) {
     throw new AppError(`Invalid dice string: ${diceStr}`, 'INVALID_INPUT');
   }

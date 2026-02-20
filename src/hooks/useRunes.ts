@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
-import { calculateRuneMaxUses } from '@/lib/runeAutomation';
+import { calculateRuneMaxUses, resolveRuneAbsorption } from '@/lib/runeAutomation';
 import { getProficiencyBonus } from '@/types/system-rules';
 import { isLocalCharacterId } from '@/lib/guestStore';
 import { AppError } from '@/lib/appError';
@@ -15,6 +15,34 @@ type Rune = Database['public']['Tables']['compendium_runes']['Row'];
 type RuneInscription = Database['public']['Tables']['character_rune_inscriptions']['Row'];
 type RuneKnowledge = Database['public']['Tables']['character_rune_knowledge']['Row'];
 type Equipment = Database['public']['Tables']['character_equipment']['Row'];
+
+const buildRuneKnowledgeCacheKey = (userId: string, characterId: string) => {
+  return `solo-compendium.cache.rune-knowledge.${userId}.character:${characterId}.v1`;
+};
+
+const buildRuneInscriptionsCacheKey = (userId: string, characterId: string) => {
+  return `solo-compendium.cache.rune-inscriptions.${userId}.character:${characterId}.v1`;
+};
+
+const readCachedData = <T>(key: string): T | null => {
+  try {
+    if (typeof window === 'undefined') return null;
+    const raw = window.localStorage.getItem(key);
+    if (!raw) return null;
+    return JSON.parse(raw) as T;
+  } catch {
+    return null;
+  }
+};
+
+const writeCachedData = <T>(key: string, data: T) => {
+  try {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem(key, JSON.stringify(data));
+  } catch {
+    // ignore
+  }
+};
 
 // Fetch all compendium runes
 export function useCompendiumRunes(characterId?: string) {
@@ -44,6 +72,9 @@ export function useCharacterRuneKnowledge(characterId: string | undefined) {
       if (!characterId) return [];
       if (isLocalCharacterId(characterId)) return [];
 
+      const { data: { user } } = await supabase.auth.getUser();
+      const cacheKey = user?.id ? buildRuneKnowledgeCacheKey(user.id, characterId) : null;
+
       const { data, error } = await supabase
         .from('character_rune_knowledge')
         .select(`
@@ -52,18 +83,30 @@ export function useCharacterRuneKnowledge(characterId: string | undefined) {
         `)
         .eq('character_id', characterId);
 
-      if (error) throw error;
+      if (error) {
+        if (cacheKey) {
+          const cached = readCachedData<Array<RuneKnowledge & { rune: Rune }>>(cacheKey);
+          if (cached) return cached;
+        }
+        throw error;
+      }
       const knowledgeEntries = data.map(rk => ({
         ...rk,
         rune: rk.rune as Rune,
       })) as Array<RuneKnowledge & { rune: Rune }>;
 
       const campaignId = await getCharacterCampaignId(characterId);
-      return filterRowsBySourcebookAccess(
+      const filtered = await filterRowsBySourcebookAccess(
         knowledgeEntries,
         (entry) => entry.rune?.source_book,
         { campaignId }
       );
+
+      if (cacheKey) {
+        writeCachedData(cacheKey, filtered);
+      }
+
+      return filtered;
     },
     enabled: !!characterId,
   });
@@ -77,6 +120,9 @@ export function useCharacterRuneInscriptions(characterId: string | undefined) {
       if (!characterId) return [];
       if (isLocalCharacterId(characterId)) return [];
 
+      const { data: { user } } = await supabase.auth.getUser();
+      const cacheKey = user?.id ? buildRuneInscriptionsCacheKey(user.id, characterId) : null;
+
       const { data, error } = await supabase
         .from('character_rune_inscriptions')
         .select(`
@@ -87,7 +133,13 @@ export function useCharacterRuneInscriptions(characterId: string | undefined) {
         .eq('character_id', characterId)
         .eq('is_active', true);
 
-      if (error) throw error;
+      if (error) {
+        if (cacheKey) {
+          const cached = readCachedData<Array<RuneInscription & { rune: Rune; equipment: Equipment }>>(cacheKey);
+          if (cached) return cached;
+        }
+        throw error;
+      }
       const inscriptions = data.map(ri => ({
         ...ri,
         rune: ri.rune as Rune,
@@ -95,23 +147,44 @@ export function useCharacterRuneInscriptions(characterId: string | undefined) {
       })) as Array<RuneInscription & { rune: Rune; equipment: Equipment }>;
 
       const campaignId = await getCharacterCampaignId(characterId);
-      return filterRowsBySourcebookAccess(
+      const filtered = await filterRowsBySourcebookAccess(
         inscriptions,
         (entry) => entry.rune?.source_book,
         { campaignId }
       );
+
+      if (cacheKey) {
+        writeCachedData(cacheKey, filtered);
+      }
+
+      return filtered;
     },
     enabled: !!characterId,
   });
 }
 
+const buildEquipmentRunesCacheKey = (userId: string, equipmentId: string) => {
+  return `solo-compendium.cache.equipment-runes.${userId}.equipment:${equipmentId}.v1`;
+};
+
 // Fetch runes on specific equipment
 export function useEquipmentRunes(equipmentId: string | undefined, characterId?: string) {
+  const authQuery = useQuery({
+    queryKey: ['auth-user'],
+    queryFn: async () => {
+      const { data } = await supabase.auth.getUser();
+      return data;
+    }
+  });
+  const user = authQuery.data?.user;
+
   return useQuery({
     queryKey: ['equipment-runes', equipmentId, characterId ?? 'none'],
     queryFn: async () => {
       if (!equipmentId) return [];
       if (equipmentId.startsWith('local_')) return [];
+
+      const cacheKey = user?.id ? buildEquipmentRunesCacheKey(user.id, equipmentId) : null;
 
       const { data, error } = await supabase
         .from('character_rune_inscriptions')
@@ -122,7 +195,13 @@ export function useEquipmentRunes(equipmentId: string | undefined, characterId?:
         .eq('equipment_id', equipmentId)
         .eq('is_active', true);
 
-      if (error) throw error;
+      if (error) {
+        if (cacheKey) {
+          const cached = readCachedData<Array<RuneInscription & { rune: Rune }>>(cacheKey);
+          if (cached) return cached;
+        }
+        throw error;
+      }
       const equipmentRunes = data.map(ri => ({
         ...ri,
         rune: ri.rune as Rune,
@@ -130,11 +209,17 @@ export function useEquipmentRunes(equipmentId: string | undefined, characterId?:
 
       const resolvedCharacterId = characterId || equipmentRunes[0]?.character_id || null;
       const campaignId = resolvedCharacterId ? await getCharacterCampaignId(resolvedCharacterId) : null;
-      return filterRowsBySourcebookAccess(
+      const filtered = await filterRowsBySourcebookAccess(
         equipmentRunes,
         (entry) => entry.rune?.source_book,
         { campaignId }
       );
+
+      if (cacheKey) {
+        writeCachedData(cacheKey, filtered);
+      }
+
+      return filtered;
     },
     enabled: !!equipmentId,
   });
@@ -359,6 +444,110 @@ export function useLearnRune() {
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['character-rune-knowledge', variables.characterId] });
+    },
+  });
+}
+
+// Absorb a rune — Solo Leveling style one-time consumption
+// Permanently teaches the rune's ability as a character_feature.
+// Cross-type absorption (caster absorbs martial or vice versa) limits uses per rest.
+export function useAbsorbRune() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({
+      characterId,
+      runeId,
+    }: {
+      characterId: string;
+      runeId: string;
+    }) => {
+      if (isLocalCharacterId(characterId)) {
+        throw new AppError('Sign in required to absorb runes', 'AUTH_REQUIRED');
+      }
+
+      // Get character
+      const { data: character, error: charError } = await supabase
+        .from('characters')
+        .select('id, job, level')
+        .eq('id', characterId)
+        .single();
+      if (charError || !character) throw new AppError('Character not found', 'NOT_FOUND');
+
+      // Get rune
+      const { data: rune, error: runeError } = await supabase
+        .from('compendium_runes')
+        .select('*')
+        .eq('id', runeId)
+        .single();
+      if (runeError || !rune) throw new AppError('Rune not found', 'NOT_FOUND');
+
+      // Sourcebook check
+      const campaignId = await getCharacterCampaignId(characterId);
+      if (!(await isSourcebookAccessible(rune.source_book, { campaignId }))) {
+        throw new AppError('This rune requires sourcebook access.', 'INVALID_INPUT');
+      }
+
+      // Check if already absorbed (feature with this source already exists)
+      const runeSourceLabel = `Rune: ${rune.name}`;
+      const { data: existing } = await supabase
+        .from('character_features')
+        .select('id')
+        .eq('character_id', characterId)
+        .eq('source', runeSourceLabel)
+        .maybeSingle();
+
+      if (existing) {
+        throw new AppError('You have already absorbed this rune', 'INVALID_INPUT');
+      }
+
+      // Resolve cross-type adaptation
+      const profBonus = getProficiencyBonus(character.level);
+      const absorption = resolveRuneAbsorption(
+        rune.rune_type,
+        rune.uses_per_rest,
+        character.job,
+        character.level,
+        profBonus,
+      );
+
+      // Create permanent character feature
+      const featurePayload = {
+        character_id: characterId,
+        name: rune.name,
+        source: runeSourceLabel,
+        description: rune.effect_description || rune.description || '',
+        level_acquired: character.level,
+        is_active: true,
+        uses_max: absorption.usesMax,
+        uses_current: absorption.usesMax,
+        recharge: absorption.usesMax !== null ? absorption.recharge : null,
+      };
+
+      const { error: insertError } = await supabase
+        .from('character_features')
+        .insert(featurePayload as any);
+      if (insertError) throw insertError;
+
+      // Mark rune as absorbed in knowledge (mastery_level 5 = absorbed)
+      await supabase
+        .from('character_rune_knowledge')
+        .upsert({
+          character_id: characterId,
+          rune_id: runeId,
+          mastery_level: 5,
+          can_teach: false,
+          learned_from: 'absorbed',
+        }, {
+          onConflict: 'character_id,rune_id',
+        });
+
+      return { runeName: rune.name, absorption };
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['character-rune-knowledge', variables.characterId] });
+      queryClient.invalidateQueries({ queryKey: ['features', variables.characterId] });
+      queryClient.invalidateQueries({ queryKey: ['character-features', variables.characterId] });
     },
   });
 }

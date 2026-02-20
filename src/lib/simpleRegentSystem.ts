@@ -271,10 +271,14 @@ export class SimpleRegentSystem {
   // Private helper methods
   private static getHighestStat(character: any): string {
     const abilities = character.abilityScores || character.abilities || {};
-    return Object.entries(abilities).reduce((highest, [stat, value]) => 
-      value > abilities[highest] ? stat : highest, 
-      'strength'
-    );
+    const entries = Object.entries(abilities) as Array<[string, unknown]>;
+    return entries.reduce((highest, [stat, value]) => {
+      const numericValue = typeof value === 'number' ? value : Number(value);
+      const highestValueRaw = (abilities as Record<string, unknown>)[highest];
+      const highestValue = typeof highestValueRaw === 'number' ? highestValueRaw : Number(highestValueRaw);
+      if (!Number.isFinite(numericValue) || !Number.isFinite(highestValue)) return highest;
+      return numericValue > highestValue ? stat : highest;
+    }, 'strength');
   }
 
   // Fallback methods when AI is unavailable
@@ -361,5 +365,3 @@ export class SimpleRegentSystem {
     return await LocalAIIntegration.generateOptimizationSuggestions(character);
   }
 }
-
-export { SimpleRegent, SimpleGeminiSovereign, SimpleRegentSystem };

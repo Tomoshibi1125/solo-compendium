@@ -4,7 +4,7 @@
 import { Character } from '../types/character';
 import { LocalAIIntegration } from './localAIIntegration';
 
-type AbilityScore = 'STR' | 'DEX' | 'CON' | 'INT' | 'WIS' | 'CHA';
+type AbilityScore = 'STR' | 'AGI' | 'VIT' | 'INT' | 'SENSE' | 'PRE';
 type Job = string;
 
 interface Feature {
@@ -32,11 +32,11 @@ interface Trait {
 // Regent types based on highest stat
 export enum RegentType {
   STRENGTH_REGENT = 'Strength Regent',
-  DEXTERITY_REGENT = 'Dexterity Regent', 
-  CONSTITUTION_REGENT = 'Constitution Regent',
+  AGILITY_REGENT = 'Agility Regent', 
+  VITALITY_REGENT = 'Vitality Regent',
   INTELLIGENCE_REGENT = 'Intelligence Regent',
-  WISDOM_REGENT = 'Wisdom Regent',
-  CHARISMA_REGENT = 'Charisma Regent'
+  SENSE_REGENT = 'Sense Regent',
+  PRESENCE_REGENT = 'Presence Regent'
 }
 
 // Regent paths with unique abilities
@@ -139,7 +139,7 @@ export class RegentGeminiSystem {
     {
       id: 'shadow_dancer_regent',
       name: 'Shadow Dancer Regent',
-      type: RegentType.DEXTERITY_REGENT,
+      type: RegentType.AGILITY_REGENT,
       description: 'Master of stealth and acrobatic movement',
       abilities: ['Shadow Step', 'Perfect Balance', 'Acrobatic Mastery'],
       features: [
@@ -155,7 +155,7 @@ export class RegentGeminiSystem {
     {
       id: 'wind_walker_regent',
       name: 'Wind Walker Regent',
-      type: RegentType.DEXTERITY_REGENT,
+      type: RegentType.AGILITY_REGENT,
       description: 'Swift as the wind, impossible to catch',
       abilities: ['Wind Step', 'Lightning Speed', 'Evasion Mastery'],
       features: [
@@ -171,7 +171,7 @@ export class RegentGeminiSystem {
     {
       id: 'phantom_blade_regent',
       name: 'Phantom Blade Regent',
-      type: RegentType.DEXTERITY_REGENT,
+      type: RegentType.AGILITY_REGENT,
       description: 'Master of weapon techniques and precision strikes',
       abilities: ['Phantom Strike', 'Weapon Mastery', 'Perfect Aim'],
       features: [
@@ -189,7 +189,7 @@ export class RegentGeminiSystem {
     {
       id: 'iron_body_regent',
       name: 'Iron Body Regent',
-      type: RegentType.CONSTITUTION_REGENT,
+      type: RegentType.VITALITY_REGENT,
       description: 'Unbreakable body and incredible endurance',
       abilities: ['Iron Skin', 'Endurance Mastery', 'Pain Resistance'],
       features: [
@@ -205,7 +205,7 @@ export class RegentGeminiSystem {
     {
       id: 'earth_guardian_regent',
       name: 'Earth Guardian Regent',
-      type: RegentType.CONSTITUTION_REGENT,
+      type: RegentType.VITALITY_REGENT,
       description: 'Protector of the land and its people',
       abilities: ['Earth Shield', 'Ground Control', 'Protection Aura'],
       features: [
@@ -221,7 +221,7 @@ export class RegentGeminiSystem {
     {
       id: 'life_binder_regent',
       name: 'Life Binder Regent',
-      type: RegentType.CONSTITUTION_REGENT,
+      type: RegentType.VITALITY_REGENT,
       description: 'Master of life force and healing',
       abilities: ['Life Force Control', 'Healing Touch', 'Vitality Mastery'],
       features: [
@@ -289,7 +289,7 @@ export class RegentGeminiSystem {
     {
       id: 'divine_seer_regent',
       name: 'Divine Seer Regent',
-      type: RegentType.WISDOM_REGENT,
+      type: RegentType.SENSE_REGENT,
       description: 'Prophet with divine insight and foresight',
       abilities: ['Divine Sight', 'Prophecy', 'Healing Hands'],
       features: [
@@ -305,7 +305,7 @@ export class RegentGeminiSystem {
     {
       id: 'nature_lord_regent',
       name: 'Nature Lord Regent',
-      type: RegentType.WISDOM_REGENT,
+      type: RegentType.SENSE_REGENT,
       description: 'Master of natural world and its creatures',
       abilities: ['Beast Command', 'Plant Control', 'Weather Mastery'],
       features: [
@@ -321,7 +321,7 @@ export class RegentGeminiSystem {
     {
       id: 'spirit_walker_regent',
       name: 'Spirit Walker Regent',
-      type: RegentType.WISDOM_REGENT,
+      type: RegentType.SENSE_REGENT,
       description: 'Traveler between spirit and material worlds',
       abilities: ['Spirit Form', 'Astral Projection', 'Soul Sight'],
       features: [
@@ -339,7 +339,7 @@ export class RegentGeminiSystem {
     {
       id: 'silver_tongue_regent',
       name: 'Silver Tongue Regent',
-      type: RegentType.CHARISMA_REGENT,
+      type: RegentType.PRESENCE_REGENT,
       description: 'Master of persuasion and social manipulation',
       abilities: ['Persuasion Mastery', 'Charm Person', 'Leadership Aura'],
       features: [
@@ -355,7 +355,7 @@ export class RegentGeminiSystem {
     {
       id: 'royal_commander_regent',
       name: 'Royal Commander Regent',
-      type: RegentType.CHARISMA_REGENT,
+      type: RegentType.PRESENCE_REGENT,
       description: 'Natural leader with royal authority',
       abilities: ['Royal Command', 'Inspire Loyalty', 'Noble Presence'],
       features: [
@@ -371,7 +371,7 @@ export class RegentGeminiSystem {
     {
       id: 'soul_binder_regent',
       name: 'Soul Binder Regent',
-      type: RegentType.CHARISMA_REGENT,
+      type: RegentType.PRESENCE_REGENT,
       description: 'Master of souls and spiritual contracts',
       abilities: ['Soul Binding', 'Spirit Contracts', 'Life Force Manipulation'],
       features: [
@@ -436,7 +436,7 @@ export class RegentGeminiSystem {
   // Private helper methods
   private static getHighestStat(abilities: Record<AbilityScore, number>): AbilityScore {
     let highest: AbilityScore = 'STR';
-    const abilityOrder: AbilityScore[] = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
+    const abilityOrder: AbilityScore[] = ['STR', 'AGI', 'VIT', 'INT', 'SENSE', 'PRE'];
     for (const ability of abilityOrder) {
       if (abilities[ability] > abilities[highest]) {
         highest = ability;
@@ -448,11 +448,11 @@ export class RegentGeminiSystem {
   private static getRegentType(stat: AbilityScore): RegentType {
     const statToRegent: Record<AbilityScore, RegentType> = {
       'STR': RegentType.STRENGTH_REGENT,
-      'DEX': RegentType.DEXTERITY_REGENT,
-      'CON': RegentType.CONSTITUTION_REGENT,
+      'AGI': RegentType.AGILITY_REGENT,
+      'VIT': RegentType.VITALITY_REGENT,
       'INT': RegentType.INTELLIGENCE_REGENT,
-      'WIS': RegentType.WISDOM_REGENT,
-      'CHA': RegentType.CHARISMA_REGENT
+      'SENSE': RegentType.SENSE_REGENT,
+      'PRE': RegentType.PRESENCE_REGENT
     };
     return statToRegent[stat];
   }
@@ -702,29 +702,29 @@ export class RegentGeminiSystem {
     if (regent1Type === RegentType.STRENGTH_REGENT || regent2Type === RegentType.STRENGTH_REGENT) {
       bonuses.STR = 4;
     }
-    if (regent1Type === RegentType.DEXTERITY_REGENT || regent2Type === RegentType.DEXTERITY_REGENT) {
-      bonuses.DEX = 4;
+    if (regent1Type === RegentType.AGILITY_REGENT || regent2Type === RegentType.AGILITY_REGENT) {
+      bonuses.AGI = 4;
     }
-    if (regent1Type === RegentType.CONSTITUTION_REGENT || regent2Type === RegentType.CONSTITUTION_REGENT) {
-      bonuses.CON = 4;
+    if (regent1Type === RegentType.VITALITY_REGENT || regent2Type === RegentType.VITALITY_REGENT) {
+      bonuses.VIT = 4;
     }
     if (regent1Type === RegentType.INTELLIGENCE_REGENT || regent2Type === RegentType.INTELLIGENCE_REGENT) {
       bonuses.INT = 4;
     }
-    if (regent1Type === RegentType.WISDOM_REGENT || regent2Type === RegentType.WISDOM_REGENT) {
-      bonuses.WIS = 4;
+    if (regent1Type === RegentType.SENSE_REGENT || regent2Type === RegentType.SENSE_REGENT) {
+      bonuses.SENSE = 4;
     }
-    if (regent1Type === RegentType.CHARISMA_REGENT || regent2Type === RegentType.CHARISMA_REGENT) {
-      bonuses.CHA = 4;
+    if (regent1Type === RegentType.PRESENCE_REGENT || regent2Type === RegentType.PRESENCE_REGENT) {
+      bonuses.PRE = 4;
     }
     
     // Fusion bonus
     bonuses.STR = (bonuses.STR || 0) + 2;
-    bonuses.DEX = (bonuses.DEX || 0) + 2;
-    bonuses.CON = (bonuses.CON || 0) + 2;
+    bonuses.AGI = (bonuses.AGI || 0) + 2;
+    bonuses.VIT = (bonuses.VIT || 0) + 2;
     bonuses.INT = (bonuses.INT || 0) + 2;
-    bonuses.WIS = (bonuses.WIS || 0) + 2;
-    bonuses.CHA = (bonuses.CHA || 0) + 2;
+    bonuses.SENSE = (bonuses.SENSE || 0) + 2;
+    bonuses.PRE = (bonuses.PRE || 0) + 2;
     
     return bonuses;
   }
@@ -752,12 +752,12 @@ export class RegentGeminiSystem {
   private static calculateJobCompatibility(job: Job, regent: RegentPath): number {
     // AI calculates how well regent matches character's base job
     const jobRegentMap: Record<Job, string[]> = {
-      'Warrior': ['Strength Regent', 'Constitution Regent', 'Dexterity Regent'],
-      'Mage': ['Intelligence Regent', 'Wisdom Regent', 'Charisma Regent'],
-      'Rogue': ['Dexterity Regent', 'Charisma Regent', 'Intelligence Regent'],
-      'Cleric': ['Wisdom Regent', 'Charisma Regent', 'Constitution Regent'],
-      'Ranger': ['Dexterity Regent', 'Wisdom Regent', 'Constitution Regent'],
-      'Paladin': ['Strength Regent', 'Charisma Regent', 'Constitution Regent']
+      'Warrior': ['Strength Regent', 'Vitality Regent', 'Agility Regent'],
+      'Mage': ['Intelligence Regent', 'Sense Regent', 'Presence Regent'],
+      'Rogue': ['Agility Regent', 'Presence Regent', 'Intelligence Regent'],
+      'Cleric': ['Sense Regent', 'Presence Regent', 'Vitality Regent'],
+      'Ranger': ['Agility Regent', 'Sense Regent', 'Vitality Regent'],
+      'Paladin': ['Strength Regent', 'Presence Regent', 'Vitality Regent']
     };
     
     const compatibleRegents = jobRegentMap[job] || [];
@@ -789,16 +789,17 @@ export class RegentGeminiSystem {
 
   private static getCharacterAbilities(character: Character): Record<AbilityScore, number> {
     if (character.abilities) {
-      return character.abilities;
+      return character.abilities as unknown as Record<AbilityScore, number>;
     }
 
+    const scores = (character as any).abilityScores;
     return {
-      STR: character.abilityScores?.strength ?? 10,
-      DEX: character.abilityScores?.dexterity ?? 10,
-      CON: character.abilityScores?.constitution ?? 10,
-      INT: character.abilityScores?.intelligence ?? 10,
-      WIS: character.abilityScores?.wisdom ?? 10,
-      CHA: character.abilityScores?.charisma ?? 10,
+      STR: scores?.strength ?? 10,
+      AGI: scores?.dexterity ?? scores?.agility ?? 10,
+      VIT: scores?.constitution ?? scores?.vitality ?? 10,
+      INT: scores?.intelligence ?? 10,
+      SENSE: scores?.wisdom ?? scores?.sense ?? 10,
+      PRE: scores?.charisma ?? scores?.presence ?? 10,
     };
   }
 }

@@ -8,7 +8,7 @@ export const items: Item[] = [
   {
     "id": "item-0201",
     "name": "Shadow Helmet of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted weapon recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0201.webp",
@@ -16,12 +16,26 @@ export const items: Item[] = [
       "attack": 109
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 44001
+    "value": 44001,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Deals an extra 1d6 elemental damage on a critical hit"
+      ],
+      "value": 44001
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0202",
     "name": "Eternal Helmet of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened armor recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0202.webp",
@@ -29,12 +43,28 @@ export const items: Item[] = [
       "defense": 54
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 35271
+    "value": 35271,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Reduces damage from critical hits by your proficiency bonus",
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage"
+      ],
+      "value": 35271
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0203",
     "name": "Void Helmet of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted consumable recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0203.webp",
@@ -42,12 +72,23 @@ export const items: Item[] = [
       "health": 597
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 8270
+    "value": 8270,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Restores 2d4+2 hit points when consumed"
+      ],
+      "value": 8270
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0204",
     "name": "Abyssal Helmet of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened accessory recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0204.webp",
@@ -55,12 +96,23 @@ export const items: Item[] = [
       "mana": 113
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 44140
+    "value": 44140,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Once per day, reroll a failed saving throw",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 44140
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0205",
     "name": "Demonic Helmet of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient scroll recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0205.webp",
@@ -68,12 +120,23 @@ export const items: Item[] = [
       "mana": 138
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 80768
+    "value": 80768,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "You gain proficiency in one saving throw while attuned",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 80768
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0206",
     "name": "Celestial Helmet of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted weapon recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0206.webp",
@@ -81,12 +144,26 @@ export const items: Item[] = [
       "attack": 211
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 2822
+    "value": 2822,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Once per day, the weapon can cast a cantrip-level effect"
+      ],
+      "value": 2822
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0207",
     "name": "Divine Helmet of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed armor recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0207.webp",
@@ -94,12 +171,28 @@ export const items: Item[] = [
       "defense": 197
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 96251
+    "value": 96251,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "You can cast Shield once per long rest while wearing this armor",
+        "Grants advantage on saving throws against one damage type"
+      ],
+      "value": 96251
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0208",
     "name": "Ancient Helmet of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued consumable recovered from a legendary hunter's collection. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0208.webp",
@@ -107,12 +200,23 @@ export const items: Item[] = [
       "health": 171
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 36056
+    "value": 36056,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Restores 2d4+2 hit points when consumed",
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Removes one condition affecting the user"
+      ],
+      "value": 36056
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0209",
     "name": "Forgotten Helmet of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted accessory recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0209.webp",
@@ -120,12 +224,23 @@ export const items: Item[] = [
       "mana": 105
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 95063
+    "value": 95063,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Once per day, reroll a failed saving throw",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 95063
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0210",
     "name": "Cursed Helmet of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed scroll recovered from a master artificer. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0210.webp",
@@ -133,12 +248,23 @@ export const items: Item[] = [
       "mana": 189
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 80266
+    "value": 80266,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Once per day, reroll a failed saving throw",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 80266
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0211",
     "name": "Blessed Helmet of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged weapon recovered from a master artificer. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0211.webp",
@@ -146,12 +272,26 @@ export const items: Item[] = [
       "attack": 83
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 39015
+    "value": 39015,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Once per day, the weapon can cast a cantrip-level effect"
+      ],
+      "value": 39015
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0212",
     "name": "Sacred Helmet of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted armor recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0212.webp",
@@ -159,12 +299,28 @@ export const items: Item[] = [
       "defense": 129
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 71740
+    "value": 71740,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Reduces damage from critical hits by your proficiency bonus",
+        "Grants resistance to one elemental damage type while attuned"
+      ],
+      "value": 71740
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0213",
     "name": "Profane Helmet of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged consumable recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0213.webp",
@@ -172,12 +328,23 @@ export const items: Item[] = [
       "health": 144
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 59144
+    "value": 59144,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Grants advantage on ability checks for 1 hour",
+        "Grants temporary hit points equal to your level for 1 hour"
+      ],
+      "value": 59144
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0214",
     "name": "Mystic Helmet of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient accessory recovered from a fallen gate boss. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0214.webp",
@@ -185,12 +352,23 @@ export const items: Item[] = [
       "mana": 238
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 85912
+    "value": 85912,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "You can cast Detect Magic at will while wearing this",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 85912
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0215",
     "name": "Arcane Helmet of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted scroll recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0215.webp",
@@ -198,12 +376,23 @@ export const items: Item[] = [
       "mana": 171
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 95558
+    "value": 95558,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Grants +1 to one ability score while attuned",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 95558
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0216",
     "name": "Infernal Helmet of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened weapon recovered from a legendary hunter's collection. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0216.webp",
@@ -211,12 +400,26 @@ export const items: Item[] = [
       "attack": 131
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 64891
+    "value": 64891,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "You gain +1 to initiative while carrying this weapon"
+      ],
+      "value": 64891
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0217",
     "name": "Frozen Helmet of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened armor recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0217.webp",
@@ -224,12 +427,28 @@ export const items: Item[] = [
       "defense": 141
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 6548
+    "value": 6548,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants resistance to one elemental damage type while attuned",
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage"
+      ],
+      "value": 6548
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0218",
     "name": "Thunder Helmet of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued consumable recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0218.webp",
@@ -237,12 +456,23 @@ export const items: Item[] = [
       "health": 420
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 13737
+    "value": 13737,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants advantage on ability checks for 1 hour",
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Removes one condition affecting the user"
+      ],
+      "value": 13737
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0219",
     "name": "Holy Helmet of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued accessory recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0219.webp",
@@ -250,12 +480,23 @@ export const items: Item[] = [
       "mana": 81
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 38263
+    "value": 38263,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "You can cast Detect Magic at will while wearing this",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 38263
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0220",
     "name": "Dark Helmet of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed scroll recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0220.webp",
@@ -263,12 +504,23 @@ export const items: Item[] = [
       "mana": 64
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 15257
+    "value": 15257,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Grants darkvision 60 feet if you don't already have it",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 15257
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0221",
     "name": "Shadow Gauntlets of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged weapon recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0221.webp",
@@ -276,12 +528,26 @@ export const items: Item[] = [
       "attack": 76
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 79001
+    "value": 79001,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Glows faintly when enemies are within 60 feet"
+      ],
+      "value": 79001
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0222",
     "name": "Eternal Gauntlets of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened armor recovered from a master artificer. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0222.webp",
@@ -289,12 +555,28 @@ export const items: Item[] = [
       "defense": 237
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 82877
+    "value": 82877,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage",
+        "Reduces damage from critical hits by your proficiency bonus"
+      ],
+      "value": 82877
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0223",
     "name": "Void Gauntlets of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged consumable recovered from a master artificer. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0223.webp",
@@ -302,12 +584,23 @@ export const items: Item[] = [
       "health": 511
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 26725
+    "value": 26725,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Restores 2d4+2 hit points when consumed",
+        "Removes one condition affecting the user"
+      ],
+      "value": 26725
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0224",
     "name": "Abyssal Gauntlets of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued accessory recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0224.webp",
@@ -315,12 +608,23 @@ export const items: Item[] = [
       "mana": 233
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 64904
+    "value": 64904,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "Grants +1 to one ability score while attuned",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 64904
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0225",
     "name": "Demonic Gauntlets of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened scroll recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0225.webp",
@@ -328,12 +632,23 @@ export const items: Item[] = [
       "mana": 65
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 91400
+    "value": 91400,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 91400
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0226",
     "name": "Celestial Gauntlets of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted weapon recovered from a forgotten dungeon. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0226.webp",
@@ -341,12 +656,26 @@ export const items: Item[] = [
       "attack": 141
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 49343
+    "value": 49343,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "You gain +1 to initiative while carrying this weapon"
+      ],
+      "value": 49343
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0227",
     "name": "Divine Gauntlets of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted armor recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0227.webp",
@@ -354,12 +683,28 @@ export const items: Item[] = [
       "defense": 113
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 69961
+    "value": 69961,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage",
+        "Grants resistance to one elemental damage type while attuned"
+      ],
+      "value": 69961
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0228",
     "name": "Ancient Gauntlets of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted consumable recovered from a legendary hunter's collection. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0228.webp",
@@ -367,12 +712,23 @@ export const items: Item[] = [
       "health": 457
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 44143
+    "value": 44143,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Restores 2d4+2 hit points when consumed",
+        "Removes one condition affecting the user",
+        "Grants advantage on ability checks for 1 hour"
+      ],
+      "value": 44143
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0229",
     "name": "Forgotten Gauntlets of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened accessory recovered from a legendary hunter's collection. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0229.webp",
@@ -380,12 +736,23 @@ export const items: Item[] = [
       "mana": 103
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 57273
+    "value": 57273,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 57273
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0230",
     "name": "Cursed Gauntlets of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued scroll recovered from a master artificer. Infused with lightning energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0230.webp",
@@ -393,12 +760,23 @@ export const items: Item[] = [
       "mana": 205
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 1513
+    "value": 1513,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You can cast Detect Magic at will while wearing this",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 1513
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0231",
     "name": "Blessed Gauntlets of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued weapon recovered from the depths of an A-rank gate. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0231.webp",
@@ -406,12 +784,26 @@ export const items: Item[] = [
       "attack": 57
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 47727
+    "value": 47727,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "You gain +1 to initiative while carrying this weapon"
+      ],
+      "value": 47727
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0232",
     "name": "Sacred Gauntlets of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed armor recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0232.webp",
@@ -419,12 +811,28 @@ export const items: Item[] = [
       "defense": 233
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 29487
+    "value": 29487,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants advantage on saving throws against one damage type",
+        "Grants resistance to one elemental damage type while attuned"
+      ],
+      "value": 29487
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0233",
     "name": "Profane Gauntlets of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted consumable recovered from a legendary hunter's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0233.webp",
@@ -432,12 +840,23 @@ export const items: Item[] = [
       "health": 394
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 90366
+    "value": 90366,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Grants advantage on ability checks for 1 hour"
+      ],
+      "value": 90366
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0234",
     "name": "Mystic Gauntlets of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued accessory recovered from a master artificer. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0234.webp",
@@ -445,12 +864,23 @@ export const items: Item[] = [
       "mana": 145
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 83816
+    "value": 83816,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "Grants +1 to one ability score while attuned",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 83816
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0235",
     "name": "Arcane Gauntlets of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued scroll recovered from a legendary hunter's collection. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0235.webp",
@@ -458,12 +888,23 @@ export const items: Item[] = [
       "mana": 156
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 44718
+    "value": 44718,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Grants +1 to one ability score while attuned",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 44718
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0236",
     "name": "Infernal Gauntlets of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted weapon recovered from a master artificer. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0236.webp",
@@ -471,12 +912,26 @@ export const items: Item[] = [
       "attack": 122
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 54972
+    "value": 54972,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "You gain +1 to initiative while carrying this weapon"
+      ],
+      "value": 54972
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0237",
     "name": "Frozen Gauntlets of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed armor recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0237.webp",
@@ -484,12 +939,28 @@ export const items: Item[] = [
       "defense": 163
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 75728
+    "value": 75728,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Reduces damage from critical hits by your proficiency bonus",
+        "Grants advantage on saving throws against one damage type"
+      ],
+      "value": 75728
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0238",
     "name": "Thunder Gauntlets of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged consumable recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0238.webp",
@@ -497,12 +968,23 @@ export const items: Item[] = [
       "health": 384
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 75133
+    "value": 75133,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Removes one condition affecting the user",
+        "Restores 2d4+2 hit points when consumed",
+        "Allows the user to see invisible creatures for 10 minutes"
+      ],
+      "value": 75133
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0239",
     "name": "Holy Gauntlets of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed accessory recovered from a master artificer. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0239.webp",
@@ -510,12 +992,23 @@ export const items: Item[] = [
       "mana": 67
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 15995
+    "value": 15995,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "Grants darkvision 60 feet if you don't already have it",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 15995
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0240",
     "name": "Dark Gauntlets of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened scroll recovered from a master artificer. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0240.webp",
@@ -523,12 +1016,23 @@ export const items: Item[] = [
       "mana": 217
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 30903
+    "value": 30903,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 30903
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0241",
     "name": "Shadow Boots of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened weapon recovered from a master artificer. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0241.webp",
@@ -536,12 +1040,26 @@ export const items: Item[] = [
       "attack": 94
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 75614
+    "value": 75614,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Glows faintly when enemies are within 60 feet"
+      ],
+      "value": 75614
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0242",
     "name": "Eternal Boots of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed armor recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0242.webp",
@@ -549,12 +1067,28 @@ export const items: Item[] = [
       "defense": 166
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 50759
+    "value": 50759,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants advantage on saving throws against one damage type",
+        "Grants resistance to one elemental damage type while attuned"
+      ],
+      "value": 50759
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0243",
     "name": "Void Boots of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient consumable recovered from a fallen gate boss. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0243.webp",
@@ -562,12 +1096,23 @@ export const items: Item[] = [
       "health": 169
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 66341
+    "value": 66341,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Removes one condition affecting the user",
+        "Restores 2d4+2 hit points when consumed"
+      ],
+      "value": 66341
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0244",
     "name": "Abyssal Boots of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed accessory recovered from a legendary hunter's collection. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0244.webp",
@@ -575,12 +1120,23 @@ export const items: Item[] = [
       "mana": 205
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 87740
+    "value": 87740,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 87740
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0245",
     "name": "Demonic Boots of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed scroll recovered from a master artificer. Infused with lightning energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0245.webp",
@@ -588,12 +1144,23 @@ export const items: Item[] = [
       "mana": 229
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 21188
+    "value": 21188,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "Once per day, reroll a failed saving throw",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 21188
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0246",
     "name": "Celestial Boots of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted weapon recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0246.webp",
@@ -601,12 +1168,26 @@ export const items: Item[] = [
       "attack": 143
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 78479
+    "value": 78479,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "The weapon returns to your hand when thrown (range 20/60)"
+      ],
+      "value": 78479
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0247",
     "name": "Divine Boots of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted armor recovered from a legendary hunter's collection. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0247.webp",
@@ -614,12 +1195,28 @@ export const items: Item[] = [
       "defense": 91
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 80394
+    "value": 80394,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "You can cast Shield once per long rest while wearing this armor",
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage"
+      ],
+      "value": 80394
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0248",
     "name": "Ancient Boots of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed consumable recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0248.webp",
@@ -627,12 +1224,23 @@ export const items: Item[] = [
       "health": 252
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 21516
+    "value": 21516,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants advantage on ability checks for 1 hour",
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Removes one condition affecting the user"
+      ],
+      "value": 21516
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0249",
     "name": "Forgotten Boots of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient accessory recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0249.webp",
@@ -640,12 +1248,23 @@ export const items: Item[] = [
       "mana": 128
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 35040
+    "value": 35040,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Once per day, reroll a failed saving throw",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 35040
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0250",
     "name": "Cursed Boots of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed scroll recovered from a fallen gate boss. Infused with poison energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0250.webp",
@@ -653,12 +1272,23 @@ export const items: Item[] = [
       "mana": 162
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 1972
+    "value": 1972,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "Once per day, reroll a failed saving throw",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 1972
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0251",
     "name": "Blessed Boots of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted weapon recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0251.webp",
@@ -666,12 +1296,26 @@ export const items: Item[] = [
       "attack": 122
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 88905
+    "value": 88905,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "The weapon returns to your hand when thrown (range 20/60)"
+      ],
+      "value": 88905
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0252",
     "name": "Sacred Boots of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted armor recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0252.webp",
@@ -679,12 +1323,28 @@ export const items: Item[] = [
       "defense": 243
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 99767
+    "value": 99767,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "You can cast Shield once per long rest while wearing this armor",
+        "Grants advantage on saving throws against one damage type"
+      ],
+      "value": 99767
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0253",
     "name": "Profane Boots of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed consumable recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0253.webp",
@@ -692,12 +1352,23 @@ export const items: Item[] = [
       "health": 345
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 24476
+    "value": 24476,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Restores 2d4+2 hit points when consumed",
+        "Grants advantage on ability checks for 1 hour",
+        "Removes one condition affecting the user"
+      ],
+      "value": 24476
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0254",
     "name": "Mystic Boots of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed accessory recovered from a forgotten dungeon. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0254.webp",
@@ -705,12 +1376,23 @@ export const items: Item[] = [
       "mana": 151
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 7285
+    "value": 7285,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "Once per day, reroll a failed saving throw",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 7285
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0255",
     "name": "Arcane Boots of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient scroll recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0255.webp",
@@ -718,12 +1400,23 @@ export const items: Item[] = [
       "mana": 198
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 91680
+    "value": 91680,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Once per day, reroll a failed saving throw",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 91680
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0256",
     "name": "Infernal Boots of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed weapon recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0256.webp",
@@ -731,12 +1424,26 @@ export const items: Item[] = [
       "attack": 68
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 39174
+    "value": 39174,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Deals an extra 1d6 elemental damage on a critical hit"
+      ],
+      "value": 39174
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0257",
     "name": "Frozen Boots of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened armor recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0257.webp",
@@ -744,12 +1451,28 @@ export const items: Item[] = [
       "defense": 175
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 25004
+    "value": 25004,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants advantage on saving throws against one damage type",
+        "You can cast Shield once per long rest while wearing this armor"
+      ],
+      "value": 25004
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0258",
     "name": "Thunder Boots of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient consumable recovered from a legendary hunter's collection. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0258.webp",
@@ -757,12 +1480,23 @@ export const items: Item[] = [
       "health": 584
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 31318
+    "value": 31318,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Removes one condition affecting the user",
+        "Grants advantage on ability checks for 1 hour",
+        "Allows the user to see invisible creatures for 10 minutes"
+      ],
+      "value": 31318
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0259",
     "name": "Holy Boots of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient accessory recovered from a master artificer. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0259.webp",
@@ -770,12 +1504,23 @@ export const items: Item[] = [
       "mana": 83
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 29663
+    "value": 29663,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "Grants +1 to one ability score while attuned",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 29663
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0260",
     "name": "Dark Boots of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed scroll recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0260.webp",
@@ -783,12 +1528,23 @@ export const items: Item[] = [
       "mana": 188
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 75951
+    "value": 75951,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You can cast Detect Magic at will while wearing this",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 75951
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0261",
     "name": "Shadow Ring of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted weapon recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0261.webp",
@@ -796,12 +1552,26 @@ export const items: Item[] = [
       "attack": 84
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 71514
+    "value": 71514,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Glows faintly when enemies are within 60 feet"
+      ],
+      "value": 71514
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0262",
     "name": "Eternal Ring of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened armor recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0262.webp",
@@ -809,12 +1579,28 @@ export const items: Item[] = [
       "defense": 248
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 89368
+    "value": 89368,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants advantage on saving throws against one damage type",
+        "You can cast Shield once per long rest while wearing this armor"
+      ],
+      "value": 89368
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0263",
     "name": "Void Ring of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient consumable recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0263.webp",
@@ -822,12 +1608,23 @@ export const items: Item[] = [
       "health": 262
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 58850
+    "value": 58850,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Restores 2d4+2 hit points when consumed",
+        "Grants advantage on ability checks for 1 hour"
+      ],
+      "value": 58850
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0264",
     "name": "Abyssal Ring of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted accessory recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0264.webp",
@@ -835,12 +1632,23 @@ export const items: Item[] = [
       "mana": 178
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 23319
+    "value": 23319,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Once per day, reroll a failed saving throw",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 23319
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0265",
     "name": "Demonic Ring of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient scroll recovered from a legendary hunter's collection. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0265.webp",
@@ -848,12 +1656,23 @@ export const items: Item[] = [
       "mana": 155
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 19501
+    "value": 19501,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 19501
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0266",
     "name": "Celestial Ring of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient weapon recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0266.webp",
@@ -861,12 +1680,26 @@ export const items: Item[] = [
       "attack": 89
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 92186
+    "value": 92186,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Glows faintly when enemies are within 60 feet"
+      ],
+      "value": 92186
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0267",
     "name": "Divine Ring of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted armor recovered from a master artificer. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0267.webp",
@@ -874,12 +1707,28 @@ export const items: Item[] = [
       "defense": 138
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 92106
+    "value": 92106,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants advantage on saving throws against one damage type",
+        "Grants resistance to one elemental damage type while attuned"
+      ],
+      "value": 92106
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0268",
     "name": "Ancient Ring of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed consumable recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0268.webp",
@@ -887,12 +1736,23 @@ export const items: Item[] = [
       "health": 556
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 85318
+    "value": 85318,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants advantage on ability checks for 1 hour",
+        "Restores 2d4+2 hit points when consumed",
+        "Grants temporary hit points equal to your level for 1 hour"
+      ],
+      "value": 85318
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0269",
     "name": "Forgotten Ring of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued accessory recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0269.webp",
@@ -900,12 +1760,23 @@ export const items: Item[] = [
       "mana": 155
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 58333
+    "value": 58333,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Grants darkvision 60 feet if you don't already have it",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 58333
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0270",
     "name": "Cursed Ring of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted scroll recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0270.webp",
@@ -913,12 +1784,23 @@ export const items: Item[] = [
       "mana": 234
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 24033
+    "value": 24033,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You can cast Detect Magic at will while wearing this",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 24033
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0271",
     "name": "Blessed Ring of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient weapon recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0271.webp",
@@ -926,12 +1808,26 @@ export const items: Item[] = [
       "attack": 132
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 25851
+    "value": 25851,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Deals an extra 1d6 elemental damage on a critical hit"
+      ],
+      "value": 25851
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0272",
     "name": "Sacred Ring of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed armor recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0272.webp",
@@ -939,12 +1835,28 @@ export const items: Item[] = [
       "defense": 138
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 96178
+    "value": 96178,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Reduces damage from critical hits by your proficiency bonus",
+        "Grants resistance to one elemental damage type while attuned"
+      ],
+      "value": 96178
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0273",
     "name": "Profane Ring of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted consumable recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0273.webp",
@@ -952,12 +1864,23 @@ export const items: Item[] = [
       "health": 441
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 19428
+    "value": 19428,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Removes one condition affecting the user",
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Grants advantage on ability checks for 1 hour"
+      ],
+      "value": 19428
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0274",
     "name": "Mystic Ring of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed accessory recovered from a legendary hunter's collection. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0274.webp",
@@ -965,12 +1888,23 @@ export const items: Item[] = [
       "mana": 65
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 83042
+    "value": 83042,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "You can cast Detect Magic at will while wearing this",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 83042
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0275",
     "name": "Arcane Ring of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued scroll recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0275.webp",
@@ -978,12 +1912,23 @@ export const items: Item[] = [
       "mana": 135
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 13173
+    "value": 13173,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You gain proficiency in one saving throw while attuned",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 13173
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0276",
     "name": "Infernal Ring of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted weapon recovered from a master artificer. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0276.webp",
@@ -991,12 +1936,26 @@ export const items: Item[] = [
       "attack": 203
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 53197
+    "value": 53197,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Once per day, the weapon can cast a cantrip-level effect"
+      ],
+      "value": 53197
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0277",
     "name": "Frozen Ring of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted armor recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0277.webp",
@@ -1004,12 +1963,28 @@ export const items: Item[] = [
       "defense": 123
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 73612
+    "value": 73612,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants advantage on saving throws against one damage type",
+        "You can cast Shield once per long rest while wearing this armor"
+      ],
+      "value": 73612
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0278",
     "name": "Thunder Ring of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened consumable recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0278.webp",
@@ -1017,12 +1992,23 @@ export const items: Item[] = [
       "health": 497
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 52119
+    "value": 52119,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Grants advantage on ability checks for 1 hour",
+        "Allows the user to see invisible creatures for 10 minutes"
+      ],
+      "value": 52119
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0279",
     "name": "Holy Ring of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed accessory recovered from a legendary hunter's collection. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0279.webp",
@@ -1030,12 +2016,23 @@ export const items: Item[] = [
       "mana": 83
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 50990
+    "value": 50990,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "Grants darkvision 60 feet if you don't already have it",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 50990
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0280",
     "name": "Dark Ring of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued scroll recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0280.webp",
@@ -1043,12 +2040,23 @@ export const items: Item[] = [
       "mana": 235
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 73813
+    "value": 73813,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Grants +1 to one ability score while attuned",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 73813
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0281",
     "name": "Shadow Amulet of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed weapon recovered from a legendary hunter's collection. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0281.webp",
@@ -1056,12 +2064,26 @@ export const items: Item[] = [
       "attack": 188
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 43552
+    "value": 43552,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Once per day, the weapon can cast a cantrip-level effect"
+      ],
+      "value": 43552
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0282",
     "name": "Eternal Amulet of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued armor recovered from a master artificer. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0282.webp",
@@ -1069,12 +2091,28 @@ export const items: Item[] = [
       "defense": 154
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 85108
+    "value": 85108,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "You can cast Shield once per long rest while wearing this armor",
+        "Grants resistance to one elemental damage type while attuned"
+      ],
+      "value": 85108
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0283",
     "name": "Void Amulet of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted consumable recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0283.webp",
@@ -1082,12 +2120,23 @@ export const items: Item[] = [
       "health": 353
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 30417
+    "value": 30417,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Removes one condition affecting the user",
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Grants temporary hit points equal to your level for 1 hour"
+      ],
+      "value": 30417
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0284",
     "name": "Abyssal Amulet of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted accessory recovered from a master artificer. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0284.webp",
@@ -1095,12 +2144,23 @@ export const items: Item[] = [
       "mana": 108
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 74095
+    "value": 74095,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "Grants darkvision 60 feet if you don't already have it",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 74095
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0285",
     "name": "Demonic Amulet of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued scroll recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0285.webp",
@@ -1108,12 +2168,23 @@ export const items: Item[] = [
       "mana": 71
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 97106
+    "value": 97106,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "You can cast Detect Magic at will while wearing this",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 97106
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0286",
     "name": "Celestial Amulet of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted weapon recovered from a legendary hunter's collection. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0286.webp",
@@ -1121,12 +2192,26 @@ export const items: Item[] = [
       "attack": 196
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 45856
+    "value": 45856,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Glows faintly when enemies are within 60 feet"
+      ],
+      "value": 45856
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0287",
     "name": "Divine Amulet of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued armor recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0287.webp",
@@ -1134,12 +2219,28 @@ export const items: Item[] = [
       "defense": 238
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 9513
+    "value": 9513,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage",
+        "Reduces damage from critical hits by your proficiency bonus"
+      ],
+      "value": 9513
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0288",
     "name": "Ancient Amulet of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged consumable recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0288.webp",
@@ -1147,12 +2248,23 @@ export const items: Item[] = [
       "health": 561
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 56784
+    "value": 56784,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Restores 2d4+2 hit points when consumed",
+        "Removes one condition affecting the user"
+      ],
+      "value": 56784
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0289",
     "name": "Forgotten Amulet of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued accessory recovered from a legendary hunter's collection. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0289.webp",
@@ -1160,12 +2272,23 @@ export const items: Item[] = [
       "mana": 196
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 38757
+    "value": 38757,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "Grants +1 to one ability score while attuned",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 38757
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0290",
     "name": "Cursed Amulet of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued scroll recovered from a master artificer. Infused with poison energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0290.webp",
@@ -1173,12 +2296,23 @@ export const items: Item[] = [
       "mana": 246
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 29299
+    "value": 29299,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You gain proficiency in one saving throw while attuned",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 29299
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0291",
     "name": "Blessed Amulet of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed weapon recovered from a legendary hunter's collection. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0291.webp",
@@ -1186,12 +2320,26 @@ export const items: Item[] = [
       "attack": 83
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 50432
+    "value": 50432,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "The weapon returns to your hand when thrown (range 20/60)"
+      ],
+      "value": 50432
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0292",
     "name": "Sacred Amulet of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted armor recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0292.webp",
@@ -1199,12 +2347,28 @@ export const items: Item[] = [
       "defense": 108
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 4858
+    "value": 4858,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Reduces damage from critical hits by your proficiency bonus",
+        "You can cast Shield once per long rest while wearing this armor"
+      ],
+      "value": 4858
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0293",
     "name": "Profane Amulet of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened consumable recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0293.webp",
@@ -1212,12 +2376,23 @@ export const items: Item[] = [
       "health": 496
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 52540
+    "value": 52540,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants advantage on ability checks for 1 hour",
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Removes one condition affecting the user"
+      ],
+      "value": 52540
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0294",
     "name": "Mystic Amulet of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed accessory recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0294.webp",
@@ -1225,12 +2400,23 @@ export const items: Item[] = [
       "mana": 88
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 61102
+    "value": 61102,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "You can cast Detect Magic at will while wearing this",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 61102
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0295",
     "name": "Arcane Amulet of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened scroll recovered from a legendary hunter's collection. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0295.webp",
@@ -1238,12 +2424,23 @@ export const items: Item[] = [
       "mana": 179
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 80586
+    "value": 80586,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 80586
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0296",
     "name": "Infernal Amulet of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted weapon recovered from a legendary hunter's collection. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0296.webp",
@@ -1251,12 +2448,26 @@ export const items: Item[] = [
       "attack": 200
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 40424
+    "value": 40424,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Glows faintly when enemies are within 60 feet"
+      ],
+      "value": 40424
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0297",
     "name": "Frozen Amulet of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted armor recovered from a master artificer. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0297.webp",
@@ -1264,12 +2475,28 @@ export const items: Item[] = [
       "defense": 197
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 21568
+    "value": 21568,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "You can cast Shield once per long rest while wearing this armor",
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage"
+      ],
+      "value": 21568
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0298",
     "name": "Thunder Amulet of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed consumable recovered from a master artificer. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0298.webp",
@@ -1277,12 +2504,23 @@ export const items: Item[] = [
       "health": 363
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 69018
+    "value": 69018,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Restores 2d4+2 hit points when consumed",
+        "Removes one condition affecting the user"
+      ],
+      "value": 69018
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0299",
     "name": "Holy Amulet of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed accessory recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0299.webp",
@@ -1290,12 +2528,23 @@ export const items: Item[] = [
       "mana": 97
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 39202
+    "value": 39202,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Grants +1 to one ability score while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 39202
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0300",
     "name": "Dark Amulet of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed scroll recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0300.webp",
@@ -1303,12 +2552,23 @@ export const items: Item[] = [
       "mana": 164
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 90935
+    "value": 90935,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Once per day, reroll a failed saving throw",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 90935
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0301",
     "name": "Shadow Scroll of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued weapon recovered from a legendary hunter's collection. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0301.webp",
@@ -1316,12 +2576,26 @@ export const items: Item[] = [
       "attack": 193
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 23094
+    "value": 23094,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Once per day, the weapon can cast a cantrip-level effect"
+      ],
+      "value": 23094
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0302",
     "name": "Eternal Scroll of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged armor recovered from a master artificer. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0302.webp",
@@ -1329,12 +2603,28 @@ export const items: Item[] = [
       "defense": 178
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 94013
+    "value": 94013,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants advantage on saving throws against one damage type",
+        "You can cast Shield once per long rest while wearing this armor"
+      ],
+      "value": 94013
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0303",
     "name": "Void Scroll of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened consumable recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0303.webp",
@@ -1342,12 +2632,23 @@ export const items: Item[] = [
       "health": 270
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 14294
+    "value": 14294,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Restores 2d4+2 hit points when consumed",
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Grants advantage on ability checks for 1 hour"
+      ],
+      "value": 14294
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0304",
     "name": "Abyssal Scroll of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient accessory recovered from a master artificer. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0304.webp",
@@ -1355,12 +2656,23 @@ export const items: Item[] = [
       "mana": 54
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 87305
+    "value": 87305,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "You can cast Detect Magic at will while wearing this",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 87305
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0305",
     "name": "Demonic Scroll of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed scroll recovered from a master artificer. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0305.webp",
@@ -1368,12 +2680,23 @@ export const items: Item[] = [
       "mana": 90
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 1995
+    "value": 1995,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "Grants +1 to one ability score while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 1995
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0306",
     "name": "Celestial Scroll of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient weapon recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0306.webp",
@@ -1381,12 +2704,26 @@ export const items: Item[] = [
       "attack": 176
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 61303
+    "value": 61303,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Deals an extra 1d6 elemental damage on a critical hit"
+      ],
+      "value": 61303
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0307",
     "name": "Divine Scroll of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged armor recovered from a legendary hunter's collection. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0307.webp",
@@ -1394,12 +2731,28 @@ export const items: Item[] = [
       "defense": 232
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 56673
+    "value": 56673,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Reduces damage from critical hits by your proficiency bonus",
+        "You can cast Shield once per long rest while wearing this armor"
+      ],
+      "value": 56673
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0308",
     "name": "Ancient Scroll of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted consumable recovered from a master artificer. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0308.webp",
@@ -1407,12 +2760,23 @@ export const items: Item[] = [
       "health": 586
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 41583
+    "value": 41583,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants advantage on ability checks for 1 hour",
+        "Restores 2d4+2 hit points when consumed",
+        "Allows the user to see invisible creatures for 10 minutes"
+      ],
+      "value": 41583
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0309",
     "name": "Forgotten Scroll of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed accessory recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0309.webp",
@@ -1420,12 +2784,23 @@ export const items: Item[] = [
       "mana": 157
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 47302
+    "value": 47302,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 47302
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0310",
     "name": "Cursed Scroll of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued scroll recovered from a master artificer. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0310.webp",
@@ -1433,12 +2808,23 @@ export const items: Item[] = [
       "mana": 75
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 76988
+    "value": 76988,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "You can cast Detect Magic at will while wearing this",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 76988
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0311",
     "name": "Blessed Scroll of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued weapon recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0311.webp",
@@ -1446,12 +2832,26 @@ export const items: Item[] = [
       "attack": 220
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 12004
+    "value": 12004,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "The weapon returns to your hand when thrown (range 20/60)"
+      ],
+      "value": 12004
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0312",
     "name": "Sacred Scroll of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient armor recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0312.webp",
@@ -1459,12 +2859,28 @@ export const items: Item[] = [
       "defense": 152
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 87329
+    "value": 87329,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants resistance to one elemental damage type while attuned",
+        "Reduces damage from critical hits by your proficiency bonus"
+      ],
+      "value": 87329
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0313",
     "name": "Profane Scroll of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued consumable recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0313.webp",
@@ -1472,12 +2888,23 @@ export const items: Item[] = [
       "health": 246
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 43582
+    "value": 43582,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants advantage on ability checks for 1 hour",
+        "Restores 2d4+2 hit points when consumed",
+        "Removes one condition affecting the user"
+      ],
+      "value": 43582
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0314",
     "name": "Mystic Scroll of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged accessory recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0314.webp",
@@ -1485,12 +2912,23 @@ export const items: Item[] = [
       "mana": 179
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 46203
+    "value": 46203,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You can cast Detect Magic at will while wearing this",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 46203
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0315",
     "name": "Arcane Scroll of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged scroll recovered from a legendary hunter's collection. Infused with ice energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0315.webp",
@@ -1498,12 +2936,23 @@ export const items: Item[] = [
       "mana": 191
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 62865
+    "value": 62865,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Once per day, reroll a failed saving throw",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 62865
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0316",
     "name": "Infernal Scroll of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted weapon recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0316.webp",
@@ -1511,12 +2960,26 @@ export const items: Item[] = [
       "attack": 115
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 87349
+    "value": 87349,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Once per day, the weapon can cast a cantrip-level effect"
+      ],
+      "value": 87349
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0317",
     "name": "Frozen Scroll of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened armor recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0317.webp",
@@ -1524,12 +2987,28 @@ export const items: Item[] = [
       "defense": 166
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 77550
+    "value": 77550,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "You can cast Shield once per long rest while wearing this armor",
+        "Reduces damage from critical hits by your proficiency bonus"
+      ],
+      "value": 77550
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0318",
     "name": "Thunder Scroll of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged consumable recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0318.webp",
@@ -1537,12 +3016,23 @@ export const items: Item[] = [
       "health": 353
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 54008
+    "value": 54008,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Removes one condition affecting the user",
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Grants advantage on ability checks for 1 hour"
+      ],
+      "value": 54008
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0319",
     "name": "Holy Scroll of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged accessory recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0319.webp",
@@ -1550,12 +3040,23 @@ export const items: Item[] = [
       "mana": 184
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 11175
+    "value": 11175,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Grants +1 to one ability score while attuned",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 11175
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0320",
     "name": "Dark Scroll of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient scroll recovered from a fallen gate boss. Infused with thunder energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0320.webp",
@@ -1563,12 +3064,23 @@ export const items: Item[] = [
       "mana": 248
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 44232
+    "value": 44232,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "You gain proficiency in one saving throw while attuned",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 44232
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0321",
     "name": "Shadow Tome of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed weapon recovered from a fallen gate boss. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0321.webp",
@@ -1576,12 +3088,26 @@ export const items: Item[] = [
       "attack": 108
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 68112
+    "value": 68112,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Once per day, the weapon can cast a cantrip-level effect"
+      ],
+      "value": 68112
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0322",
     "name": "Eternal Tome of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed armor recovered from a legendary hunter's collection. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0322.webp",
@@ -1589,12 +3115,28 @@ export const items: Item[] = [
       "defense": 191
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 90812
+    "value": 90812,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants resistance to one elemental damage type while attuned",
+        "Grants advantage on saving throws against one damage type"
+      ],
+      "value": 90812
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0323",
     "name": "Void Tome of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened consumable recovered from a master artificer. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0323.webp",
@@ -1602,12 +3144,23 @@ export const items: Item[] = [
       "health": 515
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 99514
+    "value": 99514,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Removes one condition affecting the user",
+        "Grants advantage on ability checks for 1 hour",
+        "Allows the user to see invisible creatures for 10 minutes"
+      ],
+      "value": 99514
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0324",
     "name": "Abyssal Tome of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed accessory recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0324.webp",
@@ -1615,12 +3168,23 @@ export const items: Item[] = [
       "mana": 225
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 30113
+    "value": 30113,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "Grants darkvision 60 feet if you don't already have it",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 30113
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0325",
     "name": "Demonic Tome of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened scroll recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0325.webp",
@@ -1628,12 +3192,23 @@ export const items: Item[] = [
       "mana": 210
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 96886
+    "value": 96886,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "Once per day, reroll a failed saving throw",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 96886
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0326",
     "name": "Celestial Tome of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened weapon recovered from a master artificer. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0326.webp",
@@ -1641,12 +3216,26 @@ export const items: Item[] = [
       "attack": 129
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 61292
+    "value": 61292,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Deals an extra 1d6 elemental damage on a critical hit"
+      ],
+      "value": 61292
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0327",
     "name": "Divine Tome of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed armor recovered from a master artificer. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0327.webp",
@@ -1654,12 +3243,28 @@ export const items: Item[] = [
       "defense": 55
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 50808
+    "value": 50808,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage",
+        "Grants resistance to one elemental damage type while attuned"
+      ],
+      "value": 50808
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0328",
     "name": "Ancient Tome of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed consumable recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0328.webp",
@@ -1667,12 +3272,23 @@ export const items: Item[] = [
       "health": 137
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 97041
+    "value": 97041,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Removes one condition affecting the user",
+        "Grants advantage on ability checks for 1 hour",
+        "Allows the user to see invisible creatures for 10 minutes"
+      ],
+      "value": 97041
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0329",
     "name": "Forgotten Tome of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed accessory recovered from a legendary hunter's collection. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0329.webp",
@@ -1680,12 +3296,23 @@ export const items: Item[] = [
       "mana": 114
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 56775
+    "value": 56775,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Grants darkvision 60 feet if you don't already have it",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 56775
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0330",
     "name": "Cursed Tome of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened scroll recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0330.webp",
@@ -1693,12 +3320,23 @@ export const items: Item[] = [
       "mana": 172
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 54296
+    "value": 54296,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Grants +1 to one ability score while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 54296
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0331",
     "name": "Blessed Tome of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient weapon recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0331.webp",
@@ -1706,12 +3344,26 @@ export const items: Item[] = [
       "attack": 64
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 78459
+    "value": 78459,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Glows faintly when enemies are within 60 feet"
+      ],
+      "value": 78459
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0332",
     "name": "Sacred Tome of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient armor recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0332.webp",
@@ -1719,12 +3371,28 @@ export const items: Item[] = [
       "defense": 76
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 7928
+    "value": 7928,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "You can cast Shield once per long rest while wearing this armor",
+        "Grants resistance to one elemental damage type while attuned"
+      ],
+      "value": 7928
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0333",
     "name": "Profane Tome of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient consumable recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0333.webp",
@@ -1732,12 +3400,23 @@ export const items: Item[] = [
       "health": 155
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 27532
+    "value": 27532,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Removes one condition affecting the user",
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Grants temporary hit points equal to your level for 1 hour"
+      ],
+      "value": 27532
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0334",
     "name": "Mystic Tome of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged accessory recovered from a master artificer. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0334.webp",
@@ -1745,12 +3424,23 @@ export const items: Item[] = [
       "mana": 203
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 64485
+    "value": 64485,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 64485
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0335",
     "name": "Arcane Tome of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted scroll recovered from a legendary hunter's collection. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0335.webp",
@@ -1758,12 +3448,23 @@ export const items: Item[] = [
       "mana": 238
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 75229
+    "value": 75229,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "Once per day, reroll a failed saving throw",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 75229
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0336",
     "name": "Infernal Tome of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued weapon recovered from a master artificer. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0336.webp",
@@ -1771,12 +3472,26 @@ export const items: Item[] = [
       "attack": 246
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 27371
+    "value": 27371,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "You gain +1 to initiative while carrying this weapon"
+      ],
+      "value": 27371
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0337",
     "name": "Frozen Tome of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed armor recovered from a master artificer. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0337.webp",
@@ -1784,12 +3499,28 @@ export const items: Item[] = [
       "defense": 247
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 76828
+    "value": 76828,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "You can cast Shield once per long rest while wearing this armor",
+        "Grants resistance to one elemental damage type while attuned"
+      ],
+      "value": 76828
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0338",
     "name": "Thunder Tome of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened consumable recovered from a legendary hunter's collection. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0338.webp",
@@ -1797,12 +3528,23 @@ export const items: Item[] = [
       "health": 487
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 56877
+    "value": 56877,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants advantage on ability checks for 1 hour",
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Grants temporary hit points equal to your level for 1 hour"
+      ],
+      "value": 56877
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0339",
     "name": "Holy Tome of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed accessory recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0339.webp",
@@ -1810,12 +3552,23 @@ export const items: Item[] = [
       "mana": 128
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 69097
+    "value": 69097,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Grants +1 to one ability score while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 69097
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0340",
     "name": "Dark Tome of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted scroll recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0340.webp",
@@ -1823,12 +3576,23 @@ export const items: Item[] = [
       "mana": 66
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 77318
+    "value": 77318,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 77318
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0341",
     "name": "Shadow Crystal of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted weapon recovered from a legendary hunter's collection. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0341.webp",
@@ -1836,12 +3600,26 @@ export const items: Item[] = [
       "attack": 91
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 72809
+    "value": 72809,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "The weapon returns to your hand when thrown (range 20/60)"
+      ],
+      "value": 72809
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0342",
     "name": "Eternal Crystal of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted armor recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0342.webp",
@@ -1849,12 +3627,28 @@ export const items: Item[] = [
       "defense": 204
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 17896
+    "value": 17896,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage",
+        "You can cast Shield once per long rest while wearing this armor"
+      ],
+      "value": 17896
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0343",
     "name": "Void Crystal of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued consumable recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0343.webp",
@@ -1862,12 +3656,23 @@ export const items: Item[] = [
       "health": 362
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 32262
+    "value": 32262,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Removes one condition affecting the user",
+        "Restores 2d4+2 hit points when consumed",
+        "Allows the user to see invisible creatures for 10 minutes"
+      ],
+      "value": 32262
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0344",
     "name": "Abyssal Crystal of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient accessory recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0344.webp",
@@ -1875,12 +3680,23 @@ export const items: Item[] = [
       "mana": 87
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 36305
+    "value": 36305,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Once per day, reroll a failed saving throw",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 36305
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0345",
     "name": "Demonic Crystal of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient scroll recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0345.webp",
@@ -1888,12 +3704,23 @@ export const items: Item[] = [
       "mana": 218
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 41162
+    "value": 41162,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Once per day, reroll a failed saving throw",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 41162
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0346",
     "name": "Celestial Crystal of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued weapon recovered from a fallen gate boss. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0346.webp",
@@ -1901,12 +3728,26 @@ export const items: Item[] = [
       "attack": 141
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 22614
+    "value": 22614,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "The weapon returns to your hand when thrown (range 20/60)"
+      ],
+      "value": 22614
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0347",
     "name": "Divine Crystal of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed armor recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0347.webp",
@@ -1914,12 +3755,28 @@ export const items: Item[] = [
       "defense": 164
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 83886
+    "value": 83886,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants resistance to one elemental damage type while attuned",
+        "You can cast Shield once per long rest while wearing this armor"
+      ],
+      "value": 83886
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0348",
     "name": "Ancient Crystal of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted consumable recovered from a legendary hunter's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0348.webp",
@@ -1927,12 +3784,23 @@ export const items: Item[] = [
       "health": 123
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 59528
+    "value": 59528,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants advantage on ability checks for 1 hour",
+        "Removes one condition affecting the user",
+        "Restores 2d4+2 hit points when consumed"
+      ],
+      "value": 59528
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0349",
     "name": "Forgotten Crystal of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted accessory recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0349.webp",
@@ -1940,12 +3808,23 @@ export const items: Item[] = [
       "mana": 78
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 64937
+    "value": 64937,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "Grants darkvision 60 feet if you don't already have it",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 64937
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0350",
     "name": "Cursed Crystal of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted scroll recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0350.webp",
@@ -1953,12 +3832,23 @@ export const items: Item[] = [
       "mana": 160
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 26107
+    "value": 26107,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 26107
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0351",
     "name": "Blessed Crystal of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened weapon recovered from a master artificer. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0351.webp",
@@ -1966,12 +3856,26 @@ export const items: Item[] = [
       "attack": 154
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 98958
+    "value": 98958,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "You gain +1 to initiative while carrying this weapon"
+      ],
+      "value": 98958
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0352",
     "name": "Sacred Crystal of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged armor recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0352.webp",
@@ -1979,12 +3883,28 @@ export const items: Item[] = [
       "defense": 221
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 37857
+    "value": 37857,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage",
+        "You can cast Shield once per long rest while wearing this armor"
+      ],
+      "value": 37857
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0353",
     "name": "Profane Crystal of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged consumable recovered from a legendary hunter's collection. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0353.webp",
@@ -1992,12 +3912,23 @@ export const items: Item[] = [
       "health": 176
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 1623
+    "value": 1623,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Grants advantage on ability checks for 1 hour"
+      ],
+      "value": 1623
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0354",
     "name": "Mystic Crystal of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted accessory recovered from a fallen gate boss. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0354.webp",
@@ -2005,12 +3936,23 @@ export const items: Item[] = [
       "mana": 91
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 81343
+    "value": 81343,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Grants +1 to one ability score while attuned",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 81343
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0355",
     "name": "Arcane Crystal of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened scroll recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0355.webp",
@@ -2018,12 +3960,23 @@ export const items: Item[] = [
       "mana": 236
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 43208
+    "value": 43208,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "You can cast Detect Magic at will while wearing this",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 43208
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0356",
     "name": "Infernal Crystal of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient weapon recovered from a master artificer. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0356.webp",
@@ -2031,12 +3984,26 @@ export const items: Item[] = [
       "attack": 76
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 72363
+    "value": 72363,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Glows faintly when enemies are within 60 feet"
+      ],
+      "value": 72363
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0357",
     "name": "Frozen Crystal of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed armor recovered from a master artificer. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0357.webp",
@@ -2044,12 +4011,28 @@ export const items: Item[] = [
       "defense": 206
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 57083
+    "value": 57083,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Reduces damage from critical hits by your proficiency bonus",
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage"
+      ],
+      "value": 57083
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0358",
     "name": "Thunder Crystal of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed consumable recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0358.webp",
@@ -2057,12 +4040,23 @@ export const items: Item[] = [
       "health": 179
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 52137
+    "value": 52137,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants advantage on ability checks for 1 hour",
+        "Restores 2d4+2 hit points when consumed",
+        "Allows the user to see invisible creatures for 10 minutes"
+      ],
+      "value": 52137
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0359",
     "name": "Holy Crystal of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted accessory recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0359.webp",
@@ -2070,12 +4064,23 @@ export const items: Item[] = [
       "mana": 72
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 11143
+    "value": 11143,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You gain proficiency in one saving throw while attuned",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 11143
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0360",
     "name": "Dark Crystal of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened scroll recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0360.webp",
@@ -2083,12 +4088,23 @@ export const items: Item[] = [
       "mana": 90
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 73163
+    "value": 73163,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "You gain proficiency in one saving throw while attuned",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 73163
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0361",
     "name": "Shadow Essence of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An forged weapon recovered from a master artificer. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0361.webp",
@@ -2096,12 +4112,26 @@ export const items: Item[] = [
       "attack": 214
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 71350
+    "value": 71350,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Glows faintly when enemies are within 60 feet"
+      ],
+      "value": 71350
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0362",
     "name": "Eternal Essence of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened armor recovered from a master artificer. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0362.webp",
@@ -2109,12 +4139,28 @@ export const items: Item[] = [
       "defense": 174
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 23781
+    "value": 23781,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "You can cast Shield once per long rest while wearing this armor",
+        "Grants advantage on saving throws against one damage type"
+      ],
+      "value": 23781
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0363",
     "name": "Void Essence of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened consumable recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0363.webp",
@@ -2122,12 +4168,23 @@ export const items: Item[] = [
       "health": 504
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 40828
+    "value": 40828,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Restores 2d4+2 hit points when consumed",
+        "Removes one condition affecting the user"
+      ],
+      "value": 40828
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0364",
     "name": "Abyssal Essence of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed accessory recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0364.webp",
@@ -2135,12 +4192,23 @@ export const items: Item[] = [
       "mana": 122
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 1437
+    "value": 1437,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 1437
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0365",
     "name": "Demonic Essence of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted scroll recovered from a legendary hunter's collection. Infused with ice energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0365.webp",
@@ -2148,12 +4216,23 @@ export const items: Item[] = [
       "mana": 141
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 9642
+    "value": 9642,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "Grants darkvision 60 feet if you don't already have it",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 9642
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0366",
     "name": "Celestial Essence of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed weapon recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0366.webp",
@@ -2161,12 +4240,26 @@ export const items: Item[] = [
       "attack": 183
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 58131
+    "value": 58131,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Once per day, the weapon can cast a cantrip-level effect"
+      ],
+      "value": 58131
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0367",
     "name": "Divine Essence of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient armor recovered from a fallen gate boss. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0367.webp",
@@ -2174,12 +4267,28 @@ export const items: Item[] = [
       "defense": 244
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 100284
+    "value": 100284,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants advantage on saving throws against one damage type",
+        "Grants resistance to one elemental damage type while attuned"
+      ],
+      "value": 100284
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0368",
     "name": "Ancient Essence of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted consumable recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0368.webp",
@@ -2187,12 +4296,23 @@ export const items: Item[] = [
       "health": 517
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 49883
+    "value": 49883,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants advantage on ability checks for 1 hour",
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Removes one condition affecting the user"
+      ],
+      "value": 49883
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0369",
     "name": "Forgotten Essence of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed accessory recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0369.webp",
@@ -2200,12 +4320,23 @@ export const items: Item[] = [
       "mana": 181
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 62651
+    "value": 62651,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Grants +1 to one ability score while attuned",
+        "Once per day, reroll a failed saving throw"
+      ],
+      "value": 62651
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0370",
     "name": "Cursed Essence of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened scroll recovered from a fallen gate boss. Infused with thunder energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0370.webp",
@@ -2213,12 +4344,23 @@ export const items: Item[] = [
       "mana": 99
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 39519
+    "value": 39519,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "You can cast Detect Magic at will while wearing this",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 39519
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0371",
     "name": "Blessed Essence of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient weapon recovered from a legendary hunter's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0371.webp",
@@ -2226,12 +4368,26 @@ export const items: Item[] = [
       "attack": 132
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 35582
+    "value": 35582,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "You gain +1 to initiative while carrying this weapon"
+      ],
+      "value": 35582
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0372",
     "name": "Sacred Essence of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed armor recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0372.webp",
@@ -2239,12 +4395,28 @@ export const items: Item[] = [
       "defense": 147
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 44688
+    "value": 44688,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "You can cast Shield once per long rest while wearing this armor",
+        "Grants advantage on saving throws against one damage type"
+      ],
+      "value": 44688
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0373",
     "name": "Profane Essence of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted consumable recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0373.webp",
@@ -2252,12 +4424,23 @@ export const items: Item[] = [
       "health": 367
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 68809
+    "value": 68809,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Restores 2d4+2 hit points when consumed",
+        "Grants temporary hit points equal to your level for 1 hour"
+      ],
+      "value": 68809
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0374",
     "name": "Mystic Essence of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient accessory recovered from a legendary hunter's collection. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0374.webp",
@@ -2265,12 +4448,23 @@ export const items: Item[] = [
       "mana": 107
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 85009
+    "value": 85009,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Once per day, reroll a failed saving throw",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 85009
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0375",
     "name": "Arcane Essence of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted scroll recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0375.webp",
@@ -2278,12 +4472,23 @@ export const items: Item[] = [
       "mana": 230
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 79246
+    "value": 79246,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 79246
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0376",
     "name": "Infernal Essence of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient weapon recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0376.webp",
@@ -2291,12 +4496,26 @@ export const items: Item[] = [
       "attack": 153
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 58606
+    "value": 58606,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "The weapon returns to your hand when thrown (range 20/60)"
+      ],
+      "value": 58606
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0377",
     "name": "Frozen Essence of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted armor recovered from a fallen gate boss. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0377.webp",
@@ -2304,12 +4523,28 @@ export const items: Item[] = [
       "defense": 173
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 45029
+    "value": 45029,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Reduces damage from critical hits by your proficiency bonus",
+        "Grants resistance to one elemental damage type while attuned"
+      ],
+      "value": 45029
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0378",
     "name": "Thunder Essence of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted consumable recovered from a legendary hunter's collection. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0378.webp",
@@ -2317,12 +4552,23 @@ export const items: Item[] = [
       "health": 414
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 40427
+    "value": 40427,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Restores 2d4+2 hit points when consumed",
+        "Grants advantage on ability checks for 1 hour",
+        "Removes one condition affecting the user"
+      ],
+      "value": 40427
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0379",
     "name": "Holy Essence of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient accessory recovered from a forgotten dungeon. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0379.webp",
@@ -2330,12 +4576,23 @@ export const items: Item[] = [
       "mana": 165
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 16890
+    "value": 16890,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "You can cast Detect Magic at will while wearing this",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 16890
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0380",
     "name": "Dark Essence of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened scroll recovered from the depths of an A-rank gate. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0380.webp",
@@ -2343,12 +4600,23 @@ export const items: Item[] = [
       "mana": 105
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 62630
+    "value": 62630,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You gain proficiency in one saving throw while attuned",
+        "Grants darkvision 60 feet if you don't already have it",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 62630
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0381",
     "name": "Shadow Heart of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted weapon recovered from a master artificer. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0381.webp",
@@ -2356,12 +4624,26 @@ export const items: Item[] = [
       "attack": 243
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 74444
+    "value": 74444,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "You gain +1 to initiative while carrying this weapon"
+      ],
+      "value": 74444
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0382",
     "name": "Eternal Heart of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted armor recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0382.webp",
@@ -2369,12 +4651,28 @@ export const items: Item[] = [
       "defense": 68
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 85347
+    "value": 85347,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants resistance to one elemental damage type while attuned",
+        "Reduces damage from critical hits by your proficiency bonus"
+      ],
+      "value": 85347
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0383",
     "name": "Void Heart of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued consumable recovered from a legendary hunter's collection. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0383.webp",
@@ -2382,12 +4680,23 @@ export const items: Item[] = [
       "health": 434
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 31593
+    "value": 31593,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Restores 2d4+2 hit points when consumed",
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Grants temporary hit points equal to your level for 1 hour"
+      ],
+      "value": 31593
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0384",
     "name": "Abyssal Heart of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient accessory recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0384.webp",
@@ -2395,12 +4704,23 @@ export const items: Item[] = [
       "mana": 186
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 12033
+    "value": 12033,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "Grants darkvision 60 feet if you don't already have it",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 12033
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0385",
     "name": "Demonic Heart of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient scroll recovered from a legendary hunter's collection. Infused with lightning energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0385.webp",
@@ -2408,12 +4728,23 @@ export const items: Item[] = [
       "mana": 166
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 41601
+    "value": 41601,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Grants +1 to one ability score while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 41601
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0386",
     "name": "Celestial Heart of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened weapon recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0386.webp",
@@ -2421,12 +4752,26 @@ export const items: Item[] = [
       "attack": 99
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 90002
+    "value": 90002,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "You gain +1 to initiative while carrying this weapon"
+      ],
+      "value": 90002
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0387",
     "name": "Divine Heart of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An blessed armor recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0387.webp",
@@ -2434,12 +4779,28 @@ export const items: Item[] = [
       "defense": 137
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 64458
+    "value": 64458,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants resistance to one elemental damage type while attuned",
+        "You can cast Shield once per long rest while wearing this armor"
+      ],
+      "value": 64458
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0388",
     "name": "Ancient Heart of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened consumable recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0388.webp",
@@ -2447,12 +4808,23 @@ export const items: Item[] = [
       "health": 238
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 13355
+    "value": 13355,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Restores 2d4+2 hit points when consumed",
+        "Removes one condition affecting the user",
+        "Allows the user to see invisible creatures for 10 minutes"
+      ],
+      "value": 13355
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0389",
     "name": "Forgotten Heart of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted accessory recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0389.webp",
@@ -2460,12 +4832,23 @@ export const items: Item[] = [
       "mana": 111
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 41952
+    "value": 41952,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "Once per day, reroll a failed saving throw",
+        "You can cast Detect Magic at will while wearing this"
+      ],
+      "value": 41952
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0390",
     "name": "Cursed Heart of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted scroll recovered from a legendary hunter's collection. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0390.webp",
@@ -2473,12 +4856,23 @@ export const items: Item[] = [
       "mana": 138
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 27282
+    "value": 27282,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Grants darkvision 60 feet if you don't already have it",
+        "Grants +1 to one ability score while attuned",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 27282
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0391",
     "name": "Blessed Heart of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted weapon recovered from a legendary hunter's collection. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0391.webp",
@@ -2486,12 +4880,26 @@ export const items: Item[] = [
       "attack": 102
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 86396
+    "value": 86396,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "Deals an extra 1d6 elemental damage on a critical hit"
+      ],
+      "value": 86396
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0392",
     "name": "Sacred Heart of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened armor recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0392.webp",
@@ -2499,12 +4907,28 @@ export const items: Item[] = [
       "defense": 161
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 83500
+    "value": 83500,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "Grants resistance to one elemental damage type while attuned",
+        "The armor adjusts to fit perfectly, imposing no stealth disadvantage"
+      ],
+      "value": 83500
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0393",
     "name": "Profane Heart of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An enchanted consumable recovered from a master artificer. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0393.webp",
@@ -2512,12 +4936,23 @@ export const items: Item[] = [
       "health": 469
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 28242
+    "value": 28242,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Grants advantage on ability checks for 1 hour",
+        "Grants temporary hit points equal to your level for 1 hour",
+        "Allows the user to see invisible creatures for 10 minutes"
+      ],
+      "value": 28242
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0394",
     "name": "Mystic Heart of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An awakened accessory recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0394.webp",
@@ -2525,12 +4960,23 @@ export const items: Item[] = [
       "mana": 81
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 54343
+    "value": 54343,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "You can cast Detect Magic at will while wearing this",
+        "Grants +1 to one ability score while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 54343
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0395",
     "name": "Arcane Heart of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An imbued scroll recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0395.webp",
@@ -2538,12 +4984,23 @@ export const items: Item[] = [
       "mana": 171
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 14024
+    "value": 14024,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "You gain proficiency in one saving throw while attuned",
+        "Grants +1 to one ability score while attuned"
+      ],
+      "value": 14024
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0396",
     "name": "Infernal Heart of Kael",
-    "description": "A legendary weapon forged in the shadow realm, imbued with the power of the Ascendant Kael. This common item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient weapon recovered from a forgotten dungeon. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0396.webp",
@@ -2551,12 +5008,26 @@ export const items: Item[] = [
       "attack": 86
     },
     "effect": "Grants enhanced weapon abilities and shadow power.",
-    "value": 92670
+    "value": 92670,
+    "weight": 3,
+    "properties": {
+      "weapon": {
+        "damage": "1d8",
+        "damageType": "slashing"
+      }
+    },
+    "effects": {
+      "passive": [
+        "The weapon returns to your hand when thrown (range 20/60)"
+      ],
+      "value": 92670
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0397",
     "name": "Frozen Heart of Kael",
-    "description": "A legendary armor forged in the shadow realm, imbued with the power of the Ascendant Kael. This uncommon item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An crafted armor recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0397.webp",
@@ -2564,12 +5035,28 @@ export const items: Item[] = [
       "defense": 142
     },
     "effect": "Grants enhanced armor abilities and shadow power.",
-    "value": 35087
+    "value": 35087,
+    "weight": 20,
+    "properties": {
+      "magical": {
+        "bonus": {
+          "armorClass": 1
+        }
+      }
+    },
+    "effects": {
+      "passive": [
+        "You can cast Shield once per long rest while wearing this armor",
+        "Grants resistance to one elemental damage type while attuned"
+      ],
+      "value": 35087
+    },
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0398",
     "name": "Thunder Heart of Kael",
-    "description": "A legendary consumable forged in the shadow realm, imbued with the power of the Ascendant Kael. This rare item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed consumable recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0398.webp",
@@ -2577,12 +5064,23 @@ export const items: Item[] = [
       "health": 569
     },
     "effect": "Grants enhanced consumable abilities and shadow power.",
-    "value": 48164
+    "value": 48164,
+    "weight": 0.5,
+    "effects": {
+      "passive": [
+        "Allows the user to see invisible creatures for 10 minutes",
+        "Removes one condition affecting the user",
+        "Grants advantage on ability checks for 1 hour"
+      ],
+      "value": 48164
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0399",
     "name": "Holy Heart of Kael",
-    "description": "A legendary accessory forged in the shadow realm, imbued with the power of the Ascendant Kael. This epic item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An cursed accessory recovered from the depths of an A-rank gate. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0399.webp",
@@ -2590,12 +5088,23 @@ export const items: Item[] = [
       "mana": 92
     },
     "effect": "Grants enhanced accessory abilities and shadow power.",
-    "value": 77953
+    "value": 77953,
+    "weight": 1,
+    "effects": {
+      "passive": [
+        "Grants +1 to one ability score while attuned",
+        "Grants darkvision 60 feet if you don't already have it",
+        "You gain proficiency in one saving throw while attuned"
+      ],
+      "value": 77953
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   },
   {
     "id": "item-0400",
     "name": "Dark Heart of Kael",
-    "description": "A legendary scroll forged in the shadow realm, imbued with the power of the Ascendant Kael. This legendary item radiates immense power and is highly sought after by shadow warriors.",
+    "description": "An ancient scroll recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0400.webp",
@@ -2603,8 +5112,17 @@ export const items: Item[] = [
       "mana": 237
     },
     "effect": "Grants enhanced scroll abilities and shadow power.",
-    "value": 97620
+    "value": 97620,
+    "weight": 0.1,
+    "effects": {
+      "passive": [
+        "Once per day, reroll a failed saving throw",
+        "Grants +1 to one ability score while attuned",
+        "Grants darkvision 60 feet if you don't already have it"
+      ],
+      "value": 97620
+    },
+    "attunement": true,
+    "source": "System Ascendant Canon"
   }
 ];
-
-

@@ -13,7 +13,7 @@ import { usePowers } from '@/hooks/usePowers';
 import { useToast } from '@/hooks/use-toast';
 import { useCharacter } from '@/hooks/useCharacters';
 import { useSpellSlots, useUpdateSpellSlot } from '@/hooks/useSpellSlots';
-import { getSpellcastingAbility, getSpellsKnownLimit, getSpellsPreparedLimit, getAbilityModifier } from '@/lib/characterCalculations';
+import { getCantripsKnownLimit, getSpellcastingAbility, getSpellsKnownLimit, getSpellsPreparedLimit, getAbilityModifier } from '@/lib/characterCalculations';
 import { cn } from '@/lib/utils';
 import { AddPowerDialog } from './AddPowerDialog';
 import { formatMonarchVernacular } from '@/lib/vernacular';
@@ -77,10 +77,13 @@ export function PowersList({ characterId }: { characterId: string }) {
     : 0;
   const spellsPreparedLimit = character ? getSpellsPreparedLimit(character.job, character.level, abilityModifier) : null;
   const spellsKnownLimit = character ? getSpellsKnownLimit(character.job, character.level) : null;
+  const cantripsKnownLimit = character ? getCantripsKnownLimit(character.job, character.level) : null;
   const preparedCount = powers.filter(p => p.is_prepared).length;
-  const knownCount = powers.length;
+  const knownCount = powers.filter((p) => (p.power_level ?? 0) > 0).length;
+  const cantripCount = powers.filter((p) => (p.power_level ?? 0) === 0).length;
   const isOverPreparedLimit = spellsPreparedLimit !== null && preparedCount > spellsPreparedLimit;
   const isOverKnownLimit = spellsKnownLimit !== null && knownCount > spellsKnownLimit;
+  const isOverCantripLimit = cantripsKnownLimit !== null && cantripCount > cantripsKnownLimit;
 
   const handleReorderGroup = useCallback(async (level: string, newOrder: typeof powers) => {
     try {
@@ -191,7 +194,7 @@ export function PowersList({ characterId }: { characterId: string }) {
     <SystemWindow title="POWERS">
       <div className="space-y-4">
         {/* Spell Limits Display */}
-        {(spellsPreparedLimit !== null || spellsKnownLimit !== null) && (
+        {(spellsPreparedLimit !== null || spellsKnownLimit !== null || cantripsKnownLimit !== null) && (
           <div className="p-2 rounded-lg border bg-muted/30">
             <div className="flex items-center justify-between text-sm">
               {spellsPreparedLimit !== null && (
@@ -222,10 +225,25 @@ export function PowersList({ characterId }: { characterId: string }) {
                   )}
                 </div>
               )}
+
+              {cantripsKnownLimit !== null && (
+                <div className={cn(
+                  "flex items-center gap-2",
+                  isOverCantripLimit && "text-destructive"
+                )}>
+                  <span className="text-muted-foreground">Cantrips:</span>
+                  <span className={cn("font-semibold", isOverCantripLimit && "text-destructive")}>
+                    {cantripCount} / {cantripsKnownLimit}
+                  </span>
+                  {isOverCantripLimit && (
+                    <AlertTriangle className="w-4 h-4 text-destructive" />
+                  )}
+                </div>
+              )}
             </div>
-            {(isOverPreparedLimit || isOverKnownLimit) && (
+            {(isOverPreparedLimit || isOverKnownLimit || isOverCantripLimit) && (
               <div className="mt-2 text-xs text-destructive">
-                Warning: You exceed the limit for {isOverPreparedLimit ? 'prepared' : ''} {isOverPreparedLimit && isOverKnownLimit ? 'and ' : ''} {isOverKnownLimit ? 'known' : ''} spells.
+                Warning: You exceed the limit for {isOverPreparedLimit ? 'prepared' : ''}{isOverPreparedLimit && (isOverKnownLimit || isOverCantripLimit) ? ' and ' : ''}{isOverKnownLimit ? 'known' : ''}{isOverKnownLimit && isOverCantripLimit ? ' and ' : ''}{isOverCantripLimit ? 'cantrip' : ''} spells.
               </div>
             )}
           </div>

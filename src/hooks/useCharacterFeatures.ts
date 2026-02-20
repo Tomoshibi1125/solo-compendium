@@ -31,31 +31,50 @@ export interface FeatureModifier {
   source: string;
 }
 
-const LOCAL_FEATURES_KEY = 'character-features';
+const buildFeaturesCacheKey = (userId: string, characterId: string) => {
+  return `solo-compendium.cache.character-features.${userId}.character:${characterId}.v1`;
+};
 
-const useLocalFeatures = () => {
-  return useUserLocalState<Record<string, CharacterFeature[]>>(
-    LOCAL_FEATURES_KEY,
-    { initialState: {} }
-  );
+const readCachedFeatures = (key: string): CharacterFeature[] | null => {
+  try {
+    if (typeof window === 'undefined') return null;
+    const raw = window.localStorage.getItem(key);
+    if (!raw) return null;
+    return JSON.parse(raw) as CharacterFeature[];
+  } catch {
+    return null;
+  }
+};
+
+const writeCachedFeatures = (key: string, features: CharacterFeature[]) => {
+  try {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem(key, JSON.stringify(features));
+  } catch {
+    // ignore
+  }
 };
 
 export const useCharacterFeatures = (characterId: string) => {
-  const { user } = useAuth();
-  const { state: localFeatures } = useLocalFeatures();
+  const { user, loading: authLoading } = useAuth();
 
   return useQuery({
     queryKey: ['character-features', characterId],
     queryFn: async (): Promise<CharacterFeature[]> => {
       if (!characterId) return [];
 
-      if (!isSupabaseConfigured || isLocalCharacterId(characterId)) {
-        return localFeatures[characterId] || [];
+      if (isLocalCharacterId(characterId)) {
+        const raw = window.localStorage.getItem('character-features');
+        if (!raw) return [];
+        const local = JSON.parse(raw) as Record<string, CharacterFeature[]>;
+        return local[characterId] || [];
       }
 
-      if (!user) {
-        return localFeatures[characterId] || [];
+      if (!isSupabaseConfigured || (!user && !authLoading)) {
+        return [];
       }
+
+      const cacheKey = user?.id ? buildFeaturesCacheKey(user.id, characterId) : null;
 
       const { data, error } = await supabase
         .from('character_features')
@@ -63,10 +82,21 @@ export const useCharacterFeatures = (characterId: string) => {
         .eq('character_id', characterId)
         .order('created_at', { ascending: true });
 
-      if (error) throw error;
-      return (data || []) as unknown as CharacterFeature[];
+      if (error) {
+        if (cacheKey) {
+          const cached = readCachedFeatures(cacheKey);
+          if (cached) return cached;
+        }
+        throw error;
+      }
+
+      const next = (data || []) as unknown as CharacterFeature[];
+      if (cacheKey) {
+        writeCachedFeatures(cacheKey, next);
+      }
+      return next;
     },
-    enabled: !!characterId,
+    enabled: !!characterId && !authLoading,
   });
 };
 
@@ -74,7 +104,6 @@ export const useApplyHomebrewFeature = () => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const { user } = useAuth();
-  const { state: localFeatures, setState: setLocalFeatures } = useLocalFeatures();
 
   return useMutation({
     mutationFn: async (params: {
@@ -101,20 +130,18 @@ export const useApplyHomebrewFeature = () => {
         created_at: new Date().toISOString(),
       };
 
-      if (!isSupabaseConfigured || isLocalCharacterId(params.characterId)) {
-        setLocalFeatures({
-          ...localFeatures,
-          [params.characterId]: [...(localFeatures[params.characterId] || []), feature],
-        });
+      if (isLocalCharacterId(params.characterId)) {
+        const raw = window.localStorage.getItem('character-features');
+        const local = raw ? (JSON.parse(raw) as Record<string, CharacterFeature[]>) : {};
+        local[params.characterId] = [...(local[params.characterId] || []), feature];
+        window.localStorage.setItem('character-features', JSON.stringify(local));
         return feature;
       }
 
-      if (!user) {
-        setLocalFeatures({
-          ...localFeatures,
-          [params.characterId]: [...(localFeatures[params.characterId] || []), feature],
-        });
-        return feature;
+      const cacheKey = user?.id ? buildFeaturesCacheKey(user.id, params.characterId) : null;
+      if (cacheKey) {
+        const cached = readCachedFeatures(cacheKey) ?? [];
+        writeCachedFeatures(cacheKey, [...cached, feature]);
       }
 
       const { data, error } = await supabase
@@ -157,16 +184,23 @@ export const useRemoveCharacterFeature = () => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const { user } = useAuth();
-  const { state: localFeatures, setState: setLocalFeatures } = useLocalFeatures();
 
   return useMutation({
     mutationFn: async (params: { featureId: string; characterId: string }) => {
-      if (!isSupabaseConfigured || isLocalCharacterId(params.characterId)) {
-        setLocalFeatures({
-          ...localFeatures,
-          [params.characterId]: (localFeatures[params.characterId] || []).filter(f => f.id !== params.featureId),
-        });
+      if (isLocalCharacterId(params.characterId)) {
+        const raw = window.localStorage.getItem('character-features');
+        const local = raw ? (JSON.parse(raw) as Record<string, CharacterFeature[]>) : {};
+        local[params.characterId] = (local[params.characterId] || []).filter(f => f.id !== params.featureId);
+        window.localStorage.setItem('character-features', JSON.stringify(local));
         return;
+      }
+
+      const cacheKey = user?.id ? buildFeaturesCacheKey(user.id, params.characterId) : null;
+      if (cacheKey) {
+        const cached = readCachedFeatures(cacheKey);
+        if (cached) {
+          writeCachedFeatures(cacheKey, cached.filter(f => f.id !== params.featureId));
+        }
       }
 
       const { error } = await supabase

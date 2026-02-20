@@ -55,7 +55,7 @@ export class VoiceChatManager {
   private audioContext: AudioContext | null = null;
   private analyser: AnalyserNode | null = null;
   private microphone: MediaStream | null = null;
-  private audioLevelCheckInterval: NodeJS.Timeout | null = null;
+  private audioLevelCheckInterval: ReturnType<typeof setInterval> | null = null;
 
   constructor() {
     this.initializeAudioContext();

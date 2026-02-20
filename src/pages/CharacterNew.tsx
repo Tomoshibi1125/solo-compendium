@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Check, Loader2 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -25,6 +25,9 @@ import { usePublishedHomebrew } from '@/hooks/useHomebrewContent';
 import { Badge } from '@/components/ui/badge';
 
 type Job = Database['public']['Tables']['compendium_jobs']['Row'] & {
+  display_name?: string | null;
+};
+type Path = Database['public']['Tables']['compendium_job_paths']['Row'] & {
   display_name?: string | null;
 };
 type Background = Database['public']['Tables']['compendium_backgrounds']['Row'] & {
@@ -81,6 +84,7 @@ const CharacterNew = () => {
   // Reset skills when job changes
   const handleJobChange = (jobId: string) => {
     setSelectedJob(jobId);
+    setSelectedPath('');
     setSelectedSkills([]); // Reset skills when job changes
   };
 
@@ -115,10 +119,26 @@ const CharacterNew = () => {
         .order('name');
       if (error) throw error;
 
-      return filterRowsBySourcebookAccess(data || [], (path) => path.source_book);
+      return filterRowsBySourcebookAccess((data || []) as Path[], (path) => path.source_book);
     },
     enabled: !!selectedJob,
   });
+
+  const pathUnlockLevel = useMemo(() => {
+    const levels = paths
+      .map((p) => (typeof (p as { path_level?: number }).path_level === 'number' ? (p as { path_level?: number }).path_level : null))
+      .filter((l): l is number => l !== null);
+    if (levels.length === 0) return null;
+    return Math.min(...levels);
+  }, [paths]);
+
+  const pathsAvailableAtCreation = useMemo(() => {
+    if (pathUnlockLevel !== 1) return [];
+    return paths;
+  }, [paths, pathUnlockLevel]);
+
+  const isPathStepEnabled = pathUnlockLevel === 1 && pathsAvailableAtCreation.length > 0;
+  const isPathRequiredAtCreation = isPathStepEnabled;
 
   // Fetch backgrounds
   const { data: backgrounds = [] } = useQuery({
@@ -180,7 +200,7 @@ const CharacterNew = () => {
     { id: 'concept', name: 'Concept' },
     { id: 'abilities', name: 'Abilities' },
     { id: 'job', name: 'Job' },
-    { id: 'path', name: 'Path' },
+    ...(isPathStepEnabled ? ([{ id: 'path', name: 'Path' }] as const) : []),
     { id: 'background', name: 'Background' },
     { id: 'review', name: 'Review' },
   ];
@@ -293,11 +313,15 @@ const CharacterNew = () => {
       const systemFavorDie = 4; // Level 1-4
 
       // Create character
+      const selectedPathRow = selectedPath && selectedPath !== 'none'
+        ? pathsAvailableAtCreation.find((p: Path) => p.id === selectedPath)
+        : null;
+
       const character = await createCharacter.mutateAsync({
         name: name.trim(),
         level: 1,
         job: job.name,
-        path: paths.find(p => p.id === selectedPath)?.name || null,
+        path: selectedPathRow?.name || null,
         background: selectedBackgroundData.name,
         appearance: appearance.trim() || null,
         backstory: backstory.trim() || null,
@@ -342,15 +366,45 @@ const CharacterNew = () => {
       }
 
       // Add level 1 features from compendium
-      const { addLevel1Features, addBackgroundFeatures, addStartingEquipment, addStartingPowers } = await import('@/lib/characterCreation');
-      await addLevel1Features(character.id, job.id, selectedPath ? paths.find(p => p.id === selectedPath)?.id : undefined);
+      const {
+        addLevel1Features,
+        addBackgroundFeatures,
+        addStartingEquipment,
+        addJobAwakeningBenefitsForLevel,
+      } = await import('@/lib/characterCreation');
+      await addLevel1Features(character.id, job.id, selectedPathRow?.id);
+      await addJobAwakeningBenefitsForLevel(character.id, job.name, 1);
 
       // Add background features and equipment (background is required)
       await addBackgroundFeatures(character.id, selectedBackgroundData);
       await addStartingEquipment(character.id, job, selectedBackgroundData);
 
-      // Add starting powers from job
-      await addStartingPowers(character.id, job);
+      // If any level-1 features require selections, prompt the player to complete them.
+      try {
+        const { data: level1Features } = await supabase
+          .from('compendium_job_features')
+          .select('id')
+          .eq('job_id', job.id)
+          .eq('level', 1);
+
+        const featureIds = (level1Features || []).map((row) => row.id).filter(Boolean);
+        if (featureIds.length > 0) {
+          const { data: groups } = await (supabase as any)
+            .from('compendium_feature_choice_groups')
+            .select('id')
+            .in('feature_id', featureIds);
+
+          const groupIds = ((groups || []) as Array<{ id: string }>).map((g) => g.id);
+          if (groupIds.length > 0) {
+            toast({
+              title: 'Selection Protocol Required',
+              description: 'The System detected pending selections. Open your Ascendant sheet to bind them.',
+            });
+          }
+        }
+      } catch {
+        // Best-effort only; do not block creation if metadata is missing.
+      }
 
       toast({
         title: 'Ascendant Awakened!',
@@ -384,7 +438,9 @@ const CharacterNew = () => {
         }
         return true;
       case 'path':
-        return paths.length === 0 || selectedPath.length > 0; // Optional if no paths
+        if (!isPathStepEnabled) return true;
+        if (!isPathRequiredAtCreation) return true;
+        return !!selectedPath && selectedPath !== 'none';
       case 'background':
         return selectedBackground.length > 0; // Required
       case 'review':
@@ -697,7 +753,14 @@ const CharacterNew = () => {
                 <p className="text-sm text-muted-foreground">
                   Please select a job first to see available paths.
                 </p>
-              ) : paths.length === 0 ? (
+              ) : !isPathStepEnabled ? (
+                <>
+                  <Label>Select Path</Label>
+                  <p className="text-sm text-muted-foreground">
+                    This job unlocks its path later (level {pathUnlockLevel ?? 3}). You will choose it when you reach that level.
+                  </p>
+                </>
+              ) : pathsAvailableAtCreation.length === 0 ? (
                 <>
                   <Label>Select Path (Optional - No paths available for this job)</Label>
                   <p className="text-sm text-muted-foreground">
@@ -706,14 +769,13 @@ const CharacterNew = () => {
                 </>
               ) : (
                 <>
-                  <Label>Select Path (Optional - Choose at level 3)</Label>
-                  <Select value={selectedPath} onValueChange={setSelectedPath}>
+                  <Label>Select Path *</Label>
+                  <Select value={selectedPath} onValueChange={setSelectedPath} data-testid="character-path">
                     <SelectTrigger>
                       <SelectValue placeholder="Choose a path..." />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="none">None (Select later at level 3)</SelectItem>
-                      {paths.map((path) => (
+                      {pathsAvailableAtCreation.map((path: Path) => (
                         <SelectItem key={path.id} value={path.id}>
                           {formatMonarchVernacular((path as { display_name?: string | null }).display_name || path.name)}
                           {(path as any)._marketplace && (
@@ -729,10 +791,10 @@ const CharacterNew = () => {
                   {selectedPath && selectedPath !== 'none' && (
                     <div className="mt-4 p-4 rounded-lg bg-muted/30">
                       <h4 className="font-heading font-semibold mb-2">
-                        {formatMonarchVernacular((paths.find(p => p.id === selectedPath) as { name?: string; display_name?: string | null } | undefined)?.display_name || paths.find(p => p.id === selectedPath)?.name || '')}
+                        {formatMonarchVernacular((pathsAvailableAtCreation.find((p: Path) => p.id === selectedPath) as { name?: string; display_name?: string | null } | undefined)?.display_name || pathsAvailableAtCreation.find((p: Path) => p.id === selectedPath)?.name || '')}
                       </h4>
                       <p className="text-sm text-muted-foreground">
-                        {formatMonarchVernacular(paths.find(p => p.id === selectedPath)?.description || '')}
+                        {formatMonarchVernacular(pathsAvailableAtCreation.find((p: Path) => p.id === selectedPath)?.description || '')}
                       </p>
                     </div>
                   )}
@@ -833,7 +895,7 @@ const CharacterNew = () => {
                 <div className="space-y-2 text-sm">
                   <div><strong>Name:</strong> {name || 'Unnamed'}</div>
                   <div><strong>Job:</strong> {jobData ? formatMonarchVernacular(jobData.display_name || jobData.name) : 'None'}</div>
-                  <div><strong>Path:</strong> {formatMonarchVernacular((paths.find(p => p.id === selectedPath) as { name?: string; display_name?: string | null } | undefined)?.display_name || paths.find(p => p.id === selectedPath)?.name || 'None')}</div>
+                  <div><strong>Path:</strong> {formatMonarchVernacular((pathsAvailableAtCreation.find((p: Path) => p.id === selectedPath) as { name?: string; display_name?: string | null } | undefined)?.display_name || pathsAvailableAtCreation.find((p: Path) => p.id === selectedPath)?.name || 'None')}</div>
                   <div><strong>Background:</strong> {formatMonarchVernacular((backgrounds.find(b => b.id === selectedBackground) as { name?: string; display_name?: string | null } | undefined)?.display_name || backgrounds.find(b => b.id === selectedBackground)?.name || 'None')}</div>
                 </div>
               </div>

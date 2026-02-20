@@ -26,10 +26,11 @@ interface MobileExperienceProps {
 }
 
 interface TouchGesture {
-  type: 'swipe' | 'pinch' | 'longPress' | 'doubleTap' | 'drag';
+  type: 'swipe' | 'pinch' | 'longPress' | 'doubleTap' | 'drag' | 'tap';
   direction?: 'left' | 'right' | 'up' | 'down';
   distance?: number;
   velocity?: { x: number; y: number };
+  timestamp?: Date;
 }
 
 interface HapticFeedback {
@@ -50,8 +51,9 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
-  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
+  const [touchStart, setTouchStart] = useState<{ x: number; y: number; timestamp: number } | null>(null);
   const [gestures, setGestures] = useState<TouchGesture[]>([]);
+  const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
 
   // Default breakpoints
   const defaultBreakpoints = {
@@ -80,13 +82,26 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
     
     // Set initial offline status
     setIsOffline(!navigator.onLine);
+
+    const handleResize = () => {
+      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+      setIsMobile(checkMobile());
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('resize', handleResize);
+    };
   }, [breakpoints, enableOfflineMode]);
 
   // Touch gesture handling
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     const touch = e.touches[0];
     if (touch) {
-      setTouchStart({ x: touch.clientX, y: touch.clientY });
+      setTouchStart({ x: touch.clientX, y: touch.clientY, timestamp: Date.now() });
     }
   }, []);
 
@@ -96,7 +111,7 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
       const deltaX = touch.clientX - touchStart.x;
       const deltaY = touch.clientY - touchStart.y;
       const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-      const duration = Date.now() - (touchStart.timestamp || Date.now());
+      const duration = Date.now() - touchStart.timestamp;
       const velocity = distance / duration;
 
       // Determine gesture type
@@ -116,8 +131,8 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
         type: gestureType,
         direction,
         distance,
-        velocity,
-        timestamp: new Date()
+        velocity: { x: velocity, y: velocity },
+        timestamp: new Date(),
       };
 
       setGestures(prev => [...prev.slice(-9), gesture]);
@@ -174,20 +189,6 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
         ? prev.filter(f => f !== filter)
         : [...prev, filter]
     );
-  }, []);
-
-  // Responsive utilities
-  const useResponsive = () => {
-    const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
-
-    useEffect(() => {
-      const handleResize = () => {
-        setWindowSize({ width: window.innerWidth, height: window.innerHeight });
-      };
-
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
-    };
   }, []);
 
   const getBreakpoint = useCallback(() => {
@@ -260,6 +261,8 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
               <button
                 onClick={toggleMobileMenu}
                 className="p-2 text-muted-foreground"
+                aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+                title={isMenuOpen ? 'Close menu' : 'Open menu'}
               >
                 {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
@@ -273,7 +276,7 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
                   type="text"
                   placeholder="Search..."
                   value={searchQuery}
-                  onChange={handleSearch}
+                  onChange={(e) => handleSearch(e.target.value)}
                   className="pl-10 pr-4 py-2 bg-muted/50 border border-border rounded-lg text-foreground placeholder:text-muted-foreground"
                 />
               </div>
@@ -287,6 +290,8 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
                     <button
                       onClick={() => setIsMenuOpen(false)}
                       className="absolute top-2 right-2 p-2 text-muted-foreground"
+                      aria-label="Close menu"
+                      title="Close menu"
                     >
                       <X className="h-6 w-6" />
                     </button>
@@ -306,6 +311,7 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
                 </nav>
               </div>
             )}
+          </div>
           </header>
       )}
 
@@ -334,13 +340,13 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
       {isMobile && (
         <div className="fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-md border-t border-border/40">
           <div className="flex items-center justify-around p-2">
-            <button className="p-2 text-muted-foreground">
+            <button className="p-2 text-muted-foreground" aria-label="Home" title="Home">
               <Home className="h-5 w-5" />
             </button>
-            <button className="p-2 text-muted-foreground">
+            <button className="p-2 text-muted-foreground" aria-label="Search" title="Search">
               <Search className="h-5 w-5" />
             </button>
-            <button className="p-2 text-muted-foreground">
+            <button className="p-2 text-muted-foreground" aria-label="Filter" title="Filter">
               <Filter className="h-5 w-5" />
             </button>
           </div>

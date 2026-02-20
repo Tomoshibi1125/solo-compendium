@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { useJoinedCampaigns, useMyCampaigns } from '@/hooks/useCampaigns';
+import { useHydratedPreferredCampaignId } from '@/hooks/usePreferredCampaignSelection';
 
 type CampaignWithRole = {
   id: string;
@@ -48,18 +49,17 @@ const SessionPlanner = () => {
     return Array.from(byId.values()).sort((a, b) => a.name.localeCompare(b.name));
   }, [joinedCampaigns, myCampaigns]);
 
-  useEffect(() => {
-    if (manageableCampaigns.length === 0) {
-      return;
-    }
-
-    const isSelectedValid = manageableCampaigns.some((campaign) => campaign.id === activeCampaignId);
-    if (!isSelectedValid) {
+  useHydratedPreferredCampaignId({
+    toolKey: 'session_planner',
+    campaigns: manageableCampaigns,
+    urlCampaignId: activeCampaignId || null,
+    isCampaignIdValid: (id) => manageableCampaigns.some((campaign) => campaign.id === id),
+    onResolveCampaignId: (id) => {
       const nextParams = new URLSearchParams(searchParams);
-      nextParams.set('campaignId', manageableCampaigns[0].id);
+      nextParams.set('campaignId', id);
       setSearchParams(nextParams, { replace: true });
-    }
-  }, [activeCampaignId, manageableCampaigns, searchParams, setSearchParams]);
+    },
+  });
 
   const handleCampaignChange = (nextCampaignId: string) => {
     const nextParams = new URLSearchParams(searchParams);

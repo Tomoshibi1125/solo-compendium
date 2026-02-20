@@ -90,8 +90,8 @@ export function useSaveSovereign() {
         fusion_stability: sovereign.fusion_stability,
         job_id: sovereign.job.id,
         path_id: sovereign.path.id,
-        monarch_a_id: sovereign.monarchA.id,
-        monarch_b_id: sovereign.monarchB.id,
+        monarch_a_id: sovereign.regentA.id,
+        monarch_b_id: sovereign.regentB.id,
         abilities: JSON.parse(JSON.stringify(sovereign.abilities)),
         created_by: user.id,
       };

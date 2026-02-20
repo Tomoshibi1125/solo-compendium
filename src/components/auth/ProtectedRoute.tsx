@@ -45,7 +45,7 @@ const AccessDenied = ({
     <div className="text-center space-y-6 max-w-md w-full bg-background/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-destructive/20">
       <div className="flex justify-center mb-4">
         <div className="p-3 bg-destructive/10 rounded-full">
-          <icon className="h-8 w-8 text-destructive" />
+          <Icon className="h-8 w-8 text-destructive" />
         </div>
       </div>
       <div className="space-y-3">
@@ -77,7 +77,12 @@ export function ProtectedRoute({ children, requireDM = false, allowGuest }: Prot
   const guestAllowed = allowGuest ?? guestEnabled;
   const hasStoredSession =
     typeof window !== 'undefined' &&
-    Object.keys(localStorage).some((key) => key.includes('auth-token') || key.includes('supabase.auth.token'));
+    Object.keys(localStorage).some((key) => {
+      if (key.includes('supabase.auth.token')) return true;
+      if (key.includes('sb-') && key.endsWith('-auth-token')) return true;
+      if (key.includes('auth-token')) return true;
+      return false;
+    });
 
   // E2E mode: Allow access for testing but still enforce role requirements
   // This enables proper testing of role-based access control

@@ -9,7 +9,7 @@ import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 export interface CompendiumEntry {
   id: string;
   name: string;
-  type: 'jobs' | 'paths' | 'powers' | 'runes' | 'relics' | 'monsters' | 'backgrounds' | 'conditions' | 'monarchs' | 'feats' | 'skills' | 'equipment' | 'shadow-soldiers' | 'techniques' | 'items' | 'spells' | 'artifacts' | 'locations' | 'sovereigns';
+  type: 'jobs' | 'paths' | 'powers' | 'runes' | 'relics' | 'monsters' | 'backgrounds' | 'conditions' | 'regents' | 'monarchs' | 'feats' | 'skills' | 'equipment' | 'shadow-soldiers' | 'techniques' | 'items' | 'spells' | 'artifacts' | 'locations' | 'sovereigns';
   rarity?: string;
   description: string; // Required in Compendium.tsx
   level?: number;

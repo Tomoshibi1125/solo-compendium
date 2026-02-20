@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Dice6 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { formatMonarchVernacular } from '@/lib/vernacular';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useUserToolState } from '@/hooks/useToolState';
 
 // System Ascendant themed reference tables
 const GATE_COMPLICATIONS = [
@@ -163,13 +165,61 @@ function rollTable<T>(table: T[]): T {
   return table[Math.floor(Math.random() * table.length)];
 }
 
+type RollableTablesState = {
+  activeTab: 'gates' | 'rewards' | 'npcs' | 'treasure';
+  results: Record<string, string>;
+};
+
 const RollableTables = () => {
   const navigate = useNavigate();
+  const { state: storedState, isLoading, saveNow } = useUserToolState<RollableTablesState>('rollable_tables', {
+    initialState: {
+      activeTab: 'gates',
+      results: {},
+    },
+    storageKey: 'solo-compendium.dm-tools.rollable-tables.v1',
+  });
+
+  const [activeTab, setActiveTab] = useState<RollableTablesState['activeTab']>('gates');
   const [results, setResults] = useState<Record<string, string>>({});
+
+  const hydrated = useMemo(() => {
+    return {
+      activeTab: storedState.activeTab ?? 'gates',
+      results: storedState.results ?? {},
+    } satisfies RollableTablesState;
+  }, [storedState.activeTab, storedState.results]);
+
+  const hydratedRef = useRef(false);
+  useEffect(() => {
+    if (isLoading) return;
+    if (hydratedRef.current) return;
+    setActiveTab(hydrated.activeTab);
+    setResults(hydrated.results);
+    hydratedRef.current = true;
+  }, [hydrated.activeTab, hydrated.results, isLoading]);
+
+  const savePayload = useMemo(
+    () => ({ activeTab, results }) satisfies RollableTablesState,
+    [activeTab, results]
+  );
+  const debouncedPayload = useDebounce(savePayload, 350);
+
+  useEffect(() => {
+    if (isLoading) return;
+    if (!hydratedRef.current) return;
+    void saveNow(debouncedPayload);
+  }, [debouncedPayload, isLoading, saveNow]);
 
   const roll = (key: string, table: string[]) => {
     const result = formatMonarchVernacular(rollTable(table));
-    setResults(prev => ({ ...prev, [key]: result }));
+    setResults((prev) => {
+      const next = { ...prev, [key]: result };
+      if (hydratedRef.current && !isLoading) {
+        void saveNow({ activeTab, results: next });
+      }
+      return next;
+    });
   };
 
   return (
@@ -192,7 +242,17 @@ const RollableTables = () => {
           </p>
         </div>
 
-        <Tabs defaultValue="gates" className="w-full">
+        <Tabs
+          value={activeTab}
+          onValueChange={(value) => {
+            const nextTab = value as RollableTablesState['activeTab'];
+            setActiveTab(nextTab);
+            if (hydratedRef.current && !isLoading) {
+              void saveNow({ activeTab: nextTab, results });
+            }
+          }}
+          className="w-full"
+        >
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="gates">Rifts</TabsTrigger>
             <TabsTrigger value="rewards">Rewards</TabsTrigger>

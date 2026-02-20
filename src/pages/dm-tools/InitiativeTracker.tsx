@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Plus, Trash2, ArrowUp, ArrowDown, RotateCcw, ExternalLink } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -12,7 +12,9 @@ import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useCampaignToolState, useUserToolState } from '@/hooks/useToolState';
-import { useJoinedCampaigns, useMyCampaigns } from '@/hooks/useCampaigns';
+import { useJoinedCampaigns, useMyCampaigns, useCampaignMembers } from '@/hooks/useCampaigns';
+import { useHydratedPreferredCampaignId } from '@/hooks/usePreferredCampaignSelection';
+import { cleanupExpiredConditions as cleanupExpiredConditionsHelper } from '@/lib/conditionTimers';
 import {
   useCampaignCombatSession,
   useUpdateCombatSession,
@@ -21,14 +23,16 @@ import {
 } from '@/hooks/useCampaignCombat';
 import { useCampaignCombatRealtime } from '@/hooks/useCampaignCombatRealtime';
 import { supabase } from '@/integrations/supabase/client';
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-import { EncounterRewards } from '@/components/combat/EncounterRewards';
->>>>>>> Stashed changes
-=======
-import { EncounterRewards } from '@/components/combat/EncounterRewards';
->>>>>>> Stashed changes
+import {
+  clearPendingResolution,
+  getPendingResolution,
+  resolveAttack,
+  resolveDamage,
+  resolveHealing,
+  resolveSave,
+  type ActionResolutionPayload,
+  type ResolutionOutcome,
+} from '@/lib/actionResolution';
 
 interface Combatant {
   id: string;
@@ -38,7 +42,11 @@ interface Combatant {
   maxHp?: number;
   ac?: number;
   conditions: string[];
+  condition_timers?: Record<string, number>;
   isHunter: boolean;
+  damage_resistances?: string[];
+  damage_immunities?: string[];
+  damage_vulnerabilities?: string[];
 }
 
 type CampaignWithRole = {
@@ -64,6 +72,43 @@ const toConditionArray = (value: unknown): string[] => {
   return value.filter((entry): entry is string => typeof entry === 'string');
 };
 
+const toConditionTimers = (value: unknown): Record<string, number> | undefined => {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return undefined;
+  const record = value as Record<string, unknown>;
+  const entries = Object.entries(record)
+    .filter(([, v]) => typeof v === 'number' && Number.isFinite(v));
+  if (entries.length === 0) return undefined;
+  return Object.fromEntries(entries.map(([k, v]) => [k, v as number]));
+};
+
+const toStringArray = (value: unknown): string[] | undefined => {
+  if (!Array.isArray(value)) return undefined;
+  const entries = value.filter((entry): entry is string => typeof entry === 'string' && entry.trim().length > 0);
+  return entries.length > 0 ? entries : undefined;
+};
+
+const normalizeDamageType = (value: string) => value.trim().toLowerCase();
+
+const applyDamageMitigation = (
+  amount: number,
+  damageType: string | undefined,
+  target: Combatant,
+): number => {
+  if (!damageType) return amount;
+  const dt = normalizeDamageType(damageType);
+
+  const immunities = (target.damage_immunities ?? []).map(normalizeDamageType);
+  if (immunities.includes(dt)) return 0;
+
+  const vulnerabilities = (target.damage_vulnerabilities ?? []).map(normalizeDamageType);
+  if (vulnerabilities.includes(dt)) return amount * 2;
+
+  const resistances = (target.damage_resistances ?? []).map(normalizeDamageType);
+  if (resistances.includes(dt)) return Math.ceil(amount / 2);
+
+  return amount;
+};
+
 const mapCampaignCombatantToTracker = (combatant: CampaignCombatantRow): Combatant => {
   const stats = toRecord(combatant.stats);
   const flags = toRecord(combatant.flags);
@@ -76,7 +121,11 @@ const mapCampaignCombatantToTracker = (combatant: CampaignCombatantRow): Combata
     maxHp: toNumber(stats.max_hp ?? stats.maxHp),
     ac: toNumber(stats.ac),
     conditions: toConditionArray(combatant.conditions),
+    condition_timers: toConditionTimers(stats.condition_timers ?? stats.conditionTimers),
     isHunter: typeof flags.isHunter === 'boolean' ? flags.isHunter : Boolean(combatant.member_id),
+    damage_resistances: toStringArray(stats.damage_resistances ?? stats.damageResistances),
+    damage_immunities: toStringArray(stats.damage_immunities ?? stats.damageImmunities),
+    damage_vulnerabilities: toStringArray(stats.damage_vulnerabilities ?? stats.damageVulnerabilities),
   };
 };
 
@@ -116,6 +165,11 @@ const InitiativeTracker = () => {
   const [combatants, setCombatants] = useState<Combatant[]>([]);
   const [currentTurn, setCurrentTurn] = useState(0);
   const [round, setRound] = useState(1);
+  const [pendingResolution, setPendingResolution] = useState<ActionResolutionPayload | null>(null);
+  const [resolutionOutcome, setResolutionOutcome] = useState<ResolutionOutcome | null>(null);
+  const [resolutionTargetId, setResolutionTargetId] = useState<string>('');
+  const [resolutionConditionDuration, setResolutionConditionDuration] = useState<number>(1);
+  const [manualConditionDuration, setManualConditionDuration] = useState<number>(0);
   const [newCombatant, setNewCombatant] = useState({
     name: '',
     initiative: 0,
@@ -150,43 +204,33 @@ const InitiativeTracker = () => {
     return Array.from(byId.values()).sort((a, b) => a.name.localeCompare(b.name));
   }, [joinedCampaigns, myCampaigns]);
 
+  useHydratedPreferredCampaignId({
+    toolKey: 'initiative_tracker',
+    campaigns: manageableCampaigns,
+    urlCampaignId: campaignId,
+    isCampaignIdValid: (id) => manageableCampaigns.some((campaign) => campaign.id === id),
+    onResolveCampaignId: (id) => {
+      const nextParams = new URLSearchParams(searchParams);
+      nextParams.set('campaignId', id);
+      nextParams.delete('sessionId');
+      setSearchParams(nextParams, { replace: true });
+    },
+  });
+
   const campaignsLoading = myCampaignsLoading || joinedCampaignsLoading;
   const selectedCampaign = campaignId
     ? manageableCampaigns.find((campaign) => campaign.id === campaignId) ?? null
     : null;
 
   const { data: combatSessionData } = useCampaignCombatSession(campaignId || '', sessionId);
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
   useCampaignCombatRealtime(campaignId, sessionId);
   const { data: campaignMembers = [] } = useCampaignMembers(campaignId || '');
->>>>>>> Stashed changes
   const updateCombatSession = useUpdateCombatSession();
   const upsertCombatants = useUpsertCombatants();
   const activeCombatSession = combatSessionData?.session ?? null;
   const activeCombatants = combatSessionData?.combatants ?? [];
   const combatSessionContext = activeCombatSession ? `${campaignId}:${activeCombatSession.id}` : null;
   const isSyncingCombatSession = isCampaignScoped && !!activeCombatSession && !!sessionId;
-
-  useEffect(() => {
-    if (campaignsLoading || manageableCampaigns.length === 0) {
-      return;
-    }
-
-    const hasValidCampaign = campaignId
-      ? manageableCampaigns.some((campaign) => campaign.id === campaignId)
-      : false;
-
-    if (!hasValidCampaign) {
-      const nextParams = new URLSearchParams(searchParams);
-      nextParams.set('campaignId', manageableCampaigns[0].id);
-      nextParams.delete('sessionId');
-      setSearchParams(nextParams, { replace: true });
-    }
-  }, [campaignId, campaignsLoading, manageableCampaigns, searchParams, setSearchParams]);
 
   const handleCampaignChange = (nextCampaignId: string) => {
     const nextParams = new URLSearchParams(searchParams);
@@ -286,6 +330,10 @@ const InitiativeTracker = () => {
             hp: combatant.hp ?? null,
             max_hp: combatant.maxHp ?? null,
             ac: combatant.ac ?? null,
+            damage_resistances: combatant.damage_resistances ?? null,
+            damage_immunities: combatant.damage_immunities ?? null,
+            damage_vulnerabilities: combatant.damage_vulnerabilities ?? null,
+            condition_timers: combatant.condition_timers ?? null,
           },
           conditions: combatant.conditions,
           flags: {
@@ -431,16 +479,43 @@ const InitiativeTracker = () => {
     }));
   };
 
-  const addCondition = (id: string, condition: string) => {
-    setCombatants(combatants.map(c =>
-      c.id === id ? { ...c, conditions: [...c.conditions, condition] } : c
-    ));
+  const addCondition = (id: string, condition: string, expiresAtRound?: number) => {
+    setCombatants((prev) => prev.map((c) => {
+      if (c.id !== id) return c;
+      const nextConditions = c.conditions.includes(condition) ? c.conditions : [...c.conditions, condition];
+      const nextTimers = expiresAtRound
+        ? { ...(c.condition_timers ?? {}), [condition]: expiresAtRound }
+        : c.condition_timers;
+      return { ...c, conditions: nextConditions, condition_timers: nextTimers };
+    }));
   };
 
   const removeCondition = (id: string, condition: string) => {
-    setCombatants(combatants.map(c =>
-      c.id === id ? { ...c, conditions: c.conditions.filter(cond => cond !== condition) } : c
-    ));
+    setCombatants((prev) => prev.map((c) => {
+      if (c.id !== id) return c;
+      const nextConditions = c.conditions.filter((cond) => cond !== condition);
+      const nextTimers = c.condition_timers ? { ...c.condition_timers } : undefined;
+      if (nextTimers && condition in nextTimers) {
+        delete nextTimers[condition];
+      }
+      return {
+        ...c,
+        conditions: nextConditions,
+        condition_timers: nextTimers && Object.keys(nextTimers).length > 0 ? nextTimers : undefined,
+      };
+    }));
+  };
+
+  const cleanupExpiredConditions = (nextRound: number) => {
+    setCombatants((prev) => prev.map((c) => {
+      const next = cleanupExpiredConditionsHelper(c.conditions, c.condition_timers, nextRound);
+      if (next.conditions === c.conditions && next.timers === c.condition_timers) return c;
+      return {
+        ...c,
+        conditions: next.conditions,
+        condition_timers: next.timers,
+      };
+    }));
   };
 
   const nextTurn = () => {
@@ -448,7 +523,9 @@ const InitiativeTracker = () => {
     setCurrentTurn((prev) => {
       const next = (prev + 1) % sortedCombatants.length;
       if (next === 0) {
-        setRound(round + 1);
+        const nextRound = round + 1;
+        setRound(nextRound);
+        cleanupExpiredConditions(nextRound);
       }
       return next;
     });
@@ -476,6 +553,7 @@ const InitiativeTracker = () => {
         .delete()
         .eq('session_id', activeCombatSession.id);
       updateCombatSession.mutate({
+        campaignId,
         sessionId: activeCombatSession.id,
         updates: {
           current_turn: 0,
@@ -491,6 +569,130 @@ const InitiativeTracker = () => {
   };
 
   const currentCombatant = sortedCombatants[currentTurn];
+
+  useEffect(() => {
+    const pending = getPendingResolution();
+    setPendingResolution(pending);
+    if (!pending) return;
+    if (sortedCombatants.length > 0 && !resolutionTargetId) {
+      setResolutionTargetId(sortedCombatants[0].id);
+    }
+  }, [resolutionTargetId, sortedCombatants]);
+
+  const clearResolution = () => {
+    clearPendingResolution();
+    setPendingResolution(null);
+    setResolutionOutcome(null);
+  };
+
+  const applyResolutionToTarget = () => {
+    const pending = getPendingResolution();
+    if (!pending) return;
+    const target = combatants.find((c) => c.id === resolutionTargetId);
+    const targetAC = target?.ac ?? 10;
+
+    if (!target) return;
+
+    const inferAttackRollMode = (targetConditions: string[]) => {
+      const normalized = targetConditions.map((c) => c.toLowerCase());
+      const grantsAdvantage = normalized.some((c) => ['blinded', 'restrained', 'paralyzed', 'unconscious', 'stunned', 'prone'].includes(c));
+      const grantsDisadvantage = normalized.some((c) => ['invisible'].includes(c));
+      if (grantsAdvantage && !grantsDisadvantage) return 'advantage' as const;
+      if (grantsDisadvantage && !grantsAdvantage) return 'disadvantage' as const;
+      return 'normal' as const;
+    };
+
+    const inferSaveRollMode = (targetConditions: string[], ability: string | undefined) => {
+      if (!ability) return 'normal' as const;
+      const normalized = targetConditions.map((c) => c.toLowerCase());
+      const ab = ability.toLowerCase();
+      const hasDisadv = normalized.some((c) => c === 'restrained') && (ab === 'agi' || ab === 'agility' || ab === 'dex' || ab === 'dexterity');
+      return hasDisadv ? 'disadvantage' as const : 'normal' as const;
+    };
+
+    const attackRollMode = inferAttackRollMode(target.conditions);
+    const saveRollMode = pending.kind === 'save'
+      ? inferSaveRollMode(target.conditions, pending.save?.ability)
+      : 'normal';
+
+    const pendingWithMode = pending.kind === 'attack' && pending.attack
+      ? {
+          ...pending,
+          attack: {
+            ...pending.attack,
+            rollMode: attackRollMode,
+          },
+        }
+      : pending.kind === 'save' && pending.save
+        ? {
+            ...pending,
+            save: {
+              ...pending.save,
+              rollMode: saveRollMode,
+            },
+          }
+        : pending;
+
+    let outcome =
+      pendingWithMode.kind === 'attack'
+        ? resolveAttack(pendingWithMode, targetAC)
+        : pendingWithMode.kind === 'save'
+          ? resolveSave(pendingWithMode)
+          : pending.kind === 'healing'
+            ? resolveHealing(pending)
+            : resolveDamage(pending);
+
+    if (outcome.kind === 'save' && pending.save?.ability) {
+      const ability = pending.save.ability.toLowerCase();
+      const normalized = target.conditions.map((c) => c.toLowerCase());
+      const autoFail = (ability === 'agi' || ability === 'dex' || ability === 'str')
+        && normalized.some((c) => c === 'paralyzed' || c === 'unconscious');
+      if (autoFail) {
+        outcome = {
+          ...outcome,
+          success: false,
+        };
+      }
+    }
+
+    setPendingResolution(pending);
+    setResolutionOutcome(outcome);
+
+    const pendingDamageType = pending.damage?.type;
+
+    if (outcome.kind === 'attack') {
+      if (outcome.hit && typeof outcome.damageTotal === 'number') {
+        const mitigated = applyDamageMitigation(outcome.damageTotal, pendingDamageType, target);
+        adjustHP(target.id, -mitigated);
+      }
+    }
+
+    if (outcome.kind === 'save') {
+      if (!outcome.success && typeof outcome.damageTotal === 'number') {
+        const mitigated = applyDamageMitigation(outcome.damageTotal, pendingDamageType, target);
+        adjustHP(target.id, -mitigated);
+      }
+    }
+
+    if (outcome.kind === 'healing') {
+      adjustHP(target.id, outcome.healingTotal);
+    }
+
+    if (outcome.kind === 'damage') {
+      const mitigated = applyDamageMitigation(outcome.damageTotal, pendingDamageType, target);
+      adjustHP(target.id, -mitigated);
+    }
+
+    if (Array.isArray(pending.appliesConditions) && pending.appliesConditions.length > 0) {
+      const durationRounds = Number.isFinite(resolutionConditionDuration) && resolutionConditionDuration > 0
+        ? Math.floor(resolutionConditionDuration)
+        : 0;
+      const expiresAt = durationRounds > 0 ? round + durationRounds : undefined;
+      for (const condition of pending.appliesConditions) {
+        addCondition(target.id, condition, expiresAt);
+      }
+    }
+  };
 
   return (
     <Layout>
@@ -551,6 +753,71 @@ const InitiativeTracker = () => {
           {/* Initiative Order */}
           <div className="lg:col-span-2 space-y-4">
             <SystemWindow title="INITIATIVE ORDER">
+              {pendingResolution && (
+                <div className="mb-4 rounded border border-border/60 bg-muted/20 p-3">
+                  <div className="text-xs font-display text-muted-foreground">PENDING RESOLUTION</div>
+                  <div className="font-heading font-semibold">{pendingResolution.name}</div>
+                  <div className="mt-2 grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_auto] gap-2 items-end">
+                    <div className="space-y-1">
+                      <Label htmlFor="resolution-target">Target</Label>
+                      <Select value={resolutionTargetId} onValueChange={setResolutionTargetId}>
+                        <SelectTrigger id="resolution-target">
+                          <SelectValue placeholder="Select target" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {sortedCombatants.map((combatant) => (
+                            <SelectItem key={combatant.id} value={combatant.id}>
+                              {combatant.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    {Array.isArray(pendingResolution.appliesConditions) && pendingResolution.appliesConditions.length > 0 && (
+                      <div className="space-y-1">
+                        <Label htmlFor="resolution-duration">Condition duration (rounds)</Label>
+                        <Input
+                          id="resolution-duration"
+                          type="number"
+                          min={0}
+                          value={resolutionConditionDuration}
+                          onChange={(e) => setResolutionConditionDuration(parseInt(e.target.value) || 0)}
+                        />
+                      </div>
+                    )}
+                    <div className="flex flex-wrap gap-2">
+                      <Button variant="outline" size="sm" onClick={applyResolutionToTarget}>
+                        Resolve
+                      </Button>
+                      <Button variant="outline" size="sm" onClick={clearResolution}>
+                        Clear
+                      </Button>
+                    </div>
+                  </div>
+                  {resolutionOutcome && (
+                    <div className="mt-2 text-sm text-muted-foreground">
+                      {resolutionOutcome.kind === 'attack' && (
+                        <div>
+                          Attack {resolutionOutcome.attackTotal} vs AC {resolutionOutcome.targetAC} ({resolutionOutcome.hit ? 'Hit' : 'Miss'})
+                          {resolutionOutcome.hit && resolutionOutcome.damageTotal !== undefined && ` | Damage ${resolutionOutcome.damageTotal}`}
+                        </div>
+                      )}
+                      {resolutionOutcome.kind === 'save' && (
+                        <div>
+                          Save {resolutionOutcome.saveTotal} vs DC {resolutionOutcome.dc} ({resolutionOutcome.success ? 'Success' : 'Failure'})
+                          {resolutionOutcome.damageTotal !== undefined && ` | Damage ${resolutionOutcome.damageTotal}`}
+                        </div>
+                      )}
+                      {resolutionOutcome.kind === 'healing' && (
+                        <div>Healing {resolutionOutcome.healingTotal}</div>
+                      )}
+                      {resolutionOutcome.kind === 'damage' && (
+                        <div>Damage {resolutionOutcome.damageTotal}</div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
               <div className="mb-4 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div>
@@ -729,14 +996,39 @@ const InitiativeTracker = () => {
                               variant="destructive"
                               className="text-xs cursor-pointer"
                               onClick={() => removeCondition(combatant.id, condition)}
+                              title={
+                                combatant.condition_timers?.[condition] !== undefined
+                                  ? `Expires at round ${combatant.condition_timers[condition]}`
+                                  : undefined
+                              }
                             >
-                              {condition} x
+                              {condition}
+                              {combatant.condition_timers?.[condition] !== undefined && (
+                                <span className="ml-1 opacity-80">(R{combatant.condition_timers[condition]})</span>
+                              )}
+                              <span className="ml-1">x</span>
                             </Badge>
                           ))}
                         </div>
                       )}
                       <div className="mt-2">
                         <div className="text-xs text-muted-foreground mb-1">Add Condition</div>
+                        <div className="mb-2">
+                          <Label
+                            htmlFor={`combatant-${combatant.id}-condition-duration`}
+                            className="text-xs text-muted-foreground"
+                          >
+                            Duration (rounds)
+                          </Label>
+                          <Input
+                            id={`combatant-${combatant.id}-condition-duration`}
+                            type="number"
+                            min={0}
+                            value={manualConditionDuration}
+                            onChange={(e) => setManualConditionDuration(parseInt(e.target.value) || 0)}
+                            aria-label={`Condition duration in rounds for ${combatant.name}`}
+                          />
+                        </div>
                         <div className="flex flex-wrap gap-1">
                           {CONDITION_OPTIONS.filter((condition) => !combatant.conditions.includes(condition))
                             .map((condition) => (
@@ -744,7 +1036,13 @@ const InitiativeTracker = () => {
                                 key={condition}
                                 variant="outline"
                                 className="text-xs cursor-pointer"
-                                onClick={() => addCondition(combatant.id, condition)}
+                                onClick={() => {
+                                  const durationRounds = Number.isFinite(manualConditionDuration) && manualConditionDuration > 0
+                                    ? Math.floor(manualConditionDuration)
+                                    : 0;
+                                  const expiresAt = durationRounds > 0 ? round + durationRounds : undefined;
+                                  addCondition(combatant.id, condition, expiresAt);
+                                }}
                                 aria-label={`Add ${condition} to ${combatant.name}`}
                               >
                                 + {condition}
@@ -758,21 +1056,6 @@ const InitiativeTracker = () => {
               )}
             </SystemWindow>
           </div>
-
-<<<<<<< Updated upstream
-=======
-          {/* Encounter Rewards (shown after End Combat) */}
-          {showRewards && campaignId && sessionId && (
-            <div className="lg:col-span-2">
-              <EncounterRewards
-                campaignId={campaignId}
-                sessionId={sessionId}
-                onComplete={() => setShowRewards(false)}
-              />
-            </div>
-          )}
-
->>>>>>> Stashed changes
           {/* Add Combatant */}
           <div className="lg:col-span-1 space-y-4">
             <SystemWindow title="ADD COMBATANT">

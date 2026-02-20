@@ -15,14 +15,47 @@ const defaultState = createDefaultCharacterSheetState();
 function normalizeSheetState(row: SheetStateRow | null): CharacterSheetState {
   if (!row) return defaultState;
   return {
-    resources: normalizeCharacterResources(row.resources as CharacterSheetState['resources']),
-    customModifiers: normalizeCustomModifiers(row.custom_modifiers as CharacterSheetState['customModifiers']),
+    resources: normalizeCharacterResources(row.resources as unknown as CharacterSheetState['resources']),
+    customModifiers: normalizeCustomModifiers(row.custom_modifiers as unknown as CharacterSheetState['customModifiers']),
   };
 }
+
+const buildSheetStateCacheKey = (userId: string, characterId: string) => {
+  return `solo-compendium.cache.character-sheet-state.${userId}.character:${characterId}.v1`;
+};
+
+const readCachedSheetState = (key: string): CharacterSheetState | null => {
+  try {
+    if (typeof window === 'undefined') return null;
+    const raw = window.localStorage.getItem(key);
+    if (!raw) return null;
+    return JSON.parse(raw) as CharacterSheetState;
+  } catch {
+    return null;
+  }
+};
+
+const writeCachedSheetState = (key: string, state: CharacterSheetState) => {
+  try {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem(key, JSON.stringify(state));
+  } catch {
+    // ignore
+  }
+};
 
 export function useCharacterSheetState(characterId: string) {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  
+  const authQuery = useQuery({
+    queryKey: ['auth-user'],
+    queryFn: async () => {
+      const { data } = await supabase.auth.getUser();
+      return data;
+    }
+  });
+  const user = authQuery.data?.user;
 
   const query = useQuery({
     queryKey: ['character-sheet-state', characterId],
@@ -37,6 +70,8 @@ export function useCharacterSheetState(characterId: string) {
         };
       }
 
+      const cacheKey = user?.id ? buildSheetStateCacheKey(user.id, characterId) : null;
+
       const { data, error } = await supabase
         .from('character_sheet_state')
         .select('*')
@@ -45,10 +80,18 @@ export function useCharacterSheetState(characterId: string) {
 
       if (error) {
         logErrorWithContext(error, 'useCharacterSheetState');
+        if (cacheKey) {
+          const cached = readCachedSheetState(cacheKey);
+          if (cached) return cached;
+        }
         throw error;
       }
 
-      return normalizeSheetState(data as SheetStateRow | null);
+      const next = normalizeSheetState(data as SheetStateRow | null);
+      if (cacheKey) {
+        writeCachedSheetState(cacheKey, next);
+      }
+      return next;
     },
     enabled: !!characterId,
   });
@@ -61,16 +104,20 @@ export function useCharacterSheetState(characterId: string) {
         return state;
       }
 
+      const cacheKey = user?.id ? buildSheetStateCacheKey(user.id, characterId) : null;
+      if (cacheKey) {
+        writeCachedSheetState(cacheKey, state);
+      }
+
+      const payload: Database['public']['Tables']['character_sheet_state']['Insert'] = {
+        character_id: characterId,
+        resources: state.resources as unknown as Database['public']['Tables']['character_sheet_state']['Insert']['resources'],
+        custom_modifiers: state.customModifiers as unknown as Database['public']['Tables']['character_sheet_state']['Insert']['custom_modifiers'],
+      };
+
       const { data, error } = await supabase
         .from('character_sheet_state')
-        .upsert(
-          {
-            character_id: characterId,
-            resources: state.resources,
-            custom_modifiers: state.customModifiers,
-          },
-          { onConflict: 'character_id' },
-        )
+        .upsert(payload, { onConflict: 'character_id' })
         .select('*')
         .single();
 

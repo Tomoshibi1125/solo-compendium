@@ -4,13 +4,13 @@
  */
 
 import type { AbilityScore, Character } from './5eRulesEngine';
-import { getSystemAbilityName, normalizeAbility } from './5eRulesEngine';
+import { getAbilityDisplayName, normalizeAbility } from './5eRulesEngine';
 import { getCharacterSpellSlots } from './5eSpellSystem';
 
 // UI display functions that show System Ascendant flavor while using 5e mechanics
 
 export function formatAbilityScore(ability: AbilityScore, score: number): string {
-  const displayName = getSystemAbilityName(ability);
+  const displayName = getAbilityDisplayName(ability);
   const modifier = Math.floor((score - 10) / 2);
   const modifierStr = modifier >= 0 ? `+${modifier}` : `${modifier}`;
   return `${displayName}: ${score} (${modifierStr})`;
@@ -41,7 +41,7 @@ export function formatSkill(skill: string, modifier: number, proficient: boolean
 }
 
 export function formatSavingThrow(ability: AbilityScore, modifier: number, proficient: boolean): string {
-  const displayName = getSystemAbilityName(ability);
+  const displayName = getAbilityDisplayName(ability);
   const proficiencyMarker = proficient ? '*' : '';
   const modifierStr = modifier >= 0 ? `+${modifier}` : `${modifier}`;
   return `${proficiencyMarker}${displayName} Save: ${modifierStr}`;
@@ -69,23 +69,23 @@ export function formatHitPoints(character: Character): string {
 
 export function formatArmorClass(character: Character): string {
   const ac = character.armorClass;
-  const dexMod = Math.floor((character.abilities.DEX - 10) / 2);
+  const agiMod = Math.floor((character.abilities.AGI - 10) / 2);
   
-  // Check if character is using heavy armor (no Dex bonus)
-  const isHeavyArmor = ac === 10 + Math.max(0, Math.min(dexMod, 2)); // Medium armor assumption
+  // Check if character is using heavy armor (no AGI bonus)
+  const isHeavyArmor = ac === 10 + Math.max(0, Math.min(agiMod, 2)); // Medium armor assumption
   
   let acStr = `AC: ${ac}`;
-  if (!isHeavyArmor && dexMod > 0) {
-    acStr += ` (10 + AGI ${dexMod >= 0 ? '+' : ''}${dexMod})`;
+  if (!isHeavyArmor && agiMod > 0) {
+    acStr += ` (10 + AGI ${agiMod >= 0 ? '+' : ''}${agiMod})`;
   }
   
   return acStr;
 }
 
 export function formatInitiative(character: Character): string {
-  const dexMod = Math.floor((character.abilities.DEX - 10) / 2);
-  const initiative = character.initiative || dexMod;
-  const modifierStr = dexMod >= 0 ? `+${dexMod}` : `${dexMod}`;
+  const agiMod = Math.floor((character.abilities.AGI - 10) / 2);
+  const initiative = character.initiative || agiMod;
+  const modifierStr = agiMod >= 0 ? `+${agiMod}` : `${agiMod}`;
   return `Initiative: ${initiative} (AGI ${modifierStr})`;
 }
 
@@ -142,11 +142,11 @@ export function formatCharacterSummary(character: Character): string {
   const lines = [
     `**${character.name}** - Level ${character.level} ${character.job}`,
     formatAbilityScore('STR', character.abilities.STR),
-    formatAbilityScore('DEX', character.abilities.DEX),
-    formatAbilityScore('CON', character.abilities.CON),
+    formatAbilityScore('AGI', character.abilities.AGI),
+    formatAbilityScore('VIT', character.abilities.VIT),
     formatAbilityScore('INT', character.abilities.INT),
-    formatAbilityScore('WIS', character.abilities.WIS),
-    formatAbilityScore('CHA', character.abilities.CHA),
+    formatAbilityScore('SENSE', character.abilities.SENSE),
+    formatAbilityScore('PRE', character.abilities.PRE),
     formatHitPoints(character),
     formatArmorClass(character),
     formatInitiative(character),
@@ -169,7 +169,7 @@ export function formatDamageRoll(damage: string, damageType: string): string {
 }
 
 export function formatSavingThrowDC(dc: number, ability: AbilityScore): string {
-  const displayName = getSystemAbilityName(ability);
+  const displayName = getAbilityDisplayName(ability);
   return `DC ${dc} ${displayName} Save`;
 }
 

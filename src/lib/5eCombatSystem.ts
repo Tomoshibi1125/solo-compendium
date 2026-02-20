@@ -11,8 +11,8 @@ import {
   formatRollResult 
 } from './advancedDiceEngine';
 
-// Standard 5e abilities (using System Ascendant display names)
-type AbilityScore = 'STR' | 'DEX' | 'CON' | 'INT' | 'WIS' | 'CHA';
+// System Ascendant canonical ability scores
+type AbilityScore = 'STR' | 'AGI' | 'VIT' | 'INT' | 'SENSE' | 'PRE';
 
 // Character interface using standard 5e structure
 interface Character {
@@ -142,12 +142,12 @@ export function calculateAttackBonus(
 ): number {
   let bonus = 0;
   
-  // Add ability modifier (STR for melee, DEX for ranged/finesse) - standard 5e
+  // Add ability modifier (STR for melee, AGI for ranged/finesse)
   const isFinesse = weapon.properties?.includes('Finesse');
   const isRanged = weapon.properties?.includes('Range') || weapon.properties?.includes('Ammunition');
   
   if (isRanged || isFinesse) {
-    bonus += getAbilityModifier(character.abilities.DEX);
+    bonus += getAbilityModifier(character.abilities.AGI);
   } else {
     bonus += getAbilityModifier(character.abilities.STR);
   }
@@ -234,7 +234,7 @@ export function calculateWeaponDamage(
     if (isFinesse) {
       abilityMod = Math.max(
         getAbilityModifier(character.abilities.STR),
-        getAbilityModifier(character.abilities.DEX)
+        getAbilityModifier(character.abilities.AGI)
       );
     } else if (!isRanged) {
       abilityMod = getAbilityModifier(character.abilities.STR);
@@ -353,10 +353,10 @@ export function performConcentrationCheck(
   damage: number
 ): ConcentrationCheckResult {
   const dc = Math.max(10, Math.floor(damage / 2));
-  const conMod = getAbilityModifier(character.abilities.CON);
-  const saveBonus = character.saving_throw_proficiencies.includes('CON') 
-    ? conMod + character.proficiency_bonus 
-    : conMod;
+  const vitMod = getAbilityModifier(character.abilities.VIT);
+  const saveBonus = character.saving_throw_proficiencies.includes('VIT') 
+    ? vitMod + character.proficiency_bonus 
+    : vitMod;
   
   const roll = Math.floor(Math.random() * 20) + 1;
   const total = roll + saveBonus;
@@ -483,17 +483,17 @@ function checkWeaponProficiency(character: Character, weapon: Equipment): boolea
  * Calculate initiative (standard 5e)
  */
 export function calculateInitiative(character: Character): InitiativeResult {
-  const dexMod = getAbilityModifier(character.abilities.DEX);
+  const agiMod = getAbilityModifier(character.abilities.AGI);
   const roll = Math.floor(Math.random() * 20) + 1;
-  const total = roll + dexMod;
+  const total = roll + agiMod;
   
   return {
     rolls: roll,
-    bonus: dexMod,
+    bonus: agiMod,
     total,
     initiative: total,
-    dexterityBonus: dexMod,
+    dexterityBonus: agiMod,
     otherBonuses: [],
-    formatted: `d20+${dexMod} = ${total} initiative`
+    formatted: `d20+${agiMod} = ${total} initiative`
   };
 }

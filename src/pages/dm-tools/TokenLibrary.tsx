@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, RefreshCw, Copy, Trash2, Plus, Upload, Search, ImageIcon, Download } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -12,20 +12,18 @@ import { cn } from '@/lib/utils';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import { supabase } from '@/integrations/supabase/client';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useUserToolState } from '@/hooks/useToolState';
+import {
+  DEFAULT_TOKENS,
+  mergeBaseTokens,
+  normalizeLibraryTokens,
+  type LibraryToken,
+  type TokenCategory,
+  type TokenType,
+} from '@/data/tokenLibraryDefaults';
 
-interface Token {
-  id: string;
-  name: string;
-  type: 'custom' | 'monster' | 'npc' | 'object' | 'effect';
-  category: 'other' | 'monster' | 'npc' | 'object' | 'effect';
-  size: 'tiny' | 'small' | 'medium' | 'large' | 'huge';
-  emoji?: string;
-  color?: string;
-  imageUrl?: string;
-  tags: string[];
-  notes?: string;
-  createdAt: string;
-}
+type Token = LibraryToken;
 
 const TOKEN_CATEGORIES = [
   { value: 'all', label: 'All', icon: ImageIcon },
@@ -44,6 +42,16 @@ const TokenLibrary = () => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
+
+  const {
+    state: storedTokens,
+    isLoading: tokensLoading,
+    saveNow: saveTokenLibrary,
+  } = useUserToolState<Token[]>('token_library', {
+    initialState: DEFAULT_TOKENS,
+    storageKey: 'vtt-tokens',
+  });
+
   const [tokens, setTokens] = useState<Token[]>([]);
   const [selectedToken, setSelectedToken] = useState<Token | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -51,11 +59,34 @@ const TokenLibrary = () => {
   const [isHydrating, setIsHydrating] = useState(true);
   const [newToken, setNewToken] = useState<Partial<Token>>({
     name: '',
-    type: 'custom',
-    category: 'other',
+    type: 'custom' as TokenType,
+    category: 'other' as TokenCategory,
     size: 'medium',
     tags: [],
   });
+
+  const normalizedMergedTokens = useMemo(() => {
+    const normalized = normalizeLibraryTokens(Array.isArray(storedTokens) ? storedTokens : []);
+    const sourceTokens = normalized.length > 0 ? normalized : DEFAULT_TOKENS;
+    return mergeBaseTokens(sourceTokens);
+  }, [storedTokens]);
+
+  useEffect(() => {
+    if (tokensLoading) return;
+    setTokens(normalizedMergedTokens);
+    setIsHydrating(false);
+    if (normalizedMergedTokens !== storedTokens) {
+      void saveTokenLibrary(normalizedMergedTokens);
+    }
+  }, [normalizedMergedTokens, saveTokenLibrary, storedTokens, tokensLoading]);
+
+  const debouncedTokens = useDebounce(tokens, 400);
+
+  useEffect(() => {
+    if (tokensLoading) return;
+    if (isHydrating) return;
+    void saveTokenLibrary(debouncedTokens);
+  }, [debouncedTokens, isHydrating, saveTokenLibrary, tokensLoading]);
 
   const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -183,8 +214,8 @@ const TokenLibrary = () => {
     setImagePreview(null);
     setNewToken({
       name: '',
-      type: 'custom',
-      category: 'other',
+      type: 'custom' as TokenType,
+      category: 'other' as TokenCategory,
       size: 'medium',
       tags: [],
     });
@@ -201,6 +232,9 @@ const TokenLibrary = () => {
   const handleDeleteToken = (id: string) => {
     const updated = tokens.filter(t => t.id !== id);
     setTokens(updated);
+    if (selectedToken?.id === id) {
+      setSelectedToken(null);
+    }
     toast({
       title: 'Deleted!',
       description: 'Token deleted.',
@@ -413,8 +447,8 @@ const TokenLibrary = () => {
                         setIsCreating(false);
                         setNewToken({
                           name: '',
-                          type: 'custom',
-                          category: 'other',
+                          type: 'custom' as TokenType,
+                          category: 'other' as TokenCategory,
                           size: 'medium',
                           tags: [],
                         });
@@ -459,7 +493,7 @@ const TokenLibrary = () => {
                             }}
                             role="button"
                             tabIndex={0}
-                            aria-pressed={selectedToken?.id === token.id}
+                            aria-pressed={selectedToken?.id === token.id ? 'true' : 'false'}
                           >
                             <div className="flex flex-col items-center gap-3">
                               <div

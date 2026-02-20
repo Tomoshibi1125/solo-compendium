@@ -14,11 +14,11 @@ export interface RuleCharacter {
   level?: number;
   abilities: {
     STR: number;
-    DEX: number;
-    CON: number;
+    AGI: number;
+    VIT: number;
     INT: number;
-    WIS: number;
-    CHA: number;
+    SENSE: number;
+    PRE: number;
   };
   proficiency_bonus?: number;
   armor_class?: number;
@@ -124,21 +124,20 @@ export class RuleEngine {
 
     if (armor) {
       if (armor.requires_proficiency) {
-        // Dex modifier limited by armor.
-        // If the armor does not specify a max DEX cap, treat it as heavy armor (no DEX bonus).
-        // This keeps RuleEngine aligned with the AC expectations in our test suite.
-        const dexCap = armor.properties?.includes('max-dex-2') ? 2 : 0;
-        const dexMod = Math.min(this.getAbilityModifier(character.abilities.DEX), dexCap);
-        baseAC = armor.armor_class! + dexMod;
+        // AGI modifier limited by armor.
+        // If the armor does not specify a max AGI cap, treat it as heavy armor (no AGI bonus).
+        const agiCap = armor.properties?.includes('max-dex-2') ? 2 : 0;
+        const agiMod = Math.min(this.getAbilityModifier(character.abilities.AGI), agiCap);
+        baseAC = armor.armor_class! + agiMod;
       } else {
         baseAC = armor.armor_class!;
       }
     } else {
       // Unarmored handling:
-      // - If AC is the vanilla base (10), add full Dex.
-      // - If AC is already set to a non-10 baseline, assume it is precomputed and do not add Dex again.
+      // - If AC is the vanilla base (10), add full AGI.
+      // - If AC is already set to a non-10 baseline, assume it is precomputed and do not add AGI again.
       if (baseAC === 10) {
-        baseAC += this.getAbilityModifier(character.abilities.DEX);
+        baseAC += this.getAbilityModifier(character.abilities.AGI);
       }
     }
 
@@ -158,13 +157,13 @@ export class RuleEngine {
    * Calculate initiative with all modifiers
    */
   static calculateInitiative(character: RuleCharacter): InitiativeResult {
-    const dexMod = this.getAbilityModifier(character.abilities.DEX);
+    const agiMod = this.getAbilityModifier(character.abilities.AGI);
     const modifiers = character.modifiers?.filter(m => m.type === 'skill' && m.source === 'initiative') || [];
     const otherMods = modifiers.map(m => m.value);
 
     return {
-      total: dexMod + otherMods.reduce((sum, mod) => sum + mod, 0),
-      dexterity_modifier: dexMod,
+      total: agiMod + otherMods.reduce((sum, mod) => sum + mod, 0),
+      dexterity_modifier: agiMod,
       other_modifiers: otherMods
     };
   }
@@ -176,16 +175,23 @@ export class RuleEngine {
     const abilityKeyMap: Record<string, keyof RuleCharacter['abilities']> = {
       str: 'STR',
       strength: 'STR',
-      dex: 'DEX',
-      dexterity: 'DEX',
-      con: 'CON',
-      constitution: 'CON',
+      agi: 'AGI',
+      agility: 'AGI',
+      dex: 'AGI',
+      dexterity: 'AGI',
+      vit: 'VIT',
+      vitality: 'VIT',
+      con: 'VIT',
+      constitution: 'VIT',
       int: 'INT',
       intelligence: 'INT',
-      wis: 'WIS',
-      wisdom: 'WIS',
-      cha: 'CHA',
-      charisma: 'CHA',
+      sense: 'SENSE',
+      wis: 'SENSE',
+      wisdom: 'SENSE',
+      pre: 'PRE',
+      presence: 'PRE',
+      cha: 'PRE',
+      charisma: 'PRE',
     };
 
     const normalized = ability.trim().toLowerCase();
@@ -196,8 +202,8 @@ export class RuleEngine {
     // Map short ability names to long form for proficiency check
     const abilityToLong: Record<string, string> = {
       'STR': 'strength',
-      'DEX': 'dexterity',
-      'CON': 'constitution',
+      'AGI': 'agility',
+      'VIT': 'vitality',
       'INT': 'intelligence',
       'WIS': 'wisdom',
       'CHA': 'charisma'
@@ -431,10 +437,10 @@ export class RuleEngine {
    * Calculate HP recovery from hit dice
    */
   static calculateHitDieHealing(character: RuleCharacter, hitDiceSpent: number): number {
-    const conMod = this.getAbilityModifier(character.abilities.CON);
+    const vitMod = this.getAbilityModifier(character.abilities.VIT);
     const averageRoll = Math.floor((character.hit_dice_size || 8) / 2) + 1;
 
-    return (averageRoll + conMod) * hitDiceSpent;
+    return (averageRoll + vitMod) * hitDiceSpent;
   }
 
   /**

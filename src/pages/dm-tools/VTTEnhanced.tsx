@@ -3,7 +3,7 @@ import { useNavigate, useParams, Link, useSearchParams } from 'react-router-dom'
 import { ArrowLeft, Eye, EyeOff, FileText, Maximize2, Minus, Plus, Save, Upload } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -17,6 +17,8 @@ import { cn } from '@/lib/utils';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import { getBestImageFormat } from '@/lib/imageOptimization';
 import { VttPixiStage } from '@/components/vtt/VttPixiStage';
+import { VTTCharacterPanel } from '@/components/vtt/VTTCharacterPanel';
+import { VTTAssetBrowser } from '@/components/vtt/VTTAssetBrowser';
 import { useCampaignMembers, useCampaignRole, type CampaignMember } from '@/hooks/useCampaigns';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
@@ -24,6 +26,7 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { readLocalToolState, useCampaignToolState, useUserToolState } from '@/hooks/useToolState';
 import PlayerMapView from '@/pages/player-tools/PlayerMapView';
 import { useAuth } from '@/lib/auth/authContext';
+import { useVTTRealtime, type VTTInitiativeState, type VTTPing } from '@/hooks/useVTTRealtime';
 
 import {
   DEFAULT_TOKENS,
@@ -56,6 +59,15 @@ interface PlacedToken {
   conditions?: string[];
   // Visibility
   visible: boolean;
+  // Ownership — player who can move this token
+  ownerId?: string;
+  // Roll20-level enhancements
+  auraRadius?: number;       // emanation radius in grid squares
+  auraColor?: string;
+  lightRadius?: number;      // bright light radius in grid squares
+  lightDimRadius?: number;   // dim light radius
+  showNameplate?: boolean;   // show name label under token
+  barVisibility?: 'always' | 'owner' | 'gm'; // who can see HP bar
 }
 
 type DrawingType = 'line' | 'rect' | 'circle';
@@ -246,12 +258,25 @@ const VTTEnhanced = () => {
   const [tokenSearch, setTokenSearch] = useState('');
   const [isMapExpanded, setIsMapExpanded] = useState(false);
   const [isUploadingMap, setIsUploadingMap] = useState(false);
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
-  const [diceRolls, setDiceRolls] = useState<DiceRoll[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [measurementStart, setMeasurementStart] = useState<{ x: number; y: number } | null>(null);
   const [measurementEnd, setMeasurementEnd] = useState<{ x: number; y: number } | null>(null);
+  const [measureShape, setMeasureShape] = useState<'line' | 'circle' | 'cone' | 'cube'>('line');
+  const [measureRadius, setMeasureRadius] = useState(4); // in grid squares (default 20ft = 4 squares)
+  const [gridSnap, setGridSnap] = useState(true);
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; tokenId: string } | null>(null);
+  const [mobilePanel, setMobilePanel] = useState<'tools' | 'sidebar' | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const touchRef = useRef<{ startDist: number; startZoom: number } | null>(null);
   const hydratedRef = useRef(false);
+
+  // Mobile detection
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
   const [isHydrated, setIsHydrated] = useState(false);
   const toolKey = sessionId ? `vtt_scenes:${sessionId}` : 'vtt_scenes';
   const legacyStorageKey = campaignId
@@ -324,6 +349,13 @@ const VTTEnhanced = () => {
   const { data: members } = useCampaignMembers(campaignId || '') as { data?: CampaignMemberWithCharacters[] };
   const { data: role } = useCampaignRole(campaignId || '');
   const isGM = role === 'system' || role === 'co-system';
+
+  // --- Multi-user realtime ---
+  const vttRealtime = useVTTRealtime({
+    campaignId: campaignId || '',
+    sessionId,
+    isDM: isGM,
+  });
   const effectiveVisibleLayers: Record<number, boolean> = useMemo(
     () => ({
       ...visibleLayers,
@@ -371,6 +403,19 @@ const VTTEnhanced = () => {
     const raw = useLocalCharacters ? localCampaignCharacters : campaignCharacters || [];
     return raw.filter((entry): entry is CharacterSummary => isCharacterSummary(entry));
   }, [campaignCharacters, localCampaignCharacters, useLocalCharacters]);
+  // Map character IDs to their owning user IDs for token ownership
+  const characterOwnerMap = useMemo<Map<string, string>>(() => {
+    const map = new Map<string, string>();
+    if (!members) return map;
+    for (const member of members) {
+      const chars = member.characters;
+      if (chars && typeof chars === 'object' && 'id' in chars && typeof (chars as any).id === 'string') {
+        map.set((chars as any).id as string, member.user_id);
+      }
+    }
+    return map;
+  }, [members]);
+
   const filteredLibraryTokens = useMemo(() => {
     const query = tokenSearch.trim().toLowerCase();
     if (!query) return libraryTokens;
@@ -595,7 +640,8 @@ const VTTEnhanced = () => {
       });
       return next;
     });
-  }, [persistSceneState]);
+    vttRealtime.broadcastTokenAdd(placed as unknown as Record<string, unknown>);
+  }, [persistSceneState, vttRealtime]);
 
   const updateToken = useCallback((tokenId: string, updates: Partial<PlacedToken>) => {
     setCurrentScene((prev) => {
@@ -625,12 +671,16 @@ const VTTEnhanced = () => {
     }
     const scene = currentSceneRef.current;
     if (!scene) return;
+    const token = scene.tokens.find((t) => t.id === tokenId);
+    if (token) {
+      vttRealtime.broadcastTokenMove(tokenId, token.x, token.y);
+    }
     setScenes((prevScenes) => {
       const nextScenes = upsertScene(prevScenes, scene);
       persistSceneState(nextScenes, scene.id);
       return nextScenes;
     });
-  }, [persistSceneState]);
+  }, [persistSceneState, vttRealtime]);
 
   const removeToken = useCallback((tokenId: string) => {
     setCurrentScene((prev) => {
@@ -644,56 +694,37 @@ const VTTEnhanced = () => {
       });
       return next;
     });
+    vttRealtime.broadcastTokenRemove(tokenId);
     if (activeTokenId === tokenId) {
       setActiveTokenId(null);
     }
-  }, [activeTokenId, persistSceneState]);
+  }, [activeTokenId, persistSceneState, vttRealtime]);
 
-  const addChatMessage = useCallback((type: 'chat' | 'dice' | 'system', message: string, diceResult?: DiceRoll) => {
-    const chatMsg: ChatMessage = {
-      id: `msg-${Date.now()}-${Math.random()}`,
-      player: 'You',
-      message,
-      timestamp: new Date(),
-      type,
-      diceResult,
-    };
-    setChatMessages(prev => [chatMsg, ...prev].slice(0, 100));
-  }, []);
-
-  const rollDice = useCallback((dice: string): number => {
-    const match = dice.match(/^(\d+)d(\d+)(?:([+-]\d+))?/);
-    if (!match) return 0;
-
-    const count = parseInt(match[1]);
-    const sides = parseInt(match[2]);
-    const modifier = match[3] ? parseInt(match[3]) : 0;
-
-    let total = modifier;
-    const rolls: number[] = [];
-    for (let i = 0; i < count; i++) {
-      const roll = Math.floor(Math.random() * sides) + 1;
-      rolls.push(roll);
-      total += roll;
-    }
-
-    const critical = rolls.every(r => r === sides) || (count === 1 && rolls[0] === 20);
-    const fumble = count === 1 && rolls[0] === 1;
-
-    const diceRoll: DiceRoll = {
-      id: `roll-${Date.now()}-${Math.random()}`,
-      player: 'You',
-      result: total,
-      dice,
-      timestamp: new Date(),
-      critical,
-    };
-
-    setDiceRolls(prevDiceRolls => [...prevDiceRolls, diceRoll].slice(0, 50));
-    addChatMessage('system', `${dice} = ${total}${critical ? ' (CRITICAL!)' : fumble ? ' (FUMBLE!)' : ''}`, diceRoll);
-
-    return total;
-  }, [addChatMessage]);
+  // --- Realtime event handlers: receive remote token moves from players ---
+  useEffect(() => {
+    if (!campaignId) return;
+    const unsub1 = vttRealtime.on('token_move', (payload) => {
+      if (payload.movedBy === vttRealtime.userId) return;
+      updateToken(payload.tokenId, { x: payload.x, y: payload.y });
+    });
+    const unsub2 = vttRealtime.on('token_update', (payload) => {
+      if (payload.updatedBy === vttRealtime.userId) return;
+      updateToken(payload.tokenId, payload.updates as Partial<PlacedToken>);
+    });
+    const unsub3 = vttRealtime.on('scene_change', (payload) => {
+      if (payload.changedBy === vttRealtime.userId) return;
+      const target = scenes.find((s) => s.id === payload.sceneId);
+      if (target) setCurrentScene(target);
+    });
+    const unsub4 = vttRealtime.on('scene_sync', (payload) => {
+      if (payload.syncedBy === vttRealtime.userId) return;
+      const incoming = (payload.scenes as Scene[]).map(normalizeScene);
+      setScenes(incoming);
+      const selected = incoming.find((s) => s.id === payload.currentSceneId) || incoming[0] || null;
+      setCurrentScene(selected);
+    });
+    return () => { unsub1(); unsub2(); unsub3(); unsub4(); };
+  }, [campaignId, scenes, updateToken, vttRealtime]);
 
   const getGridPositionFromPoint = useCallback(
     (clientX: number, clientY: number): GridPosition | null => {
@@ -927,6 +958,7 @@ const VTTEnhanced = () => {
           maxHp: hpMax || 0,
           ac: ac || 10,
           visible: true,
+          ownerId: characterOwnerMap.get(characterId) || undefined,
         };
         appendToken(placed);
         setSelectedCharacterId(null);
@@ -1029,15 +1061,47 @@ const VTTEnhanced = () => {
 
   const handleMapKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
-      if (e.key !== 'Enter' && e.key !== ' ') return;
-      e.preventDefault();
-      if (!mapRef.current) return;
-      const rect = mapRef.current.getBoundingClientRect();
-      const grid = getGridPositionFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2);
-      if (!grid) return;
-      handleMapGridAction(grid);
+      // Escape — deselect everything
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        setActiveTokenId(null);
+        return;
+      }
+      // Delete/Backspace — remove active token (GM only)
+      if ((e.key === 'Delete' || e.key === 'Backspace') && activeTokenId && isGM) {
+        e.preventDefault();
+        removeToken(activeTokenId);
+        setActiveTokenId(null);
+        return;
+      }
+      // Arrow keys — nudge active token by 1 grid square
+      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key) && activeTokenId && isGM) {
+        e.preventDefault();
+        const token = (currentScene?.tokens ?? []).find((t: PlacedToken) => t.id === activeTokenId);
+        if (token && !token.locked) {
+          const dx = e.key === 'ArrowLeft' ? -1 : e.key === 'ArrowRight' ? 1 : 0;
+          const dy = e.key === 'ArrowUp' ? -1 : e.key === 'ArrowDown' ? 1 : 0;
+          updateToken(activeTokenId, { x: token.x + dx, y: token.y + dy });
+        }
+        return;
+      }
+      // Tool hotkeys (only when no modifier keys)
+      if (!e.ctrlKey && !e.metaKey && !e.altKey) {
+        const toolKeys: Record<string, typeof selectedTool> = { s: 'select', f: 'fog', d: 'draw', e: 'effect', n: 'note', m: 'measure' };
+        const tool = toolKeys[e.key.toLowerCase()];
+        if (tool && isGM) { e.preventDefault(); setSelectedTool(tool); return; }
+      }
+      // Enter/Space — generic grid action
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (!mapRef.current) return;
+        const rect = mapRef.current.getBoundingClientRect();
+        const grid = getGridPositionFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2);
+        if (!grid) return;
+        handleMapGridAction(grid);
+      }
     },
-    [getGridPositionFromPoint, handleMapGridAction]
+    [activeTokenId, currentScene?.tokens, getGridPositionFromPoint, handleMapGridAction, isGM, removeToken, selectedTool, setActiveTokenId, setSelectedTool, updateToken]
   );
 
   const removeAnnotation = useCallback(
@@ -1087,6 +1151,7 @@ const VTTEnhanced = () => {
     [isGM, removeToken, setActiveTokenId, updateToken]
   );
 
+  const lastDmCursorBroadcast = useRef(0);
   const handleMapMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const grid = getGridPosition(e);
     if (!grid) return;
@@ -1106,7 +1171,24 @@ const VTTEnhanced = () => {
     if (activeDrawing && selectedTool === 'draw' && isGM) {
       setActiveDrawing((prev) => (prev ? { ...prev, x2: grid.gridX, y2: grid.gridY } : prev));
     }
+
+    // Broadcast DM cursor position (throttled)
+    const now = Date.now();
+    if (now - lastDmCursorBroadcast.current > 100) {
+      lastDmCursorBroadcast.current = now;
+      vttRealtime.updateCursor({ x: grid.gridX, y: grid.gridY });
+    }
   };
+
+  const handleMapDoubleClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const grid = getGridPosition(e);
+      if (grid) {
+        vttRealtime.sendPing(grid.gridX, grid.gridY);
+      }
+    },
+    [getGridPosition, vttRealtime]
+  );
 
   const handleMapMouseUp = () => {
     if (draggedToken) {
@@ -1204,18 +1286,35 @@ const VTTEnhanced = () => {
       const startY = (measurementStart.y + 0.5) * gridSize * zoom;
       const endX = (measurementEnd.x + 0.5) * gridSize * zoom;
       const endY = (measurementEnd.y + 0.5) * gridSize * zoom;
-      const length = Math.hypot(endX - startX, endY - startY);
-      const angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
-      parts.push(
-        `.vtt-measurement-line-active { left: ${startX}px; top: ${startY}px; width: ${length}px; transform: rotate(${angle}deg); }`
-      );
-      parts.push(
-        `.vtt-measurement-label-active { left: ${(startX + endX) / 2}px; top: ${(startY + endY) / 2}px; }`
-      );
+
+      if (measureShape === 'line') {
+        const length = Math.hypot(endX - startX, endY - startY);
+        const angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
+        parts.push(`.vtt-measurement-line-active { left: ${startX}px; top: ${startY}px; width: ${length}px; transform: rotate(${angle}deg); }`);
+        parts.push(`.vtt-measurement-label-active { left: ${(startX + endX) / 2}px; top: ${(startY + endY) / 2}px; }`);
+      } else if (measureShape === 'circle') {
+        const r = measureRadius * gridSize * zoom;
+        parts.push(`.vtt-aoe-circle { left: ${endX - r}px; top: ${endY - r}px; width: ${r * 2}px; height: ${r * 2}px; }`);
+        parts.push(`.vtt-measurement-label-active { left: ${endX}px; top: ${endY}px; }`);
+      } else if (measureShape === 'cone') {
+        const r = measureRadius * gridSize * zoom;
+        const angle = Math.atan2(endY - startY, endX - startX);
+        const halfAngle = Math.PI / 6; // 30° half-angle = 60° cone
+        const p1x = startX + r * Math.cos(angle - halfAngle);
+        const p1y = startY + r * Math.sin(angle - halfAngle);
+        const p2x = startX + r * Math.cos(angle + halfAngle);
+        const p2y = startY + r * Math.sin(angle + halfAngle);
+        parts.push(`.vtt-aoe-cone { clip-path: polygon(${startX}px ${startY}px, ${p1x}px ${p1y}px, ${p2x}px ${p2y}px); width: ${(sceneWidth ?? 20) * gridSize * zoom}px; height: ${(sceneHeight ?? 20) * gridSize * zoom}px; }`);
+        parts.push(`.vtt-measurement-label-active { left: ${(startX + endX) / 2}px; top: ${(startY + endY) / 2}px; }`);
+      } else if (measureShape === 'cube') {
+        const side = measureRadius * gridSize * zoom;
+        parts.push(`.vtt-aoe-cube { left: ${endX - side / 2}px; top: ${endY - side / 2}px; width: ${side}px; height: ${side}px; }`);
+        parts.push(`.vtt-measurement-label-active { left: ${endX}px; top: ${endY}px; }`);
+      }
     }
 
     return parts.join('\n');
-  }, [annotationsToRender, drawingsToRender, effectiveVisibleLayers, gridSize, measurementEnd, measurementStart, sceneClass, sceneHeight, sceneWidth, selectedTool, zoom]);
+  }, [annotationsToRender, drawingsToRender, effectiveVisibleLayers, gridSize, measureRadius, measureShape, measurementEnd, measurementStart, sceneClass, sceneHeight, sceneWidth, selectedTool, zoom]);
 
   const tokensInInitiative = useMemo(
     () =>
@@ -1235,22 +1334,45 @@ const VTTEnhanced = () => {
           <PlayerMapView campaignId={campaignId || ''} sessionId={sessionId || undefined} />
         ) : (
           <>
-            <div className="mb-4 flex items-center justify-between">
+            <div className="mb-4 flex items-center justify-between flex-wrap gap-2">
           <div>
             <Button
               variant="ghost"
               onClick={() => navigate(`/campaigns/${campaignId}`)}
-              className="mb-2"
+              className="mb-1"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Campaign
             </Button>
             <h1 className="font-arise text-3xl font-bold gradient-text-shadow">
-              VTT - {currentScene?.name || 'No Scene'}
+              VTT — {currentScene?.name || 'No Scene'}
             </h1>
-            <h2 className="text-2xl font-bold text-green-500">SESSION ACTIVE</h2>
+            <div className="flex items-center gap-3 mt-1">
+              <Badge variant={vttRealtime.isConnected ? 'default' : 'destructive'} className="text-xs">
+                {vttRealtime.isConnected ? '● LIVE' : '○ OFFLINE'}
+              </Badge>
+              {vttRealtime.activeUsers.length > 0 && (
+                <span className="text-xs text-muted-foreground">
+                  {vttRealtime.activeUsers.length + 1} connected
+                </span>
+              )}
+              {vttRealtime.activeUsers.length > 0 && (
+                <div className="flex -space-x-1.5">
+                  {vttRealtime.activeUsers.slice(0, 6).map((u) => (
+                    <div
+                      key={u.userId}
+                      className="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold text-white border border-background"
+                      style={{ backgroundColor: u.color }}
+                      title={`${u.userName} (${u.role})`}
+                    >
+                      {u.userName.charAt(0).toUpperCase()}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
             {isGM && (
               <>
                 <Button onClick={saveScenes} variant="outline" size="sm">
@@ -1261,6 +1383,36 @@ const VTTEnhanced = () => {
                   <Plus className="w-4 h-4 mr-2" />
                   New Scene
                 </Button>
+                <Dialog>
+                  <Button variant="ghost" size="sm" className="px-2 text-muted-foreground" asChild>
+                    <DialogTrigger>?</DialogTrigger>
+                  </Button>
+                  <DialogContent className="max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Keyboard Shortcuts</DialogTitle>
+                      <DialogDescription>Available when the map canvas is focused.</DialogDescription>
+                    </DialogHeader>
+                    <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm">
+                      <span className="text-muted-foreground">Escape</span><span>Deselect token</span>
+                      <span className="text-muted-foreground">Delete / Backspace</span><span>Remove selected token</span>
+                      <span className="text-muted-foreground">Arrow keys</span><span>Nudge token 1 square</span>
+                      <span className="text-muted-foreground">L</span><span>Lock / unlock token</span>
+                      <span className="text-muted-foreground">O</span><span>Open character sheet</span>
+                      <span className="text-muted-foreground font-semibold mt-2">Tool Hotkeys</span><span className="mt-2" />
+                      <span className="text-muted-foreground">S</span><span>Select tool</span>
+                      <span className="text-muted-foreground">F</span><span>Fog tool</span>
+                      <span className="text-muted-foreground">D</span><span>Draw tool</span>
+                      <span className="text-muted-foreground">E</span><span>Effect tool</span>
+                      <span className="text-muted-foreground">N</span><span>Note tool</span>
+                      <span className="text-muted-foreground">M</span><span>Measure tool</span>
+                      <span className="text-muted-foreground font-semibold mt-2">Asset Browser</span><span className="mt-2" />
+                      <span className="text-muted-foreground">Drag &amp; Drop</span><span>Drag asset onto map</span>
+                    </div>
+                    <DialogFooter>
+                      <p className="text-xs text-muted-foreground">Click the map first to enable keyboard shortcuts.</p>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
               </>
             )}
           </div>
@@ -1268,29 +1420,84 @@ const VTTEnhanced = () => {
 
         <div
           className={cn(
-            "grid grid-cols-1 md:grid-cols-12 gap-4 md:h-[calc(100vh-200px)]",
+            "grid grid-cols-1 md:grid-cols-12 gap-4",
+            !isMobile && "md:h-[calc(100vh-200px)]",
             isMapExpanded && "md:grid-cols-12"
           )}
         >
-          {/* Left Sidebar */}
-          <div className={cn("col-span-1 md:col-span-2 space-y-4 md:overflow-y-auto", isMapExpanded && "hidden")}>
+          {/* Left Sidebar — hidden on mobile, shown via bottom sheet */}
+          <div className={cn("col-span-1 md:col-span-2 space-y-4 md:overflow-y-auto", isMapExpanded && "hidden", isMobile && "hidden")}>
             {isGM && (
               <>
                 <SystemWindow title="SCENES">
-                  <div className="space-y-2 max-h-40 overflow-y-auto">
+                  <div className="space-y-1 max-h-48 overflow-y-auto">
                     {scenes.map((scene) => (
-                      <button
+                      <div
                         key={scene.id}
-                        onClick={() => setCurrentScene(scene)}
                         className={cn(
-                          'w-full p-2 rounded border text-left text-sm transition-all',
+                          'flex items-center gap-1 rounded border transition-all',
                           currentScene?.id === scene.id
                             ? 'bg-primary/20 border-primary'
                             : 'border-border hover:bg-muted/50'
                         )}
                       >
-                        {scene.name}
-                      </button>
+                        <button
+                          onClick={() => {
+                            setCurrentScene(scene);
+                            vttRealtime.broadcastSceneChange(scene.id);
+                          }}
+                          className="flex-1 p-2 text-left text-xs truncate"
+                        >
+                          {scene.name}
+                        </button>
+                        {currentScene?.id === scene.id && (
+                          <div className="flex gap-0.5 pr-1">
+                            <button
+                              onClick={() => {
+                                const newName = window.prompt('Scene name:', scene.name);
+                                if (newName && newName !== scene.name) {
+                                  updateScene({ name: newName } as any);
+                                }
+                              }}
+                              className="text-[9px] px-1 py-0.5 rounded hover:bg-muted"
+                              title="Rename"
+                            >
+                              \u270E
+                            </button>
+                            <button
+                              onClick={() => {
+                                const dup: Scene = {
+                                  ...scene,
+                                  id: `scene-${Date.now()}`,
+                                  name: `${scene.name} (copy)`,
+                                  tokens: scene.tokens.map((t) => ({ ...t, id: `token-${Date.now()}-${Math.random().toString(36).slice(2)}` })),
+                                };
+                                setScenes((prev) => [...prev, dup]);
+                                setCurrentScene(dup);
+                              }}
+                              className="text-[9px] px-1 py-0.5 rounded hover:bg-muted"
+                              title="Duplicate"
+                            >
+                              \u2398
+                            </button>
+                            {scenes.length > 1 && (
+                              <button
+                                onClick={() => {
+                                  if (!window.confirm(`Delete "${scene.name}"?`)) return;
+                                  const next = scenes.filter((s) => s.id !== scene.id);
+                                  setScenes(next);
+                                  setCurrentScene(next[0] || null);
+                                  persistSceneState(next, next[0]?.id ?? null);
+                                }}
+                                className="text-[9px] px-1 py-0.5 rounded hover:bg-destructive/20 text-destructive"
+                                title="Delete"
+                              >
+                                \u2715
+                              </button>
+                            )}
+                          </div>
+                        )}
+                      </div>
                     ))}
                   </div>
                 </SystemWindow>
@@ -1319,6 +1526,47 @@ const VTTEnhanced = () => {
                       </button>
                     ))}
                   </div>
+                  {selectedTool === 'measure' && (
+                    <div className="mt-3 pt-3 border-t border-border/50 space-y-2">
+                      <Label className="text-xs block">AoE Shape</Label>
+                      <div className="grid grid-cols-4 gap-1">
+                        {([
+                          { key: 'line', label: '─' },
+                          { key: 'circle', label: '○' },
+                          { key: 'cone', label: '◗' },
+                          { key: 'cube', label: '□' },
+                        ] as const).map((shape) => (
+                          <button
+                            key={shape.key}
+                            onClick={() => setMeasureShape(shape.key)}
+                            className={cn(
+                              'p-1.5 rounded border text-sm transition-all',
+                              measureShape === shape.key
+                                ? 'bg-cyan-500/20 border-cyan-500/50 text-cyan-300'
+                                : 'border-border/50 text-muted-foreground hover:bg-muted/30'
+                            )}
+                            title={shape.key.charAt(0).toUpperCase() + shape.key.slice(1)}
+                          >
+                            {shape.label}
+                          </button>
+                        ))}
+                      </div>
+                      {measureShape !== 'line' && (
+                        <div>
+                          <Label className="text-xs block mb-1">Radius: {measureRadius * 5}ft ({measureRadius} sq)</Label>
+                          <input
+                            type="range"
+                            min={1}
+                            max={12}
+                            value={measureRadius}
+                            onChange={(e) => setMeasureRadius(Number(e.target.value))}
+                            className="w-full h-2 accent-cyan-500"
+                            aria-label="AoE radius in grid squares"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </SystemWindow>
 
                 <SystemWindow title="CONTROLS">
@@ -1341,7 +1589,27 @@ const VTTEnhanced = () => {
                         >
                           <Plus className="w-3 h-3" />
                         </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          title="Zoom to fit"
+                          onClick={() => {
+                            if (!mapRef.current || !currentScene) return;
+                            const rect = mapRef.current.parentElement?.getBoundingClientRect();
+                            if (!rect) return;
+                            const sw = (currentScene.width ?? 20) * gridSize;
+                            const sh = (currentScene.height ?? 20) * gridSize;
+                            const fitZoom = Math.min(rect.width / sw, rect.height / sh, 2);
+                            setZoom(Math.max(0.5, Math.round(fitZoom * 20) / 20));
+                          }}
+                        >
+                          <Maximize2 className="w-3 h-3" />
+                        </Button>
                       </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <input type="checkbox" id="gridSnap" checked={gridSnap} onChange={(e) => setGridSnap(e.target.checked)} className="w-4 h-4" />
+                      <label htmlFor="gridSnap" className="text-xs cursor-pointer">Snap to Grid</label>
                     </div>
                     <div className="flex items-center gap-2">
                       <input
@@ -1830,14 +2098,82 @@ const VTTEnhanced = () => {
               <div
                 ref={mapRef}
                 onClick={handleMapClick}
+                onDoubleClick={handleMapDoubleClick}
                 onMouseDown={handleMapMouseDown}
                 onMouseMove={handleMapMouseMove}
                 onMouseUp={handleMapMouseUp}
                 onMouseLeave={handleMapMouseUp}
                 onKeyDown={handleMapKeyDown}
+                onContextMenu={(e) => {
+                  e.preventDefault();
+                  // Find token at click position for right-click/long-press context menu
+                  const rect = mapRef.current?.getBoundingClientRect();
+                  if (!rect) return;
+                  const mx = e.clientX - rect.left;
+                  const my = e.clientY - rect.top;
+                  const gx = Math.floor(mx / (gridSize * zoom));
+                  const gy = Math.floor(my / (gridSize * zoom));
+                  const token = visibleTokens.find((t) => t.x === gx && t.y === gy);
+                  if (token) {
+                    setContextMenu({ x: e.clientX, y: e.clientY, tokenId: token.id });
+                  }
+                }}
+                onTouchStart={(e) => {
+                  if (e.touches.length === 2) {
+                    const dx = e.touches[0].clientX - e.touches[1].clientX;
+                    const dy = e.touches[0].clientY - e.touches[1].clientY;
+                    touchRef.current = { startDist: Math.hypot(dx, dy), startZoom: zoom };
+                  }
+                }}
+                onTouchMove={(e) => {
+                  if (e.touches.length === 2 && touchRef.current) {
+                    const dx = e.touches[0].clientX - e.touches[1].clientX;
+                    const dy = e.touches[0].clientY - e.touches[1].clientY;
+                    const dist = Math.hypot(dx, dy);
+                    const scale = dist / touchRef.current.startDist;
+                    setZoom(Math.max(0.5, Math.min(2, touchRef.current.startZoom * scale)));
+                  }
+                }}
+                onTouchEnd={() => { touchRef.current = null; }}
+                onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; }}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  const raw = e.dataTransfer.getData('application/vtt-asset');
+                  if (!raw || !currentScene) return;
+                  try {
+                    const asset = JSON.parse(raw) as { imageUrl: string; name: string; category: string };
+                    const rect = mapRef.current?.getBoundingClientRect();
+                    const mx = rect ? (e.clientX - rect.left) : 0;
+                    const my = rect ? (e.clientY - rect.top) : 0;
+                    const gx = Math.max(0, Math.min(Math.floor(mx / (gridSize * zoom)), (currentScene.width ?? 20) - 1));
+                    const gy = Math.max(0, Math.min(Math.floor(my / (gridSize * zoom)), (currentScene.height ?? 20) - 1));
+                    if (asset.category === 'map' || asset.category === 'location') {
+                      updateScene({ backgroundImage: asset.imageUrl, name: asset.name || currentScene.name });
+                      toast({ title: 'Map Set', description: `"${asset.name}" applied as scene background.` });
+                    } else {
+                      const isEffect = ['effect', 'condition', 'technique', 'spell'].includes(asset.category);
+                      const placed: PlacedToken = {
+                        id: `${isEffect ? 'effect' : 'token'}-${Date.now()}`,
+                        name: asset.name || 'Token',
+                        imageUrl: asset.imageUrl,
+                        size: isEffect ? 'large' : 'medium',
+                        tokenType: isEffect ? 'effect' : undefined,
+                        render: isEffect ? { mode: 'overlay' as const, blendMode: 'screen' as const, opacity: 0.9 } : undefined,
+                        x: gx, y: gy,
+                        rotation: 0,
+                        layer: isEffect ? 2 : 1,
+                        locked: false,
+                        visible: true,
+                      };
+                      appendToken(placed);
+                      setActiveTokenId(placed.id);
+                      toast({ title: isEffect ? 'Effect Placed' : 'Token Placed', description: `"${asset.name}" placed at (${gx}, ${gy}).` });
+                    }
+                  } catch { /* ignore invalid drop data */ }
+                }}
                 role="application"
                 tabIndex={0}
-                aria-label="VTT map canvas. Click to place or interact with items, press Enter to act at center."
+                aria-label="VTT map canvas. Click to place or interact with items, press Enter to act at center. Drop assets from the browser to place them."
                 className={cn(
                   'flex-1 relative border-2 border-border rounded-lg bg-background overflow-auto',
                   selectedTool !== 'select' && 'cursor-crosshair',
@@ -1916,27 +2252,91 @@ const VTTEnhanced = () => {
                   {selectedTool === 'measure' && measurementStart && measurementEnd && (() => {
                     const dx = Math.abs(measurementEnd.x - measurementStart.x);
                     const dy = Math.abs(measurementEnd.y - measurementStart.y);
-                    const distance = Math.max(dx, dy) + Math.min(dx, dy) * 0.5;
+                    const distance = measureShape === 'line'
+                      ? Math.max(dx, dy) + Math.min(dx, dy) * 0.5
+                      : measureRadius;
                     return (
                       <div className="vtt-measurement">
-                        <div
-                          className={cn('vtt-measurement-line', 'vtt-measurement-line-active')}
-                        />
-                        <div
-                          className={cn('vtt-measurement-label', 'vtt-measurement-label-active')}
-                        >
-                          {distance.toFixed(1)}u ({(distance * 5).toFixed(0)} ft)
+                        {measureShape === 'line' && (
+                          <div className={cn('vtt-measurement-line', 'vtt-measurement-line-active')} />
+                        )}
+                        {measureShape === 'circle' && (
+                          <div className="vtt-aoe-circle" />
+                        )}
+                        {measureShape === 'cone' && (
+                          <div className="vtt-aoe-cone" />
+                        )}
+                        {measureShape === 'cube' && (
+                          <div className="vtt-aoe-cube" />
+                        )}
+                        <div className={cn('vtt-measurement-label', 'vtt-measurement-label-active')}>
+                          {measureShape === 'line'
+                            ? `${distance.toFixed(1)}u (${(distance * 5).toFixed(0)} ft)`
+                            : `${measureShape} ${measureRadius * 5}ft`
+                          }
                         </div>
                       </div>
                     );
                   })()}
+
+                  {/* Ping overlay */}
+                  {vttRealtime.pings.length > 0 && (
+                    <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 70 }}>
+                      {vttRealtime.pings.map((ping) => (
+                        <div
+                          key={ping.timestamp}
+                          className="absolute animate-ping"
+                          style={{
+                            left: `${(ping.x + 0.5) * gridSize * zoom}px`,
+                            top: `${(ping.y + 0.5) * gridSize * zoom}px`,
+                            width: '24px',
+                            height: '24px',
+                            borderRadius: '50%',
+                            border: `3px solid ${ping.color}`,
+                            transform: 'translate(-50%, -50%)',
+                            boxShadow: `0 0 12px ${ping.color}`,
+                          }}
+                        />
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Remote cursors overlay */}
+                  {vttRealtime.activeUsers.filter((u) => u.cursor).length > 0 && (
+                    <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 65 }}>
+                      {vttRealtime.activeUsers
+                        .filter((u) => u.cursor)
+                        .map((u) => (
+                          <div
+                            key={u.userId}
+                            className="absolute transition-all duration-100"
+                            style={{
+                              left: `${(u.cursor!.x + 0.5) * gridSize * zoom}px`,
+                              top: `${(u.cursor!.y + 0.5) * gridSize * zoom}px`,
+                              transform: 'translate(-50%, -50%)',
+                            }}
+                          >
+                            <div
+                              className="w-3 h-3 rounded-full border-2 border-white"
+                              style={{ backgroundColor: u.color }}
+                            />
+                            <div
+                              className="absolute top-4 left-0 text-[10px] px-1 rounded text-white whitespace-nowrap"
+                              style={{ backgroundColor: u.color }}
+                            >
+                              {u.userName}
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </SystemWindow>
           </div>
 
-          {/* Right Sidebar */}
-          <div className={cn("col-span-1 md:col-span-3 space-y-4 md:overflow-y-auto", isMapExpanded && "hidden")}>
+          {/* Right Sidebar — hidden on mobile, shown via bottom sheet */}
+          <div className={cn("col-span-1 md:col-span-3 space-y-4 md:overflow-y-auto", isMapExpanded && "hidden", isMobile && "hidden")}>
             {activeToken && (
               <SystemWindow title="ACTIVE TOKEN">
                 <div className="space-y-3 text-xs">
@@ -2049,6 +2449,95 @@ const VTTEnhanced = () => {
                       <span>Locked</span>
                     </div>
                   </div>
+                  {isGM && (
+                    <div className="space-y-2 border-t border-border/50 pt-2">
+                      <Label className="text-xs font-semibold">Conditions</Label>
+                      <div className="flex flex-wrap gap-1">
+                        {(['Blinded','Charmed','Deafened','Frightened','Grappled','Incapacitated','Invisible','Paralyzed','Petrified','Poisoned','Prone','Restrained','Stunned','Unconscious','Concentrating','Exhaustion'] as const).map((cond) => {
+                          const active = activeToken.conditions?.includes(cond);
+                          return (
+                            <button
+                              key={cond}
+                              onClick={() => {
+                                const current = activeToken.conditions || [];
+                                const next = active ? current.filter((c) => c !== cond) : [...current, cond];
+                                updateToken(activeToken.id, { conditions: next });
+                              }}
+                              className={cn(
+                                'text-[9px] px-1.5 py-0.5 rounded-full border transition-all',
+                                active ? 'bg-amber-500/30 border-amber-500 text-amber-300' : 'border-border/50 text-muted-foreground hover:bg-muted/50'
+                              )}
+                            >
+                              {cond}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                  {isGM && (
+                    <div className="grid grid-cols-2 gap-2 border-t border-border/50 pt-2">
+                      <div>
+                        <Label className="text-xs">Aura (sq)</Label>
+                        <Input
+                          type="number"
+                          min={0}
+                          max={20}
+                          value={activeToken.auraRadius ?? 0}
+                          onChange={(e) => updateToken(activeToken.id, { auraRadius: Number(e.target.value) || 0 })}
+                          className="h-7 text-xs"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-xs">Aura Color</Label>
+                        <Input
+                          type="color"
+                          value={activeToken.auraColor || '#3b82f6'}
+                          onChange={(e) => updateToken(activeToken.id, { auraColor: e.target.value })}
+                          className="h-7"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-xs">Light (sq)</Label>
+                        <Input
+                          type="number"
+                          min={0}
+                          max={24}
+                          value={activeToken.lightRadius ?? 0}
+                          onChange={(e) => updateToken(activeToken.id, { lightRadius: Number(e.target.value) || 0 })}
+                          className="h-7 text-xs"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-xs">Bar Vis</Label>
+                        <Select
+                          value={activeToken.barVisibility || 'always'}
+                          onValueChange={(v) => updateToken(activeToken.id, { barVisibility: v as PlacedToken['barVisibility'] })}
+                        >
+                          <SelectTrigger className="h-7 text-xs">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="always">Everyone</SelectItem>
+                            <SelectItem value="owner">Owner Only</SelectItem>
+                            <SelectItem value="gm">GM Only</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  )}
+                  {isGM && (
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={activeToken.showNameplate ?? true}
+                        onChange={(e) => updateToken(activeToken.id, { showNameplate: e.target.checked })}
+                        aria-label="Show nameplate"
+                        className="w-3 h-3"
+                      />
+                      <span className="text-xs">Show Nameplate</span>
+                    </div>
+                  )}
                   <div>
                     <Label className="text-xs">Rotation</Label>
                     <Input
@@ -2100,6 +2589,18 @@ const VTTEnhanced = () => {
                 </div>
               </SystemWindow>
             )}
+            {/* Character Sheet Panel — shown when active token has a characterId */}
+            {activeToken?.characterId && (
+              <div className="max-h-[50vh] overflow-y-auto">
+                <VTTCharacterPanel
+                  characterId={activeToken.characterId}
+                  onRoll={(formula) => vttRealtime.rollAndBroadcast(formula)}
+                  onChat={(msg, type) => vttRealtime.sendChatMessage(msg, type)}
+                  readOnly={false}
+                />
+              </div>
+            )}
+
             <Dialog open={damageDialogOpen} onOpenChange={setDamageDialogOpen}>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
@@ -2155,42 +2656,92 @@ const VTTEnhanced = () => {
             </Dialog>
 
             <Tabs defaultValue="initiative" className="w-full">
-              <TabsList className="grid w-full grid-cols-5">
-                <TabsTrigger value="initiative">Initiative</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-6">
+                <TabsTrigger value="initiative">Init</TabsTrigger>
                 <TabsTrigger value="chat">Chat</TabsTrigger>
                 <TabsTrigger value="dice">Dice</TabsTrigger>
+                <TabsTrigger value="assets">Assets</TabsTrigger>
                 <TabsTrigger value="ai">AI</TabsTrigger>
                 <TabsTrigger value="journal">Journal</TabsTrigger>
               </TabsList>
 
               <TabsContent value="initiative" className="space-y-2">
                 <SystemWindow title="INITIATIVE TRACKER">
-                  <div className="space-y-2 max-h-96 overflow-y-auto">
-                    {tokensInInitiative.map((token, index) => (
-                      <div
-                        key={token.id}
-                        className={cn(
-                          'p-2 rounded border flex items-center justify-between',
-                          index === 0 && 'bg-primary/20 border-primary'
-                        )}
-                      >
-                        <div className="flex items-center gap-2 flex-1 min-w-0">
-                          <span className="font-arise text-lg">{index + 1}</span>
-                          <span className="truncate text-sm">{token.name}</span>
-                        </div>
-                        {isGM && (
-                          <Input
-                            type="number"
-                            value={token.initiative || 0}
-                            onChange={(e) => updateTokenInitiative(token.id, parseInt(e.target.value) || 0)}
-                            className="w-16 h-7 text-xs"
-                          />
-                        )}
-                        {!isGM && (
-                          <span className="text-sm font-semibold">{token.initiative}</span>
-                        )}
+                  {/* Turn controls */}
+                  {isGM && tokensInInitiative.length > 0 && (
+                    <div className="flex items-center justify-between mb-3 pb-2 border-b border-border">
+                      <div className="flex items-center gap-2">
+                        <Button variant="outline" size="sm" onClick={vttRealtime.prevTurn} className="text-xs h-7">
+                          ← Prev
+                        </Button>
+                        <Button variant="default" size="sm" onClick={vttRealtime.nextTurn} className="text-xs h-7">
+                          Next →
+                        </Button>
                       </div>
-                    ))}
+                      <div className="flex items-center gap-2">
+                        <Badge variant="outline" className="text-xs">
+                          Round {vttRealtime.initiativeState.round}
+                        </Badge>
+                        <Button variant="destructive" size="sm" onClick={vttRealtime.endCombat} className="text-xs h-7">
+                          End
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                  {isGM && tokensInInitiative.length > 0 && !vttRealtime.initiativeState.active && (
+                    <Button
+                      variant="default"
+                      size="sm"
+                      className="w-full mb-2 text-xs"
+                      onClick={() => {
+                        vttRealtime.broadcastInitiativeUpdate({
+                          order: tokensInInitiative.map((t) => ({ tokenId: t.id, name: t.name, initiative: t.initiative || 0, hp: t.hp, maxHp: t.maxHp })),
+                          currentTurnIndex: 0,
+                          round: 1,
+                          active: true,
+                        });
+                      }}
+                    >
+                      Start Combat
+                    </Button>
+                  )}
+                  <div className="space-y-2 max-h-96 overflow-y-auto">
+                    {tokensInInitiative.map((token, index) => {
+                      const isCurrentTurn = vttRealtime.initiativeState.active && index === vttRealtime.initiativeState.currentTurnIndex;
+                      return (
+                        <div
+                          key={token.id}
+                          className={cn(
+                            'p-2 rounded border flex items-center justify-between transition-all',
+                            isCurrentTurn && 'bg-amber-500/20 border-amber-500 ring-1 ring-amber-500/50',
+                            !isCurrentTurn && index === 0 && !vttRealtime.initiativeState.active && 'bg-muted/40 border-muted-foreground/30'
+                          )}
+                        >
+                          <div className="flex items-center gap-2 flex-1 min-w-0">
+                            <span className={cn('font-arise text-lg w-6 text-center', isCurrentTurn && 'text-amber-400')}>{index + 1}</span>
+                            <div className="flex-1 min-w-0">
+                              <span className="truncate text-sm block">{token.name}</span>
+                              {token.hp !== undefined && token.maxHp !== undefined && (
+                                <div className="h-1 rounded-full bg-black/30 mt-0.5 w-full">
+                                  <div className="h-full rounded-full transition-all" style={{ width: `${Math.max(0, Math.min(100, token.maxHp > 0 ? (token.hp / token.maxHp) * 100 : 0))}%`, backgroundColor: (token.hp / (token.maxHp || 1)) > 0.5 ? '#22c55e' : (token.hp / (token.maxHp || 1)) > 0.25 ? '#eab308' : '#ef4444' }} />
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          {isGM && (
+                            <Input
+                              type="number"
+                              value={token.initiative || 0}
+                              onChange={(e) => updateTokenInitiative(token.id, parseInt(e.target.value) || 0)}
+                              className="w-16 h-7 text-xs"
+                            />
+                          )}
+                          {!isGM && (
+                            <span className="text-sm font-semibold">{token.initiative}</span>
+                          )}
+                        </div>
+                      );
+                    })}
                     {tokensInInitiative.length === 0 && (
                       <p className="text-xs text-muted-foreground text-center py-4">
                         No tokens in initiative. {isGM && 'Set initiative values on tokens.'}
@@ -2202,30 +2753,69 @@ const VTTEnhanced = () => {
 
               <TabsContent value="chat" className="space-y-2">
                 <SystemWindow title="CHAT" className="flex flex-col h-[400px]">
+                  {vttRealtime.activeUsers.length > 0 && (
+                    <div className="flex items-center gap-1 mb-2 px-1">
+                      <div className="flex -space-x-1.5">
+                        {vttRealtime.activeUsers.map((u) => (
+                          <div
+                            key={u.userId}
+                            className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white border border-background"
+                            style={{ backgroundColor: u.color }}
+                            title={`${u.userName} (${u.role})`}
+                          >
+                            {u.userName.charAt(0).toUpperCase()}
+                          </div>
+                        ))}
+                      </div>
+                      <span className="text-[10px] text-muted-foreground ml-1">
+                        {vttRealtime.activeUsers.length + 1} online
+                      </span>
+                    </div>
+                  )}
                   <div className="flex-1 overflow-y-auto space-y-2 mb-2">
-                    {chatMessages.slice().reverse().map((msg) => (
+                    {vttRealtime.chatMessages.map((msg) => (
                       <div key={msg.id} className="text-xs">
-                        <div className="flex items-center gap-1 mb-1">
-                          <span className="font-semibold">{msg.player}</span>
-                          <span className="text-muted-foreground">
-                            {msg.timestamp.toLocaleTimeString()}
-                          </span>
-                        </div>
-                        <div className={cn(
-                          'p-2 rounded border',
-                          msg.type === 'system' && 'bg-muted/30',
-                          msg.type === 'dice' && 'bg-blue-500/20'
-                        )}>
-                          {msg.message}
-                          {msg.diceResult && (
-                            <div className="mt-1 text-blue-400">
-                              Rolled {msg.diceResult.dice} = {msg.diceResult.result}
-                              {msg.diceResult.critical && ' CRITICAL!'}
+                        {msg.type === 'emote' ? (
+                          <div className="p-2 rounded border-l-2 border-amber-500 bg-amber-500/10 italic text-amber-200">
+                            * {msg.userName} {msg.message}
+                          </div>
+                        ) : msg.type === 'desc' ? (
+                          <div className="p-2 rounded border border-slate-600 bg-slate-800/60 text-center font-heading text-slate-200">
+                            {msg.message}
+                          </div>
+                        ) : (
+                          <>
+                            <div className="flex items-center gap-1 mb-1">
+                              <span className="font-semibold text-foreground">{msg.userName}</span>
+                              {msg.type === 'whisper' && <Badge variant="outline" className="text-[9px] px-1 py-0 border-teal-500/50 text-teal-400">whisper</Badge>}
+                              {msg.type === 'gmroll' && <Badge variant="outline" className="text-[9px] px-1 py-0 border-amber-500/50 text-amber-400">GM</Badge>}
+                              <span className="text-muted-foreground text-[10px]">
+                                {new Date(msg.timestamp).toLocaleTimeString()}
+                              </span>
                             </div>
-                          )}
-                        </div>
+                            <div className={cn(
+                              'p-2 rounded',
+                              msg.type === 'chat' && 'border border-border bg-muted/20',
+                              msg.type === 'system' && 'border-l-2 border-slate-500 bg-slate-800/40 text-slate-300',
+                              msg.type === 'dice' && 'border border-cyan-500/40 bg-cyan-950/30 text-cyan-100',
+                              msg.type === 'gmroll' && 'border border-amber-500/40 bg-amber-950/30 text-amber-100',
+                              msg.type === 'whisper' && 'border border-teal-500/30 bg-teal-950/30 italic text-teal-200',
+                            )}>
+                              {msg.diceDisplayText ? (
+                                <span dangerouslySetInnerHTML={{ __html: msg.diceDisplayText.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/~~(.+?)~~/g, '<del class="opacity-40">$1</del>') }} />
+                              ) : (
+                                msg.message
+                              )}
+                              {msg.diceCritical && <span className="ml-1 text-green-400 font-bold">CRITICAL!</span>}
+                              {msg.diceFumble && <span className="ml-1 text-red-400 font-bold">FUMBLE!</span>}
+                            </div>
+                          </>
+                        )}
                       </div>
                     ))}
+                  </div>
+                  <div className="text-[9px] text-muted-foreground mb-1 px-1">
+                    /roll /gmroll /w &quot;name&quot; /em /desc • adv dis 4d6kh3
                   </div>
                   <div className="flex gap-2">
                     <Input
@@ -2233,17 +2823,17 @@ const VTTEnhanced = () => {
                       onChange={(e) => setNewMessage(e.target.value)}
                       onKeyPress={(e) => {
                         if (e.key === 'Enter' && newMessage.trim()) {
-                          addChatMessage('chat', newMessage);
+                          vttRealtime.processChat(newMessage);
                           setNewMessage('');
                         }
                       }}
-                      placeholder="Type message..."
+                      placeholder="Type message or /roll 1d20+5..."
                       className="text-sm"
                     />
                     <Button
                       onClick={() => {
                         if (newMessage.trim()) {
-                          addChatMessage('chat', newMessage);
+                          vttRealtime.processChat(newMessage);
                           setNewMessage('');
                         }
                       }}
@@ -2257,78 +2847,174 @@ const VTTEnhanced = () => {
 
               <TabsContent value="dice" className="space-y-2">
                 <SystemWindow title="DICE ROLLER">
-                  <div className="space-y-4">
-                    <div>
-                      <Label className="text-xs mb-2 block">Quick Rolls</Label>
-                      <div className="grid grid-cols-2 gap-2">
-                        <Button
-                          onClick={() => rollDice('1d20')}
-                          variant="outline"
-                          size="sm"
-                          className="text-xs"
-                        >
-                          1d20
-                        </Button>
-                        <Button
-                          onClick={() => rollDice('1d12')}
-                          variant="outline"
-                          size="sm"
-                          className="text-xs"
-                        >
-                          1d12
-                        </Button>
-                        <Button
-                          onClick={() => rollDice('2d6')}
-                          variant="outline"
-                          size="sm"
-                          className="text-xs"
-                        >
-                          2d6
-                        </Button>
-                        <Button
-                          onClick={() => rollDice('1d100')}
-                          variant="outline"
-                          size="sm"
-                          className="text-xs"
-                        >
-                          1d100
-                        </Button>
-                      </div>
-                    </div>
-                    <div>
-                      <Label className="text-xs mb-2 block">Custom Roll</Label>
-                      <div className="flex gap-2">
-                        <Input
-                          id="customDice"
-                          placeholder="1d20+5"
-                          className="text-xs"
-                          onKeyPress={(e) => {
-                            if (e.key === 'Enter') {
-                              const input = e.target as HTMLInputElement;
-                              rollDice(input.value);
-                              input.value = '';
-                            }
-                          }}
-                        />
-                      </div>
-                    </div>
-                    <div className="max-h-60 overflow-y-auto space-y-1">
-                      <Label className="text-xs mb-2 block">Recent Rolls</Label>
-                      {diceRolls.slice(0, 10).map((roll) => (
-                        <div key={roll.id} className="text-xs p-2 rounded border bg-muted/30">
-                          <div className="flex justify-between">
-                            <span>{roll.dice}</span>
-                            <span className={cn(
-                              'font-bold',
-                              roll.critical && 'text-green-400'
-                            )}>
-                              {roll.result}
-                            </span>
-                          </div>
-                        </div>
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-3 gap-1.5">
+                      {['1d20', '1d12', '1d10', '1d8', '2d6', '1d4', '1d100'].map((f) => (
+                        <Button key={f} onClick={() => vttRealtime.rollAndBroadcast(f)} variant="outline" size="sm" className="text-xs h-7">{f}</Button>
                       ))}
                     </div>
+                    <div className="grid grid-cols-3 gap-1.5">
+                      <Button onClick={() => vttRealtime.rollAndBroadcast('adv')} variant="outline" size="sm" className="text-xs h-7 text-green-400 border-green-500/30">ADV</Button>
+                      <Button onClick={() => vttRealtime.rollAndBroadcast('dis')} variant="outline" size="sm" className="text-xs h-7 text-red-400 border-red-500/30">DIS</Button>
+                      <Button onClick={() => vttRealtime.rollAndBroadcast('4d6kh3')} variant="outline" size="sm" className="text-xs h-7 text-amber-400 border-amber-500/30">STAT</Button>
+                    </div>
+                    <div className="flex gap-1.5">
+                      <Input
+                        id="customDice"
+                        placeholder="2d8+1d6+5, 3d6!, adv..."
+                        className="text-xs h-8"
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter') {
+                            const input = e.target as HTMLInputElement;
+                            if (input.value.trim()) {
+                              vttRealtime.rollAndBroadcast(input.value.trim());
+                              input.value = '';
+                            }
+                          }
+                        }}
+                      />
+                    </div>
+
+                    {/* Macro Bar */}
+                    {vttRealtime.macros.length > 0 && (
+                      <div className="border-t border-border/50 pt-2">
+                        <Label className="text-xs mb-1.5 block">Macros</Label>
+                        <div className="flex flex-wrap gap-1">
+                          {vttRealtime.macros.filter((m) => m.showInBar).map((macro) => (
+                            <div key={macro.id} className="flex items-center">
+                              <Button
+                                onClick={() => vttRealtime.executeMacro(macro.id)}
+                                variant="outline"
+                                size="sm"
+                                className="text-[10px] h-6 px-2 rounded-r-none"
+                                title={macro.command}
+                              >
+                                {macro.name}
+                              </Button>
+                              <button
+                                onClick={() => vttRealtime.removeMacro(macro.id)}
+                                className="h-6 px-1 border border-l-0 border-border rounded-r text-[10px] hover:bg-destructive/20 text-muted-foreground"
+                              >
+                                ×
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    <div className="flex gap-1.5">
+                      <Input
+                        placeholder="Macro name"
+                        className="text-xs h-7 flex-1"
+                        id="macroName"
+                      />
+                      <Input
+                        placeholder="/roll 1d20+5"
+                        className="text-xs h-7 flex-1"
+                        id="macroCmd"
+                      />
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-xs h-7 px-2"
+                        onClick={() => {
+                          const nameEl = document.getElementById('macroName') as HTMLInputElement;
+                          const cmdEl = document.getElementById('macroCmd') as HTMLInputElement;
+                          if (nameEl?.value.trim() && cmdEl?.value.trim()) {
+                            vttRealtime.addMacro({ name: nameEl.value.trim(), command: cmdEl.value.trim(), showInBar: true });
+                            nameEl.value = '';
+                            cmdEl.value = '';
+                          }
+                        }}
+                      >
+                        +
+                      </Button>
+                    </div>
+
+                    <div className="max-h-40 overflow-y-auto space-y-1">
+                      <Label className="text-xs block">Recent</Label>
+                      {vttRealtime.chatMessages
+                        .filter((m) => m.type === 'dice' || m.type === 'gmroll')
+                        .slice(-8)
+                        .map((roll) => (
+                          <div key={roll.id} className="text-xs p-1.5 rounded border bg-muted/30">
+                            <div className="flex justify-between items-center">
+                              <span className="truncate flex-1">{roll.userName}: {roll.diceFormula}</span>
+                              <span className={cn('font-bold ml-2', roll.diceCritical && 'text-green-400', roll.diceFumble && 'text-red-400')}>
+                                {roll.diceResult}
+                              </span>
+                            </div>
+                            {roll.diceDisplayText && (
+                              <div className="text-[10px] text-muted-foreground mt-0.5" dangerouslySetInnerHTML={{ __html: roll.diceDisplayText.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/~~(.+?)~~/g, '<del class="opacity-40">$1</del>') }} />
+                            )}
+                          </div>
+                        ))}
+                    </div>
                   </div>
+                </SystemWindow>
+              </TabsContent>
+
+              <TabsContent value="assets" className="space-y-2">
+                <SystemWindow title="ASSET LIBRARY">
+                  <VTTAssetBrowser
+                    campaignId={campaignId}
+                    onUseAsMap={(imageUrl, name) => {
+                      if (currentScene) {
+                        updateScene({ backgroundImage: imageUrl, name: name || currentScene.name });
+                        toast({ title: 'Map Set', description: `"${name}" applied as scene background.` });
+                      } else {
+                        toast({ title: 'No Scene', description: 'Create a scene first.', variant: 'destructive' });
+                      }
+                    }}
+                    onUseAsToken={(imageUrl, name) => {
+                      if (!currentScene) {
+                        toast({ title: 'No Scene', description: 'Create a scene first.', variant: 'destructive' });
+                        return;
+                      }
+                      const placed: PlacedToken = {
+                        id: `token-${Date.now()}`,
+                        name: name || 'Token',
+                        imageUrl,
+                        size: 'medium',
+                        x: Math.floor((currentScene.width ?? 20) / 2),
+                        y: Math.floor((currentScene.height ?? 20) / 2),
+                        rotation: 0,
+                        layer: 1,
+                        locked: false,
+                        visible: true,
+                      };
+                      appendToken(placed);
+                      setActiveTokenId(placed.id);
+                      toast({ title: 'Token Placed', description: `"${name}" placed at center of map.` });
+                    }}
+                    onUseAsEffect={(imageUrl, name) => {
+                      if (!currentScene) {
+                        toast({ title: 'No Scene', description: 'Create a scene first.', variant: 'destructive' });
+                        return;
+                      }
+                      const placed: PlacedToken = {
+                        id: `effect-${Date.now()}`,
+                        name: name || 'Effect',
+                        imageUrl,
+                        size: 'large',
+                        tokenType: 'effect',
+                        render: { mode: 'overlay', blendMode: 'screen', opacity: 0.9 },
+                        x: Math.floor((currentScene.width ?? 20) / 2),
+                        y: Math.floor((currentScene.height ?? 20) / 2),
+                        rotation: 0,
+                        layer: 2,
+                        locked: false,
+                        visible: true,
+                      };
+                      appendToken(placed);
+                      setActiveTokenId(placed.id);
+                      toast({ title: 'Effect Placed', description: `"${name}" placed on effects layer.` });
+                    }}
+                    onShareHandout={(imageUrl, name) => {
+                      vttRealtime.shareHandout(name, imageUrl, '');
+                      toast({ title: 'Handout Shared', description: `"${name}" shared with all players.` });
+                    }}
+                  />
                 </SystemWindow>
               </TabsContent>
 
@@ -2355,6 +3041,194 @@ const VTTEnhanced = () => {
           </div>
         </div>
         </> ) }
+
+        {/* Mobile Toolbar + Bottom Sheet */}
+        {isMobile && isGM && (
+          <>
+            <div className="vtt-mobile-toolbar">
+              {([
+                { key: 'select', label: 'Sel' },
+                { key: 'fog', label: 'Fog' },
+                { key: 'draw', label: 'Draw' },
+                { key: 'measure', label: 'Meas' },
+              ] as const).map((tool) => (
+                <button
+                  key={tool.key}
+                  className={cn(selectedTool === tool.key && 'active')}
+                  onClick={() => { setSelectedTool(tool.key); setMobilePanel(null); }}
+                >
+                  {tool.label}
+                </button>
+              ))}
+              <div className="w-px h-8 bg-border/30 mx-1" />
+              <button className={cn(mobilePanel === 'tools' && 'active')} onClick={() => setMobilePanel(mobilePanel === 'tools' ? null : 'tools')}>
+                ⚙ Tools
+              </button>
+              <button className={cn(mobilePanel === 'sidebar' && 'active')} onClick={() => setMobilePanel(mobilePanel === 'sidebar' ? null : 'sidebar')}>
+                ☰ Panel
+              </button>
+              <div className="w-px h-8 bg-border/30 mx-1" />
+              <button onClick={() => setZoom(Math.max(0.5, zoom - 0.15))}>−</button>
+              <span className="text-[10px] text-muted-foreground min-w-[32px] text-center">{Math.round(zoom * 100)}%</span>
+              <button onClick={() => setZoom(Math.min(2, zoom + 0.15))}>+</button>
+            </div>
+
+            <div className={cn('vtt-bottom-sheet', mobilePanel && 'open')}>
+              <div className="vtt-bottom-sheet-handle" />
+              <div className="vtt-bottom-sheet-content">
+                {mobilePanel === 'tools' && (
+                  <div className="space-y-3">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Controls</h3>
+                    <div className="flex items-center gap-2">
+                      <input type="checkbox" checked={showGrid} onChange={(e) => setShowGrid(e.target.checked)} className="w-5 h-5" id="mobileGrid" />
+                      <label htmlFor="mobileGrid" className="text-sm">Grid</label>
+                      <input type="checkbox" checked={gridSnap} onChange={(e) => setGridSnap(e.target.checked)} className="w-5 h-5 ml-4" id="mobileSnap" />
+                      <label htmlFor="mobileSnap" className="text-sm">Snap</label>
+                    </div>
+                    {selectedTool === 'measure' && (
+                      <div className="space-y-2">
+                        <h4 className="text-xs font-semibold text-muted-foreground">AoE Shape</h4>
+                        <div className="grid grid-cols-4 gap-2">
+                          {(['line', 'circle', 'cone', 'cube'] as const).map((s) => (
+                            <button key={s} onClick={() => setMeasureShape(s)} className={cn('p-2 rounded border text-center text-sm', measureShape === s ? 'bg-cyan-500/20 border-cyan-500' : 'border-border')}>
+                              {s}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    <div className="space-y-1">
+                      <h4 className="text-xs font-semibold text-muted-foreground">Scenes</h4>
+                      {scenes.map((scene) => (
+                        <button key={scene.id} onClick={() => { setCurrentScene(scene); vttRealtime.broadcastSceneChange(scene.id); setMobilePanel(null); }} className={cn('w-full text-left p-2 rounded text-sm', currentScene?.id === scene.id ? 'bg-primary/20 border border-primary' : 'border border-border')}>
+                          {scene.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {mobilePanel === 'sidebar' && (
+                  <Tabs defaultValue="chat" className="w-full">
+                    <TabsList className="grid w-full grid-cols-4 mb-2">
+                      <TabsTrigger value="chat" className="text-xs">Chat</TabsTrigger>
+                      <TabsTrigger value="init" className="text-xs">Init</TabsTrigger>
+                      <TabsTrigger value="dice" className="text-xs">Dice</TabsTrigger>
+                      <TabsTrigger value="assets" className="text-xs">Assets</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="chat">
+                      <div className="space-y-2 max-h-[40vh] overflow-y-auto">
+                        {vttRealtime.chatMessages.slice(-20).map((msg) => (
+                          <div key={msg.id} className="text-xs p-1.5 rounded border border-border/40 bg-muted/10">
+                            <span className="font-semibold">{msg.userName}: </span>
+                            {msg.diceDisplayText ? (
+                              <span dangerouslySetInnerHTML={{ __html: msg.diceDisplayText.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/~~(.+?)~~/g, '<del class="opacity-40">$1</del>') }} />
+                            ) : msg.message}
+                          </div>
+                        ))}
+                      </div>
+                      <div className="flex gap-1 mt-2">
+                        <Input value={newMessage} onChange={(e) => setNewMessage(e.target.value)} placeholder="Type..." className="h-9 text-sm" onKeyPress={(e) => { if (e.key === 'Enter' && newMessage.trim()) { vttRealtime.processChat(newMessage); setNewMessage(''); }}} />
+                        <Button size="sm" className="h-9 px-3" onClick={() => { if (newMessage.trim()) { vttRealtime.processChat(newMessage); setNewMessage(''); }}}>
+                          Send
+                        </Button>
+                      </div>
+                    </TabsContent>
+                    <TabsContent value="init">
+                      <div className="space-y-1 max-h-[40vh] overflow-y-auto">
+                        {tokensInInitiative.map((token, idx) => (
+                          <div key={token.id} className={cn('flex items-center gap-2 p-2 rounded text-sm', idx === vttRealtime.initiativeState.currentTurnIndex ? 'bg-amber-500/20 border border-amber-500' : 'border border-border/40')}>
+                            <span className="truncate flex-1">{token.name}</span>
+                            <span className="font-bold">{token.initiative}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </TabsContent>
+                    <TabsContent value="dice">
+                      <div className="grid grid-cols-4 gap-2">
+                        {['1d4', '1d6', '1d8', '1d10', '1d12', '1d20', '2d6', '1d100'].map((formula) => (
+                          <Button key={formula} variant="outline" size="sm" className="text-xs" onClick={() => vttRealtime.rollAndBroadcast(formula)}>
+                            {formula}
+                          </Button>
+                        ))}
+                      </div>
+                    </TabsContent>
+                    <TabsContent value="assets">
+                      <VTTAssetBrowser
+                        campaignId={campaignId}
+                        onUseAsMap={(imageUrl, name) => {
+                          if (currentScene) { updateScene({ backgroundImage: imageUrl, name: name || currentScene.name }); setMobilePanel(null); }
+                        }}
+                        onUseAsToken={(imageUrl, name) => {
+                          if (!currentScene) return;
+                          appendToken({ id: `token-${Date.now()}`, name: name || 'Token', imageUrl, size: 'medium', x: Math.floor((currentScene.width ?? 20) / 2), y: Math.floor((currentScene.height ?? 20) / 2), rotation: 0, layer: 1, locked: false, visible: true });
+                          setMobilePanel(null);
+                        }}
+                        onUseAsEffect={(imageUrl, name) => {
+                          if (!currentScene) return;
+                          appendToken({ id: `effect-${Date.now()}`, name: name || 'Effect', imageUrl, size: 'large', tokenType: 'effect', render: { mode: 'overlay' as const, blendMode: 'screen' as const, opacity: 0.9 }, x: Math.floor((currentScene.width ?? 20) / 2), y: Math.floor((currentScene.height ?? 20) / 2), rotation: 0, layer: 2, locked: false, visible: true });
+                          setMobilePanel(null);
+                        }}
+                        onShareHandout={(imageUrl, name) => {
+                          vttRealtime.shareHandout(name, imageUrl, '');
+                          setMobilePanel(null);
+                        }}
+                      />
+                    </TabsContent>
+                  </Tabs>
+                )}
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* Token Context Menu */}
+        {contextMenu && (() => {
+          const token = visibleTokens.find((t) => t.id === contextMenu.tokenId);
+          if (!token) return null;
+          return (
+            <>
+              <div className="fixed inset-0 z-[99]" onClick={() => setContextMenu(null)} />
+              <div className="vtt-context-menu" style={{ left: contextMenu.x, top: contextMenu.y }}>
+                <button onClick={() => { setActiveTokenId(token.id); setContextMenu(null); }}>✎ Select</button>
+                {isGM && <button onClick={() => { updateToken(token.id, { locked: !token.locked }); setContextMenu(null); }}>{token.locked ? '🔓 Unlock' : '🔒 Lock'}</button>}
+                {isGM && <button onClick={() => { updateToken(token.id, { visible: !token.visible }); setContextMenu(null); }}>{token.visible ? '👁 Hide' : '👁 Show'}</button>}
+                {token.characterId && <button onClick={() => { window.open(`/characters/${token.characterId}`, '_blank'); setContextMenu(null); }}>📋 Open Sheet</button>}
+                <div className="ctx-separator" />
+                {isGM && <button className="ctx-danger" onClick={() => { removeToken(token.id); setContextMenu(null); }}>✕ Delete</button>}
+              </div>
+            </>
+          );
+        })()}
+
+        {/* Handout Share Popup Overlay */}
+        {vttRealtime.sharedHandout && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={vttRealtime.dismissHandout}>
+            <div className="bg-background border-2 border-primary rounded-lg shadow-2xl max-w-lg w-full mx-4 p-6" onClick={(e) => e.stopPropagation()}>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-arise text-lg font-bold gradient-text-shadow">{vttRealtime.sharedHandout.title}</h3>
+                <button onClick={vttRealtime.dismissHandout} className="text-muted-foreground hover:text-foreground text-lg">&times;</button>
+              </div>
+              {vttRealtime.sharedHandout.imageUrl && (
+                <div className="mb-4 rounded-lg overflow-hidden border border-border">
+                  <OptimizedImage
+                    src={vttRealtime.sharedHandout.imageUrl}
+                    alt={vttRealtime.sharedHandout.title}
+                    className="w-full max-h-[400px] object-contain"
+                    size="large"
+                  />
+                </div>
+              )}
+              {vttRealtime.sharedHandout.content && (
+                <div className="text-sm text-muted-foreground whitespace-pre-wrap max-h-48 overflow-y-auto">
+                  {vttRealtime.sharedHandout.content}
+                </div>
+              )}
+              <div className="mt-3 text-xs text-muted-foreground text-right">
+                Shared by {vttRealtime.sharedHandout.sharedBy}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </Layout>
   );

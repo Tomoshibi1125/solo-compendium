@@ -641,45 +641,45 @@ export const paths: Path[] = [
     source: 'System Ascendant Canon'
   },
   {
-    id: 'contractor--monarch-pact',
-    name: 'Path of the Monarch Pact',
+    id: 'contractor--gate-construct',
+    name: 'Path of the Gate Construct',
     jobId: 'technomancer',
     jobName: 'Technomancer',
     tier: 2,
-    pathType: 'monarch-summoning',
+    pathType: 'gate-summoning',
     requirements: {
       level: 5,
-      abilities: ['Monarch summoning', 'Pact magic'],
+      abilities: ['Gate construct summoning', 'Pact magic'],
       skills: ['Arcana', 'History', 'Religion'],
-      prerequisites: ['Must have mastered monarch fragment summoning']
+      prerequisites: ['Must have mastered gate construct summoning']
     },
-    description: 'Master the art of summoning and controlling monarch fragments.',
+    description: 'Master the art of summoning and controlling extradimensional gate constructs.',
     features: [
       {
-        name: 'Monarch Fragment',
-        description: 'Summon fragments of powerful monarchs.',
+        name: 'Gate Fragment',
+        description: 'Summon fragments of powerful gate constructs.',
         level: 7
       },
       {
-        name: 'Monarch\'s Wrath',
-        description: 'Channel the power of summoned monarchs.',
+        name: 'Construct\'s Wrath',
+        description: 'Channel the power of summoned gate constructs.',
         level: 9
       },
       {
         name: 'Fragment Merge',
-        description: 'Merge monarch fragments for greater power.',
+        description: 'Merge gate construct fragments for greater power.',
         level: 11
       },
       {
-        name: 'Monarch\'s Embrace',
-        description: 'Gain the full power of monarchs.',
+        name: 'Construct\'s Embrace',
+        description: 'Gain the full power of gate constructs.',
         level: 13
       }
     ],
     abilities: [
       {
-        name: 'Summon Fragment',
-        description: 'Summon a monarch fragment.',
+        name: 'Summon Construct',
+        description: 'Summon a gate construct fragment.',
         cooldown: 3,
         cost: 'Action'
       }

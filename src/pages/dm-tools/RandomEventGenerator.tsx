@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, RefreshCw, Copy, Sparkles, AlertTriangle } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { formatMonarchVernacular } from '@/lib/vernacular';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useUserToolState } from '@/hooks/useToolState';
 
 const WORLD_EVENTS = [
   'Rift Surge: Multiple Rifts appear simultaneously in an area',
@@ -97,8 +99,44 @@ function generateEvent(type: 'world' | 'encounter' | 'complication'): GeneratedE
 const RandomEventGenerator = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [eventType, setEventType] = useState<'world' | 'encounter' | 'complication'>('world');
+  const { state: storedState, isLoading, saveNow } = useUserToolState<{
+    eventType: GeneratedEvent['type'];
+    event: GeneratedEvent | null;
+  }>('random_event_generator', {
+    initialState: {
+      eventType: 'world',
+      event: null,
+    },
+    storageKey: 'solo-compendium.dm-tools.random-event-generator.v1',
+  });
+
+  const [eventType, setEventType] = useState<GeneratedEvent['type']>('world');
   const [event, setEvent] = useState<GeneratedEvent | null>(null);
+
+  const hydrated = useMemo(() => {
+    return {
+      eventType: storedState.eventType ?? 'world',
+      event: storedState.event ?? null,
+    };
+  }, [storedState.event, storedState.eventType]);
+
+  const hydratedRef = useRef(false);
+  useEffect(() => {
+    if (isLoading) return;
+    if (hydratedRef.current) return;
+    setEventType(hydrated.eventType);
+    setEvent(hydrated.event);
+    hydratedRef.current = true;
+  }, [hydrated.event, hydrated.eventType, isLoading]);
+
+  const savePayload = useMemo(() => ({ eventType, event }), [event, eventType]);
+  const debouncedPayload = useDebounce(savePayload, 350);
+
+  useEffect(() => {
+    if (isLoading) return;
+    if (!hydratedRef.current) return;
+    void saveNow(debouncedPayload);
+  }, [debouncedPayload, isLoading, saveNow]);
 
   const handleGenerate = () => {
     const result = generateEvent(eventType);

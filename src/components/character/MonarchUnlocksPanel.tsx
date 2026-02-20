@@ -63,26 +63,26 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
   const { data: characterCampaign } = useCampaignByCharacterId(characterId);
   const campaignId = characterCampaign?.id ?? null;
 
-  // Fetch all monarchs
-  const { data: allMonarchs = [] } = useQuery({
-    queryKey: ['all-monarchs', characterId, campaignId],
+  // Fetch all regents
+  const { data: allRegents = [] } = useQuery({
+    queryKey: ['all-regents', characterId, campaignId],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('compendium_monarchs')
+        .from('compendium_regents' as any)
         .select('id, name, title, theme, source_book')
         .order('name');
       if (error) throw error;
 
       return filterRowsBySourcebookAccess(
         data || [],
-        (monarch) => monarch.source_book,
+        (regent) => (regent as any).source_book,
         { campaignId }
       );
     },
   });
 
-  const unlockedIds = new Set(unlocks.map(u => u.monarch_id));
-  const lockedMonarchs = allMonarchs.filter(m => !unlockedIds.has(m.id));
+  const unlockedIds = new Set(unlocks.map((u: any) => u.regent_id));
+  const lockedRegents = allRegents.filter((r: any) => !unlockedIds.has(r.id));
   const canUnlockSovereign = unlocks.length >= 2;
 
   const handleUnlock = () => {
@@ -91,7 +91,7 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
     unlockMonarch.mutate(
       {
         characterId,
-        monarchId: selectedMonarchId,
+        regentId: selectedMonarchId,
         questName: questName.trim(),
         dmNotes: dmNotes.trim() || undefined,
         isPrimary: unlocks.length === 0,
@@ -139,12 +139,12 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
             
             <div className="space-y-3">
               {unlocks.map((unlock, index) => {
-                const monarch = unlock.monarch;
-                if (!monarch) return null;
+                const regent = (unlock as any).regent;
+                if (!regent) return null;
                 
-                const themeStyle = themeColors[monarch.theme] || themeColors['Shadow'];
-                const icon = themeIcons[monarch.theme] || <Crown className="h-4 w-4" />;
-                const displayTitle = formatMonarchVernacular(monarch.title || monarch.name);
+                const themeStyle = themeColors[regent.theme] || themeColors['Shadow'];
+                const icon = themeIcons[regent.theme] || <Crown className="h-4 w-4" />;
+                const displayTitle = formatMonarchVernacular(regent.title || regent.name);
                 
                 return (
                   <div
@@ -156,7 +156,6 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
                       unlock.is_primary && themeStyle.glow,
                       index < 2 && "animate-arise"
                     )}
-                    style={{ animationDelay: `${index * 0.15}s` }}
                   >
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-3">
@@ -176,7 +175,7 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
                             )}
                           </div>
                           <Badge variant="outline" className={cn("text-xs mt-1", themeStyle.text, themeStyle.border)}>
-                            {monarch.theme} Theme
+                            {regent.theme} Theme
                           </Badge>
                         </div>
                       </div>
@@ -237,8 +236,8 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
           </div>
         )}
 
-        {/* Unlock New Monarch */}
-        {lockedMonarchs.length > 0 && (
+        {/* Unlock New Regent */}
+        {lockedRegents.length > 0 && (
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
               <Button 
@@ -259,26 +258,15 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
                 <div className="space-y-2">
                   <Label className="font-heading">Select {MONARCH_LABEL}</Label>
                   <Select value={selectedMonarchId} onValueChange={setSelectedMonarchId}>
-                    <SelectTrigger className="bg-background">
+                    <SelectTrigger className="border-monarch-gold/40">
                       <SelectValue placeholder={`Choose a ${MONARCH_LABEL}...`} />
                     </SelectTrigger>
                     <SelectContent>
-                      <ScrollArea className="max-h-60">
-                        {lockedMonarchs.map((monarch) => {
-                          const themeStyle = themeColors[monarch.theme] || themeColors['Shadow'];
-                          const displayTitle = formatMonarchVernacular(monarch.title || monarch.name);
-                          return (
-                            <SelectItem key={monarch.id} value={monarch.id}>
-                              <div className="flex items-center gap-2">
-                                <span className="font-heading">{displayTitle}</span>
-                                <Badge variant="outline" className={cn("text-xs", themeStyle.text, themeStyle.border)}>
-                                  {monarch.theme}
-                                </Badge>
-                              </div>
-                            </SelectItem>
-                          );
-                        })}
-                      </ScrollArea>
+                      {lockedRegents.map((regent: any) => (
+                        <SelectItem key={regent.id} value={regent.id}>
+                          {formatMonarchVernacular(regent.title || regent.name)} ({regent.theme})
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>

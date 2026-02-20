@@ -34,8 +34,6 @@ export class DiceRollerPage {
     const rollEntry = this.page.locator('text=1d20').first();
     await expect(rollEntry).toBeVisible({ timeout: 10_000 });
   }
-<<<<<<< Updated upstream
-=======
 
   /** Select a dice type by clicking the corresponding button. */
   async selectDiceType(diceLabel: string) {
@@ -170,5 +168,4 @@ export class DiceRollerPage {
       await this.page.waitForTimeout(200);
     }
   }
->>>>>>> Stashed changes
 }

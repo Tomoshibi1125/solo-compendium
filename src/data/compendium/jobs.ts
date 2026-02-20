@@ -19,13 +19,13 @@ export interface Job {
   armorProficiencies: string[];
   weaponProficiencies: string[];
   toolProficiencies: string[];
-  // System Ascendant Awakening Features (serves as racial bonuses)
+  // System Ascendant Awakening Features (job-linked progression)
   awakeningFeatures: {
     name: string;
     description: string;
     level: number;
   }[];
-  racialTraits: {
+  jobTraits: {
     name: string;
     description: string;
     type: 'passive' | 'active' | 'resistance' | 'immunity' | 'bonus';
@@ -48,6 +48,18 @@ export interface Job {
   damageResistances?: string[];
   damageImmunities?: string[];
   conditionImmunities?: string[];
+  // DDB-parity fields
+  startingEquipment?: string[][];
+  hitPointsAtFirstLevel?: string;
+  hitPointsAtHigherLevels?: string;
+  multiclassPrerequisites?: string;
+  spellcasting?: {
+    ability: string;
+    focus?: string;
+    cantripsKnown?: number[];
+    spellsKnown?: number[];
+    spellSlots?: Record<string, number[]>;
+  };
   // Legacy properties for backward compatibility
   abilities: string[];
   stats: {
@@ -78,7 +90,7 @@ export const jobs = [
     "armorProficiencies": ["All armor", "shields"],
     "weaponProficiencies": ["Simple weapons", "martial weapons"],
     "toolProficiencies": ["One type of artisan's tools"],
-    // System Ascendant Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (job-linked progression)
     "awakeningFeatures": [
       {
         "name": "Battlefield Instinct",
@@ -88,20 +100,20 @@ export const jobs = [
       {
         "name": "Enhanced Physique",
         "description": "Your physical conditioning improves, granting you enhanced strength and the ability to push through pain.",
-        "level": 1
+        "level": 3
       },
       {
         "name": "Combat Focus",
         "description": "You can concentrate intensely in combat, gaining advantage on your first attack roll each round.",
-        "level": 1
+        "level": 7
       },
       {
         "name": "Leadership Presence",
         "description": "Your confidence inspires allies and intimidates foes, granting you advantage on Persuasion and Intimidation checks.",
-        "level": 1
+        "level": 11
       }
     ],
-    "racialTraits": [
+    "jobTraits": [
       {
         "name": "Combat Awareness",
         "description": "You have advantage on initiative rolls and can't be surprised while conscious.",
@@ -137,6 +149,15 @@ export const jobs = [
     "damageResistances": ["bludgeoning", "piercing", "slashing"],
     "damageImmunities": [],
     "conditionImmunities": [],
+    "startingEquipment": [
+      ["Chain mail", "Leather armor and a longbow with 20 arrows"],
+      ["A martial weapon and a shield", "Two martial weapons"],
+      ["A light crossbow and 20 bolts", "Two handaxes"],
+      ["A dungeoneer's pack", "An explorer's pack"]
+    ],
+    "hitPointsAtFirstLevel": "10 + your Constitution modifier",
+    "hitPointsAtHigherLevels": "1d10 (or 6) + your Constitution modifier per level after 1st",
+    "multiclassPrerequisites": "Strength 13 or Dexterity 13",
     // Legacy properties for backward compatibility
     "abilities": [
       "Fighting Style",
@@ -173,7 +194,7 @@ export const jobs = [
     "armorProficiencies": [],
     "weaponProficiencies": ["Daggers", "darts", "slings", "quarterstaffs", "light crossbows"],
     "toolProficiencies": [],
-    // System Ascendant Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (job-linked progression)
     "awakeningFeatures": [
       {
         "name": "Arcane Insight",
@@ -183,20 +204,20 @@ export const jobs = [
       {
         "name": "Essence Channeling",
         "description": "Your body becomes attuned to magical energy, allowing you to cast spells without material components.",
-        "level": 1
+        "level": 3
       },
       {
         "name": "Magical Awareness",
         "description": "You can sense the presence of magic and identify spell schools by their energy signatures.",
-        "level": 1
+        "level": 7
       },
       {
         "name": "Spell Mastery",
         "description": "You gain the ability to cast certain spells without using spell slots.",
-        "level": 1
+        "level": 11
       }
     ],
-    "racialTraits": [
+    "jobTraits": [
       {
         "name": "Spell Intuition",
         "description": "You automatically know when someone is casting a spell and what school of magic it belongs to.",
@@ -232,6 +253,31 @@ export const jobs = [
     "damageResistances": ["force", "psychic"],
     "damageImmunities": [],
     "conditionImmunities": ["charmed"],
+    "startingEquipment": [
+      ["A quarterstaff", "A dagger"],
+      ["A component pouch", "An arcane focus"],
+      ["A scholar's pack", "An explorer's pack"],
+      ["A spellbook"]
+    ],
+    "hitPointsAtFirstLevel": "6 + your Constitution modifier",
+    "hitPointsAtHigherLevels": "1d6 (or 4) + your Constitution modifier per level after 1st",
+    "multiclassPrerequisites": "Intelligence 13",
+    "spellcasting": {
+      "ability": "Intelligence",
+      "focus": "Arcane focus or spellbook",
+      "cantripsKnown": [3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+      "spellSlots": {
+        "1st": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "2nd": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "3rd": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "4th": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "5th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3],
+        "6th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2],
+        "7th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2],
+        "8th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+        "9th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1]
+      }
+    },
     // Legacy properties for backward compatibility
     "abilities": [
       "Arcane Recovery",
@@ -268,7 +314,7 @@ export const jobs = [
     "armorProficiencies": ["Light armor"],
     "weaponProficiencies": ["Simple weapons", "hand crossbows", "longswords", "rapiers", "shortswords"],
     "toolProficiencies": ["Thieves' tools"],
-    // System Ascendant Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (job-linked progression)
     "awakeningFeatures": [
       {
         "name": "Shadow Affinity",
@@ -278,20 +324,20 @@ export const jobs = [
       {
         "name": "Silent Movement",
         "description": "Your movements become unnaturally quiet and your presence fades from casual observation.",
-        "level": 1
+        "level": 3
       },
       {
         "name": "Shadow Step",
         "description": "You learn to step between shadows, teleporting short distances between areas of dim light.",
-        "level": 1
+        "level": 7
       },
       {
         "name": "Shadow Mastery",
         "description": "You gain the ability to manipulate shadows and create areas of magical darkness.",
-        "level": 1
+        "level": 11
       }
     ],
-    "racialTraits": [
+    "jobTraits": [
       {
         "name": "Shadow Camouflage",
         "description": "You have advantage on Stealth checks in dim light or darkness.",
@@ -327,6 +373,15 @@ export const jobs = [
     "damageResistances": ["necrotic", "poison"],
     "damageImmunities": [],
     "conditionImmunities": [],
+    "startingEquipment": [
+      ["A rapier", "A shortsword"],
+      ["A shortbow and quiver of 20 arrows", "A shortsword"],
+      ["A burglar's pack", "A dungeoneer's pack", "An explorer's pack"],
+      ["Leather armor, two daggers, and thieves' tools"]
+    ],
+    "hitPointsAtFirstLevel": "8 + your Constitution modifier",
+    "hitPointsAtHigherLevels": "1d8 (or 5) + your Constitution modifier per level after 1st",
+    "multiclassPrerequisites": "Dexterity 13",
     // Legacy properties for backward compatibility
     "abilities": [
       "Sneak Attack",
@@ -363,7 +418,7 @@ export const jobs = [
     "armorProficiencies": ["Light armor", "medium armor", "shields"],
     "weaponProficiencies": ["Simple weapons"],
     "toolProficiencies": ["Herbalism kit"],
-    // System Ascendant Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (job-linked progression)
     "awakeningFeatures": [
       {
         "name": "Divine Touch",
@@ -373,20 +428,20 @@ export const jobs = [
       {
         "name": "Life Essence",
         "description": "Your presence promotes healing, allowing you to stabilize the wounded and cure minor ailments.",
-        "level": 1
+        "level": 3
       },
       {
         "name": "Divine Protection",
         "description": "Your essence resonates with protective energy, allowing you to shield allies from harm.",
-        "level": 1
+        "level": 7
       },
       {
         "name": "Healing Focus",
         "description": "You gain the ability to enhance your healing spells and restore life to the recently deceased.",
-        "level": 1
+        "level": 11
       }
     ],
-    "racialTraits": [
+    "jobTraits": [
       {
         "name": "Life Aura",
         "description": "Allies within 10 feet have advantage on saving throws against disease and poison.",
@@ -422,6 +477,32 @@ export const jobs = [
     "damageResistances": ["radiant"],
     "damageImmunities": ["poison"],
     "conditionImmunities": ["diseased"],
+    "startingEquipment": [
+      ["A mace", "A warhammer (if proficient)"],
+      ["Scale mail", "Leather armor", "Chain mail (if proficient)"],
+      ["A light crossbow and 20 bolts", "Any simple weapon"],
+      ["A priest's pack", "An explorer's pack"],
+      ["A shield and a holy symbol"]
+    ],
+    "hitPointsAtFirstLevel": "8 + your Constitution modifier",
+    "hitPointsAtHigherLevels": "1d8 (or 5) + your Constitution modifier per level after 1st",
+    "multiclassPrerequisites": "Wisdom 13",
+    "spellcasting": {
+      "ability": "Wisdom",
+      "focus": "Holy symbol",
+      "cantripsKnown": [3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+      "spellSlots": {
+        "1st": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "2nd": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "3rd": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "4th": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "5th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3],
+        "6th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2],
+        "7th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2],
+        "8th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+        "9th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1]
+      }
+    },
     // Legacy properties for backward compatibility
     "abilities": [
       "Divine Domain",
@@ -457,7 +538,7 @@ export const jobs = [
     "armorProficiencies": ["Light armor", "medium armor", "shields"],
     "weaponProficiencies": ["Simple weapons", "martial weapons"],
     "toolProficiencies": [],
-    // System Ascendant Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (job-linked progression)
     "awakeningFeatures": [
       {
         "name": "Nature's Bond",
@@ -467,20 +548,20 @@ export const jobs = [
       {
         "name": "Wilderness Instinct",
         "description": "Your senses sharpen to track prey and navigate any terrain with supernatural accuracy.",
-        "level": 1
+        "level": 3
       },
       {
         "name": "Beast Affinity",
         "description": "You gain the ability to befriend and command animals, making them loyal companions.",
-        "level": 1
+        "level": 7
       },
       {
         "name": "Ascendant's Focus",
         "description": "Your mind attunes to hunting patterns, allowing you to predict prey movements and find weaknesses.",
-        "level": 1
+        "level": 11
       }
     ],
-    "racialTraits": [
+    "jobTraits": [
       {
         "name": "Natural Camouflage",
         "description": "You have advantage on Stealth checks in natural environments.",
@@ -515,6 +596,27 @@ export const jobs = [
     "damageResistances": ["poison"],
     "damageImmunities": [],
     "conditionImmunities": [],
+    "startingEquipment": [
+      ["Scale mail", "Leather armor"],
+      ["Two shortswords", "Two simple melee weapons"],
+      ["A dungeoneer's pack", "An explorer's pack"],
+      ["A longbow and a quiver of 20 arrows"]
+    ],
+    "hitPointsAtFirstLevel": "10 + your Constitution modifier",
+    "hitPointsAtHigherLevels": "1d10 (or 6) + your Constitution modifier per level after 1st",
+    "multiclassPrerequisites": "Dexterity 13 and Wisdom 13",
+    "spellcasting": {
+      "ability": "Wisdom",
+      "focus": "None (material components)",
+      "spellsKnown": [0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11],
+      "spellSlots": {
+        "1st": [0, 2, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "2nd": [0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "3rd": [0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "4th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 3, 3],
+        "5th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2]
+      }
+    },
     // Legacy properties for backward compatibility
     "abilities": [
       "Favored Enemy",
@@ -551,7 +653,7 @@ export const jobs = [
     "armorProficiencies": ["Light armor", "medium armor", "shields"],
     "weaponProficiencies": ["Simple weapons", "martial weapons"],
     "toolProficiencies": [],
-    // System Ascendant Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (job-linked progression)
     "awakeningFeatures": [
       {
         "name": "Primal Fury",
@@ -561,20 +663,20 @@ export const jobs = [
       {
         "name": "Rage Blood",
         "description": "Your blood runs hot with fury, allowing you to ignore pain and fight through injuries.",
-        "level": 1
+        "level": 3
       },
       {
         "name": "Battle Fury",
         "description": "Your mind enters a battle trance where you can track multiple enemies and strike with deadly precision.",
-        "level": 1
+        "level": 7
       },
       {
         "name": "Fury Ascension",
         "description": "You gain the ability to channel your rage into devastating attacks that can break through defenses.",
-        "level": 1
+        "level": 11
       }
     ],
-    "racialTraits": [
+    "jobTraits": [
       {
         "name": "Rage Resilience",
         "description": "While raging, you have resistance to bludgeoning, piercing, and slashing damage.",
@@ -610,6 +712,14 @@ export const jobs = [
     "damageResistances": ["cold"],
     "damageImmunities": [],
     "conditionImmunities": ["frightened"],
+    "startingEquipment": [
+      ["A greataxe", "Any martial melee weapon"],
+      ["Two handaxes", "Any simple weapon"],
+      ["An explorer's pack and four javelins"]
+    ],
+    "hitPointsAtFirstLevel": "12 + your Constitution modifier",
+    "hitPointsAtHigherLevels": "1d12 (or 7) + your Constitution modifier per level after 1st",
+    "multiclassPrerequisites": "Strength 13",
     // Legacy properties for backward compatibility
     "abilities": [
       "Rage",
@@ -646,7 +756,7 @@ export const jobs = [
     "armorProficiencies": ["All armor", "shields"],
     "weaponProficiencies": ["Simple weapons", "martial weapons"],
     "toolProficiencies": [],
-    // System Ascendant Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (job-linked progression)
     "awakeningFeatures": [
       {
         "name": "Iron Will",
@@ -656,20 +766,20 @@ export const jobs = [
       {
         "name": "Stonelike Body",
         "description": "Your body toughens, granting you enhanced durability and the ability to absorb damage.",
-        "level": 1
+        "level": 3
       },
       {
         "name": "Protective Instinct",
         "description": "Your senses attune to threats against allies, allowing you to intercept attacks and shield others.",
-        "level": 1
+        "level": 7
       },
       {
         "name": "Shield Mastery",
         "description": "You gain the ability to create protective barriers and absorb damage meant for others.",
-        "level": 1
+        "level": 11
       }
     ],
-    "racialTraits": [
+    "jobTraits": [
       {
         "name": "Damage Absorption",
         "description": "When you take damage, you can reduce the damage by your Constitution modifier.",
@@ -705,6 +815,15 @@ export const jobs = [
     "damageResistances": ["bludgeoning", "piercing", "slashing"],
     "damageImmunities": [],
     "conditionImmunities": ["charmed", "frightened"],
+    "startingEquipment": [
+      ["Chain mail", "Scale mail and a shield"],
+      ["A martial weapon and a shield", "Two martial weapons"],
+      ["A light crossbow and 20 bolts", "Two handaxes"],
+      ["A dungeoneer's pack", "An explorer's pack"]
+    ],
+    "hitPointsAtFirstLevel": "10 + your Constitution modifier",
+    "hitPointsAtHigherLevels": "1d10 (or 6) + your Constitution modifier per level after 1st",
+    "multiclassPrerequisites": "Constitution 13",
     // Legacy properties for backward compatibility
     "abilities": [
       "Fighting Style",
@@ -741,7 +860,7 @@ export const jobs = [
     "armorProficiencies": ["Light armor"],
     "weaponProficiencies": ["Simple weapons", "hand crossbows", "longswords", "rapiers", "shortswords"],
     "toolProficiencies": ["One type of musical instrument"],
-    // System Ascendant Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (job-linked progression)
     "awakeningFeatures": [
       {
         "name": "Beast Bond",
@@ -751,20 +870,20 @@ export const jobs = [
       {
         "name": "Essence Resonance",
         "description": "Your body attunes to magical creature essences, allowing you to call them temporarily to your aid.",
-        "level": 1
+        "level": 3
       },
       {
         "name": "Creature Empathy",
         "description": "You can sense the emotions and intentions of magical creatures, understanding their needs and desires.",
-        "level": 1
+        "level": 7
       },
       {
         "name": "Performance Magic",
         "description": "Your performances can manifest magical effects, creating temporary illusions and enchantments.",
-        "level": 1
+        "level": 11
       }
     ],
-    "racialTraits": [
+    "jobTraits": [
       {
         "name": "Beast Friendship",
         "description": "Magical beasts are naturally friendly toward you and will not attack unless provoked.",
@@ -801,14 +920,40 @@ export const jobs = [
     "damageResistances": ["psychic"],
     "damageImmunities": [],
     "conditionImmunities": [],
+    "startingEquipment": [
+      ["A rapier", "A longsword", "Any simple weapon"],
+      ["A diplomat's pack", "An entertainer's pack"],
+      ["A lute", "Any other musical instrument"],
+      ["Leather armor and a dagger"]
+    ],
+    "hitPointsAtFirstLevel": "8 + your Constitution modifier",
+    "hitPointsAtHigherLevels": "1d8 (or 5) + your Constitution modifier per level after 1st",
+    "multiclassPrerequisites": "Charisma 13",
+    "spellcasting": {
+      "ability": "Charisma",
+      "focus": "Musical instrument",
+      "cantripsKnown": [2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+      "spellsKnown": [4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 15, 16, 18, 19, 19, 20, 22, 22, 22],
+      "spellSlots": {
+        "1st": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "2nd": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "3rd": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "4th": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "5th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3],
+        "6th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2],
+        "7th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2],
+        "8th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+        "9th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1]
+      }
+    },
     // Legacy properties for backward compatibility
     "abilities": [
       "Bardic Inspiration",
       "Jack of All Trades",
       "Song of Rest",
       "Expertise",
-      "Font of Inspiration",
-      "Bard College"
+      "Countercharm",
+      "Magical Secrets"
     ],
     "image": "/generated/compendium/jobs/summoner.webp",
     "stats": {
@@ -837,7 +982,7 @@ export const jobs = [
     "armorProficiencies": ["All armor", "shields"],
     "weaponProficiencies": ["Simple weapons", "martial weapons"],
     "toolProficiencies": [],
-    // System Ascendant Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (job-linked progression)
     "awakeningFeatures": [
       {
         "name": "Divine Blessing",
@@ -847,20 +992,20 @@ export const jobs = [
       {
         "name": "Sacred Aura",
         "description": "Your presence radiates divine energy that protects allies and harms evil creatures.",
-        "level": 1
+        "level": 3
       },
       {
         "name": "Holy Weapon",
         "description": "Your weapons become conduits for divine power, dealing extra damage to evil creatures.",
-        "level": 1
+        "level": 7
       },
       {
         "name": "Divine Oath",
         "description": "You swear an oath to protect the innocent, gaining supernatural abilities to enforce your vows.",
-        "level": 1
+        "level": 11
       }
     ],
-    "racialTraits": [
+    "jobTraits": [
       {
         "name": "Divine Protection",
         "description": "You and allies within 10 feet have advantage on saving throws against fear.",
@@ -896,6 +1041,26 @@ export const jobs = [
     "damageResistances": ["radiant"],
     "damageImmunities": [],
     "conditionImmunities": ["frightened"],
+    "startingEquipment": [
+      ["A martial weapon and a shield", "Two martial weapons"],
+      ["Five javelins", "Any simple melee weapon"],
+      ["A priest's pack", "An explorer's pack"],
+      ["Chain mail and a holy symbol"]
+    ],
+    "hitPointsAtFirstLevel": "10 + your Constitution modifier",
+    "hitPointsAtHigherLevels": "1d10 (or 6) + your Constitution modifier per level after 1st",
+    "multiclassPrerequisites": "Strength 13 and Charisma 13",
+    "spellcasting": {
+      "ability": "Charisma",
+      "focus": "Holy symbol",
+      "spellSlots": {
+        "1st": [0, 2, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "2nd": [0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "3rd": [0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "4th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 3, 3],
+        "5th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2]
+      }
+    },
     // Legacy properties for backward compatibility
     "abilities": [
       "Divine Sense",
@@ -932,7 +1097,7 @@ export const jobs = [
     "armorProficiencies": ["Light armor", "medium armor", "shields"],
     "weaponProficiencies": ["Simple weapons"],
     "toolProficiencies": ["Tinker's tools", "One type of artisan's tools"],
-    // System Ascendant Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (job-linked progression)
     "awakeningFeatures": [
       {
         "name": "Tech Affinity",
@@ -942,20 +1107,20 @@ export const jobs = [
       {
         "name": "Arcane Infusion",
         "description": "Your body can channel magical energy into technology, enhancing its capabilities.",
-        "level": 1
+        "level": 3
       },
       {
         "name": "Device Mastery",
         "description": "You gain intuitive understanding of complex mechanisms and can repair or create advanced devices.",
-        "level": 1
+        "level": 7
       },
       {
         "name": "Tech Evolution",
         "description": "You can rapidly upgrade and evolve technological items with magical enhancements.",
-        "level": 1
+        "level": 11
       }
     ],
-    "racialTraits": [
+    "jobTraits": [
       {
         "name": "Technical Intuition",
         "description": "You have advantage on Intelligence checks related to technology and devices.",
@@ -991,6 +1156,27 @@ export const jobs = [
     "damageResistances": ["lightning", "thunder"],
     "damageImmunities": [],
     "conditionImmunities": [],
+    "startingEquipment": [
+      ["Any two simple weapons"],
+      ["A light crossbow and 20 bolts"],
+      ["Studded leather armor", "Scale mail"],
+      ["Thieves' tools and a dungeoneer's pack"]
+    ],
+    "hitPointsAtFirstLevel": "8 + your Constitution modifier",
+    "hitPointsAtHigherLevels": "1d8 (or 5) + your Constitution modifier per level after 1st",
+    "multiclassPrerequisites": "Intelligence 13",
+    "spellcasting": {
+      "ability": "Intelligence",
+      "focus": "Tinker's tools or infused item",
+      "cantripsKnown": [2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4],
+      "spellSlots": {
+        "1st": [2, 2, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "2nd": [0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "3rd": [0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "4th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 3, 3],
+        "5th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2]
+      }
+    },
     // Legacy properties for backward compatibility
     "abilities": [
       "Magical Tinkering",
@@ -1026,7 +1212,7 @@ export const jobs = [
     "armorProficiencies": ["Light armor"],
     "weaponProficiencies": ["Simple weapons"],
     "toolProficiencies": [],
-    // System Ascendant Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (job-linked progression)
     "awakeningFeatures": [
       {
         "name": "Pact Binding",
@@ -1036,20 +1222,20 @@ export const jobs = [
       {
         "name": "Essence Channeling",
         "description": "Your body becomes a conduit for otherworldly energy, granting you enhanced magical abilities.",
-        "level": 1
+        "level": 3
       },
       {
         "name": "Contract Magic",
         "description": "You gain the ability to cast spells through supernatural pacts with powerful beings.",
-        "level": 1
+        "level": 7
       },
       {
         "name": "Pact Mastery",
         "description": "Your understanding of supernatural contracts allows you to manipulate and enhance your pact abilities.",
-        "level": 1
+        "level": 11
       }
     ],
-    "racialTraits": [
+    "jobTraits": [
       {
         "name": "Pact Resistance",
         "description": "You have resistance to necrotic and psychic damage from otherworldly sources.",
@@ -1085,6 +1271,24 @@ export const jobs = [
     "damageResistances": ["psychic"],
     "damageImmunities": [],
     "conditionImmunities": ["charmed"],
+    "startingEquipment": [
+      ["A light crossbow and 20 bolts", "Any simple weapon"],
+      ["A component pouch", "An arcane focus"],
+      ["A scholar's pack", "A dungeoneer's pack"],
+      ["Leather armor, any simple weapon, and two daggers"]
+    ],
+    "hitPointsAtFirstLevel": "8 + your Constitution modifier",
+    "hitPointsAtHigherLevels": "1d8 (or 5) + your Constitution modifier per level after 1st",
+    "multiclassPrerequisites": "Charisma 13",
+    "spellcasting": {
+      "ability": "Charisma",
+      "focus": "Arcane focus",
+      "cantripsKnown": [2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+      "spellsKnown": [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15],
+      "spellSlots": {
+        "pact": [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4]
+      }
+    },
     // Legacy properties for backward compatibility
     "abilities": [
       "Otherworldly Patron",
@@ -1120,7 +1324,7 @@ export const jobs = [
     "armorProficiencies": [],
     "weaponProficiencies": ["Daggers", "darts", "slings", "quarterstaffs", "light crossbows"],
     "toolProficiencies": [],
-    // System Ascendant Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (job-linked progression)
     "awakeningFeatures": [
       {
         "name": "Death Essence",
@@ -1130,20 +1334,20 @@ export const jobs = [
       {
         "name": "Undead Command",
         "description": "Your mind gains the ability to control undead creatures and command their loyalty.",
-        "level": 1
+        "level": 3
       },
       {
         "name": "Life Manipulation",
         "description": "You can drain life force from creatures and transfer it to yourself or allies.",
-        "level": 1
+        "level": 7
       },
       {
         "name": "Death Resistance",
         "description": "Your body becomes resistant to effects that would harm the living, granting you enhanced survivability.",
-        "level": 1
+        "level": 11
       }
     ],
-    "racialTraits": [
+    "jobTraits": [
       {
         "name": "Undead Affinity",
         "description": "You have advantage on Charisma checks when interacting with undead creatures.",
@@ -1179,6 +1383,31 @@ export const jobs = [
     "damageResistances": ["necrotic", "cold"],
     "damageImmunities": [],
     "conditionImmunities": ["frightened"],
+    "startingEquipment": [
+      ["A quarterstaff", "A dagger"],
+      ["A component pouch", "An arcane focus"],
+      ["A scholar's pack", "An explorer's pack"],
+      ["A spellbook"]
+    ],
+    "hitPointsAtFirstLevel": "6 + your Constitution modifier",
+    "hitPointsAtHigherLevels": "1d6 (or 4) + your Constitution modifier per level after 1st",
+    "multiclassPrerequisites": "Intelligence 13",
+    "spellcasting": {
+      "ability": "Intelligence",
+      "focus": "Arcane focus or spellbook",
+      "cantripsKnown": [3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+      "spellSlots": {
+        "1st": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "2nd": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "3rd": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "4th": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "5th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3],
+        "6th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2],
+        "7th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2],
+        "8th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+        "9th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1]
+      }
+    },
     // Legacy properties for backward compatibility
     "abilities": [
       "Arcane Recovery",
@@ -1215,7 +1444,7 @@ export const jobs = [
     "armorProficiencies": [],
     "weaponProficiencies": ["Simple weapons", "shortswords"],
     "toolProficiencies": ["One type of artisan's tools", "Musical instrument"],
-    // System Ascendant Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (job-linked progression)
     "awakeningFeatures": [
       {
         "name": "Ki Control",
@@ -1225,20 +1454,20 @@ export const jobs = [
       {
         "name": "Combat Focus",
         "description": "Your mind achieves perfect combat awareness, allowing you to react instantly to threats.",
-        "level": 1
+        "level": 3
       },
       {
         "name": "Body Mastery",
         "description": "Your physical form becomes perfectly attuned to combat, granting you enhanced speed and agility.",
-        "level": 1
+        "level": 7
       },
       {
         "name": "Martial Enlightenment",
         "description": "Your spirit aligns with combat perfection, granting you supernatural martial abilities.",
-        "level": 1
+        "level": 11
       }
     ],
-    "racialTraits": [
+    "jobTraits": [
       {
         "name": "Unarmored Movement",
         "description": "You can move at your full speed even when wearing armor.",
@@ -1274,6 +1503,14 @@ export const jobs = [
     "damageResistances": ["force"],
     "damageImmunities": [],
     "conditionImmunities": [],
+    "startingEquipment": [
+      ["A shortsword", "Any simple weapon"],
+      ["A dungeoneer's pack", "An explorer's pack"],
+      ["10 darts"]
+    ],
+    "hitPointsAtFirstLevel": "8 + your Constitution modifier",
+    "hitPointsAtHigherLevels": "1d8 (or 5) + your Constitution modifier per level after 1st",
+    "multiclassPrerequisites": "Dexterity 13 and Wisdom 13",
     // Legacy properties for backward compatibility
     "abilities": [
       "Unarmored Defense",
@@ -1311,7 +1548,7 @@ export const jobs = [
     "armorProficiencies": ["Light armor"],
     "weaponProficiencies": ["Simple weapons", "hand crossbows", "longswords", "rapiers", "shortswords"],
     "toolProficiencies": ["Three types of musical instruments"],
-    // System Ascendant Awakening Features (serves as racial bonuses)
+    // System Ascendant Awakening Features (job-linked progression)
     "awakeningFeatures": [
       {
         "name": "Performance Magic",
@@ -1321,20 +1558,20 @@ export const jobs = [
       {
         "name": "Inspiration Aura",
         "description": "Your presence inspires allies and demoralizes enemies, affecting their combat effectiveness.",
-        "level": 1
+        "level": 3
       },
       {
         "name": "Musical Energy",
         "description": "Your body channels magical energy through music and performance, enhancing your abilities.",
-        "level": 1
+        "level": 7
       },
       {
         "name": "Storytelling Power",
         "description": "Your words and stories can shape reality, creating temporary magical effects.",
-        "level": 1
+        "level": 11
       }
     ],
-    "racialTraits": [
+    "jobTraits": [
       {
         "name": "Bardic Inspiration",
         "description": "You can inspire others with your performance, granting them bonus dice on ability checks.",
@@ -1371,6 +1608,32 @@ export const jobs = [
     "damageResistances": ["psychic"],
     "damageImmunities": [],
     "conditionImmunities": [],
+    "startingEquipment": [
+      ["A rapier", "A longsword", "Any simple weapon"],
+      ["A diplomat's pack", "An entertainer's pack"],
+      ["A lute", "Any other musical instrument"],
+      ["Leather armor and a dagger"]
+    ],
+    "hitPointsAtFirstLevel": "8 + your Constitution modifier",
+    "hitPointsAtHigherLevels": "1d8 (or 5) + your Constitution modifier per level after 1st",
+    "multiclassPrerequisites": "Charisma 13",
+    "spellcasting": {
+      "ability": "Charisma",
+      "focus": "Musical instrument",
+      "cantripsKnown": [2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+      "spellsKnown": [4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 15, 16, 18, 19, 19, 20, 22, 22, 22],
+      "spellSlots": {
+        "1st": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "2nd": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "3rd": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "4th": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "5th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3],
+        "6th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2],
+        "7th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2],
+        "8th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+        "9th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1]
+      }
+    },
     // Legacy properties for backward compatibility
     "abilities": [
       "Bardic Inspiration",

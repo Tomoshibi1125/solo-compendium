@@ -2,18 +2,13 @@
 // Best-in-class free rendering engines, 3D engines, physics engines, and game engines
 
 import * as THREE from 'three';
-import * as BABYLON from '@babylonjs/core';
+import * as BABYLON from 'babylonjs';
 import * as CANNON from 'cannon-es';
-import * as AMMO from 'ammo.js';
-import * as D3 from 'd3';
-import * as P5 from 'p5';
 import * as Phaser from 'phaser';
 import * as Kaboom from 'kaboom';
 import * as PixiJS from 'pixi.js';
 import * as PlayCanvas from 'playcanvas';
-import * as Zephyr3D from 'zephyr3d';
 import * as Two from 'two.js';
-import * as Hilo from 'hilo';
 import * as Box2D from 'box2d-wasm';
 import * as Planck from 'planck-js';
 import * as WebGPUUtils from 'webgpu-utils';
@@ -111,18 +106,6 @@ export class GlobalEngineManager {
       license: 'MIT'
     });
 
-    // BEST DATA VISUALIZATION - D3.js (industry standard)
-    this.engines.set('d3', {
-      name: 'D3.js',
-      type: 'rendering',
-      version: '7.9.0',
-      features: ['Data Visualization', 'SVG', 'DOM Manipulation', 'Animations', 'Transitions'],
-      performance: 'high',
-      learningCurve: 'hard',
-      documentation: 'https://d3js.org/',
-      license: 'BSD'
-    });
-
     // BEST WEBGPU ENGINE - Zephyr3D (modern, WebGPU-first)
     this.engines.set('zephyr3d', {
       name: 'Zephyr3D',
@@ -174,7 +157,7 @@ export class GlobalEngineManager {
     return filtered;
   }
 
-  public async initializeEngine(name: string, config?: Partial<EngineConfig>): Promise<boolean> {
+  public async initializeEngine(name: string): Promise<boolean> {
     const engine = this.engines.get(name);
     if (!engine) {
       console.error(`Engine ${name} not found`);
@@ -209,17 +192,12 @@ export class GlobalEngineManager {
             physics: {
               default: 'arcade',
               arcade: {
-                gravity: { y: 300 },
+                gravity: { x: 0, y: 300 },
                 debug: this.config.debugMode
               }
             }
           });
           this.activeEngines.set(name, { game, Phaser });
-          return true;
-
-        case 'd3':
-          // Initialize D3.js
-          this.activeEngines.set(name, { d3: D3 });
           return true;
 
         default:
@@ -244,23 +222,22 @@ export class GlobalEngineManager {
     switch (useCase) {
       case '3d-graphics':
         // Best for 3D graphics: Babylon.js (easiest) or Three.js (most flexible)
-        return this.engines.get('babylonjs') || this.engines.get('three');
+        return (this.engines.get('babylonjs') ?? this.engines.get('three')) ?? null;
       
       case '2d-game':
         // Best for 2D games: Phaser (most features) or Kaboom (easiest)
-        return this.engines.get('phaser') || this.engines.get('kaboom');
+        return (this.engines.get('phaser') ?? this.engines.get('kaboom')) ?? null;
       
       case 'physics-simulation':
         // Best for physics: Cannon-ES (modern) or Ammo.js (industry standard)
-        return this.engines.get('cannon-es') || this.engines.get('ammo.js');
+        return (this.engines.get('cannon-es') ?? this.engines.get('ammo.js')) ?? null;
       
       case 'data-visualization':
-        // Best for data viz: D3.js (industry standard)
-        return this.engines.get('d3');
+        return null;
       
       case 'webgpu-graphics':
         // Best for WebGPU: Zephyr3D (modern) or Babylon.js (WebGPU support)
-        return this.engines.get('zephyr3d') || this.engines.get('babylonjs');
+        return (this.engines.get('zephyr3d') ?? this.engines.get('babylonjs')) ?? null;
       
       default:
         return null;

@@ -73,28 +73,28 @@ const Characters = () => {
               Awaken and manage your Ascendants in the Prime Architect's domain
             </p>
           </div>
-          <div className="flex gap-2">
-            <Link to="/characters/compare">
-              <Button variant="outline" className="gap-2">
-                <Users className="w-4 h-4" />
-                Compare Ascendants
+            <div className="flex gap-2">
+              <Link to="/characters/compare">
+                <Button variant="outline" className="gap-2">
+                  <Users className="w-4 h-4" />
+                  Compare Ascendants
+                </Button>
+              </Link>
+              <Button
+                variant="outline"
+                className="gap-2"
+                onClick={() => setImportDialogOpen(true)}
+              >
+                <Upload className="w-4 h-4" />
+                Import
               </Button>
-            </Link>
-            <Button
-              variant="outline"
-              className="gap-2"
-              onClick={() => setImportDialogOpen(true)}
-            >
-              <Upload className="w-4 h-4" />
-              Import
-            </Button>
-            <Link to="/characters/new">
-              <Button className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple hover:shadow-arise/30 hover:shadow-lg transition-all">
-                <Plus className="w-4 h-4" />
-                Awaken New Ascendant
-              </Button>
-            </Link>
-          </div>
+              <Link to="/characters/new" data-testid="awaken-new-ascendant">
+                <Button className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple hover:shadow-arise/30 hover:shadow-lg transition-all">
+                  <Plus className="w-4 h-4" />
+                  Awaken New Ascendant
+                </Button>
+              </Link>
+            </div>
 
           <ImportDialog
             open={importDialogOpen}

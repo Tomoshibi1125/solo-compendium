@@ -232,11 +232,10 @@ export function canCastSpell(
   
   return false;
 }
-
 /**
  * Cast spell and consume resources
  */
-export function castSpell(
+export function castUnifiedSpell(
   character: {
     level: number;
     job: string;
@@ -257,7 +256,13 @@ export function castSpell(
     return { success: false };
   }
   
-  const result = {
+  const result: {
+    success: boolean;
+    manaUsed?: number;
+    slotLevelUsed?: number;
+    remainingMana?: number;
+    remainingSlots?: Record<number, number>;
+  } = {
     success: true,
     remainingMana: character.mana,
     remainingSlots: { ...character.spellSlots }

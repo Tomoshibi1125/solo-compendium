@@ -25,7 +25,7 @@ export const useUpdateCharacterAbilities = () => {
 
       const rows = Object.entries(abilities).map(([ability, score]) => ({
         character_id: characterId,
-        ability,
+        ability: ability as AbilityScore,
         score,
       }));
 

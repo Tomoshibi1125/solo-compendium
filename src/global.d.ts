@@ -32,3 +32,10 @@ declare module '*.json' {
   const content: any;
   export default content;
 }
+
+declare module 'react-dom/client' {
+  export function createRoot(container: Element | DocumentFragment): {
+    render(children: any): void;
+    unmount(): void;
+  };
+}

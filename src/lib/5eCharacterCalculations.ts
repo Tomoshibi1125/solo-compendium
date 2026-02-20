@@ -44,21 +44,21 @@ export function calculateCharacterStats(stats: CharacterStats): CalculatedStats 
   // Calculate ability modifiers (standard 5e formula)
   const abilityModifiers: Record<AbilityScore, number> = {
     STR: getAbilityModifier(abilities.STR),
-    DEX: getAbilityModifier(abilities.DEX),
-    CON: getAbilityModifier(abilities.CON),
+    AGI: getAbilityModifier(abilities.AGI),
+    VIT: getAbilityModifier(abilities.VIT),
     INT: getAbilityModifier(abilities.INT),
-    WIS: getAbilityModifier(abilities.WIS),
-    CHA: getAbilityModifier(abilities.CHA),
+    SENSE: getAbilityModifier(abilities.SENSE),
+    PRE: getAbilityModifier(abilities.PRE),
   };
 
   // Calculate saving throws (standard 5e)
   const savingThrows: Record<AbilityScore, number> = {
     STR: abilityModifiers.STR + (savingThrowProficiencies.includes('STR') ? proficiencyBonus : 0),
-    DEX: abilityModifiers.DEX + (savingThrowProficiencies.includes('DEX') ? proficiencyBonus : 0),
-    CON: abilityModifiers.CON + (savingThrowProficiencies.includes('CON') ? proficiencyBonus : 0),
+    AGI: abilityModifiers.AGI + (savingThrowProficiencies.includes('AGI') ? proficiencyBonus : 0),
+    VIT: abilityModifiers.VIT + (savingThrowProficiencies.includes('VIT') ? proficiencyBonus : 0),
     INT: abilityModifiers.INT + (savingThrowProficiencies.includes('INT') ? proficiencyBonus : 0),
-    WIS: abilityModifiers.WIS + (savingThrowProficiencies.includes('WIS') ? proficiencyBonus : 0),
-    CHA: abilityModifiers.CHA + (savingThrowProficiencies.includes('CHA') ? proficiencyBonus : 0),
+    SENSE: abilityModifiers.SENSE + (savingThrowProficiencies.includes('SENSE') ? proficiencyBonus : 0),
+    PRE: abilityModifiers.PRE + (savingThrowProficiencies.includes('PRE') ? proficiencyBonus : 0),
   };
 
   // Calculate skills (standard 5e with System Ascendant skill names)
@@ -67,23 +67,23 @@ export function calculateCharacterStats(stats: CharacterStats): CalculatedStats 
   // Skill to ability mapping (standard 5e)
   const skillAbilities: Record<string, AbilityScore> = {
     'athletics': 'STR',
-    'acrobatics': 'DEX',
-    'sleight-of-hand': 'DEX',
-    'stealth': 'DEX',
+    'acrobatics': 'AGI',
+    'sleight-of-hand': 'AGI',
+    'stealth': 'AGI',
     'arcana': 'INT',
     'history': 'INT',
     'investigation': 'INT',
     'nature': 'INT',
     'religion': 'INT',
-    'animal-handling': 'WIS',
-    'insight': 'WIS',
-    'medicine': 'WIS',
-    'perception': 'WIS',
-    'survival': 'WIS',
-    'deception': 'CHA',
-    'intimidation': 'CHA',
-    'performance': 'CHA',
-    'persuasion': 'CHA',
+    'animal-handling': 'SENSE',
+    'insight': 'SENSE',
+    'medicine': 'SENSE',
+    'perception': 'SENSE',
+    'survival': 'SENSE',
+    'deception': 'PRE',
+    'intimidation': 'PRE',
+    'performance': 'PRE',
+    'persuasion': 'PRE',
   };
 
   Object.entries(skillAbilities).forEach(([skill, ability]) => {
@@ -98,11 +98,11 @@ export function calculateCharacterStats(stats: CharacterStats): CalculatedStats 
     skills[skill] = bonus;
   });
 
-  // Calculate initiative (standard 5e - Dexterity modifier)
-  const initiative = abilityModifiers.DEX;
+  // Calculate initiative (AGI modifier, equivalent to 5e DEX)
+  const initiative = abilityModifiers.AGI;
 
-  // AC calculation (standard 5e base 10 + DEX, can be modified by armor)
-  const baseAC = 10 + abilityModifiers.DEX;
+  // AC calculation (base 10 + AGI, can be modified by armor)
+  const baseAC = 10 + abilityModifiers.AGI;
   const armorClass = stats.armorClass ?? baseAC;
 
   // Speed (standard 5e default 30, can be modified by race/features)
@@ -297,16 +297,17 @@ export function getSpellcastingAbility(job: string | null | undefined): AbilityS
   // Map System Ascendant jobs to standard 5e spellcasting abilities
   const jobAbilityMap: Record<string, AbilityScore> = {
     'Mage': 'INT',
-    'Esper': 'CHA',
+    'Esper': 'PRE',
     'Techsmith': 'INT',
     'Technomancer': 'INT',
     'technomancer': 'INT',
-    'Healer': 'WIS',
-    'Warden': 'WIS',
-    'Ranger': 'WIS',
-    'Herald': 'CHA',
-    'Warrior': 'INT', // Eldritch Knight
-    'Assassin': 'INT', // Arcane Trickster
+    'Healer': 'SENSE',
+    'Warden': 'SENSE',
+    'Ranger': 'SENSE',
+    'Herald': 'PRE',
+    'Holy Knight': 'PRE',
+    'Warrior': 'INT',
+    'Assassin': 'INT',
   };
   
   return jobAbilityMap[job] || null;

@@ -19,11 +19,11 @@ interface Character {
   level: number;
   abilities: {
     STR: number;
-    DEX: number;
-    CON: number;
+    AGI: number;
+    VIT: number;
     INT: number;
-    WIS: number;
-    CHA: number;
+    SENSE: number;
+    PRE: number;
   };
   proficiency_bonus: number;
   armor_class?: number;
@@ -354,8 +354,8 @@ export function checkConcentrationSave(
   damage: number
 ): boolean {
   const dc = Math.max(10, Math.floor(damage / 2));
-  const conSave = getAbilityModifier(character.abilities.CON);
-  const saveRoll = Math.floor(Math.random() * 20) + 1 + conSave;
+  const vitSave = getAbilityModifier(character.abilities.VIT);
+  const saveRoll = Math.floor(Math.random() * 20) + 1 + vitSave;
   
   return saveRoll >= dc;
 }

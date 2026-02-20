@@ -5,7 +5,7 @@ import {
   getSystemFavorMax, 
   getSystemFavorDie,
   normalizeAbility,
-  getSystemAbilityName,
+  getAbilityDisplayName,
   ABILITY_DISPLAY_NAMES,
   DC_LADDER,
   RARITY_LABELS
@@ -56,24 +56,30 @@ describe('5e Rules Engine', () => {
 
   test('Ability normalization', () => {
     expect(normalizeAbility('STR')).toBe('STR');
-    expect(normalizeAbility('AGI')).toBe('DEX');
-    expect(normalizeAbility('VIT')).toBe('CON');
+    expect(normalizeAbility('AGI')).toBe('AGI');
+    expect(normalizeAbility('VIT')).toBe('VIT');
     expect(normalizeAbility('INT')).toBe('INT');
-    expect(normalizeAbility('SENSE')).toBe('WIS');
-    expect(normalizeAbility('PRE')).toBe('CHA');
+    expect(normalizeAbility('SENSE')).toBe('SENSE');
+    expect(normalizeAbility('PRE')).toBe('PRE');
+    
+    // Test legacy 5e normalization
+    expect(normalizeAbility('DEX')).toBe('AGI');
+    expect(normalizeAbility('CON')).toBe('VIT');
+    expect(normalizeAbility('WIS')).toBe('SENSE');
+    expect(normalizeAbility('CHA')).toBe('PRE');
     
     // Test case insensitivity
     expect(normalizeAbility('str')).toBe('STR');
-    expect(normalizeAbility('agi')).toBe('DEX');
+    expect(normalizeAbility('agi')).toBe('AGI');
   });
 
   test('System Ascendant ability display names', () => {
-    expect(getSystemAbilityName('STR')).toBe('Strength (STR)');
-    expect(getSystemAbilityName('DEX')).toBe('Agility (AGI)');
-    expect(getSystemAbilityName('CON')).toBe('Vitality (VIT)');
-    expect(getSystemAbilityName('INT')).toBe('Intelligence (INT)');
-    expect(getSystemAbilityName('WIS')).toBe('Sense (SENSE)');
-    expect(getSystemAbilityName('CHA')).toBe('Presence (PRE)');
+    expect(getAbilityDisplayName('STR')).toBe('Strength');
+    expect(getAbilityDisplayName('AGI')).toBe('Agility');
+    expect(getAbilityDisplayName('VIT')).toBe('Vitality');
+    expect(getAbilityDisplayName('INT')).toBe('Intelligence');
+    expect(getAbilityDisplayName('SENSE')).toBe('Sense');
+    expect(getAbilityDisplayName('PRE')).toBe('Presence');
   });
 
   test('DC ladder structure', () => {
@@ -93,8 +99,8 @@ describe('5e Rules Engine', () => {
   });
 
   test('Ability display names completeness', () => {
-    const abilities = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'] as const;
-    const expectedNames = ['Strength (STR)', 'Agility (AGI)', 'Vitality (VIT)', 'Intelligence (INT)', 'Sense (SENSE)', 'Presence (PRE)'];
+    const abilities = ['STR', 'AGI', 'VIT', 'INT', 'SENSE', 'PRE'] as const;
+    const expectedNames = ['Strength', 'Agility', 'Vitality', 'Intelligence', 'Sense', 'Presence'];
     
     abilities.forEach((ability, index) => {
       expect(ABILITY_DISPLAY_NAMES[ability]).toBeDefined();

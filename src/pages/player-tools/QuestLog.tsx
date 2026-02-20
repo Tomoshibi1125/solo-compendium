@@ -17,6 +17,7 @@ import { useCampaignByCharacterId } from '@/hooks/useCampaigns';
 import { isQuestActive, isQuestCompleted, isQuestExpired, getQuestProgress } from '@/lib/dailyQuests/types';
 import { getLevelingMode } from '@/lib/campaignSettings';
 import type { DailyQuestInstance, DailyQuestTemplate, QuestReward } from '@/lib/dailyQuests/types';
+import type { Json } from '@/integrations/supabase/types';
 
 type QuestConfigForm = {
   enabled: boolean;
@@ -220,7 +221,7 @@ export function QuestLog({ characterId }: { characterId: string }) {
       await updateQuest({
         questId: quest.id,
         updates: {
-          rewards_granted: grantedPayload,
+          rewards_granted: grantedPayload as unknown as Json,
         },
       });
     } catch (error) {
@@ -254,7 +255,7 @@ export function QuestLog({ characterId }: { characterId: string }) {
             completed: true,
             last_updated: completedAt,
           },
-          rewards_granted: rewardPayload,
+          rewards_granted: rewardPayload as unknown as Json,
         },
       });
       await applyRewards(quest, reward);

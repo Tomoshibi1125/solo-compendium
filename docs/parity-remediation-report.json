@@ -1,0 +1,339 @@
+{
+  "report_version": "1.0.0",
+  "generated_at": "2026-02-19T21:30:00Z",
+  "title": "D&D Beyond Mechanical Parity Remediation Report",
+
+  "summary": "Full-stack parity audit and remediation implementing: (1) Level-gating module for all job/path/feature/power/ASI selections, (2) Domain event contract bus with typed payloads for 8 core gameplay events, (3) Gemini Protocol runtime resolver with modifier pipeline, (4) Regent runtime resolver with multi-regent merge and precedence, (5) Supabase migration adding gemini_state column + validate_level_gate RPC, (6) 76 unit tests covering all new modules, (7) Event emission wired into character level-up and rest systems.",
+
+  "assumptions": [
+    "Stack: React 19 + Tailwind 4 + TypeScript 5.9 + Supabase + Vite 7 + Vitest 4 + Playwright 1.58",
+    "No separate race/archetype/multiclass systems — all former racial/archetype effects are embedded in job (class) definitions",
+    "Gemini Protocol and Regents are first-class runtime systems, not cosmetic",
+    "Every domain event payload includes classId, geminiState, regents, and activeEffects",
+    "Level gating is enforced at UI, hook, and RPC/SQL layers",
+    "Existing character data (job, path, monarch_overlays, sovereign_id) is backfill-compatible"
+  ],
+
+  "checks": {
+    "level_gating": {
+      "status": "IMPLEMENTED",
+      "module": "src/lib/levelGating.ts",
+      "coverage": {
+        "path_unlock_gating": true,
+        "feature_level_gating": true,
+        "power_spell_level_gating": true,
+        "asi_feat_window_gating": true,
+        "cantrip_known_limit": true,
+        "spells_known_limit": true,
+        "spells_prepared_limit": true,
+        "composite_summary_builder": true
+      }
+    },
+    "domain_events": {
+      "status": "IMPLEMENTED",
+      "module": "src/lib/domainEvents.ts",
+      "events": [
+        "character:save",
+        "character:levelup",
+        "spell:cast",
+        "combat:attack",
+        "rest:short",
+        "rest:long",
+        "item:attune",
+        "encounter:create"
+      ],
+      "payload_fields_guaranteed": ["characterId", "characterName", "classId", "className", "pathId", "pathName", "level", "geminiState", "regents", "activeEffects", "timestamp", "campaignId"]
+    },
+    "gemini_resolver": {
+      "status": "IMPLEMENTED",
+      "module": "src/lib/geminiResolver.ts",
+      "features": [
+        "Fusion ability → modifier resolution",
+        "Runtime state builder from saved sovereign data",
+        "Compact GeminiStateRef for event payloads",
+        "ActiveEffectRef conversion for domain events",
+        "Modifier application pipeline (set → multiply → add)",
+        "Condition-gated modifier filtering",
+        "Power multiplier factor calculation",
+        "Corruption risk calculation from fusion stability"
+      ]
+    },
+    "regent_resolver": {
+      "status": "IMPLEMENTED",
+      "module": "src/lib/regentResolver.ts",
+      "features": [
+        "Level-filtered regent feature → modifier resolution",
+        "Runtime state builder from DB data",
+        "Compact RegentRef for event payloads",
+        "ActiveEffectRef conversion for domain events",
+        "Multi-regent merge with primary precedence",
+        "Modifier application pipeline (set → multiply → add)",
+        "Condition-gated modifier filtering",
+        "Regent unlock level gating",
+        "Gemini activation eligibility check (requires 2+ regents)"
+      ]
+    },
+    "schema_migration": {
+      "status": "IMPLEMENTED",
+      "file": "supabase/migrations/20260221000000_parity_level_gating_gemini_regent.sql",
+      "changes": [
+        "characters.gemini_state JSONB column",
+        "characters.active_sovereign_id FK to saved_sovereigns",
+        "validate_level_gate() RPC function for path/feature/power/ASI validation",
+        "Backfill gemini_state from existing sovereign_id data"
+      ]
+    },
+    "event_emission_wiring": {
+      "status": "IMPLEMENTED",
+      "wired_flows": [
+        {
+          "flow": "character:levelup",
+          "file": "src/pages/CharacterLevelUp.tsx",
+          "emits_at": "after successful level-up mutation"
+        },
+        {
+          "flow": "rest:short",
+          "file": "src/lib/restSystem.ts",
+          "emits_at": "after all short rest operations complete"
+        },
+        {
+          "flow": "rest:long",
+          "file": "src/lib/restSystem.ts",
+          "emits_at": "after all long rest operations complete (including partial failure path)"
+        }
+      ]
+    }
+  },
+
+  "hooks_and_events": {
+    "DomainEventBus": {
+      "type": "singleton",
+      "methods": ["on(type, handler)", "off(type, handler)", "emit(event)", "onAny(handler)", "offAny(handler)", "clear()"],
+      "location": "src/lib/domainEvents.ts"
+    },
+    "CorePayloadFields": {
+      "schema": {
+        "characterId": "string",
+        "characterName": "string",
+        "classId": "string | null",
+        "className": "string | null",
+        "pathId": "string | null",
+        "pathName": "string | null",
+        "level": "number",
+        "geminiState": {
+          "sovereignId": "string | null",
+          "isActive": "boolean",
+          "fusionTheme": "string | null",
+          "powerMultiplier": "string | null"
+        },
+        "regents": [{
+          "regentId": "string",
+          "regentName": "string",
+          "isPrimary": "boolean",
+          "theme": "string | null"
+        }],
+        "activeEffects": [{
+          "sourceType": "'class' | 'regent' | 'gemini' | 'item' | 'condition'",
+          "sourceId": "string",
+          "effectName": "string",
+          "modifiers": "Record<string, unknown>"
+        }],
+        "timestamp": "string (ISO 8601)",
+        "campaignId": "string | null"
+      }
+    }
+  },
+
+  "api_contracts": {
+    "validate_level_gate": {
+      "type": "Supabase RPC",
+      "signature": "validate_level_gate(p_character_id UUID, p_selection_type TEXT, p_selection_id UUID, p_power_level INTEGER)",
+      "returns": "TABLE(allowed BOOLEAN, reason TEXT)",
+      "selection_types": ["path", "feature", "power", "asi"],
+      "security": "SECURITY DEFINER, authenticated role"
+    }
+  },
+
+  "code_fixes": [
+    {
+      "file": "src/lib/levelGating.ts",
+      "action": "CREATED",
+      "description": "Pure-logic level gating module: path unlock, feature, power/spell, ASI/feat windows, composite summary"
+    },
+    {
+      "file": "src/lib/domainEvents.ts",
+      "action": "CREATED",
+      "description": "Typed domain event bus with 8 event types, core payload builder, singleton bus with wildcard support"
+    },
+    {
+      "file": "src/lib/geminiResolver.ts",
+      "action": "CREATED",
+      "description": "Gemini Protocol runtime resolver: modifier pipeline, state builder, event ref conversions"
+    },
+    {
+      "file": "src/lib/regentResolver.ts",
+      "action": "CREATED",
+      "description": "Regent runtime resolver: level-filtered modifiers, multi-regent merge, unlock gating"
+    },
+    {
+      "file": "supabase/migrations/20260221000000_parity_level_gating_gemini_regent.sql",
+      "action": "CREATED",
+      "description": "Migration: gemini_state + active_sovereign_id columns, validate_level_gate RPC, backfill"
+    },
+    {
+      "file": "src/pages/CharacterLevelUp.tsx",
+      "action": "MODIFIED",
+      "description": "Added level gating + domain event imports; emit character:levelup event after successful level-up"
+    },
+    {
+      "file": "src/lib/restSystem.ts",
+      "action": "MODIFIED",
+      "description": "Added domain event imports; emit rest:short and rest:long events after rest completion"
+    }
+  ],
+
+  "tests_to_add": [
+    {
+      "file": "src/lib/__tests__/levelGating.test.ts",
+      "status": "ADDED",
+      "test_count": 31,
+      "categories": [
+        "Path unlock gating (allow/deny/reason)",
+        "Feature level gating (allow/deny/filter/exact-level)",
+        "Power/spell level gating (cantrip/full/half/pact caster progression)",
+        "ASI/Feat window gating (standard + job-specific overrides)",
+        "Spell slot/cantrip/spells-known limits",
+        "Composite level-up summary builder"
+      ]
+    },
+    {
+      "file": "src/lib/__tests__/domainEvents.test.ts",
+      "status": "ADDED",
+      "test_count": 13,
+      "categories": [
+        "buildCorePayload defaults and overrides",
+        "DomainEventBus typed delivery, wildcard, off, error isolation",
+        "Payload contract assertions for all 8 event types"
+      ]
+    },
+    {
+      "file": "src/lib/__tests__/geminiResolver.test.ts",
+      "status": "ADDED",
+      "test_count": 16,
+      "categories": [
+        "Empty state defaults",
+        "Fusion modifier resolution (stat/value/skip)",
+        "Runtime state builder (active/inactive/null)",
+        "Ref conversions (GeminiStateRef, ActiveEffectRef)",
+        "Modifier application pipeline (add/set/multiply/order/conditions)",
+        "Power multiplier factor calculation"
+      ]
+    },
+    {
+      "file": "src/lib/__tests__/regentResolver.test.ts",
+      "status": "ADDED",
+      "test_count": 16,
+      "categories": [
+        "Level-filtered regent modifier resolution",
+        "Runtime state builder with level filtering",
+        "Ref conversions (RegentRef, ActiveEffectRef)",
+        "Multi-regent merge with primary precedence",
+        "Modifier application with conditions",
+        "Regent unlock level gating",
+        "Gemini activation eligibility"
+      ]
+    }
+  ],
+
+  "e2e_scenarios": [
+    {
+      "name": "Character creation with level-1 path gating",
+      "description": "Create character → verify only level-1-eligible paths are shown → verify path features are granted only if path_level = 1",
+      "status": "COVERED_BY_EXISTING_SPEC",
+      "spec": "tests/e2e/full-session-e2e.spec.ts"
+    },
+    {
+      "name": "Level-up with path unlock prompt",
+      "description": "Level up to path unlock level → verify path selection prompt appears → verify path features are granted",
+      "status": "RECOMMENDED",
+      "priority": "HIGH"
+    },
+    {
+      "name": "Gemini activation flow",
+      "description": "Unlock 2 regents → activate Gemini → verify gemini_state persists → verify modifier pipeline",
+      "status": "RECOMMENDED",
+      "priority": "HIGH"
+    },
+    {
+      "name": "Rest system event emission",
+      "description": "Perform short/long rest → verify domain events emitted with correct payloads",
+      "status": "RECOMMENDED",
+      "priority": "MEDIUM"
+    }
+  ],
+
+  "acceptance_criteria": [
+    "All 76 unit tests pass (levelGating, domainEvents, geminiResolver, regentResolver)",
+    "No separate race/archetype/multiclass selection UI exists in active gameplay flows",
+    "Path selection is gated by path_level — hidden/disabled before unlock level",
+    "Power/spell selection is gated by max power level for job at character level",
+    "ASI/Feat selection is gated by job-specific ASI levels",
+    "Feature unlocks only appear at their designated level",
+    "Domain events carry classId, geminiState, regents in every payload",
+    "validate_level_gate RPC rejects out-of-level selections at DB layer",
+    "Gemini resolver provides deterministic modifier pipeline (set → multiply → add)",
+    "Regent resolver supports multi-regent merge with primary precedence",
+    "Rest system emits rest:short and rest:long domain events",
+    "Level-up flow emits character:levelup domain event"
+  ],
+
+  "remediation_plan": {
+    "phase_a": {
+      "name": "Schema + Migrations",
+      "status": "COMPLETE",
+      "files_touched": 1,
+      "description": "Added gemini_state, active_sovereign_id columns; validate_level_gate RPC; backfill script"
+    },
+    "phase_b": {
+      "name": "Character Lifecycle",
+      "status": "COMPLETE",
+      "files_touched": 1,
+      "description": "Wired level-up flow with domain event emission and level gating imports"
+    },
+    "phase_c": {
+      "name": "Gemini Protocol Runtime",
+      "status": "COMPLETE",
+      "files_touched": 1,
+      "description": "Created geminiResolver.ts with modifier pipeline, state builder, event conversions"
+    },
+    "phase_d": {
+      "name": "Regent Runtime",
+      "status": "COMPLETE",
+      "files_touched": 1,
+      "description": "Created regentResolver.ts with level-filtered modifiers, multi-regent merge, gating"
+    },
+    "phase_e": {
+      "name": "Domain Events",
+      "status": "COMPLETE",
+      "files_touched": 1,
+      "description": "Created domainEvents.ts with typed bus, 8 event types, core payload builder"
+    },
+    "phase_f": {
+      "name": "Core Mechanic Hardening",
+      "status": "COMPLETE",
+      "files_touched": 2,
+      "description": "Wired event emission into restSystem.ts; level gating module covers all gated surfaces"
+    },
+    "phase_g": {
+      "name": "Tests",
+      "status": "COMPLETE",
+      "files_touched": 4,
+      "description": "76 unit tests across 4 test files covering level gating, domain events, gemini resolver, regent resolver"
+    }
+  },
+
+  "ci_snippet": {
+    "description": "GitHub Actions CI workflow with fail-fast stages",
+    "yaml": "name: Parity CI\non:\n  push:\n    branches: [main]\n  pull_request:\n    branches: [main]\njobs:\n  typecheck:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 20\n          cache: npm\n      - run: npm ci\n      - run: npx tsc --noEmit\n  unit-tests:\n    needs: typecheck\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 20\n          cache: npm\n      - run: npm ci\n      - run: npx vitest run --reporter=verbose\n  e2e-tests:\n    needs: unit-tests\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 20\n          cache: npm\n      - run: npm ci\n      - run: npx playwright install --with-deps chromium\n      - run: npx playwright test --reporter=html\n      - uses: actions/upload-artifact@v4\n        if: always()\n        with:\n          name: playwright-report\n          path: playwright-report/"
+  }
+}

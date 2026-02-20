@@ -170,13 +170,16 @@ test.describe('Dual-context: DM + Player campaign flow', () => {
     }
 
     const player = new PlayerPage(playerPage);
-    const characterId = await player.createCharacter('Feature Test PC');
+    const characterId =
+      (await player.createCharacter('Feature Test PC')) ??
+      (await player.getFirstExistingCharacterId());
 
-    // Clean up contexts early if skipping
+    expect(characterId, 'Need an existing character or a creatable character to continue dual-context test').toBeTruthy();
     if (!characterId) {
+      const screenshot = await playerPage.screenshot({ fullPage: true });
+      test.info().attach('player-no-character-available', { body: screenshot, contentType: 'image/png' });
       await dmContext.close();
       await playerContext.close();
-      test.skip(true, 'Character creation failed (no compendium data).');
       return;
     }
 
@@ -245,11 +248,15 @@ test.describe('Dual-context: DM + Player campaign flow', () => {
     }
 
     const player = new PlayerPage(playerPage);
-    const characterId = await player.createCharacter('Modifier Test PC');
+    const characterId =
+      (await player.createCharacter('Modifier Test PC')) ??
+      (await player.getFirstExistingCharacterId());
 
+    expect(characterId, 'Need an existing character or a creatable character to continue modifier test').toBeTruthy();
     if (!characterId) {
+      const screenshot = await playerPage.screenshot({ fullPage: true });
+      test.info().attach('player-no-character-available', { body: screenshot, contentType: 'image/png' });
       await playerContext.close();
-      test.skip(true, 'Character creation failed (no compendium data).');
       return;
     }
 

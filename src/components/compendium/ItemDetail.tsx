@@ -1,8 +1,11 @@
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Coins, Weight, Zap, Sparkles, Shield, Swords, Heart } from 'lucide-react';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
 import { formatMonarchVernacular } from '@/lib/vernacular';
+import { useNavigate } from 'react-router-dom';
+import { setPendingResolution, type ActionResolutionPayload } from '@/lib/actionResolution';
 
 interface ItemData {
   id: string;
@@ -16,7 +19,7 @@ interface ItemData {
   requirements?: {
     level?: number;
     class?: string[];
-    race?: string[];
+    job?: string[];
     alignment?: string[];
   } | null;
   properties?: {
@@ -70,6 +73,8 @@ interface ItemData {
   image?: string | null;
 }
 
+type ActiveEffect = NonNullable<NonNullable<ItemData['effects']>['active']>[number];
+
 const rarityStyles: Record<string, string> = {
   common: 'text-muted-foreground border-border bg-card',
   uncommon: 'text-emerald-400 border-emerald-500/40 bg-emerald-500/10',
@@ -79,11 +84,75 @@ const rarityStyles: Record<string, string> = {
 };
 
 export const ItemDetail = ({ data }: { data: ItemData }) => {
+  const navigate = useNavigate();
   const displayName = formatMonarchVernacular(data.display_name || data.name);
   const imageSrc = data.image_url || data.image || undefined;
   const rarityStyle = data.rarity ? rarityStyles[data.rarity] : undefined;
   const weapon = data.properties?.weapon;
   const magical = data.properties?.magical;
+
+  const parseDiceFromText = (text: string): string | null => {
+    const match = text.match(/\b(\d+d\d+(?:\s*[+-]\s*\d+)?)\b/i);
+    return match ? match[1].replace(/\s+/g, '') : null;
+  };
+
+  const buildWeaponPayload = (): ActionResolutionPayload | null => {
+    if (!weapon?.damage) return null;
+    return {
+      version: 1,
+      id: crypto.randomUUID(),
+      name: displayName,
+      source: { type: 'item', entryId: data.id },
+      kind: 'attack',
+      attack: { roll: '1d20' },
+      damage: { roll: weapon.damage },
+    };
+  };
+
+  const buildActiveEffectPayload = (active: ActiveEffect): ActionResolutionPayload | null => {
+    const description = active.description || '';
+    const dice = parseDiceFromText(description);
+
+    if (typeof active.dc === 'number') {
+      return {
+        version: 1,
+        id: crypto.randomUUID(),
+        name: `${displayName}: ${formatMonarchVernacular(active.name)}`,
+        source: { type: 'item', entryId: data.id },
+        kind: 'save',
+        save: { dc: active.dc, roll: '1d20' },
+        damage: dice ? { roll: dice } : undefined,
+      };
+    }
+
+    if (!dice) return null;
+
+    const healingHint = /\b(heal|heals|healing|regain|restore)\b/i.test(description);
+    if (healingHint) {
+      return {
+        version: 1,
+        id: crypto.randomUUID(),
+        name: `${displayName}: ${formatMonarchVernacular(active.name)}`,
+        source: { type: 'item', entryId: data.id },
+        kind: 'healing',
+        healing: { roll: dice },
+      };
+    }
+
+    return {
+      version: 1,
+      id: crypto.randomUUID(),
+      name: `${displayName}: ${formatMonarchVernacular(active.name)}`,
+      source: { type: 'item', entryId: data.id },
+      kind: 'damage',
+      damage: { roll: dice },
+    };
+  };
+
+  const queueResolutionAndNavigate = (payload: ActionResolutionPayload, path: string) => {
+    setPendingResolution(payload);
+    navigate(path);
+  };
 
   return (
     <div className="space-y-6">
@@ -113,6 +182,35 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
             {data.cursed && <Badge variant="destructive">Cursed</Badge>}
             {data.source_book && <Badge variant="outline">{formatMonarchVernacular(data.source_book)}</Badge>}
           </div>
+
+          {weapon?.damage && (
+            <div className="flex flex-wrap gap-2">
+              {weapon?.damage && (
+                <>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      const payload = buildWeaponPayload();
+                      if (!payload) return;
+                      queueResolutionAndNavigate(payload, '/dice');
+                    }}
+                  >
+                    Roll
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      const payload = buildWeaponPayload();
+                      if (!payload) return;
+                      queueResolutionAndNavigate(payload, '/dm-tools/initiative-tracker');
+                    }}
+                  >
+                    Resolve in Initiative
+                  </Button>
+                </>
+              )}
+            </div>
+          )}
         </div>
       </SystemWindow>
 
@@ -161,10 +259,10 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
                 <span>Classes: {data.requirements.class.map(formatMonarchVernacular).join(', ')}</span>
               </li>
             )}
-            {data.requirements.race && data.requirements.race.length > 0 && (
+            {data.requirements.job && data.requirements.job.length > 0 && (
               <li className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-muted-foreground" />
-                <span>Races: {data.requirements.race.map(formatMonarchVernacular).join(', ')}</span>
+                <span>Jobs: {data.requirements.job.map(formatMonarchVernacular).join(', ')}</span>
               </li>
             )}
             {data.requirements.alignment && data.requirements.alignment.length > 0 && (
@@ -254,17 +352,45 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
             {data.effects?.active && data.effects.active.length > 0 && (
               <div className="space-y-3">
                 <p className="font-heading text-foreground">Active</p>
-                {data.effects.active.map((active) => (
-                  <div key={active.name} className="border-l-2 border-primary/40 pl-3">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-heading">{formatMonarchVernacular(active.name)}</span>
-                      {active.action && <Badge variant="outline" className="text-xs">{formatMonarchVernacular(active.action)}</Badge>}
-                      {active.frequency && <Badge variant="outline" className="text-xs">{formatMonarchVernacular(active.frequency)}</Badge>}
-                      {active.dc !== undefined && <Badge variant="outline" className="text-xs">DC {active.dc}</Badge>}
+                {data.effects.active.map((active) => {
+                  const payload = buildActiveEffectPayload(active);
+
+                  return (
+                    <div key={active.name} className="border-l-2 border-primary/40 pl-3">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="font-heading">{formatMonarchVernacular(active.name)}</span>
+                        {active.action && <Badge variant="outline" className="text-xs">{formatMonarchVernacular(active.action)}</Badge>}
+                        {active.frequency && <Badge variant="outline" className="text-xs">{formatMonarchVernacular(active.frequency)}</Badge>}
+                        {active.dc !== undefined && <Badge variant="outline" className="text-xs">DC {active.dc}</Badge>}
+                      </div>
+
+                      {payload && (
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          <Button
+                            variant="outline"
+                            onClick={() => {
+                              if (!payload) return;
+                              queueResolutionAndNavigate(payload, '/dice');
+                            }}
+                          >
+                            Roll
+                          </Button>
+                          <Button
+                            variant="outline"
+                            onClick={() => {
+                              if (!payload) return;
+                              queueResolutionAndNavigate(payload, '/dm-tools/initiative-tracker');
+                            }}
+                          >
+                            Resolve in Initiative
+                          </Button>
+                        </div>
+                      )}
+
+                      <p className="text-muted-foreground">{formatMonarchVernacular(active.description)}</p>
                     </div>
-                    <p className="text-muted-foreground">{formatMonarchVernacular(active.description)}</p>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
             {data.effect && (

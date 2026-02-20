@@ -25,7 +25,7 @@ export class AudioService {
   };
   private settings: AudioSettings = DEFAULT_AUDIO_SETTINGS;
   private listeners: Set<(state: AudioPlayerState) => void> = new Set();
-  private fadeTimeout: NodeJS.Timeout | null = null;
+  private fadeTimeout: ReturnType<typeof setTimeout> | null = null;
   private activeObjectUrl: string | null = null;
   private playlistTracks: AudioTrack[] = [];
 

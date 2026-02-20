@@ -3,8 +3,8 @@
  * Generates art using Gemini-enhanced prompts with a free image generation backend.
  */
 
-import type { ArtRequest, ArtAsset, ArtMetadata, GenerationResult, GenerationPreset, QueueStatus } from './types.ts';
-import { getPreset, buildPrompt, generateCacheKey } from './types.ts';
+import type { ArtRequest, ArtAsset, ArtMetadata, GenerationResult, GenerationPreset, QueueStatus } from './types';
+import { getPreset, buildPrompt, generateCacheKey } from './types';
 import { getFeatureFlag } from '@/lib/featureFlags';
 import { logger } from '@/lib/logger';
 import { AppError } from '@/lib/appError';

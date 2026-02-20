@@ -69,6 +69,7 @@ export function SpellSlotsDisplay({ characterId, job, level, className }: SpellS
                 onClick={() => handleSlotChange(slot.level, -1)}
                 disabled={slot.current === 0}
                 aria-label={`Decrease tier ${slot.level} slots`}
+                data-testid={`spell-slot-decrease-tier-${slot.level}`}
               >
                 <Minus className="w-3 h-3" />
               </Button>
@@ -79,6 +80,7 @@ export function SpellSlotsDisplay({ characterId, job, level, className }: SpellS
                 onClick={() => handleSlotChange(slot.level, 1)}
                 disabled={slot.current >= slot.max}
                 aria-label={`Increase tier ${slot.level} slots`}
+                data-testid={`spell-slot-increase-tier-${slot.level}`}
               >
                 <Plus className="w-3 h-3" />
               </Button>

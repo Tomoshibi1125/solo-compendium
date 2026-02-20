@@ -45,7 +45,7 @@ export class CharacterMigration {
         // 5e standard abilities
         abilities,
         proficiencyBonus: Math.ceil((oldCharacter.level || 1) / 4) + 1,
-        initiative: Math.floor((abilities.DEX - 10) / 2),
+        initiative: Math.floor((abilities.AGI - 10) / 2),
         armorClass: this.calculateArmorClass(oldCharacter, abilities),
         hitPoints: this.migrateHitPoints(oldCharacter, abilities),
         hitDice: this.migrateHitDice(oldCharacter),
@@ -98,21 +98,25 @@ export class CharacterMigration {
   private static migrateAbilities(oldAbilities: any, issues: string[]): Record<string, number> {
     const abilities: Record<string, number> = {
       STR: 10,
-      DEX: 10,
-      CON: 10,
+      AGI: 10,
+      VIT: 10,
       INT: 10,
-      WIS: 10,
-      CHA: 10
+      SENSE: 10,
+      PRE: 10
     };
 
-    // Map System Ascendant abilities to 5e
+    // Normalize any ability name to System Ascendant canonical
     const abilityMap: Record<string, string> = {
       'STR': 'STR',
-      'AGI': 'DEX',
-      'VIT': 'CON',
+      'AGI': 'AGI',
+      'DEX': 'AGI',
+      'VIT': 'VIT',
+      'CON': 'VIT',
       'INT': 'INT',
-      'SENSE': 'WIS',
-      'PRE': 'CHA'
+      'SENSE': 'SENSE',
+      'WIS': 'SENSE',
+      'PRE': 'PRE',
+      'CHA': 'PRE'
     };
 
     Object.entries(oldAbilities).forEach(([oldAbility, value]) => {
@@ -150,9 +154,9 @@ export class CharacterMigration {
    * Calculate armor class
    */
   private static calculateArmorClass(oldCharacter: any, abilities: Record<string, number>): number {
-    // Base AC = 10 + DEX modifier
-    const dexMod = Math.floor((abilities.DEX - 10) / 2);
-    let ac = 10 + dexMod;
+    // Base AC = 10 + AGI modifier
+    const agiMod = Math.floor((abilities.AGI - 10) / 2);
+    let ac = 10 + agiMod;
 
     // Check for armor
     if (oldCharacter.armor) {
@@ -167,7 +171,7 @@ export class CharacterMigration {
    * Migrate hit points
    */
   private static migrateHitPoints(oldCharacter: any, abilities: Record<string, number>) {
-    const conMod = Math.floor((abilities.CON - 10) / 2);
+    const vitMod = Math.floor((abilities.VIT - 10) / 2);
     const currentHP = oldCharacter.hp_current || oldCharacter.hpCurrent || 1;
     const maxHP = oldCharacter.hp_max || oldCharacter.hpMax || currentHP;
     const tempHP = oldCharacter.hp_temp || oldCharacter.hpTemp || 0;
@@ -203,11 +207,15 @@ export class CharacterMigration {
     // Map old saving throws to new abilities
     const saveMap: Record<string, string> = {
       'STR': 'STR',
-      'AGI': 'DEX',
-      'VIT': 'CON',
+      'AGI': 'AGI',
+      'DEX': 'AGI',
+      'VIT': 'VIT',
+      'CON': 'VIT',
       'INT': 'INT',
-      'SENSE': 'WIS',
-      'PRE': 'CHA'
+      'SENSE': 'SENSE',
+      'WIS': 'SENSE',
+      'PRE': 'PRE',
+      'CHA': 'PRE'
     };
 
     if (oldCharacter.savingThrowProficiencies) {
@@ -354,8 +362,8 @@ UPDATE characters
 SET 
   proficiency_bonus = GREATEST(2, CEIL(level / 4.0) + 1),
   initiative = CASE 
-    WHEN abilities->>'DEX' IS NOT NULL 
-    THEN FLOOR((CAST(abilities->>'DEX' AS INTEGER) - 10) / 2)
+    WHEN abilities->>'AGI' IS NOT NULL 
+    THEN FLOOR((CAST(abilities->>'AGI' AS INTEGER) - 10) / 2)
     ELSE 0 
   END,
   hit_dice_current = level,
