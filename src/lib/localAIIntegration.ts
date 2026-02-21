@@ -41,7 +41,11 @@ export class LocalAIIntegration {
     if (this.isAvailable) {
       try {
         const prompt = `
-You are an expert RPG game master AI helping a player choose their regent path.
+You are an expert RPG game master AI for System Ascendant, a 5e SRD TTRPG with Solo Leveling / manhwa flavor.
+Ability scores: STR (Strength), AGI (Agility), VIT (Vitality), INT (Intelligence), SENSE (Sense), PRE (Presence).
+Classes are called "Jobs". Regents are quest/DM-gated power overlays (not level-gated).
+
+Help this player choose their regent path.
 
 PLAYER INFO:
 - Name: ${character.name}
@@ -116,19 +120,23 @@ REGENT 2:
 - Type: ${regent2.type}
 - Abilities: ${regent2.abilities.join(', ')}
 
+SYSTEM: System Ascendant is a 5e SRD TTRPG with Solo Leveling / manhwa flavor.
+Ability scores: STR (Strength), AGI (Agility), VIT (Vitality), INT (Intelligence), SENSE (Sense), PRE (Presence).
+Classes are called "Jobs". Regents are quest/DM-gated power overlays. Two regents fuse via the Gemini Protocol.
+
 TASK:
-Create a unique DBZ-style fusion sovereign class by combining both regents with the character's base class.
+Create a unique fusion sovereign class by combining both regents with the character's base job via the Gemini Protocol.
 
 Generate:
-1. Epic fusion name (DBZ-inspired)
+1. Epic fusion name
 2. Fusion description explaining the combination
 3. Fusion type: "Perfect", "Good", or "Average"
-4. 6 unique fusion abilities (blends of both regents + base class)
-5. 4 fusion features (passive/active abilities)
-6. 8 fusion spells (magical combinations)
+4. 6 unique fusion abilities (blends of both regents + base job)
+5. 4 fusion features (passive/active abilities with 5e action economy)
+6. 8 fusion spells/powers (magical combinations)
 7. 5 fusion techniques (special moves)
 8. 6 fusion traits (characteristics)
-9. Stat bonuses (STR, DEX, CON, INT, WIS, CHA)
+9. Stat bonuses using System Ascendant names (STR, AGI, VIT, INT, SENSE, PRE)
 10. 4 special abilities (ultimate powers)
 
 Return as JSON with this structure:
@@ -141,11 +149,11 @@ Return as JSON with this structure:
   "spells": ["Spell1", "Spell2", ...],
   "techniques": ["Technique1", "Technique2", ...],
   "traits": [{"name": "Trait1", "description": "...", "type": "fusion"}, ...],
-  "statBonuses": {"STR": 4, "DEX": 2, ...},
+  "statBonuses": {"STR": 4, "AGI": 2, "VIT": 2, "INT": 0, "SENSE": 0, "PRE": 2},
   "specialAbilities": ["Ultimate1", "Ultimate2", ...]
 }
 
-Be creative and make it feel like an epic DBZ fusion with unique mechanics!
+Be creative! Features should include action types (action/bonus action/reaction/passive) and uses/recharge where appropriate.
 `;
 
         const fusion = await this.callLocalAI(prompt);

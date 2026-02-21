@@ -1,12 +1,16 @@
-import { BookOpen, Sparkles, CheckCircle, Zap, Shield, Scroll, Flame } from 'lucide-react';
+import { useMemo } from 'react';
+import { BookOpen, Sparkles, CheckCircle, Zap, Shield, Scroll, Flame, AlertTriangle } from 'lucide-react';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useCharacterRuneKnowledge, useAbsorbRune } from '@/hooks/useRunes';
+import { useCharacter } from '@/hooks/useCharacters';
 import { useFeatures } from '@/hooks/useFeatures';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { formatMonarchVernacular } from '@/lib/vernacular';
+import { resolveRuneAbsorption } from '@/lib/runeAutomation';
+import { getProficiencyBonus } from '@/types/system-rules';
 
 const RUNE_TYPE_COLORS: Record<string, string> = {
   martial: 'bg-red-500/20 text-red-400 border-red-500/30',
@@ -28,6 +32,7 @@ const RUNE_TYPE_ICONS: Record<string, React.ComponentType<{ className?: string }
 
 export function RunesList({ characterId }: { characterId: string }) {
   const { data: runeKnowledge = [] } = useCharacterRuneKnowledge(characterId);
+  const { data: character } = useCharacter(characterId);
   const { features = [] } = useFeatures(characterId);
   const absorbRune = useAbsorbRune();
   const { toast } = useToast();
@@ -35,6 +40,24 @@ export function RunesList({ characterId }: { characterId: string }) {
   // Split runes into unabsorbed (available to consume) and absorbed (mastery_level 5)
   const unabsorbedRunes = runeKnowledge.filter((rk) => (rk.mastery_level || 0) < 5);
   const absorbedFeatures = features.filter((f) => f.source?.startsWith('Rune:'));
+
+  // Pre-calculate absorption previews for each unabsorbed rune
+  const absorptionPreviews = useMemo(() => {
+    if (!character) return {};
+    const level = character.level ?? 1;
+    const profBonus = getProficiencyBonus(level);
+    const previews: Record<string, ReturnType<typeof resolveRuneAbsorption>> = {};
+    for (const rk of unabsorbedRunes) {
+      previews[rk.rune_id] = resolveRuneAbsorption(
+        rk.rune.rune_type,
+        rk.rune.uses_per_rest,
+        character.job,
+        level,
+        profBonus,
+      );
+    }
+    return previews;
+  }, [character, unabsorbedRunes]);
 
   const handleAbsorb = async (runeId: string, runeName: string) => {
     const displayName = formatMonarchVernacular(runeName);
@@ -89,6 +112,22 @@ export function RunesList({ characterId }: { characterId: string }) {
                           </div>
                           {displayDesc && (
                             <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{displayDesc}</p>
+                          )}
+                          {/* Cross-type absorption preview */}
+                          {absorptionPreviews[rk.rune_id]?.isCrossType && (
+                            <div className="flex items-center gap-1.5 mt-1.5">
+                              <AlertTriangle className="w-3 h-3 text-amber-400 flex-shrink-0" />
+                              <span className="text-[10px] text-amber-400">
+                                {absorptionPreviews[rk.rune_id]?.adaptationNote}
+                              </span>
+                            </div>
+                          )}
+                          {absorptionPreviews[rk.rune_id] && !absorptionPreviews[rk.rune_id]?.isCrossType && (
+                            <div className="flex items-center gap-1.5 mt-1.5">
+                              <span className="text-[10px] text-green-400">
+                                {absorptionPreviews[rk.rune_id]?.usesMax === null ? 'At-will' : `${absorptionPreviews[rk.rune_id]?.usesMax} uses / ${absorptionPreviews[rk.rune_id]?.recharge}`}
+                              </span>
+                            </div>
                           )}
                         </div>
                       </div>

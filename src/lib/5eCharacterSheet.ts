@@ -159,12 +159,13 @@ function calculateSpellAttackBonus(character: Character): number {
  * Update character sheet after level up
  */
 export function levelUpCharacter(character: Character, newLevel: number): CharacterSheet {
+  const hitDieSize = character.hitDice?.size ?? 8;
   const updatedCharacter = {
     ...character,
     level: newLevel,
     hitPoints: {
       ...character.hitPoints,
-      max: calculateHPMax(newLevel, 8, Math.floor((character.abilities.VIT - 10) / 2))
+      max: calculateHPMax(newLevel, hitDieSize, Math.floor((character.abilities.VIT - 10) / 2))
     }
   };
 

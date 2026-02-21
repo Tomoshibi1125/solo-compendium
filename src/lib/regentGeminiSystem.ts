@@ -49,7 +49,8 @@ export interface RegentPath {
   features: Feature[];
   spells: Spell[];
   requirements: {
-    level: number;
+    /** @deprecated Regents are quest/DM-gated — level is advisory only */
+    level?: number;
     questCompleted?: string;
     statThreshold: number;
   };
@@ -392,7 +393,6 @@ export class RegentGeminiSystem {
     const highestStat = this.getHighestStat(abilities);
     const availableRegents = this.REGENT_DATABASE.filter(regent => 
       regent.type === this.getRegentType(highestStat) &&
-      regent.requirements.level <= character.level &&
       regent.requirements.statThreshold <= abilities[highestStat]
     );
 
@@ -492,7 +492,7 @@ export class RegentGeminiSystem {
     
     // Simulate AI reasoning process
     const statAlignment = abilities[highestStat] - regent.requirements.statThreshold;
-    const levelAlignment = character.level - regent.requirements.level;
+    const levelAlignment = character.level - (regent.requirements.level ?? 0);
     const jobCompatibility = this.calculateJobCompatibility(job, regent);
     const playstyleMatch = this.calculatePlaystyleMatch(character, regent);
     
@@ -635,13 +635,13 @@ export class RegentGeminiSystem {
       {
         name: `Fusion ${regent1.name.split(' ')[0]}-${regent2.name.split(' ')[0]} Strike`,
         description: `Combined power of both regents tempered through ${baseJob} ${basePathLabel} doctrine`,
-        level: Math.max(regent1.requirements.level, regent2.requirements.level),
+        level: Math.max(regent1.requirements.level ?? 0, regent2.requirements.level ?? 0),
         school: 'fusion'
       },
       {
         name: `Dual ${regent1.name.split(' ')[0]} ${regent2.name.split(' ')[0]} Aura`,
         description: `Aura combining both regent powers`,
-        level: Math.max(regent1.requirements.level, regent2.requirements.level) + 1,
+        level: Math.max(regent1.requirements.level ?? 0, regent2.requirements.level ?? 0) + 1,
         school: 'aura'
       }
     ];
@@ -771,7 +771,7 @@ export class RegentGeminiSystem {
   }
 
   private static calculateFusionType(regent1: RegentPath, regent2: RegentPath): 'Perfect' | 'Good' | 'Average' {
-    const levelDiff = Math.abs(regent1.requirements.level - regent2.requirements.level);
+    const levelDiff = Math.abs((regent1.requirements.level ?? 0) - (regent2.requirements.level ?? 0));
     const statDiff = Math.abs(regent1.requirements.statThreshold - regent2.requirements.statThreshold);
     
     if (levelDiff <= 2 && statDiff <= 2) return 'Perfect';
@@ -811,7 +811,8 @@ export interface RegentQuest {
   description: string;
   regentUnlock: string;
   requirements: {
-    level: number;
+    /** @deprecated Regent quests are DM/Warden-gated — level is advisory only */
+    level?: number;
     prerequisites: string[];
   };
   completed: boolean;

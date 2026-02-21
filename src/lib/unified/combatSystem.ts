@@ -30,7 +30,8 @@ export interface UnifiedCombatState {
   movementRemaining: number;
   concentrationActive: boolean;
   systemFavorUsed: boolean;
-  monarchPowerUsed: boolean;
+  monarchPowerUsed: boolean; // backward-compat alias
+  regentPowerUsed?: boolean;
 }
 
 // Unified Attack Result
@@ -379,28 +380,26 @@ export function applySystemFavor(
   };
 }
 
-// Apply Monarch Power (System Ascendant mechanic adapted for monarchs only)
-export function applyMonarchPower(
+// Apply Regent Power (System Ascendant mechanic — quest/DM-gated regent abilities)
+export function applyRegentPower(
   character: UnifiedCharacter,
   cost: number,
   effect: string
 ): { success: boolean; newCharacter: UnifiedCharacter; effect: string } {
-  // Only characters with active monarch can use monarch power
-  if (!character.activeMonarch) {
+  const activeRegent = character.activeRegent ?? character.activeMonarch;
+  if (!activeRegent) {
     return { 
       success: false, 
       newCharacter: character, 
-      effect: formatMonarchVernacular('No active monarch - monarch power unavailable')
+      effect: formatMonarchVernacular('No active regent — regent power unavailable')
     };
   }
   
-  // For now, we'll use systemFavor as the resource for monarch power
-  // This could be expanded to use monarch-specific resources later
   if (character.systemFavorCurrent < cost) {
     return { 
       success: false, 
       newCharacter: character, 
-      effect: formatMonarchVernacular('Insufficient System Favor for monarch power')
+      effect: formatMonarchVernacular('Insufficient System Favor for regent power')
     };
   }
   
@@ -415,6 +414,9 @@ export function applyMonarchPower(
     effect 
   };
 }
+
+/** @deprecated Use applyRegentPower instead */
+export const applyMonarchPower = applyRegentPower;
 
 // Calculate unified initiative
 export function calculateUnifiedInitiative(

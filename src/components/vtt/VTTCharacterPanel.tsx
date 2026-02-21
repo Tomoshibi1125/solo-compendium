@@ -17,7 +17,7 @@ import { SystemWindow } from '@/components/ui/SystemWindow';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import { cn } from '@/lib/utils';
 import { useCharacter } from '@/hooks/useCharacters';
-import { calculateCharacterStats } from '@/lib/characterCalculations';
+import { calculateCharacterStats, getSpellcastingAbility } from '@/lib/characterCalculations';
 import { getAbilityModifier } from '@/types/system-rules';
 import { getAllSkills, calculateSkillModifier } from '@/lib/skills';
 import { ABILITY_NAMES, type AbilityScore } from '@/types/system-rules';
@@ -299,77 +299,62 @@ export function VTTCharacterPanel({ characterId, onRoll, onChat, readOnly = fals
       </SystemWindow>
 
       {/* Quick Attack Rolls */}
-      {!compact && (
-        <SystemWindow title="ATTACKS" compact>
-          <div className="space-y-1.5">
-            <div className="flex gap-1.5">
-              <Button
-                variant="outline"
-                size="sm"
-                className="flex-1 text-[10px] h-7"
-                onClick={() => rollCheck('Melee Attack (STR)', getAbilityModifier(finalAbilities.STR) + profBonus)}
-              >
-                <Swords className="w-3 h-3 mr-1" />
-                STR Atk {formatMod(getAbilityModifier(finalAbilities.STR) + profBonus)}
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="flex-1 text-[10px] h-7"
-                onClick={() => rollCheck('Ranged Attack (AGI)', getAbilityModifier(finalAbilities.AGI) + profBonus)}
-              >
-                <Swords className="w-3 h-3 mr-1" />
-                AGI Atk {formatMod(getAbilityModifier(finalAbilities.AGI) + profBonus)}
-              </Button>
+      {!compact && (() => {
+        const spellAbility = getSpellcastingAbility(character.job);
+        const spellMod = spellAbility ? getAbilityModifier(finalAbilities[spellAbility]) : null;
+        const spellAtkBonus = spellMod !== null ? spellMod + profBonus : null;
+        const spellDC = spellMod !== null ? 8 + profBonus + spellMod : null;
+        return (
+          <SystemWindow title="ATTACKS" compact>
+            <div className="space-y-1.5">
+              <div className="flex gap-1.5">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex-1 text-[10px] h-7"
+                  onClick={() => rollCheck('Melee Attack (STR)', getAbilityModifier(finalAbilities.STR) + profBonus)}
+                >
+                  <Swords className="w-3 h-3 mr-1" />
+                  STR Atk {formatMod(getAbilityModifier(finalAbilities.STR) + profBonus)}
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex-1 text-[10px] h-7"
+                  onClick={() => rollCheck('Ranged Attack (AGI)', getAbilityModifier(finalAbilities.AGI) + profBonus)}
+                >
+                  <Swords className="w-3 h-3 mr-1" />
+                  AGI Atk {formatMod(getAbilityModifier(finalAbilities.AGI) + profBonus)}
+                </Button>
+              </div>
+              {spellAbility && spellAtkBonus !== null && spellDC !== null && (
+                <div className="flex gap-1.5">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex-1 text-[10px] h-7"
+                    onClick={() => rollCheck(`Spell Attack (${spellAbility})`, spellAtkBonus)}
+                  >
+                    <Zap className="w-3 h-3 mr-1" />
+                    {spellAbility} Spell {formatMod(spellAtkBonus)}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex-1 text-[10px] h-7"
+                    onClick={() => {
+                      onChat(`${character.name}'s Spell Save DC: **${spellDC}** (${spellAbility})`, 'system');
+                    }}
+                  >
+                    {spellAbility} DC {spellDC}
+                  </Button>
+                </div>
+              )}
+              <p className="text-[9px] text-muted-foreground text-center">Click any weapon on full sheet to roll damage</p>
             </div>
-            <div className="flex gap-1.5">
-              <Button
-                variant="outline"
-                size="sm"
-                className="flex-1 text-[10px] h-7"
-                onClick={() => rollCheck('Spell Attack (INT)', getAbilityModifier(finalAbilities.INT) + profBonus)}
-              >
-                <Zap className="w-3 h-3 mr-1" />
-                INT Spell {formatMod(getAbilityModifier(finalAbilities.INT) + profBonus)}
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="flex-1 text-[10px] h-7"
-                onClick={() => rollCheck('Spell Attack (PRE)', getAbilityModifier(finalAbilities.PRE) + profBonus)}
-              >
-                <Zap className="w-3 h-3 mr-1" />
-                PRE Spell {formatMod(getAbilityModifier(finalAbilities.PRE) + profBonus)}
-              </Button>
-            </div>
-            <div className="flex gap-1.5">
-              <Button
-                variant="outline"
-                size="sm"
-                className="flex-1 text-[10px] h-7"
-                onClick={() => {
-                  const dc = 8 + profBonus + getAbilityModifier(finalAbilities.INT);
-                  onChat(`${character.name}'s Spell Save DC: **${dc}** (INT)`, 'system');
-                }}
-              >
-                INT DC {8 + profBonus + getAbilityModifier(finalAbilities.INT)}
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="flex-1 text-[10px] h-7"
-                onClick={() => {
-                  const dc = 8 + profBonus + getAbilityModifier(finalAbilities.PRE);
-                  onChat(`${character.name}'s Spell Save DC: **${dc}** (PRE)`, 'system');
-                }}
-              >
-                PRE DC {8 + profBonus + getAbilityModifier(finalAbilities.PRE)}
-              </Button>
-            </div>
-            <p className="text-[9px] text-muted-foreground text-center">Click any weapon on full sheet to roll damage</p>
-          </div>
-        </SystemWindow>
-      )}
+          </SystemWindow>
+        );
+      })()}
 
       {/* Passive Scores */}
       {!compact && (

@@ -182,7 +182,7 @@ export const RegentSelection: React.FC<RegentSelectionProps> = ({
               <div className="mb-3">
                 <div className="text-xs text-purple-300 mb-1">Requirements:</div>
                 <div className="text-xs text-purple-400">
-                  Level {choice.regent.requirements.level} • {choice.regent.requirements.statThreshold} {choice.regent.type.split(' ')[0]}
+                  Quest / Warden Approval • {choice.regent.requirements.statThreshold} {choice.regent.type.split(' ')[0]}
                 </div>
               </div>
 

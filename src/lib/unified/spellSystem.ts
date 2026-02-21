@@ -24,7 +24,7 @@ export interface UnifiedComponents {
   somatic: boolean;
   material: boolean;
   materialDescription?: string;
-  shadowEnergy?: boolean; // Only for monarch-level powers
+  shadowEnergy?: boolean; // Only for regent-level powers
   systemFavor?: boolean;
 }
 
@@ -55,9 +55,11 @@ export interface UnifiedSpell {
   ritual: boolean;
   
   // System Ascendant adaptations
-  monarchPowerCost?: number; // Only available to monarchs and their chosen
+  monarchPowerCost?: number; // backward-compat alias for regentPowerCost
+  regentPowerCost?: number;
   systemFavorCost?: number;
-  monarchRequirement?: string;
+  monarchRequirement?: string; // backward-compat alias for regentRequirement
+  regentRequirement?: string;
   gateRank?: string;
   
   // Class and level requirements
@@ -141,10 +143,12 @@ export function canCastUnifiedSpell(
     }
   }
   
-  // Check monarch power cost (replaces shadow energy)
-  if (spell.monarchPowerCost) {
-    if (!character.activeMonarch || character.systemFavorCurrent < spell.monarchPowerCost) {
-      return { canCast: false, reason: formatMonarchVernacular(`Insufficient Monarch Power (requires ${spell.monarchPowerCost})`) };
+  // Check regent power cost
+  const regentCost = spell.regentPowerCost ?? spell.monarchPowerCost;
+  if (regentCost) {
+    const activeRegent = character.activeRegent ?? character.activeMonarch;
+    if (!activeRegent || character.systemFavorCurrent < regentCost) {
+      return { canCast: false, reason: formatMonarchVernacular(`Insufficient Regent Power (requires ${regentCost})`) };
     }
   }
   
@@ -155,10 +159,12 @@ export function canCastUnifiedSpell(
     }
   }
   
-  // Check monarch requirement
-  if (spell.monarchRequirement) {
-    if (!character.monarchUnlocks?.includes(spell.monarchRequirement)) {
-      return { canCast: false, reason: formatMonarchVernacular(`Monarch unlock required: ${spell.monarchRequirement}`) };
+  // Check regent requirement
+  const regentReq = spell.regentRequirement ?? spell.monarchRequirement;
+  if (regentReq) {
+    const unlocks = character.regentUnlocks ?? character.monarchUnlocks ?? [];
+    if (!unlocks.includes(regentReq)) {
+      return { canCast: false, reason: formatMonarchVernacular(`Regent unlock required: ${regentReq}`) };
     }
   }
   
@@ -203,13 +209,15 @@ export function castUnifiedSpell(
     results.push(`Consumed level ${upcastLevel || spell.level} spell slot`);
   }
   
-  // Consume monarch power (replaces shadow energy)
-  if (spell.monarchPowerCost && newCharacter.activeMonarch) {
+  // Consume regent power
+  const castRegentCost = spell.regentPowerCost ?? spell.monarchPowerCost;
+  const castActiveRegent = newCharacter.activeRegent ?? newCharacter.activeMonarch;
+  if (castRegentCost && castActiveRegent) {
     newCharacter = {
       ...newCharacter,
-      systemFavorCurrent: newCharacter.systemFavorCurrent - spell.monarchPowerCost
+      systemFavorCurrent: newCharacter.systemFavorCurrent - castRegentCost
     };
-    results.push(formatMonarchVernacular(`Consumed ${spell.monarchPowerCost} Monarch Power`));
+    results.push(formatMonarchVernacular(`Consumed ${castRegentCost} Regent Power`));
   }
   
   // Consume system favor
@@ -295,11 +303,15 @@ export function getUnifiedSpellList(
   character: UnifiedCharacter,
   allSpells: UnifiedSpell[]
 ): UnifiedSpell[] {
-  return allSpells.filter(spell => 
-    spell.classes.includes(character.class) &&
-    character.level >= spell.levelRequired &&
-    (!spell.monarchRequirement || character.monarchUnlocks?.includes(spell.monarchRequirement))
-  );
+  return allSpells.filter(spell => {
+    const req = spell.regentRequirement ?? spell.monarchRequirement;
+    const unlocks = character.regentUnlocks ?? character.monarchUnlocks ?? [];
+    return (
+      spell.classes.includes(character.class) &&
+      character.level >= spell.levelRequired &&
+      (!req || unlocks.includes(req))
+    );
+  });
 }
 
 // Get unified cantrips (level 0 spells)

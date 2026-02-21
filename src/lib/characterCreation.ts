@@ -152,6 +152,38 @@ async function insertCharacterFeature(
 }
 
 /**
+ * Map from 5e ability names (used in static job data) to System Ascendant ability names.
+ */
+const JOB_ASI_TO_SYSTEM: Record<string, string> = {
+  strength: 'STR',
+  dexterity: 'AGI',
+  constitution: 'VIT',
+  intelligence: 'INT',
+  wisdom: 'SENSE',
+  charisma: 'PRE',
+};
+
+/**
+ * Get the ability score improvements for a job, mapped to System Ascendant ability names.
+ * Returns a Record like { STR: 2, VIT: 1 }.
+ */
+export function getJobASI(
+  jobName: string | null | undefined
+): Record<string, number> {
+  const job = findStaticJobByName(jobName);
+  if (!job || !job.abilityScoreImprovements) return {};
+
+  const result: Record<string, number> = {};
+  for (const [ability, bonus] of Object.entries(job.abilityScoreImprovements)) {
+    const systemAbility = JOB_ASI_TO_SYSTEM[ability.toLowerCase()];
+    if (systemAbility && typeof bonus === 'number' && bonus !== 0) {
+      result[systemAbility] = bonus;
+    }
+  }
+  return result;
+}
+
+/**
  * Grant job awakening benefits (awakening features + job traits) at a specific level.
  */
 export async function addJobAwakeningBenefitsForLevel(

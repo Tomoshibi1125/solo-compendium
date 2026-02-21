@@ -135,6 +135,58 @@ export interface StaticCompendiumEntry {
   xp?: number | null;
   monster_actions?: Record<string, unknown>[] | null;
   monster_traits?: Record<string, unknown>[] | null;
+  // Background detail support (static fallback)
+  skill_proficiencies?: string[] | null;
+  tool_proficiencies?: string[] | null;
+  language_count?: number | null;
+  starting_equipment?: string | string[][] | null;
+  starting_credits?: number | null;
+  feature_name?: string | null;
+  feature_description?: string | null;
+  personality_traits?: string[] | null;
+  ideals?: string[] | null;
+  bonds?: string[] | null;
+  flaws?: string[] | null;
+  background_features?: Array<{ name: string; description: string }> | null;
+  // Job detail support (static fallback)
+  hit_die?: number | null;
+  primary_abilities?: string[] | null;
+  saving_throw_proficiencies?: string[] | null;
+  armor_proficiencies?: string[] | null;
+  weapon_proficiencies?: string[] | null;
+  skill_choices?: string[] | null;
+  skill_choice_count?: number | null;
+  hit_points_at_first_level?: string | null;
+  hit_points_at_higher_levels?: string | null;
+  multiclass_prerequisites?: string | null;
+  spellcasting_ability?: string | null;
+  spellcasting_focus?: string | null;
+  awakening_features?: Array<{ name: string; description: string; level: number }> | null;
+  job_traits?: Array<{ name: string; description: string; type: string; frequency?: string }> | null;
+  ability_score_improvements?: Record<string, number> | null;
+  // Condition detail support (static fallback)
+  condition_effects?: string[] | null;
+  condition_duration?: string | null;
+  condition_removal?: string[] | null;
+  condition_save?: { type?: string; dc?: number; description?: string } | null;
+  // Monarch detail support (static fallback)
+  monarch_title?: string | null;
+  monarch_theme?: string | null;
+  monarch_damage_type?: string | null;
+  monarch_manifestation?: string | null;
+  monarch_corruption_risk?: string | null;
+  monarch_lore?: string | null;
+  monarch_abilities?: Array<Record<string, unknown>> | null;
+  monarch_features?: Array<Record<string, unknown>> | null;
+  monarch_mechanics?: Record<string, unknown> | null;
+  monarch_requirements?: Record<string, unknown> | null;
+  // Feat detail support
+  benefits?: string[] | null;
+  // Path detail support
+  path_level?: number | null;
+  job_id?: string | null;
+  job_name?: string | null;
+  path_tier?: number | null;
 }
 
 export interface StaticDataProvider {
@@ -227,6 +279,30 @@ type StaticJobSource = {
   primary_abilities?: string[];
   rank?: string;
   image?: string;
+  // SRD 5e Class Features
+  hitDie?: string;
+  primaryAbility?: string;
+  savingThrows?: string[];
+  skillChoices?: string[];
+  armorProficiencies?: string[];
+  weaponProficiencies?: string[];
+  toolProficiencies?: string[];
+  startingEquipment?: string[][];
+  hitPointsAtFirstLevel?: string;
+  hitPointsAtHigherLevels?: string;
+  multiclassPrerequisites?: string;
+  spellcasting?: {
+    ability: string;
+    focus?: string;
+    cantripsKnown?: number[];
+    spellsKnown?: number[];
+    spellSlots?: Record<string, number[]>;
+  };
+  // System Ascendant features
+  awakeningFeatures?: Array<{ name: string; description: string; level: number }>;
+  jobTraits?: Array<{ name: string; description: string; type: string; frequency?: string }>;
+  abilityScoreImprovements?: Record<string, number>;
+  source?: string;
 };
 
 type StaticSpellSource = {
@@ -296,6 +372,26 @@ type StaticBackgroundSource = {
   description: string;
   skills?: string[];
   image?: string;
+  rank?: string;
+  // Full 5e template fields
+  skillProficiencies?: string[];
+  toolProficiencies?: string[];
+  languages?: string[];
+  equipment?: string[];
+  features?: Array<{ name: string; description: string } | string>;
+  personalityTraits?: string[];
+  ideals?: string[];
+  bonds?: string[];
+  flaws?: string[];
+  dangers?: string[];
+  abilities?: string[];
+  source?: string;
+  suggestedCharacteristics?: {
+    personality?: string[];
+    ideal?: string[];
+    bond?: string[];
+    flaw?: string[];
+  };
 };
 
 type StaticMonarchSource = {
@@ -305,6 +401,36 @@ type StaticMonarchSource = {
   title?: string;
   theme?: string;
   rank?: string;
+  image?: string;
+  type?: string;
+  tags?: string[];
+  source_book?: string;
+  requirements?: {
+    quest_completion?: string;
+    dm_verification?: boolean;
+    prerequisite_job?: string;
+    power_level?: number;
+  };
+  abilities?: Array<{
+    name: string;
+    description: string;
+    type: string;
+    frequency?: string;
+    dc?: number;
+    spell_slot?: number;
+    power_level?: number;
+  }>;
+  features?: Array<{
+    name: string;
+    description: string;
+    power_level?: number;
+  }>;
+  mechanics?: {
+    stat_bonuses?: Record<string, number>;
+    special_abilities?: string[];
+    restrictions?: string[];
+    progression?: Record<string, string[]>;
+  };
 };
 
 // Transform static data to match UI interface
@@ -429,6 +555,11 @@ function transformItem(item: StaticItemSource): StaticCompendiumEntry {
 }
 
 function transformJob(job: StaticJobSource): StaticCompendiumEntry {
+  // Parse hit die number from string like "1d10"
+  const hitDieNumber = job.hitDie ? parseInt(job.hitDie.replace(/\D/g, '').slice(-2) || '0', 10) : null;
+  // Skill choice count: 5e standard is 2 for most classes, 4 for rogue
+  const skillChoiceCount = job.skillChoices ? (job.name === 'Assassin' ? 4 : 2) : null;
+
   return {
     id: job.id || job.name.toLowerCase().replace(/\s+/g, '-'),
     name: job.name,
@@ -436,12 +567,31 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
     description: job.description,
     created_at: new Date().toISOString(),
     tags: job.primary_abilities || [],
-    source_book: 'System Ascendant Canon',
+    source_book: job.source || 'System Ascendant Canon',
     image_url: job.image,
+    rank: job.rank || null,
     rarity: job.rank === 'S' ? 'legendary' :
             job.rank === 'A' ? 'epic' :
             job.rank === 'B' ? 'rare' :
             job.rank === 'C' ? 'uncommon' : 'common',
+    // Job-specific fields for JobDetail.tsx
+    hit_die: hitDieNumber,
+    primary_abilities: job.primary_abilities || (job.primaryAbility ? [job.primaryAbility] : null),
+    saving_throw_proficiencies: job.savingThrows || null,
+    armor_proficiencies: job.armorProficiencies || null,
+    weapon_proficiencies: job.weaponProficiencies || null,
+    tool_proficiencies: job.toolProficiencies || null,
+    skill_choices: job.skillChoices || null,
+    skill_choice_count: skillChoiceCount,
+    starting_equipment: job.startingEquipment || null,
+    hit_points_at_first_level: job.hitPointsAtFirstLevel || null,
+    hit_points_at_higher_levels: job.hitPointsAtHigherLevels || null,
+    multiclass_prerequisites: job.multiclassPrerequisites || null,
+    spellcasting_ability: job.spellcasting?.ability || null,
+    spellcasting_focus: job.spellcasting?.focus || null,
+    awakening_features: job.awakeningFeatures || null,
+    job_traits: job.jobTraits || null,
+    ability_score_improvements: job.abilityScoreImprovements || null,
     level: undefined
   };
 }
@@ -583,16 +733,55 @@ function transformRune(rune: StaticRuneSource): StaticCompendiumEntry {
 }
 
 function transformBackground(background: StaticBackgroundSource): StaticCompendiumEntry {
+  // Resolve skill proficiencies from either new or legacy field
+  const skillProfs = background.skillProficiencies || background.skills || [];
+
+  // Resolve structured features into feature_name/feature_description (primary feature)
+  const structuredFeatures: Array<{ name: string; description: string }> = [];
+  if (Array.isArray(background.features)) {
+    for (const f of background.features) {
+      if (typeof f === 'object' && f !== null && 'name' in f) {
+        structuredFeatures.push(f as { name: string; description: string });
+      }
+    }
+  }
+  const primaryFeature = structuredFeatures[0] || null;
+
+  // Build equipment string from array
+  const equipmentStr = Array.isArray(background.equipment) && background.equipment.length > 0
+    ? background.equipment.join(', ')
+    : null;
+
+  // Resolve personality traits from direct fields or suggestedCharacteristics
+  const personalityTraits = background.personalityTraits || background.suggestedCharacteristics?.personality || [];
+  const ideals = background.ideals || background.suggestedCharacteristics?.ideal || [];
+  const bonds = background.bonds || background.suggestedCharacteristics?.bond || [];
+  const flaws = background.flaws || background.suggestedCharacteristics?.flaw || [];
+
   return {
     id: background.id || background.name.toLowerCase().replace(/\s+/g, '-'),
     name: background.name,
     display_name: background.name,
     description: background.description,
     created_at: new Date().toISOString(),
-    tags: background.skills || [],
-    source_book: 'System Ascendant Canon',
+    tags: skillProfs,
+    source_book: background.source || 'System Ascendant Canon',
     image_url: background.image,
-    rarity: 'uncommon'
+    rarity: background.rank?.toLowerCase() || 'uncommon',
+    rank: background.rank || null,
+    // Background-specific fields for BackgroundDetail.tsx
+    skill_proficiencies: skillProfs.length > 0 ? skillProfs : null,
+    tool_proficiencies: background.toolProficiencies && background.toolProficiencies.length > 0 ? background.toolProficiencies : null,
+    language_count: background.languages ? background.languages.length : null,
+    languages: background.languages || null,
+    starting_equipment: equipmentStr,
+    feature_name: primaryFeature?.name || null,
+    feature_description: primaryFeature?.description || null,
+    personality_traits: personalityTraits.length > 0 ? personalityTraits : null,
+    ideals: ideals.length > 0 ? ideals : null,
+    bonds: bonds.length > 0 ? bonds : null,
+    flaws: flaws.length > 0 ? flaws : null,
+    background_features: structuredFeatures.length > 0 ? structuredFeatures : null,
   };
 }
 
@@ -603,14 +792,23 @@ function transformMonarch(monarch: StaticMonarchSource): StaticCompendiumEntry {
     display_name: monarch.name,
     description: monarch.description,
     created_at: new Date().toISOString(),
-    tags: ['monarch', monarch.theme].filter(Boolean) as string[],
-    source_book: 'System Ascendant Canon',
+    tags: monarch.tags || ['monarch', monarch.theme].filter(Boolean) as string[],
+    source_book: monarch.source_book || 'System Ascendant Canon',
+    image_url: monarch.image,
     title: monarch.title,
     theme: monarch.theme,
+    rank: monarch.rank || null,
     rarity: monarch.rank === 'S' ? 'legendary' :
             monarch.rank === 'A' ? 'epic' :
             monarch.rank === 'B' ? 'rare' :
-            monarch.rank === 'C' ? 'uncommon' : 'common'
+            monarch.rank === 'C' ? 'uncommon' : 'common',
+    // Monarch-specific fields for MonarchDetail.tsx
+    monarch_title: monarch.title || null,
+    monarch_theme: monarch.theme || null,
+    monarch_abilities: monarch.abilities as Array<Record<string, unknown>> || null,
+    monarch_features: monarch.features as Array<Record<string, unknown>> || null,
+    monarch_mechanics: monarch.mechanics as Record<string, unknown> || null,
+    monarch_requirements: monarch.requirements as Record<string, unknown> || null,
   };
 }
 
@@ -647,6 +845,10 @@ export const staticDataProvider: StaticDataProvider = {
       source_book: path.source,
       image_url: path.image,
       level: path.requirements.level,
+      path_level: path.requirements.level,
+      job_id: path.jobId,
+      job_name: path.jobName,
+      path_tier: path.tier,
       prerequisites: path.requirements.prerequisites?.join(', '),
       rarity: path.tier === 3 ? 'legendary' : path.tier === 2 ? 'very_rare' : 'rare',
       jobId: path.jobId,
@@ -811,7 +1013,8 @@ export const staticDataProvider: StaticDataProvider = {
       source_book: feat.source,
       prerequisites: feat.prerequisites ? 
         (typeof feat.prerequisites === 'string' ? feat.prerequisites :
-        Object.entries(feat.prerequisites).map(([key, value]) => `${key}: ${value}`).join(', ')) : undefined
+        Object.entries(feat.prerequisites).map(([key, value]) => `${key}: ${value}`).join(', ')) : undefined,
+      benefits: feat.benefits ? [feat.benefits] : null,
     }));
   },
 
@@ -841,8 +1044,15 @@ export const staticDataProvider: StaticDataProvider = {
         type?: string;
         rarity?: string;
         image?: string;
-        requirements?: { level?: number } | null;
+        requirements?: { level?: number; class?: string; job?: string; ability?: string; score?: number } | null;
         source?: string;
+        activation?: { type?: string; time?: string } | null;
+        duration?: { type?: string; time?: string } | null;
+        range?: { type?: string; distance?: number } | null;
+        components?: { verbal?: boolean; somatic?: boolean; material?: boolean; material_desc?: string } | null;
+        effects?: { primary?: string; secondary?: string; tertiary?: string } | null;
+        limitations?: { uses?: string; cooldown?: string; conditions?: string[] } | null;
+        flavor?: string;
       }
     >('powers');
     const filtered = filterBySearch(powers, search, ['name', 'description', 'type']);
@@ -861,7 +1071,15 @@ export const staticDataProvider: StaticDataProvider = {
       theme: power.type,
       prerequisites: power.requirements ? JSON.stringify(power.requirements) : null,
       rarity: power.rarity,
-      level: power.requirements?.level
+      level: power.requirements?.level,
+      // Rich fields for detail views
+      activation: power.activation || null,
+      duration: power.duration || null,
+      range: power.range || null,
+      components: power.components || null,
+      effects: power.effects || null,
+      limitations: power.limitations || null,
+      flavor: power.flavor || null,
     }));
   },
 

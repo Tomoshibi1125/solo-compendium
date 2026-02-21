@@ -204,8 +204,18 @@ export const useEquipment = (characterId: string) => {
       }
       return data;
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ['equipment', characterId] });
+      // D&D Beyond parity: auto-recalculate AC/speed when equipment is added
+      if (!isLocalCharacterId(characterId)) {
+        try {
+          const { autoApplyEquipmentModifiers } = await import('@/lib/automation');
+          await autoApplyEquipmentModifiers(characterId);
+          queryClient.invalidateQueries({ queryKey: ['character', characterId] });
+        } catch {
+          // Best-effort
+        }
+      }
     },
     onError: (error) => {
       logErrorWithContext(error, 'useEquipment.addEquipment');
@@ -246,9 +256,19 @@ export const useEquipment = (characterId: string) => {
       }
       return data;
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ['equipment', characterId] });
       queryClient.invalidateQueries({ queryKey: ['character', characterId] });
+      // D&D Beyond parity: auto-recalculate AC/speed when equipment changes
+      if (!isLocalCharacterId(characterId)) {
+        try {
+          const { autoApplyEquipmentModifiers } = await import('@/lib/automation');
+          await autoApplyEquipmentModifiers(characterId);
+          queryClient.invalidateQueries({ queryKey: ['character', characterId] });
+        } catch {
+          // Best-effort — don't block the UI
+        }
+      }
     },
     onError: (error) => {
       logErrorWithContext(error, 'useEquipment.updateEquipment');
@@ -285,9 +305,19 @@ export const useEquipment = (characterId: string) => {
         throw error;
       }
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ['equipment', characterId] });
       queryClient.invalidateQueries({ queryKey: ['character', characterId] });
+      // D&D Beyond parity: auto-recalculate AC/speed when equipment is removed
+      if (!isLocalCharacterId(characterId)) {
+        try {
+          const { autoApplyEquipmentModifiers } = await import('@/lib/automation');
+          await autoApplyEquipmentModifiers(characterId);
+          queryClient.invalidateQueries({ queryKey: ['character', characterId] });
+        } catch {
+          // Best-effort
+        }
+      }
     },
     onError: (error) => {
       logErrorWithContext(error, 'useEquipment.removeEquipment');

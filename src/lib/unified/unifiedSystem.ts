@@ -27,7 +27,7 @@ import {
   performUnifiedAttack,
   performUnifiedSavingThrow,
   applySystemFavor as applySystemFavorUtil,
-  applyMonarchPower as applyMonarchPowerUtil,
+  applyRegentPower as applyRegentPowerUtil,
   calculateUnifiedInitiative
 } from './combatSystem';
 
@@ -124,13 +124,18 @@ export class UnifiedSystem {
     return result;
   }
 
-  // Apply Monarch Power (replaces Umbral Energy)
-  applyMonarchPower(cost: number, effect: string) {
-    const result = applyMonarchPowerUtil(this.character, cost, effect);
+  // Apply Regent Power (quest/DM-gated regent abilities)
+  applyRegentPower(cost: number, effect: string) {
+    const result = applyRegentPowerUtil(this.character, cost, effect);
     if (result.success) {
       this.updateCharacter(result.newCharacter);
     }
     return result;
+  }
+
+  /** @deprecated Use applyRegentPower instead */
+  applyMonarchPower(cost: number, effect: string) {
+    return this.applyRegentPower(cost, effect);
   }
 
   // Level up character
@@ -244,7 +249,7 @@ export class UnifiedSystem {
         current: this.character.systemFavorCurrent,
         max: this.character.systemFavorMax
       },
-      monarchPower: this.character.activeMonarch ? {
+      regentPower: (this.character.activeRegent ?? this.character.activeMonarch) ? {
         current: this.character.systemFavorCurrent,
         max: this.character.systemFavorMax
       } : undefined,
@@ -253,7 +258,7 @@ export class UnifiedSystem {
       saves: this.character.savingThrowProficiencies,
       equipment: this.character.equipment.length,
       powers: this.character.knownPowers.length,
-      monarchUnlocks: this.character.monarchUnlocks?.length || 0,
+      regentUnlocks: (this.character.regentUnlocks ?? this.character.monarchUnlocks)?.length || 0,
       shadowSoldiers: this.character.shadowSoldiers?.length || 0,
       runeInscriptions: this.character.runeInscriptions?.length || 0
     };
@@ -271,7 +276,7 @@ export class UnifiedSystem {
       movementRemaining: this.combatState.movementRemaining,
       concentrationActive: this.combatState.concentrationActive,
       systemFavorUsed: this.combatState.systemFavorUsed,
-      monarchPowerUsed: this.combatState.monarchPowerUsed
+      regentPowerUsed: this.combatState.regentPowerUsed ?? this.combatState.monarchPowerUsed
     };
   }
 };
@@ -399,7 +404,7 @@ export const UNIFIED_CONFIG = {
   MAX_RUNE_INSCRIPTIONS: 10,
   
   // System Ascendant specific
-  MAX_MONARCH_UNLOCKS: 10,
+  MAX_REGENT_UNLOCKS: 10,
   MAX_SHADOW_SOLDIERS: 5,
   
   // Combat ranges
@@ -443,9 +448,9 @@ export const UnifiedUtils = {
     return spellcasters.includes(classType);
   },
 
-  // Check if character uses shadow energy (monarch-only)
-  usesShadowEnergy(classType: UnifiedClass, isMonarch: boolean = false): boolean {
-    return isMonarch; // Only monarchs can use shadow energy
+  // Check if character uses shadow energy (regent-only)
+  usesShadowEnergy(_classType: UnifiedClass, isRegent: boolean = false): boolean {
+    return isRegent; // Only regents can use shadow energy
   },
 
   // Get class primary abilities

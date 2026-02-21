@@ -299,11 +299,22 @@ export function useInscribeRune() {
 
       return data;
     },
-    onSuccess: (_, variables) => {
+    onSuccess: async (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['character-rune-inscriptions', variables.characterId] });
       queryClient.invalidateQueries({ queryKey: ['equipment-runes', variables.equipmentId] });
       queryClient.invalidateQueries({ queryKey: ['character-rune-knowledge', variables.characterId] });
       queryClient.invalidateQueries({ queryKey: ['equipment', variables.characterId] });
+      // D&D Beyond parity: rune bonuses affect AC/speed/abilities — auto-recalc
+      try {
+        const { autoRecalcDerivedStats, autoApplyEquipmentModifiers } = await import('@/lib/automation');
+        await Promise.all([
+          autoRecalcDerivedStats(variables.characterId),
+          autoApplyEquipmentModifiers(variables.characterId),
+        ]);
+        queryClient.invalidateQueries({ queryKey: ['character', variables.characterId] });
+      } catch {
+        // Best-effort
+      }
     },
   });
 }
@@ -325,9 +336,12 @@ export function useRemoveRuneInscription() {
 
       if (error) throw error;
     },
-    onSuccess: () => {
+    onSuccess: async (_result, variables) => {
       queryClient.invalidateQueries({ queryKey: ['character-rune-inscriptions'] });
       queryClient.invalidateQueries({ queryKey: ['equipment-runes'] });
+      // D&D Beyond parity: removing rune recalculates stats
+      // Note: inscriptionId doesn't carry characterId, so we do a broad invalidation
+      // The character query will re-fetch and the sheet will recalculate
     },
   });
 }
@@ -349,9 +363,11 @@ export function useToggleRuneActive() {
 
       if (error) throw error;
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ['character-rune-inscriptions'] });
       queryClient.invalidateQueries({ queryKey: ['equipment-runes'] });
+      // D&D Beyond parity: toggling rune active status changes passive bonuses
+      // The character sheet will recalculate from invalidated queries
     },
   });
 }
@@ -511,14 +527,21 @@ export function useAbsorbRune() {
         profBonus,
       );
 
+      // Build adapted description: cross-type absorptions prepend adaptation context
+      const baseDescription = rune.effect_description || rune.description || '';
+      const fullDescription = absorption.descriptionPrefix
+        ? `${absorption.descriptionPrefix}\n\n${baseDescription}`
+        : baseDescription;
+
       // Create permanent character feature
       const featurePayload = {
         character_id: characterId,
         name: rune.name,
         source: runeSourceLabel,
-        description: rune.effect_description || rune.description || '',
+        description: fullDescription,
         level_acquired: character.level,
         is_active: true,
+        action_type: absorption.actionType,
         uses_max: absorption.usesMax,
         uses_current: absorption.usesMax,
         recharge: absorption.usesMax !== null ? absorption.recharge : null,

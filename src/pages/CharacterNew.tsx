@@ -354,11 +354,31 @@ const CharacterNew = () => {
         exhaustion_level: 0,
       });
 
-      // Update abilities
+      // Add level 1 features from compendium
+      const {
+        addLevel1Features,
+        addBackgroundFeatures,
+        addStartingEquipment,
+        addStartingPowers,
+        addJobAwakeningBenefitsForLevel,
+        getJobASI,
+      } = await import('@/lib/characterCreation');
+
+      // Apply job awakening ASI bonuses to ability scores
+      const jobASI = getJobASI(job.name);
+      const finalAbilities = { ...abilities };
+      for (const [abilityKey, bonus] of Object.entries(jobASI)) {
+        const key = abilityKey as AbilityScore;
+        if (key in finalAbilities) {
+          finalAbilities[key] += bonus;
+        }
+      }
+
+      // Update abilities (with job ASI applied)
       if (isLocalCharacterId(character.id)) {
-        setLocalAbilities(character.id, abilities as unknown as Record<DbAbilityScore, number>);
+        setLocalAbilities(character.id, finalAbilities as unknown as Record<DbAbilityScore, number>);
       } else {
-        const abilityUpdates = Object.entries(abilities).map(([ability, score]) => ({
+        const abilityUpdates = Object.entries(finalAbilities).map(([ability, score]) => ({
           character_id: character.id,
           ability: ability as AbilityScore,
           score: score,
@@ -367,15 +387,6 @@ const CharacterNew = () => {
           .from('character_abilities')
           .upsert(abilityUpdates, { onConflict: 'character_id,ability' });
       }
-
-      // Add level 1 features from compendium
-      const {
-        addLevel1Features,
-        addBackgroundFeatures,
-        addStartingEquipment,
-        addStartingPowers,
-        addJobAwakeningBenefitsForLevel,
-      } = await import('@/lib/characterCreation');
       await addLevel1Features(character.id, job.id, selectedPathRow?.id);
       await addJobAwakeningBenefitsForLevel(character.id, job.name, 1);
 
@@ -385,6 +396,19 @@ const CharacterNew = () => {
 
       // Add starting powers/cantrips for caster jobs
       await addStartingPowers(character.id, job);
+
+      // D&D Beyond parity: auto-calculate derived stats after all creation data is saved
+      if (!isLocalCharacterId(character.id)) {
+        try {
+          const { autoRecalcDerivedStats, autoApplyEquipmentModifiers } = await import('@/lib/automation');
+          await Promise.all([
+            autoRecalcDerivedStats(character.id),
+            autoApplyEquipmentModifiers(character.id),
+          ]);
+        } catch {
+          // Best-effort — don't block creation
+        }
+      }
 
       // If any level-1 features require selections, prompt the player to complete them.
       try {

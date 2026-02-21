@@ -15,7 +15,7 @@ interface MonarchData {
   flavor_text?: string;
   theme: string;
   damage_type?: string;
-  unlock_level: number;
+  unlock_level?: number;
   prerequisites?: string;
   primary_abilities?: string[];
   manifestation_description?: string;
@@ -92,7 +92,7 @@ export const MonarchDetail = ({ data }: { data: MonarchData }) => {
           <p className="text-foreground">{formatMonarchVernacular(data.description)}</p>
           
           <div className="flex flex-wrap gap-2">
-            <Badge className="bg-amber-500 text-white">Level {data.unlock_level}+</Badge>
+            <Badge className="bg-amber-500 text-white">Quest / DM Approval</Badge>
             {data.damage_type && <Badge variant="secondary">{formatMonarchVernacular(data.damage_type)} Damage</Badge>}
             {data.primary_abilities?.map((ability) => (
               <Badge key={ability} variant="outline">{formatMonarchVernacular(ability)}</Badge>

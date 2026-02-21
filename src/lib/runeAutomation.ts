@@ -267,16 +267,25 @@ export type RuneAbsorptionResult = {
   usesMax: number | null;
   /** Description of how the ability was adapted */
   adaptationNote: string;
+  /** Action type for the learned ability */
+  actionType: 'action' | 'bonus-action' | 'reaction' | 'passive';
+  /** Prefix to prepend to the ability description when cross-type */
+  descriptionPrefix: string;
 };
 
 /**
  * Determine how a rune's ability should be adapted when absorbed.
  *
+ * Solo Leveling model: runes are one-time-use skill books.
+ *
  * Same-type (martial absorbs martial, caster absorbs caster): ability works
  * as defined by the rune (at-will or its native uses).
  *
- * Cross-type (caster absorbs martial, or martial absorbs caster): ability
- * becomes proficiency-bonus uses per long rest.
+ * Cross-type:
+ *  - Martial absorbs caster rune → spell becomes a martial technique
+ *    (physical manifestation, STR/AGI-flavored, proficiency bonus uses/long rest)
+ *  - Caster absorbs martial rune → martial ability becomes a magical construct
+ *    (arcane/psychic manifestation, INT/PRE-flavored, proficiency bonus uses/long rest)
  */
 export function resolveRuneAbsorption(
   runeType: string | null,
@@ -300,11 +309,21 @@ export function resolveRuneAbsorption(
 
   if (isCrossType) {
     // Cross-type: limited uses per long rest = proficiency bonus
+    const descriptionPrefix = isMartial
+      ? '[Adapted Technique] This spell-like ability has been absorbed and manifests as a physical technique channeled through your body. Uses STR or AGI instead of a spellcasting ability.'
+      : '[Arcane Adaptation] This martial ability has been absorbed and manifests as a magical construct shaped by your will. Uses your spellcasting ability modifier.';
+
+    const actionType = isMartial ? 'action' as const : 'action' as const;
+
     return {
       isCrossType: true,
       recharge: 'long-rest',
       usesMax: proficiencyBonus,
-      adaptationNote: `Cross-type absorption: ${proficiencyBonus} uses per long rest`,
+      adaptationNote: isMartial
+        ? `Cross-type: spell adapted as martial technique. ${proficiencyBonus} uses per long rest.`
+        : `Cross-type: martial ability adapted as magical construct. ${proficiencyBonus} uses per long rest.`,
+      actionType,
+      descriptionPrefix,
     };
   }
 
@@ -316,6 +335,8 @@ export function resolveRuneAbsorption(
       recharge: 'at-will',
       usesMax: null,
       adaptationNote: 'Natural absorption: at-will',
+      actionType: 'action',
+      descriptionPrefix: '',
     };
   }
 
@@ -328,6 +349,8 @@ export function resolveRuneAbsorption(
     recharge,
     usesMax: nativeUses,
     adaptationNote: `Natural absorption: ${nativeUses} uses per ${recharge}`,
+    actionType: 'action',
+    descriptionPrefix: '',
   };
 }
 

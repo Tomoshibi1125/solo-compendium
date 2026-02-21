@@ -7,6 +7,7 @@ import type { Database } from '@/integrations/supabase/types';
 import { supabase } from '@/integrations/supabase/client';
 import { getProficiencyBonus, getSystemFavorDie } from '@/types/system-rules';
 import { error as logError } from '@/lib/logger';
+import { applyEquipmentModifiers } from '@/lib/equipmentModifiers';
 
 function getSystemFavorMax(level: number): number {
   if (level <= 4) return 3;
@@ -175,12 +176,124 @@ export async function autoUpdateFeatureUses(characterId: string): Promise<void> 
 }
 
 /**
- * Auto-apply equipment modifiers to character stats
+ * Auto-apply equipment modifiers to character stats.
+ * D&D Beyond parity: equipping / un-equipping armor instantly updates
+ * the persisted AC and speed on the character row.
  */
-export async function autoApplyEquipmentModifiers(_characterId: string): Promise<void> {
-  // This would recalculate AC, speed, ability modifiers from equipment
-  // Implementation would use equipmentModifiers.ts functions
-  // Called when equipment is equipped/unequipped
+export async function autoApplyEquipmentModifiers(characterId: string): Promise<void> {
+  const { data: character } = await supabase
+    .from('characters')
+    .select('id, armor_class, speed, abilities:character_abilities(*)')
+    .eq('id', characterId)
+    .single();
+
+  if (!character) return;
+
+  const { data: equipmentRows } = await supabase
+    .from('character_equipment')
+    .select('properties, is_equipped, is_attuned, requires_attunement')
+    .eq('character_id', characterId);
+
+  if (!equipmentRows) return;
+
+  // Resolve ability scores into a flat record
+  const abilities: Record<string, number> = {};
+  const abilityRows = (character as any).abilities as Array<{ ability: string; score: number }> | null;
+  if (Array.isArray(abilityRows)) {
+    for (const row of abilityRows) {
+      abilities[row.ability] = row.score;
+    }
+  }
+
+  const agiScore = abilities['AGI'] ?? 10;
+  const agiMod = Math.floor((agiScore - 10) / 2);
+  const baseAC = 10 + agiMod;
+  const baseSpeed = 30; // default 5e speed
+
+  const result = applyEquipmentModifiers(
+    baseAC,
+    baseSpeed,
+    abilities,
+    equipmentRows.map((e) => ({
+      properties: (e.properties as string[] | null) || [],
+      is_equipped: e.is_equipped ?? false,
+      is_attuned: e.is_attuned ?? false,
+      requires_attunement: e.requires_attunement ?? false,
+    }))
+  );
+
+  // Persist recalculated AC and speed to character row
+  await supabase
+    .from('characters')
+    .update({
+      armor_class: result.armorClass,
+      speed: Math.max(result.speed, 0),
+    })
+    .eq('id', characterId);
+}
+
+/**
+ * Auto-recalculate and persist all derived stats.
+ * D&D Beyond parity: changing level or abilities instantly updates
+ * proficiency bonus, system favor, spell save DC, and passive perception.
+ */
+export async function autoRecalcDerivedStats(characterId: string): Promise<void> {
+  const { data: character } = await supabase
+    .from('characters')
+    .select('id, level, job, skill_proficiencies, saving_throw_proficiencies, abilities:character_abilities(*)')
+    .eq('id', characterId)
+    .single();
+
+  if (!character) return;
+
+  // Resolve ability scores
+  const abilities: Record<string, number> = {};
+  const abilityRows = (character as any).abilities as Array<{ ability: string; score: number }> | null;
+  if (Array.isArray(abilityRows)) {
+    for (const row of abilityRows) {
+      abilities[row.ability] = row.score;
+    }
+  }
+
+  const level = character.level;
+  const profBonus = getProficiencyBonus(level);
+  const favorDie = getSystemFavorDie(level);
+  const favorMax = getSystemFavorMax(level);
+
+  // Spell save DC = 8 + proficiency bonus + spellcasting ability modifier
+  let spellSaveDC: number | null = null;
+  const { getSpellcastingAbility } = await import('@/lib/characterCalculations');
+  const castingAbility = getSpellcastingAbility(character.job);
+  if (castingAbility) {
+    const castingScore = abilities[castingAbility] ?? 10;
+    const castingMod = Math.floor((castingScore - 10) / 2);
+    spellSaveDC = 8 + profBonus + castingMod;
+  }
+
+  // Passive Perception = 10 + SENSE mod + (prof bonus if proficient in Perception)
+  const senseScore = abilities['SENSE'] ?? 10;
+  const senseMod = Math.floor((senseScore - 10) / 2);
+  const skillProfs = (character.skill_proficiencies as string[] | null) || [];
+  const isPerceptionProficient = skillProfs.some(
+    (s) => s.toLowerCase() === 'perception'
+  );
+  const passivePerception = 10 + senseMod + (isPerceptionProficient ? profBonus : 0);
+
+  const updates: Record<string, unknown> = {
+    proficiency_bonus: profBonus,
+    system_favor_die: favorDie,
+    system_favor_max: favorMax,
+    passive_perception: passivePerception,
+  };
+
+  if (spellSaveDC !== null) {
+    updates.spell_save_dc = spellSaveDC;
+  }
+
+  await supabase
+    .from('characters')
+    .update(updates)
+    .eq('id', characterId);
 }
 
 /**

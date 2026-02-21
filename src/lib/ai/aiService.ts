@@ -974,7 +974,19 @@ export class AIServiceManager {
       'suggest-style': `${jsonInstruction}\nSuggest variations of the given style that would work for different scenarios while maintaining the core aesthetic. Respond with JSON: {"variations":[]}`,
       'filter-content': `${jsonInstruction}\nAnalyze the given content for appropriateness. Respond with JSON: {"isAppropriate":true,"issues":[],"suggestions":[]}`,
       'create-variation': `${jsonInstruction}\nCreate a variation of the given content that maintains core elements but adds a different twist. Respond with JSON: {"variation":""}`,
-      'generate-content': `You are an expert tabletop RPG game master and narrative designer for a System Ascendant inspired setting. Generate polished, player-ready content with clear sections and labels. Return plain text only. Avoid JSON, Markdown fences, or code blocks.`,
+      'generate-content': `You are an expert tabletop RPG game master and narrative designer for System Ascendant, a 5e SRD-based TTRPG with Solo Leveling / manhwa-inspired flavor.
+
+CORE RULES CONTEXT:
+- Uses SRD 5e mechanics: proficiency bonus (ceil(level/4)+1), ability modifiers (floor((score-10)/2)), spell slots, hit dice, armor class, saving throws, skill checks.
+- Ability scores use System Ascendant names: STR (Strength), AGI (Agility/Dexterity), VIT (Vitality/Constitution), INT (Intelligence), SENSE (Sense/Wisdom), PRE (Presence/Charisma).
+- Classes are called "Jobs" (e.g., Warrior, Mage, Assassin, Esper, Oracle, Crusader, Contractor, Stalker, Herald, Invoker, Resonant, Technomancer, Revenant, Healer, Warden, Ranger, Techsmith, Holy Knight, Berserker, Bulwark, Striker).
+- Subclasses are called "Paths". The DM is called "Warden".
+- Regents (formerly Monarchs) are quest/DM-gated power overlays unlocked through quests, not level gates. Two regents unlock the Gemini Protocol (sovereign fusion).
+- Runes follow the Solo Leveling model: one-time-use consumable skill books that permanently teach abilities when absorbed. Cross-type absorption adapts the ability (martial absorbs spell → physical technique; caster absorbs martial → magical construct) with proficiency bonus uses per long rest.
+- Shadow Soldiers require the Umbral Regent unlock. System Favor replaces Inspiration.
+- Equipment uses 5e armor rules: light (base + AGI), medium (base + min(AGI,2)), heavy (fixed AC, no AGI). Max 3 attuned items.
+
+Generate polished, player-ready content with clear sections and labels. Use System Ascendant terminology. Return plain text only. Avoid JSON, Markdown fences, or code blocks.`,
     };
     
     return prompts[type] || prompts['enhance-prompt'];

@@ -40,7 +40,7 @@ export const useUpdateCharacterAbilities = () => {
 
       return abilities;
     },
-    onSuccess: (abilities, variables) => {
+    onSuccess: async (abilities, variables) => {
       queryClient.setQueryData(['character', variables.characterId], (old) => {
         if (!old) return old;
         const previous = old as CharacterWithAbilities;
@@ -49,6 +49,19 @@ export const useUpdateCharacterAbilities = () => {
           abilities,
         };
       });
+      // D&D Beyond parity: auto-recalculate derived stats when abilities change
+      if (!isLocalCharacterId(variables.characterId)) {
+        try {
+          const { autoRecalcDerivedStats, autoApplyEquipmentModifiers } = await import('@/lib/automation');
+          await Promise.all([
+            autoRecalcDerivedStats(variables.characterId),
+            autoApplyEquipmentModifiers(variables.characterId),
+          ]);
+          queryClient.invalidateQueries({ queryKey: ['character', variables.characterId] });
+        } catch {
+          // Best-effort — don't block the UI
+        }
+      }
     },
     onError: (error) => {
       toast({

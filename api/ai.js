@@ -94,13 +94,8 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Prompt too long' });
   }
 
-  // Build Gemini request
-  const contents = [];
-  if (systemPrompt && typeof systemPrompt === 'string') {
-    contents.push({ role: 'user', parts: [{ text: `System instructions: ${systemPrompt}` }] });
-    contents.push({ role: 'model', parts: [{ text: 'Understood. I will follow those instructions.' }] });
-  }
-  contents.push({ role: 'user', parts: [{ text: prompt }] });
+  // Build Gemini request using the proper systemInstruction field (Gemini 2.0+)
+  const contents = [{ role: 'user', parts: [{ text: prompt }] }];
 
   const geminiBody = {
     contents,
@@ -108,7 +103,19 @@ export default async function handler(req, res) {
       maxOutputTokens: Math.min(maxTokens || MAX_OUTPUT_TOKENS, MAX_OUTPUT_TOKENS),
       temperature: 0.8,
     },
+    // Reduce safety filtering for TTRPG fantasy content (combat descriptions, etc.)
+    safetySettings: [
+      { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_ONLY_HIGH' },
+      { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_ONLY_HIGH' },
+      { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+      { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_ONLY_HIGH' },
+    ],
   };
+
+  // Use the dedicated systemInstruction field (cleaner than multi-turn hack)
+  if (systemPrompt && typeof systemPrompt === 'string') {
+    geminiBody.systemInstruction = { parts: [{ text: systemPrompt }] };
+  }
 
   try {
     const controller = new AbortController();

@@ -378,6 +378,17 @@ const CharacterLevelUp = () => {
         logger.error('Failed to auto-update feature uses:', error);
       }
 
+      // D&D Beyond parity: auto-recalculate all derived stats (spell save DC, passive perception, etc.)
+      try {
+        const { autoRecalcDerivedStats, autoApplyEquipmentModifiers } = await import('@/lib/automation');
+        await Promise.all([
+          autoRecalcDerivedStats(character.id),
+          autoApplyEquipmentModifiers(character.id),
+        ]);
+      } catch (error) {
+        logger.error('Failed to auto-recalculate derived stats:', error);
+      }
+
       // Emit domain event
       try {
         const levelUpEvent: CharacterLevelUpEvent = {

@@ -61,7 +61,7 @@ export const ProtocolWarden: React.FC<ProtocolWardenProps> = ({
     const character = characters.find(c => c.id === selectedCharacter);
     if (!character) return false;
     
-    return character.level >= quest.requirements.level;
+    return character.level >= (quest.requirements.level ?? 0);
   };
 
   const getQuestStatusColor = (quest: RegentQuest): string => {
@@ -71,7 +71,7 @@ export const ProtocolWarden: React.FC<ProtocolWardenProps> = ({
   };
 
   const getCharacterEligibility = (character: Character, quest: RegentQuest): boolean => {
-    return character.level >= quest.requirements.level;
+    return character.level >= (quest.requirements.level ?? 0);
   };
 
   return (

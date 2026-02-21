@@ -76,9 +76,11 @@ export interface UnifiedCharacter {
   systemFavorMax: number;
   systemFavorCurrent: number;
   
-  // Monarch-specific mechanics (using existing monarch system)
-  monarchUnlocks?: string[]; // References to existing monarch IDs
-  activeMonarch?: string; // Currently active monarch ID
+  // Regent-specific mechanics (quest/DM-gated unlocks)
+  monarchUnlocks?: string[]; // Backward-compat alias for regentUnlocks
+  activeMonarch?: string; // Backward-compat alias for activeRegent
+  regentUnlocks?: string[];
+  activeRegent?: string;
   
   // Standard SRD 5e mechanics
   hitPoints: {
@@ -295,28 +297,31 @@ export function getUnifiedSavingThrowModifier(
   return abilityMod + profBonus + customBonus;
 }
 
-// Calculate unified armor class
+// Calculate unified armor class (SRD 5e armor rules)
 export function getUnifiedArmorClass(
   character: UnifiedCharacter,
   armorType?: string,
   shield?: boolean,
-  dexBonus?: number
+  dexBonus?: number,
+  armorAC?: number
 ): number {
-  const baseAC = 10;
   const agiMod = dexBonus ?? getUnifiedAbilityModifier('AGI', character.abilities.AGI);
   const shieldBonus = shield ? 2 : 0;
   
-  // Different armor types use AGI (Dexterity) with System Ascendant flavor
   switch (armorType) {
     case 'light':
-      return baseAC + agiMod + shieldBonus;
+      // Light armor: armor base AC + full AGI modifier + shield
+      return (armorAC ?? 11) + agiMod + shieldBonus;
     case 'medium':
-      return baseAC + Math.min(agiMod, 2) + shieldBonus;
+      // Medium armor: armor base AC + AGI modifier (max +2) + shield
+      return (armorAC ?? 12) + Math.min(agiMod, 2) + shieldBonus;
     case 'heavy':
-      return baseAC + shieldBonus;
+      // Heavy armor: fixed AC from armor (no AGI modifier) + shield
+      return (armorAC ?? 16) + shieldBonus;
     case 'none':
     default:
-      return baseAC + agiMod + shieldBonus;
+      // Unarmored: 10 + AGI modifier + shield
+      return 10 + agiMod + shieldBonus;
   }
 }
 
@@ -388,15 +393,15 @@ export function getUnifiedCharacterStatus(character: UnifiedCharacter): {
   ac: number;
   proficiencyBonus: number;
   systemFavor: { current: number; max: number };
-  monarchStatus?: {
-    hasMonarchUnlocks: boolean;
-    activeMonarch?: string;
+  regentStatus?: {
+    hasRegentUnlocks: boolean;
+    activeRegent?: string;
     totalUnlocks: number;
   };
   spellSlots: UnifiedSpellSlots;
   knownPowers: number;
   equipment: number;
-  monarchUnlocks: number;
+  regentUnlocks: number;
   shadowSoldiers: number;
   runeInscriptions: number;
 } {
@@ -412,15 +417,15 @@ export function getUnifiedCharacterStatus(character: UnifiedCharacter): {
       current: character.systemFavorCurrent,
       max: character.systemFavorMax
     },
-    monarchStatus: character.monarchUnlocks ? {
-      hasMonarchUnlocks: character.monarchUnlocks.length > 0,
-      activeMonarch: character.activeMonarch,
-      totalUnlocks: character.monarchUnlocks.length
+    regentStatus: (character.regentUnlocks ?? character.monarchUnlocks) ? {
+      hasRegentUnlocks: (character.regentUnlocks ?? character.monarchUnlocks ?? []).length > 0,
+      activeRegent: character.activeRegent ?? character.activeMonarch,
+      totalUnlocks: (character.regentUnlocks ?? character.monarchUnlocks ?? []).length
     } : undefined,
     spellSlots: character.spellSlots,
     knownPowers: character.knownPowers.length,
     equipment: character.equipment.length,
-    monarchUnlocks: character.monarchUnlocks?.length || 0,
+    regentUnlocks: (character.regentUnlocks ?? character.monarchUnlocks)?.length || 0,
     shadowSoldiers: character.shadowSoldiers?.length || 0,
     runeInscriptions: character.runeInscriptions?.length || 0
   };
