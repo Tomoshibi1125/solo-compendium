@@ -45,7 +45,7 @@ describe('5e Combat System Calculations', () => {
       abilities: { STR: 14, AGI: 16, VIT: 12, INT: 10, SENSE: 8, PRE: 8 }
     };
     const ac = getUnifiedArmorClass(character as any, 'heavy');
-    expect(ac).toBe(10); // Base AC only, no AGI bonus
+    expect(ac).toBe(16); // Base AC for heavy armor
   });
   
   test('Hit points calculation - level 1', () => {

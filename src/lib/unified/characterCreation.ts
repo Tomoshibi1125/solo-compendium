@@ -362,7 +362,7 @@ export function createUnifiedCharacter(options: UnifiedCharacterCreation): Unifi
     spellSlots,
     knownPowers: [],
     equipment: [],
-    monarchUnlocks: [],
+    regentUnlocks: [],
     shadowSoldiers: [],
     runeInscriptions: []
   };

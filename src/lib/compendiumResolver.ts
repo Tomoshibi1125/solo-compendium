@@ -58,7 +58,6 @@ const supabaseTableMap: Partial<Record<EntryType, keyof Database['public']['Tabl
   backgrounds: 'compendium_backgrounds',
   conditions: 'compendium_conditions',
   regents: 'compendium_regents' as any,
-  monarchs: 'compendium_regents' as any,
   feats: 'compendium_feats',
   skills: 'compendium_skills',
   equipment: 'compendium_equipment',
@@ -68,9 +67,6 @@ const supabaseTableMap: Partial<Record<EntryType, keyof Database['public']['Tabl
 
 const legacyIdMap: Partial<Record<EntryType, Record<string, string>>> = {
   regents: {
-    'umbral-sovereign-overlay': 'umbral-monarch-overlay',
-  },
-  monarchs: {
     'umbral-sovereign-overlay': 'umbral-monarch-overlay',
   },
 };
@@ -85,7 +81,6 @@ type StaticDataProvider = {
   getBackgrounds: (search?: string) => Promise<StaticCompendiumEntry[]>;
   getConditions: (search?: string) => Promise<StaticCompendiumEntry[]>;
   getRegents: (search?: string) => Promise<StaticCompendiumEntry[]>;
-  getMonarchs: (search?: string) => Promise<StaticCompendiumEntry[]>;
   getFeats: (search?: string) => Promise<StaticCompendiumEntry[]>;
   getSkills: (search?: string) => Promise<StaticCompendiumEntry[]>;
   getShadowSoldiers: (search?: string) => Promise<StaticCompendiumEntry[]>;
@@ -139,9 +134,6 @@ const getStaticEntries = async (
       entries = await provider.getConditions(search);
       break;
     case 'regents':
-      entries = await provider.getRegents(search);
-      break;
-    case 'monarchs':
       entries = await provider.getRegents(search);
       break;
     case 'feats':

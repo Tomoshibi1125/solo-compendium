@@ -1,21 +1,27 @@
-export const MONARCH_LABEL = 'Regent';
-export const MONARCH_LABEL_PLURAL = 'Regents';
-const MONARCH_CANONICAL = 'monarch';
-const MONARCH_CANONICAL_PLURAL = 'monarchs';
+export const REGENT_LABEL = 'Regent';
+export const REGENT_LABEL_PLURAL = 'Regents';
+const REGENT_CANONICAL = 'regent';
+const REGENT_CANONICAL_PLURAL = 'regents';
 
-export const formatMonarchVernacular = (value: string): string =>
+export const formatRegentVernacular = (value: string): string =>
   value
-    .replace(/\bMONARCHS\b/g, MONARCH_LABEL_PLURAL.toUpperCase())
-    .replace(/\bMONARCH\b/g, MONARCH_LABEL.toUpperCase())
-    .replace(/\bMonarchs\b/g, MONARCH_LABEL_PLURAL)
-    .replace(/\bMonarch\b/g, MONARCH_LABEL)
-    .replace(/\bmonarchs\b/g, MONARCH_LABEL_PLURAL.toLowerCase())
-    .replace(/\bmonarch\b/g, MONARCH_LABEL.toLowerCase());
+    .replace(/\bREGENTS\b/g, REGENT_LABEL_PLURAL.toUpperCase())
+    .replace(/\bREGENT\b/g, REGENT_LABEL.toUpperCase())
+    .replace(/\bRegents\b/g, REGENT_LABEL_PLURAL)
+    .replace(/\bRegent\b/g, REGENT_LABEL)
+    .replace(/\bregents\b/g, REGENT_LABEL_PLURAL.toLowerCase())
+    .replace(/\bregent\b/g, REGENT_LABEL.toLowerCase());
 
-export const normalizeMonarchSearch = (value: string): string => {
-  const label = MONARCH_LABEL.toLowerCase();
-  const labelPlural = MONARCH_LABEL_PLURAL.toLowerCase();
+export const normalizeRegentSearch = (value: string): string => {
+  const label = REGENT_LABEL.toLowerCase();
+  const labelPlural = REGENT_LABEL_PLURAL.toLowerCase();
   return value
-    .replace(new RegExp(`\\b${labelPlural}\\b`, 'gi'), MONARCH_CANONICAL_PLURAL)
-    .replace(new RegExp(`\\b${label}\\b`, 'gi'), MONARCH_CANONICAL);
+    .replace(new RegExp(`\\b${labelPlural}\\b`, 'gi'), REGENT_CANONICAL_PLURAL)
+    .replace(new RegExp(`\\b${label}\\b`, 'gi'), REGENT_CANONICAL);
 };
+
+// Backward compatibility aliases
+export const MONARCH_LABEL = REGENT_LABEL;
+export const MONARCH_LABEL_PLURAL = REGENT_LABEL_PLURAL;
+export const formatMonarchVernacular = formatRegentVernacular;
+export const normalizeMonarchSearch = normalizeRegentSearch;

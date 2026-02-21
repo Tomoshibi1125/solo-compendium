@@ -7,6 +7,9 @@ import { cn } from '@/lib/utils';
 import { DICE_THEMES, type DiceTheme } from '@/components/dice/diceThemes';
 import { Label } from '@/components/ui/label';
 import { useRecordRoll } from '@/hooks/useRollHistory';
+import { useCampaignDice } from '@/hooks/useCampaignDice';
+import { useAuth } from '@/lib/auth/authContext';
+import { useHydratedPreferredCampaignId } from '@/hooks/usePreferredCampaignSelection';
 import { logger } from '@/lib/logger';
 import {
   clearPendingResolution,
@@ -157,9 +160,16 @@ const applyRollsToDice3D = (dice: Dice3DState[], slots: DiceSlot[], rolls: numbe
 };
 
 const DiceRoller = () => {
+  const { user } = useAuth();
+  const { rollInCampaign, getCampaignsForRolling } = useCampaignDice();
+  const recordRoll = useRecordRoll();
   const [selectedDice, setSelectedDice] = useState<{ sides: number; count: number }[]>([]);
   const [modifier, setModifier] = useState(0);
   const [rollHistory, setRollHistory] = useState<DiceRoll[]>([]);
+  const [campaignId, setCampaignId] = useState<string | null>(null);
+
+  // Get campaigns for rolling
+  const campaignsQuery = getCampaignsForRolling();
   const [lastRoll, setLastRoll] = useState<DiceRoll | null>(null);
   const [rollType, setRollType] = useState<'normal' | 'advantage' | 'disadvantage'>('normal');
   const [isRolling, setIsRolling] = useState(false);
@@ -168,7 +178,6 @@ const DiceRoller = () => {
   const [diceTheme, setDiceTheme] = useState<DiceTheme>('umbral-ascendant');
   const [pendingResolution, setPendingResolutionState] = useState<ActionResolutionPayload | null>(null);
   const [resolutionOutcome, setResolutionOutcome] = useState<ResolutionOutcome | null>(null);
-  const recordRoll = useRecordRoll();
   const pendingRollRef = useRef<PendingRoll | null>(null);
   const rollTimeoutRef = useRef<number | null>(null);
 
@@ -241,23 +250,35 @@ const DiceRoller = () => {
     setLastRoll(newRoll);
     setRollHistory(prev => [newRoll, ...prev.slice(0, 19)]);
 
-    recordRoll.mutate(
-      {
+    if (campaignId) {
+      rollInCampaign(campaignId, {
         dice_formula: newRoll.dice,
         result: newRoll.total,
-        rolls: newRoll.rolls,
         roll_type: newRoll.type ?? 'normal',
+        rolls: newRoll.rolls,
         context: 'dice',
         modifiers: newRoll.modifier ? { modifier: newRoll.modifier } : null,
-        campaign_id: null,
-        character_id: null,
-      },
-      {
-        onError: (err) => {
-          logger.error('Failed to record roll:', err);
+        character_id: undefined,
+      });
+    } else {
+      recordRoll.mutate(
+        {
+          dice_formula: newRoll.dice,
+          result: newRoll.total,
+          roll_type: newRoll.type ?? 'normal',
+          rolls: newRoll.rolls,
+          context: 'dice',
+          modifiers: newRoll.modifier ? { modifier: newRoll.modifier } : null,
+          campaign_id: campaignId || undefined,
+          character_id: null,
         },
-      }
-    );
+        {
+          onError: (err) => {
+            logger.error('Failed to record roll:', err);
+          },
+        }
+      );
+    }
 
     pendingRollRef.current = null;
     setIsRolling(false);

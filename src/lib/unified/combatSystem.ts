@@ -30,8 +30,7 @@ export interface UnifiedCombatState {
   movementRemaining: number;
   concentrationActive: boolean;
   systemFavorUsed: boolean;
-  monarchPowerUsed: boolean; // backward-compat alias
-  regentPowerUsed?: boolean;
+  regentPowerUsed: boolean;
 }
 
 // Unified Attack Result
@@ -386,7 +385,7 @@ export function applyRegentPower(
   cost: number,
   effect: string
 ): { success: boolean; newCharacter: UnifiedCharacter; effect: string } {
-  const activeRegent = character.activeRegent ?? character.activeMonarch;
+  const activeRegent = character.activeRegent;
   if (!activeRegent) {
     return { 
       success: false, 
@@ -415,8 +414,6 @@ export function applyRegentPower(
   };
 }
 
-/** @deprecated Use applyRegentPower instead */
-export const applyMonarchPower = applyRegentPower;
 
 // Calculate unified initiative
 export function calculateUnifiedInitiative(
@@ -507,7 +504,7 @@ export function getUnifiedCombatStatus(
     reactionsRemaining: combatState.reactionsAvailable,
     movementRemaining: combatState.movementRemaining,
     systemFavorRemaining: character.systemFavorCurrent,
-    shadowEnergyRemaining: character.activeMonarch ? character.systemFavorCurrent : 0,
+    shadowEnergyRemaining: character.activeRegent ? character.systemFavorCurrent : 0,
     conditions: [], // Would need to track conditions in combat state
     status
   };

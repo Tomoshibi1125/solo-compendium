@@ -260,7 +260,7 @@ const CompendiumDetail = () => {
       case 'regents':
         return <RegentDetail data={data as RegentDetailData} />;
       case 'monarchs':
-        return <MonarchDetail data={data as MonarchDetailData} />;
+        return <RegentDetail data={data as RegentDetailData} />;
       case 'feats':
         return <FeatDetail data={data as FeatDetailData} />;
       case 'skills':

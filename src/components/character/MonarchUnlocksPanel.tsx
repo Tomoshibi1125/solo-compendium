@@ -9,13 +9,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { SystemWindow } from '@/components/ui/SystemWindow';
-import { useCharacterMonarchUnlocks, useUnlockMonarch, useSetPrimaryMonarch } from '@/hooks/useMonarchUnlocks';
+import { useCharacterMonarchUnlocks, useUnlockMonarch, useSetPrimaryMonarch } from '@/hooks/useRegentUnlocks';
 import { useCampaignByCharacterId } from '@/hooks/useCampaigns';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Crown, Lock, Star, Scroll, CheckCircle, Sparkles, Unlock, Skull, Zap, Flame } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { formatMonarchVernacular, MONARCH_LABEL, MONARCH_LABEL_PLURAL } from '@/lib/vernacular';
+import { formatRegentVernacular, REGENT_LABEL, REGENT_LABEL_PLURAL } from '@/lib/vernacular';
 import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 
 interface MonarchUnlocksPanelProps {
@@ -57,7 +57,7 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
   const [questName, setQuestName] = useState('');
   const [dmNotes, setDmNotes] = useState('');
 
-  const { data: unlocks = [] } = useCharacterMonarchUnlocks(characterId);
+  const { unlocks = [] } = useCharacterMonarchUnlocks(characterId);
   const unlockMonarch = useUnlockMonarch();
   const setPrimary = useSetPrimaryMonarch();
   const { data: characterCampaign } = useCampaignByCharacterId(characterId);
@@ -109,7 +109,7 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
 
   return (
     <SystemWindow 
-      title={`${MONARCH_LABEL.toUpperCase()} UNLOCKS - DIVINE AUTHORITY`} 
+      title={`${REGENT_LABEL.toUpperCase()} UNLOCKS - DIVINE AUTHORITY`} 
       variant="monarch"
       className="border-monarch-gold/30"
     >
@@ -121,7 +121,7 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
               <Crown className="h-5 w-5 text-monarch-gold" />
             </div>
             <div>
-              <p className="font-heading text-sm text-muted-foreground">{MONARCH_LABEL_PLURAL} Unlocked</p>
+              <p className="font-heading text-sm text-muted-foreground">{REGENT_LABEL_PLURAL} Unlocked</p>
               <p className="font-display text-lg text-monarch-gold">{unlocks.length} / 2 Required</p>
             </div>
           </div>
@@ -138,13 +138,13 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
             <Separator className="bg-monarch-gold/20" />
             
             <div className="space-y-3">
-              {unlocks.map((unlock, index) => {
+              {unlocks.map((unlock: any, index: number) => {
                 const regent = (unlock as any).regent;
                 if (!regent) return null;
                 
                 const themeStyle = themeColors[regent.theme] || themeColors['Shadow'];
                 const icon = themeIcons[regent.theme] || <Crown className="h-4 w-4" />;
-                const displayTitle = formatMonarchVernacular(regent.title || regent.name);
+                const displayTitle = formatRegentVernacular(regent.title || regent.name);
                 
                 return (
                   <div
@@ -195,12 +195,12 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
                     
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <Scroll className="h-3 w-3" />
-                      <span>Quest: {formatMonarchVernacular(unlock.quest_name)}</span>
+                      <span>Quest: {formatRegentVernacular(unlock.quest_name)}</span>
                     </div>
                     
                     {unlock.dm_notes && (
                       <p className="text-xs text-muted-foreground mt-2 italic border-l-2 border-monarch-gold/30 pl-2">
-                        {formatMonarchVernacular(unlock.dm_notes)}
+                        {formatRegentVernacular(unlock.dm_notes)}
                       </p>
                     )}
                   </div>
@@ -214,10 +214,10 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
           <div className="text-center py-6">
             <Lock className="h-10 w-10 text-monarch-gold/30 mx-auto mb-3" />
             <p className="text-sm text-muted-foreground font-heading">
-              No {MONARCH_LABEL_PLURAL} unlocked yet
+              No {REGENT_LABEL_PLURAL} unlocked yet
             </p>
             <p className="text-xs text-muted-foreground mt-1">
-              Complete {MONARCH_LABEL} quests marked by your Warden to unlock divine power
+              Complete {REGENT_LABEL} quests marked by your Warden to unlock divine power
             </p>
           </div>
         )}
@@ -230,7 +230,7 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
               <span className="font-display text-sm text-arise-violet tracking-wider">SOVEREIGN FUSION AVAILABLE</span>
             </div>
             <p className="text-xs text-muted-foreground">
-              With two {MONARCH_LABEL_PLURAL} unlocked, use the <span className="text-arise-violet">Gemini Protocol</span> in the Compendium 
+              With two {REGENT_LABEL_PLURAL} unlocked, use the <span className="text-arise-violet">Gemini Protocol</span> in the Compendium 
               to generate your unique Sovereign abilities.
             </p>
           </div>
@@ -245,26 +245,26 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
                 className="w-full border-monarch-gold/40 hover:border-monarch-gold hover:bg-monarch-gold/10 font-display tracking-wider"
               >
                 <Unlock className="h-4 w-4 mr-2 text-monarch-gold" />
-                UNLOCK {MONARCH_LABEL.toUpperCase()} (Warden Approved)
+                UNLOCK {REGENT_LABEL.toUpperCase()} (Warden Approved)
               </Button>
             </DialogTrigger>
             <DialogContent className="bg-card border-monarch-gold/40">
               <DialogHeader>
                 <DialogTitle className="font-display text-xl gradient-text-monarch">
-                  Unlock {MONARCH_LABEL} Power
+                  Unlock {REGENT_LABEL} Power
                 </DialogTitle>
               </DialogHeader>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label className="font-heading">Select {MONARCH_LABEL}</Label>
+                  <Label className="font-heading">Select {REGENT_LABEL}</Label>
                   <Select value={selectedMonarchId} onValueChange={setSelectedMonarchId}>
                     <SelectTrigger className="border-monarch-gold/40">
-                      <SelectValue placeholder={`Choose a ${MONARCH_LABEL}...`} />
+                      <SelectValue placeholder={`Choose a ${REGENT_LABEL}...`} />
                     </SelectTrigger>
                     <SelectContent>
                       {lockedRegents.map((regent: any) => (
                         <SelectItem key={regent.id} value={regent.id}>
-                          {formatMonarchVernacular(regent.title || regent.name)} ({regent.theme})
+                          {formatRegentVernacular(regent.title || regent.name)} ({regent.theme})
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -298,7 +298,7 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
                   disabled={!selectedMonarchId || !questName.trim() || unlockMonarch.isPending}
                 >
                   <Crown className="h-4 w-4 mr-2" />
-                  UNLOCK {MONARCH_LABEL.toUpperCase()} POWER
+                  UNLOCK {REGENT_LABEL.toUpperCase()} POWER
                 </Button>
               </div>
             </DialogContent>

@@ -28,7 +28,7 @@ import {
 } from '@/hooks/useToolState';
 import { useJoinedCampaigns, useMyCampaigns } from '@/hooks/useCampaigns';
 import { useAuth } from '@/lib/auth/authContext';
-import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
+import { formatRegentVernacular, normalizeRegentSearch } from '@/lib/vernacular';
 import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 import { useHydratedPreferredCampaignId } from '@/hooks/usePreferredCampaignSelection';
 
@@ -166,15 +166,15 @@ const mapStaticMonster = (monster: StaticMonster): Monster => {
 };
 
 const buildFallbackMonsters = (searchQuery: string) => {
-  const query = normalizeMonarchSearch(searchQuery.trim().toLowerCase());
+  const query = normalizeRegentSearch(searchQuery.trim().toLowerCase());
   const filtered = query
     ? staticMonstersList.filter((monster) => {
         const description = monster.description || '';
         return (
-          normalizeMonarchSearch(monster.name.toLowerCase()).includes(query) ||
-          normalizeMonarchSearch(monster.type.toLowerCase()).includes(query) ||
-          normalizeMonarchSearch(monster.rank.toLowerCase()).includes(query) ||
-          normalizeMonarchSearch(description.toLowerCase()).includes(query)
+          normalizeRegentSearch(monster.name.toLowerCase()).includes(query) ||
+          normalizeRegentSearch(monster.type.toLowerCase()).includes(query) ||
+          normalizeRegentSearch(monster.rank.toLowerCase()).includes(query) ||
+          normalizeRegentSearch(description.toLowerCase()).includes(query)
         );
       })
     : staticMonstersList;
@@ -346,7 +346,7 @@ const EncounterBuilder = () => {
         }
       };
 
-      const canonicalQuery = normalizeMonarchSearch(searchQuery);
+      const canonicalQuery = normalizeRegentSearch(searchQuery);
       let query = supabase
         .from('compendium_monsters')
         .select('*')
@@ -392,7 +392,7 @@ const EncounterBuilder = () => {
 
   const addMonster = (monster: Monster) => {
     markUserInteraction();
-    const displayName = formatMonarchVernacular(monster.name);
+    const displayName = formatRegentVernacular(monster.name);
     const existing = encounterMonsters.find(em => em.monster.id === monster.id);
     if (existing) {
       setEncounterMonsters(encounterMonsters.map(em =>
@@ -460,7 +460,7 @@ const EncounterBuilder = () => {
     const entries = encounterMonsters.map((entry) => ({
       entry_kind: 'monster',
       monster_id: UUID_PATTERN.test(entry.monster.id) ? entry.monster.id : null,
-      name: formatMonarchVernacular(entry.monster.name),
+      name: formatRegentVernacular(entry.monster.name),
       quantity: entry.quantity,
       stats: {
         hp: entry.monster.hit_points_average,
@@ -498,7 +498,7 @@ const EncounterBuilder = () => {
 
     const combatants = encounterMonsters.flatMap((em) => {
       const qty = Math.max(1, em.quantity || 1);
-      const displayName = formatMonarchVernacular(em.monster.name);
+      const displayName = formatRegentVernacular(em.monster.name);
       return Array.from({ length: qty }, (_, i) => ({
         id: `${em.monster.id}-${Date.now()}-${Math.random()}-${i}`,
         name: qty > 1 ? `${displayName} #${i + 1}` : displayName,
@@ -795,7 +795,7 @@ const EncounterBuilder = () => {
                       >
                         <div className="flex-1">
                           <div className="font-heading text-sm">
-                            {formatMonarchVernacular(em.monster.name)}
+                            {formatRegentVernacular(em.monster.name)}
                           </div>
                           <div className="text-xs text-muted-foreground">
                             CR {em.monster.cr || '?'} | {calculateXP(em.monster, em.quantity)} XP
@@ -807,7 +807,7 @@ const EncounterBuilder = () => {
                             variant="ghost"
                             className="h-6 w-6"
                             onClick={() => updateQuantity(em.id, em.quantity + 1)}
-                            aria-label={`Increase quantity of ${formatMonarchVernacular(em.monster.name)}`}
+                            aria-label={`Increase quantity of ${formatRegentVernacular(em.monster.name)}`}
                           >
                             <Plus className="w-3 h-3" />
                           </Button>
@@ -936,7 +936,7 @@ const EncounterBuilder = () => {
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex-1">
                           <div className="font-heading font-semibold">
-                            {formatMonarchVernacular(monster.name)}
+                            {formatRegentVernacular(monster.name)}
                           </div>
                           <div className="text-xs text-muted-foreground">
                             CR {monster.cr || '?'} | {monster.xp || 0} XP
@@ -950,7 +950,7 @@ const EncounterBuilder = () => {
                             e.stopPropagation();
                             addMonster(monster);
                           }}
-                          aria-label={`Add ${formatMonarchVernacular(monster.name)} to encounter`}
+                          aria-label={`Add ${formatRegentVernacular(monster.name)} to encounter`}
                           data-testid="encounter-add-button"
                         >
                           <Plus className="w-3 h-3" />
@@ -958,7 +958,7 @@ const EncounterBuilder = () => {
                       </div>
                       {monster.creature_type && (
                         <Badge variant="outline" className="text-xs">
-                          {formatMonarchVernacular(monster.creature_type)}
+                          {formatRegentVernacular(monster.creature_type)}
                         </Badge>
                       )}
                     </button>

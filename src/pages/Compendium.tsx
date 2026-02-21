@@ -708,16 +708,16 @@ const Compendium = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
         {/* Header */}
-        <header className="mb-8">
-          <h1 className="font-display text-4xl font-bold mb-2 gradient-text-system" role="heading">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="font-arise text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 gradient-text-shadow tracking-wider">
             COMPENDIUM
           </h1>
-          <p className="text-muted-foreground font-heading">
-            Browse the complete System Ascendant 5e SRD ruleset — {filteredAndSortedEntries.length} {filteredAndSortedEntries.length === 1 ? 'entry' : 'entries'}
+          <p className="text-sm sm:text-base text-muted-foreground font-heading leading-relaxed">
+            Browse the complete collection of System Ascendant knowledge, from character foundations to world entities.
           </p>
-        </header>
+        </div>
 
         {/* Search and Controls */}
         <section className="flex flex-col gap-4 mb-6" aria-label="Search and filters">

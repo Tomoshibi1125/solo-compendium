@@ -1302,27 +1302,32 @@ const CharacterSheet = () => {
         </div>
 
         {/* â”€â”€ DDB-Style Tabbed Content â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-        <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5 h-auto p-1">
-            <TabsTrigger value="overview" className="gap-1.5 text-xs sm:text-sm py-2">
-              <User className="w-4 h-4 hidden sm:block" />
-              Overview
+        <Tabs defaultValue="overview" className="space-y-4 sm:space-y-6">
+          <TabsList className="grid w-full grid-cols-5 h-auto p-1 bg-card border border-border rounded-lg">
+            <TabsTrigger value="overview" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm">
+              <User className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="hidden xs:inline">Overview</span>
+              <span className="xs:hidden">O</span>
             </TabsTrigger>
-            <TabsTrigger value="actions" className="gap-1.5 text-xs sm:text-sm py-2">
-              <Swords className="w-4 h-4 hidden sm:block" />
-              Actions
+            <TabsTrigger value="actions" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm">
+              <Swords className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="hidden xs:inline">Actions</span>
+              <span className="xs:hidden">A</span>
             </TabsTrigger>
-            <TabsTrigger value="inventory" className="gap-1.5 text-xs sm:text-sm py-2">
-              <Backpack className="w-4 h-4 hidden sm:block" />
-              Inventory
+            <TabsTrigger value="inventory" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm">
+              <Backpack className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="hidden xs:inline">Inv</span>
+              <span className="xs:hidden">I</span>
             </TabsTrigger>
-            <TabsTrigger value="features" className="gap-1.5 text-xs sm:text-sm py-2">
-              <Sparkles className="w-4 h-4 hidden sm:block" />
-              Features
+            <TabsTrigger value="features" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm">
+              <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="hidden xs:inline">Features</span>
+              <span className="xs:hidden">F</span>
             </TabsTrigger>
-            <TabsTrigger value="bio" className="gap-1.5 text-xs sm:text-sm py-2">
-              <BookOpen className="w-4 h-4 hidden sm:block" />
-              Bio
+            <TabsTrigger value="bio" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm">
+              <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="hidden xs:inline">Bio</span>
+              <span className="xs:hidden">B</span>
             </TabsTrigger>
           </TabsList>
 
@@ -1340,41 +1345,46 @@ const CharacterSheet = () => {
               />
             )}
 
-            {/* Core Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <SystemWindow title="HIT POINTS" compact data-testid="hp-section">
-                <div className="flex items-center justify-between mb-2">
+            {/* Core Stats - D&D Beyond Style */}
+            <div className="character-sheet-stats-grid grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+            <SystemWindow title="HIT POINTS" compact data-testid="hp-section" className="relative overflow-hidden">
+                <div className="absolute top-2 right-2">
                   <Heart className={cn(
-                    "w-6 h-6",
+                    "w-5 h-5 sm:w-6 sm:h-6",
                     character.hp_current < character.hp_max * 0.25 ? "text-destructive" :
                     character.hp_current < character.hp_max * 0.5 ? "text-orange-400" :
                     "text-red-400"
                   )} />
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-6 w-6"
-                    onClick={() => {
-                      setHpEditValue(character.hp_current.toString());
-                      setHpEditOpen(true);
-                    }}
-                    aria-label="Edit hit points"
-                    data-testid="hp-edit-button"
-                  >
-                    <Edit className="w-3 h-3" />
-                  </Button>
                 </div>
-                <div className="text-center">
-                  <div className={cn(
-                    "font-display text-3xl font-bold mb-1",
-                    character.hp_current < character.hp_max * 0.5 && "text-destructive"
-                  )} data-testid="hp-current-display">
-                    {character.hp_current}
+                <div className="pt-6 sm:pt-8">
+                  <div className="text-center">
+                    <div className={cn(
+                      "font-display text-2xl sm:text-3xl font-bold mb-1",
+                      character.hp_current < character.hp_max * 0.5 && "text-destructive"
+                    )} data-testid="hp-current-display">
+                      {character.hp_current}
+                    </div>
+                    <div className="text-xs text-muted-foreground" data-testid="hp-max-display">
+                      / {character.hp_max}
+                      {effectiveTempHp > 0 && ` + ${effectiveTempHp} temp`}
+                    </div>
                   </div>
-                  <div className="text-xs text-muted-foreground" data-testid="hp-max-display">
-                    / {character.hp_max}
-                    {effectiveTempHp > 0 && ` + ${effectiveTempHp} temp`}
-                  </div>
+                  {!isReadOnly && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="w-full mt-2 h-7 text-xs"
+                      onClick={() => {
+                        setHpEditValue(character.hp_current.toString());
+                        setHpEditOpen(true);
+                      }}
+                      aria-label="Edit hit points"
+                      data-testid="hp-edit-button"
+                    >
+                      <Edit className="w-3 h-3 mr-1" />
+                      Edit
+                    </Button>
+                  )}
                 </div>
                 {isEditMode && !isReadOnly && (
                   <div className="mt-2">
@@ -1435,9 +1445,28 @@ const CharacterSheet = () => {
                 )}
               </SystemWindow>
 
-              <SystemWindow title="ARMOR CLASS" compact>
-                <Shield className="w-6 h-6 text-blue-400 mb-2" />
-                <div className="font-display text-3xl font-bold text-center">{calculatedStats.armorClass}</div>
+              <SystemWindow title="ARMOR CLASS" compact className="relative overflow-hidden">
+                <div className="absolute top-2 right-2">
+                  <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
+                </div>
+                <div className="pt-6 sm:pt-8">
+                  <div className="font-display text-2xl sm:text-3xl font-bold text-center">{calculatedStats.armorClass}</div>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="mx-auto mt-2 h-7 w-7 p-0"
+                    onClick={() => rollAndRecord({
+                      title: 'Armor Class Check',
+                      formula: '1d20',
+                      rollType: 'ac',
+                      context: 'Armor Class',
+                    })}
+                    aria-label="Roll armor class check"
+                  >
+                    <Dice6 className="w-4 h-4" />
+                  </Button>
+                </div>
                 {isEditMode && !isReadOnly && (
                   <Input
                     type="number"
@@ -1462,32 +1491,51 @@ const CharacterSheet = () => {
                 )}
               </SystemWindow>
 
-              <SystemWindow title="INITIATIVE" compact>
-                <Zap className="w-6 h-6 text-yellow-400 mb-2" />
-                <div className="font-display text-3xl font-bold text-center">
-                  {formatModifier(calculatedStats.initiative)}
+              <SystemWindow title="INITIATIVE" compact className="relative overflow-hidden">
+                <div className="absolute top-2 right-2">
+                  <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400" />
                 </div>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="mx-auto mt-2 h-7 w-7 p-0"
-                  onClick={() => rollAndRecord({
-                    title: 'Initiative',
-                    formula: formatRollFormula('1d20', calculatedStats.initiative),
-                    rollType: 'initiative',
-                    context: 'Initiative',
-                    modifier: calculatedStats.initiative,
-                  })}
-                  aria-label="Roll initiative"
-                >
-                  <Dice6 className="w-4 h-4" />
-                </Button>
+                <div className="pt-6 sm:pt-8">
+                  <div className="font-display text-2xl sm:text-3xl font-bold text-center">
+                    {formatModifier(calculatedStats.initiative)}
+                  </div>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="mx-auto mt-2 h-7 w-7 p-0"
+                    onClick={() => rollAndRecord({
+                      title: 'Initiative',
+                      formula: formatRollFormula('1d20', calculatedStats.initiative),
+                      rollType: 'initiative',
+                      context: 'Initiative',
+                      modifier: calculatedStats.initiative,
+                    })}
+                    aria-label="Roll initiative"
+                  >
+                    <Dice6 className="w-4 h-4" />
+                  </Button>
+                </div>
               </SystemWindow>
 
-              <SystemWindow title="SPEED" compact>
-                <Swords className="w-6 h-6 text-green-400 mb-2" />
-                <div className="font-display text-3xl font-bold text-center">{calculatedStats.speed} ft</div>
+              <SystemWindow title="SPEED" compact className="relative overflow-hidden">
+                <div className="absolute top-2 right-2">
+                  <Swords className="w-5 h-5 sm:w-6 sm:h-6 text-green-400" />
+                </div>
+                <div className="pt-6 sm:pt-8">
+                  <div className="font-display text-2xl sm:text-3xl font-bold text-center">{calculatedStats.speed} ft</div>
+                  {calculatedStats.encumbrance && calculatedStats.encumbrance.status !== 'unencumbered' && (
+                    <div className={cn(
+                      "text-xs text-center mt-1",
+                      calculatedStats.encumbrance.status === 'overloaded' ? "text-destructive" :
+                      calculatedStats.encumbrance.status === 'heavy' ? "text-orange-400" :
+                      "text-muted-foreground"
+                    )}>
+                      {calculatedStats.encumbrance.status === 'heavy' && '-10 ft'}
+                      {calculatedStats.encumbrance.status === 'overloaded' && '-20 ft'}
+                    </div>
+                  )}
+                </div>
                 {isEditMode && !isReadOnly && (
                   <Input
                     type="number"
@@ -1561,9 +1609,9 @@ const CharacterSheet = () => {
               </SystemWindow>
             )}
 
-            {/* Ability Scores */}
+            {/* Ability Scores - D&D Beyond Style */}
             <SystemWindow title="ABILITY SCORES">
-              <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
+              <div className="character-sheet-ability-grid grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
                 {ABILITY_KEYS.map((ability) => {
                   const baseScore = character.abilities[ability];
                   const equipmentBonus = equipmentMods.abilityModifiers[ability.toLowerCase() as keyof typeof equipmentMods.abilityModifiers] || 0;
@@ -1575,9 +1623,9 @@ const CharacterSheet = () => {
                   const isEditingAbility = isEditMode && !isReadOnly;
                   
                   return (
-                    <div key={ability} className="text-center group">
-                      <div className="text-xs text-muted-foreground mb-1">{ABILITY_NAMES[ability]}</div>
-                      <div className="font-display text-2xl font-bold mb-1">
+                    <div key={ability} className="text-center group bg-card border border-border rounded-lg p-3 sm:p-4 relative">
+                      <div className="text-xs text-muted-foreground mb-1 font-heading">{ABILITY_NAMES[ability]}</div>
+                      <div className="font-display text-xl sm:text-2xl font-bold mb-1">
                         {totalScore}
                         {bonusTotal !== 0 && (
                           <span className={cn(
@@ -1592,7 +1640,7 @@ const CharacterSheet = () => {
                         <Input
                           type="number"
                           inputMode="numeric"
-                          className="h-7 text-center text-xs"
+                          className="h-6 text-center text-xs mt-1"
                           value={abilityDrafts[ability] ?? baseScore.toString()}
                           onChange={(e) => {
                             const value = e.target.value;
@@ -1611,7 +1659,7 @@ const CharacterSheet = () => {
                       <button
                         type="button"
                         className={cn(
-                          "text-sm font-heading cursor-pointer hover:underline inline-flex items-center gap-1",
+                          "w-full mt-2 text-sm font-heading cursor-pointer hover:bg-primary/10 rounded py-1 transition-colors flex items-center justify-center gap-1",
                           modifier >= 0 ? "text-green-400" : "text-red-400"
                         )}
                         onClick={() => rollAndRecord({
@@ -1627,7 +1675,7 @@ const CharacterSheet = () => {
                         <Dice6 className="w-3 h-3 opacity-50" />
                       </button>
                       {isProficient && (
-                        <Badge variant="secondary" className="mt-1 text-xs">Prof</Badge>
+                        <Badge variant="secondary" className="mt-1 text-xs absolute top-1 right-1">P</Badge>
                       )}
                     </div>
                   );
@@ -1635,34 +1683,39 @@ const CharacterSheet = () => {
               </div>
             </SystemWindow>
 
-            {/* Saving Throws */}
+            {/* Saving Throws - D&D Beyond Style */}
             <SystemWindow title="SAVING THROWS">
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              <div className="character-sheet-saving-throws-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                 {ABILITY_KEYS.map((ability) => {
                   const save = calculatedStats.savingThrows[ability];
                   const isProficient = character.saving_throw_proficiencies?.includes(ability);
                   const isEditingSave = isEditMode && !isReadOnly;
                   
                   return (
-                    <div key={ability} className="flex items-center justify-between p-2 rounded bg-muted/30 group">
-                      <span className="text-sm font-heading">{ABILITY_NAMES[ability]}</span>
+                    <div key={ability} className="flex items-center justify-between p-3 sm:p-2 rounded-lg bg-card border border-border group hover:bg-muted/50 transition-colors">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-heading">{ABILITY_NAMES[ability]}</span>
+                        {isProficient && (
+                          <Badge variant="secondary" className="text-xs px-1.5 py-0.5">Prof</Badge>
+                        )}
+                      </div>
                       <div className="flex items-center gap-2">
                         {isEditingSave ? (
                           <Button
                             type="button"
                             variant={isProficient ? 'default' : 'outline'}
                             size="sm"
-                            className="h-6 px-2 text-xs"
+                            className="h-6 px-2 text-xs character-sheet-touch-small"
                             onClick={() => handleToggleSavingThrowProficiency(ability)}
                             aria-pressed={isProficient}
                           >
                             P
                           </Button>
                         ) : (
-                          isProficient && <Badge variant="secondary" className="text-xs">P</Badge>
+                          isProficient && <Badge variant="secondary" className="text-xs px-1.5 py-0.5">P</Badge>
                         )}
                         <span className={cn(
-                          "font-display font-bold",
+                          "font-display font-bold text-sm sm:text-base",
                           save >= 0 ? "text-green-400" : "text-red-400"
                         )}>
                           {formatModifier(save)}
@@ -1678,10 +1731,10 @@ const CharacterSheet = () => {
                             context: `${ABILITY_NAMES[ability]} Save`,
                             modifier: save,
                           })}
-                          className="h-7 w-7 p-0 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
+                          className="h-7 w-7 p-0 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity character-sheet-touch-small"
                           aria-label={`Roll ${ABILITY_NAMES[ability]} save`}
                         >
-                          <Dice6 className="w-4 h-4" />
+                          <Dice6 className="w-3.5 h-3.5" />
                         </Button>
                       </div>
                     </div>

@@ -55,10 +55,8 @@ export interface UnifiedSpell {
   ritual: boolean;
   
   // System Ascendant adaptations
-  monarchPowerCost?: number; // backward-compat alias for regentPowerCost
   regentPowerCost?: number;
   systemFavorCost?: number;
-  monarchRequirement?: string; // backward-compat alias for regentRequirement
   regentRequirement?: string;
   gateRank?: string;
   
@@ -144,9 +142,9 @@ export function canCastUnifiedSpell(
   }
   
   // Check regent power cost
-  const regentCost = spell.regentPowerCost ?? spell.monarchPowerCost;
+  const regentCost = spell.regentPowerCost;
   if (regentCost) {
-    const activeRegent = character.activeRegent ?? character.activeMonarch;
+    const activeRegent = character.activeRegent;
     if (!activeRegent || character.systemFavorCurrent < regentCost) {
       return { canCast: false, reason: formatMonarchVernacular(`Insufficient Regent Power (requires ${regentCost})`) };
     }
@@ -160,9 +158,9 @@ export function canCastUnifiedSpell(
   }
   
   // Check regent requirement
-  const regentReq = spell.regentRequirement ?? spell.monarchRequirement;
+  const regentReq = spell.regentRequirement;
   if (regentReq) {
-    const unlocks = character.regentUnlocks ?? character.monarchUnlocks ?? [];
+    const unlocks = character.regentUnlocks ?? [];
     if (!unlocks.includes(regentReq)) {
       return { canCast: false, reason: formatMonarchVernacular(`Regent unlock required: ${regentReq}`) };
     }
@@ -210,8 +208,8 @@ export function castUnifiedSpell(
   }
   
   // Consume regent power
-  const castRegentCost = spell.regentPowerCost ?? spell.monarchPowerCost;
-  const castActiveRegent = newCharacter.activeRegent ?? newCharacter.activeMonarch;
+  const castRegentCost = spell.regentPowerCost;
+  const castActiveRegent = newCharacter.activeRegent;
   if (castRegentCost && castActiveRegent) {
     newCharacter = {
       ...newCharacter,
@@ -304,8 +302,8 @@ export function getUnifiedSpellList(
   allSpells: UnifiedSpell[]
 ): UnifiedSpell[] {
   return allSpells.filter(spell => {
-    const req = spell.regentRequirement ?? spell.monarchRequirement;
-    const unlocks = character.regentUnlocks ?? character.monarchUnlocks ?? [];
+    const req = spell.regentRequirement;
+    const unlocks = character.regentUnlocks ?? [];
     return (
       spell.classes.includes(character.class) &&
       character.level >= spell.levelRequired &&

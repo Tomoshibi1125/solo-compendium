@@ -14,7 +14,7 @@ import { Crown, Swords, Shield, Zap, Sparkles, RefreshCw, Dna, Save, Loader2 } f
 import { useSaveSovereign } from '@/hooks/useSavedSovereigns';
 import { useAuth } from '@/lib/auth/authContext';
 import { useActiveCharacter } from '@/hooks/useActiveCharacter';
-import { useCharacterRegentUnlocks } from '@/hooks/useMonarchUnlocks';
+import { useCharacterMonarchUnlocks } from '@/hooks/useRegentUnlocks';
 import { useCampaignByCharacterId } from '@/hooks/useCampaigns';
 import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 
@@ -32,7 +32,8 @@ export function GeminiProtocolGenerator() {
   const { activeCharacter } = useActiveCharacter();
   const { data: characterCampaign } = useCampaignByCharacterId(activeCharacter?.id || '');
   const campaignId = characterCampaign?.id ?? null;
-  const { data: regentUnlocks = [], isLoading: regentUnlocksLoading } = useCharacterRegentUnlocks(activeCharacter?.id);
+  const characterId = activeCharacter?.id;
+  const { unlocks: regentUnlocks = [], isLoading: regentUnlocksLoading } = useCharacterMonarchUnlocks(characterId || '');
   const [selectedJob, setSelectedJob] = useState<string>('');
   const [selectedPath, setSelectedPath] = useState<string>('');
   const [selectedRegentA, setSelectedRegentA] = useState<string>('');
@@ -187,8 +188,8 @@ export function GeminiProtocolGenerator() {
   useEffect(() => {
     if (autoMode) {
       if (regentUnlocksLoading) return;
-      const primary = regentUnlocks.find((unlock) => unlock.is_primary) || regentUnlocks[0];
-      const secondary = regentUnlocks.find((unlock) => unlock.id !== primary?.id);
+      const primary = regentUnlocks.find((unlock: any) => unlock.is_primary) || regentUnlocks[0];
+      const secondary = regentUnlocks.find((unlock: any) => unlock.id !== primary?.id);
       if (primary && selectedRegentA !== primary.regent_id) {
         setSelectedRegentA(primary.regent_id);
       }

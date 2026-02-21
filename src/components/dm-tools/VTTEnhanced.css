@@ -58,3 +58,89 @@
 .vtt-health-fill.low {
   background-color: rgb(239 68 68);
 }
+
+/* Mobile VTT styles */
+@media (max-width: 768px) {
+  .vtt-enhanced-scene {
+    min-height: 60vh;
+  }
+  
+  .vtt-enhanced-token {
+    min-width: 32px;
+    min-height: 32px;
+    font-size: 0.75rem;
+  }
+  
+  .vtt-enhanced-token-locked {
+    opacity: 0.6;
+  }
+  
+  .vtt-fog-of-war {
+    opacity: 0.9;
+  }
+  
+  .vtt-health-fill {
+    transition: width 0.2s ease;
+  }
+  
+  .vtt-measurement-tool {
+    z-index: 60;
+  }
+}
+
+@media (max-width: 480px) {
+  .vtt-enhanced-token {
+    min-width: 28px;
+    min-height: 28px;
+    font-size: 0.625rem;
+  }
+  
+  .vtt-enhanced-grid {
+    background-size: var(--grid-size, 40px) var(--grid-size, 40px);
+  }
+}
+
+/* ========================================
+   VTT INLINE STYLE REPLACEMENTS
+   ======================================== */
+
+/* User avatar colors */
+.vtt-user-avatar {
+  background-color: var(--user-color, #6b7280);
+}
+
+/* Ping positioning */
+.vtt-ping {
+  position: absolute;
+  left: var(--ping-x, 0);
+  top: var(--ping-y, 0);
+}
+
+/* Cursor positioning */
+.vtt-cursor {
+  position: absolute;
+  left: var(--cursor-x, 0);
+  top: var(--cursor-y, 0);
+  transform: translate(-50%, -50%);
+}
+
+.vtt-cursor-dot {
+  background-color: var(--user-color, #6b7280);
+}
+
+.vtt-cursor-label {
+  background-color: var(--user-color, #6b7280);
+}
+
+/* HP bar colors */
+.vtt-hp-bar {
+  width: var(--hp-percent, 100%);
+  background-color: var(--hp-color, #22c55e);
+}
+
+/* Context menu positioning */
+.vtt-context-menu {
+  position: fixed;
+  left: var(--menu-x, 0);
+  top: var(--menu-y, 0);
+}

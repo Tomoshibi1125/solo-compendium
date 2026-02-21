@@ -5,7 +5,9 @@ import { addLocalRollHistory, isLocalCharacterId, listLocalRollHistory } from '@
 
 export type RollRecord = Database['public']['Tables']['roll_history']['Row'];
 type RollRecordInsert = Database['public']['Tables']['roll_history']['Insert'];
-type RollRecordInsertClient = Omit<RollRecordInsert, 'id' | 'user_id' | 'created_at'>;
+type RollRecordInsertClient = Omit<RollRecordInsert, 'id' | 'user_id' | 'created_at'> & {
+  campaign_id?: string | null;
+};
 
 const buildRollHistoryCacheKey = (userId: string, characterId: string | null, limit: number) => {
   const scope = characterId ? `character:${characterId}` : 'all';

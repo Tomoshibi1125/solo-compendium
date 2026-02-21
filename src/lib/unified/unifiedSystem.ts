@@ -59,7 +59,7 @@ export class UnifiedSystem {
       movementRemaining: this.character.speed,
       concentrationActive: false,
       systemFavorUsed: false,
-      monarchPowerUsed: false
+      regentPowerUsed: false
     };
   }
 
@@ -133,11 +133,7 @@ export class UnifiedSystem {
     return result;
   }
 
-  /** @deprecated Use applyRegentPower instead */
-  applyMonarchPower(cost: number, effect: string) {
-    return this.applyRegentPower(cost, effect);
-  }
-
+  
   // Level up character
   levelUp(): void {
     const newLevel = this.character.level + 1;
@@ -249,7 +245,7 @@ export class UnifiedSystem {
         current: this.character.systemFavorCurrent,
         max: this.character.systemFavorMax
       },
-      regentPower: (this.character.activeRegent ?? this.character.activeMonarch) ? {
+      regentPower: this.character.activeRegent ? {
         current: this.character.systemFavorCurrent,
         max: this.character.systemFavorMax
       } : undefined,
@@ -258,7 +254,7 @@ export class UnifiedSystem {
       saves: this.character.savingThrowProficiencies,
       equipment: this.character.equipment.length,
       powers: this.character.knownPowers.length,
-      regentUnlocks: (this.character.regentUnlocks ?? this.character.monarchUnlocks)?.length || 0,
+      regentUnlocks: this.character.regentUnlocks?.length || 0,
       shadowSoldiers: this.character.shadowSoldiers?.length || 0,
       runeInscriptions: this.character.runeInscriptions?.length || 0
     };
@@ -276,7 +272,7 @@ export class UnifiedSystem {
       movementRemaining: this.combatState.movementRemaining,
       concentrationActive: this.combatState.concentrationActive,
       systemFavorUsed: this.combatState.systemFavorUsed,
-      regentPowerUsed: this.combatState.regentPowerUsed ?? this.combatState.monarchPowerUsed
+      regentPowerUsed: this.combatState.regentPowerUsed
     };
   }
 };

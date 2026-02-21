@@ -2,6 +2,7 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./index.css";
 import "./styles/system-ui.css";
+import "./styles/dropdown-opacity-fix.css";
 import { enableTouchOptimizations } from "./lib/mobile";
 import { error as logError, warn as logWarn } from "./lib/logger";
 import { initSentry } from "./lib/sentry";

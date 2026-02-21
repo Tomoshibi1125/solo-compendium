@@ -83,22 +83,23 @@ const Campaigns = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow tracking-wider">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
+          <div className="min-w-0 flex-1">
+            <h1 className="font-arise text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 gradient-text-shadow tracking-wider leading-tight">
               GUILD REGISTRY
             </h1>
-            <p className="text-muted-foreground font-heading">
+            <p className="text-sm sm:text-base text-muted-foreground font-heading leading-relaxed">
               Create or join guilds to hunt with others across the System's domain
             </p>
           </div>
           <Button 
             onClick={() => setCreateDialogOpen(true)}
-            className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple hover:shadow-arise/30 hover:shadow-lg transition-all"
+            className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple hover:shadow-arise/30 hover:shadow-lg transition-all min-h-[44px] px-4 sm:px-6"
           >
             <Plus className="w-4 h-4" />
-            Create Guild
+            <span className="hidden sm:inline">Create Guild</span>
+            <span className="sm:hidden">Create</span>
           </Button>
         </div>
 
@@ -122,56 +123,59 @@ const Campaigns = () => {
               <p className="text-muted-foreground mb-4">
                 You haven't established any guilds yet. Create one to unite Ascendants under your banner.
               </p>
-              <Button onClick={() => setCreateDialogOpen(true)} className="bg-gradient-to-r from-amber-500 to-amber-600 hover:shadow-amber-500/30 hover:shadow-lg">
+              <Button onClick={() => setCreateDialogOpen(true)} className="bg-gradient-to-r from-amber-500 to-amber-600 hover:shadow-amber-500/30 hover:shadow-lg min-h-[44px]">
                 <Crown className="w-4 h-4 mr-2" />
-                Establish Your Guild
+                <span className="hidden sm:inline">Establish Your Guild</span>
+                <span className="sm:hidden">Create Guild</span>
               </Button>
             </SystemWindow>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               {myCampaigns.map((campaign) => (
                 <div 
                   key={campaign.id} 
-                  className="glass-card p-5 hover:border-amber-500/50 transition-all duration-300 border-l-4 border-l-amber-500/50 group relative overflow-hidden"
+                  className="glass-card p-4 sm:p-5 hover:border-amber-500/50 transition-all duration-300 border-l-4 border-l-amber-500/50 group relative overflow-hidden"
                 >
                   {/* Background glow */}
                   <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-amber-500/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
                   
-                  <div className="flex items-start justify-between mb-3 relative">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 relative gap-2">
                     <div className="flex items-center gap-2">
-                      <Crown className="w-5 h-5 text-amber-400" />
-                      <h3 className="font-arise text-lg font-semibold tracking-wide group-hover:text-amber-400 transition-colors">
+                      <Crown className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
+                      <h3 className="font-arise text-base sm:text-lg font-semibold tracking-wide group-hover:text-amber-400 transition-colors leading-tight">
                         {campaign.name.toUpperCase()}
                       </h3>
                     </div>
-                    <span className="text-xs font-arise text-amber-400 bg-amber-500/10 px-2 py-1 rounded">
+                    <span className="text-xs font-arise text-amber-400 bg-amber-500/10 px-2 py-1 rounded whitespace-nowrap">
                       GUILD MASTER
                     </span>
                   </div>
                   
-                  <p className="text-sm text-muted-foreground mb-4 min-h-[3rem] relative">
+                  <p className="text-xs sm:text-sm text-muted-foreground mb-4 min-h-[2.5rem] sm:min-h-[3rem] relative leading-relaxed">
                     {campaign.description || 'No description provided.'}
                   </p>
                   
                   <div className="space-y-3 relative">
-                    <div className="flex items-center justify-between p-3 bg-gradient-to-r from-amber-500/10 to-transparent rounded-lg border border-amber-500/20">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 bg-gradient-to-r from-amber-500/10 to-transparent rounded-lg border border-amber-500/20 gap-2">
                       <span className="text-xs font-arise text-muted-foreground tracking-wide">SHARE CODE</span>
-                      <span className="font-mono font-bold text-xl text-amber-400 tracking-widest">{campaign.share_code}</span>
+                      <span className="font-mono font-bold text-lg sm:text-xl text-amber-400 tracking-widest text-center sm:text-right">{campaign.share_code}</span>
                     </div>
                     <div className="flex gap-2">
                       <Button
                         variant="outline"
                         size="sm"
-                        className="flex-1 gap-2 border-amber-500/30 hover:bg-amber-500/10 hover:border-amber-500/50"
+                        className="flex-1 gap-2 border-amber-500/30 hover:bg-amber-500/10 hover:border-amber-500/50 min-h-[36px]"
                         onClick={() => handleCopyShareLink(campaign.share_code)}
                       >
                         <Copy className="w-3 h-3" />
-                        Copy Link
+                        <span className="hidden sm:inline">Copy Link</span>
+                        <span className="sm:hidden">Copy</span>
                       </Button>
                       <Link to={`/campaigns/${campaign.id}`} className="flex-1">
-                        <Button size="sm" className="w-full gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:shadow-amber-500/30 hover:shadow-lg">
+                        <Button size="sm" className="w-full gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:shadow-amber-500/30 hover:shadow-lg min-h-[36px]">
                           <ExternalLink className="w-3 h-3" />
-                          Open
+                          <span className="hidden sm:inline">Open</span>
+                          <span className="sm:hidden">View</span>
                         </Button>
                       </Link>
                     </div>
@@ -203,37 +207,38 @@ const Campaigns = () => {
                 You haven't joined any guilds yet. Ask your Guild Master for a share code or link.
               </p>
               <Link to="/campaigns/join">
-                <Button className="bg-gradient-to-r from-arise to-shadow-purple">
+                <Button className="bg-gradient-to-r from-arise to-shadow-purple min-h-[44px]">
                   <UserPlus className="w-4 h-4 mr-2" />
-                  Join Guild
+                  <span className="hidden sm:inline">Join Guild</span>
+                  <span className="sm:hidden">Join</span>
                 </Button>
               </Link>
             </SystemWindow>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               {joinedCampaigns.map((campaign) => (
                 <div 
                   key={campaign.id} 
-                  className="glass-card p-5 hover:border-arise/50 transition-all duration-300 border-l-4 border-l-arise/50 group relative overflow-hidden"
+                  className="glass-card p-4 sm:p-5 hover:border-arise/50 transition-all duration-300 border-l-4 border-l-arise/50 group relative overflow-hidden"
                 >
                   {/* Background glow */}
                   <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-arise/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
                   
-                  <div className="flex items-start justify-between mb-3 relative">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 relative gap-2">
                     <div className="flex items-center gap-2">
-                      <Shield className="w-5 h-5 text-arise" />
-                      <h3 className="font-arise text-lg font-semibold tracking-wide group-hover:text-arise transition-colors">
+                      <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-arise" />
+                      <h3 className="font-arise text-base sm:text-lg font-semibold tracking-wide group-hover:text-arise transition-colors leading-tight">
                         {campaign.name.toUpperCase()}
                       </h3>
                     </div>
                   </div>
                   
-                  <p className="text-sm text-muted-foreground mb-4 min-h-[3rem] relative">
+                  <p className="text-xs sm:text-sm text-muted-foreground mb-4 min-h-[2.5rem] sm:min-h-[3rem] relative leading-relaxed">
                     {campaign.description || 'No description provided.'}
                   </p>
                   
                   <div className="space-y-3 relative">
-                    <div className="flex items-center justify-between p-3 bg-gradient-to-r from-arise/10 to-transparent rounded-lg border border-arise/20">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 bg-gradient-to-r from-arise/10 to-transparent rounded-lg border border-arise/20 gap-2">
                       <span className="text-xs font-arise text-muted-foreground tracking-wide">YOUR ROLE</span>
                       <span className={cn(
                         "font-heading font-semibold px-2 py-1 rounded text-sm",
@@ -246,19 +251,21 @@ const Campaigns = () => {
                     </div>
                     <div className="flex gap-2">
                       <Link to={`/campaigns/${campaign.id}`} className="flex-1">
-                        <Button size="sm" className="w-full gap-2 bg-gradient-to-r from-arise to-shadow-purple">
+                        <Button size="sm" className="w-full gap-2 bg-gradient-to-r from-arise to-shadow-purple min-h-[36px]">
                           <ExternalLink className="w-3 h-3" />
-                          Open
+                          <span className="hidden sm:inline">Open</span>
+                          <span className="sm:hidden">View</span>
                         </Button>
                       </Link>
                       <Button
                         variant="outline"
                         size="sm"
-                        className="gap-2 border-destructive/30 hover:bg-destructive/10 hover:border-destructive/50 text-destructive"
+                        className="gap-2 border-destructive/30 hover:bg-destructive/10 hover:border-destructive/50 text-destructive min-h-[36px]"
                         onClick={() => handleLeaveCampaign(campaign.id)}
                       >
                         <LogOut className="w-3 h-3" />
-                        Leave
+                        <span className="hidden sm:inline">Leave</span>
+                        <span className="sm:hidden">Exit</span>
                       </Button>
                     </div>
                   </div>
@@ -270,7 +277,7 @@ const Campaigns = () => {
 
         {/* Create Campaign Dialog */}
         <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
-          <DialogContent className="border-arise/30 bg-background/95 backdrop-blur-xl">
+          <DialogContent className="border-arise/30 bg-background/95 backdrop-blur-xl w-[calc(100%-2rem)] max-w-md">
             <DialogHeader>
               <DialogTitle className="font-arise text-xl flex items-center gap-2 tracking-wide">
                 <Sparkles className="w-5 h-5 text-arise" />
@@ -303,8 +310,8 @@ const Campaigns = () => {
                 />
               </div>
             </div>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setCreateDialogOpen(false)} className="font-heading">
+            <DialogFooter className="flex-col sm:flex-row gap-2">
+              <Button variant="outline" onClick={() => setCreateDialogOpen(false)} className="font-heading w-full sm:w-auto min-h-[44px]">
                 Cancel
               </Button>
               <Button 

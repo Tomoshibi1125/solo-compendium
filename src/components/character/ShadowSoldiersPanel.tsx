@@ -15,10 +15,10 @@ import {
   useUpdateSoldierHP,
   type ShadowSoldier 
 } from '@/hooks/useShadowSoldiers';
-import { useCharacterMonarchUnlocks } from '@/hooks/useMonarchUnlocks';
+import { useCharacterMonarchUnlocks } from '@/hooks/useRegentUnlocks';
 import { Ghost, Sword, Shield, Heart, Zap, Plus, Minus, Crown, Skull, Flame, Bird, Dog, Mountain, Crosshair } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { formatMonarchVernacular, MONARCH_LABEL, normalizeMonarchSearch } from '@/lib/vernacular';
+import { formatRegentVernacular, REGENT_LABEL, normalizeRegentSearch } from '@/lib/vernacular';
 
 interface ShadowSoldiersPanelProps {
   characterId: string;
@@ -51,7 +51,7 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
   const [selectedSoldier, setSelectedSoldier] = useState<ShadowSoldier | null>(null);
   const { data: mySoldiers = [] } = useCharacterShadowSoldiers(characterId);
   const { data: allSoldiers = [] } = useCompendiumShadowSoldiers();
-  const { data: regentUnlocks = [] } = useCharacterMonarchUnlocks(characterId);
+  const { unlocks: regentUnlocks = [] } = useCharacterMonarchUnlocks(characterId);
   const extractSoldier = useExtractShadowSoldier();
   const toggleSummon = useToggleSummon();
   const updateHP = useUpdateSoldierHP();
@@ -59,10 +59,10 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
   // Check if character has Umbral Monarch unlock
   const hasUmbralMonarch = regentUnlocks.some((unlock: any) => {
     const theme = unlock.regent?.theme?.toLowerCase() || '';
-    const name = normalizeMonarchSearch(unlock.regent?.name || '').toLowerCase();
+    const name = normalizeRegentSearch(unlock.regent?.name || '').toLowerCase();
     return theme.includes('umbral') || name.includes('umbral regent') || name.includes('umbral monarch');
   });
-  const umbralTitle = `Umbral ${MONARCH_LABEL}`;
+  const umbralTitle = `Umbral ${REGENT_LABEL}`;
   
   // Get soldiers this character can extract
   const extractedIds = new Set(mySoldiers.map(s => s.soldier_id));
@@ -153,7 +153,7 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                       <div>
                         <div className="flex items-center gap-2">
                           <span className={cn("font-heading font-semibold", css.is_summoned && "text-shadow-purple")}>
-                            {formatMonarchVernacular(css.nickname || soldier.name)}
+                            {formatRegentVernacular(css.nickname || soldier.name)}
                           </span>
                           <Badge 
                             variant="outline" 
@@ -162,7 +162,7 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                             {soldier.rank}
                           </Badge>
                         </div>
-                        <p className="text-xs text-muted-foreground italic">{formatMonarchVernacular(soldier.title)}</p>
+                        <p className="text-xs text-muted-foreground italic">{formatRegentVernacular(soldier.title)}</p>
                       </div>
                     </div>
                     <Button
@@ -287,8 +287,8 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                                 {typeData.icon}
                               </div>
                               <div>
-                                <CardTitle className="text-lg font-heading">{formatMonarchVernacular(soldier.name)}</CardTitle>
-                                <p className="text-sm text-muted-foreground italic">{formatMonarchVernacular(soldier.title)}</p>
+                                <CardTitle className="text-lg font-heading">{formatRegentVernacular(soldier.name)}</CardTitle>
+                                <p className="text-sm text-muted-foreground italic">{formatRegentVernacular(soldier.title)}</p>
                               </div>
                             </div>
                             <Badge className={cn("font-display", rankColors[soldier.rank] || '')}>
@@ -297,7 +297,7 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                           </div>
                         </CardHeader>
                         <CardContent>
-                          <p className="text-sm text-muted-foreground mb-4">{formatMonarchVernacular(soldier.description)}</p>
+                          <p className="text-sm text-muted-foreground mb-4">{formatRegentVernacular(soldier.description)}</p>
                           
                           <div className="flex gap-4 text-xs font-heading mb-4">
                             <span className="text-gate-a">HP {soldier.hit_points}</span>
@@ -311,7 +311,7 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                             <p className="text-xs font-display text-shadow-purple tracking-wider">ABILITIES:</p>
                             {soldier.abilities.map((ability, i) => (
                               <div key={i} className="text-xs p-2 rounded bg-muted/50">
-                                <span className="font-heading font-semibold text-foreground">{formatMonarchVernacular(ability.name)}</span>
+                                <span className="font-heading font-semibold text-foreground">{formatRegentVernacular(ability.name)}</span>
                                 <Badge variant="outline" className="ml-2 text-[10px] h-4">
                                   {ability.action_type}
                                 </Badge>
@@ -333,7 +333,7 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                               disabled={extractSoldier.isPending}
                             >
                               <Skull className="h-4 w-4 mr-2" />
-                              ASCEND - {formatMonarchVernacular(soldier.name)}
+                              ASCEND - {formatRegentVernacular(soldier.name)}
                             </Button>
                           )}
                         </CardContent>

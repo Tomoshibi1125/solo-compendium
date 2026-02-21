@@ -45,3 +45,81 @@
 .character-sheet-encumbrance--overloaded {
   --encumbrance-color: #ef4444;
 }
+
+/* D&D Beyond Style Mobile Breakpoints */
+@media (max-width: 475px) {
+  .xs\:hidden {
+    display: none;
+  }
+  
+  .xs\:inline {
+    display: inline;
+  }
+}
+
+@media (min-width: 476px) {
+  .xs\:hidden {
+    display: block;
+  }
+  
+  .xs\:inline {
+    display: none;
+  }
+}
+
+/* Mobile-first stat cards */
+@media (max-width: 640px) {
+  .character-sheet-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .character-sheet-ability-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .character-sheet-saving-throws-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .character-sheet-ability-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .character-sheet-saving-throws-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Touch-friendly button sizing */
+@media (pointer: coarse) {
+  .character-sheet-touch-button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .character-sheet-touch-small {
+    min-height: 36px;
+    min-width: 36px;
+  }
+}
+
+/* Compact mode for small screens */
+@media (max-width: 380px) {
+  .character-sheet-compact .font-display {
+    font-size: 1.25rem;
+  }
+  
+  .character-sheet-compact .text-2xl {
+    font-size: 1.5rem;
+  }
+  
+  .character-sheet-compact .text-3xl {
+    font-size: 1.875rem;
+  }
+}

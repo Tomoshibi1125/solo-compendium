@@ -4,7 +4,7 @@
  */
 
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { normalizeMonarchSearch } from '@/lib/vernacular';
+import { normalizeRegentSearch } from '@/lib/vernacular';
 
 /**
  * Prepare search text for PostgreSQL tsquery
@@ -22,7 +22,7 @@ export function normalizeSearchText(searchQuery: string): string {
     .replace(/\s+/g, ' ') // Normalize whitespace
     .trim();
 
-  return normalizeMonarchSearch(cleaned);
+  return normalizeRegentSearch(cleaned);
 }
 
 export function prepareSearchText(searchQuery: string): string {
@@ -53,7 +53,7 @@ export function toTsQuery(searchQuery: string): string {
  */
 export async function searchWithRPC(
   supabase: Pick<SupabaseClient, 'rpc'>,
-  table: 'jobs' | 'powers' | 'relics' | 'monsters' | 'paths' | 'monarchs',
+  table: 'jobs' | 'powers' | 'relics' | 'monsters' | 'paths' | 'regents',
   searchQuery: string,
   limit: number = 50
 ) {

@@ -155,15 +155,15 @@ const PlayerTools = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-8" data-testid="player-tools">
-        <div className="mb-8">
-          <div className="flex items-center gap-4 mb-4">
-            <SystemSigilLogo size="md" />
-            <div>
-              <h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow tracking-wider">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8" data-testid="player-tools">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4">
+            <SystemSigilLogo size="md" className="flex-shrink-0" />
+            <div className="min-w-0 flex-1">
+              <h1 className="font-arise text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 gradient-text-shadow tracking-wider leading-tight">
                 ASCENDANT ARSENAL
               </h1>
-              <p className="text-muted-foreground font-heading">
+              <p className="text-sm sm:text-base text-muted-foreground font-heading leading-relaxed">
                 Your personal tools as an Ascendant in the Umbral Legion. 
                 Track your journey, manage your powers, and rise through the ranks.
               </p>
@@ -172,12 +172,12 @@ const PlayerTools = () => {
         </div>
 
         {/* Player Stats Overview */}
-        <SystemWindow title="ASCENDANT STATUS" className="mb-8 border-blue-500/30">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
+        <SystemWindow title="ASCENDANT STATUS" className="mb-6 sm:mb-8 border-blue-500/30">
+          <div className="flex flex-col gap-4 mb-6">
             <div>
               <h2 className="font-heading text-sm text-muted-foreground">Active Ascendant</h2>
               {activeCharacter ? (
-                <div className="text-lg font-semibold">
+                <div className="text-base sm:text-lg font-semibold leading-tight">
                   {activeCharacter.name} - Level {activeCharacter.level} {formatMonarchVernacular(activeCharacter.job || 'Unawakened')}
                 </div>
               ) : (
@@ -188,7 +188,7 @@ const PlayerTools = () => {
             </div>
             {characters.length > 1 && (
               <Select value={activeCharacterId || ''} onValueChange={setActiveCharacter}>
-                <SelectTrigger className="w-64">
+                <SelectTrigger className="w-full sm:w-64 min-h-[44px]">
                   <SelectValue placeholder="Select an ascendant" />
                 </SelectTrigger>
                 <SelectContent>
@@ -201,35 +201,35 @@ const PlayerTools = () => {
               </Select>
             )}
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
             <div className="text-center">
-              <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-gradient-to-br from-blue-500/30 to-blue-600/20 flex items-center justify-center">
-                <Heart className="w-8 h-8 text-blue-400" />
+              <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-2 rounded-full bg-gradient-to-br from-blue-500/30 to-blue-600/20 flex items-center justify-center">
+                <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400" />
               </div>
-              <h3 className="font-arise text-blue-400 text-lg mb-1">VITALITY</h3>
-              <p className="text-2xl font-bold text-white">
+              <h3 className="font-arise text-blue-400 text-sm sm:text-lg mb-1">VITALITY</h3>
+              <p className="text-xl sm:text-2xl font-bold text-white">
                 {activeCharacter ? `${hpCurrent}/${hpMax}` : '--'}
               </p>
               <Progress value={hpPercent} className="h-2 mt-2 bg-gray-700 [&>div]:bg-blue-500" />
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-gradient-to-br from-purple-500/30 to-purple-600/20 flex items-center justify-center">
-                <Zap className="w-8 h-8 text-purple-400" />
+              <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-2 rounded-full bg-gradient-to-br from-purple-500/30 to-purple-600/20 flex items-center justify-center">
+                <Zap className="w-6 h-6 sm:w-8 sm:h-8 text-purple-400" />
               </div>
-              <h3 className="font-arise text-purple-400 text-lg mb-1">SYSTEM FAVOR</h3>
-              <p className="text-2xl font-bold text-white">
+              <h3 className="font-arise text-purple-400 text-sm sm:text-lg mb-1">SYSTEM FAVOR</h3>
+              <p className="text-xl sm:text-2xl font-bold text-white">
                 {activeCharacter ? `${favorCurrent}/${favorMax}` : '--'}
               </p>
               <Progress value={favorPercent} className="h-2 mt-2 bg-gray-700 [&>div]:bg-purple-500" />
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-gradient-to-br from-amber-500/30 to-amber-600/20 flex items-center justify-center">
-                <Star className="w-8 h-8 text-amber-400" />
+              <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-2 rounded-full bg-gradient-to-br from-amber-500/30 to-amber-600/20 flex items-center justify-center">
+                <Star className="w-6 h-6 sm:w-8 sm:h-8 text-amber-400" />
               </div>
-              <h3 className="font-arise text-amber-400 text-lg mb-1">ASCENDANT RANK</h3>
-              <p className="text-2xl font-bold text-white">
+              <h3 className="font-arise text-amber-400 text-sm sm:text-lg mb-1">ASCENDANT RANK</h3>
+              <p className="text-xl sm:text-2xl font-bold text-white">
                 {activeCharacter ? `${rankInfo.rank}-RANK` : '--'}
               </p>
               <div className="flex justify-center gap-1 mt-2">
@@ -237,7 +237,7 @@ const PlayerTools = () => {
                   <Star
                     key={star}
                     className={cn(
-                      "w-4 h-4",
+                      "w-3 h-3 sm:w-4 sm:h-4",
                       activeCharacter && star <= rankInfo.stars ? "text-amber-400 fill-current" : "text-gray-600"
                     )}
                   />
@@ -248,7 +248,7 @@ const PlayerTools = () => {
         </SystemWindow>
 
         {/* Tools Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {playerTools.map((tool) => {
             const isAvailable = tool.status === 'available';
             const isCampaignOnly = tool.status === 'campaign-only';
@@ -260,7 +260,7 @@ const PlayerTools = () => {
                 key={tool.id}
                 to={toolHref}
                 className={cn(
-                  "group relative overflow-hidden rounded-xl border p-6 transition-all duration-300",
+                  "group relative overflow-hidden rounded-lg sm:rounded-xl border p-4 sm:p-6 transition-all duration-300",
                   "bg-gradient-to-br backdrop-blur-sm",
                   isInteractive
                     ? cn("hover:scale-[1.02] hover:shadow-xl cursor-pointer", tool.glow)
@@ -285,23 +285,23 @@ const PlayerTools = () => {
                 
                 {/* Icon */}
                 <div className={cn(
-                  "w-14 h-14 rounded-xl flex items-center justify-center mb-4 relative z-10",
+                  "w-12 h-12 sm:w-14 sm:h-14 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-4 relative z-10",
                   "bg-background/50 border border-current/20",
                   tool.iconColor
                 )}>
-                  <tool.icon className="w-7 h-7" />
+                  <tool.icon className="w-6 h-6 sm:w-7 sm:h-7" />
                 </div>
 
                 {/* Content */}
                 <div className="relative z-10">
                   <h3 className={cn(
-                    "font-arise text-xl font-semibold mb-2 tracking-wide transition-colors",
+                    "font-arise text-lg sm:text-xl font-semibold mb-2 tracking-wide transition-colors leading-tight",
                     tool.status === 'available' && "group-hover:text-current",
                     tool.iconColor
                   )}>
                     {tool.name}
                   </h3>
-                  <p className="text-sm text-muted-foreground mb-4 font-heading">
+                  <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4 font-heading leading-relaxed">
                     {tool.description}
                   </p>
                 </div>

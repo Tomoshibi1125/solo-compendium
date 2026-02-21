@@ -3,11 +3,11 @@
 // Unified Fusion System - Single comprehensive fusion approach
 
 import type { Tables } from '@/integrations/supabase/types';
-import { formatMonarchVernacular, MONARCH_LABEL, MONARCH_LABEL_PLURAL } from '@/lib/vernacular';
+import { formatRegentVernacular, REGENT_LABEL, REGENT_LABEL_PLURAL } from '@/lib/vernacular';
 
 type Job = Tables<'compendium_jobs'>;
 type Path = Tables<'compendium_job_paths'>;
-type Regent = Tables<'compendium_monarchs'>;
+type Regent = Tables<'compendium_regents'>;
 
 export interface FusionAbility {
   name: string;
@@ -39,7 +39,7 @@ export interface GeneratedSovereign {
 const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 const stripMonarchTerm = (value: string): string => {
-  const label = escapeRegExp(MONARCH_LABEL);
+  const label = escapeRegExp(REGENT_LABEL);
   const pattern = new RegExp(`\\s*(?:Monarch|${label})\\s*`, 'gi');
   return value.replace(pattern, ' ').replace(/\s{2,}/g, ' ').trim();
 };
@@ -218,7 +218,7 @@ const abilityTemplates: Record<string, AbilityTemplate> = {
   // LEVEL 7: Domain Overlap - Territories merge
   domainOverlap: {
     name: 'Dual Domain: {fusionTheme}',
-    desc: `[TERRITORY FUSION] Manifest the overlapping domains of both ${MONARCH_LABEL_PLURAL}. Create a 30-foot radius zone where {themeA} and {themeB} rules apply simultaneously. Allies gain advantage on attacks; enemies suffer disadvantage on saves against {element} effects.`,
+    desc: `[TERRITORY FUSION] Manifest the overlapping domains of both ${REGENT_LABEL_PLURAL}. Create a 30-foot radius zone where {themeA} and {themeB} rules apply simultaneously. Allies gain advantage on attacks; enemies suffer disadvantage on saves against {element} effects.`,
     action: '1 action',
     recharge: 'Long Rest',
   },
@@ -226,14 +226,14 @@ const abilityTemplates: Record<string, AbilityTemplate> = {
   // LEVEL 10: Path Synthesis
   pathSynthesis: {
     name: '{path}: {fusionName} Form',
-    desc: `[PATH FUSION] Your {path} techniques have been rewritten by the Gemini Protocol. When you use Path features, they manifest as {fusionTheme} techniques. Gain a unique combo: use any Path ability followed by a ${MONARCH_LABEL.toLowerCase()} ability as a single action.`,
+    desc: `[PATH FUSION] Your {path} techniques have been rewritten by the Gemini Protocol. When you use Path features, they manifest as {fusionTheme} techniques. Gain a unique combo: use any Path ability followed by a ${REGENT_LABEL.toLowerCase()} ability as a single action.`,
     action: '1 bonus action',
   },
 
   // LEVEL 14: Resonant Burst - Major power spike
   resonantBurst: {
     name: '{fusionName} Burst',
-    desc: `[FUSION EXPLOSION] Release the full combined power of both ${MONARCH_LABEL_PLURAL} simultaneously. Create a 30-foot radius explosion of {element} energy. All creatures take [8d10 {damageA} + 8d10 {damageB}] damage (save for half). The explosion leaves behind a zone of {fusionTheme} for 1 minute.`,
+    desc: `[FUSION EXPLOSION] Release the full combined power of both ${REGENT_LABEL_PLURAL} simultaneously. Create a 30-foot radius explosion of {element} energy. All creatures take [8d10 {damageA} + 8d10 {damageB}] damage (save for half). The explosion leaves behind a zone of {fusionTheme} for 1 minute.`,
     action: '1 action',
     recharge: 'Long Rest',
   },
@@ -241,7 +241,7 @@ const abilityTemplates: Record<string, AbilityTemplate> = {
   // LEVEL 17: Perfect Fusion - Capstone ability
   perfectFusion: {
     name: 'Perfect Fusion: {fusionName}',
-    desc: `[ULTIMATE UNIFIED FUSION] Achieve complete integration of {job}, {path}, {regentA}, and {regentB} into a single being. For 1 minute: double proficiency on all rolls, all damage becomes [{damageA}+{damageB}], immune to {damageA} and {damageB} damage, and you may use any class, path, or ${MONARCH_LABEL.toLowerCase()} ability as a bonus action.`,
+    desc: `[ULTIMATE UNIFIED FUSION] Achieve complete integration of {job}, {path}, {regentA}, and {regentB} into a single being. For 1 minute: double proficiency on all rolls, all damage becomes [{damageA}+{damageB}], immune to {damageA} and {damageB} damage, and you may use any class, path, or ${REGENT_LABEL.toLowerCase()} ability as a bonus action.`,
     action: '1 action',
     recharge: 'Long Rest',
     isCapstone: true,
@@ -311,23 +311,23 @@ export function generateSovereign(
   const fusionStability = 'Stable (Unified, Sovereign-Grade)';
   
   const pathShortName = path.name.replace(/^Path of the\s*/i, '').replace(/\s*Path$/i, '');
-  const displayRegentAName = formatMonarchVernacular(regentA.name);
-  const displayRegentBName = formatMonarchVernacular(regentB.name);
-  const displayRegentATitle = formatMonarchVernacular(regentA.title || regentA.name);
-  const displayRegentBTitle = formatMonarchVernacular(regentB.title || regentB.name);
+  const displayRegentAName = formatRegentVernacular(regentA.name);
+  const displayRegentBName = formatRegentVernacular(regentB.name);
+  const displayRegentATitle = formatRegentVernacular(regentA.title || regentA.name);
+  const displayRegentBTitle = formatRegentVernacular(regentB.title || regentB.name);
   
   const context: Record<string, string> = {
     fusionName,
     fusionTheme: fusionTheme.theme,
     element: fusionTheme.element,
-    themeA: formatMonarchVernacular(regentA.theme),
-    themeB: formatMonarchVernacular(regentB.theme),
-    damageA: formatMonarchVernacular(regentA.damage_type || 'Force'),
-    damageB: formatMonarchVernacular(regentB.damage_type || 'Force'),
-    job: formatMonarchVernacular(job.name),
-    path: formatMonarchVernacular(path.name.replace('Path of the ', '')),
-    regentA: formatMonarchVernacular(regentA.name),
-    regentB: formatMonarchVernacular(regentB.name),
+    themeA: formatRegentVernacular(regentA.theme),
+    themeB: formatRegentVernacular(regentB.theme),
+    damageA: formatRegentVernacular(regentA.damage_type || 'Force'),
+    damageB: formatRegentVernacular(regentB.damage_type || 'Force'),
+    job: formatRegentVernacular(job.name),
+    path: formatRegentVernacular(path.name.replace('Path of the ', '')),
+    regentA: formatRegentVernacular(regentA.name),
+    regentB: formatRegentVernacular(regentB.name),
     profMod: '2',
   };
 
@@ -399,13 +399,13 @@ export function generateSovereign(
   ));
 
   return {
-    name: formatMonarchVernacular(`${fusionName} Sovereign`),
-    title: formatMonarchVernacular(`Sovereign of ${fusionTheme.theme}`),
-    description: formatMonarchVernacular(
+    name: formatRegentVernacular(`${fusionName} Sovereign`),
+    title: formatRegentVernacular(`Sovereign of ${fusionTheme.theme}`),
+    description: formatRegentVernacular(
       `Born from the Gemini Protocol fusion of ${regentA.name} and ${regentB.name}, this Sovereign represents a permanent evolution beyond standard ascendant progression.`
     ),
-    fusion_theme: formatMonarchVernacular(fusionTheme.theme),
-    fusion_description: formatMonarchVernacular(`A permanent fusion of ${fusionTheme.concept}.`),
+    fusion_theme: formatRegentVernacular(fusionTheme.theme),
+    fusion_description: formatRegentVernacular(`A permanent fusion of ${fusionTheme.concept}.`),
     fusion_method: 'Gemini Protocol (Unified Fusion)',
     abilities,
     job,
@@ -520,27 +520,27 @@ function parseAISovereignText(
       const descMatch = abilityText.match(/Description:\s*([^\n](?:[\s\S]*?)?)(?=\n\s*(?:Action|Recharge|Origin|Level|Is Capstone)|$)/i);
       return {
         ...ability,
-        name: formatMonarchVernacular(nameMatch?.[1]?.replace(/^Name:\s*/i, '').trim() || ability.name),
-        description: formatMonarchVernacular(descMatch?.[1]?.trim() || abilityText.slice(0, 300)),
+        name: formatRegentVernacular(nameMatch?.[1]?.replace(/^Name:\s*/i, '').trim() || ability.name),
+        description: formatRegentVernacular(descMatch?.[1]?.trim() || abilityText.slice(0, 300)),
       };
     }
     return ability;
   });
 
   return {
-    name: formatMonarchVernacular(fusionName.replace(/^["']|["']$/g, '')),
-    title: formatMonarchVernacular(title.replace(/^["']|["']$/g, '')),
-    description: formatMonarchVernacular(description),
-    fusion_theme: formatMonarchVernacular(fusionTheme),
-    fusion_description: formatMonarchVernacular(fusionDescription),
+    name: formatRegentVernacular(fusionName.replace(/^["']|["']$/g, '')),
+    title: formatRegentVernacular(title.replace(/^["']|["']$/g, '')),
+    description: formatRegentVernacular(description),
+    fusion_theme: formatRegentVernacular(fusionTheme),
+    fusion_description: formatRegentVernacular(fusionDescription),
     fusion_method: 'Gemini Protocol (AI-Enhanced Fusion)',
     abilities,
     job,
     path,
     regentA,
     regentB,
-    power_multiplier: formatMonarchVernacular(powerMultiplier),
-    fusion_stability: formatMonarchVernacular(fusionStability),
+    power_multiplier: formatRegentVernacular(powerMultiplier),
+    fusion_stability: formatRegentVernacular(fusionStability),
   };
 }
 
@@ -558,7 +558,7 @@ export function calculateTotalCombinations(
 
 // Get fusion description for display
 export function getFusionDescription(): string {
-  return `Gemini Protocol overlays a permanent subclass using Job + Path + ${MONARCH_LABEL} A + ${MONARCH_LABEL} B. Any valid template can fuse, and each Sovereign is a unique, irreversible overlay with combined memories and abilities.`;
+  return `Gemini Protocol overlays a permanent subclass using Job + Path + ${REGENT_LABEL} A + ${REGENT_LABEL} B. Any valid template can fuse, and each Sovereign is a unique, irreversible overlay with combined memories and abilities.`;
 }
 
 // Get fusion method description for display (legacy compatibility)

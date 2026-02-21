@@ -21,6 +21,7 @@ import { CampaignSessionsPanel } from '@/components/campaign/CampaignSessionsPan
 import { CampaignRollFeed } from '@/components/campaign/CampaignRollFeed';
 import { useAuth } from '@/lib/auth/authContext';
 import { formatMonarchVernacular } from '@/lib/vernacular';
+import { cn } from '@/lib/utils';
 
 const CampaignDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -101,17 +102,18 @@ const CampaignDetail = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-8">
-        <Button variant="ghost" className="mb-6" asChild>
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
+        <Button variant="ghost" className="mb-4 sm:mb-6 min-h-[44px]" asChild>
           <Link to="/campaigns">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Campaigns
+            <span className="hidden sm:inline">Back to Campaigns</span>
+            <span className="sm:hidden">Back</span>
           </Link>
         </Button>
 
-        <div className="mb-8">
-          <div className="flex items-center gap-4 mb-2">
-            <h1 className="font-display text-4xl font-bold gradient-text-shadow">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-2">
+            <h1 className="font-display text-2xl sm:text-4xl font-bold gradient-text-shadow leading-tight">
               {campaign.name.toUpperCase()}
             </h1>
             {!loadingRole && userRole && (
@@ -119,44 +121,56 @@ const CampaignDetail = () => {
             )}
           </div>
           {campaign.description && (
-            <p className="text-muted-foreground font-heading">{campaign.description}</p>
+            <p className="text-sm sm:text-base text-muted-foreground font-heading leading-relaxed">{campaign.description}</p>
           )}
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className={hasDMAccess ? "grid w-full grid-cols-8" : "grid w-full grid-cols-7"}>
-            <TabsTrigger value="overview" className="gap-2">
-              <Users className="w-4 h-4" />
-              Overview
+          <TabsList className={cn(
+            hasDMAccess 
+              ? "grid w-full grid-cols-4 sm:grid-cols-6 lg:grid-cols-8" 
+              : "grid w-full grid-cols-3 sm:grid-cols-5 lg:grid-cols-7"
+          )}>
+            <TabsTrigger value="overview" className="gap-2 text-xs sm:text-sm min-h-[44px]">
+              <Users className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Overview</span>
+              <span className="sm:hidden">Overview</span>
             </TabsTrigger>
-            <TabsTrigger value="vtt" className="gap-2">
-              <Layers className="w-4 h-4" />
-              VTT
+            <TabsTrigger value="vtt" className="gap-2 text-xs sm:text-sm min-h-[44px]">
+              <Layers className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">VTT</span>
+              <span className="sm:hidden">VTT</span>
             </TabsTrigger>
-            <TabsTrigger value="sessions" className="gap-2">
-              <CalendarClock className="w-4 h-4" />
-              Sessions
+            <TabsTrigger value="sessions" className="gap-2 text-xs sm:text-sm min-h-[44px]">
+              <CalendarClock className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Sessions</span>
+              <span className="sm:hidden">Sessions</span>
             </TabsTrigger>
-            <TabsTrigger value="chat" className="gap-2">
-              <MessageSquare className="w-4 h-4" />
-              Chat
+            <TabsTrigger value="chat" className="gap-2 text-xs sm:text-sm min-h-[44px]">
+              <MessageSquare className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Chat</span>
+              <span className="sm:hidden">Chat</span>
             </TabsTrigger>
-            <TabsTrigger value="notes" className="gap-2">
-              <FileText className="w-4 h-4" />
-              Notes
+            <TabsTrigger value="notes" className="gap-2 text-xs sm:text-sm min-h-[44px]">
+              <FileText className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Notes</span>
+              <span className="sm:hidden">Notes</span>
             </TabsTrigger>
-            <TabsTrigger value="handouts" className="gap-2">
-              <FileText className="w-4 h-4" />
-              Handouts
+            <TabsTrigger value="handouts" className="gap-2 text-xs sm:text-sm min-h-[44px]">
+              <FileText className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Handouts</span>
+              <span className="sm:hidden">Handouts</span>
             </TabsTrigger>
-            <TabsTrigger value="characters" className="gap-2">
-              <Share2 className="w-4 h-4" />
-              Characters
+            <TabsTrigger value="characters" className="gap-2 text-xs sm:text-sm min-h-[44px]">
+              <Share2 className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Characters</span>
+              <span className="sm:hidden">Characters</span>
             </TabsTrigger>
             {hasDMAccess && (
-              <TabsTrigger value="settings" className="gap-2">
-                <Settings className="w-4 h-4" />
-                Settings
+              <TabsTrigger value="settings" className="gap-2 text-xs sm:text-sm min-h-[44px]">
+                <Settings className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Settings</span>
+                <span className="sm:hidden">Settings</span>
               </TabsTrigger>
             )}
           </TabsList>

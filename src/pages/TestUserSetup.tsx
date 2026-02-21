@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { setupTestAccounts } from '@/lib/testUsers';
+import { setupTestAccounts } from '@/test/utils/testUsers';
 
 export default function TestUserSetup() {
   const [status, setStatus] = useState<'idle' | 'creating' | 'testing' | 'done' | 'error'>('idle');

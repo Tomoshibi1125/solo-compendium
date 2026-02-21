@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./styles/mobile-responsive.css";
 
 /* ============================================================
    System Ascendant — Amethyst & Obsidian Color Palette
@@ -16,7 +17,7 @@
   --card:            262 25% 8%;      /* Slightly lighter obsidian */
   --card-foreground: 260 15% 90%;
 
-  --popover:         262 25% 8%;
+  --popover:         262 25% 12%;     /* Increased lightness for more opacity */
   --popover-foreground: 260 15% 90%;
 
   --primary:         262 100% 71%;    /* Amethyst purple */

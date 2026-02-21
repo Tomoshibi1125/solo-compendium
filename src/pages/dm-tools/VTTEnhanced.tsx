@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import '@/styles/vtt-enhanced.css';
+import '@/styles/vtt-enhanced-dynamic.css';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { QuestGenerator } from '@/components/dm-tools/QuestGenerator';
 import { useToast } from '@/hooks/use-toast';
@@ -1329,25 +1330,27 @@ const VTTEnhanced = () => {
       {/* Test detection element */}
       <div data-testid="vtt-interface" aria-hidden="true">VTT</div>
 
-      <div className="container mx-auto px-4 py-8 max-w-[1920px]">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 max-w-[1920px]">
         {!isGM ? (
           <PlayerMapView campaignId={campaignId || ''} sessionId={sessionId || undefined} />
         ) : (
           <>
-            <div className="mb-4 flex items-center justify-between flex-wrap gap-2">
-          <div>
+            <div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="min-w-0 flex-1">
             <Button
               variant="ghost"
               onClick={() => navigate(`/campaigns/${campaignId}`)}
-              className="mb-1"
+              className="mb-1 sm:mb-2"
+              size="sm"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Campaign
+              <span className="hidden sm:inline">Back to Campaign</span>
+              <span className="sm:hidden">Back</span>
             </Button>
-            <h1 className="font-arise text-3xl font-bold gradient-text-shadow">
+            <h1 className="font-arise text-xl sm:text-2xl lg:text-3xl font-bold gradient-text-shadow leading-tight">
               VTT — {currentScene?.name || 'No Scene'}
             </h1>
-            <div className="flex items-center gap-3 mt-1">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-1">
               <Badge variant={vttRealtime.isConnected ? 'default' : 'destructive'} className="text-xs">
                 {vttRealtime.isConnected ? '● LIVE' : '○ OFFLINE'}
               </Badge>
@@ -1358,41 +1361,51 @@ const VTTEnhanced = () => {
               )}
               {vttRealtime.activeUsers.length > 0 && (
                 <div className="flex -space-x-1.5">
-                  {vttRealtime.activeUsers.slice(0, 6).map((u) => (
+                  {vttRealtime.activeUsers.slice(0, 6).map((u) => {
+                    const divRef = useRef<HTMLDivElement>(null);
+                    useEffect(() => {
+                      if (divRef.current) {
+                        divRef.current.style.setProperty('--user-color', u.color);
+                      }
+                    }, [u.color]);
+                    return (
                     <div
                       key={u.userId}
-                      className="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold text-white border border-background"
-                      style={{ backgroundColor: u.color }}
+                      ref={divRef}
+                      className="w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center text-[8px] sm:text-[9px] font-bold text-white border border-background vtt-user-avatar"
                       title={`${u.userName} (${u.role})`}
                     >
                       {u.userName.charAt(0).toUpperCase()}
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </div>
           </div>
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center flex-wrap">
             {isGM && (
               <>
-                <Button onClick={saveScenes} variant="outline" size="sm">
-                  <Save className="w-4 h-4 mr-2" />
-                  Save
+                <Button onClick={saveScenes} variant="outline" size="sm" className="min-h-[44px]">
+                  <Save className="w-4 h-4 mr-1 sm:mr-2" />
+                  <span className="hidden sm:inline">Save</span>
+                  <span className="sm:hidden">S</span>
                 </Button>
-                <Button onClick={createNewScene} variant="outline" size="sm">
-                  <Plus className="w-4 h-4 mr-2" />
-                  New Scene
+                <Button onClick={createNewScene} variant="outline" size="sm" className="min-h-[44px]">
+                  <Plus className="w-4 h-4 mr-1 sm:mr-2" />
+                  <span className="hidden sm:inline">New</span>
+                  <span className="sm:hidden">+</span>
                 </Button>
                 <Dialog>
-                  <Button variant="ghost" size="sm" className="px-2 text-muted-foreground" asChild>
+                  <Button variant="ghost" size="sm" className="px-2 text-muted-foreground min-h-[44px]" asChild>
                     <DialogTrigger>?</DialogTrigger>
                   </Button>
-                  <DialogContent className="max-w-md">
+                  <DialogContent className="max-w-md w-[calc(100%-2rem)]">
                     <DialogHeader>
                       <DialogTitle>Keyboard Shortcuts</DialogTitle>
                       <DialogDescription>Available when the map canvas is focused.</DialogDescription>
                     </DialogHeader>
-                    <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-sm">
                       <span className="text-muted-foreground">Escape</span><span>Deselect token</span>
                       <span className="text-muted-foreground">Delete / Backspace</span><span>Remove selected token</span>
                       <span className="text-muted-foreground">Arrow keys</span><span>Nudge token 1 square</span>
@@ -1420,9 +1433,9 @@ const VTTEnhanced = () => {
 
         <div
           className={cn(
-            "grid grid-cols-1 md:grid-cols-12 gap-4",
-            !isMobile && "md:h-[calc(100vh-200px)]",
-            isMapExpanded && "md:grid-cols-12"
+            "grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4",
+            !isMobile && "lg:h-[calc(100vh-200px)]",
+            isMobile && "h-[calc(100vh-120px)]"
           )}
         >
           {/* Left Sidebar — hidden on mobile, shown via bottom sheet */}
@@ -2282,22 +2295,22 @@ const VTTEnhanced = () => {
                   {/* Ping overlay */}
                   {vttRealtime.pings.length > 0 && (
                     <div className="absolute inset-0 pointer-events-none vtt-ping-layer">
-                      {vttRealtime.pings.map((ping) => (
+                      {vttRealtime.pings.map((ping) => {
+                        const pingRef = useRef<HTMLDivElement>(null);
+                        useEffect(() => {
+                          if (pingRef.current) {
+                            pingRef.current.style.setProperty('--ping-x', `${(ping.x + 0.5) * gridSize * zoom}px`);
+                            pingRef.current.style.setProperty('--ping-y', `${(ping.y + 0.5) * gridSize * zoom}px`);
+                          }
+                        }, [ping.x, ping.y, gridSize, zoom]);
+                        return (
                         <div
                           key={ping.timestamp}
-                          className="absolute animate-ping"
-                          style={{
-                            left: `${(ping.x + 0.5) * gridSize * zoom}px`,
-                            top: `${(ping.y + 0.5) * gridSize * zoom}px`,
-                            width: '24px',
-                            height: '24px',
-                            borderRadius: '50%',
-                            border: `3px solid ${ping.color}`,
-                            transform: 'translate(-50%, -50%)',
-                            boxShadow: `0 0 12px ${ping.color}`,
-                          }}
+                          ref={pingRef}
+                          className="absolute animate-ping vtt-ping"
                         />
-                      ))}
+                        );
+                      })}
                     </div>
                   )}
 
@@ -2306,28 +2319,41 @@ const VTTEnhanced = () => {
                     <div className="absolute inset-0 pointer-events-none vtt-cursor-layer">
                       {vttRealtime.activeUsers
                         .filter((u) => u.cursor)
-                        .map((u) => (
+                        .map((u) => {
+                          const cursorRef = useRef<HTMLDivElement>(null);
+                          const cursorDotRef = useRef<HTMLDivElement>(null);
+                          const cursorLabelRef = useRef<HTMLDivElement>(null);
+                          useEffect(() => {
+                            if (cursorRef.current) {
+                              cursorRef.current.style.setProperty('--cursor-x', `${(u.cursor!.x + 0.5) * gridSize * zoom}px`);
+                              cursorRef.current.style.setProperty('--cursor-y', `${(u.cursor!.y + 0.5) * gridSize * zoom}px`);
+                            }
+                            if (cursorDotRef.current) {
+                              cursorDotRef.current.style.setProperty('--user-color', u.color);
+                            }
+                            if (cursorLabelRef.current) {
+                              cursorLabelRef.current.style.setProperty('--user-color', u.color);
+                            }
+                          }, [u.cursor, u.color, gridSize, zoom]);
+                          return (
                           <div
                             key={u.userId}
-                            className="absolute transition-all duration-100"
-                            style={{
-                              left: `${(u.cursor!.x + 0.5) * gridSize * zoom}px`,
-                              top: `${(u.cursor!.y + 0.5) * gridSize * zoom}px`,
-                              transform: 'translate(-50%, -50%)',
-                            }}
+                            ref={cursorRef}
+                            className="absolute transition-all duration-100 vtt-cursor"
                           >
                             <div
-                              className="w-3 h-3 rounded-full border-2 border-white"
-                              style={{ backgroundColor: u.color }}
+                              ref={cursorDotRef}
+                              className="w-3 h-3 rounded-full border-2 border-white vtt-cursor-dot"
                             />
                             <div
-                              className="absolute top-4 left-0 text-[10px] px-1 rounded text-white whitespace-nowrap"
-                              style={{ backgroundColor: u.color }}
+                              ref={cursorLabelRef}
+                              className="absolute top-4 left-0 text-[10px] px-1 rounded text-white whitespace-nowrap vtt-cursor-label"
                             >
                               {u.userName}
                             </div>
                           </div>
-                        ))}
+                          );
+                        })}
                     </div>
                   )}
                 </div>
@@ -2721,11 +2747,22 @@ const VTTEnhanced = () => {
                             <span className={cn('font-arise text-lg w-6 text-center', isCurrentTurn && 'text-amber-400')}>{index + 1}</span>
                             <div className="flex-1 min-w-0">
                               <span className="truncate text-sm block">{token.name}</span>
-                              {token.hp !== undefined && token.maxHp !== undefined && (
+                              {token.hp !== undefined && token.maxHp !== undefined && (() => {
+                                const hpBarRef = useRef<HTMLDivElement>(null);
+                                const hpPercent = Math.max(0, Math.min(100, token.maxHp > 0 ? (token.hp / token.maxHp) * 100 : 0));
+                                const hpColor = (token.hp / (token.maxHp || 1)) > 0.5 ? '#22c55e' : (token.hp / (token.maxHp || 1)) > 0.25 ? '#eab308' : '#ef4444';
+                                useEffect(() => {
+                                  if (hpBarRef.current) {
+                                    hpBarRef.current.style.setProperty('--hp-percent', `${hpPercent}%`);
+                                    hpBarRef.current.style.setProperty('--hp-color', hpColor);
+                                  }
+                                }, [hpPercent, hpColor]);
+                                return (
                                 <div className="h-1 rounded-full bg-black/30 mt-0.5 w-full">
-                                  <div className="h-full rounded-full transition-all" style={{ width: `${Math.max(0, Math.min(100, token.maxHp > 0 ? (token.hp / token.maxHp) * 100 : 0))}%`, backgroundColor: (token.hp / (token.maxHp || 1)) > 0.5 ? '#22c55e' : (token.hp / (token.maxHp || 1)) > 0.25 ? '#eab308' : '#ef4444' }} />
+                                  <div ref={hpBarRef} className="h-full rounded-full transition-all vtt-hp-bar" />
                                 </div>
-                              )}
+                                );
+                              })()}
                             </div>
                           </div>
                           {isGM && (
@@ -2756,16 +2793,24 @@ const VTTEnhanced = () => {
                   {vttRealtime.activeUsers.length > 0 && (
                     <div className="flex items-center gap-1 mb-2 px-1">
                       <div className="flex -space-x-1.5">
-                        {vttRealtime.activeUsers.map((u) => (
+                        {vttRealtime.activeUsers.map((u) => {
+                          const avatarRef = useRef<HTMLDivElement>(null);
+                          useEffect(() => {
+                            if (avatarRef.current) {
+                              avatarRef.current.style.setProperty('--user-color', u.color);
+                            }
+                          }, [u.color]);
+                          return (
                           <div
                             key={u.userId}
-                            className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white border border-background"
-                            style={{ backgroundColor: u.color }}
+                            ref={avatarRef}
+                            className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white border border-background vtt-user-avatar"
                             title={`${u.userName} (${u.role})`}
                           >
                             {u.userName.charAt(0).toUpperCase()}
                           </div>
-                        ))}
+                          );
+                        })}
                       </div>
                       <span className="text-[10px] text-muted-foreground ml-1">
                         {vttRealtime.activeUsers.length + 1} online
@@ -3185,10 +3230,17 @@ const VTTEnhanced = () => {
         {contextMenu && (() => {
           const token = visibleTokens.find((t) => t.id === contextMenu.tokenId);
           if (!token) return null;
+          const contextMenuRef = useRef<HTMLDivElement>(null);
+          useEffect(() => {
+            if (contextMenuRef.current) {
+              contextMenuRef.current.style.setProperty('--menu-x', `${contextMenu.x}px`);
+              contextMenuRef.current.style.setProperty('--menu-y', `${contextMenu.y}px`);
+            }
+          }, [contextMenu.x, contextMenu.y]);
           return (
             <>
               <div className="fixed inset-0 z-[99]" onClick={() => setContextMenu(null)} />
-              <div className="vtt-context-menu" style={{ left: contextMenu.x, top: contextMenu.y }}>
+              <div ref={contextMenuRef} className="vtt-context-menu">
                 <button onClick={() => { setActiveTokenId(token.id); setContextMenu(null); }}>✎ Select</button>
                 {isGM && <button onClick={() => { updateToken(token.id, { locked: !token.locked }); setContextMenu(null); }}>{token.locked ? '🔓 Unlock' : '🔒 Lock'}</button>}
                 {isGM && <button onClick={() => { updateToken(token.id, { visible: !token.visible }); setContextMenu(null); }}>{token.visible ? '👁 Hide' : '👁 Show'}</button>}

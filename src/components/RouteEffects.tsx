@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { isValidEntryType, resolveRef, type EntryType } from '@/lib/compendiumResolver';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { getLocalCharacterWithAbilities, isLocalCharacterId } from '@/lib/guestStore';
-import { formatMonarchVernacular, MONARCH_LABEL_PLURAL } from '@/lib/vernacular';
+import { formatRegentVernacular, REGENT_LABEL_PLURAL } from '@/lib/vernacular';
 
 const BASE_TITLE = 'System Ascendant';
 const ACTIVE_CHARACTER_STORAGE_KEY = 'solo-compendium.active-character';
@@ -17,8 +17,8 @@ const COMPENDIUM_LABELS: Record<EntryType, string> = {
   monsters: 'Monsters',
   backgrounds: 'Backgrounds',
   conditions: 'Conditions',
-  regents: MONARCH_LABEL_PLURAL,
-  monarchs: MONARCH_LABEL_PLURAL,
+  regents: REGENT_LABEL_PLURAL,
+  monarchs: REGENT_LABEL_PLURAL,
   feats: 'Feats',
   skills: 'Skills',
   equipment: 'Equipment',
@@ -192,12 +192,12 @@ export function RouteEffects() {
     const updateTitle = async () => {
       const entry = await resolveRef(type, id);
       if (!active || !entry) return;
-      const label = formatMonarchVernacular(COMPENDIUM_LABELS[type] ?? 'Compendium');
+      const label = formatRegentVernacular(COMPENDIUM_LABELS[type] ?? 'Compendium');
       const resolvedName =
         (entry as { display_name?: string | null; title?: string | null }).display_name ||
         (entry as { title?: string | null }).title ||
         entry.name;
-      setDynamicTitle(`${BASE_TITLE} - ${label}: ${formatMonarchVernacular(resolvedName)}`);
+      setDynamicTitle(`${BASE_TITLE} - ${label}: ${formatRegentVernacular(resolvedName)}`);
     };
 
     void updateTitle();

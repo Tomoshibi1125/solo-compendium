@@ -77,8 +77,6 @@ export interface UnifiedCharacter {
   systemFavorCurrent: number;
   
   // Regent-specific mechanics (quest/DM-gated unlocks)
-  monarchUnlocks?: string[]; // Backward-compat alias for regentUnlocks
-  activeMonarch?: string; // Backward-compat alias for activeRegent
   regentUnlocks?: string[];
   activeRegent?: string;
   
@@ -417,15 +415,15 @@ export function getUnifiedCharacterStatus(character: UnifiedCharacter): {
       current: character.systemFavorCurrent,
       max: character.systemFavorMax
     },
-    regentStatus: (character.regentUnlocks ?? character.monarchUnlocks) ? {
-      hasRegentUnlocks: (character.regentUnlocks ?? character.monarchUnlocks ?? []).length > 0,
-      activeRegent: character.activeRegent ?? character.activeMonarch,
-      totalUnlocks: (character.regentUnlocks ?? character.monarchUnlocks ?? []).length
+    regentStatus: character.regentUnlocks ? {
+      hasRegentUnlocks: character.regentUnlocks.length > 0,
+      activeRegent: character.activeRegent,
+      totalUnlocks: character.regentUnlocks.length
     } : undefined,
     spellSlots: character.spellSlots,
     knownPowers: character.knownPowers.length,
     equipment: character.equipment.length,
-    regentUnlocks: (character.regentUnlocks ?? character.monarchUnlocks)?.length || 0,
+    regentUnlocks: character.regentUnlocks?.length || 0,
     shadowSoldiers: character.shadowSoldiers?.length || 0,
     runeInscriptions: character.runeInscriptions?.length || 0
   };

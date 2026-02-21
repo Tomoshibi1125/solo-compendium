@@ -23,7 +23,10 @@
 /* ── Background ──────────────────────────────────────────────────────── */
 .vtt-background {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-repeat: no-repeat;
   background-position: center;
   filter: saturate(1.05) contrast(1.02);
@@ -34,7 +37,10 @@
 /* ── Grid — SLATE (neutral, never competes) ──────────────────────────── */
 .vtt-grid {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   opacity: 0.18;
   background-image: var(--grid-image, none);
   background-size: var(--grid-size, 20px 20px);
@@ -44,7 +50,10 @@
 /* ── Fog — OBSIDIAN (deep black-purple, opaque) ──────────────────────── */
 .vtt-fog-of-war {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: radial-gradient(circle, transparent 0%, rgba(10, 6, 18, 0.9) 100%);
   z-index: 60;
 }
@@ -186,7 +195,10 @@
 /* ── Measurement ruler — CYAN (tool, clearly different) ──────────────── */
 .vtt-measurement {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   pointer-events: none;
   z-index: 55;
 }
@@ -201,18 +213,24 @@
 
 .vtt-measurement-label {
   position: absolute;
-  transform: translate(-50%, -50%);
-  background: rgba(10, 6, 18, 0.92);
-  color: #7dd3fc;
-  border: 1px solid rgba(56, 189, 248, 0.5);
-  border-radius: 999px;
-  padding: 2px 10px;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  background: rgba(56, 189, 248, 0.9);
+  color: #0c4a6e;
+  padding: 2px 6px;
+  border-radius: 4px;
   font-size: 11px;
   font-weight: 600;
   font-family: var(--font-heading, inherit);
   letter-spacing: 0.03em;
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
+}
+
+@supports (-webkit-backdrop-filter: blur(4px)) or (backdrop-filter: blur(4px)) {
+  .vtt-measurement-label {
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
 }
 
 /* ── Annotations — AMBER (warm, note-like, stands out from map) ──────── */
@@ -231,9 +249,14 @@
   white-space: nowrap;
   cursor: pointer;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+@supports (-webkit-backdrop-filter: blur(4px)) or (backdrop-filter: blur(4px)) {
+  .vtt-annotation {
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
 }
 
 .vtt-annotation:hover {
@@ -273,7 +296,7 @@
   border: 2px solid rgba(56, 189, 248, 0.7);
   border-radius: 50%;
   background: rgba(56, 189, 248, 0.12);
-  box-shadow: 0 0 16px rgba(56, 189, 248, 0.25), inset 0 0 20px rgba(56, 189, 248, 0.08);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.25), 0 0 20px rgba(56, 189, 248, 0.08);
   pointer-events: none;
   z-index: 55;
 }
@@ -308,9 +331,14 @@
   border-radius: 8px;
   padding: 4px 0;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
   animation: vtt-ctx-in 0.12s ease-out;
+}
+
+@supports (-webkit-backdrop-filter: blur(12px)) or (backdrop-filter: blur(12px)) {
+  .vtt-context-menu {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
 }
 
 @keyframes vtt-ctx-in {
@@ -371,9 +399,14 @@
   padding-bottom: max(6px, env(safe-area-inset-bottom));
   background: rgba(10, 6, 18, 0.96);
   border-top: 1px solid rgba(155, 109, 255, 0.2);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
   overflow-x: auto;
+}
+
+@supports (-webkit-backdrop-filter: blur(12px)) or (backdrop-filter: blur(12px)) {
+  .vtt-mobile-toolbar {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
 }
 
 .vtt-mobile-toolbar button {
@@ -417,11 +450,19 @@
   background: rgba(10, 6, 18, 0.98);
   border-top: 2px solid rgba(155, 109, 255, 0.3);
   border-radius: 16px 16px 0 0;
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
   transform: translateY(100%);
   transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
   overflow: hidden;
+}
+
+@supports (-webkit-backdrop-filter: blur(16px)) or (backdrop-filter: blur(16px)) {
+  .vtt-bottom-sheet {
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+  }
+}
+
+.vtt-bottom-sheet {
   padding-bottom: max(0px, env(safe-area-inset-bottom));
 }
 
@@ -439,7 +480,6 @@
 
 .vtt-bottom-sheet-content {
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
   max-height: calc(65vh - 20px);
   padding: 0 12px 12px;
 }
@@ -470,7 +510,10 @@
   /* Map fills the screen */
   .vtt-mobile-map-fullscreen {
     position: fixed !important;
-    inset: 0 !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
     z-index: 40;
     border-radius: 0 !important;
     border: none !important;

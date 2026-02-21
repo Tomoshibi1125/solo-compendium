@@ -1,8 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { isSupabaseConfigured, supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/lib/auth/authContext';
 import { AppError } from '@/lib/appError';
 import { enqueueOfflineSync } from '@/lib/offlineSync';
+import { useCallback } from 'react';
 
 export type HomebrewContentType = 'job' | 'path' | 'relic' | 'spell' | 'item';
 export type HomebrewStatus = 'draft' | 'published' | 'archived';
@@ -26,6 +28,23 @@ export interface HomebrewRecord {
   updated_by: string | null;
   created_at: string;
   updated_at: string;
+}
+
+// Character creation interfaces
+interface CharacterCreationOption {
+  id: string;
+  name: string;
+  description: string;
+  source: 'homebrew' | 'official';
+  homebrewId?: string;
+  data: Record<string, unknown>;
+}
+
+interface HomebrewCharacterOptions {
+  jobs: CharacterCreationOption[];
+  paths: CharacterCreationOption[];
+  spells: CharacterCreationOption[];
+  items: CharacterCreationOption[];
 }
 
 export interface HomebrewVersionRecord {
@@ -434,4 +453,122 @@ export const useSetHomebrewStatus = () => {
       });
     },
   });
+}
+
+// Character creation integration hook
+export function useHomebrewCharacterIntegration() {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+
+  const getHomebrewCharacterOptions = useCallback((): HomebrewCharacterOptions => {
+    if (!user) {
+      return {
+        jobs: [],
+        paths: [],
+        spells: [],
+        items: []
+      };
+    }
+
+    // Get all homebrew content from cache
+    const allHomebrew = queryClient.getQueryData(['homebrew', 'list']) as any;
+    const homebrewRecords = allHomebrew?.pages?.flat() || [];
+
+    const transformToCharacterOption = (record: HomebrewRecord): CharacterCreationOption => ({
+      id: record.id,
+      name: record.name,
+      description: record.description,
+      source: 'homebrew' as const,
+      homebrewId: record.id,
+      data: record.data
+    });
+
+    const options: HomebrewCharacterOptions = {
+      jobs: homebrewRecords
+        .filter((r: HomebrewRecord) => r.content_type === 'job' && r.status === 'published')
+        .map(transformToCharacterOption),
+      paths: homebrewRecords
+        .filter((r: HomebrewRecord) => r.content_type === 'path' && r.status === 'published')
+        .map(transformToCharacterOption),
+      spells: homebrewRecords
+        .filter((r: HomebrewRecord) => r.content_type === 'spell' && r.status === 'published')
+        .map(transformToCharacterOption),
+      items: homebrewRecords
+        .filter((r: HomebrewRecord) => r.content_type === 'item' && r.status === 'published')
+        .map(transformToCharacterOption)
+    };
+
+    return options;
+  }, [user, queryClient]);
+
+  const isHomebrewOption = useCallback((optionId: string): boolean => {
+    const options = getHomebrewCharacterOptions();
+    const allOptions = [...options.jobs, ...options.paths, ...options.spells, ...options.items];
+    return allOptions.some(option => option.id === optionId);
+  }, [getHomebrewCharacterOptions]);
+
+  const getHomebrewOptionById = useCallback((optionId: string): CharacterCreationOption | null => {
+    const options = getHomebrewCharacterOptions();
+    const allOptions = [...options.jobs, ...options.paths, ...options.spells, ...options.items];
+    return allOptions.find(option => option.id === optionId) || null;
+  }, [getHomebrewCharacterOptions]);
+
+  const getHomebrewJobsForCreation = useCallback(() => {
+    return getHomebrewCharacterOptions().jobs.map(job => ({
+      ...job,
+      // Transform homebrew job data to match expected job interface
+      hitDie: job.data.hitDie || 'd8',
+      primaryAbility: job.data.primaryAbility || 'STR',
+      savingThrows: job.data.savingThrows || [],
+      skills: job.data.skills || [],
+      equipment: job.data.equipment || [],
+      features: job.data.features || [],
+      levels: job.data.levels || []
+    }));
+  }, [getHomebrewCharacterOptions]);
+
+  const getHomebrewPathsForCreation = useCallback(() => {
+    return getHomebrewCharacterOptions().paths.map(path => ({
+      ...path,
+      // Transform homebrew path data to match expected path interface
+      requirements: path.data.requirements || [],
+      features: path.data.features || [],
+      levels: path.data.levels || []
+    }));
+  }, [getHomebrewCharacterOptions]);
+
+  const getHomebrewSpellsForCreation = useCallback(() => {
+    return getHomebrewCharacterOptions().spells.map(spell => ({
+      ...spell,
+      // Transform homebrew spell data to match expected spell interface
+      level: spell.data.level || 1,
+      school: spell.data.school || 'evocation',
+      castingTime: spell.data.castingTime || '1 action',
+      range: spell.data.range || 'Self',
+      components: spell.data.components || ['V'],
+      duration: spell.data.duration || 'Instantaneous',
+      atHigherLevels: spell.data.atHigherLevels || ''
+    }));
+  }, [getHomebrewCharacterOptions]);
+
+  const getHomebrewItemsForCreation = useCallback(() => {
+    return getHomebrewCharacterOptions().items.map(item => ({
+      ...item,
+      // Transform homebrew item data to match expected item interface
+      type: item.data.type || 'equipment',
+      rarity: item.data.rarity || 'common',
+      properties: item.data.properties || [],
+      requirements: item.data.requirements || []
+    }));
+  }, [getHomebrewCharacterOptions]);
+
+  return {
+    getHomebrewCharacterOptions,
+    isHomebrewOption,
+    getHomebrewOptionById,
+    getHomebrewJobsForCreation,
+    getHomebrewPathsForCreation,
+    getHomebrewSpellsForCreation,
+    getHomebrewItemsForCreation
+  };
 };

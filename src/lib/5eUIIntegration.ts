@@ -122,20 +122,66 @@ export function formatConditions(character: Character): string {
 }
 
 export function formatDeathSaves(character: Character): string {
-  // These would be tracked in combat state, not character data
-  // For now, return a placeholder based on HP
-  if (character.hitPoints.current > 0) return 'Healthy';
-  return 'Dying (0 HP)';
+  // Enhanced death save status based on HP and conditions
+  const hp = character.hitPoints?.current || 0;
+  const maxHp = character.hitPoints?.max || 1;
+  const hpPercentage = (hp / maxHp) * 100;
+  
+  if (hp > 0) {
+    if (hpPercentage >= 75) return 'Healthy';
+    if (hpPercentage >= 50) return 'Wounded';
+    if (hpPercentage >= 25) return 'Bloodied';
+    if (hpPercentage > 0) return 'Critical';
+  }
+  
+  // At 0 HP or below - death saves needed
+  return 'Dying (Death saves required)';
 }
 
 export function formatEquipment(character: Character): string {
-  // This would integrate with the equipment system
-  // For now, return a placeholder
-  const equipmentCount = character.equipment?.length || 0;
-  const relicCount = character.relics?.length || 0;
-  const attunedCount = character.attunedRelics?.length || 0;
+  // Format equipment list with categories and details
+  const equipment = character.equipment || [];
   
-  return `Equipment: ${equipmentCount} items, ${relicCount} relics (${attunedCount} attuned)`;
+  if (equipment.length === 0) {
+    return 'No equipment';
+  }
+  
+  // Group equipment by type (simple categorization)
+  const weapons = equipment.filter(item => 
+    item.toLowerCase().includes('sword') || 
+    item.toLowerCase().includes('axe') || 
+    item.toLowerCase().includes('bow') ||
+    item.toLowerCase().includes('staff') ||
+    item.toLowerCase().includes('dagger')
+  );
+  
+  const armor = equipment.filter(item => 
+    item.toLowerCase().includes('armor') || 
+    item.toLowerCase().includes('helmet') ||
+    item.toLowerCase().includes('shield') ||
+    item.toLowerCase().includes('mail') ||
+    item.toLowerCase().includes('plate')
+  );
+  
+  const magic = equipment.filter(item => 
+    item.toLowerCase().includes('amulet') || 
+    item.toLowerCase().includes('ring') ||
+    item.toLowerCase().includes('wand') ||
+    item.toLowerCase().includes('potion') ||
+    item.toLowerCase().includes('scroll')
+  );
+  
+  const other = equipment.filter(item => 
+    !weapons.includes(item) && !armor.includes(item) && !magic.includes(item)
+  );
+  
+  const parts = [];
+  if (weapons.length > 0) parts.push(`${weapons.length} weapons`);
+  if (armor.length > 0) parts.push(`${armor.length} armor`);
+  if (magic.length > 0) parts.push(`${magic.length} magic items`);
+  if (other.length > 0) parts.push(`${other.length} other items`);
+  
+  return `Equipment: ${parts.join(', ')} (${equipment.length} total)`;
 }
 
 export function formatCharacterSummary(character: Character): string {

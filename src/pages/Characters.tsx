@@ -63,45 +63,48 @@ const Characters = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="font-arise text-4xl font-bold mb-2 gradient-text-shadow tracking-wider">
-              ASCENDANT REGISTRY
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
+          <div className="min-w-0 flex-1">
+            <h1 className="font-arise text-2xl sm:text-3xl lg:text-4xl font-bold gradient-text-shadow tracking-wider leading-tight">
+              ASCENDANT ROSTER
             </h1>
-            <p className="text-muted-foreground font-heading">
-              Awaken and manage your Ascendants in the Prime Architect's domain
+            <p className="text-sm sm:text-base text-muted-foreground font-heading leading-relaxed">
+              Manage your awakened Ascendants and prepare them for the System's challenges.
             </p>
           </div>
-            <div className="flex gap-2">
-              <Link to="/characters/compare">
-                <Button variant="outline" className="gap-2">
-                  <Users className="w-4 h-4" />
-                  Compare Ascendants
-                </Button>
-              </Link>
-              <Button
-                variant="outline"
-                className="gap-2"
-                onClick={() => setImportDialogOpen(true)}
-              >
-                <Upload className="w-4 h-4" />
-                Import
+          <div className="flex gap-2">
+            <Button
+              onClick={() => setImportDialogOpen(true)}
+              className="gap-2 font-heading min-h-[44px]"
+              variant="outline"
+            >
+              <Upload className="w-4 h-4" />
+              <span className="hidden sm:inline">Import</span>
+              <span className="sm:hidden">Import</span>
+            </Button>
+            <Link to="/characters/new">
+              <Button className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple min-h-[44px]">
+                <Plus className="w-4 h-4" />
+                <span className="hidden sm:inline">Awaken Ascendant</span>
+                <span className="sm:hidden">Create</span>
               </Button>
-              <Link to="/characters/new" data-testid="awaken-new-ascendant">
-                <Button className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple hover:shadow-arise/30 hover:shadow-lg transition-all">
-                  <Plus className="w-4 h-4" />
-                  Awaken New Ascendant
-                </Button>
-              </Link>
-            </div>
-
-          <ImportDialog
-            open={importDialogOpen}
-            onOpenChange={setImportDialogOpen}
-            onImportSuccess={(id) => navigate(`/characters/${id}`)}
-          />
+            </Link>
+          </div>
         </div>
+
+        {selectedIds.size > 0 && (
+          <BulkActionsBar
+            selectedIds={selectedIds}
+            onClearSelection={() => setSelectedIds(new Set())}
+          />
+        )}
+
+        <ImportDialog
+          open={importDialogOpen}
+          onOpenChange={setImportDialogOpen}
+          onImportSuccess={(id) => navigate(`/characters/${id}`)}
+        />
 
         {isGuestMode && (
           <SystemWindow title="GUEST MODE" variant="alert" className="mb-6">
@@ -359,10 +362,12 @@ const Characters = () => {
         )}
 
         {/* Bulk Actions Bar */}
-        <BulkActionsBar
-          selectedIds={Array.from(selectedIds)}
-          onClearSelection={() => setSelectedIds(new Set())}
-        />
+        {selectedIds.size > 0 && (
+          <BulkActionsBar
+            selectedIds={selectedIds}
+            onClearSelection={() => setSelectedIds(new Set())}
+          />
+        )}
 
         {/* Delete Confirmation Dialog */}
         <AlertDialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>

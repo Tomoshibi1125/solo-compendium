@@ -7,7 +7,7 @@
  * Authoritative source: internal compendium data packs already ingested into the app.
  */
 
-import { normalizeMonarchSearch } from '@/lib/vernacular';
+import { normalizeRegentSearch } from '@/lib/vernacular';
 
 type DataLoader<T> = () => Promise<T[]>;
 
@@ -220,7 +220,7 @@ function filterBySearch<T extends Record<string, unknown>>(
 ): T[] {
   if (!search?.trim()) return items;
   
-  const searchLower = normalizeMonarchSearch(search.toLowerCase());
+  const searchLower = normalizeRegentSearch(search.toLowerCase());
   return items.filter(item => 
     searchFields.some(field => {
       const value = item[field];

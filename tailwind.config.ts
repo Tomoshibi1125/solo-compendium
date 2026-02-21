@@ -3,7 +3,7 @@ import tailwindcssAnimate from "tailwindcss-animate";
 import typography from "@tailwindcss/typography";
 
 export default {
-  darkMode: ["class"],
+  darkMode: "class",
   content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
   prefix: "",
   theme: {
@@ -15,8 +15,9 @@ export default {
         lg: "2rem",
       },
       screens: {
-        "2xl": "1400px",
-      },
+      "xs": "475px",
+      "2xl": "1400px",
+    },
     },
     extend: {
       fontFamily: {

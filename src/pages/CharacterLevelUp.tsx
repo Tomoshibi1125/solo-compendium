@@ -491,30 +491,31 @@ const CharacterLevelUp = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 max-w-4xl">
         <Button
           variant="ghost"
           onClick={() => navigate(`/characters/${character.id}`)}
-          className="mb-6"
+          className="mb-4 sm:mb-6 min-h-[44px]"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Ascendant
+          <span className="hidden sm:inline">Back to Ascendant</span>
+          <span className="sm:hidden">Back</span>
         </Button>
 
         {/* Level Up Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-arise/10 rounded-full border border-arise/30 mb-4">
-            <TrendingUp className="w-5 h-5 text-arise" />
-            <span className="font-arise text-arise tracking-wide">LEVEL UP PROTOCOL</span>
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-arise/10 rounded-full border border-arise/30 mb-4">
+            <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-arise" />
+            <span className="font-arise text-arise tracking-wide text-sm sm:text-base">LEVEL UP PROTOCOL</span>
           </div>
-          <h1 className="font-arise text-3xl font-bold gradient-text-shadow tracking-wider mb-2">
+          <h1 className="font-arise text-2xl sm:text-3xl font-bold gradient-text-shadow tracking-wider mb-2 leading-tight">
             {character.name.toUpperCase()}
           </h1>
-          <div className="flex items-center justify-center gap-4 text-2xl font-arise">
+          <div className="flex items-center justify-center gap-2 sm:gap-4 text-lg sm:text-2xl font-arise flex-wrap">
             <span className="text-muted-foreground">LV. {character.level}</span>
             <span className="text-arise animate-pulse">{'->'}</span>
             <span className={cn("font-bold", rankInfo.color)}>LV. {newLevel}</span>
-            <Badge className={cn("ml-2 font-arise", rankInfo.color, "bg-transparent border-current")}>
+            <Badge className={cn("ml-2 font-arise", rankInfo.color, "bg-transparent border-current text-xs sm:text-sm")}>
               {rankInfo.rank}-RANK
             </Badge>
           </div>

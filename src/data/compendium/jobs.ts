@@ -81,126 +81,142 @@ export interface Job {
 }
 
 export const jobs = [
-  // WARRIOR - Pure martial combat
+  // CONTRACTOR - Pact broker and dealmaker
   {
-    "id": "warrior",
-    "name": "Warrior",
+    "id": "contractor",
+    "name": "Contractor",
     "type": "Job",
-    "rank": "C",
-    "description": "A versatile combatant who masters various weapons and fighting styles. Warriors can specialize in offense, defense, or tactical leadership, embodying the foundation of martial prowess in the System Ascendant world.",
-    // SRD 5e Class Features
-    "hitDie": "1d10",
-    "primaryAbility": "Strength",
-    "savingThrows": ["Strength", "Constitution"],
-    "skillChoices": ["Acrobatics", "Animal Handling", "Athletics", "History", "Insight", "Intimidation", "Perception", "Survival"],
-    "armorProficiencies": ["All armor", "shields"],
-    "weaponProficiencies": ["Simple weapons", "martial weapons"],
-    "toolProficiencies": ["One type of artisan's tools"],
+    "rank": "B",
+    "description": "A master of pacts and agreements who brokers deals with extradimensional entities. Contractors excel at negotiation, binding contracts, and channeling otherworldly power through carefully worded agreements, embodying the art of the deal in the System Ascendant world.",
+    // SRD 5e Class Features (Warlock-based)
+    "hitDie": "1d8",
+    "primaryAbility": "Charisma",
+    "savingThrows": ["Wisdom", "Charisma"],
+    "skillChoices": ["Arcana", "Deception", "History", "Intimidation", "Investigation", "Nature", "Religion"],
+    "armorProficiencies": ["Light armor"],
+    "weaponProficiencies": ["Simple weapons"],
+    "toolProficiencies": ["None"],
     // System Ascendant Awakening Features (job-linked progression)
     "awakeningFeatures": [
       {
-        "name": "Battlefield Instinct",
-        "description": "Your combat awareness sharpens, allowing you to anticipate enemy movements and react more quickly in combat.",
+        "name": "Pact Sense",
+        "description": "You can sense the presence of otherworldly entities and active pacts within 100 feet. As an action, you can concentrate on this sense for 1 minute to learn the number and general type (celestial, fiend, fey, elemental, etc.) of entities within range. This sense can penetrate most barriers, but is blocked by 3 feet of wood or dirt, 1 foot of stone, 1 inch of common metal, or a thin sheet of lead. You cannot use this feature while incapacitated.",
         "level": 1
       },
       {
-        "name": "Enhanced Physique",
-        "description": "Your physical conditioning improves, granting you enhanced strength and the ability to push through pain.",
+        "name": "Contract Binding",
+        "description": "Your words carry the weight of otherworldly law. When you speak a binding agreement with a creature that can understand you, you can magically bind them to its terms. If the creature breaks the agreement, they suffer disadvantage on all attack rolls, ability checks, and saving throws for 24 hours. Additionally, they take 2d6 psychic damage at the start of each of their turns while the penalty persists. This binding lasts until the agreement is fulfilled, broken, or dispelled with dispel magic or similar effects. You can have one active binding at a time, plus one additional binding at 5th, 11th, and 17th level.",
         "level": 3
       },
       {
-        "name": "Combat Focus",
-        "description": "You can concentrate intensely in combat, gaining advantage on your first attack roll each round.",
+        "name": "Entity Channel",
+        "description": "You can directly channel power from your bound entities, enhancing your pact abilities. As a bonus action, you can draw upon your patron's essence to gain one of the following benefits for 1 minute: advantage on your next Charisma-based ability check, resistance to one damage type of your choice, or the ability to cast one of your known pact spells without expending a spell slot. Once you use this feature, you cannot use it again until you finish a short rest. At 14th level, you can use this feature twice between short rests.",
         "level": 7
       },
       {
-        "name": "Leadership Presence",
-        "description": "Your confidence inspires allies and intimidates foes, granting you advantage on Persuasion and Intimidation checks.",
+        "name": "Pact Mastery",
+        "description": "You have mastered the art of pact-making and can renegotiate terms of existing pacts and create new binding agreements with greater flexibility. You can add or remove clauses from existing contracts, and creatures bound to your pacts gain advantage on saving throws against being charmed or frightened by you. Additionally, when you cast a spell that affects a creature bound to your pact, you can add your Charisma modifier to the spell's save DC. At 18th level, you can cast geas on any creature bound to your pact without expending a spell slot once per long rest.",
         "level": 11
       }
     ],
     "jobTraits": [
       {
-        "name": "Combat Awareness",
-        "description": "You have advantage on initiative rolls and can't be surprised while conscious.",
+        "name": "Entity Awareness",
+        "description": "You always know when you are being observed by otherworldly entities within 300 feet. This awareness manifests as a subtle sense of being watched, and you can determine the general direction and distance of the observing entity. You cannot be surprised by creatures from other planes, and you have advantage on initiative rolls against such creatures. Additionally, you can sense when a creature is attempting to magically scry on you.",
         "type": "bonus"
       },
       {
-        "name": "Pain Tolerance",
-        "description": "You can continue fighting while at 1 hit point and have advantage on Constitution saving throws against exhaustion.",
+        "name": "Pact Resistance",
+        "description": "You have advantage on saving throws against being charmed or frightened by otherworldly entities, and you have resistance to psychic damage from any source. Additionally, when you are affected by a spell or effect from your patron or their allies, you can use your reaction to gain advantage on the saving throw. You can use this reaction a number of times equal to your proficiency bonus per long rest.",
         "type": "resistance"
       },
       {
-        "name": "Adrenaline Rush",
-        "description": "When you take damage, you can gain temporary hit points equal to your proficiency bonus and advantage on your next attack.",
-        "type": "active",
-        "frequency": "short-rest"
-      },
-      {
-        "name": "Intimidating Presence",
-        "description": "Once per long rest, you can force a creature to make a Wisdom saving throw or be frightened of you for 1 minute.",
+        "name": "Binding Words",
+        "description": "Once per long rest, you can speak a binding command that a creature within 60 feet must obey or suffer disadvantage on their next attack roll, ability check, or saving throw. The creature must be able to hear you and understand your language. If the creature is hostile to you, they can make a Wisdom saving throw against your spell save DC to ignore the command. At 10th level, you can use this feature twice per long rest, and at 18th level three times per long rest.",
         "type": "active",
         "frequency": "long-rest"
+      },
+      {
+        "name": "Entity Favor",
+        "description": "Your bound entities are more likely to grant favors and respond to your requests. When you make a Charisma (Persuasion or Intimidation) check against an otherworldly entity, you can add your proficiency bonus to the roll. Additionally, when you cast a spell that calls upon your patron's power (such as through eldritch invocation or pact magic), you can treat your Charisma score as 2 higher for the purpose of determining spell effects. At 15th level, this bonus increases to your proficiency bonus + 2.",
+        "type": "passive"
       }
     ],
     "abilityScoreImprovements": {
-      "strength": 2,
-      "constitution": 1
+      "charisma": 2,
+      "wisdom": 1
     },
     "size": "medium",
     "speed": 30,
     "languages": ["Common"],
     "darkvision": 60,
-    "specialSenses": ["Combat Awareness"],
-    "damageResistances": ["bludgeoning", "piercing", "slashing"],
+    "specialSenses": ["Entity Awareness"],
+    "damageResistances": [],
     "damageImmunities": [],
     "conditionImmunities": [],
     "startingEquipment": [
-      ["Chain mail", "Leather armor and a longbow with 20 arrows"],
-      ["A martial weapon and a shield", "Two martial weapons"],
-      ["A light crossbow and 20 bolts", "Two handaxes"],
-      ["A dungeoneer's pack", "An explorer's pack"]
+      ["A light crossbow and 20 bolts", "A simple weapon"],
+      ["An arcane focus", "A component pouch"],
+      ["A scholar's pack", "An explorer's pack"],
+      ["Leather armor, two daggers, and thieves' tools"]
     ],
-    "hitPointsAtFirstLevel": "10 + your Constitution modifier",
-    "hitPointsAtHigherLevels": "1d10 (or 6) + your Constitution modifier per level after 1st",
-    "multiclassPrerequisites": "Strength 13 or Dexterity 13",
+    "hitPointsAtFirstLevel": "8 + your Constitution modifier",
+    "hitPointsAtHigherLevels": "1d8 (or 5) + your Constitution modifier per level after 1st",
+    "multiclassPrerequisites": "Charisma 13",
+    "spellcasting": {
+      "ability": "Charisma",
+      "focus": "Pact Object or Arcane Focus",
+      "cantripsKnown": [2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+      "spellsKnown": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 11, 11, 12, 12, 12, 13, 13, 13, 15],
+      "spellSlots": {
+        "1st": [1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "2nd": [0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "3rd": [0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+        "4th": [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "5th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+      }
+    },
     "classFeatures": [
-      { "level": 1, "name": "Fighting Style", "description": "You adopt a particular style of fighting as your specialty. Choose one: Defense (+1 AC in armor), Dueling (+2 damage one-handed), Great Weapon Fighting (reroll 1-2 damage with two-handed), Two-Weapon Fighting (add ability mod to off-hand damage), or Archery (+2 to ranged attack rolls)." },
-      { "level": 1, "name": "Second Wind", "description": "You have a limited well of stamina. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your warrior level. Once you use this feature, you must finish a short or long rest before using it again." },
-      { "level": 2, "name": "Action Surge", "description": "You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action. Once you use this feature, you must finish a short or long rest before using it again. Starting at 17th level, you can use it twice before a rest." },
-      { "level": 3, "name": "Martial Path", "description": "Choose a Martial Path that shapes your combat techniques: Champion (raw physical power), Battle Master (tactical superiority), or Eldritch Knight (martial magic). Your path grants features at 3rd, 7th, 10th, 15th, and 18th level." },
-      { "level": 4, "name": "Ability Score Improvement", "description": "Increase one ability score by 2, or two ability scores by 1 each. Alternatively, choose a feat. You gain this feature again at 6th, 8th, 12th, 14th, 16th, and 19th level." },
-      { "level": 5, "name": "Extra Attack", "description": "You can attack twice, instead of once, whenever you take the Attack action on your turn. The number of attacks increases to three at 11th level and four at 20th level." },
-      { "level": 7, "name": "Path Feature", "description": "You gain a feature from your Martial Path." },
-      { "level": 9, "name": "Indomitable", "description": "You can reroll a saving throw that you fail. If you do so, you must use the new roll. You can use this feature once per long rest. You gain additional uses at 13th level (2) and 17th level (3)." },
-      { "level": 10, "name": "Path Feature", "description": "You gain an additional feature from your Martial Path." },
-      { "level": 11, "name": "Extra Attack (2)", "description": "You can now attack three times whenever you take the Attack action on your turn." },
-      { "level": 13, "name": "Indomitable (2 uses)", "description": "You can now use Indomitable twice between long rests." },
-      { "level": 15, "name": "Path Feature", "description": "You gain an additional feature from your Martial Path." },
-      { "level": 17, "name": "Action Surge (2 uses)", "description": "You can now use Action Surge twice before a rest, but only once on the same turn." },
-      { "level": 17, "name": "Indomitable (3 uses)", "description": "You can now use Indomitable three times between long rests." },
-      { "level": 18, "name": "Path Feature", "description": "You gain an additional feature from your Martial Path." },
-      { "level": 20, "name": "System-Forged Champion", "description": "You can attack four times whenever you take the Attack action. The System has refined your body into the ultimate weapon—every muscle fiber, every reflex, every instinct has been optimized for combat perfection." }
+      { "level": 1, "name": "Otherworldly Patron", "description": "You have struck a bargain with an otherworldly being. Your patron grants you power and features at 1st, 6th, 10th, and 14th level." },
+      { "level": 1, "name": "Pact Magic", "description": "Your patron bestows upon you the ability to cast spells. Charisma is your spellcasting ability. You have a limited number of spell slots that recharge on a short rest." },
+      { "level": 2, "name": "Eldritch Invocations", "description": "You learn invocations that enhance your pact magic abilities." },
+      { "level": 3, "name": "Pact Boon", "description": "Choose a Pact Boon: Pact of the Chain (familiar), Pact of the Tome (book of shadows), or Pact of the Blade (pact weapon)." },
+      { "level": 4, "name": "Ability Score Improvement", "description": "Increase one ability score by 2, or two ability scores by 1 each. Alternatively, choose a feat. You gain this feature again at 8th, 12th, 16th, and 19th level." },
+      { "level": 5, "name": "Pact Magic (3rd level)", "description": "You gain access to 3rd-level spell slots." },
+      { "level": 6, "name": "Patron Feature", "description": "You gain an additional feature from your otherworldly patron." },
+      { "level": 7, "name": "Pact Magic (4th level)", "description": "You gain access to 4th-level spell slots." },
+      { "level": 8, "name": "Ability Score Improvement", "description": "Increase one ability score by 2, or two ability scores by 1 each. Alternatively, choose a feat." },
+      { "level": 9, "name": "Pact Magic (5th level)", "description": "You gain access to 5th-level spell slots." },
+      { "level": 10, "name": "Patron Feature", "description": "You gain an additional feature from your otherworldly patron." },
+      { "level": 11, "name": "Mystic Arcanum (6th)", "description": "You learn one 6th-level spell from your patron's spell list. You can cast it once per long rest." },
+      { "level": 12, "name": "Ability Score Improvement", "description": "Increase one ability score by 2, or two ability scores by 1 each. Alternatively, choose a feat." },
+      { "level": 13, "name": "Patron Feature", "description": "You gain an additional feature from your otherworldly patron." },
+      { "level": 14, "name": "Mystic Arcanum (7th)", "description": "You learn one 7th-level spell from your patron's spell list. You can cast it once per long rest." },
+      { "level": 15, "name": "Mystic Arcanum (8th)", "description": "You learn one 8th-level spell from your patron's spell list. You can cast it once per long rest." },
+      { "level": 16, "name": "Ability Score Improvement", "description": "Increase one ability score by 2, or two ability scores by 1 each. Alternatively, choose a feat." },
+      { "level": 17, "name": "Mystic Arcanum (9th)", "description": "You learn one 9th-level spell from your patron's spell list. You can cast it once per long rest." },
+      { "level": 18, "name": "Pact Master", "description": "You can cast your Mystic Arcanum spells twice per long rest." },
+      { "level": 19, "name": "Ability Score Improvement", "description": "Increase one ability score by 2, or two ability scores by 1 each. Alternatively, choose a feat." },
+      { "level": 20, "name": "Eldritch Master", "description": "You can cast any warlock spell you know without expending a spell slot. Once you use this feature, you can't use it again until you finish a long rest." }
     ],
     // Legacy properties for backward compatibility
     "abilities": [
-      "Fighting Style",
-      "Second Wind",
-      "Action Surge",
-      "Martial Archetype",
-      "Indomitable",
-      "Extra Attack"
+      "Pact Magic",
+      "Eldritch Invocations",
+      "Pact Boon",
+      "Mystic Arcanum",
+      "Otherworldly Patron"
     ],
-    "image": "/generated/compendium/jobs/warrior.webp",
+    "image": "/generated/compendium/jobs/warlock.webp",
     "stats": {
-      "strength": 15,
+      "strength": 10,
       "dexterity": 14,
-      "constitution": 15,
+      "constitution": 12,
       "intelligence": 12,
-      "wisdom": 13,
-      "charisma": 12
+      "wisdom": 14,
+      "charisma": 15
     },
-    "primary_abilities": ["Strength", "Constitution"],
+    "primary_abilities": ["Charisma", "Wisdom"],
     "source": "System Ascendant Canon"
   },
   // MAGE - Arcane magic mastery
@@ -400,6 +416,10 @@ export const jobs = [
       "dexterity": 2,
       "intelligence": 1
     },
+    "racialASI": {
+      "dexterity": 1,
+      "wisdom": 1
+    },
     "size": "medium",
     "speed": 35,
     "languages": ["Common", "Thieves' Cant"],
@@ -456,71 +476,75 @@ export const jobs = [
     "primary_abilities": ["Dexterity", "Intelligence"],
     "source": "System Ascendant Canon"
   },
-  // HEALER - Divine healing magic
+  // HERALD - Divine inspiration and leadership
   {
-    "id": "healer",
-    "name": "Healer",
+    "id": "herald",
+    "name": "Herald",
     "type": "Job",
     "rank": "B",
-    "description": "A divine conduit who channels healing energy to mend wounds and cure ailments. Healers can specialize in different domains of divine power, from restorative healing to protective wards, embodying the life-giving forces in the System Ascendant world.",
-    // SRD 5e Class Features
+    "description": "A divine messenger who inspires allies and demoralizes foes through sacred performance and leadership. Heralds channel divine power through music and words, serving as beacons of hope and courage in the System Ascendant world.",
+    // SRD 5e Class Features (Bard-based)
     "hitDie": "1d8",
-    "primaryAbility": "Wisdom",
-    "savingThrows": ["Wisdom", "Charisma"],
-    "skillChoices": ["History", "Insight", "Medicine", "Persuasion", "Religion"],
-    "armorProficiencies": ["Light armor", "medium armor", "shields"],
-    "weaponProficiencies": ["Simple weapons"],
-    "toolProficiencies": ["Herbalism kit"],
+    "primaryAbility": "Charisma",
+    "savingThrows": ["Dexterity", "Charisma"],
+    "skillChoices": ["Athletics", "Acrobatics", "Sleight of Hand", "Stealth", "Arcana", "History", "Investigation", "Nature", "Religion"],
+    "armorProficiencies": ["Light armor"],
+    "weaponProficiencies": ["Simple weapons", "hand crossbows", "longswords", "rapiers", "shortswords"],
+    "toolProficiencies": ["Three musical instruments of your choice"],
     // System Ascendant Awakening Features (job-linked progression)
     "awakeningFeatures": [
       {
-        "name": "Divine Touch",
-        "description": "Your hands become conduits for healing energy, allowing you to heal through touch.",
+        "name": "Divine Inspiration",
+        "description": "You can inspire others through stirring words or music. As a bonus action, you can choose one creature other than yourself within 60 feet who can hear you. That creature gains one Bardic Inspiration die, a d6. Within 10 minutes, the creature can roll the die and add the number rolled to one ability check, attack roll, or saving throw it makes. The creature can wait until after it rolls the d20 before deciding to use the Bardic Inspiration die, but must decide before the DM says whether the roll succeeds or fails. Once the Bardic Inspiration die is rolled, it is lost. A creature can have only one Bardic Inspiration die at a time. You can use this feature a number of times equal to your Charisma modifier (minimum once).",
         "level": 1
       },
       {
-        "name": "Life Essence",
-        "description": "Your presence promotes healing, allowing you to stabilize the wounded and cure minor ailments.",
+        "name": "Song of Rest",
+        "description": "You can use soothing music or oration to help revitalize your wounded allies during a short rest. If you or any friendly creatures who can hear your performance regain hit points at the end of a short rest by spending one or more Hit Dice, each of those creatures regains an extra 1d6 hit points. The extra hit points increase when you reach certain levels in this class: 2d6 at 5th level, 3d6 at 10th level, and 4d6 at 15th level.",
         "level": 3
       },
       {
-        "name": "Divine Protection",
-        "description": "Your essence resonates with protective energy, allowing you to shield allies from harm.",
+        "name": "Countercharm",
+        "description": "You can use your music or oration to disrupt magical effects. As an action, you can start a performance that lasts until the end of your next turn. During that time, you and any friendly creatures within 30 feet of you have advantage on saving throws against being frightened or charmed. A creature must be able to hear you to gain this benefit. The performance ends early if you are incapacitated or silenced or if you voluntarily end it (no action required).",
         "level": 7
       },
       {
-        "name": "Healing Focus",
-        "description": "You gain the ability to enhance your healing spells and restore life to the recently deceased.",
+        "name": "Magical Performance",
+        "description": "Your performance can become a conduit for magical effects. You can cast spells that require verbal or somatic components while playing a musical instrument. Additionally, when you cast a spell that has a casting time of 1 action, you can make a performance check as part of the same action. If the check exceeds the spell's save DC, one target of the spell has disadvantage on their saving throw. You can use this feature a number of times equal to your proficiency bonus per long rest.",
         "level": 11
       }
     ],
     "jobTraits": [
       {
-        "name": "Life Aura",
-        "description": "Allies within 10 feet have advantage on saving throws against disease and poison.",
+        "name": "Performance Focus",
+        "description": "You gain expertise in one type of musical instrument or one type of performance (such as comedy, drama, or singing). When you make a performance check using your chosen expertise, you can add double your proficiency bonus to the roll. Additionally, you can perform for up to 4 hours without suffering exhaustion.",
         "type": "bonus"
       },
       {
-        "name": "Divine Immunity",
-        "description": "You have advantage on saving throws against disease, poison, and necrotic damage.",
+        "name": "Inspiration Resonance",
+        "description": "When you use your Divine Inspiration feature, the Bardic Inspiration die becomes a d8 instead of a d6. Additionally, when a creature uses your Bardic Inspiration die, they also gain temporary hit points equal to the number rolled. At 10th level, the die becomes a d10, and at 15th level a d12.",
         "type": "resistance"
       },
       {
-        "name": "Cure Wounds",
-        "description": "As an action, you can touch a creature and restore 1d8 + your Wisdom modifier hit points.",
+        "name": "Enthralling Performance",
+        "description": "As an action, you can start a performance that captivates your audience. Choose one creature within 60 feet that can see and hear you. The creature must make a Wisdom saving throw against your spell save DC or be charmed by you for 1 minute. While charmed, the creature regards you as a friendly acquaintance and cannot take hostile actions against you. The effect ends if you or your allies do anything harmful to the creature. You can use this feature a number of times equal to your proficiency bonus per long rest.",
         "type": "active",
-        "frequency": "short-rest"
+        "frequency": "long-rest"
       },
       {
-        "name": "Stabilize",
-        "description": "When a creature within 30 feet drops to 0 hit points, you can automatically stabilize them as a reaction.",
+        "name": "Versatile Inspiration",
+        "description": "When you use your Divine Inspiration feature, you can choose to grant the creature advantage on the next attack roll, ability check, or saving throw it makes within the next 10 minutes, instead of rolling the Bardic Inspiration die. Additionally, you can use your reaction to grant a creature advantage on a saving throw they are about to make. You can use this reaction a number of times equal to your Charisma modifier per long rest.",
         "type": "active",
         "frequency": "long-rest"
       }
     ],
     "abilityScoreImprovements": {
-      "wisdom": 2,
-      "charisma": 1
+      "charisma": 2,
+      "dexterity": 1
+    },
+    "racialASI": {
+      "charisma": 1,
+      "constitution": 1
     },
     "size": "medium",
     "speed": 30,
@@ -655,6 +679,10 @@ export const jobs = [
       "dexterity": 2,
       "wisdom": 1
     },
+    "racialASI": {
+      "dexterity": 1,
+      "constitution": 1
+    },
     "size": "medium",
     "speed": 35,
     "languages": ["Common", "Elvish"],
@@ -786,6 +814,10 @@ export const jobs = [
       "strength": 2,
       "constitution": 1
     },
+    "racialASI": {
+      "strength": 1,
+      "dexterity": 1
+    },
     "size": "medium",
     "speed": 30,
     "languages": ["Common", "Giant"],
@@ -839,71 +871,75 @@ export const jobs = [
     "primary_abilities": ["Strength", "Constitution"],
     "source": "System Ascendant Canon"
   },
-  // TANK - Defense and protection
+  // DESTROYER - Unstoppable force and destruction
   {
-    "id": "tank",
-    "name": "Tank",
+    "id": "destroyer",
+    "name": "Destroyer",
     "type": "Job",
-    "rank": "B",
-    "description": "A defensive specialist who protects allies and absorbs damage. Tanks can withstand incredible punishment and shield others from harm, embodying the protective spirit in the System Ascendant world.",
-    // SRD 5e Class Features
-    "hitDie": "1d10",
-    "primaryAbility": "Constitution",
-    "savingThrows": ["Constitution", "Wisdom"],
-    "skillChoices": ["Athletics", "Intimidation", "Medicine", "Perception", "Survival"],
-    "armorProficiencies": ["All armor", "shields"],
+    "rank": "A",
+    "description": "An unstoppable force of destruction who wields immense power to break through any defense. Destroyers combine raw physical power with tactical dominance, serving as living siege engines in the System Ascendant world.",
+    // SRD 5e Class Features (Barbarian-based)
+    "hitDie": "1d12",
+    "primaryAbility": "Strength",
+    "savingThrows": ["Strength", "Constitution"],
+    "skillChoices": ["Athletics", "Intimidation", "Nature", "Perception", "Survival"],
+    "armorProficiencies": ["Light armor", "medium armor", "shields"],
     "weaponProficiencies": ["Simple weapons", "martial weapons"],
     "toolProficiencies": [],
     // System Ascendant Awakening Features (job-linked progression)
     "awakeningFeatures": [
       {
-        "name": "Iron Will",
-        "description": "Your mind becomes unshakeable, granting you resistance to mental effects and fear.",
+        "name": "Primal Fury",
+        "description": "In battle, you fight with primal ferocity. On your turn, you can enter a rage as a bonus action. While raging, you gain the following benefits if you aren't wearing heavy armor: advantage on Strength checks and saving throws, a +2 bonus to melee damage rolls, and resistance to bludgeoning, piercing, and slashing damage. You have advantage on Intelligence and Wisdom saving throws against being charmed or frightened. Your rage lasts for 1 minute. It ends early if you are knocked unconscious or if your turn ends and you haven't attacked a hostile creature since your last turn or taken damage since your last turn. You can rage a number of times equal to your proficiency bonus + 1 per long rest.",
         "level": 1
       },
       {
-        "name": "Stonelike Body",
-        "description": "Your body toughens, granting you enhanced durability and the ability to absorb damage.",
+        "name": "Unarmored Defense",
+        "description": "While you are not wearing armor, your Armor Class equals 10 + your Dexterity modifier + your Constitution modifier. You can use a shield and still gain this benefit. Additionally, while raging, your natural armor toughens, granting you an additional +1 bonus to AC. This bonus increases to +2 at 10th level and +3 at 18th level.",
         "level": 3
       },
       {
-        "name": "Protective Instinct",
-        "description": "Your senses attune to threats against allies, allowing you to intercept attacks and shield others.",
+        "name": "Reckless Attack",
+        "description": "When you make your first attack on your turn, you can decide to attack recklessly. Doing so gives you advantage on the attack roll, but attack rolls against you have advantage until your next turn. While raging, you can use this feature without disadvantage on the subsequent attacks against you. Additionally, when you score a critical hit while raging, you can immediately make another attack as part of the same action.",
         "level": 7
       },
       {
-        "name": "Shield Mastery",
-        "description": "You gain the ability to create protective barriers and absorb damage meant for others.",
+        "name": "Danger Sense",
+        "description": "You gain an uncanny sense of when things nearby aren't right. You have advantage on Dexterity saving throws against effects that you can see, such as traps and spells. To gain this benefit, you can't be blinded, deafened, or incapacitated. Additionally, while raging, your senses sharpen, allowing you to use this feature even against effects you can't see but can hear within 30 feet. At 15th level, you gain advantage on all saving throws while raging.",
         "level": 11
       }
     ],
     "jobTraits": [
       {
-        "name": "Damage Absorption",
-        "description": "When you take damage, you can reduce the damage by your Constitution modifier.",
+        "name": "Rage Resilience",
+        "description": "While you are raging, you have resistance to bludgeoning, piercing, and slashing damage. Additionally, when you take damage while raging, you can use your reaction to gain temporary hit points equal to your Constitution modifier. These temporary hit points last until the end of your next turn. You can use this reaction a number of times equal to your proficiency bonus per long rest.",
         "type": "resistance"
       },
       {
-        "name": "Protective Presence",
-        "description": "Allies within 5 feet of you have advantage on saving throws against area effects.",
+        "name": "Fury Senses",
+        "description": "While you are raging, you have advantage on Wisdom (Perception) and Intelligence (Investigation) checks. Additionally, you can sense the presence of hidden creatures within 30 feet, even if they are behind total cover. You cannot be surprised while raging, and you have advantage on initiative rolls. At 10th level, your senses extend to 60 feet, and at 18th level to 90 feet.",
         "type": "bonus"
       },
       {
-        "name": "Shield Ally",
-        "description": "As a reaction, you can intercept an attack against an adjacent ally, taking the damage instead.",
+        "name": "Devastating Blow",
+        "description": "Once per rage, you can make a devastating attack as part of the Attack action. When you hit a creature with a melee weapon attack while raging, you can add your rage damage bonus twice to the damage roll. If the attack hits, the target must make a Strength saving throw against your attack roll or be knocked prone. At 14th level, you can use this feature twice per rage, and at 18th level three times per rage.",
         "type": "active",
-        "frequency": "short-rest"
+        "frequency": "once-per-rage"
       },
       {
-        "name": "Iron Wall",
-        "description": "Once per long rest, you can become immune to damage until your next turn.",
+        "name": "Relentless Rage",
+        "description": "Your rage can keep you fighting despite grievous wounds. If you drop to 0 hit points while you're raging and aren't killed outright, you can make a DC 10 Constitution saving throw. If you succeed, you drop to 1 hit point instead. Each time you use this feature after the first, the DC increases by 5. When you finish a short or long rest, the DC resets to 10. Additionally, while raging, you automatically succeed on death saving throws.",
         "type": "active",
-        "frequency": "long-rest"
+        "frequency": "once-per-rage"
       }
     ],
     "abilityScoreImprovements": {
       "constitution": 2,
       "strength": 1
+    },
+    "racialASI": {
+      "constitution": 1,
+      "dexterity": 1
     },
     "size": "medium",
     "speed": 25,
@@ -1025,6 +1061,10 @@ export const jobs = [
       "charisma": 2,
       "dexterity": 1
     },
+    "racialASI": {
+      "charisma": 1,
+      "wisdom": 1
+    },
     "size": "medium",
     "speed": 30,
     "languages": ["Common", "Sylvan"],
@@ -1095,13 +1135,13 @@ export const jobs = [
     "primary_abilities": ["Charisma", "Dexterity"],
     "source": "System Ascendant Canon"
   },
-  // PALADIN - Holy power and sacred duty
+  // HOLY KNIGHT - Divine warrior and protector
   {
-    "id": "paladin",
-    "name": "Paladin",
+    "id": "holy-knight",
+    "name": "Holy Knight",
     "type": "Job",
     "rank": "A",
-    "description": "A holy warrior who channels divine power through sacred combat. Paladins can smite enemies with holy energy and protect allies with divine auras, embodying the sacred warrior abilities seen in certain blessed ascendants in the System Ascendant world.",
+    "description": "A divine warrior who wields sacred power to smite evil and protect the innocent. Holy Knights combine martial prowess with divine magic, serving as champions of their faith and beacons of hope in the System Ascendant world.",
     // SRD 5e Class Features
     "hitDie": "1d10",
     "primaryAbility": "Strength",
@@ -1160,6 +1200,10 @@ export const jobs = [
     "abilityScoreImprovements": {
       "strength": 2,
       "charisma": 1
+    },
+    "racialASI": {
+      "strength": 1,
+      "constitution": 1
     },
     "size": "medium",
     "speed": 30,
@@ -1226,13 +1270,13 @@ export const jobs = [
     "primary_abilities": ["Strength", "Charisma"],
     "source": "System Ascendant Canon"
   },
-  // TECHNOMANCER - Artificer (Technology manipulation inspired by tech hunters)
+  // TECHSMITH - Master of magical technology and crafting
   {
-    "id": "technomancer",
-    "name": "Technomancer",
+    "id": "techsmith",
+    "name": "Techsmith",
     "type": "Job",
     "rank": "A",
-    "description": "A master of magical technology who infuses devices with arcane power. Technomancers can create and modify technological weapons and tools, embodying the fusion of magic and technology seen in advanced ascendants in the System Ascendant world.",
+    "description": "A master craftsman who infuses technology with magical power. Techsmiths can create and modify technological weapons and tools, embodying the fusion of arcane arts and advanced engineering seen in certain ascendants in the System Ascendant world.",
     // SRD 5e Class Features
     "hitDie": "1d8",
     "primaryAbility": "Intelligence",
@@ -1244,52 +1288,60 @@ export const jobs = [
     // System Ascendant Awakening Features (job-linked progression)
     "awakeningFeatures": [
       {
-        "name": "Tech Affinity",
-        "description": "Your mind connects to technological devices, allowing you to understand and modify them instantly.",
+        "name": "Artificer's Intuition",
+        "description": "You have advantage on Intelligence (Investigation) checks related to magical or technological devices. You can identify the function of any magic item you examine.",
         "level": 1
       },
       {
-        "name": "Arcane Infusion",
-        "description": "Your body can channel magical energy into technology, enhancing its capabilities.",
+        "name": "Tool Expertise",
+        "description": "You have proficiency with tinker's tools and one additional artisan's tool of your choice. You add double your proficiency bonus to ability checks made with tools.",
+        "level": 1
+      },
+      {
+        "name": "Magical Crafting",
+        "description": "You can create simple magic items. During a short rest, you can craft a common magic item worth up to 100 gp using materials you have on hand.",
         "level": 3
       },
       {
-        "name": "Device Mastery",
-        "description": "You gain intuitive understanding of complex mechanisms and can repair or create advanced devices.",
+        "name": "Infusion Touch",
+        "description": "You can infuse non-magical items with magical energy. As an action, you can touch a simple item and grant it a minor magical property for 1 hour.",
         "level": 7
       },
-      {
-        "name": "Tech Evolution",
-        "description": "You can rapidly upgrade and evolve technological items with magical enhancements.",
-        "level": 11
-      }
     ],
     "jobTraits": [
       {
-        "name": "Technical Intuition",
-        "description": "You have advantage on Intelligence checks related to technology and devices.",
+        "name": "Tool Mastery",
+        "description": "You have advantage on ability checks made with artisan's tools. You can craft items in half the normal time.",
         "type": "bonus"
       },
       {
-        "name": "Energy Resistance",
-        "description": "You have resistance to lightning and thunder damage from technological sources.",
+        "name": "Construct Resilience",
+        "description": "You have resistance to poison damage and advantage on saving throws against being poisoned.",
         "type": "resistance"
       },
       {
-        "name": "Device Creation",
-        "description": "As a short rest, you can create a simple technological device with basic magical properties.",
-        "type": "active",
-        "frequency": "short-rest"
+        "name": "Magical Resilience",
+        "description": "You have resistance to force damage and advantage on saving throws against being charmed or frightened by constructs.",
+        "type": "resistance"
       },
       {
-        "name": "Tech Overload",
-        "description": "Once per day, you can overload a technological device to create a powerful effect.",
+        "name": "Artificer's Sight",
+        "description": "You can identify the magical properties of any item you examine. You can also detect the presence of magic within 30 feet.",
+        "type": "resistance"
+      },
+      {
+        "name": "Infusion Focus",
+        "description": "You can maintain one additional infusion without counting against your normal limit.",
         "type": "active",
-        "frequency": "once-per-day"
+        "frequency": "at-will"
       }
     ],
     "abilityScoreImprovements": {
       "intelligence": 2,
+      "constitution": 1
+    },
+    "racialASI": {
+      "intelligence": 1,
       "constitution": 1
     },
     "size": "medium",
@@ -1547,6 +1599,10 @@ export const jobs = [
       "intelligence": 2,
       "wisdom": 1
     },
+    "racialASI": {
+      "intelligence": 1,
+      "constitution": 1
+    },
     "size": "medium",
     "speed": 30,
     "languages": ["Common", "Draconic"],
@@ -1612,13 +1668,13 @@ export const jobs = [
     "primary_abilities": ["Intelligence", "Wisdom"],
     "source": "System Ascendant Canon"
   },
-  // MONK - Essence-channeled martial discipline
+  // STRIKER - Essence-channeled martial combat specialist
   {
-    "id": "monk",
-    "name": "Monk",
+    "id": "striker",
+    "name": "Striker",
     "type": "Job",
     "rank": "A",
-    "description": "A master of martial discipline who harnesses inner energy through combat training. Monks can strike with unarmed precision and control their body's energy flow, embodying the disciplined warrior abilities seen in certain specialized ascendants in the System Ascendant world.",
+    "description": "A master of martial combat who harnesses inner energy through unarmed strikes. Strikers can strike with precision and control their body's energy flow, embodying the disciplined warrior abilities seen in certain specialized ascendants in the System Ascendant world.",
     // SRD 5e Class Features
     "hitDie": "1d8",
     "primaryAbility": "Dexterity",
@@ -1631,22 +1687,42 @@ export const jobs = [
     "awakeningFeatures": [
       {
         "name": "Ki Control",
-        "description": "Your body learns to channel inner energy (ki) through martial discipline, enhancing your physical abilities.",
+        "description": "Your body naturally produces and channels ki energy. You can spend 1 ki point as a bonus action to gain one of the following benefits: increase your movement speed by 20 feet until the end of your turn, gain advantage on the next attack roll you make this turn, or gain temporary hit points equal to your level. You have a number of ki points equal to your level. Your ki points replenish after a long rest. Additionally, you can use your ki to power stunning strike and other monk abilities.",
+        "level": 1
+      },
+      {
+        "name": "Artificer's Intuition",
+        "description": "You have advantage on Intelligence (Investigation) checks related to magical or technological devices. You can identify the function of any magic item you examine.",
         "level": 1
       },
       {
         "name": "Combat Focus",
-        "description": "Your mind achieves perfect combat awareness, allowing you to react instantly to threats.",
+        "description": "Your mind achieves perfect combat awareness. You can use your reaction to gain advantage on a saving throw against an effect that would cause you to be charmed, frightened, or stunned.",
+        "level": 3
+      },
+      {
+        "name": "Enhanced Reflexes",
+        "description": "Your body naturally reacts to threats. You have advantage on Dexterity saving throws and your initiative score is increased by your Wisdom modifier.",
         "level": 3
       },
       {
         "name": "Body Mastery",
-        "description": "Your physical form becomes perfectly attuned to combat, granting you enhanced speed and agility.",
+        "description": "Your physical form becomes perfectly attuned to combat. You can use your reaction to catch a missile when you are hit by a ranged weapon attack. When you do so, you take no damage from that attack.",
+        "level": 7
+      },
+      {
+        "name": "Inner Harmony",
+        "description": "Your body naturally maintains inner balance. You are immune to disease and poison, and you have advantage on saving throws against being frightened. Additionally, you can meditate for 10 minutes to regain 1 ki point.",
         "level": 7
       },
       {
         "name": "Martial Enlightenment",
-        "description": "Your spirit aligns with combat perfection, granting you supernatural martial abilities.",
+        "description": "Your body achieves perfect martial understanding. You can use your action to make two unarmed strikes as a bonus action, and your unarmed strikes count as magical for the purpose of overcoming resistance.",
+        "level": 11
+      },
+      {
+        "name": "Perfect Body",
+        "description": "Your body reaches physical perfection. You no longer need food, water, or air, and you cannot be aged by magic. Additionally, you can regenerate 1 ki point at the start of your turn if you have none.",
         "level": 11
       }
     ],
@@ -1657,26 +1733,40 @@ export const jobs = [
         "type": "bonus"
       },
       {
+        "name": "Natural Athlete",
+        "description": "Your body is naturally athletic. You are proficient in the Acrobatics and Athletics skills, even if you already have proficiency.",
+        "type": "bonus"
+      },
+      {
         "name": "Ki Defense",
         "description": "You can use your ki to reduce damage taken from attacks.",
         "type": "resistance"
       },
       {
+        "name": "Mental Discipline",
+        "description": "Your body naturally resists mental effects. You have advantage on saving throws against being charmed or frightened.",
+        "type": "resistance"
+      },
+      {
         "name": "Flurry of Blows",
-        "description": "As a bonus action, you can make two unarmed strikes.",
+        "description": "Your body can unleash rapid strikes. Once per turn, you can spend 1 ki point to make two unarmed strikes as a bonus action.",
         "type": "active",
-        "frequency": "short-rest"
+        "frequency": "ki-points"
       },
       {
         "name": "Stunning Strike",
-        "description": "Once per turn, you can attempt to stun a creature with an unarmed strike.",
+        "description": "Your body can strike with stunning force. When you hit a creature with an unarmed strike, you can spend 1 ki point to attempt a stunning strike.",
         "type": "active",
-        "frequency": "once-per-day"
+        "frequency": "ki-points"
       }
     ],
     "abilityScoreImprovements": {
       "dexterity": 2,
       "wisdom": 1
+    },
+    "racialASI": {
+      "dexterity": 1,
+      "constitution": 1
     },
     "size": "medium",
     "speed": 30,
@@ -1803,6 +1893,10 @@ export const jobs = [
     "abilityScoreImprovements": {
       "charisma": 2,
       "dexterity": 1
+    },
+    "racialASI": {
+      "charisma": 1,
+      "intelligence": 1
     },
     "size": "medium",
     "speed": 30,

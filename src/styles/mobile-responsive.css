@@ -1,0 +1,2518 @@
+/* Mobile-First Responsive Design System */
+
+/* ========================================
+   GLOBAL MOBILE UTILITIES
+   ======================================== */
+
+/* Touch-friendly sizing */
+@media (pointer: coarse) {
+  .touch-button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .touch-button-small {
+    min-height: 36px;
+    min-width: 36px;
+  }
+  
+  .touch-target {
+    padding: 12px;
+  }
+}
+
+/* Mobile breakpoints */
+@media (max-width: 475px) {
+  .mobile-hidden {
+    display: none !important;
+  }
+  
+  .mobile-block {
+    display: block !important;
+  }
+  
+  .mobile-flex {
+    display: flex !important;
+  }
+  
+  .mobile-text-xs {
+    font-size: 0.75rem !important;
+  }
+  
+  .mobile-text-sm {
+    font-size: 0.875rem !important;
+  }
+  
+  .mobile-text-base {
+    font-size: 1rem !important;
+  }
+}
+
+@media (min-width: 476px) {
+  .mobile-hidden {
+    display: block !important;
+  }
+  
+  .mobile-block {
+    display: none !important;
+  }
+}
+
+/* ========================================
+   DM TOOLS MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .dm-tools-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .dm-tool-card {
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+  
+  .dm-tool-icon {
+    width: 3rem;
+    height: 3rem;
+  }
+  
+  .dm-tool-title {
+    font-size: 1.125rem;
+  }
+  
+  .dm-tool-description {
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+  }
+  
+  .eternal-loop {
+    padding: 1rem;
+  }
+  
+  .eternal-step {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   VTT MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 768px) {
+  .vtt-container {
+    padding: 1rem;
+  }
+  
+  .vtt-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .vtt-title {
+    font-size: 1.25rem;
+  }
+  
+  .vtt-controls {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .vtt-control-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+  
+  .vtt-main-grid {
+    grid-template-columns: 1fr;
+    height: calc(100vh - 8rem);
+  }
+  
+  .vtt-sidebar {
+    display: none;
+  }
+  
+  .vtt-map-container {
+    min-height: 60vh;
+  }
+  
+  .vtt-tool-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .vtt-tool-button {
+    padding: 0.75rem;
+    font-size: 0.75rem;
+    min-height: 44px;
+  }
+  
+  .vtt-measurement-shapes {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.25rem;
+  }
+  
+  .vtt-measurement-shape-button {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  .vtt-zoom-controls {
+    gap: 0.5rem;
+  }
+  
+  .vtt-zoom-button {
+    min-height: 36px;
+    min-width: 36px;
+  }
+  
+  .vtt-token-list {
+    max-height: 12rem;
+  }
+  
+  .vtt-token-item {
+    padding: 0.75rem;
+    font-size: 0.75rem;
+  }
+  
+  .vtt-token-avatar {
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  .vtt-tabs {
+    overflow-x: auto;
+  }
+  
+  @supports (scrollbar-width: none) {
+    .vtt-tabs {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+  }
+  
+  .vtt-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .vtt-tab-list {
+    width: max-content;
+    min-width: 100%;
+  }
+  
+  .vtt-tab-trigger {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+}
+
+/* ========================================
+   COMPENDIUM MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .compendium-header {
+    text-align: center;
+  }
+  
+  .compendium-title {
+    font-size: 1.5rem;
+  }
+  
+  .compendium-description {
+    font-size: 0.875rem;
+    text-align: center;
+  }
+  
+  .compendium-search-section {
+    gap: 1rem;
+  }
+  
+  .compendium-search-container {
+    flex-direction: column;
+  }
+  
+  .compendium-search-input {
+    font-size: 1rem;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+  }
+  
+  .compendium-controls {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .compendium-sort-select {
+    width: 100%;
+    min-height: 44px;
+  }
+  
+  .compendium-view-buttons {
+    justify-content: center;
+  }
+  
+  .compendium-layout {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .compendium-sidebar {
+    order: 2;
+  }
+  
+  .compendium-results {
+    order: 1;
+  }
+  
+  .compendium-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .compendium-card {
+    padding: 1rem;
+  }
+  
+  .compendium-card-title {
+    font-size: 1rem;
+  }
+  
+  .compendium-card-description {
+    font-size: 0.875rem;
+  }
+  
+  .compendium-filters {
+    display: none;
+  }
+  
+  .compendium-mobile-filters {
+    display: block;
+  }
+  
+  .compendium-category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .compendium-category-button {
+    padding: 0.75rem;
+    font-size: 0.75rem;
+    min-height: 44px;
+  }
+  
+  .compendium-pagination {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .compendium-export-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .compendium-export-button {
+    min-height: 44px;
+  }
+}
+
+/* ========================================
+   CHARACTER SHEET MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .character-sheet-container {
+    padding: 1rem;
+  }
+  
+  .character-sheet-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .character-sheet-title {
+    font-size: 1.5rem;
+  }
+  
+  .character-sheet-subtitle {
+    font-size: 0.875rem;
+  }
+  
+  .character-sheet-tabs {
+    overflow-x: auto;
+  }
+  
+  @supports (scrollbar-width: none) {
+    .character-sheet-tabs {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+  }
+  
+  .character-sheet-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .character-sheet-tab-list {
+    width: max-content;
+    min-width: 100%;
+  }
+  
+  .character-sheet-tab-trigger {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    min-height: 44px;
+  }
+  
+  .character-sheet-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .character-sheet-stat-card {
+    padding: 1rem;
+  }
+  
+  .character-sheet-stat-value {
+    font-size: 1.5rem;
+  }
+  
+  .character-sheet-ability-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .character-sheet-ability-card {
+    padding: 0.75rem;
+  }
+  
+  .character-sheet-ability-value {
+    font-size: 1.25rem;
+  }
+  
+  .character-sheet-saving-throws-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .character-sheet-saving-throw {
+    padding: 0.75rem;
+  }
+  
+  .character-sheet-actions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .character-sheet-action-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+  
+  .character-sheet-input {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .character-sheet-dialog {
+    width: calc(100% - 2rem);
+    max-width: none;
+  }
+}
+
+/* ========================================
+   PLAYER TOOLS MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .player-tools-container {
+    padding: 1rem;
+  }
+  
+  .player-tools-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .player-tools-title {
+    font-size: 1.25rem;
+  }
+  
+  .player-tools-tabs {
+    overflow-x: auto;
+  }
+  
+  @supports (scrollbar-width: none) {
+    .player-tools-tabs {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+  }
+  
+  .player-tools-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .player-tools-tab-list {
+    width: max-content;
+    min-width: 100%;
+  }
+  
+  .player-tools-tab-trigger {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    min-height: 44px;
+  }
+  
+  .player-tools-dice-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .player-tools-dice-button {
+    padding: 1rem;
+    font-size: 0.75rem;
+    min-height: 60px;
+  }
+  
+  .player-tools-initiative-list {
+    gap: 0.5rem;
+  }
+  
+  .player-tools-initiative-item {
+    padding: 0.75rem;
+    font-size: 0.875rem;
+  }
+  
+  .player-tools-chat-container {
+    height: 12rem;
+  }
+  
+  .player-tools-chat-input {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .player-tools-character-sheet {
+    padding: 1rem;
+  }
+  
+  .player-tools-character-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .player-tools-assets-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .player-tools-asset-card {
+    padding: 0.75rem;
+  }
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+.mobile-scroll-x {
+  overflow-x: auto;
+}
+
+@supports (scrollbar-width: none) {
+  .mobile-scroll-x {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+}
+
+.mobile-scroll-x::-webkit-scrollbar {
+  display: none;
+}
+
+.mobile-touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.mobile-text-center {
+  text-align: center;
+}
+
+.mobile-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-full-width {
+  width: 100%;
+}
+
+.mobile-spacing-sm {
+  gap: 0.5rem;
+}
+
+.mobile-spacing-md {
+  gap: 1rem;
+}
+
+.mobile-spacing-lg {
+  gap: 1.5rem;
+}
+
+/* ========================================
+   LANDSCAPE MODE ADJUSTMENTS
+   ======================================== */
+
+@media (max-width: 896px) and (orientation: landscape) {
+  .vtt-container {
+    padding: 0.5rem;
+  }
+  
+  .vtt-header {
+    margin-bottom: 0.5rem;
+  }
+  
+  .vtt-main-grid {
+    height: calc(100vh - 6rem);
+  }
+  
+  .character-sheet-container {
+    padding: 0.5rem;
+  }
+  
+  .compendium-container {
+    padding: 0.5rem;
+  }
+}
+
+/* ========================================
+   VERY SMALL SCREENS
+   ======================================== */
+
+@media (max-width: 380px) {
+  .dm-tool-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  
+  .dm-tool-title {
+    font-size: 1rem;
+  }
+  
+  .vtt-control-button {
+    font-size: 0.75rem;
+  }
+  
+  .character-sheet-stat-value {
+    font-size: 1.25rem;
+  }
+  
+  .compendium-title {
+    font-size: 1.25rem;
+  }
+  
+  .mobile-text-xs {
+    font-size: 0.6875rem !important;
+  }
+}
+
+/* ========================================
+   CAMPAIGNS MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .campaigns-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .campaigns-title {
+    font-size: 1.5rem;
+  }
+  
+  .campaigns-description {
+    font-size: 0.875rem;
+  }
+  
+  .campaigns-create-button {
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+  }
+  
+  .campaigns-section-title {
+    font-size: 1.25rem;
+  }
+  
+  .campaigns-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .campaign-card {
+    padding: 1rem;
+  }
+  
+  .campaign-card-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .campaign-card-title {
+    font-size: 1rem;
+  }
+  
+  .campaign-card-description {
+    min-height: 2.5rem;
+    font-size: 0.75rem;
+  }
+  
+  .campaign-card-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .campaign-card-button {
+    min-height: 36px;
+    font-size: 0.75rem;
+  }
+  
+  .campaign-dialog {
+    width: calc(100% - 2rem);
+    max-width: none;
+  }
+  
+  .campaign-dialog-footer {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .campaign-dialog-button {
+    width: 100%;
+    min-height: 44px;
+  }
+}
+
+/* ========================================
+   ENCOUNTER BUILDER MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .encounter-builder-container {
+    padding: 1rem;
+  }
+  
+  .encounter-builder-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .encounter-builder-title {
+    font-size: 1.25rem;
+  }
+  
+  .encounter-builder-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .encounter-builder-monsters {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .encounter-builder-monster-card {
+    padding: 0.75rem;
+  }
+  
+  .encounter-builder-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .encounter-builder-difficulty {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .encounter-builder-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+/* ========================================
+   INITIATIVE TRACKER MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .initiative-tracker-container {
+    padding: 1rem;
+  }
+  
+  .initiative-tracker-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .initiative-tracker-title {
+    font-size: 1.25rem;
+  }
+  
+  .initiative-tracker-controls {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .initiative-tracker-list {
+    gap: 0.5rem;
+  }
+  
+  .initiative-tracker-item {
+    padding: 0.75rem;
+    font-size: 0.875rem;
+  }
+  
+  .initiative-tracker-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .initiative-tracker-button {
+    min-height: 36px;
+    font-size: 0.75rem;
+  }
+}
+
+/* ========================================
+   GENERATOR TOOLS MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .generator-container {
+    padding: 1rem;
+  }
+  
+  .generator-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .generator-title {
+    font-size: 1.25rem;
+  }
+  
+  .generator-description {
+    font-size: 0.875rem;
+  }
+  
+  .generator-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .generator-input {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .generator-textarea {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .generator-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+  
+  .generator-result {
+    padding: 1rem;
+    font-size: 0.875rem;
+  }
+  
+  .generator-enhance-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   DUNGEON MAP GENERATOR MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .dungeon-map-generator-container {
+    padding: 1rem;
+  }
+  
+  .dungeon-map-generator-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .dungeon-map-generator-title {
+    font-size: 1.25rem;
+  }
+  
+  .dungeon-map-generator-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .dungeon-map-generator-settings {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .dungeon-map-generator-input {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .dungeon-map-generator-preview {
+    min-height: 300px;
+  }
+  
+  .dungeon-map-generator-export {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+/* ========================================
+   NPC GENERATOR MOBILE STYLES
+  ======================================== */
+
+@media (max-width: 640px) {
+  .npc-generator-container {
+    padding: 1rem;
+  }
+  
+  .npc-generator-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .npc-generator-title {
+    font-size: 1.25rem;
+  }
+  
+  .npc-generator-description {
+    font-size: 0.875rem;
+  }
+  
+  .npc-generator-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .npc-generator-input {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .npc-generator-textarea {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .npc-generator-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+  
+  .npc-generator-result {
+    padding: 1rem;
+    font-size: 0.875rem;
+  }
+  
+  .npc-generator-enhance-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   QUEST GENERATOR MOBILE STYLES
+  ======================================== */
+
+@media (max-width: 640px) {
+  .quest-generator-container {
+    padding: 1rem;
+  }
+  
+  .quest-generator-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .quest-generator-title {
+    font-size: 1.25rem;
+  }
+  
+  .quest-generator-description {
+    font-size: 0.875rem;
+  }
+  
+  .quest-generator-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .quest-generator-input {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .quest-generator-textarea {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .quest-generator-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+  
+  .quest-generator-result {
+    padding: 1rem;
+    font-size: 0.875rem;
+  }
+  
+  .quest-generator-enhance-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   TREASURE GENERATOR MOBILE STYLES
+  ======================================== */
+
+@media (max-width: 640px) {
+  .treasure-generator-container {
+    padding: 1rem;
+  }
+  
+  .treasure-generator-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .treasure-generator-title {
+    font-size: 1.25rem;
+  }
+  
+  .treasure-generator-description {
+    font-size: 0.875rem;
+  }
+  
+  .treasure-generator-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .treasure-generator-input {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .treasure-generator-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+  
+  .treasure-generator-result {
+    padding: 1rem;
+    font-size: 0.875rem;
+  }
+  
+  .treasure-generator-enhance-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   RANDOM EVENT GENERATOR MOBILE STYLES
+  ======================================== */
+
+@media (max-width: 640px) {
+  .random-event-generator-container {
+    padding: 1rem;
+  }
+  
+  .random-event-generator-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .random-event-generator-title {
+    font-size: 1.25rem;
+  }
+  
+  .random-event-generator-description {
+    font-size: 0.875rem;
+  }
+  
+  .random-event-generator-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .random-event-generator-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+  
+  .random-event-generator-result {
+    padding: 1rem;
+    font-size: 0.875rem;
+  }
+  
+  .random-event-generator-enhance-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   RELIC WORKSHOP MOBILE STYLES
+  ======================================== */
+
+@media (max-width: 640px) {
+  .relic-workshop-container {
+    padding: 1rem;
+  }
+  
+  .relic-workshop-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .relic-workshop-title {
+    font-size: 1.25rem;
+  }
+  
+  .relic-workshop-description {
+    font-size: 0.875rem;
+  }
+  
+  .relic-workshop-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .relic-workshop-input {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .relic-workshop-textarea {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .relic-workshop-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+  
+  .relic-workshop-result {
+    padding: 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   ART GENERATOR MOBILE STYLES
+  ======================================== */
+
+@media (max-width: 640px) {
+  .art-generator-container {
+    padding: 1rem;
+  }
+  
+  .art-generator-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .art-generator-title {
+    font-size: 1.25rem;
+  }
+  
+  .art-generator-description {
+    font-size: 0.875rem;
+  }
+  
+  .art-generator-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .art-generator-input {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .art-generator-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+  
+  .art-generator-preview {
+    min-height: 300px;
+  }
+  
+  .art-generator-enhance-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   ROLLABLE TABLES MOBILE STYLES
+  ======================================== */
+
+@media (max-width: 640px) {
+  .rollable-tables-container {
+    padding: 1rem;
+  }
+  
+  .rollable-tables-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .rollable-tables-title {
+    font-size: 1.25rem;
+  }
+  
+  .rollable-tables-description {
+    font-size: 0.875rem;
+  }
+  
+  .rollable-tables-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .rollable-tables-select {
+    width: 100%;
+    min-height: 44px;
+  }
+  
+  .rollable-tables-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+  
+  .rollable-tables-result {
+    padding: 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   TOKEN LIBRARY MOBILE STYLES
+  ======================================== */
+
+@media (max-width: 640px) {
+  .token-library-container {
+    padding: 1rem;
+  }
+  
+  .token-library-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .token-library-title {
+    font-size: 1.25rem;
+  }
+  
+  .token-library-description {
+    font-size: 0.875rem;
+  }
+  
+  .token-library-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .token-library-search {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .token-library-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .token-library-token {
+    padding: 0.75rem;
+    font-size: 0.75rem;
+  }
+  
+  .token-library-token-avatar {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+/* ========================================
+   SESSION PLANNER MOBILE STYLES
+  ======================================== */
+
+@media (max-width: 640px) {
+  .session-planner-container {
+    padding: 1rem;
+  }
+  
+  .session-planner-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .session-planner-title {
+    font-size: 1.25rem;
+  }
+  
+  .session-planner-description {
+    font-size: 0.875rem;
+  }
+  
+  .session-planner-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .session-planner-input {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .session-planner-textarea {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .session-planner-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   PARTY TRACKER MOBILE STYLES
+  ======================================== */
+
+@media (max-width: 640px) {
+  .party-tracker-container {
+    padding: 1rem;
+  }
+  
+  .party-tracker-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .party-tracker-title {
+    font-size: 1.25rem;
+  }
+  
+  .party-tracker-description {
+    font-size: 0.875rem;
+  }
+  
+  .party-tracker-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .party-tracker-member-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .party-tracker-member-card {
+    padding: 0.75rem;
+    font-size: 0.875rem;
+  }
+  
+  .party-tracker-member-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .party-tracker-member-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* ========================================
+   CAMPAIGN COMPONENTS MOBILE STYLES
+  ======================================== */
+
+@media (max-width: 640px) {
+  .campaign-analytics-container {
+    padding: 1rem;
+  }
+  
+  .campaign-analytics-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .campaign-analytics-title {
+    font-size: 1.25rem;
+  }
+  
+  .campaign-analytics-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .campaign-analytics-stat {
+    padding: 0.75rem;
+    text-align: center;
+  }
+  
+  .campaign-analytics-stat-value {
+    font-size: 1.25rem;
+  }
+  
+  .campaign-characters-container {
+    padding: 1rem;
+  }
+  
+  .campaign-characters-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .campaign-characters-character {
+    padding: 0.75rem;
+    font-size: 0.875rem;
+  }
+  
+  .campaign-chat-container {
+    flex-direction: column;
+    height: 12rem;
+  }
+  
+  .campaign-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+  }
+  
+  .campaign-chat-input {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .campaign-handouts-container {
+    padding: 1rem;
+  }
+  
+  .campaign-handouts-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .campaign-handouts-handout {
+    padding: 0.75rem;
+    font-size: 0.875rem;
+  }
+  
+  .campaign-notes-container {
+    padding: 1rem;
+  }
+  
+  .campaign-notes-editor {
+    font-size: 1rem;
+    padding: 0.75rem;
+    min-height: 8rem;
+  }
+  
+  .campaign-protocol-controls {
+    padding: 1rem;
+  }
+  
+  .campaign-protocol-controls-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .campaign-roll-feed-container {
+    padding: 1rem;
+  }
+  
+  .campaign-roll-feed-list {
+    gap: 0.5rem;
+  }
+  
+  .campaign-roll-feed-item {
+    padding: 0.75rem;
+    font-size: 0.875rem;
+  }
+  
+  .campaign-sessions-container {
+    padding: 1rem;
+  }
+  
+  .campaign-sessions-list {
+    gap: 0.5rem;
+  }
+  
+  .campaign-sessions-session {
+    padding: 0.75rem;
+    font-size: 0.875rem;
+  }
+  
+  .campaign-settings-container {
+    padding: 1rem;
+  }
+  
+  .campaign-settings-form {
+    gap: 1rem;
+  }
+  
+  .campaign-settings-input {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .campaign-settings-textarea {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+}
+
+/* ========================================
+   ENHANCED MOBILE UTILITIES
+   ======================================== */
+
+@media (max-width: 380px) {
+  .campaigns-title {
+    font-size: 1.125rem;
+  }
+  
+  .campaign-card-title {
+    font-size: 0.875rem;
+  }
+  
+  .generator-title {
+    font-size: 1.125rem;
+  }
+  
+  .generator-description {
+    font-size: 0.75rem;
+  }
+  
+  .generator-button {
+    font-size: 0.75rem;
+  }
+  
+  .generator-result {
+    font-size: 0.75rem;
+  }
+  
+  .generator-enhance-button {
+    font-size: 0.75rem;
+  }
+}
+
+/* ========================================
+   LANDSCAPE MODE OPTIMIZATIONS
+  ======================================== */
+
+@media (max-width: 896px) and (orientation: landscape) {
+  .campaigns-container {
+    padding: 0.5rem;
+  }
+  
+  .campaigns-header {
+    margin-bottom: 0.5rem;
+  }
+  
+  .campaigns-section-title {
+    font-size: 1.125rem;
+  }
+  
+  .campaigns-grid {
+    gap: 0.5rem;
+  }
+  
+  .campaign-card {
+    padding: 0.75rem;
+  }
+  
+  .campaign-card-description {
+    min-height: 2rem;
+  }
+  
+  .generator-container {
+    padding: 0.5rem;
+  }
+  
+  .generator-header {
+    margin-bottom: 0.5rem;
+  }
+  
+  .generator-title {
+    font-size: 1.125rem;
+  }
+  
+  .generator-controls {
+    gap: 0.5rem;
+  }
+  
+  .generator-result {
+    padding: 0.75rem;
+  }
+  
+  .vtt-container {
+    padding: 0.5rem;
+  }
+  
+  .vtt-header {
+    margin-bottom: 0.5rem;
+  }
+  
+  .compendium-container {
+    padding: 0.5rem;
+  }
+  
+  .player-tools-container {
+    padding: 0.5rem;
+  }
+  
+  .dm-tools-container {
+    padding: 0.5rem;
+  }
+}
+
+/* ========================================
+   CHARACTER CREATION MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .character-new-container {
+    padding: 1rem;
+  }
+  
+  .character-new-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .character-new-title {
+    font-size: 1.5rem;
+  }
+  
+  .character-new-back-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+  
+  .character-new-steps {
+    overflow-x: auto;
+  }
+  
+  @supports (scrollbar-width: none) {
+    .character-new-steps {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+  }
+  
+  .character-new-steps::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .character-new-step {
+    min-width: 80px;
+  }
+  
+  .character-new-step-circle {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.75rem;
+  }
+  
+  .character-new-step-text {
+    font-size: 0.75rem;
+  }
+  
+  .character-new-content {
+    padding: 1rem;
+  }
+  
+  .character-new-input {
+    font-size: 1rem;
+    padding: 0.75rem;
+    min-height: 44px;
+  }
+  
+  .character-new-textarea {
+    font-size: 1rem;
+    padding: 0.75rem;
+    min-height: 100px;
+  }
+  
+  .character-new-select {
+    font-size: 1rem;
+    padding: 0.75rem;
+    min-height: 44px;
+  }
+  
+  .character-new-checkbox {
+    min-height: 44px;
+  }
+  
+  .character-new-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   CHARACTER LEVEL UP MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .character-level-up-container {
+    padding: 1rem;
+  }
+  
+  .character-level-up-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .character-level-up-title {
+    font-size: 1.5rem;
+  }
+  
+  .character-level-up-back-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+  
+  .character-level-up-badge {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+  }
+  
+  .character-level-up-rank-display {
+    font-size: 1rem;
+  }
+  
+  .character-level-up-level-display {
+    font-size: 1.125rem;
+  }
+  
+  .character-level-up-input {
+    font-size: 1rem;
+    padding: 0.75rem;
+    min-height: 44px;
+  }
+  
+  .character-level-up-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+  
+  .character-level-up-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .character-level-up-stat-card {
+    padding: 0.75rem;
+    text-align: center;
+  }
+  
+  .character-level-up-stat-value {
+    font-size: 1.25rem;
+  }
+}
+
+/* ========================================
+   CAMPAIGN DETAIL MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .campaign-detail-container {
+    padding: 1rem;
+  }
+  
+  .campaign-detail-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .campaign-detail-title {
+    font-size: 1.5rem;
+  }
+  
+  .campaign-detail-description {
+    font-size: 0.875rem;
+  }
+  
+  .campaign-detail-back-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+  
+  .campaign-detail-tabs {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.25rem;
+  }
+  
+  .campaign-detail-tab-trigger {
+    font-size: 0.75rem;
+    min-height: 44px;
+    padding: 0.5rem;
+  }
+  
+  .campaign-detail-tab-icon {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+  
+  .campaign-detail-tab-text {
+    display: none;
+  }
+  
+  .campaign-detail-vtt-content {
+    padding: 1rem;
+  }
+  
+  .campaign-detail-vtt-title {
+    font-size: 1.25rem;
+  }
+  
+  .campaign-detail-vtt-description {
+    font-size: 0.875rem;
+  }
+  
+  .campaign-detail-vtt-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+  
+  .campaign-detail-vtt-features {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .campaign-detail-vtt-feature {
+    padding: 0.75rem;
+  }
+  
+  .campaign-detail-vtt-feature-title {
+    font-size: 0.875rem;
+  }
+  
+  .campaign-detail-vtt-feature-description {
+    font-size: 0.75rem;
+  }
+}
+
+/* ========================================
+   CHARACTERS LIST MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .characters-container {
+    padding: 1rem;
+  }
+  
+  .characters-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .characters-title {
+    font-size: 1.5rem;
+  }
+  
+  .characters-description {
+    font-size: 0.875rem;
+  }
+  
+  .characters-actions {
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+  
+  .characters-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+  
+  .characters-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .characters-character-card {
+    padding: 1rem;
+  }
+  
+  .characters-character-avatar {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+  
+  .characters-character-rank {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 0.875rem;
+  }
+  
+  .characters-character-name {
+    font-size: 1.125rem;
+  }
+  
+  .characters-character-job {
+    font-size: 0.875rem;
+  }
+  
+  .characters-character-stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .characters-character-stat {
+    padding: 0.5rem;
+  }
+  
+  .characters-character-stat-value {
+    font-size: 1rem;
+  }
+  
+  .characters-character-stat-label {
+    font-size: 0.625rem;
+  }
+  
+  .characters-character-hp-bar {
+    height: 0.5rem;
+  }
+  
+  .characters-character-hp-text {
+    font-size: 0.75rem;
+  }
+  
+  .characters-create-card {
+    min-height: 280px;
+    padding: 1rem;
+  }
+  
+  .characters-create-icon {
+    width: 4rem;
+    height: 4rem;
+  }
+  
+  .characters-create-text {
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   MARKETPLACE MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .marketplace-container {
+    padding: 1rem;
+  }
+  
+  .marketplace-header {
+    margin-bottom: 1.5rem;
+  }
+  
+  .marketplace-title {
+    font-size: 1.5rem;
+  }
+  
+  .marketplace-description {
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   HOMEBREW MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .homebrew-container {
+    padding: 1rem;
+  }
+  
+  .homebrew-header {
+    margin-bottom: 1.5rem;
+  }
+  
+  .homebrew-title {
+    font-size: 1.5rem;
+  }
+  
+  .homebrew-description {
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   AUTH PAGES MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .auth-container {
+    padding: 1rem;
+  }
+  
+  .auth-title {
+    font-size: 1.5rem;
+  }
+  
+  .auth-description {
+    font-size: 0.875rem;
+  }
+  
+  .auth-form {
+    gap: 1rem;
+  }
+  
+  .auth-input {
+    font-size: 1rem;
+    padding: 0.75rem;
+    min-height: 44px;
+  }
+  
+  .auth-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+  
+  .auth-oauth-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   LANDING PAGE MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .landing-container {
+    padding: 1rem;
+  }
+  
+  .landing-hero {
+    text-align: center;
+    padding: 2rem 0;
+  }
+  
+  .landing-title {
+    font-size: 2rem;
+  }
+  
+  .landing-subtitle {
+    font-size: 1rem;
+  }
+  
+  .landing-description {
+    font-size: 0.875rem;
+  }
+  
+  .landing-features {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .landing-feature {
+    padding: 1.5rem;
+    text-align: center;
+  }
+  
+  .landing-feature-icon {
+    width: 3rem;
+    height: 3rem;
+  }
+  
+  .landing-feature-title {
+    font-size: 1.125rem;
+  }
+  
+  .landing-feature-description {
+    font-size: 0.875rem;
+  }
+  
+  .landing-cta {
+    text-align: center;
+    padding: 2rem 0;
+  }
+  
+  .landing-cta-button {
+    min-height: 48px;
+    font-size: 1rem;
+    padding: 1rem 2rem;
+  }
+}
+
+/* ========================================
+   ADMIN PAGES MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .admin-container {
+    padding: 1rem;
+  }
+  
+  .admin-title {
+    font-size: 1.5rem;
+  }
+  
+  .admin-description {
+    font-size: 0.875rem;
+  }
+  
+  .admin-controls {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .admin-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+  
+  .admin-table {
+    font-size: 0.75rem;
+  }
+  
+  .admin-table-header {
+    font-size: 0.875rem;
+  }
+  
+  .admin-table-cell {
+    padding: 0.5rem;
+  }
+}
+
+/* ========================================
+   DICE ROLLER MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .dice-roller-container {
+    padding: 1rem;
+  }
+  
+  .dice-roller-header {
+    margin-bottom: 1.5rem;
+  }
+  
+  .dice-roller-title {
+    font-size: 1.5rem;
+  }
+  
+  .dice-roller-description {
+    font-size: 0.875rem;
+  }
+  
+  .dice-roller-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .dice-roller-input {
+    font-size: 1rem;
+    padding: 0.75rem;
+    min-height: 44px;
+  }
+  
+  .dice-roller-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+  
+  .dice-roller-dice-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .dice-roller-dice-button {
+    min-height: 60px;
+    font-size: 0.75rem;
+  }
+  
+  .dice-roller-results {
+    gap: 0.75rem;
+  }
+  
+  .dice-roller-result {
+    padding: 0.75rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   COMPARISON PAGE MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .comparison-container {
+    padding: 1rem;
+  }
+  
+  .comparison-header {
+    margin-bottom: 1.5rem;
+  }
+  
+  .comparison-title {
+    font-size: 1.5rem;
+  }
+  
+  .comparison-description {
+    font-size: 0.875rem;
+  }
+  
+  .comparison-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .comparison-select {
+    font-size: 1rem;
+    padding: 0.75rem;
+    min-height: 44px;
+  }
+  
+  .comparison-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+  
+  .comparison-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .comparison-character-card {
+    padding: 1rem;
+  }
+  
+  .comparison-character-name {
+    font-size: 1.125rem;
+  }
+  
+  .comparison-character-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .comparison-character-stat {
+    padding: 0.5rem;
+    text-align: center;
+  }
+  
+  .comparison-character-stat-value {
+    font-size: 1rem;
+  }
+  
+  .comparison-character-stat-label {
+    font-size: 0.75rem;
+  }
+}
+
+/* ========================================
+   FAVORITES PAGE MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .favorites-container {
+    padding: 1rem;
+  }
+  
+  .favorites-header {
+    margin-bottom: 1.5rem;
+  }
+  
+  .favorites-title {
+    font-size: 1.5rem;
+  }
+  
+  .favorites-description {
+    font-size: 0.875rem;
+  }
+  
+  .favorites-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .favorites-item {
+    padding: 1rem;
+  }
+  
+  .favorites-item-title {
+    font-size: 1rem;
+  }
+  
+  .favorites-item-description {
+    font-size: 0.875rem;
+  }
+  
+  .favorites-item-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .favorites-item-button {
+    min-height: 36px;
+    font-size: 0.75rem;
+  }
+}
+
+/* ========================================
+   PLAYER TOOL DETAIL MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .player-tool-detail-container {
+    padding: 1rem;
+  }
+  
+  .player-tool-detail-header {
+    margin-bottom: 1.5rem;
+  }
+  
+  .player-tool-detail-title {
+    font-size: 1.5rem;
+  }
+  
+  .player-tool-detail-description {
+    font-size: 0.875rem;
+  }
+  
+  .player-tool-detail-content {
+    padding: 1rem;
+  }
+  
+  .player-tool-detail-section {
+    margin-bottom: 2rem;
+  }
+  
+  .player-tool-detail-section-title {
+    font-size: 1.125rem;
+  }
+  
+  .player-tool-detail-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .player-tool-detail-input {
+    font-size: 1rem;
+    padding: 0.75rem;
+    min-height: 44px;
+  }
+  
+  .player-tool-detail-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   SETUP PAGE MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .setup-container {
+    padding: 1rem;
+  }
+  
+  .setup-header {
+    margin-bottom: 1.5rem;
+  }
+  
+  .setup-title {
+    font-size: 1.5rem;
+  }
+  
+  .setup-description {
+    font-size: 0.875rem;
+  }
+  
+  .setup-form {
+    gap: 1rem;
+  }
+  
+  .setup-input {
+    font-size: 1rem;
+    padding: 0.75rem;
+    min-height: 44px;
+  }
+  
+  .setup-textarea {
+    font-size: 1rem;
+    padding: 0.75rem;
+    min-height: 100px;
+  }
+  
+  .setup-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   CAMPAIGN JOIN MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .campaign-join-container {
+    padding: 1rem;
+  }
+  
+  .campaign-join-header {
+    margin-bottom: 1.5rem;
+  }
+  
+  .campaign-join-title {
+    font-size: 1.5rem;
+  }
+  
+  .campaign-join-description {
+    font-size: 0.875rem;
+  }
+  
+  .campaign-join-form {
+    gap: 1rem;
+  }
+  
+  .campaign-join-input {
+    font-size: 1rem;
+    padding: 0.75rem;
+    min-height: 44px;
+  }
+  
+  .campaign-join-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   CAMPAIGN SESSION PLAY MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .campaign-session-play-container {
+    padding: 0.5rem;
+  }
+  
+  .campaign-session-play-header {
+    margin-bottom: 1rem;
+  }
+  
+  .campaign-session-play-title {
+    font-size: 1.25rem;
+  }
+  
+  .campaign-session-play-content {
+    height: calc(100vh - 8rem);
+  }
+  
+  .campaign-session-play-tabs {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.25rem;
+  }
+  
+  .campaign-session-play-tab-trigger {
+    font-size: 0.75rem;
+    min-height: 44px;
+    padding: 0.5rem;
+  }
+  
+  .campaign-session-play-tab-icon {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+  
+  .campaign-session-play-tab-text {
+    display: none;
+  }
+}
+
+/* ========================================
+   NOT FOUND PAGE MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .not-found-container {
+    padding: 1rem;
+  }
+  
+  .not-found-content {
+    text-align: center;
+    padding: 2rem 0;
+  }
+  
+  .not-found-title {
+    font-size: 2rem;
+  }
+  
+  .not-found-description {
+    font-size: 1rem;
+  }
+  
+  .not-found-button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   INDEX PAGE MOBILE STYLES
+   ======================================== */
+
+@media (max-width: 640px) {
+  .index-container {
+    padding: 1rem;
+  }
+  
+  .index-content {
+    text-align: center;
+    padding: 2rem 0;
+  }
+  
+  .index-title {
+    font-size: 2rem;
+  }
+  
+  .index-description {
+    font-size: 1rem;
+  }
+  
+  .index-button {
+    min-height: 48px;
+    font-size: 1rem;
+    padding: 1rem 2rem;
+  }
+}

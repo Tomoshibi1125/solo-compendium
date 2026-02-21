@@ -18,7 +18,7 @@ import { useState } from 'react';
 import { logger } from '@/lib/logger';
 
 interface BulkActionsBarProps {
-  selectedIds: string[];
+  selectedIds: Set<string>;
   onClearSelection: () => void;
 }
 
@@ -33,7 +33,7 @@ export function BulkActionsBar({ selectedIds, onClearSelection }: BulkActionsBar
   const handleBulkDelete = async () => {
     setIsDeleting(true);
     try {
-      const result = await bulkDeleteCharacters(selectedIds);
+      const result = await bulkDeleteCharacters(Array.from(selectedIds));
       if (result.failed > 0) {
         toast({
           title: 'Partial success',
@@ -64,7 +64,7 @@ export function BulkActionsBar({ selectedIds, onClearSelection }: BulkActionsBar
   const handleBulkLevelUp = async () => {
     setIsLevelingUp(true);
     try {
-      const result = await bulkLevelUp(selectedIds);
+      const result = await bulkLevelUp(Array.from(selectedIds));
       if (result.failed > 0) {
         toast({
           title: 'Partial success',
@@ -94,7 +94,7 @@ export function BulkActionsBar({ selectedIds, onClearSelection }: BulkActionsBar
   const handleBulkRest = async (restType: 'short' | 'long') => {
     setIsResting(true);
     try {
-      const result = await bulkRest(selectedIds, restType);
+      const result = await bulkRest(Array.from(selectedIds), restType);
       if (result.failed > 0) {
         toast({
           title: 'Partial success',
@@ -121,13 +121,13 @@ export function BulkActionsBar({ selectedIds, onClearSelection }: BulkActionsBar
     }
   };
 
-  if (selectedIds.length === 0) return null;
+  if (selectedIds.size === 0) return null;
 
   return (
     <>
       <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 bg-background border border-primary/50 rounded-lg shadow-xl p-4 flex items-center gap-4">
         <Badge variant="default" className="gap-2">
-          {selectedIds.length} selected
+          {selectedIds.size} selected
         </Badge>
         <div className="flex gap-2">
           <Button
@@ -197,9 +197,9 @@ export function BulkActionsBar({ selectedIds, onClearSelection }: BulkActionsBar
       <AlertDialog open={deleteConfirmOpen} onOpenChange={setDeleteConfirmOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete {selectedIds.length} character{selectedIds.length > 1 ? 's' : ''}?</AlertDialogTitle>
+            <AlertDialogTitle>Delete {selectedIds.size} character{selectedIds.size > 1 ? 's' : ''}?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete {selectedIds.length === 1 ? 'this character' : 'these characters'} from your roster.
+              This action cannot be undone. This will permanently delete {selectedIds.size === 1 ? 'this character' : 'these characters'} from your roster.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
