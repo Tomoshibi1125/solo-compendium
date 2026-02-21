@@ -754,8 +754,8 @@ export class RegentGeminiSystem {
     const jobRegentMap: Record<Job, string[]> = {
       'Warrior': ['Strength Regent', 'Vitality Regent', 'Agility Regent'],
       'Mage': ['Intelligence Regent', 'Sense Regent', 'Presence Regent'],
-      'Rogue': ['Agility Regent', 'Presence Regent', 'Intelligence Regent'],
-      'Cleric': ['Sense Regent', 'Presence Regent', 'Vitality Regent'],
+      'Assassin': ['Agility Regent', 'Presence Regent', 'Intelligence Regent'],
+      'Healer': ['Sense Regent', 'Presence Regent', 'Vitality Regent'],
       'Ranger': ['Agility Regent', 'Sense Regent', 'Vitality Regent'],
       'Paladin': ['Strength Regent', 'Presence Regent', 'Vitality Regent']
     };
