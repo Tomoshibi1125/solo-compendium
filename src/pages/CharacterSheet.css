@@ -1,125 +1,403 @@
-.character-sheet-encumbrance {
-  width: 100%;
-  height: 0.5rem;
-  display: block;
-  border: none;
-  border-radius: 9999px;
+/* D&D Beyond Style Character Sheet */
+
+.character-sheet-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Header Styles */
+.character-sheet-header {
+  margin-bottom: 2rem;
+}
+
+.character-sheet-quick-stats {
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.1);
+  /* Fallback for browsers that don't support backdrop-filter */
+  background-color: rgba(255, 255, 255, 0.15);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+/* Fallback for older browsers */
+@supports not ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
+  .stat-card {
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+}
+
+.stat-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0.25rem;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  font-family: 'Courier New', monospace;
+}
+
+/* Tab Styles */
+.character-sheet-tabs {
+  margin-top: 2rem;
+}
+
+.tab-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.tab-trigger:hover {
+  background: hsl(var(--muted) / 0.5);
+}
+
+.tab-trigger[data-state="active"] {
+  background: hsl(var(--background));
+  border-color: hsl(var(--primary) / 0.3);
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+}
+
+.tab-content {
+  margin-top: 1.5rem;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ability Scores */
+.ability-scores-container {
+  background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--muted) / 0.3) 100%);
+  border: 1px solid hsl(var(--border));
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.ability-score-card {
+  background: hsl(var(--background));
+  border: 2px solid hsl(var(--border));
+  border-radius: 0.75rem;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.2s ease;
+  position: relative;
   overflow: hidden;
-  background-color: hsl(var(--muted));
-  appearance: none;
 }
 
-.character-sheet-encumbrance::-webkit-progress-bar {
-  background-color: hsl(var(--muted));
-  border-radius: 9999px;
+.ability-score-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)));
 }
 
-.character-sheet-encumbrance::-webkit-progress-value {
-  background-color: var(--encumbrance-color, #22c55e);
-  border-radius: 9999px;
-  transition: width 150ms ease;
+.ability-score-card:hover {
+  border-color: hsl(var(--primary));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
 }
 
-.character-sheet-encumbrance::-moz-progress-bar {
-  background-color: var(--encumbrance-color, #22c55e);
-  border-radius: 9999px;
-  transition: width 150ms ease;
+.ability-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
 }
 
-.character-sheet-encumbrance--unencumbered {
-  --encumbrance-color: #22c55e;
+.ability-name {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: hsl(var(--foreground));
 }
 
-.character-sheet-encumbrance--light {
-  --encumbrance-color: #3b82f6;
+.ability-score {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: hsl(var(--primary));
+  font-family: 'Courier New', monospace;
 }
 
-.character-sheet-encumbrance--medium {
-  --encumbrance-color: #eab308;
+.ability-modifier {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
 }
 
-.character-sheet-encumbrance--heavy {
-  --encumbrance-color: #f97316;
+.modifier-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: hsl(var(--foreground));
+  font-family: 'Courier New', monospace;
 }
 
-.character-sheet-encumbrance--overloaded {
-  --encumbrance-color: #ef4444;
+/* Skills */
+.skills-container {
+  background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--muted) / 0.3) 100%);
+  border: 1px solid hsl(var(--border));
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 
-/* D&D Beyond Style Mobile Breakpoints */
-@media (max-width: 475px) {
-  .xs\:hidden {
-    display: none;
+.skill-card {
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.skill-card:hover {
+  border-color: hsl(var(--primary));
+  background: hsl(var(--accent) / 0.1);
+}
+
+.skill-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.skill-name {
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: hsl(var(--foreground));
+}
+
+.skill-modifier {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Combat Stats */
+.combat-stats-container {
+  background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--muted) / 0.3) 100%);
+  border: 1px solid hsl(var(--border));
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.combat-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.combat-stat:hover {
+  border-color: hsl(var(--primary));
+  background: hsl(var(--accent) / 0.1);
+}
+
+/* Character Info */
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid hsl(var(--border) / 0.5);
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-weight: 500;
+  color: hsl(var(--muted-foreground));
+  font-size: 0.875rem;
+}
+
+.info-value {
+  font-weight: 600;
+  color: hsl(var(--foreground));
+  text-align: right;
+}
+
+/* Floating Action Buttons */
+.character-sheet-fab {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 50;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .character-sheet-container {
+    padding: 0.5rem;
   }
   
-  .xs\:inline {
-    display: inline;
-  }
-}
-
-@media (min-width: 476px) {
-  .xs\:hidden {
-    display: block;
+  .character-sheet-quick-stats {
+    padding: 1rem;
   }
   
-  .xs\:inline {
-    display: none;
-  }
-}
-
-/* Mobile-first stat cards */
-@media (max-width: 640px) {
-  .character-sheet-stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
+  .stat-card {
+    padding: 0.75rem;
   }
   
-  .character-sheet-ability-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
-  }
-  
-  .character-sheet-saving-throws-grid {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-  }
-}
-
-/* Tablet adjustments */
-@media (min-width: 641px) and (max-width: 1024px) {
-  .character-sheet-ability-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  
-  .character-sheet-saving-throws-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* Touch-friendly button sizing */
-@media (pointer: coarse) {
-  .character-sheet-touch-button {
-    min-height: 44px;
-    min-width: 44px;
-  }
-  
-  .character-sheet-touch-small {
-    min-height: 36px;
-    min-width: 36px;
-  }
-}
-
-/* Compact mode for small screens */
-@media (max-width: 380px) {
-  .character-sheet-compact .font-display {
+  .stat-value {
     font-size: 1.25rem;
   }
   
-  .character-sheet-compact .text-2xl {
-    font-size: 1.5rem;
+  .tab-trigger {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
   }
   
-  .character-sheet-compact .text-3xl {
-    font-size: 1.875rem;
+  .ability-score-card {
+    padding: 0.75rem;
+  }
+  
+  .ability-score {
+    font-size: 1.25rem;
+  }
+  
+  .character-sheet-fab {
+    bottom: 1rem;
+    right: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .character-sheet-quick-stats .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .ability-scores-container .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .skills-container .grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .combat-stats-container .grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
+/* Dark Mode Enhancements */
+@media (prefers-color-scheme: dark) {
+  .character-sheet-quick-stats {
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.8) 0%, hsl(var(--accent) / 0.8) 100%);
+  }
+  
+  .ability-score-card::before {
+    background: linear-gradient(90deg, hsl(var(--primary) / 0.8), hsl(var(--accent) / 0.8));
+  }
+}
+
+/* Animation Classes */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Utility Classes */
+.text-gradient {
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.border-gradient {
+  border-image: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent))) 1;
+}
+
+.shadow-glow {
+  box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+}
+
+/* Print Styles */
+@media print {
+  .character-sheet-fab {
+    display: none;
+  }
+  
+  .tab-trigger {
+    display: none;
+  }
+  
+  .character-sheet-tabs {
+    border: none;
+    box-shadow: none;
+  }
+  
+  .ability-score-card:hover,
+  .skill-card:hover,
+  .combat-stat:hover {
+    transform: none;
+    box-shadow: none;
   }
 }

@@ -469,16 +469,12 @@ const CharacterNew = () => {
       await addJobAwakeningBenefitsForLevel(character.id, job.name, 1);
 
       // Add starting equipment (background is required)
-      // Note: addStartingEquipment expects full Job type, so we need to handle this carefully
       if (selectedBackgroundData) {
-        // For now, skip the equipment addition to avoid type issues
-        // The character will get equipment through other means
-        console.log('Skipping equipment addition due to type compatibility issues');
+        await addStartingEquipment(character.id, job, selectedBackgroundData);
       }
 
       // Add starting powers/cantrips for caster jobs
-      // Note: addStartingPowers also expects full Job type
-      console.log('Skipping power addition due to type compatibility issues');
+      await addStartingPowers(character.id, job);
 
       // D&D Beyond parity: auto-calculate derived stats after all creation data is saved
       if (!isLocalCharacterId(character.id)) {
@@ -577,41 +573,77 @@ const CharacterNew = () => {
           <span className="sm:hidden">Back</span>
         </Button>
 
-        {/* Progress Steps */}
+        {/* Enhanced Progress Steps - D&D Beyond Style */}
         <div className="mb-6 sm:mb-8">
-          <div className="flex items-center justify-between mb-4 overflow-x-auto">
-            {steps.map((step, index) => (
-              <div key={step.id} className="flex items-center flex-1 min-w-0">
-                <div className="flex flex-col items-center flex-1">
-                  <div
-                    className={cn(
-                      "w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-display text-xs sm:text-sm mb-2 transition-colors",
-                      index <= currentStepIndex
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-muted text-muted-foreground"
-                    )}
-                  >
-                    {index < currentStepIndex ? (
-                      <Check className="w-3 h-3 sm:w-5 sm:h-5" />
-                    ) : (
-                      index + 1
+          <div className="bg-card border border-border rounded-lg p-4 shadow-sm">
+            <div className="flex items-center justify-between mb-4 overflow-x-auto">
+              {steps.map((step, index) => (
+                <div key={step.id} className="flex items-center flex-1 min-w-0">
+                  <div className="flex flex-col items-center flex-1 relative">
+                    {/* Step Circle */}
+                    <div
+                      className={cn(
+                        "w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-display text-sm sm:text-base mb-2 transition-all duration-300 border-2",
+                        index < currentStepIndex
+                          ? "bg-primary text-primary-foreground border-primary shadow-lg"
+                          : index === currentStepIndex
+                          ? "bg-primary text-primary-foreground border-primary shadow-lg ring-4 ring-primary/20"
+                          : "bg-muted text-muted-foreground border-border"
+                      )}
+                    >
+                      {index < currentStepIndex ? (
+                        <Check className="w-4 h-4 sm:w-5 sm:h-5" />
+                      ) : (
+                        index + 1
+                      )}
+                    </div>
+                    
+                    {/* Step Name */}
+                    <span className={cn(
+                      "text-xs sm:text-sm font-heading text-center transition-colors",
+                      index <= currentStepIndex ? "text-foreground font-semibold" : "text-muted-foreground"
+                    )}>
+                      {step.name}
+                    </span>
+                    
+                    {/* Current Step Indicator */}
+                    {index === currentStepIndex && (
+                      <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-primary rounded-full animate-pulse" />
                     )}
                   </div>
-                  <span className={cn(
-                    "text-xs font-heading text-center",
-                    index <= currentStepIndex ? "text-foreground" : "text-muted-foreground"
-                  )}>
-                    {step.name}
-                  </span>
+                  
+                  {/* Connector Line */}
+                  {index < steps.length - 1 && (
+                    <div className={cn(
+                      "h-0.5 flex-1 mx-2 sm:mx-4 mb-6 transition-all duration-300",
+                      index < currentStepIndex 
+                        ? "bg-primary shadow-sm" 
+                        : "bg-muted"
+                    )} />
+                  )}
                 </div>
-                {index < steps.length - 1 && (
-                  <div className={cn(
-                    "h-0.5 flex-1 mx-1 sm:mx-2 mb-6 hidden sm:block",
-                    index < currentStepIndex ? "bg-primary" : "bg-muted"
-                  )} />
-                )}
-              </div>
-            ))}
+              ))}
+            </div>
+            
+            {/* Step Progress Bar */}
+            <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+              <div 
+                className="bg-primary h-full transition-all duration-500 ease-out character-creation-progress-bar"
+                data-progress={((currentStepIndex + 1) / steps.length) * 100}
+              />
+            </div>
+            
+            {/* Step Description */}
+            <div className="mt-4 text-center">
+              <p className="text-sm text-muted-foreground">
+                {currentStep === 'concept' && 'Create your character\'s identity and appearance'}
+                {currentStep === 'abilities' && 'Choose your character\'s ability scores'}
+                {currentStep === 'job' && 'Select your character\'s primary class'}
+                {currentStep === 'path' && 'Choose a specialization within your job'}
+                {currentStep === 'background' && 'Define your character\'s history and origins'}
+                {currentStep === 'review' && 'Review and finalize your character'}
+              </p>
+            </div>
           </div>
         </div>
 

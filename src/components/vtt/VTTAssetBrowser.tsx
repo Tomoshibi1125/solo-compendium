@@ -1,5 +1,5 @@
 import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
-import { Search, MapPin, Image, Upload, Layers, Skull, Sparkles, Box, Heart, Swords, X, User, Wand2, BookOpen, Zap, Clock, GripVertical, ChevronDown } from 'lucide-react';
+import { Search, MapPin, Image, Upload, Layers, Skull, Sparkles, Box, Heart, Swords, X, User, Wand2, BookOpen, Zap, Clock, GripVertical, ChevronDown, Shield, Sword, Building, Car, Trees, Moon, Cloud, Cog, Star } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -32,6 +32,21 @@ const CATEGORY_ICONS: Record<VTTAssetCategory, React.ReactNode> = {
   handout: <BookOpen className="w-3 h-3" />,
   token: <Image className="w-3 h-3" />,
   technique: <Zap className="w-3 h-3" />,
+  // New categories
+  environment: <Trees className="w-3 h-3" />,
+  weapon: <Sword className="w-3 h-3" />,
+  armor: <Shield className="w-3 h-3" />,
+  creature: <Skull className="w-3 h-3" />,
+  npc: <User className="w-3 h-3" />,
+  building: <Building className="w-3 h-3" />,
+  vehicle: <Car className="w-3 h-3" />,
+  nature: <Trees className="w-3 h-3" />,
+  elemental: <Cloud className="w-3 h-3" />,
+  divine: <Star className="w-3 h-3" />,
+  shadow: <Moon className="w-3 h-3" />,
+  cosmic: <Star className="w-3 h-3" />,
+  mechanical: <Cog className="w-3 h-3" />,
+  magical: <Sparkles className="w-3 h-3" />,
 };
 
 const RECENT_ASSETS_KEY = 'vtt-recent-assets';

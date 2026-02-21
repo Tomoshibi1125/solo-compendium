@@ -1,3 +1,9 @@
+/**
+ * Enhanced DM Tools Page - D&D Beyond Style Layout
+ * Professional dungeon master tools with System Ascendant theme
+ */
+
+import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Sword, 
@@ -22,14 +28,50 @@ import {
   Database,
   BarChart3,
   Layers,
+  Search,
+  Filter,
+  Grid3x3,
+  List,
+  Shield,
+  Map,
+  Trophy,
+  Scroll,
+  Compass,
+  Hammer,
+  Eye,
+  Zap as Bolt,
+  Crown as CrownIcon,
+  Star,
+  Moon,
+  Sun,
+  HelpCircle,
+  Settings,
+  Bell,
+  LogOut,
+  TrendingUp,
+  Activity,
+  FileText,
+  Archive,
+  Palette,
+  Music,
+  Volume2
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { SystemSigilLogo } from '@/components/ui/SystemSigilLogo';
 import { GatePortal } from '@/components/ui/GatePortal';
+import { Progress } from '@/components/ui/progress';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
+import './DMTools.css';
 
-const tools = [
+const dmTools = [
+  // Core Combat Tools
   {
     id: 'encounter-builder',
     name: 'Encounter Builder',
@@ -39,6 +81,8 @@ const tools = [
     color: 'from-red-500/20 to-red-600/10 border-red-500/30 hover:border-red-500/60',
     iconColor: 'text-red-400',
     glow: 'group-hover:shadow-red-500/20',
+    category: 'combat',
+    priority: 1,
   },
   {
     id: 'initiative-tracker',
@@ -49,7 +93,11 @@ const tools = [
     color: 'from-blue-500/20 to-blue-600/10 border-blue-500/30 hover:border-blue-500/60',
     iconColor: 'text-blue-400',
     glow: 'group-hover:shadow-blue-500/20',
+    category: 'combat',
+    priority: 2,
   },
+  
+  // World Building Tools
   {
     id: 'gate-generator',
     name: 'Rift Generator',
@@ -59,6 +107,8 @@ const tools = [
     color: 'from-orange-500/20 to-orange-600/10 border-orange-500/30 hover:border-orange-500/60',
     iconColor: 'text-orange-400',
     glow: 'group-hover:shadow-orange-500/20',
+    category: 'world',
+    priority: 3,
   },
   {
     id: 'npc-generator',
@@ -66,20 +116,64 @@ const tools = [
     description: 'Create NPCs with mannerisms, secrets, and motivations.',
     icon: Users,
     status: 'available',
-    color: 'from-arise/20 to-shadow-purple/10 border-arise/30 hover:border-arise/60',
-    iconColor: 'text-arise',
-    glow: 'group-hover:shadow-arise/20',
+    color: 'from-purple-500/20 to-purple-600/10 border-purple-500/30 hover:border-purple-500/60',
+    iconColor: 'text-purple-400',
+    glow: 'group-hover:shadow-purple-500/20',
+    category: 'world',
+    priority: 4,
   },
+  {
+    id: 'dungeon-map-generator',
+    name: 'Dungeon Map Generator',
+    description: 'Generate procedural dungeon layouts with room descriptions.',
+    icon: Map,
+    status: 'available',
+    color: 'from-green-500/20 to-green-600/10 border-green-500/30 hover:border-green-500/60',
+    iconColor: 'text-green-400',
+    glow: 'group-hover:shadow-green-500/20',
+    category: 'world',
+    priority: 5,
+  },
+  
+  // Content Tools
   {
     id: 'rollable-tables',
     name: 'Rollable Tables',
     description: 'Access all Protocol Warden\'s Guide tables for hazards, complications, rewards, and more.',
     icon: Dice6,
     status: 'available',
-    color: 'from-green-500/20 to-green-600/10 border-green-500/30 hover:border-green-500/60',
-    iconColor: 'text-green-400',
-    glow: 'group-hover:shadow-green-500/20',
+    color: 'from-cyan-500/20 to-cyan-600/10 border-cyan-500/30 hover:border-cyan-500/60',
+    iconColor: 'text-cyan-400',
+    glow: 'group-hover:shadow-cyan-500/20',
+    category: 'content',
+    priority: 6,
   },
+  {
+    id: 'quest-generator',
+    name: 'Quest Generator',
+    description: 'Generate branching quests with objectives, complications, and rewards.',
+    icon: Scroll,
+    status: 'available',
+    color: 'from-indigo-500/20 to-indigo-600/10 border-indigo-500/30 hover:border-indigo-500/60',
+    iconColor: 'text-indigo-400',
+    glow: 'group-hover:shadow-indigo-500/20',
+    category: 'content',
+    priority: 7,
+  },
+  {
+    id: 'random-event-generator',
+    name: 'Random Events',
+    description: 'Generate unexpected events to add dynamism to your sessions.',
+    icon: AlertTriangle,
+    status: 'available',
+    color: 'from-yellow-500/20 to-yellow-600/10 border-yellow-500/30 hover:border-yellow-500/60',
+    iconColor: 'text-yellow-400',
+    glow: 'group-hover:shadow-yellow-500/20',
+    category: 'content',
+    priority: 8,
+  },
+  
+  // Item & Equipment Tools
   {
     id: 'relic-workshop',
     name: 'Relic Workshop',
@@ -89,6 +183,8 @@ const tools = [
     color: 'from-amber-500/20 to-amber-600/10 border-amber-500/30 hover:border-amber-500/60',
     iconColor: 'text-amber-400',
     glow: 'group-hover:shadow-amber-500/20',
+    category: 'items',
+    priority: 9,
   },
   {
     id: 'treasure-generator',
@@ -96,110 +192,104 @@ const tools = [
     description: 'Generate treasure hoards by Rift Rank with gold, items, materials, and relics.',
     icon: Gem,
     status: 'available',
-    color: 'from-yellow-500/20 to-yellow-600/10 border-yellow-500/30 hover:border-yellow-500/60',
-    iconColor: 'text-yellow-400',
-    glow: 'group-hover:shadow-yellow-500/20',
+    color: 'from-pink-500/20 to-pink-600/10 border-pink-500/30 hover:border-pink-500/60',
+    iconColor: 'text-pink-400',
+    glow: 'group-hover:shadow-pink-500/20',
+    category: 'items',
+    priority: 10,
   },
+  
+  // Party & Session Tools
   {
-    id: 'quest-generator',
-    name: 'Quest Generator',
-    description: 'Generate missions and contracts with objectives, complications, and rewards.',
-    icon: Target,
+    id: 'party-tracker',
+    name: 'Party Tracker',
+    description: 'Manage party members, levels, and shared resources.',
+    icon: UsersRound,
     status: 'available',
-    color: 'from-indigo-500/20 to-indigo-600/10 border-indigo-500/30 hover:border-indigo-500/60',
-    iconColor: 'text-indigo-400',
-    glow: 'group-hover:shadow-indigo-500/20',
+    color: 'from-teal-500/20 to-teal-600/10 border-teal-500/30 hover:border-teal-500/60',
+    iconColor: 'text-teal-400',
+    glow: 'group-hover:shadow-teal-500/20',
+    category: 'party',
+    priority: 11,
   },
   {
     id: 'session-planner',
     name: 'Session Planner',
-    description: 'Plan and organize sessions with notes, encounters, NPCs, and plot points.',
+    description: 'Plan and organize your campaign sessions.',
     icon: Calendar,
     status: 'available',
-    color: 'from-pink-500/20 to-pink-600/10 border-pink-500/30 hover:border-pink-500/60',
-    iconColor: 'text-pink-400',
-    glow: 'group-hover:shadow-pink-500/20',
+    color: 'from-lime-500/20 to-lime-600/10 border-lime-500/30 hover:border-lime-500/60',
+    iconColor: 'text-lime-400',
+    glow: 'group-hover:shadow-lime-500/20',
+    category: 'party',
+    priority: 12,
   },
+  
+  // VTT & Visual Tools
   {
-    id: 'random-event-generator',
-    name: 'Random Event Generator',
-    description: 'Generate random world events, NPC encounters, and complications.',
-    icon: AlertTriangle,
-    status: 'available',
-    color: 'from-cyan-500/20 to-cyan-600/10 border-cyan-500/30 hover:border-cyan-500/60',
-    iconColor: 'text-cyan-400',
-    glow: 'group-hover:shadow-cyan-500/20',
-  },
-  {
-    id: 'party-tracker',
-    name: 'Party Tracker',
-    description: 'Track party members\' HP, conditions, AC, and status during sessions.',
-    icon: UsersRound,
-    status: 'available',
-    color: 'from-emerald-500/20 to-emerald-600/10 border-emerald-500/30 hover:border-emerald-500/60',
-    iconColor: 'text-emerald-400',
-    glow: 'group-hover:shadow-emerald-500/20',
-  },
-  {
-    id: 'dungeon-map-generator',
-    name: 'Dungeon Map Generator',
-    description: 'Generate full rift/dungeon maps with rooms, corridors, and special chambers for VTT-style gameplay.',
+    id: 'vtt-enhanced',
+    name: 'VTT Enhanced',
+    description: 'Virtual tabletop with maps, tokens, and real-time collaboration.',
     icon: Grid,
     status: 'available',
     color: 'from-violet-500/20 to-violet-600/10 border-violet-500/30 hover:border-violet-500/60',
     iconColor: 'text-violet-400',
     glow: 'group-hover:shadow-violet-500/20',
+    category: 'vtt',
+    priority: 13,
   },
   {
     id: 'token-library',
     name: 'Token Library',
-    description: 'Manage tokens and assets for VTT sessions. Create custom tokens, organize by category.',
-    icon: ImageIcon,
+    description: 'Manage and organize your token collection.',
+    icon: Target,
     status: 'available',
-    color: 'from-teal-500/20 to-teal-600/10 border-teal-500/30 hover:border-teal-500/60',
-    iconColor: 'text-teal-400',
-    glow: 'group-hover:shadow-teal-500/20',
-  },
-  {
-    id: 'vtt-map',
-    name: 'VTT Map Viewer',
-    description: 'Place tokens on maps for virtual tabletop gameplay. Drag tokens, rotate, and organize by layers.',
-    icon: Layers,
-    status: 'available',
-    color: 'from-rose-500/20 to-rose-600/10 border-rose-500/30 hover:border-rose-500/60',
-    iconColor: 'text-rose-400',
-    glow: 'group-hover:shadow-rose-500/20',
-  },
-  {
-    id: 'vtt-enhanced',
-    name: 'Enhanced VTT',
-    description: 'Full-featured virtual tabletop with scenes, fog of war, initiative tracking, dice, and chat.',
-    icon: Layers,
-    status: 'campaign-only',
-    color: 'from-purple-500/20 to-purple-600/10 border-purple-500/30 hover:border-purple-500/60',
-    iconColor: 'text-purple-400',
-    glow: 'group-hover:shadow-purple-500/20',
+    color: 'from-fuchsia-500/20 to-fuchsia-600/10 border-fuchsia-500/30 hover:border-fuchsia-500/60',
+    iconColor: 'text-fuchsia-400',
+    glow: 'group-hover:shadow-fuchsia-500/20',
+    category: 'vtt',
+    priority: 14,
   },
   {
     id: 'vtt-journal',
     name: 'VTT Journal',
-    description: 'Campaign journal entries, session logs, lore, and handouts for your virtual tabletop sessions.',
+    description: 'Campaign wiki and knowledge base for your world.',
     icon: BookOpen,
-    status: 'campaign-only',
-    color: 'from-indigo-500/20 to-indigo-600/10 border-indigo-500/30 hover:border-indigo-500/60',
-    iconColor: 'text-indigo-400',
-    glow: 'group-hover:shadow-indigo-500/20',
+    status: 'available',
+    color: 'from-rose-500/20 to-rose-600/10 border-rose-500/30 hover:border-rose-500/60',
+    iconColor: 'text-rose-400',
+    glow: 'group-hover:shadow-rose-500/20',
+    category: 'vtt',
+    priority: 15,
+  },
+  
+  // Creative Tools
+  {
+    id: 'art-generator',
+    name: 'Art Generation',
+    description: 'Generate character portraits, scenes, and concept art.',
+    icon: ImageIcon,
+    status: 'available',
+    color: 'from-sky-500/20 to-sky-600/10 border-sky-500/30 hover:border-sky-500/60',
+    iconColor: 'text-sky-400',
+    glow: 'group-hover:shadow-sky-500/20',
+    category: 'creative',
+    priority: 16,
   },
   {
-    id: 'campaign-manager',
-    name: 'Campaign Manager',
-    description: 'Comprehensive campaign management with world-building, timeline tracking, and story arcs.',
-    icon: Globe,
-    status: 'coming-soon',
-    color: 'from-slate-500/20 to-slate-600/10 border-slate-500/30 hover:border-slate-500/60',
-    iconColor: 'text-slate-400',
-    glow: 'group-hover:shadow-slate-500/20',
+    id: 'audio-manager',
+    name: 'Audio Manager',
+    description: 'Manage sound effects, music, and ambient audio for your sessions.',
+    icon: Volume2,
+    status: 'available',
+    color: 'from-emerald-500/20 to-emerald-600/10 border-emerald-500/30 hover:border-emerald-500/60',
+    iconColor: 'text-emerald-400',
+    glow: 'group-hover:shadow-emerald-500/20',
+    category: 'creative',
+    priority: 17,
   },
+  
+  // System Tools
   {
     id: 'system-console',
     name: 'System Console',
@@ -209,6 +299,8 @@ const tools = [
     color: 'from-slate-500/20 to-slate-600/10 border-slate-500/30 hover:border-slate-500/60',
     iconColor: 'text-slate-400',
     glow: 'group-hover:shadow-slate-500/20',
+    category: 'system',
+    priority: 18,
   },
   {
     id: 'content-audit',
@@ -216,251 +308,311 @@ const tools = [
     description: 'Review database completeness, link integrity, and coverage gaps.',
     icon: BarChart3,
     status: 'available',
-    color: 'from-indigo-500/20 to-indigo-600/10 border-indigo-500/30 hover:border-indigo-500/60',
-    iconColor: 'text-indigo-400',
-    glow: 'group-hover:shadow-indigo-500/20',
-  },
-  {
-    id: 'art-generation',
-    name: 'Art Generation',
-    description: 'Monitor AI-assisted art generation, queues, and validation.',
-    icon: ImageIcon,
-    status: 'available',
-    color: 'from-fuchsia-500/20 to-fuchsia-600/10 border-fuchsia-500/30 hover:border-fuchsia-500/60',
-    iconColor: 'text-fuchsia-400',
-    glow: 'group-hover:shadow-fuchsia-500/20',
+    color: 'from-zinc-500/20 to-zinc-600/10 border-zinc-500/30 hover:border-zinc-500/60',
+    iconColor: 'text-zinc-400',
+    glow: 'group-hover:shadow-zinc-500/20',
+    category: 'system',
+    priority: 19,
   },
 ];
 
+const categories = [
+  { id: 'all', name: 'All Tools', icon: Grid3x3 },
+  { id: 'combat', name: 'Combat', icon: Sword },
+  { id: 'world', name: 'World Building', icon: Globe },
+  { id: 'content', name: 'Content', icon: BookOpen },
+  { id: 'items', name: 'Items & Equipment', icon: Shield },
+  { id: 'party', name: 'Party & Session', icon: UsersRound },
+  { id: 'vtt', name: 'VTT & Visual', icon: Grid },
+  { id: 'creative', name: 'Creative', icon: Palette },
+  { id: 'system', name: 'System', icon: Settings },
+];
+
 const DMTools = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+
+  // Filter tools based on search and category
+  const filteredTools = useMemo(() => {
+    return dmTools.filter(tool => {
+      const matchesSearch = tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         tool.description.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCategory = selectedCategory === 'all' || tool.category === selectedCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [searchQuery, selectedCategory]);
+
+  // Group tools by category
+  const toolsByCategory = useMemo(() => {
+    const grouped = categories.reduce((acc, category) => {
+      acc[category.id] = filteredTools.filter(tool => 
+        category.id === 'all' || tool.category === category.id
+      );
+      return acc;
+    }, {} as Record<string, typeof dmTools>);
+    return grouped;
+  }, [filteredTools]);
+
   return (
     <Layout>
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8" data-testid="dm-tools">
-        <div className="mb-6 sm:mb-8">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-4">
-            <SystemSigilLogo size="md" className="flex-shrink-0" />
-            <div className="min-w-0 flex-1">
-              <h1
-                className="font-arise text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 gradient-text-shadow tracking-wider"
-                data-testid="dm-tools-heading"
-              >
-                PRIME ARCHITECT'S DOMAIN
-              </h1>
-              <p className="text-sm sm:text-base text-muted-foreground font-heading leading-relaxed">
-                Divine tools granted to guide Ascendants through the Rifts. 
-                In this post-reset world, the System's will shapes reality.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Default Loop Reminder */}
-        <SystemWindow title="THE ETERNAL LOOP" className="mb-6 sm:mb-8 border-arise/30">
-          <div className="flex flex-col items-center gap-4 sm:gap-6">
-            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full">
-              <div className="flex items-center gap-3 group w-full sm:w-auto justify-center">
-                <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-arise/30 to-shadow-purple/20 flex items-center justify-center font-arise text-arise text-sm sm:text-base border border-arise/30 group-hover:shadow-arise/30 group-hover:shadow-lg transition-all flex-shrink-0">
-                  1
-                </span>
-                <div className="text-center sm:text-left">
-                  <span className="font-arise text-arise tracking-wide text-sm sm:text-base">CONTRACT</span>
-                  <p className="text-xs text-muted-foreground">Accept the mission</p>
-                </div>
-              </div>
-              <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-arise/50 hidden sm:block flex-shrink-0" />
-              <div className="flex items-center gap-3 group w-full sm:w-auto justify-center">
-                <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-orange-500/30 to-red-500/20 flex items-center justify-center font-arise text-orange-400 text-sm sm:text-base border border-orange-500/30 group-hover:shadow-orange-500/30 group-hover:shadow-lg transition-all flex-shrink-0">
-                  2
-                </span>
-                <div className="text-center sm:text-left">
-                  <span className="font-arise text-orange-400 tracking-wide text-sm sm:text-base">RIFT</span>
-                  <p className="text-xs text-muted-foreground">Enter the dungeon</p>
-                </div>
-              </div>
-              <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-arise/50 hidden sm:block flex-shrink-0" />
-              <div className="flex items-center gap-3 group w-full sm:w-auto justify-center">
-                <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-amber-500/30 to-yellow-500/20 flex items-center justify-center font-arise text-amber-400 text-sm sm:text-base border border-amber-500/30 group-hover:shadow-amber-500/30 group-hover:shadow-lg transition-all flex-shrink-0">
-                  3
-                </span>
-                <div className="text-center sm:text-left">
-                  <span className="font-arise text-amber-400 tracking-wide text-sm sm:text-base">AFTERMATH</span>
-                  <p className="text-xs text-muted-foreground">Claim rewards</p>
-                </div>
-              </div>
-            </div>
-            <p className="text-xs sm:text-sm text-muted-foreground text-center leading-relaxed px-2">
-              The core session structure from the Protocol Warden's Guide. Ascendants navigate Contracts, Rifts, and their Aftermath under the System's watchful gaze.
-            </p>
-          </div>
-        </SystemWindow>
-
-        {/* Tools Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
-          {tools.map((tool) => {
-            const isAvailable = tool.status === 'available';
-            const isCampaignOnly = tool.status === 'campaign-only';
-            const isDisabled = tool.status === 'coming-soon';
-            const toolHref = isCampaignOnly ? '/campaigns' : isAvailable ? `/dm-tools/${tool.id}` : '#';
-            const isInteractive = isAvailable || isCampaignOnly;
-
-            return (
-            <Link
-              key={tool.id}
-              to={toolHref}
-              aria-disabled={isDisabled}
-              className={cn(
-                "group relative overflow-hidden rounded-lg sm:rounded-xl border p-4 sm:p-6 transition-all duration-300",
-                "bg-gradient-to-br backdrop-blur-sm",
-                isInteractive
-                  ? cn("hover:scale-[1.02] hover:shadow-xl cursor-pointer", tool.glow)
-                  : "opacity-60 cursor-not-allowed",
-                tool.color
-              )}
-            >
-              {/* Background decorations */}
-              {tool.id === 'gate-generator' && (
-                <div className="absolute top-0 right-0 opacity-10 group-hover:opacity-20 transition-opacity">
-                  <GatePortal rank="A" className="w-32 h-32" animated={false} />
-                </div>
-              )}
-              {tool.id === 'encounter-builder' && (
-                <div className="absolute top-0 right-0 opacity-10 group-hover:opacity-20 transition-opacity">
-                  <SystemSigilLogo size="md" />
-                </div>
-              )}
-              
-              {/* Hover glow effect */}
-              <div className={cn(
-                "absolute -bottom-6 -right-6 w-32 h-32 rounded-full blur-3xl opacity-0 group-hover:opacity-50 transition-opacity duration-500",
-                tool.id === 'encounter-builder' && "bg-red-500/30",
-                tool.id === 'initiative-tracker' && "bg-blue-500/30",
-                tool.id === 'gate-generator' && "bg-orange-500/30",
-                tool.id === 'npc-generator' && "bg-arise/30",
-                tool.id === 'rollable-tables' && "bg-green-500/30",
-                tool.id === 'relic-workshop' && "bg-amber-500/30",
-                tool.id === 'treasure-generator' && "bg-yellow-500/30",
-                tool.id === 'quest-generator' && "bg-indigo-500/30",
-                tool.id === 'session-planner' && "bg-pink-500/30",
-                tool.id === 'random-event-generator' && "bg-cyan-500/30",
-                tool.id === 'party-tracker' && "bg-emerald-500/30",
-                tool.id === 'dungeon-map-generator' && "bg-violet-500/30",
-                tool.id === 'token-library' && "bg-teal-500/30",
-                tool.id === 'vtt-map' && "bg-rose-500/30",
-                tool.id === 'system-console' && "bg-slate-500/30",
-                tool.id === 'content-audit' && "bg-indigo-500/30",
-                tool.id === 'art-generation' && "bg-fuchsia-500/30"
-              )} />
-              
-              {/* Icon */}
-              <div className={cn(
-                "w-12 h-12 sm:w-14 sm:h-14 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-4 relative z-10",
-                "bg-background/50 border border-current/20",
-                tool.iconColor
-              )}>
-                <tool.icon className="w-6 h-6 sm:w-7 sm:h-7" />
-              </div>
-
-              {/* Content */}
-              <div className="relative z-10">
-                <h3 className={cn(
-                  "font-arise text-lg sm:text-xl font-semibold mb-2 tracking-wide transition-colors leading-tight",
-                  tool.status === 'available' && "group-hover:text-current",
-                  tool.iconColor
-                )}>
-                  {tool.name}
-                </h3>
-                <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4 font-heading leading-relaxed">
-                  {tool.description}
+      <div className="dm-tools-container">
+        {/* Header */}
+        <div className="dm-tools-header">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <SystemSigilLogo size="lg" className="flex-shrink-0" />
+              <div>
+                <h1 className="dm-tools-title">
+                  PRIME ARCHITECT'S DOMAIN
+                </h1>
+                <p className="dm-tools-subtitle">
+                  Divine tools granted to guide Ascendants through the Rifts. 
+                  In this post-reset world, the System's will shapes reality.
                 </p>
               </div>
-
-              {/* Status */}
-              {tool.status === 'coming-soon' && (
-                <span className={cn(
-                  "inline-flex items-center gap-1 px-2 sm:px-3 py-1.5 rounded-full text-xs font-arise uppercase",
-                  "bg-blue-500/10 text-blue-400 border border-blue-500/30"
-                )}>
-                  <Sparkles className="w-3 h-3" />
-                  <span className="hidden sm:inline">In Development</span>
-                  <span className="sm:hidden">Soon</span>
-                </span>
-              )}
-              {tool.status === 'campaign-only' && (
-                <div className={cn("flex items-center text-xs sm:text-sm font-heading", tool.iconColor)}>
-                  <Crown className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                  <span className="hidden sm:inline">Requires Campaign</span>
-                  <span className="sm:hidden">Campaign</span>
-                  <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                </div>
-              )}
-              {tool.status === 'available' && (
-                <div className={cn("flex items-center text-xs sm:text-sm font-heading", tool.iconColor)}>
-                  <Zap className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                  <span className="hidden sm:inline">Open Tool</span>
-                  <span className="sm:hidden">Open</span>
-                  <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                </div>
-              )}
-            </Link>
-          );
-          })}
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm">
+                <HelpCircle className="w-4 h-4 mr-2" />
+                Help
+              </Button>
+              <Button variant="outline" size="sm">
+                <Settings className="w-4 h-4 mr-2" />
+                Settings
+              </Button>
+            </div>
+          </div>
         </div>
 
-        {/* Quick Reference */}
-        <div className="mt-12">
-          <h2 className="font-arise text-2xl font-bold mb-4 gradient-text-system tracking-wide flex items-center gap-2">
-            <Crown className="w-5 h-5 text-arise" />
-            SYSTEM REFERENCE
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <SystemWindow title="DIFFICULTY LADDER" className="border-arise/30">
-              <div className="space-y-2 text-sm">
-                {[
-                  { name: 'Very Easy', dc: 5, color: 'text-green-400' },
-                  { name: 'Easy', dc: 10, color: 'text-blue-400' },
-                  { name: 'Moderate', dc: 15, color: 'text-yellow-400' },
-                  { name: 'Hard', dc: 20, color: 'text-orange-400' },
-                  { name: 'Very Hard', dc: 25, color: 'text-red-400' },
-                  { name: 'Nearly Impossible', dc: 30, color: 'text-purple-400' },
-                ].map((item) => (
-                  <div key={item.dc} className="flex justify-between items-center p-2 rounded bg-muted/30 hover:bg-muted/50 transition-colors">
-                    <span className="font-heading">{item.name}</span>
-                    <span className={cn("font-arise text-lg", item.color)}>DC {item.dc}</span>
+        {/* Eternal Loop */}
+        <div className="eternal-loop-container">
+          <SystemWindow title="THE ETERNAL LOOP" className="border-arise/30">
+            <div className="flex flex-col items-center gap-6">
+              <div className="flex flex-col md:flex-row items-center gap-6 w-full">
+                <div className="loop-step">
+                  <div className="step-number step-contract">1</div>
+                  <div className="step-content">
+                    <span className="step-title">CONTRACT</span>
+                    <p className="step-description">Accept the mission</p>
                   </div>
-                ))}
+                </div>
+                <ChevronRight className="w-6 h-6 text-arise/50 hidden md:block" />
+                <div className="loop-step">
+                  <div className="step-number step-rift">2</div>
+                  <div className="step-content">
+                    <span className="step-title">RIFT</span>
+                    <p className="step-description">Enter the dungeon</p>
+                  </div>
+                </div>
+                <ChevronRight className="w-6 h-6 text-arise/50 hidden md:block" />
+                <div className="loop-step">
+                  <div className="step-number step-aftermath">3</div>
+                  <div className="step-content">
+                    <span className="step-title">AFTERMATH</span>
+                    <p className="step-description">Claim rewards</p>
+                  </div>
+                </div>
               </div>
-            </SystemWindow>
+              <p className="loop-description">
+                The core session structure from the Protocol Warden's Guide. Ascendants navigate Contracts, Rifts, and their Aftermath under the System's watchful gaze.
+              </p>
+            </div>
+          </SystemWindow>
+        </div>
 
-            <SystemWindow title="ASCENDANT TIERS" variant="alert" className="border-amber-500/30">
-              <div className="space-y-2 text-sm">
-                {[
-                  { tier: 'Tier 1 (1-4)', bonus: '+6', dc: '14', rank: 'D-C', color: 'text-green-400' },
-                  { tier: 'Tier 2 (5-10)', bonus: '+10', dc: '18', rank: 'C-B', color: 'text-blue-400' },
-                  { tier: 'Tier 3 (11-16)', bonus: '+12', dc: '20', rank: 'B-A', color: 'text-orange-400' },
-                  { tier: 'Tier 4 (17-20)', bonus: '+14', dc: '22', rank: 'A-S', color: 'text-amber-400' },
-                ].map((item) => (
-                  <div key={item.tier} className="flex justify-between items-center p-2 rounded bg-muted/30 hover:bg-muted/50 transition-colors">
-                    <div>
-                      <span className="font-heading">{item.tier}</span>
-                      <span className={cn("ml-2 text-xs", item.color)}>[{item.rank}]</span>
-                    </div>
-                    <span className="font-arise text-lg">
-                      <span className="text-arise">{item.bonus}</span>
-                      <span className="text-muted-foreground mx-1">/</span>
-                      <span className="text-amber-400">DC {item.dc}</span>
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </SystemWindow>
+        {/* Search and Filters */}
+        <div className="dm-tools-filters">
+          <div className="search-bar">
+            <Search className="w-5 h-5 text-muted-foreground" />
+            <Input
+              placeholder="Search DM tools..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="border-0 focus:ring-0"
+            />
           </div>
+          
+          <div className="filter-controls">
+            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+              <SelectTrigger className="w-48">
+                <SelectValue placeholder="Category" />
+              </SelectTrigger>
+              <SelectContent>
+                {categories.map((category) => {
+                  const Icon = category.icon;
+                  return (
+                    <SelectItem key={category.id} value={category.id}>
+                      <div className="flex items-center gap-2">
+                        <Icon className="w-4 h-4" />
+                        {category.name}
+                      </div>
+                    </SelectItem>
+                  );
+                })}
+              </SelectContent>
+            </Select>
+            
+            <div className="view-toggle">
+              <Button
+                variant={viewMode === 'grid' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setViewMode('grid')}
+              >
+                <Grid3x3 className="w-4 h-4" />
+              </Button>
+              <Button
+                variant={viewMode === 'list' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setViewMode('list')}
+              >
+                <List className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Tools Content */}
+        <div className="dm-tools-content">
+          {selectedCategory === 'all' ? (
+            // Categorized view
+            <div className="space-y-8">
+              {categories.filter(cat => cat.id !== 'all').map((category) => {
+                const categoryTools = toolsByCategory[category.id];
+                if (categoryTools.length === 0) return null;
+                
+                const Icon = category.icon;
+                return (
+                  <div key={category.id} className="category-section">
+                    <div className="category-header">
+                      <div className="flex items-center gap-2">
+                        <Icon className="w-5 h-5" />
+                        <h2 className="category-title">{category.name}</h2>
+                        <Badge variant="secondary">{categoryTools.length}</Badge>
+                      </div>
+                    </div>
+                    
+                    <div className={cn(
+                      "tools-grid",
+                      viewMode === 'list' ? "tools-list" : "tools-grid"
+                    )}>
+                      {categoryTools.map((tool) => (
+                        <DMToolCard key={tool.id} tool={tool} viewMode={viewMode} />
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            // Single category view
+            <div className={cn(
+              "tools-grid",
+              viewMode === 'list' ? "tools-list" : "tools-grid"
+            )}>
+              {filteredTools.map((tool) => (
+                <DMToolCard key={tool.id} tool={tool} viewMode={viewMode} />
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Quick Actions */}
+        <div className="dm-tools-quick-actions">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Zap className="w-5 h-5" />
+                Quick Actions
+              </CardTitle>
+              <CardDescription>
+                Common tasks and shortcuts for Dungeon Masters
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <Button variant="outline" className="justify-start">
+                  <Sword className="w-4 h-4 mr-2" />
+                  Quick Combat
+                </Button>
+                <Button variant="outline" className="justify-start">
+                  <Dice6 className="w-4 h-4 mr-2" />
+                  Random Encounter
+                </Button>
+                <Button variant="outline" className="justify-start">
+                  <Users className="w-4 h-4 mr-2" />
+                  Party Status
+                </Button>
+                <Button variant="outline" className="justify-start">
+                  <Calendar className="w-4 h-4 mr-2" />
+                  Session Notes
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </Layout>
   );
 };
 
+// DM Tool Card Component
+const DMToolCard = ({ tool, viewMode }: { tool: typeof dmTools[0]; viewMode: 'grid' | 'list' }) => {
+  const Icon = tool.icon;
+  
+  if (viewMode === 'list') {
+    return (
+      <Card className="dm-tool-card-list">
+        <CardContent className="p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className={cn("dm-tool-icon-list", tool.iconColor)}>
+                <Icon className="w-6 h-6" />
+              </div>
+              <div className="flex-1">
+                <h3 className="dm-tool-title-list">{tool.name}</h3>
+                <p className="dm-tool-description-list">{tool.description}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <Badge variant="secondary" className="text-xs">Available</Badge>
+              <Button size="sm" asChild>
+                <Link to={`/dm-tools/${tool.id}`}>
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+  
+  return (
+    <Card className={cn("dm-tool-card", tool.color, tool.glow)}>
+      <CardHeader className="pb-3">
+        <div className={cn("dm-tool-icon", tool.iconColor)}>
+          <Icon className="w-8 h-8" />
+        </div>
+        <CardTitle className="dm-tool-title">{tool.name}</CardTitle>
+        <CardDescription className="dm-tool-description">
+          {tool.description}
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="pt-0">
+        <div className="flex items-center justify-between">
+          <Badge variant="secondary" className="text-xs">Available</Badge>
+          <Button size="sm" className="dm-tool-action" asChild>
+            <Link to={`/dm-tools/${tool.id}`}>
+              Launch
+              <ChevronRight className="w-4 h-4 ml-1" />
+            </Link>
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
 export default DMTools;
-
-
-

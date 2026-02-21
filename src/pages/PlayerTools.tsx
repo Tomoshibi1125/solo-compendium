@@ -1,9 +1,9 @@
 /**
- * Player Tools Page
+ * Enhanced Player Tools Page - D&D Beyond Style Layout
  * Role-based tools for players in System Ascendant
  */
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   User, 
@@ -20,15 +20,35 @@ import {
   FlaskConical,
   Sparkles,
   ChevronRight,
+  TrendingUp,
+  Award,
+  Crown,
+  Sword,
+  Gem,
+  Compass,
+  Settings,
+  HelpCircle,
+  LogOut,
+  Bell,
+  Search,
+  Filter,
+  Grid3x3,
+  List
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { SystemSigilLogo } from '@/components/ui/SystemSigilLogo';
 import { Progress } from '@/components/ui/progress';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 import { useActiveCharacter } from '@/hooks/useActiveCharacter';
 import { formatMonarchVernacular } from '@/lib/vernacular';
+import './PlayerTools.css';
 
 const playerTools = [
   {
@@ -40,6 +60,8 @@ const playerTools = [
     color: 'from-blue-500/20 to-blue-600/10 border-blue-500/30 hover:border-blue-500/60',
     iconColor: 'text-blue-400',
     glow: 'group-hover:shadow-blue-500/20',
+    category: 'core',
+    priority: 1,
   },
   {
     id: 'inventory',
@@ -50,6 +72,8 @@ const playerTools = [
     color: 'from-green-500/20 to-green-600/10 border-green-500/30 hover:border-green-500/60',
     iconColor: 'text-green-400',
     glow: 'group-hover:shadow-green-500/20',
+    category: 'core',
+    priority: 2,
   },
   {
     id: 'abilities',
@@ -60,6 +84,8 @@ const playerTools = [
     color: 'from-purple-500/20 to-purple-600/10 border-purple-500/30 hover:border-purple-500/60',
     iconColor: 'text-purple-400',
     glow: 'group-hover:shadow-purple-500/20',
+    category: 'core',
+    priority: 3,
   },
   {
     id: 'character-art',
@@ -70,6 +96,8 @@ const playerTools = [
     color: 'from-pink-500/20 to-pink-600/10 border-pink-500/30 hover:border-pink-500/60',
     iconColor: 'text-pink-400',
     glow: 'group-hover:shadow-pink-500/20',
+    category: 'creative',
+    priority: 4,
   },
   {
     id: 'compendium-viewer',
@@ -80,6 +108,8 @@ const playerTools = [
     color: 'from-indigo-500/20 to-indigo-600/10 border-indigo-500/30 hover:border-indigo-500/60',
     iconColor: 'text-indigo-400',
     glow: 'group-hover:shadow-indigo-500/20',
+    category: 'reference',
+    priority: 5,
   },
   {
     id: 'quest-log',
@@ -90,6 +120,8 @@ const playerTools = [
     color: 'from-orange-500/20 to-orange-600/10 border-orange-500/30 hover:border-orange-500/60',
     iconColor: 'text-orange-400',
     glow: 'group-hover:shadow-orange-500/20',
+    category: 'progression',
+    priority: 6,
   },
   {
     id: 'party-view',
@@ -100,287 +132,392 @@ const playerTools = [
     color: 'from-cyan-500/20 to-cyan-600/10 border-cyan-500/30 hover:border-cyan-500/60',
     iconColor: 'text-cyan-400',
     glow: 'group-hover:shadow-cyan-500/20',
+    category: 'social',
+    priority: 7,
   },
   {
     id: 'dice-roller',
     name: 'Dice Roller',
-    description: 'Roll dice for skill checks, attacks, and saving throws.',
+    description: 'Advanced dice rolling with modifiers and history.',
     icon: Dice6,
     status: 'available',
-    color: 'from-amber-500/20 to-amber-600/10 border-amber-500/30 hover:border-amber-500/60',
-    iconColor: 'text-amber-400',
-    glow: 'group-hover:shadow-amber-500/20',
+    color: 'from-red-500/20 to-red-600/10 border-red-500/30 hover:border-red-500/60',
+    iconColor: 'text-red-400',
+    glow: 'group-hover:shadow-red-500/20',
+    category: 'tools',
+    priority: 8,
   },
   {
-    id: 'homebrew-studio',
-    name: 'Homebrew Studio',
-    description: 'Create and publish custom jobs, relics, powers, and campaign content.',
+    id: 'marketplace',
+    name: 'Marketplace',
+    description: 'Browse and purchase items, equipment, and services.',
+    icon: Store,
+    status: 'available',
+    color: 'from-yellow-500/20 to-yellow-600/10 border-yellow-500/30 hover:border-yellow-500/60',
+    iconColor: 'text-yellow-400',
+    glow: 'group-hover:shadow-yellow-500/20',
+    category: 'economy',
+    priority: 9,
+  },
+  {
+    id: 'potions',
+    name: 'Potions & Consumables',
+    description: 'Manage your potions, elixirs, and consumable items.',
     icon: FlaskConical,
     status: 'available',
     color: 'from-emerald-500/20 to-emerald-600/10 border-emerald-500/30 hover:border-emerald-500/60',
     iconColor: 'text-emerald-400',
     glow: 'group-hover:shadow-emerald-500/20',
+    category: 'inventory',
+    priority: 10,
   },
   {
-    id: 'marketplace',
-    name: 'Marketplace',
-    description: 'Browse and share campaign assets with entitlement-aware downloads and ratings.',
-    icon: Store,
+    id: 'achievements',
+    name: 'Achievements',
+    description: 'View your accomplishments and unlock rewards.',
+    icon: Award,
     status: 'available',
-    color: 'from-cyan-500/20 to-cyan-600/10 border-cyan-500/30 hover:border-cyan-500/60',
-    iconColor: 'text-cyan-400',
-    glow: 'group-hover:shadow-cyan-500/20',
+    color: 'from-amber-500/20 to-amber-600/10 border-amber-500/30 hover:border-amber-500/60',
+    iconColor: 'text-amber-400',
+    glow: 'group-hover:shadow-amber-500/20',
+    category: 'progression',
+    priority: 11,
+  },
+  {
+    id: 'regent-status',
+    name: `${formatMonarchVernacular('Regent')} Status`,
+    description: `Manage your ${formatMonarchVernacular('regent')} domains and powers.`,
+    icon: Crown,
+    status: 'high-level',
+    color: 'from-violet-500/20 to-violet-600/10 border-violet-500/30 hover:border-violet-500/60',
+    iconColor: 'text-violet-400',
+    glow: 'group-hover:shadow-violet-500/20',
+    category: 'high-level',
+    priority: 12,
   },
 ];
 
+const categories = [
+  { id: 'all', name: 'All Tools', icon: Grid3x3 },
+  { id: 'core', name: 'Core', icon: Heart },
+  { id: 'creative', name: 'Creative', icon: Sparkles },
+  { id: 'reference', name: 'Reference', icon: BookOpen },
+  { id: 'progression', name: 'Progression', icon: TrendingUp },
+  { id: 'social', name: 'Social', icon: Users },
+  { id: 'tools', name: 'Tools', icon: Settings },
+  { id: 'economy', name: 'Economy', icon: Store },
+  { id: 'inventory', name: 'Inventory', icon: Shield },
+  { id: 'high-level', name: 'High Level', icon: Crown },
+];
+
 const PlayerTools = () => {
-  const { activeCharacter, characters, activeCharacterId, setActiveCharacter, isLoading } = useActiveCharacter();
+  const { activeCharacter, isLoading: characterLoading } = useActiveCharacter();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
-  const rankInfo = useMemo(() => {
-    const level = activeCharacter?.level ?? 0;
-    if (level >= 17) return { rank: 'S', color: 'text-amber-400', stars: 5 };
-    if (level >= 13) return { rank: 'A', color: 'text-red-400', stars: 4 };
-    if (level >= 9) return { rank: 'B', color: 'text-orange-400', stars: 3 };
-    if (level >= 5) return { rank: 'C', color: 'text-blue-400', stars: 2 };
-    if (level >= 2) return { rank: 'D', color: 'text-green-400', stars: 1 };
-    return { rank: 'E', color: 'text-gray-400', stars: 1 };
-  }, [activeCharacter]);
+  // Filter tools based on search and category
+  const filteredTools = useMemo(() => {
+    return playerTools.filter(tool => {
+      const matchesSearch = tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         tool.description.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCategory = selectedCategory === 'all' || tool.category === selectedCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [searchQuery, selectedCategory]);
 
-  const hpCurrent = activeCharacter?.hp_current ?? 0;
-  const hpMax = activeCharacter?.hp_max ?? 0;
-  const hpPercent = hpMax > 0 ? Math.min(100, (hpCurrent / hpMax) * 100) : 0;
-  const favorCurrent = activeCharacter?.system_favor_current ?? 0;
-  const favorMax = activeCharacter?.system_favor_max ?? 0;
-  const favorPercent = favorMax > 0 ? Math.min(100, (favorCurrent / favorMax) * 100) : 0;
+  // Group tools by category
+  const toolsByCategory = useMemo(() => {
+    const grouped = categories.reduce((acc, category) => {
+      acc[category.id] = filteredTools.filter(tool => 
+        category.id === 'all' || tool.category === category.id
+      );
+      return acc;
+    }, {} as Record<string, typeof playerTools>);
+    return grouped;
+  }, [filteredTools]);
+
+  if (characterLoading) {
+    return (
+      <Layout>
+        <div className="player-tools-loading">
+          <div className="animate-pulse space-y-4">
+            <div className="h-8 bg-muted rounded w-1/3"></div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="h-48 bg-muted rounded-lg"></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8" data-testid="player-tools">
-        <div className="mb-6 sm:mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4">
-            <SystemSigilLogo size="md" className="flex-shrink-0" />
-            <div className="min-w-0 flex-1">
-              <h1 className="font-arise text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 gradient-text-shadow tracking-wider leading-tight">
-                ASCENDANT ARSENAL
-              </h1>
-              <p className="text-sm sm:text-base text-muted-foreground font-heading leading-relaxed">
-                Your personal tools as an Ascendant in the Umbral Legion. 
-                Track your journey, manage your powers, and rise through the ranks.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Player Stats Overview */}
-        <SystemWindow title="ASCENDANT STATUS" className="mb-6 sm:mb-8 border-blue-500/30">
-          <div className="flex flex-col gap-4 mb-6">
+      <div className="player-tools-container">
+        {/* Header */}
+        <div className="player-tools-header">
+          <div className="flex items-center justify-between">
             <div>
-              <h2 className="font-heading text-sm text-muted-foreground">Active Ascendant</h2>
-              {activeCharacter ? (
-                <div className="text-base sm:text-lg font-semibold leading-tight">
-                  {activeCharacter.name} - Level {activeCharacter.level} {formatMonarchVernacular(activeCharacter.job || 'Unawakened')}
-                </div>
-              ) : (
-                <div className="text-sm text-muted-foreground">
-                  {isLoading ? 'Loading ascendants...' : 'No ascendants yet'}
-                </div>
-              )}
-            </div>
-            {characters.length > 1 && (
-              <Select value={activeCharacterId || ''} onValueChange={setActiveCharacter}>
-                <SelectTrigger className="w-full sm:w-64 min-h-[44px]">
-                  <SelectValue placeholder="Select an ascendant" />
-                </SelectTrigger>
-                <SelectContent>
-                  {characters.map((character) => (
-                    <SelectItem key={character.id} value={character.id}>
-                      {character.name} (Level {character.level})
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            <div className="text-center">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-2 rounded-full bg-gradient-to-br from-blue-500/30 to-blue-600/20 flex items-center justify-center">
-                <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400" />
-              </div>
-              <h3 className="font-arise text-blue-400 text-sm sm:text-lg mb-1">VITALITY</h3>
-              <p className="text-xl sm:text-2xl font-bold text-white">
-                {activeCharacter ? `${hpCurrent}/${hpMax}` : '--'}
+              <h1 className="player-tools-title">
+                Player Tools
+              </h1>
+              <p className="player-tools-subtitle">
+                Manage your Ascendant's journey through the System
               </p>
-              <Progress value={hpPercent} className="h-2 mt-2 bg-gray-700 [&>div]:bg-blue-500" />
             </div>
             
-            <div className="text-center">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-2 rounded-full bg-gradient-to-br from-purple-500/30 to-purple-600/20 flex items-center justify-center">
-                <Zap className="w-6 h-6 sm:w-8 sm:h-8 text-purple-400" />
-              </div>
-              <h3 className="font-arise text-purple-400 text-sm sm:text-lg mb-1">SYSTEM FAVOR</h3>
-              <p className="text-xl sm:text-2xl font-bold text-white">
-                {activeCharacter ? `${favorCurrent}/${favorMax}` : '--'}
-              </p>
-              <Progress value={favorPercent} className="h-2 mt-2 bg-gray-700 [&>div]:bg-purple-500" />
-            </div>
-            
-            <div className="text-center">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-2 rounded-full bg-gradient-to-br from-amber-500/30 to-amber-600/20 flex items-center justify-center">
-                <Star className="w-6 h-6 sm:w-8 sm:h-8 text-amber-400" />
-              </div>
-              <h3 className="font-arise text-amber-400 text-sm sm:text-lg mb-1">ASCENDANT RANK</h3>
-              <p className="text-xl sm:text-2xl font-bold text-white">
-                {activeCharacter ? `${rankInfo.rank}-RANK` : '--'}
-              </p>
-              <div className="flex justify-center gap-1 mt-2">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <Star
-                    key={star}
-                    className={cn(
-                      "w-3 h-3 sm:w-4 sm:h-4",
-                      activeCharacter && star <= rankInfo.stars ? "text-amber-400 fill-current" : "text-gray-600"
-                    )}
-                  />
-                ))}
-              </div>
+            <div className="flex items-center gap-4">
+              <Button variant="outline" size="sm">
+                <HelpCircle className="w-4 h-4 mr-2" />
+                Help
+              </Button>
+              <Button variant="outline" size="sm">
+                <Settings className="w-4 h-4 mr-2" />
+                Settings
+              </Button>
             </div>
           </div>
-        </SystemWindow>
 
-        {/* Tools Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-          {playerTools.map((tool) => {
-            const isAvailable = tool.status === 'available';
-            const isCampaignOnly = tool.status === 'campaign-only';
-            const toolHref = isCampaignOnly ? '/campaigns' : isAvailable ? `/player-tools/${tool.id}` : '#';
-            const isInteractive = isAvailable || isCampaignOnly;
-
-            return (
-              <Link
-                key={tool.id}
-                to={toolHref}
-                className={cn(
-                  "group relative overflow-hidden rounded-lg sm:rounded-xl border p-4 sm:p-6 transition-all duration-300",
-                  "bg-gradient-to-br backdrop-blur-sm",
-                  isInteractive
-                    ? cn("hover:scale-[1.02] hover:shadow-xl cursor-pointer", tool.glow)
-                    : "opacity-60 cursor-not-allowed",
-                  tool.color
-                )}
-              >
-                {/* Hover glow effect */}
-                <div className={cn(
-                  "absolute -bottom-6 -right-6 w-32 h-32 rounded-full blur-3xl opacity-0 group-hover:opacity-50 transition-opacity duration-500",
-                  tool.id === 'character-sheet' && "bg-blue-500/30",
-                  tool.id === 'inventory' && "bg-green-500/30",
-                  tool.id === 'abilities' && "bg-purple-500/30",
-                  tool.id === 'character-art' && "bg-pink-500/30",
-                  tool.id === 'compendium-viewer' && "bg-indigo-500/30",
-                  tool.id === 'quest-log' && "bg-orange-500/30",
-                  tool.id === 'party-view' && "bg-cyan-500/30",
-                  tool.id === 'dice-roller' && "bg-amber-500/30",
-                  tool.id === 'homebrew-studio' && "bg-emerald-500/30",
-                  tool.id === 'marketplace' && "bg-cyan-500/30"
-                )} />
+          {/* Character Status Bar */}
+          {activeCharacter && (
+            <div className="character-status-bar">
+              <div className="flex items-center gap-6">
+                <div className="flex items-center gap-3">
+                  <div className="character-avatar">
+                    <User className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <div className="character-name">{activeCharacter.name}</div>
+                    <div className="character-details">
+                      Level {activeCharacter.level} {activeCharacter.background || 'Unknown'} {activeCharacter.job}
+                    </div>
+                  </div>
+                </div>
                 
-                {/* Icon */}
-                <div className={cn(
-                  "w-12 h-12 sm:w-14 sm:h-14 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-4 relative z-10",
-                  "bg-background/50 border border-current/20",
-                  tool.iconColor
-                )}>
-                  <tool.icon className="w-6 h-6 sm:w-7 sm:h-7" />
-                </div>
-
-                {/* Content */}
-                <div className="relative z-10">
-                  <h3 className={cn(
-                    "font-arise text-lg sm:text-xl font-semibold mb-2 tracking-wide transition-colors leading-tight",
-                    tool.status === 'available' && "group-hover:text-current",
-                    tool.iconColor
-                  )}>
-                    {tool.name}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4 font-heading leading-relaxed">
-                    {tool.description}
-                  </p>
-                </div>
-
-                {/* Status */}
-                {tool.status === 'campaign-only' && (
-                  <div className={cn("flex items-center text-sm font-heading", tool.iconColor)}>
-                    <Users className="w-4 h-4 mr-1" />
-                    <span>Campaign Only</span>
-                    <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                <div className="flex items-center gap-4">
+                  <div className="stat-item">
+                    <span className="stat-label">HP</span>
+                    <span className="stat-value">{activeCharacter.hp_current}/{activeCharacter.hp_max}</span>
                   </div>
-                )}
-                {tool.status === 'available' && (
-                  <div className={cn("flex items-center text-sm font-heading", tool.iconColor)}>
-                    <Sparkles className="w-4 h-4 mr-1" />
-                    <span>Open Tool</span>
-                    <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                  <div className="stat-item">
+                    <span className="stat-label">AC</span>
+                    <span className="stat-value">{activeCharacter.armor_class || 10}</span>
                   </div>
-                )}
-              </Link>
-            );
-          })}
+                  <div className="stat-item">
+                    <span className="stat-label">XP</span>
+                    <span className="stat-value">{activeCharacter.experience || 0}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Quick Reference */}
-        <div className="mt-12">
-          <h2 className="font-arise text-2xl font-bold mb-4 gradient-text-system tracking-wide flex items-center gap-2">
-            <Map className="w-5 h-5 text-blue-400" />
-            ASCENDANT REFERENCE
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <SystemWindow title="RANK PROGRESSION" className="border-blue-500/30">
-              <div className="space-y-2 text-sm">
-                {[
-                  { rank: 'E-Rank', description: 'Beginner Ascendant', color: 'text-gray-400' },
-                  { rank: 'D-Rank', description: 'Novice Ascendant', color: 'text-green-400' },
-                  { rank: 'C-Rank', description: 'Apprentice Ascendant', color: 'text-blue-400' },
-                  { rank: 'B-Rank', description: 'Elite Ascendant', color: 'text-purple-400' },
-                  { rank: 'A-Rank', description: 'Master Ascendant', color: 'text-orange-400' },
-                  { rank: 'S-Rank', description: 'Legendary Ascendant', color: 'text-red-400' },
-                ].map((item) => (
-                  <div key={item.rank} className="flex justify-between items-center p-2 rounded bg-muted/30 hover:bg-muted/50 transition-colors">
-                    <div>
-                      <span className="font-heading">{item.rank}</span>
-                      <p className="text-xs text-muted-foreground">{item.description}</p>
-                    </div>
-                    <span className={cn("font-arise text-lg", item.color)}>{item.rank[0]}</span>
-                  </div>
-                ))}
-              </div>
-            </SystemWindow>
-
-            <SystemWindow title="SHADOW ABILITIES" variant="alert" className="border-purple-500/30">
-              <div className="space-y-2 text-sm">
-                {[
-                  { ability: 'Shadow Step', type: 'Movement', cost: '10 Energy', color: 'text-purple-400' },
-                  { ability: 'Shadow Bolt', type: 'Attack', cost: '15 Energy', color: 'text-red-400' },
-                  { ability: 'Shadow Shield', type: 'Defense', cost: '20 Energy', color: 'text-blue-400' },
-                  { ability: 'Shadow Sense', type: 'Utility', cost: '5 Energy', color: 'text-green-400' },
-                  { ability: 'Shadow Form', type: 'Ultimate', cost: '50 Energy', color: 'text-orange-400' },
-                ].map((item) => (
-                  <div key={item.ability} className="flex justify-between items-center p-2 rounded bg-muted/30 hover:bg-muted/50 transition-colors">
-                    <div>
-                      <span className="font-heading">{item.ability}</span>
-                      <span className="ml-2 text-xs text-muted-foreground">({item.type})</span>
-                    </div>
-                    <span className={cn("font-arise text-sm", item.color)}>{item.cost}</span>
-                  </div>
-                ))}
-              </div>
-            </SystemWindow>
+        {/* Search and Filters */}
+        <div className="player-tools-filters">
+          <div className="search-bar">
+            <Search className="w-5 h-5 text-muted-foreground" />
+            <Input
+              placeholder="Search tools..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="border-0 focus:ring-0"
+            />
           </div>
+          
+          <div className="filter-controls">
+            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+              <SelectTrigger className="w-48">
+                <SelectValue placeholder="Category" />
+              </SelectTrigger>
+              <SelectContent>
+                {categories.map((category) => {
+                  const Icon = category.icon;
+                  return (
+                    <SelectItem key={category.id} value={category.id}>
+                      <div className="flex items-center gap-2">
+                        <Icon className="w-4 h-4" />
+                        {category.name}
+                      </div>
+                    </SelectItem>
+                  );
+                })}
+              </SelectContent>
+            </Select>
+            
+            <div className="view-toggle">
+              <Button
+                variant={viewMode === 'grid' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setViewMode('grid')}
+              >
+                <Grid3x3 className="w-4 h-4" />
+              </Button>
+              <Button
+                variant={viewMode === 'list' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setViewMode('list')}
+              >
+                <List className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Tools Content */}
+        <div className="player-tools-content">
+          {selectedCategory === 'all' ? (
+            // Categorized view
+            <div className="space-y-8">
+              {categories.filter(cat => cat.id !== 'all').map((category) => {
+                const categoryTools = toolsByCategory[category.id];
+                if (categoryTools.length === 0) return null;
+                
+                const Icon = category.icon;
+                return (
+                  <div key={category.id} className="category-section">
+                    <div className="category-header">
+                      <div className="flex items-center gap-2">
+                        <Icon className="w-5 h-5" />
+                        <h2 className="category-title">{category.name}</h2>
+                        <Badge variant="secondary">{categoryTools.length}</Badge>
+                      </div>
+                    </div>
+                    
+                    <div className={cn(
+                      "tools-grid",
+                      viewMode === 'list' ? "tools-list" : "tools-grid"
+                    )}>
+                      {categoryTools.map((tool) => (
+                        <ToolCard key={tool.id} tool={tool} viewMode={viewMode} />
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            // Single category view
+            <div className={cn(
+              "tools-grid",
+              viewMode === 'list' ? "tools-list" : "tools-grid"
+            )}>
+              {filteredTools.map((tool) => (
+                <ToolCard key={tool.id} tool={tool} viewMode={viewMode} />
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Quick Actions */}
+        <div className="player-tools-quick-actions">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Sparkles className="w-5 h-5" />
+                Quick Actions
+              </CardTitle>
+              <CardDescription>
+                Common tasks and shortcuts for your Ascendant
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <Button variant="outline" className="justify-start">
+                  <Sword className="w-4 h-4 mr-2" />
+                  Combat Mode
+                </Button>
+                <Button variant="outline" className="justify-start">
+                  <Dice6 className="w-4 h-4 mr-2" />
+                  Quick Roll
+                </Button>
+                <Button variant="outline" className="justify-start">
+                  <Heart className="w-4 h-4 mr-2" />
+                  Rest & Recover
+                </Button>
+                <Button variant="outline" className="justify-start">
+                  <Map className="w-4 h-4 mr-2" />
+                  View Map
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </Layout>
   );
 };
 
+// Tool Card Component
+const ToolCard = ({ tool, viewMode }: { tool: typeof playerTools[0]; viewMode: 'grid' | 'list' }) => {
+  const Icon = tool.icon;
+  
+  if (viewMode === 'list') {
+    return (
+      <Card className="tool-card-list">
+        <CardContent className="p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className={cn("tool-icon-list", tool.iconColor)}>
+                <Icon className="w-6 h-6" />
+              </div>
+              <div className="flex-1">
+                <h3 className="tool-title-list">{tool.name}</h3>
+                <p className="tool-description-list">{tool.description}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              {tool.status === 'campaign-only' && (
+                <Badge variant="outline">Campaign</Badge>
+              )}
+              {tool.status === 'high-level' && (
+                <Badge variant="outline">High Level</Badge>
+              )}
+              <Button size="sm">
+                <ChevronRight className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+  
+  return (
+    <Card className={cn("tool-card", tool.color, tool.glow)}>
+      <CardHeader className="pb-3">
+        <div className={cn("tool-icon", tool.iconColor)}>
+          <Icon className="w-8 h-8" />
+        </div>
+        <CardTitle className="tool-title">{tool.name}</CardTitle>
+        <CardDescription className="tool-description">
+          {tool.description}
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="pt-0">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            {tool.status === 'campaign-only' && (
+              <Badge variant="outline" className="text-xs">Campaign</Badge>
+            )}
+            {tool.status === 'high-level' && (
+              <Badge variant="outline" className="text-xs">High Level</Badge>
+            )}
+            {tool.status === 'available' && (
+              <Badge variant="secondary" className="text-xs">Available</Badge>
+            )}
+          </div>
+          <Button size="sm" className="tool-action">
+            Launch
+            <ChevronRight className="w-4 h-4 ml-1" />
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
 export default PlayerTools;
-
-
-

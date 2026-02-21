@@ -1,0 +1,70 @@
+/* Dungeon Map Generator Styles */
+
+.map-container {
+  border: 2px solid hsl(var(--border));
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background: hsl(var(--background));
+  overflow: auto;
+  max-height: 600px;
+}
+
+.map-grid {
+  display: grid;
+  gap: 0;
+  display: inline-grid;
+}
+
+.map-cell {
+  border: 1px solid hsl(var(--border));
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.map-cell:hover {
+  opacity: 0.8;
+}
+
+.map-cell.small-text {
+  font-size: 8px;
+}
+
+.cell-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: 700;
+  padding: 0.125rem;
+  text-align: center;
+  line-height: 1;
+}
+
+/* Dynamic styles for map container */
+.map-container.zoom-scale {
+  transform-origin: top left;
+}
+
+/* Dynamic styles for map grid */
+.map-grid.dynamic-size {
+  display: grid;
+  gap: 0;
+}
+
+/* Dynamic styles for map cells */
+.map-cell.dynamic-size {
+  position: relative;
+  border: 1px solid hsl(var(--border));
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.map-cell.dynamic-size:hover {
+  opacity: 0.8;
+}

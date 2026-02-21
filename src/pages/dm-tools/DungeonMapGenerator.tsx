@@ -1,18 +1,22 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, RefreshCw, Download, Grid, Plus, Minus, Square, Layout, DoorOpen, Crown, Gem, AlertTriangle, Sparkles, Loader2 } from 'lucide-react';
-import { useAIEnhance } from '@/hooks/useAIEnhance';
-import { Layout as PageLayout } from '@/components/layout/Layout';
+import React, { useState, useRef, useCallback, useMemo, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Sword, Clock, Flame, Users, BookOpen, Dice6, Settings2, ChevronRight, Crown, Sparkles, Zap, Gem, Target, Calendar, AlertTriangle, UsersRound, Grid, Globe, Image as ImageIcon, Database, BarChart3, Layers, Download, Upload, RefreshCw, Eye, EyeOff, Save, Trash2, Plus, Minus, Maximize2, Square, DoorOpen, Loader2, Copy, ArrowLeft } from 'lucide-react';
+import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogTrigger } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { useDebounce } from '@/hooks/useDebounce';
 import { useUserToolState } from '@/hooks/useToolState';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useAIEnhance } from '@/hooks/useAIEnhance';
+import './DungeonMapGenerator.css';
 
 type CellType = 'empty' | 'room' | 'corridor' | 'entrance' | 'boss' | 'treasure' | 'trap' | 'puzzle' | 'secret';
 
@@ -105,16 +109,16 @@ const deserializeDungeonMap = (map: SerializedDungeonMap | null): DungeonMap | n
 const GATE_RANKS = ['E', 'D', 'C', 'B', 'A', 'S'] as const;
 import type { LucideIcon } from 'lucide-react';
 
-const CELL_TYPES: { type: CellType; icon: LucideIcon; color: string; label: string }[] = [
+const CELL_TYPES: { type: CellType; icon: any; color: string; label: string }[] = [
   { type: 'empty', icon: Square, color: 'bg-background border-border', label: 'Empty' },
-  { type: 'room', icon: Layout, color: 'bg-blue-500/20 border-blue-500/50', label: 'Room' },
+  { type: 'room', icon: Grid, color: 'bg-blue-500/20 border-blue-500/50', label: 'Room' },
   { type: 'corridor', icon: Grid, color: 'bg-gray-600/30 border-gray-600/50', label: 'Corridor' },
   { type: 'entrance', icon: DoorOpen, color: 'bg-green-500/30 border-green-500/60', label: 'Entrance' },
   { type: 'boss', icon: Crown, color: 'bg-red-500/40 border-red-500/70', label: 'Boss Chamber' },
   { type: 'treasure', icon: Gem, color: 'bg-yellow-500/40 border-yellow-500/70', label: 'Treasure Room' },
   { type: 'trap', icon: AlertTriangle, color: 'bg-orange-500/40 border-orange-500/70', label: 'Trap Room' },
-  { type: 'puzzle', icon: Square, color: 'bg-purple-500/40 border-purple-500/70', label: 'Puzzle Room' },
-  { type: 'secret', icon: Square, color: 'bg-indigo-500/40 border-indigo-500/70', label: 'Secret Room' },
+  { type: 'puzzle', icon: Grid, color: 'bg-purple-500/40 border-purple-500/70', label: 'Puzzle Room' },
+  { type: 'secret', icon: Grid, color: 'bg-indigo-500/40 border-indigo-500/70', label: 'Secret Room' },
 ];
 
 function generateMap(width: number, height: number, rank: string): DungeonMap {
@@ -408,6 +412,103 @@ Provide ALL of the following sections with full detail:
     });
   };
 
+  const handleCopy = () => {
+    if (!dungeonMap) return;
+    const roomSummary = dungeonMap.rooms.map((r, i) => `Room ${i + 1}: ${r.type} (${r.width}x${r.height})`).join('; ');
+    const text = `RIFT DUNGEON MAP
+Rank: ${selectedRank}
+Size: ${mapSize.width}x${mapSize.height}
+Rooms: ${dungeonMap.rooms.length}
+Layout: ${roomSummary}
+
+---
+D&D BEYOND STYLE DUNGEON KEY:
+
+ROOM DESCRIPTIONS:
+${dungeonMap.rooms.map((room, i) => `ROOM ${i + 1}: ${room.type} (${room.width}x${room.height})
+• READ-ALOUD: "[Sensory details when players enter this ${room.type}]"
+• DM NOTES: [Hidden features, secret doors, environmental conditions]
+• EXITS: [Connections to other rooms and corridors]
+• FEATURES: [Notable architectural elements or furnishings]`).join('\n\n')}
+
+TRAPS:
+${dungeonMap.rooms.filter(r => r.type === 'trap').map((trap, i) => `TRAP ${i + 1}:
+• Type: [Mechanical, magical, or environmental trap]
+• Trigger: [How the trap is activated]
+• DC: [Difficulty class to detect or disable]
+• Damage: [Damage type and amount]
+• Reset: [How the trap resets after triggering]
+• Detection: [Passive Perception DC to notice]`).join('\n\n') || 'No traps in this dungeon'}
+
+ENCOUNTERS:
+${dungeonMap.rooms.filter(r => r.type === 'boss' || r.type === 'room').map((room, i) => `ENCOUNTER AREA ${i + 1}: ${room.type}
+• Challenge Rating: [Appropriate to ${selectedRank} Rank]
+• Monster Types: [2-3 monster types appropriate to Rift theme]
+• Placement: [Strategic positioning in room]
+• Tactics: [Combat behavior and strategy]
+• Reinforcements: [Where additional monsters might come from]`).join('\n\n') || 'No encounter areas in this dungeon'}
+
+SECRETS:
+${dungeonMap.rooms.filter(r => r.type === 'secret').map((secret, i) => `SECRET ${i + 1}:
+• Location: [Hidden area or concealed object]
+• Investigation DC: [Difficulty to discover]
+• Nature: [What the secret is - passage, treasure, lore]
+• Clues: [Hints that might lead players to discover it]
+• Reward: [What players gain from finding it]`).join('\n\n') || 'No secrets in this dungeon'}
+
+PUZZLES:
+${dungeonMap.rooms.filter(r => r.type === 'puzzle').map((puzzle, i) => `PUZZLE ${i + 1}:
+• Type: [Mechanical, magical, or logic puzzle]
+• Solution: [How to solve the puzzle]
+• Hints: [3 progressive hints players can receive]
+• Failure Consequences: [What happens if they fail]
+• Reward: [What they gain for solving it]`).join('\n\n') || 'No puzzles in this dungeon'}
+
+BOSS ROOM:
+${dungeonMap.rooms.filter(r => r.type === 'boss').map((boss, i) => `BOSS CHAMBER ${i + 1}:
+• Boss: [Boss name and type]
+• Stat Block: [AC, HP, abilities, attacks]
+• Legendary Actions: [1-3 legendary actions]
+• Lair Actions: [Environmental effects on initiative 20]
+• Tactics: [How the boss fights]
+• Weaknesses: [Exploitable vulnerabilities]
+• Environment: [Terrain features and hazards]
+• Treasure: [Boss loot and rewards]`).join('\n\n') || 'No boss room in this dungeon'}
+
+LORE:
+• Dungeon History: [How this dungeon was created and its past]
+• Builder: [Who originally constructed this place]
+• Purpose: [Why the dungeon exists - prison, temple, vault, etc.]
+• Regent Connection: [Which Regent domain influenced its creation]
+• System Significance: [Why the System created this dungeon]
+• Current Inhabitants: [Who or what lives here now]
+
+TREASURE:
+${dungeonMap.rooms.filter(r => r.type === 'treasure').map((treasure, i) => `TREASURE ROOM ${i + 1}:
+• Contents: [Types and quantities of treasure]
+• Protection: [Traps or guardians protecting the treasure]
+• Value: [Total GP value of treasure]
+• Special Items: [Any magical items or relics]
+• History: [Story behind the treasure]`).join('\n\n') || 'No treasure rooms in this dungeon'}
+
+ENVIRONMENTAL HAZARDS:
+${dungeonMap.rooms.map((room, i) => `ROOM ${i + 1} (${room.type}):
+• Lighting: [Bright, dim, or darkness]
+• Terrain: [Difficult terrain, obstacles, hazards]
+• Atmosphere: [Temperature, air quality, special conditions]
+• Acoustics: [Sound propagation and stealth implications]
+• Special Conditions: [Any unique environmental effects]`).join('\n\n')}
+
+READ-ALOUD ENTRANCE:
+"[Detailed description of what players see, hear, and smell as they first enter this ${selectedRank} Rank Rift dungeon, including the atmosphere, immediate impressions, and any notable features of the entrance area]"`;
+    
+    navigator.clipboard.writeText(text);
+    toast({
+      title: 'Copied!',
+      description: 'Complete dungeon key copied to clipboard.',
+    });
+  };
+
   const handlePrint = () => {
     window.print();
   };
@@ -420,7 +521,7 @@ Provide ALL of the following sections with full detail:
   const cellSize = Math.max(16, Math.min(32, Math.floor(600 / Math.max(mapSize.width, mapSize.height))));
 
   return (
-    <PageLayout>
+    <Layout>
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         <div className="mb-6">
           <Button
@@ -583,6 +684,10 @@ Provide ALL of the following sections with full detail:
                         {dungeonMap.rooms.length} Rooms • {dungeonMap.width}×{dungeonMap.height} Grid
                       </Badge>
                       <div className="flex gap-2">
+                        <Button onClick={handleCopy} variant="outline" size="sm">
+                          <Copy className="w-4 h-4 mr-2" />
+                          Copy Key
+                        </Button>
                         <Button onClick={handleExport} variant="outline" size="sm">
                           <Download className="w-4 h-4 mr-2" />
                           Export JSON
@@ -596,14 +701,13 @@ Provide ALL of the following sections with full detail:
 
                     <div
                       ref={mapRef}
-                      className="border-2 border-border rounded-lg p-4 bg-background overflow-auto max-h-[600px]"
+                      className="map-container zoom-scale"
                       style={{
                         transform: `scale(${zoom})`,
-                        transformOrigin: 'top left',
                       }}
                     >
                       <div
-                        className="grid gap-0 inline-grid"
+                        className="map-grid dynamic-size"
                         style={{
                           gridTemplateColumns: `repeat(${dungeonMap.width}, ${cellSize}px)`,
                           gridTemplateRows: `repeat(${dungeonMap.height}, ${cellSize}px)`,
@@ -622,9 +726,9 @@ Provide ALL of the following sections with full detail:
                                 type="button"
                                 onClick={() => handleCellClick(x, y)}
                                 className={cn(
-                                  'border border-border cursor-pointer relative transition-all hover:opacity-80',
+                                  'map-cell dynamic-size',
                                   getCellColor(type),
-                                  cellSize < 20 && 'text-[8px]'
+                                  cellSize < 20 && 'small-text'
                                 )}
                                 style={{
                                   width: `${cellSize}px`,
@@ -635,7 +739,7 @@ Provide ALL of the following sections with full detail:
                                 aria-label={`Cell ${x + 1}, ${y + 1} (${type})${label ? ` - ${label}` : ''}`}
                               >
                                 {label && (
-                                  <div className="absolute inset-0 flex items-center justify-center text-[8px] font-bold p-0.5 text-center leading-tight">
+                                  <div className="cell-label">
                                     {label}
                                   </div>
                                 )}
@@ -700,7 +804,7 @@ Provide ALL of the following sections with full detail:
           </div>
         </div>
       </div>
-    </PageLayout>
+    </Layout>
   );
 };
 

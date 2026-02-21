@@ -7,7 +7,7 @@ import { locations } from '@/data/compendium/locations';
 import { spells } from '@/data/compendium/spells';
 import { items } from '@/data/compendium/items';
 
-export type VTTAssetCategory = 'map' | 'monster' | 'portrait' | 'location' | 'effect' | 'spell' | 'prop' | 'condition' | 'item' | 'token' | 'handout' | 'technique';
+export type VTTAssetCategory = 'map' | 'monster' | 'portrait' | 'location' | 'effect' | 'spell' | 'prop' | 'condition' | 'item' | 'token' | 'handout' | 'technique' | 'environment' | 'weapon' | 'armor' | 'creature' | 'npc' | 'building' | 'vehicle' | 'nature' | 'elemental' | 'divine' | 'shadow' | 'cosmic' | 'mechanical' | 'magical';
 
 export interface VTTAsset {
   id: string;
@@ -303,6 +303,150 @@ const STANDALONE_SPELL_EFFECTS: VTTAsset[] = [
   tags: ['effect', 'spell', 'overlay', name.split('-')[0]],
 }));
 
+// ── Environment Assets (Weather, Nature, Terrain) ───────────────────────
+const ENVIRONMENT_ASSETS: VTTAsset[] = [
+  { id: 'env-sunny-day', name: 'Sunny Day', category: 'environment', imageUrl: '/generated/environments/sunny-day.webp', tags: ['weather', 'sun', 'clear', 'day'] },
+  { id: 'env-rain-storm', name: 'Rain Storm', category: 'environment', imageUrl: '/generated/environments/rain-storm.webp', tags: ['weather', 'rain', 'storm', 'wet'] },
+  { id: 'env-snow-fall', name: 'Snow Fall', category: 'environment', imageUrl: '/generated/environments/snow-fall.webp', tags: ['weather', 'snow', 'winter', 'cold'] },
+  { id: 'env-fog-morning', name: 'Morning Fog', category: 'environment', imageUrl: '/generated/environments/fog-morning.webp', tags: ['weather', 'fog', 'morning', 'mist'] },
+  { id: 'env-lightning-storm', name: 'Lightning Storm', category: 'environment', imageUrl: '/generated/environments/lightning-storm.webp', tags: ['weather', 'lightning', 'storm', 'dramatic'] },
+  { id: 'env-autumn-forest', name: 'Autumn Forest', category: 'environment', imageUrl: '/generated/environments/autumn-forest.webp', tags: ['nature', 'forest', 'autumn', 'trees'] },
+  { id: 'env-spring-meadow', name: 'Spring Meadow', category: 'environment', imageUrl: '/generated/environments/spring-meadow.webp', tags: ['nature', 'meadow', 'spring', 'flowers'] },
+  { id: 'env-desert-dunes', name: 'Desert Dunes', category: 'environment', imageUrl: '/generated/environments/desert-dunes.webp', tags: ['terrain', 'desert', 'sand', 'dunes'] },
+  { id: 'env-mountain-peak', name: 'Mountain Peak', category: 'environment', imageUrl: '/generated/environments/mountain-peak.webp', tags: ['terrain', 'mountain', 'snow', 'peak'] },
+  { id: 'env-volcano-eruption', name: 'Volcano Eruption', category: 'environment', imageUrl: '/generated/environments/volcano-eruption.webp', tags: ['terrain', 'volcano', 'lava', 'fire'] },
+];
+
+// ── Weapon Assets (Swords, Axes, Bows, etc.) ───────────────────────────────
+const WEAPON_ASSETS: VTTAsset[] = [
+  { id: 'weapon-longsword', name: 'Longsword', category: 'weapon', imageUrl: '/generated/weapons/longsword.webp', tags: ['sword', 'melee', 'steel', 'martial'] },
+  { id: 'weapon-battle-axe', name: 'Battle Axe', category: 'weapon', imageUrl: '/generated/weapons/battle-axe.webp', tags: ['axe', 'melee', 'heavy', 'brutal'] },
+  { id: 'warpon-warhammer', name: 'Warhammer', category: 'weapon', imageUrl: '/generated/weapons/warhammer.webp', tags: ['hammer', 'melee', 'blunt', 'heavy'] },
+  { id: 'weapon-dagger', name: 'Dagger', category: 'weapon', imageUrl: '/generated/weapons/dagger.webp', tags: ['dagger', 'melee', 'light', 'stealth'] },
+  { id: 'weapon-bow-long', name: 'Longbow', category: 'weapon', imageUrl: '/generated/weapons/longbow.webp', tags: ['bow', 'ranged', 'wood', 'archery'] },
+  { id: 'weapon-crossbow-heavy', name: 'Heavy Crossbow', category: 'weapon', imageUrl: '/generated/weapons/heavy-crossbow.webp', tags: ['crossbow', 'ranged', 'mechanical', 'powerful'] },
+  { id: 'weapon-staff-magic', name: 'Magic Staff', category: 'weapon', imageUrl: '/generated/weapons/magic-staff.webp', tags: ['staff', 'melee', 'magic', 'arcane'] },
+  { id: 'weapon-wand-simple', name: 'Simple Wand', category: 'weapon', imageUrl: '/generated/weapons/simple-wand.webp', tags: ['wand', 'melee', 'magic', 'light'] },
+  { id: 'weapon-spear-wood', name: 'Wooden Spear', category: 'weapon', imageUrl: '/generated/weapons/wooden-spear.webp', tags: ['spear', 'melee', 'wood', 'primitive'] },
+  { id: 'weapon-mace-heavy', name: 'Heavy Mace', category: 'weapon', imageUrl: '/generated/weapons/heavy-mace.webp', tags: ['mace', 'melee', 'blunt', 'crushing'] },
+];
+
+// ── Armor Assets (Helmets, Chestplates, Shields) ───────────────────────────
+const ARMOR_ASSETS: VTTAsset[] = [
+  { id: 'armor-helmet-steel', name: 'Steel Helmet', category: 'armor', imageUrl: '/generated/armor/steel-helmet.webp', tags: ['helmet', 'head', 'steel', 'protection'] },
+  { id: 'armor-chestplate-iron', name: 'Iron Chestplate', category: 'armor', imageUrl: '/generated/armor/iron-chestplate.webp', tags: ['chestplate', 'torso', 'iron', 'heavy'] },
+  { id: 'armor-shield-wood', name: 'Wooden Shield', category: 'armor', imageUrl: '/generated/armor/wooden-shield.webp', tags: ['shield', 'defense', 'wood', 'light'] },
+  { id: 'armor-shield-steel', name: 'Steel Shield', category: 'armor', imageUrl: '/generated/armor/steel-shield.webp', tags: ['shield', 'defense', 'steel', 'heavy'] },
+  { id: 'armor-boots-leather', name: 'Leather Boots', category: 'armor', imageUrl: '/generated/armor/leather-boots.webp', tags: ['boots', 'feet', 'leather', 'light'] },
+  { id: 'armor-gauntlets-iron', name: 'Iron Gauntlets', category: 'armor', imageUrl: '/generated/armor/iron-gauntlets.webp', tags: ['gauntlets', 'hands', 'iron', 'protective'] },
+  { id: 'armor-cloak-leather', name: 'Leather Cloak', category: 'armor', imageUrl: '/generated/armor/leather-cloak.webp', tags: ['cloak', 'body', 'leather', 'light'] },
+  { id: 'armor-robe-mage', name: 'Mage Robe', category: 'armor', imageUrl: '/generated/armor/mage-robe.webp', tags: ['robe', 'body', 'cloth', 'magical'] },
+];
+
+// ── Creature Assets (Animals, Beasts, Mounts) ──────────────────────────────
+const CREATURE_ASSETS: VTTAsset[] = [
+  { id: 'creature-wolf-grey', name: 'Grey Wolf', category: 'creature', imageUrl: '/generated/creatures/grey-wolf.webp', tags: ['wolf', 'animal', 'predator', 'pack'] },
+  { id: 'creature-bear-brown', name: 'Brown Bear', category: 'creature', imageUrl: '/generated/creatures/brown-bear.webp', tags: ['bear', 'animal', 'powerful', 'wild'] },
+  { id: 'creature-eagle-golden', name: 'Golden Eagle', category: 'creature', imageUrl: '/generated/creatures/golden-eagle.webp', tags: ['eagle', 'bird', 'majestic', 'flying'] },
+  { id: 'creature-horse-war', name: 'War Horse', category: 'creature', imageUrl: '/generated/creatures/war-horse.webp', tags: ['horse', 'mount', 'war', 'strong'] },
+  { id: 'creature-lion-male', name: 'Male Lion', category: 'creature', imageUrl: '/generated/creatures/male-lion.webp', tags: ['lion', 'animal', 'predator', 'king'] },
+  { id: 'creature-tiger-siberian', name: 'Siberian Tiger', category: 'creature', imageUrl: '/generated/creatures/siberian-tiger.webp', tags: ['tiger', 'animal', 'predator', 'striped'] },
+  { id: 'creature-dragon-red', name: 'Red Dragon', category: 'creature', imageUrl: '/generated/creatures/red-dragon.webp', tags: ['dragon', 'mythical', 'fire', 'powerful'] },
+  { id: 'creature-phoenix-fire', name: 'Fire Phoenix', category: 'creature', imageUrl: '/generated/creatures/fire-phoenix.webp', tags: ['phoenix', 'mythical', 'fire', 'rebirth'] },
+];
+
+// ── NPC Assets (Commoners, Merchants, Guards) ──────────────────────────────
+const NPC_ASSETS: VTTAsset[] = [
+  { id: 'npc-farmer-male', name: 'Male Farmer', category: 'npc', imageUrl: '/generated/npcs/male-farmer.webp', tags: ['farmer', 'commoner', 'male', 'rural'] },
+  { id: 'npc-merchant-female', name: 'Female Merchant', category: 'npc', imageUrl: '/generated/npcs/female-merchant.webp', tags: ['merchant', 'trader', 'female', 'wealthy'] },
+  { id: 'npc-guard-city', name: 'City Guard', category: 'npc', imageUrl: '/generated/npcs/city-guard.webp', tags: ['guard', 'soldier', 'law', 'city'] },
+  { id: 'npc-innkeeper-male', name: 'Male Innkeeper', category: 'npc', imageUrl: '/generated/npcs/male-innkeeper.webp', tags: ['innkeeper', 'tavern', 'male', 'hospitality'] },
+  { id: 'npc-blacksmith-female', name: 'Female Blacksmith', category: 'npc', imageUrl: '/generated/npcs/female-blacksmith.webp', tags: ['blacksmith', 'craft', 'female', 'strong'] },
+  { id: 'npc-scholar-elderly', name: 'Elderly Scholar', category: 'npc', imageUrl: '/generated/npcs/elderly-scholar.webp', tags: ['scholar', 'wise', 'elderly', 'knowledge'] },
+  { id: 'npc-child-village', name: 'Village Child', category: 'npc', imageUrl: '/generated/npcs/village-child.webp', tags: ['child', 'innocent', 'village', 'young'] },
+  { id: 'npc-noble-lord', name: 'Noble Lord', category: 'npc', imageUrl: '/generated/npcs/noble-lord.webp', tags: ['noble', 'lord', 'wealthy', 'aristocrat'] },
+];
+
+// ── Building Assets (Houses, Towers, Structures) ───────────────────────────
+const BUILDING_ASSETS: VTTAsset[] = [
+  { id: 'building-cottage-wood', name: 'Wooden Cottage', category: 'building', imageUrl: '/generated/buildings/wooden-cottage.webp', tags: ['cottage', 'house', 'wood', 'rural'] },
+  { id: 'building-tower-watch', name: 'Watch Tower', category: 'building', imageUrl: '/generated/buildings/watch-tower.webp', tags: ['tower', 'military', 'stone', 'tall'] },
+  { id: 'building-church-stone', name: 'Stone Church', category: 'building', imageUrl: '/generated/buildings/stone-church.webp', tags: ['church', 'religious', 'stone', 'sacred'] },
+  { id: 'building-mill-wind', name: 'Windmill', category: 'building', imageUrl: '/generated/buildings/windmill.webp', tags: ['mill', 'industrial', 'wood', 'mechanical'] },
+  { id: 'building-bridge-stone', name: 'Stone Bridge', category: 'building', imageUrl: '/generated/buildings/stone-bridge.webp', tags: ['bridge', 'structure', 'stone', 'crossing'] },
+  { id: 'building-farm-barn', name: 'Farm Barn', category: 'building', imageUrl: '/generated/buildings/farm-barn.webp', tags: ['barn', 'farm', 'wood', 'agricultural'] },
+  { id: 'building-castle-ruins', name: 'Castle Ruins', category: 'building', imageUrl: '/generated/buildings/castle-ruins.webp', tags: ['ruins', 'castle', 'ancient', 'destroyed'] },
+  { id: 'building-lighthouse-coastal', name: 'Coastal Lighthouse', category: 'building', imageUrl: '/generated/buildings/coastal-lighthouse.webp', tags: ['lighthouse', 'coastal', 'stone', 'guiding'] },
+];
+
+// ── Vehicle Assets (Ships, Carts, Flying Machines) ─────────────────────────
+const VEHICLE_ASSETS: VTTAsset[] = [
+  { id: 'vehicle-ship-sailing', name: 'Sailing Ship', category: 'vehicle', imageUrl: '/generated/vehicles/sailing-ship.webp', tags: ['ship', 'sea', 'wood', 'transport'] },
+  { id: 'vehicle-cart-merchant', name: 'Merchant Cart', category: 'vehicle', imageUrl: '/generated/vehicles/merchant-cart.webp', tags: ['cart', 'land', 'wood', 'trade'] },
+  { id: 'vehicle-carriage-royal', name: 'Royal Carriage', category: 'vehicle', imageUrl: '/generated/vehicles/royal-carriage.webp', tags: ['carriage', 'land', 'luxury', 'noble'] },
+  { id: 'vehicle-boat-fishing', name: 'Fishing Boat', category: 'vehicle', imageUrl: '/generated/vehicles/fishing-boat.webp', tags: ['boat', 'sea', 'small', 'fishing'] },
+  { id: 'vehicle-balloon-hotair', name: 'Hot Air Balloon', category: 'vehicle', imageUrl: '/generated/vehicles/hot-air-balloon.webp', tags: ['balloon', 'air', 'colorful', 'flight'] },
+  { id: 'vehicle-raft-simple', name: 'Simple Raft', category: 'vehicle', imageUrl: '/generated/vehicles/simple-raft.webp', tags: ['raft', 'water', 'basic', 'makeshift'] },
+];
+
+// ── Elemental Assets (Fire, Water, Earth, Air) ──────────────────────────────
+const ELEMENTAL_ASSETS: VTTAsset[] = [
+  { id: 'elemental-fire-spirit', name: 'Fire Spirit', category: 'elemental', imageUrl: '/generated/elementals/fire-spirit.webp', tags: ['fire', 'elemental', 'spirit', 'flame'] },
+  { id: 'elemental-water-nymph', name: 'Water Nymph', category: 'elemental', imageUrl: '/generated/elementals/water-nymph.webp', tags: ['water', 'elemental', 'nymph', 'flowing'] },
+  { id: 'elemental-earth-golem', name: 'Earth Golem', category: 'elemental', imageUrl: '/generated/elementals/earth-golem.webp', tags: ['earth', 'elemental', 'golem', 'stone'] },
+  { id: 'elemental-air-sylph', name: 'Air Sylph', category: 'elemental', imageUrl: '/generated/elementals/air-sylph.webp', tags: ['air', 'elemental', 'sylph', 'wind'] },
+  { id: 'elemental-lightning-bolt', name: 'Lightning Bolt', category: 'elemental', imageUrl: '/generated/elementals/lightning-bolt.webp', tags: ['lightning', 'elemental', 'electric', 'energy'] },
+  { id: 'elemental-ice-shard', name: 'Ice Shard', category: 'elemental', imageUrl: '/generated/elementals/ice-shard.webp', tags: ['ice', 'elemental', 'cold', 'sharp'] },
+];
+
+// ── Divine Assets (Angels, Holy Symbols, Divine Light) ─────────────────────
+const DIVINE_ASSETS: VTTAsset[] = [
+  { id: 'divine-angel-warrior', name: 'Warrior Angel', category: 'divine', imageUrl: '/generated/divine/warrior-angel.webp', tags: ['angel', 'divine', 'warrior', 'holy'] },
+  { id: 'divine-cherub-small', name: 'Cherub', category: 'divine', imageUrl: '/generated/divine/cherub.webp', tags: ['cherub', 'divine', 'small', 'innocent'] },
+  { id: 'divine-halo-golden', name: 'Golden Halo', category: 'divine', imageUrl: '/generated/divine/golden-halo.webp', tags: ['halo', 'divine', 'light', 'holy'] },
+  { id: 'divine-cross-silver', name: 'Silver Cross', category: 'divine', imageUrl: '/generated/divine/silver-cross.webp', tags: ['cross', 'divine', 'silver', 'symbol'] },
+  { id: 'divine-light-beam', name: 'Divine Light Beam', category: 'divine', imageUrl: '/generated/divine/light-beam.webp', tags: ['light', 'divine', 'beam', 'heavenly'] },
+  { id: 'divine-dove-white', name: 'White Dove', category: 'divine', imageUrl: '/generated/divine/white-dove.webp', tags: ['dove', 'divine', 'peace', 'white'] },
+];
+
+// ── Shadow Assets (Dark Creatures, Shadow Effects) ───────────────────────
+const SHADOW_ASSETS: VTTAsset[] = [
+  { id: 'shadow-demon-horned', name: 'Horned Shadow Demon', category: 'shadow', imageUrl: '/generated/shadow/horned-shadow-demon.webp', tags: ['demon', 'shadow', 'horned', 'evil'] },
+  { id: 'shadow-wraith-cloaked', name: 'Cloaked Wraith', category: 'shadow', imageUrl: '/generated/shadow/cloaked-wraith.webp', tags: ['wraith', 'shadow', 'cloaked', 'undead'] },
+  { id: 'shadow-void-portal', name: 'Void Portal', category: 'shadow', imageUrl: '/generated/shadow/void-portal.webp', tags: ['portal', 'void', 'shadow', 'gateway'] },
+  { id: 'shadow-tentacle-dark', name: 'Dark Tentacle', category: 'shadow', imageUrl: '/generated/shadow/dark-tentacle.webp', tags: ['tentacle', 'shadow', 'monster', 'reaching'] },
+  { id: 'shadow-creature-formless', name: 'Formless Shadow', category: 'shadow', imageUrl: '/generated/shadow/formless-shadow.webp', tags: ['shadow', 'formless', 'creature', 'amorphous'] },
+];
+
+// ── Cosmic Assets (Stars, Planets, Celestial Bodies) ───────────────────────
+const COSMIC_ASSETS: VTTAsset[] = [
+  { id: 'cosmic-moon-full', name: 'Full Moon', category: 'cosmic', imageUrl: '/generated/cosmic/full-moon.webp', tags: ['moon', 'cosmic', 'night', 'celestial'] },
+  { id: 'cosmic-sun-rising', name: 'Rising Sun', category: 'cosmic', imageUrl: '/generated/cosmic/rising-sun.webp', tags: ['sun', 'cosmic', 'dawn', 'light'] },
+  { id: 'cosmic-stars-cluster', name: 'Star Cluster', category: 'cosmic', imageUrl: '/generated/cosmic/star-cluster.webp', tags: ['stars', 'cosmic', 'cluster', 'space'] },
+  { id: 'cosmic-nebula-purple', name: 'Purple Nebula', category: 'cosmic', imageUrl: '/generated/cosmic/purple-nebula.webp', tags: ['nebula', 'cosmic', 'purple', 'colorful'] },
+  { id: 'cosmic-comet-tail', name: 'Comet with Tail', category: 'cosmic', imageUrl: '/generated/cosmic/comet-tail.webp', tags: ['comet', 'cosmic', 'tail', 'flying'] },
+  { id: 'cosmic-planet-rings', name: 'Ringed Planet', category: 'cosmic', imageUrl: '/generated/cosmic/ringed-planet.webp', tags: ['planet', 'cosmic', 'rings', 'saturn'] },
+];
+
+// ── Mechanical Assets (Gears, Clockwork, Machines) ───────────────────────
+const MECHANICAL_ASSETS: VTTAsset[] = [
+  { id: 'mechanical-gear-brass', name: 'Brass Gear', category: 'mechanical', imageUrl: '/generated/mechanical/brass-gear.webp', tags: ['gear', 'mechanical', 'brass', 'clockwork'] },
+  { id: 'mechanical-automaton-bronze', name: 'Bronze Automaton', category: 'mechanical', imageUrl: '/generated/mechanical/bronze-automaton.webp', tags: ['automaton', 'mechanical', 'bronze', 'robot'] },
+  { id: 'mechanical-clock-tower', name: 'Clock Tower', category: 'mechanical', imageUrl: '/generated/mechanical/clock-tower.webp', tags: ['tower', 'mechanical', 'clock', 'time'] },
+  { id: 'mechanical-piston-steam', name: 'Steam Piston', category: 'mechanical', imageUrl: '/generated/mechanical/steam-piston.webp', tags: ['piston', 'mechanical', 'steam', 'power'] },
+  { id: 'mechanical-cog-wheel', name: 'Cog Wheel', category: 'mechanical', imageUrl: '/generated/mechanical/cog-wheel.webp', tags: ['wheel', 'mechanical', 'cog', 'machine'] },
+];
+
+// ── Magical Assets (Scrolls, Potions, Magical Items) ───────────────────────
+const MAGICAL_ASSETS: VTTAsset[] = [
+  { id: 'magical-scroll-ancient', name: 'Ancient Scroll', category: 'magical', imageUrl: '/generated/magical/ancient-scroll.webp', tags: ['scroll', 'magical', 'ancient', 'knowledge'] },
+  { id: 'magical-potion-glowing', name: 'Glowing Potion', category: 'magical', imageUrl: '/generated/magical/glowing-potion.webp', tags: ['potion', 'magical', 'glowing', 'liquid'] },
+  { id: 'magical-crystal-focusing', name: 'Focusing Crystal', category: 'magical', imageUrl: '/generated/magical/focusing-crystal.webp', tags: ['crystal', 'magical', 'focus', 'power'] },
+  { id: 'magical-orb-mystical', name: 'Mystical Orb', category: 'magical', imageUrl: '/generated/magical/mystical-orb.webp', tags: ['orb', 'magical', 'mystical', 'sphere'] },
+  { id: 'magical-rune-circle', name: 'Rune Circle', category: 'magical', imageUrl: '/generated/magical/rune-circle.webp', tags: ['runes', 'magical', 'circle', 'ritual'] },
+  { id: 'magical-wand-enchanted', name: 'Enchanted Wand', category: 'magical', imageUrl: '/generated/magical/enchanted-wand.webp', tags: ['wand', 'magical', 'enchanted', 'focus'] },
+];
+
 // ── Combined Library ─────────────────────────────────────────────────────
 export const VTT_ASSET_LIBRARY: VTTAsset[] = [
   ...PREMADE_MAPS,
@@ -325,6 +469,20 @@ export const VTT_ASSET_LIBRARY: VTTAsset[] = [
   ...STANDALONE_SPELL_EFFECTS,
   ...ITEMS,
   ...TOKEN_TEMPLATES,
+  // New comprehensive categories
+  ...ENVIRONMENT_ASSETS,
+  ...WEAPON_ASSETS,
+  ...ARMOR_ASSETS,
+  ...CREATURE_ASSETS,
+  ...NPC_ASSETS,
+  ...BUILDING_ASSETS,
+  ...VEHICLE_ASSETS,
+  ...ELEMENTAL_ASSETS,
+  ...DIVINE_ASSETS,
+  ...SHADOW_ASSETS,
+  ...COSMIC_ASSETS,
+  ...MECHANICAL_ASSETS,
+  ...MAGICAL_ASSETS,
 ];
 
 export const VTT_ASSET_CATEGORIES: { id: VTTAssetCategory; label: string; count: number }[] = [
@@ -340,6 +498,20 @@ export const VTT_ASSET_CATEGORIES: { id: VTTAssetCategory; label: string; count:
   { id: 'technique', label: 'Techniques', count: TECHNIQUE_ASSETS.length },
   { id: 'condition', label: 'Conditions', count: CONDITIONS.length },
   { id: 'token', label: 'Token Frames', count: TOKEN_TEMPLATES.length },
+  // New comprehensive categories
+  { id: 'environment', label: 'Environments', count: ENVIRONMENT_ASSETS.length },
+  { id: 'weapon', label: 'Weapons', count: WEAPON_ASSETS.length },
+  { id: 'armor', label: 'Armor', count: ARMOR_ASSETS.length },
+  { id: 'creature', label: 'Creatures', count: CREATURE_ASSETS.length },
+  { id: 'npc', label: 'NPCs', count: NPC_ASSETS.length },
+  { id: 'building', label: 'Buildings', count: BUILDING_ASSETS.length },
+  { id: 'vehicle', label: 'Vehicles', count: VEHICLE_ASSETS.length },
+  { id: 'elemental', label: 'Elementals', count: ELEMENTAL_ASSETS.length },
+  { id: 'divine', label: 'Divine', count: DIVINE_ASSETS.length },
+  { id: 'shadow', label: 'Shadow', count: SHADOW_ASSETS.length },
+  { id: 'cosmic', label: 'Cosmic', count: COSMIC_ASSETS.length },
+  { id: 'mechanical', label: 'Mechanical', count: MECHANICAL_ASSETS.length },
+  { id: 'magical', label: 'Magical', count: MAGICAL_ASSETS.length },
 ];
 
 export function searchAssets(query: string, category?: VTTAssetCategory): VTTAsset[] {

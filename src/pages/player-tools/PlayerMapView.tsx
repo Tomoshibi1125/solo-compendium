@@ -15,6 +15,9 @@ import { useCampaignMembers } from '@/hooks/useCampaigns';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import { VTTCharacterPanel } from '@/components/vtt/VTTCharacterPanel';
 import { VTTAssetBrowser } from '@/components/vtt/VTTAssetBrowser';
+import { PlayerToolsPanel } from '@/components/vtt/PlayerToolsPanel';
+import '@/styles/vtt-player-map.css';
+import './PlayerMapView.css';
 import { cn } from '@/lib/utils';
 import type { LibraryToken } from '@/data/tokenLibraryDefaults';
 
@@ -369,8 +372,8 @@ const PlayerMapView = ({ campaignId, sessionId }: { campaignId?: string; session
                 {vttRealtime.activeUsers.slice(0, 5).map((u) => (
                   <div
                     key={u.userId}
-                    className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white border border-background"
-                    style={{ backgroundColor: u.color }}
+                    className="vtt-user-avatar"
+                    style={{ '--avatar-bg-color': u.color } as React.CSSProperties}
                     title={`${u.userName} (${u.role})`}
                   >
                     {u.userName.charAt(0).toUpperCase()}
@@ -431,7 +434,7 @@ const PlayerMapView = ({ campaignId, sessionId }: { campaignId?: string; session
                   onDoubleClick={handleMapDoubleClick}
                 >
                   <div
-                    className="relative"
+                    className="vtt-map-container vtt-map-scene"
                     style={{
                       width: `${sceneWidth * gridSize * zoom}px`,
                       height: `${sceneHeight * gridSize * zoom}px`,
@@ -443,13 +446,11 @@ const PlayerMapView = ({ campaignId, sessionId }: { campaignId?: string; session
                         <OptimizedImage
                           src={currentScene.backgroundImage}
                           alt="Map background"
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover vtt-background-image"
                           size="large"
                           style={{
-                            opacity: 0.95,
-                            transform: `scale(${currentScene.backgroundScale ?? 1})`,
-                            transformOrigin: 'top left',
-                          }}
+                            '--bg-scale': currentScene.backgroundScale ?? 1,
+                          } as React.CSSProperties}
                         />
                       </div>
                     )}
@@ -457,33 +458,28 @@ const PlayerMapView = ({ campaignId, sessionId }: { campaignId?: string; session
                     {/* Grid overlay */}
                     {showGrid && (
                       <div
-                        className="absolute inset-0 opacity-20 pointer-events-none"
+                        className="vtt-grid-overlay"
                         style={{
-                          backgroundImage: `
-                            linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px),
-                            linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px)
-                          `,
-                          backgroundSize: `${gridSize * zoom}px ${gridSize * zoom}px`,
-                        }}
+                          '--grid-bg-size': `${gridSize * zoom}px ${gridSize * zoom}px`,
+                          '--grid-border-color': 'hsl(var(--border))',
+                        } as React.CSSProperties}
                       />
                     )}
 
                     {/* Fog of war */}
                     {currentScene?.fogOfWar && currentScene.fogData && (
-                      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 50 }}>
+                      <div className="absolute inset-0 pointer-events-none vtt-fog-overlay-layer">
                         {currentScene.fogData.map((row, ry) =>
                           row.map((revealed, rx) =>
                             !revealed ? (
                               <div
                                 key={`fog-${rx}-${ry}`}
-                                className="absolute"
+                                className="absolute vtt-fog-cell"
                                 style={{
-                                  left: `${rx * gridSize * zoom}px`,
-                                  top: `${ry * gridSize * zoom}px`,
-                                  width: `${gridSize * zoom}px`,
-                                  height: `${gridSize * zoom}px`,
-                                  backgroundColor: 'rgba(0, 0, 0, 0.85)',
-                                }}
+                                  '--fog-left': rx * gridSize * zoom,
+                                  '--fog-top': ry * gridSize * zoom,
+                                  '--fog-size': gridSize * zoom,
+                                } as React.CSSProperties}
                               />
                             ) : null,
                           ),
@@ -499,16 +495,15 @@ const PlayerMapView = ({ campaignId, sessionId }: { campaignId?: string; session
                       return (
                         <div
                           key={`aura-${token.id}`}
-                          className="absolute rounded-full pointer-events-none animate-pulse"
+                          className="absolute rounded-full pointer-events-none animate-pulse vtt-token-aura"
                           style={{
-                            left: `${token.x * gridSize * zoom + centerOffset}px`,
-                            top: `${token.y * gridSize * zoom + centerOffset}px`,
-                            width: `${auraSize}px`,
-                            height: `${auraSize}px`,
-                            backgroundColor: `${token.auraColor || '#3b82f6'}18`,
-                            border: `2px solid ${token.auraColor || '#3b82f6'}40`,
-                            zIndex: token.layer * 10 + 5,
-                          }}
+                            '--aura-left': token.x * gridSize * zoom + centerOffset,
+                            '--aura-top': token.y * gridSize * zoom + centerOffset,
+                            '--aura-size': `${auraSize}px`,
+                            '--aura-bg-color': `${token.auraColor || '#3b82f6'}18`,
+                            '--aura-border-color': `${token.auraColor || '#3b82f6'}40`,
+                            '--aura-z-index': token.layer * 10 + 5,
+                          } as React.CSSProperties}
                         />
                       );
                     })}
@@ -523,31 +518,30 @@ const PlayerMapView = ({ campaignId, sessionId }: { campaignId?: string; session
                         <div
                           key={token.id}
                           className={cn(
-                            'absolute transition-all',
+                            'vtt-token-container transition-all',
                             canDrag ? 'cursor-move' : 'cursor-default',
                             draggedTokenId === token.id && 'opacity-70',
                           )}
                           style={{
-                            left: `${token.x * gridSize * zoom}px`,
-                            top: `${token.y * gridSize * zoom}px`,
-                            width: `${size}px`,
-                            height: `${size}px`,
-                            transform: `rotate(${token.rotation}deg)`,
-                            zIndex: token.layer * 10 + 10,
-                          }}
+                            '--token-x': token.x * gridSize * zoom,
+                            '--token-y': token.y * gridSize * zoom,
+                            '--token-size': `${size}px`,
+                            '--token-rotation': `${token.rotation}deg`,
+                            '--token-z-index': token.layer,
+                          } as React.CSSProperties}
                           onMouseDown={(e) => handleTokenMouseDown(token, e)}
                           title={`${token.name}${token.hp !== undefined ? ` (${token.hp}/${token.maxHp} HP)` : ''}${canDrag ? ' — drag to move' : ''}`}
                         >
                           <div
                             className={cn(
-                              'w-full h-full flex items-center justify-center border-2 text-xs font-bold',
-                              isOverlay ? 'border-transparent bg-transparent' : 'rounded-full',
+                              'vtt-token-inner',
+                              isOverlay ? 'vtt-token-overlay' : 'rounded-full vtt-token-base',
                             )}
                             style={{
-                              backgroundColor: isOverlay ? 'transparent' : token.color ? `${token.color}40` : 'rgba(0,0,0,0.3)',
-                              borderColor: isOverlay ? 'transparent' : token.color || 'hsl(var(--primary))',
-                              fontSize: `${size * 0.35}px`,
-                            }}
+                              '--token-bg-color': isOverlay ? 'transparent' : token.color ? `${token.color}40` : 'rgba(0,0,0,0.3)',
+                              '--token-border-color': isOverlay ? 'transparent' : token.color || 'hsl(var(--primary))',
+                              '--token-font-size': `${size * 0.35}px`,
+                            } as React.CSSProperties}
                           >
                             {token.imageUrl ? (
                               <OptimizedImage
@@ -563,24 +557,28 @@ const PlayerMapView = ({ campaignId, sessionId }: { campaignId?: string; session
 
                           {/* HP bar */}
                           {hpPercent !== null && !isOverlay && (
-                            <div className="absolute -bottom-1.5 left-0 right-0 h-1.5 rounded-full bg-black/40 overflow-hidden">
+                            <div className="vtt-hp-bar-container">
                               <div
-                                className="h-full rounded-full transition-all"
+                                className={cn(
+                                  "vtt-hp-bar vtt-hp-bar-fill",
+                                  hpPercent! > 50 && "high",
+                                  hpPercent! > 25 && hpPercent! <= 50 && "medium",
+                                  hpPercent! <= 25 && "low"
+                                )}
                                 style={{
-                                  width: `${Math.max(0, Math.min(100, hpPercent))}%`,
-                                  backgroundColor: hpPercent > 50 ? '#22c55e' : hpPercent > 25 ? '#eab308' : '#ef4444',
-                                }}
+                                  '--hp-width': `${Math.max(0, Math.min(100, hpPercent))}%`,
+                                } as React.CSSProperties}
                               />
                             </div>
                           )}
 
                           {/* Conditions */}
                           {token.conditions && token.conditions.length > 0 && (
-                            <div className="absolute -top-2 -right-2 flex gap-0.5">
+                            <div className="vtt-conditions">
                               {token.conditions.slice(0, 3).map((cond) => (
                                 <span
                                   key={cond}
-                                  className="bg-amber-500 text-black text-[8px] px-1 rounded-full font-bold"
+                                  className="vtt-condition-badge"
                                   title={cond}
                                 >
                                   {cond.charAt(0).toUpperCase()}
@@ -594,21 +592,16 @@ const PlayerMapView = ({ campaignId, sessionId }: { campaignId?: string; session
 
                     {/* Pings overlay */}
                     {vttRealtime.pings.length > 0 && (
-                      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 70 }}>
+                      <div className="absolute inset-0 pointer-events-none vtt-pings-overlay">
                         {vttRealtime.pings.map((ping) => (
                           <div
                             key={ping.timestamp}
-                            className="absolute animate-ping"
+                            className="absolute animate-ping vtt-ping"
                             style={{
-                              left: `${(ping.x + 0.5) * gridSize * zoom}px`,
-                              top: `${(ping.y + 0.5) * gridSize * zoom}px`,
-                              width: '24px',
-                              height: '24px',
-                              borderRadius: '50%',
-                              border: `3px solid ${ping.color}`,
-                              transform: 'translate(-50%, -50%)',
-                              boxShadow: `0 0 12px ${ping.color}`,
-                            }}
+                              '--ping-left': (ping.x + 0.5) * gridSize * zoom,
+                              '--ping-top': (ping.y + 0.5) * gridSize * zoom,
+                              '--ping-color': ping.color,
+                            } as React.CSSProperties}
                           />
                         ))}
                       </div>
@@ -616,7 +609,7 @@ const PlayerMapView = ({ campaignId, sessionId }: { campaignId?: string; session
 
                     {/* Remote cursors */}
                     {vttRealtime.activeUsers.filter((u) => u.cursor).length > 0 && (
-                      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 65 }}>
+                      <div className="absolute inset-0 pointer-events-none vtt-cursors-overlay">
                         {vttRealtime.activeUsers
                           .filter((u) => u.cursor)
                           .map((u) => (
@@ -624,18 +617,17 @@ const PlayerMapView = ({ campaignId, sessionId }: { campaignId?: string; session
                               key={u.userId}
                               className="absolute transition-all duration-100"
                               style={{
-                                left: `${(u.cursor!.x + 0.5) * gridSize * zoom}px`,
-                                top: `${(u.cursor!.y + 0.5) * gridSize * zoom}px`,
-                                transform: 'translate(-50%, -50%)',
-                              }}
+                                '--cursor-left': (u.cursor!.x + 0.5) * gridSize * zoom,
+                                '--cursor-top': (u.cursor!.y + 0.5) * gridSize * zoom,
+                              } as React.CSSProperties}
                             >
                               <div
-                                className="w-3 h-3 rounded-full border-2 border-white"
-                                style={{ backgroundColor: u.color }}
+                                className="w-3 h-3 rounded-full border-2 border-white vtt-cursor-dot"
+                                style={{ '--cursor-dot-bg': u.color } as React.CSSProperties}
                               />
                               <div
-                                className="absolute top-4 left-0 text-[10px] px-1 rounded text-white whitespace-nowrap"
-                                style={{ backgroundColor: u.color }}
+                                className="absolute top-4 left-0 text-[10px] px-1 rounded text-white whitespace-nowrap vtt-cursor-label"
+                                style={{ '--cursor-label-bg': u.color } as React.CSSProperties}
                               >
                                 {u.userName}
                               </div>
@@ -657,6 +649,25 @@ const PlayerMapView = ({ campaignId, sessionId }: { campaignId?: string; session
 
             {/* Right Sidebar — hidden on mobile, shown via bottom sheet */}
             <div className={cn("col-span-1 md:col-span-3 space-y-4 md:overflow-y-auto", isMobile && "hidden")}>
+              {/* Player Tools Panel */}
+              <PlayerToolsPanel
+                characterId={myCharacterId || undefined}
+                onRollDice={(formula) => vttRealtime.rollAndBroadcast(formula)}
+                onSendMessage={(message, type) => vttRealtime.sendChatMessage(message, type as any)}
+                onUseAbility={(ability) => {
+                  // Handle ability usage
+                  vttRealtime.rollAndBroadcast(`1d20+${ability}`);
+                }}
+                onCastSpell={(spellId) => {
+                  // Handle spell casting
+                  vttRealtime.sendChatMessage(`Casts ${spellId}!`, 'emote');
+                }}
+                onTakeAction={(action) => {
+                  // Handle action taken
+                  vttRealtime.sendChatMessage(`Takes ${action} action!`, 'emote');
+                }}
+              />
+
               <Tabs defaultValue="sheet" className="w-full">
                 <TabsList className="grid w-full grid-cols-5">
                   <TabsTrigger value="sheet">Sheet</TabsTrigger>
@@ -838,11 +849,15 @@ const PlayerMapView = ({ campaignId, sessionId }: { campaignId?: string; session
                                 {hpPercent !== null && (
                                   <div className="h-1 rounded-full bg-black/30 mt-0.5">
                                     <div
-                                      className="h-full rounded-full"
+                                      className={cn(
+                                        "h-full rounded-full vtt-initiative-hp-bar",
+                                        hpPercent! > 50 && "high",
+                                        hpPercent! > 25 && hpPercent! <= 50 && "medium",
+                                        hpPercent! <= 25 && "low"
+                                      )}
                                       style={{
-                                        width: `${Math.max(0, Math.min(100, hpPercent))}%`,
-                                        backgroundColor: hpPercent > 50 ? '#22c55e' : hpPercent > 25 ? '#eab308' : '#ef4444',
-                                      }}
+                                        '--initiative-hp-width': `${Math.max(0, Math.min(100, hpPercent))}%`,
+                                      } as React.CSSProperties}
                                     />
                                   </div>
                                 )}

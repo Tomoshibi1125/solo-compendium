@@ -150,11 +150,67 @@ Provide ALL of the following sections with full detail:
 
   const handleCopy = () => {
     if (!npc) return;
-    const text = `NPC: ${npc.name}\nRank: ${npc.rank}\nRole: ${npc.role}\nPersonality: ${npc.personality}\nMotivation: ${npc.motivation}\nSecret: ${npc.secret}\nQuirk: ${npc.quirk}\n\n${npc.description}`;
+    const text = `NPC: ${npc.name}
+Rank: ${npc.rank}
+Role: ${npc.role}
+Personality: ${npc.personality}
+Motivation: ${npc.motivation}
+Secret: ${npc.secret}
+Quirk: ${npc.quirk}
+
+${npc.description}
+
+---
+D&D BEYOND STYLE NPC DOSSIER:
+
+STAT BLOCK:
+• Ability Scores: STR [determined by rank], AGI [determined by rank], VIT [determined by rank], INT [determined by rank], SENSE [determined by rank], PRE [determined by rank]
+• Armor Class: [determined by rank + role]
+• Hit Points: [determined by rank]
+• Challenge Rating: [equivalent to ${npc.rank} Rank]
+• Proficiency Bonus: [+${npc.rank === 'S' ? '6' : npc.rank === 'A' ? '4' : npc.rank === 'B' ? '3' : npc.rank === 'C' ? '2' : '1'}]
+• Saving Throws: [based on primary abilities]
+• Skills: [role-appropriate skills with expertise]
+
+COMBAT:
+• Attacks: [role-appropriate weapons/abilities]
+• Spellcasting: [if applicable, spells known and save DC]
+• Tactical Behavior: ${npc.personality.toLowerCase()} tendencies in combat
+
+LORE:
+${npc.description}
+
+Background: ${npc.motivation.toLowerCase()}
+Secret Knowledge: ${npc.secret.toLowerCase()}
+
+PERSONALITY:
+• Traits: ${npc.personality.toLowerCase()}, ${npc.quirk.toLowerCase()}
+• Ideal: ${npc.motivation.toLowerCase()}
+• Bond: [Connection to campaign world]
+• Flaw: ${npc.secret.toLowerCase()}
+
+DIALOGUE:
+1. [Sample line reflecting ${npc.personality.toLowerCase()} nature]
+2. [Sample line about ${npc.motivation.toLowerCase()}]
+3. [Sample line hinting at ${npc.secret.toLowerCase()}]
+
+PLOT HOOKS:
+1. [Quest involving ${npc.motivation.toLowerCase()}]
+2. [Adventure related to ${npc.secret.toLowerCase()}]
+3. [Mission connected to ${npc.role.toLowerCase()} role]
+
+EQUIPMENT:
+• [Role-appropriate gear]
+• [Any notable items or relics]
+• [Standard equipment for ${npc.rank} Rank]
+
+DESCRIPTION:
+${npc.description}`;
+    
     navigator.clipboard.writeText(text);
     toast({
       title: 'Copied',
-      description: 'NPC details copied to clipboard.',
+      description: 'Complete NPC dossier copied to clipboard.',
     });
   };
 

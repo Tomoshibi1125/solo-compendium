@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Save, Plus, Trash2, Sparkles, Shield, Sword, Wand2, Loader2 } from 'lucide-react';
+import { ArrowLeft, Save, Plus, Trash2, Sparkles, Shield, Sword, Wand2, Loader2, Copy } from 'lucide-react';
 import { useAIEnhance } from '@/hooks/useAIEnhance';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
@@ -166,6 +166,92 @@ Provide ALL of the following sections with full detail:
     await enhance('relic', seed);
   };
 
+  const handleCopy = () => {
+    if (!currentRelic.name) return;
+    const text = `RELIC: ${currentRelic.name}
+Type: ${currentRelic.type}
+Rank: ${currentRelic.rank}
+Rarity: ${currentRelic.rarity}
+Attunement: ${currentRelic.attunement ? 'Required' : 'None'}
+Description: ${currentRelic.description || 'None provided'}
+Properties: ${currentRelic.properties.map(p => `${p.name} (${p.type}): ${p.description}`).join('; ') || 'None'}
+
+---
+D&D BEYOND STYLE RELIC STAT BLOCK:
+
+STATS:
+• Type: ${currentRelic.type}
+• Rarity: ${currentRelic.rarity}
+• Attunement: ${currentRelic.attunement ? 'Required by character of ${currentRelic.rank} Rank or higher' : 'None required'}
+• Weight: [Standard for ${currentRelic.type} type]
+• Value: [${currentRelic.rarity === 'legendary' ? '10,000+' : currentRelic.rarity === 'very-rare' ? '5,000+' : currentRelic.rarity === 'rare' ? '2,000+' : currentRelic.rarity === 'uncommon' ? '500+' : '100+'} GP]
+
+PROPERTIES:
+${currentRelic.properties.map((property, i) => `${i + 1}. ${property.name} (${property.type}):
+   • Effect: ${property.description}
+   • Activation: [Action type and requirements]
+   • Uses: [Per day or recharge]
+   • Duration: [Effect duration]
+   • Save DC: [If applicable]`).join('\n\n') || 'None'}
+
+ABILITIES:
+ABILITY 1: [Primary ability name]
+• Description: [How the ability functions]
+• Activation: [Action, bonus action, or reaction]
+• Duration: [Instant, concentration, or timed]
+• Recharge: [How often it can be used]
+
+ABILITY 2: [Secondary ability name]
+• Description: [Supporting or defensive function]
+• Activation: [Usage requirements]
+• Duration: [Effect length]
+• Recharge: [Reset conditions]
+
+${currentRelic.rarity === 'rare' || currentRelic.rarity === 'very-rare' || currentRelic.rarity === 'legendary' ? `ABILITY 3: [Advanced ability]
+• Description: [High-level function]
+• Activation: [Complex requirements]
+• Duration: [Extended effect]
+• Recharge: [Limited usage]` : ''}
+
+${currentRelic.rarity === 'very-rare' || currentRelic.rarity === 'legendary' ? `ABILITY 4: [Ultimate ability]
+• Description: [Maximum power effect]
+• Activation: [Special conditions]
+• Duration: [Permanent or very long]
+• Recharge: [Once per day or week]` : ''}
+
+CURSE/BLESSING:
+${currentRelic.rarity === 'rare' || currentRelic.rarity === 'very-rare' || currentRelic.rarity === 'legendary' ? `• Curse: [Negative effect and removal conditions]
+• Blessing: [Positive effect and activation]` : '• None'}
+
+LORE:
+• Creation Story: [How this relic was forged]
+• Legendary Wielders: [Famous past users]
+• Connection to Regents: [Which Regent domain influenced its creation]
+• Rift Origins: [If created from Rift materials]
+• System Significance: [Why the System created this item]
+
+ATTUNEMENT RITUAL:
+"[Flavor text describing the attunement process, including any special requirements, ceremonies, or personal sacrifices needed to bond with the relic]"
+
+COMBAT USE:
+• Primary Function: [How to use in combat situations]
+• Synergies: [Works best with specific jobs/paths]
+• Tactical Advantages: [Strategic benefits in battle]
+• Limitations: [Restrictions or drawbacks]
+
+DESCRIPTION:
+${currentRelic.description || 'No description provided'}
+
+READ-ALOUD DISCOVERY:
+"[Detailed description of how the players discover this relic, including its appearance, any magical aura, and initial impressions of its power]"`;
+    
+    navigator.clipboard.writeText(text);
+    toast({
+      title: 'Copied',
+      description: 'Complete relic stat block copied to clipboard.',
+    });
+  };
+
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'weapon': return Sword;
@@ -312,6 +398,7 @@ Provide ALL of the following sections with full detail:
                     checked={currentRelic.attunement}
                     onChange={(e) => setCurrentRelic({ ...currentRelic, attunement: e.target.checked })}
                     className="w-4 h-4"
+                    aria-label="Requires Attunement"
                   />
                   <Label htmlFor="attunement" className="cursor-pointer">
                     Requires Attunement
@@ -462,6 +549,17 @@ Provide ALL of the following sections with full detail:
             <Save className="w-4 h-4 mr-2" />
             Save Relic
           </Button>
+          {currentRelic.name && (
+            <Button
+              onClick={handleCopy}
+              variant="outline"
+              className="w-full"
+              size="lg"
+            >
+              <Copy className="w-4 h-4 mr-2" />
+              Copy Relic Stats
+            </Button>
+          )}
           {currentRelic.name && (
             <Button
               onClick={handleAIEnhance}

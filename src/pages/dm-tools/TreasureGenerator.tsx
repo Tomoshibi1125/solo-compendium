@@ -95,12 +95,71 @@ Provide ALL of the following sections with full detail:
     const text = `Rift Rank ${treasure.rank} Treasure:
 Gold: ${treasure.gold}
 ${treasure.items.length > 0 ? `Items: ${treasure.items.join(', ')}\n` : ''}${treasure.materials.length > 0 ? `Materials: ${treasure.materials.join(', ')}\n` : ''}${treasure.relics.length > 0 ? `Relics: ${treasure.relics.join(', ')}\n` : ''}
-${treasure.description}`;
+${treasure.description}
+
+---
+D&D BEYOND STYLE TREASURE HOARD:
+
+ITEMS:
+${treasure.items.map((item, i) => `${i + 1}. ${item}
+   • Type: [Weapon/Armor/Accessory/Consumable]
+   • Rarity: [Appropriate to ${treasure.rank} Rank]
+   • Attunement: [Required if magical]
+   • Properties: [Mechanical bonuses and effects]
+   • Damage/AC/Save Bonus: [+${treasure.rank === 'S' ? '4' : treasure.rank === 'A' ? '3' : treasure.rank === 'B' ? '2' : treasure.rank === 'C' ? '1' : '0'}]
+   • Weight: [Standard for item type]
+   • Value: [${treasure.rank} Rank appropriate GP]`).join('\n\n') || 'None'}
+
+MAGICAL PROPERTIES:
+${treasure.items.map((item, i) => `${i + 1}. ${item}:
+   • Activation: [Action/bonus/triggered]
+   • Charges: [If applicable]
+   • Recharge: [Recharge conditions]
+   • Duration: [Effect duration]
+   • Side Effects: [Any drawbacks or curses]
+   • Special Rules: [Unique mechanics]`).join('\n\n') || 'None'}
+
+LORE:
+${treasure.items.map((item, i) => `${i + 1}. ${item}:
+   • History: [Creation story and previous owners]
+   • Creator: [Who crafted this item]
+   • Legendary Status: [Famous deeds or wielders]
+   • System Ascendant Connection: [How it relates to Rifts or Regents]`).join('\n\n') || 'None'}
+
+VALUE:
+${treasure.items.map((item, i) => `${i + 1}. ${item}:
+   • Market Value: [${treasure.rank} Rank appropriate GP]
+   • Trade Value: [Bartering potential]
+   • Faction Value: [Which factions value this item]`).join('\n\n') || 'None'}
+
+MATERIALS:
+${treasure.materials.map((material, i) => `${i + 1}. ${material}:
+   • Weight: [Material weight per unit]
+   • Composition: [Physical and magical properties]
+   • Crafting Uses: [What can be forged from this material]
+   • Quantity: [Amount found]
+   • Value: [Per unit and total value]`).join('\n\n') || 'None'}
+
+RELICS:
+${treasure.relics.map((relic, i) => `${i + 1}. ${relic}:
+   • Type: [Weapon/Armor/Accessory/Tool]
+   • Attunement Requirements: [${treasure.rank} Rank or higher]
+   • Dormant Tier: [Basic abilities]
+   • Awakened Tier: [Enhanced abilities]
+   • Exalted Tier: [Maximum power]
+   • Activation: [How to use each tier]
+   • Lore: [Connection to Regents or System origins]`).join('\n\n') || 'None'}
+
+DESCRIPTION:
+${treasure.description}
+
+READ-ALOUD DISCOVERY:
+"[Detailed description of how the players discover this treasure hoard, including sensory details, placement, and initial impressions of the most valuable items]"`;
     
     navigator.clipboard.writeText(text);
     toast({
       title: 'Copied!',
-      description: 'Treasure details copied to clipboard.',
+      description: 'Complete treasure hoard details copied to clipboard.',
     });
   };
 

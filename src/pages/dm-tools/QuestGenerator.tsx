@@ -268,12 +268,93 @@ OBJECTIVES:
 ${quest.objectives.map((obj, i) => `${i + 1}. ${obj}`).join('\n')}
 
 ${quest.complications.length > 0 ? `COMPLICATIONS:\n${quest.complications.map((c) => `- ${c}`).join('\n')}\n` : ''}${quest.timeLimit ? `TIME LIMIT: ${quest.timeLimit}\n` : ''}REWARDS:
-${quest.rewards.map((r) => `- ${r}`).join('\n')}`;
+${quest.rewards.map((r) => `- ${r}`).join('\n')}
+
+---
+D&D BEYOND STYLE QUEST BRIEFING:
+
+OVERVIEW:
+• Quest Giver: [NPC name and rank]
+• Premise: ${quest.description}
+• Stakes: [Consequences of success/failure]
+• Urgency: ${quest.timeLimit || 'No time limit'}
+
+OBJECTIVES:
+PRIMARY OBJECTIVES:
+${quest.objectives.map((obj, i) => `${i + 1}. ${obj} (DC determined by complexity)`).join('\n')}
+
+SECONDARY OBJECTIVES:
+• [Optional bonus objectives]
+• [Hidden objectives revealed during play]
+
+SUCCESS CONDITIONS:
+• Complete all primary objectives
+• [Optional: Complete secondary objectives for bonus rewards]
+
+FAILURE CONDITIONS:
+• [Consequences of failure]
+• [Partial success outcomes]
+
+ENCOUNTERS:
+ENCOUNTER 1: [Type of challenge]
+• Challenge Rating: [Appropriate to ${quest.rank} Rank]
+• Terrain: ${quest.location} environment
+• Tactics: [Enemy strategy]
+
+ENCOUNTER 2: [Secondary challenge]
+• Challenge Rating: [Lower than primary]
+• Environment: [Terrain features]
+• Complications: ${quest.complications.join(', ') || 'None'}
+
+COMPLICATIONS:
+${quest.complications.map((c, i) => `${i + 1}. ${c} (Mechanical effect: [DC/save/damage])`).join('\n') || 'None'}
+
+REWARDS:
+EXPERIENCE POINTS:
+• Base XP: [${quest.rank} Rank appropriate amount]
+• Bonus XP: [For complications overcome]
+
+GOLD:
+• Base reward: [${quest.rank} Rank appropriate GP]
+• Bonus: [For exceptional performance]
+
+ITEMS:
+${quest.rewards.map((r, i) => `${i + 1}. ${r} (Full stats and description)`).join('\n')}
+
+FACTION REPUTATION:
+• [Affected factions and reputation changes]
+
+LORE:
+• Connection to Rift activity: [How quest relates to current Rift events]
+• Awakened Council involvement: [Official interest or authorization]
+• System implications: [How this affects the greater System]
+
+TIMELINE:
+• Estimated sessions: [${quest.rank} Rank complexity determines length]
+• Time pressure: ${quest.timeLimit || 'Standard pacing'}
+• Milestone triggers: [Key events that advance the quest]
+
+KEY NPCs:
+QUEST GIVER:
+• Name: [NPC name]
+• Rank: [Appropriate to quest importance]
+• Motivation: ${quest.description.split('.')[0]}
+• Stats: AC [appropriate], HP [appropriate], CR [appropriate]
+
+SUPPORTING NPCS:
+• [2-3 additional NPCs with brief stat blocks and motivations]
+
+READ-ALOUD BRIEFING:
+"[Opening scene description for quest briefing]"
+
+${quest.description}
+
+"[Closing remarks and call to action]"`;
     
     navigator.clipboard.writeText(text);
     toast({
       title: 'Copied!',
-      description: 'Quest details copied to clipboard.',
+      description: 'Complete quest briefing copied to clipboard.',
     });
   };
 

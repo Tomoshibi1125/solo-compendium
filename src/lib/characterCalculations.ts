@@ -235,7 +235,7 @@ export function getSpellsKnownLimit(job: string | null | undefined, level: numbe
   
   // Prepared casters don't have a "known" limit, they prepare from their list
   // Known casters (Sorcerer, Warlock, etc.) have limits
-  if (job === 'Esper' || job === 'Invoker' || job === 'Contractor') {
+  if (['Esper', 'Invoker', 'Contractor'].includes(job)) {
     // Known casters: level + 1
     return level + 1;
   }

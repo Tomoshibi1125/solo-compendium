@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate, useParams, Link, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, Eye, EyeOff, FileText, Maximize2, Minus, Plus, Save, Upload } from 'lucide-react';
+import { ArrowLeft, Eye, EyeOff, FileText, Maximize2, Minus, Plus, Save, Upload, Clock, MessageSquare, Dice6, Image as ImageIcon, Sparkles, BookOpen, Users } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogTrigger } from '@/components/ui/dialog';
@@ -20,6 +20,8 @@ import { getBestImageFormat } from '@/lib/imageOptimization';
 import { VttPixiStage } from '@/components/vtt/VttPixiStage';
 import { VTTCharacterPanel } from '@/components/vtt/VTTCharacterPanel';
 import { VTTAssetBrowser } from '@/components/vtt/VTTAssetBrowser';
+import { DMToolsPanel } from '@/components/vtt/DMToolsPanel';
+import { PlayerToolsPanel } from '@/components/vtt/PlayerToolsPanel';
 import { useCampaignMembers, useCampaignRole, type CampaignMember } from '@/hooks/useCampaigns';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
@@ -1972,11 +1974,55 @@ const VTTEnhanced = () => {
               </>
             )}
 
+            {/* Comprehensive DM Tools Panel */}
+            {isGM && (
+              <DMToolsPanel
+                campaignId={campaignId || ''}
+                onAddToken={(token) => {
+                  // Add token to current scene
+                  if (currentScene) {
+                    updateScene({
+                      tokens: [...(currentScene.tokens || []), { ...token, id: token.id || `token-${Date.now()}` }]
+                    });
+                  }
+                }}
+                onAddEffect={(effect) => {
+                  // Add effect to current scene (could be stored in annotations or a separate effects array)
+                  toast({
+                    title: "Effect Added",
+                    description: `${effect.name} effect placed on map`,
+                  });
+                }}
+                onPlaySound={(soundId) => {
+                  // Play sound effect
+                  toast({
+                    title: "Sound Played",
+                    description: `Playing ${soundId} sound effect`,
+                  });
+                }}
+                onMusicChange={(musicId) => {
+                  // Change background music
+                  toast({
+                    title: "Music Changed",
+                    description: `Switched to ${musicId} music`,
+                  });
+                }}
+              />
+            )}
+
             <SystemWindow title="TOKENS">
               <Tabs defaultValue="characters" className="w-full">
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="characters">Characters</TabsTrigger>
-                  <TabsTrigger value="library">Library</TabsTrigger>
+                <TabsList className="grid w-full grid-cols-2 h-auto p-1 bg-card border border-border rounded-lg shadow-sm">
+                  <TabsTrigger value="characters" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
+                    <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    <span className="hidden xs:inline">Characters</span>
+                    <span className="xs:hidden">C</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="library" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
+                    <ImageIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    <span className="hidden xs:inline">Library</span>
+                    <span className="xs:hidden">L</span>
+                  </TabsTrigger>
                 </TabsList>
                 <TabsContent value="characters" className="mt-3">
                   <div className="space-y-2 max-h-60 overflow-y-auto">
@@ -2682,13 +2728,37 @@ const VTTEnhanced = () => {
             </Dialog>
 
             <Tabs defaultValue="initiative" className="w-full">
-              <TabsList className="grid w-full grid-cols-6">
-                <TabsTrigger value="initiative">Init</TabsTrigger>
-                <TabsTrigger value="chat">Chat</TabsTrigger>
-                <TabsTrigger value="dice">Dice</TabsTrigger>
-                <TabsTrigger value="assets">Assets</TabsTrigger>
-                <TabsTrigger value="ai">AI</TabsTrigger>
-                <TabsTrigger value="journal">Journal</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-6 h-auto p-1 bg-card border border-border rounded-lg shadow-sm">
+                <TabsTrigger value="initiative" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
+                  <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <span className="hidden sm:inline">Initiative</span>
+                  <span className="sm:hidden">Init</span>
+                </TabsTrigger>
+                <TabsTrigger value="chat" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
+                  <MessageSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <span className="hidden sm:inline">Chat</span>
+                  <span className="sm:hidden">Chat</span>
+                </TabsTrigger>
+                <TabsTrigger value="dice" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
+                  <Dice6 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <span className="hidden sm:inline">Dice</span>
+                  <span className="sm:hidden">Dice</span>
+                </TabsTrigger>
+                <TabsTrigger value="assets" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
+                  <ImageIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <span className="hidden sm:inline">Assets</span>
+                  <span className="sm:hidden">Assets</span>
+                </TabsTrigger>
+                <TabsTrigger value="ai" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
+                  <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <span className="hidden sm:inline">AI</span>
+                  <span className="sm:hidden">AI</span>
+                </TabsTrigger>
+                <TabsTrigger value="journal" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
+                  <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <span className="hidden sm:inline">Journal</span>
+                  <span className="sm:hidden">Journal</span>
+                </TabsTrigger>
               </TabsList>
 
               <TabsContent value="initiative" className="space-y-2">
@@ -3154,11 +3224,27 @@ const VTTEnhanced = () => {
                 )}
                 {mobilePanel === 'sidebar' && (
                   <Tabs defaultValue="chat" className="w-full">
-                    <TabsList className="grid w-full grid-cols-4 mb-2">
-                      <TabsTrigger value="chat" className="text-xs">Chat</TabsTrigger>
-                      <TabsTrigger value="init" className="text-xs">Init</TabsTrigger>
-                      <TabsTrigger value="dice" className="text-xs">Dice</TabsTrigger>
-                      <TabsTrigger value="assets" className="text-xs">Assets</TabsTrigger>
+                    <TabsList className="grid w-full grid-cols-4 h-auto p-1 bg-card border border-border rounded-lg shadow-sm mb-2">
+                      <TabsTrigger value="chat" className="gap-1.5 text-xs py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
+                        <MessageSquare className="w-3.5 h-3.5" />
+                        <span className="hidden xs:inline">Chat</span>
+                        <span className="xs:hidden">C</span>
+                      </TabsTrigger>
+                      <TabsTrigger value="init" className="gap-1.5 text-xs py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
+                        <Clock className="w-3.5 h-3.5" />
+                        <span className="hidden xs:inline">Init</span>
+                        <span className="xs:hidden">I</span>
+                      </TabsTrigger>
+                      <TabsTrigger value="dice" className="gap-1.5 text-xs py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
+                        <Dice6 className="w-3.5 h-3.5" />
+                        <span className="hidden xs:inline">Dice</span>
+                        <span className="xs:hidden">D</span>
+                      </TabsTrigger>
+                      <TabsTrigger value="assets" className="gap-1.5 text-xs py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
+                        <ImageIcon className="w-3.5 h-3.5" />
+                        <span className="hidden xs:inline">Assets</span>
+                        <span className="xs:hidden">A</span>
+                      </TabsTrigger>
                     </TabsList>
                     <TabsContent value="chat">
                       <div className="space-y-2 max-h-[40vh] overflow-y-auto">

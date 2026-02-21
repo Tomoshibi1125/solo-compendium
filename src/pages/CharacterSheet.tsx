@@ -1301,30 +1301,35 @@ const CharacterSheet = () => {
           </div>
         </div>
 
-        {/* â”€â”€ DDB-Style Tabbed Content â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        {/* D&D Beyond Style Tabbed Content */}
         <Tabs defaultValue="overview" className="space-y-4 sm:space-y-6">
-          <TabsList className="grid w-full grid-cols-5 h-auto p-1 bg-card border border-border rounded-lg">
-            <TabsTrigger value="overview" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm">
+          <TabsList className="grid w-full grid-cols-6 h-auto p-1 bg-card border border-border rounded-lg shadow-sm">
+            <TabsTrigger value="overview" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
               <User className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span className="hidden xs:inline">Overview</span>
               <span className="xs:hidden">O</span>
             </TabsTrigger>
-            <TabsTrigger value="actions" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm">
+            <TabsTrigger value="actions" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
               <Swords className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span className="hidden xs:inline">Actions</span>
               <span className="xs:hidden">A</span>
             </TabsTrigger>
-            <TabsTrigger value="inventory" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm">
+            <TabsTrigger value="inventory" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
               <Backpack className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span className="hidden xs:inline">Inv</span>
+              <span className="hidden xs:inline">Inventory</span>
               <span className="xs:hidden">I</span>
             </TabsTrigger>
-            <TabsTrigger value="features" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm">
+            <TabsTrigger value="spells" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
+              <Moon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="hidden xs:inline">Spells</span>
+              <span className="xs:hidden">S</span>
+            </TabsTrigger>
+            <TabsTrigger value="features" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
               <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span className="hidden xs:inline">Features</span>
               <span className="xs:hidden">F</span>
             </TabsTrigger>
-            <TabsTrigger value="bio" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm">
+            <TabsTrigger value="bio" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
               <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span className="hidden xs:inline">Bio</span>
               <span className="xs:hidden">B</span>
@@ -1999,6 +2004,19 @@ const CharacterSheet = () => {
 
             {/* Currency */}
             <CurrencyManager characterId={character.id} />
+          </TabsContent>
+
+          {/* â”€â”€ TAB: Spells â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+          <TabsContent value="spells" className="space-y-6 mt-0">
+            {/* Spell Slots */}
+            <SpellSlotsDisplay 
+              characterId={character.id}
+              job={character.job}
+              level={character.level}
+            />
+            
+            {/* Powers List */}
+            <PowersList characterId={character.id} />
           </TabsContent>
 
           {/* â”€â”€ TAB: Features â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}

@@ -10,7 +10,7 @@ export const AudioTrackSchema = z.object({
   id: z.string(),
   title: z.string(),
   artist: z.string(),
-  category: z.enum(['music', 'ambient', 'effect', 'combat', 'exploration', 'social', 'horror', 'mystery']),
+  category: z.enum(['music', 'ambient', 'effect', 'combat', 'exploration', 'social', 'horror', 'mystery', 'victory', 'sad', 'sacred', 'sfx']),
   duration: z.number(), // in seconds
   url: z.string(),
   localPath: z.string().optional(),
@@ -72,6 +72,10 @@ export const SOUND_CATEGORIES = {
   SOCIAL: 'social',
   HORROR: 'horror',
   MYSTERY: 'mystery',
+  VICTORY: 'victory',
+  SAD: 'sad',
+  SACRED: 'sacred',
+  SFX: 'sfx',
 } as const;
 
 // Mood tags for filtering

@@ -153,11 +153,80 @@ Provide ALL of the following sections with full detail:
 
   const handleCopy = () => {
     if (!rift) return;
-    const text = `RIFT DETAILS\nRank: ${rift.rank}\nTheme: ${rift.theme}\nBiome: ${rift.biome}\nBoss: ${rift.boss}\nComplications: ${rift.complications.join(', ')}\n\n${rift.description}`;
+    const text = `RIFT DETAILS\nRank: ${rift.rank}\nTheme: ${rift.theme}\nBiome: ${rift.biome}\nBoss: ${rift.boss}\nComplications: ${rift.complications.join(', ')}\n\n${rift.description}
+
+---
+D&D BEYOND STYLE RIFT DOSSIER:
+
+DESCRIPTION:
+${rift.description}
+
+APPEARANCE:
+• Visual Features: [Sensory details of Rift entrance and interior]
+• Sounds: [Audio cues - humming, crackling, monster sounds]
+• Smells: [Olfactory sensations - ozone, decay, magic]
+• Entry Conditions: [Requirements to enter the Rift]
+• Environmental Hazards: [Immediate dangers upon entry]
+
+MONSTERS:
+${rift.complications.map((complication, i) => `${i + 1}. [Monster type related to ${rift.theme}]
+   • Challenge Rating: [Appropriate to ${rift.rank} Rank]
+   • Armor Class: [${rift.rank} Rank appropriate]
+   • Hit Points: [${rift.rank} Rank appropriate]
+   • Key Abilities: [Special attacks or powers]
+   • Tactical Behavior: [Combat preferences and strategies]`).join('\n\n')}
+
+BOSS: ${rift.boss}
+• Armor Class: [${rift.rank} Rank boss appropriate]
+• Hit Points: [${rift.rank} Rank boss appropriate]
+• Speed: [Movement type and speed]
+• Saving Throws: [Primary saves with bonuses]
+• Skills: [Key skills with expertise]
+• Attacks: [Primary and secondary attacks with to-hit and damage]
+• Special Abilities: [Unique boss mechanics]
+• Legendary Actions: [1-3 legendary actions per round]
+• Lair Actions: [Environmental effects on initiative count 20]
+• Tactics: [How the boss fights and uses its abilities]
+• Weaknesses: [Exploitable vulnerabilities]
+
+ENVIRONMENT:
+• Terrain Features: [${rift.biome} characteristics]
+• Traps: [${rift.complications.length} traps with DCs, damage, triggers, and reset conditions]
+• Hazard Zones: [Areas of special danger]
+• Cover Positions: [Strategic locations for combat]
+• Visibility: [Lighting conditions and sight lines]
+• Acoustics: [Sound propagation and stealth implications]
+
+LORE:
+• Rift Origin: [How this Rift formed and why]
+• Regent Domain Connection: [Which Regent domain this connects to]
+• System Classification: [Official System designation]
+• Historical Significance: [Past events involving this Rift]
+• Local Impact: [Effect on surrounding area]
+• Discovery: [How the Rift was found]
+
+REWARDS:
+• Rift Cores: [${rift.rank} Rank appropriate number and quality]
+• Materials: [${rift.rank} Rank appropriate materials]
+• Experience Points: [${rift.rank} Rank appropriate XP per player]
+• Rare Drops: [${rift.rank} Rank appropriate items with full stats]
+• Special Rewards: [Unique items or components]
+
+MAP NOTES:
+• Room 1: [Entrance area description and features]
+• Room 2: [First chamber contents and encounters]
+• Room 3: [Central area with boss positioning]
+• Room 4: [Treasure location and guardians]
+• Room 5: [Secret areas and hidden passages]
+• [Additional rooms as appropriate to ${rift.rank} Rank complexity]
+
+READ-ALOUD ENTRY:
+"[Detailed description of what players see, hear, and smell as they first approach and enter the Rift, setting the tone and atmosphere for the adventure within]"`;
+    
     navigator.clipboard.writeText(text);
     toast({
       title: 'Copied',
-      description: 'Rift details copied to clipboard.',
+      description: 'Complete Rift dossier copied to clipboard.',
     });
   };
 
