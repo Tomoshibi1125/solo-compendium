@@ -1,4 +1,4 @@
-// Solo Leveling Runes Compendium — Consumable Skill Stones
+// System Ascendant Runes Compendium — Consumable Skill Stones
 // One-time use items that permanently teach abilities when absorbed.
 // Cross-type absorption (caster absorbing martial, or vice versa) limits
 // the learned ability to proficiency-bonus uses per long rest.
@@ -584,8 +584,8 @@ export const runesCompendium: Rune[] = [
 export const runes = runesCompendium;
 export default runesCompendium;
 
-// ── Solo Leveling Rune Compendium (DB-schema compatible) ────────────────
-export const soloLevelingRunes: RuneCompendiumEntry[] = [
+// ── System Ascendant Rune Compendium (DB-schema compatible) ────────────────
+export const systemAscendantRunes: RuneCompendiumEntry[] = [
   // ── MARTIAL RUNES (D-Rank / Common) ───────────────────────────────────
   {
     id: 'rune-iron-cleave',

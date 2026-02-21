@@ -251,7 +251,7 @@ export function applyRuneBonuses(
 }
 
 // ---------------------------------------------------------------------------
-// Solo Leveling Rune Absorption — cross-type resolution
+// System Ascendant Rune Absorption — cross-type resolution
 // ---------------------------------------------------------------------------
 
 const CASTER_JOBS = ['Mage', 'Esper', 'Healer', 'Herald', 'Necromancer', 'Warlock', 'Technomancer'];
@@ -276,7 +276,7 @@ export type RuneAbsorptionResult = {
 /**
  * Determine how a rune's ability should be adapted when absorbed.
  *
- * Solo Leveling model: runes are one-time-use skill books.
+ * System Ascendant model: runes are one-time-use skill books.
  *
  * Same-type (martial absorbs martial, caster absorbs caster): ability works
  * as defined by the rune (at-will or its native uses).

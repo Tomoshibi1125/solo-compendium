@@ -982,7 +982,7 @@ CORE RULES CONTEXT:
 - Classes are called "Jobs" (e.g., Warrior, Mage, Assassin, Esper, Oracle, Crusader, Contractor, Stalker, Herald, Invoker, Resonant, Technomancer, Revenant, Healer, Warden, Ranger, Techsmith, Holy Knight, Berserker, Bulwark, Striker).
 - Subclasses are called "Paths". The DM is called "Warden".
 - Regents (formerly Monarchs) are quest/DM-gated power overlays unlocked through quests, not level gates. Two regents unlock the Gemini Protocol (sovereign fusion).
-- Runes follow the Solo Leveling model: one-time-use consumable skill books that permanently teach abilities when absorbed. Cross-type absorption adapts the ability (martial absorbs spell → physical technique; caster absorbs martial → magical construct) with proficiency bonus uses per long rest.
+- Runes follow the System Ascendant model: one-time-use consumable skill books that permanently teach abilities when absorbed. Cross-type absorption adapts the ability (martial absorbs spell → physical technique; caster absorbs martial → magical construct) with proficiency bonus uses per long rest.
 - Shadow Soldiers require the Umbral Regent unlock. System Favor replaces Inspiration.
 - Equipment uses 5e armor rules: light (base + AGI), medium (base + min(AGI,2)), heavy (fixed AC, no AGI). Max 3 attuned items.
 

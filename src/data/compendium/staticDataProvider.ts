@@ -18,7 +18,7 @@ const dataLoaders = {
   spells: () => import('./spells').then((module) => module.spells),
   locations: () => import('./locations').then((module) => module.locations),
   runesCompendium: () => import('./runes').then((module) => module.runesCompendium),
-  soloLevelingRunes: () => import('./runes').then((module) => module.soloLevelingRunes),
+  systemAscendantRunes: () => import('./runes').then((module) => module.systemAscendantRunes),
   backgrounds: () => import('./backgrounds').then((module) => module.backgrounds),
   monarchs: () => import('./monarchs').then((module) => module.monarchs),
   regents: () => import('./regents').then((module) => module.regents),
@@ -348,7 +348,7 @@ type StaticRuneSource = {
   rarity?: string;
   image?: string;
   power?: number;
-  // Solo Leveling fields
+  // System Ascendant rune fields
   effect_description?: string;
   rune_type?: string;
   rune_category?: string;
@@ -884,7 +884,7 @@ export const staticDataProvider: StaticDataProvider = {
   getRunes: async (search?: string) => {
     const [legacyRunes, slRunes] = await Promise.all([
       loadData<StaticRuneSource>('runesCompendium'),
-      loadData<StaticRuneSource>('soloLevelingRunes'),
+      loadData<StaticRuneSource>('systemAscendantRunes'),
     ]);
     const combined = [...slRunes, ...legacyRunes];
     const filtered = filterBySearch(combined, search, ['name', 'description']);

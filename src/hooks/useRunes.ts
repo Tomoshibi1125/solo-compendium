@@ -464,7 +464,7 @@ export function useLearnRune() {
   });
 }
 
-// Absorb a rune — Solo Leveling style one-time consumption
+// Absorb a rune — System Ascendant style one-time consumption
 // Permanently teaches the rune's ability as a character_feature.
 // Cross-type absorption (caster absorbs martial or vice versa) limits uses per rest.
 export function useAbsorbRune() {
