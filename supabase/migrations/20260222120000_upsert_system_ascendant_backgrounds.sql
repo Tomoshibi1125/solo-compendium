@@ -2,13 +2,12 @@
 -- Replaces any generic/sparse backgrounds with richly detailed SA-flavored content
 
 INSERT INTO compendium_backgrounds (
-  id, name, description, feature_name, feature_description,
+  name, description, feature_name, feature_description,
   skill_proficiencies, tool_proficiencies, starting_equipment, starting_credits,
   language_count, personality_traits, ideals, bonds, flaws,
   source_book, source_kind, tags, theme_tags
 ) VALUES
 (
-  'shadow-realm-exile',
   'Shadow Realm Exile',
   'You survived exile in the shadow realm—a dimension of perpetual twilight where predators stalk the unwary. The experience scarred your mind and body, but you emerged with abilities others can only dream of.',
   'Shadow Affinity',
@@ -47,7 +46,6 @@ INSERT INTO compendium_backgrounds (
   ARRAY['dark','shadow','survival']
 ),
 (
-  'gate-survivor',
   'Rift Survivor',
   'You survived a catastrophic rift event that claimed the lives of countless others. The raw dimensional energy seared your body and mind, but you emerged changed—tougher, sharper, and haunted by the screams of those who weren''t so fortunate.',
   'Rift Sense',
@@ -86,7 +84,6 @@ INSERT INTO compendium_backgrounds (
   ARRAY['survival','resilience','dimensional']
 ),
 (
-  'hunter-academy-graduate',
   'Ascendant Academy Graduate',
   'You graduated from the prestigious Ascendant Academy, receiving formal training in combat, magic, and dimensional theory. The Academy''s rigorous curriculum covered rift classification, monster taxonomy, essence manipulation, and tactical coordination.',
   'Academy Credentials',
@@ -125,7 +122,6 @@ INSERT INTO compendium_backgrounds (
   ARRAY['academic','knowledge','formal']
 ),
 (
-  'guild-master',
   'Guild Master',
   'You have led or managed an ascendant guild, taking responsibility for organizing raids, managing resources, and training new ascendants. You''ve balanced budgets, mediated disputes, and sent people into rifts knowing some might not return.',
   'Guild Authority',
@@ -164,7 +160,6 @@ INSERT INTO compendium_backgrounds (
   ARRAY['leadership','social','tactical']
 ),
 (
-  'dimensional-traveler',
   'Dimensional Traveler',
   'You have journeyed between dimensions, either by choice or necessity. You''ve seen worlds of fire and worlds of crystal silence. These experiences have given you a unique perspective on reality and the ability to navigate the spaces between worlds.',
   'Planar Pathfinder',
@@ -203,7 +198,6 @@ INSERT INTO compendium_backgrounds (
   ARRAY['exploration','dimensional','wanderer']
 ),
 (
-  'essence-user',
   'Essence User',
   'You possess the rare ability to manipulate essence directly, without the need for complex spells or rituals. This natural talent makes you exceptionally powerful but also draws dangerous attention from those who would exploit or study your gift.',
   'Essence Sensitivity',
@@ -242,7 +236,6 @@ INSERT INTO compendium_backgrounds (
   ARRAY['magical','essence','innate']
 ),
 (
-  'monarchs-chosen',
   'Regent''s Chosen',
   'You have been selected by a regent—one of the immensely powerful dimensional entities that rule vast shadow domains. This connection grants you a fragment of their authority and insight, but it comes with expectations and obligations that weigh heavily on your soul.',
   'Regent''s Mark',
@@ -281,7 +274,6 @@ INSERT INTO compendium_backgrounds (
   ARRAY['regent','shadow','power']
 ),
 (
-  'shadow-soldier',
   'Umbral Legionnaire',
   'You served as a legionnaire in the umbral legions, the disciplined military force that fights to hold the line against dimensional incursions. Your combat experience is extensive and you understand the art of warfare better than most.',
   'Legion Discipline',
@@ -320,7 +312,6 @@ INSERT INTO compendium_backgrounds (
   ARRAY['military','combat','discipline']
 ),
 (
-  'rune-master',
   'Rune Master',
   'You have mastered the ancient art of rune crafting, able to inscribe magical symbols that produce powerful effects. Your knowledge of runes makes you invaluable for enchantment and protection work.',
   'Rune Lore',
@@ -359,7 +350,6 @@ INSERT INTO compendium_backgrounds (
   ARRAY['rune','crafting','knowledge']
 ),
 (
-  'artifact-keeper',
   'Artifact Keeper',
   'You have been entrusted with the care and protection of powerful magical artifacts—relics of fallen civilizations, weapons of legendary heroes, and objects of terrible purpose. This sacred responsibility has given you deep knowledge of ancient items and the dangers they possess.',
   'Artifact Attunement',
@@ -398,7 +388,6 @@ INSERT INTO compendium_backgrounds (
   ARRAY['artifact','guardian','knowledge']
 ),
 (
-  'dragon-slayer',
   'Dragon Slayer',
   'You have successfully hunted and killed dragons—among the most feared entities that emerge from high-rank rifts. These legendary feats earned you both respect and enmity. You know where to strike, when to dodge, and how to use a dragon''s own elemental fury against it.',
   'Dragon Sense',
@@ -437,7 +426,6 @@ INSERT INTO compendium_backgrounds (
   ARRAY['combat','hunter','legendary']
 ),
 (
-  'demon-hunter',
   'Demon Slayer',
   'You specialize in hunting demonic entities, understanding their nature and knowing how to banish them permanently. Your expertise makes you the first line of defense against demonic incursions, but the work takes its toll on body and soul alike.',
   'Demon Lore',
@@ -476,7 +464,6 @@ INSERT INTO compendium_backgrounds (
   ARRAY['combat','holy','demon']
 ),
 (
-  'time-walker',
   'Time Walker',
   'You have experienced temporal anomalies that shattered your linear perception of time. You''ve seen moments that haven''t happened yet, relived days that already passed, and occasionally lost weeks entirely. These experiences give you insights that others cannot comprehend.',
   'Temporal Intuition',
@@ -515,7 +502,6 @@ INSERT INTO compendium_backgrounds (
   ARRAY['temporal','mysterious','arcane']
 ),
 (
-  'reality-bender',
   'Reality Bender',
   'You can perceive and manipulate the fundamental fabric of reality itself. This rare ability manifested after exposure to a rift event that tore the dimensional membrane, leaving you permanently attuned to the scaffolding beneath the world.',
   'Reality Sight',
@@ -554,7 +540,6 @@ INSERT INTO compendium_backgrounds (
   ARRAY['reality','perception','arcane']
 ),
 (
-  'void-touched',
   'Void Touched',
   'You have been exposed to the pure void between dimensions—the absolute nothingness that exists where reality ends. Most who touch the void are unmade entirely. You survived, but you were changed in fundamental ways.',
   'Void Touched',
@@ -593,7 +578,6 @@ INSERT INTO compendium_backgrounds (
   ARRAY['void','shadow','dark']
 ),
 (
-  'star-born',
   'Star Born',
   'You were born under a cosmic alignment—or perhaps you came from beyond the stars entirely, a fragment of celestial intelligence given mortal form. You possess knowledge and abilities that transcend normal mortal understanding.',
   'Stellar Knowledge',
@@ -632,7 +616,6 @@ INSERT INTO compendium_backgrounds (
   ARRAY['celestial','cosmic','radiant']
 ),
 (
-  'ancient-guardian',
   'Ancient Guardian',
   'You are an ancient being tasked with protecting something of immense importance. Your long life has given you wisdom and perspective that few can match, but it has also left you disconnected from the rapid pace of modern times.',
   'Ancient Vigil',
@@ -671,7 +654,6 @@ INSERT INTO compendium_backgrounds (
   ARRAY['ancient','guardian','protective']
 ),
 (
-  'forgotten-king',
   'Forgotten King',
   'You once ruled a kingdom that has been lost to time—whether through conquest, catastrophe, or dimensional displacement. Your crown is gone, your subjects scattered or dead, and your palace exists only in your memory. But your royal bearing and leadership experience remain.',
   'Royal Bearing',
@@ -710,7 +692,6 @@ INSERT INTO compendium_backgrounds (
   ARRAY['noble','leadership','regal']
 ),
 (
-  'champion-of-light',
   'Champion of Light',
   'You have been chosen as a champion of radiant power—a beacon against the encroaching darkness of corrupted rifts and shadow entities. Whether anointed by a divine being, awakened through a near-death experience, or simply born with an inner light, you carry a responsibility that transcends personal ambition.',
   'Radiant Aura',
@@ -749,7 +730,6 @@ INSERT INTO compendium_backgrounds (
   ARRAY['radiant','holy','champion']
 ),
 (
-  'bringer-of-dawn',
   'Bringer of Dawn',
   'You are a beacon of hope in a world increasingly consumed by shadow and dimensional horror. Whether through song, story, healing, or simply your unwavering presence, you bring light to dark places and courage to the despairing.',
   'Dawn''s Inspiration',
@@ -788,7 +768,6 @@ INSERT INTO compendium_backgrounds (
   ARRAY['hope','inspiration','light']
 ),
 (
-  'eternal-watcher',
   'Eternal Watcher',
   'You have been tasked with observing important events or places across time. This vigil has given you incredible perception and an unmatched understanding of patterns in history—but it has also isolated you from normal life.',
   'Vigilant Eye',
@@ -827,7 +806,6 @@ INSERT INTO compendium_backgrounds (
   ARRAY['observation','eternal','perception']
 ),
 (
-  'cosmic-wanderer',
   'Cosmic Wanderer',
   'You travel between worlds and dimensions as a wanderer, seeking knowledge, experience, and the ineffable something that drives you ever onward. Your journeys have given you cosmic perspective, diverse survival skills, and a collection of stories that would fill a library.',
   'Wanderer''s Wisdom',
@@ -865,8 +843,7 @@ INSERT INTO compendium_backgrounds (
   ARRAY['wanderer','cosmic','traveler','survival'],
   ARRAY['wanderer','cosmic','survival']
 )
-ON CONFLICT (id) DO UPDATE SET
-  name = EXCLUDED.name,
+ON CONFLICT (name) DO UPDATE SET
   description = EXCLUDED.description,
   feature_name = EXCLUDED.feature_name,
   feature_description = EXCLUDED.feature_description,
