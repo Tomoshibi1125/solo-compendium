@@ -165,7 +165,7 @@ export class AIContentGenerator {
     const tags: string[] = [];
     const tagPatterns: Record<string, RegExp> = {
       combat: /combat|battle|fight|attack|damage/i,
-      magic: /magic|spell|arcane|wizard|sorcery/i,
+      magic: /magic|spell|arcane|wizard|mage|sorcery|esper/i,
       social: /social|dialogue|conversation|persuasion/i,
       exploration: /exploration|dungeon|wilderness|travel/i,
       mystery: /mystery|secret|puzzle|investigation/i,

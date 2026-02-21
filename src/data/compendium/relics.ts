@@ -259,7 +259,7 @@ export const relics: Relic[] = [
     lore: {
       origin: 'Forged in the Abyss by shadow smiths using materials from defeated shadow lords',
       history: 'This armor has protected many powerful shadow warriors throughout the ages, each adding their own essence to its power.',
-      previousOwners: ['Shadow Knight Commander', 'Dark Paladin Vorlag', 'Shadow Warlord Zara']
+      previousOwners: ['Shadow Knight Commander', 'Dark Herald Vorlag', 'Shadow Warlord Zara']
     },
     mechanics: {
       bonus: {
@@ -3491,7 +3491,7 @@ export const relics: Relic[] = [
       }
     ],
     lore: {
-      origin: 'Created by a master artificer who wanted to defy gravity',
+      origin: 'Created by a master techsmith who wanted to defy gravity',
       history: 'This rod has been used in countless construction and escape projects.'
     },
     mechanics: {
@@ -3534,7 +3534,7 @@ export const relics: Relic[] = [
       }
     ],
     lore: {
-      origin: 'Created by a paladin who hunted invisible monsters',
+      origin: 'Created by a herald who hunted invisible monsters',
       history: 'This lantern has been used by monster ascendants and investigators.'
     },
     mechanics: {
@@ -3891,7 +3891,7 @@ export const relics: Relic[] = [
       }
     ],
     lore: {
-      origin: 'Created by a master artificer who perfected dimensional magic',
+      origin: 'Created by a master techsmith who perfected dimensional magic',
       history: 'This portable hole has been used by adventurers for centuries.'
     },
     mechanics: {
@@ -3975,7 +3975,7 @@ export const relics: Relic[] = [
       }
     ],
     lore: {
-      origin: 'Created by a clever artificer who hated being unprepared',
+      origin: 'Created by a clever techsmith who hated being unprepared',
       history: 'This robe has saved many adventurers from dangerous situations.'
     },
     mechanics: {
@@ -4016,7 +4016,7 @@ export const relics: Relic[] = [
       }
     ],
     lore: {
-      origin: 'Created by a master artificer who perfected storage magic',
+      origin: 'Created by a master techsmith who perfected storage magic',
       history: 'This bag has been used by adventurers and merchants for centuries.'
     },
     mechanics: {

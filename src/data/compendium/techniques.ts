@@ -956,7 +956,7 @@ export const techniques: Technique[] = [
     style: 'weapon',
     prerequisites: {
       level: 17,
-      class: 'Paladin',
+      class: 'Herald',
       technique: ['Divine Smite']
     },
     activation: {
@@ -969,7 +969,7 @@ export const techniques: Technique[] = [
     effects: {
       primary: 'Attack with advantage and add 8d8 radiant damage.',
       secondary: 'If the target is an evil creature, it must make Constitution saving throw or die.',
-      tertiary: 'If the target dies, you and all allies within 30 feet gain temporary hit points equal to your paladin level.'
+      tertiary: 'If the target dies, you and all allies within 30 feet gain temporary hit points equal to your herald level.'
     },
     mechanics: {
       attack: {

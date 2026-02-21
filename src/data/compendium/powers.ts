@@ -317,14 +317,14 @@ export const powers: Power[] = [
     type: 'class',
     rarity: 'common',
     requirements: {
-      class: 'Monk'
+      class: 'Martial Artist'
     },
     activation: {
       type: 'passive'
     },
     effects: {
-      primary: 'Gain a pool of ki points equal to your monk level.',
-      secondary: 'Can spend ki points to use various monk abilities.'
+      primary: 'Gain a pool of ki points equal to your martial artist level.',
+      secondary: 'Can spend ki points to use various martial artist abilities.'
     },
     limitations: {
       uses: 'Regain all ki points after a long rest'
@@ -340,14 +340,14 @@ export const powers: Power[] = [
     type: 'class',
     rarity: 'rare',
     requirements: {
-      class: 'Paladin',
+      class: 'Herald',
       level: 2
     },
     activation: {
       type: 'reaction'
     },
     effects: {
-      primary: 'Add radiant damage equal to 2d8 + paladin level to a melee weapon hit.',
+      primary: 'Add radiant damage equal to 2d8 + herald level to a melee weapon hit.',
       secondary: 'Extra damage increases to 3d8 at 11th level and 4d8 at 17th level.'
     },
     limitations: {
@@ -620,7 +620,7 @@ export const powers: Power[] = [
     rarity: 'legendary',
     requirements: {
       level: 17,
-      class: 'Paladin'
+      class: 'Herald'
     },
     activation: {
       type: 'action'

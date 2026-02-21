@@ -8,7 +8,7 @@ export const items: Item[] = [
   {
     "id": "item-0001",
     "name": "Shadow Blade of Kael",
-    "description": "An awakened weapon recovered from a master artificer. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+    "description": "An awakened weapon recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0001.webp",
@@ -99,7 +99,7 @@ export const items: Item[] = [
   {
     "id": "item-0003",
     "name": "Void Blade of Kael",
-    "description": "An blessed consumable recovered from a master artificer. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An blessed consumable recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0003.webp",
@@ -171,7 +171,7 @@ export const items: Item[] = [
   {
     "id": "item-0006",
     "name": "Celestial Blade of Kael",
-    "description": "An blessed weapon recovered from a master artificer. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An blessed weapon recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0006.webp",
@@ -251,7 +251,7 @@ export const items: Item[] = [
   {
     "id": "item-0009",
     "name": "Forgotten Blade of Kael",
-    "description": "An crafted accessory recovered from a master artificer. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An crafted accessory recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0009.webp",
@@ -355,7 +355,7 @@ export const items: Item[] = [
   {
     "id": "item-0013",
     "name": "Profane Blade of Kael",
-    "description": "An forged consumable recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An forged consumable recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0013.webp",
@@ -483,7 +483,7 @@ export const items: Item[] = [
   {
     "id": "item-0018",
     "name": "Thunder Blade of Kael",
-    "description": "An forged consumable recovered from a master artificer. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An forged consumable recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0018.webp",
@@ -507,7 +507,7 @@ export const items: Item[] = [
   {
     "id": "item-0019",
     "name": "Holy Blade of Kael",
-    "description": "An cursed accessory recovered from a master artificer. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An cursed accessory recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0019.webp",
@@ -739,7 +739,7 @@ export const items: Item[] = [
   {
     "id": "item-0028",
     "name": "Ancient Sword of Kael",
-    "description": "An ancient consumable recovered from a master artificer. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An ancient consumable recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0028.webp",
@@ -811,7 +811,7 @@ export const items: Item[] = [
   {
     "id": "item-0031",
     "name": "Blessed Sword of Kael",
-    "description": "An ancient weapon recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An ancient weapon recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0031.webp",
@@ -867,7 +867,7 @@ export const items: Item[] = [
   {
     "id": "item-0033",
     "name": "Profane Sword of Kael",
-    "description": "An crafted consumable recovered from a master artificer. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An crafted consumable recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0033.webp",
@@ -966,7 +966,7 @@ export const items: Item[] = [
   {
     "id": "item-0037",
     "name": "Frozen Sword of Kael",
-    "description": "An imbued armor recovered from a master artificer. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An imbued armor recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0037.webp",
@@ -1019,7 +1019,7 @@ export const items: Item[] = [
   {
     "id": "item-0039",
     "name": "Holy Sword of Kael",
-    "description": "An crafted accessory recovered from a master artificer. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An crafted accessory recovered from a master techsmith. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0039.webp",
@@ -1148,7 +1148,7 @@ export const items: Item[] = [
   {
     "id": "item-0044",
     "name": "Abyssal Dagger of Kael",
-    "description": "An ancient accessory recovered from a master artificer. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An ancient accessory recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0044.webp",
@@ -1196,7 +1196,7 @@ export const items: Item[] = [
   {
     "id": "item-0046",
     "name": "Celestial Dagger of Kael",
-    "description": "An crafted weapon recovered from a master artificer. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An crafted weapon recovered from a master techsmith. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0046.webp",
@@ -1511,7 +1511,7 @@ export const items: Item[] = [
   {
     "id": "item-0058",
     "name": "Thunder Dagger of Kael",
-    "description": "An ancient consumable recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An ancient consumable recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0058.webp",
@@ -1535,7 +1535,7 @@ export const items: Item[] = [
   {
     "id": "item-0059",
     "name": "Holy Dagger of Kael",
-    "description": "An cursed accessory recovered from a master artificer. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An cursed accessory recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0059.webp",
@@ -1639,7 +1639,7 @@ export const items: Item[] = [
   {
     "id": "item-0063",
     "name": "Void Axe of Kael",
-    "description": "An enchanted consumable recovered from a master artificer. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An enchanted consumable recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0063.webp",
@@ -1767,7 +1767,7 @@ export const items: Item[] = [
   {
     "id": "item-0068",
     "name": "Ancient Axe of Kael",
-    "description": "An crafted consumable recovered from a master artificer. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An crafted consumable recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0068.webp",
@@ -1994,7 +1994,7 @@ export const items: Item[] = [
   {
     "id": "item-0077",
     "name": "Frozen Axe of Kael",
-    "description": "An enchanted armor recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An enchanted armor recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0077.webp",
@@ -2047,7 +2047,7 @@ export const items: Item[] = [
   {
     "id": "item-0079",
     "name": "Holy Axe of Kael",
-    "description": "An cursed accessory recovered from a master artificer. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An cursed accessory recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0079.webp",
@@ -2122,7 +2122,7 @@ export const items: Item[] = [
   {
     "id": "item-0082",
     "name": "Eternal Hammer of Kael",
-    "description": "An enchanted armor recovered from a master artificer. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An enchanted armor recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0082.webp",
@@ -2327,7 +2327,7 @@ export const items: Item[] = [
   {
     "id": "item-0090",
     "name": "Cursed Hammer of Kael",
-    "description": "An blessed scroll recovered from a master artificer. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+    "description": "An blessed scroll recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0090.webp",
@@ -2455,7 +2455,7 @@ export const items: Item[] = [
   {
     "id": "item-0095",
     "name": "Arcane Hammer of Kael",
-    "description": "An crafted scroll recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+    "description": "An crafted scroll recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0095.webp",
@@ -2506,7 +2506,7 @@ export const items: Item[] = [
   {
     "id": "item-0097",
     "name": "Frozen Hammer of Kael",
-    "description": "An cursed armor recovered from a master artificer. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An cursed armor recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0097.webp",
@@ -2736,7 +2736,7 @@ export const items: Item[] = [
   {
     "id": "item-0106",
     "name": "Celestial Staff of Kael",
-    "description": "An forged weapon recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An forged weapon recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0106.webp",
@@ -2893,7 +2893,7 @@ export const items: Item[] = [
   {
     "id": "item-0112",
     "name": "Sacred Staff of Kael",
-    "description": "An blessed armor recovered from a master artificer. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An blessed armor recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0112.webp",
@@ -2946,7 +2946,7 @@ export const items: Item[] = [
   {
     "id": "item-0114",
     "name": "Mystic Staff of Kael",
-    "description": "An ancient accessory recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An ancient accessory recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0114.webp",
@@ -3075,7 +3075,7 @@ export const items: Item[] = [
   {
     "id": "item-0119",
     "name": "Holy Staff of Kael",
-    "description": "An enchanted accessory recovered from a master artificer. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An enchanted accessory recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0119.webp",
@@ -3309,7 +3309,7 @@ export const items: Item[] = [
   {
     "id": "item-0128",
     "name": "Ancient Wand of Kael",
-    "description": "An blessed consumable recovered from a master artificer. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An blessed consumable recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0128.webp",
@@ -3615,7 +3615,7 @@ export const items: Item[] = [
   {
     "id": "item-0140",
     "name": "Dark Wand of Kael",
-    "description": "An forged scroll recovered from a master artificer. Infused with thunder energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+    "description": "An forged scroll recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0140.webp",
@@ -3895,7 +3895,7 @@ export const items: Item[] = [
   {
     "id": "item-0151",
     "name": "Blessed Orb of Kael",
-    "description": "An imbued weapon recovered from a master artificer. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An imbued weapon recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0151.webp",
@@ -3922,7 +3922,7 @@ export const items: Item[] = [
   {
     "id": "item-0152",
     "name": "Sacred Orb of Kael",
-    "description": "An ancient armor recovered from a master artificer. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An ancient armor recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0152.webp",
@@ -4151,7 +4151,7 @@ export const items: Item[] = [
   {
     "id": "item-0161",
     "name": "Shadow Armor of Kael",
-    "description": "An ancient weapon recovered from a master artificer. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An ancient weapon recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0161.webp",
@@ -4255,7 +4255,7 @@ export const items: Item[] = [
   {
     "id": "item-0165",
     "name": "Demonic Armor of Kael",
-    "description": "An imbued scroll recovered from a master artificer. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+    "description": "An imbued scroll recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0165.webp",
@@ -4407,7 +4407,7 @@ export const items: Item[] = [
   {
     "id": "item-0171",
     "name": "Blessed Armor of Kael",
-    "description": "An imbued weapon recovered from a master artificer. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An imbued weapon recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0171.webp",
@@ -4639,7 +4639,7 @@ export const items: Item[] = [
   {
     "id": "item-0180",
     "name": "Dark Armor of Kael",
-    "description": "An imbued scroll recovered from a master artificer. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+    "description": "An imbued scroll recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0180.webp",
@@ -4690,7 +4690,7 @@ export const items: Item[] = [
   {
     "id": "item-0182",
     "name": "Eternal Shield of Kael",
-    "description": "An blessed armor recovered from a master artificer. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An blessed armor recovered from a master techsmith. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0182.webp",
@@ -4791,7 +4791,7 @@ export const items: Item[] = [
   {
     "id": "item-0186",
     "name": "Celestial Shield of Kael",
-    "description": "An enchanted weapon recovered from a master artificer. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An enchanted weapon recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0186.webp",
@@ -5103,7 +5103,7 @@ export const items: Item[] = [
   {
     "id": "item-0198",
     "name": "Thunder Shield of Kael",
-    "description": "An ancient consumable recovered from a master artificer. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An ancient consumable recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0198.webp",

@@ -368,7 +368,7 @@ export const comprehensiveRelics: Relic[] = [
     lore: {
       origin: 'Forged in the Abyss by shadow smiths using materials from defeated shadow lords',
       history: 'This armor has protected many powerful shadow warriors throughout the ages, each adding their own essence to its power.',
-      previousOwners: ['Shadow Knight Commander', 'Dark Paladin Vorlag', 'Shadow Warlord Zara']
+      previousOwners: ['Shadow Knight Commander', 'Dark Herald Vorlag', 'Shadow Warlord Zara']
     },
     mechanics: {
       bonus: {

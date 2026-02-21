@@ -216,7 +216,7 @@ export const items: Item[] = [
   {
     "id": "item-0409",
     "name": "Forgotten Soul of Kael",
-    "description": "An imbued accessory recovered from a master artificer. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An imbued accessory recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0409.webp",
@@ -320,7 +320,7 @@ export const items: Item[] = [
   {
     "id": "item-0413",
     "name": "Profane Soul of Kael",
-    "description": "An blessed consumable recovered from a master artificer. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An blessed consumable recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0413.webp",
@@ -496,7 +496,7 @@ export const items: Item[] = [
   {
     "id": "item-0420",
     "name": "Dark Soul of Kael",
-    "description": "An cursed scroll recovered from a master artificer. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+    "description": "An cursed scroll recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0420.webp",
@@ -675,7 +675,7 @@ export const items: Item[] = [
   {
     "id": "item-0427",
     "name": "Divine Core of Kael",
-    "description": "An imbued armor recovered from a master artificer. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An imbued armor recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0427.webp",
@@ -752,7 +752,7 @@ export const items: Item[] = [
   {
     "id": "item-0430",
     "name": "Cursed Core of Kael",
-    "description": "An enchanted scroll recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+    "description": "An enchanted scroll recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0430.webp",
@@ -904,7 +904,7 @@ export const items: Item[] = [
   {
     "id": "item-0436",
     "name": "Infernal Core of Kael",
-    "description": "An ancient weapon recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An ancient weapon recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0436.webp",
@@ -1032,7 +1032,7 @@ export const items: Item[] = [
   {
     "id": "item-0441",
     "name": "Shadow Blade of the Umbral Monarch",
-    "description": "An blessed weapon recovered from a master artificer. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An blessed weapon recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0441.webp",
@@ -1392,7 +1392,7 @@ export const items: Item[] = [
   {
     "id": "item-0455",
     "name": "Arcane Blade of the Umbral Monarch",
-    "description": "An imbued scroll recovered from a master artificer. Infused with lightning energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+    "description": "An imbued scroll recovered from a master techsmith. Infused with lightning energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0455.webp",
@@ -1416,7 +1416,7 @@ export const items: Item[] = [
   {
     "id": "item-0456",
     "name": "Infernal Blade of the Umbral Monarch",
-    "description": "An cursed weapon recovered from a master artificer. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An cursed weapon recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0456.webp",
@@ -1496,7 +1496,7 @@ export const items: Item[] = [
   {
     "id": "item-0459",
     "name": "Holy Blade of the Umbral Monarch",
-    "description": "An awakened accessory recovered from a master artificer. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An awakened accessory recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0459.webp",
@@ -1544,7 +1544,7 @@ export const items: Item[] = [
   {
     "id": "item-0461",
     "name": "Shadow Sword of the Umbral Monarch",
-    "description": "An forged weapon recovered from a master artificer. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An forged weapon recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0461.webp",
@@ -1571,7 +1571,7 @@ export const items: Item[] = [
   {
     "id": "item-0462",
     "name": "Eternal Sword of the Umbral Monarch",
-    "description": "An awakened armor recovered from a master artificer. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An awakened armor recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0462.webp",
@@ -1624,7 +1624,7 @@ export const items: Item[] = [
   {
     "id": "item-0464",
     "name": "Abyssal Sword of the Umbral Monarch",
-    "description": "An forged accessory recovered from a master artificer. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An forged accessory recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0464.webp",
@@ -1699,7 +1699,7 @@ export const items: Item[] = [
   {
     "id": "item-0467",
     "name": "Divine Sword of the Umbral Monarch",
-    "description": "An forged armor recovered from a master artificer. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An forged armor recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0467.webp",
@@ -1856,7 +1856,7 @@ export const items: Item[] = [
   {
     "id": "item-0473",
     "name": "Profane Sword of the Umbral Monarch",
-    "description": "An enchanted consumable recovered from a master artificer. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An enchanted consumable recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0473.webp",
@@ -1928,7 +1928,7 @@ export const items: Item[] = [
   {
     "id": "item-0476",
     "name": "Infernal Sword of the Umbral Monarch",
-    "description": "An blessed weapon recovered from a master artificer. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An blessed weapon recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0476.webp",
@@ -1955,7 +1955,7 @@ export const items: Item[] = [
   {
     "id": "item-0477",
     "name": "Frozen Sword of the Umbral Monarch",
-    "description": "An forged armor recovered from a master artificer. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An forged armor recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0477.webp",
@@ -2161,7 +2161,7 @@ export const items: Item[] = [
   {
     "id": "item-0485",
     "name": "Demonic Dagger of the Umbral Monarch",
-    "description": "An ancient scroll recovered from a master artificer. Infused with poison energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+    "description": "An ancient scroll recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0485.webp",
@@ -2500,7 +2500,7 @@ export const items: Item[] = [
   {
     "id": "item-0498",
     "name": "Thunder Dagger of the Umbral Monarch",
-    "description": "An cursed consumable recovered from a master artificer. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An cursed consumable recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0498.webp",
@@ -2700,7 +2700,7 @@ export const items: Item[] = [
   {
     "id": "item-0506",
     "name": "Celestial Axe of the Umbral Monarch",
-    "description": "An ancient weapon recovered from a master artificer. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An ancient weapon recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0506.webp",
@@ -2727,7 +2727,7 @@ export const items: Item[] = [
   {
     "id": "item-0507",
     "name": "Divine Axe of the Umbral Monarch",
-    "description": "An enchanted armor recovered from a master artificer. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An enchanted armor recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0507.webp",
@@ -2780,7 +2780,7 @@ export const items: Item[] = [
   {
     "id": "item-0509",
     "name": "Forgotten Axe of the Umbral Monarch",
-    "description": "An forged accessory recovered from a master artificer. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An forged accessory recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0509.webp",
@@ -3140,7 +3140,7 @@ export const items: Item[] = [
   {
     "id": "item-0523",
     "name": "Void Hammer of the Umbral Monarch",
-    "description": "An awakened consumable recovered from a master artificer. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An awakened consumable recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0523.webp",
@@ -3212,7 +3212,7 @@ export const items: Item[] = [
   {
     "id": "item-0526",
     "name": "Celestial Hammer of the Umbral Monarch",
-    "description": "An forged weapon recovered from a master artificer. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An forged weapon recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0526.webp",
@@ -3396,7 +3396,7 @@ export const items: Item[] = [
   {
     "id": "item-0533",
     "name": "Profane Hammer of the Umbral Monarch",
-    "description": "An imbued consumable recovered from a master artificer. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An imbued consumable recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0533.webp",
@@ -3444,7 +3444,7 @@ export const items: Item[] = [
   {
     "id": "item-0535",
     "name": "Arcane Hammer of the Umbral Monarch",
-    "description": "An crafted scroll recovered from a master artificer. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+    "description": "An crafted scroll recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0535.webp",
@@ -3495,7 +3495,7 @@ export const items: Item[] = [
   {
     "id": "item-0537",
     "name": "Frozen Hammer of the Umbral Monarch",
-    "description": "An forged armor recovered from a master artificer. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An forged armor recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0537.webp",
@@ -3572,7 +3572,7 @@ export const items: Item[] = [
   {
     "id": "item-0540",
     "name": "Dark Hammer of the Umbral Monarch",
-    "description": "An imbued scroll recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+    "description": "An imbued scroll recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0540.webp",
@@ -3596,7 +3596,7 @@ export const items: Item[] = [
   {
     "id": "item-0541",
     "name": "Shadow Staff of the Umbral Monarch",
-    "description": "An crafted weapon recovered from a master artificer. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An crafted weapon recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0541.webp",
@@ -3653,7 +3653,7 @@ export const items: Item[] = [
   {
     "id": "item-0543",
     "name": "Void Staff of the Umbral Monarch",
-    "description": "An cursed consumable recovered from a master artificer. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An cursed consumable recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0543.webp",
@@ -3701,7 +3701,7 @@ export const items: Item[] = [
   {
     "id": "item-0545",
     "name": "Demonic Staff of the Umbral Monarch",
-    "description": "An awakened scroll recovered from a master artificer. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+    "description": "An awakened scroll recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0545.webp",
@@ -3882,7 +3882,7 @@ export const items: Item[] = [
   {
     "id": "item-0552",
     "name": "Sacred Staff of the Umbral Monarch",
-    "description": "An cursed armor recovered from a master artificer. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An cursed armor recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0552.webp",
@@ -3935,7 +3935,7 @@ export const items: Item[] = [
   {
     "id": "item-0554",
     "name": "Mystic Staff of the Umbral Monarch",
-    "description": "An enchanted accessory recovered from a master artificer. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An enchanted accessory recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0554.webp",
@@ -4011,7 +4011,7 @@ export const items: Item[] = [
   {
     "id": "item-0557",
     "name": "Frozen Staff of the Umbral Monarch",
-    "description": "An awakened armor recovered from a master artificer. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An awakened armor recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0557.webp",
@@ -4269,7 +4269,7 @@ export const items: Item[] = [
   {
     "id": "item-0567",
     "name": "Divine Wand of the Umbral Monarch",
-    "description": "An ancient armor recovered from a master artificer. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An ancient armor recovered from a master techsmith. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0567.webp",
@@ -4346,7 +4346,7 @@ export const items: Item[] = [
   {
     "id": "item-0570",
     "name": "Cursed Wand of the Umbral Monarch",
-    "description": "An forged scroll recovered from a master artificer. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+    "description": "An forged scroll recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0570.webp",
@@ -4475,7 +4475,7 @@ export const items: Item[] = [
   {
     "id": "item-0575",
     "name": "Arcane Wand of the Umbral Monarch",
-    "description": "An enchanted scroll recovered from a master artificer. Infused with poison energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+    "description": "An enchanted scroll recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0575.webp",
@@ -4499,7 +4499,7 @@ export const items: Item[] = [
   {
     "id": "item-0576",
     "name": "Infernal Wand of the Umbral Monarch",
-    "description": "An cursed weapon recovered from a master artificer. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An cursed weapon recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
     "image": "/generated/compendium/items/item-0576.webp",
@@ -4684,7 +4684,7 @@ export const items: Item[] = [
   {
     "id": "item-0583",
     "name": "Void Orb of the Umbral Monarch",
-    "description": "An awakened consumable recovered from a master artificer. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An awakened consumable recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
     "image": "/generated/compendium/items/item-0583.webp",
@@ -4708,7 +4708,7 @@ export const items: Item[] = [
   {
     "id": "item-0584",
     "name": "Abyssal Orb of the Umbral Monarch",
-    "description": "An forged accessory recovered from a master artificer. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An forged accessory recovered from a master techsmith. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0584.webp",
@@ -4732,7 +4732,7 @@ export const items: Item[] = [
   {
     "id": "item-0585",
     "name": "Demonic Orb of the Umbral Monarch",
-    "description": "An cursed scroll recovered from a master artificer. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+    "description": "An cursed scroll recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0585.webp",
@@ -4836,7 +4836,7 @@ export const items: Item[] = [
   {
     "id": "item-0589",
     "name": "Forgotten Orb of the Umbral Monarch",
-    "description": "An ancient accessory recovered from a master artificer. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An ancient accessory recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
     "image": "/generated/compendium/items/item-0589.webp",
@@ -4988,7 +4988,7 @@ export const items: Item[] = [
   {
     "id": "item-0595",
     "name": "Arcane Orb of the Umbral Monarch",
-    "description": "An awakened scroll recovered from a master artificer. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
+    "description": "An awakened scroll recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
     "image": "/generated/compendium/items/item-0595.webp",
@@ -5039,7 +5039,7 @@ export const items: Item[] = [
   {
     "id": "item-0597",
     "name": "Frozen Orb of the Umbral Monarch",
-    "description": "An awakened armor recovered from a master artificer. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
+    "description": "An awakened armor recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
     "image": "/generated/compendium/items/item-0597.webp",

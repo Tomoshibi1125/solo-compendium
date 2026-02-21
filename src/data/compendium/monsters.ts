@@ -1724,7 +1724,7 @@ export const monsters = [
   },
   {
     "id": "monster-0020",
-    "name": "Eternal Celestial Paladin",
+    "name": "Eternal Celestial Herald",
     "type": "Beast",
     "rank": "S",
     "hp": 112,
@@ -3350,7 +3350,7 @@ export const monsters = [
   },
   {
     "id": "monster-0040",
-    "name": "Corrupted Celestial Paladin",
+    "name": "Corrupted Celestial Herald",
     "type": "Undead",
     "rank": "S",
     "hp": 198,
@@ -4971,7 +4971,7 @@ export const monsters = [
   },
   {
     "id": "monster-0060",
-    "name": "Blessed Celestial Paladin",
+    "name": "Blessed Celestial Herald",
     "type": "Elemental",
     "rank": "S",
     "hp": 352,
@@ -6622,7 +6622,7 @@ export const monsters = [
   },
   {
     "id": "monster-0080",
-    "name": "Cursed Celestial Paladin",
+    "name": "Cursed Celestial Herald",
     "type": "Beast",
     "rank": "S",
     "hp": 155,
@@ -8219,7 +8219,7 @@ export const monsters = [
   },
   {
     "id": "monster-0100",
-    "name": "Ancient Celestial Paladin",
+    "name": "Ancient Celestial Herald",
     "type": "Undead",
     "rank": "S",
     "hp": 752,
@@ -9834,7 +9834,7 @@ export const monsters = [
   },
   {
     "id": "monster-0120",
-    "name": "Primordial Celestial Paladin",
+    "name": "Primordial Celestial Herald",
     "type": "Elemental",
     "rank": "S",
     "hp": 101,
@@ -11456,7 +11456,7 @@ export const monsters = [
   },
   {
     "id": "monster-0140",
-    "name": "Supreme Celestial Paladin",
+    "name": "Supreme Celestial Herald",
     "type": "Beast",
     "rank": "S",
     "hp": 261,
@@ -13071,7 +13071,7 @@ export const monsters = [
   },
   {
     "id": "monster-0160",
-    "name": "Legendary Celestial Paladin",
+    "name": "Legendary Celestial Herald",
     "type": "Undead",
     "rank": "S",
     "hp": 162,
@@ -14684,7 +14684,7 @@ export const monsters = [
   },
   {
     "id": "monster-0180",
-    "name": "Mythic Celestial Paladin",
+    "name": "Mythic Celestial Herald",
     "type": "Elemental",
     "rank": "S",
     "hp": 555,
@@ -16339,7 +16339,7 @@ export const monsters = [
   },
   {
     "id": "monster-0200",
-    "name": "Divine Celestial Paladin",
+    "name": "Divine Celestial Herald",
     "type": "Beast",
     "rank": "S",
     "hp": 859,
@@ -17989,7 +17989,7 @@ export const monsters = [
   },
   {
     "id": "monster-0220",
-    "name": "Infernal Celestial Paladin",
+    "name": "Infernal Celestial Herald",
     "type": "Undead",
     "rank": "S",
     "hp": 505,
@@ -19659,7 +19659,7 @@ export const monsters = [
   },
   {
     "id": "monster-0240",
-    "name": "Celestial Celestial Paladin",
+    "name": "Celestial Celestial Herald",
     "type": "Elemental",
     "rank": "S",
     "hp": 949,
@@ -21341,7 +21341,7 @@ export const monsters = [
   },
   {
     "id": "monster-0260",
-    "name": "Eternal Celestial Paladin",
+    "name": "Eternal Celestial Herald",
     "type": "Beast",
     "rank": "S",
     "hp": 498,
@@ -22989,7 +22989,7 @@ export const monsters = [
   },
   {
     "id": "monster-0280",
-    "name": "Corrupted Celestial Paladin",
+    "name": "Corrupted Celestial Herald",
     "type": "Undead",
     "rank": "S",
     "hp": 951,
@@ -24598,7 +24598,7 @@ export const monsters = [
   },
   {
     "id": "monster-0300",
-    "name": "Blessed Celestial Paladin",
+    "name": "Blessed Celestial Herald",
     "type": "Elemental",
     "rank": "S",
     "hp": 121,
@@ -26277,7 +26277,7 @@ export const monsters = [
   },
   {
     "id": "monster-0320",
-    "name": "Cursed Celestial Paladin",
+    "name": "Cursed Celestial Herald",
     "type": "Beast",
     "rank": "S",
     "hp": 912,
@@ -27876,7 +27876,7 @@ export const monsters = [
   },
   {
     "id": "monster-0340",
-    "name": "Ancient Celestial Paladin",
+    "name": "Ancient Celestial Herald",
     "type": "Undead",
     "rank": "S",
     "hp": 718,
@@ -29503,7 +29503,7 @@ export const monsters = [
   },
   {
     "id": "monster-0360",
-    "name": "Primordial Celestial Paladin",
+    "name": "Primordial Celestial Herald",
     "type": "Elemental",
     "rank": "S",
     "hp": 751,
@@ -31088,7 +31088,7 @@ export const monsters = [
   },
   {
     "id": "monster-0380",
-    "name": "Supreme Celestial Paladin",
+    "name": "Supreme Celestial Herald",
     "type": "Beast",
     "rank": "S",
     "hp": 419,
@@ -32740,7 +32740,7 @@ export const monsters = [
   },
   {
     "id": "monster-0400",
-    "name": "Legendary Celestial Paladin",
+    "name": "Legendary Celestial Herald",
     "type": "Undead",
     "rank": "S",
     "hp": 480,
@@ -34379,7 +34379,7 @@ export const monsters = [
   },
   {
     "id": "monster-0420",
-    "name": "Mythic Celestial Paladin",
+    "name": "Mythic Celestial Herald",
     "type": "Elemental",
     "rank": "S",
     "hp": 1066,
@@ -36023,7 +36023,7 @@ export const monsters = [
   },
   {
     "id": "monster-0440",
-    "name": "Divine Celestial Paladin",
+    "name": "Divine Celestial Herald",
     "type": "Beast",
     "rank": "S",
     "hp": 168,
@@ -37593,7 +37593,7 @@ export const monsters = [
   },
   {
     "id": "monster-0460",
-    "name": "Infernal Celestial Paladin",
+    "name": "Infernal Celestial Herald",
     "type": "Undead",
     "rank": "S",
     "hp": 449,
@@ -39208,7 +39208,7 @@ export const monsters = [
   },
   {
     "id": "monster-0480",
-    "name": "Celestial Celestial Paladin",
+    "name": "Celestial Celestial Herald",
     "type": "Elemental",
     "rank": "S",
     "hp": 213,
@@ -40819,7 +40819,7 @@ export const monsters = [
   },
   {
     "id": "monster-0500",
-    "name": "Eternal Celestial Paladin",
+    "name": "Eternal Celestial Herald",
     "type": "Beast",
     "rank": "S",
     "hp": 593,
@@ -42434,7 +42434,7 @@ export const monsters = [
   },
   {
     "id": "monster-0520",
-    "name": "Corrupted Celestial Paladin",
+    "name": "Corrupted Celestial Herald",
     "type": "Undead",
     "rank": "S",
     "hp": 459,
@@ -44062,7 +44062,7 @@ export const monsters = [
   },
   {
     "id": "monster-0540",
-    "name": "Blessed Celestial Paladin",
+    "name": "Blessed Celestial Herald",
     "type": "Elemental",
     "rank": "S",
     "hp": 534,
@@ -45673,7 +45673,7 @@ export const monsters = [
   },
   {
     "id": "monster-0560",
-    "name": "Cursed Celestial Paladin",
+    "name": "Cursed Celestial Herald",
     "type": "Beast",
     "rank": "S",
     "hp": 782,
@@ -47344,7 +47344,7 @@ export const monsters = [
   },
   {
     "id": "monster-0580",
-    "name": "Ancient Celestial Paladin",
+    "name": "Ancient Celestial Herald",
     "type": "Undead",
     "rank": "S",
     "hp": 699,
@@ -48956,7 +48956,7 @@ export const monsters = [
   },
   {
     "id": "monster-0600",
-    "name": "Primordial Celestial Paladin",
+    "name": "Primordial Celestial Herald",
     "type": "Elemental",
     "rank": "S",
     "hp": 607,

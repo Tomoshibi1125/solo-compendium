@@ -104,7 +104,7 @@ const FILTER_OPTIONS = {
   ],
   weaponProperties: [
     'Ammunition', 'Finesse', 'Heavy', 'Light', 'Loading', 'Range', 'Reach',
-    'Special', 'Thrown', 'Two-Handed', 'Versatile', 'Monk', 'Silvered'
+    'Special', 'Thrown', 'Two-Handed', 'Versatile', 'Martial Artist', 'Silvered'
   ],
   armorTypes: ['Light Armor', 'Medium Armor', 'Heavy Armor', 'Shield'],
   abilities: ['STR', 'AGI', 'VIT', 'INT', 'SENSE', 'PRE'],
