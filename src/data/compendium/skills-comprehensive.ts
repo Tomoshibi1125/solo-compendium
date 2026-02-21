@@ -65,7 +65,7 @@ export const comprehensiveSkills: Skill[] = [
       'Use shadows for reconnaissance and scouting',
       'Sacrifice shadows to power shadow abilities'
     ],
-    synergies: ['Shadow Mastery', 'Monarch\'s Aura', 'Shadow Command'],
+    synergies: ['Shadow Mastery', 'Regent\'s Aura', 'Shadow Command'],
     source: 'System Ascendant Canon'
   },
   {
@@ -216,7 +216,7 @@ export const comprehensiveSkills: Skill[] = [
       'Force shadows to perform specific tasks',
       'Negotiate with powerful shadow entities'
     ],
-    synergies: ['Monarch\'s Aura', 'Intimidation', 'Leadership'],
+    synergies: ['Regent\'s Aura', 'Intimidation', 'Leadership'],
     source: 'System Ascendant Canon'
   },
 

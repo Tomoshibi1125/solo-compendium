@@ -65,7 +65,7 @@ export const skills: Skill[] = [
       'Use shadows for reconnaissance and scouting',
       'Sacrifice shadows to power shadow abilities'
     ],
-    synergies: ['Shadow Mastery', 'Monarch\'s Aura', 'Shadow Command'],
+    synergies: ['Shadow Mastery', 'Regent\'s Aura', 'Shadow Command'],
     source: 'System Ascendant Canon'
   },
   {
@@ -645,7 +645,7 @@ export const skills: Skill[] = [
         'Combat support with shadow warriors',
         'Specialized shadow servants'
       ],
-    synergies: ['Shadow Extraction', 'Monarch\'s Aura', 'Shadow Command'],
+    synergies: ['Shadow Extraction', 'Regent\'s Aura', 'Shadow Command'],
     source: 'System Ascendant Canon'
   },
 

@@ -164,6 +164,8 @@ export interface StaticCompendiumEntry {
   awakening_features?: Array<{ name: string; description: string; level: number }> | null;
   job_traits?: Array<{ name: string; description: string; type: string; frequency?: string }> | null;
   ability_score_improvements?: Record<string, number> | null;
+  class_features?: Array<{ level: number; name: string; description: string }> | null;
+  spellcasting?: { ability: string; focus?: string; cantripsKnown?: number[]; spellsKnown?: number[]; spellSlots?: Record<string, number[]> } | null;
   // Condition detail support (static fallback)
   condition_effects?: string[] | null;
   condition_duration?: string | null;
@@ -302,6 +304,7 @@ type StaticJobSource = {
   awakeningFeatures?: Array<{ name: string; description: string; level: number }>;
   jobTraits?: Array<{ name: string; description: string; type: string; frequency?: string }>;
   abilityScoreImprovements?: Record<string, number>;
+  classFeatures?: Array<{ level: number; name: string; description: string }>;
   source?: string;
 };
 
@@ -592,6 +595,8 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
     awakening_features: job.awakeningFeatures || null,
     job_traits: job.jobTraits || null,
     ability_score_improvements: job.abilityScoreImprovements || null,
+    class_features: job.classFeatures || null,
+    spellcasting: job.spellcasting || null,
     level: undefined
   };
 }

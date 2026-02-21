@@ -277,6 +277,46 @@ export async function addLevel1Features(
         });
       }
     }
+  } else {
+    // Static fallback: if DB had no features, use static classFeatures
+    const { data: jobRow } = await supabase
+      .from('compendium_jobs')
+      .select('name')
+      .eq('id', jobId)
+      .maybeSingle();
+
+    const staticJob = findStaticJobByName(jobRow?.name);
+    if (staticJob?.classFeatures) {
+      const level1Features = staticJob.classFeatures.filter(cf => cf.level === 1);
+      for (const cf of level1Features) {
+        if (isLocalCharacterId(characterId)) {
+          addLocalFeature(characterId, {
+            name: cf.name,
+            source: 'Job: Level 1',
+            level_acquired: 1,
+            description: cf.description,
+            action_type: null,
+            uses_max: null,
+            uses_current: null,
+            recharge: null,
+            is_active: true,
+          });
+        } else {
+          await supabase.from('character_features').insert({
+            character_id: characterId,
+            name: cf.name,
+            source: 'Job: Level 1',
+            level_acquired: 1,
+            description: cf.description,
+            action_type: null,
+            uses_max: null,
+            uses_current: null,
+            recharge: null,
+            is_active: true,
+          });
+        }
+      }
+    }
   }
 
   // Get level 1 path features if path selected

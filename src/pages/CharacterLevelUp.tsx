@@ -86,7 +86,7 @@ const CharacterLevelUp = () => {
   const showPathSelection = needsPathSelection && availablePaths.length > 0;
   const showASISection = !!character && isASILevel(newLevel, character?.job);
 
-  // Fetch features for the new level
+  // Fetch features for the new level (DB first, static fallback)
   const { data: newFeatures = [] } = useQuery({
     queryKey: ['job-features', character?.job, newLevel, campaignId],
     queryFn: async () => {
@@ -142,6 +142,31 @@ const CharacterLevelUp = () => {
 
             return [...accessibleJobFeatures, ...accessiblePathFeatures];
           }
+        }
+      }
+
+      // Static fallback: if DB returned nothing, use static classFeatures
+      if (accessibleJobFeatures.length === 0) {
+        try {
+          const { jobs: staticJobs } = await import('@/data/compendium/jobs');
+          const staticJob = staticJobs.find(j => j.name === character.job);
+          if (staticJob?.classFeatures) {
+            const levelFeatures = staticJob.classFeatures.filter(cf => cf.level === newLevel);
+            return levelFeatures.map((cf, idx) => ({
+              id: `static-${cf.name.toLowerCase().replace(/\s+/g, '-')}-${idx}`,
+              name: cf.name,
+              description: cf.description,
+              level: cf.level,
+              is_path_feature: false,
+              action_type: null,
+              uses_formula: null,
+              prerequisites: null,
+              recharge: null,
+              source_name: null,
+            }));
+          }
+        } catch {
+          // Best-effort static fallback
         }
       }
 

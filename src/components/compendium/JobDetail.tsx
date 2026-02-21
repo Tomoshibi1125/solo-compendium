@@ -34,6 +34,14 @@ interface JobData {
   multiclass_prerequisites?: string | null;
   spellcasting_ability?: string | null;
   spellcasting_focus?: string | null;
+  class_features?: Array<{ level: number; name: string; description: string }> | null;
+  spellcasting?: {
+    ability: string;
+    focus?: string;
+    cantripsKnown?: number[];
+    spellsKnown?: number[];
+    spellSlots?: Record<string, number[]>;
+  } | null;
 }
 
 interface JobFeature {
@@ -321,7 +329,59 @@ export const JobDetail = ({ data }: { data: JobData }) => {
         </SystemWindow>
       )}
 
-      {/* Features by Level */}
+      {/* Spellcasting Table (for caster jobs with spell slot data) */}
+      {data.spellcasting?.spellSlots && Object.keys(data.spellcasting.spellSlots).length > 0 && (
+        <SystemWindow title="SPELLCASTING TABLE">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border">
+                  <th className="text-left py-2 px-2 font-heading text-muted-foreground">Level</th>
+                  {data.spellcasting.cantripsKnown && (
+                    <th className="text-center py-2 px-2 font-heading text-muted-foreground">Cantrips</th>
+                  )}
+                  {data.spellcasting.spellsKnown && (
+                    <th className="text-center py-2 px-2 font-heading text-muted-foreground">Spells Known</th>
+                  )}
+                  {Object.keys(data.spellcasting.spellSlots)
+                    .sort((a, b) => Number(a) - Number(b))
+                    .map((slotLevel) => (
+                      <th key={slotLevel} className="text-center py-2 px-2 font-heading text-muted-foreground">
+                        {slotLevel === '1' ? '1st' : slotLevel === '2' ? '2nd' : slotLevel === '3' ? '3rd' : `${slotLevel}th`}
+                      </th>
+                    ))}
+                </tr>
+              </thead>
+              <tbody>
+                {Array.from({ length: 20 }, (_, i) => i).map((levelIdx) => (
+                  <tr key={levelIdx} className="border-b border-border/50 hover:bg-muted/20">
+                    <td className="py-1.5 px-2 font-heading font-semibold">{levelIdx + 1}</td>
+                    {data.spellcasting!.cantripsKnown && (
+                      <td className="text-center py-1.5 px-2 font-heading">
+                        {data.spellcasting!.cantripsKnown[levelIdx] ?? '—'}
+                      </td>
+                    )}
+                    {data.spellcasting!.spellsKnown && (
+                      <td className="text-center py-1.5 px-2 font-heading">
+                        {data.spellcasting!.spellsKnown[levelIdx] ?? '—'}
+                      </td>
+                    )}
+                    {Object.keys(data.spellcasting!.spellSlots!)
+                      .sort((a, b) => Number(a) - Number(b))
+                      .map((slotLevel) => (
+                        <td key={slotLevel} className="text-center py-1.5 px-2 font-heading">
+                          {data.spellcasting!.spellSlots![slotLevel][levelIdx] || '—'}
+                        </td>
+                      ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </SystemWindow>
+      )}
+
+      {/* Features by Level (DB features) */}
       {features.length > 0 && (
         <SystemWindow title="CLASS FEATURES">
           <div className="space-y-4">
@@ -337,6 +397,32 @@ export const JobDetail = ({ data }: { data: JobData }) => {
                 <p className="text-sm text-muted-foreground">{formatMonarchVernacular(feature.description)}</p>
               </div>
             ))}
+          </div>
+        </SystemWindow>
+      )}
+
+      {/* Static Class Features Fallback (level progression table from static data) */}
+      {features.length === 0 && data.class_features && data.class_features.length > 0 && (
+        <SystemWindow title="LEVEL PROGRESSION">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border">
+                  <th className="text-left py-2 px-3 font-heading text-muted-foreground w-16">Level</th>
+                  <th className="text-left py-2 px-3 font-heading text-muted-foreground w-48">Feature</th>
+                  <th className="text-left py-2 px-3 font-heading text-muted-foreground">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.class_features.map((cf, idx) => (
+                  <tr key={idx} className="border-b border-border/50 hover:bg-muted/20">
+                    <td className="py-2 px-3 font-heading font-semibold text-primary">{cf.level}</td>
+                    <td className="py-2 px-3 font-heading font-semibold">{formatMonarchVernacular(cf.name)}</td>
+                    <td className="py-2 px-3 text-sm text-muted-foreground">{formatMonarchVernacular(cf.description)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </SystemWindow>
       )}

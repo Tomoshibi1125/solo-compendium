@@ -23,6 +23,7 @@ import { isSafeNextPath } from '@/lib/campaignInviteUtils';
 import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 import { usePublishedHomebrew } from '@/hooks/useHomebrewContent';
 import { Badge } from '@/components/ui/badge';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 type Job = Database['public']['Tables']['compendium_jobs']['Row'] & {
   display_name?: string | null;
@@ -73,6 +74,7 @@ const CharacterNew = () => {
   const [selectedPath, setSelectedPath] = useState<string>('');
   const [selectedBackground, setSelectedBackground] = useState<string>('');
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [showJobFeatures, setShowJobFeatures] = useState(false);
 
   const pointBuySpent =
     abilityMethod === 'point-buy'
@@ -195,6 +197,18 @@ const CharacterNew = () => {
 
   // Get selected job data
   const jobData = allJobs.find(j => j.id === selectedJob) as (Job & { _homebrew?: boolean }) | undefined;
+
+  // Fetch static classFeatures for the selected job
+  const { data: staticJobFeatures } = useQuery({
+    queryKey: ['static-job-features', jobData?.name],
+    queryFn: async () => {
+      if (!jobData?.name) return null;
+      const { jobs: staticJobs } = await import('@/data/compendium/jobs');
+      const match = staticJobs.find(j => j.name === jobData.name);
+      return match?.classFeatures || null;
+    },
+    enabled: !!jobData?.name,
+  });
 
   const steps: { id: Step; name: string }[] = [
     { id: 'concept', name: 'Concept' },
@@ -732,12 +746,35 @@ const CharacterNew = () => {
                 </SelectContent>
               </Select>
               {jobData && (
-                <div className="mt-4 p-4 rounded-lg bg-muted/30">
+                <div className="mt-4 p-4 rounded-lg bg-muted/30 space-y-3">
                   <h4 className="font-heading font-semibold mb-2">{formatMonarchVernacular(jobData.display_name || jobData.name)}</h4>
                   <p className="text-sm text-muted-foreground">{formatMonarchVernacular(jobData.description)}</p>
-                  <div className="mt-2 text-xs text-muted-foreground">
+                  <div className="text-xs text-muted-foreground">
                     Hit Die: d{jobData.hit_die} | Primary: {jobData.primary_abilities.map(formatMonarchVernacular).join(', ')}
                   </div>
+                  {staticJobFeatures && staticJobFeatures.length > 0 && (
+                    <div className="border-t border-border/50 pt-3">
+                      <button
+                        type="button"
+                        onClick={() => setShowJobFeatures(!showJobFeatures)}
+                        className="flex items-center gap-1.5 text-xs font-heading text-primary hover:text-primary/80 transition-colors"
+                      >
+                        {showJobFeatures ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                        {showJobFeatures ? 'Hide' : 'Show'} Level Progression ({staticJobFeatures.length} features)
+                      </button>
+                      {showJobFeatures && (
+                        <div className="mt-2 space-y-1.5 max-h-64 overflow-y-auto pr-1">
+                          {staticJobFeatures.map((cf, idx) => (
+                            <div key={idx} className="flex gap-2 text-xs">
+                              <span className="font-heading font-semibold text-primary min-w-[2rem]">L{cf.level}</span>
+                              <span className="font-heading font-semibold min-w-[8rem]">{formatMonarchVernacular(cf.name)}</span>
+                              <span className="text-muted-foreground">{formatMonarchVernacular(cf.description).slice(0, 100)}{cf.description.length > 100 ? '…' : ''}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
               {jobData && jobData.skill_choices && jobData.skill_choices.length > 0 && (

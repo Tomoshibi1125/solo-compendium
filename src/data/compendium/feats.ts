@@ -75,9 +75,9 @@ export const feats: Feat[] = [
     source: 'System Ascendant Canon'
   },
   {
-    id: 'monarch-aura',
-    name: 'Monarch\'s Aura',
-    description: 'You project an aura of authority that affects lesser shadows and undead.',
+    id: 'regent-aura',
+    name: 'Regent\'s Aura',
+    description: 'You project an aura of dimensional authority that bends lesser shadows and undead to your will.',
     prerequisites: {
       level: 15,
       feats: ['shadow-mastery', 'essence-absorption']
@@ -92,7 +92,7 @@ export const feats: Feat[] = [
       type: 'passive',
       frequency: 'at-will'
     },
-    flavor: 'The very presence of a Monarch commands respect and fear from the shadows.',
+    flavor: 'The very presence of a Regent commands respect and fear from the shadows.',
     source: 'System Ascendant Canon'
   },
 
@@ -212,12 +212,12 @@ export const feats: Feat[] = [
     source: 'System Ascendant Canon'
   },
   {
-    id: 'monarchs-resilience',
-    name: 'Monarch\'s Resilience',
-    description: 'The power of a Monarch flows through you, granting incredible durability.',
+    id: 'regents-resilience',
+    name: 'Regent\'s Resilience',
+    description: 'The power of a Regent flows through you, granting incredible durability that transcends mortal limits.',
     prerequisites: {
       level: 20,
-      feats: ['shadow-resilience', 'monarch-aura']
+      feats: ['shadow-resilience', 'regent-aura']
     },
     benefits: [
       'Resistance to all damage types except radiant',
@@ -229,7 +229,7 @@ export const feats: Feat[] = [
       type: 'passive',
       frequency: 'at-will'
     },
-    flavor: 'The essence of a Monarch cannot be easily extinguished.',
+    flavor: 'The essence of a Regent cannot be easily extinguished—it burns with the authority of a being that has conquered dimensions.',
     source: 'System Ascendant Canon'
   },
 
