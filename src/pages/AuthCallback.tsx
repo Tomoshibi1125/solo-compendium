@@ -75,6 +75,7 @@ export default function AuthCallback() {
             .upsert(
               {
                 id: user.id,
+                email: user.email ?? '',
                 role: pendingRole,
                 updated_at: new Date().toISOString(),
               },

@@ -200,7 +200,7 @@ export async function resolveRef(
   if (isSupabaseConfigured && tableName) {
     try {
       const { data, error } = await supabase
-        .from(tableName)
+        .from(tableName as any)
         .select('*')
         .eq('id', id)
         .maybeSingle();

@@ -288,6 +288,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             .upsert(
               {
                 id: data.user.id,
+                email: data.user.email ?? email,
                 role: expectedRole,
                 updated_at: new Date().toISOString(),
               },
@@ -357,6 +358,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           .upsert(
             {
               id: data.user.id,
+              email: data.user.email ?? email,
               role: toProfileRole(role),
               updated_at: new Date().toISOString(),
             },

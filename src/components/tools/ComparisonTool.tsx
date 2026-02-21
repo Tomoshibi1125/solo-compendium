@@ -39,12 +39,12 @@ export function ComparisonTool({ type, className }: ComparisonToolProps) {
       if (!tableName) return [];
 
       const { data, error } = await supabase
-        .from(tableName as keyof Database['public']['Tables'])
+        .from(tableName as any)
         .select('*')
         .limit(100);
 
       if (error) throw error;
-      return (data || []) as Array<{ id: string; name?: string; [key: string]: unknown }>;
+      return (data || []) as unknown as Array<{ id: string; name?: string; [key: string]: unknown }>;
     },
   });
 

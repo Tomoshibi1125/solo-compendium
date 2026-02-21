@@ -340,7 +340,7 @@ export async function importContentBundle(
             display_name: relicData.display_name,
             aliases: relicData.aliases || [],
             rarity: relicData.rarity,
-            relic_tier: relicData.relic_tier,
+            relic_tier: relicData.relic_tier as any,
             item_type: relicData.item_type,
             requires_attunement: relicData.requires_attunement,
             attunement_requirements: relicData.attunement_requirements,

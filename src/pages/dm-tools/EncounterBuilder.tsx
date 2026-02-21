@@ -151,8 +151,6 @@ const mapStaticMonster = (monster: StaticMonster): Monster => {
     alignment: null,
     aliases: null,
     generated_reason: null,
-    image_generated_at: null,
-    image_url: monster.image || null,
     license_note: null,
     source_book: 'System Ascendant Homebrew',
     source_kind: null,
