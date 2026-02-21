@@ -98,6 +98,22 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: 'Invalid or expired access token' });
   }
 
+  // Require requester to be the campaign DM
+  const requesterId = tokenUserData.user.id;
+  const { data: dmRows, error: dmError } = await userClient
+    .from('campaigns')
+    .select('id, dm_id')
+    .eq('id', campaignId)
+    .limit(1);
+
+  if (dmError) {
+    return res.status(403).json({ error: 'Unable to verify campaign ownership' });
+  }
+  const campaignRow = dmRows?.[0];
+  if (!campaignRow || campaignRow.dm_id !== requesterId) {
+    return res.status(403).json({ error: 'Only the campaign DM can create invites' });
+  }
+
   const body = readJsonBody(req);
   const campaignId = typeof body.campaignId === 'string' ? body.campaignId : '';
   const role = body.role === 'co-system' ? 'co-system' : 'hunter';
@@ -124,6 +140,8 @@ export default async function handler(req, res) {
       p_role: role,
       p_expires_at: expiresAt,
       p_max_uses: maxUses,
+      // Legacy RPC may ignore invite_email; enforce failure if email was requested
+      ...(inviteEmail ? { p_invite_email: inviteEmail } : {}),
     });
     inviteRows = legacy.data;
     inviteError = legacy.error;

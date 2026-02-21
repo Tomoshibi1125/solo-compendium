@@ -236,6 +236,7 @@ export interface Character {
 
 // Utility functions
 export function getAbilityModifier(score: number): number {
+  if (!Number.isFinite(score)) return 0;
   return Math.floor((score - 10) / 2);
 }
 

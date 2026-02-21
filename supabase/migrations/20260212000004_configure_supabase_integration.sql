@@ -1,5 +1,80 @@
--- Configure Supabase to work with existing static compendium data
 -- This migration sets up the database structure to support the app's existing data flow
+
+-- Ensure the profiles table exists (handles legacy user_profiles naming)
+DO $$
+BEGIN
+  IF to_regclass('public.profiles') IS NULL THEN
+    IF to_regclass('public.user_profiles') IS NOT NULL THEN
+      ALTER TABLE public.user_profiles RENAME TO profiles;
+      RAISE NOTICE 'Renamed user_profiles to profiles for consistency.';
+    ELSE
+      CREATE TABLE IF NOT EXISTS public.profiles (
+        id UUID REFERENCES auth.users(id) PRIMARY KEY,
+        email TEXT UNIQUE,
+        display_name TEXT,
+        username TEXT,
+        role TEXT NOT NULL DEFAULT 'player' CHECK (role IN ('player', 'dm', 'admin')),
+        avatar_url TEXT,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+      );
+      RAISE NOTICE 'Created profiles table to satisfy dependent objects.';
+    END IF;
+  END IF;
+END $$;
+
+-- Ensure profiles.email column exists and is populated for downstream views
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_schema = 'public' AND table_name = 'profiles' AND column_name = 'email'
+  ) THEN
+    ALTER TABLE public.profiles ADD COLUMN email TEXT;
+  END IF;
+
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_schema = 'public' AND table_name = 'profiles' AND column_name = 'display_name'
+  ) THEN
+    ALTER TABLE public.profiles ADD COLUMN display_name TEXT;
+  END IF;
+
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_schema = 'public' AND table_name = 'profiles' AND column_name = 'username'
+  ) THEN
+    ALTER TABLE public.profiles ADD COLUMN username TEXT;
+  END IF;
+
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_schema = 'public' AND table_name = 'profiles' AND column_name = 'role'
+  ) THEN
+    ALTER TABLE public.profiles ADD COLUMN role TEXT NOT NULL DEFAULT 'player';
+  END IF;
+
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_schema = 'public' AND table_name = 'profiles' AND column_name = 'avatar_url'
+  ) THEN
+    ALTER TABLE public.profiles ADD COLUMN avatar_url TEXT;
+  END IF;
+
+  -- Backfill emails from auth.users when possible
+  UPDATE public.profiles p
+  SET email = u.email
+  FROM auth.users u
+  WHERE p.id = u.id AND (p.email IS NULL OR p.email = '');
+
+  -- Enforce uniqueness and not-null going forward
+  ALTER TABLE public.profiles ALTER COLUMN email SET NOT NULL;
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_indexes WHERE schemaname = 'public' AND tablename = 'profiles' AND indexname = 'profiles_email_key'
+  ) THEN
+    ALTER TABLE public.profiles ADD CONSTRAINT profiles_email_key UNIQUE (email);
+  END IF;
+END $$;
 
 -- Create functions to sync static data with Supabase (optional for future use)
 CREATE OR REPLACE FUNCTION public.sync_compendium_data()
@@ -83,7 +158,9 @@ ON CONFLICT (id) DO NOTHING;
 CREATE POLICY "Users can upload their own avatars" ON storage.objects
   FOR INSERT WITH CHECK (
     bucket_id = 'character-avatars' AND 
-    auth.uid()::text = (storage.foldername(name))[1]
+    (storage.foldername(name))[1] IS NOT NULL AND
+    auth.uid()::text = (storage.foldername(name))[1] AND
+    COALESCE((storage.foldername(name))[2], '') <> ''
   );
 
 CREATE POLICY "Anyone can view avatars" ON storage.objects

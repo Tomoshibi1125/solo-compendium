@@ -40,6 +40,9 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const normalizeRole = (value?: string | null): UserRole => {
   if (value === 'dm' || value === 'admin') return 'dm';
   if (value === 'player') return 'player';
+  if (value) {
+    logError('Invalid role value encountered, defaulting to player:', value);
+  }
   return 'player';
 };
 
@@ -175,10 +178,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (data) {
         const metadataRole = typeof authUser.user_metadata?.role === 'string' ? authUser.user_metadata.role : undefined;
+        const resolvedRole = normalizeRole(metadataRole ?? data.role);
         setUser({
           id: data.id,
           email: authUser.email ?? '',
-          role: normalizeRole(metadataRole ?? data.role),
+          role: resolvedRole,
           displayName: fallbackUser.displayName,
           avatar: fallbackUser.avatar,
           createdAt: data.created_at,

@@ -115,6 +115,7 @@ export interface VTTHandoutShare {
   imageUrl?: string;
   content?: string;
   sharedBy: string;
+  sharedById: string;
   timestamp: number;
 }
 
@@ -708,19 +709,27 @@ export function useVTTRealtime({ campaignId, sessionId, isDM = false }: UseVTTRe
 
   // Handout share
   const [sharedHandout, setSharedHandout] = useState<VTTHandoutShare | null>(null);
+  const handoutTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const shareHandout = useCallback(
     (title: string, imageUrl?: string, content?: string) => {
-      const handout: VTTHandoutShare = { title, imageUrl, content, sharedBy: userName, timestamp: Date.now() };
+      const handout: VTTHandoutShare = { title, imageUrl, content, sharedBy: userName, sharedById: userId, timestamp: Date.now() };
       setSharedHandout(handout);
       broadcast({ type: 'handout_share', payload: handout });
       // Auto-dismiss after 30s
-      setTimeout(() => setSharedHandout(null), 30000);
+      if (handoutTimeoutRef.current) clearTimeout(handoutTimeoutRef.current);
+      handoutTimeoutRef.current = setTimeout(() => setSharedHandout(null), 30000);
     },
-    [broadcast, userName],
+    [broadcast, userId, userName],
   );
 
-  const dismissHandout = useCallback(() => setSharedHandout(null), []);
+  const dismissHandout = useCallback(() => {
+    if (handoutTimeoutRef.current) {
+      clearTimeout(handoutTimeoutRef.current);
+      handoutTimeoutRef.current = null;
+    }
+    setSharedHandout(null);
+  }, []);
 
   // Macros
   const [macros, setMacros] = useState<VTTMacro[]>([]);
@@ -811,10 +820,19 @@ export function useVTTRealtime({ campaignId, sessionId, isDM = false }: UseVTTRe
             setRulerSegments((prev) => prev.filter((s) => s.userId !== clearUid));
             break;
           }
-          case 'handout_share':
-            setSharedHandout(payload.payload as VTTHandoutShare);
-            setTimeout(() => setSharedHandout(null), 30000);
+          case 'handout_share': {
+            const incoming = payload.payload as VTTHandoutShare;
+            if (!incoming.sharedById) break;
+            const sender = presenceUsers.get(incoming.sharedById);
+            if (!sender) break;
+            // Only accept from DM if a DM is known in presence; otherwise accept from any known user
+            const dmPresent = Array.from(presenceUsers.values()).some((u) => u.role === 'dm');
+            if (dmPresent && sender.role !== 'dm') break;
+            setSharedHandout(incoming);
+            if (handoutTimeoutRef.current) clearTimeout(handoutTimeoutRef.current);
+            handoutTimeoutRef.current = setTimeout(() => setSharedHandout(null), 30000);
             break;
+          }
         }
 
         // External handlers

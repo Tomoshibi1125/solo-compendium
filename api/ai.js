@@ -13,24 +13,32 @@ const REQUEST_TIMEOUT_MS = 30000;
 const rateBuckets = new Map();
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX = 20; // 20 requests per minute per IP
+const RATE_LIMIT_MAX_AUTH = 60; // per user token per minute
 
-function isRateLimited(ip) {
+function rateKey(ip, userId) {
+  return userId ? `user:${userId}` : `ip:${ip}`;
+}
+
+function isRateLimited(ip, userId) {
   const now = Date.now();
-  const bucket = rateBuckets.get(ip);
+  const bucketKey = rateKey(ip, userId);
+  const bucket = rateBuckets.get(bucketKey);
   if (!bucket || now - bucket.windowStart > RATE_LIMIT_WINDOW_MS) {
-    rateBuckets.set(ip, { windowStart: now, count: 1 });
+    rateBuckets.set(bucketKey, { windowStart: now, count: 1 });
     return false;
   }
   bucket.count += 1;
-  if (bucket.count > RATE_LIMIT_MAX) return true;
+  const limit = userId ? RATE_LIMIT_MAX_AUTH : RATE_LIMIT_MAX;
+  if (bucket.count > limit) return true;
   return false;
 }
 
 export default async function handler(req, res) {
   // CORS preflight
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  const allowedOrigin = process.env.ALLOWED_ORIGIN || '*';
+  res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
   if (req.method === 'OPTIONS') {
     return res.status(204).end();
@@ -49,9 +57,23 @@ export default async function handler(req, res) {
     });
   }
 
-  // Rate limit by IP
+  // Optional auth via bearer token (e.g., Supabase access token) or shared secret
+  const authHeader = req.headers['authorization'] || '';
+  const bearer = authHeader.startsWith('Bearer ') ? authHeader.slice('Bearer '.length).trim() : null;
+  const sharedSecret = process.env.AI_PROXY_SECRET || null;
+  let userId = null;
+
+  if (sharedSecret) {
+    if (bearer !== sharedSecret) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+  } else if (bearer) {
+    userId = bearer; // treat bearer as user token/id for simple rate keying
+  }
+
+  // Rate limit by IP or user
   const clientIp = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown';
-  if (isRateLimited(clientIp)) {
+  if (isRateLimited(clientIp, userId)) {
     return res.status(429).json({ error: 'Rate limit exceeded. Try again in a minute.' });
   }
 
@@ -66,6 +88,10 @@ export default async function handler(req, res) {
   const { prompt, systemPrompt, maxTokens } = body;
   if (!prompt || typeof prompt !== 'string') {
     return res.status(400).json({ error: 'Missing required field: prompt' });
+  }
+
+  if (prompt.length > 8000) {
+    return res.status(400).json({ error: 'Prompt too long' });
   }
 
   // Build Gemini request

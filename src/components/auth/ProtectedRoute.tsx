@@ -100,7 +100,7 @@ export function ProtectedRoute({ children, requireDM = false, allowGuest }: Prot
 
   // If Supabase isn't configured, show helpful setup message
   if (!isSupabaseConfigured) {
-    if (guestAllowed) {
+    if (guestAllowed && (!requireDM || isDM)) {
       return <>{children}</>;
     }
     return (

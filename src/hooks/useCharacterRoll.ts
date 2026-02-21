@@ -26,6 +26,16 @@ export function useCharacterRoll({
     kind: 'ability' | 'save' | 'skill',
     label?: string
   ) => {
+    if (!rollKey || typeof rollKey !== 'string') {
+      toast({ title: 'Roll failed', description: 'Invalid roll target', variant: 'destructive' });
+      return null;
+    }
+
+    if (!Number.isFinite(modifier)) {
+      toast({ title: 'Roll failed', description: 'Modifier unavailable', variant: 'destructive' });
+      return null;
+    }
+
     // Generate a random d20 roll
     const d20 = Math.floor(Math.random() * 20) + 1;
     const total = d20 + modifier;
