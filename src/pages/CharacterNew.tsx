@@ -914,6 +914,51 @@ const CharacterNew = () => {
                       )}
                     </div>
                   )}
+                  {(() => {
+                    const bg = backgrounds.find(b => b.id === selectedBackground);
+                    const hasSuggestedChars = (bg?.personality_traits && bg.personality_traits.length > 0)
+                      || (bg?.ideals && bg.ideals.length > 0)
+                      || (bg?.bonds && bg.bonds.length > 0)
+                      || (bg?.flaws && bg.flaws.length > 0);
+                    if (!hasSuggestedChars) return null;
+                    return (
+                      <div className="mt-3 pt-3 border-t border-border space-y-2">
+                        <div className="text-xs font-heading font-semibold">Suggested Characteristics</div>
+                        {bg?.personality_traits && bg.personality_traits.length > 0 && (
+                          <div className="text-xs text-muted-foreground">
+                            <strong>Personality Traits:</strong>
+                            <ul className="mt-1 ml-4 list-disc space-y-0.5">
+                              {bg.personality_traits.map((t, i) => <li key={i}>{formatMonarchVernacular(t)}</li>)}
+                            </ul>
+                          </div>
+                        )}
+                        {bg?.ideals && bg.ideals.length > 0 && (
+                          <div className="text-xs text-muted-foreground">
+                            <strong>Ideals:</strong>
+                            <ul className="mt-1 ml-4 list-disc space-y-0.5">
+                              {bg.ideals.map((t, i) => <li key={i}>{formatMonarchVernacular(t)}</li>)}
+                            </ul>
+                          </div>
+                        )}
+                        {bg?.bonds && bg.bonds.length > 0 && (
+                          <div className="text-xs text-muted-foreground">
+                            <strong>Bonds:</strong>
+                            <ul className="mt-1 ml-4 list-disc space-y-0.5">
+                              {bg.bonds.map((t, i) => <li key={i}>{formatMonarchVernacular(t)}</li>)}
+                            </ul>
+                          </div>
+                        )}
+                        {bg?.flaws && bg.flaws.length > 0 && (
+                          <div className="text-xs text-muted-foreground">
+                            <strong>Flaws:</strong>
+                            <ul className="mt-1 ml-4 list-disc space-y-0.5">
+                              {bg.flaws.map((t, i) => <li key={i}>{formatMonarchVernacular(t)}</li>)}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
                 </div>
               )}
             </div>

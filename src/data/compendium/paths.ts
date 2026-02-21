@@ -59,11 +59,11 @@ export const paths: Path[] = [
       skills: ['Athletics', 'Intimidation'],
       prerequisites: ['Must have mastered Warrior fundamentals']
     },
-    description: 'Master the art of berserker rage, specializing in champion techniques and abilities.',
+    description: 'When the System awakened your rage, it didn\'t just unlock fury—it shattered your limiters. Berserker Champions channel raw, primal violence that would shatter a normal body, their muscles reinforced by essence until every blow lands like a collapsing rift wall. In the arenas of the Ascendant guilds, Berserker Champions are both feared and revered.',
     features: [
       {
         name: 'Berserker Mastery',
-        description: 'Gain advanced abilities in berserker rage and enhanced champion capabilities.',
+        description: 'Your rage transcends mortal fury. While raging, your melee attacks deal additional damage equal to your proficiency bonus, and you can make one additional attack as part of the Attack action. You ignore the first source of damage each turn that would reduce you below 1 HP.',
         level: 7
       }
     ],
@@ -98,11 +98,11 @@ export const paths: Path[] = [
       skills: ['Athletics', 'Acrobatics'],
       prerequisites: ['Must have mastered multiple weapon types']
     },
-    description: 'Become a master of all weapons, specializing in advanced combat techniques.',
+    description: 'The System measures combat potential in raw numbers, but Weapon Masters transcend those calculations. Through obsessive drilling in the rift-forged training grounds, you have achieved a fluid mastery that lets you pick up any blade, axe, or polearm and wield it as if born to it. Your fighting style shifts like water between stances.',
     features: [
       {
         name: 'Weapon Mastery',
-        description: 'Gain proficiency with all weapons and advanced combat techniques.',
+        description: 'You gain proficiency with all weapons and can attune to any weapon as a bonus action. When you hit with a weapon attack, you can choose to use your Strength or Agility modifier for both the attack and damage rolls. You learn one additional Fighting Style.',
         level: 7
       }
     ],
@@ -139,11 +139,11 @@ export const paths: Path[] = [
       skills: ['Arcana', 'Investigation'],
       prerequisites: ['Must have mastered basic elements']
     },
-    description: 'Master the elements, gaining control over fire, ice, lightning, and earth.',
+    description: 'Within the rifts, raw elemental essence swirls in concentrations that would incinerate the unprepared. Elemental Masters don\'t just cast spells—they commune with the primal forces that bleed through dimensional tears. Fire, frost, lightning, and stone answer your call not as tools, but as extensions of your awakened will.',
     features: [
       {
         name: 'Elemental Affinity',
-        description: 'Gain enhanced power and control over elemental magic.',
+        description: 'Choose one element (fire, cold, lightning, or earth). Spells you cast that deal your chosen damage type deal additional damage equal to your INT modifier. You have resistance to your chosen element\'s damage type, and once per long rest you can change your elemental affinity during a short rest.',
         level: 7
       }
     ],
@@ -180,11 +180,11 @@ export const paths: Path[] = [
       skills: ['Stealth', 'Perception'],
       prerequisites: ['Must have mastered shadow arts']
     },
-    description: 'Become one with the shadows, mastering stealth and shadow manipulation.',
+    description: 'The shadows are not empty—they are alive with dimensional residue, and you have learned to move within them like a predator beneath dark water. Shadow Stalkers are the System\'s answer to the unseen threat: assassins who step between the folds of reality, striking from angles that shouldn\'t exist and vanishing before the blood hits the ground.',
     features: [
       {
         name: 'Shadow Form',
-        description: 'Gain the ability to become partially incorporeal in shadows.',
+        description: 'As a bonus action, you can become partially incorporeal while in dim light or darkness. While in Shadow Form, you have resistance to all damage except force and radiant, and you can move through creatures and objects as if they were difficult terrain. Lasts for 1 minute, usable once per short rest.',
         level: 7
       }
     ],
@@ -219,7 +219,7 @@ export const paths: Path[] = [
       skills: ['Stealth', 'Perception', 'Acrobatics'],
       prerequisites: ['Must have mastered ranged assassination']
     },
-    description: 'Master the art of long-range assassination, specializing in precision strikes from distance.',
+    description: 'In the sprawling rift-scarred cityscapes, some threats must be eliminated before they even know they\'re targeted. The Distant Needle specializes in impossible shots across dimensional distortion fields, threading projectiles through reality\'s seams to strike targets that believe themselves untouchable.',
     features: [
       {
         name: 'Ranged Expertise',
@@ -273,7 +273,7 @@ export const paths: Path[] = [
       skills: ['Deception', 'Stealth', 'Performance'],
       prerequisites: ['Must have mastered infiltration techniques']
     },
-    description: 'Master the art of disguise and infiltration, becoming anyone you need to be.',
+    description: 'Identity is fragile in the post-awakening world, and the Masked Ghost exploits that fragility with surgical precision. You don\'t just wear faces—you become them, slipping through guild security, regent courts, and rift expedition teams as whoever the mission demands. The System itself struggles to track you.',
     features: [
       {
         name: 'Master of Disguise',
@@ -327,7 +327,7 @@ export const paths: Path[] = [
       skills: ['Stealth', 'Medicine', 'Nature'],
       prerequisites: ['Must have mastered poison techniques']
     },
-    description: 'Master the deadly arts of poison, using toxins to eliminate targets silently.',
+    description: 'The rifts bleed substances that defy conventional chemistry—venoms that corrode essence, toxins that unravel mana pathways, poisons that eat through dimensional barriers. The Night Venom harvests these impossible compounds and distills them into weapons of exquisite lethality. Your targets don\'t die—they dissolve.',
     features: [
       {
         name: 'Poisoner\'s Kit',
@@ -381,7 +381,7 @@ export const paths: Path[] = [
       skills: ['Stealth', 'Arcana', 'Medicine'],
       prerequisites: ['Must have mastered blood sigil techniques']
     },
-    description: 'Master the forbidden art of blood magic, using life force to power deadly abilities.',
+    description: 'Blood carries essence—the fundamental currency of the System. Those who walk the Path of the Red Sigil have learned to inscribe living runes in crimson, turning life force into tracking beacons, cursed brands, and conduits for devastating power. The Awakened Council officially condemns this path, but the results speak louder than their edicts.',
     features: [
       {
         name: 'Blood Mark',
@@ -435,7 +435,7 @@ export const paths: Path[] = [
       skills: ['Stealth', 'Perception', 'Insight'],
       prerequisites: ['Must have mastered shadow coordination']
     },
-    description: 'Coordinate with shadow allies to create deadly assassination networks.',
+    description: 'No assassin works alone—not truly. The Shadow Net weaves invisible threads of dimensional resonance between operatives, creating a hive-mind of killers who share senses, coordinate strikes across impossible distances, and vanish as one. When a Shadow Net operation activates, entire rift-boss security details simply cease to exist.',
     features: [
       {
         name: 'Network Coordination',
@@ -489,7 +489,7 @@ export const paths: Path[] = [
       skills: ['Stealth', 'Acrobatics', 'Sleight of Hand'],
       prerequisites: ['Must have mastered silent assassination']
     },
-    description: 'Master the art of silent close-range assassination with knives and daggers.',
+    description: 'There is an art to killing that transcends mere violence. The Silent Knife reduces assassination to its purest form: one breath, one motion, one kill. Your blade slides between ribs like a whispered secret, and your target crumples without a sound. In a world of flashy System abilities, you are the reminder that sometimes the simplest solution is the most terrifying.',
     features: [
       {
         name: 'Assassinate',
@@ -545,7 +545,7 @@ export const paths: Path[] = [
       skills: ['Technology', 'Investigation', 'Arcana'],
       prerequisites: ['Must have mastered data interface']
     },
-    description: 'Master the art of data manipulation, accessing and controlling digital information.',
+    description: 'The System is data—and data can be rewritten. Those who forge the Data Pact learn to interface directly with the System\'s underlying architecture, pulling streams of raw information from rift networks, guild databases, and the dimensional lattice itself. Your mind becomes a living terminal, processing information at speeds that leave conventional analysts in the dust.',
     features: [
       {
         name: 'Data Interface',
@@ -599,7 +599,7 @@ export const paths: Path[] = [
       skills: ['Deception', 'Performance', 'Arcana'],
       prerequisites: ['Must have mastered mirror duplication']
     },
-    description: 'Master the art of creating and controlling mirror duplicates.',
+    description: 'Reality reflects itself in the spaces between dimensions, and Mirror Pact walkers have learned to shatter those reflections into independent constructs. Each duplicate carries a fragment of your consciousness and combat ability, creating a hall of mirrors where every surface hides a lethal surprise. Opponents who face a Mirror Pact technomancer never know which version will strike the killing blow.',
     features: [
       {
         name: 'Mirror Double',
@@ -653,7 +653,7 @@ export const paths: Path[] = [
       skills: ['Arcana', 'History', 'Religion'],
       prerequisites: ['Must have mastered gate construct summoning']
     },
-    description: 'Master the art of summoning and controlling extradimensional gate constructs.',
+    description: 'Deep within the rifts, autonomous constructs patrol ancient corridors—remnants of civilizations that fell to dimensional catastrophe. Gate Construct summoners forge pacts with these mechanical guardians, calling fragments of their terrible power through stabilized micro-rifts. Each construct carries the memory of a fallen world\'s final defense.',
     features: [
       {
         name: 'Gate Fragment',
@@ -707,7 +707,7 @@ export const paths: Path[] = [
       skills: ['Arcana', 'Investigation', 'History'],
       prerequisites: ['Must have mastered relic bonding']
     },
-    description: 'Master the art of bonding with and controlling powerful relics.',
+    description: 'Every relic carries an echo of its creator\'s intent—a fragment of will crystallized in enchanted steel and shadow-forged crystal. Relic Pact technomancers don\'t merely wield these artifacts; they merge with them, forging bonds so deep that relic and wielder become a single entity. The most powerful Relic Pact masters are indistinguishable from the legendary weapons they carry.',
     features: [
       {
         name: 'Relic Bond',
@@ -761,7 +761,7 @@ export const paths: Path[] = [
       skills: ['Stealth', 'Technology', 'Arcana'],
       prerequisites: ['Must have mastered shadow tech']
     },
-    description: 'Master the fusion of shadow magic and technology.',
+    description: 'Where shadow meets circuitry, impossible technology is born. Shadow Pact technomancers weave dimensional darkness through technological frameworks, creating devices that operate in the spaces between reality. Their shadow-tech can bypass any firewall, penetrate any defense, and deliver payloads through dimensions that conventional weapons cannot reach.',
     features: [
       {
         name: 'Shadow Step',
@@ -815,7 +815,7 @@ export const paths: Path[] = [
       skills: ['Technology', 'Athletics', 'Intimidation'],
       prerequisites: ['Must have mastered weapon bonding']
     },
-    description: 'Master the art of technological weapon enhancement and control.',
+    description: 'The Weapon Pact binds your essence to instruments of destruction, forging a symbiotic bond between wielder and armament. Your weapons are not tools—they are extensions of your System-enhanced will, responding to your thoughts, evolving with your power, and eventually developing a hunger of their own. S-Rank Weapon Pact technomancers wield arsenals that fight alongside them like loyal shadow soldiers.',
     features: [
       {
         name: 'Pact Weapon',
@@ -871,7 +871,7 @@ export const paths: Path[] = [
       skills: ['Athletics', 'Intimidation'],
       prerequisites: ['Must have mastered berserker rage']
     },
-    description: 'Master the art of berserker rage, becoming an unstoppable force of destruction.',
+    description: 'The System recognized something primal in you—a fury older than the rifts, deeper than dimensional theory. Path of the Berserker strips away everything civilized and leaves only the engine of destruction beneath. Your rage isn\'t just anger; it\'s a controlled detonation of essence that transforms your body into a living weapon, each blow carrying the force of a collapsing rift gate.',
     features: [
       {
         name: 'Frenzy',
@@ -927,30 +927,30 @@ export const paths: Path[] = [
       skills: ['Bard skills', 'History'],
       prerequisites: ['Must have mastered Bard fundamentals']
     },
-    description: 'Master the art of arcane knowledge, specializing in knowledge-magic techniques and abilities.',
+    description: 'In a world where the System quantifies everything, the Lore Keeper proves that knowledge itself is the greatest weapon. You have spent years in the Archive Vaults beneath the Ascendant Academy, studying forbidden texts, deciphering rift-tongue inscriptions, and cataloging the secrets that the Awakened Council would rather forget. Your magic is fueled not by raw power, but by understanding.',
     features: [
       {
         name: 'Lore Mastery',
-        description: 'Gain access to ancient knowledge and enhanced magical abilities.',
+        description: 'You gain proficiency in two additional skills of your choice and expertise in one Intelligence-based skill you are already proficient in. When you use a spell that requires the target to make a saving throw, you can spend a use of Bardic Inspiration to change the saving throw ability to one of your choice.',
         level: 7
       }
     ],
     abilities: [
       {
         name: 'Lore Strike',
-        description: 'Execute a powerful arcane knowledge technique that overwhelms opponents.',
+        description: 'As an action, you weave forbidden knowledge into a psychic assault. One creature within 60 feet must make an INT saving throw against your spell save DC or take 3d8 psychic damage and be stunned until the end of their next turn. On a success, half damage and no stun.',
         cooldown: 1,
         cost: 'Action'
       },
       {
         name: 'Lore Defense',
-        description: 'Activate defensive arcane knowledge abilities that protect you and allies.',
+        description: 'As a bonus action, you recite a protective incantation that shields you and allies within 15 feet. Until the start of your next turn, affected creatures have advantage on saving throws against spells and magical effects. Usable a number of times equal to your PRE modifier per long rest.',
         cooldown: 2,
         cost: 'Bonus action'
       },
       {
         name: 'Lore Ultimate',
-        description: 'Unleash the ultimate arcane knowledge technique that can change the tide of battle.',
+        description: 'Once per long rest, you can invoke the Forbidden Archive—channeling ancient knowledge into a devastating revelation. Each creature of your choice within 30 feet must make a SENSE saving throw or take 8d6 psychic damage, be frightened, and have their speed reduced to 0 for 1 minute. Affected creatures can repeat the save at the end of each turn.',
         cooldown: 3,
         cost: 'Legendary action'
       }
