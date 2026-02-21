@@ -855,112 +855,120 @@ const CharacterNew = () => {
                   ))}
                 </SelectContent>
               </Select>
-              {selectedBackground && (
-                <div className="mt-4 p-4 rounded-lg bg-muted/30 space-y-3">
-                  <div>
-                    <h4 className="font-heading font-semibold mb-2">
-                      {formatMonarchVernacular((backgrounds.find(b => b.id === selectedBackground) as { name?: string; display_name?: string | null } | undefined)?.display_name || backgrounds.find(b => b.id === selectedBackground)?.name || '')}
-                    </h4>
-                    <p className="text-sm text-muted-foreground">
-                      {formatMonarchVernacular(backgrounds.find(b => b.id === selectedBackground)?.description || '')}
-                    </p>
-                  </div>
-                  {(() => {
-                    const bg = backgrounds.find(b => b.id === selectedBackground);
-                    return bg?.skill_proficiencies && bg.skill_proficiencies.length > 0;
-                  })() && (() => {
-                    const bg = backgrounds.find(b => b.id === selectedBackground);
-                    return (
-                      <div className="text-xs text-muted-foreground">
-                        <strong>Skill Proficiencies:</strong> {bg?.skill_proficiencies?.map(formatMonarchVernacular).join(', ') || ''}
-                      </div>
-                    );
-                  })()}
-                  {(() => {
-                    const bg = backgrounds.find(b => b.id === selectedBackground);
-                    return bg?.tool_proficiencies && bg.tool_proficiencies.length > 0;
-                  })() && (() => {
-                    const bg = backgrounds.find(b => b.id === selectedBackground);
-                    return (
-                      <div className="text-xs text-muted-foreground">
-                        <strong>Tool Proficiencies:</strong> {bg?.tool_proficiencies?.map(formatMonarchVernacular).join(', ') || ''}
-                      </div>
-                    );
-                  })()}
-                  {backgrounds.find(b => b.id === selectedBackground)?.language_count && (backgrounds.find(b => b.id === selectedBackground)?.language_count ?? 0) > 0 && (
-                    <div className="text-xs text-muted-foreground">
-                      <strong>Languages:</strong> {(backgrounds.find(b => b.id === selectedBackground)?.language_count ?? 0)} additional language{(backgrounds.find(b => b.id === selectedBackground)?.language_count ?? 0) > 1 ? 's' : ''}
+              {selectedBackground && (() => {
+                const bg = backgrounds.find(b => b.id === selectedBackground);
+                if (!bg) return null;
+                const hasSuggestedChars = (bg.personality_traits && bg.personality_traits.length > 0)
+                  || (bg.ideals && bg.ideals.length > 0)
+                  || (bg.bonds && bg.bonds.length > 0)
+                  || (bg.flaws && bg.flaws.length > 0);
+                return (
+                  <div className="mt-4 p-5 rounded-lg bg-muted/30 space-y-4">
+                    {/* Title + Description */}
+                    <div className="space-y-2">
+                      <h4 className="font-heading text-lg font-semibold text-foreground">
+                        {formatMonarchVernacular((bg as { name?: string; display_name?: string | null }).display_name || bg.name || '')}
+                      </h4>
+                      <p className="text-sm leading-relaxed text-muted-foreground">
+                        {formatMonarchVernacular(bg.description || '')}
+                      </p>
                     </div>
-                  )}
-                  {backgrounds.find(b => b.id === selectedBackground)?.starting_equipment && (
-                    <div className="text-xs text-muted-foreground">
-                      <strong>Starting Equipment:</strong> {formatMonarchVernacular(backgrounds.find(b => b.id === selectedBackground)!.starting_equipment || '')}
-                    </div>
-                  )}
-                  {backgrounds.find(b => b.id === selectedBackground)?.starting_credits && (
-                    <div className="text-xs text-muted-foreground">
-                      <strong>Starting Credits:</strong> {backgrounds.find(b => b.id === selectedBackground)!.starting_credits}
-                    </div>
-                  )}
-                  {backgrounds.find(b => b.id === selectedBackground)?.feature_name && (
-                    <div className="mt-3 pt-3 border-t border-border">
-                      <div className="text-xs font-heading font-semibold mb-1">
-                        {formatMonarchVernacular(backgrounds.find(b => b.id === selectedBackground)!.feature_name || '')}
-                      </div>
-                      {backgrounds.find(b => b.id === selectedBackground)?.feature_description && (
-                        <div className="text-xs text-muted-foreground">
-                          {formatMonarchVernacular(backgrounds.find(b => b.id === selectedBackground)!.feature_description || '')}
+
+                    {/* Proficiencies Grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {bg.skill_proficiencies && bg.skill_proficiencies.length > 0 && (
+                        <div className="p-3 rounded-md bg-background/50 border border-border/50">
+                          <div className="text-xs font-heading font-semibold text-primary uppercase tracking-wider mb-1.5">Skill Proficiencies</div>
+                          <div className="text-sm text-foreground">{bg.skill_proficiencies.map(formatMonarchVernacular).join(', ')}</div>
+                        </div>
+                      )}
+                      {bg.tool_proficiencies && bg.tool_proficiencies.length > 0 && (
+                        <div className="p-3 rounded-md bg-background/50 border border-border/50">
+                          <div className="text-xs font-heading font-semibold text-primary uppercase tracking-wider mb-1.5">Tool Proficiencies</div>
+                          <div className="text-sm text-foreground">{bg.tool_proficiencies.map(formatMonarchVernacular).join(', ')}</div>
+                        </div>
+                      )}
+                      {bg.language_count && bg.language_count > 0 && (
+                        <div className="p-3 rounded-md bg-background/50 border border-border/50">
+                          <div className="text-xs font-heading font-semibold text-primary uppercase tracking-wider mb-1.5">Languages</div>
+                          <div className="text-sm text-foreground">{bg.language_count} additional language{bg.language_count > 1 ? 's' : ''}</div>
+                        </div>
+                      )}
+                      {bg.starting_credits && (
+                        <div className="p-3 rounded-md bg-background/50 border border-border/50">
+                          <div className="text-xs font-heading font-semibold text-primary uppercase tracking-wider mb-1.5">Starting Credits</div>
+                          <div className="text-sm text-foreground">{bg.starting_credits} gp</div>
                         </div>
                       )}
                     </div>
-                  )}
-                  {(() => {
-                    const bg = backgrounds.find(b => b.id === selectedBackground);
-                    const hasSuggestedChars = (bg?.personality_traits && bg.personality_traits.length > 0)
-                      || (bg?.ideals && bg.ideals.length > 0)
-                      || (bg?.bonds && bg.bonds.length > 0)
-                      || (bg?.flaws && bg.flaws.length > 0);
-                    if (!hasSuggestedChars) return null;
-                    return (
-                      <div className="mt-3 pt-3 border-t border-border space-y-2">
-                        <div className="text-xs font-heading font-semibold">Suggested Characteristics</div>
-                        {bg?.personality_traits && bg.personality_traits.length > 0 && (
-                          <div className="text-xs text-muted-foreground">
-                            <strong>Personality Traits:</strong>
-                            <ul className="mt-1 ml-4 list-disc space-y-0.5">
-                              {bg.personality_traits.map((t, i) => <li key={i}>{formatMonarchVernacular(t)}</li>)}
-                            </ul>
-                          </div>
-                        )}
-                        {bg?.ideals && bg.ideals.length > 0 && (
-                          <div className="text-xs text-muted-foreground">
-                            <strong>Ideals:</strong>
-                            <ul className="mt-1 ml-4 list-disc space-y-0.5">
-                              {bg.ideals.map((t, i) => <li key={i}>{formatMonarchVernacular(t)}</li>)}
-                            </ul>
-                          </div>
-                        )}
-                        {bg?.bonds && bg.bonds.length > 0 && (
-                          <div className="text-xs text-muted-foreground">
-                            <strong>Bonds:</strong>
-                            <ul className="mt-1 ml-4 list-disc space-y-0.5">
-                              {bg.bonds.map((t, i) => <li key={i}>{formatMonarchVernacular(t)}</li>)}
-                            </ul>
-                          </div>
-                        )}
-                        {bg?.flaws && bg.flaws.length > 0 && (
-                          <div className="text-xs text-muted-foreground">
-                            <strong>Flaws:</strong>
-                            <ul className="mt-1 ml-4 list-disc space-y-0.5">
-                              {bg.flaws.map((t, i) => <li key={i}>{formatMonarchVernacular(t)}</li>)}
-                            </ul>
-                          </div>
+
+                    {/* Starting Equipment */}
+                    {bg.starting_equipment && (
+                      <div className="p-3 rounded-md bg-background/50 border border-border/50">
+                        <div className="text-xs font-heading font-semibold text-primary uppercase tracking-wider mb-1.5">Starting Equipment</div>
+                        <div className="text-sm text-foreground leading-relaxed">{formatMonarchVernacular(bg.starting_equipment)}</div>
+                      </div>
+                    )}
+
+                    {/* Feature */}
+                    {bg.feature_name && (
+                      <div className="p-3 rounded-md bg-primary/5 border border-primary/20">
+                        <div className="text-xs font-heading font-semibold text-primary uppercase tracking-wider mb-1.5">
+                          {formatMonarchVernacular(bg.feature_name)}
+                        </div>
+                        {bg.feature_description && (
+                          <div className="text-sm text-foreground leading-relaxed">{formatMonarchVernacular(bg.feature_description)}</div>
                         )}
                       </div>
-                    );
-                  })()}
-                </div>
-              )}
+                    )}
+
+                    {/* Suggested Characteristics — Collapsible */}
+                    {hasSuggestedChars && (
+                      <details className="group">
+                        <summary className="cursor-pointer text-sm font-heading font-semibold text-muted-foreground hover:text-foreground transition-colors select-none">
+                          Suggested Characteristics
+                          <span className="ml-1 text-xs group-open:hidden">▸</span>
+                          <span className="ml-1 text-xs hidden group-open:inline">▾</span>
+                        </summary>
+                        <div className="mt-3 space-y-3">
+                          {bg.personality_traits && bg.personality_traits.length > 0 && (
+                            <div>
+                              <div className="text-xs font-heading font-semibold text-primary uppercase tracking-wider mb-1">Personality Traits</div>
+                              <ul className="ml-4 list-disc space-y-1 text-sm text-muted-foreground">
+                                {bg.personality_traits.map((t, i) => <li key={i}>{formatMonarchVernacular(t)}</li>)}
+                              </ul>
+                            </div>
+                          )}
+                          {bg.ideals && bg.ideals.length > 0 && (
+                            <div>
+                              <div className="text-xs font-heading font-semibold text-primary uppercase tracking-wider mb-1">Ideals</div>
+                              <ul className="ml-4 list-disc space-y-1 text-sm text-muted-foreground">
+                                {bg.ideals.map((t, i) => <li key={i}>{formatMonarchVernacular(t)}</li>)}
+                              </ul>
+                            </div>
+                          )}
+                          {bg.bonds && bg.bonds.length > 0 && (
+                            <div>
+                              <div className="text-xs font-heading font-semibold text-primary uppercase tracking-wider mb-1">Bonds</div>
+                              <ul className="ml-4 list-disc space-y-1 text-sm text-muted-foreground">
+                                {bg.bonds.map((t, i) => <li key={i}>{formatMonarchVernacular(t)}</li>)}
+                              </ul>
+                            </div>
+                          )}
+                          {bg.flaws && bg.flaws.length > 0 && (
+                            <div>
+                              <div className="text-xs font-heading font-semibold text-primary uppercase tracking-wider mb-1">Flaws</div>
+                              <ul className="ml-4 list-disc space-y-1 text-sm text-muted-foreground">
+                                {bg.flaws.map((t, i) => <li key={i}>{formatMonarchVernacular(t)}</li>)}
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+                      </details>
+                    )}
+                  </div>
+                );
+              })()}
             </div>
           )}
 

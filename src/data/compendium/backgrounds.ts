@@ -570,6 +570,184 @@ export const backgrounds = [
     "dangers": ["Shadow Corruption", "Rift Instability", "Regent's Wrath", "Dimensional Sickness"],
     "image": "/generated/compendium/backgrounds/cosmic-wanderer.webp",
     "source": "System Ascendant Canon"
+  },
+
+  // ── MODERN-DAY BACKGROUNDS ───────────────────────────────────────────
+  {
+    "id": "viral-streamer",
+    "name": "Viral Streamer",
+    "type": "Background",
+    "rank": "C",
+    "skillProficiencies": ["Performance", "Persuasion"],
+    "toolProficiencies": ["Streaming Equipment", "Video Editing Software"],
+    "languages": ["Common"],
+    "equipment": ["A high-end streaming laptop", "A ring light and portable camera", "A branded hoodie with your channel logo", "A portable Wi-Fi hotspot", "A belt pouch containing 15 gp"],
+    "features": [
+      { "name": "Viral Reach", "description": "Your online following gives you access to information networks. You can spend 1 hour broadcasting a request to your followers to gain advantage on one Intelligence (Investigation) or Charisma (Persuasion) check within the next 24 hours as your audience crowdsources answers or applies social pressure." },
+      { "name": "Content Creator's Eye", "description": "You have an instinct for what captures attention. You have advantage on Wisdom (Perception) checks to notice unusual or noteworthy events happening around you." }
+    ],
+    "personalityTraits": ["I narrate everything I do as if someone is watching—because someone usually is.", "I can't resist documenting a dramatic moment, even in the middle of danger.", "I speak in catchphrases and memes that I've made famous.", "I treat every social interaction like an interview opportunity."],
+    "ideals": ["Authenticity. My audience trusts me because I never fake it. (Good)", "Fame. More followers means more power, and power is everything. (Neutral)", "Connection. I stream because loneliness is a disease the internet can cure. (Any)", "Truth. I use my platform to expose corruption and injustice. (Lawful)"],
+    "bonds": ["My first subscriber stuck with me from zero—I'd do anything for them.", "A corporation tried to buy my silence about a gate incident I streamed live.", "My streaming rival disappeared after exploring a gate on camera.", "I accidentally captured classified Hunter Association footage and now I'm a target."],
+    "flaws": ["I can't stop checking my viewer count, even during life-or-death moments.", "I'll take insane risks for content that will go viral.", "I've built a persona so thick I've forgotten who I actually am.", "I overshare everything online and have no concept of operational security."],
+    "description": "Before the System chose you, you were already famous—or at least internet-famous. Your live streams, reaction videos, or documentary content had built an audience of thousands, maybe millions. When gates started opening and hunters started awakening, you pointed your camera at the chaos and never looked away. Now that you've awakened yourself, your audience watches your ascension in real time.",
+    "dangers": ["Doxxing", "Corporate Exploitation", "Parasocial Stalkers", "Content Addiction"],
+    "image": "/generated/compendium/backgrounds/viral-streamer.webp",
+    "source": "System Ascendant Canon"
+  },
+  {
+    "id": "kpop-idol",
+    "name": "K-Pop Idol",
+    "type": "Background",
+    "rank": "B",
+    "skillProficiencies": ["Performance", "Acrobatics"],
+    "toolProficiencies": ["Musical Instrument (any one)", "Disguise Kit"],
+    "languages": ["Common", "Korean"],
+    "equipment": ["A designer stage outfit", "A musical instrument of your choice", "A disguise kit", "A signed photo collection from your group", "A belt pouch containing 25 gp"],
+    "features": [
+      { "name": "Stage Presence", "description": "Your years of idol training have given you supernatural charisma. When you perform for at least 1 minute, all friendly creatures within 30 feet gain temporary hit points equal to your Charisma modifier + your proficiency bonus. This can be used once per short rest." },
+      { "name": "Fandom Network", "description": "Your devoted fan base spans the globe. In any major city, you can find a fan willing to provide shelter, information, or minor assistance within 1d4 hours of making your presence known." }
+    ],
+    "personalityTraits": ["I maintain perfect posture and appearance at all times—training never ends.", "I count beats in my head during combat, turning every fight into choreography.", "I bow to everyone I meet, a habit from years of fan meets.", "I practice my smile so often it's become my default expression, even when I'm terrified."],
+    "ideals": ["Perfection. I trained 16 hours a day for years—I refuse to accept anything less than my best. (Lawful)", "Inspiration. My purpose is to give people hope through my art. (Good)", "Freedom. The agency controlled my life—never again. (Chaotic)", "Legacy. I want to be remembered for more than just a pretty face and catchy songs. (Any)"],
+    "bonds": ["My former group members are scattered across different hunter guilds—I need to find them.", "My agency still holds my contract and wants me back, dead or alive.", "A sasaeng fan awakened the same day I did and is obsessed with following my ascension.", "I dedicated my last song to someone who disappeared into a gate—I'll find them."],
+    "flaws": ["I am terrified of being seen without makeup or my stage persona.", "I instinctively try to please everyone, even enemies.", "I can't handle being ignored—I need to be the center of attention.", "Years of strict dieting have left me with a complicated relationship with food and rest."],
+    "description": "You were one of the brightest stars in the entertainment industry—a trained performer whose face graced billboards, whose songs topped charts, and whose every movement was choreographed to perfection. Then the System awakened you, and suddenly your stage presence became something far more dangerous. Your fans now watch you fight monsters instead of performing, and somehow, you make even that look beautiful.",
+    "dangers": ["Paparazzi Exposure", "Agency Debt", "Sasaeng Stalkers", "Identity Crisis"],
+    "image": "/generated/compendium/backgrounds/kpop-idol.webp",
+    "source": "System Ascendant Canon"
+  },
+  {
+    "id": "movie-star",
+    "name": "Movie Star",
+    "type": "Background",
+    "rank": "B",
+    "skillProficiencies": ["Performance", "Deception"],
+    "toolProficiencies": ["Disguise Kit", "Vehicles (land)"],
+    "languages": ["Common"],
+    "equipment": ["A set of luxury clothes", "A disguise kit", "An autographed headshot (your own)", "A pair of designer sunglasses", "A belt pouch containing 30 gp"],
+    "features": [
+      { "name": "Method Actor", "description": "Your acting training lets you assume identities with frightening accuracy. You have advantage on Charisma (Deception) checks when impersonating a specific person you have observed for at least 10 minutes. Additionally, you can perfectly mimic accents and speech patterns." },
+      { "name": "Celebrity Status", "description": "Your fame opens doors. You can gain access to exclusive locations, VIP areas, and high-society events. Important NPCs are more likely to grant you an audience, giving you advantage on the first Charisma check when meeting someone who recognizes you." }
+    ],
+    "personalityTraits": ["I quote my own movies in conversation and expect people to recognize the reference.", "I approach every situation like it's a scene—I need motivation, stakes, and a dramatic arc.", "I am genuinely kind to fans but ruthless in negotiations.", "I've played so many characters that I sometimes lose track of my real personality."],
+    "ideals": ["Art. Acting taught me empathy—I've lived a thousand lives and understand them all. (Good)", "Power. Fame is just another word for influence, and influence changes the world. (Neutral)", "Authenticity. I'm tired of pretending—I want to be someone real for once. (Any)", "Justice. I've seen how the powerful exploit the weak, and I won't stand for it. (Lawful)"],
+    "bonds": ["My stunt double was killed when a gate opened on set—I carry their memory.", "A director I trust implicitly has been asking me to investigate strange gate activity.", "My co-star awakened as a villain, and only I know their true identity.", "I promised my late parent I'd use my platform to help people."],
+    "flaws": ["I need an audience to function—I freeze when no one is watching.", "I've been pampered so long that roughing it genuinely distresses me.", "I trust my agent's judgment over my own, even when it's clearly wrong.", "I can't resist a dramatic entrance, even when stealth is critical."],
+    "description": "Hollywood royalty, box office gold, the face that launched a thousand franchises—that was your life before the gates. You had everything: mansions, private jets, adoring fans. Then the System chose you, and suddenly the action scenes weren't choreographed anymore. The monsters were real. The stakes were real. And for the first time in your career, no one was going to yell 'cut.'",
+    "dangers": ["Tabloid Exposure", "Stalker Fans", "Typecasting", "Reality Dissociation"],
+    "image": "/generated/compendium/backgrounds/movie-star.webp",
+    "source": "System Ascendant Canon"
+  },
+  {
+    "id": "pro-athlete",
+    "name": "Pro Athlete",
+    "type": "Background",
+    "rank": "C",
+    "skillProficiencies": ["Athletics", "Intimidation"],
+    "toolProficiencies": ["Sports Equipment (any one)", "Vehicles (land)"],
+    "languages": ["Common"],
+    "equipment": ["A set of athletic wear", "Sports equipment of your choice", "A championship medal or trophy replica", "A training journal", "A belt pouch containing 20 gp"],
+    "features": [
+      { "name": "Peak Conditioning", "description": "Your professional training has pushed your body to its limits. You can add your proficiency bonus to Constitution saving throws against exhaustion, and you require only 4 hours of sleep to gain the benefits of a long rest." },
+      { "name": "Competitive Spirit", "description": "When you fail an ability check or saving throw, you can choose to reroll it with advantage. You can use this feature once per long rest. Additionally, you have advantage on Athletics checks related to running, jumping, or climbing." }
+    ],
+    "personalityTraits": ["I turn everything into a competition, even eating breakfast.", "I maintain a strict training regimen no matter what—6 AM runs in the dungeon if I have to.", "I motivate others with intense pre-battle speeches that sound like locker room pep talks.", "I keep detailed stats on everything: kills, damage dealt, gates cleared, personal bests."],
+    "ideals": ["Excellence. Second place is first loser—I will be the absolute best. (Lawful)", "Teamwork. No champion wins alone—I protect my team above all else. (Good)", "Glory. I fight so the world will remember my name. (Neutral)", "Resilience. It's not about how hard you hit—it's about how hard you can get hit and keep going. (Any)"],
+    "bonds": ["My coach was killed by a gate beast and I fight in their memory.", "My old team was my family—I'd cross dimensions to protect them.", "A rival athlete awakened with powers that dwarf mine, and I refuse to fall behind.", "I still have a contract with my sports team, and they expect me to play AND clear gates."],
+    "flaws": ["I push myself past my limits and refuse to admit when I'm injured.", "I can't stand losing—a defeat sends me into a spiral of self-doubt.", "I rely too heavily on my physical abilities and neglect studying or planning.", "I have a massive ego that makes cooperation with equals difficult."],
+    "description": "You were at the top of your game—a professional athlete whose name was synonymous with peak human performance. Your body was a finely tuned instrument, honed through years of brutal training and competition. When the System awakened you, it took that foundation and built something superhuman on top of it. Now you compete on a very different field, where the losers don't go home—they don't go anywhere at all.",
+    "dangers": ["Career-Ending Injury", "Performance-Enhancing Temptation", "Sponsor Pressure", "Burnout"],
+    "image": "/generated/compendium/backgrounds/pro-athlete.webp",
+    "source": "System Ascendant Canon"
+  },
+  {
+    "id": "corporate-executive",
+    "name": "Corporate Executive",
+    "type": "Background",
+    "rank": "B",
+    "skillProficiencies": ["Persuasion", "Insight"],
+    "toolProficiencies": ["Forgery Kit"],
+    "languages": ["Common", "one additional language"],
+    "equipment": ["A tailored business suit", "A leather briefcase", "A corporate ID badge", "A burner phone", "A belt pouch containing 50 gp"],
+    "features": [
+      { "name": "Corporate Connections", "description": "Your business network spans industries and governments. You can call in a favor once per week to arrange meetings with powerful figures, access restricted corporate facilities, or obtain classified market information. The favor's scope is at the Warden's discretion." },
+      { "name": "Hostile Negotiator", "description": "You are ruthlessly effective in negotiations. When you engage in a contested Charisma check during negotiations, you can treat a roll of 9 or lower as a 10." }
+    ],
+    "personalityTraits": ["I evaluate every person I meet in terms of their usefulness to me.", "I schedule everything, including leisure time, in 15-minute increments.", "I speak in corporate buzzwords and motivational quotes without realizing it.", "I always have an exit strategy—for meetings, relationships, and combat."],
+    "ideals": ["Order. Systems and hierarchies exist for a reason—they create efficiency. (Lawful)", "Ambition. Power flows to those who seize it. I intend to be at the top. (Neutral)", "Innovation. The old world is dying. The System is the future, and I will shape it. (Any)", "Responsibility. With great power comes great fiduciary responsibility to stakeholders. (Lawful)"],
+    "bonds": ["My company is secretly funding gate research, and I know things that could topple governments.", "My family's wealth was built on exploiting hunters, and I'm trying to make it right.", "A business rival has awakened and is using their powers for corporate espionage.", "I owe my position to a mentor who disappeared into an S-Rank gate."],
+    "flaws": ["I treat people like assets to be leveraged rather than individuals.", "I am addicted to control and become erratic when things don't go according to plan.", "I will sacrifice almost anything—including allies—to protect my reputation.", "I look down on people who lack ambition or education."],
+    "description": "Corner office, seven-figure salary, a name that made markets move—you were a titan of industry before the gates changed everything. You managed portfolios worth more than some countries' GDP and made decisions that affected millions. When the System awakened you, you treated it like any other hostile takeover: assess, strategize, dominate. The boardroom prepared you for battle better than anyone expected.",
+    "dangers": ["Corporate Espionage", "Hostile Takeover", "Burnout", "Moral Compromise"],
+    "image": "/generated/compendium/backgrounds/corporate-executive.webp",
+    "source": "System Ascendant Canon"
+  },
+  {
+    "id": "underground-hacker",
+    "name": "Underground Hacker",
+    "type": "Background",
+    "rank": "C",
+    "skillProficiencies": ["Investigation", "Stealth"],
+    "toolProficiencies": ["Hacking Tools", "Thieves' Tools"],
+    "languages": ["Common"],
+    "equipment": ["A custom-built laptop with encrypted drives", "A set of nondescript clothes", "Hacking tools", "A collection of USB drives with unknown data", "A belt pouch containing 10 gp"],
+    "features": [
+      { "name": "Digital Ghost", "description": "You can interface with electronic systems and security networks with supernatural ease. You have advantage on Intelligence checks related to technology, hacking, or digital systems. Once per long rest, you can spend 10 minutes to access a secured digital system without leaving a trace." },
+      { "name": "Dark Web Contacts", "description": "You have connections in the digital underground. You can spend 1 hour to contact an anonymous informant who can provide you with information about a person, organization, or location. The information is reliable but may come at a price." }
+    ],
+    "personalityTraits": ["I see the world as systems and code—everything can be hacked if you know where to look.", "I use a different alias for every situation and never give my real name.", "I compulsively encrypt everything, including handwritten notes.", "I speak in technical jargon that no one else understands and refuse to simplify it."],
+    "ideals": ["Freedom. Information wants to be free, and so do people. (Chaotic)", "Knowledge. Data is power, and I want to know everything. (Neutral)", "Justice. I hack the powerful to protect the powerless. (Good)", "Chaos. The old systems are broken—I'm just helping them fall faster. (Chaotic)"],
+    "bonds": ["My hacker collective was targeted by a hunter guild for exposing their corruption.", "I found something in the Hunter Association's classified servers that terrified me.", "The System's code structure reminds me of something I've seen before, and I need to find the connection.", "A fellow hacker was forcibly recruited by a shadow organization—I'm going to get them out."],
+    "flaws": ["I trust machines more than people.", "I am paranoid about surveillance and sometimes see conspiracies where there are none.", "I can't resist poking at secure systems, even when it's suicidal to try.", "I've spent so long online that I have serious difficulty with face-to-face social interaction."],
+    "description": "In the digital shadows, you were a ghost—a phantom who moved through firewalls like they were tissue paper. Governments feared your keystrokes, corporations trembled at your handle. When the System awakened you, you realized that reality itself was just another system to hack. The code that underlies gates, essence, and ascension looks hauntingly familiar to someone who's spent their whole life reading between the lines of code.",
+    "dangers": ["Government Surveillance", "Cyberattack Retaliation", "Digital Addiction", "Identity Erasure"],
+    "image": "/generated/compendium/backgrounds/underground-hacker.webp",
+    "source": "System Ascendant Canon"
+  },
+  {
+    "id": "social-media-influencer",
+    "name": "Social Media Influencer",
+    "type": "Background",
+    "rank": "D",
+    "skillProficiencies": ["Persuasion", "Deception"],
+    "toolProficiencies": ["Photography Equipment"],
+    "languages": ["Common"],
+    "equipment": ["A smartphone with high-end camera", "A portable ring light", "A curated wardrobe of trendy clothes", "Brand partnership contracts", "A belt pouch containing 20 gp"],
+    "features": [
+      { "name": "Influencer's Reach", "description": "You can sway public opinion with a single post. Once per long rest, you can make a Charisma (Persuasion) check to influence the attitude of a community or organization toward a person, idea, or cause. The DC is set by the Warden based on how controversial the stance is." },
+      { "name": "Brand Recognition", "description": "Merchants and vendors recognize you. You receive a 15% discount on non-magical goods and services in any settlement with access to the internet or media networks." }
+    ],
+    "personalityTraits": ["I instinctively pose when someone points anything at me that might be a camera.", "I rate everything on a 1-to-10 scale and share my opinion whether asked or not.", "I genuinely care about my followers and consider them an extended family.", "I curate my life so carefully that I sometimes forget what's real and what's a brand."],
+    "ideals": ["Community. My platform connects people—that matters more than money. (Good)", "Image. Perception is reality, and I control how people perceive me. (Neutral)", "Growth. Every day is a chance to reach more people and expand my brand. (Any)", "Truth. I refuse to promote anything I don't believe in, even if it costs me sponsors. (Lawful)"],
+    "bonds": ["My followers funded my first gate expedition through crowdfunding.", "A rival influencer has been spreading lies about me and my hunter abilities.", "I promised to document the truth about gates for the public, no matter how dangerous.", "My brand manager knows my darkest secret and uses it as leverage."],
+    "flaws": ["My self-worth is entirely tied to engagement metrics and follower counts.", "I'll do almost anything for content, including putting others at risk.", "I can't handle negative comments—criticism sends me into a tailspin.", "I present a perfect life online but I'm deeply insecure underneath it all."],
+    "description": "Likes, shares, followers, brand deals—that was your world. You built an empire of content, turning your personality into a product and your life into a performance. When the System chose you, your audience exploded overnight. Millions now watch an influencer fight actual monsters, and the engagement has never been better. But behind the filters and the curated feeds, you're starting to realize that the person your followers love might not be the person you actually are.",
+    "dangers": ["Cancel Culture", "Brand Dependency", "Authenticity Crisis", "Doxxing"],
+    "image": "/generated/compendium/backgrounds/social-media-influencer.webp",
+    "source": "System Ascendant Canon"
+  },
+  {
+    "id": "esports-champion",
+    "name": "E-Sports Champion",
+    "type": "Background",
+    "rank": "C",
+    "skillProficiencies": ["Perception", "Investigation"],
+    "toolProficiencies": ["Gaming Equipment", "Vehicles (land)"],
+    "languages": ["Common"],
+    "equipment": ["A custom gaming peripheral set", "A team jersey", "A tournament trophy replica", "Energy drinks (1 week supply)", "A belt pouch containing 15 gp"],
+    "features": [
+      { "name": "Tactical Overlay", "description": "Years of competitive gaming have trained your brain to process complex tactical information instantly. You can take the Help action as a bonus action once per short rest. Additionally, you have advantage on Intelligence checks to analyze tactical situations, traps, or puzzles." },
+      { "name": "Clutch Factor", "description": "When the pressure is highest, you perform your best. When you are at half hit points or below, you gain a +2 bonus to attack rolls and saving throws. This represents your ability to perform in clutch moments." }
+    ],
+    "personalityTraits": ["I call out ability names when I use them, like a character in a game.", "I analyze everyone's 'build' and suggest optimizations whether they want them or not.", "I treat real combat encounters like raid bosses—I need strategy, roles, and a shot caller.", "I use gaming terminology for everything: 'aggro,' 'DPS,' 'tank,' 'res me.'"],
+    "ideals": ["Strategy. Every problem has an optimal solution—you just have to find it. (Lawful)", "Competition. I don't just want to win—I want to be the undisputed best. (Neutral)", "Teamwork. No carry is complete without a team. I protect my squad. (Good)", "Innovation. The meta is always evolving, and I evolve with it. (Any)"],
+    "bonds": ["My former esports team was my real family—I'd queue into an S-Rank gate for them.", "My biggest rival in gaming awakened the same day I did, and we're still competing.", "I was scouted by a hunter guild specifically because they saw my tactical ability in tournaments.", "My gaming sponsor is secretly a front for an organization researching System mechanics."],
+    "flaws": ["I sometimes forget that death in real life doesn't have a respawn timer.", "I min-max everything, including relationships.", "I can be incredibly toxic when we're losing—old gaming habits die hard.", "I've spent so many years indoors that I'm physically underdeveloped compared to other hunters."],
+    "description": "You were the best—or close to it. Your reflexes were measured in milliseconds, your strategic thinking could dismantle world-class teams, and your name was known in every gaming community on the planet. When the System awakened you, it was like the ultimate game had finally begun. The HUD, the stats, the skill trees—it all felt terrifyingly familiar. As if the games you'd been playing your whole life were just training simulations for this moment.",
+    "dangers": ["Overconfidence", "Gaming Addiction Relapse", "Physical Weakness", "Toxic Behavior"],
+    "image": "/generated/compendium/backgrounds/esports-champion.webp",
+    "source": "System Ascendant Canon"
   }
 ];
 
