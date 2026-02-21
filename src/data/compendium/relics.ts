@@ -2741,7 +2741,7 @@ export const relics: Relic[] = [
     rarity: 'rare',
     attunement: true,
     requirements: {
-      class: 'Wizard',
+      class: 'Mage',
       level: 10
     },
     properties: {
@@ -2783,7 +2783,7 @@ export const relics: Relic[] = [
     rarity: 'legendary',
     attunement: true,
     requirements: {
-      class: 'Wizard',
+      class: 'Mage',
       level: 15
     },
     properties: {
@@ -2994,7 +2994,7 @@ export const relics: Relic[] = [
     rarity: 'rare',
     attunement: true,
     requirements: {
-      class: 'Wizard',
+      class: 'Mage',
       level: 10
     },
     properties: {
@@ -3040,7 +3040,7 @@ export const relics: Relic[] = [
     rarity: 'rare',
     attunement: true,
     requirements: {
-      class: 'Wizard',
+      class: 'Mage',
       level: 10
     },
     properties: {
@@ -3086,7 +3086,7 @@ export const relics: Relic[] = [
     rarity: 'rare',
     attunement: true,
     requirements: {
-      class: 'Wizard',
+      class: 'Mage',
       level: 10
     },
     properties: {
@@ -3132,7 +3132,7 @@ export const relics: Relic[] = [
     rarity: 'very_rare',
     attunement: true,
     requirements: {
-      class: 'Wizard',
+      class: 'Mage',
       level: 12
     },
     properties: {

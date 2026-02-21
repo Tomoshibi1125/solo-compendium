@@ -75,7 +75,7 @@ export interface Job {
 }
 
 export const jobs = [
-  // WARRIOR - Fighter (Pure martial combat)
+  // WARRIOR - Pure martial combat
   {
     "id": "warrior",
     "name": "Warrior",
@@ -179,7 +179,7 @@ export const jobs = [
     "primary_abilities": ["Strength", "Constitution"],
     "source": "System Ascendant Canon"
   },
-  // MAGE - Wizard (Arcane magic mastery)
+  // MAGE - Arcane magic mastery
   {
     "id": "mage",
     "name": "Mage",
@@ -299,7 +299,7 @@ export const jobs = [
     "primary_abilities": ["Intelligence", "Wisdom"],
     "source": "System Ascendant Canon"
   },
-  // ASSASSIN - Rogue (Stealth and precision)
+  // ASSASSIN - Stealth and precision
   {
     "id": "assassin",
     "name": "Assassin",
@@ -403,7 +403,7 @@ export const jobs = [
     "primary_abilities": ["Dexterity", "Intelligence"],
     "source": "System Ascendant Canon"
   },
-  // HEALER - Cleric (Divine healing magic)
+  // HEALER - Divine healing magic
   {
     "id": "healer",
     "name": "Healer",
@@ -523,7 +523,7 @@ export const jobs = [
     "primary_abilities": ["Wisdom", "Charisma"],
     "source": "System Ascendant Canon"
   },
-  // RANGER - Ranger (Nature and tracking)
+  // RANGER - Nature and tracking
   {
     "id": "ranger",
     "name": "Ranger",
@@ -638,7 +638,7 @@ export const jobs = [
     "primary_abilities": ["Dexterity", "Wisdom"],
     "source": "System Ascendant Canon"
   },
-  // BERSERKER - Barbarian (Rage and fury)
+  // BERSERKER - Rage and fury
   {
     "id": "berserker",
     "name": "Berserker",
@@ -741,7 +741,7 @@ export const jobs = [
     "primary_abilities": ["Strength", "Constitution"],
     "source": "System Ascendant Canon"
   },
-  // TANK - Fighter (Defense and protection)
+  // TANK - Defense and protection
   {
     "id": "tank",
     "name": "Tank",
@@ -845,7 +845,7 @@ export const jobs = [
     "primary_abilities": ["Constitution", "Strength"],
     "source": "System Ascendant Canon"
   },
-  // SUMMONER - Bard (Essence bonding with magical creatures)
+  // SUMMONER - Essence bonding with magical creatures
   {
     "id": "summoner",
     "name": "Summoner",
@@ -967,7 +967,7 @@ export const jobs = [
     "primary_abilities": ["Charisma", "Dexterity"],
     "source": "System Ascendant Canon"
   },
-  // PALADIN - Paladin (Holy power inspired by sacred hunters)
+  // PALADIN - Holy power and sacred duty
   {
     "id": "paladin",
     "name": "Paladin",
@@ -1197,7 +1197,7 @@ export const jobs = [
     "primary_abilities": ["Intelligence", "Constitution"],
     "source": "System Ascendant Canon"
   },
-  // WARLOCK - Warlock (Pact magic inspired by umbral monarch contractors)
+  // WARLOCK - Pact magic and umbral contracts
   {
     "id": "warlock",
     "name": "Warlock",
@@ -1309,7 +1309,7 @@ export const jobs = [
     "primary_abilities": ["Charisma", "Wisdom"],
     "source": "System Ascendant Canon"
   },
-  // NECROMANCER - Wizard (Death magic inspired by death-themed hunters)
+  // NECROMANCER - Death magic and shadow extraction
   {
     "id": "necromancer",
     "name": "Necromancer",
@@ -1429,7 +1429,7 @@ export const jobs = [
     "primary_abilities": ["Intelligence", "Wisdom"],
     "source": "System Ascendant Canon"
   },
-  // MONK - Monk (Discipline mastery inspired by martial artist hunters)
+  // MONK - Essence-channeled martial discipline
   {
     "id": "monk",
     "name": "Monk",
@@ -1533,7 +1533,7 @@ export const jobs = [
     "primary_abilities": ["Dexterity", "Wisdom"],
     "source": "System Ascendant Canon"
   },
-  // BARD - Bard (Inspiration magic inspired by performance hunters)
+  // BARD - Harmonic resonance and inspiration magic
   {
     "id": "bard",
     "name": "Bard",

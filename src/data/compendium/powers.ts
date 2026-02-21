@@ -313,7 +313,7 @@ export const powers: Power[] = [
   {
     id: 'ki-point',
     name: 'Ki Point',
-    description: 'Martial arts energy that fuels special abilities.',
+    description: 'Essence-channeled martial energy that fuels transcendent combat abilities, refined through the System\'s awakening of your inner potential.',
     type: 'class',
     rarity: 'common',
     requirements: {
@@ -329,14 +329,14 @@ export const powers: Power[] = [
     limitations: {
       uses: 'Regain all ki points after a long rest'
     },
-    flavor: 'Your body and mind are one, channeling universal energy through martial discipline.',
+    flavor: 'The System channeled raw essence into your meridians, awakening a reservoir of power that most ascendants can only dream of.',
     source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/ki-point.webp'
   },
   {
     id: 'divine-smite',
     name: 'Divine Smite',
-    description: 'Channel divine energy into weapon attacks.',
+    description: 'Channel radiant essence through your weapon, unleashing concentrated holy energy that burns through dimensional corruption.',
     type: 'class',
     rarity: 'rare',
     requirements: {
@@ -354,18 +354,18 @@ export const powers: Power[] = [
       uses: 'Limited by spell slots',
       conditions: ['Must hit a creature']
     },
-    flavor: 'Divine light flows through your weapon, smiting evil with righteous fury.',
+    flavor: 'Radiant essence erupts from your blade like a rift-born sunrise, searing through shadow corruption and leaving only purified light in its wake.',
     source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/divine-smite.webp'
   },
   {
     id: 'wild-shape',
-    name: 'Wild Shape',
-    description: 'The ability to transform into animals.',
+    name: 'Primal Shift',
+    description: 'Channel essence from rift-born ecosystems to reshape your body into the form of creatures encountered within dimensional gates.',
     type: 'class',
     rarity: 'rare',
     requirements: {
-      class: 'Druid',
+      class: 'Summoner',
       level: 2
     },
     activation: {
@@ -376,61 +376,61 @@ export const powers: Power[] = [
       time: '2 hours'
     },
     effects: {
-      primary: 'Transform into a beast with challenge rating no higher than your druid level divided by 3.',
+      primary: 'Transform into a beast with challenge rating no higher than your summoner level divided by 3.',
       secondary: 'Gain the beast\'s statistics except for Intelligence, Wisdom, and Charisma.'
     },
     limitations: {
       uses: '2 times per short rest, increases at higher levels',
       cooldown: 'Short rest'
     },
-    flavor: 'You become one with nature, taking the form of the beasts of the wild.',
+    flavor: 'Your body warps and reshapes, drawing on primal essence patterns cataloged from rift creatures to become something far more dangerous than human.',
     source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/wild-shape.webp'
   },
   {
     id: 'arcane-recovery',
     name: 'Arcane Recovery',
-    description: 'The ability to recover expended spell slots.',
+    description: 'Draw residual essence from the dimensional lattice to restore depleted spell matrices, a technique taught only in the Ascendant Academy\'s advanced programs.',
     type: 'class',
     rarity: 'uncommon',
     requirements: {
-      class: 'Wizard',
+      class: 'Mage',
       level: 1
     },
     activation: {
       type: 'long-rest'
     },
     effects: {
-      primary: 'Recover expended spell slots with a total level equal to half your wizard level.',
+      primary: 'Recover expended spell slots with a total level equal to half your mage level.',
       secondary: 'Cannot recover spell slots of 6th level or higher.'
     },
     limitations: {
       uses: 'Once per long rest'
     },
-    flavor: 'Your mastery of arcane magic allows you to recover magical energy through study and rest.',
+    flavor: 'You siphon ambient essence from the dimensional lattice itself, replenishing your depleted reserves through sheer force of intellect.',
     source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/arcane-recovery.webp'
   },
   {
     id: 'sneak-attack',
-    name: 'Sneak Attack',
-    description: 'The ability to strike vulnerable points for extra damage.',
+    name: 'Precision Kill',
+    description: 'The System-enhanced ability to identify and exploit critical weak points in any target\'s defenses, turning a single strike into a devastating wound.',
     type: 'class',
     rarity: 'common',
     requirements: {
-      class: 'Rogue'
+      class: 'Assassin'
     },
     activation: {
       type: 'passive'
     },
     effects: {
       primary: 'Add extra damage to attacks when you have advantage or target has an ally adjacent.',
-      secondary: 'Extra damage increases with rogue level.'
+      secondary: 'Extra damage increases with assassin level.'
     },
     limitations: {
       conditions: ['Must use finesse or ranged weapon', 'Target must be vulnerable']
     },
-    flavor: 'You strike where it hurts most, exploiting every weakness and opening.',
+    flavor: 'Your System-enhanced perception highlights critical points in your target\'s anatomy—joints, arteries, nerve clusters—turning every strike into a potential kill shot.',
     source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/sneak-attack.webp'
   },
@@ -562,8 +562,8 @@ export const powers: Power[] = [
   // DIVINE POWERS
   {
     id: 'divine-intervention',
-    name: 'Divine Intervention',
-    description: 'The ability to call upon divine aid.',
+    name: 'System Override',
+    description: 'Issue a direct petition to the architects of the System itself, requesting intervention that transcends the normal rules of dimensional reality.',
     type: 'divine',
     rarity: 'legendary',
     requirements: {
@@ -573,21 +573,21 @@ export const powers: Power[] = [
       type: 'action'
     },
     effects: {
-      primary: 'Request direct intervention from your deity.',
+      primary: 'Request direct intervention from the System architects.',
       secondary: 'Warden determines the form and effectiveness of the intervention.'
     },
     limitations: {
       uses: 'Once per lifetime',
       cooldown: 'Never'
     },
-    flavor: 'You call upon the ultimate power of your deity, asking for direct intervention in mortal affairs.',
+    flavor: 'You speak directly to whatever intelligence built the System—and for one terrible, beautiful moment, it answers.',
     source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/divine-intervention.webp'
   },
   {
     id: 'angelic-wings',
-    name: 'Angelic Wings',
-    description: 'The ability to manifest divine wings for flight.',
+    name: 'Essence Wings',
+    description: 'Manifest wings of crystallized essence that grant flight, a hallmark of ascendants who have transcended the System\'s physical limitations.',
     type: 'divine',
     rarity: 'very_rare',
     requirements: {
@@ -608,14 +608,14 @@ export const powers: Power[] = [
       uses: '3 times per day',
       cooldown: 'Long rest'
     },
-    flavor: 'Divine light manifests as wings, allowing you to soar among the heavens.',
+    flavor: 'Wings of pure essence unfurl from your back—not feathered, but fractal, geometric, blazing with the light of a thousand collapsed rifts. The sky is no longer a boundary.',
     source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/angelic-wings.webp'
   },
   {
     id: 'holy-aura',
-    name: 'Holy Aura',
-    description: 'A protective aura of divine power.',
+    name: 'Sanctified Aura',
+    description: 'A radiant field of purified essence that shields allies from dimensional corruption and shadow influence.',
     type: 'divine',
     rarity: 'legendary',
     requirements: {
@@ -642,19 +642,19 @@ export const powers: Power[] = [
       uses: 'Once per day',
       cooldown: 'Long rest'
     },
-    flavor: 'Divine radiance surrounds you and your allies, protecting against the forces of darkness.',
+    flavor: 'Purified essence radiates from your body like a beacon, burning away shadow corruption and shielding your allies within a dome of sanctified light.',
     source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/holy-aura.webp'
   },
   {
     id: 'avatar-of-battle',
     name: 'Avatar of Battle',
-    description: 'The ability to become an avatar of combat prowess.',
+    description: 'The System elevates your combat potential beyond mortal limits, transforming you into a living embodiment of warfare itself.',
     type: 'divine',
     rarity: 'legendary',
     requirements: {
       level: 18,
-      class: 'Fighter'
+      class: 'Warrior'
     },
     activation: {
       type: 'action'
@@ -672,19 +672,19 @@ export const powers: Power[] = [
       uses: 'Once per day',
       cooldown: 'Long rest'
     },
-    flavor: 'You become the embodiment of martial perfection, a living avatar of battle itself.',
+    flavor: 'The System strips away every limiter, every hesitation, every flaw—and what remains is perfection. For one transcendent minute, you fight like a god of war.',
     source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/avatar-of-battle.webp'
   },
   {
     id: 'arcane-ascension',
     name: 'Arcane Ascension',
-    description: 'The ability to transcend mortal magical limitations.',
+    description: 'Transcend the System\'s imposed limitations on mortal spellcasting, briefly accessing the raw arcane matrix that underlies all dimensional reality.',
     type: 'divine',
     rarity: 'legendary',
     requirements: {
       level: 20,
-      class: 'Wizard'
+      class: 'Mage'
     },
     activation: {
       type: 'action'
@@ -702,7 +702,7 @@ export const powers: Power[] = [
       uses: 'Once per day',
       cooldown: 'Long rest'
     },
-    flavor: 'You transcend the limits of mortal magic, becoming one with the arcane fabric of reality.',
+    flavor: 'For one impossible minute, you see the System\'s source code—the raw arcane lattice beneath reality. You speak in equations that reshape dimensions, and the world bends to your will.',
     source: 'System Ascendant Canon',
     image: '/generated/compendium/powers/arcane-ascension.webp'
   }

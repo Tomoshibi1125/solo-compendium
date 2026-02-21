@@ -116,7 +116,7 @@ export const techniques: Technique[] = [
   {
     id: 'dragon-fist',
     name: 'Dragon Fist',
-    description: 'A powerful unarmed strike that channels draconic energy.',
+    description: 'A devastating unarmed strike that channels essence in patterns mimicking the breath weapons of rift-born dragons, delivering concussive force that shatters armor and bone alike.',
     type: 'offensive',
     style: 'unarmed',
     prerequisites: {
@@ -152,14 +152,14 @@ export const techniques: Technique[] = [
       uses: 'At-will',
       conditions: ['Must spend 2 ki points for enhanced effect']
     },
-    flavor: 'Your fist channels the raw power of ancient dragons, striking with devastating force.',
+    flavor: 'Essence coils around your fist like a dragon\'s maw, and when you strike, the impact carries the weight of a collapsing rift gate.',
     source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/dragon-fist.webp'
   },
   {
     id: 'void-slash',
     name: 'Void Slash',
-    description: 'A dimensional cutting attack that bypasses conventional defenses.',
+    description: 'A dimensional cutting attack that tears through the fabric of reality, bypassing conventional defenses by striking through the space between dimensions.',
     type: 'offensive',
     style: 'weapon',
     prerequisites: {
@@ -194,49 +194,7 @@ export const techniques: Technique[] = [
       uses: 'Once per turn',
       cooldown: 'None'
     },
-    flavor: 'Your weapon cuts through dimensions themselves, ignoring conventional defenses.',
-    source: 'System Ascendant Canon',
-    image: '/generated/compendium/techniques/void-slash.webp'
-  },
-  {
-    id: 'void-slash',
-    name: 'Void Slash',
-    description: 'A dimensional cutting attack that bypasses conventional defenses.',
-    type: 'offensive',
-    style: 'weapon',
-    prerequisites: {
-      level: 12,
-      ability: 'Dexterity',
-      score: 17
-    },
-    activation: {
-      type: 'action',
-      cost: 'One attack action'
-    },
-    range: {
-      type: 'melee'
-    },
-    effects: {
-      primary: 'Attack ignores all armor and resistance.',
-      secondary: 'If you hit, you can teleport to an unoccupied space within 30 feet as a bonus action.',
-      tertiary: 'Critical hits deal maximum damage and teleport the target to a random location within 30 feet.'
-    },
-    mechanics: {
-      attack: {
-        type: 'melee',
-        modifier: 'Dexterity',
-        damage: 'force'
-      },
-      movement: {
-        type: 'teleport',
-        distance: 30
-      }
-    },
-    limitations: {
-      uses: 'Once per turn',
-      cooldown: 'None'
-    },
-    flavor: 'Your weapon cuts through dimensions themselves, ignoring conventional defenses.',
+    flavor: 'Your blade doesn\'t cut through armor—it cuts through the dimension the armor exists in. The wound appears before the strike lands.',
     source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/void-slash.webp'
   },
@@ -444,12 +402,12 @@ export const techniques: Technique[] = [
   {
     id: 'guardian-stance',
     name: 'Guardian Stance',
-    description: 'A protective stance that shields nearby allies.',
+    description: 'A defensive formation technique perfected by the Umbral Legions, projecting a field of protective essence that shields nearby allies from harm.',
     type: 'defensive',
     style: 'any',
     prerequisites: {
       level: 7,
-      class: 'Fighter'
+      class: 'Warrior'
     },
     activation: {
       type: 'bonus-action'
@@ -470,7 +428,7 @@ export const techniques: Technique[] = [
       uses: '3 times per long rest',
       cooldown: 'Long rest'
     },
-    flavor: 'You become a living shield, protecting your allies with your very presence.',
+    flavor: 'You plant yourself like a fortress wall, essence radiating outward in a protective dome. Your allies fight harder knowing you stand between them and death.',
     source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/guardian-stance.webp'
   },
@@ -993,7 +951,7 @@ export const techniques: Technique[] = [
   {
     id: 'divine-execution',
     name: 'Divine Execution',
-    description: 'A holy strike that delivers divine justice.',
+    description: 'The ultimate expression of radiant judgment—a strike imbued with so much purified essence that it can sever a corrupted soul from its body entirely.',
     type: 'finishing',
     style: 'weapon',
     prerequisites: {
@@ -1031,19 +989,19 @@ export const techniques: Technique[] = [
       cooldown: 'Long rest',
       conditions: ['Target must be evil', 'Requires holy weapon']
     },
-    flavor: 'Divine light flows through your weapon, delivering righteous judgment to the wicked.',
+    flavor: 'Your weapon blazes with the light of a thousand purified rifts. When it falls, it doesn\'t just kill—it judges. And the judgment is absolute.',
     source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/divine-execution.webp'
   },
   {
     id: 'arcane-overload',
     name: 'Arcane Overload',
-    description: 'A spell-enhanced attack that unleashes raw magical power.',
+    description: 'Overload your spell matrices beyond their designed capacity, channeling catastrophic amounts of raw essence through a single devastating attack.',
     type: 'finishing',
     style: 'any',
     prerequisites: {
       level: 19,
-      class: 'Wizard',
+      class: 'Mage',
       technique: ['Arcane Recovery']
     },
     activation: {
@@ -1073,7 +1031,7 @@ export const techniques: Technique[] = [
       cooldown: 'Long rest',
       conditions: ['Must expend a spell slot', 'Cannot be used with cantrips']
     },
-    flavor: 'You channel raw arcane energy through your attack, unleashing the full power of your magic.',
+    flavor: 'Your spell matrices burn white-hot as you force more essence through them than any mortal should survive. The explosion of arcane power leaves reality itself scarred.',
     source: 'System Ascendant Canon',
     image: '/generated/compendium/techniques/arcane-overload.webp'
   }
