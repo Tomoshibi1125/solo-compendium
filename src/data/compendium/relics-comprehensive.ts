@@ -259,7 +259,7 @@ export const comprehensiveRelics: Relic[] = [
     lore: {
       origin: 'Carved from the heart of an ancient glacier by frost giants',
       history: 'This axe has been passed down through generations of winter warriors, each adding to its icy power.',
-      previousOwners: ['Frost Giant King', 'Winter Warrior', 'Ice Barbarian']
+      previousOwners: ['Frost Giant King', 'Winter Warrior', 'Ice Berserker']
     },
     mechanics: {
       bonus: {
@@ -682,7 +682,7 @@ export const comprehensiveRelics: Relic[] = [
     lore: {
       origin: 'Created by shadow mages as a portable source of shadow energy',
       history: 'This orb has been used by countless shadow users who needed portable power.',
-      previousOwners: ['Shadow Archmage', 'Dark Sorcerer', 'Shadow Warlock']
+      previousOwners: ['Shadow Archmage', 'Dark Esper', 'Shadow Warlock']
     },
     mechanics: {
       resistance: ['necrotic']
@@ -735,9 +735,9 @@ export const comprehensiveRelics: Relic[] = [
       }
     ],
     lore: {
-      origin: 'Created by a time wizard who discovered the secrets of temporal manipulation',
+      origin: 'Created by a time mage who discovered the secrets of temporal manipulation',
       history: 'This device is one of the few objects that can truly affect the flow of time.',
-      previousOwners: ['Time Master Chronos', 'Temporal Wizard', 'Hourglass Keeper']
+      previousOwners: ['Time Master Chronos', 'Temporal Mage', 'Hourglass Keeper']
     },
     mechanics: {
       immunity: ['time-based effects']
@@ -862,7 +862,7 @@ export const comprehensiveRelics: Relic[] = [
       }
     ],
     lore: {
-      origin: 'Created by a shadow wizard who wanted to see what others could not',
+      origin: 'Created by a shadow mage who wanted to see what others could not',
       history: 'This lens has helped many adventurers discover hidden dangers and secrets.'
     },
     mechanics: {

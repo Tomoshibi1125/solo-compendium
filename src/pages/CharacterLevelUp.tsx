@@ -24,8 +24,14 @@ import { isASILevel, isPathUnlockLevel, type PathUnlockMeta } from '@/lib/levelG
 import { DomainEventBus, buildCorePayload, type CharacterLevelUpEvent } from '@/lib/domainEvents';
 import { calculateFeatureUses, autoUpdateFeatureUses } from '@/lib/automation';
 
+// SRD 5e XP Thresholds (cumulative XP needed to reach each level)
+const XP_THRESHOLDS = [
+  0, 0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000,
+  85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000,
+];
+
 function getExperienceForNextLevel(currentLevel: number): number {
-  return currentLevel * 1000; // Simple progression formula
+  return XP_THRESHOLDS[Math.min(currentLevel + 1, 20)] ?? Infinity;
 }
 
 const CharacterLevelUp = () => {

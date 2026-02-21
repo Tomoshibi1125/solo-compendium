@@ -825,7 +825,7 @@ export const jobs = [
       "Reckless Attack",
       "Danger Sense",
       "Fast Movement",
-      "Barbarian Path"
+      "Berserker Path"
     ],
     "image": "/generated/compendium/jobs/berserker.webp",
     "stats": {

@@ -560,7 +560,7 @@ function transformItem(item: StaticItemSource): StaticCompendiumEntry {
 function transformJob(job: StaticJobSource): StaticCompendiumEntry {
   // Parse hit die number from string like "1d10"
   const hitDieNumber = job.hitDie ? parseInt(job.hitDie.replace(/\D/g, '').slice(-2) || '0', 10) : null;
-  // Skill choice count: 5e standard is 2 for most classes, 4 for rogue
+  // Skill choice count: 5e standard is 2 for most jobs, 4 for Assassin
   const skillChoiceCount = job.skillChoices ? (job.name === 'Assassin' ? 4 : 2) : null;
 
   return {

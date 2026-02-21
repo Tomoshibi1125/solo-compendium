@@ -1224,7 +1224,7 @@ export const relics: Relic[] = [
       }
     ],
     lore: {
-      origin: 'Created by an air elemental sorcerer',
+      origin: 'Created by an air elemental esper',
       history: 'These boots have been used to reach otherwise inaccessible places and escape dangerous situations.'
     },
     mechanics: {
@@ -2974,7 +2974,7 @@ export const relics: Relic[] = [
       }
     ],
     lore: {
-      origin: 'Created by a wizard who loved the reliability of Magic Missile',
+      origin: 'Created by a mage who loved the reliability of Magic Missile',
       history: 'This wand has been used by battle mages and duelists.'
     },
     mechanics: {

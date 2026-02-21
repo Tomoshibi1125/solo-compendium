@@ -283,7 +283,7 @@ export function calculateMaxSpellSlots(character: Character): Character['spell_s
     level_9: 0,
   };
   
-  // Example for a level 5 wizard
+  // Example for a level 5 full caster (Mage, Healer, etc.)
   if (character.level >= 1) slots.level_1 = 4;
   if (character.level >= 3) slots.level_2 = 3;
   if (character.level >= 5) slots.level_3 = 2;

@@ -135,16 +135,21 @@ export class CharacterMigration {
    * Migrate job/class name
    */
   private static migrateJob(oldJob: string): string {
+    // Map legacy D&D class names TO System Ascendant job names
     const jobMap: Record<string, string> = {
-      'Warrior': 'Fighter',
-      'Mage': 'Wizard',
-      'Healer': 'Cleric',
+      'Fighter': 'Warrior',
+      'Wizard': 'Mage',
+      'Cleric': 'Healer',
       'Ranger': 'Ranger',
-      'Esper': 'Sorcerer',
-      'Herald': 'Paladin',
-      'Assassin': 'Rogue',
-      'Warden': 'Druid',
-      'Techsmith': 'Artificer'
+      'Sorcerer': 'Esper',
+      'Paladin': 'Herald',
+      'Rogue': 'Assassin',
+      'Druid': 'Warden',
+      'Artificer': 'Techsmith',
+      'Barbarian': 'Berserker',
+      'Monk': 'Monk',
+      'Warlock': 'Warlock',
+      'Bard': 'Bard',
     };
 
     return jobMap[oldJob] || oldJob;

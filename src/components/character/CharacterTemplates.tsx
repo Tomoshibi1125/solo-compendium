@@ -42,7 +42,7 @@ const TEMPLATES: CharacterTemplate[] = [
     tags: ['damage', 'ranged', 'spellcaster'],
   },
   {
-    id: 'assassin-rogue',
+    id: 'assassin-shadow',
     name: 'Stealth Assassin',
     description: 'A sneaky damage dealer with high mobility',
     job: 'Assassin',
