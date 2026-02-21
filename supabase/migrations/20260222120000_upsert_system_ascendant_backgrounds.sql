@@ -41,7 +41,7 @@ INSERT INTO compendium_backgrounds (
     'I trust shadows more than people.',
     'I am willing to sacrifice others for my own survival.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['shadow','exile','dimensional','stealth'],
   ARRAY['dark','shadow','survival']
 ),
@@ -79,7 +79,7 @@ INSERT INTO compendium_backgrounds (
     'I take unnecessary risks because I feel I should have died in the rift.',
     'I hoard supplies obsessively, terrified of being unprepared.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['rift','survivor','dimensional','trauma'],
   ARRAY['survival','resilience','dimensional']
 ),
@@ -117,7 +117,7 @@ INSERT INTO compendium_backgrounds (
     'I can''t resist showing off my knowledge, even when it''s inappropriate.',
     'I was sheltered at the academy and sometimes misjudge real-world dangers.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['academy','educated','formal','arcana'],
   ARRAY['academic','knowledge','formal']
 ),
@@ -155,7 +155,7 @@ INSERT INTO compendium_backgrounds (
     'I invested everything in my guild and lost it—I''m rebuilding from nothing.',
     'I judge people by their usefulness and discard those who aren''t productive.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['guild','leadership','management','social'],
   ARRAY['leadership','social','tactical']
 ),
@@ -193,7 +193,7 @@ INSERT INTO compendium_backgrounds (
     'Dimensional travel has made me age unevenly—sometimes I lose time.',
     'I''m addicted to the sensation of crossing between worlds.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['dimensional','traveler','planar','explorer'],
   ARRAY['exploration','dimensional','wanderer']
 ),
@@ -231,7 +231,7 @@ INSERT INTO compendium_backgrounds (
     'I crave magical energy and sometimes take risks to be near it.',
     'I underestimate conventional (non-magical) threats.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['essence','magic','natural','arcane'],
   ARRAY['magical','essence','innate']
 ),
@@ -269,7 +269,7 @@ INSERT INTO compendium_backgrounds (
     'The mark of the regent is slowly changing me, and I''m afraid of what I''m becoming.',
     'I look down on the unchosen as lesser beings.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['regent','chosen','shadow','authority'],
   ARRAY['regent','shadow','power']
 ),
@@ -307,7 +307,7 @@ INSERT INTO compendium_backgrounds (
     'I''m uncomfortable making decisions for myself.',
     'I solve problems with violence before considering other options.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['military','legion','umbral','combat'],
   ARRAY['military','combat','discipline']
 ),
@@ -345,7 +345,7 @@ INSERT INTO compendium_backgrounds (
     'I underestimate the danger of ancient runes, assuming I can handle anything.',
     'I''ve developed a dependence on rune-enhanced items and feel vulnerable without them.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['rune','crafting','inscription','arcane'],
   ARRAY['rune','crafting','knowledge']
 ),
@@ -383,7 +383,7 @@ INSERT INTO compendium_backgrounds (
     'I struggle to let go of items, even mundane ones.',
     'I am rigid about protocols and become unreasonable when others don''t follow them.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['artifact','keeper','guardian','relic'],
   ARRAY['artifact','guardian','knowledge']
 ),
@@ -421,7 +421,7 @@ INSERT INTO compendium_backgrounds (
     'I disregard other threats as trivial compared to dragons.',
     'The thrill of the hunt has become an obsession I cannot control.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['dragon','slayer','hunter','combat'],
   ARRAY['combat','hunter','legendary']
 ),
@@ -459,7 +459,7 @@ INSERT INTO compendium_backgrounds (
     'The horrors I''ve witnessed have made me cold and distant.',
     'I struggle to trust anyone, fearing they might be a demon in disguise.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['demon','slayer','fiend','holy'],
   ARRAY['combat','holy','demon']
 ),
@@ -497,7 +497,7 @@ INSERT INTO compendium_backgrounds (
     'I sometimes panic when events don''t match the timeline I remember.',
     'I''ve lived through the same traumatic event multiple times and can''t forget any version.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['time','temporal','anomaly','precognition'],
   ARRAY['temporal','mysterious','arcane']
 ),
@@ -535,7 +535,7 @@ INSERT INTO compendium_backgrounds (
     'I am tempted to fix things in reality that aren''t broken.',
     'I''ve lost fragments of my own existence—moments, relationships, even body parts that flicker.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['reality','illusion','dimensional','perception'],
   ARRAY['reality','perception','arcane']
 ),
@@ -573,7 +573,7 @@ INSERT INTO compendium_backgrounds (
     'My void-touched nature frightens people, and I''ve stopped trying to reassure them.',
     'I make decisions that prioritize the void''s interests over my companions''.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['void','shadow','darkness','stealth'],
   ARRAY['void','shadow','dark']
 ),
@@ -611,7 +611,7 @@ INSERT INTO compendium_backgrounds (
     'I am homesick for a place I can barely remember.',
     'I sometimes prioritize cosmic concerns over immediate mortal ones.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['celestial','cosmic','star','divine'],
   ARRAY['celestial','cosmic','radiant']
 ),
@@ -649,7 +649,7 @@ INSERT INTO compendium_backgrounds (
     'I have lost pieces of my memory over the centuries and sometimes confuse eras.',
     'I am so focused on my duty that I neglect everything else.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['ancient','guardian','protector','history'],
   ARRAY['ancient','guardian','protective']
 ),
@@ -687,7 +687,7 @@ INSERT INTO compendium_backgrounds (
     'I can be haughty and dismissive of those I perceive as beneath my station.',
     'I am haunted by the decisions I made as king that led to my kingdom''s fall.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['royalty','forgotten','leadership','noble'],
   ARRAY['noble','leadership','regal']
 ),
@@ -725,7 +725,7 @@ INSERT INTO compendium_backgrounds (
     'I can be self-righteous and dismissive of those who take a darker path.',
     'My devotion to the light makes me inflexible in moral gray areas.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['light','holy','champion','radiant'],
   ARRAY['radiant','holy','champion']
 ),
@@ -763,7 +763,7 @@ INSERT INTO compendium_backgrounds (
     'I neglect my own well-being in my drive to help others.',
     'I am terrified of the dark and what it represents.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['hope','dawn','inspiration','performance'],
   ARRAY['hope','inspiration','light']
 ),
@@ -801,7 +801,7 @@ INSERT INTO compendium_backgrounds (
     'I know secrets that make people uncomfortable around me.',
     'I sometimes forget that I''m allowed to participate in events, not just watch.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['watcher','observer','perception','eternal'],
   ARRAY['observation','eternal','perception']
 ),
@@ -839,7 +839,7 @@ INSERT INTO compendium_backgrounds (
     'I have trouble remembering which customs belong to which world.',
     'I am lonely but afraid of putting down roots.'
   ],
-  'System Ascendant Canon', 'official',
+  'System Ascendant Canon', 'homebrew',
   ARRAY['wanderer','cosmic','traveler','survival'],
   ARRAY['wanderer','cosmic','survival']
 )
