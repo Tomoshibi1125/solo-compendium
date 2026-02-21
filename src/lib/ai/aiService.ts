@@ -974,7 +974,7 @@ export class AIServiceManager {
       'suggest-style': `${jsonInstruction}\nSuggest variations of the given style that would work for different scenarios while maintaining the core aesthetic. Respond with JSON: {"variations":[]}`,
       'filter-content': `${jsonInstruction}\nAnalyze the given content for appropriateness. Respond with JSON: {"isAppropriate":true,"issues":[],"suggestions":[]}`,
       'create-variation': `${jsonInstruction}\nCreate a variation of the given content that maintains core elements but adds a different twist. Respond with JSON: {"variation":""}`,
-      'generate-content': `You are an expert tabletop RPG game master and narrative designer for System Ascendant, a 5e SRD-based TTRPG with Solo Leveling / manhwa-inspired flavor.
+      'generate-content': `You are an expert tabletop RPG game master and narrative designer for System Ascendant, a 5e SRD-based TTRPG with dark manhwa-inspired flavor.
 
 CORE RULES CONTEXT:
 - Uses SRD 5e mechanics: proficiency bonus (ceil(level/4)+1), ability modifiers (floor((score-10)/2)), spell slots, hit dice, armor class, saving throws, skill checks.

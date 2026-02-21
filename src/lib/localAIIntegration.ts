@@ -41,7 +41,7 @@ export class LocalAIIntegration {
     if (this.isAvailable) {
       try {
         const prompt = `
-You are an expert RPG game master AI for System Ascendant, a 5e SRD TTRPG with Solo Leveling / manhwa flavor.
+You are an expert RPG game master AI for System Ascendant, a 5e SRD TTRPG with dark manhwa-inspired flavor.
 Ability scores: STR (Strength), AGI (Agility), VIT (Vitality), INT (Intelligence), SENSE (Sense), PRE (Presence).
 Classes are called "Jobs". Regents are quest/DM-gated power overlays (not level-gated).
 
@@ -120,7 +120,7 @@ REGENT 2:
 - Type: ${regent2.type}
 - Abilities: ${regent2.abilities.join(', ')}
 
-SYSTEM: System Ascendant is a 5e SRD TTRPG with Solo Leveling / manhwa flavor.
+SYSTEM: System Ascendant is a 5e SRD TTRPG with dark manhwa-inspired flavor.
 Ability scores: STR (Strength), AGI (Agility), VIT (Vitality), INT (Intelligence), SENSE (Sense), PRE (Presence).
 Classes are called "Jobs". Regents are quest/DM-gated power overlays. Two regents fuse via the Gemini Protocol.
 
