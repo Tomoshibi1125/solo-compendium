@@ -295,22 +295,140 @@ function getJobTraitModifiers(jobName: string, traitName: string): FeatureModifi
   const job = jobName.trim().toLowerCase();
   const trait = traitName.trim().toLowerCase();
 
-  // NOTE: Targets must match what CharacterRollsPanel passes into resolveAdvantageForRoll.
-  if (job === 'berserker' && trait === 'predator instinct') {
-    return [{ type: 'advantage', value: 0, target: 'initiative', source: traitName }];
+  // 1. DESTROYER
+  if (job === 'destroyer') {
+    if (trait === 'gate breaker') {
+      return [{ type: 'advantage', value: 0, target: 'save:fear', source: traitName }];
+    }
+    if (trait === 'combat telemetry') {
+      // Bonus action scan: advantage on Investigation checks
+      return [{ type: 'advantage', value: 0, target: 'skill:investigation', source: traitName }];
+    }
   }
 
-  if (job === 'berserker' && trait === 'threat reflex') {
-    return [{ type: 'advantage', value: 0, target: 'AGI_saves', source: traitName }];
+  // 2. BERSERKER
+  if (job === 'berserker') {
+    if (trait === 'threat reflex') {
+      return [{ type: 'advantage', value: 0, target: 'AGI_saves', source: traitName }];
+    }
+    if (trait === 'predator instinct') {
+      return [{ type: 'advantage', value: 0, target: 'initiative', source: traitName }];
+    }
+    if (trait === 'mana intimidation') {
+      return [{ type: 'save_dc_bonus', value: 0, target: 'PRE', source: traitName }];
+    }
   }
 
-  if (job === 'assassin' && trait === 'ghost walk') {
-    return [{ type: 'advantage', value: 0, target: 'skill:stealth', source: traitName }];
+  // 3. ASSASSIN
+  if (job === 'assassin') {
+    if (trait === 'dimensional sight') {
+      return [{ type: 'advantage', value: 0, target: 'skill:perception_hearing', source: traitName }];
+    }
+    if (trait === 'ghost walk') {
+      return [{ type: 'advantage', value: 0, target: 'skill:stealth', source: traitName }];
+    }
   }
 
-  if (job === 'destroyer' && trait === 'combat telemetry') {
-    // Active scan feature: modeled as advantage on Investigation checks when toggled on.
-    return [{ type: 'advantage', value: 0, target: 'skill:investigation', source: traitName }];
+  // 4. STRIKER
+  if (job === 'striker') {
+    if (trait === 'impulse sense') {
+      return [{ type: 'advantage', value: 0, target: 'skill:perception', source: traitName }];
+    }
+  }
+
+  // 5. MAGE
+  if (job === 'mage') {
+    if (trait === 'arcane sight') {
+      return [{ type: 'advantage', value: 0, target: 'skill:arcana', source: traitName }];
+    }
+    if (trait === 'spell resistance matrix') {
+      return [{ type: 'resistance', value: 0, target: 'psychic', source: traitName }];
+    }
+  }
+
+  // 6. ESPER
+  if (job === 'esper') {
+    if (trait === 'mana sensitivity') {
+      return [{ type: 'advantage', value: 0, target: 'skill:arcana', source: traitName }];
+    }
+    if (trait === 'anomalous resistance') {
+      return [{ type: 'advantage', value: 0, target: 'save:charm', source: traitName }];
+    }
+  }
+
+  // 7. REVENANT
+  if (job === 'revenant') {
+    if (trait === 'necrotic shell') {
+      return [{ type: 'resistance', value: 0, target: 'necrotic', source: traitName }];
+    }
+  }
+
+  // 8. SUMMONER
+  if (job === 'summoner') {
+    if (trait === 'biome link') {
+      return [{ type: 'advantage', value: 0, target: 'skill:animal_handling', source: traitName }];
+    }
+    if (trait === 'toxin resistance') {
+      return [
+        { type: 'advantage', value: 0, target: 'save:poison', source: traitName },
+        { type: 'resistance', value: 0, target: 'poison', source: traitName }
+      ];
+    }
+  }
+
+  // 9. HERALD
+  if (job === 'herald') {
+    if (trait === 'entity detection') {
+      return [{ type: 'advantage', value: 0, target: 'skill:religion', source: traitName }];
+    }
+    if (trait === 'signal hardening') {
+      return [
+        { type: 'resistance', value: 0, target: 'necrotic', source: traitName },
+        { type: 'resistance', value: 0, target: 'radiant', source: traitName },
+        { type: 'advantage', value: 0, target: 'save:hp_reduction', source: traitName }
+      ];
+    }
+  }
+
+  // 10. CONTRACTOR
+  if (job === 'contractor') {
+    if (trait === 'contract protection') {
+      return [{ type: 'advantage', value: 0, target: 'save:charm', source: traitName }];
+    }
+  }
+
+  // 11. STALKER
+  if (job === 'stalker') {
+    if (trait === 'gate navigator') {
+      return [{ type: 'advantage', value: 0, target: 'save:gate_hazard', source: traitName }];
+    }
+  }
+
+  // 12. HOLY KNIGHT
+  if (job === 'holy-knight') {
+    if (trait === 'oath ward') {
+      return [{ type: 'save_bonus', value: 0, target: 'PRE_mod', source: traitName }];
+    }
+  }
+
+  // 13. TECHNOMANCER
+  if (job === 'technomancer') {
+    if (trait === 'tool mastery') {
+      return [{ type: 'expertise', value: 0, target: 'all_tools', source: traitName }];
+    }
+    if (trait === 'system assist') {
+      return [{ type: 'bonus', value: 0, target: 'INT_mod', source: traitName }];
+    }
+  }
+
+  // 14. IDOL
+  if (job === 'idol') {
+    if (trait === 'system versatility') {
+      return [{ type: 'jack_of_all_trades', value: 0, target: 'ability_checks', source: traitName }];
+    }
+    if (trait === 'specialist training') {
+      return [{ type: 'expertise', value: 0, target: 'choice:2', source: traitName }];
+    }
   }
 
   return [];
@@ -320,26 +438,273 @@ function getJobAwakeningFeatureModifiers(jobName: string, featureName: string, l
   const job = jobName.trim().toLowerCase();
   const feature = featureName.trim().toLowerCase();
 
-  if (job === 'berserker' && feature === 'mana-dense physiology') {
-    // HP maximum increases by 1 per Berserker level (apply current level's worth).
-    return [{ type: 'hp-max', value: level, target: null as any, source: featureName }];
+  // 1. DESTROYER
+  if (job === 'destroyer') {
+    if (feature === 'reinforced frame') {
+      return [{ type: 'death_save_success_regain_hp', value: 1, target: 'self', source: featureName }];
+    }
+    if (feature === 'system targeting hud') {
+      return [
+        { type: 'advantage', value: 0, target: 'initiative', source: featureName },
+        { type: 'crit_die_count', value: 1, target: 'weapon', source: featureName }
+      ];
+    }
+    if (feature === 'adrenal regulator') {
+      return [{ type: 'damage', value: 0, target: 'force:1d4', source: featureName }];
+    }
+    if (feature === 'weapon neural bond') {
+      const bonus = level >= 17 ? 2 : 1;
+      return [
+        { type: 'attack', value: bonus, target: 'melee', source: featureName },
+        { type: 'damage', value: bonus, target: 'melee', source: featureName },
+        { type: 'attack', value: bonus, target: 'ranged', source: featureName },
+        { type: 'damage', value: bonus, target: 'ranged', source: featureName },
+        { type: 'disarm_immunity', value: 0, target: 'self', source: featureName }
+      ];
+    }
   }
 
-  if (job === 'berserker' && feature === 'toxin purge') {
-    return [{ type: 'advantage', value: 0, target: 'save:poison', source: featureName }];
+  // 2. BERSERKER
+  if (job === 'berserker') {
+    if (feature === 'mana-dense physiology') {
+      return [{ type: 'hp-max', value: level, target: null as any, source: featureName }];
+    }
+    if (feature === 'toxin purge') {
+      return [
+        { type: 'advantage', value: 0, target: 'save:poison', source: featureName },
+        { type: 'resistance', value: 0, target: 'poison', source: featureName }
+      ];
+    }
+    if (feature === 'feedback frenzy') {
+      return [{ type: 'disadvantage', value: 0, target: 'ability_checks', source: featureName }];
+    }
+    if (feature === 'mana saturation') {
+      return [
+        { type: 'resistance', value: 0, target: 'all_but_psychic', source: featureName },
+        { type: 'unconscious_immunity_if_hp_above_0', value: 0, target: 'self', source: featureName }
+      ];
+    }
+    if (feature === 'unstable discharge') {
+      return [{ type: 'damage', value: 0, target: 'force:1d6', source: featureName }];
+    }
   }
 
-  if (job === 'berserker' && feature === 'feedback frenzy') {
-    return [{ type: 'disadvantage', value: 0, target: 'ability_checks', source: featureName }];
+  // 3. ASSASSIN
+  if (job === 'assassin') {
+    if (feature === 'phase-shifted mind') {
+      return [
+        { type: 'advantage', value: 0, target: 'save:charm', source: featureName },
+        { type: 'immunity', value: 0, target: 'magical_sleep', source: featureName }
+      ];
+    }
+    if (feature === 'shadow phase') {
+      return [{ type: 'advantage', value: 0, target: 'attack_after_teleport', source: featureName }];
+    }
+    if (feature === 'lethal geometry') {
+      const dieCount = level >= 13 ? 2 : 1;
+      return [{ type: 'damage', value: 0, target: `force:${dieCount}d6`, source: featureName }];
+    }
+    if (feature === 'kill designation') {
+      return [{ type: 'crit_threshold', value: 19, target: 'designated_target', source: featureName }];
+    }
   }
 
-  if (job === 'destroyer' && feature === 'weapon neural bond') {
-    return [
-      { type: 'attack', value: 1, target: 'melee', source: featureName },
-      { type: 'damage', value: 1, target: 'melee', source: featureName },
-      { type: 'attack', value: 1, target: 'ranged', source: featureName },
-      { type: 'damage', value: 1, target: 'ranged', source: featureName },
-    ];
+  // 4. STRIKER
+  if (job === 'striker') {
+    if (feature === 'neural overclock') {
+      return [{ type: 'reroll_ones', value: 0, target: 'self', source: featureName }];
+    }
+    if (feature === 'fluid physiology') {
+      return [
+        { type: 'move_through_larger', value: 0, target: 'self', source: featureName },
+        { type: 'prone_immunity', value: 0, target: 'self', source: featureName }
+      ];
+    }
+    if (feature === 'impulse sense') {
+      return [{ type: 'blindsight', value: 120, target: 'self', source: featureName }];
+    }
+    if (feature === 'autonomic mastery') {
+      return [{ type: 'walk_on_liquids', value: 0, target: 'self', source: featureName }];
+    }
+    if (feature === 'force channeling') {
+      return [{ type: 'damage', value: 0, target: 'force:1d4', source: featureName }];
+    }
+  }
+
+  // 5. MAGE
+  if (job === 'mage') {
+    if (feature === 'mana-shielded cortex') {
+      return [
+        { type: 'advantage', value: 0, target: 'save:INT', source: featureName },
+        { type: 'advantage', value: 0, target: 'save:SENSE', source: featureName },
+        { type: 'advantage', value: 0, target: 'save:PRE', source: featureName }
+      ];
+    }
+    if (feature === 'system read access') {
+      return [{ type: 'advantage', value: 0, target: 'skill:arcana', source: featureName }];
+    }
+    if (feature === 'real-time decompilation') {
+      return [{ type: 'advantage', value: 0, target: 'save:spells', source: featureName }];
+    }
+  }
+
+  // 6. ESPER
+  if (job === 'esper') {
+    if (feature === 'mana-saturated body') {
+      return [{ type: 'hp-max', value: level, target: null as any, source: featureName }];
+    }
+    if (feature === 'willpower amplifier') {
+      return [{ type: 'damage', value: 0, target: 'force:PRE_mod', source: featureName }];
+    }
+  }
+
+  // 7. REVENANT
+  if (job === 'revenant') {
+    if (feature === 'reconstructed biology') {
+      return [
+        { type: 'immunity', value: 0, target: 'disease', source: featureName },
+        { type: 'no_breathing', value: 0, target: 'self', source: featureName }
+      ];
+    }
+    if (feature === 'death\'s threshold') {
+      return [
+        { type: 'advantage', value: 0, target: 'save:death', source: featureName },
+        { type: 'immunity', value: 0, target: 'frightened', source: featureName }
+      ];
+    }
+    if (feature === 'life siphon') {
+      return [{ type: 'hp-regain', value: 0.5, target: 'necrotic_damage_dealt', source: featureName }];
+    }
+  }
+
+  // 8. SUMMONER
+  if (job === 'summoner') {
+    if (feature === 'biome attunement') {
+      return [
+        { type: 'advantage', value: 0, target: 'save:poison', source: featureName },
+        { type: 'advantage', value: 0, target: 'save:disease', source: featureName },
+        { type: 'resistance', value: 0, target: 'poison', source: featureName }
+      ];
+    }
+    if (feature === 'gate ecology sense') {
+      return [{ type: 'advantage', value: 0, target: 'skill:nature', source: featureName }];
+    }
+    if (feature === 'stabilized entity shift') {
+      return [{ type: 'hp-temp', value: level, target: 'shift', source: featureName }];
+    }
+    if (feature === 'reinforced summons') {
+      return [
+        { type: 'hp-max', value: 0, target: 'summons:prof', source: featureName },
+        { type: 'damage', value: 0, target: 'summons:1d4_force', source: featureName }
+      ];
+    }
+  }
+
+  // 9. HERALD
+  if (job === 'herald') {
+    if (feature === 'restoration protocol') {
+      return [{ type: 'hp-regain', value: level, target: 'self', source: featureName }];
+    }
+    if (feature === 'system uplink') {
+      return [{ type: 'hp-regain', value: 0, target: '1d8_SENSE', source: featureName }];
+    }
+    if (feature === 'broadcast aura') {
+      const bonus = level >= 11 ? 2 : 1;
+      return [{ type: 'save_bonus', value: bonus, target: 'all', source: featureName }];
+    }
+  }
+
+  // 10. CONTRACTOR
+  if (job === 'contractor') {
+    if (feature === 'pact-warded mind') {
+      return [{ type: 'advantage', value: 0, target: 'save:charm', source: featureName }];
+    }
+    if (feature === 'entity awareness') {
+      return [{ type: 'advantage', value: 0, target: 'skill:insight', source: featureName }];
+    }
+    if (feature === 'empowered conduit') {
+      return [
+        { type: 'damage', value: 0, target: 'force:PRE_mod', source: featureName },
+        { type: 'push', value: 10, target: 'target', source: featureName }
+      ];
+    }
+    if (feature === 'patron\'s boon') {
+      return [{ type: 'resistance', value: 0, target: 'choice', source: featureName }];
+    }
+  }
+
+  // 11. STALKER
+  if (job === 'stalker') {
+    if (feature === 'predator physiology') {
+      return [
+        { type: 'advantage', value: 0, target: 'skill:perception_hearing', source: featureName },
+        { type: 'advantage', value: 0, target: 'skill:perception_smell', source: featureName }
+      ];
+    }
+    if (feature === 'enhanced locomotion') {
+      return [{ type: 'speed', value: 5, target: 'walking', source: featureName }];
+    }
+    if (feature === 'prey lock') {
+      return [{ type: 'advantage', value: 0, target: 'skill:survival_track', source: featureName }];
+    }
+    if (feature === 'terrain adaptation') {
+      return [{ type: 'initiative_advantage', value: 0, target: 'favored_terrain', source: featureName }];
+    }
+    if (feature === 'apex instinct') {
+      return [{ type: 'damage', value: 0, target: 'prof', source: featureName }];
+    }
+  }
+
+  // 12. HOLY KNIGHT
+  if (job === 'holy-knight') {
+    if (feature === 'covenant bond') {
+      return [{ type: 'hp-regain', value: 1, target: 'death_save_success', source: featureName }];
+    }
+    if (feature === 'oath sense') {
+      return [{ type: 'advantage', value: 0, target: 'skill:perception_entity', source: featureName }];
+    }
+    if (feature === 'aura of resolve') {
+      return [{ type: 'immunity', value: 0, target: 'frightened', source: featureName }];
+    }
+    if (feature === 'purification touch') {
+      return [{ type: 'dispel_magic', value: 0, target: 'touch', source: featureName }];
+    }
+  }
+
+  // 13. TECHNOMANCER
+  if (job === 'technomancer') {
+    if (feature === 'blueprint vision') {
+      return [{ type: 'expertise', value: 0, target: 'skill:INT_magic_items', source: featureName }];
+    }
+    if (feature === 'system write access') {
+      return [{ type: 'advantage', value: 0, target: 'skill:INT_analyze_tech', source: featureName }];
+    }
+    if (feature === 'infusion optimization') {
+      const bonus = level >= 14 ? 2 : 1;
+      return [{ type: 'item_bonus', value: bonus, target: 'infusion', source: featureName }];
+    }
+    if (feature === 'construct reinforcement') {
+      return [{ type: 'hp-max-summons', value: level * 2, target: 'constructs', source: featureName }];
+    }
+  }
+
+  // 14. IDOL
+  if (job === 'idol') {
+    if (feature === 'broad-spectrum awakening') {
+      return [{ type: 'proficiency', value: 0, target: 'choice:2', source: featureName }];
+    }
+    if (feature === 'resonance shield') {
+      return [
+        { type: 'advantage', value: 0, target: 'save:charm', source: featureName },
+        { type: 'immunity', value: 0, target: 'magical_sleep', source: featureName }
+      ];
+    }
+    if (feature === 'amplified hype') {
+      return [{ type: 'hp-temp', value: 0, target: 'PRE_mod', source: featureName }];
+    }
+    if (feature === 'resonance lock') {
+      return [{ type: 'hype_recovery_on_max', value: 1, target: 'self', source: featureName }];
+    }
   }
 
   return [];

@@ -223,9 +223,31 @@ export async function autoApplyEquipmentModifiers(characterId: string): Promise<
     ? defaultBaseAC
     : (getUnarmoredDefenseBaseAC((character as any).job ?? null, abilities) ?? defaultBaseAC);
 
+  // Character features/traits can also affect AC and Speed
+  const { data: features } = await supabase
+    .from('character_features')
+    .select('modifiers')
+    .eq('character_id', characterId)
+    .eq('is_active', true);
+
+  let featureACBonus = 0;
+  let featureSpeedBonus = 0;
+
+  if (features) {
+    for (const f of features) {
+      const mods = f.modifiers as any[];
+      if (Array.isArray(mods)) {
+        for (const mod of mods) {
+          if (mod.type === 'ac_bonus') featureACBonus += mod.value;
+          if (mod.type === 'speed') featureSpeedBonus += mod.value;
+        }
+      }
+    }
+  }
+
   const result = applyEquipmentModifiers(
-    baseAC,
-    baseSpeed,
+    baseAC + featureACBonus,
+    baseSpeed + featureSpeedBonus,
     abilities,
     equipmentRows.map((e) => ({
       properties: (e.properties as string[] | null) || [],
@@ -299,8 +321,33 @@ export async function autoRecalcDerivedStats(characterId: string): Promise<void>
     passive_perception: passivePerception,
   };
 
+  // Character features/traits can also affect derived stats (like save DC bonuses)
+  const { data: featureRows } = await supabase
+    .from('character_features')
+    .select('modifiers')
+    .eq('character_id', characterId)
+    .eq('is_active', true);
+
+  let featureSaveDCBonus = 0;
+  let featureHPMaxBonus = 0;
+
+  if (featureRows) {
+    for (const f of featureRows) {
+      const mods = f.modifiers as any[];
+      if (Array.isArray(mods)) {
+        for (const mod of mods) {
+          if (mod.type === 'save_dc_bonus') featureSaveDCBonus += mod.value;
+          if (mod.type === 'hp-max') {
+            // value is usually per level, handle as flat for now if needed or total
+            featureHPMaxBonus += mod.value;
+          }
+        }
+      }
+    }
+  }
+
   if (spellSaveDC !== null) {
-    updates.spell_save_dc = spellSaveDC;
+    updates.spell_save_dc = spellSaveDC + featureSaveDCBonus;
   }
 
   await supabase

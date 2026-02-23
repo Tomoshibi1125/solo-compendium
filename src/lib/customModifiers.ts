@@ -10,6 +10,18 @@ export const CUSTOM_MODIFIER_TYPES = [
   'hp-max',
   'advantage',
   'disadvantage',
+  'save_bonus',
+  'skill_bonus',
+  'attack_bonus',
+  'damage_bonus',
+  'ac_bonus',
+  'expertise',
+  'proficiency',
+  'crit_threshold',
+  'crit_die_count',
+  'hp-regain',
+  'hp-temp',
+  'bonus'
 ] as const;
 
 export type CustomModifierType = typeof CUSTOM_MODIFIER_TYPES[number];

@@ -54,7 +54,19 @@ export function CharacterRollsPanel({
   const getSaveModifier = (ability: string) => {
     const baseMod = getAbilityModifier(abilities[ability.toLowerCase()] || 10);
     const isProficient = savingThrowProficiencies?.includes(ability.toLowerCase());
-    return baseMod + (isProficient ? proficiencyBonus : 0);
+    const totalMod = baseMod + (isProficient ? proficiencyBonus : 0);
+
+    // Apply feature-based save bonuses
+    let featureBonus = 0;
+    for (const modifier of customModifiers) {
+      if (modifier.enabled && modifier.type === 'save_bonus') {
+        const target = modifier.target?.toLowerCase();
+        if (target === 'all' || target === ability.toLowerCase() || target === `${ability.toLowerCase()}_mod`) {
+          featureBonus += modifier.value;
+        }
+      }
+    }
+    return totalMod + featureBonus;
   };
 
   // Calculate skill modifiers
@@ -62,13 +74,34 @@ export function CharacterRollsPanel({
     if (!skill) return 0;
     
     const abilityMod = getAbilityModifier(abilities[skill.ability.toLowerCase()] || 10);
+    let baseMod = abilityMod;
     
     if (skill.proficiency === 'proficient') {
-      return abilityMod + proficiencyBonus;
+      baseMod += proficiencyBonus;
     } else if (skill.proficiency === 'expertise') {
-      return abilityMod + (proficiencyBonus * 2);
+      baseMod += (proficiencyBonus * 2);
     }
-    return abilityMod;
+
+    // Apply feature-based skill/attack bonuses
+    let featureBonus = 0;
+    for (const modifier of customModifiers) {
+      if (modifier.enabled) {
+        const target = modifier.target?.toLowerCase();
+        if (modifier.type === 'bonus' || modifier.type === 'skill_bonus') {
+          if (target === skill.name.toLowerCase() || target === `skill:${skill.name.toLowerCase()}`) {
+            featureBonus += modifier.value;
+          }
+        }
+        if (modifier.type === 'expertise' && (target === skill.name.toLowerCase() || target === `skill:${skill.name.toLowerCase()}`)) {
+          // If not already expertise, add another proficiency bonus
+          if (skill.proficiency !== 'expertise') {
+            featureBonus += proficiencyBonus;
+          }
+        }
+      }
+    }
+    
+    return baseMod + featureBonus;
   };
 
   const getSaveRollType = (ability: AbilityScore) => {
