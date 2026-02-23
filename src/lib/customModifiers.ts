@@ -7,6 +7,7 @@ export const CUSTOM_MODIFIER_TYPES = [
   'ac',
   'speed',
   'initiative',
+  'hp-max',
   'advantage',
   'disadvantage',
 ] as const;

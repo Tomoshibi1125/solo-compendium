@@ -67,62 +67,90 @@ export const spells = [
     "id": "spell-0001",
     "name": "Shadow Bolt",
     "description": "Channel minor shadow energy as shadows gather around your hands. Make a ranged spell attack against a target. On a hit, deals 2d6 necrotic damage. Critical hits apply the shadow affliction condition for 1 round.",
-    
-    // 5e Spell Structure
     "level": 1,
     "school": "Necromancy",
     "castingTime": "1 action",
-    "range": "60 ft",
+    "range": {
+      "type": "distance",
+      "value": 60,
+      "unit": "ft"
+    },
     "components": {
       "verbal": true,
       "somatic": true,
       "material": false
     },
-    "duration": "Instantaneous",
+    "duration": {
+      "type": "instant"
+    },
     "concentration": false,
     "ritual": false,
     "type": "Attack",
     "rank": "D",
     "image": "/generated/compendium/spells/spell-0001.webp",
     "effect": "On a hit, deals 2d6 necrotic damage. Critical hits apply the shadow affliction condition for 1 round.",
-    // 5e mechanics
     "atHigherLevels": "When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d6 for each slot level above 1st.",
-    "classes": ["Mage", "Contractor", "Revenant"],
-    
-    // Additional mechanics
+    "classes": [
+      "Mage",
+      "Contractor",
+      "Revenant"
+    ],
     "spellAttack": {
       "type": "ranged",
       "ability": "spellcasting",
       "damage": "2d6 necrotic"
-    }
+    },
+    "activation": {
+      "type": "action",
+      "cost": 1
+    },
+    "effects": {
+      "primary": "On a hit, deals 2d6 necrotic damage. Critical hits apply the shadow affliction condition for 1 round."
+    },
+    "mechanics": {
+      "attack": {
+        "mode": "ranged",
+        "resolution": "spell_attack",
+        "damage": {
+          "dice": "2d6",
+          "type": "necrotic"
+        }
+      }
+    },
+    "limitations": {},
+    "flavor": "In the post-reset lattice, Shadow Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus."
   },
   {
     "id": "spell-0002",
     "name": "Void Bolt",
     "description": "Weave moderate void energy into a protective manifestation as entropy accelerates. Creates a barrier of void energy that absorbs damage and grants temporary resistance to force damage.",
-    
-    // 5e Spell Structure
     "level": 2,
     "school": "Abjuration",
     "castingTime": "1 action",
-    "range": "Self (10-foot radius)",
+    "range": {
+      "type": "distance",
+      "value": 60,
+      "unit": "ft"
+    },
     "components": {
       "verbal": true,
       "somatic": true,
       "material": false
     },
-    "duration": "1 minute",
+    "duration": {
+      "type": "instant"
+    },
     "concentration": true,
     "ritual": false,
     "type": "Defense",
     "rank": "C",
     "image": "/generated/compendium/spells/spell-0002.webp",
     "effect": "Creates a barrier of void energy that absorbs damage and grants temporary resistance to force damage.",
-    // 5e mechanics
     "atHigherLevels": "When you cast this spell using a spell slot of 3rd level or higher, the temporary resistance extends to an additional damage type of your choice for each slot level above 2nd.",
-    "classes": ["Mage", "Contractor"],
-    
-    // Additional mechanics
+    "classes": [
+      "Mage",
+      "Contractor"
+    ],
     "savingThrow": {
       "ability": "none",
       "dc": "none",
@@ -133,35 +161,56 @@ export const spells = [
       "type": "sphere",
       "size": "10-foot radius",
       "shape": "sphere"
-    }
+    },
+    "activation": {
+      "type": "action",
+      "cost": 1
+    },
+    "effects": {
+      "primary": "Creates a barrier of void energy that absorbs damage and grants temporary resistance to force damage."
+    },
+    "mechanics": {
+      "saving_throw": {
+        "ability": "CON",
+        "dc": 13,
+        "on_save": "Half effect or negates secondary impairment (if any)."
+      }
+    },
+    "limitations": {},
+    "flavor": "In the post-reset lattice, Void Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus."
   },
   {
     "id": "spell-0003",
     "name": "Abyssal Bolt",
     "description": "Harness significant abyssal energy as demonic resonance builds. Produces a abyssal-aligned effect that alters the environment or enhances the caster's capabilities. Mastered only by those who've cleared B-rank gates.",
-    
-    // 5e Spell Structure
     "level": 3,
     "school": "Conjuration",
     "castingTime": "1 action",
-    "range": "120 ft",
+    "range": {
+      "type": "distance",
+      "value": 60,
+      "unit": "ft"
+    },
     "components": {
       "verbal": true,
       "somatic": true,
       "material": "a drop of demonic blood"
     },
-    "duration": "Concentration, up to 1 minute",
+    "duration": {
+      "type": "instant"
+    },
     "concentration": true,
     "ritual": false,
     "type": "Utility",
     "rank": "B",
     "image": "/generated/compendium/spells/spell-0003.webp",
     "effect": "Produces a abyssal-aligned effect that alters the environment or enhances the caster's capabilities.",
-    // 5e mechanics
     "atHigherLevels": "When you cast this spell using a spell slot of 4th level or higher, you can create additional effects or increase the area of effect by 20 feet for each slot level above 3rd.",
-    "classes": ["Mage", "Contractor", "Invoker"],
-    
-    // Additional mechanics
+    "classes": [
+      "Mage",
+      "Contractor",
+      "Invoker"
+    ],
     "savingThrow": {
       "ability": "Wisdom",
       "dc": "spell save",
@@ -184,10 +233,14 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 105,
+      "mana_cost": 105
     },
     "flavor": "In the post-reset lattice, Abyssal Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
-    "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base."
+    "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
+    "activation": {
+      "type": "action",
+      "cost": 1
+    }
   },
   {
     "id": "spell-0004",
@@ -225,7 +278,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 107,
+      "mana_cost": 107
     },
     "flavor": "In the post-reset lattice, Demonic Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -271,7 +324,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 46,
+      "mana_cost": 46
     },
     "flavor": "In the post-reset lattice, Celestial Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -314,7 +367,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 45,
+      "mana_cost": 45
     },
     "flavor": "In the post-reset lattice, Divine Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -357,7 +410,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 106,
+      "mana_cost": 106
     },
     "flavor": "In the post-reset lattice, Arcane Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -399,7 +452,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 52,
+      "mana_cost": 52
     },
     "flavor": "In the post-reset lattice, Infernal Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -445,7 +498,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 60,
+      "mana_cost": 60
     },
     "flavor": "In the post-reset lattice, Frozen Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -488,7 +541,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 103,
+      "mana_cost": 103
     },
     "flavor": "In the post-reset lattice, Thunder Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -531,7 +584,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 104,
+      "mana_cost": 104
     },
     "flavor": "In the post-reset lattice, Holy Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -573,7 +626,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 20,
+      "mana_cost": 20
     },
     "flavor": "In the post-reset lattice, Dark Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -619,7 +672,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 48,
+      "mana_cost": 48
     },
     "flavor": "In the post-reset lattice, Shadow Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -662,7 +715,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 75,
+      "mana_cost": 75
     },
     "flavor": "In the post-reset lattice, Void Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -705,7 +758,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 30,
+      "mana_cost": 30
     },
     "flavor": "In the post-reset lattice, Abyssal Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -747,7 +800,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 73,
+      "mana_cost": 73
     },
     "flavor": "In the post-reset lattice, Demonic Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -793,7 +846,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 87,
+      "mana_cost": 87
     },
     "flavor": "In the post-reset lattice, Celestial Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -836,7 +889,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 101,
+      "mana_cost": 101
     },
     "flavor": "In the post-reset lattice, Divine Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -879,7 +932,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 52,
+      "mana_cost": 52
     },
     "flavor": "In the post-reset lattice, Arcane Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -921,7 +974,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 12,
+      "mana_cost": 12
     },
     "flavor": "In the post-reset lattice, Infernal Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -967,7 +1020,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 55,
+      "mana_cost": 55
     },
     "flavor": "In the post-reset lattice, Frozen Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -1010,7 +1063,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 84,
+      "mana_cost": 84
     },
     "flavor": "In the post-reset lattice, Thunder Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -1053,7 +1106,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 24,
+      "mana_cost": 24
     },
     "flavor": "In the post-reset lattice, Holy Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -1095,7 +1148,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 54,
+      "mana_cost": 54
     },
     "flavor": "In the post-reset lattice, Dark Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -1141,7 +1194,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 19,
+      "mana_cost": 19
     },
     "flavor": "In the post-reset lattice, Shadow Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -1184,7 +1237,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 65,
+      "mana_cost": 65
     },
     "flavor": "In the post-reset lattice, Void Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -1227,7 +1280,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 25,
+      "mana_cost": 25
     },
     "flavor": "In the post-reset lattice, Abyssal Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -1269,7 +1322,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 25,
+      "mana_cost": 25
     },
     "flavor": "In the post-reset lattice, Demonic Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -1315,7 +1368,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 87,
+      "mana_cost": 87
     },
     "flavor": "In the post-reset lattice, Celestial Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -1358,7 +1411,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 77,
+      "mana_cost": 77
     },
     "flavor": "In the post-reset lattice, Divine Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -1401,7 +1454,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 32,
+      "mana_cost": 32
     },
     "flavor": "In the post-reset lattice, Arcane Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -1443,7 +1496,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 62,
+      "mana_cost": 62
     },
     "flavor": "In the post-reset lattice, Infernal Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -1489,7 +1542,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 61,
+      "mana_cost": 61
     },
     "flavor": "In the post-reset lattice, Frozen Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -1532,7 +1585,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 73,
+      "mana_cost": 73
     },
     "flavor": "In the post-reset lattice, Thunder Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -1575,7 +1628,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 24,
+      "mana_cost": 24
     },
     "flavor": "In the post-reset lattice, Holy Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -1617,7 +1670,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 40,
+      "mana_cost": 40
     },
     "flavor": "In the post-reset lattice, Dark Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -1663,7 +1716,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 33,
+      "mana_cost": 33
     },
     "flavor": "In the post-reset lattice, Shadow Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -1706,7 +1759,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 27,
+      "mana_cost": 27
     },
     "flavor": "In the post-reset lattice, Void Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -1749,7 +1802,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 75,
+      "mana_cost": 75
     },
     "flavor": "In the post-reset lattice, Abyssal Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -1791,7 +1844,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 89,
+      "mana_cost": 89
     },
     "flavor": "In the post-reset lattice, Demonic Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -1837,7 +1890,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 63,
+      "mana_cost": 63
     },
     "flavor": "In the post-reset lattice, Celestial Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -1880,7 +1933,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 10,
+      "mana_cost": 10
     },
     "flavor": "In the post-reset lattice, Divine Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -1923,7 +1976,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 53,
+      "mana_cost": 53
     },
     "flavor": "In the post-reset lattice, Arcane Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -1965,7 +2018,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 90,
+      "mana_cost": 90
     },
     "flavor": "In the post-reset lattice, Infernal Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -2011,7 +2064,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 44,
+      "mana_cost": 44
     },
     "flavor": "In the post-reset lattice, Frozen Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -2054,7 +2107,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 34,
+      "mana_cost": 34
     },
     "flavor": "In the post-reset lattice, Voltaic Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -2097,7 +2150,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 93,
+      "mana_cost": 93
     },
     "flavor": "In the post-reset lattice, Holy Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -2139,7 +2192,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 89,
+      "mana_cost": 89
     },
     "flavor": "In the post-reset lattice, Dark Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -2185,7 +2238,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 31,
+      "mana_cost": 31
     },
     "flavor": "In the post-reset lattice, Shadow Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -2228,7 +2281,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 75,
+      "mana_cost": 75
     },
     "flavor": "In the post-reset lattice, Void Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -2271,7 +2324,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 105,
+      "mana_cost": 105
     },
     "flavor": "In the post-reset lattice, Abyssal Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -2313,7 +2366,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 92,
+      "mana_cost": 92
     },
     "flavor": "In the post-reset lattice, Demonic Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -2359,7 +2412,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 33,
+      "mana_cost": 33
     },
     "flavor": "In the post-reset lattice, Celestial Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -2402,7 +2455,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 89,
+      "mana_cost": 89
     },
     "flavor": "In the post-reset lattice, Divine Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -2445,7 +2498,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 24,
+      "mana_cost": 24
     },
     "flavor": "In the post-reset lattice, Arcane Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -2487,7 +2540,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 64,
+      "mana_cost": 64
     },
     "flavor": "In the post-reset lattice, Infernal Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -2533,7 +2586,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 20,
+      "mana_cost": 20
     },
     "flavor": "In the post-reset lattice, Frozen Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -2576,7 +2629,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 50,
+      "mana_cost": 50
     },
     "flavor": "In the post-reset lattice, Thunder Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -2619,7 +2672,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 102,
+      "mana_cost": 102
     },
     "flavor": "In the post-reset lattice, Holy Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -2661,7 +2714,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 21,
+      "mana_cost": 21
     },
     "flavor": "In the post-reset lattice, Dark Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -2707,7 +2760,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 61,
+      "mana_cost": 61
     },
     "flavor": "In the post-reset lattice, Shadow Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -2750,7 +2803,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 69,
+      "mana_cost": 69
     },
     "flavor": "In the post-reset lattice, Void Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -2793,7 +2846,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 14,
+      "mana_cost": 14
     },
     "flavor": "In the post-reset lattice, Abyssal Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -2835,7 +2888,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 91,
+      "mana_cost": 91
     },
     "flavor": "In the post-reset lattice, Demonic Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -2881,7 +2934,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 31,
+      "mana_cost": 31
     },
     "flavor": "In the post-reset lattice, Celestial Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -2924,7 +2977,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 21,
+      "mana_cost": 21
     },
     "flavor": "In the post-reset lattice, Divine Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -2967,7 +3020,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 80,
+      "mana_cost": 80
     },
     "flavor": "In the post-reset lattice, Arcane Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -3009,7 +3062,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 35,
+      "mana_cost": 35
     },
     "flavor": "In the post-reset lattice, Infernal Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -3055,7 +3108,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 44,
+      "mana_cost": 44
     },
     "flavor": "In the post-reset lattice, Frozen Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -3098,7 +3151,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 52,
+      "mana_cost": 52
     },
     "flavor": "In the post-reset lattice, Thunder Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -3141,7 +3194,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 46,
+      "mana_cost": 46
     },
     "flavor": "In the post-reset lattice, Holy Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -3183,7 +3236,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 71,
+      "mana_cost": 71
     },
     "flavor": "In the post-reset lattice, Dark Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -3229,7 +3282,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 40,
+      "mana_cost": 40
     },
     "flavor": "In the post-reset lattice, Shadow Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -3272,7 +3325,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 52,
+      "mana_cost": 52
     },
     "flavor": "In the post-reset lattice, Void Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -3315,7 +3368,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 40,
+      "mana_cost": 40
     },
     "flavor": "In the post-reset lattice, Abyssal Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -3357,7 +3410,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 11,
+      "mana_cost": 11
     },
     "flavor": "In the post-reset lattice, Demonic Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -3403,7 +3456,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 73,
+      "mana_cost": 73
     },
     "flavor": "In the post-reset lattice, Celestial Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -3446,7 +3499,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 87,
+      "mana_cost": 87
     },
     "flavor": "In the post-reset lattice, Divine Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -3489,7 +3542,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 100,
+      "mana_cost": 100
     },
     "flavor": "In the post-reset lattice, Arcane Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -3531,7 +3584,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 57,
+      "mana_cost": 57
     },
     "flavor": "In the post-reset lattice, Infernal Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -3577,7 +3630,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 92,
+      "mana_cost": 92
     },
     "flavor": "In the post-reset lattice, Frozen Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -3620,7 +3673,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 23,
+      "mana_cost": 23
     },
     "flavor": "In the post-reset lattice, Thunder Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -3663,7 +3716,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 25,
+      "mana_cost": 25
     },
     "flavor": "In the post-reset lattice, Holy Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -3705,7 +3758,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 82,
+      "mana_cost": 82
     },
     "flavor": "In the post-reset lattice, Dark Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -3751,7 +3804,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 55,
+      "mana_cost": 55
     },
     "flavor": "In the post-reset lattice, Shadow Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -3794,7 +3847,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 22,
+      "mana_cost": 22
     },
     "flavor": "In the post-reset lattice, Void Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -3837,7 +3890,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 103,
+      "mana_cost": 103
     },
     "flavor": "In the post-reset lattice, Abyssal Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -3879,7 +3932,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 33,
+      "mana_cost": 33
     },
     "flavor": "In the post-reset lattice, Demonic Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -3925,7 +3978,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 11,
+      "mana_cost": 11
     },
     "flavor": "In the post-reset lattice, Celestial Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -3968,7 +4021,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 67,
+      "mana_cost": 67
     },
     "flavor": "In the post-reset lattice, Divine Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -4011,7 +4064,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 18,
+      "mana_cost": 18
     },
     "flavor": "In the post-reset lattice, Arcane Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -4053,7 +4106,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 101,
+      "mana_cost": 101
     },
     "flavor": "In the post-reset lattice, Infernal Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -4099,7 +4152,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 60,
+      "mana_cost": 60
     },
     "flavor": "In the post-reset lattice, Frozen Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -4142,7 +4195,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 31,
+      "mana_cost": 31
     },
     "flavor": "In the post-reset lattice, Thunder Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -4185,7 +4238,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 32,
+      "mana_cost": 32
     },
     "flavor": "In the post-reset lattice, Holy Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -4227,7 +4280,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 35,
+      "mana_cost": 35
     },
     "flavor": "In the post-reset lattice, Dark Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -4273,7 +4326,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 84,
+      "mana_cost": 84
     },
     "flavor": "In the post-reset lattice, Shadow Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -4316,7 +4369,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 43,
+      "mana_cost": 43
     },
     "flavor": "In the post-reset lattice, Void Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -4359,7 +4412,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 67,
+      "mana_cost": 67
     },
     "flavor": "In the post-reset lattice, Abyssal Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -4401,7 +4454,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 39,
+      "mana_cost": 39
     },
     "flavor": "In the post-reset lattice, Demonic Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -4447,7 +4500,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 51,
+      "mana_cost": 51
     },
     "flavor": "In the post-reset lattice, Celestial Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -4490,7 +4543,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 88,
+      "mana_cost": 88
     },
     "flavor": "In the post-reset lattice, Divine Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -4533,7 +4586,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 41,
+      "mana_cost": 41
     },
     "flavor": "In the post-reset lattice, Arcane Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -4575,7 +4628,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 105,
+      "mana_cost": 105
     },
     "flavor": "In the post-reset lattice, Infernal Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -4621,7 +4674,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 39,
+      "mana_cost": 39
     },
     "flavor": "In the post-reset lattice, Frozen Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -4664,7 +4717,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 106,
+      "mana_cost": 106
     },
     "flavor": "In the post-reset lattice, Thunder Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -4707,7 +4760,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 60,
+      "mana_cost": 60
     },
     "flavor": "In the post-reset lattice, Holy Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -4749,7 +4802,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 32,
+      "mana_cost": 32
     },
     "flavor": "In the post-reset lattice, Dark Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -4795,7 +4848,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 90,
+      "mana_cost": 90
     },
     "flavor": "In the post-reset lattice, Shadow Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -4838,7 +4891,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 88,
+      "mana_cost": 88
     },
     "flavor": "In the post-reset lattice, Void Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -4881,7 +4934,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 67,
+      "mana_cost": 67
     },
     "flavor": "In the post-reset lattice, Abyssal Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -4923,7 +4976,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 108,
+      "mana_cost": 108
     },
     "flavor": "In the post-reset lattice, Demonic Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -4969,7 +5022,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 70,
+      "mana_cost": 70
     },
     "flavor": "In the post-reset lattice, Celestial Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -5012,7 +5065,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 56,
+      "mana_cost": 56
     },
     "flavor": "In the post-reset lattice, Divine Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -5055,7 +5108,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 33,
+      "mana_cost": 33
     },
     "flavor": "In the post-reset lattice, Arcane Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -5097,7 +5150,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 85,
+      "mana_cost": 85
     },
     "flavor": "In the post-reset lattice, Infernal Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -5143,7 +5196,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 88,
+      "mana_cost": 88
     },
     "flavor": "In the post-reset lattice, Frozen Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -5186,7 +5239,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 39,
+      "mana_cost": 39
     },
     "flavor": "In the post-reset lattice, Thunder Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -5229,7 +5282,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 62,
+      "mana_cost": 62
     },
     "flavor": "In the post-reset lattice, Holy Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -5271,7 +5324,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 90,
+      "mana_cost": 90
     },
     "flavor": "In the post-reset lattice, Dark Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -5317,7 +5370,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 63,
+      "mana_cost": 63
     },
     "flavor": "In the post-reset lattice, Shadow Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -5360,7 +5413,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 95,
+      "mana_cost": 95
     },
     "flavor": "In the post-reset lattice, Void Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -5403,7 +5456,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 44,
+      "mana_cost": 44
     },
     "flavor": "In the post-reset lattice, Abyssal Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -5445,7 +5498,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 34,
+      "mana_cost": 34
     },
     "flavor": "In the post-reset lattice, Demonic Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -5491,7 +5544,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 49,
+      "mana_cost": 49
     },
     "flavor": "In the post-reset lattice, Celestial Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -5534,7 +5587,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 37,
+      "mana_cost": 37
     },
     "flavor": "In the post-reset lattice, Divine Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -5577,7 +5630,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 90,
+      "mana_cost": 90
     },
     "flavor": "In the post-reset lattice, Arcane Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -5619,7 +5672,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 94,
+      "mana_cost": 94
     },
     "flavor": "In the post-reset lattice, Infernal Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -5665,7 +5718,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 61,
+      "mana_cost": 61
     },
     "flavor": "In the post-reset lattice, Frozen Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -5708,7 +5761,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 61,
+      "mana_cost": 61
     },
     "flavor": "In the post-reset lattice, Thunder Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -5751,7 +5804,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 74,
+      "mana_cost": 74
     },
     "flavor": "In the post-reset lattice, Holy Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -5793,7 +5846,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 96,
+      "mana_cost": 96
     },
     "flavor": "In the post-reset lattice, Dark Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -5839,7 +5892,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 67,
+      "mana_cost": 67
     },
     "flavor": "In the post-reset lattice, Shadow Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -5882,7 +5935,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 105,
+      "mana_cost": 105
     },
     "flavor": "In the post-reset lattice, Void Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -5925,7 +5978,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 44,
+      "mana_cost": 44
     },
     "flavor": "In the post-reset lattice, Abyssal Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -5967,7 +6020,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 38,
+      "mana_cost": 38
     },
     "flavor": "In the post-reset lattice, Demonic Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -6013,7 +6066,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 22,
+      "mana_cost": 22
     },
     "flavor": "In the post-reset lattice, Celestial Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -6056,7 +6109,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 105,
+      "mana_cost": 105
     },
     "flavor": "In the post-reset lattice, Divine Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -6099,7 +6152,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 75,
+      "mana_cost": 75
     },
     "flavor": "In the post-reset lattice, Arcane Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -6141,7 +6194,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 53,
+      "mana_cost": 53
     },
     "flavor": "In the post-reset lattice, Infernal Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -6187,7 +6240,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 26,
+      "mana_cost": 26
     },
     "flavor": "In the post-reset lattice, Frozen Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -6230,7 +6283,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 49,
+      "mana_cost": 49
     },
     "flavor": "In the post-reset lattice, Thunder Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -6273,7 +6326,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 39,
+      "mana_cost": 39
     },
     "flavor": "In the post-reset lattice, Holy Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -6315,7 +6368,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 102,
+      "mana_cost": 102
     },
     "flavor": "In the post-reset lattice, Dark Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -6361,7 +6414,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 85,
+      "mana_cost": 85
     },
     "flavor": "In the post-reset lattice, Shadow Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -6404,7 +6457,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 100,
+      "mana_cost": 100
     },
     "flavor": "In the post-reset lattice, Void Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -6447,7 +6500,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 70,
+      "mana_cost": 70
     },
     "flavor": "In the post-reset lattice, Abyssal Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -6489,7 +6542,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 46,
+      "mana_cost": 46
     },
     "flavor": "In the post-reset lattice, Demonic Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -6535,7 +6588,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 44,
+      "mana_cost": 44
     },
     "flavor": "In the post-reset lattice, Celestial Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -6578,7 +6631,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 61,
+      "mana_cost": 61
     },
     "flavor": "In the post-reset lattice, Divine Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -6621,7 +6674,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 26,
+      "mana_cost": 26
     },
     "flavor": "In the post-reset lattice, Arcane Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -6663,7 +6716,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 69,
+      "mana_cost": 69
     },
     "flavor": "In the post-reset lattice, Infernal Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -6709,7 +6762,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 57,
+      "mana_cost": 57
     },
     "flavor": "In the post-reset lattice, Frozen Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -6752,7 +6805,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 39,
+      "mana_cost": 39
     },
     "flavor": "In the post-reset lattice, Thunder Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -6795,7 +6848,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 78,
+      "mana_cost": 78
     },
     "flavor": "In the post-reset lattice, Holy Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -6837,7 +6890,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 90,
+      "mana_cost": 90
     },
     "flavor": "In the post-reset lattice, Dark Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -6883,7 +6936,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 107,
+      "mana_cost": 107
     },
     "flavor": "In the post-reset lattice, Shadow Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -6926,7 +6979,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 62,
+      "mana_cost": 62
     },
     "flavor": "In the post-reset lattice, Void Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -6969,7 +7022,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 45,
+      "mana_cost": 45
     },
     "flavor": "In the post-reset lattice, Abyssal Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -7011,7 +7064,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 88,
+      "mana_cost": 88
     },
     "flavor": "In the post-reset lattice, Demonic Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -7057,7 +7110,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 107,
+      "mana_cost": 107
     },
     "flavor": "In the post-reset lattice, Celestial Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -7100,7 +7153,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 103,
+      "mana_cost": 103
     },
     "flavor": "In the post-reset lattice, Divine Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -7143,7 +7196,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 101,
+      "mana_cost": 101
     },
     "flavor": "In the post-reset lattice, Arcane Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -7185,7 +7238,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 22,
+      "mana_cost": 22
     },
     "flavor": "In the post-reset lattice, Infernal Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -7231,7 +7284,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 40,
+      "mana_cost": 40
     },
     "flavor": "In the post-reset lattice, Frozen Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -7274,7 +7327,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 61,
+      "mana_cost": 61
     },
     "flavor": "In the post-reset lattice, Thunder Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -7317,7 +7370,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 54,
+      "mana_cost": 54
     },
     "flavor": "In the post-reset lattice, Holy Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -7359,7 +7412,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 55,
+      "mana_cost": 55
     },
     "flavor": "In the post-reset lattice, Dark Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -7405,7 +7458,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 90,
+      "mana_cost": 90
     },
     "flavor": "In the post-reset lattice, Shadow Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -7448,7 +7501,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 106,
+      "mana_cost": 106
     },
     "flavor": "In the post-reset lattice, Void Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -7491,7 +7544,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 35,
+      "mana_cost": 35
     },
     "flavor": "In the post-reset lattice, Abyssal Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -7533,7 +7586,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 90,
+      "mana_cost": 90
     },
     "flavor": "In the post-reset lattice, Demonic Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -7579,7 +7632,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 52,
+      "mana_cost": 52
     },
     "flavor": "In the post-reset lattice, Celestial Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -7622,7 +7675,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 66,
+      "mana_cost": 66
     },
     "flavor": "In the post-reset lattice, Divine Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -7665,7 +7718,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 16,
+      "mana_cost": 16
     },
     "flavor": "In the post-reset lattice, Arcane Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -7707,7 +7760,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 35,
+      "mana_cost": 35
     },
     "flavor": "In the post-reset lattice, Infernal Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -7753,7 +7806,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 88,
+      "mana_cost": 88
     },
     "flavor": "In the post-reset lattice, Frozen Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -7796,7 +7849,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 15,
+      "mana_cost": 15
     },
     "flavor": "In the post-reset lattice, Thunder Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -7839,7 +7892,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 107,
+      "mana_cost": 107
     },
     "flavor": "In the post-reset lattice, Holy Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -7881,7 +7934,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 22,
+      "mana_cost": 22
     },
     "flavor": "In the post-reset lattice, Dark Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -7927,7 +7980,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 100,
+      "mana_cost": 100
     },
     "flavor": "In the post-reset lattice, Shadow Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -7970,7 +8023,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 109,
+      "mana_cost": 109
     },
     "flavor": "In the post-reset lattice, Void Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -8013,7 +8066,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 63,
+      "mana_cost": 63
     },
     "flavor": "In the post-reset lattice, Abyssal Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -8055,7 +8108,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 79,
+      "mana_cost": 79
     },
     "flavor": "In the post-reset lattice, Demonic Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -8101,7 +8154,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 89,
+      "mana_cost": 89
     },
     "flavor": "In the post-reset lattice, Celestial Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -8144,7 +8197,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 94,
+      "mana_cost": 94
     },
     "flavor": "In the post-reset lattice, Divine Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -8187,7 +8240,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 99,
+      "mana_cost": 99
     },
     "flavor": "In the post-reset lattice, Arcane Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -8229,7 +8282,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 100,
+      "mana_cost": 100
     },
     "flavor": "In the post-reset lattice, Infernal Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -8275,7 +8328,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 84,
+      "mana_cost": 84
     },
     "flavor": "In the post-reset lattice, Frozen Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -8318,7 +8371,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 10,
+      "mana_cost": 10
     },
     "flavor": "In the post-reset lattice, Thunder Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -8361,7 +8414,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 46,
+      "mana_cost": 46
     },
     "flavor": "In the post-reset lattice, Holy Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -8403,7 +8456,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 68,
+      "mana_cost": 68
     },
     "flavor": "In the post-reset lattice, Dark Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -8449,7 +8502,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 15,
+      "mana_cost": 15
     },
     "flavor": "In the post-reset lattice, Shadow Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -8492,7 +8545,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 40,
+      "mana_cost": 40
     },
     "flavor": "In the post-reset lattice, Void Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -8535,7 +8588,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 101,
+      "mana_cost": 101
     },
     "flavor": "In the post-reset lattice, Abyssal Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -8577,7 +8630,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 94,
+      "mana_cost": 94
     },
     "flavor": "In the post-reset lattice, Demonic Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -8623,7 +8676,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 19,
+      "mana_cost": 19
     },
     "flavor": "In the post-reset lattice, Celestial Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -8666,7 +8719,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 37,
+      "mana_cost": 37
     },
     "flavor": "In the post-reset lattice, Divine Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -8709,7 +8762,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 72,
+      "mana_cost": 72
     },
     "flavor": "In the post-reset lattice, Arcane Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -8751,7 +8804,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 32,
+      "mana_cost": 32
     },
     "flavor": "In the post-reset lattice, Infernal Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -8797,7 +8850,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 30,
+      "mana_cost": 30
     },
     "flavor": "In the post-reset lattice, Frozen Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -8840,7 +8893,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 60,
+      "mana_cost": 60
     },
     "flavor": "In the post-reset lattice, Thunder Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -8883,7 +8936,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 48,
+      "mana_cost": 48
     },
     "flavor": "In the post-reset lattice, Holy Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -8925,7 +8978,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 18,
+      "mana_cost": 18
     },
     "flavor": "In the post-reset lattice, Dark Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -8971,7 +9024,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 76,
+      "mana_cost": 76
     },
     "flavor": "In the post-reset lattice, Shadow Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -9014,7 +9067,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 97,
+      "mana_cost": 97
     },
     "flavor": "In the post-reset lattice, Void Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -9057,7 +9110,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 101,
+      "mana_cost": 101
     },
     "flavor": "In the post-reset lattice, Abyssal Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -9099,7 +9152,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 78,
+      "mana_cost": 78
     },
     "flavor": "In the post-reset lattice, Demonic Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -9145,7 +9198,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 66,
+      "mana_cost": 66
     },
     "flavor": "In the post-reset lattice, Celestial Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -9188,7 +9241,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 79,
+      "mana_cost": 79
     },
     "flavor": "In the post-reset lattice, Divine Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -9231,7 +9284,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 45,
+      "mana_cost": 45
     },
     "flavor": "In the post-reset lattice, Arcane Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -9273,7 +9326,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 97,
+      "mana_cost": 97
     },
     "flavor": "In the post-reset lattice, Infernal Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -9319,7 +9372,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 70,
+      "mana_cost": 70
     },
     "flavor": "In the post-reset lattice, Frozen Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -9362,7 +9415,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 67,
+      "mana_cost": 67
     },
     "flavor": "In the post-reset lattice, Thunder Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -9405,7 +9458,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 88,
+      "mana_cost": 88
     },
     "flavor": "In the post-reset lattice, Holy Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -9447,7 +9500,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 80,
+      "mana_cost": 80
     },
     "flavor": "In the post-reset lattice, Dark Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -9493,7 +9546,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 103,
+      "mana_cost": 103
     },
     "flavor": "In the post-reset lattice, Shadow Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -9536,7 +9589,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 80,
+      "mana_cost": 80
     },
     "flavor": "In the post-reset lattice, Void Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -9579,7 +9632,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 75,
+      "mana_cost": 75
     },
     "flavor": "In the post-reset lattice, Abyssal Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -9621,7 +9674,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 98,
+      "mana_cost": 98
     },
     "flavor": "In the post-reset lattice, Demonic Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -9667,7 +9720,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 53,
+      "mana_cost": 53
     },
     "flavor": "In the post-reset lattice, Celestial Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -9710,7 +9763,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 20,
+      "mana_cost": 20
     },
     "flavor": "In the post-reset lattice, Divine Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -9753,7 +9806,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 96,
+      "mana_cost": 96
     },
     "flavor": "In the post-reset lattice, Arcane Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -9795,7 +9848,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 89,
+      "mana_cost": 89
     },
     "flavor": "In the post-reset lattice, Infernal Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -9841,7 +9894,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 48,
+      "mana_cost": 48
     },
     "flavor": "In the post-reset lattice, Frozen Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -9884,7 +9937,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 21,
+      "mana_cost": 21
     },
     "flavor": "In the post-reset lattice, Thunder Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -9927,7 +9980,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 52,
+      "mana_cost": 52
     },
     "flavor": "In the post-reset lattice, Holy Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -9969,7 +10022,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 24,
+      "mana_cost": 24
     },
     "flavor": "In the post-reset lattice, Dark Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -10015,7 +10068,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 53,
+      "mana_cost": 53
     },
     "flavor": "In the post-reset lattice, Shadow Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -10058,7 +10111,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 64,
+      "mana_cost": 64
     },
     "flavor": "In the post-reset lattice, Void Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -10101,7 +10154,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 40,
+      "mana_cost": 40
     },
     "flavor": "In the post-reset lattice, Abyssal Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -10143,7 +10196,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 79,
+      "mana_cost": 79
     },
     "flavor": "In the post-reset lattice, Demonic Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -10189,7 +10242,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 50,
+      "mana_cost": 50
     },
     "flavor": "In the post-reset lattice, Celestial Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -10232,7 +10285,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 55,
+      "mana_cost": 55
     },
     "flavor": "In the post-reset lattice, Divine Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -10275,7 +10328,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 85,
+      "mana_cost": 85
     },
     "flavor": "In the post-reset lattice, Arcane Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -10317,7 +10370,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 78,
+      "mana_cost": 78
     },
     "flavor": "In the post-reset lattice, Infernal Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -10363,7 +10416,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 12,
+      "mana_cost": 12
     },
     "flavor": "In the post-reset lattice, Frozen Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -10406,7 +10459,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 76,
+      "mana_cost": 76
     },
     "flavor": "In the post-reset lattice, Voltaic Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -10449,7 +10502,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 109,
+      "mana_cost": 109
     },
     "flavor": "In the post-reset lattice, Holy Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -10491,7 +10544,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 15,
+      "mana_cost": 15
     },
     "flavor": "In the post-reset lattice, Dark Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -10537,7 +10590,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 39,
+      "mana_cost": 39
     },
     "flavor": "In the post-reset lattice, Shadow Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -10580,7 +10633,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 36,
+      "mana_cost": 36
     },
     "flavor": "In the post-reset lattice, Void Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -10623,7 +10676,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 80,
+      "mana_cost": 80
     },
     "flavor": "In the post-reset lattice, Abyssal Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -10665,7 +10718,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 87,
+      "mana_cost": 87
     },
     "flavor": "In the post-reset lattice, Demonic Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -10711,7 +10764,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 51,
+      "mana_cost": 51
     },
     "flavor": "In the post-reset lattice, Celestial Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -10754,7 +10807,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 69,
+      "mana_cost": 69
     },
     "flavor": "In the post-reset lattice, Divine Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -10797,7 +10850,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 78,
+      "mana_cost": 78
     },
     "flavor": "In the post-reset lattice, Arcane Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -10839,7 +10892,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 108,
+      "mana_cost": 108
     },
     "flavor": "In the post-reset lattice, Infernal Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -10885,7 +10938,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 40,
+      "mana_cost": 40
     },
     "flavor": "In the post-reset lattice, Frozen Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -10928,7 +10981,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 106,
+      "mana_cost": 106
     },
     "flavor": "In the post-reset lattice, Thunder Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -10971,7 +11024,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 32,
+      "mana_cost": 32
     },
     "flavor": "In the post-reset lattice, Holy Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -11013,7 +11066,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 93,
+      "mana_cost": 93
     },
     "flavor": "In the post-reset lattice, Dark Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -11059,7 +11112,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 33,
+      "mana_cost": 33
     },
     "flavor": "In the post-reset lattice, Shadow Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -11102,7 +11155,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 80,
+      "mana_cost": 80
     },
     "flavor": "In the post-reset lattice, Void Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -11145,7 +11198,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 57,
+      "mana_cost": 57
     },
     "flavor": "In the post-reset lattice, Abyssal Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -11187,7 +11240,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 84,
+      "mana_cost": 84
     },
     "flavor": "In the post-reset lattice, Demonic Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -11233,7 +11286,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 71,
+      "mana_cost": 71
     },
     "flavor": "In the post-reset lattice, Celestial Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -11276,7 +11329,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 78,
+      "mana_cost": 78
     },
     "flavor": "In the post-reset lattice, Divine Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -11319,7 +11372,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 27,
+      "mana_cost": 27
     },
     "flavor": "In the post-reset lattice, Arcane Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -11361,7 +11414,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 105,
+      "mana_cost": 105
     },
     "flavor": "In the post-reset lattice, Infernal Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -11407,7 +11460,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 90,
+      "mana_cost": 90
     },
     "flavor": "In the post-reset lattice, Frozen Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -11450,7 +11503,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 95,
+      "mana_cost": 95
     },
     "flavor": "In the post-reset lattice, Thunder Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -11493,7 +11546,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 43,
+      "mana_cost": 43
     },
     "flavor": "In the post-reset lattice, Holy Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -11535,7 +11588,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 77,
+      "mana_cost": 77
     },
     "flavor": "In the post-reset lattice, Dark Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -11581,7 +11634,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 81,
+      "mana_cost": 81
     },
     "flavor": "In the post-reset lattice, Shadow Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -11624,7 +11677,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 74,
+      "mana_cost": 74
     },
     "flavor": "In the post-reset lattice, Void Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -11667,7 +11720,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 12,
+      "mana_cost": 12
     },
     "flavor": "In the post-reset lattice, Abyssal Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -11709,7 +11762,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 82,
+      "mana_cost": 82
     },
     "flavor": "In the post-reset lattice, Demonic Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -11755,7 +11808,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 77,
+      "mana_cost": 77
     },
     "flavor": "In the post-reset lattice, Celestial Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -11798,7 +11851,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 48,
+      "mana_cost": 48
     },
     "flavor": "In the post-reset lattice, Divine Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -11841,7 +11894,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 66,
+      "mana_cost": 66
     },
     "flavor": "In the post-reset lattice, Arcane Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -11883,7 +11936,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 108,
+      "mana_cost": 108
     },
     "flavor": "In the post-reset lattice, Infernal Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -11929,7 +11982,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 73,
+      "mana_cost": 73
     },
     "flavor": "In the post-reset lattice, Frozen Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -11972,7 +12025,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 93,
+      "mana_cost": 93
     },
     "flavor": "In the post-reset lattice, Thunder Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -12015,7 +12068,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 71,
+      "mana_cost": 71
     },
     "flavor": "In the post-reset lattice, Holy Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -12057,7 +12110,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 24,
+      "mana_cost": 24
     },
     "flavor": "In the post-reset lattice, Dark Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -12103,7 +12156,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 91,
+      "mana_cost": 91
     },
     "flavor": "In the post-reset lattice, Shadow Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -12146,7 +12199,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 15,
+      "mana_cost": 15
     },
     "flavor": "In the post-reset lattice, Void Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -12189,7 +12242,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 57,
+      "mana_cost": 57
     },
     "flavor": "In the post-reset lattice, Abyssal Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -12231,7 +12284,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 82,
+      "mana_cost": 82
     },
     "flavor": "In the post-reset lattice, Demonic Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -12277,7 +12330,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 78,
+      "mana_cost": 78
     },
     "flavor": "In the post-reset lattice, Celestial Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -12320,7 +12373,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 94,
+      "mana_cost": 94
     },
     "flavor": "In the post-reset lattice, Divine Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -12363,7 +12416,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 63,
+      "mana_cost": 63
     },
     "flavor": "In the post-reset lattice, Arcane Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -12405,7 +12458,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 104,
+      "mana_cost": 104
     },
     "flavor": "In the post-reset lattice, Infernal Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -12451,7 +12504,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 62,
+      "mana_cost": 62
     },
     "flavor": "In the post-reset lattice, Frozen Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -12494,7 +12547,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 69,
+      "mana_cost": 69
     },
     "flavor": "In the post-reset lattice, Thunder Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -12537,7 +12590,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 28,
+      "mana_cost": 28
     },
     "flavor": "In the post-reset lattice, Holy Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -12579,7 +12632,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 79,
+      "mana_cost": 79
     },
     "flavor": "In the post-reset lattice, Dark Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -12625,7 +12678,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 106,
+      "mana_cost": 106
     },
     "flavor": "In the post-reset lattice, Shadow Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -12668,7 +12721,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 73,
+      "mana_cost": 73
     },
     "flavor": "In the post-reset lattice, Void Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -12711,7 +12764,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 108,
+      "mana_cost": 108
     },
     "flavor": "In the post-reset lattice, Abyssal Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -12753,7 +12806,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 56,
+      "mana_cost": 56
     },
     "flavor": "In the post-reset lattice, Demonic Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -12799,7 +12852,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 87,
+      "mana_cost": 87
     },
     "flavor": "In the post-reset lattice, Celestial Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -12842,7 +12895,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 66,
+      "mana_cost": 66
     },
     "flavor": "In the post-reset lattice, Divine Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -12885,7 +12938,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 25,
+      "mana_cost": 25
     },
     "flavor": "In the post-reset lattice, Arcane Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -12927,7 +12980,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 72,
+      "mana_cost": 72
     },
     "flavor": "In the post-reset lattice, Infernal Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -12973,7 +13026,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 108,
+      "mana_cost": 108
     },
     "flavor": "In the post-reset lattice, Frozen Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -13016,7 +13069,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 62,
+      "mana_cost": 62
     },
     "flavor": "In the post-reset lattice, Thunder Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -13059,7 +13112,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 48,
+      "mana_cost": 48
     },
     "flavor": "In the post-reset lattice, Holy Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -13101,7 +13154,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 107,
+      "mana_cost": 107
     },
     "flavor": "In the post-reset lattice, Dark Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -13147,7 +13200,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 85,
+      "mana_cost": 85
     },
     "flavor": "In the post-reset lattice, Shadow Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -13190,7 +13243,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 102,
+      "mana_cost": 102
     },
     "flavor": "In the post-reset lattice, Void Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -13233,7 +13286,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 59,
+      "mana_cost": 59
     },
     "flavor": "In the post-reset lattice, Abyssal Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -13275,7 +13328,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 26,
+      "mana_cost": 26
     },
     "flavor": "In the post-reset lattice, Demonic Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -13321,7 +13374,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 96,
+      "mana_cost": 96
     },
     "flavor": "In the post-reset lattice, Celestial Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -13364,7 +13417,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 87,
+      "mana_cost": 87
     },
     "flavor": "In the post-reset lattice, Divine Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -13407,7 +13460,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 82,
+      "mana_cost": 82
     },
     "flavor": "In the post-reset lattice, Arcane Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -13449,7 +13502,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 61,
+      "mana_cost": 61
     },
     "flavor": "In the post-reset lattice, Infernal Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -13495,7 +13548,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 100,
+      "mana_cost": 100
     },
     "flavor": "In the post-reset lattice, Frozen Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -13538,7 +13591,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 106,
+      "mana_cost": 106
     },
     "flavor": "In the post-reset lattice, Thunder Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -13581,7 +13634,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 106,
+      "mana_cost": 106
     },
     "flavor": "In the post-reset lattice, Holy Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -13623,7 +13676,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 39,
+      "mana_cost": 39
     },
     "flavor": "In the post-reset lattice, Dark Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -13669,7 +13722,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 81,
+      "mana_cost": 81
     },
     "flavor": "In the post-reset lattice, Shadow Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -13712,7 +13765,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 70,
+      "mana_cost": 70
     },
     "flavor": "In the post-reset lattice, Void Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -13755,7 +13808,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 70,
+      "mana_cost": 70
     },
     "flavor": "In the post-reset lattice, Abyssal Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -13797,7 +13850,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 101,
+      "mana_cost": 101
     },
     "flavor": "In the post-reset lattice, Demonic Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -13843,7 +13896,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 83,
+      "mana_cost": 83
     },
     "flavor": "In the post-reset lattice, Celestial Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -13886,7 +13939,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 72,
+      "mana_cost": 72
     },
     "flavor": "In the post-reset lattice, Divine Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -13929,7 +13982,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 98,
+      "mana_cost": 98
     },
     "flavor": "In the post-reset lattice, Arcane Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -13971,7 +14024,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 80,
+      "mana_cost": 80
     },
     "flavor": "In the post-reset lattice, Infernal Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -14017,7 +14070,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 60,
+      "mana_cost": 60
     },
     "flavor": "In the post-reset lattice, Frozen Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -14060,7 +14113,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 60,
+      "mana_cost": 60
     },
     "flavor": "In the post-reset lattice, Thunder Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -14103,7 +14156,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 10,
+      "mana_cost": 10
     },
     "flavor": "In the post-reset lattice, Holy Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -14145,7 +14198,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 58,
+      "mana_cost": 58
     },
     "flavor": "In the post-reset lattice, Dark Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -14191,7 +14244,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 30,
+      "mana_cost": 30
     },
     "flavor": "In the post-reset lattice, Shadow Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -14234,7 +14287,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 82,
+      "mana_cost": 82
     },
     "flavor": "In the post-reset lattice, Void Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -14277,7 +14330,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 58,
+      "mana_cost": 58
     },
     "flavor": "In the post-reset lattice, Abyssal Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -14319,7 +14372,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 93,
+      "mana_cost": 93
     },
     "flavor": "In the post-reset lattice, Demonic Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -14365,7 +14418,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 64,
+      "mana_cost": 64
     },
     "flavor": "In the post-reset lattice, Celestial Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -14408,7 +14461,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 53,
+      "mana_cost": 53
     },
     "flavor": "In the post-reset lattice, Divine Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -14451,7 +14504,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 55,
+      "mana_cost": 55
     },
     "flavor": "In the post-reset lattice, Arcane Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -14493,7 +14546,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 87,
+      "mana_cost": 87
     },
     "flavor": "In the post-reset lattice, Infernal Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -14539,7 +14592,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 28,
+      "mana_cost": 28
     },
     "flavor": "In the post-reset lattice, Frozen Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -14582,7 +14635,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 30,
+      "mana_cost": 30
     },
     "flavor": "In the post-reset lattice, Thunder Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -14625,7 +14678,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 109,
+      "mana_cost": 109
     },
     "flavor": "In the post-reset lattice, Holy Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -14667,7 +14720,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 65,
+      "mana_cost": 65
     },
     "flavor": "In the post-reset lattice, Dark Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -14713,7 +14766,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 64,
+      "mana_cost": 64
     },
     "flavor": "In the post-reset lattice, Shadow Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -14756,7 +14809,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 88,
+      "mana_cost": 88
     },
     "flavor": "In the post-reset lattice, Void Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -14799,7 +14852,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 32,
+      "mana_cost": 32
     },
     "flavor": "In the post-reset lattice, Abyssal Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -14841,7 +14894,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 83,
+      "mana_cost": 83
     },
     "flavor": "In the post-reset lattice, Demonic Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -14887,7 +14940,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 46,
+      "mana_cost": 46
     },
     "flavor": "In the post-reset lattice, Celestial Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -14930,7 +14983,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 41,
+      "mana_cost": 41
     },
     "flavor": "In the post-reset lattice, Divine Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -14973,7 +15026,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 28,
+      "mana_cost": 28
     },
     "flavor": "In the post-reset lattice, Arcane Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -15015,7 +15068,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 102,
+      "mana_cost": 102
     },
     "flavor": "In the post-reset lattice, Infernal Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -15061,7 +15114,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 54,
+      "mana_cost": 54
     },
     "flavor": "In the post-reset lattice, Frozen Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -15104,7 +15157,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 73,
+      "mana_cost": 73
     },
     "flavor": "In the post-reset lattice, Thunder Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -15147,7 +15200,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 86,
+      "mana_cost": 86
     },
     "flavor": "In the post-reset lattice, Holy Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -15189,7 +15242,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 96,
+      "mana_cost": 96
     },
     "flavor": "In the post-reset lattice, Dark Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -15235,7 +15288,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 18,
+      "mana_cost": 18
     },
     "flavor": "In the post-reset lattice, Shadow Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -15278,7 +15331,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 51,
+      "mana_cost": 51
     },
     "flavor": "In the post-reset lattice, Void Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -15321,7 +15374,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 56,
+      "mana_cost": 56
     },
     "flavor": "In the post-reset lattice, Abyssal Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -15363,7 +15416,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 64,
+      "mana_cost": 64
     },
     "flavor": "In the post-reset lattice, Demonic Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -15409,7 +15462,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 57,
+      "mana_cost": 57
     },
     "flavor": "In the post-reset lattice, Celestial Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -15452,7 +15505,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 78,
+      "mana_cost": 78
     },
     "flavor": "In the post-reset lattice, Divine Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -15495,7 +15548,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 26,
+      "mana_cost": 26
     },
     "flavor": "In the post-reset lattice, Arcane Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -15537,7 +15590,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 102,
+      "mana_cost": 102
     },
     "flavor": "In the post-reset lattice, Infernal Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -15583,7 +15636,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 11,
+      "mana_cost": 11
     },
     "flavor": "In the post-reset lattice, Frozen Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -15626,7 +15679,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 90,
+      "mana_cost": 90
     },
     "flavor": "In the post-reset lattice, Thunder Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -15669,7 +15722,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 67,
+      "mana_cost": 67
     },
     "flavor": "In the post-reset lattice, Holy Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -15711,7 +15764,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 97,
+      "mana_cost": 97
     },
     "flavor": "In the post-reset lattice, Dark Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -15757,7 +15810,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 57,
+      "mana_cost": 57
     },
     "flavor": "In the post-reset lattice, Shadow Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -15800,7 +15853,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 36,
+      "mana_cost": 36
     },
     "flavor": "In the post-reset lattice, Void Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -15843,7 +15896,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 77,
+      "mana_cost": 77
     },
     "flavor": "In the post-reset lattice, Abyssal Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -15885,7 +15938,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 25,
+      "mana_cost": 25
     },
     "flavor": "In the post-reset lattice, Demonic Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -15931,7 +15984,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 89,
+      "mana_cost": 89
     },
     "flavor": "In the post-reset lattice, Celestial Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -15974,7 +16027,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 45,
+      "mana_cost": 45
     },
     "flavor": "In the post-reset lattice, Divine Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -16017,7 +16070,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 92,
+      "mana_cost": 92
     },
     "flavor": "In the post-reset lattice, Arcane Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -16059,7 +16112,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 70,
+      "mana_cost": 70
     },
     "flavor": "In the post-reset lattice, Infernal Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -16105,7 +16158,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 42,
+      "mana_cost": 42
     },
     "flavor": "In the post-reset lattice, Frozen Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -16148,7 +16201,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 44,
+      "mana_cost": 44
     },
     "flavor": "In the post-reset lattice, Thunder Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -16191,7 +16244,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 66,
+      "mana_cost": 66
     },
     "flavor": "In the post-reset lattice, Holy Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -16233,7 +16286,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 35,
+      "mana_cost": 35
     },
     "flavor": "In the post-reset lattice, Dark Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -16279,7 +16332,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 52,
+      "mana_cost": 52
     },
     "flavor": "In the post-reset lattice, Shadow Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -16322,7 +16375,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 49,
+      "mana_cost": 49
     },
     "flavor": "In the post-reset lattice, Void Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -16365,7 +16418,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 60,
+      "mana_cost": 60
     },
     "flavor": "In the post-reset lattice, Abyssal Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -16407,7 +16460,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 42,
+      "mana_cost": 42
     },
     "flavor": "In the post-reset lattice, Demonic Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -16453,7 +16506,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 38,
+      "mana_cost": 38
     },
     "flavor": "In the post-reset lattice, Celestial Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -16496,7 +16549,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 84,
+      "mana_cost": 84
     },
     "flavor": "In the post-reset lattice, Divine Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -16539,7 +16592,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 92,
+      "mana_cost": 92
     },
     "flavor": "In the post-reset lattice, Arcane Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -16581,7 +16634,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 59,
+      "mana_cost": 59
     },
     "flavor": "In the post-reset lattice, Infernal Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -16627,7 +16680,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 104,
+      "mana_cost": 104
     },
     "flavor": "In the post-reset lattice, Frozen Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -16670,7 +16723,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 103,
+      "mana_cost": 103
     },
     "flavor": "In the post-reset lattice, Thunder Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -16713,7 +16766,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 41,
+      "mana_cost": 41
     },
     "flavor": "In the post-reset lattice, Holy Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -16755,7 +16808,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 45,
+      "mana_cost": 45
     },
     "flavor": "In the post-reset lattice, Dark Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -16801,7 +16854,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 67,
+      "mana_cost": 67
     },
     "flavor": "In the post-reset lattice, Shadow Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -16844,7 +16897,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 61,
+      "mana_cost": 61
     },
     "flavor": "In the post-reset lattice, Void Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -16887,7 +16940,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 66,
+      "mana_cost": 66
     },
     "flavor": "In the post-reset lattice, Abyssal Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -16929,7 +16982,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 73,
+      "mana_cost": 73
     },
     "flavor": "In the post-reset lattice, Demonic Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -16975,7 +17028,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 32,
+      "mana_cost": 32
     },
     "flavor": "In the post-reset lattice, Celestial Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -17018,7 +17071,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 21,
+      "mana_cost": 21
     },
     "flavor": "In the post-reset lattice, Divine Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -17061,7 +17114,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 14,
+      "mana_cost": 14
     },
     "flavor": "In the post-reset lattice, Arcane Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -17103,7 +17156,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 102,
+      "mana_cost": 102
     },
     "flavor": "In the post-reset lattice, Infernal Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -17149,7 +17202,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 108,
+      "mana_cost": 108
     },
     "flavor": "In the post-reset lattice, Frozen Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -17192,7 +17245,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 56,
+      "mana_cost": 56
     },
     "flavor": "In the post-reset lattice, Thunder Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -17235,7 +17288,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 81,
+      "mana_cost": 81
     },
     "flavor": "In the post-reset lattice, Holy Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -17277,7 +17330,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 73,
+      "mana_cost": 73
     },
     "flavor": "In the post-reset lattice, Dark Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -17323,7 +17376,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 104,
+      "mana_cost": 104
     },
     "flavor": "In the post-reset lattice, Shadow Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -17366,7 +17419,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 70,
+      "mana_cost": 70
     },
     "flavor": "In the post-reset lattice, Void Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -17409,7 +17462,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 17,
+      "mana_cost": 17
     },
     "flavor": "In the post-reset lattice, Abyssal Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -17451,7 +17504,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 98,
+      "mana_cost": 98
     },
     "flavor": "In the post-reset lattice, Demonic Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -17497,7 +17550,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 88,
+      "mana_cost": 88
     },
     "flavor": "In the post-reset lattice, Celestial Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -17540,7 +17593,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 69,
+      "mana_cost": 69
     },
     "flavor": "In the post-reset lattice, Divine Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -17583,7 +17636,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 34,
+      "mana_cost": 34
     },
     "flavor": "In the post-reset lattice, Arcane Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -17625,7 +17678,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 76,
+      "mana_cost": 76
     },
     "flavor": "In the post-reset lattice, Infernal Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -17671,7 +17724,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 40,
+      "mana_cost": 40
     },
     "flavor": "In the post-reset lattice, Frozen Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -17714,7 +17767,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 101,
+      "mana_cost": 101
     },
     "flavor": "In the post-reset lattice, Thunder Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -17757,7 +17810,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 88,
+      "mana_cost": 88
     },
     "flavor": "In the post-reset lattice, Holy Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -17799,7 +17852,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 39,
+      "mana_cost": 39
     },
     "flavor": "In the post-reset lattice, Dark Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -17845,7 +17898,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 81,
+      "mana_cost": 81
     },
     "flavor": "In the post-reset lattice, Shadow Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -17888,7 +17941,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 18,
+      "mana_cost": 18
     },
     "flavor": "In the post-reset lattice, Void Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -17931,7 +17984,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 25,
+      "mana_cost": 25
     },
     "flavor": "In the post-reset lattice, Abyssal Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -17973,7 +18026,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 78,
+      "mana_cost": 78
     },
     "flavor": "In the post-reset lattice, Demonic Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -18019,7 +18072,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 10,
+      "mana_cost": 10
     },
     "flavor": "In the post-reset lattice, Celestial Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -18062,7 +18115,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 97,
+      "mana_cost": 97
     },
     "flavor": "In the post-reset lattice, Divine Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -18105,7 +18158,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 21,
+      "mana_cost": 21
     },
     "flavor": "In the post-reset lattice, Arcane Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -18147,7 +18200,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 106,
+      "mana_cost": 106
     },
     "flavor": "In the post-reset lattice, Infernal Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -18193,7 +18246,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 66,
+      "mana_cost": 66
     },
     "flavor": "In the post-reset lattice, Frozen Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -18236,7 +18289,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 55,
+      "mana_cost": 55
     },
     "flavor": "In the post-reset lattice, Thunder Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -18279,7 +18332,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 95,
+      "mana_cost": 95
     },
     "flavor": "In the post-reset lattice, Holy Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -18321,7 +18374,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 57,
+      "mana_cost": 57
     },
     "flavor": "In the post-reset lattice, Dark Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -18367,7 +18420,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 102,
+      "mana_cost": 102
     },
     "flavor": "In the post-reset lattice, Shadow Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -18410,7 +18463,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 73,
+      "mana_cost": 73
     },
     "flavor": "In the post-reset lattice, Void Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -18453,7 +18506,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 76,
+      "mana_cost": 76
     },
     "flavor": "In the post-reset lattice, Abyssal Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -18495,7 +18548,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 101,
+      "mana_cost": 101
     },
     "flavor": "In the post-reset lattice, Demonic Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -18541,7 +18594,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 28,
+      "mana_cost": 28
     },
     "flavor": "In the post-reset lattice, Celestial Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -18584,7 +18637,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 83,
+      "mana_cost": 83
     },
     "flavor": "In the post-reset lattice, Divine Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -18627,7 +18680,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 96,
+      "mana_cost": 96
     },
     "flavor": "In the post-reset lattice, Arcane Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -18669,7 +18722,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 20,
+      "mana_cost": 20
     },
     "flavor": "In the post-reset lattice, Infernal Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -18715,7 +18768,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 25,
+      "mana_cost": 25
     },
     "flavor": "In the post-reset lattice, Frozen Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -18758,7 +18811,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 96,
+      "mana_cost": 96
     },
     "flavor": "In the post-reset lattice, Voltaic Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -18801,7 +18854,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 81,
+      "mana_cost": 81
     },
     "flavor": "In the post-reset lattice, Holy Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -18843,7 +18896,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 10,
+      "mana_cost": 10
     },
     "flavor": "In the post-reset lattice, Dark Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -18889,7 +18942,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 98,
+      "mana_cost": 98
     },
     "flavor": "In the post-reset lattice, Shadow Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -18932,7 +18985,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 52,
+      "mana_cost": 52
     },
     "flavor": "In the post-reset lattice, Void Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -18975,7 +19028,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 45,
+      "mana_cost": 45
     },
     "flavor": "In the post-reset lattice, Abyssal Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -19017,7 +19070,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 25,
+      "mana_cost": 25
     },
     "flavor": "In the post-reset lattice, Demonic Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -19063,7 +19116,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 40,
+      "mana_cost": 40
     },
     "flavor": "In the post-reset lattice, Celestial Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -19106,7 +19159,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 30,
+      "mana_cost": 30
     },
     "flavor": "In the post-reset lattice, Divine Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -19149,7 +19202,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 29,
+      "mana_cost": 29
     },
     "flavor": "In the post-reset lattice, Arcane Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -19191,7 +19244,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 12,
+      "mana_cost": 12
     },
     "flavor": "In the post-reset lattice, Infernal Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -19237,7 +19290,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 51,
+      "mana_cost": 51
     },
     "flavor": "In the post-reset lattice, Frozen Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -19280,7 +19333,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 74,
+      "mana_cost": 74
     },
     "flavor": "In the post-reset lattice, Thunder Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -19323,7 +19376,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 49,
+      "mana_cost": 49
     },
     "flavor": "In the post-reset lattice, Holy Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -19365,7 +19418,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 20,
+      "mana_cost": 20
     },
     "flavor": "In the post-reset lattice, Dark Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -19411,7 +19464,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 108,
+      "mana_cost": 108
     },
     "flavor": "In the post-reset lattice, Shadow Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -19454,7 +19507,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 93,
+      "mana_cost": 93
     },
     "flavor": "In the post-reset lattice, Void Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -19497,7 +19550,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 109,
+      "mana_cost": 109
     },
     "flavor": "In the post-reset lattice, Abyssal Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -19539,7 +19592,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 67,
+      "mana_cost": 67
     },
     "flavor": "In the post-reset lattice, Demonic Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -19585,7 +19638,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 13,
+      "mana_cost": 13
     },
     "flavor": "In the post-reset lattice, Celestial Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -19628,7 +19681,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 85,
+      "mana_cost": 85
     },
     "flavor": "In the post-reset lattice, Divine Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -19671,7 +19724,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 92,
+      "mana_cost": 92
     },
     "flavor": "In the post-reset lattice, Arcane Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -19713,7 +19766,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 80,
+      "mana_cost": 80
     },
     "flavor": "In the post-reset lattice, Infernal Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -19759,7 +19812,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 41,
+      "mana_cost": 41
     },
     "flavor": "In the post-reset lattice, Frozen Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -19802,7 +19855,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 46,
+      "mana_cost": 46
     },
     "flavor": "In the post-reset lattice, Thunder Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -19845,7 +19898,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 66,
+      "mana_cost": 66
     },
     "flavor": "In the post-reset lattice, Holy Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -19887,7 +19940,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 67,
+      "mana_cost": 67
     },
     "flavor": "In the post-reset lattice, Dark Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -19933,7 +19986,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 52,
+      "mana_cost": 52
     },
     "flavor": "In the post-reset lattice, Shadow Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -19976,7 +20029,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 39,
+      "mana_cost": 39
     },
     "flavor": "In the post-reset lattice, Void Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -20019,7 +20072,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 41,
+      "mana_cost": 41
     },
     "flavor": "In the post-reset lattice, Abyssal Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -20061,7 +20114,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 40,
+      "mana_cost": 40
     },
     "flavor": "In the post-reset lattice, Demonic Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -20107,7 +20160,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 52,
+      "mana_cost": 52
     },
     "flavor": "In the post-reset lattice, Celestial Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -20150,7 +20203,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 80,
+      "mana_cost": 80
     },
     "flavor": "In the post-reset lattice, Divine Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -20193,7 +20246,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 105,
+      "mana_cost": 105
     },
     "flavor": "In the post-reset lattice, Arcane Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -20235,7 +20288,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 100,
+      "mana_cost": 100
     },
     "flavor": "In the post-reset lattice, Infernal Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -20281,7 +20334,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 102,
+      "mana_cost": 102
     },
     "flavor": "In the post-reset lattice, Frozen Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -20324,7 +20377,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 79,
+      "mana_cost": 79
     },
     "flavor": "In the post-reset lattice, Thunder Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -20367,7 +20420,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 99,
+      "mana_cost": 99
     },
     "flavor": "In the post-reset lattice, Holy Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -20409,7 +20462,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 101,
+      "mana_cost": 101
     },
     "flavor": "In the post-reset lattice, Dark Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -20455,7 +20508,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 54,
+      "mana_cost": 54
     },
     "flavor": "In the post-reset lattice, Shadow Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -20498,7 +20551,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 42,
+      "mana_cost": 42
     },
     "flavor": "In the post-reset lattice, Void Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -20541,7 +20594,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 24,
+      "mana_cost": 24
     },
     "flavor": "In the post-reset lattice, Abyssal Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -20583,7 +20636,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 85,
+      "mana_cost": 85
     },
     "flavor": "In the post-reset lattice, Demonic Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -20629,7 +20682,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 18,
+      "mana_cost": 18
     },
     "flavor": "In the post-reset lattice, Celestial Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -20672,7 +20725,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 106,
+      "mana_cost": 106
     },
     "flavor": "In the post-reset lattice, Divine Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -20715,7 +20768,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 63,
+      "mana_cost": 63
     },
     "flavor": "In the post-reset lattice, Arcane Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -20757,7 +20810,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 100,
+      "mana_cost": 100
     },
     "flavor": "In the post-reset lattice, Infernal Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -20803,7 +20856,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 50,
+      "mana_cost": 50
     },
     "flavor": "In the post-reset lattice, Frozen Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -20846,7 +20899,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 36,
+      "mana_cost": 36
     },
     "flavor": "In the post-reset lattice, Thunder Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -20889,7 +20942,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 103,
+      "mana_cost": 103
     },
     "flavor": "In the post-reset lattice, Holy Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -20931,7 +20984,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 44,
+      "mana_cost": 44
     },
     "flavor": "In the post-reset lattice, Dark Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -20977,7 +21030,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 61,
+      "mana_cost": 61
     },
     "flavor": "In the post-reset lattice, Shadow Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -21020,7 +21073,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 20,
+      "mana_cost": 20
     },
     "flavor": "In the post-reset lattice, Void Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -21063,7 +21116,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 52,
+      "mana_cost": 52
     },
     "flavor": "In the post-reset lattice, Abyssal Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -21105,7 +21158,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 37,
+      "mana_cost": 37
     },
     "flavor": "In the post-reset lattice, Demonic Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -21151,7 +21204,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 69,
+      "mana_cost": 69
     },
     "flavor": "In the post-reset lattice, Celestial Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -21194,7 +21247,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 72,
+      "mana_cost": 72
     },
     "flavor": "In the post-reset lattice, Divine Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -21237,7 +21290,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 104,
+      "mana_cost": 104
     },
     "flavor": "In the post-reset lattice, Arcane Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -21279,7 +21332,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 108,
+      "mana_cost": 108
     },
     "flavor": "In the post-reset lattice, Infernal Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -21325,7 +21378,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 19,
+      "mana_cost": 19
     },
     "flavor": "In the post-reset lattice, Frozen Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -21368,7 +21421,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 50,
+      "mana_cost": 50
     },
     "flavor": "In the post-reset lattice, Thunder Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -21411,7 +21464,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 15,
+      "mana_cost": 15
     },
     "flavor": "In the post-reset lattice, Holy Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -21453,7 +21506,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 88,
+      "mana_cost": 88
     },
     "flavor": "In the post-reset lattice, Dark Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -21499,7 +21552,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 82,
+      "mana_cost": 82
     },
     "flavor": "In the post-reset lattice, Shadow Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -21542,7 +21595,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 44,
+      "mana_cost": 44
     },
     "flavor": "In the post-reset lattice, Void Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -21585,7 +21638,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 96,
+      "mana_cost": 96
     },
     "flavor": "In the post-reset lattice, Abyssal Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -21627,7 +21680,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 95,
+      "mana_cost": 95
     },
     "flavor": "In the post-reset lattice, Demonic Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -21673,7 +21726,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 10,
+      "mana_cost": 10
     },
     "flavor": "In the post-reset lattice, Celestial Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -21716,7 +21769,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 105,
+      "mana_cost": 105
     },
     "flavor": "In the post-reset lattice, Divine Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -21759,7 +21812,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 41,
+      "mana_cost": 41
     },
     "flavor": "In the post-reset lattice, Arcane Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -21801,7 +21854,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 108,
+      "mana_cost": 108
     },
     "flavor": "In the post-reset lattice, Infernal Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -21847,7 +21900,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 49,
+      "mana_cost": 49
     },
     "flavor": "In the post-reset lattice, Frozen Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -21890,7 +21943,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 67,
+      "mana_cost": 67
     },
     "flavor": "In the post-reset lattice, Thunder Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -21933,7 +21986,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 17,
+      "mana_cost": 17
     },
     "flavor": "In the post-reset lattice, Holy Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -21975,7 +22028,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 68,
+      "mana_cost": 68
     },
     "flavor": "In the post-reset lattice, Dark Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -22021,7 +22074,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 89,
+      "mana_cost": 89
     },
     "flavor": "In the post-reset lattice, Shadow Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -22064,7 +22117,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 85,
+      "mana_cost": 85
     },
     "flavor": "In the post-reset lattice, Void Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -22107,7 +22160,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 38,
+      "mana_cost": 38
     },
     "flavor": "In the post-reset lattice, Abyssal Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -22149,7 +22202,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 33,
+      "mana_cost": 33
     },
     "flavor": "In the post-reset lattice, Demonic Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -22195,7 +22248,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 65,
+      "mana_cost": 65
     },
     "flavor": "In the post-reset lattice, Celestial Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -22238,7 +22291,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 89,
+      "mana_cost": 89
     },
     "flavor": "In the post-reset lattice, Divine Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -22281,7 +22334,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 22,
+      "mana_cost": 22
     },
     "flavor": "In the post-reset lattice, Arcane Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -22323,7 +22376,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 35,
+      "mana_cost": 35
     },
     "flavor": "In the post-reset lattice, Infernal Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -22369,7 +22422,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 23,
+      "mana_cost": 23
     },
     "flavor": "In the post-reset lattice, Frozen Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -22412,7 +22465,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 80,
+      "mana_cost": 80
     },
     "flavor": "In the post-reset lattice, Thunder Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -22455,7 +22508,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 77,
+      "mana_cost": 77
     },
     "flavor": "In the post-reset lattice, Holy Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -22497,7 +22550,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 37,
+      "mana_cost": 37
     },
     "flavor": "In the post-reset lattice, Dark Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -22543,7 +22596,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 92,
+      "mana_cost": 92
     },
     "flavor": "In the post-reset lattice, Shadow Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -22586,7 +22639,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 80,
+      "mana_cost": 80
     },
     "flavor": "In the post-reset lattice, Void Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -22629,7 +22682,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 52,
+      "mana_cost": 52
     },
     "flavor": "In the post-reset lattice, Abyssal Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -22671,7 +22724,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 46,
+      "mana_cost": 46
     },
     "flavor": "In the post-reset lattice, Demonic Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -22717,7 +22770,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 52,
+      "mana_cost": 52
     },
     "flavor": "In the post-reset lattice, Celestial Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -22760,7 +22813,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 109,
+      "mana_cost": 109
     },
     "flavor": "In the post-reset lattice, Divine Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -22803,7 +22856,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 97,
+      "mana_cost": 97
     },
     "flavor": "In the post-reset lattice, Arcane Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -22845,7 +22898,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 30,
+      "mana_cost": 30
     },
     "flavor": "In the post-reset lattice, Infernal Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -22891,7 +22944,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 71,
+      "mana_cost": 71
     },
     "flavor": "In the post-reset lattice, Frozen Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -22934,7 +22987,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 63,
+      "mana_cost": 63
     },
     "flavor": "In the post-reset lattice, Thunder Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -22977,7 +23030,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 61,
+      "mana_cost": 61
     },
     "flavor": "In the post-reset lattice, Holy Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -23019,7 +23072,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 45,
+      "mana_cost": 45
     },
     "flavor": "In the post-reset lattice, Dark Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -23065,7 +23118,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 18,
+      "mana_cost": 18
     },
     "flavor": "In the post-reset lattice, Shadow Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -23108,7 +23161,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 56,
+      "mana_cost": 56
     },
     "flavor": "In the post-reset lattice, Void Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -23151,7 +23204,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 45,
+      "mana_cost": 45
     },
     "flavor": "In the post-reset lattice, Abyssal Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -23193,7 +23246,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 53,
+      "mana_cost": 53
     },
     "flavor": "In the post-reset lattice, Demonic Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -23239,7 +23292,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 26,
+      "mana_cost": 26
     },
     "flavor": "In the post-reset lattice, Celestial Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -23282,7 +23335,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 94,
+      "mana_cost": 94
     },
     "flavor": "In the post-reset lattice, Divine Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -23325,7 +23378,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 25,
+      "mana_cost": 25
     },
     "flavor": "In the post-reset lattice, Arcane Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -23367,7 +23420,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 25,
+      "mana_cost": 25
     },
     "flavor": "In the post-reset lattice, Infernal Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -23413,7 +23466,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 51,
+      "mana_cost": 51
     },
     "flavor": "In the post-reset lattice, Frozen Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -23456,7 +23509,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 44,
+      "mana_cost": 44
     },
     "flavor": "In the post-reset lattice, Thunder Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -23499,7 +23552,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 23,
+      "mana_cost": 23
     },
     "flavor": "In the post-reset lattice, Holy Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -23541,7 +23594,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 58,
+      "mana_cost": 58
     },
     "flavor": "In the post-reset lattice, Dark Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -23587,7 +23640,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 15,
+      "mana_cost": 15
     },
     "flavor": "In the post-reset lattice, Shadow Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -23630,7 +23683,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 39,
+      "mana_cost": 39
     },
     "flavor": "In the post-reset lattice, Void Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -23673,7 +23726,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 49,
+      "mana_cost": 49
     },
     "flavor": "In the post-reset lattice, Abyssal Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -23715,7 +23768,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 96,
+      "mana_cost": 96
     },
     "flavor": "In the post-reset lattice, Demonic Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -23761,7 +23814,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 53,
+      "mana_cost": 53
     },
     "flavor": "In the post-reset lattice, Celestial Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -23804,7 +23857,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 98,
+      "mana_cost": 98
     },
     "flavor": "In the post-reset lattice, Divine Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -23847,7 +23900,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 14,
+      "mana_cost": 14
     },
     "flavor": "In the post-reset lattice, Arcane Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -23889,7 +23942,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 92,
+      "mana_cost": 92
     },
     "flavor": "In the post-reset lattice, Infernal Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -23935,7 +23988,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 50,
+      "mana_cost": 50
     },
     "flavor": "In the post-reset lattice, Frozen Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -23978,7 +24031,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 39,
+      "mana_cost": 39
     },
     "flavor": "In the post-reset lattice, Thunder Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -24021,7 +24074,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 96,
+      "mana_cost": 96
     },
     "flavor": "In the post-reset lattice, Holy Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -24063,7 +24116,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 107,
+      "mana_cost": 107
     },
     "flavor": "In the post-reset lattice, Dark Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -24109,7 +24162,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 20,
+      "mana_cost": 20
     },
     "flavor": "In the post-reset lattice, Shadow Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -24152,7 +24205,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 49,
+      "mana_cost": 49
     },
     "flavor": "In the post-reset lattice, Void Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -24195,7 +24248,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 40,
+      "mana_cost": 40
     },
     "flavor": "In the post-reset lattice, Abyssal Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -24237,7 +24290,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 21,
+      "mana_cost": 21
     },
     "flavor": "In the post-reset lattice, Demonic Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -24283,7 +24336,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 29,
+      "mana_cost": 29
     },
     "flavor": "In the post-reset lattice, Celestial Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -24326,7 +24379,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 100,
+      "mana_cost": 100
     },
     "flavor": "In the post-reset lattice, Divine Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -24369,7 +24422,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 34,
+      "mana_cost": 34
     },
     "flavor": "In the post-reset lattice, Arcane Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -24411,7 +24464,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 35,
+      "mana_cost": 35
     },
     "flavor": "In the post-reset lattice, Infernal Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -24457,7 +24510,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 96,
+      "mana_cost": 96
     },
     "flavor": "In the post-reset lattice, Frozen Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -24500,7 +24553,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 10,
+      "mana_cost": 10
     },
     "flavor": "In the post-reset lattice, Thunder Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -24543,7 +24596,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 30,
+      "mana_cost": 30
     },
     "flavor": "In the post-reset lattice, Holy Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -24585,7 +24638,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 62,
+      "mana_cost": 62
     },
     "flavor": "In the post-reset lattice, Dark Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -24631,7 +24684,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 96,
+      "mana_cost": 96
     },
     "flavor": "In the post-reset lattice, Shadow Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -24674,7 +24727,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 86,
+      "mana_cost": 86
     },
     "flavor": "In the post-reset lattice, Void Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -24717,7 +24770,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 26,
+      "mana_cost": 26
     },
     "flavor": "In the post-reset lattice, Abyssal Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -24759,7 +24812,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 91,
+      "mana_cost": 91
     },
     "flavor": "In the post-reset lattice, Demonic Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -24805,7 +24858,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 79,
+      "mana_cost": 79
     },
     "flavor": "In the post-reset lattice, Celestial Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -24848,7 +24901,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 73,
+      "mana_cost": 73
     },
     "flavor": "In the post-reset lattice, Divine Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -24891,7 +24944,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 17,
+      "mana_cost": 17
     },
     "flavor": "In the post-reset lattice, Arcane Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -24933,7 +24986,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 105,
+      "mana_cost": 105
     },
     "flavor": "In the post-reset lattice, Infernal Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -24979,7 +25032,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 17,
+      "mana_cost": 17
     },
     "flavor": "In the post-reset lattice, Frozen Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -25022,7 +25075,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 93,
+      "mana_cost": 93
     },
     "flavor": "In the post-reset lattice, Thunder Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -25065,7 +25118,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 28,
+      "mana_cost": 28
     },
     "flavor": "In the post-reset lattice, Holy Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -25107,7 +25160,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 31,
+      "mana_cost": 31
     },
     "flavor": "In the post-reset lattice, Dark Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -25153,7 +25206,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 32,
+      "mana_cost": 32
     },
     "flavor": "In the post-reset lattice, Shadow Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -25196,7 +25249,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 92,
+      "mana_cost": 92
     },
     "flavor": "In the post-reset lattice, Void Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -25239,7 +25292,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 89,
+      "mana_cost": 89
     },
     "flavor": "In the post-reset lattice, Abyssal Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -25281,7 +25334,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 80,
+      "mana_cost": 80
     },
     "flavor": "In the post-reset lattice, Demonic Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -25327,7 +25380,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 30,
+      "mana_cost": 30
     },
     "flavor": "In the post-reset lattice, Celestial Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -25370,7 +25423,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 50,
+      "mana_cost": 50
     },
     "flavor": "In the post-reset lattice, Divine Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -25413,7 +25466,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 43,
+      "mana_cost": 43
     },
     "flavor": "In the post-reset lattice, Arcane Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -25455,7 +25508,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 16,
+      "mana_cost": 16
     },
     "flavor": "In the post-reset lattice, Infernal Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -25501,7 +25554,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 51,
+      "mana_cost": 51
     },
     "flavor": "In the post-reset lattice, Frozen Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -25544,7 +25597,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 27,
+      "mana_cost": 27
     },
     "flavor": "In the post-reset lattice, Thunder Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -25587,7 +25640,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 29,
+      "mana_cost": 29
     },
     "flavor": "In the post-reset lattice, Holy Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -25629,7 +25682,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 25,
+      "mana_cost": 25
     },
     "flavor": "In the post-reset lattice, Dark Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -25675,7 +25728,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 24,
+      "mana_cost": 24
     },
     "flavor": "In the post-reset lattice, Shadow Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -25718,7 +25771,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 92,
+      "mana_cost": 92
     },
     "flavor": "In the post-reset lattice, Void Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -25761,7 +25814,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 99,
+      "mana_cost": 99
     },
     "flavor": "In the post-reset lattice, Abyssal Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -25803,7 +25856,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 97,
+      "mana_cost": 97
     },
     "flavor": "In the post-reset lattice, Demonic Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -25849,7 +25902,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 50,
+      "mana_cost": 50
     },
     "flavor": "In the post-reset lattice, Celestial Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -25892,7 +25945,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 30,
+      "mana_cost": 30
     },
     "flavor": "In the post-reset lattice, Divine Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -25935,7 +25988,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 55,
+      "mana_cost": 55
     },
     "flavor": "In the post-reset lattice, Arcane Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -25977,7 +26030,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 26,
+      "mana_cost": 26
     },
     "flavor": "In the post-reset lattice, Infernal Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -26023,7 +26076,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 36,
+      "mana_cost": 36
     },
     "flavor": "In the post-reset lattice, Frozen Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -26066,7 +26119,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 62,
+      "mana_cost": 62
     },
     "flavor": "In the post-reset lattice, Thunder Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -26109,7 +26162,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 62,
+      "mana_cost": 62
     },
     "flavor": "In the post-reset lattice, Holy Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -26151,7 +26204,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 76,
+      "mana_cost": 76
     },
     "flavor": "In the post-reset lattice, Dark Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -26197,7 +26250,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 108,
+      "mana_cost": 108
     },
     "flavor": "In the post-reset lattice, Shadow Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -26240,7 +26293,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 26,
+      "mana_cost": 26
     },
     "flavor": "In the post-reset lattice, Void Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -26283,7 +26336,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 109,
+      "mana_cost": 109
     },
     "flavor": "In the post-reset lattice, Abyssal Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -26325,7 +26378,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 61,
+      "mana_cost": 61
     },
     "flavor": "In the post-reset lattice, Demonic Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -26371,7 +26424,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 104,
+      "mana_cost": 104
     },
     "flavor": "In the post-reset lattice, Celestial Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -26414,7 +26467,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 17,
+      "mana_cost": 17
     },
     "flavor": "In the post-reset lattice, Divine Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -26457,7 +26510,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 43,
+      "mana_cost": 43
     },
     "flavor": "In the post-reset lattice, Arcane Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -26499,7 +26552,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 17,
+      "mana_cost": 17
     },
     "flavor": "In the post-reset lattice, Infernal Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -26545,7 +26598,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 55,
+      "mana_cost": 55
     },
     "flavor": "In the post-reset lattice, Frozen Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -26588,7 +26641,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 10,
+      "mana_cost": 10
     },
     "flavor": "In the post-reset lattice, Thunder Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -26631,7 +26684,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 41,
+      "mana_cost": 41
     },
     "flavor": "In the post-reset lattice, Holy Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -26673,7 +26726,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 33,
+      "mana_cost": 33
     },
     "flavor": "In the post-reset lattice, Dark Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -26719,7 +26772,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 83,
+      "mana_cost": 83
     },
     "flavor": "In the post-reset lattice, Shadow Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -26762,7 +26815,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 28,
+      "mana_cost": 28
     },
     "flavor": "In the post-reset lattice, Void Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -26805,7 +26858,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 69,
+      "mana_cost": 69
     },
     "flavor": "In the post-reset lattice, Abyssal Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -26847,7 +26900,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 51,
+      "mana_cost": 51
     },
     "flavor": "In the post-reset lattice, Demonic Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -26893,7 +26946,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 80,
+      "mana_cost": 80
     },
     "flavor": "In the post-reset lattice, Celestial Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -26936,7 +26989,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 12,
+      "mana_cost": 12
     },
     "flavor": "In the post-reset lattice, Divine Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -26979,7 +27032,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 70,
+      "mana_cost": 70
     },
     "flavor": "In the post-reset lattice, Arcane Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -27021,7 +27074,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 39,
+      "mana_cost": 39
     },
     "flavor": "In the post-reset lattice, Infernal Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -27067,7 +27120,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 102,
+      "mana_cost": 102
     },
     "flavor": "In the post-reset lattice, Frozen Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -27110,7 +27163,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 69,
+      "mana_cost": 69
     },
     "flavor": "In the post-reset lattice, Voltaic Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -27153,7 +27206,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 38,
+      "mana_cost": 38
     },
     "flavor": "In the post-reset lattice, Holy Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -27195,7 +27248,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 85,
+      "mana_cost": 85
     },
     "flavor": "In the post-reset lattice, Dark Wave is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -27241,7 +27294,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 20,
+      "mana_cost": 20
     },
     "flavor": "In the post-reset lattice, Shadow Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -27284,7 +27337,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 68,
+      "mana_cost": 68
     },
     "flavor": "In the post-reset lattice, Void Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -27327,7 +27380,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 92,
+      "mana_cost": 92
     },
     "flavor": "In the post-reset lattice, Abyssal Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -27369,7 +27422,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 47,
+      "mana_cost": 47
     },
     "flavor": "In the post-reset lattice, Demonic Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -27415,7 +27468,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 80,
+      "mana_cost": 80
     },
     "flavor": "In the post-reset lattice, Celestial Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -27458,7 +27511,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 32,
+      "mana_cost": 32
     },
     "flavor": "In the post-reset lattice, Divine Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -27501,7 +27554,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 30,
+      "mana_cost": 30
     },
     "flavor": "In the post-reset lattice, Arcane Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -27543,7 +27596,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 85,
+      "mana_cost": 85
     },
     "flavor": "In the post-reset lattice, Infernal Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -27589,7 +27642,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 72,
+      "mana_cost": 72
     },
     "flavor": "In the post-reset lattice, Frozen Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -27632,7 +27685,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 17,
+      "mana_cost": 17
     },
     "flavor": "In the post-reset lattice, Thunder Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -27675,7 +27728,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 32,
+      "mana_cost": 32
     },
     "flavor": "In the post-reset lattice, Holy Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -27717,7 +27770,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 12,
+      "mana_cost": 12
     },
     "flavor": "In the post-reset lattice, Dark Nova is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -27763,7 +27816,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 52,
+      "mana_cost": 52
     },
     "flavor": "In the post-reset lattice, Shadow Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -27806,7 +27859,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 38,
+      "mana_cost": 38
     },
     "flavor": "In the post-reset lattice, Void Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -27849,7 +27902,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 93,
+      "mana_cost": 93
     },
     "flavor": "In the post-reset lattice, Abyssal Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -27891,7 +27944,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 62,
+      "mana_cost": 62
     },
     "flavor": "In the post-reset lattice, Demonic Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -27937,7 +27990,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 105,
+      "mana_cost": 105
     },
     "flavor": "In the post-reset lattice, Celestial Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -27980,7 +28033,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 41,
+      "mana_cost": 41
     },
     "flavor": "In the post-reset lattice, Divine Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -28023,7 +28076,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 100,
+      "mana_cost": 100
     },
     "flavor": "In the post-reset lattice, Arcane Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -28065,7 +28118,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 70,
+      "mana_cost": 70
     },
     "flavor": "In the post-reset lattice, Infernal Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -28111,7 +28164,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 39,
+      "mana_cost": 39
     },
     "flavor": "In the post-reset lattice, Frozen Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -28154,7 +28207,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 74,
+      "mana_cost": 74
     },
     "flavor": "In the post-reset lattice, Thunder Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -28197,7 +28250,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 81,
+      "mana_cost": 81
     },
     "flavor": "In the post-reset lattice, Holy Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -28239,7 +28292,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 64,
+      "mana_cost": 64
     },
     "flavor": "In the post-reset lattice, Dark Barrier is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -28285,7 +28338,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 62,
+      "mana_cost": 62
     },
     "flavor": "In the post-reset lattice, Shadow Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -28328,7 +28381,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 75,
+      "mana_cost": 75
     },
     "flavor": "In the post-reset lattice, Void Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -28371,7 +28424,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 37,
+      "mana_cost": 37
     },
     "flavor": "In the post-reset lattice, Abyssal Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -28413,7 +28466,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 73,
+      "mana_cost": 73
     },
     "flavor": "In the post-reset lattice, Demonic Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -28459,7 +28512,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 52,
+      "mana_cost": 52
     },
     "flavor": "In the post-reset lattice, Celestial Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -28502,7 +28555,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 13,
+      "mana_cost": 13
     },
     "flavor": "In the post-reset lattice, Divine Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -28545,7 +28598,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 32,
+      "mana_cost": 32
     },
     "flavor": "In the post-reset lattice, Arcane Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -28587,7 +28640,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 73,
+      "mana_cost": 73
     },
     "flavor": "In the post-reset lattice, Infernal Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -28633,7 +28686,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 45,
+      "mana_cost": 45
     },
     "flavor": "In the post-reset lattice, Frozen Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -28676,7 +28729,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 31,
+      "mana_cost": 31
     },
     "flavor": "In the post-reset lattice, Thunder Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -28719,7 +28772,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 49,
+      "mana_cost": 49
     },
     "flavor": "In the post-reset lattice, Holy Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -28761,7 +28814,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 109,
+      "mana_cost": 109
     },
     "flavor": "In the post-reset lattice, Dark Shield is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -28807,7 +28860,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 44,
+      "mana_cost": 44
     },
     "flavor": "In the post-reset lattice, Shadow Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -28850,7 +28903,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 101,
+      "mana_cost": 101
     },
     "flavor": "In the post-reset lattice, Void Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -28893,7 +28946,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 47,
+      "mana_cost": 47
     },
     "flavor": "In the post-reset lattice, Abyssal Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -28935,7 +28988,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 71,
+      "mana_cost": 71
     },
     "flavor": "In the post-reset lattice, Demonic Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -28981,7 +29034,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 71,
+      "mana_cost": 71
     },
     "flavor": "In the post-reset lattice, Celestial Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -29024,7 +29077,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 36,
+      "mana_cost": 36
     },
     "flavor": "In the post-reset lattice, Divine Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -29067,7 +29120,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 100,
+      "mana_cost": 100
     },
     "flavor": "In the post-reset lattice, Arcane Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -29109,7 +29162,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 82,
+      "mana_cost": 82
     },
     "flavor": "In the post-reset lattice, Infernal Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -29155,7 +29208,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 103,
+      "mana_cost": 103
     },
     "flavor": "In the post-reset lattice, Frozen Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -29198,7 +29251,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 62,
+      "mana_cost": 62
     },
     "flavor": "In the post-reset lattice, Thunder Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -29241,7 +29294,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 104,
+      "mana_cost": 104
     },
     "flavor": "In the post-reset lattice, Holy Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -29283,7 +29336,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 97,
+      "mana_cost": 97
     },
     "flavor": "In the post-reset lattice, Dark Curse is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -29329,7 +29382,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 16,
+      "mana_cost": 16
     },
     "flavor": "In the post-reset lattice, Shadow Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -29372,7 +29425,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 95,
+      "mana_cost": 95
     },
     "flavor": "In the post-reset lattice, Void Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -29415,7 +29468,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 109,
+      "mana_cost": 109
     },
     "flavor": "In the post-reset lattice, Abyssal Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -29457,7 +29510,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 83,
+      "mana_cost": 83
     },
     "flavor": "In the post-reset lattice, Demonic Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -29503,7 +29556,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 65,
+      "mana_cost": 65
     },
     "flavor": "In the post-reset lattice, Celestial Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -29546,7 +29599,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 31,
+      "mana_cost": 31
     },
     "flavor": "In the post-reset lattice, Divine Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -29589,7 +29642,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 38,
+      "mana_cost": 38
     },
     "flavor": "In the post-reset lattice, Arcane Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -29631,7 +29684,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 15,
+      "mana_cost": 15
     },
     "flavor": "In the post-reset lattice, Infernal Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -29677,7 +29730,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 78,
+      "mana_cost": 78
     },
     "flavor": "In the post-reset lattice, Frozen Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -29720,7 +29773,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 51,
+      "mana_cost": 51
     },
     "flavor": "In the post-reset lattice, Thunder Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -29763,7 +29816,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 32,
+      "mana_cost": 32
     },
     "flavor": "In the post-reset lattice, Holy Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -29805,7 +29858,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 55,
+      "mana_cost": 55
     },
     "flavor": "In the post-reset lattice, Dark Blessing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -29851,7 +29904,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 85,
+      "mana_cost": 85
     },
     "flavor": "In the post-reset lattice, Shadow Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -29894,7 +29947,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 109,
+      "mana_cost": 109
     },
     "flavor": "In the post-reset lattice, Void Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -29937,7 +29990,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 85,
+      "mana_cost": 85
     },
     "flavor": "In the post-reset lattice, Abyssal Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -29979,7 +30032,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 26,
+      "mana_cost": 26
     },
     "flavor": "In the post-reset lattice, Demonic Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -30025,7 +30078,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 15,
+      "mana_cost": 15
     },
     "flavor": "In the post-reset lattice, Celestial Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -30068,7 +30121,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 98,
+      "mana_cost": 98
     },
     "flavor": "In the post-reset lattice, Divine Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -30111,7 +30164,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 34,
+      "mana_cost": 34
     },
     "flavor": "In the post-reset lattice, Arcane Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -30153,7 +30206,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 66,
+      "mana_cost": 66
     },
     "flavor": "In the post-reset lattice, Infernal Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -30199,7 +30252,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 100,
+      "mana_cost": 100
     },
     "flavor": "In the post-reset lattice, Frozen Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -30242,7 +30295,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 28,
+      "mana_cost": 28
     },
     "flavor": "In the post-reset lattice, Thunder Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -30285,7 +30338,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 21,
+      "mana_cost": 21
     },
     "flavor": "In the post-reset lattice, Holy Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -30327,7 +30380,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 11,
+      "mana_cost": 11
     },
     "flavor": "In the post-reset lattice, Dark Healing is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -30373,7 +30426,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 87,
+      "mana_cost": 87
     },
     "flavor": "In the post-reset lattice, Shadow Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -30416,7 +30469,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 20,
+      "mana_cost": 20
     },
     "flavor": "In the post-reset lattice, Void Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -30459,7 +30512,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 109,
+      "mana_cost": 109
     },
     "flavor": "In the post-reset lattice, Abyssal Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -30501,7 +30554,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 12,
+      "mana_cost": 12
     },
     "flavor": "In the post-reset lattice, Demonic Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -30547,7 +30600,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 57,
+      "mana_cost": 57
     },
     "flavor": "In the post-reset lattice, Celestial Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -30590,7 +30643,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 55,
+      "mana_cost": 55
     },
     "flavor": "In the post-reset lattice, Divine Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -30633,7 +30686,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 42,
+      "mana_cost": 42
     },
     "flavor": "In the post-reset lattice, Arcane Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -30675,7 +30728,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 65,
+      "mana_cost": 65
     },
     "flavor": "In the post-reset lattice, Infernal Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -30721,7 +30774,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 71,
+      "mana_cost": 71
     },
     "flavor": "In the post-reset lattice, Frozen Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -30764,7 +30817,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 69,
+      "mana_cost": 69
     },
     "flavor": "In the post-reset lattice, Thunder Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -30807,7 +30860,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 30,
+      "mana_cost": 30
     },
     "flavor": "In the post-reset lattice, Holy Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -30849,7 +30902,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 70,
+      "mana_cost": 70
     },
     "flavor": "In the post-reset lattice, Dark Restoration is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -30895,7 +30948,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 59,
+      "mana_cost": 59
     },
     "flavor": "In the post-reset lattice, Shadow Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -30938,7 +30991,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 96,
+      "mana_cost": 96
     },
     "flavor": "In the post-reset lattice, Void Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -30981,7 +31034,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 95,
+      "mana_cost": 95
     },
     "flavor": "In the post-reset lattice, Abyssal Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -31023,7 +31076,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 43,
+      "mana_cost": 43
     },
     "flavor": "In the post-reset lattice, Demonic Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -31069,7 +31122,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 34,
+      "mana_cost": 34
     },
     "flavor": "In the post-reset lattice, Celestial Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -31112,7 +31165,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 43,
+      "mana_cost": 43
     },
     "flavor": "In the post-reset lattice, Divine Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -31155,7 +31208,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 45,
+      "mana_cost": 45
     },
     "flavor": "In the post-reset lattice, Arcane Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -31197,7 +31250,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 32,
+      "mana_cost": 32
     },
     "flavor": "In the post-reset lattice, Infernal Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -31243,7 +31296,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 19,
+      "mana_cost": 19
     },
     "flavor": "In the post-reset lattice, Frozen Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -31286,7 +31339,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 104,
+      "mana_cost": 104
     },
     "flavor": "In the post-reset lattice, Thunder Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -31329,7 +31382,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 37,
+      "mana_cost": 37
     },
     "flavor": "In the post-reset lattice, Holy Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -31371,7 +31424,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 70,
+      "mana_cost": 70
     },
     "flavor": "In the post-reset lattice, Dark Destruction is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -31417,7 +31470,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 98,
+      "mana_cost": 98
     },
     "flavor": "In the post-reset lattice, Shadow Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -31460,7 +31513,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 105,
+      "mana_cost": 105
     },
     "flavor": "In the post-reset lattice, Void Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -31503,7 +31556,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 77,
+      "mana_cost": 77
     },
     "flavor": "In the post-reset lattice, Abyssal Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -31545,7 +31598,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 94,
+      "mana_cost": 94
     },
     "flavor": "In the post-reset lattice, Demonic Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -31591,7 +31644,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 14,
+      "mana_cost": 14
     },
     "flavor": "In the post-reset lattice, Celestial Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -31634,7 +31687,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 108,
+      "mana_cost": 108
     },
     "flavor": "In the post-reset lattice, Divine Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -31677,7 +31730,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 87,
+      "mana_cost": 87
     },
     "flavor": "In the post-reset lattice, Arcane Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -31719,7 +31772,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 107,
+      "mana_cost": 107
     },
     "flavor": "In the post-reset lattice, Infernal Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -31765,7 +31818,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 41,
+      "mana_cost": 41
     },
     "flavor": "In the post-reset lattice, Frozen Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -31808,7 +31861,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 99,
+      "mana_cost": 99
     },
     "flavor": "In the post-reset lattice, Thunder Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -31851,7 +31904,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 57,
+      "mana_cost": 57
     },
     "flavor": "In the post-reset lattice, Holy Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -31893,7 +31946,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 102,
+      "mana_cost": 102
     },
     "flavor": "In the post-reset lattice, Dark Summoning is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -31939,7 +31992,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 62,
+      "mana_cost": 62
     },
     "flavor": "In the post-reset lattice, Shadow Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -31982,7 +32035,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 46,
+      "mana_cost": 46
     },
     "flavor": "In the post-reset lattice, Void Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -32025,7 +32078,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 29,
+      "mana_cost": 29
     },
     "flavor": "In the post-reset lattice, Abyssal Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -32067,7 +32120,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 21,
+      "mana_cost": 21
     },
     "flavor": "In the post-reset lattice, Demonic Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -32113,7 +32166,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 35,
+      "mana_cost": 35
     },
     "flavor": "In the post-reset lattice, Celestial Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -32156,7 +32209,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 101,
+      "mana_cost": 101
     },
     "flavor": "In the post-reset lattice, Divine Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -32199,7 +32252,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 62,
+      "mana_cost": 62
     },
     "flavor": "In the post-reset lattice, Arcane Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -32241,7 +32294,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 16,
+      "mana_cost": 16
     },
     "flavor": "In the post-reset lattice, Infernal Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -32287,7 +32340,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 31,
+      "mana_cost": 31
     },
     "flavor": "In the post-reset lattice, Frozen Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -32330,7 +32383,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 47,
+      "mana_cost": 47
     },
     "flavor": "In the post-reset lattice, Thunder Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -32373,7 +32426,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 83,
+      "mana_cost": 83
     },
     "flavor": "In the post-reset lattice, Holy Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -32415,7 +32468,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 83,
+      "mana_cost": 83
     },
     "flavor": "In the post-reset lattice, Dark Binding is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -32461,7 +32514,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 64,
+      "mana_cost": 64
     },
     "flavor": "In the post-reset lattice, Shadow Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -32504,7 +32557,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 109,
+      "mana_cost": 109
     },
     "flavor": "In the post-reset lattice, Void Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -32547,7 +32600,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 90,
+      "mana_cost": 90
     },
     "flavor": "In the post-reset lattice, Abyssal Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -32589,7 +32642,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 75,
+      "mana_cost": 75
     },
     "flavor": "In the post-reset lattice, Demonic Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -32635,7 +32688,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 79,
+      "mana_cost": 79
     },
     "flavor": "In the post-reset lattice, Celestial Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -32678,7 +32731,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 73,
+      "mana_cost": 73
     },
     "flavor": "In the post-reset lattice, Divine Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -32721,7 +32774,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 47,
+      "mana_cost": 47
     },
     "flavor": "In the post-reset lattice, Arcane Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -32763,7 +32816,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 50,
+      "mana_cost": 50
     },
     "flavor": "In the post-reset lattice, Infernal Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -32809,7 +32862,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 57,
+      "mana_cost": 57
     },
     "flavor": "In the post-reset lattice, Frozen Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -32852,7 +32905,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 84,
+      "mana_cost": 84
     },
     "flavor": "In the post-reset lattice, Thunder Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -32895,7 +32948,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 82,
+      "mana_cost": 82
     },
     "flavor": "In the post-reset lattice, Holy Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -32937,7 +32990,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 108,
+      "mana_cost": 108
     },
     "flavor": "In the post-reset lattice, Dark Teleportation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -32983,7 +33036,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 54,
+      "mana_cost": 54
     },
     "flavor": "In the post-reset lattice, Shadow Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -33026,7 +33079,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 100,
+      "mana_cost": 100
     },
     "flavor": "In the post-reset lattice, Void Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -33069,7 +33122,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 14,
+      "mana_cost": 14
     },
     "flavor": "In the post-reset lattice, Abyssal Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -33111,7 +33164,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 22,
+      "mana_cost": 22
     },
     "flavor": "In the post-reset lattice, Demonic Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -33157,7 +33210,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 46,
+      "mana_cost": 46
     },
     "flavor": "In the post-reset lattice, Celestial Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -33200,7 +33253,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 81,
+      "mana_cost": 81
     },
     "flavor": "In the post-reset lattice, Divine Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -33243,7 +33296,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 17,
+      "mana_cost": 17
     },
     "flavor": "In the post-reset lattice, Arcane Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -33285,7 +33338,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 29,
+      "mana_cost": 29
     },
     "flavor": "In the post-reset lattice, Infernal Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -33331,7 +33384,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 56,
+      "mana_cost": 56
     },
     "flavor": "In the post-reset lattice, Frozen Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -33374,7 +33427,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 77,
+      "mana_cost": 77
     },
     "flavor": "In the post-reset lattice, Thunder Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -33417,7 +33470,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 84,
+      "mana_cost": 84
     },
     "flavor": "In the post-reset lattice, Holy Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -33459,7 +33512,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 92,
+      "mana_cost": 92
     },
     "flavor": "In the post-reset lattice, Dark Transformation is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -33505,7 +33558,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 37,
+      "mana_cost": 37
     },
     "flavor": "In the post-reset lattice, Shadow Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -33548,7 +33601,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 59,
+      "mana_cost": 59
     },
     "flavor": "In the post-reset lattice, Void Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -33591,7 +33644,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 65,
+      "mana_cost": 65
     },
     "flavor": "In the post-reset lattice, Abyssal Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -33633,7 +33686,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 14,
+      "mana_cost": 14
     },
     "flavor": "In the post-reset lattice, Demonic Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -33679,7 +33732,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 84,
+      "mana_cost": 84
     },
     "flavor": "In the post-reset lattice, Celestial Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -33722,7 +33775,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 17,
+      "mana_cost": 17
     },
     "flavor": "In the post-reset lattice, Divine Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -33765,7 +33818,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 71,
+      "mana_cost": 71
     },
     "flavor": "In the post-reset lattice, Arcane Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -33807,7 +33860,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 45,
+      "mana_cost": 45
     },
     "flavor": "In the post-reset lattice, Infernal Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -33853,7 +33906,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 67,
+      "mana_cost": 67
     },
     "flavor": "In the post-reset lattice, Frozen Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -33896,7 +33949,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 76,
+      "mana_cost": 76
     },
     "flavor": "In the post-reset lattice, Thunder Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -33939,7 +33992,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 102,
+      "mana_cost": 102
     },
     "flavor": "In the post-reset lattice, Holy Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -33981,7 +34034,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 100,
+      "mana_cost": 100
     },
     "flavor": "In the post-reset lattice, Dark Bolt is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -34027,7 +34080,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 69,
+      "mana_cost": 69
     },
     "flavor": "In the post-reset lattice, Shadow Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -34070,7 +34123,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 36,
+      "mana_cost": 36
     },
     "flavor": "In the post-reset lattice, Void Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -34113,7 +34166,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 19,
+      "mana_cost": 19
     },
     "flavor": "In the post-reset lattice, Abyssal Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -34155,7 +34208,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 60,
+      "mana_cost": 60
     },
     "flavor": "In the post-reset lattice, Demonic Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -34201,7 +34254,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 77,
+      "mana_cost": 77
     },
     "flavor": "In the post-reset lattice, Celestial Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -34244,7 +34297,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 94,
+      "mana_cost": 94
     },
     "flavor": "In the post-reset lattice, Divine Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -34287,7 +34340,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 104,
+      "mana_cost": 104
     },
     "flavor": "In the post-reset lattice, Arcane Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -34329,7 +34382,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 109,
+      "mana_cost": 109
     },
     "flavor": "In the post-reset lattice, Infernal Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -34375,7 +34428,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 50,
+      "mana_cost": 50
     },
     "flavor": "In the post-reset lattice, Frozen Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -34418,7 +34471,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 100,
+      "mana_cost": 100
     },
     "flavor": "In the post-reset lattice, Thunder Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -34461,7 +34514,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 85,
+      "mana_cost": 85
     },
     "flavor": "In the post-reset lattice, Holy Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -34503,7 +34556,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 91,
+      "mana_cost": 91
     },
     "flavor": "In the post-reset lattice, Dark Blast is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -34549,7 +34602,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 72,
+      "mana_cost": 72
     },
     "flavor": "In the post-reset lattice, Shadow Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -34592,7 +34645,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 45,
+      "mana_cost": 45
     },
     "flavor": "In the post-reset lattice, Void Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -34635,7 +34688,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 80,
+      "mana_cost": 80
     },
     "flavor": "In the post-reset lattice, Abyssal Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -34677,7 +34730,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 25,
+      "mana_cost": 25
     },
     "flavor": "In the post-reset lattice, Demonic Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -34723,7 +34776,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 79,
+      "mana_cost": 79
     },
     "flavor": "In the post-reset lattice, Celestial Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, damage increases by 1d6 per tier above base. At S-rank, the spell gains a secondary effect based on its element.",
@@ -34766,7 +34819,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 81,
+      "mana_cost": 81
     },
     "flavor": "In the post-reset lattice, Divine Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the barrier absorbs an additional 1d8 damage per tier above base and extends its duration.",
@@ -34809,7 +34862,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 71,
+      "mana_cost": 71
     },
     "flavor": "In the post-reset lattice, Arcane Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, the effect's duration doubles and its area increases by 5 feet per tier above base.",
@@ -34851,7 +34904,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 35,
+      "mana_cost": 35
     },
     "flavor": "In the post-reset lattice, Infernal Storm is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus.",
     "higher_levels": "When cast at a higher tier, healing increases by 1d8 per tier above base. At A-rank and above, also removes one additional condition.",
@@ -34897,7 +34950,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 150,
+      "mana_cost": 150
     },
     "flavor": "In the post-reset lattice, Eternal Shadow Convergence is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus."
   },
@@ -34938,7 +34991,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 200,
+      "mana_cost": 200
     },
     "flavor": "In the post-reset lattice, Void Reality Distortion is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus."
   },
@@ -34978,7 +35031,7 @@ export const spells = [
       }
     },
     "limitations": {
-      "mana_cost": 100,
+      "mana_cost": 100
     },
     "flavor": "In the post-reset lattice, Supreme Abyssal Ascension is a repeatable protocol: precise inputs, predictable outcomes, and a price paid in focus."
   }

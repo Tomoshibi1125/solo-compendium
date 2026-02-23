@@ -1,15 +1,16 @@
 import { useMemo, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { CheckCircle2, Loader2 } from 'lucide-react';
-import { SystemWindow } from '@/components/ui/SystemWindow';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
+import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
 import { formatMonarchVernacular, MONARCH_LABEL } from '@/lib/vernacular';
 import { getMaxPowerLevelForJobAtLevel } from '@/lib/characterCreation';
 import type { AbilityScore } from '@/types/system-rules';
+import type { FeatureModifier } from '@/hooks/useCharacterFeatures';
 
 type ChoiceGroupRow = {
   id: string;
@@ -107,11 +108,11 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
         const path = characterPath || '';
         const maxPowerLevel = getMaxPowerLevelForJobAtLevel(characterJob, characterLevel ?? 1);
 
-        const regentList = regentNames.map((name) => `"${name.replace(/\"/g, '')}"`).join(',');
+        const regentList = regentNames.map((name) => `"${String(name).replace(/\"/g, '')}"`).join(',');
         const regentFilter = regentList ? `regent_names.ov.{${regentList}}` : '';
         const orParts = [
-          `job_names.cs.{"${job.replace(/\"/g, '')}"}`,
-          path ? `path_names.cs.{"${path.replace(/\"/g, '')}"}` : '',
+          `job_names.cs.{"${String(job).replace(/\"/g, '')}"}`,
+          path ? `path_names.cs.{"${String(path).replace(/\"/g, '')}"}` : '',
           regentFilter,
         ].filter(Boolean);
 
@@ -305,10 +306,12 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
           if (grant.type === 'feat' && typeof grant.name === 'string') {
             if (existingFeatureNames.has(grant.name)) continue;
 
+            const featName = grant.name;
+
             const { data: featRow } = await supabase
               .from('compendium_feats')
               .select('name, description, benefits')
-              .eq('name', grant.name)
+              .eq('name', featName)
               .maybeSingle();
 
             const featDescription =
@@ -326,17 +329,144 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
                 : featDescription
               : benefitsText || null;
 
+            const buildFeatModifiers = (benefitLines: string[]): FeatureModifier[] => {
+              const mods: FeatureModifier[] = [];
+
+              const push = (type: FeatureModifier['type'], value: number, target: string | null, source: string) => {
+                mods.push({ type, value, target: target ?? undefined, source });
+              };
+
+              for (const raw of benefitLines) {
+                const text = String(raw || '').trim();
+                if (!text) continue;
+                const lower = text.toLowerCase();
+
+                // Ability increases: "Increase STR or AGI by 1", "Increase any ability score by 2"
+                const incAny = lower.match(/increase\s+(?:any\s+)?ability\s+score\s+by\s+(\d+)/i);
+                if (incAny?.[1]) {
+                  // Can't pick ability here; leave to existing ability_increase grants.
+                  continue;
+                }
+
+                const incSpecific = lower.match(/increase\s+(str|strength|agi|dex|dexterity|vitality|vit|con|constitution|int|intelligence|sense|wis|wisdom|pre|presence|cha|charisma)\s+by\s+(\d+)/i);
+                if (incSpecific?.[1] && incSpecific?.[2]) {
+                  const amount = parseInt(incSpecific[2], 10);
+                  const keyRaw = incSpecific[1];
+                  const toAbility: Record<string, AbilityScore> = {
+                    str: 'STR', strength: 'STR',
+                    agi: 'AGI', dex: 'AGI', dexterity: 'AGI', agility: 'AGI',
+                    vit: 'VIT', vitality: 'VIT', con: 'VIT', constitution: 'VIT',
+                    int: 'INT', intelligence: 'INT',
+                    sense: 'SENSE', wis: 'SENSE', wisdom: 'SENSE',
+                    pre: 'PRE', presence: 'PRE', cha: 'PRE', charisma: 'PRE',
+                  };
+                  const ability = toAbility[keyRaw];
+                  if (ability && Number.isFinite(amount) && amount !== 0) {
+                    push('ability', amount, ability, featName);
+                    continue;
+                  }
+                }
+
+                // Flat numeric bonuses
+                const speed = lower.match(/speed\s+(?:increases|increase|bonus)\s+by\s+(\d+)\s*(?:ft|feet)?/i);
+                if (speed?.[1]) {
+                  push('speed', parseInt(speed[1], 10), null, featName);
+                  continue;
+                }
+
+                const ac = lower.match(/\+\s*(\d+)\s*(?:bonus\s+)?to\s+ac/i);
+                if (ac?.[1]) {
+                  push('ac', parseInt(ac[1], 10), null, featName);
+                  continue;
+                }
+
+                const initiative = lower.match(/\+\s*(\d+)\s*(?:bonus\s+)?to\s+initiative/i);
+                if (initiative?.[1]) {
+                  push('initiative', parseInt(initiative[1], 10), null, featName);
+                  continue;
+                }
+
+                const hpPerLevel = lower.match(/hp\s+maximum\s+increases\s+by\s+(\d+)\s+per\s+level/i);
+                if (hpPerLevel?.[1]) {
+                  // We don't know character level here reliably; handled elsewhere.
+                  continue;
+                }
+
+                const hpFlat = lower.match(/(?:max\s+)?hp\s+maximum\s+increases\s+by\s+(\d+)/i);
+                if (hpFlat?.[1]) {
+                  push('hp-max', parseInt(hpFlat[1], 10), null, featName);
+                  continue;
+                }
+
+                // Skill/save bonuses: "+1 to Constitution saving throws", "+2 to Investigation"
+                const saveBonus = lower.match(/\+\s*(\d+)\s+to\s+([a-z]+)\s+saving\s+throws?/i);
+                if (saveBonus?.[1] && saveBonus?.[2]) {
+                  const amount = parseInt(saveBonus[1], 10);
+                  const key = saveBonus[2].trim();
+                  const toAbility: Record<string, AbilityScore> = {
+                    str: 'STR', strength: 'STR',
+                    agi: 'AGI', dex: 'AGI', dexterity: 'AGI', agility: 'AGI',
+                    vit: 'VIT', vitality: 'VIT', con: 'VIT', constitution: 'VIT',
+                    int: 'INT', intelligence: 'INT',
+                    sense: 'SENSE', wis: 'SENSE', wisdom: 'SENSE',
+                    pre: 'PRE', presence: 'PRE', cha: 'PRE', charisma: 'PRE',
+                  };
+                  const ability = toAbility[key];
+                  if (ability) {
+                    push('save', amount, ability, featName);
+                    continue;
+                  }
+                }
+
+                const skillBonus = lower.match(/\+\s*(\d+)\s+to\s+([a-z][a-z\s']+)/i);
+                if (skillBonus?.[1] && skillBonus?.[2]) {
+                  const amount = parseInt(skillBonus[1], 10);
+                  const rawSkill = skillBonus[2].trim();
+                  if (!rawSkill.includes('saving') && rawSkill !== 'ac' && rawSkill !== 'initiative') {
+                    const canonical = rawSkill
+                      .split(/\s+/)
+                      .map((w) => (w.length ? w[0].toUpperCase() + w.slice(1) : w))
+                      .join(' ')
+                      .replaceAll("'S", "'s");
+                    push('skill', amount, canonical, featName);
+                    continue;
+                  }
+                }
+
+                // Advantage patterns
+                if (lower.includes('advantage on initiative')) {
+                  push('advantage', 0, 'initiative', featName);
+                  continue;
+                }
+
+                const advSave = lower.match(/advantage\s+on\s+saves?\s+against\s+([a-z\s]+)/i);
+                if (advSave?.[1]) {
+                  const key = advSave[1].trim();
+                  // e.g. "poison" -> save:poison (consumed by roll advantage resolver)
+                  if (key.length > 0) {
+                    push('advantage', 0, `save:${key}`, featName);
+                    continue;
+                  }
+                }
+              }
+
+              return mods;
+            };
+
+            const featModifiers = buildFeatModifiers(benefits);
+
             await supabase.from('character_features').insert({
               character_id: characterId,
-              name: grant.name,
+              name: featName,
               source: `Feat (Choice: ${group.choice_key})`,
               level_acquired: (character?.level as number) || 1,
               description: fullDescription,
               action_type: null,
               is_active: true,
+              modifiers: featModifiers.length > 0 ? (featModifiers as any) : null,
             });
 
-            existingFeatureNames.add(grant.name);
+            existingFeatureNames.add(featName);
           }
 
           if (grant.type === 'ability_increase') {

@@ -524,6 +524,7 @@ const CharacterSheet = () => {
     const customAcBonus = sumCustomModifiers(customModifiers, 'ac');
     const customSpeedBonus = sumCustomModifiers(customModifiers, 'speed');
     const customInitiativeBonus = sumCustomModifiers(customModifiers, 'initiative');
+    const customHpMaxBonus = sumCustomModifiers(customModifiers, 'hp-max');
 
     const calculatedStats = {
       ...modifiedBaseStats,
@@ -531,6 +532,7 @@ const CharacterSheet = () => {
       savingThrows: finalSavingThrows,
       armorClass: runeBonuses.ac + customAcBonus,
       speed: Math.max(0, finalSpeed + customSpeedBonus),
+      hpMax: Math.max(1, (character.hp_max ?? 1) + customHpMaxBonus),
       encumbrance,
     };
 

@@ -263,6 +263,27 @@ async function insertCharacterFeature(
   });
 }
 
+async function updateCharacterFeatureModifiersByName(
+  characterId: string,
+  name: string,
+  modifiers: FeatureModifier[] | null,
+): Promise<void> {
+  if (isLocalCharacterId(characterId)) {
+    const { listLocalFeatures, updateLocalFeature } = await import('@/lib/guestStore');
+    const local = listLocalFeatures(characterId);
+    const existing = local.find((f: { name?: string | null; id: string }) => f.name === name);
+    if (!existing) return;
+    updateLocalFeature(existing.id, { modifiers: modifiers as any });
+    return;
+  }
+
+  await supabase
+    .from('character_features')
+    .update({ modifiers: modifiers as any })
+    .eq('character_id', characterId)
+    .eq('name', name);
+}
+
 type FeatureModifier = {
   type: string;
   value: number;
@@ -290,6 +311,35 @@ function getJobTraitModifiers(jobName: string, traitName: string): FeatureModifi
   if (job === 'destroyer' && trait === 'combat telemetry') {
     // Active scan feature: modeled as advantage on Investigation checks when toggled on.
     return [{ type: 'advantage', value: 0, target: 'skill:investigation', source: traitName }];
+  }
+
+  return [];
+}
+
+function getJobAwakeningFeatureModifiers(jobName: string, featureName: string, level: number): FeatureModifier[] {
+  const job = jobName.trim().toLowerCase();
+  const feature = featureName.trim().toLowerCase();
+
+  if (job === 'berserker' && feature === 'mana-dense physiology') {
+    // HP maximum increases by 1 per Berserker level (apply current level's worth).
+    return [{ type: 'hp-max', value: level, target: null as any, source: featureName }];
+  }
+
+  if (job === 'berserker' && feature === 'toxin purge') {
+    return [{ type: 'advantage', value: 0, target: 'save:poison', source: featureName }];
+  }
+
+  if (job === 'berserker' && feature === 'feedback frenzy') {
+    return [{ type: 'disadvantage', value: 0, target: 'ability_checks', source: featureName }];
+  }
+
+  if (job === 'destroyer' && feature === 'weapon neural bond') {
+    return [
+      { type: 'attack', value: 1, target: 'melee', source: featureName },
+      { type: 'damage', value: 1, target: 'melee', source: featureName },
+      { type: 'attack', value: 1, target: 'ranged', source: featureName },
+      { type: 'damage', value: 1, target: 'ranged', source: featureName },
+    ];
   }
 
   return [];
@@ -340,15 +390,24 @@ export async function addJobAwakeningBenefitsForLevel(
 
   const existingNames = await getExistingFeatureNames(characterId);
 
+  // Handle scaling awakening features that need to update with character level.
+  if (job.name.trim().toLowerCase() === 'berserker' && existingNames.has('Mana-Dense Physiology')) {
+    const next = getJobAwakeningFeatureModifiers(job.name, 'Mana-Dense Physiology', level);
+    await updateCharacterFeatureModifiersByName(characterId, 'Mana-Dense Physiology', next.length > 0 ? next : null);
+  }
+
   const awakeningAtLevel = (job.awakeningFeatures || []).filter((f) => f.level === level);
   for (const feature of awakeningAtLevel) {
     if (existingNames.has(feature.name)) continue;
+
+    const modifiers = getJobAwakeningFeatureModifiers(job.name, feature.name, level);
     await insertCharacterFeature(characterId, {
       name: feature.name,
       source: `Job Awakening: ${job.name}`,
       level_acquired: level,
       description: feature.description,
       is_active: true,
+      modifiers: modifiers.length > 0 ? (modifiers as any) : null,
     });
   }
 
