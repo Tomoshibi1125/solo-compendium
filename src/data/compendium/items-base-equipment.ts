@@ -18,6 +18,7 @@ function baseItem(
     weapon_type?: string;
     simple_properties?: string[];
     range?: string;
+    effects?: Item['effects'];
   }
 ): Item {
   const isWeapon = partial.item_type === 'weapon';
@@ -52,6 +53,7 @@ function baseItem(
     image: '',
     weight: partial.weight,
     value: partial.value,
+    effects: partial.effects,
     properties,
   } as Item;
 }
@@ -525,6 +527,69 @@ const musicalInstrument = baseItem({
   item_type: 'tool', weight: 3, value: 25,
 });
 
+const highEndStreamingLaptop = baseItem({
+  id: 'base-tool-streaming-laptop', name: 'High-End Streaming Laptop',
+  description: 'A modern high-performance laptop with camera, mic, and editing suite.',
+  item_type: 'tool', weight: 4, value: 1500,
+  effects: { passive: ['+2 to Investigation', '+1 to History'] },
+});
+
+const ringLight = baseItem({
+  id: 'base-tool-ring-light', name: 'Ring Light',
+  description: 'A portable LED ring light for clean, flattering illumination.',
+  item_type: 'tool', weight: 2, value: 60,
+  effects: { passive: ['+2 to Performance', '+1 to Persuasion'] },
+});
+
+const portableCamera = baseItem({
+  id: 'base-tool-portable-camera', name: 'Portable Camera',
+  description: 'A compact camera for documentation, interviews, and evidence gathering.',
+  item_type: 'tool', weight: 1, value: 400,
+  effects: { passive: ['+2 to Investigation'] },
+});
+
+const portableWifiHotspot = baseItem({
+  id: 'base-tool-wifi-hotspot', name: 'Portable Wi-Fi Hotspot',
+  description: 'A pocket hotspot that provides connectivity in the field when signals exist.',
+  item_type: 'tool', weight: 0.5, value: 120,
+  effects: { passive: ['+2 to Investigation'] },
+});
+
+const burnerPhone = baseItem({
+  id: 'base-tool-burner-phone', name: 'Burner Phone',
+  description: 'A disposable phone used for secure calls and avoiding traceability.',
+  item_type: 'tool', weight: 0.5, value: 50,
+  effects: { passive: ['+2 to Deception'] },
+});
+
+const customBuiltLaptop = baseItem({
+  id: 'base-tool-custom-laptop', name: 'Custom-Built Laptop',
+  description: 'A hardened laptop with encrypted drives and specialized tooling.',
+  item_type: 'tool', weight: 5, value: 2000,
+  effects: { passive: ['+2 to Investigation', '+2 to Arcana'] },
+});
+
+const hackingTools = baseItem({
+  id: 'base-tool-hacking-tools', name: 'Hacking Tools',
+  description: 'Adapters, cables, lockout keys, and diagnostic hardware for systems intrusion.',
+  item_type: 'tool', weight: 3, value: 250,
+  effects: { passive: ['+2 to Investigation', '+1 to Sleight of Hand'] },
+});
+
+const usbDriveCollection = baseItem({
+  id: 'base-tool-usb-drives', name: 'USB Drive Collection',
+  description: 'A set of drives containing cached logs, maps, and encrypted data dumps.',
+  item_type: 'misc', weight: 0.2, value: 25,
+  effects: { passive: ['+1 to Investigation'] },
+});
+
+const smartphoneCamera = baseItem({
+  id: 'base-tool-smartphone-camera', name: 'Smartphone (High-End Camera)',
+  description: 'A modern smartphone with a high-end camera and editing apps.',
+  item_type: 'tool', weight: 0.4, value: 900,
+  effects: { passive: ['+1 to Performance', '+1 to Deception'] },
+});
+
 export const baseEquipment: Item[] = [
   // Armor
   padded, leather, studdedLeather, hide, chainShirt, scaleMail, breastplate, halfPlate,
@@ -546,4 +611,6 @@ export const baseEquipment: Item[] = [
   arcaneFocus, componentPouch, primalFocus, systemFocus, grimoire,
   // Tools
   thievesTools, tinkerTools, musicalInstrument,
+  highEndStreamingLaptop, ringLight, portableCamera, portableWifiHotspot,
+  burnerPhone, customBuiltLaptop, hackingTools, usbDriveCollection, smartphoneCamera,
 ];

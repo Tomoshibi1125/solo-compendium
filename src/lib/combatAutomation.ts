@@ -116,6 +116,21 @@ function getAbilityModifier(score: number): number {
   return Math.floor((score - 10) / 2);
 }
 
+function getWeaponAbilityModifier(character: Character, weapon: Equipment): number {
+  const strMod = getAbilityModifier(character.abilities.STR);
+  const agiMod = getAbilityModifier(character.abilities.AGI);
+
+  const props = (weapon.properties || []).map((p) => p.toLowerCase());
+
+  const isFinesse = props.includes('finesse');
+  const isRanged = props.some((p) => p.startsWith('range')) || props.includes('ammunition');
+  const isThrown = props.includes('thrown');
+
+  if (isRanged && !isThrown) return agiMod;
+  if (isFinesse) return Math.max(strMod, agiMod);
+  return strMod;
+}
+
 /**
  * Calculate attack bonus for a weapon
  */
@@ -126,15 +141,7 @@ export function calculateAttackBonus(
 ): number {
   let bonus = 0;
   
-  // Add ability modifier (STR for melee, DEX for ranged/finesse)
-  const isFinesse = weapon.properties?.includes('Finesse');
-  const isRanged = weapon.properties?.includes('Range') || weapon.properties?.includes('Ammunition');
-  
-  if (isRanged || isFinesse) {
-    bonus += getAbilityModifier(character.abilities.AGI);
-  } else {
-    bonus += getAbilityModifier(character.abilities.STR);
-  }
+  bonus += getWeaponAbilityModifier(character, weapon);
   
   // Add proficiency bonus if proficient
   if (isProficient) {
@@ -208,22 +215,7 @@ export function calculateWeaponDamage(
   // Roll base damage
   const damageRoll = rollCritical(weapon.damage, isCritical);
   
-  // Add ability modifier to damage (unless thrown with finesse/ranged rules)
-  let abilityMod = 0;
-  const isFinesse = weapon.properties?.includes('Finesse');
-  const isRanged = weapon.properties?.includes('Range') || weapon.properties?.includes('Ammunition');
-  const isThrown = weapon.properties?.includes('Thrown');
-  
-  if (!isRanged || (isThrown && isFinesse)) {
-    if (isFinesse) {
-      abilityMod = Math.max(
-        getAbilityModifier(character.abilities.STR),
-        getAbilityModifier(character.abilities.AGI)
-      );
-    } else if (!isRanged) {
-      abilityMod = getAbilityModifier(character.abilities.STR);
-    }
-  }
+  const abilityMod = getWeaponAbilityModifier(character, weapon);
   
   // Add magical bonus to damage
   const magicalBonus = weapon.magical_bonus || 0;

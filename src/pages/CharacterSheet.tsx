@@ -44,6 +44,7 @@ import { calculateCharacterStats, formatModifier } from '@/lib/characterCalculat
 import { getAvailableFavorOptions } from '@/lib/systemFavor';
 import { getAbilityModifier } from '@/types/system-rules';
 import { applyEquipmentModifiers } from '@/lib/equipmentModifiers';
+import { getUnarmoredDefenseBaseAC } from '@/lib/unarmoredDefense';
 import { applyRuneBonuses } from '@/lib/runeAutomation';
 import { getActiveConditionEffects, getAllConditions } from '@/lib/conditions';
 import { calculateEncumbrance, calculateTotalWeight, calculateCarryingCapacity } from '@/lib/encumbrance';
@@ -394,9 +395,22 @@ const CharacterSheet = () => {
       speed: character.speed,
     });
 
+    const equippedArmor = (equipment || []).some((item) => {
+      const props = (item.properties || []).map((p) => p.toLowerCase());
+      if (!item.is_equipped) return false;
+      if (item.requires_attunement && !item.is_attuned) return false;
+      return props.includes('light') || props.includes('medium') || props.includes('heavy');
+    });
+
+    const unarmoredDefenseBase = equippedArmor
+      ? null
+      : getUnarmoredDefenseBaseAC(character.job, character.abilities);
+
+    const baseACForEquipment = unarmoredDefenseBase ?? baseStats.armorClass;
+
     // Apply equipment modifiers
     const equipmentMods = applyEquipmentModifiers(
-      baseStats.armorClass,
+      baseACForEquipment,
       character.speed,
       character.abilities,
       equipment?.map(item => ({
@@ -536,8 +550,10 @@ const CharacterSheet = () => {
         character.skill_expertise || [],
         calculatedStats.proficiencyBonus
       );
+      const equipmentSkillBonus =
+        (equipmentMods.skillBonuses?.[skill.name] || 0) + (equipmentMods.skillBonuses?.['*'] || 0);
       const customSkillBonus = sumCustomModifiers(customModifiers, 'skill', skill.name);
-      const modifier = baseModifier + customSkillBonus;
+      const modifier = baseModifier + equipmentSkillBonus + customSkillBonus;
       acc[skill.name] = {
         modifier,
         passive: 10 + modifier,

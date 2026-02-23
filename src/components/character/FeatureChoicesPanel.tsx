@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { formatMonarchVernacular, MONARCH_LABEL } from '@/lib/vernacular';
+import { getMaxPowerLevelForJobAtLevel } from '@/lib/characterCreation';
 import type { AbilityScore } from '@/types/system-rules';
 
 type ChoiceGroupRow = {
@@ -104,6 +105,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
       {
         const job = characterJob;
         const path = characterPath || '';
+        const maxPowerLevel = getMaxPowerLevelForJobAtLevel(characterJob, characterLevel ?? 1);
 
         const regentList = regentNames.map((name) => `"${name.replace(/\"/g, '')}"`).join(',');
         const regentFilter = regentList ? `regent_names.ov.{${regentList}}` : '';
@@ -116,7 +118,8 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
         const { data: eligibleRows, error: eligibleError } = await (supabase as any)
           .from('compendium_powers')
           .select('name')
-          .or(orParts.join(','));
+          .or(orParts.join(','))
+          .lte('power_level', maxPowerLevel);
 
         if (eligibleError) throw eligibleError;
         for (const row of (eligibleRows || []) as Array<{ name: string }>) {

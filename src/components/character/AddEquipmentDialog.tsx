@@ -65,7 +65,46 @@ export function AddEquipmentDialog({
         name: item.name,
         description: item.description,
         equipment_type: item.equipment_type || item.item_type || 'gear',
-        properties: Array.isArray(item.properties) ? item.properties : [],
+        properties: (() => {
+          if (Array.isArray(item.properties)) return item.properties;
+          const props: string[] = [];
+
+          const passiveEffects = (item.effects as any)?.passive;
+          if (Array.isArray(passiveEffects)) {
+            for (const line of passiveEffects) {
+              if (typeof line === 'string' && line.trim().length > 0) {
+                props.push(line.trim());
+              }
+            }
+          }
+
+          const weapon = (item.properties as any)?.weapon;
+          if (weapon) {
+            if (typeof weapon.damage === 'string' && typeof weapon.damageType === 'string') {
+              props.push(`${weapon.damage} ${weapon.damageType}`);
+            }
+            if (weapon.finesse === true) props.push('finesse');
+          }
+
+          const armor = (item.properties as any)?.armor;
+          if (armor) {
+            if (typeof armor.baseAC === 'number') props.push(`AC ${armor.baseAC}`);
+            if (typeof armor.type === 'string') props.push(armor.type);
+          }
+
+          const magical = (item.properties as any)?.magical;
+          if (magical?.bonus?.armorClass && typeof magical.bonus.armorClass === 'number') {
+            props.push(`${magical.bonus.armorClass >= 0 ? '+' : ''}${magical.bonus.armorClass} AC`);
+          }
+          if (magical?.bonus?.attack && typeof magical.bonus.attack === 'number' && magical.bonus.attack !== 0) {
+            props.push(`${magical.bonus.attack >= 0 ? '+' : ''}${magical.bonus.attack} to attack`);
+          }
+          if (magical?.bonus?.damage && typeof magical.bonus.damage === 'number' && magical.bonus.damage !== 0) {
+            props.push(`${magical.bonus.damage >= 0 ? '+' : ''}${magical.bonus.damage} to damage`);
+          }
+
+          return props;
+        })(),
         weight: item.weight ?? null,
         source_book: item.source_book ?? null,
         rarity: item.rarity ?? null,

@@ -17,6 +17,37 @@ export interface EquipmentModifiers {
   skills?: Record<string, number>;
 }
 
+function getAbilityModifier(score: number): number {
+  return Math.floor((score - 10) / 2);
+}
+
+function getDexCapFromArmorType(armorType: string | undefined): number | null {
+  const t = (armorType || '').trim().toLowerCase();
+  if (t === 'light') return null;
+  if (t === 'medium') return 2;
+  if (t === 'heavy') return 0;
+  return null;
+}
+
+function isArmorItem(properties: string[]): boolean {
+  return properties.some((p) => {
+    const lower = p.toLowerCase();
+    return lower === 'light' || lower === 'medium' || lower === 'heavy' || lower === 'shield';
+  });
+}
+
+function parseArmorBaseAc(properties: string[]): number | null {
+  for (const prop of properties) {
+    const lowerProp = prop.toLowerCase();
+    const acMatch = lowerProp.match(/(?:ac\s+(\d+))/i);
+    if (acMatch?.[1]) {
+      const n = parseInt(acMatch[1], 10);
+      if (!Number.isNaN(n) && n > 0) return n;
+    }
+  }
+  return null;
+}
+
 /**
  * Parse equipment properties into modifiers
  */
@@ -105,6 +136,38 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
       }
     }
 
+    // Per-save modifiers: "+1 to STR saves", "+2 to dexterity saving throws"
+    const saveAliases: Array<[string, string]> = [
+      ['strength', 'STR'],
+      ['str', 'STR'],
+      ['dexterity', 'AGI'],
+      ['dex', 'AGI'],
+      ['agility', 'AGI'],
+      ['agi', 'AGI'],
+      ['constitution', 'VIT'],
+      ['con', 'VIT'],
+      ['vitality', 'VIT'],
+      ['vit', 'VIT'],
+      ['intelligence', 'INT'],
+      ['int', 'INT'],
+      ['wisdom', 'SENSE'],
+      ['wis', 'SENSE'],
+      ['sense', 'SENSE'],
+      ['charisma', 'PRE'],
+      ['cha', 'PRE'],
+      ['presence', 'PRE'],
+      ['pre', 'PRE'],
+    ];
+    for (const [alias, key] of saveAliases) {
+      const re = new RegExp(`(\\+?\\d+)\\s+to\\s+${alias}\\s+(?:saving\\s+)?throws?`, 'i');
+      const m = lowerProp.match(re);
+      if (m?.[1]) {
+        const value = parseInt(m[1] || '0', 10);
+        if (!modifiers.savingThrows) modifiers.savingThrows = {};
+        modifiers.savingThrows[key] = (modifiers.savingThrows[key] || 0) + value;
+      }
+    }
+
     // Skill modifiers: "+2 to Stealth", "+1 to all skills"
     const skillMatch = lowerProp.match(/(\+?\d+)\s+to\s+(?:all\s+)?skills?/i);
     if (skillMatch) {
@@ -113,6 +176,26 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
       if (lowerProp.includes('all')) {
         // Would need skill list - for now, just note it
         modifiers.skills['*'] = value;
+      }
+    }
+
+    // Per-skill modifiers: "+2 to Investigation", "+1 to Sleight of Hand"
+    // We store exact canonical skill name keys (title-cased) and consume them in CharacterSheet.
+    const specificSkillMatch = lowerProp.match(/(\+?\d+)\s+to\s+([a-z][a-z\s']+)/i);
+    if (specificSkillMatch?.[1] && specificSkillMatch?.[2]) {
+      const value = parseInt(specificSkillMatch[1] || '0', 10);
+      const raw = specificSkillMatch[2].trim();
+
+      // Guard: ignore cases we already handled above
+      if (!raw.includes('saving') && raw !== 'attack' && raw !== 'damage' && raw !== 'skills' && raw !== 'skill') {
+        const canonical = raw
+          .split(/\s+/)
+          .map((w) => (w.length ? w[0].toUpperCase() + w.slice(1) : w))
+          .join(' ')
+          .replaceAll("'S", "'s");
+
+        if (!modifiers.skills) modifiers.skills = {};
+        modifiers.skills[canonical] = (modifiers.skills[canonical] || 0) + value;
       }
     }
   });
@@ -158,6 +241,8 @@ export function applyEquipmentModifiers(
   abilityModifiers: Record<string, number>;
   attackBonus: number;
   damageBonus: number;
+  savingThrowBonuses: Record<string, number>;
+  skillBonuses: Record<string, number>;
 } {
   const equipped = equipment.filter(
     e => e.is_equipped && (!e.requires_attunement || e.is_attuned)
@@ -167,10 +252,56 @@ export function applyEquipmentModifiers(
     ...equipped.map(e => parseModifiers(e.properties || []))
   );
 
-  // Apply AC modifier (if set, use it; otherwise add to base)
-  const armorClass = allModifiers.ac !== undefined 
-    ? (allModifiers.ac > 10 ? allModifiers.ac : baseAC + (allModifiers.ac || 0))
-    : baseAC;
+  const dexMod = getAbilityModifier(baseAbilities.AGI ?? 10);
+  const equippedArmor = equipped
+    .map((e) => e.properties || [])
+    .filter((props) => isArmorItem(props) && !props.some((p) => p.toLowerCase() === 'shield'));
+  const equippedShield = equipped
+    .map((e) => e.properties || [])
+    .find((props) => props.some((p) => p.toLowerCase() === 'shield'));
+
+  let armorClass = baseAC;
+
+  // If armor is equipped, compute 5e AC from its base + Dex (with cap by armor type).
+  // Keep unarmored baseline (10 + Dex) when no armor is equipped.
+  if (equippedArmor.length > 0) {
+    // If multiple armor items are equipped, take the highest resulting AC.
+    let best = Number.NEGATIVE_INFINITY;
+    for (const props of equippedArmor) {
+      const baseArmorAc = parseArmorBaseAc(props);
+      if (baseArmorAc === null) continue;
+
+      const armorType = props.find((p) => {
+        const t = p.toLowerCase();
+        return t === 'light' || t === 'medium' || t === 'heavy';
+      });
+      const dexCap = getDexCapFromArmorType(armorType);
+      const appliedDex = dexCap === null ? dexMod : Math.min(dexMod, dexCap);
+      best = Math.max(best, baseArmorAc + appliedDex);
+    }
+
+    // If we couldn't parse any equipped armor into a base AC, fall back to legacy behavior.
+    if (best !== Number.NEGATIVE_INFINITY) {
+      armorClass = best;
+    }
+  }
+
+  // Shields are additive (+2 AC via properties parsing). If the shield wasn't represented
+  // by a parsed AC modifier for any reason, this still works via allModifiers.ac.
+  if (equippedShield) {
+    // Nothing needed here; shield AC is handled below via the legacy modifier path.
+  }
+
+  // Apply remaining AC modifiers (e.g., shield +2, magic +1 AC, etc.).
+  // If parseModifiers found a flat AC setting (e.g. "AC 15"), treat it as a base override
+  // ONLY when no armor was equipped (keeps 5e armor logic authoritative when armor is present).
+  if (allModifiers.ac !== undefined) {
+    if (equippedArmor.length === 0 && allModifiers.ac > 10) {
+      armorClass = allModifiers.ac;
+    } else if (allModifiers.ac <= 10) {
+      armorClass = armorClass + (allModifiers.ac || 0);
+    }
+  }
 
   // Apply speed modifier
   const speed = baseSpeed + (allModifiers.speed || 0);
@@ -187,5 +318,7 @@ export function applyEquipmentModifiers(
     abilityModifiers,
     attackBonus: allModifiers.attack || 0,
     damageBonus: allModifiers.damage || 0,
+    savingThrowBonuses: allModifiers.savingThrows || {},
+    skillBonuses: allModifiers.skills || {},
   };
 }

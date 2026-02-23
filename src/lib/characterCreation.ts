@@ -19,15 +19,64 @@ import {
 import { calculateFeatureUses } from '@/lib/automation';
 import { jobs as staticJobs } from '@/data/compendium/jobs';
 import { items as staticItems } from '@/data/compendium/items';
+import { backgrounds as staticBackgrounds } from '@/data/compendium/backgrounds';
 
 type Job = Database['public']['Tables']['compendium_jobs']['Row'];
 type Background = Database['public']['Tables']['compendium_backgrounds']['Row'];
 
 type StaticJob = (typeof staticJobs)[number];
+type StaticBackground = (typeof staticBackgrounds)[number];
+
+function normalizeItemLookupName(value: string): string {
+  return value
+    .trim()
+    .replace(/^a\s+/i, '')
+    .replace(/^an\s+/i, '')
+    .replace(/^a\s+set\s+of\s+/i, '')
+    .replace(/^set\s+of\s+/i, '')
+    .replace(/^a\s+pair\s+of\s+/i, '')
+    .replace(/^pair\s+of\s+/i, '')
+    .trim()
+    .toLowerCase();
+}
 
 function findStaticItemByName(itemName: string): (typeof staticItems)[number] | null {
-  const normalized = itemName.trim().toLowerCase();
-  return staticItems.find((i) => i.name.trim().toLowerCase() === normalized) ?? null;
+  const normalized = normalizeItemLookupName(itemName);
+
+  // Exact match first
+  const exact = staticItems.find((i) => normalizeItemLookupName(i.name) === normalized) ?? null;
+  if (exact) return exact;
+
+  // Fuzzy fallback: background equipment strings often include adjectives ("portable", "high-end", etc.)
+  // so we do a conservative contains check.
+  return (
+    staticItems.find((i) => {
+      const n = normalizeItemLookupName(i.name);
+      return normalized.includes(n) || n.includes(normalized);
+    }) ?? null
+  );
+}
+
+function findStaticBackgroundByName(backgroundName: string | null | undefined): StaticBackground | null {
+  if (!backgroundName) return null;
+  const normalized = backgroundName.trim().toLowerCase();
+  return staticBackgrounds.find((b) => b.name.trim().toLowerCase() === normalized) ?? null;
+}
+
+function splitCompoundEquipmentEntry(entry: string): string[] {
+  const trimmed = entry.trim();
+  if (!trimmed) return [];
+
+  // Handle common compound phrasing from modern backgrounds.
+  // Example: "A ring light and portable camera"
+  if (trimmed.toLowerCase().includes(' and ')) {
+    return trimmed
+      .split(/\s+and\s+/i)
+      .map((s) => s.trim())
+      .filter(Boolean);
+  }
+
+  return [trimmed];
 }
 
 function deriveItemType(item: (typeof staticItems)[number]): string {
@@ -78,6 +127,15 @@ function buildItemProperties(item: (typeof staticItems)[number]): string[] {
     props.push(...item.simple_properties);
   }
   if (item.range && item.range !== 'Melee') props.push(`Range ${item.range}`);
+
+  const passive = (item.effects as any)?.passive;
+  if (Array.isArray(passive)) {
+    for (const line of passive) {
+      if (typeof line === 'string' && line.trim().length > 0) {
+        props.push(line.trim());
+      }
+    }
+  }
 
   return props;
 }
@@ -515,7 +573,7 @@ export async function addStartingEquipment(
     }
   }
 
-  // Add background starting equipment
+  // Add background starting equipment (DB field)
   if (background?.starting_equipment) {
     const equipmentItems = background.starting_equipment.split(',').map(e => e.trim());
     

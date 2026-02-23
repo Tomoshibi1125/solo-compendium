@@ -8,6 +8,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { getProficiencyBonus, getSystemFavorDie } from '@/types/system-rules';
 import { error as logError } from '@/lib/logger';
 import { applyEquipmentModifiers } from '@/lib/equipmentModifiers';
+import { getUnarmoredDefenseBaseAC } from '@/lib/unarmoredDefense';
 
 function getSystemFavorMax(level: number): number {
   if (level <= 4) return 3;
@@ -183,7 +184,7 @@ export async function autoUpdateFeatureUses(characterId: string): Promise<void> 
 export async function autoApplyEquipmentModifiers(characterId: string): Promise<void> {
   const { data: character } = await supabase
     .from('characters')
-    .select('id, armor_class, speed, abilities:character_abilities(*)')
+    .select('id, job, armor_class, speed, abilities:character_abilities(*)')
     .eq('id', characterId)
     .single();
 
@@ -207,8 +208,20 @@ export async function autoApplyEquipmentModifiers(characterId: string): Promise<
 
   const agiScore = abilities['AGI'] ?? 10;
   const agiMod = Math.floor((agiScore - 10) / 2);
-  const baseAC = 10 + agiMod;
+  const defaultBaseAC = 10 + agiMod;
   const baseSpeed = 30; // default 5e speed
+
+  const equippedArmor = equipmentRows.some((row) => {
+    const props = ((row.properties as string[] | null) || []).map((p) => p.toLowerCase());
+    const isEquipped = row.is_equipped ?? false;
+    const isAttunedOk = !(row.requires_attunement ?? false) || (row.is_attuned ?? false);
+    if (!isEquipped || !isAttunedOk) return false;
+    return props.includes('light') || props.includes('medium') || props.includes('heavy');
+  });
+
+  const baseAC = equippedArmor
+    ? defaultBaseAC
+    : (getUnarmoredDefenseBaseAC((character as any).job ?? null, abilities) ?? defaultBaseAC);
 
   const result = applyEquipmentModifiers(
     baseAC,

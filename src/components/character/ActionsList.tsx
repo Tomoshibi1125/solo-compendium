@@ -65,6 +65,17 @@ export function ActionsList({ characterId }: { characterId: string }) {
   const strMod = getAbilityModifier(finalAbilities.STR);
   const agiMod = getAbilityModifier(finalAbilities.AGI);
 
+  const getWeaponAbilityMod = (weapon: { properties?: string[] | null }) => {
+    const props = (weapon.properties || []).map((p) => p.toLowerCase());
+    const isFinesse = props.includes('finesse');
+    const isRanged = props.some((p) => p.startsWith('range')) || props.includes('ammunition');
+    const isThrown = props.includes('thrown');
+
+    if (isRanged && !isThrown) return agiMod;
+    if (isFinesse) return Math.max(strMod, agiMod);
+    return strMod;
+  };
+
   // Get equipped weapons
   const weapons = equipment.filter(
     e => e.is_equipped && (e.item_type === 'weapon' || e.item_type?.includes('weapon'))
@@ -75,9 +86,9 @@ export function ActionsList({ characterId }: { characterId: string }) {
     const modifiers = parseModifiers(weapon.properties || []);
     const attackMod = modifiers.attack || 0;
     
-    // Determine if weapon uses STR or AGI (default to STR for melee, AGI for ranged)
-    const isRanged = weapon.item_type?.includes('ranged') || weapon.name.toLowerCase().includes('bow');
-    const abilityMod = isRanged ? agiMod : strMod;
+    const abilityMod = getWeaponAbilityMod(weapon);
+    const props = (weapon.properties || []).map((p) => p.toLowerCase());
+    const isRanged = props.some((p) => p.startsWith('range')) || props.includes('ammunition');
     const customAttackBonus = sumCustomModifiers(customModifiers, 'attack', isRanged ? 'ranged' : 'melee');
     const attackBonus = abilityMod + proficiencyBonus + attackMod + customAttackBonus;
 

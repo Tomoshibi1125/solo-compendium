@@ -10,6 +10,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { usePowers } from '@/hooks/usePowers';
@@ -31,6 +32,7 @@ export function AddPowerDialog({
   characterId: string;
 }) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [levelTab, setLevelTab] = useState<string>('all');
   const { addPower, removePower, powers: characterPowers } = usePowers(characterId);
   const { toast } = useToast();
   const { data: character } = useCharacter(characterId);
@@ -96,7 +98,7 @@ export function AddPowerDialog({
         .select('*')
         .or(orParts.join(','))
         .lte('power_level', maxPowerLevel)
-        .limit(20);
+        .limit(200);
 
       const trimmedQuery = searchQuery.trim();
       if (trimmedQuery) {
@@ -134,7 +136,7 @@ export function AddPowerDialog({
           }
           return true;
         })
-        .slice(0, 30);
+        .slice(0, 200);
 
       return filtered.map(spell => ({
         id: spell.id,
@@ -163,6 +165,25 @@ export function AddPowerDialog({
     },
     enabled: open && !!character?.job,
   });
+
+  const sortedPowers = useMemo(() => {
+    return [...powers].sort(
+      (a, b) => (a.power_level ?? 0) - (b.power_level ?? 0) || a.name.localeCompare(b.name)
+    );
+  }, [powers]);
+
+  const visiblePowers = useMemo(() => {
+    if (levelTab === 'all') return sortedPowers;
+    const wanted = parseInt(levelTab, 10);
+    if (Number.isNaN(wanted)) return sortedPowers;
+    return sortedPowers.filter((p) => (p.power_level ?? 0) === wanted);
+  }, [sortedPowers, levelTab]);
+
+  const availableLevels = useMemo(() => {
+    const set = new Set<number>();
+    for (const p of sortedPowers) set.add(p.power_level ?? 0);
+    return Array.from(set).sort((a, b) => a - b);
+  }, [sortedPowers]);
 
   const knownNonCantripCount = useMemo(
     () => characterPowers.filter((p) => (p.power_level ?? 0) > 0).length,
@@ -370,61 +391,79 @@ export function AddPowerDialog({
             />
           </div>
 
-          <div className="flex-1 overflow-y-auto space-y-2">
-            {isLoading ? (
-              <div className="flex items-center justify-center py-8">
-                <Loader2 className="w-6 h-6 animate-spin text-primary" />
-              </div>
-            ) : powers.length === 0 ? (
-              <div className="text-center py-8 text-muted-foreground">
-                {maxPowerLevel === 0
-                  ? 'This job has no spellcasting progression. Powers cannot be added.'
-                  : searchQuery
-                  ? 'No powers found matching your search.'
-                  : 'No powers available for this job at your current level.'}
-              </div>
-            ) : (
-              powers.map((power) => (
-                <div
-                  key={power.id}
-                  className="p-3 rounded-lg border bg-muted/30 hover:bg-muted/50 transition-colors"
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="font-heading font-semibold">
-                          {formatMonarchVernacular(power.name)}
-                        </span>
-                        {power.power_level > 0 && (
-                          <Badge variant="secondary" className="text-xs">
-                            Level {power.power_level}
-                          </Badge>
-                        )}
-                        {power.concentration && (
-                          <Badge variant="destructive" className="text-xs">Concentration</Badge>
-                        )}
-                      </div>
-                      {power.description && (
-                        <p className="text-xs text-muted-foreground line-clamp-2">
-                          {formatMonarchVernacular(power.description)}
-                        </p>
-                      )}
-                      <div className="flex flex-wrap gap-2 mt-1 text-xs text-muted-foreground">
-                        {power.casting_time && <span>{formatMonarchVernacular(power.casting_time)}</span>}
-                        {power.range && <span>{formatMonarchVernacular(power.range)}</span>}
-                      </div>
-                    </div>
-                    <Button
-                      size="sm"
-                      onClick={() => handleAdd(power)}
-                    >
-                      Add
-                    </Button>
-                  </div>
+          <Tabs value={levelTab} onValueChange={setLevelTab}>
+            <TabsList className="w-full justify-start overflow-x-auto">
+              <TabsTrigger value="all">All</TabsTrigger>
+              {availableLevels.map((lvl) => (
+                <TabsTrigger key={lvl} value={String(lvl)}>
+                  {lvl === 0 ? 'Cantrips' : `Lvl ${lvl}`}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+
+            <TabsContent value={levelTab} className="mt-3 flex-1 overflow-y-auto space-y-2">
+              {isLoading ? (
+                <div className="flex items-center justify-center py-8">
+                  <Loader2 className="w-6 h-6 animate-spin text-primary" />
                 </div>
-              ))
-            )}
-          </div>
+              ) : visiblePowers.length === 0 ? (
+                <div className="text-center py-8 text-muted-foreground">
+                  {maxPowerLevel === 0
+                    ? 'This job has no spellcasting progression. Powers cannot be added.'
+                    : searchQuery
+                    ? 'No powers found matching your search.'
+                    : 'No powers available for this job at your current level.'}
+                </div>
+              ) : (
+                visiblePowers.map((power) => (
+                  <div
+                    key={power.id}
+                    className="p-3 rounded-lg border bg-muted/30 hover:bg-muted/50 transition-colors"
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1 flex-wrap">
+                          <span className="font-heading font-semibold">
+                            {formatMonarchVernacular(power.name)}
+                          </span>
+                          {(power.power_level ?? 0) > 0 ? (
+                            <Badge variant="secondary" className="text-xs">
+                              Level {power.power_level}
+                            </Badge>
+                          ) : (
+                            <Badge variant="outline" className="text-xs">Cantrip</Badge>
+                          )}
+                          {power.school && (
+                            <Badge variant="outline" className="text-xs">
+                              {formatMonarchVernacular(power.school)}
+                            </Badge>
+                          )}
+                          {power.concentration && (
+                            <Badge variant="destructive" className="text-xs">Concentration</Badge>
+                          )}
+                        </div>
+                        {power.description && (
+                          <p className="text-xs text-muted-foreground line-clamp-2">
+                            {formatMonarchVernacular(power.description)}
+                          </p>
+                        )}
+                        <div className="flex flex-wrap gap-2 mt-1 text-xs text-muted-foreground">
+                          {power.casting_time && <span>{formatMonarchVernacular(power.casting_time)}</span>}
+                          {power.range && <span>{formatMonarchVernacular(power.range)}</span>}
+                        </div>
+                      </div>
+                      <Button
+                        size="sm"
+                        onClick={() => handleAdd(power)}
+                      >
+                        Add
+                      </Button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </TabsContent>
+          </Tabs>
         </div>
       </DialogContent>
     </Dialog>
