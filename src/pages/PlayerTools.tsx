@@ -255,6 +255,29 @@ const PlayerTools = () => {
     );
   }
 
+  if (!activeCharacter) {
+    return (
+      <Layout>
+        <div className="player-tools-container">
+          <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 text-center">
+            <User className="w-16 h-16 text-muted-foreground/50" />
+            <div>
+              <h2 className="text-2xl font-heading font-bold mb-2">No Character Found</h2>
+              <p className="text-muted-foreground max-w-md">
+                You need to create a character before accessing Player Tools.
+                Build your Ascendant and start your journey through the System.
+              </p>
+            </div>
+            <Button size="lg" onClick={() => navigate('/characters/new')}>
+              <Sparkles className="w-5 h-5 mr-2" />
+              Create Your First Character
+            </Button>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <div className="player-tools-container">

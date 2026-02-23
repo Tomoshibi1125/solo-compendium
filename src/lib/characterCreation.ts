@@ -46,6 +46,42 @@ function findStaticJobByName(jobName: string | null | undefined): StaticJob | nu
   return staticJobs.find((j) => j.name.trim().toLowerCase() === normalized) ?? null;
 }
 
+/**
+ * Build a properties string array from a static compendium item's mechanical fields.
+ * The equipmentModifiers.ts parser reads these strings to apply AC, damage, etc.
+ */
+function buildItemProperties(item: (typeof staticItems)[number]): string[] {
+  const props: string[] = [];
+
+  // Armor: emit "AC <value>" so the modifier parser picks it up
+  if (item.armor_class) {
+    if (item.armor_type === 'Shield') {
+      props.push('+2 AC');
+    } else {
+      // e.g. "16" from "16", or "14 + Dex modifier (max 2)" → extract leading number
+      const acNum = parseInt(item.armor_class);
+      if (!isNaN(acNum) && acNum > 10) {
+        props.push(`AC ${acNum}`);
+      }
+    }
+    if (item.armor_type) props.push(item.armor_type);
+  }
+  if (item.stealth_disadvantage) props.push('Stealth disadvantage');
+  if (item.strength_requirement) props.push(`Requires STR ${item.strength_requirement}`);
+
+  // Weapon: damage string
+  if (item.damage && item.damage_type) {
+    props.push(`${item.damage} ${item.damage_type}`);
+  }
+  if (item.weapon_type) props.push(item.weapon_type);
+  if (item.simple_properties) {
+    props.push(...item.simple_properties);
+  }
+  if (item.range && item.range !== 'Melee') props.push(`Range ${item.range}`);
+
+  return props;
+}
+
 function isChoiceFeatureText(value: string | null | undefined): boolean {
   if (!value) return false;
   return /\b(choose|select|pick)\b/i.test(value);
@@ -445,14 +481,19 @@ export async function addStartingEquipment(
 
       // Look up item in static compendium for proper metadata
       const compendiumItem = findStaticItemByName(itemName);
+      const itemType = compendiumItem ? deriveItemType(compendiumItem) : 'gear';
+      // Auto-equip armor, shields, and weapons so new characters start ready
+      const shouldAutoEquip = ['armor', 'shield', 'weapon'].includes(itemType);
       const equipData = compendiumItem
         ? {
             name: compendiumItem.name,
-            item_type: deriveItemType(compendiumItem),
+            item_type: itemType,
             weight: compendiumItem.weight ?? null,
             description: compendiumItem.description ?? null,
+            properties: buildItemProperties(compendiumItem),
+            rarity: (compendiumItem.rarity as 'common' | 'uncommon' | 'rare' | 'legendary' | 'very_rare') ?? null,
             quantity: 1,
-            is_equipped: false,
+            is_equipped: shouldAutoEquip,
           }
         : {
             name: itemName,

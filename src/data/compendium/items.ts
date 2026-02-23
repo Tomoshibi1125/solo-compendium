@@ -108,9 +108,11 @@ import { items as itemsPart2 } from './items-part2';
 import { items as itemsPart3 } from './items-part3';
 import { items as itemsPart4 } from './items-part4';
 import { items as itemsPart5 } from './items-part5';
+import { baseEquipment } from './items-base-equipment';
 
 // Combined items array for backward compatibility
 export const items = [
+  ...baseEquipment,
   ...itemsPart1,
   ...itemsPart2,
   ...itemsPart3,

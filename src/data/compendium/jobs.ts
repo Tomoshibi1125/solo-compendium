@@ -85,7 +85,7 @@ export const jobs: Job[] = [
     ],
     abilityScoreImprovements: { strength: 2, constitution: 1 }, size: "medium", speed: 30, languages: ["Common"], darkvision: 60,
     damageResistances: ["bludgeoning from nonmagical attacks (while conscious)"],
-    startingEquipment: [["Chain mail","Leather armor, longbow, 20 arrows"],["A martial weapon and shield","Two martial weapons"],["A light crossbow and 20 bolts","Two handaxes"],["A dungeoneer's pack","An explorer's pack"]],
+    startingEquipment: [["Chain Mail","Leather Armor"],["Longsword","Battleaxe"],["Shield"],["Light Crossbow"],["Crossbow Bolts (20)"],["Dungeoneer's Pack","Explorer's Pack"]],
     hitPointsAtFirstLevel: "10 + your Vitality modifier", hitPointsAtHigherLevels: "1d10 (or 6) + your Vitality modifier per level after 1st",
     classFeatures: [
       { level: 1, name: "System Mark", description: "Bonus action: your HUD locks onto a target like a fighter jet's missile tracking. Gain +1d4 to attack rolls against it (only one mark active). When the marked target drops to 0 HP, your HUD auto-locks the next threat as a free action." },
@@ -128,7 +128,7 @@ export const jobs: Job[] = [
     ],
     abilityScoreImprovements: { strength: 2, constitution: 1 }, size: "medium", speed: 30, languages: ["Common"], darkvision: 60,
     damageResistances: ["poison"],
-    startingEquipment: [["A greataxe","Any martial melee weapon"],["Two handaxes","Any simple weapon"],["An explorer's pack and four javelins"]],
+    startingEquipment: [["Greataxe","Battleaxe"],["Handaxe"],["Handaxe"],["Explorer's Pack"],["Javelin"],["Javelin"],["Javelin"],["Javelin"]],
     hitPointsAtFirstLevel: "12 + your Vitality modifier", hitPointsAtHigherLevels: "1d12 (or 7) + your Vitality modifier per level after 1st",
     classFeatures: [
       { level: 1, name: "Overload State", description: "Bonus action: trigger mana overload — your veins glow, your muscles visibly swell, and nearby electronics emit static. Melee damage bonus = STR mod, resistance to bludgeoning/piercing/slashing, and HP temporarily increases by Berserker level (lost when Overload ends). 2/long rest, scaling to unlimited at 20th." },
@@ -174,7 +174,7 @@ export const jobs: Job[] = [
     ],
     abilityScoreImprovements: { dexterity: 2, intelligence: 1 }, size: "medium", speed: 30, languages: ["Common","Shadow Cant"], darkvision: 120,
     conditionImmunities: ["magical sleep"],
-    startingEquipment: [["A rapier","A shortsword"],["A shortbow and 20 arrows","A shortsword"],["A burglar's pack","A dungeoneer's pack","An explorer's pack"],["Leather armor, two daggers, thieves' tools"]],
+    startingEquipment: [["Rapier","Shortsword"],["Shortbow"],["Arrows (20)"],["Burglar's Pack","Dungeoneer's Pack","Explorer's Pack"],["Leather Armor"],["Dagger"],["Dagger"],["Thieves' Tools"]],
     hitPointsAtFirstLevel: "8 + your Vitality modifier", hitPointsAtHigherLevels: "1d8 (or 5) + your Vitality modifier per level after 1st",
     classFeatures: [
       { level: 1, name: "Specialist Training", description: "The System accelerates your learning in chosen fields — you master lockpicking, hacking, forgery, or surveillance in weeks instead of years. Double proficiency on two skill/tool proficiencies. Two more at 6th level." },
@@ -220,7 +220,7 @@ export const jobs: Job[] = [
       { name: "Kinetic Deflection", description: "Reaction: intercept incoming projectiles — bullets, arrows, thrown objects — with your bare hands. Reduce damage by 1d10+AGI mod+level. If reduced to 0, catch it and throw it back. Viral videos of Strikers catching bullets have billions of views.", type: "active", frequency: "at-will" }
     ],
     abilityScoreImprovements: { dexterity: 2, wisdom: 1 }, size: "medium", speed: 30, languages: ["Common"], darkvision: 60,
-    startingEquipment: [["A shortsword","Any simple weapon"],["A dungeoneer's pack","An explorer's pack"],["10 darts"]],
+    startingEquipment: [["Shortsword","Handaxe"],["Dungeoneer's Pack","Explorer's Pack"],["Darts (10)"]],
     hitPointsAtFirstLevel: "8 + your Vitality modifier", hitPointsAtHigherLevels: "1d8 (or 5) + your Vitality modifier per level after 1st",
     classFeatures: [
       { level: 1, name: "Kinetic Barrier", description: "Your nerve network generates a passive mana field visible as a faint shimmer in bright light — airport metal detectors go haywire when you walk through. Without armor or shield: AC = 10 + Agility mod + Sense mod." },
@@ -269,7 +269,7 @@ export const jobs: Job[] = [
     ],
     abilityScoreImprovements: { intelligence: 2, wisdom: 1 }, size: "medium", speed: 30, languages: ["Common"], darkvision: 60,
     damageResistances: ["psychic"],
-    startingEquipment: [["A quarterstaff","A dagger"],["A component pouch","An arcane focus"],["A scholar's pack","An explorer's pack"],["A grimoire"]],
+    startingEquipment: [["Quarterstaff","Dagger"],["Component Pouch","Arcane Focus"],["Scholar's Pack","Explorer's Pack"],["Grimoire"]],
     hitPointsAtFirstLevel: "6 + your Vitality modifier", hitPointsAtHigherLevels: "1d6 (or 4) + your Vitality modifier per level after 1st",
     spellcasting: {
       ability: "Intelligence", focus: "Arcane focus or grimoire",
@@ -314,7 +314,7 @@ export const jobs: Job[] = [
     ],
     abilityScoreImprovements: { charisma: 2, constitution: 1 }, size: "medium", speed: 30, languages: ["Common"], darkvision: 60,
     damageResistances: ["force"],
-    startingEquipment: [["A light crossbow and 20 bolts","Any simple weapon"],["A component pouch","An arcane focus"],["A dungeoneer's pack","An explorer's pack"],["Two daggers"]],
+    startingEquipment: [["Light Crossbow","Dagger"],["Crossbow Bolts (20)"],["Component Pouch","Arcane Focus"],["Dungeoneer's Pack","Explorer's Pack"],["Dagger"],["Dagger"]],
     hitPointsAtFirstLevel: "6 + your Vitality modifier", hitPointsAtHigherLevels: "1d6 (or 4) + your Vitality modifier per level after 1st",
     spellcasting: {
       ability: "Presence", focus: "Arcane focus",
@@ -361,7 +361,7 @@ export const jobs: Job[] = [
     abilityScoreImprovements: { intelligence: 2, constitution: 1 }, size: "medium", speed: 30, languages: ["Common"], darkvision: 120,
     damageResistances: ["necrotic"],
     conditionImmunities: ["frightened"],
-    startingEquipment: [["A quarterstaff","A dagger"],["A component pouch","An arcane focus"],["A scholar's pack","An explorer's pack"],["A grimoire"]],
+    startingEquipment: [["Quarterstaff","Dagger"],["Component Pouch","Arcane Focus"],["Scholar's Pack","Explorer's Pack"],["Grimoire"]],
     hitPointsAtFirstLevel: "6 + your Vitality modifier", hitPointsAtHigherLevels: "1d6 (or 4) + your Vitality modifier per level after 1st",
     spellcasting: {
       ability: "Intelligence", focus: "Arcane focus or grimoire",
@@ -408,7 +408,7 @@ export const jobs: Job[] = [
     ],
     abilityScoreImprovements: { wisdom: 2, constitution: 1 }, size: "medium", speed: 30, languages: ["Common","Gate Speak"], darkvision: 60,
     damageResistances: ["poison"],
-    startingEquipment: [["A wooden shield","Any simple weapon"],["A scimitar","Any simple melee weapon"],["Leather armor, explorer's pack, primal focus"]],
+    startingEquipment: [["Shield","Spear"],["Scimitar","Mace"],["Leather Armor"],["Explorer's Pack"],["Primal Focus"]],
     hitPointsAtFirstLevel: "8 + your Vitality modifier", hitPointsAtHigherLevels: "1d8 (or 5) + your Vitality modifier per level after 1st",
     spellcasting: {
       ability: "Sense", focus: "Primal focus",
@@ -455,7 +455,7 @@ export const jobs: Job[] = [
     ],
     abilityScoreImprovements: { wisdom: 2, charisma: 1 }, size: "medium", speed: 30, languages: ["Common"], darkvision: 60,
     damageResistances: ["necrotic","radiant"],
-    startingEquipment: [["A mace","A warhammer (if proficient)"],["Scale mail","Leather armor","Chain mail (if proficient)"],["A light crossbow and 20 bolts","Any simple weapon"],["A priest's pack","An explorer's pack"],["A shield and System focus"]],
+    startingEquipment: [["Mace","Warhammer"],["Scale Mail","Leather Armor","Chain Mail"],["Light Crossbow","Mace"],["Crossbow Bolts (20)"],["Priest's Pack","Explorer's Pack"],["Shield"],["System Focus"]],
     hitPointsAtFirstLevel: "8 + your Vitality modifier", hitPointsAtHigherLevels: "1d8 (or 5) + your Vitality modifier per level after 1st",
     spellcasting: {
       ability: "Sense", focus: "System focus",
@@ -501,7 +501,7 @@ export const jobs: Job[] = [
     ],
     abilityScoreImprovements: { charisma: 2, constitution: 1 }, size: "medium", speed: 30, languages: ["Common"], darkvision: 120,
     damageResistances: ["fire"],
-    startingEquipment: [["A light crossbow and 20 bolts","Any simple weapon"],["A component pouch","An arcane focus"],["A scholar's pack","A dungeoneer's pack"],["Leather armor, any simple weapon, and two daggers"]],
+    startingEquipment: [["Light Crossbow","Quarterstaff"],["Crossbow Bolts (20)"],["Component Pouch","Arcane Focus"],["Scholar's Pack","Dungeoneer's Pack"],["Leather Armor"],["Dagger"],["Dagger"]],
     hitPointsAtFirstLevel: "8 + your Vitality modifier", hitPointsAtHigherLevels: "1d8 (or 5) + your Vitality modifier per level after 1st",
     spellcasting: {
       ability: "Presence", focus: "Arcane focus",
@@ -549,7 +549,7 @@ export const jobs: Job[] = [
     ],
     abilityScoreImprovements: { dexterity: 2, wisdom: 1 }, size: "medium", speed: 35, languages: ["Common"], darkvision: 60,
     specialSenses: ["Keen Hearing and Smell"],
-    startingEquipment: [["Scale mail","Leather armor"],["Two shortswords","Two simple melee weapons"],["A dungeoneer's pack","An explorer's pack"],["A longbow and 20 arrows"]],
+    startingEquipment: [["Scale Mail","Leather Armor"],["Shortsword"],["Shortsword"],["Dungeoneer's Pack","Explorer's Pack"],["Longbow"],["Arrows (20)"]],
     hitPointsAtFirstLevel: "10 + your Vitality modifier", hitPointsAtHigherLevels: "1d10 (or 6) + your Vitality modifier per level after 1st",
     spellcasting: {
       ability: "Sense", focus: "None (no focus needed)",
@@ -599,7 +599,7 @@ export const jobs: Job[] = [
     ],
     abilityScoreImprovements: { strength: 2, charisma: 1 }, size: "medium", speed: 30, languages: ["Common","Celestial"], darkvision: 60,
     damageResistances: ["radiant"],
-    startingEquipment: [["A martial weapon and shield","Two martial weapons"],["Five javelins","Any simple melee weapon"],["A priest's pack","An explorer's pack"],["Chain mail and a System focus"]],
+    startingEquipment: [["Longsword","Battleaxe"],["Shield"],["Javelin"],["Javelin"],["Javelin"],["Javelin"],["Javelin"],["Priest's Pack","Explorer's Pack"],["Chain Mail"],["System Focus"]],
     hitPointsAtFirstLevel: "10 + your Vitality modifier", hitPointsAtHigherLevels: "1d10 (or 6) + your Vitality modifier per level after 1st",
     spellcasting: {
       ability: "Presence", focus: "System focus",
@@ -649,7 +649,7 @@ export const jobs: Job[] = [
     abilityScoreImprovements: { intelligence: 2, constitution: 1 }, size: "medium", speed: 30, languages: ["Common"], darkvision: 60,
     damageResistances: ["lightning"],
     specialSenses: ["Blueprint Vision (identify magic items by touch, 1 minute)"],
-    startingEquipment: [["Any two simple weapons"],["A light crossbow and 20 bolts"],["Studded leather armor and thieves' tools"],["A dungeoneer's pack"]],
+    startingEquipment: [["Handaxe","Dagger"],["Handaxe","Dagger"],["Light Crossbow"],["Crossbow Bolts (20)"],["Studded Leather Armor"],["Thieves' Tools"],["Dungeoneer's Pack"]],
     hitPointsAtFirstLevel: "8 + your Vitality modifier", hitPointsAtHigherLevels: "1d8 (or 5) + your Vitality modifier per level after 1st",
     spellcasting: {
       ability: "Intelligence", focus: "Thieves' tools or artisan's tools",
@@ -700,7 +700,7 @@ export const jobs: Job[] = [
       { name: "Specialist Training", description: "Double proficiency on two chosen skill proficiencies. Two more at 10th level.", type: "passive" }
     ],
     abilityScoreImprovements: { charisma: 2, dexterity: 1 }, size: "medium", speed: 30, languages: ["Common","One additional language"], darkvision: 60,
-    startingEquipment: [["A rapier","A longsword","Any simple weapon"],["A diplomat's pack","An entertainer's pack"],["A lute","Any musical instrument"],["Leather armor and a dagger"]],
+    startingEquipment: [["Rapier","Longsword","Dagger"],["Diplomat's Pack","Entertainer's Pack"],["Musical Instrument"],["Leather Armor"],["Dagger"]],
     hitPointsAtFirstLevel: "8 + your Vitality modifier", hitPointsAtHigherLevels: "1d8 (or 5) + your Vitality modifier per level after 1st",
     spellcasting: {
       ability: "Presence", focus: "Musical instrument",
