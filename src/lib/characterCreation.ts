@@ -467,16 +467,18 @@ export async function addBackgroundFeatures(
 export async function addStartingEquipment(
   characterId: string,
   job: Job,
-  background?: Background
+  background?: Background,
+  equipmentChoices?: Record<number, string>
 ): Promise<void> {
   const campaignId = await getCharacterCampaignId(characterId);
 
   // Add job starting equipment from static data
   const staticJob = findStaticJobByName(job.name);
   if (staticJob?.startingEquipment) {
-    for (const equipmentGroup of staticJob.startingEquipment) {
-      // Each group is a choice array; grant the first option by default
-      const itemName = equipmentGroup[0];
+    for (let groupIndex = 0; groupIndex < staticJob.startingEquipment.length; groupIndex++) {
+      const equipmentGroup = staticJob.startingEquipment[groupIndex];
+      // Use player's choice if provided, otherwise default to first option
+      const itemName = (equipmentChoices && equipmentChoices[groupIndex]) ?? equipmentGroup[0];
       if (!itemName) continue;
 
       // Look up item in static compendium for proper metadata

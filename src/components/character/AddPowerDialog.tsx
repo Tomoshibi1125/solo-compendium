@@ -115,34 +115,49 @@ export function AddPowerDialog({
         );
       }
 
-      // Static fallback: load powers from compendium data
-      const { staticDataProvider } = await import('@/data/compendium/staticDataProvider');
-      const staticPowers = await staticDataProvider.getPowers(trimmedQuery || undefined);
-      const filtered = staticPowers
-        .filter(p => (p.power_level ?? 0) <= maxPowerLevel)
-        .slice(0, 20);
-      return filtered.map(p => ({
-        id: p.id,
-        name: p.name,
-        description: p.description ?? '',
-        power_level: p.power_level ?? 0,
-        school: p.school ?? null,
-        casting_time: null,
-        range: typeof p.range === 'string' ? p.range : null,
-        duration: null,
-        concentration: false,
-        higher_levels: p.higher_levels ?? null,
-        source_book: p.source_book ?? 'System Ascendant Canon',
+      // Static fallback: use spells.ts which has proper level (0-9) and classes[] fields
+      const { spells } = await import('@/data/compendium/spells');
+      const jobNameLower = (character?.job ?? '').toLowerCase();
+      const filtered = spells
+        .filter(spell => {
+          // Level gate
+          if ((spell.level ?? 0) > maxPowerLevel) return false;
+          // Job filter: match classes array if present, otherwise show all
+          if (spell.classes && spell.classes.length > 0) {
+            const matches = spell.classes.some(c => c.toLowerCase() === jobNameLower);
+            if (!matches) return false;
+          }
+          // Search filter
+          if (trimmedQuery) {
+            const q = trimmedQuery.toLowerCase();
+            return spell.name.toLowerCase().includes(q) || spell.description.toLowerCase().includes(q);
+          }
+          return true;
+        })
+        .slice(0, 30);
+
+      return filtered.map(spell => ({
+        id: spell.id,
+        name: spell.name,
+        description: spell.description ?? '',
+        power_level: spell.level,
+        school: spell.school ?? null,
+        casting_time: spell.castingTime ?? null,
+        range: typeof spell.range === 'string' ? spell.range : null,
+        duration: typeof spell.duration === 'string' ? spell.duration : null,
+        concentration: spell.concentration ?? false,
+        higher_levels: spell.atHigherLevels ?? null,
+        source_book: 'System Ascendant Canon',
         source_name: null,
         source_kind: null,
         job_names: character?.job ? [character.job] : [],
         path_names: character?.path ? [character.path] : [],
         regent_names: [],
-        created_at: p.created_at,
-        display_name: p.display_name ?? null,
+        created_at: new Date().toISOString(),
+        display_name: spell.name,
         aliases: null,
         license_note: null,
-        tags: p.tags ?? null,
+        tags: [spell.school, spell.type].filter(Boolean) as string[],
         theme_tags: null,
       })) as unknown as NonNullable<typeof data>;
     },
@@ -362,7 +377,11 @@ export function AddPowerDialog({
               </div>
             ) : powers.length === 0 ? (
               <div className="text-center py-8 text-muted-foreground">
-                {searchQuery ? 'No powers found' : 'Search for powers to add'}
+                {maxPowerLevel === 0
+                  ? 'This job has no spellcasting progression. Powers cannot be added.'
+                  : searchQuery
+                  ? 'No powers found matching your search.'
+                  : 'No powers available for this job at your current level.'}
               </div>
             ) : (
               powers.map((power) => (

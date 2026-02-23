@@ -52,7 +52,7 @@ type Background = Database['public']['Tables']['compendium_backgrounds']['Row'] 
 };
 type DbAbilityScore = Database['public']['Enums']['ability_score'];
 
-type Step = 'concept' | 'abilities' | 'job' | 'path' | 'background' | 'review';
+type Step = 'concept' | 'abilities' | 'job' | 'path' | 'background' | 'equipment' | 'review';
 
 const STANDARD_ARRAY = [15, 14, 13, 12, 10, 8];
 const POINT_BUY_COST: Record<number, number> = {
@@ -91,6 +91,8 @@ const CharacterNew = () => {
   const [selectedBackground, setSelectedBackground] = useState<string>('');
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [showJobFeatures, setShowJobFeatures] = useState(false);
+  // Equipment choices: index = choice group index, value = chosen item name
+  const [equipmentChoices, setEquipmentChoices] = useState<Record<number, string>>({});
 
   const pointBuySpent =
     abilityMethod === 'point-buy'
@@ -99,13 +101,13 @@ const CharacterNew = () => {
   const pointBuyRemaining = POINT_BUY_TOTAL - pointBuySpent;
   const isPointBuyValid = abilityMethod !== 'point-buy' || pointBuyRemaining >= 0;
 
-  // Reset skills when job changes
+  // Reset skills and equipment choices when job changes
   const handleJobChange = (jobId: string) => {
     setSelectedJob(jobId);
     setSelectedPath('');
-    setSelectedSkills([]); // Reset skills when job changes
+    setSelectedSkills([]);
+    setEquipmentChoices({});
   };
-
 
   // Fetch jobs - use static data as primary source with database fallback
   const { data: jobs = [] } = useQuery({
@@ -175,6 +177,14 @@ const CharacterNew = () => {
       return staticJobsData;
     },
   });
+
+  // Get static job data (including startingEquipment) for the selected job
+  const staticJobData = useMemo(() => {
+    if (!selectedJob) return null;
+    const jobName = jobs.find(j => j.id === selectedJob)?.name;
+    if (!jobName) return null;
+    return staticJobs.find(j => j.name === jobName) ?? null;
+  }, [selectedJob, jobs]);
 
   // Fetch paths for selected job (with static fallback)
   const { data: paths = [] } = useQuery({
@@ -350,6 +360,7 @@ const CharacterNew = () => {
     { id: 'job', name: 'Job' },
     ...(isPathStepEnabled ? ([{ id: 'path', name: 'Path' }] as const) : []),
     { id: 'background', name: 'Background' },
+    { id: 'equipment', name: 'Equipment' },
     { id: 'review', name: 'Review' },
   ];
 
@@ -538,9 +549,9 @@ const CharacterNew = () => {
       await addLevel1Features(character.id, job.id, selectedPathRow?.id);
       await addJobAwakeningBenefitsForLevel(character.id, job.name, 1);
 
-      // Add starting equipment (background is required)
+      // Add starting equipment (background is required), passing player choices
       if (selectedBackgroundData) {
-        await addStartingEquipment(character.id, job, selectedBackgroundData);
+        await addStartingEquipment(character.id, job, selectedBackgroundData, equipmentChoices);
       }
 
       // Add starting powers/cantrips for caster jobs
@@ -623,6 +634,8 @@ const CharacterNew = () => {
         return !!selectedPath && selectedPath !== 'none';
       case 'background':
         return selectedBackground.length > 0; // Required
+      case 'equipment':
+        return true; // All groups have defaults
       case 'review':
         return true;
       default:
@@ -711,6 +724,7 @@ const CharacterNew = () => {
                 {currentStep === 'job' && 'Select your character\'s primary class'}
                 {currentStep === 'path' && 'Choose a specialization within your job'}
                 {currentStep === 'background' && 'Define your character\'s history and origins'}
+                {currentStep === 'equipment' && 'Choose your starting equipment'}
                 {currentStep === 'review' && 'Review and finalize your character'}
               </p>
             </div>
@@ -1112,7 +1126,87 @@ const CharacterNew = () => {
             </div>
           )}
 
-          
+          {currentStep === 'equipment' && (
+            <div className="space-y-6">
+              {!staticJobData?.startingEquipment || staticJobData.startingEquipment.length === 0 ? (
+                <div className="text-center py-8 text-muted-foreground">
+                  <p>No starting equipment choices for this job.</p>
+                  <p className="text-xs mt-1">Equipment will be assigned automatically.</p>
+                </div>
+              ) : (
+                <>
+                  <p className="text-sm text-muted-foreground">
+                    Choose your starting equipment. The first option in each group is selected by default.
+                  </p>
+                  <div className="space-y-4">
+                    {staticJobData.startingEquipment.map((group, groupIndex) => {
+                      const chosen = equipmentChoices[groupIndex] ?? group[0];
+                      return (
+                        <div key={groupIndex} className="p-4 rounded-lg border bg-muted/20">
+                          {group.length === 1 ? (
+                            <div className="flex items-center gap-3">
+                              <div className="w-4 h-4 rounded-full bg-primary flex-shrink-0" />
+                              <span className="font-heading font-semibold text-sm">{group[0]}</span>
+                              <Badge variant="secondary" className="text-xs ml-auto">Included</Badge>
+                            </div>
+                          ) : (
+                            <div className="space-y-2">
+                              <p className="text-xs font-heading text-muted-foreground uppercase tracking-wider mb-3">
+                                Choose one:
+                              </p>
+                              {group.map((option) => (
+                                <button
+                                  key={option}
+                                  type="button"
+                                  onClick={() => setEquipmentChoices(prev => ({ ...prev, [groupIndex]: option }))}
+                                  className={cn(
+                                    "w-full text-left p-3 rounded-md border transition-all",
+                                    chosen === option
+                                      ? "border-primary bg-primary/10 text-foreground"
+                                      : "border-border bg-background/40 text-muted-foreground hover:bg-muted/50"
+                                  )}
+                                >
+                                  <div className="flex items-center gap-3">
+                                    <div className={cn(
+                                      "w-4 h-4 rounded-full border-2 flex-shrink-0 transition-colors",
+                                      chosen === option ? "border-primary bg-primary" : "border-muted-foreground"
+                                    )} />
+                                    <span className="font-heading font-semibold text-sm">{option}</span>
+                                    {chosen === option && (
+                                      <Badge variant="default" className="text-xs ml-auto">Selected</Badge>
+                                    )}
+                                  </div>
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Summary of chosen equipment */}
+                  <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
+                    <p className="text-xs font-heading font-semibold text-primary uppercase tracking-wider mb-2">
+                      Your Starting Equipment
+                    </p>
+                    <ul className="space-y-1">
+                      {staticJobData.startingEquipment.map((group, i) => {
+                        const chosen = equipmentChoices[i] ?? group[0];
+                        return (
+                          <li key={i} className="text-sm flex items-center gap-2">
+                            <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                            {chosen}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+
           {currentStep === 'review' && (
             <div className="space-y-6">
               <div>
