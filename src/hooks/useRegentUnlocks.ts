@@ -264,6 +264,7 @@ export function useAvailableRegents(characterId: string) {
 // Backward compatibility aliases
 export const useMonarchUnlocks = useRegentUnlocks;
 export const useCharacterMonarchUnlocks = useRegentUnlocks;
+export const useCharacterRegentUnlocks = useRegentUnlocks;
 
 // Export individual mutation functions for backward compatibility
 export const useUnlockMonarch = () => {

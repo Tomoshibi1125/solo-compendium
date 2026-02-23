@@ -6,16 +6,38 @@ export interface Item {
   id: string;
   name: string;
   description: string;
+  
+  // 5e Item Structure (System Ascendant Themed)
+  item_type?: 'weapon' | 'armor' | 'shield' | 'consumable' | 'tool' | 'misc';
+  weapon_type?: string;             // "martial melee", "simple ranged", etc.
+  damage?: string;                  // "1d8 slashing", "2d6 piercing", etc.
+  damage_type?: string;             // "slashing", "piercing", "bludgeoning", etc.
+  simple_properties?: string[];       // ["finesse", "light", "thrown", etc.]
+  range?: string;                   // "Melee", "Ranged (20/60)", etc.
+  armor_class?: string;            // "15 + Dex modifier", "18", etc.
+  armor_type?: string;             // "Light", "Medium", "Heavy", "Shield"
+  stealth_disadvantage?: boolean;   // For heavy armor
+  strength_requirement?: number;    // For certain armor/weapons
+  magical_bonus?: number;           // +1, +2, +3 for magical items
+  
+  // System Ascendant compatibility (legacy)
   rarity: 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
   type: 'weapon' | 'armor' | 'consumable' | 'accessory' | 'scroll' | 'wondrous' | 'ring' | 'amulet' | 'staff' | 'wand';
   image: string;
-  // SRD 5e mechanics
-  requirements?: {
-    level?: number;
-    class?: string[];
-    job?: string[];
-    alignment?: string[];
-  };
+  
+  // 5e mechanics (System Ascendant themed)
+  requires_attunement?: boolean;
+  weight: number;                   // In pounds
+  value: number;                    // In gold pieces
+  
+  // System Ascendant specific fields
+  essence_cost?: number;            // Essence cost to use/attune
+  hunter_level_required?: number;   // Minimum Hunter level
+  system_awakening_required?: boolean; // Requires System Awakening
+  shadow_soldier_compatible?: boolean; // Can be used by Shadow Soldiers (Umbral Regent only)
+  legendary_crafted?: boolean;      // Legendary crafted item
+  
+  // Enhanced properties
   properties?: {
     weapon?: {
       damage: string;
@@ -44,6 +66,8 @@ export interface Item {
       vulnerability?: string[];
     };
   };
+  
+  // Enhanced effects
   effects?: {
     passive?: string[];
     active?: {
@@ -62,6 +86,10 @@ export interface Item {
     current: number;
     recharge?: 'dawn' | 'dusk' | 'short-rest' | 'long-rest';
   };
+  
+  // Additional optional fields
+  requirements?: Record<string, unknown>;
+  
   // Legacy stats for backward compatibility
   stats?: {
     attack?: number;
@@ -70,9 +98,8 @@ export interface Item {
     mana?: number;
   };
   effect?: string;
-  value: number;
-  weight?: number;
   source?: string;
+  [key: string]: unknown;
 }
 
 // Re-export items from split files

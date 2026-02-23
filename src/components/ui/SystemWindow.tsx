@@ -7,7 +7,7 @@ interface SystemWindowProps {
   actions?: ReactNode;
   className?: string;
   contentClassName?: string;
-  variant?: 'default' | 'alert' | 'quest' | 'monarch' | 'arise' | 'gate-e' | 'gate-d' | 'gate-c' | 'gate-b' | 'gate-a' | 'gate-s' | 'gate-ss' | 'gate-national';
+  variant?: 'default' | 'alert' | 'quest' | 'monarch' | 'regent' | 'arise' | 'gate-e' | 'gate-d' | 'gate-c' | 'gate-b' | 'gate-a' | 'gate-s' | 'gate-ss' | 'gate-national';
   compact?: boolean;
   animated?: boolean;
   id?: string;
@@ -38,6 +38,7 @@ export function SystemWindow({
     'gate-s': 'border-gate-s/40 from-gate-s/10 via-card to-void-black/80',
     'gate-ss': 'border-gate-ss/40 from-gate-ss/10 via-card to-void-black/80',
     'gate-national': 'border-gate-national/40 from-gate-national/10 via-card to-void-black/80',
+    regent: 'border-shadow-purple/40 from-shadow-purple/10 via-card to-void-black/80',
   };
 
   const glowColors = {
@@ -54,6 +55,7 @@ export function SystemWindow({
     'gate-s': 'hsl(var(--gate-s-glow))',
     'gate-ss': 'hsl(var(--gate-ss-glow))',
     'gate-national': 'hsl(var(--gate-national-glow))',
+    regent: 'hsl(var(--shadow-purple))',
   };
 
   // Map variant → raw HSL CSS variable name (without hsl() wrapper)
@@ -71,6 +73,7 @@ export function SystemWindow({
     'gate-s': '--gate-s-glow',
     'gate-ss': '--gate-ss-glow',
     'gate-national': '--gate-national-glow',
+    regent: '--shadow-purple',
   } as const;
 
   const glowVar = glowVarMap[variant];
@@ -134,7 +137,7 @@ export function SystemWindow({
 
 interface CornerDecorationProps {
   position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
-  variant: 'default' | 'alert' | 'quest' | 'monarch' | 'arise' | 'gate-e' | 'gate-d' | 'gate-c' | 'gate-b' | 'gate-a' | 'gate-s' | 'gate-ss' | 'gate-national';
+  variant: 'default' | 'alert' | 'quest' | 'monarch' | 'regent' | 'arise' | 'gate-e' | 'gate-d' | 'gate-c' | 'gate-b' | 'gate-a' | 'gate-s' | 'gate-ss' | 'gate-national';
 }
 
 function CornerDecoration({ position, variant }: CornerDecorationProps) {
@@ -159,6 +162,7 @@ function CornerDecoration({ position, variant }: CornerDecorationProps) {
     'gate-s': 'border-gate-s/40 shadow-[0_0_6px_hsl(var(--gate-s-glow)/0.5)]',
     'gate-ss': 'border-gate-ss/40 shadow-[0_0_6px_hsl(var(--gate-ss-glow)/0.5)]',
     'gate-national': 'border-gate-national/40 shadow-[0_0_6px_hsl(var(--gate-national-glow)/0.5)]',
+    regent: 'border-shadow-purple/40 shadow-[0_0_6px_hsl(var(--shadow-purple)/0.5)]',
   };
 
   return (

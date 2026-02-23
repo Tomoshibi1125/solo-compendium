@@ -19,7 +19,7 @@ import { RouteEffects } from "@/components/RouteEffects";
 import { OfflineStatus } from "@/components/pwa/PWAComponents";
 import { setCommandPaletteOpener } from "@/lib/globalShortcuts";
 import { validateEnv } from "@/lib/envValidation";
-import { engineManager } from "@/lib/globalEngineManager";
+
 import { AuthProvider, useAuth } from "@/lib/auth/authContext";
 import { getRuntimeEnvValue, normalizeBasePath } from "@/lib/runtimeEnv";
 import { isSetupRouteEnabled } from "@/lib/setupAccess";
@@ -31,9 +31,9 @@ import PerformancePreload from "@/components/PerformancePreload";
 import { PerformanceProvider } from "@/lib/performanceProfile";
 import { useOfflineSyncStatus } from "@/hooks/useOfflineSyncStatus";
 import { useOfflineCacheWarmer } from "@/hooks/useOfflineCacheWarmer";
-import Login from "./pages/Login";
-import PlayerTools from "./pages/PlayerTools";
-import TestUserSetup from "./pages/TestUserSetup";
+const Login = lazy(() => import("./pages/Login"));
+const PlayerTools = lazy(() => import("./pages/PlayerTools"));
+const TestUserSetup = lazy(() => import("./pages/TestUserSetup"));
 
 // Validate environment variables on app startup (non-blocking; setup mode is supported)
 const envResult = validateEnv();

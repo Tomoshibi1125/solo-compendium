@@ -40,7 +40,8 @@ export interface CompendiumEntry {
 const STARTUP_CATEGORIES = [
   'jobs', 'paths', 'powers', 'runes', 'relics', 'monsters', 
   'backgrounds', 'conditions', 'monarchs', 'feats', 'skills', 
-  'equipment', 'shadow-soldiers'
+  'equipment', 'shadow-soldiers', 'items', 'spells', 'techniques',
+  'artifacts', 'locations'
 ] as const;
 
 type StartupCategory = (typeof STARTUP_CATEGORIES)[number];
@@ -131,6 +132,21 @@ export const useStartupData = () => {
               break;
             case 'shadow-soldiers':
               data = await staticDataProvider.getShadowSoldiers('');
+              break;
+            case 'items':
+              data = await staticDataProvider.getItems('');
+              break;
+            case 'spells':
+              data = await staticDataProvider.getSpells('');
+              break;
+            case 'techniques':
+              data = await staticDataProvider.getTechniques('');
+              break;
+            case 'artifacts':
+              data = await staticDataProvider.getArtifacts('');
+              break;
+            case 'locations':
+              data = await staticDataProvider.getLocations('');
               break;
             default:
               data = [];
@@ -287,8 +303,35 @@ export const useStartupData = () => {
                 .select('id, name, display_name, description, created_at, tags, source_book, role, rank')
                 .limit(STARTUP_LIMIT);
               break;
-            default:
+            default: {
+              // Categories without Supabase tables (items, spells, techniques, artifacts, locations)
+              // fall back to static data provider
+              let staticFallback: StaticCompendiumEntry[] = [];
+              switch (category) {
+                case 'items': staticFallback = await staticDataProvider.getItems(''); break;
+                case 'spells': staticFallback = await staticDataProvider.getSpells(''); break;
+                case 'techniques': staticFallback = await staticDataProvider.getTechniques(''); break;
+                case 'artifacts': staticFallback = await staticDataProvider.getArtifacts(''); break;
+                case 'locations': staticFallback = await staticDataProvider.getLocations(''); break;
+              }
+              if (staticFallback.length > 0) {
+                const limited = staticFallback.slice(0, STARTUP_LIMIT);
+                const transformed = limited.map((item: StaticCompendiumEntry): CompendiumEntry => ({
+                  id: item.id,
+                  name: item.display_name || item.name,
+                  type: category as CompendiumEntry['type'],
+                  description: item.description || 'No description available',
+                  rarity: item.rarity || 'common',
+                  tags: Array.isArray(item.tags) ? item.tags : [],
+                  created_at: item.created_at,
+                  source_book: item.source_book,
+                  image_url: item.image_url,
+                  isFavorite: false,
+                }));
+                return { entries: transformed, count: limited.length };
+              }
               return { entries: [], count: 0 };
+            }
           }
 
           const { data, error } = await query;

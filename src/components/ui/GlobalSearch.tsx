@@ -12,7 +12,7 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { useRecentItems } from '@/hooks/useRecentItems';
 import { cn } from '@/lib/utils';
 import { normalizeSearchText } from '@/lib/fullTextSearch';
-import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
+import { formatRegentVernacular, normalizeRegentSearch, formatMonarchVernacular } from '@/lib/vernacular';
 import { error as logError } from '@/lib/logger';
 import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 
@@ -45,7 +45,7 @@ export function GlobalSearch({ className }: { className?: string }) {
       if (!debouncedQuery.trim()) return [];
 
       const allResults: SearchResult[] = [];
-      const canonicalQuery = normalizeMonarchSearch(debouncedQuery);
+      const canonicalQuery = normalizeRegentSearch(debouncedQuery);
       const searchTerms = canonicalQuery === debouncedQuery ? [debouncedQuery] : [debouncedQuery, canonicalQuery];
 
       // Search across all compendium types

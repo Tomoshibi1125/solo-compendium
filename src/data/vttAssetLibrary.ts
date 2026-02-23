@@ -100,7 +100,7 @@ const PROPS: VTTAsset[] = [
 const CONDITIONS: VTTAsset[] = [
   { id: 'cond-essence-drained', name: 'Essence Drained', category: 'condition', imageUrl: '/generated/conditions/essence-drained.webp', tags: ['condition', 'drain', 'debuff'] },
   { id: 'cond-gate-exhausted', name: 'Gate Exhausted', category: 'condition', imageUrl: '/generated/conditions/gate-exhausted.webp', tags: ['condition', 'exhausted', 'gate'] },
-  { id: 'cond-regent-marked', name: 'Regent Marked', category: 'condition', imageUrl: '/generated/conditions/monarch-marked.webp', tags: ['condition', 'regent', 'mark'] },
+  { id: 'cond-regent-marked', name: 'Regent Marked', category: 'condition', imageUrl: '/generated/conditions/regent-marked.webp', tags: ['condition', 'regent', 'mark'] },
   { id: 'cond-shadow-bound', name: 'Shadow Bound', category: 'condition', imageUrl: '/generated/conditions/shadow-bound.webp', tags: ['condition', 'shadow', 'bound', 'restrained'] },
   { id: 'cond-shadow-corrupted', name: 'Shadow Corrupted', category: 'condition', imageUrl: '/generated/conditions/shadow-corrupted.webp', tags: ['condition', 'shadow', 'corrupt'] },
   { id: 'cond-shadow-fused', name: 'Shadow Fused', category: 'condition', imageUrl: '/generated/conditions/shadow-fused.webp', tags: ['condition', 'shadow', 'fused', 'transform'] },
@@ -152,23 +152,37 @@ const LOCATION_ASSETS: VTTAsset[] = locations.map((l) => ({
 const toTitleCase = (s: string) => s.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 
 const REGENT_PORTRAITS: VTTAsset[] = [
-  'berserker-monarch', 'blood-monarch', 'destruction-monarch', 'dragon-monarch',
-  'ice-cold-monarch', 'plague-monarch', 'shadow-command-monarch', 'steel-flesh-monarch',
-  'umbral-sovereign', 'white-flame-monarch',
+  'berserker-regent', 'blood-regent', 'destruction-regent', 'dragon-regent',
+  'ice-cold-regent', 'plague-regent', 'shadow-command-regent', 'steel-flesh-regent',
+  'umbral-sovereign', 'white-flame-regent',
 ].map((fileName) => ({
-  id: `portrait-${fileName}`, name: toTitleCase(fileName).replace(/Monarch/g, 'Regent'), category: 'portrait' as VTTAssetCategory,
-  imageUrl: `/generated/compendium/monarchs/${fileName}.webp`,
+  id: `portrait-${fileName}`, name: toTitleCase(fileName), category: 'portrait' as VTTAssetCategory,
+  imageUrl: `/generated/compendium/regents/${fileName}.webp`,
   tags: ['portrait', 'regent', 'boss', 'npc', fileName.split('-')[0]],
 }));
 
 // ── Portraits — Jobs (class/archetype tokens) ───────────────────────────
-const JOB_PORTRAITS: VTTAsset[] = [
-  'artificer', 'assassin', 'bard', 'berserker', 'healer', 'mage', 'monk',
-  'necromancer', 'paladin', 'ranger', 'summoner', 'tank', 'warlock', 'warrior',
-].map((name) => ({
-  id: `portrait-job-${name}`, name: toTitleCase(name), category: 'portrait' as VTTAssetCategory,
-  imageUrl: `/generated/compendium/jobs/${name}.webp`,
-  tags: ['portrait', 'job', 'class', 'player', name],
+// Maps image filenames to SA job display names (files on disk keep original names)
+const JOB_PORTRAIT_MAP: { file: string; display: string }[] = [
+  { file: 'artificer', display: 'Technomancer' },
+  { file: 'assassin', display: 'Assassin' },
+  { file: 'bard', display: 'Resonant' },
+  { file: 'berserker', display: 'Berserker' },
+  { file: 'healer', display: 'Herald' },
+  { file: 'mage', display: 'Mage' },
+  { file: 'monk', display: 'Striker' },
+  { file: 'necromancer', display: 'Revenant' },
+  { file: 'paladin', display: 'Holy Knight' },
+  { file: 'ranger', display: 'Stalker' },
+  { file: 'summoner', display: 'Summoner' },
+  { file: 'tank', display: 'Destroyer' },
+  { file: 'warlock', display: 'Contractor' },
+  { file: 'warrior', display: 'Esper' },
+];
+const JOB_PORTRAITS: VTTAsset[] = JOB_PORTRAIT_MAP.map(({ file, display }) => ({
+  id: `portrait-job-${file}`, name: display, category: 'portrait' as VTTAssetCategory,
+  imageUrl: `/generated/compendium/jobs/${file}.webp`,
+  tags: ['portrait', 'job', 'hunter', 'player', display.toLowerCase()],
 }));
 
 // ── Portraits — Backgrounds (character archetype tokens) ─────────────────
@@ -176,11 +190,11 @@ const BACKGROUND_PORTRAITS: VTTAsset[] = [
   'ancient-guardian', 'artifact-keeper', 'bringer-of-dawn', 'champion-of-light',
   'cosmic-wanderer', 'demon-hunter', 'dimensional-traveler', 'dragon-slayer',
   'essence-user', 'eternal-watcher', 'forgotten-king', 'gate-survivor',
-  'guild-master', 'hunter-academy-graduate', 'monarchs-chosen', 'reality-bender',
+  'guild-master', 'hunter-academy-graduate', 'regents-chosen', 'reality-bender',
   'rune-master', 'shadow-realm-exile', 'shadow-soldier', 'star-born',
   'time-walker', 'void-touched',
 ].map((fileName) => ({
-  id: `portrait-bg-${fileName}`, name: toTitleCase(fileName).replace(/Monarchs/g, 'Regents').replace(/Monarch/g, 'Regent'), category: 'portrait' as VTTAssetCategory,
+  id: `portrait-bg-${fileName}`, name: toTitleCase(fileName), category: 'portrait' as VTTAssetCategory,
   imageUrl: `/generated/compendium/backgrounds/${fileName}.webp`,
   tags: ['portrait', 'background', 'character', fileName.split('-')[0]],
 }));
@@ -209,10 +223,10 @@ const COMPENDIUM_ITEMS: VTTAsset[] = (items as { id: string; name: string; image
 // ── Artifacts (legendary item handout art) ───────────────────────────────
 const ARTIFACT_ITEMS: VTTAsset[] = [
   'chaos-heart', 'destiny-book', 'divine-crown', 'dragon-god-spear', 'eternal-heart',
-  'infinity-orb', 'monarch-gauntlets', 'order-crystal', 'reality-weaver',
+  'infinity-orb', 'regent-gauntlets', 'order-crystal', 'reality-weaver',
   'shadow-lord-blade', 'soul-harvester', 'time-master-staff', 'void-armor', 'world-tree-acorn',
 ].map((fileName) => ({
-  id: `artifact-${fileName}`, name: toTitleCase(fileName).replace(/Monarch/g, 'Regent'), category: 'handout' as VTTAssetCategory,
+  id: `artifact-${fileName}`, name: toTitleCase(fileName), category: 'handout' as VTTAssetCategory,
   imageUrl: `/generated/compendium/artifacts/${fileName}.webp`,
   tags: ['artifact', 'legendary', 'handout', fileName.split('-')[0]],
 }));

@@ -361,7 +361,7 @@ export const OptimizedSearch = ({
           <CardContent className="p-2">
             <div className="text-sm text-muted-foreground mb-2">Quick Suggestions:</div>
             <div className="flex flex-wrap gap-2">
-              {['Warrior', 'Mage', 'Longsword', 'Fireball', 'Healing Potion'].map(suggestion => (
+              {['Destroyer', 'Mage', 'Longsword', 'Fireball', 'Healing Potion'].map(suggestion => (
                 <button
                   key={suggestion}
                   onClick={() => setQuery(suggestion)}

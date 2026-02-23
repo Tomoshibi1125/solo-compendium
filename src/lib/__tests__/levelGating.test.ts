@@ -236,10 +236,10 @@ describe('spell/power level gating', () => {
   });
 
   it('half caster has reduced progression', () => {
-    expect(getMaxAccessiblePowerLevel('Crusader', 1)).toBe(0);
-    expect(getMaxAccessiblePowerLevel('Crusader', 2)).toBe(1);
-    expect(getMaxAccessiblePowerLevel('Crusader', 5)).toBe(2);
-    expect(getMaxAccessiblePowerLevel('Crusader', 17)).toBe(5);
+    expect(getMaxAccessiblePowerLevel('Holy Knight', 1)).toBe(0);
+    expect(getMaxAccessiblePowerLevel('Holy Knight', 2)).toBe(1);
+    expect(getMaxAccessiblePowerLevel('Holy Knight', 5)).toBe(2);
+    expect(getMaxAccessiblePowerLevel('Holy Knight', 17)).toBe(5);
   });
 
   it('pact caster caps at level 5 spells', () => {

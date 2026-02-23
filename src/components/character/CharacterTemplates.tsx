@@ -20,20 +20,20 @@ interface CharacterTemplate {
 
 const TEMPLATES: CharacterTemplate[] = [
   {
-    id: 'striker-tank',
-    name: 'Tank Striker',
-    description: 'A frontline warrior focused on defense and protection',
-    job: 'Striker',
+    id: 'destroyer-vanguard',
+    name: 'Vanguard Destroyer',
+    description: 'A frontline combat master with tactical superiority',
+    job: 'Destroyer',
     path: 'Guardian',
     background: 'Former E-Rank',
     level: 1,
     icon: Shield,
-    tags: ['tank', 'defensive', 'melee'],
+    tags: ['frontline', 'tactical', 'melee'],
   },
   {
     id: 'mage-blast',
     name: 'Blaster Mage',
-    description: 'A damage-focused spellcaster',
+    description: 'A damage-focused spellcaster who devastates the battlefield',
     job: 'Mage',
     path: 'Evoker',
     background: 'Academy Graduate',
@@ -44,7 +44,7 @@ const TEMPLATES: CharacterTemplate[] = [
   {
     id: 'assassin-shadow',
     name: 'Stealth Assassin',
-    description: 'A sneaky damage dealer with high mobility',
+    description: 'A precision hunter who strikes from the shadows',
     job: 'Assassin',
     path: 'Shadow',
     background: 'Independent Contractor',
@@ -53,15 +53,15 @@ const TEMPLATES: CharacterTemplate[] = [
     tags: ['stealth', 'damage', 'mobile'],
   },
   {
-    id: 'umbral-monarch',
-    name: 'Umbral Monarch',
-    description: 'A necromancer with an umbral legion',
-    job: 'Necromancer',
-    path: 'Umbral Monarch',
+    id: 'umbral-revenant',
+    name: 'Umbral Revenant',
+    description: 'A death magic hunter commanding an undead legion',
+    job: 'Revenant',
+    path: 'Umbral Regent',
     background: 'Reawakened Ascendant',
     level: 1,
     icon: Sparkles,
-    tags: ['summoner', 'necromancer', 'umbral'],
+    tags: ['summoner', 'undead', 'umbral'],
   },
 ];
 

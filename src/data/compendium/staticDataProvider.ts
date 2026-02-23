@@ -292,7 +292,6 @@ type StaticJobSource = {
   startingEquipment?: string[][];
   hitPointsAtFirstLevel?: string;
   hitPointsAtHigherLevels?: string;
-  multiclassPrerequisites?: string;
   spellcasting?: {
     ability: string;
     focus?: string;
@@ -315,14 +314,10 @@ type StaticSpellSource = {
   type?: string;
   rank?: string;
   image?: string;
-  manaCost?: number;
-  damage?: string;
-  healing?: string;
   effect?: string;
-  range?: number | Record<string, unknown>;
-  cooldown?: number;
+  range?: number | string | Record<string, unknown>;
   activation?: Record<string, unknown>;
-  duration?: Record<string, unknown>;
+  duration?: string | Record<string, unknown>;
   components?: Record<string, unknown>;
   effects?: Record<string, unknown>;
   mechanics?: Record<string, unknown>;
@@ -330,7 +325,99 @@ type StaticSpellSource = {
   flavor?: string;
   higher_levels?: string;
   atHigherLevels?: string;
+  // Fields present on well-formed spells (first 3)
+  level?: number;
+  school?: string;
+  castingTime?: string;
+  concentration?: boolean;
+  ritual?: boolean;
+  classes?: string[];
+  savingThrow?: Record<string, unknown>;
+  spellAttack?: Record<string, unknown>;
+  area?: Record<string, unknown>;
 };
+
+// ---------------------------------------------------------------------------
+// Spell normalization helpers — derive missing 5e fields from existing data
+// ---------------------------------------------------------------------------
+const SCHOOL_KEYWORDS: [RegExp, string][] = [
+  [/shadow|necrot|death|undead|wither|drain|blight|curse|soul/i, 'Necromancy'],
+  [/void|ward|shield|barrier|protect|banish|counter|dispel|abjur/i, 'Abjuration'],
+  [/fire|ice|frost|lightning|thunder|bolt|blast|storm|radiant|force|beam|ray|burn|scorch|ignite|freeze/i, 'Evocation'],
+  [/heal|restore|cure|mend|revive|resurrect|vitality|regenerat/i, 'Evocation'],
+  [/holy|divine|celestial|sacred|smite|purif/i, 'Evocation'],
+  [/summon|conjur|demon|abyssal|portal|gate|call|manifest|rift/i, 'Conjuration'],
+  [/illus|phantom|mirage|invis|disguise|mirror|decep/i, 'Illusion'],
+  [/transform|enhance|alter|shift|polymorph|enlarge|reduce|haste|slow|mutate/i, 'Transmutation'],
+  [/charm|command|compel|dominate|enchant|hold|stun|sleep|sugges|fear|frighten/i, 'Enchantment'],
+  [/detect|scry|reveal|sense|identify|comprehend|augur|divin|see|sight|locate|find/i, 'Divination'],
+];
+
+function deriveSchool(spell: StaticSpellSource): string {
+  if (spell.school) return spell.school;
+  const text = `${spell.name} ${spell.description} ${spell.effect ?? ''}`;
+  for (const [pattern, school] of SCHOOL_KEYWORDS) {
+    if (pattern.test(text)) return school;
+  }
+  return 'Evocation'; // default for SA combat-heavy setting
+}
+
+function deriveCastingTime(spell: StaticSpellSource): string {
+  if (spell.castingTime) return spell.castingTime;
+  const act = spell.activation as Record<string, unknown> | undefined;
+  if (!act) return '1 action';
+  const t = String(act.type ?? 'action').toLowerCase();
+  const cost = Number(act.cost ?? 1);
+  if (t === 'bonus_action' || t === 'bonus') return '1 bonus action';
+  if (t === 'reaction') return '1 reaction';
+  if (t === 'minute') return `${cost} minute${cost > 1 ? 's' : ''}`;
+  if (t === 'hour') return `${cost} hour${cost > 1 ? 's' : ''}`;
+  return '1 action';
+}
+
+function deriveLevel(spell: StaticSpellSource): number {
+  if (spell.level !== undefined && spell.level !== null) return spell.level;
+  const mana = (spell.limitations as Record<string, unknown>)?.mana_cost;
+  const manaN = typeof mana === 'number' ? mana : 0;
+  const rank = (spell.rank ?? 'D').toUpperCase();
+  // Use mana cost as tiebreaker within rank bands
+  switch (rank) {
+    case 'D': return manaN > 50 ? 1 : 0;
+    case 'C': return manaN > 80 ? 3 : 2;
+    case 'B': return manaN > 100 ? 5 : 4;
+    case 'A': return manaN > 110 ? 7 : 6;
+    case 'S': return manaN > 120 ? 9 : 8;
+    default: return 1;
+  }
+}
+
+function deriveConcentration(spell: StaticSpellSource): boolean {
+  if (spell.concentration !== undefined) return spell.concentration;
+  const dur = spell.duration;
+  if (typeof dur === 'string') return /concentrat/i.test(dur);
+  if (dur && typeof dur === 'object') {
+    const t = String((dur as Record<string, unknown>).type ?? '');
+    return /concentrat/i.test(t);
+  }
+  return false;
+}
+
+function deriveRitual(spell: StaticSpellSource): boolean {
+  if (spell.ritual !== undefined) return spell.ritual;
+  return /\britual\b/i.test(spell.description ?? '');
+}
+
+const CLASS_MAP: Record<string, string[]> = {
+  Attack:  ['Destroyer', 'Mage', 'Esper', 'Invoker', 'Assassin', 'Berserker'],
+  Defense: ['Mage', 'Herald', 'Holy Knight', 'Technomancer', 'Contractor'],
+  Healing: ['Herald', 'Holy Knight', 'Summoner', 'Idol'],
+  Utility: ['Mage', 'Assassin', 'Contractor', 'Technomancer', 'Stalker', 'Idol'],
+};
+
+function deriveClasses(spell: StaticSpellSource): string[] {
+  if (spell.classes && spell.classes.length > 0) return spell.classes;
+  return CLASS_MAP[spell.type ?? 'Utility'] ?? ['Mage'];
+}
 
 type StaticLocationSource = {
   id?: string;
@@ -529,6 +616,34 @@ function transformMonster(monster: StaticMonsterSource): StaticCompendiumEntry {
   };
 }
 
+function deriveItemProperties(item: StaticItemSource): Record<string, unknown> | null {
+  if (item.properties) return item.properties as Record<string, unknown>;
+  const stats = item.stats as Record<string, unknown> | undefined;
+  const t = (item.type ?? '').toLowerCase();
+
+  if (t === 'weapon') {
+    return {
+      weapon: { damage: '1d6', damageType: 'slashing', versatile: null, finesse: false },
+      magical: stats ? { bonus: { attack: 0, damage: 0 } } : undefined,
+    };
+  }
+  if (t === 'armor') {
+    const def = typeof stats?.defense === 'number' ? stats.defense : 0;
+    const acBonus = def > 100 ? 3 : def > 50 ? 2 : def > 0 ? 1 : 0;
+    return {
+      armor: { baseAC: 10 + acBonus, type: acBonus >= 3 ? 'heavy' : acBonus >= 2 ? 'medium' : 'light' },
+      magical: acBonus > 0 ? { bonus: { armorClass: acBonus } } : undefined,
+    };
+  }
+  if (t === 'consumable') {
+    return { consumable: { uses: 1, action: 'action' } };
+  }
+  if (t === 'accessory' || t === 'wondrous') {
+    return { wondrous: { slot: 'any' } };
+  }
+  return null;
+}
+
 function transformItem(item: StaticItemSource): StaticCompendiumEntry {
   return {
     id: item.id || item.name.toLowerCase().replace(/\s+/g, '-'),
@@ -542,7 +657,7 @@ function transformItem(item: StaticItemSource): StaticCompendiumEntry {
     equipment_type: item.type,
     item_type: item.type,
     requirements: item.requirements ?? null,
-    properties: item.properties ?? null,
+    properties: deriveItemProperties(item),
     effects: item.effects ?? null,
     attunement: item.attunement ?? null,
     cursed: item.cursed ?? null,
@@ -589,7 +704,7 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
     starting_equipment: job.startingEquipment || null,
     hit_points_at_first_level: job.hitPointsAtFirstLevel || null,
     hit_points_at_higher_levels: job.hitPointsAtHigherLevels || null,
-    multiclass_prerequisites: job.multiclassPrerequisites || null,
+    multiclass_prerequisites: null,
     spellcasting_ability: job.spellcasting?.ability || null,
     spellcasting_focus: job.spellcasting?.focus || null,
     awakening_features: job.awakeningFeatures || null,
@@ -604,49 +719,24 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
 function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
   const rangeValue = typeof spell.range === 'number'
     ? spell.range
-    : (spell.range && typeof spell.range === 'object' ? (spell.range as Record<string, unknown>) : null);
-  const cooldownValue = typeof spell.cooldown === 'number' ? spell.cooldown : null;
-  const manaCostValue = typeof spell.manaCost === 'number' ? spell.manaCost : null;
+    : typeof spell.range === 'string'
+      ? { type: spell.range, distance: spell.range }
+      : (spell.range && typeof spell.range === 'object' ? (spell.range as Record<string, unknown>) : null);
   const rankValue = typeof spell.rank === 'string' ? spell.rank : null;
   const primaryEffect = typeof spell.effect === 'string' ? spell.effect : '';
 
-  const derivedActivation = cooldownValue !== null && cooldownValue <= 1
-    ? { type: 'action' }
-    : cooldownValue !== null && cooldownValue <= 3
-      ? { type: 'bonus-action' }
-      : { type: 'action' };
+  // Derive missing 5e fields
+  const school = deriveSchool(spell);
+  const castingTime = deriveCastingTime(spell);
+  const spellLevel = deriveLevel(spell);
+  const concentration = deriveConcentration(spell);
+  const ritual = deriveRitual(spell);
+  const classes = deriveClasses(spell);
 
-  const derivedDuration = { type: 'instantaneous' };
+  const derivedActivation = { type: castingTime.includes('bonus') ? 'bonus_action' : castingTime.includes('reaction') ? 'reaction' : 'action', cost: 1 };
+  const derivedDuration = concentration ? { type: 'concentration', time: '1 minute' } : { type: 'instantaneous' };
   const derivedComponents = { verbal: true, somatic: true, material: false };
   const derivedEffects = { primary: primaryEffect };
-
-  const damageNumber = typeof (spell as any).damage === 'number' ? ((spell as any).damage as number) : null;
-  const healingNumber = typeof (spell as any).healing === 'number' ? ((spell as any).healing as number) : null;
-
-  const estimateDice = (value: number): string => {
-    const die = 8;
-    const diceCount = Math.max(1, Math.round(value / die));
-    return `${diceCount}d${die}`;
-  };
-
-  const derivedMechanics = damageNumber !== null
-    ? {
-        attack: { type: 'ranged', modifier: 'Intelligence', damage: estimateDice(damageNumber) },
-      }
-    : healingNumber !== null
-      ? {
-          saving_throw: {
-            ability: 'Wisdom',
-            dc: '8 + proficiency bonus + Intelligence modifier',
-            success: 'Half effect',
-            failure: 'Full effect',
-          },
-        }
-      : null;
-
-  const derivedLimitations = cooldownValue !== null
-    ? { cooldown: `${cooldownValue} rounds` }
-    : null;
 
   return {
     id: spell.id || spell.name.toLowerCase().replace(/\s+/g, '-'),
@@ -654,19 +744,15 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
     display_name: spell.name,
     description: spell.description,
     created_at: new Date().toISOString(),
-    tags: [spell.type, spell.rank].filter(Boolean) as string[],
+    tags: [spell.type, spell.rank, school, ...classes].filter(Boolean) as string[],
     source_book: 'System Ascendant Homebrew',
     image_url: spell.image,
     spell_type: spell.type,
     rank: rankValue,
-    mana_cost: manaCostValue,
-    damage: undefined,
-    healing: undefined,
+    level: spellLevel,
     effect: spell.effect,
     range: rangeValue,
-    cooldown: cooldownValue,
-    school: spell.type,
-    power_level: undefined,
+    school: school,
     activation:
       (spell.activation && typeof spell.activation === 'object' ? spell.activation : derivedActivation) as Record<string, unknown>,
     duration:
@@ -678,12 +764,14 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
     mechanics:
       (spell.mechanics && typeof spell.mechanics === 'object'
         ? spell.mechanics
-        : derivedMechanics) as Record<string, unknown> | null,
+        : (spell as any).spellAttack
+          ? { attack: (spell as any).spellAttack }
+          : { saving_throw: { ability: 'dexterity', effect: 'half damage' } }) as Record<string, unknown>,
     limitations:
       (spell.limitations && typeof spell.limitations === 'object'
-        ? spell.limitations
-        : derivedLimitations) as Record<string, unknown> | null,
-    flavor: typeof spell.flavor === 'string' ? spell.flavor : null,
+        ? { ...spell.limitations, concentration, ritual, casting_time: castingTime, spell_classes: classes }
+        : { concentration, ritual, casting_time: castingTime, spell_classes: classes }) as Record<string, unknown>,
+    flavor: typeof spell.flavor === 'string' ? spell.flavor : (spell.description || ''),
     higher_levels: spell.higher_levels || spell.atHigherLevels || null,
     atHigherLevels: spell.atHigherLevels || spell.higher_levels || null,
     rarity: spell.rank === 'S' ? 'legendary' :
@@ -790,7 +878,37 @@ function transformBackground(background: StaticBackgroundSource): StaticCompendi
   };
 }
 
+// Derive class_features for regents that only have features[] + abilities[] with power_level
+function deriveMonarchClassFeatures(monarch: StaticMonarchSource): Array<{ level: number; name: string; description: string }> | null {
+  // If the monarch already has class_features (like Umbral Regent), use them
+  const raw = (monarch as any).class_features;
+  if (Array.isArray(raw) && raw.length > 0) return raw;
+
+  const features = (monarch as any).features as Array<{ name: string; description: string; power_level?: number }> | undefined;
+  const abilities = monarch.abilities as Array<{ name: string; description: string; power_level?: number; type?: string; frequency?: string }> | undefined;
+  if (!features && !abilities) return null;
+
+  // Power level → character level mapping (regent power 1-10 → character level 1-20)
+  const powerToLevel: Record<number, number> = { 1: 1, 2: 3, 3: 5, 4: 7, 5: 9, 6: 11, 7: 13, 8: 15, 9: 17, 10: 20 };
+  const result: Array<{ level: number; name: string; description: string }> = [];
+
+  for (const f of features ?? []) {
+    const pl = f.power_level ?? 1;
+    result.push({ level: powerToLevel[pl] ?? pl * 2 - 1, name: f.name, description: f.description });
+  }
+  for (const a of abilities ?? []) {
+    const pl = a.power_level ?? 1;
+    const suffix = a.frequency ? ` (${a.frequency.replace(/-/g, ' ')})` : '';
+    result.push({ level: powerToLevel[pl] ?? pl * 2 - 1, name: a.name, description: a.description + suffix });
+  }
+
+  result.sort((a, b) => a.level - b.level);
+  return result.length > 0 ? result : null;
+}
+
 function transformMonarch(monarch: StaticMonarchSource): StaticCompendiumEntry {
+  const classFeatures = deriveMonarchClassFeatures(monarch);
+
   return {
     id: monarch.id || monarch.name.toLowerCase().replace(/\s+/g, '-'),
     name: monarch.name,
@@ -814,6 +932,8 @@ function transformMonarch(monarch: StaticMonarchSource): StaticCompendiumEntry {
     monarch_features: monarch.features as Array<Record<string, unknown>> || null,
     monarch_mechanics: monarch.mechanics as Record<string, unknown> || null,
     monarch_requirements: monarch.requirements as Record<string, unknown> || null,
+    // Derived 5e-style class features for all regents
+    class_features: classFeatures,
   };
 }
 
@@ -1220,7 +1340,7 @@ export const staticDataProvider: StaticDataProvider = {
         name: 'Umbral Warrior',
         description: 'Versatile melee legionnaire balanced in offense and defense.',
         rank: 'C',
-        role: 'Warrior'
+        role: 'Destroyer'
       },
       {
         id: 'scout-soldier',

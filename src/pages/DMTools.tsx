@@ -4,7 +4,7 @@
  */
 
 import React, { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   Sword, 
   Clock, 
@@ -329,6 +329,7 @@ const categories = [
 ];
 
 const DMTools = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -374,11 +375,11 @@ const DMTools = () => {
             </div>
             
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" onClick={() => navigate('/compendium')}>
                 <HelpCircle className="w-4 h-4 mr-2" />
                 Help
               </Button>
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" onClick={() => navigate('/dm-tools/system-console')}>
                 <Settings className="w-4 h-4 mr-2" />
                 Settings
               </Button>
@@ -532,19 +533,19 @@ const DMTools = () => {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <Button variant="outline" className="justify-start">
+                <Button variant="outline" className="justify-start" onClick={() => navigate('/dm-tools/encounter-builder')}>
                   <Sword className="w-4 h-4 mr-2" />
                   Quick Combat
                 </Button>
-                <Button variant="outline" className="justify-start">
+                <Button variant="outline" className="justify-start" onClick={() => navigate('/dm-tools/random-event-generator')}>
                   <Dice6 className="w-4 h-4 mr-2" />
                   Random Encounter
                 </Button>
-                <Button variant="outline" className="justify-start">
+                <Button variant="outline" className="justify-start" onClick={() => navigate('/dm-tools/party-tracker')}>
                   <Users className="w-4 h-4 mr-2" />
                   Party Status
                 </Button>
-                <Button variant="outline" className="justify-start">
+                <Button variant="outline" className="justify-start" onClick={() => navigate('/dm-tools/session-planner')}>
                   <Calendar className="w-4 h-4 mr-2" />
                   Session Notes
                 </Button>

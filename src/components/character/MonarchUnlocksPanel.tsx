@@ -71,13 +71,25 @@ export function MonarchUnlocksPanel({ characterId }: MonarchUnlocksPanelProps) {
         .from('compendium_regents' as any)
         .select('id, name, title, theme, source_book')
         .order('name');
-      if (error) throw error;
 
-      return filterRowsBySourcebookAccess(
-        data || [],
-        (regent) => (regent as any).source_book,
-        { campaignId }
-      );
+      if (!error && data && data.length > 0) {
+        return filterRowsBySourcebookAccess(
+          data,
+          (regent) => (regent as any).source_book,
+          { campaignId }
+        );
+      }
+
+      // Static fallback
+      const { staticDataProvider } = await import('@/data/compendium/staticDataProvider');
+      const staticRegents = await staticDataProvider.getRegents('');
+      return staticRegents.map(r => ({
+        id: r.id,
+        name: r.name,
+        title: r.title ?? null,
+        theme: r.theme ?? null,
+        source_book: r.source_book ?? 'System Ascendant Canon',
+      }));
     },
   });
 

@@ -28,15 +28,20 @@ describe('5e Homebrew Compatibility', () => {
   test('Job compatibility with 5e classes', () => {
     // Test job mappings
     const jobMappings = {
-      'Mage': 'Wizard',
-      'Healer': 'Cleric',
-      'Ranger': 'Ranger',
-      'Esper': 'Sorcerer',
-      'Herald': 'Paladin',
-      'Warrior': 'Fighter',
+      'Destroyer': 'Fighter',
+      'Berserker': 'Barbarian',
       'Assassin': 'Rogue',
-      'Warden': 'Druid',
-      'Techsmith': 'Artificer'
+      'Striker': 'Monk',
+      'Mage': 'Wizard',
+      'Esper': 'Sorcerer',
+      'Revenant': 'Wizard',
+      'Summoner': 'Druid',
+      'Herald': 'Cleric',
+      'Contractor': 'Warlock',
+      'Stalker': 'Ranger',
+      'Holy Knight': 'Paladin',
+      'Technomancer': 'Artificer',
+      'Idol': 'Bard'
     };
     
     Object.entries(jobMappings).forEach(([systemJob, standardClass]) => {

@@ -46,6 +46,21 @@ export interface Power {
   flavor: string;
   source: string;
   image?: string;
+  
+  // 5e-style power mechanics
+  spell_level_equivalent?: number;     // If power acts like a spell
+  concentration_required?: boolean;
+  saving_throw?: {
+    ability: string;
+    dc: string | number;
+    success: string;
+    failure: string;
+  };
+  attack_roll?: {
+    type: 'melee' | 'ranged';
+    ability: string;
+    damage: string;
+  };
 }
 
 export const powers: Power[] = [
@@ -286,7 +301,7 @@ export const powers: Power[] = [
     type: 'awakening',
     rarity: 'uncommon',
     requirements: {
-      job: 'Warrior'
+      job: 'Destroyer'
     },
     activation: {
       type: 'bonus-action'
@@ -654,7 +669,7 @@ export const powers: Power[] = [
     rarity: 'legendary',
     requirements: {
       level: 18,
-      class: 'Warrior'
+      class: 'Destroyer'
     },
     activation: {
       type: 'action'

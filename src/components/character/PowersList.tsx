@@ -41,14 +41,19 @@ export function PowersList({ characterId }: { characterId: string }) {
   const [filterLevel, setFilterLevel] = useState<string>('all');
   const [filterPrepared, setFilterPrepared] = useState<string>('all');
 
-  // Get compendium power IDs for linking
+  // Get compendium power IDs for linking (with static fallback)
   const { data: compendiumPowers = [] } = useQuery({
     queryKey: ['compendium-powers-lookup'],
     queryFn: async () => {
       const { data } = await supabase
         .from('compendium_powers')
         .select('id, name');
-      return data || [];
+      if (data && data.length > 0) return data;
+
+      // Static fallback
+      const { staticDataProvider } = await import('@/data/compendium/staticDataProvider');
+      const staticPowers = await staticDataProvider.getPowers('');
+      return staticPowers.map(p => ({ id: p.id, name: p.name }));
     },
   });
 

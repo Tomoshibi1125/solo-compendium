@@ -393,11 +393,15 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-2">
-                  <Button size="sm" variant="outline">
+                  <Button size="sm" variant="outline" onClick={() => {
+                    if (characterId) window.open(`/characters/${characterId}#spells`, '_blank');
+                  }}>
                     <BookOpen className="w-3 h-3 mr-1" />
                     Spellbook
                   </Button>
-                  <Button size="sm" variant="outline">
+                  <Button size="sm" variant="outline" onClick={() => {
+                    if (characterId) window.open(`/characters/${characterId}#spells`, '_blank');
+                  }}>
                     <Plus className="w-3 h-3 mr-1" />
                     Prepare Spell
                   </Button>

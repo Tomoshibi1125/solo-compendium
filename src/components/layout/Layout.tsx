@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { useState, useEffect, useMemo } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
 import { Header } from './Header';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/lib/auth/authContext';
@@ -10,9 +10,25 @@ interface LayoutProps {
   className?: string;
 }
 
+// Derive SA zone from current route
+function useSAZone(): string {
+  const location = useLocation();
+  const path = location.pathname;
+  if (path.startsWith('/dm-tools') || path.startsWith('/admin')) return 'dm';
+  if (path.startsWith('/campaigns')) return 'campaign';
+  if (path.startsWith('/compendium') || path.startsWith('/favorites')) return 'compendium';
+  if (path.startsWith('/player-tools') || path.startsWith('/dice')) return 'player';
+  if (path.startsWith('/characters')) return 'character';
+  if (path.startsWith('/auth') || path.startsWith('/login')) return 'auth';
+  if (path.startsWith('/homebrew') || path.startsWith('/marketplace')) return 'compendium';
+  if (path.startsWith('/profile')) return 'player';
+  return 'character'; // default
+}
+
 export function Layout({ children, className }: LayoutProps) {
   const { user, signOut } = useAuth();
   const { reducedMotion, highContrast } = useAccessibility();
+  const saZone = useSAZone();
 
   // Complete responsive design system
   const useMediaQuery = (query: string): boolean => {
@@ -65,7 +81,7 @@ export function Layout({ children, className }: LayoutProps) {
   }, [reducedMotion, highContrast]);
 
   return (
-    <div className={layoutClasses}>
+    <div className={layoutClasses} data-sa-zone={saZone}>
       <a href="#main-content" className="skip-link">
         Skip to content
       </a>

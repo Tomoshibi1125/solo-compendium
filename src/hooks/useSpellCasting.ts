@@ -24,6 +24,8 @@ export interface CastableSpell {
   id: string;
   name: string;
   level: number; // 0 = cantrip
+  type?: 'Attack' | 'Defense' | 'Utility' | 'Healing';
+  rank?: 'D' | 'C' | 'B' | 'A' | 'S';
   isRitual: boolean;
   isConcentration: boolean;
   castingTime: string | null;

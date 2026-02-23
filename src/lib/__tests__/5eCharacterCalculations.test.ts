@@ -88,19 +88,22 @@ describe('5e Character Calculations', () => {
   test('Caster type detection', () => {
     expect(getCasterType('Mage')).toBe('full');
     expect(getCasterType('Esper')).toBe('full');
-    expect(getCasterType('Herald')).toBe('half');
-    expect(getCasterType('Ranger')).toBe('half');
-    expect(getCasterType('Warrior')).toBe('artificer'); // Maps to Fighter (Eldritch Knight) → third caster
-    expect(getCasterType('Techsmith')).toBe('artificer');
+    expect(getCasterType('Herald')).toBe('full'); // Cleric = full caster
+    expect(getCasterType('Idol')).toBe('full'); // Bard = full caster
+    expect(getCasterType('Stalker')).toBe('half'); // Ranger = half caster
+    expect(getCasterType('Technomancer')).toBe('artificer');
+    expect(getCasterType('Contractor')).toBe('pact');
+    expect(getCasterType('Destroyer')).toBe('none');
   });
 
   test('Spellcasting ability detection', () => {
     expect(getSpellcastingAbility('Mage')).toBe('INT');
     expect(getSpellcastingAbility('Esper')).toBe('PRE');
-    expect(getSpellcastingAbility('Herald')).toBe('PRE');
-    expect(getSpellcastingAbility('Ranger')).toBe('SENSE');
-    expect(getSpellcastingAbility('Healer')).toBe('SENSE');
-    expect(getSpellcastingAbility('Warrior')).toBe('INT'); // Eldritch Knight uses INT
+    expect(getSpellcastingAbility('Herald')).toBe('SENSE'); // Cleric uses Sense (Wisdom)
+    expect(getSpellcastingAbility('Stalker')).toBe('SENSE');
+    expect(getSpellcastingAbility('Summoner')).toBe('SENSE');
+    expect(getSpellcastingAbility('Idol')).toBe('PRE');
+    expect(getSpellcastingAbility('Destroyer')).toBeNull(); // Non-caster
   });
 
   test('Spells known limit', () => {
@@ -113,7 +116,7 @@ describe('5e Character Calculations', () => {
     expect(preparedLimit).toBe(8); // 3 + 5
     
     // Non-caster
-    const nonCasterLimit = getSpellsKnownLimit('Warrior', 5);
+    const nonCasterLimit = getSpellsKnownLimit('Destroyer', 5);
     expect(nonCasterLimit).toBeNull();
   });
 

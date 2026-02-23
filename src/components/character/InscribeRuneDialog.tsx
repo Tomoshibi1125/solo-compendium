@@ -12,7 +12,7 @@ import { useEquipment } from '@/hooks/useEquipment';
 import { useToast } from '@/hooks/use-toast';
 import { BookOpen, AlertCircle, CheckCircle, Sparkles, Zap, Shield, Scroll } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
+import { formatRegentVernacular, normalizeRegentSearch, formatMonarchVernacular } from '@/lib/vernacular';
 
 const RUNE_TYPE_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   martial: Zap,
@@ -75,8 +75,8 @@ export function InscribeRuneDialog({
       // Filter by search
       const trimmedQuery = searchQuery.trim();
       if (trimmedQuery) {
-        const canonicalQuery = normalizeMonarchSearch(trimmedQuery.toLowerCase());
-        const runeName = normalizeMonarchSearch(rune.name.toLowerCase());
+        const canonicalQuery = normalizeRegentSearch(trimmedQuery.toLowerCase());
+        const runeName = normalizeRegentSearch(rune.name.toLowerCase());
         if (!runeName.includes(canonicalQuery)) {
           return false;
         }

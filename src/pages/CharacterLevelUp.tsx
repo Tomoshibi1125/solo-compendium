@@ -23,6 +23,9 @@ import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 import { isASILevel, isPathUnlockLevel, type PathUnlockMeta } from '@/lib/levelGating';
 import { DomainEventBus, buildCorePayload, type CharacterLevelUpEvent } from '@/lib/domainEvents';
 import { calculateFeatureUses, autoUpdateFeatureUses } from '@/lib/automation';
+import { useRegentUnlocks } from '@/hooks/useRegentUnlocks';
+import { monarchs as regents } from '@/data/compendium/monarchs';
+import { formatRegentVernacular } from '@/lib/vernacular';
 
 // SRD 5e XP Thresholds (cumulative XP needed to reach each level)
 const XP_THRESHOLDS = [
@@ -91,6 +94,16 @@ const CharacterLevelUp = () => {
 
   const showPathSelection = needsPathSelection && availablePaths.length > 0;
   const showASISection = !!character && isASILevel(newLevel, character?.job);
+
+  // Regent progression: show new regent features unlocked at this level
+  const { unlocks: regentUnlocks } = useRegentUnlocks(id || '');
+  const primaryRegentUnlock = regentUnlocks.find((u: any) => u.is_primary) ?? regentUnlocks[0];
+  const regentData = primaryRegentUnlock
+    ? regents.find((m: any) => m.id === primaryRegentUnlock.regent_id)
+    : null;
+  const newRegentFeatures = regentData?.class_features?.filter(
+    (f: any) => f.level === newLevel
+  ) ?? [];
 
   // Fetch features for the new level (DB first, static fallback)
   const { data: newFeatures = [] } = useQuery({
@@ -751,6 +764,41 @@ const CharacterLevelUp = () => {
                           )}
                         </div>
                       </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Regent Features Unlocked at This Level */}
+            {primaryRegentUnlock && newRegentFeatures.length > 0 && (
+              <div className="p-4 rounded-lg bg-gradient-to-r from-monarch-gold/10 to-shadow-purple/10 border border-monarch-gold/20">
+                <Label className="font-arise text-monarch-gold tracking-wide flex items-center gap-2 mb-4">
+                  <Crown className="w-4 h-4" />
+                  {formatRegentVernacular(regentData?.name ?? '')} — NEW ABILITIES
+                </Label>
+                <div className="space-y-3">
+                  {newRegentFeatures.map((feature: any, idx: number) => (
+                    <div
+                      key={idx}
+                      className="p-4 rounded-lg border border-monarch-gold/10 bg-muted/30"
+                    >
+                      <div className="flex items-center gap-2 mb-1 flex-wrap">
+                        <span className="font-arise font-semibold text-monarch-gold tracking-wide">
+                          {formatRegentVernacular(feature.name)}
+                        </span>
+                        <Badge variant="secondary" className="text-xs font-heading">
+                          {feature.type}
+                        </Badge>
+                        {feature.frequency && (
+                          <Badge variant="outline" className="text-xs font-heading border-monarch-gold/30 text-monarch-gold">
+                            {feature.frequency}
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground font-heading">
+                        {formatRegentVernacular(feature.description)}
+                      </p>
                     </div>
                   ))}
                 </div>

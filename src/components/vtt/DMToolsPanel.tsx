@@ -372,10 +372,21 @@ export const DMToolsPanel: React.FC<DMToolsPanelProps> = ({
                   placeholder="Session notes..."
                 />
                 <div className="flex gap-2 mt-2">
-                  <Button size="sm" className="flex-1">
+                  <Button size="sm" className="flex-1" onClick={() => {
+                    const textarea = document.querySelector('[placeholder="Session notes..."]') as HTMLTextAreaElement;
+                    if (textarea?.value.trim()) {
+                      localStorage.setItem(`sa-session-notes-${campaignId || 'local'}`, textarea.value);
+                      toast({ title: 'Notes Saved', description: 'Session notes saved locally.' });
+                    }
+                  }}>
                     Save
                   </Button>
-                  <Button size="sm" variant="outline">
+                  <Button size="sm" variant="outline" onClick={() => {
+                    const textarea = document.querySelector('[placeholder="Session notes..."]') as HTMLTextAreaElement;
+                    if (textarea) { textarea.value = ''; }
+                    localStorage.removeItem(`sa-session-notes-${campaignId || 'local'}`);
+                    toast({ title: 'Notes Cleared' });
+                  }}>
                     Clear
                   </Button>
                 </div>

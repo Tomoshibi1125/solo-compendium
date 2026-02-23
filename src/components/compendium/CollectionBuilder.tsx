@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
+import { formatRegentVernacular, normalizeRegentSearch, formatMonarchVernacular } from '@/lib/vernacular';
 
 interface CollectionItem {
   id: string;
@@ -219,10 +219,10 @@ export function CollectionBuilder({
   };
 
   const filteredItems = availableItems.filter((item) => {
-    const canonicalQuery = normalizeMonarchSearch(searchQuery.toLowerCase());
+    const canonicalQuery = normalizeRegentSearch(searchQuery.toLowerCase());
     return (
-      normalizeMonarchSearch(item.name.toLowerCase()).includes(canonicalQuery) ||
-      normalizeMonarchSearch(item.type.toLowerCase()).includes(canonicalQuery)
+      normalizeRegentSearch(item.name.toLowerCase()).includes(canonicalQuery) ||
+      normalizeRegentSearch(item.type.toLowerCase()).includes(canonicalQuery)
     );
   });
 

@@ -543,6 +543,8 @@ export function useHomebrewCharacterIntegration() {
       // Transform homebrew spell data to match expected spell interface
       level: spell.data.level || 1,
       school: spell.data.school || 'evocation',
+      type: spell.data.type || 'Utility',
+      rank: spell.data.rank || 'D',
       castingTime: spell.data.castingTime || '1 action',
       range: spell.data.range || 'Self',
       components: spell.data.components || ['V'],

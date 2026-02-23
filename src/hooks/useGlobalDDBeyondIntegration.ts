@@ -174,8 +174,7 @@ export function useGlobalDDBeyondIntegration() {
         };
       },
       syncOfflineData: async () => {
-        // Trigger offline sync
-        console.log('Syncing offline data...');
+        // Trigger offline sync via background sync hook
       }
     };
   };

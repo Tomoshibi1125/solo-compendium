@@ -9,6 +9,20 @@ export interface Skill {
   ability: 'Strength' | 'Dexterity' | 'Constitution' | 'Intelligence' | 'Wisdom' | 'Charisma';
   type: 'combat' | 'exploration' | 'social' | 'magical' | 'shadow';
   uses: string;
+  
+  // 5e-style skill mechanics
+  ability_score_modifiers?: boolean;    // Can add ability score to skill checks
+  expertise_available?: boolean;        // Can be taken as expertise
+  synergies: {
+    skill: string;
+    benefit: string;
+  }[] | string[];
+  special_applications?: {
+    situation: string;
+    benefit: string;
+  }[];
+  
+  // System Ascendant compatibility (legacy)
   mechanics: {
     check: string;
     dc?: number | 'opposed' | 'contest' | string;
@@ -22,7 +36,7 @@ export interface Skill {
     master: string[];
   };
   applications: string[];
-  synergies: string[];
+  // (synergies field merged with 5e-style declaration above)
   source: string;
   image?: string;
 }

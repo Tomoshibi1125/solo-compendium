@@ -14,7 +14,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useCharacters } from '@/hooks/useCharacters';
 import { FileText, User, BookOpen, Dice6, Settings, Home } from 'lucide-react';
 import { getTableName, type EntryType } from '@/lib/compendiumResolver';
-import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
+import { formatRegentVernacular, normalizeRegentSearch } from '@/lib/vernacular';
 
 interface CommandPaletteProps {
   open: boolean;
@@ -25,7 +25,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
   const navigate = useNavigate();
   const { data: characters } = useCharacters();
   const [search, setSearch] = useState('');
-  const canonicalSearch = normalizeMonarchSearch(search.toLowerCase());
+  const canonicalSearch = normalizeRegentSearch(search.toLowerCase());
 
   // Search compendium items
   const { data: compendiumResults } = useQuery({
@@ -34,7 +34,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
       if (!search || search.length < 2) return [];
 
       const results: Array<{ id: string; name: string; type: string; href: string }> = [];
-      const canonicalQuery = normalizeMonarchSearch(search);
+      const canonicalQuery = normalizeRegentSearch(search);
 
       // Search common compendium types using resolver table names
       const searchTypes: Array<{ type: EntryType; label: string; route: string }> = [
@@ -128,7 +128,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
             {characters
               .filter(char =>
                 !search ||
-                normalizeMonarchSearch(char.name.toLowerCase()).includes(canonicalSearch)
+                normalizeRegentSearch(char.name.toLowerCase()).includes(canonicalSearch)
               )
               .slice(0, 5)
               .map((character) => (
@@ -137,9 +137,9 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
                   onSelect={() => handleSelect(`/characters/${character.id}`)}
                 >
                   <User className="mr-2 h-4 w-4" />
-                  {formatMonarchVernacular(character.name)}
+                  {formatRegentVernacular(character.name)}
                   <span className="ml-2 text-xs text-muted-foreground">
-                    Level {character.level} {formatMonarchVernacular(character.job || 'Ascendant')}
+                    Level {character.level} {formatRegentVernacular(character.job || 'Ascendant')}
                   </span>
                 </CommandItem>
               ))}
@@ -155,9 +155,9 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
                 onSelect={() => handleSelect(item.href)}
               >
                 <FileText className="mr-2 h-4 w-4" />
-                {formatMonarchVernacular(item.name)}
+                {formatRegentVernacular(item.name)}
                 <span className="ml-2 text-xs text-muted-foreground">
-                  {formatMonarchVernacular(item.type)}
+                  {formatRegentVernacular(item.type)}
                 </span>
               </CommandItem>
             ))}

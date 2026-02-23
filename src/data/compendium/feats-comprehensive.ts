@@ -826,7 +826,7 @@ export const comprehensiveFeats: Feat[] = [
     name: 'Warrior\'s Determination',
     description: 'Your martial awakening grants you exceptional determination and resilience.',
     prerequisites: {
-      job: 'Warrior'
+      job: 'Destroyer'
     },
     benefits: [
       'Advantage on saving throws against fear and charm',

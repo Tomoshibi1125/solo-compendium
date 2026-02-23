@@ -55,11 +55,30 @@ export function useCompendiumRunes(characterId?: string) {
         .order('rune_level', { ascending: true })
         .order('name', { ascending: true });
 
-      if (error) throw error;
+      // If Supabase returned results, use them
+      if (!error && data && data.length > 0) {
+        const runes = data as Rune[];
+        const campaignId = characterId ? await getCharacterCampaignId(characterId) : null;
+        return filterRowsBySourcebookAccess(runes, (rune) => rune.source_book, { campaignId });
+      }
 
-      const runes = (data || []) as Rune[];
-      const campaignId = characterId ? await getCharacterCampaignId(characterId) : null;
-      return filterRowsBySourcebookAccess(runes, (rune) => rune.source_book, { campaignId });
+      // Static fallback: load runes from compendium data
+      const { staticDataProvider } = await import('@/data/compendium/staticDataProvider');
+      const staticRunes = await staticDataProvider.getRunes('');
+      return staticRunes.map(r => ({
+        id: r.id,
+        name: r.name,
+        display_name: r.display_name || r.name,
+        description: r.description,
+        rune_level: r.rune_level ?? 1,
+        rune_type: r.rune_type ?? 'enhancement',
+        rune_category: r.rune_category ?? 'general',
+        rarity: r.rarity ?? 'common',
+        source_book: r.source_book ?? 'System Ascendant Canon',
+        created_at: r.created_at,
+        tags: r.tags ?? null,
+        image_url: r.image_url ?? null,
+      })) as unknown as Rune[];
     },
   });
 }
@@ -594,7 +613,7 @@ export function checkRuneRequirements(
   const isNaturalUser = rune.requires_job?.includes(characterJob || '') || false;
 
   // Determine if cross-learning penalty applies
-  const isCaster = ['Mage', 'Esper', 'Healer', 'Herald'].includes(characterJob || '');
+  const isCaster = ['Mage', 'Esper', 'Herald', 'Revenant', 'Contractor', 'Technomancer', 'Resonant', 'Summoner'].includes(characterJob || '');
   const isMartial = !isCaster && characterJob !== null;
   
   if (!isNaturalUser) {

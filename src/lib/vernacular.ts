@@ -5,6 +5,12 @@ const REGENT_CANONICAL_PLURAL = 'regents';
 
 export const formatRegentVernacular = (value: string): string =>
   value
+    .replace(/\bMONARCHS\b/g, REGENT_LABEL_PLURAL.toUpperCase())
+    .replace(/\bMONARCH\b/g, REGENT_LABEL.toUpperCase())
+    .replace(/\bMonarchs\b/g, REGENT_LABEL_PLURAL)
+    .replace(/\bMonarch\b/g, REGENT_LABEL)
+    .replace(/\bmonarchs\b/g, REGENT_LABEL_PLURAL.toLowerCase())
+    .replace(/\bmonarch\b/g, REGENT_LABEL.toLowerCase())
     .replace(/\bREGENTS\b/g, REGENT_LABEL_PLURAL.toUpperCase())
     .replace(/\bREGENT\b/g, REGENT_LABEL.toUpperCase())
     .replace(/\bRegents\b/g, REGENT_LABEL_PLURAL)
@@ -16,6 +22,8 @@ export const normalizeRegentSearch = (value: string): string => {
   const label = REGENT_LABEL.toLowerCase();
   const labelPlural = REGENT_LABEL_PLURAL.toLowerCase();
   return value
+    .replace(/\bmonarchs\b/gi, REGENT_CANONICAL_PLURAL)
+    .replace(/\bmonarch\b/gi, REGENT_CANONICAL)
     .replace(new RegExp(`\\b${labelPlural}\\b`, 'gi'), REGENT_CANONICAL_PLURAL)
     .replace(new RegExp(`\\b${label}\\b`, 'gi'), REGENT_CANONICAL);
 };

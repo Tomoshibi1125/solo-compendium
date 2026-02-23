@@ -18,11 +18,27 @@ import {
 } from '@/lib/sourcebookAccess';
 import { calculateFeatureUses } from '@/lib/automation';
 import { jobs as staticJobs } from '@/data/compendium/jobs';
+import { items as staticItems } from '@/data/compendium/items';
 
 type Job = Database['public']['Tables']['compendium_jobs']['Row'];
 type Background = Database['public']['Tables']['compendium_backgrounds']['Row'];
 
 type StaticJob = (typeof staticJobs)[number];
+
+function findStaticItemByName(itemName: string): (typeof staticItems)[number] | null {
+  const normalized = itemName.trim().toLowerCase();
+  return staticItems.find((i) => i.name.trim().toLowerCase() === normalized) ?? null;
+}
+
+function deriveItemType(item: (typeof staticItems)[number]): string {
+  if (item.item_type) return item.item_type;
+  const t = item.type?.toLowerCase() ?? '';
+  if (t === 'weapon') return 'weapon';
+  if (t === 'armor') return 'armor';
+  if (t === 'consumable') return 'consumable';
+  if (t === 'scroll' || t === 'wand' || t === 'staff') return 'tool';
+  return 'misc';
+}
 
 function findStaticJobByName(jobName: string | null | undefined): StaticJob | null {
   if (!jobName) return null;
@@ -57,11 +73,11 @@ function getSpellProgressionForJob(jobName: string | null | undefined): SpellPro
   const normalized = normalizeJobName(jobName);
 
   // Full casters
-  const fullCasters = ['mage', 'necromancer', 'technomancer', 'oracle', 'resonant', 'invoker', 'healer', 'warden', 'esper', 'revenant'];
+  const fullCasters = ['mage', 'revenant', 'herald', 'esper', 'summoner', 'idol'];
   if (fullCasters.includes(normalized)) return 'full';
 
   // Half casters
-  const halfCasters = ['crusader', 'stalker', 'herald', 'ranger', 'techsmith', 'holy knight'];
+  const halfCasters = ['holy knight', 'stalker', 'technomancer'];
   if (halfCasters.includes(normalized)) return 'half';
 
   // Pact caster
@@ -427,20 +443,30 @@ export async function addStartingEquipment(
       const itemName = equipmentGroup[0];
       if (!itemName) continue;
 
+      // Look up item in static compendium for proper metadata
+      const compendiumItem = findStaticItemByName(itemName);
+      const equipData = compendiumItem
+        ? {
+            name: compendiumItem.name,
+            item_type: deriveItemType(compendiumItem),
+            weight: compendiumItem.weight ?? null,
+            description: compendiumItem.description ?? null,
+            quantity: 1,
+            is_equipped: false,
+          }
+        : {
+            name: itemName,
+            item_type: 'gear',
+            quantity: 1,
+            is_equipped: false,
+          };
+
       if (isLocalCharacterId(characterId)) {
-        addLocalEquipment(characterId, {
-          name: itemName,
-          item_type: 'gear',
-          quantity: 1,
-          is_equipped: false,
-        });
+        addLocalEquipment(characterId, equipData);
       } else {
         await supabase.from('character_equipment').insert({
           character_id: characterId,
-          name: itemName,
-          item_type: 'gear',
-          quantity: 1,
-          is_equipped: false,
+          ...equipData,
         });
       }
     }

@@ -1,6 +1,6 @@
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
-import { Zap, Timer, Target, Heart, Sparkles, Shield, Swords, Footprints } from 'lucide-react';
+import { Zap, Timer, Target, Sparkles, Shield, Swords, Footprints } from 'lucide-react';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 import { Button } from '@/components/ui/button';
@@ -14,12 +14,8 @@ interface SpellData {
   description?: string | null;
   spell_type?: string | null;
   rank?: string | null;
-  mana_cost?: number | null;
-  damage?: number | null;
-  healing?: number | null;
   effect?: string | null;
   range?: number | { type?: string; distance?: number } | null;
-  cooldown?: number | null;
   activation?: { type?: string; cost?: string } | null;
   duration?: { type?: string; time?: string } | null;
   components?: { verbal?: boolean; somatic?: boolean; material?: boolean; material_desc?: string } | null;
@@ -113,12 +109,6 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
     }
   };
 
-  const estimateDice = (value: number): string => {
-    const die = 8;
-    const diceCount = Math.max(1, Math.round(value / die));
-    return `${diceCount}d${die}`;
-  };
-
   const buildResolutionPayload = (): ActionResolutionPayload | null => {
     const mechanicsAny = (data.mechanics ?? null) as any;
 
@@ -127,15 +117,11 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 
     const damageRoll = typeof mechanicsAny?.attack?.damage === 'string'
       ? mechanicsAny.attack.damage
-      : typeof data.damage === 'number'
-        ? estimateDice(data.damage)
-        : null;
+      : null;
 
     const healingRoll = typeof (mechanicsAny?.healing?.dice) === 'string'
       ? mechanicsAny.healing.dice
-      : typeof data.healing === 'number'
-        ? estimateDice(data.healing)
-        : null;
+      : null;
 
     if (mechanicsAny?.attack) {
       const bonus = rankBonus(data.rank);
@@ -243,15 +229,6 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
       </SystemWindow>
 
       <div id="spell-stats" className="grid grid-cols-2 md:grid-cols-4 gap-4 scroll-mt-4">
-        {data.mana_cost !== null && data.mana_cost !== undefined && (
-          <SystemWindow title="MANA COST" compact>
-            <div className="flex items-center gap-2">
-              <Zap className="w-5 h-5 text-blue-400" />
-              <span className="font-heading">{data.mana_cost}</span>
-            </div>
-          </SystemWindow>
-        )}
-
         {rangeText && (
           <SystemWindow title="RANGE" compact>
             <div className="flex items-center gap-2">
@@ -261,32 +238,6 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
           </SystemWindow>
         )}
 
-        {data.cooldown !== null && data.cooldown !== undefined && (
-          <SystemWindow title="COOLDOWN" compact>
-            <div className="flex items-center gap-2">
-              <Timer className="w-5 h-5 text-amber-400" />
-              <span className="font-heading">{data.cooldown} rounds</span>
-            </div>
-          </SystemWindow>
-        )}
-
-        {data.damage !== null && data.damage !== undefined && (
-          <SystemWindow title="DAMAGE" compact>
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-rose-400" />
-              <span className="font-heading">{data.damage}</span>
-            </div>
-          </SystemWindow>
-        )}
-
-        {data.healing !== null && data.healing !== undefined && (
-          <SystemWindow title="HEALING" compact>
-            <div className="flex items-center gap-2">
-              <Heart className="w-5 h-5 text-rose-400" />
-              <span className="font-heading">{data.healing}</span>
-            </div>
-          </SystemWindow>
-        )}
       </div>
 
       {(activation || duration || components) && (

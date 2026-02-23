@@ -20,6 +20,7 @@ interface AdvancedSearchFilters {
   gateRanks: string[];
   
   // Spell Filters
+  spellTypes: string[];
   spellSchools: string[];
   spellComponents: string[];
   castingTimes: string[];
@@ -62,6 +63,7 @@ const FILTER_OPTIONS = {
   ],
   rarities: ['common', 'uncommon', 'rare', 'very_rare', 'legendary'],
   gateRanks: ['E', 'D', 'C', 'B', 'A', 'S', 'SS'],
+  spellTypes: ['Attack', 'Defense', 'Utility', 'Healing'],
   spellSchools: [
     'Abjuration', 'Conjuration', 'Divination', 'Enchantment',
     'Evocation', 'Illusion', 'Necromancy', 'Transmutation'
@@ -168,6 +170,7 @@ export function AdvancedSearch({ filters, onFiltersChange, className }: Advanced
       rarities: [],
       levels: { min: 1, max: 20 },
       gateRanks: [],
+      spellTypes: [],
       spellSchools: [],
       spellComponents: [],
       castingTimes: [],
@@ -356,6 +359,24 @@ export function AdvancedSearch({ filters, onFiltersChange, className }: Advanced
           </CollapsibleTrigger>
           <CollapsibleContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Type</Label>
+                <div className="space-y-2 mt-2">
+                  {FILTER_OPTIONS.spellTypes.map((spellType) => (
+                    <div key={spellType} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`spellType-${spellType}`}
+                        checked={filters.spellTypes.includes(spellType)}
+                        onCheckedChange={() => toggleArrayFilter('spellTypes', spellType)}
+                      />
+                      <Label htmlFor={`spellType-${spellType}`} className="text-sm">
+                        {spellType}
+                      </Label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               <div>
                 <Label>Schools</Label>
                 <div className="space-y-2 mt-2">

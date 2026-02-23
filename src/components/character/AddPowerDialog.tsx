@@ -14,7 +14,7 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { usePowers } from '@/hooks/usePowers';
 import { useToast } from '@/hooks/use-toast';
-import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
+import { formatRegentVernacular, formatMonarchVernacular, normalizeRegentSearch } from '@/lib/vernacular';
 import { useCampaignByCharacterId } from '@/hooks/useCampaigns';
 import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 import { useCharacter } from '@/hooks/useCharacters';
@@ -100,18 +100,51 @@ export function AddPowerDialog({
 
       const trimmedQuery = searchQuery.trim();
       if (trimmedQuery) {
-        const canonicalQuery = normalizeMonarchSearch(trimmedQuery);
+        const canonicalQuery = normalizeRegentSearch(trimmedQuery);
         query = query.ilike('name', `%${canonicalQuery}%`);
       }
 
       const { data, error } = await query;
-      if (error) throw error;
 
-      return filterRowsBySourcebookAccess(
-        data || [],
-        (power) => power.source_book,
-        { campaignId }
-      );
+      // If Supabase returned results, use them
+      if (!error && data && data.length > 0) {
+        return filterRowsBySourcebookAccess(
+          data,
+          (power) => power.source_book,
+          { campaignId }
+        );
+      }
+
+      // Static fallback: load powers from compendium data
+      const { staticDataProvider } = await import('@/data/compendium/staticDataProvider');
+      const staticPowers = await staticDataProvider.getPowers(trimmedQuery || undefined);
+      const filtered = staticPowers
+        .filter(p => (p.power_level ?? 0) <= maxPowerLevel)
+        .slice(0, 20);
+      return filtered.map(p => ({
+        id: p.id,
+        name: p.name,
+        description: p.description ?? '',
+        power_level: p.power_level ?? 0,
+        school: p.school ?? null,
+        casting_time: null,
+        range: typeof p.range === 'string' ? p.range : null,
+        duration: null,
+        concentration: false,
+        higher_levels: p.higher_levels ?? null,
+        source_book: p.source_book ?? 'System Ascendant Canon',
+        source_name: null,
+        source_kind: null,
+        job_names: character?.job ? [character.job] : [],
+        path_names: character?.path ? [character.path] : [],
+        regent_names: [],
+        created_at: p.created_at,
+        display_name: p.display_name ?? null,
+        aliases: null,
+        license_note: null,
+        tags: p.tags ?? null,
+        theme_tags: null,
+      })) as unknown as NonNullable<typeof data>;
     },
     enabled: open && !!character?.job,
   });

@@ -52,6 +52,8 @@ interface Spell {
   name: string;
   level: number;
   school: string;
+  type: 'Attack' | 'Defense' | 'Utility' | 'Healing';
+  rank: 'D' | 'C' | 'B' | 'A' | 'S';
   casting_time: string;
   range: string;
   components: string[];
@@ -283,7 +285,7 @@ export function calculateMaxSpellSlots(character: Character): Character['spell_s
     level_9: 0,
   };
   
-  // Example for a level 5 full caster (Mage, Healer, etc.)
+  // Example for a level 5 full caster (Mage, Herald, etc.)
   if (character.level >= 1) slots.level_1 = 4;
   if (character.level >= 3) slots.level_2 = 3;
   if (character.level >= 5) slots.level_3 = 2;

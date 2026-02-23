@@ -86,7 +86,9 @@ export function CompendiumImage({
   }, [size]);
   const isSupabaseUrl = Boolean(imageSrc && imageSrc.includes('supabase.co/storage'));
   const isLocalWebp = Boolean(imageSrc && !isSupabaseUrl && imageSrc.toLowerCase().endsWith('.webp'));
-  const localAvif = isLocalWebp && imageSrc ? imageSrc.replace(/\.webp$/i, '.avif') : null;
+  // Only use AVIF source if the file is in ui-art (which has AVIF variants); compendium images are webp-only
+  const hasAvifVariant = isLocalWebp && imageSrc && imageSrc.startsWith('/ui-art/');
+  const localAvif = hasAvifVariant && imageSrc ? imageSrc.replace(/\.webp$/i, '.avif') : null;
 
   // Optimize image on mount
   useEffect(() => {

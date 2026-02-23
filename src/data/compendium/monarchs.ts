@@ -1,9 +1,9 @@
-// Monarchs Compendium - Authoritative PDF Content
-// Extracted from internal compendium data pack
-// This is the authoritative source for monarchs data - FULL ADMIN PRIVILEGES INTEGRATION
-// Generated on: 2026-01-13T22:03:39.610Z
-// POST-RESET TIMELINE: Monarchs are CLASS OVERLAYS, not NPC names
-// Kael Voss is the Prime Architect/Warden in this timeline
+// Regents Compendium - Authoritative Source
+// Regents are quest-locked CLASS OVERLAYS (Hunter specializations), not NPC names
+// Unlock: DM-approved quest completion only — no gate-rank or level gating
+// Post-unlock progression: level-based (regent level = character level)
+// Kael Voss is the Supreme Deity / Prime Architect — NOT selectable as a regent
+// Shadow soldiers and umbral features are exclusive to Umbral Regent
 
 export interface Monarch {
   id: string;
@@ -17,13 +17,62 @@ export interface Monarch {
   tags?: string[];
   created_at?: string;
   source_book?: string;
-  // System Ascendant progression mechanics
+  
+  // System Ascendant 5e-style Hunter progression
+  hit_dice: string;                 // "1d12", "1d8", etc.
+  primary_ability: string[];        // Primary abilities for the Hunter
+  saving_throws: string[];          // Additional saving throw proficiencies
+  skill_proficiencies: string[];    // Hunter-specific skill proficiencies
+  armor_proficiencies: string[];    // Any armor proficiencies granted
+  weapon_proficiencies: string[];   // Any weapon proficiencies granted
+  tool_proficiencies: string[];     // Any tool proficiencies granted
+  
+  // Level-based progression (1-20) - Hunter Rank Advancement
+  class_features: {
+    level: number;
+    name: string;
+    description: string;
+    type: 'passive' | 'active' | 'action' | 'bonus-action' | 'reaction';
+    frequency?: 'at-will' | 'short-rest' | 'long-rest' | 'once-per-day' | 'once-per-long-rest';
+  }[];
+  
+  // Spellcasting integration (if applicable) - System Awakening Powers
+  spellcasting?: {
+    ability: string;
+    spell_slots: Record<string, number[]>;
+    cantrips_known?: number[];
+    spells_known?: number[];
+    spell_preparation?: boolean;
+    additional_spells?: string[];   // Hunter-specific spells
+  };
+  
+  // Feature progression mapping - Hunter Level Progression
+  progression_table: {
+    [level: number]: {
+      features_gained: string[];
+      abilities_improved?: string[];
+      spell_slots?: Record<string, number>;
+      special_abilities?: string[];
+    };
+  };
+  
+  // Integration requirements - Quest-based Hunter Qualification
+  multiclass_requirements?: {
+    level: number;
+    abilities: Record<string, number>;
+    quest_completion: string;
+    dm_approval: boolean;
+  };
+  
+  // System Ascendant Hunter mechanics
   requirements: {
     quest_completion: string;
     dm_verification: boolean;
     prerequisite_job?: string;
     power_level: number; // 1-10 scale matching System Ascendant power levels
+    system_awakening?: boolean;     // Requires System Awakening
   };
+  
   abilities: {
     name: string;
     description: string;
@@ -32,12 +81,15 @@ export interface Monarch {
     dc?: number;
     spell_slot?: number;
     power_level?: number; // When this ability is unlocked
+    essence_cost?: number; // Essence cost to use
   }[];
+  
   features: {
     name: string;
     description: string;
     power_level: number; // When this feature is unlocked
   }[];
+  
   mechanics: {
     stat_bonuses: {
       strength?: number;
@@ -63,87 +115,166 @@ export interface Monarch {
       level_19: string[];
       level_20: string[];
     };
+    // Only Umbral Regent gets shadow soldier abilities
+    shadow_legion_command?: boolean; // Can command Shadow Legion (Umbral Regent only)
+    essence_manipulation?: boolean;  // Can manipulate essence
   };
 }
 
 export const monarchs = [
   {
     "id": "umbral-monarch-overlay",
-    "name": "Umbral Monarch",
-    "title": "Umbral Monarch Class",
+    "name": "Umbral Regent",
+    "title": "Umbral Regent Hunter Class",
     "theme": "Umbral and Death",
-    "description": "The ultimate umbral manipulation class overlay, embodying Kael Voss's mastery over the veil, death, and the ability to command the Umbral Legion. This is the highest tier veil-based class available to players, granting true Monarch-level power over the umbral realm.",
+    "description": "The ultimate umbral manipulation Hunter class overlay, embodying mastery over the veil, death, and the ability to command the Umbral Legion. This is the highest tier veil-based Hunter class available to players, granting true Regent-level power over the umbral realm and the ability to command shadows.",
     "rank": "S",
     "image": "/generated/compendium/monarchs/umbral-sovereign.webp",
-    "type": "class-overlay",
+    "type": "hunter-class-overlay",
     "tags": [
-      "monarch",
+      "regent",
       "umbral",
       "death",
-      "kael",
-      "class-overlay"
+      "hunter-class-overlay",
+      "shadow-soldier-command"
     ],
     "created_at": "2026-01-13T22:03:39.601Z",
     "source_book": "System Ascendant Canon",
-    "requirements": {
-      "quest_completion": "Complete the Umbral Monarch Ascension quest series",
-      "dm_verification": true,
-      "prerequisite_job": "Any base job",
-      "power_level": 10
+    
+    // System Ascendant 5e-style Hunter progression
+    "hit_dice": "1d12",
+    "primary_ability": ["Charisma", "Wisdom"],
+    "saving_throws": ["Wisdom", "Charisma"],
+    "skill_proficiencies": ["Stealth", "Intimidation", "Arcana", "Religion"],
+    "armor_proficiencies": ["Light armor", "Medium armor", "Shields"],
+    "weapon_proficiencies": ["Simple weapons", "Martial weapons"],
+    "tool_proficiencies": [],
+    
+    // Level-based progression (1-20) - Hunter Rank Advancement
+    "class_features": [
+      { "level": 1, "name": "Umbral Command", "description": "Command up to 20 umbral creatures as if they were your loyal followers. They obey your telepathic commands.", "type": "action", "frequency": "at-will" },
+      { "level": 1, "name": "Veilstep Supreme", "description": "As a bonus action, teleport up to 120 feet to any unoccupied space in dim light or darkness.", "type": "bonus-action", "frequency": "at-will" },
+      { "level": 1, "name": "Umbral Dominion", "description": "You gain immunity to necrotic damage and advantage on all saving throws against umbral effects.", "type": "passive" },
+      { "level": 2, "name": "Essence Harvest", "description": "When a creature dies within 30 feet, you can harvest its essence to regain 2d10 hit points.", "type": "reaction", "frequency": "short-rest" },
+      { "level": 2, "name": "Regent's Presence", "description": "Frightening presence: enemies within 30 feet must make a Wisdom saving throw (DC 18) or be frightened of you.", "type": "passive" },
+      { "level": 3, "name": "Legion of the Veil", "description": "As an action, summon 2d6 umbral legionnaires that fight for you for 1 hour. They have the stats of shadows but obey your commands.", "type": "action", "frequency": "once-per-day" },
+      { "level": 3, "name": "Umbral Mastery", "description": "You can cast umbral spells at will without expending spell slots.", "type": "passive" },
+      { "level": 4, "name": "Army of the Damned", "description": "Once per long rest, you can raise an army of up to 100 shadow creatures that serve you for 24 hours.", "type": "action", "frequency": "long-rest" },
+      { "level": 5, "name": "Dimensional Regent", "description": "You can cast gate and plane shift without expending spell slots. You have advantage on saving throws against teleportation effects.", "type": "passive" },
+      { "level": 5, "name": "Dimensional Authority", "description": "You can travel between planes at will and control dimensional gates.", "type": "passive" },
+      { "level": 6, "name": "Essence Lord", "description": "You can harvest the essence of any creature, gaining their memories and abilities temporarily.", "type": "action", "frequency": "short-rest" },
+      { "level": 7, "name": "Umbral Dominion", "description": "As an action, create a 1-mile radius area of absolute umbral control. All umbral creatures within gain advantage on all attacks.", "type": "action", "frequency": "once-per-day" },
+      { "level": 7, "name": "Umbral God", "description": "You become a living embodiment of the veil, able to shape umbral essence at will.", "type": "passive" },
+      { "level": 8, "name": "Death's Command", "description": "You can command any undead creature, regardless of its origin or power.", "type": "action", "frequency": "at-will" },
+      { "level": 9, "name": "Death's Authority", "description": "As an action, force all undead within 300 feet to make a Wisdom save (DC 20) or become your loyal servants.", "type": "action", "frequency": "once-per-day" },
+      { "level": 9, "name": "Umbral Emperor", "description": "Your umbral powers extend across multiple planes, allowing you to affect the veil anywhere.", "type": "passive" },
+      { "level": 10, "name": "Absolute Umbral", "description": "You achieve the ultimate umbral power, becoming immune to all effects and able to reshape reality through the veil.", "type": "passive" }
+    ],
+    
+    // Spellcasting integration - System Awakening Powers
+    "spellcasting": {
+      "ability": "Charisma",
+      "spell_slots": {
+        "1st": [4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "2nd": [2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "3rd": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "4th": [0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "5th": [0, 0, 0, 0, 1, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "6th": [0, 0, 0, 0, 0, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "7th": [0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "8th": [0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "9th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4]
+      },
+      "cantrips_known": [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+      "spells_known": [6, 7, 9, 10, 12, 14, 15, 15, 15, 18, 19, 19, 20, 22, 22, 24, 24, 25, 26, 27],
+      "spell_preparation": false,
+      "additional_spells": ["Shadow Bolt", "Void Bolt", "Abyssal Bolt", "Dimensional Lock", "Plane Shift"]
+    },
+    
+    // Feature progression mapping - Hunter Level Progression
+    "progression_table": {
+      1: { "features_gained": ["Umbral Command", "Veilstep Supreme", "Umbral Dominion"], "spell_slots": { "1st": 4 } },
+      2: { "features_gained": ["Essence Harvest", "Regent's Presence"], "spell_slots": { "1st": 3, "2nd": 2 } },
+      3: { "features_gained": ["Legion of the Veil", "Umbral Mastery"], "spell_slots": { "1st": 4, "2nd": 3, "3rd": 2 } },
+      4: { "features_gained": ["Army of the Damned"], "spell_slots": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 1 } },
+      5: { "features_gained": ["Dimensional Regent", "Dimensional Authority"], "spell_slots": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 2, "5th": 1 } },
+      6: { "features_gained": ["Essence Lord"], "spell_slots": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 2, "6th": 1 } },
+      7: { "features_gained": ["Umbral Dominion", "Umbral God"], "spell_slots": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 3, "6th": 2, "7th": 1 } },
+      8: { "features_gained": ["Death's Command"], "spell_slots": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 3, "6th": 3, "7th": 2, "8th": 1 } },
+      9: { "features_gained": ["Death's Authority", "Umbral Emperor"], "spell_slots": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 3, "6th": 3, "7th": 3, "8th": 2, "9th": 1 } },
+      10: { "features_gained": ["Absolute Umbral"], "spell_slots": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 3, "6th": 3, "7th": 3, "8th": 3, "9th": 2 } },
+      11: { "features_gained": ["Shadow Ascendant", "Dimensional Lord", "Death God"], "spell_slots": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 3, "6th": 3, "7th": 3, "8th": 3, "9th": 3 } },
+      12: { "features_gained": [], "spell_slots": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 3, "6th": 3, "7th": 3, "8th": 3, "9th": 3 } },
+      13: { "features_gained": ["Shadow Apocalypse", "Void Dominion", "Essence God"], "spell_slots": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 3, "6th": 3, "7th": 3, "8th": 3, "9th": 3 } },
+      14: { "features_gained": [], "spell_slots": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 3, "6th": 3, "7th": 3, "8th": 3, "9th": 3 } },
+      15: { "features_gained": ["Shadow Reality", "Dimensional God", "Death Emperor"], "spell_slots": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 3, "6th": 3, "7th": 3, "8th": 3, "9th": 3 } },
+      16: { "features_gained": [], "spell_slots": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 3, "6th": 3, "7th": 3, "8th": 3, "9th": 3 } },
+      17: { "features_gained": ["Shadow Transcendence", "Void God", "Essence Emperor"], "spell_slots": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 3, "6th": 3, "7th": 3, "8th": 3, "9th": 3 } },
+      18: { "features_gained": [], "spell_slots": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 3, "6th": 3, "7th": 3, "8th": 3, "9th": 3 } },
+      19: { "features_gained": ["Shadow Omnipotence", "Dimensional Emperor", "Death Regent"], "spell_slots": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 3, "6th": 3, "7th": 3, "8th": 3, "9th": 3 } },
+      20: { "features_gained": ["Shadow Supremacy", "Absolute Shadow", "Ultimate Umbral Power"], "spell_slots": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 3, "6th": 3, "7th": 3, "8th": 3, "9th": 4 } }
+    },
+    
+    // Integration requirements - Quest-based Hunter Qualification
+    "multiclass_requirements": {
+      "level": 5,
+      "abilities": { "charisma": 13, "wisdom": 13 },
+      "quest_completion": "Complete the Umbral Regent Ascension quest series",
+      "dm_approval": true
     },
     "abilities": [
       {
         "name": "Umbral Command",
-        "description": "Command up to 20 umbral creatures as if they were your loyal followers. They obey your telepathic commands, just as Kael commands the Umbral Legion.",
+        "description": "Command up to 20 umbral creatures as if they were your loyal followers. They obey your telepathic commands.",
         "type": "action",
         "frequency": "at-will",
         "power_level": 1
       },
       {
         "name": "Legion of the Veil",
-        "description": "As an action, summon 2d6 umbral legionnaires that fight for you for 1 hour. They have the stats of shadows but obey your commands, mirroring Kael's veil extraction ability.",
+        "description": "As an action, summon 2d6 umbral legionnaires that fight for you for 1 hour. They have the stats of shadows but obey your commands.",
         "type": "action",
         "frequency": "once-per-day",
         "power_level": 3
       },
       {
         "name": "Veilstep Supreme",
-        "description": "As a bonus action, teleport up to 120 feet to any unoccupied space in dim light or darkness. This mirrors Kael's veilstep mastery.",
+        "description": "As a bonus action, teleport up to 120 feet to any unoccupied space in dim light or darkness.",
         "type": "bonus-action",
         "frequency": "at-will",
         "power_level": 1
       },
       {
         "name": "Essence Harvest",
-        "description": "When a creature dies within 30 feet, you can harvest its essence to regain 2d10 hit points. This reflects Kael's ability to extract power from defeated foes.",
+        "description": "When a creature dies within 30 feet, you can harvest its essence to regain 2d10 hit points.",
         "type": "reaction",
         "frequency": "short-rest",
         "power_level": 2
       },
       {
         "name": "Dimensional Regent",
-        "description": "You can cast gate and plane shift without expending spell slots. You have advantage on saving throws against teleportation effects. This represents Kael's mastery over dimensional travel.",
+        "description": "You can cast gate and plane shift without expending spell slots. You have advantage on saving throws against teleportation effects.",
         "type": "passive",
         "frequency": "at-will",
         "power_level": 5
       },
       {
         "name": "Umbral Dominion",
-        "description": "As an action, create a 1-mile radius area of absolute umbral control. All umbral creatures within gain advantage on all attacks. This mirrors Kael's domain control as Umbral Monarch.",
+        "description": "As an action, create a 1-mile radius area of absolute umbral control. All umbral creatures within gain advantage on all attacks.",
         "type": "action",
         "frequency": "once-per-day",
         "power_level": 7
       },
       {
         "name": "Death's Authority",
-        "description": "As an action, force all undead within 300 feet to make a Wisdom save (DC 20) or become your loyal servants. This reflects Kael's command over death itself.",
+        "description": "As an action, force all undead within 300 feet to make a Wisdom save (DC 20) or become your loyal servants.",
         "type": "action",
         "frequency": "once-per-day",
         "power_level": 9
       },
       {
-        "name": "Umbral Dominion",
-        "description": "You become the ultimate master of the veil, gaining immunity to all damage and the ability to command any umbral creature anywhere in the multiverse. This represents Kael's ultimate power as the true Umbral Monarch.",
+        "name": "Absolute Umbral",
+        "description": "You become the ultimate master of the veil, gaining immunity to all damage and the ability to command any umbral creature anywhere in the multiverse.",
         "type": "passive",
         "frequency": "at-will",
         "power_level": 10
@@ -156,13 +287,13 @@ export const monarchs = [
         "power_level": 1
       },
       {
-        "name": "Monarch's Presence",
-        "description": "Frightening presence: enemies within 30 feet must make a Wisdom saving throw (DC 18) or be frightened of you. This reflects the aura of a true monarch.",
+        "name": "Regent's Presence",
+        "description": "Frightening presence: enemies within 30 feet must make a Wisdom saving throw (DC 18) or be frightened of you.",
         "power_level": 2
       },
       {
         "name": "Umbral Mastery",
-        "description": "You can cast umbral spells at will without expending spell slots. This represents Kael's complete mastery over umbral magic.",
+        "description": "You can cast umbral spells at will without expending spell slots.",
         "power_level": 3
       },
       {

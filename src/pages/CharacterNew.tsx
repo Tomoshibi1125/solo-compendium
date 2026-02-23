@@ -16,6 +16,8 @@ import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { calculateHPMax } from '@/lib/characterCalculations';
 import { ABILITY_NAMES, type AbilityScore } from '@/types/system-rules';
+import { RegentSelection } from '@/components/character/RegentSelection';
+import { monarchs } from '@/data/compendium/monarchs';
 
 // Map standard D&D ability names to System Ascendant names
 const mapAbilityToSA = (ability: string): AbilityScore => {
@@ -104,6 +106,7 @@ const CharacterNew = () => {
     setSelectedSkills([]); // Reset skills when job changes
   };
 
+
   // Fetch jobs - use static data as primary source with database fallback
   const { data: jobs = [] } = useQuery({
     queryKey: ['jobs'],
@@ -129,7 +132,7 @@ const CharacterNew = () => {
         starting_equipment: job.startingEquipment || null,
         hit_points_at_first_level: job.hitPointsAtFirstLevel || null,
         hit_points_at_higher_levels: job.hitPointsAtHigherLevels || null,
-        multiclass_prerequisites: job.multiclassPrerequisites || null,
+        multiclass_prerequisites: null,
         // Add missing database fields
         aliases: null,
         flavor_text: null,
@@ -173,19 +176,54 @@ const CharacterNew = () => {
     },
   });
 
-  // Fetch paths for selected job
+  // Fetch paths for selected job (with static fallback)
   const { data: paths = [] } = useQuery({
     queryKey: ['paths', selectedJob],
     queryFn: async () => {
       if (!selectedJob) return [];
-      const { data, error } = await supabase
-        .from('compendium_job_paths')
-        .select('*')
-        .eq('job_id', selectedJob)
-        .order('name');
-      if (error) throw error;
 
-      return filterRowsBySourcebookAccess((data || []) as Path[], (path) => path.source_book);
+      // Try Supabase first
+      try {
+        const { data, error } = await supabase
+          .from('compendium_job_paths')
+          .select('*')
+          .eq('job_id', selectedJob)
+          .order('name');
+
+        if (!error && data && data.length > 0) {
+          return filterRowsBySourcebookAccess((data || []) as Path[], (path) => path.source_book);
+        }
+      } catch {
+        // Fall through to static
+      }
+
+      // Static fallback: load paths from compendium data
+      const { staticDataProvider } = await import('@/data/compendium/staticDataProvider');
+      const staticPaths = await staticDataProvider.getPaths('');
+      const jobName = jobs.find(j => j.id === selectedJob)?.name;
+      const filtered = jobName
+        ? staticPaths.filter(p => p.job_name === jobName || p.job_id === selectedJob)
+        : staticPaths;
+      return filtered.map(p => ({
+        id: p.id,
+        name: p.name,
+        display_name: p.display_name || p.name,
+        description: p.description,
+        job_id: selectedJob,
+        path_level: p.path_level ?? 3,
+        source_book: p.source_book ?? 'System Ascendant Canon',
+        created_at: p.created_at,
+        updated_at: p.created_at,
+        aliases: null,
+        license_note: null,
+        source_kind: null,
+        source_name: null,
+        theme_tags: null,
+        image_url: p.image_url ?? null,
+        tags: p.tags ?? null,
+        flavor_text: null,
+        generated_reason: null,
+      })) as unknown as Path[];
     },
     enabled: !!selectedJob,
   });
@@ -206,22 +244,54 @@ const CharacterNew = () => {
   const isPathStepEnabled = pathUnlockLevel === 1 && pathsAvailableAtCreation.length > 0;
   const isPathRequiredAtCreation = isPathStepEnabled;
 
-  // Fetch backgrounds
+  // Fetch backgrounds (with static fallback)
   const { data: backgrounds = [] } = useQuery({
     queryKey: ['backgrounds'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('compendium_backgrounds')
-        .select('*')
-        .order('name');
-      if (error) throw error;
+      // Try Supabase first
+      try {
+        const { data, error } = await supabase
+          .from('compendium_backgrounds')
+          .select('*')
+          .order('name');
 
-      const filteredBackgrounds = await filterRowsBySourcebookAccess(
-        (data || []) as Background[],
-        (background) => background.source_book
-      );
+        if (!error && data && data.length > 0) {
+          return filterRowsBySourcebookAccess(
+            (data || []) as Background[],
+            (background) => background.source_book
+          );
+        }
+      } catch {
+        // Fall through to static
+      }
 
-      return filteredBackgrounds;
+      // Static fallback: load backgrounds from compendium data
+      const { staticDataProvider } = await import('@/data/compendium/staticDataProvider');
+      const staticBgs = await staticDataProvider.getBackgrounds('');
+      return staticBgs.map(bg => ({
+        id: bg.id,
+        name: bg.name,
+        display_name: bg.display_name || bg.name,
+        description: bg.description,
+        source_book: bg.source_book ?? 'System Ascendant Canon',
+        created_at: bg.created_at,
+        updated_at: bg.created_at,
+        aliases: null,
+        license_note: null,
+        source_kind: null,
+        source_name: null,
+        theme_tags: null,
+        image_url: bg.image_url ?? null,
+        tags: bg.tags ?? null,
+        flavor_text: null,
+        generated_reason: null,
+        skill_proficiencies: bg.skill_proficiencies ?? null,
+        tool_proficiencies: bg.tool_proficiencies ?? null,
+        language_count: bg.language_count ?? null,
+        starting_equipment: bg.starting_equipment ?? null,
+        feature_name: bg.feature_name ?? null,
+        feature_description: bg.feature_description ?? null,
+      })) as unknown as Background[];
     },
   });
 
@@ -994,8 +1064,8 @@ const CharacterNew = () => {
                   ))}
                 </SelectContent>
               </Select>
-              {selectedBackground && (() => {
-                const bg = backgrounds.find(b => b.id === selectedBackground);
+              {selectedBackground ? (() => {
+                const bg = backgrounds.find((b: Background) => b.id === selectedBackground);
                 if (!bg) return null;
                 const hasSuggestedChars = (bg.personality_traits && bg.personality_traits.length > 0)
                   || (bg.ideals && bg.ideals.length > 0)
@@ -1027,90 +1097,22 @@ const CharacterNew = () => {
                           <div className="text-sm text-foreground">{bg.tool_proficiencies.map(formatMonarchVernacular).join(', ')}</div>
                         </div>
                       )}
-                      {bg.language_count && bg.language_count > 0 && (
-                        <div className="p-3 rounded-md bg-background/50 border border-border/50">
-                          <div className="text-xs font-heading font-semibold text-primary uppercase tracking-wider mb-1.5">Languages</div>
-                          <div className="text-sm text-foreground">{bg.language_count} additional language{bg.language_count > 1 ? 's' : ''}</div>
-                        </div>
-                      )}
-                      {bg.starting_credits && (
-                        <div className="p-3 rounded-md bg-background/50 border border-border/50">
-                          <div className="text-xs font-heading font-semibold text-primary uppercase tracking-wider mb-1.5">Starting Credits</div>
-                          <div className="text-sm text-foreground">{bg.starting_credits} gp</div>
-                        </div>
-                      )}
                     </div>
 
                     {/* Starting Equipment */}
                     {bg.starting_equipment && (
-                      <div className="p-3 rounded-md bg-background/50 border border-border/50">
+                      <div className="p-3 rounded-md bg-primary/5 border border-primary/20">
                         <div className="text-xs font-heading font-semibold text-primary uppercase tracking-wider mb-1.5">Starting Equipment</div>
                         <div className="text-sm text-foreground leading-relaxed">{formatMonarchVernacular(bg.starting_equipment)}</div>
                       </div>
                     )}
-
-                    {/* Feature */}
-                    {bg.feature_name && (
-                      <div className="p-3 rounded-md bg-primary/5 border border-primary/20">
-                        <div className="text-xs font-heading font-semibold text-primary uppercase tracking-wider mb-1.5">
-                          {formatMonarchVernacular(bg.feature_name)}
-                        </div>
-                        {bg.feature_description && (
-                          <div className="text-sm text-foreground leading-relaxed">{formatMonarchVernacular(bg.feature_description)}</div>
-                        )}
-                      </div>
-                    )}
-
-                    {/* Suggested Characteristics — Collapsible */}
-                    {hasSuggestedChars && (
-                      <details className="group">
-                        <summary className="cursor-pointer text-sm font-heading font-semibold text-muted-foreground hover:text-foreground transition-colors select-none">
-                          Suggested Characteristics
-                          <span className="ml-1 text-xs group-open:hidden">▸</span>
-                          <span className="ml-1 text-xs hidden group-open:inline">▾</span>
-                        </summary>
-                        <div className="mt-3 space-y-3">
-                          {bg.personality_traits && bg.personality_traits.length > 0 && (
-                            <div>
-                              <div className="text-xs font-heading font-semibold text-primary uppercase tracking-wider mb-1">Personality Traits</div>
-                              <ul className="ml-4 list-disc space-y-1 text-sm text-muted-foreground">
-                                {bg.personality_traits.map((t, i) => <li key={i}>{formatMonarchVernacular(t)}</li>)}
-                              </ul>
-                            </div>
-                          )}
-                          {bg.ideals && bg.ideals.length > 0 && (
-                            <div>
-                              <div className="text-xs font-heading font-semibold text-primary uppercase tracking-wider mb-1">Ideals</div>
-                              <ul className="ml-4 list-disc space-y-1 text-sm text-muted-foreground">
-                                {bg.ideals.map((t, i) => <li key={i}>{formatMonarchVernacular(t)}</li>)}
-                              </ul>
-                            </div>
-                          )}
-                          {bg.bonds && bg.bonds.length > 0 && (
-                            <div>
-                              <div className="text-xs font-heading font-semibold text-primary uppercase tracking-wider mb-1">Bonds</div>
-                              <ul className="ml-4 list-disc space-y-1 text-sm text-muted-foreground">
-                                {bg.bonds.map((t, i) => <li key={i}>{formatMonarchVernacular(t)}</li>)}
-                              </ul>
-                            </div>
-                          )}
-                          {bg.flaws && bg.flaws.length > 0 && (
-                            <div>
-                              <div className="text-xs font-heading font-semibold text-primary uppercase tracking-wider mb-1">Flaws</div>
-                              <ul className="ml-4 list-disc space-y-1 text-sm text-muted-foreground">
-                                {bg.flaws.map((t, i) => <li key={i}>{formatMonarchVernacular(t)}</li>)}
-                              </ul>
-                            </div>
-                          )}
-                        </div>
-                      </details>
-                    )}
                   </div>
                 );
-              })()}
+              })() : null}
             </div>
           )}
 
+          
           {currentStep === 'review' && (
             <div className="space-y-6">
               <div>

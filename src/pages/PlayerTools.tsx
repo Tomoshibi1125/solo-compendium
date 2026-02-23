@@ -4,7 +4,7 @@
  */
 
 import React, { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   User, 
   Shield, 
@@ -211,6 +211,7 @@ const categories = [
 ];
 
 const PlayerTools = () => {
+  const navigate = useNavigate();
   const { activeCharacter, isLoading: characterLoading } = useActiveCharacter();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -270,11 +271,11 @@ const PlayerTools = () => {
             </div>
             
             <div className="flex items-center gap-4">
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" onClick={() => navigate('/compendium')}>
                 <HelpCircle className="w-4 h-4 mr-2" />
                 Help
               </Button>
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" onClick={() => navigate('/profile')}>
                 <Settings className="w-4 h-4 mr-2" />
                 Settings
               </Button>
@@ -426,19 +427,19 @@ const PlayerTools = () => {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <Button variant="outline" className="justify-start">
+                <Button variant="outline" className="justify-start" onClick={() => activeCharacter ? navigate(`/characters/${activeCharacter.id}`) : navigate('/characters/new')}>
                   <Sword className="w-4 h-4 mr-2" />
                   Combat Mode
                 </Button>
-                <Button variant="outline" className="justify-start">
+                <Button variant="outline" className="justify-start" onClick={() => navigate('/dice')}>
                   <Dice6 className="w-4 h-4 mr-2" />
                   Quick Roll
                 </Button>
-                <Button variant="outline" className="justify-start">
+                <Button variant="outline" className="justify-start" onClick={() => activeCharacter ? navigate(`/characters/${activeCharacter.id}`) : navigate('/characters/new')}>
                   <Heart className="w-4 h-4 mr-2" />
                   Rest & Recover
                 </Button>
-                <Button variant="outline" className="justify-start">
+                <Button variant="outline" className="justify-start" onClick={() => navigate('/dm-tools/vtt')}>
                   <Map className="w-4 h-4 mr-2" />
                   View Map
                 </Button>
@@ -457,66 +458,70 @@ const ToolCard = ({ tool, viewMode }: { tool: typeof playerTools[0]; viewMode: '
   
   if (viewMode === 'list') {
     return (
-      <Card className="tool-card-list">
-        <CardContent className="p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className={cn("tool-icon-list", tool.iconColor)}>
-                <Icon className="w-6 h-6" />
+      <Link to={`/player-tools/${tool.id}`} className="block">
+        <Card className="tool-card-list">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className={cn("tool-icon-list", tool.iconColor)}>
+                  <Icon className="w-6 h-6" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="tool-title-list">{tool.name}</h3>
+                  <p className="tool-description-list">{tool.description}</p>
+                </div>
               </div>
-              <div className="flex-1">
-                <h3 className="tool-title-list">{tool.name}</h3>
-                <p className="tool-description-list">{tool.description}</p>
+              <div className="flex items-center gap-2">
+                {tool.status === 'campaign-only' && (
+                  <Badge variant="outline">Campaign</Badge>
+                )}
+                {tool.status === 'high-level' && (
+                  <Badge variant="outline">High Level</Badge>
+                )}
+                <Button size="sm">
+                  <ChevronRight className="w-4 h-4" />
+                </Button>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              {tool.status === 'campaign-only' && (
-                <Badge variant="outline">Campaign</Badge>
-              )}
-              {tool.status === 'high-level' && (
-                <Badge variant="outline">High Level</Badge>
-              )}
-              <Button size="sm">
-                <ChevronRight className="w-4 h-4" />
-              </Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </Link>
     );
   }
   
   return (
-    <Card className={cn("tool-card", tool.color, tool.glow)}>
-      <CardHeader className="pb-3">
-        <div className={cn("tool-icon", tool.iconColor)}>
-          <Icon className="w-8 h-8" />
-        </div>
-        <CardTitle className="tool-title">{tool.name}</CardTitle>
-        <CardDescription className="tool-description">
-          {tool.description}
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="pt-0">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            {tool.status === 'campaign-only' && (
-              <Badge variant="outline" className="text-xs">Campaign</Badge>
-            )}
-            {tool.status === 'high-level' && (
-              <Badge variant="outline" className="text-xs">High Level</Badge>
-            )}
-            {tool.status === 'available' && (
-              <Badge variant="secondary" className="text-xs">Available</Badge>
-            )}
+    <Link to={`/player-tools/${tool.id}`} className="block">
+      <Card className={cn("tool-card", tool.color, tool.glow)}>
+        <CardHeader className="pb-3">
+          <div className={cn("tool-icon", tool.iconColor)}>
+            <Icon className="w-8 h-8" />
           </div>
-          <Button size="sm" className="tool-action">
-            Launch
-            <ChevronRight className="w-4 h-4 ml-1" />
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
+          <CardTitle className="tool-title">{tool.name}</CardTitle>
+          <CardDescription className="tool-description">
+            {tool.description}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              {tool.status === 'campaign-only' && (
+                <Badge variant="outline" className="text-xs">Campaign</Badge>
+              )}
+              {tool.status === 'high-level' && (
+                <Badge variant="outline" className="text-xs">High Level</Badge>
+              )}
+              {tool.status === 'available' && (
+                <Badge variant="secondary" className="text-xs">Available</Badge>
+              )}
+            </div>
+            <Button size="sm" className="tool-action">
+              Launch
+              <ChevronRight className="w-4 h-4 ml-1" />
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </Link>
   );
 };
 

@@ -254,9 +254,9 @@ export function applyRuneBonuses(
 // System Ascendant Rune Absorption — cross-type resolution
 // ---------------------------------------------------------------------------
 
-const CASTER_JOBS = ['Mage', 'Esper', 'Healer', 'Herald', 'Necromancer', 'Warlock', 'Technomancer'];
-const MARTIAL_JOBS = ['Warrior', 'Assassin', 'Berserker', 'Tank', 'Ranger', 'Monk', 'Paladin'];
-// Hybrid jobs (Summoner, Bard) are considered compatible with both types.
+const CASTER_JOBS = ['Mage', 'Esper', 'Herald', 'Revenant', 'Contractor', 'Technomancer', 'Holy Knight', 'Stalker', 'Summoner', 'Idol'];
+const MARTIAL_JOBS = ['Assassin', 'Berserker', 'Destroyer', 'Striker'];
+// All 14 canonical jobs are categorized above. Summoner and Idol are full casters.
 
 export type RuneAbsorptionResult = {
   /** True if the character's archetype doesn't match the rune type */

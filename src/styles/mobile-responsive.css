@@ -2516,3 +2516,166 @@
     padding: 1rem 2rem;
   }
 }
+
+/* ========================================
+   GLOBAL MOBILE DIALOG ENHANCEMENTS
+   ======================================== */
+
+@media (max-width: 640px) {
+  /* Full-width dialogs on mobile */
+  [role="dialog"] > div,
+  [data-radix-popper-content-wrapper] {
+    max-width: calc(100vw - 1rem) !important;
+    width: calc(100vw - 1rem) !important;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+
+  /* Dialog footer buttons stack vertically */
+  [role="dialog"] footer,
+  .dialog-footer {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  [role="dialog"] footer button,
+  .dialog-footer button {
+    width: 100%;
+    min-height: 44px;
+  }
+}
+
+/* ========================================
+   GLOBAL MOBILE FORM ENHANCEMENTS
+   ======================================== */
+
+@media (max-width: 640px) {
+  /* Prevent iOS zoom on inputs (must be >=16px) */
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  input[type="url"],
+  input[type="tel"],
+  textarea,
+  select {
+    font-size: 1rem !important;
+  }
+
+  /* Larger select triggers for touch */
+  [role="combobox"],
+  [data-radix-select-trigger] {
+    min-height: 44px;
+  }
+}
+
+/* ========================================
+   GLOBAL TOUCH TARGET ENFORCEMENT
+   ======================================== */
+
+@media (pointer: coarse) {
+  /* All buttons get minimum touch target */
+  button,
+  [role="button"],
+  a[href] {
+    min-height: 44px;
+  }
+
+  /* Small icon-only buttons get proper sizing */
+  button[class*="size-icon"],
+  button[class*="w-6"],
+  button[class*="w-7"],
+  button[class*="h-6"],
+  button[class*="h-7"] {
+    min-height: 36px;
+    min-width: 36px;
+  }
+
+  /* Tab triggers */
+  [role="tab"] {
+    min-height: 44px;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  /* Checkbox/radio targets */
+  [role="checkbox"],
+  [role="radio"],
+  [role="switch"] {
+    min-height: 24px;
+    min-width: 24px;
+  }
+
+  /* Dropdown menu items */
+  [role="menuitem"],
+  [role="option"] {
+    min-height: 44px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+/* ========================================
+   SAFE AREA INSETS (notched devices)
+   ======================================== */
+
+@supports (padding: env(safe-area-inset-bottom)) {
+  .sticky.bottom-0,
+  .fixed.bottom-0,
+  nav.fixed.bottom-0 {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  header.sticky,
+  header.fixed {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .fixed.left-0,
+  .fixed.right-0 {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* ========================================
+   SCROLL BEHAVIOR
+   ======================================== */
+
+/* Smooth scroll but respect reduced motion */
+html {
+  scroll-behavior: smooth;
+}
+
+.reduce-motion html,
+html.reduce-motion {
+  scroll-behavior: auto;
+}
+
+/* Horizontal scroll containers (tabs, etc.) */
+.overflow-x-auto,
+[role="tablist"] {
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+}
+
+[role="tablist"] > * {
+  scroll-snap-align: start;
+}
+
+/* ========================================
+   KEYBOARD VISIBLE ADJUSTMENTS
+   ======================================== */
+
+@media (max-height: 500px) and (max-width: 768px) {
+  /* When virtual keyboard is open, reduce padding */
+  .fixed.bottom-0,
+  .sticky.bottom-0 {
+    padding-bottom: 0 !important;
+  }
+
+  header.sticky {
+    position: relative;
+  }
+}

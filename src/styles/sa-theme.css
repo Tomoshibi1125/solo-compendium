@@ -1,0 +1,422 @@
+/* ============================================================
+   System Ascendant — Global Dungeon Hunter Aesthetic
+   Context-aware theming per app section
+   ============================================================
+   Zones:
+     [data-sa-zone="character"]  — Purple/violet hunter profile
+     [data-sa-zone="dm"]         — Red/orange warden command center
+     [data-sa-zone="campaign"]   — Blue/teal guild alliance hall
+     [data-sa-zone="compendium"] — Gold/amber knowledge archive
+     [data-sa-zone="player"]     — Cyan/green hunter toolkit
+     [data-sa-zone="auth"]       — Deep purple gate awakening
+     (default)                   — Base purple SA theme
+   ============================================================ */
+
+/* --- Zone Accent Variables --- */
+:root {
+  --sa-accent: 262 100% 71%;
+  --sa-accent-rgb: 139, 92, 246;
+  --sa-accent-secondary: 185 80% 52%;
+  --sa-accent-secondary-rgb: 6, 182, 212;
+  --sa-glow-intensity: 0.3;
+}
+
+[data-sa-zone="character"] {
+  --sa-accent: 262 100% 71%;
+  --sa-accent-rgb: 139, 92, 246;
+  --sa-accent-secondary: 185 80% 52%;
+  --sa-accent-secondary-rgb: 6, 182, 212;
+}
+
+[data-sa-zone="dm"] {
+  --sa-accent: 15 90% 55%;
+  --sa-accent-rgb: 234, 88, 12;
+  --sa-accent-secondary: 0 72% 51%;
+  --sa-accent-secondary-rgb: 220, 38, 38;
+}
+
+[data-sa-zone="campaign"] {
+  --sa-accent: 210 72% 55%;
+  --sa-accent-rgb: 59, 130, 246;
+  --sa-accent-secondary: 185 80% 52%;
+  --sa-accent-secondary-rgb: 6, 182, 212;
+}
+
+[data-sa-zone="compendium"] {
+  --sa-accent: 43 90% 58%;
+  --sa-accent-rgb: 234, 179, 8;
+  --sa-accent-secondary: 30 80% 50%;
+  --sa-accent-secondary-rgb: 230, 138, 0;
+}
+
+[data-sa-zone="player"] {
+  --sa-accent: 155 80% 42%;
+  --sa-accent-rgb: 16, 185, 129;
+  --sa-accent-secondary: 185 80% 52%;
+  --sa-accent-secondary-rgb: 6, 182, 212;
+}
+
+[data-sa-zone="auth"] {
+  --sa-accent: 275 75% 62%;
+  --sa-accent-rgb: 168, 85, 247;
+  --sa-accent-secondary: 262 100% 71%;
+  --sa-accent-secondary-rgb: 139, 92, 246;
+  --sa-glow-intensity: 0.5;
+}
+
+/* ============================================================
+   Global HUD Elements
+   ============================================================ */
+
+/* --- SA Scan Line (top accent on major containers) --- */
+.sa-scan-border {
+  position: relative;
+}
+
+.sa-scan-border::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--sa-accent-rgb), 0.8),
+    rgba(var(--sa-accent-secondary-rgb), 0.6),
+    rgba(var(--sa-accent-rgb), 0.8),
+    transparent
+  );
+  background-size: 200% 100%;
+  z-index: 1;
+}
+
+.sa-scan-border--animated::before {
+  animation: sa-global-scan 4s linear infinite;
+}
+
+@keyframes sa-global-scan {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* --- SA Card (unified card style across app) --- */
+.sa-card {
+  background: hsl(var(--card));
+  border: 1px solid rgba(var(--sa-accent-rgb), 0.15);
+  border-radius: 0.75rem;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.sa-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    rgba(var(--sa-accent-rgb), 0.6),
+    rgba(var(--sa-accent-secondary-rgb), 0.4)
+  );
+  opacity: 0.5;
+  transition: opacity 0.25s;
+}
+
+.sa-card:hover {
+  border-color: rgba(var(--sa-accent-rgb), 0.35);
+  box-shadow: 0 4px 20px rgba(var(--sa-accent-rgb), calc(var(--sa-glow-intensity) * 0.5));
+}
+
+.sa-card:hover::before {
+  opacity: 1;
+}
+
+/* --- SA Panel (SystemWindow equivalent with zone awareness) --- */
+.sa-panel {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--card)) 0%,
+    rgba(var(--sa-accent-rgb), 0.04) 100%
+  );
+  border: 1px solid rgba(var(--sa-accent-rgb), 0.12);
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* --- SA Header Bar (page title area) --- */
+.sa-page-header {
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 10, 30, 0.95) 0%,
+    rgba(var(--sa-accent-rgb), 0.08) 50%,
+    rgba(10, 10, 25, 0.95) 100%
+  );
+  border: 1px solid rgba(var(--sa-accent-rgb), 0.2);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  overflow: hidden;
+}
+
+.sa-page-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--sa-accent-rgb), 0.7),
+    rgba(var(--sa-accent-secondary-rgb), 0.5),
+    rgba(var(--sa-accent-rgb), 0.7),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: sa-global-scan 4s linear infinite;
+}
+
+.sa-page-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--sa-accent-rgb), 0.3),
+    transparent
+  );
+}
+
+/* --- SA Section Title --- */
+.sa-section-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(var(--sa-accent-rgb), 0.8);
+}
+
+/* --- SA Stat Display --- */
+.sa-stat {
+  font-family: var(--font-display, ui-monospace, monospace);
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 0 10px rgba(var(--sa-accent-rgb), 0.3);
+}
+
+/* --- SA Badge (rank/rarity/status) --- */
+.sa-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid rgba(var(--sa-accent-rgb), 0.3);
+  background: rgba(var(--sa-accent-rgb), 0.1);
+  color: rgba(var(--sa-accent-rgb), 1);
+}
+
+/* --- SA Button Glow --- */
+.sa-btn-glow {
+  transition: box-shadow 0.25s, border-color 0.25s;
+}
+
+.sa-btn-glow:hover {
+  box-shadow: 0 0 12px rgba(var(--sa-accent-rgb), 0.3);
+  border-color: rgba(var(--sa-accent-rgb), 0.4);
+}
+
+/* --- SA Tab Bar --- */
+.sa-tabs [role="tablist"] {
+  background: rgba(15, 10, 30, 0.5);
+  border-color: rgba(var(--sa-accent-rgb), 0.12);
+}
+
+.sa-tabs [role="tab"][data-state="active"] {
+  background: rgba(var(--sa-accent-rgb), 0.12) !important;
+  border-color: rgba(var(--sa-accent-rgb), 0.25) !important;
+  box-shadow: 0 0 10px rgba(var(--sa-accent-rgb), 0.1),
+    inset 0 1px 0 rgba(var(--sa-accent-rgb), 0.15) !important;
+  color: white;
+}
+
+.sa-tabs [role="tab"]:hover:not([data-state="active"]) {
+  background: rgba(var(--sa-accent-rgb), 0.06);
+}
+
+/* --- SA Input --- */
+.sa-input:focus {
+  border-color: rgba(var(--sa-accent-rgb), 0.5);
+  box-shadow: 0 0 0 2px rgba(var(--sa-accent-rgb), 0.15);
+}
+
+/* --- SA Progress Bar --- */
+.sa-progress {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(var(--sa-accent-rgb), 0.1);
+  overflow: hidden;
+}
+
+.sa-progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(
+    90deg,
+    rgba(var(--sa-accent-rgb), 0.8),
+    rgba(var(--sa-accent-secondary-rgb), 0.7)
+  );
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- SA Divider --- */
+.sa-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--sa-accent-rgb), 0.3),
+    transparent
+  );
+  margin: 1rem 0;
+}
+
+/* --- SA Glow Text --- */
+.sa-glow-text {
+  color: rgba(var(--sa-accent-rgb), 1);
+  text-shadow: 0 0 8px rgba(var(--sa-accent-rgb), 0.4);
+}
+
+/* --- SA Data Grid Row Hover --- */
+.sa-row:hover {
+  background: rgba(var(--sa-accent-rgb), 0.04);
+  border-color: rgba(var(--sa-accent-rgb), 0.2);
+}
+
+/* ============================================================
+   Zone-Specific Overrides
+   ============================================================ */
+
+/* DM Tools: Warden Command HUD */
+[data-sa-zone="dm"] .sa-page-header {
+  background: linear-gradient(
+    135deg,
+    rgba(20, 8, 8, 0.95) 0%,
+    rgba(var(--sa-accent-rgb), 0.1) 50%,
+    rgba(15, 5, 5, 0.95) 100%
+  );
+}
+
+/* Campaign: Alliance Guild Hall */
+[data-sa-zone="campaign"] .sa-page-header {
+  background: linear-gradient(
+    135deg,
+    rgba(8, 12, 25, 0.95) 0%,
+    rgba(var(--sa-accent-rgb), 0.08) 50%,
+    rgba(5, 10, 20, 0.95) 100%
+  );
+}
+
+/* Compendium: Knowledge Archive */
+[data-sa-zone="compendium"] .sa-page-header {
+  background: linear-gradient(
+    135deg,
+    rgba(20, 15, 5, 0.95) 0%,
+    rgba(var(--sa-accent-rgb), 0.06) 50%,
+    rgba(15, 10, 3, 0.95) 100%
+  );
+}
+
+/* Player Tools: Hunter Toolkit */
+[data-sa-zone="player"] .sa-page-header {
+  background: linear-gradient(
+    135deg,
+    rgba(5, 18, 12, 0.95) 0%,
+    rgba(var(--sa-accent-rgb), 0.08) 50%,
+    rgba(3, 15, 10, 0.95) 100%
+  );
+}
+
+/* Auth: System Awakening */
+[data-sa-zone="auth"] .sa-page-header {
+  background: linear-gradient(
+    135deg,
+    rgba(15, 5, 25, 0.95) 0%,
+    rgba(var(--sa-accent-rgb), 0.12) 50%,
+    rgba(10, 3, 20, 0.95) 100%
+  );
+}
+
+/* ============================================================
+   Global Element Overrides (applies everywhere)
+   ============================================================ */
+
+/* SystemWindow cards get zone-aware borders */
+[data-sa-zone] .border-border {
+  border-color: rgba(var(--sa-accent-rgb), 0.1);
+}
+
+/* All buttons get subtle zone glow on hover */
+[data-sa-zone] button:hover:not(:disabled) {
+  transition: box-shadow 0.2s;
+}
+
+/* Zone-aware focus rings */
+[data-sa-zone] *:focus-visible {
+  outline-color: rgba(var(--sa-accent-rgb), 0.6);
+}
+
+/* Badge zone coloring */
+[data-sa-zone] .badge-zone {
+  border-color: rgba(var(--sa-accent-rgb), 0.3);
+  color: rgba(var(--sa-accent-rgb), 1);
+}
+
+/* ============================================================
+   Reduced Motion
+   ============================================================ */
+.reduce-motion .sa-scan-border--animated::before,
+.reduce-motion .sa-page-header::before {
+  animation: none;
+}
+
+.reduce-motion .sa-card:hover {
+  transform: none;
+}
+
+/* ============================================================
+   Print
+   ============================================================ */
+@media print {
+  .sa-page-header,
+  .sa-scan-border {
+    background: white !important;
+    border-color: #ccc !important;
+  }
+
+  .sa-page-header::before,
+  .sa-page-header::after,
+  .sa-scan-border::before {
+    display: none;
+  }
+
+  .sa-card {
+    border-color: #ddd !important;
+    box-shadow: none !important;
+  }
+}

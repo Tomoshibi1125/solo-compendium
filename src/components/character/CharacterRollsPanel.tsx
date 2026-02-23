@@ -4,6 +4,9 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { InlineRollButton, AbilityRollButton, SaveRollButton, SkillRollButton } from './InlineRollButton';
 import { useAuth } from '@/lib/auth/authContext';
+import { ABILITY_NAMES, type AbilityScore } from '@/types/system-rules';
+
+const ABILITY_KEYS = Object.keys(ABILITY_NAMES) as AbilityScore[];
 
 interface CharacterRollsPanelProps {
   characterId: string;
@@ -79,14 +82,14 @@ export function CharacterRollsPanel({
         <div>
           <h4 className="font-medium mb-2">Ability Checks</h4>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-            {['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'].map((ability) => (
+            {ABILITY_KEYS.map((ability) => (
               <AbilityRollButton
                 key={ability}
                 characterId={characterId}
                 characterName={characterName}
                 rollKey={ability.toLowerCase()}
                 label={ability}
-                modifier={getAbilityModifier(abilities[ability.toLowerCase()] || 10)}
+                modifier={getAbilityModifier(abilities[ability.toLowerCase()] || abilities[ability] || 10)}
                 campaignId={campaignId}
               />
             ))}
@@ -99,14 +102,14 @@ export function CharacterRollsPanel({
         <div>
           <h4 className="font-medium mb-2">Saving Throws</h4>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-            {['Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma'].map((save) => (
+            {ABILITY_KEYS.map((ability) => (
               <SaveRollButton
-                key={save}
+                key={ability}
                 characterId={characterId}
                 characterName={characterName}
-                rollKey={save.toLowerCase()}
-                label={save.substring(0, 3)}
-                modifier={getSaveModifier(save)}
+                rollKey={ability.toLowerCase()}
+                label={ABILITY_NAMES[ability]}
+                modifier={getSaveModifier(ability)}
                 campaignId={campaignId}
               />
             ))}
@@ -145,7 +148,7 @@ export function CharacterRollsPanel({
               rollType="ability"
               rollKey="initiative"
               label="Initiative"
-              modifier={getAbilityModifier(abilities.dexterity || 10)}
+              modifier={getAbilityModifier(abilities.agi || abilities.AGI || 10)}
               campaignId={campaignId}
             />
             <InlineRollButton

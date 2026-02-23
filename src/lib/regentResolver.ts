@@ -1,7 +1,7 @@
 /**
  * Regent Runtime Resolver
  *
- * Provides a deterministic modifier pipeline for Regent (Monarch) effects.
+ * Provides a deterministic modifier pipeline for Regent effects.
  * Regents grant passive and active modifiers that interact with class features
  * and Gemini effects with strict precedence.
  *

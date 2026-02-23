@@ -35,7 +35,7 @@ export function SystemSigilLogo({ className, size = 'md', variant = 'default' }:
 
   const styles = variantStyles[variant];
   const idPrefix = useId().replace(/:/g, '');
-  const monarchGradientId = `monarchGradientSupreme-${idPrefix}`;
+  const regentGradientId = `monarchGradientSupreme-${idPrefix}`;
   const shadowCoreId = `shadowCoreDeep-${idPrefix}`;
   const ariseGlowId = `ariseGlow-${idPrefix}`;
   const shadowGlowId = `shadowGlow-${idPrefix}`;
@@ -52,7 +52,7 @@ export function SystemSigilLogo({ className, size = 'md', variant = 'default' }:
       >
         {/* Gradient Definitions - Prime Architect Palette */}
         <defs>
-          <linearGradient id={monarchGradientId} x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id={regentGradientId} x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="hsl(220 100% 60%)" />
             <stop offset="30%" stopColor="hsl(265 75% 55%)" />
             <stop offset="60%" stopColor="hsl(280 85% 65%)" />
@@ -83,7 +83,7 @@ export function SystemSigilLogo({ className, size = 'md', variant = 'default' }:
           cy="50"
           r="46"
           fill="none"
-          stroke={`url(#${monarchGradientId})`}
+          stroke={`url(#${regentGradientId})`}
           strokeWidth="1.5"
           opacity="0.5"
           className={styles.outerGlow}
@@ -96,7 +96,7 @@ export function SystemSigilLogo({ className, size = 'md', variant = 'default' }:
           cy="50"
           r="42"
           fill="none"
-          stroke={`url(#${monarchGradientId})`}
+          stroke={`url(#${regentGradientId})`}
           strokeWidth="2"
           opacity="0.7"
           className={styles.outerGlow}
@@ -114,7 +114,7 @@ export function SystemSigilLogo({ className, size = 'md', variant = 'default' }:
         {/* Ascendant's Seal - The Crown */}
         <path
           d="M 50 15 L 62 35 L 85 35 L 68 52 L 75 75 L 50 62 L 25 75 L 32 52 L 15 35 L 38 35 Z"
-          fill={`url(#${monarchGradientId})`}
+          fill={`url(#${regentGradientId})`}
           opacity="0.85"
           filter={`url(#${shadowGlowId})`}
           className={styles.innerPulse}

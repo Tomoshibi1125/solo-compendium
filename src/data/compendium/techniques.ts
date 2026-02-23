@@ -57,6 +57,16 @@ export interface Technique {
     };
     condition?: string[];
   };
+  
+  // 5e-style technique mechanics
+  weapon_requirements?: string[];       // Specific weapon types needed
+  maneuver_save_dc?: string;           // DC for opponent saving throws
+  superiority_dice?: {
+    dice: string;
+    amount: number;
+    scaling: string;
+  };
+  martial_archetype?: string;          // Associated martial archetype
   limitations?: {
     uses?: string;
     cooldown?: string;
@@ -121,7 +131,7 @@ export const techniques: Technique[] = [
     style: 'unarmed',
     prerequisites: {
       level: 8,
-      class: 'Monk'
+      class: 'Striker'
     },
     activation: {
       type: 'action',
@@ -407,7 +417,7 @@ export const techniques: Technique[] = [
     style: 'any',
     prerequisites: {
       level: 7,
-      class: 'Warrior'
+      class: 'Destroyer'
     },
     activation: {
       type: 'bonus-action'

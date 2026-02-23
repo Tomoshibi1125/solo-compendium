@@ -41,7 +41,7 @@ import { useUpdateCharacterAbilities } from '@/hooks/useCharacterAbilities';
 import { useCharacterSheetState } from '@/hooks/useCharacterSheetState';
 import { useRecordRoll } from '@/hooks/useRollHistory';
 import { calculateCharacterStats, formatModifier } from '@/lib/characterCalculations';
-import { getAvailableFavorOptions } from '@/lib/5eRulesEngine';
+import { getAvailableFavorOptions } from '@/lib/systemFavor';
 import { getAbilityModifier } from '@/types/system-rules';
 import { applyEquipmentModifiers } from '@/lib/equipmentModifiers';
 import { applyRuneBonuses } from '@/lib/runeAutomation';
@@ -61,6 +61,8 @@ import { ActionsList } from '@/components/character/ActionsList';
 import { FeaturesList } from '@/components/character/FeaturesList';
 import { FeatureChoicesPanel } from '@/components/character/FeatureChoicesPanel';
 import { HomebrewFeatureApplicator } from '@/components/character/HomebrewFeatureApplicator';
+import { RegentFeaturesDisplay } from '@/components/character/RegentFeaturesDisplay';
+import { CharacterRollsPanel } from '@/components/character/CharacterRollsPanel';
 import { RollHistoryPanel } from '@/components/character/RollHistoryPanel';
 import { ExportDialog } from '@/components/character/ExportDialog';
 import { PortraitUpload } from '@/components/character/PortraitUpload';
@@ -74,6 +76,7 @@ import { ABILITY_NAMES, type AbilityScore } from '@/types/system-rules';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { useEquipment } from '@/hooks/useEquipment';
+import { useRegentUnlocks } from '@/hooks/useRegentUnlocks';
 import { isLocalCharacterId } from '@/lib/guestStore';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useCampaignByCharacterId } from '@/hooks/useCampaigns';
@@ -91,10 +94,28 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RichTextNotes } from '@/components/character/RichTextNotes';
+import { JournalPanel } from '@/components/character/JournalPanel';
 import { CharacterResourcesPanel } from '@/components/character/CharacterResourcesPanel';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
-import { BookOpen, Backpack, Scroll, User, Sparkles } from 'lucide-react';
+import { DeathSaveTracker } from '@/components/CharacterSheet/DeathSaveTracker';
+import { ShortRestDialog } from '@/components/CharacterSheet/ShortRestDialog';
+import { ConcentrationBanner } from '@/components/CharacterSheet/ConcentrationBanner';
+import { AttunementSlots } from '@/components/CharacterSheet/AttunementSlots';
+import { ProficienciesLanguages } from '@/components/CharacterSheet/ProficienciesLanguages';
+import { SpellPanel, type SpellEntry, type SpellSlotDisplay } from '@/components/CharacterSheet/SpellPanel';
+import { ACBreakdownTooltip } from '@/components/CharacterSheet/ACBreakdownTooltip';
+import { ConditionBadgeBar } from '@/components/CharacterSheet/ConditionBadgeBar';
+import { SensesDisplay } from '@/components/CharacterSheet/SensesDisplay';
+import { ResistancesDisplay } from '@/components/CharacterSheet/ResistancesDisplay';
+import { useDeathSaves } from '@/hooks/useDeathSaves';
+import { useConcentration } from '@/hooks/useConcentration';
+import { useAttunement } from '@/hooks/useAttunement';
+import { useSpellSlots } from '@/hooks/useSpellSlots';
+import { useSpellCasting } from '@/hooks/useSpellCasting';
+import { usePowers } from '@/hooks/usePowers';
+import { getSpellcastingAbility } from '@/lib/characterCalculations';
+import { BookOpen, Backpack, User, Sparkles } from 'lucide-react';
 import './CharacterSheet.css';
 
 const ABILITY_KEYS = Object.keys(ABILITY_NAMES) as AbilityScore[];
@@ -245,6 +266,26 @@ const CharacterSheet = () => {
   const [hpMaxDraft, setHpMaxDraft] = useState('');
   const undoRedo = useCharacterUndoRedo(character ?? null);
   const { data: activeRunes = [] } = useCharacterRuneInscriptions(id);
+  const { unlocks: regentUnlocks } = useRegentUnlocks(character?.id || '');
+  const deathSaves = useDeathSaves(0, 0);
+  const [lastDeathSaveResult, setLastDeathSaveResult] = useState<{ roll: number; message: string } | null>(null);
+  const concentration = useConcentration(
+    character?.abilities?.VIT ?? 10,
+    character?.level ?? 1,
+    character?.saving_throw_proficiencies ?? []
+  );
+  const attunement = useAttunement();
+
+  // Spell system hooks
+  const { data: spellSlotData = [] } = useSpellSlots(character?.id || '', character?.job || null, character?.level || 1);
+  const { powers: characterPowers = [] } = usePowers(character?.id || '');
+  const spellCasting = useSpellCasting(
+    spellSlotData,
+    (spellName, duration) => concentration.concentrate({ id: spellName, name: spellName, description: `Concentrating on ${spellName}`, duration }),
+    () => concentration.drop()
+  );
+
+  const primaryRegentUnlock = regentUnlocks.find(u => u.is_primary) ?? regentUnlocks[0];
   const hasTriggeredPrintRef = useRef(false);
   const notesSaveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const characterResources = sheetState.resources;
@@ -1235,47 +1276,95 @@ const CharacterSheet = () => {
           </SystemWindow>
         )}
 
-        {/* â”€â”€ DDB-Style Character Header (always visible) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-        <div className="flex flex-col sm:flex-row items-start gap-4 mb-6 p-4 rounded-xl bg-card border border-border">
-          {character.portrait_url && (
+        {/* SA Hunter Profile Header */}
+        <div className="sa-hunter-header flex flex-col sm:flex-row items-start gap-4 mb-6">
+          {character.portrait_url ? (
             <OptimizedImage
               src={character.portrait_url}
               alt={character.name}
-              className="w-20 h-20 sm:w-24 sm:h-24 rounded-lg object-cover border border-primary/30 flex-shrink-0"
+              className="w-20 h-20 sm:w-24 sm:h-24 rounded-lg object-cover border-2 border-purple-500/40 flex-shrink-0 shadow-[0_0_15px_rgba(139,92,246,0.2)]"
               size="small"
             />
+          ) : (
+            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-lg border-2 border-purple-500/30 flex-shrink-0 bg-gradient-to-br from-purple-900/40 to-indigo-900/40 flex items-center justify-center">
+              <User className="w-8 h-8 sm:w-10 sm:h-10 text-purple-400/60" />
+            </div>
           )}
           <div className="flex-1 min-w-0">
-            <h1 className="font-display text-2xl sm:text-3xl font-bold truncate">{character.name}</h1>
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1 text-sm text-muted-foreground">
-              <span className="font-heading">Level <span className="text-foreground font-bold">{character.level}</span></span>
-              <span className="text-border">â€¢</span>
-              <span className="font-heading text-foreground">{jobDisplayName || 'Unassigned'}</span>
+            <div className="flex items-center gap-3">
+              <h1 className="font-display text-2xl sm:text-3xl font-bold truncate text-white">{character.name}</h1>
+              {/* Hunter Rank Badge */}
+              <span className={cn(
+                'sa-rank-badge px-2',
+                character.level >= 17 ? 'sa-rank-badge--s' :
+                character.level >= 13 ? 'sa-rank-badge--a' :
+                character.level >= 9 ? 'sa-rank-badge--b' :
+                character.level >= 5 ? 'sa-rank-badge--c' :
+                character.level >= 2 ? 'sa-rank-badge--d' :
+                'sa-rank-badge--e'
+              )}>
+                {character.level >= 17 ? 'S' :
+                 character.level >= 13 ? 'A' :
+                 character.level >= 9 ? 'B' :
+                 character.level >= 5 ? 'C' :
+                 character.level >= 2 ? 'D' : 'E'}
+              </span>
+            </div>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-sm">
+              <span className="font-heading text-purple-300">Lv. <span className="text-white font-bold text-base">{character.level}</span></span>
+              <span className="text-purple-500/50">|</span>
+              <span className="font-heading text-cyan-300">{jobDisplayName || 'Unawakened'}</span>
               {pathDisplayName && (
                 <>
-                  <span className="text-border">â€¢</span>
-                  <span className="font-heading">{pathDisplayName}</span>
+                  <span className="text-purple-500/50">|</span>
+                  <span className="font-heading text-purple-200/80">{pathDisplayName}</span>
                 </>
               )}
               {backgroundDisplayName && (
                 <>
-                  <span className="text-border">â€¢</span>
-                  <span className="font-heading">{backgroundDisplayName}</span>
+                  <span className="text-purple-500/50">|</span>
+                  <span className="font-heading text-purple-200/60">{backgroundDisplayName}</span>
                 </>
               )}
             </div>
+            {/* XP Progress Bar */}
+            {character.experience !== undefined && character.experience !== null && (
+              <div className="mt-2 flex items-center gap-2">
+                <div className="flex-1 h-1.5 rounded-full bg-purple-900/40 overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-purple-500 to-cyan-400 transition-all duration-500"
+                    style={{ width: `${Math.min(100, ((character.experience || 0) % 1000) / 10)}%` }}
+                  />
+                </div>
+                <span className="text-[10px] font-mono text-purple-300/60">{character.experience || 0} XP</span>
+              </div>
+            )}
             {/* Quick Actions Row */}
             <div className="flex flex-wrap gap-2 mt-3">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleShortRest}
-                className="gap-1.5 h-8"
-                disabled={updateCharacter.isPending}
-              >
-                <Moon className="w-3.5 h-3.5" />
-                Short Rest
-              </Button>
+              <ShortRestDialog
+                hitDiceAvailable={character.hit_dice_current}
+                hitDiceMax={character.hit_dice_max}
+                hitDieSize={character.hit_dice_size}
+                hpCurrent={character.hp_current}
+                hpMax={character.hp_max}
+                onSpendHitDie={() => {
+                  const vitMod = getAbilityModifier(finalAbilities?.VIT ?? character.abilities.VIT);
+                  const roll = Math.floor(Math.random() * character.hit_dice_size) + 1;
+                  const hpGain = Math.max(0, roll + vitMod);
+                  const currentHP = character.hp_current;
+                  const actualGain = Math.min(hpGain, character.hp_max - currentHP);
+                  const remaining = character.hit_dice_current - 1;
+                  handleResourceAdjust('hit_dice_current', -1);
+                  return { roll, vitModifier: vitMod, hpRecovered: actualGain, hitDiceRemaining: remaining };
+                }}
+                onFinishRest={async (totalRecovered) => {
+                  if (totalRecovered > 0) {
+                    const newHP = Math.min(character.hp_current + totalRecovered, character.hp_max);
+                    await updateCharacter.mutateAsync({ id: character.id, data: { hp_current: newHP } });
+                  }
+                  await handleShortRest();
+                }}
+              />
               <Button
                 variant="outline"
                 size="sm"
@@ -1300,6 +1389,37 @@ const CharacterSheet = () => {
             </div>
           </div>
         </div>
+
+        {/* Concentration Banner */}
+        <ConcentrationBanner
+          isConcentrating={concentration.state.isConcentrating}
+          effectName={concentration.state.currentEffect?.name}
+          remainingRounds={concentration.state.currentEffect?.remainingRounds}
+          onDrop={concentration.drop}
+        />
+
+        {/* Persistent Condition Badge Bar (always visible above tabs) */}
+        {((character.conditions && character.conditions.length > 0) || character.exhaustion_level > 0) && !isReadOnly && (
+          <ConditionBadgeBar
+            conditions={character.conditions || []}
+            onAddCondition={(condition) => {
+              const current = character.conditions || [];
+              if (!current.some(c => c.toLowerCase() === condition.toLowerCase())) {
+                updateCharacter.mutate({
+                  id: character.id,
+                  data: { conditions: [...current, condition] },
+                });
+              }
+            }}
+            onRemoveCondition={(condition) => {
+              const current = character.conditions || [];
+              updateCharacter.mutate({
+                id: character.id,
+                data: { conditions: current.filter(c => c.toLowerCase() !== condition.toLowerCase()) },
+              });
+            }}
+          />
+        )}
 
         {/* D&D Beyond Style Tabbed Content */}
         <Tabs defaultValue="overview" className="space-y-4 sm:space-y-6">
@@ -1455,22 +1575,20 @@ const CharacterSheet = () => {
                   <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
                 </div>
                 <div className="pt-6 sm:pt-8">
-                  <div className="font-display text-2xl sm:text-3xl font-bold text-center">{calculatedStats.armorClass}</div>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="mx-auto mt-2 h-7 w-7 p-0"
-                    onClick={() => rollAndRecord({
-                      title: 'Armor Class Check',
-                      formula: '1d20',
-                      rollType: 'ac',
-                      context: 'Armor Class',
-                    })}
-                    aria-label="Roll armor class check"
-                  >
-                    <Dice6 className="w-4 h-4" />
-                  </Button>
+                  <ACBreakdownTooltip
+                    breakdown={{
+                      base: baseStats.armorClass,
+                      agiModifier: getAbilityModifier(finalAbilities.AGI),
+                      agiApplied: getAbilityModifier(finalAbilities.AGI),
+                      armorAC: baseStats.armorClass,
+                      shieldBonus: equipmentMods.armorClass - baseStats.armorClass > 0 ? equipmentMods.armorClass - baseStats.armorClass : 0,
+                      magicalBonus: runeBonuses.ac - equipmentMods.armorClass > 0 ? runeBonuses.ac - equipmentMods.armorClass : 0,
+                      otherBonuses: calculatedStats.armorClass - runeBonuses.ac,
+                      total: calculatedStats.armorClass,
+                      formula: `${baseStats.armorClass} base${equipmentMods.armorClass !== baseStats.armorClass ? ` + ${equipmentMods.armorClass - baseStats.armorClass} equip` : ''}${runeBonuses.ac !== equipmentMods.armorClass ? ` + ${runeBonuses.ac - equipmentMods.armorClass} runes` : ''}`,
+                      warnings: [],
+                    }}
+                  />
                 </div>
                 {isEditMode && !isReadOnly && (
                   <Input
@@ -1748,6 +1866,135 @@ const CharacterSheet = () => {
               </div>
             </SystemWindow>
 
+            {/* Skills - D&D Beyond Style */}
+            <SystemWindow title="SKILLS">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {allSkills.map((skill) => {
+                  const s = skills[skill.name];
+                  if (!s) return null;
+                  const isEditingSkill = isEditMode && !isReadOnly;
+                  return (
+                    <div key={skill.name} className="flex items-center justify-between px-3 py-1.5 rounded-lg bg-card border border-border group hover:bg-muted/50 transition-colors">
+                      <div className="flex items-center gap-2 min-w-0">
+                        {isEditingSkill ? (
+                          <div className="flex gap-0.5">
+                            <Button
+                              type="button"
+                              variant={s.proficient ? (s.expertise ? 'default' : 'secondary') : 'outline'}
+                              size="sm"
+                              className="h-5 w-5 p-0 text-[10px]"
+                              onClick={() => {
+                                if (s.expertise) {
+                                  handleToggleSkillExpertise(skill.name);
+                                } else if (s.proficient) {
+                                  handleToggleSkillExpertise(skill.name);
+                                } else {
+                                  handleToggleSkillProficiency(skill.name);
+                                }
+                              }}
+                              title={s.expertise ? 'Expertise' : s.proficient ? 'Proficient (click for expertise)' : 'Not proficient'}
+                            >
+                              {s.expertise ? 'E' : s.proficient ? 'P' : '○'}
+                            </Button>
+                          </div>
+                        ) : (
+                          <>
+                            {s.expertise && <Badge variant="default" className="text-[9px] px-1 py-0 h-4">E</Badge>}
+                            {s.proficient && !s.expertise && <Badge variant="secondary" className="text-[9px] px-1 py-0 h-4">P</Badge>}
+                          </>
+                        )}
+                        <span className="text-xs font-heading truncate">{skill.name}</span>
+                        <span className="text-[10px] text-muted-foreground">({skill.ability})</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 flex-shrink-0">
+                        <span className={cn(
+                          "font-display font-bold text-sm",
+                          s.modifier >= 0 ? "text-green-400" : "text-red-400"
+                        )}>
+                          {formatModifier(s.modifier)}
+                        </span>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => rollAndRecord({
+                            title: `${skill.name}`,
+                            formula: formatRollFormula('1d20', s.modifier),
+                            rollType: 'skill',
+                            context: `${skill.name} (${skill.ability})`,
+                            modifier: s.modifier,
+                          })}
+                          className="h-6 w-6 p-0 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
+                          aria-label={`Roll ${skill.name} check`}
+                        >
+                          <Dice6 className="w-3 h-3" />
+                        </Button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              {/* Passive Scores */}
+              <div className="mt-4 grid grid-cols-3 gap-3">
+                <div className="text-center p-2 rounded-lg bg-muted/50 border border-border">
+                  <div className="text-[10px] text-muted-foreground font-heading">Passive Perception</div>
+                  <div className="font-display font-bold text-lg">{skills['Perception']?.passive ?? 10}</div>
+                </div>
+                <div className="text-center p-2 rounded-lg bg-muted/50 border border-border">
+                  <div className="text-[10px] text-muted-foreground font-heading">Passive Investigation</div>
+                  <div className="font-display font-bold text-lg">{skills['Investigation']?.passive ?? 10}</div>
+                </div>
+                <div className="text-center p-2 rounded-lg bg-muted/50 border border-border">
+                  <div className="text-[10px] text-muted-foreground font-heading">Passive Insight</div>
+                  <div className="font-display font-bold text-lg">{skills['Insight']?.passive ?? 10}</div>
+                </div>
+              </div>
+            </SystemWindow>
+
+            {/* Proficiencies & Languages */}
+            <ProficienciesLanguages
+              armorProficiencies={character.armor_proficiencies || []}
+              weaponProficiencies={character.weapon_proficiencies || []}
+              toolProficiencies={character.tool_proficiencies || []}
+            />
+
+            {/* Senses (passive scores + special senses from job/regent) */}
+            <SensesDisplay
+              senses={(character as unknown as Record<string, unknown>).senses as string[] | undefined}
+              passivePerception={skills['Perception']?.passive ?? 10}
+              passiveInvestigation={skills['Investigation']?.passive ?? 10}
+              passiveInsight={skills['Insight']?.passive ?? 10}
+            />
+
+            {/* Resistances & Immunities (from equipment, regents, features) */}
+            <ResistancesDisplay
+              resistances={(character as unknown as Record<string, unknown>).damage_resistances as string[] | undefined}
+              immunities={(character as unknown as Record<string, unknown>).damage_immunities as string[] | undefined}
+              vulnerabilities={(character as unknown as Record<string, unknown>).damage_vulnerabilities as string[] | undefined}
+              conditionImmunities={(character as unknown as Record<string, unknown>).condition_immunities as string[] | undefined}
+            />
+
+            {/* Death Save Tracker (only shown at 0 HP) */}
+            <DeathSaveTracker
+              successes={deathSaves.state.successes}
+              failures={deathSaves.state.failures}
+              isStable={deathSaves.state.isStable}
+              isDead={deathSaves.state.isDead}
+              hpCurrent={character.hp_current}
+              onRollDeathSave={() => {
+                const result = deathSaves.rollDeathSave();
+                setLastDeathSaveResult({ roll: result.roll, message: result.message });
+                deathSaves.persist(character.id);
+                toast({ title: 'Death Save', description: result.message });
+              }}
+              onStabilize={() => {
+                deathSaves.stabilize();
+                deathSaves.persist(character.id);
+                toast({ title: 'Stabilized', description: 'Character is stable.' });
+              }}
+              lastRollResult={lastDeathSaveResult}
+            />
+
             {/* Resources */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <SystemWindow title="HIT DICE" compact>
@@ -1985,6 +2232,25 @@ const CharacterSheet = () => {
             {/* Actions */}
             <ActionsList characterId={character.id} />
 
+            {/* Quick Rolls */}
+            <CharacterRollsPanel
+              characterId={character.id}
+              characterName={character.name}
+              abilities={character.abilities as Record<string, number>}
+              proficiencyBonus={calculatedStats.proficiencyBonus}
+              savingThrowProficiencies={character.saving_throw_proficiencies || []}
+              skills={allSkills.map(skill => ({
+                name: skill.name,
+                ability: skill.ability,
+                proficiency: (character.skill_expertise || []).includes(skill.name)
+                  ? 'expertise'
+                  : (character.skill_proficiencies || []).includes(skill.name)
+                    ? 'proficient'
+                    : 'none',
+              }))}
+              campaignId={campaignId ?? undefined}
+            />
+
             {/* Spell Slots */}
             <SpellSlotsDisplay 
               characterId={character.id} 
@@ -1999,6 +2265,15 @@ const CharacterSheet = () => {
 
           {/* â”€â”€ TAB: Inventory â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           <TabsContent value="inventory" className="space-y-6 mt-0">
+            {/* Attunement Slots */}
+            <AttunementSlots
+              attunedItems={attunement.attunedItems}
+              slotsRemaining={attunement.slotsRemaining}
+              onUnattune={(itemId) => {
+                attunement.unattune(itemId);
+              }}
+            />
+
             {/* Equipment */}
             <EquipmentList characterId={character.id} />
 
@@ -2008,14 +2283,118 @@ const CharacterSheet = () => {
 
           {/* â”€â”€ TAB: Spells â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           <TabsContent value="spells" className="space-y-6 mt-0">
-            {/* Spell Slots */}
-            <SpellSlotsDisplay 
-              characterId={character.id}
-              job={character.job}
-              level={character.level}
-            />
-            
-            {/* Powers List */}
+            {/* Full Spell Panel: slots, cantrips, preparation, upcasting, ritual casting */}
+            {(() => {
+              const castingAbility = getSpellcastingAbility(character.job);
+              const castingMod = castingAbility ? getAbilityModifier(finalAbilities[castingAbility] ?? 10) : 0;
+              const profBonus = calculatedStats.proficiencyBonus;
+              const spellSaveDC = 8 + profBonus + castingMod;
+              const spellAttackBonus = profBonus + castingMod;
+
+              const spellSlots: SpellSlotDisplay[] = spellSlotData.map(s => ({
+                level: s.level,
+                current: s.current,
+                max: s.max,
+              }));
+
+              const spellEntries: SpellEntry[] = characterPowers.map(p => ({
+                id: p.id,
+                name: p.name,
+                level: p.power_level ?? 0,
+                isRitual: false,
+                isConcentration: p.concentration ?? false,
+                isPrepared: p.is_prepared ?? true,
+                castingTime: p.casting_time ?? null,
+                range: p.range ?? null,
+                duration: p.duration ?? null,
+                description: p.description ?? null,
+                higherLevels: p.higher_levels ?? null,
+                school: null,
+                damage: null,
+              }));
+
+              const maxPrepared = castingAbility
+                ? Math.max(1, castingMod + character.level)
+                : null;
+              const canPrepare = !!castingAbility;
+
+              return (
+                <SpellPanel
+                  characterLevel={character.level}
+                  spellSlots={spellSlots}
+                  spells={spellEntries}
+                  spellSaveDC={spellSaveDC}
+                  spellAttackBonus={spellAttackBonus}
+                  maxPrepared={maxPrepared}
+                  canPrepare={canPrepare}
+                  onCastSpell={async (spellId, atLevel, asRitual) => {
+                    const power = characterPowers.find(p => p.id === spellId);
+                    if (!power) return;
+                    const result = await spellCasting.castSpell({
+                      spell: {
+                        id: power.id,
+                        name: power.name,
+                        level: power.power_level ?? 0,
+                        isRitual: false,
+                        isConcentration: power.concentration ?? false,
+                        castingTime: power.casting_time ?? null,
+                        range: power.range ?? null,
+                        duration: power.duration ?? null,
+                        description: power.description ?? null,
+                        higherLevels: power.higher_levels ?? null,
+                      },
+                      castAtLevel: atLevel,
+                      asRitual,
+                      characterId: character.id,
+                      characterName: character.name,
+                      jobName: character.job,
+                      pathName: character.path,
+                      level: character.level,
+                      campaignId: campaignId,
+                    });
+                    toast({
+                      title: asRitual ? `${power.name} (Ritual)` : `${power.name} Cast`,
+                      description: result.message,
+                    });
+                    queryClient.invalidateQueries({ queryKey: ['spell-slots', character.id] });
+                  }}
+                  onTogglePrepared={async (spellId, prepared) => {
+                    const power = characterPowers.find(p => p.id === spellId);
+                    if (!power) return;
+                    if (isLocalCharacterId(character.id)) {
+                      const { updateLocalPower } = await import('@/lib/guestStore');
+                      updateLocalPower(spellId, { is_prepared: prepared });
+                    } else {
+                      await supabase.from('character_powers').update({ is_prepared: prepared }).eq('id', spellId);
+                    }
+                    queryClient.invalidateQueries({ queryKey: ['powers', character.id] });
+                    toast({
+                      title: prepared ? 'Spell Prepared' : 'Spell Unprepared',
+                      description: `${power.name} is now ${prepared ? 'prepared' : 'unprepared'}.`,
+                    });
+                  }}
+                  onRestoreSlot={async (level) => {
+                    const slot = spellSlotData.find(s => s.level === level);
+                    if (!slot || slot.current >= slot.max) return;
+                    if (isLocalCharacterId(character.id)) {
+                      const { updateLocalSpellSlotRow } = await import('@/lib/guestStore');
+                      const slotRow = spellSlotData.find(s => s.level === level);
+                      if (slotRow) updateLocalSpellSlotRow(`${character.id}-slot-${level}`, { slots_current: slot.current + 1 });
+                    } else {
+                      await supabase
+                        .from('character_spell_slots')
+                        .update({ slots_current: slot.current + 1 })
+                        .eq('character_id', character.id)
+                        .eq('spell_level', level);
+                    }
+                    queryClient.invalidateQueries({ queryKey: ['spell-slots', character.id] });
+                    toast({ title: 'Slot Restored', description: `Level ${level} spell slot restored.` });
+                  }}
+                />
+              );
+            })()}
+
+            {/* Powers List (for non-spell powers like techniques) */}
             <PowersList characterId={character.id} />
           </TabsContent>
 
@@ -2048,6 +2427,16 @@ const CharacterSheet = () => {
               </SystemWindow>
             ) : (
               <MonarchUnlocksPanel characterId={character.id} />
+            )}
+
+            {/* Regent Features Display — shows features for DM-unlocked regent */}
+            {!isLocal && primaryRegentUnlock && (
+              <RegentFeaturesDisplay
+                characterId={character.id}
+                characterLevel={character.level}
+                regentId={primaryRegentUnlock.regent_id}
+                regentLevel={character.level}
+              />
             )}
 
             {/* Umbral Legion */}
@@ -2113,6 +2502,11 @@ const CharacterSheet = () => {
                 </div>
               </div>
             </SystemWindow>
+
+            {/* Adventure Journal */}
+            {!isLocal && (
+              <JournalPanel characterId={character.id} />
+            )}
 
             {/* Roll History */}
             <RollHistoryPanel characterId={character.id} />
@@ -2237,10 +2631,3 @@ const CharacterSheet = () => {
 };
 
 export default CharacterSheet;
-
-// Dead code reference removed â€” old right-column content (custom modifiers, skills,
-// actions, features, equipment, currency, spells, powers, runes, monarch unlocks,
-// shadow soldiers, portrait, notes) is now in the tabbed layout above.
-// The following was a no-op block that has been cleaned up.
-/* eslint-disable @typescript-eslint/no-unused-vars */
-const _DEAD_CODE_REMOVED = true;

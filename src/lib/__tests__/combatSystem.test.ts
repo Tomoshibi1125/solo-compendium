@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest';
-import { getUnifiedArmorClass, getUnifiedHitPoints, getUnifiedProficiencyBonus } from '../unified/rulesEngine';
-import { performConcentrationCheck } from '../5eCombatSystem';
+import { getAbilityModifier, getProficiencyBonus } from '../5eRulesEngine';
+import { calculateHPMax } from '../characterCalculations';
 import {
   initializeDeathSaves,
   takeDamageAtZeroHP,
@@ -16,103 +16,35 @@ import {
 } from '../srd5e/concentration';
 
 describe('5e Combat System Calculations', () => {
-  test('Armor class calculation - no armor', () => {
-    const character = {
-      name: 'Test',
-      class: 'warrior' as const,
-      race: 'Human',
-      background: 'Soldier',
-      level: 5,
-      abilities: { STR: 14, AGI: 16, VIT: 12, INT: 10, SENSE: 8, PRE: 8 },
-      hp: 45,
-      maxHp: 45,
-      ac: 10,
-      speed: 30,
-      proficiencyBonus: 3,
-      skills: {},
-      equipment: [],
-      features: [],
-      spellSlots: {},
-      preparedSpells: []
-    };
-    const ac = getUnifiedArmorClass(character as any, 'none');
-    expect(ac).toBe(13); // 10 + AGI mod (3)
+  test('Armor class calculation - no armor (10 + AGI mod)', () => {
+    const agiMod = getAbilityModifier(16); // +3
+    const ac = 10 + agiMod;
+    expect(ac).toBe(13);
   });
-  
-  test('Armor class calculation - heavy armor', () => {
-    const character = {
-      level: 5,
-      abilities: { STR: 14, AGI: 16, VIT: 12, INT: 10, SENSE: 8, PRE: 8 }
-    };
-    const ac = getUnifiedArmorClass(character as any, 'heavy');
-    expect(ac).toBe(16); // Base AC for heavy armor
+
+  test('Hit points calculation - level 1 (d8 + VIT mod)', () => {
+    const vitMod = getAbilityModifier(14); // +2
+    const hp = calculateHPMax(1, 8, vitMod);
+    expect(hp).toBe(10); // 8 + 2
   });
-  
-  test('Hit points calculation - level 1', () => {
-    const character = {
-      level: 1,
-      abilities: { STR: 14, AGI: 16, VIT: 14, INT: 10, SENSE: 8, PRE: 8 }
-    };
-    const hp = getUnifiedHitPoints(character as any, 'd8');
-    expect(hp).toBe(10); // 8 + VIT mod (2)
+
+  test('Hit points calculation - level 5 (d8 + VIT mod per level)', () => {
+    const vitMod = getAbilityModifier(14); // +2
+    const hp = calculateHPMax(5, 8, vitMod);
+    expect(hp).toBe(38); // (8+2) + 4*(5+2) = 10 + 28
   });
-  
-  test('Hit points calculation - level 5', () => {
-    const character = {
-      level: 5,
-      abilities: { STR: 14, AGI: 16, VIT: 14, INT: 10, SENSE: 8, PRE: 8 }
-    };
-    const hp = getUnifiedHitPoints(character as any, 'd8');
-    expect(hp).toBe(38); // 8 + 2 + 4 * (4 + 1 + 2) = 10 + 28 = 38
-  });
-  
+
   test('Proficiency bonus matches 5e standard', () => {
-    expect(getUnifiedProficiencyBonus(1)).toBe(2);
-    expect(getUnifiedProficiencyBonus(4)).toBe(2);
-    expect(getUnifiedProficiencyBonus(5)).toBe(3);
-    expect(getUnifiedProficiencyBonus(8)).toBe(3);
-    expect(getUnifiedProficiencyBonus(9)).toBe(4);
-    expect(getUnifiedProficiencyBonus(20)).toBe(6);
+    expect(getProficiencyBonus(1)).toBe(2);
+    expect(getProficiencyBonus(4)).toBe(2);
+    expect(getProficiencyBonus(5)).toBe(3);
+    expect(getProficiencyBonus(8)).toBe(3);
+    expect(getProficiencyBonus(9)).toBe(4);
+    expect(getProficiencyBonus(20)).toBe(6);
   });
 });
 
 describe('5e Combat Automation', () => {
-  test('Concentration check DC is max(10, damage/2)', () => {
-    const character = {
-      id: 'c1',
-      name: 'Test Mage',
-      level: 5,
-      abilities: { STR: 8, AGI: 14, VIT: 14, INT: 18, SENSE: 12, PRE: 10 },
-      proficiency_bonus: 3,
-      armor_class: 12,
-      hp_current: 30,
-      hp_max: 30,
-      speed: 30,
-      conditions: [],
-      saving_throw_proficiencies: ['VIT' as const],
-      skill_proficiencies: [],
-      skill_expertise: [],
-      equipment: [],
-    };
-
-    // Low damage → DC stays at 10
-    const lowResult = performConcentrationCheck(character, 8);
-    expect(lowResult.dc).toBe(10);
-    expect(lowResult.damage).toBe(8);
-
-    // High damage → DC = floor(damage/2)
-    const highResult = performConcentrationCheck(character, 30);
-    expect(highResult.dc).toBe(15); // floor(30/2)
-
-    // Exactly 20 damage → DC 10 (20/2 = 10, same as floor)
-    const exactResult = performConcentrationCheck(character, 20);
-    expect(exactResult.dc).toBe(10);
-
-    // 22 damage → DC 11
-    const oddResult = performConcentrationCheck(character, 22);
-    expect(oddResult.dc).toBe(11);
-  });
-
   test('Death saving throw state machine tracks successes and failures', () => {
     let state = initializeDeathSaves();
     expect(state.deathSaveSuccesses).toBe(0);

@@ -11,7 +11,7 @@ import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { cn } from '@/lib/utils';
-import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
+import { formatRegentVernacular, normalizeRegentSearch } from '@/lib/vernacular';
 
 type JobRow = { id: string; name: string };
 
@@ -64,7 +64,7 @@ export default function FeatureChoicesAdmin() {
   const [newOptionDescription, setNewOptionDescription] = useState('');
   const [newOptionGrants, setNewOptionGrants] = useState('[{"type":"feature","name":"","description":""}]');
 
-  const canonicalQuery = useMemo(() => normalizeMonarchSearch(search.trim()), [search]);
+  const canonicalQuery = useMemo(() => normalizeRegentSearch(search.trim()), [search]);
 
   const { data: jobs = [] } = useQuery({
     queryKey: ['admin-choice-jobs'],
@@ -95,7 +95,7 @@ export default function FeatureChoicesAdmin() {
 
       return choicePoint.filter((row) => {
         const hay = `${row.name}\n${row.description || ''}\n${row.prerequisites || ''}`;
-        return normalizeMonarchSearch(hay).includes(canonicalQuery);
+        return normalizeRegentSearch(hay).includes(canonicalQuery);
       });
     },
   });
@@ -169,7 +169,7 @@ export default function FeatureChoicesAdmin() {
 
       const abilities = ['STR', 'AGI', 'VIT', 'INT', 'SENSE', 'PRE'] as const;
       const buildKey = (raw: string) => {
-        const key = normalizeMonarchSearch(raw).replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+        const key = normalizeRegentSearch(raw).replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
         return key || 'option';
       };
 
@@ -453,10 +453,10 @@ export default function FeatureChoicesAdmin() {
                         <div className="flex items-start justify-between gap-2">
                           <div className="flex-1 min-w-0">
                             <div className="font-heading font-semibold">
-                              {formatMonarchVernacular(feature.name)}
+                              {formatRegentVernacular(feature.name)}
                             </div>
                             <div className="text-xs text-muted-foreground mt-1">
-                              {formatMonarchVernacular(jobName)} • Level {feature.level}
+                              {formatRegentVernacular(jobName)} • Level {feature.level}
                               {feature.is_path_feature ? ' • Path' : ''}
                             </div>
                           </div>
@@ -483,10 +483,10 @@ export default function FeatureChoicesAdmin() {
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <div className="font-heading font-semibold">
-                        {formatMonarchVernacular(selectedFeature.name)}
+                        {formatRegentVernacular(selectedFeature.name)}
                       </div>
                       <div className="text-xs text-muted-foreground mt-1">
-                        Level {selectedFeature.level} • {formatMonarchVernacular(jobNameById.get(selectedFeature.job_id) || 'Unknown Job')}
+                        Level {selectedFeature.level} • {formatRegentVernacular(jobNameById.get(selectedFeature.job_id) || 'Unknown Job')}
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
@@ -543,10 +543,10 @@ export default function FeatureChoicesAdmin() {
                           <div className="flex items-center justify-between gap-2">
                             <div>
                               <div className="font-heading font-semibold">
-                                {formatMonarchVernacular(g.choice_key)}
+                                {formatRegentVernacular(g.choice_key)}
                               </div>
                               <div className="text-xs text-muted-foreground">
-                                Pick {g.choice_count}{g.prompt ? ` • ${formatMonarchVernacular(g.prompt)}` : ''}
+                                Pick {g.choice_count}{g.prompt ? ` • ${formatRegentVernacular(g.prompt)}` : ''}
                               </div>
                             </div>
                             <Badge variant="outline" className="text-xs">
@@ -616,11 +616,11 @@ export default function FeatureChoicesAdmin() {
                                 <div className="flex items-start justify-between gap-2">
                                   <div className="flex-1">
                                     <div className="font-heading font-semibold">
-                                      {formatMonarchVernacular(o.name)}
+                                      {formatRegentVernacular(o.name)}
                                     </div>
                                     {o.description && (
                                       <div className="text-xs text-muted-foreground mt-1">
-                                        {formatMonarchVernacular(o.description)}
+                                        {formatRegentVernacular(o.description)}
                                       </div>
                                     )}
                                     <div className="text-[10px] text-muted-foreground mt-2 font-mono break-all">

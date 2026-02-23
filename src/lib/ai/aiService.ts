@@ -979,8 +979,8 @@ export class AIServiceManager {
 CORE RULES CONTEXT:
 - Uses SRD 5e mechanics: proficiency bonus (ceil(level/4)+1), ability modifiers (floor((score-10)/2)), spell slots, hit dice, armor class, saving throws, skill checks.
 - Ability scores use System Ascendant names: STR (Strength), AGI (Agility/Dexterity), VIT (Vitality/Constitution), INT (Intelligence), SENSE (Sense/Wisdom), PRE (Presence/Charisma).
-- Classes are called "Jobs" (e.g., Warrior, Mage, Assassin, Esper, Oracle, Crusader, Contractor, Stalker, Herald, Invoker, Resonant, Technomancer, Revenant, Healer, Warden, Ranger, Techsmith, Holy Knight, Berserker, Bulwark, Striker).
-- Subclasses are called "Paths". The DM is called "Warden".
+- Classes are called "Jobs". The 14 canonical jobs are: Destroyer (Fighter), Berserker (Barbarian), Assassin (Rogue), Striker (Monk), Mage (Wizard), Esper (Sorcerer), Revenant (Necromancer), Summoner (Druid), Herald (Cleric), Contractor (Warlock), Stalker (Ranger), Holy Knight (Paladin), Technomancer (Artificer), Idol (Bard).
+- Subclasses are called "Paths". The DM is called "Protocol Warden".
 - Regents (formerly Monarchs) are quest/DM-gated power overlays unlocked through quests, not level gates. Two regents unlock the Gemini Protocol (sovereign fusion).
 - Runes follow the System Ascendant model: one-time-use consumable skill books that permanently teach abilities when absorbed. Cross-type absorption adapts the ability (martial absorbs spell → physical technique; caster absorbs martial → magical construct) with proficiency bonus uses per long rest.
 - Shadow Soldiers require the Umbral Regent unlock. System Favor replaces Inspiration.

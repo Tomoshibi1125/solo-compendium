@@ -1,7 +1,7 @@
 import { Shield, Sword, Target, Eye } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { formatMonarchVernacular } from '@/lib/vernacular';
+import { formatRegentVernacular } from '@/lib/vernacular';
 
 interface ShadowSoldierDetailProps {
   data: {
@@ -48,11 +48,11 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
-          <h2 className="text-2xl font-bold font-heading">{formatMonarchVernacular(entry.name)}</h2>
+          <h2 className="text-2xl font-bold font-heading">{formatRegentVernacular(entry.name)}</h2>
           {entry.role && (
             <div className="flex items-center gap-2 mt-2">
               {getRoleIcon(entry.role)}
-              <span className="text-lg text-muted-foreground capitalize">{formatMonarchVernacular(entry.role)}</span>
+              <span className="text-lg text-muted-foreground capitalize">{formatRegentVernacular(entry.role)}</span>
             </div>
           )}
         </div>
@@ -68,7 +68,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
       {/* Description */}
       <div id="soldier-description" className="scroll-mt-4">
         <h3 className="text-lg font-semibold mb-3 font-heading">Overview</h3>
-        <p className="text-muted-foreground leading-relaxed">{formatMonarchVernacular(entry.description)}</p>
+        <p className="text-muted-foreground leading-relaxed">{formatRegentVernacular(entry.description)}</p>
       </div>
 
       {/* Combat Role Details */}
@@ -86,7 +86,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
                 {entry.role === 'Assassin' && 'Specialized in stealth, reconnaissance, and eliminating high-value targets. High burst damage.'}
                 {entry.role === 'Mage' && 'Specialized in shadow magic and ranged spellcasting. Area control and debuff capabilities.'}
                 {entry.role === 'Archer' && 'Specialized in precise long-range attacks and reconnaissance. High accuracy and mobility.'}
-                {entry.role === 'Warrior' && 'Balanced melee combatant with good offense and defense capabilities. Versatile frontline fighter.'}
+                {entry.role === 'Destroyer' && 'Balanced melee combatant with good offense and defense capabilities. Versatile frontline fighter.'}
                 {entry.role === 'Scout' && 'Specialized in reconnaissance, scouting, and rapid movement. High speed and detection abilities.'}
               </p>
             </div>
@@ -101,7 +101,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
           <div className="flex flex-wrap gap-2">
             {entry.tags.map((tag, index) => (
               <Badge key={index} variant="secondary" className="capitalize">
-                {formatMonarchVernacular(tag.replace('-', ' '))}
+                {formatRegentVernacular(tag.replace('-', ' '))}
               </Badge>
             ))}
           </div>
@@ -111,7 +111,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
       {/* Source */}
       {entry.source_book && (
         <div className="text-sm text-muted-foreground">
-          Source: {formatMonarchVernacular(entry.source_book)}
+          Source: {formatRegentVernacular(entry.source_book)}
         </div>
       )}
     </div>

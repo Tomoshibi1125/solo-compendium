@@ -48,8 +48,33 @@ export interface Relic {
     immunity?: string[];
     vulnerabilities?: string[];
   };
-  source: string;
+  
+  source?: string;
   image?: string;
+  
+  // 5e-style relic mechanics
+  artifact_tier?: 'minor' | 'major' | 'legendary';
+  sentience?: {
+    intelligence: number;
+    wisdom: number;
+    charisma: number;
+    personality: string;
+    ideals: string;
+    bonds: string;
+    flaws: string;
+    communication: string[];
+  };
+  curse?: {
+    description: string;
+    removal_method?: string;
+    effects: string[];
+  };
+  attunement_requirements?: {
+    slot?: string;
+    alignment?: string;
+    class?: string;
+    quest?: string;
+  };
 }
 
 export const relics: Relic[] = [
@@ -2909,7 +2934,7 @@ export const relics: Relic[] = [
     rarity: 'rare',
     attunement: true,
     requirements: {
-      class: 'Bard',
+      class: 'Resonant',
       level: 8
     },
     properties: {

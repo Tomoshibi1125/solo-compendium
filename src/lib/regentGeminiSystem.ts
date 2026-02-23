@@ -751,13 +751,21 @@ export class RegentGeminiSystem {
   // Helper methods for compatibility calculation
   private static calculateJobCompatibility(job: Job, regent: RegentPath): number {
     // AI calculates how well regent matches character's base job
-    const jobRegentMap: Record<Job, string[]> = {
-      'Warrior': ['Strength Regent', 'Vitality Regent', 'Agility Regent'],
+    const jobRegentMap: Record<string, string[]> = {
+      'Contractor': ['Presence Regent', 'Sense Regent', 'Intelligence Regent'],
       'Mage': ['Intelligence Regent', 'Sense Regent', 'Presence Regent'],
       'Assassin': ['Agility Regent', 'Presence Regent', 'Intelligence Regent'],
-      'Healer': ['Sense Regent', 'Presence Regent', 'Vitality Regent'],
-      'Ranger': ['Agility Regent', 'Sense Regent', 'Vitality Regent'],
-      'Paladin': ['Strength Regent', 'Presence Regent', 'Vitality Regent']
+      'Herald': ['Sense Regent', 'Presence Regent', 'Vitality Regent'],
+      'Stalker': ['Agility Regent', 'Sense Regent', 'Vitality Regent'],
+      'Berserker': ['Strength Regent', 'Vitality Regent', 'Agility Regent'],
+      'Destroyer': ['Strength Regent', 'Vitality Regent', 'Agility Regent'],
+      'Summoner': ['Presence Regent', 'Intelligence Regent', 'Vitality Regent'],
+      'Holy Knight': ['Strength Regent', 'Presence Regent', 'Vitality Regent'],
+      'Technomancer': ['Intelligence Regent', 'Agility Regent', 'Sense Regent'],
+      'Esper': ['Presence Regent', 'Intelligence Regent', 'Vitality Regent'],
+      'Revenant': ['Intelligence Regent', 'Sense Regent', 'Vitality Regent'],
+      'Striker': ['Agility Regent', 'Sense Regent', 'Strength Regent'],
+      'Idol': ['Presence Regent', 'Agility Regent', 'Intelligence Regent']
     };
     
     const compatibleRegents = jobRegentMap[job] || [];

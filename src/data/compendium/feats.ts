@@ -6,6 +6,29 @@ export interface Feat {
   id: string;
   name: string;
   description: string;
+  
+  // 5e-style feat mechanics
+  ability_score_increase?: {
+    strength?: number;
+    dexterity?: number;
+    constitution?: number;
+    intelligence?: number;
+    wisdom?: number;
+    charisma?: number;
+  };
+  skill_proficiencies?: string[];
+  tool_proficiencies?: string[];
+  weapon_proficiencies?: string[];
+  armor_proficiencies?: string[];
+  special_abilities?: {
+    name: string;
+    description: string;
+    type: 'passive' | 'active' | 'triggered';
+    frequency?: string;
+    action?: string;
+  }[];
+  
+  // System Ascendant compatibility (legacy)
   prerequisites?: {
     level?: number;
     ability?: string;

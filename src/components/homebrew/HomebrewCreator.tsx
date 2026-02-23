@@ -23,9 +23,12 @@ import {
   Sparkles,
   Target,
   Shield,
-  Zap
+  Zap,
+  Loader2,
+  Brain
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useAIEnhance } from '@/hooks/useAIEnhance';
 import { cn } from '@/lib/utils';
 
 interface HomebrewContent {
@@ -45,6 +48,67 @@ const HomebrewCreator = () => {
   const [isPreview, setIsPreview] = useState(false);
   const [savedContent, setSavedContent] = useState<HomebrewContent[]>([]);
   const { toast } = useToast();
+  const { isEnhancing, enhancedText, enhance, clearEnhanced } = useAIEnhance();
+
+  const handleAIEnhance = async () => {
+    if (!currentForm.name && !currentForm.description) {
+      toast({ title: 'Nothing to enhance', description: 'Add a name or description first.', variant: 'destructive' });
+      return;
+    }
+    const seed = `Enhance this homebrew ${activeTab} for a System Ascendant TTRPG campaign.
+
+CONTENT:
+- Name: ${currentForm.name || 'Unnamed'}
+- Type: ${activeTab}
+- Description: ${currentForm.description || 'No description yet'}
+- Additional Data: ${JSON.stringify(currentForm, null, 2)}
+
+Provide a fully enhanced version with:
+1. Rich lore and flavor text fitting the System Ascendant universe
+2. Balanced mechanical details (stats, abilities, effects)
+3. Prerequisites and requirements if applicable
+4. Integration hooks with existing SA systems (Regents, Gates, Runes)`;
+    const result = await enhance('homebrew-' + activeTab, seed);
+    if (result) {
+      toast({ title: 'AI Enhancement Complete', description: 'Review the enhanced content below.' });
+    }
+  };
+
+  const handleExport = () => {
+    if (savedContent.length === 0) {
+      toast({ title: 'Nothing to export', description: 'Save some content first.' });
+      return;
+    }
+    const blob = new Blob([JSON.stringify(savedContent, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `sa-homebrew-${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast({ title: 'Exported!', description: `${savedContent.length} items exported.` });
+  };
+
+  const handleImport = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = async (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (!file) return;
+      try {
+        const text = await file.text();
+        const imported = JSON.parse(text) as HomebrewContent[];
+        if (Array.isArray(imported)) {
+          setSavedContent(prev => [...prev, ...imported]);
+          toast({ title: 'Imported!', description: `${imported.length} items imported.` });
+        }
+      } catch {
+        toast({ title: 'Import failed', description: 'Invalid JSON file.', variant: 'destructive' });
+      }
+    };
+    input.click();
+  };
 
   // Update current form when tab changes
   useEffect(() => {
@@ -337,19 +401,35 @@ const HomebrewCreator = () => {
               <Save className="w-4 h-4" />
               Save Content
             </Button>
+            <Button onClick={handleAIEnhance} disabled={isEnhancing} className="flex items-center gap-2 btn-umbral">
+              {isEnhancing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Brain className="w-4 h-4" />}
+              {isEnhancing ? 'Enhancing...' : 'AI Enhance'}
+            </Button>
             <Button variant="outline" onClick={() => setIsPreview(!isPreview)} className="flex items-center gap-2">
               <Eye className="w-4 h-4" />
               {isPreview ? 'Edit' : 'Preview'}
             </Button>
-            <Button variant="outline" className="flex items-center gap-2">
+            <Button variant="outline" onClick={handleImport} className="flex items-center gap-2">
               <Upload className="w-4 h-4" />
               Import
             </Button>
-            <Button variant="outline" className="flex items-center gap-2">
+            <Button variant="outline" onClick={handleExport} className="flex items-center gap-2">
               <Download className="w-4 h-4" />
               Export
             </Button>
           </div>
+          {enhancedText && (
+            <div className="mt-4 border-t border-primary/30 pt-3">
+              <div className="flex items-center gap-2 mb-2">
+                <Brain className="w-4 h-4 text-primary" />
+                <span className="text-xs font-display text-primary">AI-ENHANCED CONTENT</span>
+                <Button variant="ghost" size="sm" className="ml-auto h-6 text-xs" onClick={clearEnhanced}>Dismiss</Button>
+              </div>
+              <div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-3 max-h-[400px] overflow-y-auto">
+                {enhancedText}
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
     );

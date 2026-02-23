@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/lib/auth/authContext';
 import { useOfflineDataAccess } from '@/hooks/useOfflineDataAccess';
-import { use5eCharacter } from '@/hooks/use5eCharacter';
 import { useMyCampaigns, useJoinedCampaigns } from '@/hooks/useCampaigns';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 
@@ -33,14 +32,6 @@ export function useOfflineCachePopulation() {
     if (!user) return false;
 
     try {
-      const characterQuery = use5eCharacter(characterId);
-      const character = characterQuery.data;
-      
-      if (!character) {
-        console.warn(`Character ${characterId} not found for cache population`);
-        return false;
-      }
-
       await cacheCharacter(characterId);
       return true;
     } catch (error) {

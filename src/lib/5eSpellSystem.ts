@@ -79,7 +79,7 @@ export function canCastSpell(
   preparedSpells: PreparedSpell[]
 ): boolean {
   // Check if spell is prepared (for prepared casters)
-  const isPreparedCaster = ['Mage', 'Oracle', 'Technomancer', 'Revenant', 'Resonant', 'Healer', 'Warden', 'Crusader', 'Stalker', 'Herald', 'Holy Knight', 'Ranger', 'Techsmith'].includes(character.job);
+  const isPreparedCaster = ['Mage', 'Technomancer', 'Revenant', 'Summoner', 'Stalker', 'Herald', 'Holy Knight'].includes(character.job);
   if (isPreparedCaster) {
     const prepared = preparedSpells.find(p => p.spellId === spell.id);
     if (!prepared?.prepared) return false;
@@ -119,7 +119,7 @@ export function castSpell(
   }
   
   // Mark as cast today (for prepared casters)
-  const isPreparedCaster = ['Mage', 'Oracle', 'Technomancer', 'Revenant', 'Resonant', 'Healer', 'Warden', 'Crusader', 'Stalker', 'Herald', 'Holy Knight', 'Ranger', 'Techsmith'].includes(character.job);
+  const isPreparedCaster = ['Mage', 'Technomancer', 'Revenant', 'Summoner', 'Stalker', 'Herald', 'Holy Knight'].includes(character.job);
   if (isPreparedCaster) {
     const preparedIndex = updatedPrepared.findIndex(p => p.spellId === spell.id);
     if (preparedIndex >= 0) {
@@ -138,7 +138,7 @@ export function castSpell(
 }
 
 // Shared prepared caster list for consistent checks
-const PREPARED_CASTERS = ['Mage', 'Oracle', 'Technomancer', 'Revenant', 'Resonant', 'Healer', 'Warden', 'Crusader', 'Stalker', 'Herald', 'Holy Knight', 'Ranger', 'Techsmith'];
+const PREPARED_CASTERS = ['Mage', 'Technomancer', 'Revenant', 'Summoner', 'Stalker', 'Herald', 'Holy Knight'];
 
 /**
  * Calculate spell save DC for a character

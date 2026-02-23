@@ -15,7 +15,7 @@ import {
   useUpdateSoldierHP,
   type ShadowSoldier 
 } from '@/hooks/useShadowSoldiers';
-import { useCharacterMonarchUnlocks } from '@/hooks/useRegentUnlocks';
+import { useCharacterRegentUnlocks } from '@/hooks/useRegentUnlocks';
 import { Ghost, Sword, Shield, Heart, Zap, Plus, Minus, Crown, Skull, Flame, Bird, Dog, Mountain, Crosshair } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { formatRegentVernacular, REGENT_LABEL, normalizeRegentSearch } from '@/lib/vernacular';
@@ -44,23 +44,23 @@ const typeIcons: Record<string, { icon: React.ReactNode; color: string }> = {
   mage: { icon: <Flame className="h-4 w-4" />, color: 'text-gate-a' },
   assassin: { icon: <Crosshair className="h-4 w-4" />, color: 'text-shadow-blue' },
   dragon: { icon: <Bird className="h-4 w-4" />, color: 'text-arise-violet' },
-  giant: { icon: <Mountain className="h-4 w-4" />, color: 'text-monarch-gold' },
+  giant: { icon: <Mountain className="h-4 w-4" />, color: 'text-regent-gold' },
 };
 
 export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldiersPanelProps) {
   const [selectedSoldier, setSelectedSoldier] = useState<ShadowSoldier | null>(null);
   const { data: mySoldiers = [] } = useCharacterShadowSoldiers(characterId);
   const { data: allSoldiers = [] } = useCompendiumShadowSoldiers();
-  const { unlocks: regentUnlocks = [] } = useCharacterMonarchUnlocks(characterId);
+  const { unlocks: regentUnlocks = [] } = useCharacterRegentUnlocks(characterId);
   const extractSoldier = useExtractShadowSoldier();
   const toggleSummon = useToggleSummon();
   const updateHP = useUpdateSoldierHP();
 
-  // Check if character has Umbral Monarch unlock
-  const hasUmbralMonarch = regentUnlocks.some((unlock: any) => {
+  // Check if character has Umbral Regent unlock
+  const hasUmbralRegent = regentUnlocks.some((unlock: any) => {
     const theme = unlock.regent?.theme?.toLowerCase() || '';
     const name = normalizeRegentSearch(unlock.regent?.name || '').toLowerCase();
-    return theme.includes('umbral') || name.includes('umbral regent') || name.includes('umbral monarch');
+    return theme.includes('umbral') || name.includes('umbral regent') || name.includes('umbral regent');
   });
   const umbralTitle = `Umbral ${REGENT_LABEL}`;
   
@@ -74,7 +74,7 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
     const levelMatch = req.match(/Level (\d+)\+/);
     const requiredLevel = levelMatch ? parseInt(levelMatch[1]) : 0;
     
-    return characterLevel >= requiredLevel && hasUmbralMonarch;
+    return characterLevel >= requiredLevel && hasUmbralRegent;
   });
 
   const summonedCount = mySoldiers.filter(s => s.is_summoned).length;
@@ -84,9 +84,9 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
     updateHP.mutate({ characterId, shadowSoldierId: soldierId, currentHp: newHp });
   };
 
-  if (!hasUmbralMonarch) {
+  if (!hasUmbralRegent) {
     return (
-      <SystemWindow title="Umbral Legion" variant="monarch">
+      <SystemWindow title="Umbral Legion" variant="regent">
         <div className="text-center py-8">
           <Ghost className="h-12 w-12 text-shadow-purple/40 mx-auto mb-4" />
           <p className="text-muted-foreground font-heading mb-2">
@@ -225,7 +225,7 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                         <span className="text-accent">
                           Speed {soldier.speed} ft
                         </span>
-                        <span className="text-monarch-gold">
+                        <span className="text-regent-gold">
                           <Crown className="h-3 w-3 inline mr-1" />
                           Bond Lv.{css.bond_level}
                         </span>

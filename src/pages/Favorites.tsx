@@ -11,7 +11,7 @@ import { useFavorites } from '@/hooks/useFavorites';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { resolveRefs, isValidEntryType, type EntryType } from '@/lib/compendiumResolver';
-import { formatMonarchVernacular, normalizeMonarchSearch } from '@/lib/vernacular';
+import { formatMonarchVernacular, normalizeMonarchSearch, normalizeRegentSearch } from '@/lib/vernacular';
 
 interface FavoriteItem {
   id: string;
@@ -33,7 +33,7 @@ const Favorites = () => {
   const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState('all');
-  const canonicalQuery = normalizeMonarchSearch(searchQuery.toLowerCase());
+  const canonicalQuery = normalizeRegentSearch(searchQuery.toLowerCase());
 
   const favoriteKeys = useMemo(() => Array.from(favorites).sort(), [favorites]);
   const favoriteRefs = useMemo(
@@ -102,9 +102,9 @@ const Favorites = () => {
       favoriteItems.filter((item) => {
         const matchesSearch =
           !searchQuery ||
-          normalizeMonarchSearch(item.name.toLowerCase()).includes(canonicalQuery) ||
-          normalizeMonarchSearch(item.displayName?.toLowerCase() || '').includes(canonicalQuery) ||
-          normalizeMonarchSearch(item.description?.toLowerCase() || '').includes(canonicalQuery);
+          normalizeRegentSearch(item.name.toLowerCase()).includes(canonicalQuery) ||
+          normalizeRegentSearch(item.displayName?.toLowerCase() || '').includes(canonicalQuery) ||
+          normalizeRegentSearch(item.description?.toLowerCase() || '').includes(canonicalQuery);
 
         const matchesType = filterType === 'all' || item.type === filterType;
 

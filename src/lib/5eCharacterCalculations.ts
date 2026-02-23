@@ -153,48 +153,40 @@ export function getCasterType(job: string | null | undefined): CasterType {
   if (!job) return 'none';
   
   // Full casters (standard 5e)
-  const fullCasters = ['Wizard', 'Cleric', 'Druid', 'Sorcerer'];
+  const fullCasters = ['Wizard', 'Cleric', 'Druid', 'Sorcerer', 'Bard'];
   // Half casters (standard 5e)
   const halfCasters = ['Paladin', 'Ranger'];
-  // Third casters (standard 5e)
-  const thirdCasters = ['Fighter (Eldritch Knight)', 'Rogue (Arcane Trickster)'];
+  // Non-casters (no spell slots)
+  const nonCasters = ['Fighter', 'Barbarian', 'Rogue', 'Monk'];
   // Artificer special case
   const artificers = ['Artificer'];
   
-  // Map System Ascendant jobs to 5e equivalents
+  // Map System Ascendant canonical 14 jobs to 5e equivalents
   const jobMapping: Record<string, string> = {
+    'Destroyer': 'Fighter',
+    'Berserker': 'Barbarian',
+    'Assassin': 'Rogue',
+    'Striker': 'Monk',
     'Mage': 'Wizard',
-    'Healer': 'Cleric', 
-    'Warden': 'Druid',
     'Esper': 'Sorcerer',
-    'Herald': 'Paladin',
-    'Ranger': 'Ranger',
-    'Warrior': 'Fighter (Eldritch Knight)',
-    'Assassin': 'Rogue (Arcane Trickster)',
-    'Techsmith': 'Artificer',
-    'Technomancer': 'Wizard',
-    'technomancer': 'Wizard',
-    'Oracle': 'Cleric',
-    'Invoker': 'Sorcerer',
-    'Resonant': 'Sorcerer',
     'Revenant': 'Wizard',
-    'Crusader': 'Paladin',
-    'Stalker': 'Ranger',
+    'Summoner': 'Druid',
+    'Herald': 'Cleric',
     'Contractor': 'Warlock',
-    'Striker': 'Fighter (Eldritch Knight)',
-    'Bulwark': 'Fighter (Eldritch Knight)',
-    'Berserker': 'Fighter (Eldritch Knight)',
+    'Stalker': 'Ranger',
     'Holy Knight': 'Paladin',
+    'Technomancer': 'Artificer',
+    'Idol': 'Bard',
   };
   
   const pactCasters = ['Warlock'];
 
   const standardJob = jobMapping[job] || job;
   
+  if (nonCasters.includes(standardJob)) return 'none';
   if (fullCasters.includes(standardJob)) return 'full';
   if (halfCasters.includes(standardJob)) return 'half';
   if (pactCasters.includes(standardJob)) return 'pact';
-  if (thirdCasters.includes(standardJob)) return 'artificer';
   if (artificers.includes(standardJob)) return 'artificer';
   return 'none';
 }
@@ -322,27 +314,18 @@ export function getSpellSlotsPerLevel(casterType: CasterType, level: number): Re
 export function getSpellcastingAbility(job: string | null | undefined): AbilityScore | null {
   if (!job) return null;
   
-  // Map System Ascendant jobs to standard 5e spellcasting abilities
+  // Map canonical 14 SA jobs to spellcasting abilities
   const jobAbilityMap: Record<string, AbilityScore> = {
     'Mage': 'INT',
-    'Esper': 'PRE',
-    'Techsmith': 'INT',
-    'Technomancer': 'INT',
-    'technomancer': 'INT',
     'Revenant': 'INT',
-    'Healer': 'SENSE',
-    'Warden': 'SENSE',
-    'Ranger': 'SENSE',
-    'Oracle': 'SENSE',
+    'Technomancer': 'INT',
+    'Herald': 'SENSE',
+    'Summoner': 'SENSE',
     'Stalker': 'SENSE',
-    'Herald': 'PRE',
-    'Holy Knight': 'PRE',
-    'Invoker': 'PRE',
-    'Resonant': 'PRE',
-    'Crusader': 'PRE',
+    'Esper': 'PRE',
     'Contractor': 'PRE',
-    'Warrior': 'INT',
-    'Assassin': 'INT',
+    'Holy Knight': 'PRE',
+    'Idol': 'PRE',
   };
   
   return jobAbilityMap[job] || null;
@@ -352,8 +335,8 @@ export function getSpellcastingAbility(job: string | null | undefined): AbilityS
 export function getSpellsKnownLimit(job: string | null | undefined, level: number): number | null {
   if (!job) return null;
   
-  // Known casters (Sorcerer, Warlock) have limits
-  if (job === 'Esper' || job === 'Invoker' || job === 'Contractor') {
+  // Known casters have limits
+  if (['Esper', 'Contractor', 'Idol'].includes(job)) {
     return level + 1; // Known casters: level + 1
   }
   
@@ -373,7 +356,7 @@ export function getSpellsPreparedLimit(
   if (!spellcastingAbility) return null;
   
   // Prepared casters: ability modifier + level (minimum 1) - standard 5e
-  const preparedCasters = ['Mage', 'Oracle', 'Technomancer', 'Revenant', 'Resonant', 'Crusader', 'Stalker', 'Healer', 'Warden', 'Herald', 'Ranger', 'Techsmith'];
+  const preparedCasters = ['Mage', 'Technomancer', 'Revenant', 'Stalker', 'Herald', 'Holy Knight', 'Summoner'];
   if (preparedCasters.includes(job)) {
     return Math.max(1, abilityModifier + level);
   }
