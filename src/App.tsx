@@ -86,6 +86,7 @@ const CampaignDetail = lazy(() => import("./pages/CampaignDetail"));
 const CampaignJoin = lazy(() => import("./pages/CampaignJoin"));
 const CampaignSessionPlay = lazy(() => import("./pages/CampaignSessionPlay"));
 const CharacterCompare = lazy(() => import("./pages/CharacterCompare"));
+const Profile = lazy(() => import("./pages/Profile"));
 const Homebrew = lazy(() => import("./pages/Homebrew"));
 const MarketplacePage = lazy(() => import("./pages/Marketplace"));
 const Auth = lazy(() => import("./pages/Auth"));
@@ -598,6 +599,16 @@ const AppContent = () => {
           <Suspense fallback={<PageLoader />}>
             <Favorites />
           </Suspense>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute allowGuest={false}>
+            <Suspense fallback={<PageLoader />}>
+              <Profile />
+            </Suspense>
+          </ProtectedRoute>
         }
       />
       <Route
