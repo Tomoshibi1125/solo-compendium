@@ -6,6 +6,7 @@
  */
 
 import { AppError } from '@/lib/appError';
+import { rollCheck } from '@/lib/rollEngine';
 import { 
   RollResult, 
   rollWithAdvantage, 
@@ -357,7 +358,7 @@ export function checkConcentrationSave(
 ): boolean {
   const dc = Math.max(10, Math.floor(damage / 2));
   const vitSave = getAbilityModifier(character.abilities.VIT);
-  const saveRoll = Math.floor(Math.random() * 20) + 1 + vitSave;
+  const saveRoll = rollCheck(vitSave, 'normal').total;
   
   return saveRoll >= dc;
 }

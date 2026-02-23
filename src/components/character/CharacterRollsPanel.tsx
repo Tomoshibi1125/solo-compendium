@@ -5,6 +5,8 @@ import { Separator } from '@/components/ui/separator';
 import { InlineRollButton, AbilityRollButton, SaveRollButton, SkillRollButton } from './InlineRollButton';
 import { useAuth } from '@/lib/auth/authContext';
 import { ABILITY_NAMES, type AbilityScore } from '@/types/system-rules';
+import type { CustomModifier } from '@/lib/customModifiers';
+import { resolveAdvantageForRoll } from '@/lib/rollAdvantage';
 
 const ABILITY_KEYS = Object.keys(ABILITY_NAMES) as AbilityScore[];
 
@@ -20,6 +22,9 @@ interface CharacterRollsPanelProps {
     proficiency: string;
   }>;
   campaignId?: string;
+  conditions?: string[];
+  exhaustionLevel?: number;
+  customModifiers?: CustomModifier[];
   className?: string;
 }
 
@@ -31,6 +36,9 @@ export function CharacterRollsPanel({
   savingThrowProficiencies,
   skills,
   campaignId,
+  conditions = [],
+  exhaustionLevel = 0,
+  customModifiers = [],
   className
 }: CharacterRollsPanelProps) {
   const { user } = useAuth();
@@ -63,6 +71,38 @@ export function CharacterRollsPanel({
     return abilityMod;
   };
 
+  const getSaveRollType = (ability: AbilityScore) => {
+    switch (ability) {
+      case 'STR':
+        return 'STR_saves' as const;
+      case 'AGI':
+        return 'AGI_saves' as const;
+      case 'VIT':
+        return 'VIT_saves' as const;
+      case 'INT':
+        return 'INT_saves' as const;
+      case 'SENSE':
+        return 'SENSE_saves' as const;
+      case 'PRE':
+        return 'PRE_saves' as const;
+      default:
+        return 'saving_throws' as const;
+    }
+  };
+
+  const resolveAdv = (params: {
+    rollType: Parameters<typeof resolveAdvantageForRoll>[0]['rollType'];
+    targets: Array<string | null | undefined>;
+  }) => {
+    return resolveAdvantageForRoll({
+      conditions,
+      exhaustionLevel,
+      rollType: params.rollType,
+      customModifiers,
+      customTargets: params.targets,
+    });
+  };
+
   return (
     <Card className={className}>
       <CardHeader>
@@ -91,6 +131,10 @@ export function CharacterRollsPanel({
                 label={ability}
                 modifier={getAbilityModifier(abilities[ability.toLowerCase()] || abilities[ability] || 10)}
                 campaignId={campaignId}
+                advantageState={resolveAdv({
+                  rollType: 'ability_checks',
+                  targets: ['ability_checks', `ability:${ability.toLowerCase()}`, ability],
+                })}
               />
             ))}
           </div>
@@ -111,6 +155,10 @@ export function CharacterRollsPanel({
                 label={ABILITY_NAMES[ability]}
                 modifier={getSaveModifier(ability)}
                 campaignId={campaignId}
+                advantageState={resolveAdv({
+                  rollType: getSaveRollType(ability),
+                  targets: ['saving_throws', getSaveRollType(ability), `save:${ability.toLowerCase()}`, ability],
+                })}
               />
             ))}
           </div>
@@ -131,6 +179,10 @@ export function CharacterRollsPanel({
                 label={skill.name}
                 modifier={getSkillModifier(skill)}
                 campaignId={campaignId}
+                advantageState={resolveAdv({
+                  rollType: 'ability_checks',
+                  targets: ['ability_checks', `skill:${skill.name.toLowerCase()}`, skill.name],
+                })}
               />
             ))}
           </div>
@@ -150,6 +202,10 @@ export function CharacterRollsPanel({
               label="Initiative"
               modifier={getAbilityModifier(abilities.agi || abilities.AGI || 10)}
               campaignId={campaignId}
+              advantageState={resolveAdv({
+                rollType: 'ability_checks',
+                targets: ['initiative', 'ability_checks'],
+              })}
             />
             <InlineRollButton
               characterId={characterId}
@@ -159,6 +215,10 @@ export function CharacterRollsPanel({
               label="Perception"
               modifier={getSkillModifier(skills?.find((s: any) => s.name === 'Perception'))}
               campaignId={campaignId}
+              advantageState={resolveAdv({
+                rollType: 'ability_checks',
+                targets: ['ability_checks', 'skill:perception', 'Perception'],
+              })}
             />
             <InlineRollButton
               characterId={characterId}
@@ -168,6 +228,10 @@ export function CharacterRollsPanel({
               label="Stealth"
               modifier={getSkillModifier(skills?.find((s: any) => s.name === 'Stealth'))}
               campaignId={campaignId}
+              advantageState={resolveAdv({
+                rollType: 'ability_checks',
+                targets: ['ability_checks', 'skill:stealth', 'Stealth'],
+              })}
             />
           </div>
         </div>

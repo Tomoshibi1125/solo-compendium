@@ -251,6 +251,8 @@ async function insertCharacterFeature(
       uses_current: payload.uses_current ?? null,
       recharge: payload.recharge ?? null,
       is_active: payload.is_active ?? true,
+      modifiers: (payload as any).modifiers ?? null,
+      homebrew_id: (payload as any).homebrew_id ?? null,
     });
     return;
   }
@@ -259,6 +261,38 @@ async function insertCharacterFeature(
     character_id: characterId,
     ...payload,
   });
+}
+
+type FeatureModifier = {
+  type: string;
+  value: number;
+  target?: string;
+  source: string;
+};
+
+function getJobTraitModifiers(jobName: string, traitName: string): FeatureModifier[] {
+  const job = jobName.trim().toLowerCase();
+  const trait = traitName.trim().toLowerCase();
+
+  // NOTE: Targets must match what CharacterRollsPanel passes into resolveAdvantageForRoll.
+  if (job === 'berserker' && trait === 'predator instinct') {
+    return [{ type: 'advantage', value: 0, target: 'initiative', source: traitName }];
+  }
+
+  if (job === 'berserker' && trait === 'threat reflex') {
+    return [{ type: 'advantage', value: 0, target: 'AGI_saves', source: traitName }];
+  }
+
+  if (job === 'assassin' && trait === 'ghost walk') {
+    return [{ type: 'advantage', value: 0, target: 'skill:stealth', source: traitName }];
+  }
+
+  if (job === 'destroyer' && trait === 'combat telemetry') {
+    // Active scan feature: modeled as advantage on Investigation checks when toggled on.
+    return [{ type: 'advantage', value: 0, target: 'skill:investigation', source: traitName }];
+  }
+
+  return [];
 }
 
 /**
@@ -321,12 +355,16 @@ export async function addJobAwakeningBenefitsForLevel(
   if (level === 1) {
     for (const trait of job.jobTraits || []) {
       if (existingNames.has(trait.name)) continue;
+
+      const modifiers = getJobTraitModifiers(job.name, trait.name);
+      const isActiveByDefault = trait.type !== 'active';
       await insertCharacterFeature(characterId, {
         name: trait.name,
         source: `Job Trait: ${job.name}`,
         level_acquired: 1,
         description: trait.description,
-        is_active: true,
+        is_active: isActiveByDefault,
+        modifiers: modifiers.length > 0 ? (modifiers as any) : null,
       });
     }
   }

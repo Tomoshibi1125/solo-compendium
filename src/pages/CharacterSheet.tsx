@@ -52,7 +52,7 @@ import { useCharacterRuneInscriptions } from '@/hooks/useRunes';
 import { getAllSkills, calculateSkillModifier, type SkillDefinition } from '@/lib/skills';
 import { rollDiceString, formatRollResult } from '@/lib/diceRoller';
 import { calculateTotalTempHP, addTemporaryHP, applyResourceRest, type CustomResource } from '@/lib/characterResources';
-import { sumCustomModifiers, type CustomModifier, CUSTOM_MODIFIER_TYPES } from '@/lib/customModifiers';
+import { sumCustomModifiers, type CustomModifier, CUSTOM_MODIFIER_TYPES, normalizeCustomModifiers } from '@/lib/customModifiers';
 import { EquipmentList } from '@/components/character/EquipmentList';
 import { CurrencyManager } from '@/components/character/CurrencyManager';
 import { PowersList } from '@/components/character/PowersList';
@@ -67,6 +67,7 @@ import { CharacterRollsPanel } from '@/components/character/CharacterRollsPanel'
 import { RollHistoryPanel } from '@/components/character/RollHistoryPanel';
 import { ExportDialog } from '@/components/character/ExportDialog';
 import { PortraitUpload } from '@/components/character/PortraitUpload';
+import { useCharacterFeatures, featureModifiersToCustomModifiers } from '@/hooks/useCharacterFeatures';
 import { CharacterLevelUp } from '@/components/CharacterLevelUp';
 import { MonarchUnlocksPanel } from '@/components/character/MonarchUnlocksPanel';
 import { MONARCH_LABEL, formatMonarchVernacular } from '@/lib/vernacular';
@@ -241,7 +242,10 @@ const CharacterSheet = () => {
   const generateShareToken = useGenerateShareToken();
   const { equipment } = useEquipment(id || '');
   const { state: sheetState, saveSheetState } = useCharacterSheetState(character?.id || '');
-  const customModifiers = sheetState.customModifiers;
+  const { data: charFeatures = [] } = useCharacterFeatures(character?.id || '');
+  const baseCustomModifiers = normalizeCustomModifiers(sheetState.customModifiers);
+  const featureCustomModifiers = featureModifiersToCustomModifiers(charFeatures);
+  const customModifiers = [...baseCustomModifiers, ...featureCustomModifiers];
   const [hpEditOpen, setHpEditOpen] = useState(false);
   const [hpEditValue, setHpEditValue] = useState('');
   const [hpDeltaValue, setHpDeltaValue] = useState('');
@@ -1347,9 +1351,11 @@ const CharacterSheet = () => {
             {character.experience !== undefined && character.experience !== null && (
               <div className="mt-2 flex items-center gap-2">
                 <div className="flex-1 h-1.5 rounded-full bg-purple-900/40 overflow-hidden">
-                  <div
-                    className="h-full rounded-full bg-gradient-to-r from-purple-500 to-cyan-400 transition-all duration-500"
-                    style={{ width: `${Math.min(100, ((character.experience || 0) % 1000) / 10)}%` }}
+                  <progress
+                    className="character-sheet-xp-progress"
+                    value={Math.min(100, ((character.experience || 0) % 1000) / 10)}
+                    max={100}
+                    aria-label="XP progress"
                   />
                 </div>
                 <span className="text-[10px] font-mono text-purple-300/60">{character.experience || 0} XP</span>
@@ -2265,6 +2271,9 @@ const CharacterSheet = () => {
                     : 'none',
               }))}
               campaignId={campaignId ?? undefined}
+              conditions={character.conditions || []}
+              exhaustionLevel={character.exhaustion_level ?? 0}
+              customModifiers={customModifiers}
             />
 
             {/* Spell Slots */}

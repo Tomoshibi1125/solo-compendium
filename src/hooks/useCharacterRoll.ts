@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useRecordRoll } from '@/hooks/useRollHistory';
 import { useAuth } from '@/lib/auth/authContext';
+import { rollCheck } from '@/lib/rollEngine';
 
 interface CharacterRollProps {
   characterId: string;
@@ -85,7 +86,8 @@ export function useCharacterRoll({
     modifier: number,
     kind: 'ability' | 'save' | 'skill',
     label?: string,
-    campaignId?: string
+    campaignId?: string,
+    advantage?: 'advantage' | 'disadvantage' | 'normal'
   ) => {
     if (!rollKey || typeof rollKey !== 'string') {
       toast({ title: 'Roll failed', description: 'Invalid roll target', variant: 'destructive' });
@@ -97,13 +99,13 @@ export function useCharacterRoll({
       return null;
     }
 
-    // Generate a random d20 roll
-    const d20 = Math.floor(Math.random() * 20) + 1;
-    const total = d20 + modifier;
-    
+    const result = rollCheck(modifier, advantage);
+    const d20 = result.rolls[0] ?? 0;
+    const total = result.total;
+
     // Determine if it's a critical success/failure
-    const isCritical = d20 === 20;
-    const isFumble = d20 === 1;
+    const isCritical = result.isNatural20;
+    const isFumble = result.isNatural1;
     
     // Create roll description
     const rollDescription = label || rollKey;
@@ -117,9 +119,14 @@ export function useCharacterRoll({
       dice_formula: `1d20+${modifier}`,
       result: total,
       roll_type: kind,
-      rolls: [d20],
+      rolls: result.droppedRolls ? [d20, ...(result.droppedRolls || [])] : [d20],
       context: rollDescription,
-      modifiers: { base: modifier, proficiency: proficiencyBonus },
+      modifiers: {
+        base: modifier,
+        proficiency: proficiencyBonus,
+        advantage: advantage ?? 'normal',
+        dropped: result.droppedRolls ?? null,
+      },
     });
     
     // Show toast notification

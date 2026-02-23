@@ -6,6 +6,7 @@
  */
 
 import { AppError } from '@/lib/appError';
+import { rollCheck } from '@/lib/rollEngine';
 
 // Core character interface for rule calculations
 export interface RuleCharacter {
@@ -255,8 +256,8 @@ export class RuleEngine {
     targetAC: number,
     advantage: 'advantage' | 'disadvantage' | 'normal' = 'normal'
   ): AttackResult {
-    const roll1 = Math.floor(Math.random() * 20) + 1;
-    const roll2 = Math.floor(Math.random() * 20) + 1;
+    const roll1 = rollCheck(0, 'normal').rolls[0] ?? 0;
+    const roll2 = rollCheck(0, 'normal').rolls[0] ?? 0;
 
     let effectiveRoll: number;
     switch (advantage) {
@@ -292,8 +293,8 @@ export class RuleEngine {
     dc: number,
     advantage: 'advantage' | 'disadvantage' | 'normal' = 'normal'
   ): SaveResult {
-    const roll1 = Math.floor(Math.random() * 20) + 1;
-    const roll2 = Math.floor(Math.random() * 20) + 1;
+    const roll1 = rollCheck(0, 'normal').rolls[0] ?? 0;
+    const roll2 = rollCheck(0, 'normal').rolls[0] ?? 0;
 
     let effectiveRoll: number;
     switch (advantage) {
@@ -448,8 +449,8 @@ export class RuleEngine {
    */
   static checkConcentration(character: RuleCharacter, damage: number): boolean {
     const dc = Math.max(10, Math.floor(damage / 2) + 5);
-    const roll = Math.floor(Math.random() * 20) + 1;
-    return roll >= dc;
+    const result = rollCheck(0, 'normal');
+    return result.total >= dc;
   }
 
   /**

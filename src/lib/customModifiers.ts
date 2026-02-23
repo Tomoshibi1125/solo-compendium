@@ -7,6 +7,8 @@ export const CUSTOM_MODIFIER_TYPES = [
   'ac',
   'speed',
   'initiative',
+  'advantage',
+  'disadvantage',
 ] as const;
 
 export type CustomModifierType = typeof CUSTOM_MODIFIER_TYPES[number];
@@ -37,6 +39,37 @@ function matchesTarget(modTarget: string | null, target: string | null): boolean
   if (!modTarget || modTarget === 'all') return true;
   if (!target) return false;
   return modTarget === target;
+}
+
+export type AdvantageState = 'advantage' | 'disadvantage' | 'normal';
+
+export function resolveAdvantageFromCustomModifiers(
+  modifiers: CustomModifier[],
+  targets: Array<string | null | undefined>,
+): AdvantageState {
+  const normalizedTargets = targets
+    .map((t) => normalizeTarget(t))
+    .filter((t): t is string | null => t !== undefined);
+
+  let hasAdvantage = false;
+  let hasDisadvantage = false;
+
+  for (const modifier of modifiers) {
+    if (!modifier.enabled) continue;
+    if (modifier.type !== 'advantage' && modifier.type !== 'disadvantage') continue;
+
+    const modTarget = normalizeTarget(modifier.target);
+    const matches = normalizedTargets.some((t) => matchesTarget(modTarget, t));
+    if (!matches) continue;
+
+    if (modifier.type === 'advantage') hasAdvantage = true;
+    if (modifier.type === 'disadvantage') hasDisadvantage = true;
+  }
+
+  if (hasAdvantage && hasDisadvantage) return 'normal';
+  if (hasAdvantage) return 'advantage';
+  if (hasDisadvantage) return 'disadvantage';
+  return 'normal';
 }
 
 export function sumCustomModifiers(

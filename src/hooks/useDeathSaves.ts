@@ -15,6 +15,7 @@
 import { useState, useCallback, useMemo } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { isLocalCharacterId } from '@/lib/guestStore';
+import { rollCheck } from '@/lib/rollEngine';
 
 export interface DeathSaveState {
   successes: number;
@@ -66,7 +67,8 @@ export function useDeathSaves(
   });
 
   const rollDeathSave = useCallback((): DeathSaveRollResult => {
-    const roll = Math.floor(Math.random() * 20) + 1;
+    const result = rollCheck(0, 'normal');
+    const roll = result.rolls[0] ?? 0;
     const isNat20 = roll === 20;
     const isNat1 = roll === 1;
 

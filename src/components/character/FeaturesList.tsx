@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react';
-import { Star, Minus, Plus } from 'lucide-react';
+import { useState, useCallback, useMemo } from 'react';
+import { Star, Minus, Plus, Power, PowerOff, Zap } from 'lucide-react';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -191,15 +191,45 @@ export function FeaturesList({ characterId }: { characterId: string }) {
                           </div>
                         )}
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleToggleActive(feature)}
-                          className="text-xs"
-                        >
-                          {feature.is_active ? 'Deactivate' : 'Activate'}
-                        </Button>
+                      <div className="flex flex-col items-end gap-2">
+                        <div className="flex items-center gap-2">
+                          <Button
+                            variant={feature.is_active ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => handleToggleActive(feature)}
+                            className={cn(
+                              "text-xs gap-1.5 h-8",
+                              feature.is_active 
+                                ? "bg-primary/20 text-primary border-primary/30 hover:bg-primary/30" 
+                                : "text-muted-foreground hover:text-foreground"
+                            )}
+                          >
+                            {feature.is_active ? (
+                              <>
+                                <Power className="w-3.5 h-3.5" />
+                                Active
+                              </>
+                            ) : (
+                              <>
+                                <PowerOff className="w-3.5 h-3.5" />
+                                Inactive
+                              </>
+                            )}
+                          </Button>
+                        </div>
+
+                        {feature.uses_max !== null && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleUseFeature(feature, -1)}
+                            disabled={!feature.uses_current || feature.uses_current <= 0}
+                            className="h-8 text-xs gap-1.5 border-primary/20 hover:bg-primary/10"
+                          >
+                            <Zap className="w-3.5 h-3.5 text-primary" />
+                            Spend Use
+                          </Button>
+                        )}
                       </div>
                     </div>
                   </div>

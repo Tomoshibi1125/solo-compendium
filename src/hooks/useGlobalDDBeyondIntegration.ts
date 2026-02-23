@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/lib/auth/authContext';
+import { rollCheck, quickRoll } from '@/lib/rollEngine';
 import { useCharacterRoll } from '@/hooks/useCharacterRoll';
 import { useOfflineDataAccess } from '@/hooks/useOfflineDataAccess';
 import { useCampaignDice } from '@/hooks/useCampaignDice';
@@ -77,9 +78,14 @@ export function useGlobalDDBeyondIntegration() {
         
         const dice = match[1] || '1d20';
         const modifier = match[2] || '0';
-        const result = Math.floor(Math.random() * 20) + 1 + parseInt(modifier);
+        const modNum = parseInt(modifier, 10);
+        const rollResult = rollCheck(modNum, 'normal');
         
-        return { dice, modifier, result };
+        return { 
+          dice, 
+          modifier, 
+          result: rollResult.total 
+        };
       },
       exportCharacter: async (format: 'json' | 'pdf') => {
         const result = format === 'json' 

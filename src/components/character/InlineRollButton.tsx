@@ -5,6 +5,8 @@ import { Dice1 } from 'lucide-react';
 import { useCharacterRoll } from '@/hooks/useCharacterRoll';
 import { useCampaignDice } from '@/hooks/useCampaignDice';
 import { useAuth } from '@/lib/auth/authContext';
+import { rollCheck } from '@/lib/rollEngine';
+import type { AdvantageState } from '@/lib/rollAdvantage';
 
 interface InlineRollButtonProps {
   characterId: string;
@@ -14,6 +16,7 @@ interface InlineRollButtonProps {
   label: string;
   modifier?: number;
   campaignId?: string;
+  advantageState?: AdvantageState;
   disabled?: boolean;
   size?: 'sm' | 'lg' | 'default' | 'icon';
   variant?: 'default' | 'outline' | 'ghost';
@@ -27,6 +30,7 @@ export function InlineRollButton({
   label,
   modifier,
   campaignId,
+  advantageState,
   disabled = false,
   size = 'sm',
   variant = 'outline'
@@ -45,34 +49,29 @@ export function InlineRollButton({
 
   const handleRoll = async () => {
     try {
+      const resolvedModifier = Number.isFinite(modifier) ? (modifier as number) : 0;
+      const resolvedAdvantage: AdvantageState = advantageState ?? 'normal';
       let result;
       
       if (campaignId) {
-        // Use campaign-scoped rolling
-        result = await rollInCampaign(campaignId, {
-          dice_formula: '1d20',
-          result: 0, // Will be calculated by the hook
+        const roll = rollCheck(resolvedModifier, resolvedAdvantage);
+        const d20 = roll.rolls[0] ?? 0;
+        await rollInCampaign(campaignId, {
+          dice_formula: `1d20${resolvedModifier >= 0 ? `+${resolvedModifier}` : `${resolvedModifier}`}`,
+          result: roll.total,
           roll_type: rollType,
-          rolls: [0], // Will be populated by the hook
+          rolls: roll.droppedRolls ? [d20, ...(roll.droppedRolls || [])] : [d20],
           context: label,
-          modifiers: { modifier: modifier || 0 },
-          character_id: characterId
+          modifiers: {
+            base: resolvedModifier,
+            advantage: resolvedAdvantage,
+            dropped: roll.droppedRolls ?? null,
+          },
+          character_id: characterId,
         });
+        result = { d20, modifier: resolvedModifier, total: roll.total };
       } else {
-        // Use character rolling
-        switch (rollType) {
-          case 'ability':
-            result = await characterRoll.rollAbilityCheck(rollKey);
-            break;
-          case 'save':
-            result = await characterRoll.rollSavingThrow(rollKey);
-            break;
-          case 'skill':
-            result = await characterRoll.rollSkillCheck(rollKey);
-            break;
-          default:
-            result = await characterRoll.roll(rollKey, modifier || 0, rollType, label);
-        }
+        result = await characterRoll.roll(rollKey, resolvedModifier, rollType, label, campaignId, resolvedAdvantage);
       }
 
       // The roll result will be displayed via toast from the hooks

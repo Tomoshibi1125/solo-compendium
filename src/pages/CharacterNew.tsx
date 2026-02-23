@@ -40,6 +40,7 @@ import { usePublishedHomebrew } from '@/hooks/useHomebrewContent';
 import { Badge } from '@/components/ui/badge';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { jobs as staticJobs } from '@/data/compendium/jobs';
+import { getJobASI } from '@/lib/characterCreation';
 
 type Job = Database['public']['Tables']['compendium_jobs']['Row'] & {
   display_name?: string | null;
@@ -178,6 +179,22 @@ const CharacterNew = () => {
     },
   });
 
+  const jobASI = useMemo(() => {
+    if (!selectedJob) return {} as Record<AbilityScore, number>;
+    const jobName = jobs.find((j) => j.id === selectedJob)?.name;
+    if (!jobName) return {} as Record<AbilityScore, number>;
+    return getJobASI(jobName) as Record<AbilityScore, number>;
+  }, [jobs, selectedJob]);
+
+  const effectiveAbilities = useMemo(() => {
+    const next = { ...abilities };
+    for (const [abilityKey, bonus] of Object.entries(jobASI)) {
+      const key = abilityKey as AbilityScore;
+      if (key in next) next[key] += bonus;
+    }
+    return next;
+  }, [abilities, jobASI]);
+
   // Get static job data (including startingEquipment) for the selected job
   const staticJobData = useMemo(() => {
     if (!selectedJob) return null;
@@ -185,6 +202,16 @@ const CharacterNew = () => {
     if (!jobName) return null;
     return staticJobs.find(j => j.name === jobName) ?? null;
   }, [selectedJob, jobs]);
+
+  const jobAwakeningAtCreation = useMemo(() => {
+    if (!staticJobData?.awakeningFeatures) return [];
+    return staticJobData.awakeningFeatures.filter((f) => f.level === 1);
+  }, [staticJobData]);
+
+  const jobTraitsAtCreation = useMemo(() => {
+    if (!staticJobData?.jobTraits) return [];
+    return staticJobData.jobTraits;
+  }, [staticJobData]);
 
   // Fetch paths for selected job (with static fallback)
   const { data: paths = [] } = useQuery({
@@ -356,8 +383,8 @@ const CharacterNew = () => {
 
   const steps: { id: Step; name: string }[] = [
     { id: 'concept', name: 'Concept' },
-    { id: 'abilities', name: 'Abilities' },
     { id: 'job', name: 'Job' },
+    { id: 'abilities', name: 'Abilities' },
     ...(isPathStepEnabled ? ([{ id: 'path', name: 'Path' }] as const) : []),
     { id: 'background', name: 'Background' },
     { id: 'equipment', name: 'Equipment' },
@@ -464,12 +491,20 @@ const CharacterNew = () => {
       // Calculate initial stats
       const level = 1;
       const proficiencyBonus = Math.ceil(level / 4) + 1;
-      const vitModifier = Math.floor((abilities.VIT - 10) / 2);
+      const vitModifier = Math.floor((effectiveAbilities.VIT - 10) / 2);
       const hpMax = calculateHPMax(level, job.hit_die, vitModifier);
-      const agiModifier = Math.floor((abilities.AGI - 10) / 2);
+      const agiModifier = Math.floor((effectiveAbilities.AGI - 10) / 2);
       const baseAC = 10 + agiModifier;
       const initiative = agiModifier;
       const systemFavorDie = 4; // Level 1-4
+
+      const jobSenses: string[] = [];
+      if (staticJobData?.darkvision) {
+        jobSenses.push(`Darkvision ${staticJobData.darkvision} ft`);
+      }
+      if (staticJobData?.specialSenses && staticJobData.specialSenses.length > 0) {
+        jobSenses.push(...staticJobData.specialSenses);
+      }
 
       // Create character
       const selectedPathRow = selectedPath && selectedPath !== 'none'
@@ -486,7 +521,7 @@ const CharacterNew = () => {
         backstory: backstory.trim() || null,
         proficiency_bonus: proficiencyBonus,
         armor_class: baseAC,
-        speed: 30,
+        speed: staticJobData?.speed ?? 30,
         initiative: initiative,
         hp_current: hpMax,
         hp_max: hpMax,
@@ -509,9 +544,13 @@ const CharacterNew = () => {
           ...(job.tool_proficiencies || []),
           ...(selectedBackgroundData.tool_proficiencies || []),
         ],
+        senses: jobSenses.length > 0 ? (jobSenses as any) : null,
+        damage_resistances: (staticJobData?.damageResistances as any) ?? null,
+        damage_immunities: (staticJobData?.damageImmunities as any) ?? null,
+        condition_immunities: (staticJobData?.conditionImmunities as any) ?? null,
         conditions: [],
         exhaustion_level: 0,
-      });
+      } as any);
 
       // Add level 1 features from compendium
       const {
@@ -520,13 +559,11 @@ const CharacterNew = () => {
         addStartingEquipment,
         addStartingPowers,
         addJobAwakeningBenefitsForLevel,
-        getJobASI,
       } = await import('@/lib/characterCreation');
 
       // Apply job awakening ASI bonuses to ability scores
-      const jobASI = getJobASI(job.name);
       const finalAbilities = { ...abilities };
-      for (const [abilityKey, bonus] of Object.entries(jobASI)) {
+      for (const [abilityKey, bonus] of Object.entries(getJobASI(job.name))) {
         const key = abilityKey as AbilityScore;
         if (key in finalAbilities) {
           finalAbilities[key] += bonus;
@@ -619,8 +656,6 @@ const CharacterNew = () => {
     switch (currentStep) {
       case 'concept':
         return name.trim().length > 0;
-      case 'abilities':
-        return isPointBuyValid;
       case 'job':
         if (!selectedJob.length) return false;
         // Check if skill selection is required and complete
@@ -628,6 +663,8 @@ const CharacterNew = () => {
           return selectedSkills.length === jobData.skill_choice_count;
         }
         return true;
+      case 'abilities':
+        return !!selectedJob && isPointBuyValid;
       case 'path':
         if (!isPathStepEnabled) return true;
         if (!isPathRequiredAtCreation) return true;
@@ -720,8 +757,8 @@ const CharacterNew = () => {
             <div className="mt-4 text-center">
               <p className="text-sm text-muted-foreground">
                 {currentStep === 'concept' && 'Create your character\'s identity and appearance'}
-                {currentStep === 'abilities' && 'Choose your character\'s ability scores'}
                 {currentStep === 'job' && 'Select your character\'s primary class'}
+                {currentStep === 'abilities' && 'Choose your character\'s ability scores'}
                 {currentStep === 'path' && 'Choose a specialization within your job'}
                 {currentStep === 'background' && 'Define your character\'s history and origins'}
                 {currentStep === 'equipment' && 'Choose your starting equipment'}
@@ -771,6 +808,17 @@ const CharacterNew = () => {
 
           {currentStep === 'abilities' && (
             <div className="space-y-6">
+              {selectedJob && Object.keys(jobASI).length > 0 && (
+                <div className="p-4 rounded-lg bg-primary/5 border border-primary/20 text-sm">
+                  <div className="font-heading font-semibold mb-1">Job ASI Bonuses</div>
+                  <div className="text-muted-foreground">
+                    {Object.entries(jobASI)
+                      .filter(([, v]) => typeof v === 'number' && v !== 0)
+                      .map(([k, v]) => `${ABILITY_NAMES[k as AbilityScore]} ${v > 0 ? `+${v}` : v}`)
+                      .join(', ')}
+                  </div>
+                </div>
+              )}
               <div className="flex gap-4 flex-wrap">
                 <Button
                   variant={abilityMethod === 'standard' ? 'default' : 'outline'}
@@ -904,8 +952,8 @@ const CharacterNew = () => {
                       className="mt-1"
                     />
                     <div className="text-xs text-muted-foreground mt-1">
-                      Modifier: {Math.floor((abilities[ability] - 10) / 2) >= 0 ? '+' : ''}
-                      {Math.floor((abilities[ability] - 10) / 2)}
+                      Modifier: {Math.floor((effectiveAbilities[ability] - 10) / 2) >= 0 ? '+' : ''}
+                      {Math.floor((effectiveAbilities[ability] - 10) / 2)}
                     </div>
                   </div>
                 ))}
@@ -938,6 +986,102 @@ const CharacterNew = () => {
                   <div className="text-xs text-muted-foreground">
                     Hit Die: d{jobData.hit_die} | Primary: {jobData.primary_abilities.map(formatMonarchVernacular).join(', ')}
                   </div>
+
+                  {staticJobData && (
+                    <div className="border-t border-border/50 pt-3 space-y-3">
+                      <div className="text-xs font-heading font-semibold text-primary uppercase tracking-wider">
+                        Awakening Package (Race-Equivalent)
+                      </div>
+
+                      {selectedJob && Object.keys(jobASI).length > 0 && (
+                        <div className="text-xs text-muted-foreground">
+                          <span className="font-heading font-semibold text-foreground">ASI:</span>{' '}
+                          {Object.entries(jobASI)
+                            .filter(([, v]) => typeof v === 'number' && v !== 0)
+                            .map(([k, v]) => `${ABILITY_NAMES[k as AbilityScore]} ${v > 0 ? `+${v}` : v}`)
+                            .join(', ') || '—'}
+                        </div>
+                      )}
+
+                      {(staticJobData.languages?.length || 0) > 0 && (
+                        <div className="text-xs text-muted-foreground">
+                          <span className="font-heading font-semibold text-foreground">Languages:</span>{' '}
+                          {staticJobData.languages.join(', ')}
+                        </div>
+                      )}
+
+                      {typeof staticJobData.speed === 'number' && (
+                        <div className="text-xs text-muted-foreground">
+                          <span className="font-heading font-semibold text-foreground">Speed:</span>{' '}
+                          {staticJobData.speed} ft
+                        </div>
+                      )}
+
+                      {typeof staticJobData.darkvision === 'number' && (
+                        <div className="text-xs text-muted-foreground">
+                          <span className="font-heading font-semibold text-foreground">Darkvision:</span>{' '}
+                          {staticJobData.darkvision} ft
+                        </div>
+                      )}
+
+                      {(staticJobData.specialSenses?.length || 0) > 0 && (
+                        <div className="text-xs text-muted-foreground">
+                          <span className="font-heading font-semibold text-foreground">Special Senses:</span>{' '}
+                          {staticJobData.specialSenses?.join(', ')}
+                        </div>
+                      )}
+
+                      {(staticJobData.damageResistances?.length || 0) > 0 && (
+                        <div className="text-xs text-muted-foreground">
+                          <span className="font-heading font-semibold text-foreground">Resistances:</span>{' '}
+                          {staticJobData.damageResistances?.join(', ')}
+                        </div>
+                      )}
+
+                      {(staticJobData.damageImmunities?.length || 0) > 0 && (
+                        <div className="text-xs text-muted-foreground">
+                          <span className="font-heading font-semibold text-foreground">Immunities:</span>{' '}
+                          {staticJobData.damageImmunities?.join(', ')}
+                        </div>
+                      )}
+
+                      {(staticJobData.conditionImmunities?.length || 0) > 0 && (
+                        <div className="text-xs text-muted-foreground">
+                          <span className="font-heading font-semibold text-foreground">Condition Immunities:</span>{' '}
+                          {staticJobData.conditionImmunities?.join(', ')}
+                        </div>
+                      )}
+
+                      {jobAwakeningAtCreation.length > 0 && (
+                        <div className="space-y-2">
+                          <div className="text-xs font-heading font-semibold text-foreground">Awakening Features (Level 1)</div>
+                          <div className="space-y-2">
+                            {jobAwakeningAtCreation.map((f) => (
+                              <div key={f.name} className="text-xs">
+                                <div className="font-heading font-semibold">{formatMonarchVernacular(f.name)}</div>
+                                <div className="text-muted-foreground">{formatMonarchVernacular(f.description)}</div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {jobTraitsAtCreation.length > 0 && (
+                        <div className="space-y-2">
+                          <div className="text-xs font-heading font-semibold text-foreground">Innate Traits</div>
+                          <div className="space-y-2">
+                            {jobTraitsAtCreation.map((t) => (
+                              <div key={t.name} className="text-xs">
+                                <div className="font-heading font-semibold">{formatMonarchVernacular(t.name)}</div>
+                                <div className="text-muted-foreground">{formatMonarchVernacular(t.description)}</div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                   {staticJobFeatures && staticJobFeatures.length > 0 && (
                     <div className="border-t border-border/50 pt-3">
                       <button
@@ -1225,8 +1369,8 @@ const CharacterNew = () => {
                     <div key={ability} className="flex justify-between">
                       <span>{ABILITY_NAMES[ability]}:</span>
                       <span className="font-display">
-                        {abilities[ability]} ({Math.floor((abilities[ability] - 10) / 2) >= 0 ? '+' : ''}
-                        {Math.floor((abilities[ability] - 10) / 2)})
+                        {effectiveAbilities[ability]} ({Math.floor((effectiveAbilities[ability] - 10) / 2) >= 0 ? '+' : ''}
+                        {Math.floor((effectiveAbilities[ability] - 10) / 2)})
                       </span>
                     </div>
                   ))}
@@ -1236,9 +1380,68 @@ const CharacterNew = () => {
                 <div>
                   <h3 className="font-heading font-semibold mb-2">Starting Stats (Level 1)</h3>
                   <div className="text-sm space-y-1">
-                    <div><strong>HP:</strong> {calculateHPMax(1, jobData.hit_die, Math.floor((abilities.VIT - 10) / 2))}</div>
-                    <div><strong>AC:</strong> {10 + Math.floor((abilities.AGI - 10) / 2)}</div>
+                    <div><strong>HP:</strong> {calculateHPMax(1, jobData.hit_die, Math.floor((effectiveAbilities.VIT - 10) / 2))}</div>
+                    <div><strong>AC:</strong> {10 + Math.floor((effectiveAbilities.AGI - 10) / 2)}</div>
                     <div><strong>Proficiency Bonus:</strong> +2</div>
+                  </div>
+                </div>
+              )}
+
+              {staticJobData && (
+                <div>
+                  <h3 className="font-heading font-semibold mb-2">Awakening Package</h3>
+                  <div className="space-y-2 text-sm">
+                    {selectedJob && Object.keys(jobASI).length > 0 && (
+                      <div>
+                        <strong>ASI:</strong>{' '}
+                        {Object.entries(jobASI)
+                          .filter(([, v]) => typeof v === 'number' && v !== 0)
+                          .map(([k, v]) => `${ABILITY_NAMES[k as AbilityScore]} ${v > 0 ? `+${v}` : v}`)
+                          .join(', ') || '—'}
+                      </div>
+                    )}
+
+                    {(staticJobData.languages?.length || 0) > 0 && (
+                      <div><strong>Languages:</strong> {staticJobData.languages.join(', ')}</div>
+                    )}
+
+                    {typeof staticJobData.darkvision === 'number' && (
+                      <div><strong>Darkvision:</strong> {staticJobData.darkvision} ft</div>
+                    )}
+
+                    {(staticJobData.damageResistances?.length || 0) > 0 && (
+                      <div><strong>Resistances:</strong> {staticJobData.damageResistances?.join(', ')}</div>
+                    )}
+
+                    {(staticJobData.conditionImmunities?.length || 0) > 0 && (
+                      <div><strong>Condition Immunities:</strong> {staticJobData.conditionImmunities?.join(', ')}</div>
+                    )}
+
+                    {jobAwakeningAtCreation.length > 0 && (
+                      <div>
+                        <strong>Awakening Features:</strong>
+                        <div className="mt-1 space-y-1">
+                          {jobAwakeningAtCreation.map((f) => (
+                            <div key={f.name} className="text-muted-foreground">
+                              {formatMonarchVernacular(f.name)}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {jobTraitsAtCreation.length > 0 && (
+                      <div>
+                        <strong>Innate Traits:</strong>
+                        <div className="mt-1 space-y-1">
+                          {jobTraitsAtCreation.map((t) => (
+                            <div key={t.name} className="text-muted-foreground">
+                              {formatMonarchVernacular(t.name)}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}

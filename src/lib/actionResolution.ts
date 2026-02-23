@@ -1,4 +1,5 @@
 import { rollDiceString } from '@/lib/diceRoller';
+import { rollCheck } from '@/lib/rollEngine';
 
 export type ResolutionKind = 'attack' | 'save' | 'healing' | 'damage';
 
@@ -95,8 +96,25 @@ export function resolveAttack(payload: ActionResolutionPayload, targetAC: number
   const mode = payload.attack.rollMode ?? 'normal';
 
   const rollD20 = (modifier: number) => {
-    const d20 = Math.floor(Math.random() * 20) + 1;
-    return { d20, total: d20, result: d20 + modifier };
+    if (mode === 'normal') {
+      const r = rollCheck(modifier, 'normal');
+      const d20 = r.rolls[0] ?? 0;
+      return { d20, total: d20, result: r.total, rolls: [d20] as number[] };
+    }
+
+    // Preserve original roll order for UI/test expectations: [roll1, roll2]
+    const r1 = rollCheck(modifier, 'normal');
+    const r2 = rollCheck(modifier, 'normal');
+    const d1 = r1.rolls[0] ?? 0;
+    const d2 = r2.rolls[0] ?? 0;
+
+    const chosenD20 = mode === 'advantage' ? Math.max(d1, d2) : Math.min(d1, d2);
+    return {
+      d20: chosenD20,
+      total: chosenD20,
+      result: chosenD20 + modifier,
+      rolls: [d1, d2] as number[],
+    };
   };
 
   const parseD20Modifier = (roll: string) => {
@@ -109,16 +127,7 @@ export function resolveAttack(payload: ActionResolutionPayload, targetAC: number
   const d20Mod = parseD20Modifier(payload.attack.roll);
   const attack = d20Mod !== null
     ? (() => {
-        if (mode === 'normal') {
-          const r = rollD20(d20Mod);
-          return { ...r, rolls: [r.d20] as number[] };
-        }
-        const r1 = rollD20(d20Mod);
-        const r2 = rollD20(d20Mod);
-        const chosen = mode === 'advantage'
-          ? (r2.result > r1.result ? r2 : r1)
-          : (r2.result < r1.result ? r2 : r1);
-        return { ...chosen, rolls: [r1.d20, r2.d20] as number[] };
+        return rollD20(d20Mod);
       })()
     : rollDiceString(payload.attack.roll);
 
@@ -165,23 +174,31 @@ export function resolveSave(payload: ActionResolutionPayload): ResolutionOutcome
   };
 
   const rollD20 = (modifier: number) => {
-    const d20 = Math.floor(Math.random() * 20) + 1;
-    return { d20, total: d20, result: d20 + modifier };
+    if (mode === 'normal') {
+      const r = rollCheck(modifier, 'normal');
+      const d20 = r.rolls[0] ?? 0;
+      return { d20, total: d20, result: r.total, rolls: [d20] as number[] };
+    }
+
+    // Preserve original roll order for UI/test expectations: [roll1, roll2]
+    const r1 = rollCheck(modifier, 'normal');
+    const r2 = rollCheck(modifier, 'normal');
+    const d1 = r1.rolls[0] ?? 0;
+    const d2 = r2.rolls[0] ?? 0;
+    const chosenD20 = mode === 'advantage' ? Math.max(d1, d2) : Math.min(d1, d2);
+
+    return {
+      d20: chosenD20,
+      total: chosenD20,
+      result: chosenD20 + modifier,
+      rolls: [d1, d2] as number[],
+    };
   };
 
   const d20Mod = parseD20Modifier(roll);
   const save = d20Mod !== null
     ? (() => {
-        if (mode === 'normal') {
-          const r = rollD20(d20Mod);
-          return { ...r, rolls: [r.d20] as number[] };
-        }
-        const r1 = rollD20(d20Mod);
-        const r2 = rollD20(d20Mod);
-        const chosen = mode === 'advantage'
-          ? (r2.result > r1.result ? r2 : r1)
-          : (r2.result < r1.result ? r2 : r1);
-        return { ...chosen, rolls: [r1.d20, r2.d20] as number[] };
+        return rollD20(d20Mod);
       })()
     : rollDiceString(roll);
   const dc = payload.save.dc;

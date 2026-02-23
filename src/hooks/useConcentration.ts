@@ -22,6 +22,7 @@ import {
   type ConcentrationEffect,
 } from '@/lib/srd5e/concentration';
 import { getAbilityModifier, getProficiencyBonus } from '@/types/system-rules';
+import { rollCheck } from '@/lib/rollEngine';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -86,7 +87,7 @@ export function useConcentration(
       if (!state.isConcentrating || !state.currentEffect) return null;
 
       const dc = Math.max(10, Math.floor(damage / 2));
-      const roll = Math.floor(Math.random() * 20) + 1;
+      const roll = rollCheck(0, 'normal').rolls[0] ?? 0;
       const total = roll + saveModifier;
       const success = total >= dc;
 

@@ -1,7 +1,7 @@
 import { useSpellSlots, useUpdateSpellSlot } from '@/hooks/useSpellSlots';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
-import { Plus, Minus } from 'lucide-react';
+import { Plus, Minus, Zap } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { logger } from '@/lib/logger';
 import { getSpellcastingAbility, getCasterType } from '@/lib/characterCalculations';
@@ -74,29 +74,41 @@ export function SpellSlotsDisplay({ characterId, job, level, abilities, classNam
                 {slot.current} / {slot.max}
               </span>
             </div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
               <Button
-                variant="ghost"
-                size="icon"
-                className="h-6 w-6"
+                variant="outline"
+                size="sm"
                 onClick={() => handleSlotChange(slot.level, -1)}
                 disabled={slot.current === 0}
-                aria-label={`Decrease tier ${slot.level} slots`}
-                data-testid={`spell-slot-decrease-tier-${slot.level}`}
+                className="h-8 text-xs gap-1.5 border-primary/20 hover:bg-primary/10 hidden sm:flex"
               >
-                <Minus className="w-3 h-3" />
+                <Zap className="w-3.5 h-3.5 text-primary" />
+                Spend
               </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-6 w-6"
-                onClick={() => handleSlotChange(slot.level, 1)}
-                disabled={slot.current >= slot.max}
-                aria-label={`Increase tier ${slot.level} slots`}
-                data-testid={`spell-slot-increase-tier-${slot.level}`}
-              >
-                <Plus className="w-3 h-3" />
-              </Button>
+              <div className="flex items-center gap-1">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-6 w-6"
+                  onClick={() => handleSlotChange(slot.level, -1)}
+                  disabled={slot.current === 0}
+                  aria-label={`Decrease tier ${slot.level} slots`}
+                  data-testid={`spell-slot-decrease-tier-${slot.level}`}
+                >
+                  <Minus className="w-3 h-3" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-6 w-6"
+                  onClick={() => handleSlotChange(slot.level, 1)}
+                  disabled={slot.current >= slot.max}
+                  aria-label={`Increase tier ${slot.level} slots`}
+                  data-testid={`spell-slot-increase-tier-${slot.level}`}
+                >
+                  <Plus className="w-3 h-3" />
+                </Button>
+              </div>
             </div>
           </div>
         ))}
