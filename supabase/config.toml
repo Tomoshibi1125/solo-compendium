@@ -3,24 +3,17 @@ project_id = "hqouinpnnmjjtvgjrnff"
 [functions.signup]
 verify_jwt = false
 
-[storage.buckets]
-[[storage.buckets.buckets]]
-id = "compendium-images"
-name = "compendium-images"
+[storage.buckets.compendium-images]
 public = true
 file_size_limit = 5242880
 allowed_mime_types = ["image/png", "image/jpeg", "image/jpg", "image/webp"]
 
-[[storage.buckets.buckets]]
-id = "custom-tokens"
-name = "custom-tokens"
+[storage.buckets.custom-tokens]
 public = true
 file_size_limit = 5242880
 allowed_mime_types = ["image/png", "image/jpeg", "image/jpg", "image/webp", "image/gif"]
 
-[[storage.buckets.buckets]]
-id = "character-portraits"
-name = "character-portraits"
+[storage.buckets.character-portraits]
 public = true
 file_size_limit = 5242880
 allowed_mime_types = ["image/png", "image/jpeg", "image/jpg", "image/webp", "image/gif"]
