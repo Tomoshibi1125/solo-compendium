@@ -38,7 +38,7 @@ export const locations = [
     "type": "Castle",
     "rank": "C",
     "image": "/generated/compendium/locations/location-0002.webp",
-    "description": "A massive fortress that floats in the void between dimensions, its towers constructed from crystallized nothingness. The Eternal Void Fortress was once the stronghold of a void monarch who sought to erase all existence from reality. Now abandoned, it serves as a proving ground for C-rank ascendants who must navigate anti-gravity chambers and reality-warping traps while avoiding the void remnants that still patrol its halls.",
+    "description": "A massive fortress that floats in the void between dimensions, its towers constructed from crystallized nothingness. The Eternal Void Fortress was once the stronghold of a void regent who sought to erase all existence from reality. Now abandoned, it serves as a proving ground for C-rank ascendants who must navigate anti-gravity chambers and reality-warping traps while avoiding the void remnants that still patrol its halls.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts"
@@ -145,7 +145,7 @@ export const locations = [
     "type": "Castle",
     "rank": "B",
     "image": "/generated/compendium/locations/location-0008.webp",
-    "description": "A fortress that was once the seat of a umbral monarch's power, now split across seven different dimensions. B-rank ascendants must navigate through versions of the same castle that exist simultaneously, each with different dangers and secrets.",
+    "description": "A fortress that was once the seat of a umbral regent's power, now split across seven different dimensions. B-rank ascendants must navigate through versions of the same castle that exist simultaneously, each with different dangers and secrets.",
     "encounters": [
       "Shadow Demons",
       "Void Beasts"

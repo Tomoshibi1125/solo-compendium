@@ -59,7 +59,7 @@ export const comprehensiveRelics: Relic[] = [
   // LEGENDARY WEAPONS
   {
     id: 'monarchs-shadow-dagger',
-    name: 'Monarch\'s Shadow Dagger',
+    name: 'Regent\'s Shadow Dagger',
     description: 'A dagger forged from pure shadow energy, capable of piercing dimensional barriers and striking at the very essence of beings.',
     type: 'weapon',
     rarity: 'legendary',
@@ -103,9 +103,9 @@ export const comprehensiveRelics: Relic[] = [
       }
     ],
     lore: {
-      origin: 'Forged by the first Umbral Monarch from the essence of a defeated god',
-      history: 'This dagger has served as the symbol of power for countless Umbral Monarchs throughout history. It is said to contain the collective will and power of all who have wielded it.',
-      previousOwners: ['First Umbral Monarch', 'First Monarch', 'Various Umbral Monarchs']
+      origin: 'Forged by the first Umbral Regent from the essence of a defeated god',
+      history: 'This dagger has served as the symbol of power for countless Umbral Regents throughout history. It is said to contain the collective will and power of all who have wielded it.',
+      previousOwners: ['First Umbral Regent', 'First Regent', 'Various Umbral Regents']
     },
     mechanics: {
       bonus: {
@@ -276,13 +276,13 @@ export const comprehensiveRelics: Relic[] = [
   {
     id: 'skywyrms-gauntlet',
     name: 'Skywyrm\'s Gauntlet',
-    description: 'The legendary gauntlet of the Umbral Monarch, containing the power to command shadows and bend reality.',
+    description: 'The legendary gauntlet of the Umbral Regent, containing the power to command shadows and bend reality.',
     type: 'armor',
     rarity: 'mythic',
     attunement: true,
     requirements: {
       level: 20,
-      class: 'Umbral Monarch'
+      class: 'Umbral Regent'
     },
     properties: {
       magical: true,
@@ -306,7 +306,7 @@ export const comprehensiveRelics: Relic[] = [
         action: 'action'
       },
       {
-        name: 'Monarch\'s Protection',
+        name: 'Regent\'s Protection',
         description: 'You have resistance to all damage types and advantage on all saving throws.',
         type: 'passive'
       },
@@ -319,9 +319,9 @@ export const comprehensiveRelics: Relic[] = [
       }
     ],
     lore: {
-      origin: 'Created by the original Umbral Monarch from the essence of conquered dimensions',
+      origin: 'Created by the original Umbral Regent from the essence of conquered dimensions',
       history: 'This gauntlet represents the pinnacle of shadow power, containing the authority to command all shadows and reshape reality itself.',
-      currentOwner: 'Current Umbral Monarch'
+      currentOwner: 'Current Umbral Regent'
     },
     mechanics: {
       resistance: ['bludgeoning', 'piercing', 'slashing', 'fire', 'cold', 'lightning', 'thunder', 'acid', 'poison', 'necrotic', 'radiant', 'force'],
@@ -475,9 +475,9 @@ export const comprehensiveRelics: Relic[] = [
       }
     ],
     lore: {
-      origin: 'Created by the first Monarch to establish authority over their growing shadow empire',
-      history: 'This artifact represents the right to rule, containing the essence of leadership and command that all Monarchs must possess.',
-      previousOwners: ['First Umbral Monarch', 'Queen of Shadows', 'Emperor of Night']
+      origin: 'Created by the first Regent to establish authority over their growing shadow empire',
+      history: 'This artifact represents the right to rule, containing the essence of leadership and command that all Regents must possess.',
+      previousOwners: ['First Umbral Regent', 'Queen of Shadows', 'Emperor of Night']
     },
     mechanics: {
       bonus: {

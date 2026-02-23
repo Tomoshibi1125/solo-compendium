@@ -465,8 +465,8 @@ Focus on maximizing character effectiveness and synergy.
     return {
       statPriorities: lowestStats,
       equipment: ['Magic Weapon', 'Protective Armor', 'Healing Potions'],
-      feats: ['Ability Score Improvement', 'Toughness', 'Weapon Focus'],
-      abilities: ['Power Attack', 'Expertise', 'Improved Initiative'],
+      feats: ['Ability Score Improvement', 'Reinforced Vitality', 'Weapon Attunement'],
+      abilities: ['Devastating Blow', 'Honed Instinct', 'Threat Processor'],
       levelUp: ['Focus on core stats', 'Consider multiclass options', 'Plan equipment upgrades']
     };
   }

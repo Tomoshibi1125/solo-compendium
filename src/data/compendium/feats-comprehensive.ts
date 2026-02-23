@@ -1,6 +1,6 @@
-// Comprehensive Feats Compendium - Authoritative System Ascendant Content
-// ALL feats needed for the complete compendium system
-// Based on System Ascendant canon with SRD 5e mechanics
+// Comprehensive Feats Compendium - System Ascendant Original Content
+// ALL feats for the complete compendium system
+// SA-flavored names and descriptions on 5e mechanical backbone
 
 export interface Feat {
   id: string;
@@ -32,970 +32,635 @@ export interface Feat {
 }
 
 export const comprehensiveFeats: Feat[] = [
-  // SHADOW FEATS (Expanded)
+  // ═══════════════════════════════════════════
+  // SHADOW FEATS
+  // ═══════════════════════════════════════════
   {
     id: 'shadow-mastery',
     name: 'Shadow Mastery',
-    description: 'You have mastered the art of shadow manipulation, gaining enhanced control over shadow energy.',
-    prerequisites: {
-      level: 5,
-      ability: 'Wisdom',
-      score: 13
-    },
+    description: 'Your mana signature has attuned to shadow-frequency energy, granting instinctive control over darkness.',
+    prerequisites: { level: 5, ability: 'Wisdom', score: 13 },
     benefits: [
-      'Gain advantage on Dexterity (Stealth) checks in dim light or darkness',
-      'Can cast Shadow Step as a bonus action 3 times per long rest',
-      'Resistance to necrotic damage from shadow sources',
+      'Advantage on Dexterity (Stealth) checks in dim light or darkness',
+      'Can use Shadow Step as a bonus action 3 times per long rest (teleport up to 30 ft between shadows)',
+      'Resistance to necrotic damage',
       'Can see through magical darkness up to 60 feet'
     ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'The shadows bend to your will, becoming extensions of your very essence.',
+    mechanics: { type: 'passive', frequency: 'at-will' },
+    flavor: '[SHADOW ATTUNEMENT: COMPLETE — DARKNESS RESPONDS TO YOUR WILL]',
     source: 'System Ascendant Canon'
   },
   {
     id: 'essence-absorption',
     name: 'Essence Absorption',
-    description: 'You can absorb the life essence from defeated enemies to enhance your own power.',
-    prerequisites: {
-      level: 7,
-      feats: ['shadow-mastery']
-    },
+    description: 'Your System interface siphons residual life energy from slain creatures, converting it into temporary power.',
+    prerequisites: { level: 7, feats: ['shadow-mastery'] },
     benefits: [
       'When you reduce a creature to 0 HP, gain temporary HP equal to your Wisdom modifier',
-      'Once per long rest, can absorb essence to gain advantage on your next attack roll',
-      'Can store absorbed essence to power shadow abilities',
-      'Gain +1 to Constitution saving throws'
+      'Once per long rest, absorb essence to gain advantage on your next attack roll',
+      'Can store absorbed essence to fuel shadow abilities',
+      '+1 to Constitution saving throws'
     ],
-    mechanics: {
-      type: 'triggered',
-      frequency: 'once-per-turn',
-      action: 'free'
-    },
-    flavor: 'The life force of your foes becomes the fuel for your ascension.',
+    mechanics: { type: 'triggered', frequency: 'once-per-turn', action: 'free' },
+    flavor: 'The kill feeds you. Every death refills your reserves.',
     source: 'System Ascendant Canon'
   },
   {
     id: 'regent-aura',
     name: 'Regent\'s Aura',
-    description: 'You project an aura of dimensional authority that bends lesser shadows and undead to your will.',
-    prerequisites: {
-      level: 15,
-      feats: ['shadow-mastery', 'essence-absorption']
-    },
+    description: 'You project an aura of dimensional authority that suppresses lesser shadow creatures and undead.',
+    prerequisites: { level: 15, feats: ['shadow-mastery', 'essence-absorption'] },
     benefits: [
       'Undead and shadow creatures with CR less than your level are frightened of you',
       'Can command shadow creatures as an action (Wisdom check contested)',
       'Allies within 30 feet gain +1 to saving throws against fear',
       'Shadow creatures have disadvantage on attack rolls against you'
     ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'The very presence of a Regent commands respect and fear from the shadows.',
+    mechanics: { type: 'passive', frequency: 'at-will' },
+    flavor: '[AUTHORITY: REGENT-CLASS — SHADOW ENTITIES: SUPPRESSED]',
     source: 'System Ascendant Canon'
   },
   {
     id: 'shadow-dance',
     name: 'Shadow Dance',
-    description: 'You move through combat with supernatural grace, striking from unexpected angles.',
-    prerequisites: {
-      ability: 'Dexterity',
-      score: 15
-    },
+    description: 'You move through combat like a wraith, phasing between shadows to strike from impossible angles.',
+    prerequisites: { ability: 'Dexterity', score: 15 },
     benefits: [
-      'When you take the Dodge action, can move up to your speed without provoking opportunity attacks',
-      'Once per turn, can teleport up to 15 feet to unoccupied space you can see',
+      'When you take the Dodge action, move up to your speed without provoking opportunity attacks',
+      'Once per turn, teleport up to 15 feet to unoccupied space in dim light or darkness',
       'Advantage on Dexterity saving throws against area effects',
       'Can use Shadow Step as a reaction when targeted by an attack'
     ],
-    mechanics: {
-      type: 'active',
-      frequency: 'once-per-turn',
-      action: 'reaction'
-    },
-    flavor: 'Like a dancer in the dark, you weave between strikes with impossible grace.',
+    mechanics: { type: 'active', frequency: 'once-per-turn', action: 'reaction' },
+    flavor: 'You exist in one shadow, then another. The space between is irrelevant.',
     source: 'System Ascendant Canon'
   },
   {
     id: 'critical-shadow',
     name: 'Critical Shadow',
-    description: 'Your attacks carry the essence of shadow, dealing devastating critical hits.',
-    prerequisites: {
-      level: 9,
-      ability: 'Dexterity',
-      score: 17
-    },
+    description: 'Your strikes carry shadow energy that erupts on critical hits, blinding targets with concentrated darkness.',
+    prerequisites: { level: 9, ability: 'Dexterity', score: 17 },
     benefits: [
-      'Critical hits with weapons or shadow abilities deal extra necrotic damage equal to your proficiency bonus',
-      'When you score a critical hit, target must make Constitution save or be blinded for 1 minute',
-      'Shadow weapons count as magical for overcoming resistance',
+      'Critical hits deal extra necrotic damage equal to your proficiency bonus',
+      'On crit, target must make Con save or be blinded for 1 round',
+      'Shadow-infused weapons count as magical for overcoming resistance',
       'Can reroll one damage die on critical hits (must use new result)'
     ],
-    mechanics: {
-      type: 'triggered',
-      frequency: 'when-critical-hit',
-      action: 'free'
-    },
-    flavor: 'Your strikes carry the weight of darkness itself, crushing all who oppose you.',
+    mechanics: { type: 'triggered', frequency: 'when-critical-hit', action: 'free' },
+    flavor: '[CRITICAL STRIKE: SHADOW DETONATION — TARGET VISUAL SYSTEMS: OFFLINE]',
     source: 'System Ascendant Canon'
   },
   {
     id: 'shadow-extraction-expert',
     name: 'Shadow Extraction Expert',
-    description: 'You have perfected the art of extracting shadows from defeated enemies.',
-    prerequisites: {
-      level: 3,
-      feats: ['shadow-mastery']
-    },
+    description: 'Your extraction technique has been refined — faster, more reliable, capable of binding stronger shadows.',
+    prerequisites: { level: 3, feats: ['shadow-mastery'] },
     benefits: [
-      'Can extract shadows from creatures up to CR 1 higher than your level',
+      'Extract shadows from creatures up to CR 1 higher than your level',
       'Extracted shadows have +2 to all ability scores',
       'Can extract and command up to 2 shadows at once',
-      'Extraction process takes only 1 minute instead of 10'
+      'Extraction takes 1 minute instead of 10'
     ],
-    mechanics: {
-      type: 'active',
-      frequency: 'short-rest',
-      action: 'action'
-    },
-    flavor: 'Every fallen foe becomes a potential ally in your growing shadow army.',
-    source: 'System Ascendant Canon'
-  },
-  {
-    id: 'dimensional-awareness',
-    name: 'Dimensional Awareness',
-    description: 'Your senses extend beyond normal perception, allowing you to perceive dimensional distortions.',
-    prerequisites: {
-      ability: 'Wisdom',
-      score: 13
-    },
-    benefits: [
-      'Cannot be surprised by creatures using teleportation or shadow movement',
-      'Advantage on Perception checks to notice invisible or ethereal creatures',
-      'Can sense the use of teleportation magic within 100 feet',
-      'Resistance to force damage'
-    ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'The fabric of reality whispers its secrets to those who know how to listen.',
-    source: 'System Ascendant Canon'
-  },
-  {
-    id: 'shadow-resilience',
-    name: 'Shadow Resilience',
-    description: 'Your body has adapted to withstand the corrupting influence of shadow energy.',
-    prerequisites: {
-      level: 5,
-      ability: 'Constitution',
-      score: 14
-    },
-    benefits: [
-      'Advantage on saving throws against shadow-based spells and abilities',
-      'Cannot be frightened by shadow creatures or effects',
-      'Regenerate 1 HP per round while in dim light or darkness',
-      'Immunity to the shadow corruption condition'
-    ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'What would corrupt lesser beings only strengthens your resolve.',
-    source: 'System Ascendant Canon'
-  },
-  {
-    id: 'regents-resilience',
-    name: 'Regent\'s Resilience',
-    description: 'The power of a Regent flows through you, granting incredible durability that transcends mortal limits.',
-    prerequisites: {
-      level: 20,
-      feats: ['shadow-resilience', 'regent-aura']
-    },
-    benefits: [
-      'Resistance to all damage types except radiant',
-      'Cannot be reduced below 1 HP by shadow damage',
-      'Regenerate 5 HP per round',
-      'When reduced to 0 HP, can spend 1 resolve point to return to 50% HP'
-    ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'The essence of a Regent cannot be easily extinguished—it burns with the authority of a being that has conquered dimensions.',
+    mechanics: { type: 'active', frequency: 'short-rest', action: 'action' },
+    flavor: '[EXTRACTION PROTOCOL: UPGRADED — BINDING EFFICIENCY: +200%]',
     source: 'System Ascendant Canon'
   },
   {
     id: 'shadow-weapon-mastery',
     name: 'Shadow Weapon Mastery',
-    description: 'You can create and wield weapons made of pure shadow energy.',
-    prerequisites: {
-      level: 10,
-      feats: ['shadow-mastery']
-    },
+    description: 'You forge weapons from pure shadow energy, summoning blades that dissolve after striking.',
+    prerequisites: { level: 10, feats: ['shadow-mastery'] },
     benefits: [
-      'Can create shadow weapons as a bonus action',
+      'Can create shadow weapons as a bonus action (any simple or martial weapon)',
       'Shadow weapons deal +1d6 necrotic damage',
-      'Shadow weapons can change form as a bonus action',
-      'Can throw shadow weapons that return to your hand'
+      'Can change weapon form as a bonus action',
+      'Can throw shadow weapons — they return to your hand at end of turn'
     ],
-    mechanics: {
-      type: 'active',
-      frequency: 'bonus-action',
-      action: 'bonus-action'
-    },
+    mechanics: { type: 'active', frequency: 'bonus-action', action: 'bonus-action' },
     flavor: 'Your will becomes steel, forged in the darkness of your soul.',
     source: 'System Ascendant Canon'
   },
   {
     id: 'shadow-armor',
     name: 'Shadow Armor',
-    description: 'You can form protective armor from shadow energy around yourself.',
-    prerequisites: {
-      level: 8,
-      feats: ['shadow-mastery']
-    },
+    description: 'You weave protective shadow energy around yourself, forming armor from compressed darkness.',
+    prerequisites: { level: 8, feats: ['shadow-mastery'] },
     benefits: [
-      'Can form shadow armor as a bonus action',
-      'Shadow armor provides +2 AC and resistance to non-magical damage',
-      'Shadow armor doesn\'t impose disadvantage on Stealth checks',
-      'Can repair shadow armor as a bonus action'
+      'Form shadow armor as a bonus action — provides +2 AC',
+      'Shadow armor grants resistance to non-magical damage',
+      'Shadow armor imposes no Stealth disadvantage',
+      'Can repair shadow armor as a bonus action if damaged'
     ],
-    mechanics: {
-      type: 'active',
-      frequency: 'bonus-action',
-      action: 'bonus-action'
-    },
+    mechanics: { type: 'active', frequency: 'bonus-action', action: 'bonus-action' },
     flavor: 'The shadows themselves become your shield against harm.',
     source: 'System Ascendant Canon'
   },
-
-  // COMBAT FEATS (Expanded)
   {
-    id: 'weapon-focus',
-    name: 'Weapon Focus',
-    description: 'You have mastered a specific type of weapon, gaining superior combat abilities with it.',
-    prerequisites: {
-      ability: 'Strength',
-      score: 13
-    },
+    id: 'regents-resilience',
+    name: 'Regent\'s Resilience',
+    description: 'The power of a Regent flows through you, granting durability that transcends mortal limits.',
+    prerequisites: { level: 20, feats: ['shadow-mastery', 'regent-aura'] },
     benefits: [
-      '+1 to attack and damage rolls with chosen weapon type',
-      'Can use chosen weapon type as reaction for opportunity attacks',
-      'Critical hits with chosen weapon type deal +1d10 damage',
-      'Can disarm opponents using chosen weapon type as bonus action'
+      'Resistance to all damage types except radiant',
+      'Cannot be reduced below 1 HP by shadow damage',
+      'Regenerate 5 HP per round',
+      'When reduced to 0 HP, spend 1 resolve point to return to 50% HP (once per long rest)'
     ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'Your chosen weapon becomes an extension of your body and soul.',
-    source: 'System Ascendant Canon'
-  },
-  {
-    id: 'two-weapon-fighting',
-    name: 'Two-Weapon Fighting',
-    description: 'You are skilled at fighting with two weapons simultaneously.',
-    prerequisites: {
-      ability: 'Dexterity',
-      score: 15
-    },
-    benefits: [
-      'No penalty to attack rolls when fighting with two weapons',
-      'Can make two attacks as one action when using two light weapons',
-      'Can add ability modifier to damage of off-hand weapon',
-      'Can throw two weapons as one action'
-    ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'Two blades are better than one, especially when they dance in your hands.',
-    source: 'System Ascendant Canon'
-  },
-  {
-    id: 'power-attack',
-    name: 'Power Attack',
-    description: 'You can trade accuracy for devastating damage with melee attacks.',
-    prerequisites: {
-      level: 4,
-      ability: 'Strength',
-      score: 15
-    },
-    benefits: [
-      'Can take -5 penalty to attack roll to add +10 to damage roll',
-      'Can use this ability once per turn',
-      'Works with any melee weapon or unarmed strike',
-      'Can use with thrown weapons within 30 feet'
-    ],
-    mechanics: {
-      type: 'active',
-      frequency: 'once-per-turn',
-      action: 'action'
-    },
-    flavor: 'Sometimes raw power is more important than precision.',
-    source: 'System Ascendant Canon'
-  },
-  {
-    id: 'precise-shot',
-    name: 'Precise Shot',
-    description: 'Your ranged attacks are exceptionally accurate and deadly.',
-    prerequisites: {
-      ability: 'Dexterity',
-      score: 15
-    },
-    benefits: [
-      'Ranged attacks don\'t have disadvantage at long range',
-      'Can ignore half and three-quarters cover with ranged attacks',
-      'Ranged attacks deal +1 damage',
-      'Can make called shots to target specific body parts'
-    ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'Every arrow finds its mark when guided by your steady hand.',
-    source: 'System Ascendant Canon'
-  },
-  {
-    id: 'combat-reflexes',
-    name: 'Combat Reflexes',
-    description: 'Your reflexes in combat are supernaturally fast.',
-    prerequisites: {
-      ability: 'Dexterity',
-      score: 13
-    },
-    benefits: [
-      'Advantage on initiative rolls',
-      'Can act in surprise round',
-      'Can use reaction to make opportunity attack against any creature that moves within reach',
-      'Can use reaction to dodge one attack per round'
-    ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'Before others can react, you have already struck.',
-    source: 'System Ascendant Canon'
-  },
-  {
-    id: 'cleave',
-    name: 'Cleave',
-    description: 'Your powerful attacks can strike multiple enemies.',
-    prerequisites: {
-      level: 6,
-      ability: 'Strength',
-      score: 16
-    },
-    benefits: [
-      'When you hit a creature with a melee attack, can make another attack against different creature within reach',
-      'Can use this ability once per turn',
-      'Second attack uses same attack roll as first',
-      'Works with any melee weapon'
-    ],
-    mechanics: {
-      type: 'triggered',
-      frequency: 'once-per-turn',
-      action: 'free'
-    },
-    flavor: 'One strike can fell many foes when wielded with sufficient force.',
-    source: 'System Ascendant Canon'
-  },
-  {
-    id: 'defensive-fighting',
-    name: 'Defensive Fighting',
-    description: 'You can fight defensively to protect yourself and allies.',
-    prerequisites: {
-      ability: 'Dexterity',
-      score: 13
-    },
-    benefits: [
-      'Can use Dodge action and still make one attack with disadvantage',
-      'Can use reaction to protect adjacent ally from attack',
-      'Allies within 5 feet gain +1 to AC when you use Dodge action',
-      'Can use shield to block spells targeting adjacent allies'
-    ],
-    mechanics: {
-      type: 'active',
-      frequency: 'reaction',
-      action: 'reaction'
-    },
-    flavor: 'A strong defense is often the best offense.',
-    source: 'System Ascendant Canon'
-  },
-  {
-    id: 'critical-mastery',
-    name: 'Critical Mastery',
-    description: 'Your critical hits are exceptionally devastating.',
-    prerequisites: {
-      level: 12,
-      feats: ['weapon-focus']
-    },
-    benefits: [
-      'Critical hits deal maximum weapon damage',
-      'Can reroll one damage die on critical hit',
-      'Critical hits force enemies to make Constitution save or be stunned',
-      'Threat range for critical hits increases by 1'
-    ],
-    mechanics: {
-      type: 'triggered',
-      frequency: 'when-critical-hit',
-      action: 'free'
-    },
-    flavor: 'When you find an opening, you exploit it to its fullest.',
+    mechanics: { type: 'passive', frequency: 'at-will' },
+    flavor: '[REGENT RESILIENCE: ACTIVE — MORTALITY: SUSPENDED]',
     source: 'System Ascendant Canon'
   },
 
-  // DEFENSIVE FEATS (Expanded)
+  // ═══════════════════════════════════════════
+  // SYSTEM INTERFACE FEATS
+  // ═══════════════════════════════════════════
   {
-    id: 'toughness',
-    name: 'Toughness',
-    description: 'You are significantly tougher than normal.',
-    prerequisites: {
-      ability: 'Constitution',
-      score: 13
-    },
+    id: 'system-overclock',
+    name: 'System Overclock',
+    description: 'You push your System interface beyond safe limits, temporarily boosting all stat outputs.',
+    prerequisites: { level: 5, ability: 'Constitution', score: 13 },
     benefits: [
-      'Maximum HP increases by 2 per level',
-      'Resistance to poison damage',
-      'Advantage on Constitution saving throws',
-      'Can stabilize dying creatures without check'
+      'As a bonus action, enter Overclock for 1 minute: +2 to all ability checks and saving throws',
+      'Speed increases by 10 feet, +1d4 force damage on weapon attacks',
+      'When Overclock ends, gain 1 level of exhaustion',
+      'Duration extends by 1 round per enemy reduced to 0 HP'
     ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'Your body can withstand punishment that would fell lesser beings.',
+    mechanics: { type: 'active', frequency: 'long-rest', action: 'bonus-action' },
+    flavor: '[WARNING: SYSTEM OVERCLOCK — STAT LIMITERS REMOVED — BURNOUT IMMINENT]',
     source: 'System Ascendant Canon'
   },
   {
-    id: 'dodge-training',
-    name: 'Dodge Training',
-    description: 'You are exceptionally difficult to hit due to your evasive abilities.',
-    prerequisites: {
-      ability: 'Dexterity',
-      score: 15
-    },
+    id: 'threat-ping',
+    name: 'Threat Ping',
+    description: 'Your System broadcasts threat markers to allies, highlighting enemies and weak points.',
+    prerequisites: { level: 3, ability: 'Wisdom', score: 12 },
     benefits: [
-      'Advantage on Dexterity saving throws',
-      'Can use reaction to halve damage from one attack per round',
-      'Difficult terrain doesn\'t slow your movement',
-      'Can move through enemy spaces without provoking opportunity attacks'
+      'As a bonus action, mark one creature — allies within 60 feet deal +1d4 damage to marked target',
+      'Mark lasts 1 minute or until target drops to 0 HP',
+      'Only one mark at a time; marking new target removes old mark',
+      'When marked target drops to 0 HP, immediately mark another as a free action'
     ],
-    mechanics: {
-      type: 'active',
-      frequency: 'reaction',
-      action: 'reaction'
-    },
-    flavor: 'The best way to win a fight is to not get hit in the first place.',
+    mechanics: { type: 'active', frequency: 'at-will', action: 'bonus-action' },
+    flavor: '[THREAT PING: TARGET MARKED — ALL HUNTERS: FOCUS FIRE]',
     source: 'System Ascendant Canon'
   },
   {
-    id: 'damage-reduction',
-    name: 'Damage Reduction',
-    description: 'Your body can absorb and reduce damage from attacks.',
-    prerequisites: {
-      level: 8,
-      feats: ['toughness']
-    },
+    id: 'quest-log-intuition',
+    name: 'Quest Log Intuition',
+    description: 'Your System feeds you hints about objectives, hidden paths, and threat assessments.',
+    prerequisites: { ability: 'Wisdom', score: 13 },
     benefits: [
-      'Reduce all weapon damage by 3 (to minimum of 1)',
-      'Resistance to bludgeoning, piercing, and slashing damage',
-      'Can use reaction to reduce damage from one attack by half',
-      'Immunity to critical hits from non-magical weapons'
+      'System highlights interactive objects and hidden doors within 30 feet',
+      'Receive threat assessment when entering a new area',
+      'Once per long rest, ask for a hint — DM provides one true clue',
+      'Cannot be surprised while System interface is active'
     ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'Your body has become as resilient as armor itself.',
+    mechanics: { type: 'passive', frequency: 'at-will' },
+    flavor: '[QUEST UPDATE: OBJECTIVE NEARBY — THREAT LEVEL: CAUTION]',
     source: 'System Ascendant Canon'
   },
   {
-    id: 'regeneration',
-    name: 'Regeneration',
-    description: 'Your body can heal wounds at an accelerated rate.',
-    prerequisites: {
-      level: 10,
-      feats: ['toughness']
-    },
+    id: 'kill-count-momentum',
+    name: 'Kill Count Momentum',
+    description: 'The System tracks kills in real time. As the count rises, combat efficiency escalates.',
+    prerequisites: { level: 3, ability: 'Strength', score: 13 },
     benefits: [
-      'Regenerate 1 HP per round',
-      'Can reattach severed limbs within 1 hour',
-      'Cannot die from massive damage unless reduced to -20 HP',
-      'Healing spells have enhanced effect on you'
+      'System maintains a kill counter per combat encounter',
+      'After 2 kills: +1 to attack rolls',
+      'After 4 kills: +1d4 bonus damage on weapon attacks',
+      'After 6 kills: crit range expands by 1. Resets when combat ends or 1 min without a kill'
     ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'Life flows through you, refusing to be extinguished.',
+    mechanics: { type: 'triggered', frequency: 'at-will', action: 'free' },
+    flavor: '[KILL COUNT: RISING — COMBAT EFFICIENCY: ESCALATING]',
+    source: 'System Ascendant Canon'
+  },
+  {
+    id: 'daily-quest-discipline',
+    name: 'Daily Quest Discipline',
+    description: 'You follow the System\'s daily training regimen. Consistent completion has enhanced your baseline.',
+    prerequisites: { level: 2, ability: 'Constitution', score: 12 },
+    benefits: [
+      'HP maximum increases by 1 per level (retroactive)',
+      'Recover 1 additional hit die during long rests',
+      'Once per day after a short rest, remove 1 level of exhaustion',
+      'Declare daily quest at dawn for +1 to all saves until next long rest'
+    ],
+    mechanics: { type: 'passive', frequency: 'at-will' },
+    flavor: '[DAILY QUEST: 100 PUSH-UPS, 100 SIT-UPS, 100 SQUATS, 10KM RUN]',
     source: 'System Ascendant Canon'
   },
 
-  // MAGICAL FEATS (Expanded)
+  // ═══════════════════════════════════════════
+  // GATE SURVIVAL FEATS
+  // ═══════════════════════════════════════════
   {
-    id: 'spell-mastery',
-    name: 'Spell Mastery',
-    description: 'You have mastered certain spells, casting them with exceptional power.',
-    prerequisites: {
-      level: 8,
-      class: 'Mage'
-    },
+    id: 'gate-sense',
+    name: 'Gate Sense',
+    description: 'Repeated gate exposure has attuned your senses to dimensional energy.',
+    prerequisites: { level: 3, ability: 'Wisdom', score: 12 },
     benefits: [
-      'Choose 3 spells you can cast at will',
-      'Can cast chosen spells without spell slots',
-      'Chosen spells have +1 to spell attack rolls',
-      'Can modify chosen spells with metamagic without cost'
+      'Sense gates or rifts within 1 mile',
+      'Determine rank (D-S) by spending 1 minute within 30 feet',
+      'Advantage on saves against forced teleportation',
+      'Detect invisible/ethereal creatures within 15 feet'
     ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'Some spells have become as natural to you as breathing.',
+    mechanics: { type: 'passive', frequency: 'at-will' },
+    flavor: '[DIMENSIONAL ANOMALY DETECTED — RANK: B — CAUTION ADVISED]',
     source: 'System Ascendant Canon'
   },
   {
-    id: 'metamagic-adept',
-    name: 'Metamagic Adept',
-    description: 'You can modify your spells with metamagic abilities.',
-    prerequisites: {
-      level: 6,
-      class: 'Mage'
-    },
+    id: 'gate-hardened',
+    name: 'Gate-Hardened',
+    description: 'Repeated gate exposure has warped your body, granting resistance to dimensional hazards.',
+    prerequisites: { level: 6, ability: 'Constitution', score: 14 },
     benefits: [
-      'Gain 2 metamagic options',
-      'Can use metamagic 3 times per day without cost',
-      'Metamagic costs 1 less sorcery point',
-      'Can apply multiple metamagic options to same spell'
+      'Immune to gate-entry disorientation and psychic static',
+      'Resistance to one damage type of your choice',
+      'Extreme gate environments impose no disadvantage',
+      'Once per long rest, drop to 1 HP instead of 0 inside a gate'
     ],
-    mechanics: {
-      type: 'active',
-      frequency: '3-per-day',
-      action: 'bonus-action'
-    },
-    flavor: 'You don\'t just cast spells - you reshape them to your will.',
+    mechanics: { type: 'passive', frequency: 'at-will' },
+    flavor: 'Other hunters vomit at the threshold. You just check your gear and walk in.',
     source: 'System Ascendant Canon'
   },
   {
-    id: 'arcane-defense',
-    name: 'Arcane Defense',
-    description: 'You have developed special defenses against magical attacks.',
-    prerequisites: {
-      level: 4,
-      class: 'Mage'
-    },
+    id: 'boss-reader',
+    name: 'Boss Reader',
+    description: 'You read gate boss attack patterns. The System highlights wind-up animations.',
+    prerequisites: { level: 8, ability: 'Intelligence', score: 13 },
     benefits: [
-      'Advantage on saving throws against spells',
-      'Can use reaction to counterspell once per day',
-      'Resistance to force, lightning, and thunder damage',
-      'Can identify spells being cast as reaction'
+      'When CR 5+ creature begins a special ability, react to warn allies — +3 to their save',
+      'After 1 round of observation, identify boss\'s legendary actions and resistances',
+      'Once per long rest, "Pattern Read" a recharge ability — it automatically misses you',
+      'System displays boss HP as a percentage bar'
     ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'Magic flows around you, unable to find purchase.',
-    source: 'System Ascendant Canon'
-  },
-  {
-    id: 'spell-penetration',
-    name: 'Spell Penetration',
-    description: 'Your spells can overcome magical resistance and defenses.',
-    prerequisites: {
-      level: 10,
-      class: 'Mage'
-    },
-    benefits: [
-      'Spells ignore magic resistance',
-      'Spells ignore half and three-quarters cover',
-      'Spells can affect normally immune creatures',
-      'Spells have +1 to overcome spell resistance'
-    ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'Your magic cannot be contained by mortal defenses.',
+    mechanics: { type: 'triggered', frequency: 'long-rest', action: 'reaction' },
+    flavor: '[BOSS PATTERN DETECTED — DODGE WINDOW: NOW]',
     source: 'System Ascendant Canon'
   },
 
-  // SKILL FEATS (Expanded)
+  // ═══════════════════════════════════════════
+  // MANA CIRCUIT FEATS
+  // ═══════════════════════════════════════════
   {
-    id: 'skill-expertise',
-    name: 'Skill Expertise',
-    description: 'You have mastered a specific skill, gaining exceptional ability with it.',
-    prerequisites: {
-      level: 4,
-      skill: 'Any'
-    },
+    id: 'mana-overflow',
+    name: 'Mana Overflow',
+    description: 'Your circuits temporarily hold more energy than designed, supercharging your next spell.',
+    prerequisites: { level: 5, ability: 'Intelligence', score: 14 },
     benefits: [
-      'Double proficiency bonus with chosen skill',
-      'Can use chosen skill for any related task',
-      'Advantage on chosen skill checks',
-      'Can teach chosen skill to others'
+      'Once per short rest, Mana Overflow a spell: deal maximum damage instead of rolling',
+      'Also increases spell range by 50% and area by 5 feet',
+      'Take 1d8 force damage after as circuits vent',
+      'First spell in combat auto-triggers Overflow if available'
     ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'Your chosen skill has become second nature to you.',
+    mechanics: { type: 'active', frequency: 'short-rest', action: 'free' },
+    flavor: '[MANA OVERFLOW — OUTPUT EXCEEDS CAPACITY — VENTING...]',
     source: 'System Ascendant Canon'
   },
   {
-    id: 'jack-of-all-trades',
-    name: 'Jack of All Trades',
-    description: 'You have basic competence in all skills.',
-    prerequisites: {
-      level: 2
-    },
+    id: 'mana-siphon',
+    name: 'Mana Siphon',
+    description: 'On kill, your circuits drain residual energy from the corpse, recovering spent resources.',
+    prerequisites: { level: 6, ability: 'Intelligence', score: 13 },
     benefits: [
-      'Add half proficiency bonus to all skill checks',
-      'Can attempt any skill check even if untrained',
-      'Advantage on skill checks with tools',
-      'Learn new skills in half the normal time'
+      'Kill with spell: recover a slot 1 level lower than used (min 1st)',
+      'Kill with weapon: regain 1d6 + Int modifier HP',
+      'Siphoned energy dissipates after 1 hour if unused',
+      'Cannot siphon from constructs or undead'
     ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'A little knowledge of everything is better than complete ignorance.',
+    mechanics: { type: 'triggered', frequency: 'at-will', action: 'free' },
+    flavor: 'Every death refills your reserves. The System designed hunters to be perpetual engines.',
     source: 'System Ascendant Canon'
   },
   {
-    id: 'skill-focus',
-    name: 'Skill Focus',
-    description: 'You can focus your mental energy to enhance skill performance.',
-    prerequisites: {
-      level: 6
-    },
+    id: 'circuit-breaker',
+    name: 'Circuit Breaker',
+    description: 'You overload an enemy\'s mana network, disrupting their magical abilities.',
+    prerequisites: { level: 7, ability: 'Charisma', score: 14 },
     benefits: [
-      'Once per day, gain advantage on one skill check',
-      'Can add proficiency bonus to any skill check',
-      'Can use this ability after seeing the roll result',
-      'Can use on others\' skill checks to help them'
+      'As an action, target one creature within 30 feet — Con save vs your spell DC',
+      'On fail, cannot cast spells or use magical abilities until end of your next turn',
+      'If concentrating, that spell ends immediately',
+      'Forces Legendary Resistance expenditure if resisted'
     ],
-    mechanics: {
-      type: 'active',
-      frequency: 'once-per-day',
-      action: 'free'
-    },
-    flavor: 'Sometimes a moment of concentration makes all the difference.',
+    mechanics: { type: 'active', frequency: 'short-rest', action: 'action', save: 'Constitution', dc: 'spell-save' },
+    flavor: '[CIRCUIT BREAKER — MANA NETWORK: DISRUPTED — CASTING: DISABLED]',
     source: 'System Ascendant Canon'
   },
 
-  // SOCIAL FEATS (Expanded)
+  // ═══════════════════════════════════════════
+  // COMBAT FEATS (SA-flavored)
+  // ═══════════════════════════════════════════
   {
-    id: 'leadership',
-    name: 'Leadership',
-    description: 'You have natural leadership abilities that inspire others to follow you.',
-    prerequisites: {
-      level: 6,
-      ability: 'Charisma',
-      score: 15
-    },
+    id: 'annihilation-style',
+    name: 'Annihilation Style',
+    description: 'You channel raw mana through heavy weapons, trading accuracy for catastrophic damage.',
+    prerequisites: { ability: 'Strength', score: 13 },
     benefits: [
-      'Can attract followers and build a loyal following',
-      'Allies within 30 feet gain +1 to attack rolls and saving throws',
-      'Can inspire courage in allies, removing fear effects',
-      'Can organize groups for maximum efficiency'
+      'On hit with heavy weapon, -5 attack for +10 damage',
+      'On crit with heavy weapon, add one additional damage die',
+      'After reducing to 0 HP, make one bonus action attack',
+      'Proficient with all martial weapons'
     ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'Others naturally look to you for guidance and inspiration.',
+    mechanics: { type: 'active', frequency: 'at-will' },
+    flavor: 'The System measures your output in tons of force per swing.',
     source: 'System Ascendant Canon'
   },
   {
-    id: 'diplomacy',
-    name: 'Diplomacy',
-    description: 'You have exceptional ability to negotiate and resolve conflicts peacefully.',
-    prerequisites: {
-      ability: 'Charisma',
-      score: 13
-    },
+    id: 'deadeye-protocol',
+    name: 'Deadeye Protocol',
+    description: 'The System feeds targeting data into your instincts, eliminating range penalties.',
+    prerequisites: { ability: 'Dexterity', score: 13 },
     benefits: [
-      'Advantage on Charisma (Persuasion) checks',
-      'Can prevent fights through negotiation',
-      'Can mediate disputes between hostile parties',
-      'Can gain favorable terms in negotiations'
+      'Long range doesn\'t impose disadvantage',
+      'Ranged attacks ignore half and three-quarters cover',
+      '-5 attack for +10 damage on ranged attacks',
+      '+2 to damage with ranged weapons'
     ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'Words can be more powerful than weapons when used wisely.',
+    mechanics: { type: 'active', frequency: 'at-will' },
+    flavor: '[TARGET LOCKED] — the System draws the line, you pull the trigger.',
     source: 'System Ascendant Canon'
   },
   {
-    id: 'intimidating-presence',
-    name: 'Intimidating Presence',
-    description: 'Your mere presence inspires fear and respect in those around you.',
-    prerequisites: {
-      ability: 'Charisma',
-      score: 15
-    },
+    id: 'iron-vanguard',
+    name: 'Iron Vanguard',
+    description: 'You anchor your position with mana-reinforced resolve, locking down enemies that try to bypass you.',
     benefits: [
-      'Advantage on Charisma (Intimidation) checks',
-      'Can force creatures to make Wisdom save or be frightened',
-      'Enemies within 30 feet have disadvantage on attack rolls',
-      'Can intimidate groups of creatures simultaneously'
+      'Opportunity attack hits reduce target speed to 0',
+      'Creatures provoke opportunity attacks even when Disengaging',
+      'When adjacent creature attacks an ally, use reaction to attack it',
+      'Opportunity attacks against you have disadvantage'
     ],
-    mechanics: {
-      type: 'active',
-      frequency: 'long-rest',
-      action: 'action'
-    },
-    flavor: 'Your reputation precedes you, and even the braviest hesitate to cross your path.',
-    source: 'System Ascendant Canon'
-  },
-
-  // UTILITY FEATS (Expanded)
-  {
-    id: 'quick-learner',
-    name: 'Quick Learner',
-    description: 'You learn new skills and abilities with exceptional speed.',
-    prerequisites: {
-      level: 3,
-      ability: 'Intelligence',
-      score: 13
-    },
-    benefits: [
-      'Learn new skills in half the normal time',
-      'Can temporarily gain proficiency with any skill for 1 hour',
-      'Advantage on Intelligence checks to learn new information',
-      'Can master skills with less practice'
-    ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'Your mind is a sponge, absorbing knowledge wherever you go.',
+    mechanics: { type: 'passive', frequency: 'at-will' },
+    flavor: 'Nothing passes without paying the toll.',
     source: 'System Ascendant Canon'
   },
   {
-    id: 'eidetic-memory',
-    name: 'Eidetic Memory',
-    description: 'You have perfect recall of everything you have seen or heard.',
-    prerequisites: {
-      ability: 'Intelligence',
-      score: 14
-    },
+    id: 'twin-fang-technique',
+    name: 'Twin Fang Technique',
+    description: 'You split mana flow into twin channels, wielding paired weapons with perfect sync.',
+    prerequisites: { ability: 'Dexterity', score: 15 },
     benefits: [
-      'Perfect recall of all information',
-      'Can remember exact details from years ago',
-      'Advantage on Intelligence checks to recall information',
-      'Can never be fooled by illusions that rely on memory'
+      'Draw or stow two one-handed weapons simultaneously',
+      'Two-weapon fighting works even when weapons aren\'t light',
+      '+2 AC while wielding two weapons',
+      'Add ability modifier to off-hand damage'
     ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'Your mind is a perfect library of all you have experienced.',
+    mechanics: { type: 'passive', frequency: 'at-will' },
+    flavor: 'Left fang, right fang — prey caught between has nowhere to run.',
     source: 'System Ascendant Canon'
   },
   {
-    id: 'adaptability',
-    name: 'Adaptability',
-    description: 'You can quickly adapt to new situations and environments.',
-    prerequisites: {
-      level: 4
-    },
+    id: 'battle-channeler',
+    name: 'Battle Channeler',
+    description: 'Your mana circuits remain stable under combat stress.',
     benefits: [
-      'Advantage on saving throws against environmental effects',
-      'Can adapt to new climates in 1 day instead of 1 week',
-      'Can learn creature languages quickly',
-      'Can improvise tools and solutions in any situation'
+      'Advantage on Con saves to maintain concentration',
+      'Somatic components work with weapons or shields in hands',
+      'Can cast a spell as an opportunity attack',
+      'Spells as reactions don\'t consume opportunity attack reaction'
     ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'No matter the challenge, you find a way to overcome it.',
+    mechanics: { type: 'passive', frequency: 'at-will' },
+    flavor: 'Blades clash around you, but your mana flow never wavers.',
+    source: 'System Ascendant Canon'
+  },
+  {
+    id: 'gatekeepers-reach',
+    name: 'Gatekeeper\'s Reach',
+    description: 'You wield reach weapons with the discipline of a gate-zone sentinel, controlling space.',
+    prerequisites: { ability: 'Strength', score: 13 },
+    benefits: [
+      'Bonus action attack with opposite end of polearm (1d4 damage)',
+      'Creatures provoke opportunity attacks when entering your reach',
+      '+1 to damage with polearms',
+      'Can use polearm one-handed'
+    ],
+    mechanics: { type: 'passive', frequency: 'at-will' },
+    flavor: 'Nothing enters your zone without the System\'s permission — and yours.',
     source: 'System Ascendant Canon'
   },
 
-  // JOB FEATS (Expanded)
+  // ═══════════════════════════════════════════
+  // DEFENSIVE FEATS (SA-flavored)
+  // ═══════════════════════════════════════════
   {
-    id: 'warrior-determination',
-    name: 'Warrior\'s Determination',
-    description: 'Your martial awakening grants you exceptional determination and resilience.',
-    prerequisites: {
-      job: 'Destroyer'
-    },
+    id: 'iron-constitution',
+    name: 'Iron Constitution',
+    description: 'The System reinforced your cellular structure, increasing your capacity to absorb punishment.',
     benefits: [
-      'Advantage on saving throws against fear and charm',
-      'Can reroll failed saving throws once per day',
+      'HP maximum increases by 2 per level (retroactive)',
+      'Resistance to non-magical bludgeoning damage',
+      'Withstand extreme conditions without penalty',
+      'Healing effects restore additional HP equal to proficiency bonus'
+    ],
+    mechanics: { type: 'passive', frequency: 'at-will' },
+    flavor: '[VITALITY STAT INCREASED] — lesser blows no longer register.',
+    source: 'System Ascendant Canon'
+  },
+  {
+    id: 'adaptive-resistance',
+    name: 'Adaptive Resistance',
+    description: 'Repeated threat exposure triggered a System adaptation, hardening your defenses.',
+    benefits: [
+      'Gain proficiency in one saving throw of your choice',
+      'Advantage on the chosen saving throw',
+      'Reroll a failed save of that type once per long rest',
+      'Immunity to minor effects of that type'
+    ],
+    mechanics: { type: 'passive', frequency: 'at-will' },
+    flavor: 'What nearly killed you before now barely registers.',
+    source: 'System Ascendant Canon'
+  },
+  {
+    id: 'fortress-conditioning',
+    name: 'Fortress Conditioning',
+    description: 'Mana-reinforced muscle density lets you wear heavy plating as a second skin.',
+    prerequisites: { ability: 'Strength', score: 15 },
+    benefits: [
+      'Heavy armor doesn\'t impose Stealth disadvantage',
+      'Reduce non-magical physical damage by 3',
+      'Heavy armor doesn\'t reduce speed',
+      'Sleep in heavy armor without penalty'
+    ],
+    mechanics: { type: 'passive', frequency: 'at-will' },
+    flavor: 'Other hunters remove their armor to rest. You barely notice yours.',
+    source: 'System Ascendant Canon'
+  },
+
+  // ═══════════════════════════════════════════
+  // HUNTER PROTOCOL FEATS
+  // ═══════════════════════════════════════════
+  {
+    id: 'party-sync',
+    name: 'Party Sync',
+    description: 'Synchronize your System with allies, sharing real-time tactical data.',
+    prerequisites: { level: 5, ability: 'Charisma', score: 13 },
+    benefits: [
+      'Sync with up to 5 allies during rest — they see each other\'s HP percentages',
+      'Synced allies can\'t be surprised within 60 feet of each other',
+      'Once per long rest, when synced ally drops to 0 HP, grant them temp HP equal to your level',
+      '+1 to initiative for synced allies'
+    ],
+    mechanics: { type: 'passive', frequency: 'at-will' },
+    flavor: '[PARTY SYNC: ESTABLISHED — VITALS: SHARING]',
+    source: 'System Ascendant Canon'
+  },
+  {
+    id: 'last-stand-protocol',
+    name: 'Last Stand Protocol',
+    description: 'At the brink, the System activates emergency combat mode — defense traded for offense.',
+    prerequisites: { level: 8, ability: 'Constitution', score: 14 },
+    benefits: [
+      'Below 25% HP: +3 attack rolls, +1d8 damage',
+      'AC reduced by 2, must stay adjacent to at least one enemy',
+      'Killing while in Last Stand heals 1d10 + Con modifier',
+      'Ends when HP above 50% or combat ends'
+    ],
+    mechanics: { type: 'triggered', frequency: 'at-will', action: 'free' },
+    flavor: '[CRITICAL HP — LAST STAND: ENGAGED — FIGHT.]',
+    source: 'System Ascendant Canon'
+  },
+  {
+    id: 'emergency-extraction',
+    name: 'Emergency Extraction',
+    description: 'Your System calculates escape routes from collapsing gates.',
+    prerequisites: { level: 6, ability: 'Dexterity', score: 13 },
+    benefits: [
+      'Once per long rest, open exit rift for 1 round — up to 5 allies within 30 feet teleport to safety',
+      'Guaranteed success inside collapsing gates',
+      'Evacuated allies stabilized at 1 HP if at 0',
+      'Does not count as quest failure'
+    ],
+    mechanics: { type: 'active', frequency: 'long-rest', action: 'action' },
+    flavor: '[EMERGENCY EXTRACTION — EVACUATE NOW]',
+    source: 'System Ascendant Canon'
+  },
+
+  // ═══════════════════════════════════════════
+  // JOB FEATS
+  // ═══════════════════════════════════════════
+  {
+    id: 'destroyer-resolve',
+    name: 'Destroyer\'s Resolve',
+    description: 'Your martial awakening forged an iron will that refuses to yield, even at death\'s threshold.',
+    prerequisites: { job: 'Destroyer' },
+    benefits: [
+      'Advantage on saves against fear and charm',
+      'Reroll failed saving throws once per day',
       'Gain temporary HP when reduced to 0 HP',
       'Cannot be reduced below 1 HP by failed death saves'
     ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'The warrior\'s spirit refuses to be extinguished.',
+    mechanics: { type: 'passive', frequency: 'at-will' },
+    flavor: '[HP CRITICAL — RESOLVE PROTOCOL: ACTIVATED]',
     source: 'System Ascendant Canon'
   },
   {
     id: 'stalker-grace',
     name: 'Stalker\'s Grace',
-    description: 'Your rift-tracking instincts grant you supernatural grace and perception.',
-    prerequisites: {
-      job: 'Stalker'
-    },
+    description: 'Rift-tracking instincts grant supernatural grace and perception honed in gate-zone hunting.',
+    prerequisites: { job: 'Stalker' },
     benefits: [
       'Advantage on Dexterity checks',
-      'Can move through difficult terrain without penalty',
+      'Move through difficult terrain without penalty',
       'Advantage on Perception checks',
       'Immunity to magical sleep effects'
     ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
+    mechanics: { type: 'passive', frequency: 'at-will' },
     flavor: 'Dimensional awareness flows through your every movement.',
     source: 'System Ascendant Canon'
   },
-  {
-    id: 'bulwark-fortitude',
-    name: 'Bulwark Fortitude',
-    description: 'Your crystallized mana body grants you exceptional toughness and resilience.',
-    prerequisites: {
-      job: 'Bulwark'
-    },
-    benefits: [
-      'Advantage on Constitution saving throws',
-      'Resistance to poison damage',
-      'Can sense structural weaknesses in objects',
-      'Advantage on checks to resist being moved or knocked prone'
-    ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'Your mana-crystallized body is an unbreakable fortress.',
-    source: 'System Ascendant Canon'
-  },
 
-  // DIVINE FEATS (Expanded)
+  // ═══════════════════════════════════════════
+  // AWAKENING & S-RANK FEATS
+  // ═══════════════════════════════════════════
   {
-    id: 'divine-favor',
-    name: 'Divine Favor',
-    description: 'You have been blessed by divine powers that aid you in times of need.',
-    prerequisites: {
-      level: 8,
-      alignment: 'Any Good'
-    },
+    id: 'double-awakening',
+    name: 'Double Awakening',
+    description: 'Your awakening triggered twice, granting abilities from a second job.',
+    prerequisites: { level: 10 },
     benefits: [
-      'Once per day, can reroll any failed saving throw',
-      'Advantage on attacks against undead and fiends',
-      'Can heal others with touch (1d8 + level HP per day)',
-      'Immunity to disease'
+      'Choose a second job — gain its level 1 and level 3 features',
+      'Can use abilities from both jobs (standard concentration rules apply)',
+      'System displays both job titles',
+      'Gain one cantrip or at-will ability from second job'
     ],
-    mechanics: {
-      type: 'active',
-      frequency: 'once-per-day',
-      action: 'free'
-    },
-    flavor: 'Divine power flows through you, aiding the worthy.',
+    mechanics: { type: 'passive', frequency: 'at-will' },
+    flavor: '[ANOMALY: SECOND AWAKENING — DUAL JOB: CONFIRMED]',
     source: 'System Ascendant Canon'
   },
   {
-    id: 'holy-warrior',
-    name: 'Holy Warrior',
-    description: 'You have been trained to fight against evil forces.',
-    prerequisites: {
-      level: 6,
-      alignment: 'Lawful Good'
-    },
+    id: 'latent-potential',
+    name: 'Latent Potential',
+    description: 'Your growth rate exceeds System predictions. Each level-up grants more than expected.',
+    prerequisites: { level: 4, ability: 'Constitution', score: 13 },
     benefits: [
-      'Advantage on attacks against evil creatures',
-      'Can smite evil once per day (extra radiant damage)',
-      'Resistance to necrotic damage',
-      'Can detect evil creatures'
+      'Roll hit die twice on level-up, take higher result',
+      'Every 4 levels, +1 to an ability score (in addition to normal ASI)',
+      'Carry capacity doubles',
+      'System classifies you as "high-growth" — displayed rank treated as one tier higher'
     ],
-    mechanics: {
-      type: 'active',
-      frequency: 'once-per-day',
-      action: 'bonus-action'
-    },
-    flavor: 'Your blade is guided by divine justice.',
-    source: 'System Ascendant Canon'
-  },
-
-  // EPIC FEATS (Expanded)
-  {
-    id: 'epic-charisma',
-    name: 'Epic Charisma',
-    description: 'Your charisma is so powerful it can bend reality itself.',
-    prerequisites: {
-      level: 21,
-      ability: 'Charisma',
-      score: 25
-    },
-    benefits: [
-      'Can persuade creatures to act against their nature',
-      'Can inspire loyalty that persists after death',
-      'Can command armies with your words alone',
-      'Can convince deities to grant favors'
-    ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'Your words reshape the world around you.',
+    mechanics: { type: 'passive', frequency: 'at-will' },
+    flavor: '[GROWTH RATE: ANOMALOUS — POTENTIAL: UNBOUND]',
     source: 'System Ascendant Canon'
   },
   {
-    id: 'epic-strength',
-    name: 'Epic Strength',
-    description: 'Your physical strength is beyond mortal limits.',
-    prerequisites: {
-      level: 21,
-      ability: 'Strength',
-      score: 25
-    },
+    id: 'domain-of-shadows',
+    name: 'Domain of Shadows',
+    description: 'You project a sphere of absolute shadow that empowers your army and weakens all others.',
+    prerequisites: { level: 15, feats: ['shadow-mastery'] },
     benefits: [
-      'Can lift and throw massive objects',
-      'Can break through walls and barriers',
-      'Can wrestle with giants',
-      'Can destroy magical constructs with bare hands'
+      'As an action, 60-foot shadow sphere for 1 minute',
+      'Your shadows inside: +2 attacks, +2 AC, +1d6 necrotic',
+      'Hostiles inside: disadvantage on attacks, halved speed',
+      'Teleport to any point within as a bonus action'
     ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'Your strength rivals that of the gods themselves.',
+    mechanics: { type: 'active', frequency: 'long-rest', action: 'action' },
+    flavor: '[DOMAIN OF SHADOWS: DEPLOYED — ENEMIES: SUPPRESSED]',
     source: 'System Ascendant Canon'
   },
   {
-    id: 'epic-intelligence',
-    name: 'Epic Intelligence',
-    description: 'Your intellect can comprehend the deepest mysteries of reality.',
-    prerequisites: {
-      level: 21,
-      ability: 'Intelligence',
-      score: 25
-    },
+    id: 'system-administrator',
+    name: 'System Administrator',
+    description: 'You have gained partial admin access to the System itself.',
+    prerequisites: { level: 18 },
     benefits: [
-      'Can understand any language',
-      'Can solve any puzzle or riddle',
-      'Can create new spells and magical systems',
-      'Can comprehend the nature of reality'
+      'Once per long rest, force reroll on any die within 60 feet — choose which result',
+      'Read System status of any visible creature: HP, conditions, buffs, resources',
+      'Once per long rest, System Command: "Heal" (50 HP), "Silence" (no casting 1 round), or "Reveal" (invisible in 120 ft)',
+      'System addresses you as [ADMINISTRATOR]'
     ],
-    mechanics: {
-      type: 'passive',
-      frequency: 'at-will'
-    },
-    flavor: 'Your mind contains the knowledge of ages.',
+    mechanics: { type: 'active', frequency: 'long-rest', action: 'free' },
+    flavor: '[SYSTEM ACCESS: ADMINISTRATOR — AWAITING COMMAND]',
+    source: 'System Ascendant Canon'
+  },
+  {
+    id: 'transcendent-vessel',
+    name: 'Transcendent Vessel',
+    description: 'Your body has evolved beyond mortal limits. The System no longer classifies you as human.',
+    prerequisites: { level: 17 },
+    benefits: [
+      'Ability scores can exceed 20 (max 24)',
+      'No need to eat, drink, sleep, or breathe — 4-hour meditation for long rest',
+      'Immune to disease, poison, and aging',
+      'Once ever: when you would die, return at 1 HP with 4 exhaustion levels instead'
+    ],
+    mechanics: { type: 'passive', frequency: 'at-will' },
+    flavor: '[SPECIES: RECLASSIFIED — TRANSCENDENT — MORTALITY: CONDITIONAL]',
+    source: 'System Ascendant Canon'
+  },
+  {
+    id: 'rulers-authority',
+    name: 'Ruler\'s Authority',
+    description: 'Your mana pressure is so overwhelming that weaker creatures cannot raise a hand against you.',
+    prerequisites: { level: 15, ability: 'Charisma', score: 18 },
+    benefits: [
+      'Creatures CR ≤ half your level: Wis save or frightened 1 minute',
+      'Frightened creatures cannot attack or target you',
+      'Can suppress aura as a free action',
+      'Fail by 10+: paralyzed 1 round instead'
+    ],
+    mechanics: { type: 'passive', frequency: 'at-will', save: 'Wisdom', dc: 'ability-modifier' },
+    flavor: '[MANA PRESSURE: REGENT-CLASS — KNEEL.]',
     source: 'System Ascendant Canon'
   }
 ];
-
-
-

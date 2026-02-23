@@ -305,17 +305,17 @@ export const conditions: Condition[] = [
   },
   {
     id: 'monarch-marked',
-    name: 'Monarch Marked',
+    name: 'Regent Marked',
     type: 'shadow',
-    description: 'Marked by a Monarch for death or recruitment. The mark cannot be hidden.',
+    description: 'Marked by a Regent for death or recruitment. The mark cannot be hidden.',
     effects: [
-      'Monarch and their servants can always track your location',
+      'Regent and their servants can always track your location',
       'Disadvantage on stealth checks',
-      'Monarch can communicate with you telepathically',
-      'Cannot benefit from illusions or disguises against the Monarch'
+      'Regent can communicate with you telepathically',
+      'Cannot benefit from illusions or disguises against the Regent'
     ],
-    duration: 'Until Monarch removes it or dies',
-    removal: ['Monarch removes the mark', 'Monarch dies', 'Divine intervention', 'Wish spell'],
+    duration: 'Until Regent removes it or dies',
+    removal: ['Regent removes the mark', 'Regent dies', 'Divine intervention', 'Wish spell'],
     source: 'System Ascendant Canon',
     image: '/generated/conditions/monarch-marked.webp'
   },

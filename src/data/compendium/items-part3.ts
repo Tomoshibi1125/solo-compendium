@@ -1031,7 +1031,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0441",
-    "name": "Shadow Blade of the Umbral Monarch",
+    "name": "Shadow Blade of the Umbral Regent",
     "description": "An blessed weapon recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -1058,7 +1058,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0442",
-    "name": "Eternal Blade of the Umbral Monarch",
+    "name": "Eternal Blade of the Umbral Regent",
     "description": "An blessed armor recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -1087,7 +1087,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0443",
-    "name": "Void Blade of the Umbral Monarch",
+    "name": "Void Blade of the Umbral Regent",
     "description": "An enchanted consumable recovered from a legendary hunter's collection. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -1111,7 +1111,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0444",
-    "name": "Abyssal Blade of the Umbral Monarch",
+    "name": "Abyssal Blade of the Umbral Regent",
     "description": "An cursed accessory recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -1135,7 +1135,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0445",
-    "name": "Demonic Blade of the Umbral Monarch",
+    "name": "Demonic Blade of the Umbral Regent",
     "description": "An cursed scroll recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -1159,7 +1159,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0446",
-    "name": "Celestial Blade of the Umbral Monarch",
+    "name": "Celestial Blade of the Umbral Regent",
     "description": "An forged weapon recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -1186,7 +1186,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0447",
-    "name": "Divine Blade of the Umbral Monarch",
+    "name": "Divine Blade of the Umbral Regent",
     "description": "An enchanted armor recovered from a legendary hunter's collection. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -1215,7 +1215,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0448",
-    "name": "Ancient Blade of the Umbral Monarch",
+    "name": "Ancient Blade of the Umbral Regent",
     "description": "An awakened consumable recovered from a legendary hunter's collection. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -1239,7 +1239,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0449",
-    "name": "Forgotten Blade of the Umbral Monarch",
+    "name": "Forgotten Blade of the Umbral Regent",
     "description": "An forged accessory recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -1263,7 +1263,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0450",
-    "name": "Cursed Blade of the Umbral Monarch",
+    "name": "Cursed Blade of the Umbral Regent",
     "description": "An ancient scroll recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -1287,7 +1287,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0451",
-    "name": "Blessed Blade of the Umbral Monarch",
+    "name": "Blessed Blade of the Umbral Regent",
     "description": "An crafted weapon recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -1314,7 +1314,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0452",
-    "name": "Sacred Blade of the Umbral Monarch",
+    "name": "Sacred Blade of the Umbral Regent",
     "description": "An crafted armor recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -1343,7 +1343,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0453",
-    "name": "Profane Blade of the Umbral Monarch",
+    "name": "Profane Blade of the Umbral Regent",
     "description": "An ancient consumable recovered from a legendary hunter's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -1367,7 +1367,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0454",
-    "name": "Mystic Blade of the Umbral Monarch",
+    "name": "Mystic Blade of the Umbral Regent",
     "description": "An crafted accessory recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -1391,7 +1391,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0455",
-    "name": "Arcane Blade of the Umbral Monarch",
+    "name": "Arcane Blade of the Umbral Regent",
     "description": "An imbued scroll recovered from a master techsmith. Infused with lightning energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -1415,7 +1415,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0456",
-    "name": "Infernal Blade of the Umbral Monarch",
+    "name": "Infernal Blade of the Umbral Regent",
     "description": "An cursed weapon recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -1442,7 +1442,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0457",
-    "name": "Frozen Blade of the Umbral Monarch",
+    "name": "Frozen Blade of the Umbral Regent",
     "description": "An forged armor recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -1471,7 +1471,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0458",
-    "name": "Thunder Blade of the Umbral Monarch",
+    "name": "Thunder Blade of the Umbral Regent",
     "description": "An forged consumable recovered from a forgotten dungeon. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -1495,7 +1495,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0459",
-    "name": "Holy Blade of the Umbral Monarch",
+    "name": "Holy Blade of the Umbral Regent",
     "description": "An awakened accessory recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -1519,7 +1519,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0460",
-    "name": "Dark Blade of the Umbral Monarch",
+    "name": "Dark Blade of the Umbral Regent",
     "description": "An cursed scroll recovered from a legendary hunter's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -1543,7 +1543,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0461",
-    "name": "Shadow Sword of the Umbral Monarch",
+    "name": "Shadow Sword of the Umbral Regent",
     "description": "An forged weapon recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -1570,7 +1570,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0462",
-    "name": "Eternal Sword of the Umbral Monarch",
+    "name": "Eternal Sword of the Umbral Regent",
     "description": "An awakened armor recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -1599,7 +1599,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0463",
-    "name": "Void Sword of the Umbral Monarch",
+    "name": "Void Sword of the Umbral Regent",
     "description": "An ancient consumable recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -1623,7 +1623,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0464",
-    "name": "Abyssal Sword of the Umbral Monarch",
+    "name": "Abyssal Sword of the Umbral Regent",
     "description": "An forged accessory recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -1647,7 +1647,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0465",
-    "name": "Demonic Sword of the Umbral Monarch",
+    "name": "Demonic Sword of the Umbral Regent",
     "description": "An crafted scroll recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -1671,7 +1671,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0466",
-    "name": "Celestial Sword of the Umbral Monarch",
+    "name": "Celestial Sword of the Umbral Regent",
     "description": "An enchanted weapon recovered from a legendary hunter's collection. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -1698,7 +1698,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0467",
-    "name": "Divine Sword of the Umbral Monarch",
+    "name": "Divine Sword of the Umbral Regent",
     "description": "An forged armor recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -1727,7 +1727,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0468",
-    "name": "Ancient Sword of the Umbral Monarch",
+    "name": "Ancient Sword of the Umbral Regent",
     "description": "An imbued consumable recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -1751,7 +1751,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0469",
-    "name": "Forgotten Sword of the Umbral Monarch",
+    "name": "Forgotten Sword of the Umbral Regent",
     "description": "An blessed accessory recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -1775,7 +1775,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0470",
-    "name": "Cursed Sword of the Umbral Monarch",
+    "name": "Cursed Sword of the Umbral Regent",
     "description": "An awakened scroll recovered from a legendary hunter's collection. Infused with poison energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -1799,7 +1799,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0471",
-    "name": "Blessed Sword of the Umbral Monarch",
+    "name": "Blessed Sword of the Umbral Regent",
     "description": "An blessed weapon recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -1826,7 +1826,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0472",
-    "name": "Sacred Sword of the Umbral Monarch",
+    "name": "Sacred Sword of the Umbral Regent",
     "description": "An blessed armor recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -1855,7 +1855,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0473",
-    "name": "Profane Sword of the Umbral Monarch",
+    "name": "Profane Sword of the Umbral Regent",
     "description": "An enchanted consumable recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -1879,7 +1879,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0474",
-    "name": "Mystic Sword of the Umbral Monarch",
+    "name": "Mystic Sword of the Umbral Regent",
     "description": "An crafted accessory recovered from the depths of an A-rank gate. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -1903,7 +1903,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0475",
-    "name": "Arcane Sword of the Umbral Monarch",
+    "name": "Arcane Sword of the Umbral Regent",
     "description": "An cursed scroll recovered from a fallen gate boss. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -1927,7 +1927,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0476",
-    "name": "Infernal Sword of the Umbral Monarch",
+    "name": "Infernal Sword of the Umbral Regent",
     "description": "An blessed weapon recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -1954,7 +1954,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0477",
-    "name": "Frozen Sword of the Umbral Monarch",
+    "name": "Frozen Sword of the Umbral Regent",
     "description": "An forged armor recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -1983,7 +1983,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0478",
-    "name": "Thunder Sword of the Umbral Monarch",
+    "name": "Thunder Sword of the Umbral Regent",
     "description": "An awakened consumable recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -2007,7 +2007,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0479",
-    "name": "Holy Sword of the Umbral Monarch",
+    "name": "Holy Sword of the Umbral Regent",
     "description": "An blessed accessory recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -2031,7 +2031,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0480",
-    "name": "Dark Sword of the Umbral Monarch",
+    "name": "Dark Sword of the Umbral Regent",
     "description": "An cursed scroll recovered from a legendary hunter's collection. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -2055,7 +2055,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0481",
-    "name": "Shadow Dagger of the Umbral Monarch",
+    "name": "Shadow Dagger of the Umbral Regent",
     "description": "An cursed weapon recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -2083,7 +2083,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0482",
-    "name": "Eternal Dagger of the Umbral Monarch",
+    "name": "Eternal Dagger of the Umbral Regent",
     "description": "An forged armor recovered from a fallen gate boss. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -2112,7 +2112,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0483",
-    "name": "Void Dagger of the Umbral Monarch",
+    "name": "Void Dagger of the Umbral Regent",
     "description": "An cursed consumable recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -2136,7 +2136,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0484",
-    "name": "Abyssal Dagger of the Umbral Monarch",
+    "name": "Abyssal Dagger of the Umbral Regent",
     "description": "An forged accessory recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -2160,7 +2160,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0485",
-    "name": "Demonic Dagger of the Umbral Monarch",
+    "name": "Demonic Dagger of the Umbral Regent",
     "description": "An ancient scroll recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -2184,7 +2184,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0486",
-    "name": "Celestial Dagger of the Umbral Monarch",
+    "name": "Celestial Dagger of the Umbral Regent",
     "description": "An crafted weapon recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -2212,7 +2212,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0487",
-    "name": "Divine Dagger of the Umbral Monarch",
+    "name": "Divine Dagger of the Umbral Regent",
     "description": "An cursed armor recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -2241,7 +2241,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0488",
-    "name": "Ancient Dagger of the Umbral Monarch",
+    "name": "Ancient Dagger of the Umbral Regent",
     "description": "An ancient consumable recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -2265,7 +2265,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0489",
-    "name": "Forgotten Dagger of the Umbral Monarch",
+    "name": "Forgotten Dagger of the Umbral Regent",
     "description": "An crafted accessory recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -2289,7 +2289,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0490",
-    "name": "Cursed Dagger of the Umbral Monarch",
+    "name": "Cursed Dagger of the Umbral Regent",
     "description": "An crafted scroll recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -2313,7 +2313,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0491",
-    "name": "Blessed Dagger of the Umbral Monarch",
+    "name": "Blessed Dagger of the Umbral Regent",
     "description": "An cursed weapon recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -2341,7 +2341,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0492",
-    "name": "Sacred Dagger of the Umbral Monarch",
+    "name": "Sacred Dagger of the Umbral Regent",
     "description": "An ancient armor recovered from a legendary hunter's collection. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -2370,7 +2370,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0493",
-    "name": "Profane Dagger of the Umbral Monarch",
+    "name": "Profane Dagger of the Umbral Regent",
     "description": "An blessed consumable recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -2394,7 +2394,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0494",
-    "name": "Mystic Dagger of the Umbral Monarch",
+    "name": "Mystic Dagger of the Umbral Regent",
     "description": "An ancient accessory recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -2418,7 +2418,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0495",
-    "name": "Arcane Dagger of the Umbral Monarch",
+    "name": "Arcane Dagger of the Umbral Regent",
     "description": "An cursed scroll recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -2442,7 +2442,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0496",
-    "name": "Infernal Dagger of the Umbral Monarch",
+    "name": "Infernal Dagger of the Umbral Regent",
     "description": "An forged weapon recovered from a fallen gate boss. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -2470,7 +2470,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0497",
-    "name": "Frozen Dagger of the Umbral Monarch",
+    "name": "Frozen Dagger of the Umbral Regent",
     "description": "An cursed armor recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -2499,7 +2499,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0498",
-    "name": "Thunder Dagger of the Umbral Monarch",
+    "name": "Thunder Dagger of the Umbral Regent",
     "description": "An cursed consumable recovered from a master techsmith. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -2523,7 +2523,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0499",
-    "name": "Holy Dagger of the Umbral Monarch",
+    "name": "Holy Dagger of the Umbral Regent",
     "description": "An forged accessory recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -2547,7 +2547,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0500",
-    "name": "Dark Dagger of the Umbral Monarch",
+    "name": "Dark Dagger of the Umbral Regent",
     "description": "An ancient scroll recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -2571,7 +2571,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0501",
-    "name": "Shadow Axe of the Umbral Monarch",
+    "name": "Shadow Axe of the Umbral Regent",
     "description": "An ancient weapon recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -2598,7 +2598,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0502",
-    "name": "Eternal Axe of the Umbral Monarch",
+    "name": "Eternal Axe of the Umbral Regent",
     "description": "An crafted armor recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -2627,7 +2627,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0503",
-    "name": "Void Axe of the Umbral Monarch",
+    "name": "Void Axe of the Umbral Regent",
     "description": "An ancient consumable recovered from a legendary hunter's collection. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -2651,7 +2651,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0504",
-    "name": "Abyssal Axe of the Umbral Monarch",
+    "name": "Abyssal Axe of the Umbral Regent",
     "description": "An ancient accessory recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -2675,7 +2675,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0505",
-    "name": "Demonic Axe of the Umbral Monarch",
+    "name": "Demonic Axe of the Umbral Regent",
     "description": "An ancient scroll recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -2699,7 +2699,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0506",
-    "name": "Celestial Axe of the Umbral Monarch",
+    "name": "Celestial Axe of the Umbral Regent",
     "description": "An ancient weapon recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -2726,7 +2726,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0507",
-    "name": "Divine Axe of the Umbral Monarch",
+    "name": "Divine Axe of the Umbral Regent",
     "description": "An enchanted armor recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -2755,7 +2755,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0508",
-    "name": "Ancient Axe of the Umbral Monarch",
+    "name": "Ancient Axe of the Umbral Regent",
     "description": "An ancient consumable recovered from a legendary hunter's collection. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -2779,7 +2779,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0509",
-    "name": "Forgotten Axe of the Umbral Monarch",
+    "name": "Forgotten Axe of the Umbral Regent",
     "description": "An forged accessory recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -2803,7 +2803,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0510",
-    "name": "Cursed Axe of the Umbral Monarch",
+    "name": "Cursed Axe of the Umbral Regent",
     "description": "An forged scroll recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -2827,7 +2827,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0511",
-    "name": "Blessed Axe of the Umbral Monarch",
+    "name": "Blessed Axe of the Umbral Regent",
     "description": "An imbued weapon recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -2854,7 +2854,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0512",
-    "name": "Sacred Axe of the Umbral Monarch",
+    "name": "Sacred Axe of the Umbral Regent",
     "description": "An imbued armor recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -2883,7 +2883,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0513",
-    "name": "Profane Axe of the Umbral Monarch",
+    "name": "Profane Axe of the Umbral Regent",
     "description": "An forged consumable recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -2907,7 +2907,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0514",
-    "name": "Mystic Axe of the Umbral Monarch",
+    "name": "Mystic Axe of the Umbral Regent",
     "description": "An imbued accessory recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -2931,7 +2931,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0515",
-    "name": "Arcane Axe of the Umbral Monarch",
+    "name": "Arcane Axe of the Umbral Regent",
     "description": "An imbued scroll recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -2955,7 +2955,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0516",
-    "name": "Infernal Axe of the Umbral Monarch",
+    "name": "Infernal Axe of the Umbral Regent",
     "description": "An cursed weapon recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -2982,7 +2982,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0517",
-    "name": "Frozen Axe of the Umbral Monarch",
+    "name": "Frozen Axe of the Umbral Regent",
     "description": "An awakened armor recovered from a legendary hunter's collection. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -3011,7 +3011,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0518",
-    "name": "Thunder Axe of the Umbral Monarch",
+    "name": "Thunder Axe of the Umbral Regent",
     "description": "An crafted consumable recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -3035,7 +3035,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0519",
-    "name": "Holy Axe of the Umbral Monarch",
+    "name": "Holy Axe of the Umbral Regent",
     "description": "An imbued accessory recovered from the depths of an A-rank gate. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -3059,7 +3059,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0520",
-    "name": "Dark Axe of the Umbral Monarch",
+    "name": "Dark Axe of the Umbral Regent",
     "description": "An enchanted scroll recovered from a forgotten dungeon. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -3083,7 +3083,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0521",
-    "name": "Shadow Hammer of the Umbral Monarch",
+    "name": "Shadow Hammer of the Umbral Regent",
     "description": "An forged weapon recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -3110,7 +3110,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0522",
-    "name": "Eternal Hammer of the Umbral Monarch",
+    "name": "Eternal Hammer of the Umbral Regent",
     "description": "An awakened armor recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -3139,7 +3139,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0523",
-    "name": "Void Hammer of the Umbral Monarch",
+    "name": "Void Hammer of the Umbral Regent",
     "description": "An awakened consumable recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -3163,7 +3163,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0524",
-    "name": "Abyssal Hammer of the Umbral Monarch",
+    "name": "Abyssal Hammer of the Umbral Regent",
     "description": "An cursed accessory recovered from a fallen gate boss. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -3187,7 +3187,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0525",
-    "name": "Demonic Hammer of the Umbral Monarch",
+    "name": "Demonic Hammer of the Umbral Regent",
     "description": "An forged scroll recovered from a legendary hunter's collection. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -3211,7 +3211,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0526",
-    "name": "Celestial Hammer of the Umbral Monarch",
+    "name": "Celestial Hammer of the Umbral Regent",
     "description": "An forged weapon recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -3238,7 +3238,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0527",
-    "name": "Divine Hammer of the Umbral Monarch",
+    "name": "Divine Hammer of the Umbral Regent",
     "description": "An enchanted armor recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -3267,7 +3267,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0528",
-    "name": "Ancient Hammer of the Umbral Monarch",
+    "name": "Ancient Hammer of the Umbral Regent",
     "description": "An blessed consumable recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -3291,7 +3291,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0529",
-    "name": "Forgotten Hammer of the Umbral Monarch",
+    "name": "Forgotten Hammer of the Umbral Regent",
     "description": "An awakened accessory recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -3315,7 +3315,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0530",
-    "name": "Cursed Hammer of the Umbral Monarch",
+    "name": "Cursed Hammer of the Umbral Regent",
     "description": "An crafted scroll recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -3339,7 +3339,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0531",
-    "name": "Blessed Hammer of the Umbral Monarch",
+    "name": "Blessed Hammer of the Umbral Regent",
     "description": "An ancient weapon recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -3366,7 +3366,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0532",
-    "name": "Sacred Hammer of the Umbral Monarch",
+    "name": "Sacred Hammer of the Umbral Regent",
     "description": "An ancient armor recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -3395,7 +3395,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0533",
-    "name": "Profane Hammer of the Umbral Monarch",
+    "name": "Profane Hammer of the Umbral Regent",
     "description": "An imbued consumable recovered from a master techsmith. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -3419,7 +3419,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0534",
-    "name": "Mystic Hammer of the Umbral Monarch",
+    "name": "Mystic Hammer of the Umbral Regent",
     "description": "An enchanted accessory recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -3443,7 +3443,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0535",
-    "name": "Arcane Hammer of the Umbral Monarch",
+    "name": "Arcane Hammer of the Umbral Regent",
     "description": "An crafted scroll recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -3467,7 +3467,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0536",
-    "name": "Infernal Hammer of the Umbral Monarch",
+    "name": "Infernal Hammer of the Umbral Regent",
     "description": "An blessed weapon recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -3494,7 +3494,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0537",
-    "name": "Frozen Hammer of the Umbral Monarch",
+    "name": "Frozen Hammer of the Umbral Regent",
     "description": "An forged armor recovered from a master techsmith. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -3523,7 +3523,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0538",
-    "name": "Thunder Hammer of the Umbral Monarch",
+    "name": "Thunder Hammer of the Umbral Regent",
     "description": "An ancient consumable recovered from a forgotten dungeon. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -3547,7 +3547,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0539",
-    "name": "Holy Hammer of the Umbral Monarch",
+    "name": "Holy Hammer of the Umbral Regent",
     "description": "An crafted accessory recovered from a fallen gate boss. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -3571,7 +3571,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0540",
-    "name": "Dark Hammer of the Umbral Monarch",
+    "name": "Dark Hammer of the Umbral Regent",
     "description": "An imbued scroll recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -3595,7 +3595,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0541",
-    "name": "Shadow Staff of the Umbral Monarch",
+    "name": "Shadow Staff of the Umbral Regent",
     "description": "An crafted weapon recovered from a master techsmith. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -3623,7 +3623,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0542",
-    "name": "Eternal Staff of the Umbral Monarch",
+    "name": "Eternal Staff of the Umbral Regent",
     "description": "An cursed armor recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -3652,7 +3652,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0543",
-    "name": "Void Staff of the Umbral Monarch",
+    "name": "Void Staff of the Umbral Regent",
     "description": "An cursed consumable recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -3676,7 +3676,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0544",
-    "name": "Abyssal Staff of the Umbral Monarch",
+    "name": "Abyssal Staff of the Umbral Regent",
     "description": "An awakened accessory recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -3700,7 +3700,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0545",
-    "name": "Demonic Staff of the Umbral Monarch",
+    "name": "Demonic Staff of the Umbral Regent",
     "description": "An awakened scroll recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -3724,7 +3724,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0546",
-    "name": "Celestial Staff of the Umbral Monarch",
+    "name": "Celestial Staff of the Umbral Regent",
     "description": "An ancient weapon recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -3752,7 +3752,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0547",
-    "name": "Divine Staff of the Umbral Monarch",
+    "name": "Divine Staff of the Umbral Regent",
     "description": "An enchanted armor recovered from a fallen gate boss. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -3781,7 +3781,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0548",
-    "name": "Ancient Staff of the Umbral Monarch",
+    "name": "Ancient Staff of the Umbral Regent",
     "description": "An cursed consumable recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -3805,7 +3805,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0549",
-    "name": "Forgotten Staff of the Umbral Monarch",
+    "name": "Forgotten Staff of the Umbral Regent",
     "description": "An forged accessory recovered from a legendary hunter's collection. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -3829,7 +3829,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0550",
-    "name": "Cursed Staff of the Umbral Monarch",
+    "name": "Cursed Staff of the Umbral Regent",
     "description": "An awakened scroll recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -3853,7 +3853,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0551",
-    "name": "Blessed Staff of the Umbral Monarch",
+    "name": "Blessed Staff of the Umbral Regent",
     "description": "An ancient weapon recovered from the depths of an A-rank gate. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -3881,7 +3881,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0552",
-    "name": "Sacred Staff of the Umbral Monarch",
+    "name": "Sacred Staff of the Umbral Regent",
     "description": "An cursed armor recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -3910,7 +3910,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0553",
-    "name": "Profane Staff of the Umbral Monarch",
+    "name": "Profane Staff of the Umbral Regent",
     "description": "An blessed consumable recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -3934,7 +3934,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0554",
-    "name": "Mystic Staff of the Umbral Monarch",
+    "name": "Mystic Staff of the Umbral Regent",
     "description": "An enchanted accessory recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -3958,7 +3958,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0555",
-    "name": "Arcane Staff of the Umbral Monarch",
+    "name": "Arcane Staff of the Umbral Regent",
     "description": "An cursed scroll recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -3982,7 +3982,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0556",
-    "name": "Infernal Staff of the Umbral Monarch",
+    "name": "Infernal Staff of the Umbral Regent",
     "description": "An ancient weapon recovered from the depths of an A-rank gate. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -4010,7 +4010,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0557",
-    "name": "Frozen Staff of the Umbral Monarch",
+    "name": "Frozen Staff of the Umbral Regent",
     "description": "An awakened armor recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -4039,7 +4039,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0558",
-    "name": "Thunder Staff of the Umbral Monarch",
+    "name": "Thunder Staff of the Umbral Regent",
     "description": "An blessed consumable recovered from the depths of an A-rank gate. Infused with poison energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -4063,7 +4063,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0559",
-    "name": "Holy Staff of the Umbral Monarch",
+    "name": "Holy Staff of the Umbral Regent",
     "description": "An ancient accessory recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -4087,7 +4087,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0560",
-    "name": "Dark Staff of the Umbral Monarch",
+    "name": "Dark Staff of the Umbral Regent",
     "description": "An cursed scroll recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -4111,7 +4111,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0561",
-    "name": "Shadow Wand of the Umbral Monarch",
+    "name": "Shadow Wand of the Umbral Regent",
     "description": "An awakened weapon recovered from a forgotten dungeon. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -4139,7 +4139,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0562",
-    "name": "Eternal Wand of the Umbral Monarch",
+    "name": "Eternal Wand of the Umbral Regent",
     "description": "An enchanted armor recovered from a fallen gate boss. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -4168,7 +4168,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0563",
-    "name": "Void Wand of the Umbral Monarch",
+    "name": "Void Wand of the Umbral Regent",
     "description": "An awakened consumable recovered from a fallen gate boss. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -4192,7 +4192,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0564",
-    "name": "Abyssal Wand of the Umbral Monarch",
+    "name": "Abyssal Wand of the Umbral Regent",
     "description": "An crafted accessory recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -4216,7 +4216,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0565",
-    "name": "Demonic Wand of the Umbral Monarch",
+    "name": "Demonic Wand of the Umbral Regent",
     "description": "An enchanted scroll recovered from the depths of an A-rank gate. Infused with acid energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -4240,7 +4240,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0566",
-    "name": "Celestial Wand of the Umbral Monarch",
+    "name": "Celestial Wand of the Umbral Regent",
     "description": "An blessed weapon recovered from a legendary hunter's collection. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -4268,7 +4268,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0567",
-    "name": "Divine Wand of the Umbral Monarch",
+    "name": "Divine Wand of the Umbral Regent",
     "description": "An ancient armor recovered from a master techsmith. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -4297,7 +4297,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0568",
-    "name": "Ancient Wand of the Umbral Monarch",
+    "name": "Ancient Wand of the Umbral Regent",
     "description": "An blessed consumable recovered from a fallen gate boss. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -4321,7 +4321,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0569",
-    "name": "Forgotten Wand of the Umbral Monarch",
+    "name": "Forgotten Wand of the Umbral Regent",
     "description": "An crafted accessory recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -4345,7 +4345,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0570",
-    "name": "Cursed Wand of the Umbral Monarch",
+    "name": "Cursed Wand of the Umbral Regent",
     "description": "An forged scroll recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -4369,7 +4369,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0571",
-    "name": "Blessed Wand of the Umbral Monarch",
+    "name": "Blessed Wand of the Umbral Regent",
     "description": "An cursed weapon recovered from a legendary hunter's collection. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -4397,7 +4397,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0572",
-    "name": "Sacred Wand of the Umbral Monarch",
+    "name": "Sacred Wand of the Umbral Regent",
     "description": "An crafted armor recovered from a forgotten dungeon. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -4426,7 +4426,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0573",
-    "name": "Profane Wand of the Umbral Monarch",
+    "name": "Profane Wand of the Umbral Regent",
     "description": "An crafted consumable recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -4450,7 +4450,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0574",
-    "name": "Mystic Wand of the Umbral Monarch",
+    "name": "Mystic Wand of the Umbral Regent",
     "description": "An blessed accessory recovered from a forgotten dungeon. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -4474,7 +4474,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0575",
-    "name": "Arcane Wand of the Umbral Monarch",
+    "name": "Arcane Wand of the Umbral Regent",
     "description": "An enchanted scroll recovered from a master techsmith. Infused with poison energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -4498,7 +4498,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0576",
-    "name": "Infernal Wand of the Umbral Monarch",
+    "name": "Infernal Wand of the Umbral Regent",
     "description": "An cursed weapon recovered from a master techsmith. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -4526,7 +4526,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0577",
-    "name": "Frozen Wand of the Umbral Monarch",
+    "name": "Frozen Wand of the Umbral Regent",
     "description": "An cursed armor recovered from the depths of an A-rank gate. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -4555,7 +4555,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0578",
-    "name": "Thunder Wand of the Umbral Monarch",
+    "name": "Thunder Wand of the Umbral Regent",
     "description": "An awakened consumable recovered from a legendary hunter's collection. Infused with psychic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -4579,7 +4579,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0579",
-    "name": "Holy Wand of the Umbral Monarch",
+    "name": "Holy Wand of the Umbral Regent",
     "description": "An forged accessory recovered from a legendary hunter's collection. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -4603,7 +4603,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0580",
-    "name": "Dark Wand of the Umbral Monarch",
+    "name": "Dark Wand of the Umbral Regent",
     "description": "An cursed scroll recovered from a forgotten dungeon. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -4627,7 +4627,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0581",
-    "name": "Shadow Orb of the Umbral Monarch",
+    "name": "Shadow Orb of the Umbral Regent",
     "description": "An awakened weapon recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -4654,7 +4654,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0582",
-    "name": "Eternal Orb of the Umbral Monarch",
+    "name": "Eternal Orb of the Umbral Regent",
     "description": "An imbued armor recovered from the depths of an A-rank gate. Infused with ice energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -4683,7 +4683,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0583",
-    "name": "Void Orb of the Umbral Monarch",
+    "name": "Void Orb of the Umbral Regent",
     "description": "An awakened consumable recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -4707,7 +4707,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0584",
-    "name": "Abyssal Orb of the Umbral Monarch",
+    "name": "Abyssal Orb of the Umbral Regent",
     "description": "An forged accessory recovered from a master techsmith. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -4731,7 +4731,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0585",
-    "name": "Demonic Orb of the Umbral Monarch",
+    "name": "Demonic Orb of the Umbral Regent",
     "description": "An cursed scroll recovered from a master techsmith. Infused with psychic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -4755,7 +4755,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0586",
-    "name": "Celestial Orb of the Umbral Monarch",
+    "name": "Celestial Orb of the Umbral Regent",
     "description": "An enchanted weapon recovered from the depths of an A-rank gate. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -4782,7 +4782,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0587",
-    "name": "Divine Orb of the Umbral Monarch",
+    "name": "Divine Orb of the Umbral Regent",
     "description": "An blessed armor recovered from the depths of an A-rank gate. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -4811,7 +4811,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0588",
-    "name": "Ancient Orb of the Umbral Monarch",
+    "name": "Ancient Orb of the Umbral Regent",
     "description": "An ancient consumable recovered from a legendary hunter's collection. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -4835,7 +4835,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0589",
-    "name": "Forgotten Orb of the Umbral Monarch",
+    "name": "Forgotten Orb of the Umbral Regent",
     "description": "An ancient accessory recovered from a master techsmith. Infused with force energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -4859,7 +4859,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0590",
-    "name": "Cursed Orb of the Umbral Monarch",
+    "name": "Cursed Orb of the Umbral Regent",
     "description": "An imbued scroll recovered from the depths of an A-rank gate. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -4883,7 +4883,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0591",
-    "name": "Blessed Orb of the Umbral Monarch",
+    "name": "Blessed Orb of the Umbral Regent",
     "description": "An awakened weapon recovered from a forgotten dungeon. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -4910,7 +4910,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0592",
-    "name": "Sacred Orb of the Umbral Monarch",
+    "name": "Sacred Orb of the Umbral Regent",
     "description": "An awakened armor recovered from a legendary hunter's collection. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -4939,7 +4939,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0593",
-    "name": "Profane Orb of the Umbral Monarch",
+    "name": "Profane Orb of the Umbral Regent",
     "description": "An enchanted consumable recovered from a fallen gate boss. Infused with fire energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -4963,7 +4963,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0594",
-    "name": "Mystic Orb of the Umbral Monarch",
+    "name": "Mystic Orb of the Umbral Regent",
     "description": "An imbued accessory recovered from a forgotten dungeon. Infused with thunder energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -4987,7 +4987,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0595",
-    "name": "Arcane Orb of the Umbral Monarch",
+    "name": "Arcane Orb of the Umbral Regent",
     "description": "An awakened scroll recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",
@@ -5011,7 +5011,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0596",
-    "name": "Infernal Orb of the Umbral Monarch",
+    "name": "Infernal Orb of the Umbral Regent",
     "description": "An cursed weapon recovered from a fallen gate boss. Infused with acid energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "common",
     "type": "weapon",
@@ -5038,7 +5038,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0597",
-    "name": "Frozen Orb of the Umbral Monarch",
+    "name": "Frozen Orb of the Umbral Regent",
     "description": "An awakened armor recovered from a master techsmith. Infused with radiant energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "uncommon",
     "type": "armor",
@@ -5067,7 +5067,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0598",
-    "name": "Thunder Orb of the Umbral Monarch",
+    "name": "Thunder Orb of the Umbral Regent",
     "description": "An crafted consumable recovered from a forgotten dungeon. Infused with necrotic energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "rare",
     "type": "consumable",
@@ -5091,7 +5091,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0599",
-    "name": "Holy Orb of the Umbral Monarch",
+    "name": "Holy Orb of the Umbral Regent",
     "description": "An awakened accessory recovered from a forgotten dungeon. Infused with lightning energy, it resonates with power when wielded by a worthy hunter.",
     "rarity": "epic",
     "type": "accessory",
@@ -5115,7 +5115,7 @@ export const items: Item[] = [
   },
   {
     "id": "item-0600",
-    "name": "Dark Orb of the Umbral Monarch",
+    "name": "Dark Orb of the Umbral Regent",
     "description": "An forged scroll recovered from a legendary hunter's collection. Infused with lightning energy, it resonates with power when wielded by a worthy hunter. Only a handful exist in the known world.",
     "rarity": "legendary",
     "type": "scroll",

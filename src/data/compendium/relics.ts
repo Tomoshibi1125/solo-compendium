@@ -80,8 +80,8 @@ export interface Relic {
 export const relics: Relic[] = [
   // WEAPONS
   {
-    id: 'monarchs-shadow-dagger',
-    name: 'Monarch\'s Shadow Dagger',
+    id: 'regents-shadow-dagger',
+    name: 'Regent\'s Shadow Dagger',
     description: 'A dagger forged from pure shadow energy, capable of piercing dimensional barriers and striking at the very essence of beings.',
     type: 'weapon',
     rarity: 'legendary',
@@ -124,9 +124,9 @@ export const relics: Relic[] = [
       }
     ],
     lore: {
-      origin: 'Forged by the first Umbral Monarch from the essence of a defeated god',
-      history: 'This dagger has served as the symbol of power for countless Umbral Monarchs throughout history. It is said to contain the collective will and power of all who have wielded it.',
-      previousOwners: ['First Umbral Monarch', 'First Monarch', 'Various Umbral Monarchs']
+      origin: 'Forged by the first Umbral Regent from the essence of a defeated gate lord',
+      history: 'This dagger has served as the symbol of power for countless Umbral Regents throughout history. It is said to contain the collective will and power of all who have wielded it.',
+      previousOwners: ['First Umbral Regent', 'The Progenitor', 'Various Umbral Regents']
     },
     mechanics: {
       bonus: {
@@ -194,13 +194,13 @@ export const relics: Relic[] = [
   {
     id: 'skywyrms-gauntlet',
     name: 'Skywyrm\'s Gauntlet',
-    description: 'The legendary gauntlet of the Umbral Monarch, containing the power to command shadows and bend reality.',
+    description: 'The legendary gauntlet of the Umbral Regent, containing the power to command shadows and bend reality.',
     type: 'armor',
     rarity: 'mythic',
     attunement: true,
     requirements: {
       level: 20,
-      class: 'Umbral Monarch'
+      class: 'Umbral Regent'
     },
     properties: {
       magical: true,
@@ -223,7 +223,7 @@ export const relics: Relic[] = [
         action: 'action'
       },
       {
-        name: 'Monarch\'s Protection',
+        name: 'Regent\'s Protection',
         description: 'You have resistance to all damage types and advantage on all saving throws.',
         type: 'passive'
       },
@@ -236,9 +236,9 @@ export const relics: Relic[] = [
       }
     ],
     lore: {
-      origin: 'Created by the original Umbral Monarch from the essence of conquered dimensions',
+      origin: 'Created by the original Umbral Regent from the essence of conquered dimensions',
       history: 'This gauntlet represents the pinnacle of shadow power, containing the authority to command all shadows and reshape reality itself.',
-      currentOwner: 'Current Umbral Monarch'
+      currentOwner: 'Current Umbral Regent'
     },
     mechanics: {
       resistance: ['bludgeoning', 'piercing', 'slashing', 'fire', 'cold', 'lightning', 'thunder', 'acid', 'poison', 'necrotic', 'radiant', 'force'],
@@ -342,9 +342,9 @@ export const relics: Relic[] = [
       }
     ],
     lore: {
-      origin: 'Created by the first Monarch to establish authority over their growing shadow empire',
-      history: 'This artifact represents the right to rule, containing the essence of leadership and command that all Monarchs must possess.',
-      previousOwners: ['First Umbral Monarch', 'Queen of Shadows', 'Emperor of Night']
+      origin: 'Created by the first Regent to establish authority over their growing shadow empire',
+      history: 'This artifact represents the right to rule, containing the essence of leadership and command that all Regents must possess.',
+      previousOwners: ['First Umbral Regent', 'Queen of Shadows', 'Emperor of Night']
     },
     mechanics: {
       bonus: {
@@ -1341,8 +1341,8 @@ export const relics: Relic[] = [
   },
   {
     id: 'necklace-of-fireballs',
-    name: 'Necklace of Fireballs',
-    description: 'A necklace embedded with beads that explode as fireballs when thrown.',
+    name: 'Inferno Bead Strand',
+    description: 'A necklace embedded with mana-compressed ignition beads that detonate on impact.',
     type: 'accessory',
     rarity: 'rare',
     attunement: false,
@@ -1351,8 +1351,8 @@ export const relics: Relic[] = [
     },
     abilities: [
       {
-        name: 'Fireball Beads',
-        description: 'Each bead can be thrown as a 3d6 fireball with 20-foot radius.',
+        name: 'Ignition Beads',
+        description: 'Each bead can be thrown as a 3d6 detonation with 20-foot radius.',
         type: 'consumable',
         action: 'action',
         charges: 4
@@ -1505,8 +1505,8 @@ export const relics: Relic[] = [
   },
   {
     id: 'cloak-of-protection',
-    name: 'Cloak of Protection',
-    description: 'A magical cloak that provides defensive benefits and good fortune.',
+    name: 'Umbral Shroud',
+    description: 'A shadow-woven cloak that deflects hostile intent and bolsters the wearer\'s defenses.',
     type: 'armor',
     rarity: 'rare',
     attunement: true,
@@ -1648,21 +1648,21 @@ export const relics: Relic[] = [
     abilities: [
       {
         name: 'Shooting Star',
-        description: 'Once per day, cast Fireball as a 5th-level spell.',
+        description: 'Once per day, unleash a 5th-level Inferno Burst.',
         type: 'active',
         frequency: 'once-per-day',
         action: 'action'
       },
       {
-        name: 'Lightning Bolt',
-        description: 'Once per day, cast Lightning Bolt as a 3rd-level spell.',
+        name: 'Arc Discharge',
+        description: 'Once per day, unleash a 3rd-level Arc Discharge.',
         type: 'active',
         frequency: 'once-per-day',
         action: 'action'
       },
       {
-        name: 'Faerie Fire',
-        description: 'At will, cast Faerie Fire.',
+        name: 'Luminance Flare',
+        description: 'At will, cast Luminance Flare to outline hidden targets.',
         type: 'active',
         frequency: 'at-will',
         action: 'action'
@@ -2975,8 +2975,8 @@ export const relics: Relic[] = [
   },
   {
     id: 'wand-of-magic-missiles',
-    name: 'Wand of Magic Missiles',
-    description: 'A wand that casts Magic Missile spells.',
+    name: 'Wand of Mana Darts',
+    description: 'A wand that launches unerring mana projectiles at targets.',
     type: 'accessory',
     rarity: 'uncommon',
     attunement: true,
@@ -2985,8 +2985,8 @@ export const relics: Relic[] = [
     },
     abilities: [
       {
-        name: 'Magic Missile',
-        description: 'Cast Magic Missile at 2nd level.',
+        name: 'Mana Dart Volley',
+        description: 'Fire a volley of mana darts at 2nd level.',
         type: 'active',
         frequency: 'at-will',
         action: 'action',
@@ -2999,7 +2999,7 @@ export const relics: Relic[] = [
       }
     ],
     lore: {
-      origin: 'Created by a mage who loved the reliability of Magic Missile',
+      origin: 'Crafted by a mage who valued the unerring precision of mana projectiles',
       history: 'This wand has been used by battle mages and duelists.'
     },
     mechanics: {
@@ -3028,7 +3028,7 @@ export const relics: Relic[] = [
     abilities: [
       {
         name: 'Fire Spells',
-        description: 'Can cast Fireball and Wall of Fire.',
+        description: 'Can cast Inferno Burst and Wall of Flame.',
         type: 'active',
         frequency: 'at-will',
         action: 'action',
@@ -3120,7 +3120,7 @@ export const relics: Relic[] = [
     abilities: [
       {
         name: 'Lightning Spells',
-        description: 'Can cast Lightning Bolt and Chain Lightning.',
+        description: 'Can cast Arc Discharge and Chain Surge.',
         type: 'active',
         frequency: 'at-will',
         action: 'action',
@@ -3199,8 +3199,8 @@ export const relics: Relic[] = [
   },
   {
     id: 'wand-of-fireballs',
-    name: 'Wand of Fireballs',
-    description: 'A wand that casts devastating fireball spells.',
+    name: 'Wand of Inferno Burst',
+    description: 'A wand that channels compressed fire mana into devastating detonations.',
     type: 'accessory',
     rarity: 'rare',
     attunement: true,
@@ -3209,8 +3209,8 @@ export const relics: Relic[] = [
     },
     abilities: [
       {
-        name: 'Fireball',
-        description: 'Cast Fireball at 5th level.',
+        name: 'Inferno Burst',
+        description: 'Cast Inferno Burst at 5th level.',
         type: 'active',
         frequency: 'at-will',
         action: 'action',
@@ -3234,8 +3234,8 @@ export const relics: Relic[] = [
   },
   {
     id: 'wand-of-lightning-bolts',
-    name: 'Wand of Lightning Bolts',
-    description: 'A wand that casts powerful lightning spells.',
+    name: 'Wand of Arc Discharge',
+    description: 'A wand that channels concentrated electrical mana into devastating bolts.',
     type: 'accessory',
     rarity: 'rare',
     attunement: true,
@@ -3244,8 +3244,8 @@ export const relics: Relic[] = [
     },
     abilities: [
       {
-        name: 'Lightning Bolt',
-        description: 'Cast Lightning Bolt at 5th level.',
+        name: 'Arc Discharge',
+        description: 'Cast Arc Discharge at 5th level.',
         type: 'active',
         frequency: 'at-will',
         action: 'action',
@@ -4015,8 +4015,8 @@ export const relics: Relic[] = [
   },
   {
     id: 'bag-of-holding',
-    name: 'Bag of Holding',
-    description: 'A bag that contains extradimensional space.',
+    name: 'Rift Pouch',
+    description: 'A bag linked to a pocket dimension, storing far more than its exterior suggests.',
     type: 'accessory',
     rarity: 'uncommon',
     attunement: false,

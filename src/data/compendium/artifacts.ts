@@ -81,7 +81,7 @@ export const artifacts: Artifact[] = [
   {
     id: 'shadow-lord-blade',
     name: 'Shadow Lord Blade',
-    description: 'The legendary blade of the Umbral Monarch, capable of cutting through dimensions.',
+    description: 'The legendary blade of the Umbral Regent, capable of cutting through dimensions.',
     type: 'weapon',
     rarity: 'divine',
     attunement: true,
@@ -90,7 +90,7 @@ export const artifacts: Artifact[] = [
       ability: 'Dexterity',
       score: 20,
       alignment: 'Chaotic Neutral',
-      quest: 'Must defeat a umbral monarch or be chosen by the shadows'
+      quest: 'Must defeat an umbral regent or be chosen by the shadows'
     },
     properties: {
       magical: true,
@@ -127,7 +127,7 @@ export const artifacts: Artifact[] = [
       }
     },
     lore: {
-      origin: 'Forged by the first Umbral Monarch from the essence of the void.',
+      origin: 'Forged by the first Umbral Regent from the essence of the void.',
       history: 'This blade has passed through countless hands, each wielder becoming a legend.',
       personality: 'The blade speaks in whispers of shadows and secrets, offering power at a cost.',
       curse: 'Wielders slowly lose their connection to the material world.'
@@ -638,15 +638,15 @@ export const artifacts: Artifact[] = [
 
   // LEGENDARY RELICS
   {
-    id: 'monarch-gauntlets',
-    name: 'Monarch Gauntlets',
-    description: 'Gauntlets that grant the power of all monarchs.',
+    id: 'regent-gauntlets',
+    name: 'Regent Gauntlets',
+    description: 'Gauntlets that grant the power of all regents.',
     type: 'accessory',
     rarity: 'legendary',
     attunement: true,
     requirements: {
       level: 20,
-      quest: 'Must defeat all monarchs'
+      quest: 'Must defeat all regents'
     },
     properties: {
       magical: true,
@@ -656,32 +656,32 @@ export const artifacts: Artifact[] = [
     },
     abilities: {
       primary: {
-        name: 'Monarch Power',
-        description: 'Use all monarch abilities.',
+        name: 'Regent Power',
+        description: 'Use all regent abilities.',
         type: 'passive'
       },
       secondary: {
-        name: 'Monarch Army',
+        name: 'Regent Army',
         description: 'Command all armies.',
         type: 'active',
         frequency: 'once-per-day',
         action: 'action'
       },
       tertiary: {
-        name: 'Monarch Authority',
+        name: 'Regent Authority',
         description: 'All must obey your commands.',
         type: 'passive'
       },
       ultimate: {
-        name: 'Monarch Ascension',
-        description: 'Become the ultimate monarch.',
+        name: 'Regent Ascension',
+        description: 'Become the ultimate regent.',
         type: 'active',
         frequency: 'once-per-lifetime',
         action: 'action'
       }
     },
     lore: {
-      origin: 'Forged from the essence of all monarchs.',
+      origin: 'Forged from the essence of all regents.',
       history: 'These gauntlets have been worn by the ultimate rulers.',
       personality: 'The gauntlets speak with the authority of countless rulers.',
       curse: 'Wielders lose their personal identity.'
@@ -695,7 +695,7 @@ export const artifacts: Artifact[] = [
       special: ['Cannot be disobeyed', 'Commands all creatures']
     },
     source: 'System Ascendant Canon',
-    image: '/generated/compendium/artifacts/monarch-gauntlets.webp'
+    image: '/generated/compendium/artifacts/regent-gauntlets.webp'
   },
   {
     id: 'world-tree-acorn',
