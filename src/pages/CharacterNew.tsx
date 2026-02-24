@@ -656,49 +656,15 @@ const CharacterNew = () => {
 
   // Calculate comprehensive total choices including awakening features and traits
   const totalChoices = useMemo(() => {
-    if (!staticJobData) return { skills: jobData?.skill_choice_count || 0, feats: 0, spells: 0, powers: 0, techniques: 0, runes: 0, items: 0, tools: 0, languages: 0, expertise: 0 };
-    
-    // Get selected path data
-    const selectedPathData = selectedPath ? paths.find(p => p.id === selectedPath) : null;
-    
-    // Create enhanced job data that includes both database fields and static awakening features/traits
-    const enhancedJobData = {
-      ...jobData,
-      awakeningFeatures: staticJobData.awakeningFeatures || [],
-      jobTraits: staticJobData.jobTraits || [],
-    };
-    
-    console.log('CharacterNew: Enhanced job data for choice calculations:', {
-      jobName: jobData?.name,
-      awakeningFeatures: enhancedJobData.awakeningFeatures?.length || 0,
-      jobTraits: enhancedJobData.jobTraits?.length || 0
-    });
-    
-    const result = calculateTotalChoices(enhancedJobData, selectedPathData, [], 1);
-    console.log('CharacterNew: Total choices calculated:', result);
-    
-    return result;
-  }, [staticJobData, jobData, selectedPath, paths]);
+    // Temporarily disable choice calculations to isolate error
+    return { skills: jobData?.skill_choice_count || 0, feats: 0, spells: 0, powers: 0, techniques: 0, runes: 0, items: 0, tools: 0, languages: 0, expertise: 0 };
+  }, [jobData?.skill_choice_count]);
 
   // Get choice grant details for UI display
   const choiceGrantDetails = useMemo(() => {
-    if (!staticJobData) return [];
-    
-    // Get selected path data
-    const selectedPathData = selectedPath ? paths.find(p => p.id === selectedPath) : null;
-    
-    // Create enhanced job data that includes both database fields and static awakening features/traits
-    const enhancedJobData = {
-      ...jobData,
-      awakeningFeatures: staticJobData.awakeningFeatures || [],
-      jobTraits: staticJobData.jobTraits || [],
-    };
-    
-    const result = getChoiceGrantDetails(enhancedJobData, selectedPathData, [], 1);
-    console.log('CharacterNew: Choice grant details:', result);
-    
-    return result;
-  }, [staticJobData, jobData, selectedPath, paths]);
+    // Temporarily disable choice grant details to isolate error
+    return [];
+  }, []);
 
   const canProceed = () => {
     switch (currentStep) {
