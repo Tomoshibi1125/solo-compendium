@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
@@ -8,6 +8,8 @@ import { DetailHeader } from './DetailHeader';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
+import { jobs as staticJobs } from '@/data/compendium/jobs';
+import { calculateTotalChoices, getChoiceGrantDetails } from '@/lib/choiceCalculations';
 
 interface JobData {
   id: string;
@@ -66,6 +68,22 @@ export const JobDetail = ({ data }: { data: JobData }) => {
   const [features, setFeatures] = useState<JobFeature[]>([]);
   const [paths, setPaths] = useState<JobPath[]>([]);
   const [relatedPowers, setRelatedPowers] = useState<Array<{ id: string; name: string; display_name?: string | null; power_level: number }>>([]);
+
+  // Calculate total choices including awakening features
+  const totalChoices = useMemo(() => {
+    const staticJob = staticJobs.find(job => job.name === data.name);
+    if (!staticJob) return { skills: data.skill_choice_count, feats: 0, spells: 0, powers: 0, techniques: 0, runes: 0, items: 0, tools: 0, languages: 0, expertise: 0 };
+    
+    return calculateTotalChoices(data, null, [], 1);
+  }, [data]);
+
+  // Get choice grant details for UI display
+  const choiceGrantDetails = useMemo(() => {
+    const staticJob = staticJobs.find(job => job.name === data.name);
+    if (!staticJob) return [];
+    
+    return getChoiceGrantDetails(data, null, [], 1);
+  }, [data]);
 
   const displayName = formatMonarchVernacular(data.display_name || data.name);
 
@@ -191,7 +209,18 @@ export const JobDetail = ({ data }: { data: JobData }) => {
         <SystemWindow title="SKILL CHOICES" compact>
           <div className="flex items-center gap-2">
             <Swords className="w-5 h-5 text-green-400" />
-            <span className="font-heading">Choose {data.skill_choice_count}</span>
+            <span className="font-heading">Choose {totalChoices.skills}</span>
+            {totalChoices.skills > data.skill_choice_count && (
+              <Badge variant="secondary" className="text-xs">
+                +{totalChoices.skills - data.skill_choice_count} from features
+              </Badge>
+            )}
+            {/* Show other choice types if available */}
+            {(totalChoices.feats > 0 || totalChoices.spells > 0 || totalChoices.powers > 0 || totalChoices.techniques > 0 || totalChoices.runes > 0 || totalChoices.items > 0 || totalChoices.tools > 0 || totalChoices.languages > 0) && (
+              <Badge variant="outline" className="text-xs ml-2">
+                +{Object.values(totalChoices).reduce((sum, val, idx) => idx === 0 ? val - data.skill_choice_count : sum + val, 0)} more choices
+              </Badge>
+            )}
           </div>
         </SystemWindow>
       </div>

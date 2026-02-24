@@ -39,6 +39,7 @@ import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 import { usePublishedHomebrew } from '@/hooks/useHomebrewContent';
 import { Badge } from '@/components/ui/badge';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { calculateTotalChoices, getChoiceGrantDetails, type TotalChoices } from '@/lib/choiceCalculations';
 import { jobs as staticJobs } from '@/data/compendium/jobs';
 import { getJobASI } from '@/lib/characterCreation';
 
@@ -652,6 +653,24 @@ const CharacterNew = () => {
     }
   };
 
+  // Calculate comprehensive total choices including awakening features and traits
+  const totalChoices = useMemo(() => {
+    if (!staticJobData) return { skills: jobData?.skill_choice_count || 0, feats: 0, spells: 0, powers: 0, techniques: 0, runes: 0, items: 0, tools: 0, languages: 0, expertise: 0 };
+    
+    // Get selected path data
+    const selectedPathData = selectedPath ? paths.find(p => p.id === selectedPath) : null;
+    
+    return calculateTotalChoices(jobData, selectedPathData, [], 1);
+  }, [staticJobData, jobData, selectedPath, paths]);
+
+  // Get choice grant details for UI display
+  const choiceGrantDetails = useMemo(() => {
+    if (!staticJobData) return [];
+    
+    const selectedPathData = selectedPath ? paths.find(p => p.id === selectedPath) : null;
+    return getChoiceGrantDetails(jobData, selectedPathData, [], 1);
+  }, [staticJobData, jobData, selectedPath, paths]);
+
   const canProceed = () => {
     switch (currentStep) {
       case 'concept':
@@ -660,7 +679,7 @@ const CharacterNew = () => {
         if (!selectedJob.length) return false;
         // Check if skill selection is required and complete
         if (jobData?.skill_choices && jobData.skill_choices.length > 0) {
-          return selectedSkills.length === jobData.skill_choice_count;
+          return selectedSkills.length === totalChoices.skills;
         }
         return true;
       case 'abilities':
@@ -1110,8 +1129,33 @@ const CharacterNew = () => {
               {jobData && jobData.skill_choices && jobData.skill_choices.length > 0 && (
                 <div className="mt-4 space-y-2">
                   <Label>
-                    Select {jobData.skill_choice_count} Skill{jobData.skill_choice_count > 1 ? 's' : ''} *
+                    Select {totalChoices.skills} Skill{totalChoices.skills > 1 ? 's' : ''} *
                   </Label>
+                  {totalChoices.skills > (jobData?.skill_choice_count || 0) && (
+                    <p className="text-xs text-primary mb-2">
+                      +{totalChoices.skills - (jobData?.skill_choice_count || 0)} additional skills from awakening features
+                    </p>
+                  )}
+                  {/* Show other choice types if available */}
+                  {(totalChoices.feats > 0 || totalChoices.spells > 0 || totalChoices.powers > 0 || totalChoices.techniques > 0 || totalChoices.runes > 0 || totalChoices.items > 0 || totalChoices.tools > 0 || totalChoices.languages > 0) && (
+                    <div className="text-xs text-amber-600 dark:text-amber-400 mb-2">
+                      Additional choices available: 
+                      {totalChoices.feats > 0 && `${totalChoices.feats} feats`}
+                      {totalChoices.spells > 0 && `${totalChoices.spells} spells`}
+                      {totalChoices.powers > 0 && `${totalChoices.powers} powers`}
+                      {totalChoices.techniques > 0 && `${totalChoices.techniques} techniques`}
+                      {totalChoices.runes > 0 && `${totalChoices.runes} runes`}
+                      {totalChoices.items > 0 && `${totalChoices.items} items`}
+                      {totalChoices.tools > 0 && `${totalChoices.tools} tools`}
+                      {totalChoices.languages > 0 && `${totalChoices.languages} languages`}
+                    </div>
+                  )}
+                  {/* Show expertise information if applicable */}
+                  {totalChoices.expertise > 0 && (
+                    <p className="text-xs text-amber-600 dark:text-amber-400 mb-2">
+                      ⚠️ {totalChoices.expertise} expertise selections available - will be handled after character creation
+                    </p>
+                  )}
                   <div className="grid grid-cols-2 gap-2">
                     {jobData.skill_choices.map((skill) => (
                       <div key={skill} className="flex items-center space-x-2">
@@ -1120,14 +1164,14 @@ const CharacterNew = () => {
                           checked={selectedSkills.includes(skill)}
                           onCheckedChange={(checked) => {
                             if (checked) {
-                              if (selectedSkills.length < jobData.skill_choice_count) {
+                              if (selectedSkills.length < totalChoices.skills) {
                                 setSelectedSkills([...selectedSkills, skill]);
                               }
                             } else {
                               setSelectedSkills(selectedSkills.filter(s => s !== skill));
                             }
                           }}
-                          disabled={!selectedSkills.includes(skill) && selectedSkills.length >= jobData.skill_choice_count}
+                          disabled={!selectedSkills.includes(skill) && selectedSkills.length >= totalChoices.skills}
                         />
                         <label htmlFor={`skill-${skill}`} className="text-sm font-heading cursor-pointer">
                           {formatMonarchVernacular(skill)}
@@ -1137,7 +1181,7 @@ const CharacterNew = () => {
                   </div>
                   {selectedSkills.length > 0 && (
                     <p className="text-xs text-muted-foreground mt-2">
-                      Selected: {selectedSkills.map(formatMonarchVernacular).join(', ')} ({selectedSkills.length}/{jobData.skill_choice_count})
+                      Selected: {selectedSkills.map(formatMonarchVernacular).join(', ')} ({selectedSkills.length}/{totalChoices.skills})
                     </p>
                   )}
                 </div>
