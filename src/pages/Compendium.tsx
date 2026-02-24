@@ -708,10 +708,14 @@ const Compendium = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
-        {/* Header */}
-        <div className="mb-6 sm:mb-8">
-          <h1 className="font-arise text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 gradient-text-shadow tracking-wider">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 relative">
+        {/* System UI Background Effects */}
+        <div className="absolute inset-0 hex-grid-overlay opacity-30 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-amethyst-purple/5 via-transparent to-transparent pointer-events-none" />
+        
+        {/* Header with System UI styling */}
+        <div className="mb-6 sm:mb-8 relative z-10">
+          <h1 className="font-arise text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 gradient-text-shadow tracking-wider system-text-glow">
             COMPENDIUM
           </h1>
           <p className="text-sm sm:text-base text-muted-foreground font-heading leading-relaxed">

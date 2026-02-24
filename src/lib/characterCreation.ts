@@ -317,6 +317,9 @@ function getJobTraitModifiers(jobName: string, traitName: string): FeatureModifi
     if (trait === 'mana intimidation') {
       return [{ type: 'save_dc_bonus', value: 0, target: 'PRE', source: traitName }];
     }
+    if (trait === 'feral instinct') {
+      return [{ type: 'advantage', value: 0, target: 'initiative', source: traitName }];
+    }
   }
 
   // 3. ASSASSIN
@@ -327,12 +330,18 @@ function getJobTraitModifiers(jobName: string, traitName: string): FeatureModifi
     if (trait === 'ghost walk') {
       return [{ type: 'advantage', value: 0, target: 'skill:stealth', source: traitName }];
     }
+    if (trait === 'specialist training') {
+      return [{ type: 'expertise', value: 0, target: 'choice:2', source: traitName }];
+    }
   }
 
   // 4. STRIKER
   if (job === 'striker') {
     if (trait === 'impulse sense') {
       return [{ type: 'advantage', value: 0, target: 'skill:perception', source: traitName }];
+    }
+    if (trait === 'gyroscopic core') {
+      return [{ type: 'immunity', value: 0, target: 'prone', source: traitName }];
     }
   }
 
@@ -354,18 +363,30 @@ function getJobTraitModifiers(jobName: string, traitName: string): FeatureModifi
     if (trait === 'anomalous resistance') {
       return [{ type: 'advantage', value: 0, target: 'save:charm', source: traitName }];
     }
+    if (trait === 'focused discharge') {
+      return [{ type: 'disadvantage', value: 0, target: 'save:target', source: traitName }];
+    }
   }
 
   // 7. REVENANT
   if (job === 'revenant') {
+    if (trait === 'deathsight') {
+      return [{ type: 'advantage', value: 0, target: 'skill:perception_life', source: traitName }];
+    }
     if (trait === 'necrotic shell') {
-      return [{ type: 'resistance', value: 0, target: 'necrotic', source: traitName }];
+      return [
+        { type: 'resistance', value: 0, target: 'necrotic', source: traitName },
+        { type: 'immunity', value: 0, target: 'hp_reduction', source: traitName }
+      ];
+    }
+    if (trait === 'voice of the dead') {
+      return [{ type: 'at_will_spell', value: 0, target: 'Speak with Dead', source: traitName }];
     }
   }
 
   // 8. SUMMONER
   if (job === 'summoner') {
-    if (trait === 'biome link') {
+    if (trait === 'wild intuition') {
       return [{ type: 'advantage', value: 0, target: 'skill:animal_handling', source: traitName }];
     }
     if (trait === 'toxin resistance') {
@@ -384,28 +405,36 @@ function getJobTraitModifiers(jobName: string, traitName: string): FeatureModifi
     if (trait === 'signal hardening') {
       return [
         { type: 'resistance', value: 0, target: 'necrotic', source: traitName },
-        { type: 'resistance', value: 0, target: 'radiant', source: traitName },
-        { type: 'advantage', value: 0, target: 'save:hp_reduction', source: traitName }
+        { type: 'resistance', value: 0, target: 'radiant', source: traitName }
       ];
     }
   }
 
   // 10. CONTRACTOR
   if (job === 'contractor') {
-    if (trait === 'contract protection') {
+    if (trait === 'pact resilience') {
       return [{ type: 'advantage', value: 0, target: 'save:charm', source: traitName }];
+    }
+    if (trait === 'contract vision') {
+      return [{ type: 'advantage', value: 0, target: 'skill:insight', source: traitName }];
     }
   }
 
   // 11. STALKER
   if (job === 'stalker') {
-    if (trait === 'gate navigator') {
+    if (trait === 'rift navigator') {
       return [{ type: 'advantage', value: 0, target: 'save:gate_hazard', source: traitName }];
+    }
+    if (trait === 'apex predator') {
+      return [{ type: 'advantage', value: 0, target: 'skill:survival_track', source: traitName }];
     }
   }
 
   // 12. HOLY KNIGHT
-  if (job === 'holy-knight') {
+  if (job === 'holy knight' || job === 'holy-knight') {
+    if (trait === 'covenant ward') {
+      return [{ type: 'save_bonus', value: 0, target: 'PRE_mod', source: traitName }];
+    }
     if (trait === 'oath ward') {
       return [{ type: 'save_bonus', value: 0, target: 'PRE_mod', source: traitName }];
     }
@@ -413,11 +442,17 @@ function getJobTraitModifiers(jobName: string, traitName: string): FeatureModifi
 
   // 13. TECHNOMANCER
   if (job === 'technomancer') {
-    if (trait === 'tool mastery') {
+    if (trait === 'system analysis') {
+      return [{ type: 'advantage', value: 0, target: 'skill:investigation_tech', source: traitName }];
+    }
+    if (trait === 'hardware bond') {
       return [{ type: 'expertise', value: 0, target: 'all_tools', source: traitName }];
     }
-    if (trait === 'system assist') {
-      return [{ type: 'bonus', value: 0, target: 'INT_mod', source: traitName }];
+    if (trait === 'specialist training') {
+      return [{ type: 'expertise', value: 0, target: 'choice:2', source: traitName }];
+    }
+    if (trait === 'tool mastery') {
+      return [{ type: 'expertise', value: 0, target: 'all_tools', source: traitName }];
     }
   }
 
@@ -425,6 +460,15 @@ function getJobTraitModifiers(jobName: string, traitName: string): FeatureModifi
   if (job === 'idol') {
     if (trait === 'system versatility') {
       return [{ type: 'jack_of_all_trades', value: 0, target: 'ability_checks', source: traitName }];
+    }
+    if (trait === 'resonance shield') {
+      return [
+        { type: 'advantage', value: 0, target: 'save:charm', source: traitName },
+        { type: 'immunity', value: 0, target: 'magical_sleep', source: traitName }
+      ];
+    }
+    if (trait === 'frequency restoration') {
+      return [{ type: 'short_rest_hp_bonus', value: 0, target: '1d6', source: traitName }];
     }
     if (trait === 'specialist training') {
       return [{ type: 'expertise', value: 0, target: 'choice:2', source: traitName }];
@@ -466,7 +510,7 @@ function getJobAwakeningFeatureModifiers(jobName: string, featureName: string, l
 
   // 2. BERSERKER
   if (job === 'berserker') {
-    if (feature === 'mana-dense physiology') {
+    if (feature === 'mana-dense physiology' || feature === 'mana-dense-physiology') {
       return [{ type: 'hp-max', value: level, target: null as any, source: featureName }];
     }
     if (feature === 'toxin purge') {
@@ -550,11 +594,17 @@ function getJobAwakeningFeatureModifiers(jobName: string, featureName: string, l
 
   // 6. ESPER
   if (job === 'esper') {
-    if (feature === 'mana-saturated body') {
+    if (feature === 'mana-saturated body' || feature === 'mana-dense-physiology') {
       return [{ type: 'hp-max', value: level, target: null as any, source: featureName }];
+    }
+    if (feature === 'unstable reactor') {
+      return [{ type: 'mana_surge_on_cast', value: 1, target: 'self', source: featureName }];
     }
     if (feature === 'willpower amplifier') {
       return [{ type: 'damage', value: 0, target: 'force:PRE_mod', source: featureName }];
+    }
+    if (feature === 'reality distortion') {
+      return [{ type: 'reroll_spell_damage', value: 1, target: 'self', source: featureName }];
     }
   }
 
@@ -563,7 +613,8 @@ function getJobAwakeningFeatureModifiers(jobName: string, featureName: string, l
     if (feature === 'reconstructed biology') {
       return [
         { type: 'immunity', value: 0, target: 'disease', source: featureName },
-        { type: 'no_breathing', value: 0, target: 'self', source: featureName }
+        { type: 'no_breathing', value: 0, target: 'self', source: featureName },
+        { type: 'no_food_water', value: 0, target: 'self', source: featureName }
       ];
     }
     if (feature === 'death\'s threshold') {
@@ -572,6 +623,9 @@ function getJobAwakeningFeatureModifiers(jobName: string, featureName: string, l
         { type: 'immunity', value: 0, target: 'frightened', source: featureName }
       ];
     }
+    if (feature === 'entropic aura') {
+      return [{ type: 'aura_wither_plants', value: 10, target: 'radius', source: featureName }];
+    }
     if (feature === 'life siphon') {
       return [{ type: 'hp-regain', value: 0.5, target: 'necrotic_damage_dealt', source: featureName }];
     }
@@ -579,15 +633,14 @@ function getJobAwakeningFeatureModifiers(jobName: string, featureName: string, l
 
   // 8. SUMMONER
   if (job === 'summoner') {
-    if (feature === 'biome attunement') {
+    if (feature === 'gate attunement' || feature === 'biome attunement') {
       return [
-        { type: 'advantage', value: 0, target: 'save:poison', source: featureName },
-        { type: 'advantage', value: 0, target: 'save:disease', source: featureName },
-        { type: 'resistance', value: 0, target: 'poison', source: featureName }
+        { type: 'resistance', value: 0, target: 'poison', source: featureName },
+        { type: 'advantage', value: 0, target: 'save:poison', source: featureName }
       ];
     }
-    if (feature === 'gate ecology sense') {
-      return [{ type: 'advantage', value: 0, target: 'skill:nature', source: featureName }];
+    if (feature === 'entity bond' || feature === 'gate ecology sense') {
+      return [{ type: 'telepathic_bond', value: 100, target: 'summon', source: featureName }];
     }
     if (feature === 'stabilized entity shift') {
       return [{ type: 'hp-temp', value: level, target: 'shift', source: featureName }];
@@ -602,11 +655,11 @@ function getJobAwakeningFeatureModifiers(jobName: string, featureName: string, l
 
   // 9. HERALD
   if (job === 'herald') {
-    if (feature === 'restoration protocol') {
-      return [{ type: 'hp-regain', value: level, target: 'self', source: featureName }];
+    if (feature === 'system transmission' || feature === 'restoration protocol') {
+      return [{ type: 'hp-temp-on-heal', value: 1, target: 'target', source: featureName }];
     }
-    if (feature === 'system uplink') {
-      return [{ type: 'hp-regain', value: 0, target: '1d8_SENSE', source: featureName }];
+    if (feature === 'mana redistribution' || feature === 'system uplink') {
+      return [{ type: 'slot_recovery_on_kill', value: 1, target: 'self', source: featureName }];
     }
     if (feature === 'broadcast aura') {
       const bonus = level >= 11 ? 2 : 1;
@@ -616,11 +669,14 @@ function getJobAwakeningFeatureModifiers(jobName: string, featureName: string, l
 
   // 10. CONTRACTOR
   if (job === 'contractor') {
-    if (feature === 'pact-warded mind') {
-      return [{ type: 'advantage', value: 0, target: 'save:charm', source: featureName }];
+    if (feature === 'contract magic' || feature === 'pact-warded mind') {
+      return [{ type: 'slot_recovery_on_kill', value: 1, target: 'self', source: featureName }];
     }
-    if (feature === 'entity awareness') {
-      return [{ type: 'advantage', value: 0, target: 'skill:insight', source: featureName }];
+    if (feature === 'entity manifestation' || feature === 'entity awareness') {
+      return [
+        { type: 'speed_fly', value: 30, target: 'self', source: featureName },
+        { type: 'aura_fear', value: 10, target: 'radius', source: featureName }
+      ];
     }
     if (feature === 'empowered conduit') {
       return [
@@ -635,17 +691,11 @@ function getJobAwakeningFeatureModifiers(jobName: string, featureName: string, l
 
   // 11. STALKER
   if (job === 'stalker') {
-    if (feature === 'predator physiology') {
-      return [
-        { type: 'advantage', value: 0, target: 'skill:perception_hearing', source: featureName },
-        { type: 'advantage', value: 0, target: 'skill:perception_smell', source: featureName }
-      ];
+    if (feature === 'prey lock' || feature === 'predator physiology') {
+      return [{ type: 'damage_bonus', value: 0, target: 'marked_target', source: featureName }];
     }
-    if (feature === 'enhanced locomotion') {
-      return [{ type: 'speed', value: 5, target: 'walking', source: featureName }];
-    }
-    if (feature === 'prey lock') {
-      return [{ type: 'advantage', value: 0, target: 'skill:survival_track', source: featureName }];
+    if (feature === 'ambush tactics' || feature === 'enhanced locomotion') {
+      return [{ type: 'damage_bonus_first_turn', value: 0, target: 'weapon', source: featureName }];
     }
     if (feature === 'terrain adaptation') {
       return [{ type: 'initiative_advantage', value: 0, target: 'favored_terrain', source: featureName }];
@@ -656,12 +706,12 @@ function getJobAwakeningFeatureModifiers(jobName: string, featureName: string, l
   }
 
   // 12. HOLY KNIGHT
-  if (job === 'holy-knight') {
-    if (feature === 'covenant bond') {
-      return [{ type: 'hp-regain', value: 1, target: 'death_save_success', source: featureName }];
+  if (job === 'holy knight' || job === 'holy-knight') {
+    if (feature === 'covenant strike' || feature === 'covenant bond') {
+      return [{ type: 'speed_reduction_on_hit', value: 10, target: 'target', source: featureName }];
     }
-    if (feature === 'oath sense') {
-      return [{ type: 'advantage', value: 0, target: 'skill:perception_entity', source: featureName }];
+    if (feature === 'radiant conduit' || feature === 'oath sense') {
+      return [{ type: 'hp-regain-aura', value: 0, target: 'allies', source: featureName }];
     }
     if (feature === 'aura of resolve') {
       return [{ type: 'immunity', value: 0, target: 'frightened', source: featureName }];
@@ -676,8 +726,8 @@ function getJobAwakeningFeatureModifiers(jobName: string, featureName: string, l
     if (feature === 'blueprint vision') {
       return [{ type: 'expertise', value: 0, target: 'skill:INT_magic_items', source: featureName }];
     }
-    if (feature === 'system write access') {
-      return [{ type: 'advantage', value: 0, target: 'skill:INT_analyze_tech', source: featureName }];
+    if (feature === 'core integration' || feature === 'system write access') {
+      return [{ type: 'mana_pulse_on_cast', value: 10, target: 'radius', source: featureName }];
     }
     if (feature === 'infusion optimization') {
       const bonus = level >= 14 ? 2 : 1;
@@ -700,10 +750,7 @@ function getJobAwakeningFeatureModifiers(jobName: string, featureName: string, l
       ];
     }
     if (feature === 'amplified hype') {
-      return [{ type: 'hp-temp', value: 0, target: 'PRE_mod', source: featureName }];
-    }
-    if (feature === 'resonance lock') {
-      return [{ type: 'hype_recovery_on_max', value: 1, target: 'self', source: featureName }];
+      return [{ type: 'hype_temp_hp', value: 0, target: 'PRE_mod', source: featureName }];
     }
   }
 
@@ -742,6 +789,177 @@ export function getJobASI(
   return result;
 }
 
+function getPathFeatureModifiers(jobName: string, pathName: string, featureName: string, level: number): FeatureModifier[] {
+  const job = jobName.trim().toLowerCase();
+  const path = pathName.trim().toLowerCase();
+  const feature = featureName.trim().toLowerCase();
+
+  // 1. DESTROYER PATHS
+  if (job === 'destroyer') {
+    if (path === 'path of the apex predator') {
+      if (feature === 'optimized lethality') return [{ type: 'crit_threshold', value: 19, target: 'weapon', source: featureName }];
+      if (feature === 'peak conditioning') return [{ type: 'jack_of_all_trades', value: 0, target: 'STR_AGI_VIT', source: featureName }];
+      if (feature === 'expanded kill zone') return [{ type: 'crit_threshold', value: 18, target: 'weapon', source: featureName }];
+      if (feature === 'auto-repair protocol') return [{ type: 'hp_regain_start_of_turn', value: 5, target: 'VIT_mod', source: featureName }];
+    }
+    if (path === 'path of the tactician') {
+      if (feature === 'tactical charge') return [{ type: 'resource_max', value: 4, target: 'tactical_dice', source: featureName }];
+    }
+    if (path === 'path of the spell breaker') {
+      if (feature === 'matrix combat casting') return [{ type: 'caster_level', value: 0.33, target: 'INT', source: featureName }];
+    }
+    if (path === 'path of the bulwark') {
+      if (feature === 'threat lock') return [{ type: 'advantage', value: 0, target: 'marked_attacks', source: featureName }];
+    }
+  }
+
+  // 2. BERSERKER PATHS
+  if (job === 'berserker') {
+    if (path === 'path of the feedback loop') {
+      if (feature === 'escalating loop') return [{ type: 'bonus_action_attack', value: 1, target: 'weapon', source: featureName }];
+    }
+    if (path === 'path of the gate beast') {
+      if (feature === 'bonded aspect' && feature.includes('tank-beast')) return [{ type: 'resistance', value: 0, target: 'all_but_psychic', source: featureName }];
+    }
+  }
+
+  // 3. ASSASSIN PATHS
+  if (job === 'assassin') {
+    if (path === 'path of the gate runner') {
+      if (feature === 'wall runner') return [{ type: 'climb_speed', value: 0, target: 'walking', source: featureName }];
+    }
+    if (path === 'path of the terminus') {
+      if (feature === 'first strike protocol') return [{ type: 'advantage', value: 0, target: 'first_turn', source: featureName }];
+    }
+  }
+
+  // 4. STRIKER PATHS
+  if (job === 'striker') {
+    if (path === 'path of the kinetic fist') {
+      if (feature === 'impact technique') return [{ type: 'impact_effect', value: 0, target: 'gate_of_force', source: featureName }];
+      if (feature === 'neural repair') return [{ type: 'hp_regain_action', value: 3, target: 'striker_level', source: featureName }];
+    }
+    if (path === 'path of the phantom step') {
+      if (feature === 'shadow impulse') return [{ type: 'at_will_spell', value: 0, target: 'Minor Illusion', source: featureName }];
+    }
+  }
+
+  // 5. MAGE PATHS
+  if (job === 'mage') {
+    if (path === 'school of evocation' || path === 'path of the mana burst') {
+      if (feature === 'evocation savant') return [{ type: 'gold_cost_reduction', value: 0.5, target: 'evocation_spells', source: featureName }];
+      if (feature === 'sculpt spells') return [{ type: 'spell_safety', value: 0, target: 'allies', source: featureName }];
+    }
+  }
+
+  // 6. ESPER PATHS
+  if (job === 'esper') {
+    if (path === 'draconic bloodline' || path === 'path of the mana dragon') {
+      if (feature === 'dragon hide') return [{ type: 'ac_base', value: 13, target: 'AGI', source: featureName }];
+      if (feature === 'draconic resilience') return [{ type: 'hp-max', value: level, target: null as any, source: featureName }];
+    }
+  }
+
+  // 7. REVENANT PATHS
+  if (job === 'revenant') {
+    if (path === 'grave lord' || path === 'path of the soul reaper') {
+      if (feature === 'grim harvest') return [{ type: 'hp_regain_on_kill', value: 2, target: 'spell_level', source: featureName }];
+    }
+  }
+
+  // 8. SUMMONER PATHS
+  if (job === 'summoner') {
+    if (path === 'circle of the moon' || path === 'path of the entity shift') {
+      if (feature === 'combat shift') return [{ type: 'bonus_action_shift', value: 0, target: 'self', source: featureName }];
+    }
+  }
+
+  // 9. HERALD PATHS
+  if (job === 'herald') {
+    if (path === 'life domain' || path === 'path of the restorer') {
+      if (feature === 'disciple of life') return [{ type: 'healing_bonus', value: 2, target: 'spell_level', source: featureName }];
+    }
+  }
+
+  // 10. CONTRACTOR PATHS
+  if (job === 'contractor') {
+    if (path === 'the fiend' || path === 'path of the abyss') {
+      if (feature === 'dark one\'s blessing') return [{ type: 'hp-temp-on-kill', value: 0, target: 'PRE_mod', source: featureName }];
+    }
+  }
+
+  // 11. STALKER PATHS
+  if (job === 'stalker') {
+    if (path === 'hunter' || path === 'path of the apex stalker') {
+      if (feature === 'hunter\'s prey') return [{ type: 'choice:1', value: 0, target: 'prey_type', source: featureName }];
+    }
+  }
+
+  // 12. HOLY KNIGHT PATHS
+  if (job === 'holy knight' || job === 'holy-knight') {
+    if (path === 'oath of devotion' || path === 'path of the pure protocol') {
+      if (feature === 'aura of devotion') return [{ type: 'immunity_aura', value: 10, target: 'charm', source: featureName }];
+    }
+  }
+
+  // 13. TECHNOMANCER PATHS
+  if (job === 'technomancer') {
+    if (path === 'alchemist' || path === 'path of the bio-engineer') {
+      if (feature === 'experimental elixir') return [{ type: 'resource_max', value: 1, target: 'elixirs', source: featureName }];
+    }
+  }
+
+  // 14. IDOL PATHS
+  if (job === 'idol') {
+    if (path === 'college of lore' || path === 'path of the chronicler') {
+      if (feature === 'cutting words') return [{ type: 'dissonance_effect', value: 0, target: 'hype_die', source: featureName }];
+    }
+  }
+
+  return [];
+}
+
+function getRegentFeatureModifiers(regentName: string, featureName: string, level: number): FeatureModifier[] {
+  const regent = regentName.trim().toLowerCase();
+  const feature = featureName.trim().toLowerCase();
+
+  if (regent === 'umbral regent') {
+    if (feature === 'umbral command') return [{ type: 'summon_max', value: 20, target: 'umbral_creatures', source: featureName }];
+    if (feature === 'veilstep supreme') return [{ type: 'teleport_range', value: 120, target: 'dim_light', source: featureName }];
+    if (feature === 'umbral dominion') return [
+      { type: 'immunity', value: 0, target: 'necrotic', source: featureName },
+      { type: 'advantage', value: 0, target: 'save:umbral', source: featureName }
+    ];
+    if (feature === 'regent\'s presence') return [{ type: 'aura_fear', value: 30, target: 'radius', source: featureName }];
+    if (feature === 'absolute umbral') return [{ type: 'immunity', value: 0, target: 'all', source: featureName }];
+    if (feature === 'legion of the veil') return [{ type: 'summon_count', value: 0, target: '2d6_shadows', source: featureName }];
+    if (feature === 'umbral mastery') return [{ type: 'at_will_spell', value: 0, target: 'umbral_spells', source: featureName }];
+    if (feature === 'death\'s command') return [{ type: 'command_undead', value: 0, target: 'all', source: featureName }];
+  }
+
+  if (regent === 'flame monarch') {
+    if (feature === 'flame step') return [{ type: 'teleport_range', value: 120, target: 'flames', source: featureName }];
+    if (feature === 'flame dominion') return [
+      { type: 'immunity', value: 0, target: 'fire', source: featureName },
+      { type: 'resistance', value: 0, target: 'radiant', source: featureName }
+    ];
+    if (feature === 'immolation aura') return [{ type: 'aura_damage', value: 1, target: '1d6_fire', source: featureName }];
+    if (feature === 'white flame burst') return [{ type: 'aoe_damage', value: 0, target: '10d10_fire', source: featureName }];
+    if (feature === 'purification flame') return [{ type: 'aoe_cleanse', value: 60, target: 'radius', source: featureName }];
+    if (feature === 'phoenix rebirth') return [{ type: 'auto_resurrection', value: 1, target: 'self', source: featureName }];
+  }
+
+  if (regent === 'frost sovereign') {
+    if (feature === 'glacial domain') return [
+      { type: 'immunity', value: 0, target: 'cold', source: featureName },
+      { type: 'resistance', value: 0, target: 'fire', source: featureName }
+    ];
+    if (feature === 'absolute zero') return [{ type: 'aura_speed_reduction', value: 20, target: 'radius:30', source: featureName }];
+  }
+
+  return [];
+}
+
 /**
  * Grant job awakening benefits (awakening features + job traits) at a specific level.
  */
@@ -774,6 +992,52 @@ export async function addJobAwakeningBenefitsForLevel(
       is_active: true,
       modifiers: modifiers.length > 0 ? (modifiers as any) : null,
     });
+  }
+
+  // Path benefits
+  const { data: character } = await supabase.from('characters').select('path').eq('id', characterId).single();
+  if (character?.path) {
+    const { paths: staticPaths } = await import('@/data/compendium/paths');
+    const pathData = staticPaths.find(p => p.name === character.path);
+    if (pathData) {
+      const pathFeaturesAtLevel = (pathData.features || []).filter(f => f.level === level);
+      for (const feature of pathFeaturesAtLevel) {
+        if (existingNames.has(feature.name)) continue;
+        const modifiers = getPathFeatureModifiers(job.name, pathData.name, feature.name, level);
+        await insertCharacterFeature(characterId, {
+          name: feature.name,
+          source: `Path Feature: ${pathData.name}`,
+          level_acquired: level,
+          description: feature.description,
+          is_active: true,
+          modifiers: modifiers.length > 0 ? (modifiers as any) : null,
+        });
+      }
+    }
+  }
+
+  // Regent benefits
+  const { data: regentChoices } = await (supabase as any).from('character_regents').select('regent_id').eq('character_id', characterId);
+  if (regentChoices && regentChoices.length > 0) {
+    const { monarchs: staticRegents } = await import('@/data/compendium/monarchs');
+    for (const choice of regentChoices as Array<{regent_id: string}>) {
+      const regentData = staticRegents.find(r => r.id === choice.regent_id);
+      if (regentData) {
+        const regentFeaturesAtLevel = (regentData.class_features || []).filter(f => f.level === level);
+        for (const feature of regentFeaturesAtLevel) {
+          if (existingNames.has(feature.name)) continue;
+          const modifiers = getRegentFeatureModifiers(regentData.name, feature.name, level);
+          await insertCharacterFeature(characterId, {
+            name: feature.name,
+            source: `Regent Feature: ${regentData.name}`,
+            level_acquired: level,
+            description: feature.description,
+            is_active: true,
+            modifiers: modifiers.length > 0 ? (modifiers as any) : null,
+          });
+        }
+      }
+    }
   }
 
   if (level === 1) {

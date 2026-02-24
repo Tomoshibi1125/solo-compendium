@@ -3,24 +3,30 @@ import { useParams, useNavigate, Link, useSearchParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { 
   ArrowLeft, 
-  Heart, 
-  Shield, 
-  Zap, 
-  Swords, 
-  Moon,
-  Sun,
-  Loader2,
-  Edit,
-  Plus,
-  Download,
-  Dice6,
-  Share2,
-  Copy,
+  Backpack,
+  BookOpen,
   Check,
-  Undo2,
+  CheckCircle2,
+  Copy,
+  Dice6,
+  Download,
+  Edit,
+  Heart, 
+  Loader2,
+  Moon,
+  Move,
+  Plus,
   Redo2,
+  Share2,
+  Shield, 
   SlidersHorizontal,
-  Trash2
+  Sparkles,
+  Sun,
+  Swords, 
+  Trash2,
+  Undo2,
+  User,
+  Zap
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -40,7 +46,7 @@ import { useCharacter, useUpdateCharacter, useGenerateShareToken } from '@/hooks
 import { useUpdateCharacterAbilities } from '@/hooks/useCharacterAbilities';
 import { useCharacterSheetState } from '@/hooks/useCharacterSheetState';
 import { useRecordRoll } from '@/hooks/useRollHistory';
-import { calculateCharacterStats, formatModifier } from '@/lib/characterCalculations';
+import { calculateCharacterStats, formatModifier, calculateHPMax } from '@/lib/characterCalculations';
 import { getAvailableFavorOptions } from '@/lib/systemFavor';
 import { getAbilityModifier } from '@/types/system-rules';
 import { applyEquipmentModifiers } from '@/lib/equipmentModifiers';
@@ -52,7 +58,7 @@ import { useCharacterRuneInscriptions } from '@/hooks/useRunes';
 import { getAllSkills, calculateSkillModifier, type SkillDefinition } from '@/lib/skills';
 import { rollDiceString, formatRollResult } from '@/lib/diceRoller';
 import { calculateTotalTempHP, addTemporaryHP, applyResourceRest, type CustomResource } from '@/lib/characterResources';
-import { sumCustomModifiers, type CustomModifier, CUSTOM_MODIFIER_TYPES, normalizeCustomModifiers } from '@/lib/customModifiers';
+import { resolveAdvantageFromCustomModifiers, sumCustomModifiers, type CustomModifier, CUSTOM_MODIFIER_TYPES, normalizeCustomModifiers } from '@/lib/customModifiers';
 import { EquipmentList } from '@/components/character/EquipmentList';
 import { CurrencyManager } from '@/components/character/CurrencyManager';
 import { PowersList } from '@/components/character/PowersList';
@@ -117,7 +123,6 @@ import { useSpellSlots } from '@/hooks/useSpellSlots';
 import { useSpellCasting } from '@/hooks/useSpellCasting';
 import { usePowers } from '@/hooks/usePowers';
 import { getSpellcastingAbility } from '@/lib/characterCalculations';
-import { BookOpen, Backpack, User, Sparkles } from 'lucide-react';
 import './CharacterSheet.css';
 
 const ABILITY_KEYS = Object.keys(ABILITY_NAMES) as AbilityScore[];
@@ -464,27 +469,45 @@ const CharacterSheet = () => {
         finalAbilities[ability as keyof typeof finalAbilities] = value;
       }
     });
+
     const customAbilityBonuses = ABILITY_KEYS.reduce((acc, ability) => {
-      acc[ability] = sumCustomModifiers(customModifiers, 'ability', ability);
-      return acc;
-    }, {} as Record<AbilityScore, number>);
+      // Sum bonuses from custom modifiers and character features
+      const bonus = sumCustomModifiers(customModifiers, 'ability', ability);
+      const featureBonus = sumCustomModifiers(customModifiers, 'ability_bonus' as any, ability);
+      return acc + bonus + featureBonus;
+    }, 0);
+
     ABILITY_KEYS.forEach((ability) => {
-      const bonus = customAbilityBonuses[ability];
+      const bonus = sumCustomModifiers(customModifiers, 'ability', ability) + 
+                    sumCustomModifiers(customModifiers, 'ability_bonus' as any, ability);
       if (bonus !== 0) {
         finalAbilities[ability] = (finalAbilities[ability] || 0) + bonus;
       }
     });
 
-    // Recalculate base stats with modified abilities
-    const modifiedBaseStats = calculateCharacterStats({
-      level: character.level,
-      abilities: finalAbilities,
-      savingThrowProficiencies: character.saving_throw_proficiencies || [],
-      skillProficiencies: character.skill_proficiencies || [],
-      skillExpertise: character.skill_expertise || [],
-      armorClass: character.armor_class,
-      speed: character.speed,
-    });
+    // Calculate initiative (AGI modifier + initiative bonuses)
+    const initiativeAdvantage = resolveAdvantageFromCustomModifiers(customModifiers, ['initiative', 'initiative_advantage']);
+    const initiativeBonus = sumCustomModifiers(customModifiers, 'initiative_bonus' as any) + 
+                            sumCustomModifiers(customModifiers, 'initiative');
+    const finalInitiative = getAbilityModifier(finalAbilities.AGI) + initiativeBonus;
+
+    // HP calculation (with feature bonuses like Mana-Dense Physiology)
+    const hpMaxBonus = sumCustomModifiers(customModifiers, 'hp-max') + 
+                       sumCustomModifiers(customModifiers, 'hp_max' as any);
+    const finalHPMax = calculateHPMax(character.level, character.hit_dice_size || 8, getAbilityModifier(finalAbilities.VIT)) + hpMaxBonus;
+    
+    // Speed (with feature bonuses)
+    const speedBonus = sumCustomModifiers(customModifiers, 'speed') + 
+                       sumCustomModifiers(customModifiers, 'speed_bonus' as any);
+    let finalSpeed = (character.speed || 30) + speedBonus;
+
+    // AC calculation
+    const featureACBonus = sumCustomModifiers(customModifiers, 'ac_bonus');
+    const baseACValue = sumCustomModifiers(customModifiers, 'ac_base' as any);
+    let finalAC = baseStats.armorClass + featureACBonus;
+    if (baseACValue > 0) {
+      finalAC = Math.max(finalAC, baseACValue + getAbilityModifier(finalAbilities.AGI) + featureACBonus);
+    }
 
     // Recalculate saving throws with modified abilities
     const customSaveBonuses = ABILITY_KEYS.reduce((acc, ability) => {
@@ -492,12 +515,12 @@ const CharacterSheet = () => {
       return acc;
     }, {} as Record<AbilityScore, number>);
     const finalSavingThrows: Record<AbilityScore, number> = {
-      STR: getAbilityModifier(finalAbilities.STR) + (character.saving_throw_proficiencies?.includes('STR') ? modifiedBaseStats.proficiencyBonus : 0) + customSaveBonuses.STR,
-      AGI: getAbilityModifier(finalAbilities.AGI) + (character.saving_throw_proficiencies?.includes('AGI') ? modifiedBaseStats.proficiencyBonus : 0) + customSaveBonuses.AGI,
-      VIT: getAbilityModifier(finalAbilities.VIT) + (character.saving_throw_proficiencies?.includes('VIT') ? modifiedBaseStats.proficiencyBonus : 0) + customSaveBonuses.VIT,
-      INT: getAbilityModifier(finalAbilities.INT) + (character.saving_throw_proficiencies?.includes('INT') ? modifiedBaseStats.proficiencyBonus : 0) + customSaveBonuses.INT,
-      SENSE: getAbilityModifier(finalAbilities.SENSE) + (character.saving_throw_proficiencies?.includes('SENSE') ? modifiedBaseStats.proficiencyBonus : 0) + customSaveBonuses.SENSE,
-      PRE: getAbilityModifier(finalAbilities.PRE) + (character.saving_throw_proficiencies?.includes('PRE') ? modifiedBaseStats.proficiencyBonus : 0) + customSaveBonuses.PRE,
+      STR: getAbilityModifier(finalAbilities.STR) + (character.saving_throw_proficiencies?.includes('STR') ? baseStats.proficiencyBonus : 0) + customSaveBonuses.STR,
+      AGI: getAbilityModifier(finalAbilities.AGI) + (character.saving_throw_proficiencies?.includes('AGI') ? baseStats.proficiencyBonus : 0) + customSaveBonuses.AGI,
+      VIT: getAbilityModifier(finalAbilities.VIT) + (character.saving_throw_proficiencies?.includes('VIT') ? baseStats.proficiencyBonus : 0) + customSaveBonuses.VIT,
+      INT: getAbilityModifier(finalAbilities.INT) + (character.saving_throw_proficiencies?.includes('INT') ? baseStats.proficiencyBonus : 0) + customSaveBonuses.INT,
+      SENSE: getAbilityModifier(finalAbilities.SENSE) + (character.saving_throw_proficiencies?.includes('SENSE') ? baseStats.proficiencyBonus : 0) + customSaveBonuses.SENSE,
+      PRE: getAbilityModifier(finalAbilities.PRE) + (character.saving_throw_proficiencies?.includes('PRE') ? baseStats.proficiencyBonus : 0) + customSaveBonuses.PRE,
     };
 
     // Calculate encumbrance
@@ -506,7 +529,7 @@ const CharacterSheet = () => {
     const encumbrance = calculateEncumbrance(totalWeight, carryingCapacity);
     
     // Apply speed penalty from encumbrance
-    let finalSpeed = runeBonuses.speed;
+    finalSpeed = runeBonuses.speed;
     if (encumbrance.status === 'heavy') {
       finalSpeed = Math.max(0, finalSpeed - 10);
     } else if (encumbrance.status === 'overloaded') {
@@ -527,8 +550,8 @@ const CharacterSheet = () => {
     const customHpMaxBonus = sumCustomModifiers(customModifiers, 'hp-max');
 
     const calculatedStats = {
-      ...modifiedBaseStats,
-      initiative: modifiedBaseStats.initiative + customInitiativeBonus,
+      ...baseStats,
+      initiative: baseStats.initiative + customInitiativeBonus,
       savingThrows: finalSavingThrows,
       armorClass: runeBonuses.ac + customAcBonus,
       speed: Math.max(0, finalSpeed + customSpeedBonus),
@@ -582,6 +605,8 @@ const CharacterSheet = () => {
       equipmentMods,
       runeBonuses,
       finalSpeed,
+      finalInitiative,
+      initiativeAdvantage,
       baseStats,
     };
   }, [character, equipment, activeRunes, customModifiers]);
@@ -684,6 +709,8 @@ const CharacterSheet = () => {
     equipmentMods,
     runeBonuses,
     finalSpeed,
+    finalInitiative,
+    initiativeAdvantage,
     baseStats,
   } = memoizedStatsValue;
 
@@ -1447,36 +1474,43 @@ const CharacterSheet = () => {
 
         {/* D&D Beyond Style Tabbed Content */}
         <Tabs defaultValue="overview" className="space-y-4 sm:space-y-6">
-          <TabsList className="grid w-full grid-cols-6 h-auto p-1 bg-card border border-border rounded-lg shadow-sm">
-            <TabsTrigger value="overview" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
-              <User className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span className="hidden xs:inline">Overview</span>
-              <span className="xs:hidden">O</span>
+          <TabsList className="grid w-full grid-cols-6 h-auto p-1 bg-obsidian-charcoal/40 border border-amethyst-purple/20 backdrop-blur-md hud-brackets relative overflow-hidden rounded-lg shadow-lg">
+            <div className="absolute inset-0 bg-gradient-to-b from-amethyst-purple/5 to-transparent pointer-events-none" />
+            <TabsTrigger value="overview" className="gap-1.5 text-[10px] xs:text-xs sm:text-sm py-2.5 font-mono tracking-wider uppercase relative group data-[state=active]:bg-amethyst-purple/20 data-[state=active]:text-amethyst-purple">
+              <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 relative z-10" />
+              <span className="hidden xs:inline relative z-10">Overview</span>
+              <span className="xs:hidden relative z-10">O</span>
+              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-amethyst-purple scale-x-0 group-data-[state=active]:scale-x-100 transition-transform duration-500 origin-center shadow-[0_0_10px_rgba(155,109,255,0.8)]" />
             </TabsTrigger>
-            <TabsTrigger value="actions" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
-              <Swords className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span className="hidden xs:inline">Actions</span>
-              <span className="xs:hidden">A</span>
+            <TabsTrigger value="actions" className="gap-1.5 text-[10px] xs:text-xs sm:text-sm py-2.5 font-mono tracking-wider uppercase relative group data-[state=active]:bg-amethyst-purple/20 data-[state=active]:text-amethyst-purple">
+              <Swords className="w-3.5 h-3.5 sm:w-4 sm:h-4 relative z-10" />
+              <span className="hidden xs:inline relative z-10">Actions</span>
+              <span className="xs:hidden relative z-10">A</span>
+              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-amethyst-purple scale-x-0 group-data-[state=active]:scale-x-100 transition-transform duration-500 origin-center shadow-[0_0_10px_rgba(155,109,255,0.8)]" />
             </TabsTrigger>
-            <TabsTrigger value="inventory" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
-              <Backpack className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span className="hidden xs:inline">Inventory</span>
-              <span className="xs:hidden">I</span>
+            <TabsTrigger value="inventory" className="gap-1.5 text-[10px] xs:text-xs sm:text-sm py-2.5 font-mono tracking-wider uppercase relative group data-[state=active]:bg-amethyst-purple/20 data-[state=active]:text-amethyst-purple">
+              <Backpack className="w-3.5 h-3.5 sm:w-4 sm:h-4 relative z-10" />
+              <span className="hidden xs:inline relative z-10">Inventory</span>
+              <span className="xs:hidden relative z-10">I</span>
+              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-amethyst-purple scale-x-0 group-data-[state=active]:scale-x-100 transition-transform duration-500 origin-center shadow-[0_0_10px_rgba(155,109,255,0.8)]" />
             </TabsTrigger>
-            <TabsTrigger value="spells" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
-              <Moon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span className="hidden xs:inline">Spells</span>
-              <span className="xs:hidden">S</span>
+            <TabsTrigger value="spells" className="gap-1.5 text-[10px] xs:text-xs sm:text-sm py-2.5 font-mono tracking-wider uppercase relative group data-[state=active]:bg-amethyst-purple/20 data-[state=active]:text-amethyst-purple">
+              <Moon className="w-3.5 h-3.5 sm:w-4 sm:h-4 relative z-10" />
+              <span className="hidden xs:inline relative z-10">Spells</span>
+              <span className="xs:hidden relative z-10">S</span>
+              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-amethyst-purple scale-x-0 group-data-[state=active]:scale-x-100 transition-transform duration-500 origin-center shadow-[0_0_10px_rgba(155,109,255,0.8)]" />
             </TabsTrigger>
-            <TabsTrigger value="features" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
-              <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span className="hidden xs:inline">Features</span>
-              <span className="xs:hidden">F</span>
+            <TabsTrigger value="features" className="gap-1.5 text-[10px] xs:text-xs sm:text-sm py-2.5 font-mono tracking-wider uppercase relative group data-[state=active]:bg-amethyst-purple/20 data-[state=active]:text-amethyst-purple">
+              <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 relative z-10" />
+              <span className="hidden xs:inline relative z-10">Features</span>
+              <span className="xs:hidden relative z-10">F</span>
+              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-amethyst-purple scale-x-0 group-data-[state=active]:scale-x-100 transition-transform duration-500 origin-center shadow-[0_0_10px_rgba(155,109,255,0.8)]" />
             </TabsTrigger>
-            <TabsTrigger value="bio" className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30">
-              <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span className="hidden xs:inline">Bio</span>
-              <span className="xs:hidden">B</span>
+            <TabsTrigger value="bio" className="gap-1.5 text-[10px] xs:text-xs sm:text-sm py-2.5 font-mono tracking-wider uppercase relative group data-[state=active]:bg-amethyst-purple/20 data-[state=active]:text-amethyst-purple">
+              <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 relative z-10" />
+              <span className="hidden xs:inline relative z-10">Bio</span>
+              <span className="xs:hidden relative z-10">B</span>
+              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-amethyst-purple scale-x-0 group-data-[state=active]:scale-x-100 transition-transform duration-500 origin-center shadow-[0_0_10px_rgba(155,109,255,0.8)]" />
             </TabsTrigger>
           </TabsList>
 
@@ -1496,11 +1530,12 @@ const CharacterSheet = () => {
 
             {/* Core Stats - D&D Beyond Style */}
             <div className="character-sheet-stats-grid grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            <SystemWindow title="HIT POINTS" compact data-testid="hp-section" className="relative overflow-hidden">
+              <SystemWindow title="HIT POINTS" compact data-testid="hp-section" className="relative overflow-hidden group">
+                <div className="absolute top-0 left-0 w-1 h-full bg-red-500 opacity-50 group-hover:opacity-100 transition-opacity" />
                 <div className="absolute top-2 right-2">
                   <Heart className={cn(
-                    "w-5 h-5 sm:w-6 sm:h-6",
-                    character.hp_current < character.hp_max * 0.25 ? "text-destructive" :
+                    "w-5 h-5 sm:w-6 sm:h-6 transition-transform group-hover:scale-110",
+                    character.hp_current < character.hp_max * 0.25 ? "text-destructive animate-pulse" :
                     character.hp_current < character.hp_max * 0.5 ? "text-orange-400" :
                     "text-red-400"
                   )} />
@@ -1508,21 +1543,42 @@ const CharacterSheet = () => {
                 <div className="pt-6 sm:pt-8">
                   <div className="text-center">
                     <div className={cn(
-                      "font-display text-2xl sm:text-3xl font-bold mb-1",
-                      character.hp_current < character.hp_max * 0.5 && "text-destructive"
+                      "font-display text-3xl sm:text-4xl font-bold mb-1 tracking-tighter",
+                      character.hp_current < character.hp_max * 0.5 ? "text-destructive" : "text-white"
                     )} data-testid="hp-current-display">
                       {character.hp_current}
                     </div>
-                    <div className="text-xs text-muted-foreground" data-testid="hp-max-display">
-                      / {character.hp_max}
-                      {effectiveTempHp > 0 && ` + ${effectiveTempHp} temp`}
+                    <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground" data-testid="hp-max-display">
+                      MAX {character.hp_max}
+                      {effectiveTempHp > 0 && (
+                        <span className="text-cyan-400 ml-1">
+                          (+{effectiveTempHp})
+                        </span>
+                      )}
                     </div>
                   </div>
+                  
+                  {/* Status Bar Visualization */}
+                  <div className="mt-4 px-2">
+                    <div className="h-1.5 w-full bg-obsidian-charcoal rounded-full overflow-hidden border border-white/5">
+                      <div 
+                        className={cn(
+                          "h-full transition-all duration-500 ease-out",
+                          character.hp_current < character.hp_max * 0.25 ? "bg-destructive shadow-[0_0_8px_rgba(239,68,68,0.5)]" :
+                          character.hp_current < character.hp_max * 0.5 ? "bg-orange-500" :
+                          "bg-red-500"
+                        )}
+                        // eslint-disable-next-line react/no-inline-styles
+                        style={{ width: `${Math.min(100, (character.hp_current / character.hp_max) * 100)}%` }}
+                      />
+                    </div>
+                  </div>
+
                   {!isReadOnly && (
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="w-full mt-2 h-7 text-xs"
+                      className="w-full mt-4 h-7 text-[10px] font-mono uppercase tracking-tighter hover:bg-red-500/10 hover:text-red-400"
                       onClick={() => {
                         setHpEditValue(character.hp_current.toString());
                         setHpEditOpen(true);
@@ -1531,7 +1587,7 @@ const CharacterSheet = () => {
                       data-testid="hp-edit-button"
                     >
                       <Edit className="w-3 h-3 mr-1" />
-                      Edit
+                      Protocol: Adj
                     </Button>
                   )}
                 </div>
@@ -1594,11 +1650,12 @@ const CharacterSheet = () => {
                 )}
               </SystemWindow>
 
-              <SystemWindow title="ARMOR CLASS" compact className="relative overflow-hidden">
+              <SystemWindow title="ARMOR CLASS" compact data-testid="ac-section" className="relative overflow-hidden group">
+                <div className="absolute top-0 left-0 w-1 h-full bg-cyan-500 opacity-50 group-hover:opacity-100 transition-opacity" />
                 <div className="absolute top-2 right-2">
-                  <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
+                  <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-400 transition-transform group-hover:rotate-12" />
                 </div>
-                <div className="pt-6 sm:pt-8">
+                <div className="pt-6 sm:pt-8 text-center">
                   <ACBreakdownTooltip
                     breakdown={{
                       base: baseStats.armorClass,
@@ -1612,149 +1669,98 @@ const CharacterSheet = () => {
                       formula: `${baseStats.armorClass} base${equipmentMods.armorClass !== baseStats.armorClass ? ` + ${equipmentMods.armorClass - baseStats.armorClass} equip` : ''}${runeBonuses.ac !== equipmentMods.armorClass ? ` + ${runeBonuses.ac - equipmentMods.armorClass} runes` : ''}`,
                       warnings: [],
                     }}
-                  />
-                </div>
-                {isEditMode && !isReadOnly && (
-                  <Input
-                    type="number"
-                    inputMode="numeric"
-                    className="mt-2 h-7 text-xs text-center"
-                    value={armorClassDraft}
-                    onChange={(e) => setArmorClassDraft(e.target.value)}
-                    onBlur={handleArmorClassCommit}
-                    onKeyDown={(event) => {
-                      if (event.key === 'Enter') {
-                        (event.target as HTMLInputElement).blur();
-                      }
-                    }}
-                    aria-label="Set armor class"
-                    disabled={updateCharacter.isPending}
-                  />
-                )}
-                {equipmentMods.armorClass !== baseStats.armorClass && (
-                  <div className="text-xs text-muted-foreground">
-                    Base: {baseStats.armorClass} + {equipmentMods.armorClass - baseStats.armorClass}
-                  </div>
-                )}
-              </SystemWindow>
-
-              <SystemWindow title="INITIATIVE" compact className="relative overflow-hidden">
-                <div className="absolute top-2 right-2">
-                  <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400" />
-                </div>
-                <div className="pt-6 sm:pt-8">
-                  <div className="font-display text-2xl sm:text-3xl font-bold text-center">
-                    {formatModifier(calculatedStats.initiative)}
-                  </div>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="mx-auto mt-2 h-7 w-7 p-0"
-                    onClick={() => rollAndRecord({
-                      title: 'Initiative',
-                      formula: formatRollFormula('1d20', calculatedStats.initiative),
-                      rollType: 'initiative',
-                      context: 'Initiative',
-                      modifier: calculatedStats.initiative,
-                    })}
-                    aria-label="Roll initiative"
                   >
-                    <Dice6 className="w-4 h-4" />
-                  </Button>
-                </div>
-              </SystemWindow>
-
-              <SystemWindow title="SPEED" compact className="relative overflow-hidden">
-                <div className="absolute top-2 right-2">
-                  <Swords className="w-5 h-5 sm:w-6 sm:h-6 text-green-400" />
-                </div>
-                <div className="pt-6 sm:pt-8">
-                  <div className="font-display text-2xl sm:text-3xl font-bold text-center">{calculatedStats.speed} ft</div>
-                  {calculatedStats.encumbrance && calculatedStats.encumbrance.status !== 'unencumbered' && (
-                    <div className={cn(
-                      "text-xs text-center mt-1",
-                      calculatedStats.encumbrance.status === 'overloaded' ? "text-destructive" :
-                      calculatedStats.encumbrance.status === 'heavy' ? "text-orange-400" :
-                      "text-muted-foreground"
-                    )}>
-                      {calculatedStats.encumbrance.status === 'heavy' && '-10 ft'}
-                      {calculatedStats.encumbrance.status === 'overloaded' && '-20 ft'}
+                    <div className="font-display text-3xl sm:text-4xl font-bold mb-1 tracking-tighter text-white" data-testid="ac-display">
+                      {calculatedStats.armorClass}
+                    </div>
+                  </ACBreakdownTooltip>
+                  <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+                    DEFENSE RATING
+                  </div>
+                  {isEditMode && !isReadOnly && (
+                    <div className="mt-4 px-2">
+                      <Input
+                        type="number"
+                        inputMode="numeric"
+                        className="h-7 text-xs text-center font-mono border-cyan-500/30 focus:border-cyan-500"
+                        value={armorClassDraft}
+                        onChange={(e) => setArmorClassDraft(e.target.value)}
+                        onBlur={handleArmorClassCommit}
+                        onKeyDown={(event) => {
+                          if (event.key === 'Enter') {
+                            (event.target as HTMLInputElement).blur();
+                          }
+                        }}
+                        aria-label="Set armor class"
+                        data-testid="ac-input"
+                        disabled={updateCharacter.isPending}
+                      />
                     </div>
                   )}
                 </div>
-                {isEditMode && !isReadOnly && (
-                  <Input
-                    type="number"
-                    inputMode="numeric"
-                    className="mt-2 h-7 text-xs text-center"
-                    value={speedDraft}
-                    onChange={(e) => setSpeedDraft(e.target.value)}
-                    onBlur={handleSpeedCommit}
-                    onKeyDown={(event) => {
-                      if (event.key === 'Enter') {
-                        (event.target as HTMLInputElement).blur();
-                      }
-                    }}
-                    aria-label="Set base speed"
-                    disabled={updateCharacter.isPending}
-                  />
-                )}
-                {calculatedStats.encumbrance && calculatedStats.encumbrance.status !== 'unencumbered' && (
-                  <div className={cn(
-                    "text-xs",
-                    calculatedStats.encumbrance.status === 'overloaded' ? "text-destructive" :
-                    calculatedStats.encumbrance.status === 'heavy' ? "text-orange-400" :
-                    "text-muted-foreground"
-                  )}>
-                    {calculatedStats.encumbrance.status === 'heavy' && '-10 ft (Heavy Load)'}
-                    {calculatedStats.encumbrance.status === 'overloaded' && '-20 ft (Overloaded)'}
-                  </div>
-                )}
-                {equipmentMods.speed !== character.speed && !calculatedStats.encumbrance && (
-                  <div className="text-xs text-muted-foreground">
-                    Base: {character.speed} + {equipmentMods.speed - character.speed}
-                  </div>
-                )}
               </SystemWindow>
-            </div>
 
-            {/* Encumbrance Status */}
-            {calculatedStats.encumbrance && (
-              <SystemWindow title="CARRYING CAPACITY">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Status</span>
-                    <Badge 
-                      variant={
-                        calculatedStats.encumbrance.status === 'overloaded' ? 'destructive' :
-                        calculatedStats.encumbrance.status === 'heavy' ? 'destructive' :
-                        calculatedStats.encumbrance.status === 'medium' ? 'secondary' :
-                        'default'
-                      }
-                    >
-                      {calculatedStats.encumbrance.statusMessage}
+              <SystemWindow title="INITIATIVE" compact data-testid="initiative-section" className="relative overflow-hidden group">
+                <div className="absolute top-0 left-0 w-1 h-full bg-amber-500 opacity-50 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute top-2 right-2">
+                  <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400 transition-transform group-hover:scale-110" />
+                </div>
+                <div className="pt-6 sm:pt-8 text-center">
+                  <div className="font-display text-3xl sm:text-4xl font-bold mb-1 tracking-tighter text-white" data-testid="initiative-display">
+                    {formatModifier(finalInitiative)}
+                  </div>
+                  <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+                    REACTION SPEED
+                  </div>
+                  {initiativeAdvantage !== 'normal' && (
+                    <Badge variant="outline" className="mt-2 text-[10px] border-amber-500/50 text-amber-400 px-1 py-0 h-4">
+                      {initiativeAdvantage.toUpperCase()}
                     </Badge>
-                  </div>
-                  <progress
-                    className={cn('character-sheet-encumbrance', encumbranceBarClass)}
-                    value={encumbranceValue}
-                    max={encumbranceMax}
-                  />
-                  <div className="flex items-center justify-between text-xs text-muted-foreground">
-                    <span>
-                      {calculatedStats.encumbrance.totalWeight.toFixed(1)} / {calculatedStats.encumbrance.carryingCapacity} lbs
-                    </span>
-                    {calculatedStats.encumbrance.status === 'heavy' && (
-                      <span className="text-orange-400">Speed -10 ft</span>
-                    )}
-                    {calculatedStats.encumbrance.status === 'overloaded' && (
-                      <span className="text-destructive">Speed -20 ft</span>
-                    )}
-                  </div>
+                  )}
                 </div>
               </SystemWindow>
-            )}
+
+              <SystemWindow title="SPEED" compact data-testid="speed-section" className="relative overflow-hidden group">
+                <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500 opacity-50 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute top-2 right-2">
+                  <Move className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400 transition-transform group-hover:translate-x-1" />
+                </div>
+                <div className="pt-6 sm:pt-8 text-center">
+                  <div className="font-display text-3xl sm:text-4xl font-bold mb-1 tracking-tighter text-white" data-testid="speed-display">
+                    {finalSpeed}<span className="text-lg ml-1 font-mono text-muted-foreground">FT</span>
+                  </div>
+                  <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+                    LOCOMOTION
+                  </div>
+                  {calculatedStats.encumbrance && (
+                    <div className="text-[10px] text-orange-400 font-mono mt-1">
+                      {calculatedStats.encumbrance.status === 'heavy' && '-10 ft (Heavy Load)'}
+                      {calculatedStats.encumbrance.status === 'overloaded' && '-20 ft (Overloaded)'}
+                    </div>
+                  )}
+                  {isEditMode && !isReadOnly && (
+                    <div className="mt-4 px-2">
+                      <Input
+                        type="number"
+                        inputMode="numeric"
+                        className="h-7 text-xs text-center font-mono border-emerald-500/30 focus:border-cyan-500"
+                        value={speedDraft}
+                        onChange={(e) => setSpeedDraft(e.target.value)}
+                        onBlur={handleSpeedCommit}
+                        onKeyDown={(event) => {
+                          if (event.key === 'Enter') {
+                            (event.target as HTMLInputElement).blur();
+                          }
+                        }}
+                        aria-label="Set speed"
+                        data-testid="speed-input"
+                        disabled={updateCharacter.isPending}
+                      />
+                    </div>
+                  )}
+                </div>
+              </SystemWindow>
+            </div>
 
             {/* Ability Scores - D&D Beyond Style */}
             <SystemWindow title="ABILITY SCORES">
@@ -1762,7 +1768,7 @@ const CharacterSheet = () => {
                 {ABILITY_KEYS.map((ability) => {
                   const baseScore = character.abilities[ability];
                   const equipmentBonus = equipmentMods.abilityModifiers[ability.toLowerCase() as keyof typeof equipmentMods.abilityModifiers] || 0;
-                  const customAbilityBonus = customAbilityBonuses[ability] || 0;
+                  const customAbilityBonus = sumCustomModifiers(customModifiers, 'ability', ability) + sumCustomModifiers(customModifiers, 'ability_bonus' as any, ability);
                   const bonusTotal = equipmentBonus + customAbilityBonus;
                   const totalScore = baseScore + bonusTotal;
                   const modifier = calculatedStats.abilityModifiers[ability];

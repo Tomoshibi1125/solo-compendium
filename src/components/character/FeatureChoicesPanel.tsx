@@ -221,7 +221,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
     try {
       const { data: characterRow } = await supabase
         .from('characters')
-        .select('skill_proficiencies')
+        .select('skill_proficiencies, skill_expertise, tool_proficiencies')
         .eq('id', characterId)
         .maybeSingle();
       const skillProficiencies = new Set<string>(
@@ -229,12 +229,22 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
           ? (((characterRow as any).skill_proficiencies as unknown as string[]) || [])
           : []
       );
+      const skillExpertise = new Set<string>(
+        Array.isArray((characterRow as any)?.skill_expertise)
+          ? (((characterRow as any).skill_expertise as unknown as string[]) || [])
+          : []
+      );
+      const toolProficiencies = new Set<string>(
+        Array.isArray((characterRow as any)?.tool_proficiencies)
+          ? (((characterRow as any).tool_proficiencies as unknown as string[]) || [])
+          : []
+      );
 
       const { data: existingFeatures } = await supabase
         .from('character_features')
         .select('name')
         .eq('character_id', characterId);
-      const existingFeatureNames = new Set((existingFeatures || []).map((row) => row.name));
+      const existingFeatureNames = new Set((existingFeatures || []).map((row: { name: string }) => row.name));
 
       const { data: existingPowers } = await supabase
         .from('character_powers')
@@ -246,7 +256,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
         .from('character_equipment')
         .select('name')
         .eq('character_id', characterId);
-      const existingEquipmentNames = new Set((existingEquipment || []).map((row) => row.name));
+      const existingEquipmentNames = new Set((existingEquipment || []).map((row: { name: string }) => row.name));
 
       const { data: existingAbilities } = await supabase
         .from('character_abilities')
@@ -489,6 +499,40 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
             abilityScoreByKey.set(ability, nextScore);
           }
 
+          if (grant.type === 'tool_proficiency' && typeof grant.name === 'string') {
+            const toolName = grant.name;
+            if (toolProficiencies.has(toolName)) continue;
+
+            const next = [...toolProficiencies, toolName].sort();
+            await supabase
+              .from('characters')
+              .update({ tool_proficiencies: next as any })
+              .eq('id', characterId);
+            toolProficiencies.add(toolName);
+          }
+
+          if (grant.type === 'technique' && typeof grant.name === 'string') {
+            const techName = grant.name;
+            const { data: techRow } = await supabase
+        .from('compendium_techniques' as any)
+        .select('id')
+        .eq('name', techName)
+        .maybeSingle();
+      const techId = (techRow as {id?: string} | null)?.id;
+      if (!techId) continue;
+
+            await supabase
+              .from('character_techniques' as any)
+              .upsert(
+                {
+                  character_id: characterId,
+                  technique_id: techId,
+                  source: `Choice: ${group.choice_key}`,
+                } as any,
+                { onConflict: 'character_id,technique_id' }
+              );
+          }
+
           if (grant.type === 'skill_proficiency' && typeof grant.name === 'string') {
             const skillName = grant.name;
             if (skillProficiencies.has(skillName)) continue;
@@ -499,6 +543,18 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
               .update({ skill_proficiencies: next as any })
               .eq('id', characterId);
             skillProficiencies.add(skillName);
+          }
+
+          if (grant.type === 'skill_expertise' && typeof grant.name === 'string') {
+            const skillName = grant.name;
+            if (skillExpertise.has(skillName)) continue;
+
+            const next = [...skillExpertise, skillName].sort();
+            await supabase
+              .from('characters')
+              .update({ skill_expertise: next as any })
+              .eq('id', characterId);
+            skillExpertise.add(skillName);
           }
 
           if (grant.type === 'power' && typeof grant.name === 'string') {

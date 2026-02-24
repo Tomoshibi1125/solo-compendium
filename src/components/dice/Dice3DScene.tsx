@@ -1597,7 +1597,6 @@ export function Dice3DRoller({ dice, isRolling, onRollComplete, theme = 'umbral-
         className="dice-audio-toggle"
         onClick={() => setAudioEnabled((prev) => !prev)}
         aria-label={audioEnabled ? 'Mute dice audio' : 'Enable dice audio'}
-        aria-pressed={audioEnabled ? 'true' : 'false'}
       >
         {audioEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
       </button>

@@ -46,3 +46,7 @@ __pycache__/
 
 .vercel
 .env*.local
+
+src/pages/CharacterSheet.tsx.bak
+src/pages/CharacterSheet.tsx.broken
+src/pages/CharacterSheet.tsx.stable_anchor

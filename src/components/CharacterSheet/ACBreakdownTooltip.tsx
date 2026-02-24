@@ -5,18 +5,21 @@ import type { ACBreakdown } from '@/hooks/useArmorClass';
 
 interface ACBreakdownTooltipProps {
   breakdown: ACBreakdown;
+  children?: React.ReactNode;
 }
 
-export function ACBreakdownTooltip({ breakdown }: ACBreakdownTooltipProps) {
+export function ACBreakdownTooltip({ breakdown, children }: ACBreakdownTooltipProps) {
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <div className="flex items-center gap-2 cursor-default">
-            <Shield className="h-5 w-5 text-blue-600" />
-            <span className="text-xl font-bold text-blue-700">{breakdown.total}</span>
-            <span className="text-sm text-blue-500">AC</span>
-          </div>
+          {children || (
+            <div className="flex items-center gap-2 cursor-default">
+              <Shield className="h-5 w-5 text-blue-600" />
+              <span className="text-xl font-bold text-blue-700">{breakdown.total}</span>
+              <span className="text-sm text-blue-500">AC</span>
+            </div>
+          )}
         </TooltipTrigger>
         <TooltipContent side="bottom" className="max-w-xs text-left space-y-1">
           <p className="font-semibold text-sm">Armor Class Breakdown</p>

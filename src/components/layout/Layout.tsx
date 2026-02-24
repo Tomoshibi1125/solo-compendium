@@ -81,7 +81,19 @@ export function Layout({ children, className }: LayoutProps) {
   }, [reducedMotion, highContrast]);
 
   return (
-    <div className={layoutClasses} data-sa-zone={saZone}>
+    <div className={cn(layoutClasses, "relative overflow-hidden")} data-sa-zone={saZone}>
+      {/* Global Background Effects */}
+      <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
+        <div className="absolute inset-0 bg-background" />
+        {!reducedMotion && (
+          <>
+            <div className="absolute inset-0 hex-grid-overlay opacity-[0.03]" />
+            <div className="absolute inset-0 data-rain-overlay opacity-[0.02]" />
+            <div className="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-b from-amethyst-purple/5 to-transparent" />
+          </>
+        )}
+      </div>
+
       <a href="#main-content" className="skip-link">
         Skip to content
       </a>

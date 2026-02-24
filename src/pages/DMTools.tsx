@@ -357,14 +357,18 @@ const DMTools = () => {
 
   return (
     <Layout>
-      <div className="dm-tools-container">
+      <div className="dm-tools-container relative">
+        {/* System UI Background Effects */}
+        <div className="absolute inset-0 hex-grid-overlay opacity-20 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-amethyst-purple/5 via-transparent to-obsidian-deep pointer-events-none" />
+        
         {/* Header */}
-        <div className="dm-tools-header">
+        <div className="dm-tools-header relative z-10">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <SystemSigilLogo size="lg" className="flex-shrink-0" />
               <div>
-                <h1 className="dm-tools-title">
+                <h1 className="dm-tools-title system-text-glow">
                   PRIME ARCHITECT'S DOMAIN
                 </h1>
                 <p className="dm-tools-subtitle">
@@ -388,8 +392,8 @@ const DMTools = () => {
         </div>
 
         {/* Eternal Loop */}
-        <div className="eternal-loop-container">
-          <SystemWindow title="THE ETERNAL LOOP" className="border-arise/30">
+        <div className="eternal-loop-container relative z-10">
+          <SystemWindow title="THE ETERNAL LOOP" className="border-arise/30 hud-brackets">
             <div className="flex flex-col items-center gap-6">
               <div className="flex flex-col md:flex-row items-center gap-6 w-full">
                 <div className="loop-step">
@@ -424,7 +428,7 @@ const DMTools = () => {
         </div>
 
         {/* Search and Filters */}
-        <div className="dm-tools-filters">
+        <div className="dm-tools-filters relative z-10">
           <div className="search-bar">
             <Search className="w-5 h-5 text-muted-foreground" />
             <Input
@@ -475,7 +479,7 @@ const DMTools = () => {
         </div>
 
         {/* Tools Content */}
-        <div className="dm-tools-content">
+        <div className="dm-tools-content relative z-10">
           {selectedCategory === 'all' ? (
             // Categorized view
             <div className="space-y-8">
@@ -520,7 +524,7 @@ const DMTools = () => {
         </div>
 
         {/* Quick Actions */}
-        <div className="dm-tools-quick-actions">
+        <div className="dm-tools-quick-actions relative z-10">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
