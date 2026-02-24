@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Loader2, Zap, Heart, TrendingUp, Crown, Sparkles, Star, Shield, Swords } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -26,6 +26,8 @@ import { calculateFeatureUses, autoUpdateFeatureUses } from '@/lib/automation';
 import { useRegentUnlocks } from '@/hooks/useRegentUnlocks';
 import { monarchs as regents } from '@/data/compendium/monarchs';
 import { formatRegentVernacular } from '@/lib/vernacular';
+import { calculateTotalChoices, getChoiceGrantDetails } from '@/lib/choiceCalculations';
+import { jobs as staticJobs } from '@/data/compendium/jobs';
 
 // SRD 5e XP Thresholds (cumulative XP needed to reach each level)
 const XP_THRESHOLDS = [
@@ -54,6 +56,25 @@ const CharacterLevelUp = () => {
   const [isRolling, setIsRolling] = useState(false);
   const [selectedPath, setSelectedPath] = useState<string>('');
   const [asiChoices, setAsiChoices] = useState<Record<string, number>>({});
+  const [selectedFeats, setSelectedFeats] = useState<string[]>([]);
+
+  // Calculate available choices at the new level (including job awakening features and traits)
+  const availableChoices = useMemo(() => {
+    if (!character) return { feats: 0, skills: 0, powers: 0, techniques: 0, runes: 0, items: 0, tools: 0, languages: 0, expertise: 0 };
+    
+    const staticJob = staticJobs.find(job => job.name === character.job);
+    if (!staticJob) return { feats: 0, skills: 0, powers: 0, techniques: 0, runes: 0, items: 0, tools: 0, languages: 0, expertise: 0 };
+    
+    // Create enhanced job data with awakening features and traits
+    const enhancedJobData = {
+      name: character.job,
+      skill_choice_count: 0, // Not relevant for level-up
+      awakeningFeatures: staticJob.awakeningFeatures || [],
+      jobTraits: staticJob.jobTraits || [],
+    };
+    
+    return calculateTotalChoices(enhancedJobData, null, [], newLevel);
+  }, [character, newLevel]);
 
   // Level progression logic
   const currentExperience = character?.experience ?? 0;
@@ -92,8 +113,37 @@ const CharacterLevelUp = () => {
     enabled: needsPathSelection && !!newLevel,
   });
 
+  // Fetch available feats for selection at ASI levels
+  const { data: availableFeats = [] } = useQuery({
+    queryKey: ['level-up-feats', character?.job, newLevel, campaignId],
+    queryFn: async () => {
+      if (!character || !isASILevel(newLevel, character.job)) return [];
+      
+      const { data, error } = await supabase
+        .from('compendium_feats')
+        .select('*')
+        .order('name');
+      
+      if (error) throw error;
+      const accessible = await filterRowsBySourcebookAccess(
+        data || [],
+        (feat) => feat.source_book,
+        { campaignId }
+      );
+      
+      // Filter feats by prerequisites (level-based)
+      return accessible.filter((feat: any) => {
+        const prereqs = feat.prerequisites as any;
+        if (!prereqs || !prereqs.level) return true;
+        return prereqs.level <= newLevel;
+      });
+    },
+    enabled: !!character && isASILevel(newLevel, character?.job),
+  });
+
   const showPathSelection = needsPathSelection && availablePaths.length > 0;
   const showASISection = !!character && isASILevel(newLevel, character?.job);
+  const showFeatSelection = showASISection && availableChoices.feats > 0;
 
   // Regent progression: show new regent features unlocked at this level
   const { unlocks: regentUnlocks } = useRegentUnlocks(id || '');
@@ -329,6 +379,37 @@ const CharacterLevelUp = () => {
               .from('character_abilities')
               .upsert(abilityUpdates, { onConflict: 'character_id,ability' });
           }
+        }
+      }
+
+      // Apply feat selections if feats are available from awakening features
+      if (showFeatSelection && selectedFeats.length > 0) {
+        // Add selected feats as character features
+        const featFeatures = selectedFeats.map((featId, index) => {
+          const feat = availableFeats.find((f: any) => f.id === featId);
+          if (!feat) return null;
+          
+          return {
+            character_id: character.id,
+            name: feat.name,
+            source: 'Feat Selection',
+            level_acquired: newLevel,
+            description: feat.description,
+            uses_current: null,
+            uses_max: null,
+            recharge: null,
+            action_type: null,
+            is_active: true,
+            modifiers: null,
+            homebrew_id: null,
+            display_order: index,
+          };
+        }).filter(Boolean);
+
+        if (featFeatures.length > 0) {
+          await supabase
+            .from('character_features')
+            .insert(featFeatures as any[]);
         }
       }
 
@@ -714,6 +795,52 @@ const CharacterLevelUp = () => {
                 </div>
                 <p className="text-xs text-muted-foreground mt-2 font-heading">
                   Points remaining: {2 - Object.values(asiChoices).reduce((s, v) => s + v, 0)}
+                </p>
+              </div>
+            )}
+
+            {/* Feat Selection (shown when feats are available from awakening features) */}
+            {showFeatSelection && (
+              <div className="p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-transparent border border-purple-500/20">
+                <Label className="font-arise text-purple-400 tracking-wide flex items-center gap-2 mb-4">
+                  <Star className="w-4 h-4" />
+                  FEAT SELECTION
+                </Label>
+                <p className="text-sm text-muted-foreground mb-3 font-heading">
+                  Choose {availableChoices.feats} feat{availableChoices.feats > 1 ? 's' : ''} from awakening features.
+                </p>
+                <div className="space-y-2 max-h-48 overflow-y-auto">
+                  {availableFeats.map((feat: any) => (
+                    <div key={feat.id} className="flex items-center gap-3 p-2 rounded-lg bg-background/50 border border-purple-500/10">
+                      <input
+                        type="checkbox"
+                        id={`feat-${feat.id}`}
+                        checked={selectedFeats.includes(feat.id)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            if (selectedFeats.length < availableChoices.feats) {
+                              setSelectedFeats([...selectedFeats, feat.id]);
+                            }
+                          } else {
+                            setSelectedFeats(selectedFeats.filter(id => id !== feat.id));
+                          }
+                        }}
+                        disabled={!selectedFeats.includes(feat.id) && selectedFeats.length >= availableChoices.feats}
+                        className="rounded border-purple-500/30"
+                      />
+                      <label htmlFor={`feat-${feat.id}`} className="flex-1 cursor-pointer">
+                        <div>
+                          <span className="font-arise text-sm text-purple-400">{formatMonarchVernacular(feat.name)}</span>
+                          <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                            {formatMonarchVernacular(feat.description)}
+                          </p>
+                        </div>
+                      </label>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-muted-foreground mt-2 font-heading">
+                  Selected: {selectedFeats.length}/{availableChoices.feats}
                 </p>
               </div>
             )}

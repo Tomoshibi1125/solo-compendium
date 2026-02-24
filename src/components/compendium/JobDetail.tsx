@@ -74,7 +74,14 @@ export const JobDetail = ({ data }: { data: JobData }) => {
     const staticJob = staticJobs.find(job => job.name === data.name);
     if (!staticJob) return { skills: data.skill_choice_count, feats: 0, spells: 0, powers: 0, techniques: 0, runes: 0, items: 0, tools: 0, languages: 0, expertise: 0 };
     
-    return calculateTotalChoices(data, null, [], 1);
+    // Create enhanced job data that includes both database fields and static awakening features/traits
+    const enhancedJobData = {
+      ...data,
+      awakeningFeatures: staticJob.awakeningFeatures || [],
+      jobTraits: staticJob.jobTraits || [],
+    };
+    
+    return calculateTotalChoices(enhancedJobData, null, [], 1);
   }, [data]);
 
   // Get choice grant details for UI display
@@ -82,7 +89,14 @@ export const JobDetail = ({ data }: { data: JobData }) => {
     const staticJob = staticJobs.find(job => job.name === data.name);
     if (!staticJob) return [];
     
-    return getChoiceGrantDetails(data, null, [], 1);
+    // Create enhanced job data that includes both database fields and static awakening features/traits
+    const enhancedJobData = {
+      ...data,
+      awakeningFeatures: staticJob.awakeningFeatures || [],
+      jobTraits: staticJob.jobTraits || [],
+    };
+    
+    return getChoiceGrantDetails(enhancedJobData, null, [], 1);
   }, [data]);
 
   const displayName = formatMonarchVernacular(data.display_name || data.name);

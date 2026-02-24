@@ -660,15 +660,31 @@ const CharacterNew = () => {
     // Get selected path data
     const selectedPathData = selectedPath ? paths.find(p => p.id === selectedPath) : null;
     
-    return calculateTotalChoices(jobData, selectedPathData, [], 1);
+    // Create enhanced job data that includes both database fields and static awakening features/traits
+    const enhancedJobData = {
+      ...jobData,
+      awakeningFeatures: staticJobData.awakeningFeatures || [],
+      jobTraits: staticJobData.jobTraits || [],
+    };
+    
+    return calculateTotalChoices(enhancedJobData, selectedPathData, [], 1);
   }, [staticJobData, jobData, selectedPath, paths]);
 
   // Get choice grant details for UI display
   const choiceGrantDetails = useMemo(() => {
     if (!staticJobData) return [];
     
+    // Get selected path data
     const selectedPathData = selectedPath ? paths.find(p => p.id === selectedPath) : null;
-    return getChoiceGrantDetails(jobData, selectedPathData, [], 1);
+    
+    // Create enhanced job data that includes both database fields and static awakening features/traits
+    const enhancedJobData = {
+      ...jobData,
+      awakeningFeatures: staticJobData.awakeningFeatures || [],
+      jobTraits: staticJobData.jobTraits || [],
+    };
+    
+    return getChoiceGrantDetails(enhancedJobData, selectedPathData, [], 1);
   }, [staticJobData, jobData, selectedPath, paths]);
 
   const canProceed = () => {

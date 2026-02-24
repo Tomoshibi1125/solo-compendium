@@ -24,6 +24,17 @@ export interface TotalChoices {
 }
 
 /**
+ * Convert written number to digit
+ */
+const writtenNumberToDigit = (word: string): number => {
+  const numbers: Record<string, number> = {
+    'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5,
+    'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10
+  };
+  return numbers[word.toLowerCase()] || 0;
+};
+
+/**
  * Parse a description for choice grants using comprehensive pattern matching
  */
 export function parseChoiceGrants(
@@ -33,22 +44,23 @@ export function parseChoiceGrants(
   const grants: ChoiceGrant[] = [];
   const desc = description.toLowerCase();
 
-  // Skill proficiency patterns
+  // Skill proficiency patterns - handle both digits and written numbers
   const skillPatterns = [
-    /gain\s+proficiency\s+in\s+(\d+)\s+additional\s+skills?/i,
-    /gain\s+(\d+)\s+additional\s+skill\s+proficiencies?/i,
-    /proficient\s+in\s+(\d+)\s+additional\s+skills?/i,
-    /learn\s+(\d+)\s+additional\s+skills?/i,
-    /choose\s+(\d+)\s+additional\s+skills?/i,
-    /select\s+(\d+)\s+additional\s+skills?/i
+    /gain\s+proficiency\s+in\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+skills?/i,
+    /gain\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+skill\s+proficiencies?/i,
+    /proficient\s+in\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+skills?/i,
+    /learn\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+skills?/i,
+    /choose\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+skills?/i,
+    /select\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+skills?/i
   ];
 
   for (const pattern of skillPatterns) {
     const match = desc.match(pattern);
     if (match) {
+      const count = /^\d+$/.test(match[1]) ? parseInt(match[1], 10) : writtenNumberToDigit(match[1]);
       grants.push({
         type: 'skills',
-        count: parseInt(match[1], 10),
+        count,
         source,
         description: description.substring(0, 100) + '...'
       });
@@ -56,21 +68,22 @@ export function parseChoiceGrants(
     }
   }
 
-  // Feat patterns
+  // Feat patterns - handle both digits and written numbers
   const featPatterns = [
-    /gain\s+(\d+)\s+additional\s+feats?/i,
-    /learn\s+(\d+)\s+additional\s+feats?/i,
-    /choose\s+(\d+)\s+additional\s+feats?/i,
-    /select\s+(\d+)\s+additional\s+feats?/i,
-    /gain\s+(\d+)\s+feat(s)?\s+of\s+your\s+choice/i
+    /gain\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+feats?/i,
+    /learn\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+feats?/i,
+    /choose\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+feats?/i,
+    /select\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+feats?/i,
+    /gain\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+feat(s)?\s+of\s+your\s+choice/i
   ];
 
   for (const pattern of featPatterns) {
     const match = desc.match(pattern);
     if (match) {
+      const count = /^\d+$/.test(match[1]) ? parseInt(match[1], 10) : writtenNumberToDigit(match[1]);
       grants.push({
         type: 'feats',
-        count: parseInt(match[1], 10),
+        count,
         source,
         description: description.substring(0, 100) + '...'
       });
@@ -78,22 +91,23 @@ export function parseChoiceGrants(
     }
   }
 
-  // Spell patterns
+  // Spell patterns - handle both digits and written numbers
   const spellPatterns = [
-    /learn\s+(\d+)\s+additional\s+spells?/i,
-    /gain\s+(\d+)\s+additional\s+spells?/i,
-    /know\s+(\d+)\s+additional\s+spells?/i,
-    /choose\s+(\d+)\s+additional\s+spells?/i,
-    /select\s+(\d+)\s+additional\s+spells?/i,
-    /add\s+(\d+)\s+spells?\s+to\s+your\s+spellbook/i
+    /learn\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+spells?/i,
+    /gain\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+spells?/i,
+    /know\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+spells?/i,
+    /choose\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+spells?/i,
+    /select\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+spells?/i,
+    /add\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+spells?\s+to\s+your\s+spellbook/i
   ];
 
   for (const pattern of spellPatterns) {
     const match = desc.match(pattern);
     if (match) {
+      const count = /^\d+$/.test(match[1]) ? parseInt(match[1], 10) : writtenNumberToDigit(match[1]);
       grants.push({
         type: 'spells',
-        count: parseInt(match[1], 10),
+        count,
         source,
         description: description.substring(0, 100) + '...'
       });
@@ -101,21 +115,22 @@ export function parseChoiceGrants(
     }
   }
 
-  // Power patterns
+  // Power patterns - handle both digits and written numbers
   const powerPatterns = [
-    /gain\s+(\d+)\s+additional\s+powers?/i,
-    /learn\s+(\d+)\s+additional\s+powers?/i,
-    /choose\s+(\d+)\s+additional\s+powers?/i,
-    /select\s+(\d+)\s+additional\s+powers?/i,
-    /unlock\s+(\d+)\s+additional\s+powers?/i
+    /gain\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+powers?/i,
+    /learn\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+powers?/i,
+    /choose\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+powers?/i,
+    /select\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+powers?/i,
+    /unlock\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+powers?/i
   ];
 
   for (const pattern of powerPatterns) {
     const match = desc.match(pattern);
     if (match) {
+      const count = /^\d+$/.test(match[1]) ? parseInt(match[1], 10) : writtenNumberToDigit(match[1]);
       grants.push({
         type: 'powers',
-        count: parseInt(match[1], 10),
+        count,
         source,
         description: description.substring(0, 100) + '...'
       });
@@ -123,21 +138,22 @@ export function parseChoiceGrants(
     }
   }
 
-  // Technique patterns
+  // Technique patterns - handle both digits and written numbers
   const techniquePatterns = [
-    /learn\s+(\d+)\s+additional\s+techniques?/i,
-    /gain\s+(\d+)\s+additional\s+techniques?/i,
-    /master\s+(\d+)\s+additional\s+techniques?/i,
-    /choose\s+(\d+)\s+additional\s+techniques?/i,
-    /select\s+(\d+)\s+additional\s+techniques?/i
+    /learn\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+techniques?/i,
+    /gain\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+techniques?/i,
+    /master\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+techniques?/i,
+    /choose\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+techniques?/i,
+    /select\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+techniques?/i
   ];
 
   for (const pattern of techniquePatterns) {
     const match = desc.match(pattern);
     if (match) {
+      const count = /^\d+$/.test(match[1]) ? parseInt(match[1], 10) : writtenNumberToDigit(match[1]);
       grants.push({
         type: 'techniques',
-        count: parseInt(match[1], 10),
+        count,
         source,
         description: description.substring(0, 100) + '...'
       });
@@ -145,22 +161,23 @@ export function parseChoiceGrants(
     }
   }
 
-  // Rune patterns
+  // Rune patterns - handle both digits and written numbers
   const runePatterns = [
-    /learn\s+(\d+)\s+additional\s+runes?/i,
-    /gain\s+(\d+)\s+additional\s+runes?/i,
-    /discover\s+(\d+)\s+additional\s+runes?/i,
-    /choose\s+(\d+)\s+additional\s+runes?/i,
-    /select\s+(\d+)\s+additional\s+runes?/i,
-    /absorb\s+(\d+)\s+additional\s+runes?/i
+    /learn\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+runes?/i,
+    /gain\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+runes?/i,
+    /discover\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+runes?/i,
+    /choose\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+runes?/i,
+    /select\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+runes?/i,
+    /absorb\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+runes?/i
   ];
 
   for (const pattern of runePatterns) {
     const match = desc.match(pattern);
     if (match) {
+      const count = /^\d+$/.test(match[1]) ? parseInt(match[1], 10) : writtenNumberToDigit(match[1]);
       grants.push({
         type: 'runes',
-        count: parseInt(match[1], 10),
+        count,
         source,
         description: description.substring(0, 100) + '...'
       });
@@ -168,21 +185,22 @@ export function parseChoiceGrants(
     }
   }
 
-  // Item patterns
+  // Item patterns - handle both digits and written numbers
   const itemPatterns = [
-    /gain\s+(\d+)\s+additional\s+items?/i,
-    /receive\s+(\d+)\s+additional\s+items?/i,
-    /choose\s+(\d+)\s+additional\s+items?/i,
-    /select\s+(\d+)\s+additional\s+items?/i,
-    /craft\s+(\d+)\s+additional\s+items?/i
+    /gain\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+items?/i,
+    /receive\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+items?/i,
+    /choose\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+items?/i,
+    /select\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+items?/i,
+    /craft\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+items?/i
   ];
 
   for (const pattern of itemPatterns) {
     const match = desc.match(pattern);
     if (match) {
+      const count = /^\d+$/.test(match[1]) ? parseInt(match[1], 10) : writtenNumberToDigit(match[1]);
       grants.push({
         type: 'items',
-        count: parseInt(match[1], 10),
+        count,
         source,
         description: description.substring(0, 100) + '...'
       });
@@ -190,20 +208,21 @@ export function parseChoiceGrants(
     }
   }
 
-  // Tool patterns
+  // Tool patterns - handle both digits and written numbers
   const toolPatterns = [
-    /gain\s+proficiency\s+in\s+(\d+)\s+additional\s+tools?/i,
-    /become\s+proficient\s+with\s+(\d+)\s+additional\s+tools?/i,
-    /learn\s+to\s+use\s+(\d+)\s+additional\s+tools?/i,
-    /choose\s+(\d+)\s+additional\s+tool\s+proficiencies?/i
+    /gain\s+proficiency\s+in\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+tools?/i,
+    /become\s+proficient\s+with\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+tools?/i,
+    /learn\s+to\s+use\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+tools?/i,
+    /choose\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+tool\s+proficiencies?/i
   ];
 
   for (const pattern of toolPatterns) {
     const match = desc.match(pattern);
     if (match) {
+      const count = /^\d+$/.test(match[1]) ? parseInt(match[1], 10) : writtenNumberToDigit(match[1]);
       grants.push({
         type: 'tools',
-        count: parseInt(match[1], 10),
+        count,
         source,
         description: description.substring(0, 100) + '...'
       });
@@ -211,21 +230,22 @@ export function parseChoiceGrants(
     }
   }
 
-  // Language patterns
+  // Language patterns - handle both digits and written numbers
   const languagePatterns = [
-    /learn\s+(\d+)\s+additional\s+languages?/i,
-    /speak\s+(\d+)\s+additional\s+languages?/i,
-    /know\s+(\d+)\s+additional\s+languages?/i,
-    /choose\s+(\d+)\s+additional\s+languages?/i,
-    /select\s+(\d+)\s+additional\s+languages?/i
+    /learn\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+languages?/i,
+    /speak\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+languages?/i,
+    /know\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+languages?/i,
+    /choose\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+languages?/i,
+    /select\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+languages?/i
   ];
 
   for (const pattern of languagePatterns) {
     const match = desc.match(pattern);
     if (match) {
+      const count = /^\d+$/.test(match[1]) ? parseInt(match[1], 10) : writtenNumberToDigit(match[1]);
       grants.push({
         type: 'languages',
-        count: parseInt(match[1], 10),
+        count,
         source,
         description: description.substring(0, 100) + '...'
       });
@@ -233,20 +253,21 @@ export function parseChoiceGrants(
     }
   }
 
-  // Expertise patterns (double proficiency)
+  // Expertise patterns (double proficiency) - handle both digits and written numbers
   const expertisePatterns = [
-    /double\s+proficiency\s+on\s+(\d+)\s+chosen\s+skill\s+proficiencies?/i,
-    /gain\s+expertise\s+in\s+(\d+)\s+skills?/i,
-    /choose\s+(\d+)\s+skills?\s+to\s+gain\s+expertise\s+in/i,
-    /select\s+(\d+)\s+skills?\s+for\s+expertise/i
+    /double\s+proficiency\s+on\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+chosen\s+skill\s+proficiencies?/i,
+    /gain\s+expertise\s+in\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+skills?/i,
+    /choose\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+skills?\s+to\s+gain\s+expertise\s+in/i,
+    /select\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+skills?\s+for\s+expertise/i
   ];
 
   for (const pattern of expertisePatterns) {
     const match = desc.match(pattern);
     if (match) {
+      const count = /^\d+$/.test(match[1]) ? parseInt(match[1], 10) : writtenNumberToDigit(match[1]);
       grants.push({
         type: 'expertise',
-        count: parseInt(match[1], 10),
+        count,
         source,
         description: description.substring(0, 100) + '...'
       });
