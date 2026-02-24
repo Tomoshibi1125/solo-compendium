@@ -287,6 +287,15 @@ export function calculateTotalChoices(
   regentData: any[],
   level: number = 1
 ): TotalChoices {
+  console.log('choiceCalculations: calculateTotalChoices called with:', {
+    jobName: jobData?.name,
+    hasAwakeningFeatures: !!(jobData?.awakeningFeatures),
+    awakeningFeaturesCount: jobData?.awakeningFeatures?.length || 0,
+    hasJobTraits: !!(jobData?.jobTraits),
+    jobTraitsCount: jobData?.jobTraits?.length || 0,
+    level
+  });
+
   const totals: TotalChoices = {
     skills: 0,
     feats: 0,
@@ -303,14 +312,18 @@ export function calculateTotalChoices(
   // Base job choices
   if (jobData) {
     totals.skills += jobData.skill_choice_count || 0;
+    console.log('choiceCalculations: Base skill choices:', jobData.skill_choice_count);
     
     // Job awakening features
     if (jobData.awakeningFeatures) {
       for (const feature of jobData.awakeningFeatures) {
         if (feature.level <= level) {
+          console.log('choiceCalculations: Processing awakening feature:', feature.name, 'at level', feature.level);
           const grants = parseChoiceGrants(feature.description, `Job: ${feature.name}`);
+          console.log('choiceCalculations: Grants from feature:', grants);
           for (const grant of grants) {
             totals[grant.type] += grant.count;
+            console.log(`choiceCalculations: Added ${grant.count} ${grant.type} from ${grant.source}`);
           }
         }
       }
@@ -319,9 +332,12 @@ export function calculateTotalChoices(
     // Job traits
     if (jobData.jobTraits) {
       for (const trait of jobData.jobTraits) {
+        console.log('choiceCalculations: Processing job trait:', trait.name);
         const grants = parseChoiceGrants(trait.description, `Trait: ${trait.name}`);
+        console.log('choiceCalculations: Grants from trait:', grants);
         for (const grant of grants) {
           totals[grant.type] += grant.count;
+          console.log(`choiceCalculations: Added ${grant.count} ${grant.type} from ${grant.source}`);
         }
       }
     }
@@ -355,6 +371,7 @@ export function calculateTotalChoices(
     }
   }
 
+  console.log('choiceCalculations: Final totals calculated:', totals);
   return totals;
 }
 

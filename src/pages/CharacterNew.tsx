@@ -641,11 +641,12 @@ const CharacterNew = () => {
       });
 
       navigate(safeNext ?? `/characters/${character.id}`);
-    } catch {
+    } catch (error) {
       // Error is handled by React Query's error state
+      console.error('Character creation failed:', error);
       toast({
         title: 'Awakening Failed',
-        description: 'The System could not awaken your Ascendant. Please try again.',
+        description: `The System could not awaken your Ascendant. Error: ${error instanceof Error ? error.message : 'Unknown error'}. Please try again.`,
         variant: 'destructive',
       });
     } finally {
@@ -667,7 +668,16 @@ const CharacterNew = () => {
       jobTraits: staticJobData.jobTraits || [],
     };
     
-    return calculateTotalChoices(enhancedJobData, selectedPathData, [], 1);
+    console.log('CharacterNew: Enhanced job data for choice calculations:', {
+      jobName: jobData?.name,
+      awakeningFeatures: enhancedJobData.awakeningFeatures?.length || 0,
+      jobTraits: enhancedJobData.jobTraits?.length || 0
+    });
+    
+    const result = calculateTotalChoices(enhancedJobData, selectedPathData, [], 1);
+    console.log('CharacterNew: Total choices calculated:', result);
+    
+    return result;
   }, [staticJobData, jobData, selectedPath, paths]);
 
   // Get choice grant details for UI display
@@ -684,7 +694,10 @@ const CharacterNew = () => {
       jobTraits: staticJobData.jobTraits || [],
     };
     
-    return getChoiceGrantDetails(enhancedJobData, selectedPathData, [], 1);
+    const result = getChoiceGrantDetails(enhancedJobData, selectedPathData, [], 1);
+    console.log('CharacterNew: Choice grant details:', result);
+    
+    return result;
   }, [staticJobData, jobData, selectedPath, paths]);
 
   const canProceed = () => {
