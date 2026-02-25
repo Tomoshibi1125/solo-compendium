@@ -364,3 +364,70 @@ export function getActivePenaltySummary(conditions: string[], exhaustionLevel: n
 
   return summaries;
 }
+
+// ---------------------------------------------------------------------------
+// Condition Lifecycle Management (Phase 2)
+// ---------------------------------------------------------------------------
+
+import type { ActiveCondition } from './characterEngine';
+
+/**
+ * Remove all conditions tied to a specific concentration spell.
+ * Called when concentration is broken (damage, casting another spell, etc.)
+ */
+export function breakConcentrationConditions(
+  conditions: ActiveCondition[],
+  spellId: string
+): ActiveCondition[] {
+  return conditions.filter(c => !(c.concentration && c.spellId === spellId));
+}
+
+/**
+ * Tick round-based durations (call at end of each round).
+ * Returns { active, expired } condition arrays.
+ */
+export function tickRoundDurations(
+  conditions: ActiveCondition[]
+): { active: ActiveCondition[]; expired: ActiveCondition[] } {
+  const active: ActiveCondition[] = [];
+  const expired: ActiveCondition[] = [];
+
+  for (const condition of conditions) {
+    if (condition.duration?.type === 'rounds' && condition.duration.remainingRounds !== undefined) {
+      const remaining = condition.duration.remainingRounds - 1;
+      if (remaining <= 0) {
+        expired.push(condition);
+      } else {
+        active.push({
+          ...condition,
+          duration: { ...condition.duration, remainingRounds: remaining },
+        });
+      }
+    } else {
+      active.push(condition);
+    }
+  }
+
+  return { active, expired };
+}
+
+/**
+ * Filter out time-expired conditions (minutes/hours with expiresAt).
+ */
+export function filterExpiredConditions(
+  conditions: ActiveCondition[],
+  now: Date = new Date()
+): { active: ActiveCondition[]; expired: ActiveCondition[] } {
+  const active: ActiveCondition[] = [];
+  const expired: ActiveCondition[] = [];
+
+  for (const condition of conditions) {
+    if (condition.expiresAt && condition.expiresAt <= now) {
+      expired.push(condition);
+    } else {
+      active.push(condition);
+    }
+  }
+
+  return { active, expired };
+}

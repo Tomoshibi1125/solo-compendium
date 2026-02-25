@@ -21,9 +21,12 @@ type Character = Database['public']['Tables']['characters']['Row'];
 type Feature = Database['public']['Tables']['character_features']['Row'];
 
 /**
- * Auto-calculate and update all character derived stats
+ * @deprecated Prefer `computeCharacterStats()` from characterEngine.ts.
+ * This function persists derived values to DB which risks desync.
+ * Retained only for backward compatibility during migration.
  */
 export async function autoCalculateCharacterStats(characterId: string): Promise<void> {
+  console.warn('[DEPRECATED] autoCalculateCharacterStats: use computeCharacterStats() instead');
   const { data: character } = await supabase
     .from('characters')
     .select('*')
@@ -112,7 +115,7 @@ export function calculateFeatureUses(
       .replace(/pb/gi, proficiencyBonus.toString())
       .replace(/level/gi, level.toString())
       .replace(/lvl/gi, level.toString());
-    
+
     // Only allow safe math operations - use Function constructor instead of eval for better isolation
     // This is still risky but slightly safer than direct eval, and we validate the input
     if (/^[\d+\-*/().\s]+$/.test(expression)) {
@@ -177,11 +180,11 @@ export async function autoUpdateFeatureUses(characterId: string): Promise<void> 
 }
 
 /**
- * Auto-apply equipment modifiers to character stats.
- * D&D Beyond parity: equipping / un-equipping armor instantly updates
- * the persisted AC and speed on the character row.
+ * @deprecated Prefer `computeCharacterStats()` from characterEngine.ts.
+ * Persisting AC/speed to DB risks desync. Retained for backward compat.
  */
 export async function autoApplyEquipmentModifiers(characterId: string): Promise<void> {
+  console.warn('[DEPRECATED] autoApplyEquipmentModifiers: use computeCharacterStats() instead');
   const { data: character } = await supabase
     .from('characters')
     .select('id, job, armor_class, speed, abilities:character_abilities(*)')
@@ -268,11 +271,12 @@ export async function autoApplyEquipmentModifiers(characterId: string): Promise<
 }
 
 /**
- * Auto-recalculate and persist all derived stats.
- * D&D Beyond parity: changing level or abilities instantly updates
- * proficiency bonus, system favor, spell save DC, and passive perception.
+ * @deprecated Prefer `computeCharacterStats()` from characterEngine.ts.
+ * Persisting spell save DC, passive perception, etc. risks desync.
+ * Retained only for backward compatibility during migration.
  */
 export async function autoRecalcDerivedStats(characterId: string): Promise<void> {
+  console.warn('[DEPRECATED] autoRecalcDerivedStats: use computeCharacterStats() instead');
   const { data: character } = await supabase
     .from('characters')
     .select('id, level, job, skill_proficiencies, saving_throw_proficiencies, abilities:character_abilities(*)')
@@ -414,11 +418,11 @@ export function autoCalculateEncounterDifficulty(
   adjustedXP: number;
   threshold: number;
 } {
-  const multiplier = hunterCount === 1 ? 1 
-    : hunterCount <= 2 ? 1.5 
-    : hunterCount <= 6 ? 2 
-    : 2.5;
-  
+  const multiplier = hunterCount === 1 ? 1
+    : hunterCount <= 2 ? 1.5
+      : hunterCount <= 6 ? 2
+        : 2.5;
+
   const adjustedXP = totalXP * multiplier;
 
   const thresholds = {

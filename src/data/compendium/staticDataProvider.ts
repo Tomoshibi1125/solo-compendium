@@ -158,7 +158,7 @@ export interface StaticCompendiumEntry {
   skill_choice_count?: number | null;
   hit_points_at_first_level?: string | null;
   hit_points_at_higher_levels?: string | null;
-  multiclass_prerequisites?: string | null;
+  regent_prerequisites?: string | null;
   spellcasting_ability?: string | null;
   spellcasting_focus?: string | null;
   awakening_features?: Array<{ name: string; description: string; level: number }> | null;
@@ -214,18 +214,18 @@ export interface StaticDataProvider {
 
 // Helper function to filter by search query
 function filterBySearch<T extends Record<string, unknown>>(
-  items: T[], 
+  items: T[],
   search?: string,
   searchFields: (keyof T)[] = ['name', 'description']
 ): T[] {
   if (!search?.trim()) return items;
-  
+
   const searchLower = normalizeRegentSearch(search.toLowerCase());
-  return items.filter(item => 
+  return items.filter(item =>
     searchFields.some(field => {
       const value = item[field];
-      return value && typeof value === 'string' && 
-             value.toLowerCase().includes(searchLower);
+      return value && typeof value === 'string' &&
+        value.toLowerCase().includes(searchLower);
     })
   );
 }
@@ -408,7 +408,7 @@ function deriveRitual(spell: StaticSpellSource): boolean {
 }
 
 const CLASS_MAP: Record<string, string[]> = {
-  Attack:  ['Destroyer', 'Mage', 'Esper', 'Invoker', 'Assassin', 'Berserker'],
+  Attack: ['Destroyer', 'Mage', 'Esper', 'Invoker', 'Assassin', 'Berserker'],
   Defense: ['Mage', 'Herald', 'Holy Knight', 'Technomancer', 'Contractor'],
   Healing: ['Herald', 'Holy Knight', 'Summoner', 'Idol'],
   Utility: ['Mage', 'Assassin', 'Contractor', 'Technomancer', 'Stalker', 'Idol'],
@@ -577,9 +577,9 @@ function transformMonster(monster: StaticMonsterSource): StaticCompendiumEntry {
     gate_rank: rank ?? null,
     is_boss: rank === 'S' || rank === 'A',
     rarity: rank === 'S' ? 'legendary' :
-            rank === 'A' ? 'epic' :
-            rank === 'B' ? 'rare' :
-            rank === 'C' ? 'uncommon' : 'common',
+      rank === 'A' ? 'epic' :
+        rank === 'B' ? 'rare' :
+          rank === 'C' ? 'uncommon' : 'common',
 
     size: typeof monster.size === 'string' ? monster.size : 'Medium',
     creature_type: monster.type ?? null,
@@ -596,10 +596,10 @@ function transformMonster(monster: StaticMonsterSource): StaticCompendiumEntry {
     pre: typeof abilityScores?.charisma === 'number' ? (abilityScores.charisma as number) : null,
     saving_throws: savingThrows
       ? (Object.fromEntries(
-          Object.entries(savingThrows)
-            .filter(([, v]) => typeof v === 'number')
-            .map(([k, v]) => [k, v as number]),
-        ) as Record<string, number>)
+        Object.entries(savingThrows)
+          .filter(([, v]) => typeof v === 'number')
+          .map(([k, v]) => [k, v as number]),
+      ) as Record<string, number>)
       : null,
     skills: skillMap,
     damage_resistances: normalizeStringArray(monster.damageResistances) ?? null,
@@ -689,9 +689,9 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
     image_url: job.image,
     rank: job.rank || null,
     rarity: job.rank === 'S' ? 'legendary' :
-            job.rank === 'A' ? 'epic' :
-            job.rank === 'B' ? 'rare' :
-            job.rank === 'C' ? 'uncommon' : 'common',
+      job.rank === 'A' ? 'epic' :
+        job.rank === 'B' ? 'rare' :
+          job.rank === 'C' ? 'uncommon' : 'common',
     // Job-specific fields for JobDetail.tsx
     hit_die: hitDieNumber,
     primary_abilities: job.primary_abilities || (job.primaryAbility ? [job.primaryAbility] : null),
@@ -704,7 +704,7 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
     starting_equipment: job.startingEquipment || null,
     hit_points_at_first_level: job.hitPointsAtFirstLevel || null,
     hit_points_at_higher_levels: job.hitPointsAtHigherLevels || null,
-    multiclass_prerequisites: null,
+    regent_prerequisites: null,
     spellcasting_ability: job.spellcasting?.ability || null,
     spellcasting_focus: job.spellcasting?.focus || null,
     awakening_features: job.awakeningFeatures || null,
@@ -775,9 +775,9 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
     higher_levels: spell.higher_levels || spell.atHigherLevels || null,
     atHigherLevels: spell.atHigherLevels || spell.higher_levels || null,
     rarity: spell.rank === 'S' ? 'legendary' :
-            spell.rank === 'A' ? 'epic' :
-            spell.rank === 'B' ? 'rare' :
-            spell.rank === 'C' ? 'uncommon' : 'common'
+      spell.rank === 'A' ? 'epic' :
+        spell.rank === 'B' ? 'rare' :
+          spell.rank === 'C' ? 'uncommon' : 'common'
   };
 }
 
@@ -796,9 +796,9 @@ function transformLocation(location: StaticLocationSource): StaticCompendiumEntr
     encounters: location.encounters,
     treasures: location.treasures,
     rarity: location.rank === 'S' ? 'legendary' :
-            location.rank === 'A' ? 'epic' :
-            location.rank === 'B' ? 'rare' :
-            location.rank === 'C' ? 'uncommon' : 'common'
+      location.rank === 'A' ? 'epic' :
+        location.rank === 'B' ? 'rare' :
+          location.rank === 'C' ? 'uncommon' : 'common'
   };
 }
 
@@ -922,9 +922,9 @@ function transformMonarch(monarch: StaticMonarchSource): StaticCompendiumEntry {
     theme: monarch.theme,
     rank: monarch.rank || null,
     rarity: monarch.rank === 'S' ? 'legendary' :
-            monarch.rank === 'A' ? 'epic' :
-            monarch.rank === 'B' ? 'rare' :
-            monarch.rank === 'C' ? 'uncommon' : 'common',
+      monarch.rank === 'A' ? 'epic' :
+        monarch.rank === 'B' ? 'rare' :
+          monarch.rank === 'C' ? 'uncommon' : 'common',
     // Monarch-specific fields for MonarchDetail.tsx
     monarch_title: monarch.title || null,
     monarch_theme: monarch.theme || null,
@@ -1136,9 +1136,9 @@ export const staticDataProvider: StaticDataProvider = {
           : []),
       ].filter(Boolean) as string[],
       source_book: feat.source,
-      prerequisites: feat.prerequisites ? 
+      prerequisites: feat.prerequisites ?
         (typeof feat.prerequisites === 'string' ? feat.prerequisites :
-        Object.entries(feat.prerequisites).map(([key, value]) => `${key}: ${value}`).join(', ')) : undefined,
+          Object.entries(feat.prerequisites).map(([key, value]) => `${key}: ${value}`).join(', ')) : undefined,
       benefits: feat.benefits ? [feat.benefits] : null,
     }));
   },
@@ -1350,7 +1350,7 @@ export const staticDataProvider: StaticDataProvider = {
         role: 'Scout'
       }
     ];
-    
+
     const filtered = filterBySearch(shadowSoldiers, search, ['name', 'description', 'role']);
     return filtered.map(item => ({
       id: item.id,
@@ -1362,8 +1362,8 @@ export const staticDataProvider: StaticDataProvider = {
       source_book: 'System Ascendant Canon',
       role: item.role,
       gate_rank: item.rank,
-      rarity: item.rank === 'A' ? 'very_rare' : 
-              item.rank === 'B' ? 'rare' : 'uncommon',
+      rarity: item.rank === 'A' ? 'very_rare' :
+        item.rank === 'B' ? 'rare' : 'uncommon',
       level: undefined
     }));
   },

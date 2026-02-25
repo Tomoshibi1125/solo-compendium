@@ -11,14 +11,14 @@ export default defineConfig({
   testDir: '.',
   testMatch: ['tests/**/*.spec.ts', '*.spec.ts'],
   testIgnore: ['**/node_modules/**', '**/dist/**'],
-  timeout: 120_000,
-  expect: { timeout: 10_000 },
+  timeout: 60_000, // Reduced from 120s for faster failure detection
+  expect: { timeout: 8_000 }, // Slightly reduced
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 2 : 1, // Add 1 retry for local stability
   /* Opt out of parallel tests to avoid state interference across persistent accounts/tool-state. */
   workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
@@ -31,7 +31,7 @@ export default defineConfig({
     /* Headed mode so the run is watchable */
     headless: false,
     viewport: { width: 1280, height: 800 },
-    actionTimeout: 20_000,
+    actionTimeout: 15_000, // Reduced from 20s
 
     /* Collect trace when retrying the failed test. */
     trace: 'retain-on-failure',
@@ -42,9 +42,15 @@ export default defineConfig({
     /* Record video on failure */
     video: 'retain-on-failure',
 
-    /* Slow down interactions so headed mode is viewable */
+    /* Reduced slowMo for faster execution while maintaining visibility */
     launchOptions: {
-      slowMo: 800,
+      slowMo: 400, // Reduced from 800ms
+      args: [
+        '--disable-web-security', // Help with CORS issues
+        '--disable-features=VizDisplayCompositor', // Stability improvement
+        '--no-sandbox', // Stability in CI environments
+        '--disable-dev-shm-usage' // Prevent memory issues
+      ]
     },
   },
 

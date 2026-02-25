@@ -175,7 +175,7 @@ export function RegentUnlock({
               <p className="text-sm text-muted-foreground mb-3">
                 {selectedRegentData.description}
               </p>
-              
+
               {/* Requirements */}
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-sm">
@@ -186,9 +186,9 @@ export function RegentUnlock({
                   <User className="w-4 h-4 text-blue-500" />
                   <span>DM approval required</span>
                 </div>
-                {selectedRegentData.multiclass_requirements && (
+                {selectedRegentData.regent_requirements && (
                   <div className="text-sm text-muted-foreground">
-                    Minimum character level: {selectedRegentData.multiclass_requirements.level}
+                    Minimum character level: {selectedRegentData.regent_requirements.level}
                   </div>
                 )}
               </div>

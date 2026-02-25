@@ -112,6 +112,7 @@ export interface Power {
   duration: string;
   components?: string;
   concentration?: boolean;
+  ritual?: boolean;
   description: string;
   higherLevels?: string;
   jobs: string[]; // Job IDs that can use this
@@ -185,10 +186,10 @@ export interface Character {
   job: string;
   path?: string;
   background?: string;
-  
+
   // Ability scores
   abilities: Record<AbilityScore, number>;
-  
+
   // Derived stats
   proficiencyBonus: number;
   initiative: number;
@@ -204,32 +205,32 @@ export interface Character {
     max: number;
     size: number;
   };
-  
+
   // Proficiencies
   savingThrowProficiencies: AbilityScore[];
   skillProficiencies: string[];
   skillExpertise: string[];
-  
+
   // Resources
   systemFavor: {
     current: number;
     max: number;
     dieSize: number;
   };
-  
+
   // Equipment
   equipment: string[];
   relics: string[];
   attunedRelics: string[];
-  
+
   // Features and powers
   features: string[];
   powers: string[];
-  
+
   // Conditions and status
   conditions: string[];
   exhaustionLevel: number;
-  
+
   // Notes
   notes: string;
 }

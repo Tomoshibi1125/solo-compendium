@@ -57,7 +57,7 @@ export interface Monarch {
   };
   
   // Integration requirements - Quest-based Hunter Qualification
-  multiclass_requirements?: {
+  regent_requirements?: {
     level: number;
     abilities: Record<string, number>;
     quest_completion: string;
@@ -216,7 +216,7 @@ export const monarchs = [
     },
     
     // Integration requirements - Quest-based Hunter Qualification
-    "multiclass_requirements": {
+    "regent_requirements": {
       "level": 5,
       "abilities": { "charisma": 13, "wisdom": 13 },
       "quest_completion": "Complete the Umbral Regent Ascension quest series",

@@ -141,6 +141,7 @@ export interface Power {
   duration: string;
   components?: string;
   concentration?: boolean;
+  ritual?: boolean;
   description: string;
   higherLevels?: string;
   classes: string[];
@@ -177,10 +178,10 @@ export interface Character {
   race?: string;
   alignment?: string;
   experience?: number;
-  
+
   // Standard 5e abilities (displayed with System Ascendant names)
   abilities: Record<AbilityScore, number>;
-  
+
   // Standard 5e derived stats
   proficiencyBonus: number;
   initiative: number;
@@ -197,54 +198,54 @@ export interface Character {
     max: number;
     size: number;
   };
-  
+
   // Standard 5e proficiencies
   savingThrowProficiencies: AbilityScore[];
   skillProficiencies: string[];
   skillExpertise: string[];
-  
+
   // Armor, weapon, tool proficiencies and languages
   armorProficiencies?: string[];
   weaponProficiencies?: string[];
   toolProficiencies?: string[];
   languages?: string[];
-  
+
   // Senses
   senses?: string[];
-  
+
   // Damage resistances, immunities, vulnerabilities
   resistances?: string[];
   immunities?: string[];
   vulnerabilities?: string[];
   conditionImmunities?: string[];
-  
+
   // System Ascendant resources (mapped to 5e equivalents)
   systemFavor: {
     current: number;
     max: number;
     dieSize: number;
   }; // Maps to Inspiration/Bardic Inspiration etc.
-  
+
   // Standard 5e equipment
   equipment: string[];
   relics: string[];
   attunedRelics: string[];
-  
+
   // Currency (copper, silver, electrum, gold, platinum)
   currency?: { cp: number; sp: number; ep: number; gp: number; pp: number };
-  
+
   // Standard 5e features and powers
   features: string[];
   powers: string[];
   spellSlots?: Record<number, number>;
-  
+
   // Actions (pre-calculated attack blocks)
   actions?: CharacterAction[];
-  
+
   // Standard 5e conditions and status
   conditions: string[];
   exhaustionLevel: number;
-  
+
   // Backstory & personality
   personalityTraits?: string;
   ideals?: string;
@@ -252,7 +253,7 @@ export interface Character {
   flaws?: string;
   appearance?: string;
   backstory?: string;
-  
+
   // Notes
   notes: string;
 }

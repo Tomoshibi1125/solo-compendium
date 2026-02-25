@@ -1,6 +1,6 @@
 /* ============================================================
-   System Ascendant — Global Dungeon Hunter Aesthetic
-   Context-aware theming per app section
+   System Ascendant — Global Dungeon Hunter Aesthetic v2
+   Glassmorphism · Neon Glows · Angular Frames · Holographic HUD
    ============================================================
    Zones:
      [data-sa-zone="character"]  — Purple/violet hunter profile
@@ -14,61 +14,119 @@
 
 /* --- Zone Accent Variables --- */
 :root {
-  --sa-accent: 262 100% 71%;
-  --sa-accent-rgb: 139, 92, 246;
-  --sa-accent-secondary: 185 80% 52%;
-  --sa-accent-secondary-rgb: 6, 182, 212;
-  --sa-glow-intensity: 0.3;
+  --sa-accent: 275 72% 59%;
+  --sa-accent-rgb: 157, 78, 221;
+  --sa-accent-secondary: 190 100% 50%;
+  --sa-accent-secondary-rgb: 0, 212, 255;
+  --sa-glow-intensity: 0.35;
 }
 
 [data-sa-zone="character"] {
-  --sa-accent: 262 100% 71%;
-  --sa-accent-rgb: 139, 92, 246;
-  --sa-accent-secondary: 185 80% 52%;
-  --sa-accent-secondary-rgb: 6, 182, 212;
+  --sa-accent: 275 72% 59%;
+  --sa-accent-rgb: 157, 78, 221;
+  --sa-accent-secondary: 190 100% 50%;
+  --sa-accent-secondary-rgb: 0, 212, 255;
 }
 
 [data-sa-zone="dm"] {
   --sa-accent: 15 90% 55%;
   --sa-accent-rgb: 234, 88, 12;
-  --sa-accent-secondary: 0 72% 51%;
-  --sa-accent-secondary-rgb: 220, 38, 38;
+  --sa-accent-secondary: 0 85% 55%;
+  --sa-accent-secondary-rgb: 229, 29, 29;
 }
 
 [data-sa-zone="campaign"] {
-  --sa-accent: 210 72% 55%;
-  --sa-accent-rgb: 59, 130, 246;
-  --sa-accent-secondary: 185 80% 52%;
-  --sa-accent-secondary-rgb: 6, 182, 212;
+  --sa-accent: 210 85% 58%;
+  --sa-accent-rgb: 59, 140, 255;
+  --sa-accent-secondary: 190 100% 50%;
+  --sa-accent-secondary-rgb: 0, 212, 255;
 }
 
 [data-sa-zone="compendium"] {
-  --sa-accent: 43 90% 58%;
-  --sa-accent-rgb: 234, 179, 8;
-  --sa-accent-secondary: 30 80% 50%;
-  --sa-accent-secondary-rgb: 230, 138, 0;
+  --sa-accent: 43 95% 60%;
+  --sa-accent-rgb: 251, 191, 36;
+  --sa-accent-secondary: 30 85% 54%;
+  --sa-accent-secondary-rgb: 243, 127, 28;
 }
 
 [data-sa-zone="player"] {
-  --sa-accent: 155 80% 42%;
-  --sa-accent-rgb: 16, 185, 129;
-  --sa-accent-secondary: 185 80% 52%;
-  --sa-accent-secondary-rgb: 6, 182, 212;
+  --sa-accent: 145 75% 45%;
+  --sa-accent-rgb: 29, 206, 116;
+  --sa-accent-secondary: 190 100% 50%;
+  --sa-accent-secondary-rgb: 0, 212, 255;
 }
 
 [data-sa-zone="auth"] {
-  --sa-accent: 275 75% 62%;
+  --sa-accent: 275 80% 65%;
   --sa-accent-rgb: 168, 85, 247;
-  --sa-accent-secondary: 262 100% 71%;
-  --sa-accent-secondary-rgb: 139, 92, 246;
-  --sa-glow-intensity: 0.5;
+  --sa-accent-secondary: 275 72% 59%;
+  --sa-accent-secondary-rgb: 157, 78, 221;
+  --sa-glow-intensity: 0.55;
 }
 
 /* ============================================================
-   Global HUD Elements
+   Global Keyframes
    ============================================================ */
 
-/* --- SA Scan Line (top accent on major containers) --- */
+@keyframes sa-global-scan {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes sa-pulse-border {
+
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes sa-glow-breathe {
+
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(var(--sa-accent-rgb), 0.25);
+  }
+
+  50% {
+    box-shadow: 0 0 22px rgba(var(--sa-accent-rgb), 0.55);
+  }
+}
+
+@keyframes sa-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes sa-float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+/* ============================================================
+   SA Scan Line (top accent on major containers)
+   ============================================================ */
 .sa-scan-border {
   position: relative;
 }
@@ -79,15 +137,13 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(var(--sa-accent-rgb), 0.8),
-    rgba(var(--sa-accent-secondary-rgb), 0.6),
-    rgba(var(--sa-accent-rgb), 0.8),
-    transparent
-  );
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(var(--sa-accent-rgb), 0.9) 30%,
+      rgba(var(--sa-accent-secondary-rgb), 0.7) 50%,
+      rgba(var(--sa-accent-rgb), 0.9) 70%,
+      transparent 100%);
   background-size: 200% 100%;
   z-index: 1;
 }
@@ -96,270 +152,462 @@
   animation: sa-global-scan 4s linear infinite;
 }
 
-@keyframes sa-global-scan {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-/* --- SA Card (unified card style across app) --- */
+/* ============================================================
+   SA Card — Glassmorphic floating panel
+   ============================================================ */
 .sa-card {
-  background: hsl(var(--card));
-  border: 1px solid rgba(var(--sa-accent-rgb), 0.15);
+  background: rgba(10, 6, 25, 0.6);
+  backdrop-filter: blur(12px) saturate(1.5);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+  border: 1px solid rgba(var(--sa-accent-rgb), 0.18);
   border-radius: 0.75rem;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  transition:
+    border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Top neon scan edge */
 .sa-card::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    rgba(var(--sa-accent-rgb), 0.6),
-    rgba(var(--sa-accent-secondary-rgb), 0.4)
-  );
-  opacity: 0.5;
+  height: 1px;
+  background: linear-gradient(90deg,
+      rgba(var(--sa-accent-rgb), 0.5),
+      rgba(var(--sa-accent-secondary-rgb), 0.35));
+  opacity: 0.6;
   transition: opacity 0.25s;
 }
 
+/* Faint inner cyan shine (refraction layer) */
+.sa-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+      rgba(var(--sa-accent-secondary-rgb), 0.04) 0%,
+      transparent 50%,
+      transparent 100%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
 .sa-card:hover {
-  border-color: rgba(var(--sa-accent-rgb), 0.35);
-  box-shadow: 0 4px 20px rgba(var(--sa-accent-rgb), calc(var(--sa-glow-intensity) * 0.5));
+  border-color: rgba(var(--sa-accent-rgb), 0.38);
+  box-shadow:
+    0 4px 20px rgba(var(--sa-accent-rgb), calc(var(--sa-glow-intensity) * 0.5)),
+    0 0 0 1px rgba(var(--sa-accent-rgb), 0.1),
+    inset 0 1px 0 rgba(var(--sa-accent-secondary-rgb), 0.08);
+  transform: translateY(-1px);
 }
 
 .sa-card:hover::before {
   opacity: 1;
 }
 
-/* --- SA Panel (SystemWindow equivalent with zone awareness) --- */
+/* ============================================================
+   SA Panel — Zone-aware glassmorphic system window
+   ============================================================ */
 .sa-panel {
-  background: linear-gradient(
-    135deg,
-    hsl(var(--card)) 0%,
-    rgba(var(--sa-accent-rgb), 0.04) 100%
-  );
-  border: 1px solid rgba(var(--sa-accent-rgb), 0.12);
+  background: rgba(7, 4, 18, 0.72);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  border: 1px solid rgba(var(--sa-accent-rgb), 0.14);
   border-radius: 1rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-}
-
-/* --- SA Header Bar (page title area) --- */
-.sa-page-header {
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 60px rgba(var(--sa-accent-rgb), 0.04),
+    inset 0 0 30px rgba(var(--sa-accent-rgb), 0.02);
   position: relative;
-  background: linear-gradient(
-    135deg,
-    rgba(15, 10, 30, 0.95) 0%,
-    rgba(var(--sa-accent-rgb), 0.08) 50%,
-    rgba(10, 10, 25, 0.95) 100%
-  );
-  border: 1px solid rgba(var(--sa-accent-rgb), 0.2);
-  border-radius: 1rem;
-  padding: 1.5rem;
   overflow: hidden;
 }
 
+/* Top gradient sheen */
+.sa-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(var(--sa-accent-rgb), 0.5),
+      rgba(var(--sa-accent-secondary-rgb), 0.35),
+      rgba(var(--sa-accent-rgb), 0.5),
+      transparent);
+}
+
+/* ============================================================
+   SA Page Header — Cinematic hero bar with angled corners
+   ============================================================ */
+.sa-page-header {
+  position: relative;
+  background:
+    linear-gradient(135deg,
+      rgba(7, 3, 18, 0.97) 0%,
+      rgba(var(--sa-accent-rgb), 0.10) 45%,
+      rgba(var(--sa-accent-secondary-rgb), 0.04) 65%,
+      rgba(5, 2, 15, 0.97) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(var(--sa-accent-rgb), 0.22);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  overflow: hidden;
+  clip-path: polygon(0 0,
+      calc(100% - 20px) 0,
+      100% 20px,
+      100% 100%,
+      20px 100%,
+      0 calc(100% - 20px));
+}
+
+/* Animated top scanner line */
 .sa-page-header::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(var(--sa-accent-rgb), 0.7),
-    rgba(var(--sa-accent-secondary-rgb), 0.5),
-    rgba(var(--sa-accent-rgb), 0.7),
-    transparent
-  );
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(var(--sa-accent-rgb), 0.9) 25%,
+      rgba(var(--sa-accent-secondary-rgb), 0.8) 50%,
+      rgba(var(--sa-accent-rgb), 0.9) 75%,
+      transparent 100%);
   background-size: 200% 100%;
   animation: sa-global-scan 4s linear infinite;
+  z-index: 2;
 }
 
+/* Bottom faint underline */
 .sa-page-header::after {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
-  right: 0;
+  left: 5%;
+  right: 5%;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(var(--sa-accent-rgb), 0.3),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(var(--sa-accent-rgb), 0.25),
+      rgba(var(--sa-accent-secondary-rgb), 0.15),
+      rgba(var(--sa-accent-rgb), 0.25),
+      transparent);
 }
 
-/* --- SA Section Title --- */
+/* ============================================================
+   SA Section Title — Small neon label
+   ============================================================ */
 .sa-section-title {
-  font-size: 0.7rem;
-  font-weight: 700;
+  font-size: 0.68rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: rgba(var(--sa-accent-rgb), 0.8);
+  letter-spacing: 0.14em;
+  color: rgba(var(--sa-accent-rgb), 0.85);
+  text-shadow: 0 0 8px rgba(var(--sa-accent-rgb), 0.4);
 }
 
-/* --- SA Stat Display --- */
+/* ============================================================
+   SA Stat Display — Holographic number readout
+   ============================================================ */
 .sa-stat {
   font-family: var(--font-display, ui-monospace, monospace);
   font-weight: 700;
-  color: white;
-  text-shadow: 0 0 10px rgba(var(--sa-accent-rgb), 0.3);
+  color: #fff;
+  text-shadow:
+    0 0 6px rgba(var(--sa-accent-rgb), 0.5),
+    0 0 14px rgba(var(--sa-accent-rgb), 0.25);
 }
 
-/* --- SA Badge (rank/rarity/status) --- */
+/* ============================================================
+   SA Badge — Angled rank/rarity chip
+   ============================================================ */
 .sa-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  padding: 0.125rem 0.5rem;
-  border-radius: 0.375rem;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  border: 1px solid rgba(var(--sa-accent-rgb), 0.3);
-  background: rgba(var(--sa-accent-rgb), 0.1);
+  border: 1px solid rgba(var(--sa-accent-rgb), 0.35);
+  background: rgba(var(--sa-accent-rgb), 0.12);
   color: rgba(var(--sa-accent-rgb), 1);
+  text-shadow: 0 0 6px rgba(var(--sa-accent-rgb), 0.4);
+  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+  border-radius: 0;
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
+  backdrop-filter: blur(4px);
 }
 
-/* --- SA Button Glow --- */
+/* ============================================================
+   SA Button Glow — Pulsing interactive element glow
+   ============================================================ */
 .sa-btn-glow {
-  transition: box-shadow 0.25s, border-color 0.25s;
+  transition:
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.15s ease;
+  position: relative;
 }
 
 .sa-btn-glow:hover {
-  box-shadow: 0 0 12px rgba(var(--sa-accent-rgb), 0.3);
-  border-color: rgba(var(--sa-accent-rgb), 0.4);
+  box-shadow:
+    0 0 10px rgba(var(--sa-accent-rgb), 0.35),
+    0 0 22px rgba(var(--sa-accent-rgb), 0.15),
+    inset 0 1px 0 rgba(var(--sa-accent-secondary-rgb), 0.1);
+  border-color: rgba(var(--sa-accent-rgb), 0.5);
+  transform: translateY(-1px);
 }
 
-/* --- SA Tab Bar --- */
+.sa-btn-glow:active {
+  transform: translateY(0px);
+}
+
+/* ============================================================
+   SA Tab Bar — System terminal tab strip
+   ============================================================ */
 .sa-tabs [role="tablist"] {
-  background: rgba(15, 10, 30, 0.5);
+  background: rgba(7, 4, 18, 0.6);
   border-color: rgba(var(--sa-accent-rgb), 0.12);
+  backdrop-filter: blur(8px);
 }
 
 .sa-tabs [role="tab"][data-state="active"] {
-  background: rgba(var(--sa-accent-rgb), 0.12) !important;
-  border-color: rgba(var(--sa-accent-rgb), 0.25) !important;
-  box-shadow: 0 0 10px rgba(var(--sa-accent-rgb), 0.1),
-    inset 0 1px 0 rgba(var(--sa-accent-rgb), 0.15) !important;
-  color: white;
+  background: rgba(var(--sa-accent-rgb), 0.14) !important;
+  border-color: rgba(var(--sa-accent-rgb), 0.28) !important;
+  box-shadow:
+    0 0 12px rgba(var(--sa-accent-rgb), 0.15),
+    inset 0 1px 0 rgba(var(--sa-accent-rgb), 0.2) !important;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(var(--sa-accent-rgb), 0.35);
 }
 
 .sa-tabs [role="tab"]:hover:not([data-state="active"]) {
-  background: rgba(var(--sa-accent-rgb), 0.06);
+  background: rgba(var(--sa-accent-rgb), 0.07);
+  color: rgba(var(--sa-accent-rgb), 0.9);
 }
 
-/* --- SA Input --- */
+/* ============================================================
+   SA Input — Neon focus ring
+   ============================================================ */
 .sa-input:focus {
-  border-color: rgba(var(--sa-accent-rgb), 0.5);
-  box-shadow: 0 0 0 2px rgba(var(--sa-accent-rgb), 0.15);
+  border-color: rgba(var(--sa-accent-rgb), 0.55);
+  box-shadow:
+    0 0 0 2px rgba(var(--sa-accent-rgb), 0.15),
+    0 0 8px rgba(var(--sa-accent-rgb), 0.1);
+  outline: none;
 }
 
-/* --- SA Progress Bar --- */
+/* ============================================================
+   SA Progress Bar — Animated energy fill
+   ============================================================ */
 .sa-progress {
   width: 100%;
-  height: 6px;
+  height: 5px;
   border-radius: 3px;
-  background: rgba(var(--sa-accent-rgb), 0.1);
+  background: rgba(var(--sa-accent-rgb), 0.08);
   overflow: hidden;
+  position: relative;
+}
+
+.sa-progress::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(var(--sa-accent-secondary-rgb), 0.04);
 }
 
 .sa-progress-fill {
   height: 100%;
   border-radius: 3px;
-  background: linear-gradient(
-    90deg,
-    rgba(var(--sa-accent-rgb), 0.8),
-    rgba(var(--sa-accent-secondary-rgb), 0.7)
-  );
+  background: linear-gradient(90deg,
+      rgba(var(--sa-accent-rgb), 0.95),
+      rgba(var(--sa-accent-secondary-rgb), 0.8));
+  box-shadow: 0 0 6px rgba(var(--sa-accent-rgb), 0.4);
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
 }
 
-/* --- SA Divider --- */
-.sa-divider {
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(var(--sa-accent-rgb), 0.3),
-    transparent
-  );
-  margin: 1rem 0;
-}
-
-/* --- SA Glow Text --- */
-.sa-glow-text {
-  color: rgba(var(--sa-accent-rgb), 1);
-  text-shadow: 0 0 8px rgba(var(--sa-accent-rgb), 0.4);
-}
-
-/* --- SA Data Grid Row Hover --- */
-.sa-row:hover {
-  background: rgba(var(--sa-accent-rgb), 0.04);
-  border-color: rgba(var(--sa-accent-rgb), 0.2);
+/* Shimmer effect on filled bar */
+.sa-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.25),
+      transparent);
+  animation: sa-shimmer 2.5s linear infinite;
 }
 
 /* ============================================================
-   Zone-Specific Overrides
+   SA Divider — Neon separator line
+   ============================================================ */
+.sa-divider {
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(var(--sa-accent-rgb), 0.35) 30%,
+      rgba(var(--sa-accent-secondary-rgb), 0.2) 50%,
+      rgba(var(--sa-accent-rgb), 0.35) 70%,
+      transparent 100%);
+  margin: 1rem 0;
+  position: relative;
+}
+
+.sa-divider::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 3px;
+  background: rgba(var(--sa-accent-secondary-rgb), 0.8);
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(var(--sa-accent-secondary-rgb), 0.6);
+}
+
+/* ============================================================
+   SA Glow Text — Neon text with layered shadow
+   ============================================================ */
+.sa-glow-text {
+  color: rgba(var(--sa-accent-rgb), 1);
+  text-shadow:
+    0 0 6px rgba(var(--sa-accent-rgb), 0.6),
+    0 0 16px rgba(var(--sa-accent-rgb), 0.3),
+    0 0 30px rgba(var(--sa-accent-rgb), 0.12);
+}
+
+/* Animated breathe variant */
+.sa-glow-text--pulse {
+  animation: sa-glow-breathe 2.5s ease-in-out infinite;
+}
+
+/* ============================================================
+   SA Data Grid Row Hover
+   ============================================================ */
+.sa-row:hover {
+  background: rgba(var(--sa-accent-rgb), 0.05);
+  border-color: rgba(var(--sa-accent-rgb), 0.22);
+  box-shadow: inset 2px 0 0 rgba(var(--sa-accent-rgb), 0.4);
+}
+
+/* ============================================================
+   SA Holographic Overlay — Faint grid overlay for panels
+   ============================================================ */
+.sa-holo-grid {
+  position: relative;
+}
+
+.sa-holo-grid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(var(--sa-accent-rgb), 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--sa-accent-rgb), 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: inherit;
+}
+
+/* ============================================================
+   SA Corner Bracket — Geometric corner accent (use with relative pos)
+   ============================================================ */
+.sa-corner-brackets {
+  position: relative;
+}
+
+.sa-corner-brackets::before,
+.sa-corner-brackets::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: rgba(var(--sa-accent-rgb), 0.55);
+  border-style: solid;
+}
+
+.sa-corner-brackets::before {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+}
+
+.sa-corner-brackets::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 2px 2px 0;
+}
+
+/* ============================================================
+   Zone-Specific Page Header Overrides
    ============================================================ */
 
 /* DM Tools: Warden Command HUD */
 [data-sa-zone="dm"] .sa-page-header {
-  background: linear-gradient(
-    135deg,
-    rgba(20, 8, 8, 0.95) 0%,
-    rgba(var(--sa-accent-rgb), 0.1) 50%,
-    rgba(15, 5, 5, 0.95) 100%
-  );
+  background:
+    linear-gradient(135deg,
+      rgba(20, 5, 5, 0.97) 0%,
+      rgba(var(--sa-accent-rgb), 0.12) 45%,
+      rgba(var(--sa-accent-secondary-rgb), 0.05) 65%,
+      rgba(15, 3, 3, 0.97) 100%);
 }
 
 /* Campaign: Alliance Guild Hall */
 [data-sa-zone="campaign"] .sa-page-header {
-  background: linear-gradient(
-    135deg,
-    rgba(8, 12, 25, 0.95) 0%,
-    rgba(var(--sa-accent-rgb), 0.08) 50%,
-    rgba(5, 10, 20, 0.95) 100%
-  );
+  background:
+    linear-gradient(135deg,
+      rgba(4, 10, 22, 0.97) 0%,
+      rgba(var(--sa-accent-rgb), 0.1) 45%,
+      rgba(var(--sa-accent-secondary-rgb), 0.06) 65%,
+      rgba(3, 8, 18, 0.97) 100%);
 }
 
 /* Compendium: Knowledge Archive */
 [data-sa-zone="compendium"] .sa-page-header {
-  background: linear-gradient(
-    135deg,
-    rgba(20, 15, 5, 0.95) 0%,
-    rgba(var(--sa-accent-rgb), 0.06) 50%,
-    rgba(15, 10, 3, 0.95) 100%
-  );
+  background:
+    linear-gradient(135deg,
+      rgba(18, 13, 3, 0.97) 0%,
+      rgba(var(--sa-accent-rgb), 0.08) 45%,
+      rgba(var(--sa-accent-secondary-rgb), 0.04) 65%,
+      rgba(14, 9, 2, 0.97) 100%);
 }
 
 /* Player Tools: Hunter Toolkit */
 [data-sa-zone="player"] .sa-page-header {
-  background: linear-gradient(
-    135deg,
-    rgba(5, 18, 12, 0.95) 0%,
-    rgba(var(--sa-accent-rgb), 0.08) 50%,
-    rgba(3, 15, 10, 0.95) 100%
-  );
+  background:
+    linear-gradient(135deg,
+      rgba(3, 14, 9, 0.97) 0%,
+      rgba(var(--sa-accent-rgb), 0.1) 45%,
+      rgba(var(--sa-accent-secondary-rgb), 0.06) 65%,
+      rgba(2, 10, 6, 0.97) 100%);
 }
 
 /* Auth: System Awakening */
 [data-sa-zone="auth"] .sa-page-header {
-  background: linear-gradient(
-    135deg,
-    rgba(15, 5, 25, 0.95) 0%,
-    rgba(var(--sa-accent-rgb), 0.12) 50%,
-    rgba(10, 3, 20, 0.95) 100%
-  );
+  background:
+    linear-gradient(135deg,
+      rgba(12, 4, 22, 0.97) 0%,
+      rgba(var(--sa-accent-rgb), 0.15) 45%,
+      rgba(var(--sa-accent-secondary-rgb), 0.06) 65%,
+      rgba(8, 2, 18, 0.97) 100%);
 }
 
 /* ============================================================
@@ -368,34 +616,70 @@
 
 /* SystemWindow cards get zone-aware borders */
 [data-sa-zone] .border-border {
-  border-color: rgba(var(--sa-accent-rgb), 0.1);
-}
-
-/* All buttons get subtle zone glow on hover */
-[data-sa-zone] button:hover:not(:disabled) {
-  transition: box-shadow 0.2s;
+  border-color: rgba(var(--sa-accent-rgb), 0.12);
 }
 
 /* Zone-aware focus rings */
 [data-sa-zone] *:focus-visible {
-  outline-color: rgba(var(--sa-accent-rgb), 0.6);
+  outline: 2px solid rgba(var(--sa-accent-rgb), 0.65);
+  outline-offset: 2px;
 }
 
 /* Badge zone coloring */
 [data-sa-zone] .badge-zone {
-  border-color: rgba(var(--sa-accent-rgb), 0.3);
+  border-color: rgba(var(--sa-accent-rgb), 0.35);
   color: rgba(var(--sa-accent-rgb), 1);
+  text-shadow: 0 0 5px rgba(var(--sa-accent-rgb), 0.35);
+}
+
+/* Scrollbar styling */
+[data-sa-zone] *::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+[data-sa-zone] *::-webkit-scrollbar-track {
+  background: rgba(var(--sa-accent-rgb), 0.04);
+}
+
+[data-sa-zone] *::-webkit-scrollbar-thumb {
+  background: rgba(var(--sa-accent-rgb), 0.25);
+  border-radius: 2px;
+}
+
+[data-sa-zone] *::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--sa-accent-rgb), 0.45);
 }
 
 /* ============================================================
    Reduced Motion
    ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+
+  .sa-scan-border--animated::before,
+  .sa-page-header::before,
+  .sa-progress-fill::after {
+    animation: none;
+  }
+
+  .sa-card:hover,
+  .sa-btn-glow:hover {
+    transform: none;
+  }
+
+  .sa-glow-text--pulse {
+    animation: none;
+  }
+}
+
 .reduce-motion .sa-scan-border--animated::before,
-.reduce-motion .sa-page-header::before {
+.reduce-motion .sa-page-header::before,
+.reduce-motion .sa-progress-fill::after {
   animation: none;
 }
 
-.reduce-motion .sa-card:hover {
+.reduce-motion .sa-card:hover,
+.reduce-motion .sa-btn-glow:hover {
   transform: none;
 }
 
@@ -403,20 +687,26 @@
    Print
    ============================================================ */
 @media print {
+
   .sa-page-header,
-  .sa-scan-border {
+  .sa-scan-border,
+  .sa-panel,
+  .sa-card {
     background: white !important;
     border-color: #ccc !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+    clip-path: none !important;
   }
 
   .sa-page-header::before,
   .sa-page-header::after,
-  .sa-scan-border::before {
+  .sa-scan-border::before,
+  .sa-panel::before,
+  .sa-card::before,
+  .sa-card::after,
+  .sa-divider::after,
+  .sa-holo-grid::before {
     display: none;
-  }
-
-  .sa-card {
-    border-color: #ddd !important;
-    box-shadow: none !important;
   }
 }

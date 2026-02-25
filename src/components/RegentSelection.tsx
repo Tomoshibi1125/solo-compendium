@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { error as logError } from '@/lib/logger';
 import { Character } from '../types/character';
-import { 
-  RegentGeminiSystem, 
-  RegentChoice, 
-  RegentPath, 
+import {
+  RegentGeminiSystem,
+  RegentChoice,
+  RegentPath,
   GeminiSovereign,
-  RegentQuestManager 
+  RegentQuestManager
 } from '../lib/regentGeminiSystem';
 
 type AbilityScore = 'STR' | 'AGI' | 'VIT' | 'INT' | 'SENSE' | 'PRE';
@@ -54,7 +54,7 @@ export const RegentSelection: React.FC<RegentSelectionProps> = ({
 
   const handleRegentSelect = async (choice: RegentChoice) => {
     setSelectedRegent(choice);
-    
+
     // Preview Gemini fusion if this would be the second regent
     if (currentRegents.length === 1) {
       const preview = await RegentGeminiSystem.createGeminiFusion(
@@ -95,7 +95,7 @@ export const RegentSelection: React.FC<RegentSelectionProps> = ({
   const getStatColor = (stat: AbilityScore): string => {
     const colors: Record<AbilityScore, string> = {
       'STR': 'text-red-600',
-      'AGI': 'text-green-600', 
+      'AGI': 'text-green-600',
       'VIT': 'text-orange-600',
       'INT': 'text-blue-600',
       'SENSE': 'text-purple-600',
@@ -138,7 +138,7 @@ export const RegentSelection: React.FC<RegentSelectionProps> = ({
           Regent Selection
         </h2>
         <div className="text-purple-200 mb-4">
-          Based on your highest stat: 
+          Based on your highest stat:
           <span className={`font-bold ml-2 ${getStatColor(highestStat)}`}>
             {getStatIcon(highestStat)} {highestStat} ({abilities[highestStat]})
           </span>
@@ -163,11 +163,10 @@ export const RegentSelection: React.FC<RegentSelectionProps> = ({
           {regentChoices.map((choice, index) => (
             <div
               key={choice.regent.id}
-              className={`regent-option bg-purple-800 bg-opacity-50 rounded-lg p-4 border-2 cursor-pointer transition-all hover:bg-opacity-80 hover:scale-105 ${
-                selectedRegent?.regent.id === choice.regent.id 
-                  ? 'border-yellow-400 shadow-lg shadow-yellow-400/50' 
+              className={`regent-option bg-purple-800 bg-opacity-50 rounded-lg p-4 border-2 cursor-pointer transition-all hover:bg-opacity-80 hover:scale-105 ${selectedRegent?.regent.id === choice.regent.id
+                  ? 'border-yellow-400 shadow-lg shadow-yellow-400/50'
                   : 'border-purple-600'
-              }`}
+                }`}
               onClick={() => handleRegentSelect(choice)}
             >
               <div className="flex justify-between items-start mb-2">
@@ -176,9 +175,9 @@ export const RegentSelection: React.FC<RegentSelectionProps> = ({
                   {choice.compatibilityScore}% Match
                 </div>
               </div>
-              
+
               <p className="text-purple-200 text-sm mb-3">{choice.regent.description}</p>
-              
+
               <div className="mb-3">
                 <div className="text-xs text-purple-300 mb-1">Requirements:</div>
                 <div className="text-xs text-purple-400">
@@ -207,12 +206,12 @@ export const RegentSelection: React.FC<RegentSelectionProps> = ({
         <div className="bg-purple-800 bg-opacity-50 rounded-lg p-4 mb-6 border-2 border-yellow-400">
           <h3 className="text-lg font-bold text-yellow-400 mb-2">Selected Regent</h3>
           <p className="text-purple-200 mb-4">{selectedRegent.regent.name}</p>
-          
+
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
               <div className="text-sm text-purple-300">Stat Alignment</div>
               <div className={`font-bold ${getStatColor(highestStat)}`}>
-                {selectedRegent.statAlignment > 0 ? '+' : ''}{selectedRegent.statAlignment}
+                {(abilities[highestStat] - selectedRegent.regent.requirements.statThreshold) > 0 ? '+' : ''}{abilities[highestStat] - selectedRegent.regent.requirements.statThreshold}
               </div>
             </div>
             <div>
@@ -236,7 +235,7 @@ export const RegentSelection: React.FC<RegentSelectionProps> = ({
             <span className="mr-2">🌟</span>
             Gemini Protocol Preview
           </h3>
-          
+
           <div className="text-white mb-4">
             <div className="text-2xl font-bold mb-2">{geminiPreview.name}</div>
             <div className="text-sm opacity-90 mb-2">

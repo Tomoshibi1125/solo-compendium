@@ -46,10 +46,11 @@ export interface Power {
   flavor: string;
   source: string;
   image?: string;
-  
+
   // 5e-style power mechanics
   spell_level_equivalent?: number;     // If power acts like a spell
   concentration_required?: boolean;
+  ritual?: boolean;
   saving_throw?: {
     ability: string;
     dc: string | number;

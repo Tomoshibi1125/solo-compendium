@@ -1,8 +1,10 @@
 // REGENT & GEMINI PROTOCOL SYSTEM
-// Advanced sovereign class system with DBZ-style fusion mechanics
+// Advanced sovereign class system with AI-driven fusion mechanics
+// Nine Regents inspired by Solo Leveling's Nine Monarchs
 
 import { Character } from '../types/character';
 import { LocalAIIntegration } from './localAIIntegration';
+import { NINE_REGENTS } from './nineRegents';
 
 type AbilityScore = 'STR' | 'AGI' | 'VIT' | 'INT' | 'SENSE' | 'PRE';
 type Job = string;
@@ -32,7 +34,7 @@ interface Trait {
 // Regent types based on highest stat
 export enum RegentType {
   STRENGTH_REGENT = 'Strength Regent',
-  AGILITY_REGENT = 'Agility Regent', 
+  AGILITY_REGENT = 'Agility Regent',
   VITALITY_REGENT = 'Vitality Regent',
   INTELLIGENCE_REGENT = 'Intelligence Regent',
   SENSE_REGENT = 'Sense Regent',
@@ -79,330 +81,62 @@ export interface GeminiSovereign {
 export interface RegentChoice {
   regent: RegentPath;
   aiReasoning: string;
-  statAlignment: number;
+  adaptationNote?: string; // How the regent is adapted for martial/caster compatibility
   compatibilityScore: number;
 }
 
 // Complete regent system implementation
+// The Nine Regents - Inspired by Solo Leveling's Nine Monarchs
+//
+// REGENT SELECTION RULES:
+// 1. On quest unlock, AI presents 3 regent choices
+// 2. Choices are based on character's stats, job, playstyle
+// 3. Player picks ONE regent
+// 4. When DM unlocks second quest, AI presents 3 NEW choices (cannot pick same regent twice)
+// 5. Player picks ONE more regent (MAX 2 REGENTS TOTAL)
+// 6. If martial picks caster regent (or vice versa), AI adapts it for compatibility
+// 7. When player has 2 regents, they can fuse via Gemini Protocol
+// 8. ALL 9x9 regent combinations are valid for fusion (81 possible sovereigns)
 export class RegentGeminiSystem {
-  static readonly REGENT_DATABASE: RegentPath[] = [
-    // Strength-based regents
-    {
-      id: 'iron_fist_regent',
-      name: 'Iron Fist Regent',
-      type: RegentType.STRENGTH_REGENT,
-      description: 'Master of physical combat and martial prowess',
-      abilities: ['Unarmed Strike Mastery', 'Brute Force', 'Physical Dominance'],
-      features: [
-        {
-          name: 'Titanic Strength',
-          description: 'Double strength modifier for melee attacks',
-          type: 'passive'
-        }
-      ],
-      spells: [],
-      requirements: { level: 10, statThreshold: 16 }
-    },
-    {
-      id: 'warlord_regent',
-      name: 'Warlord Regent', 
-      type: RegentType.STRENGTH_REGENT,
-      description: 'Commander of armies and master of warfare',
-      abilities: ['Battle Command', 'Tactical Mastery', 'Army Leadership'],
-      features: [
-        {
-          name: 'Inspiring Presence',
-          description: 'Allies gain +2 to attack rolls within 30ft',
-          type: 'aura'
-        }
-      ],
-      spells: [],
-      requirements: { level: 15, statThreshold: 18 }
-    },
-    {
-      id: 'berserker_regent',
-      name: 'Berserker Regent',
-      type: RegentType.STRENGTH_REGENT,
-      description: 'Unleashed fury and unstoppable rage',
-      abilities: ['Rage Transformation', 'Fury Strike', 'Unstoppable Force'],
-      features: [
-        {
-          name: 'Primal Rage',
-          description: 'Enter rage state for enhanced combat abilities',
-          type: 'transformation'
-        }
-      ],
-      spells: [],
-      requirements: { level: 12, statThreshold: 17 }
-    },
-    
-    // Dexterity-based regents
-    {
-      id: 'shadow_dancer_regent',
-      name: 'Shadow Dancer Regent',
-      type: RegentType.AGILITY_REGENT,
-      description: 'Master of stealth and acrobatic movement',
-      abilities: ['Shadow Step', 'Perfect Balance', 'Acrobatic Mastery'],
-      features: [
-        {
-          name: 'Shadowmeld',
-          description: 'Become invisible in shadows',
-          type: 'stealth'
-        }
-      ],
-      spells: ['Darkness', 'Shadow Strike'],
-      requirements: { level: 10, statThreshold: 16 }
-    },
-    {
-      id: 'wind_walker_regent',
-      name: 'Wind Walker Regent',
-      type: RegentType.AGILITY_REGENT,
-      description: 'Swift as the wind, impossible to catch',
-      abilities: ['Wind Step', 'Lightning Speed', 'Evasion Mastery'],
-      features: [
-        {
-          name: 'Wind Walk',
-          description: 'Move through enemies without provoking attacks',
-          type: 'movement'
-        }
-      ],
-      spells: ['Haste', 'Feather Fall'],
-      requirements: { level: 12, statThreshold: 17 }
-    },
-    {
-      id: 'phantom_blade_regent',
-      name: 'Phantom Blade Regent',
-      type: RegentType.AGILITY_REGENT,
-      description: 'Master of weapon techniques and precision strikes',
-      abilities: ['Phantom Strike', 'Weapon Mastery', 'Perfect Aim'],
-      features: [
-        {
-          name: 'Ghost Touch',
-          description: 'Attacks ignore armor and resistances',
-          type: 'offensive'
-        }
-      ],
-      spells: ['Teleport Strike', 'Blade Ward'],
-      requirements: { level: 15, statThreshold: 18 }
-    },
-    
-    // Constitution-based regents
-    {
-      id: 'iron_body_regent',
-      name: 'Iron Body Regent',
-      type: RegentType.VITALITY_REGENT,
-      description: 'Unbreakable body and incredible endurance',
-      abilities: ['Iron Skin', 'Endurance Mastery', 'Pain Resistance'],
-      features: [
-        {
-          name: 'Adamantine Body',
-          description: 'Immunity to poison and resistance to all damage',
-          type: 'defensive'
-        }
-      ],
-      spells: ['Stoneskin', 'Regeneration'],
-      requirements: { level: 10, statThreshold: 16 }
-    },
-    {
-      id: 'earth_guardian_regent',
-      name: 'Earth Guardian Regent',
-      type: RegentType.VITALITY_REGENT,
-      description: 'Protector of the land and its people',
-      abilities: ['Earth Shield', 'Ground Control', 'Protection Aura'],
-      features: [
-        {
-          name: 'Guardian Shield',
-          description: 'Protect allies within 30ft with damage reduction',
-          type: 'protective'
-        }
-      ],
-      spells: ['Wall of Stone', 'Earthquake'],
-      requirements: { level: 15, statThreshold: 18 }
-    },
-    {
-      id: 'life_binder_regent',
-      name: 'Life Binder Regent',
-      type: RegentType.VITALITY_REGENT,
-      description: 'Master of life force and healing',
-      abilities: ['Life Force Control', 'Healing Touch', 'Vitality Mastery'],
-      features: [
-        {
-          name: 'Life Transfer',
-          description: 'Transfer life force between allies',
-          type: 'healing'
-        }
-      ],
-      spells: ['Heal', 'Mass Cure', 'Resurrection'],
-      requirements: { level: 12, statThreshold: 17 }
-    },
-    
-    // Intelligence-based regents
-    {
-      id: 'arcane_master_regent',
-      name: 'Arcane Master Regent',
-      type: RegentType.INTELLIGENCE_REGENT,
-      description: 'Supreme mastery of magical arts',
-      abilities: ['Spell Mastery', 'Arcane Insight', 'Reality Manipulation'],
-      features: [
-        {
-          name: 'Spell Weaving',
-          description: 'Combine and modify spells in real-time',
-          type: 'magical'
-        }
-      ],
-      spells: ['Time Stop', 'Wish', 'Meteor Swarm'],
-      requirements: { level: 15, statThreshold: 18 }
-    },
-    {
-      id: 'technomancer_regent',
-      name: 'Technomancer Regent',
-      type: RegentType.INTELLIGENCE_REGENT,
-      description: 'Fusion of magic and technology',
-      abilities: ['Tech Integration', 'Invention Mastery', 'Digital Control'],
-      features: [
-        {
-          name: 'Technological Integration',
-          description: 'Combine magic with advanced technology',
-          type: 'technological'
-        }
-      ],
-      spells: ['Lightning Bolt', 'Force Field', 'Hologram'],
-      requirements: { level: 12, statThreshold: 17 }
-    },
-    {
-      id: 'mind_lord_regent',
-      name: 'Mind Lord Regent',
-      type: RegentType.INTELLIGENCE_REGENT,
-      description: 'Master of mental powers and psionics',
-      abilities: ['Telepathy', 'Mind Control', 'Psychic Domination'],
-      features: [
-        {
-          name: 'Psychic Network',
-          description: 'Create mental network with allies',
-          type: 'psionic'
-        }
-      ],
-      spells: ['Dominate Person', 'Mind Blank', 'Psychic Scream'],
-      requirements: { level: 10, statThreshold: 16 }
-    },
-    
-    // Wisdom-based regents
-    {
-      id: 'divine_seer_regent',
-      name: 'Divine Seer Regent',
-      type: RegentType.SENSE_REGENT,
-      description: 'Prophet with divine insight and foresight',
-      abilities: ['Divine Sight', 'Prophecy', 'Healing Hands'],
-      features: [
-        {
-          name: 'Divine Intervention',
-          description: 'Call upon divine power for assistance',
-          type: 'divine'
-        }
-      ],
-      spells: ['Heal', 'Divine Favor', 'True Seeing'],
-      requirements: { level: 12, statThreshold: 17 }
-    },
-    {
-      id: 'nature_lord_regent',
-      name: 'Nature Lord Regent',
-      type: RegentType.SENSE_REGENT,
-      description: 'Master of natural world and its creatures',
-      abilities: ['Beast Command', 'Plant Control', 'Weather Mastery'],
-      features: [
-        {
-          name: 'Nature\'s Wrath',
-          description: 'Command natural forces to attack enemies',
-          type: 'elemental'
-        }
-      ],
-      spells: ['Call Lightning', 'Control Weather', 'Summon Nature\'s Ally'],
-      requirements: { level: 15, statThreshold: 18 }
-    },
-    {
-      id: 'spirit_walker_regent',
-      name: 'Spirit Walker Regent',
-      type: RegentType.SENSE_REGENT,
-      description: 'Traveler between spirit and material worlds',
-      abilities: ['Spirit Form', 'Astral Projection', 'Soul Sight'],
-      features: [
-        {
-          name: 'Ethereal Form',
-          description: 'Become ethereal and pass through objects',
-          type: 'spiritual'
-        }
-      ],
-      spells: ['Ethereal Jaunt', 'Spirit Guardians', 'Plane Shift'],
-      requirements: { level: 10, statThreshold: 16 }
-    },
-    
-    // Charisma-based regents
-    {
-      id: 'silver_tongue_regent',
-      name: 'Silver Tongue Regent',
-      type: RegentType.PRESENCE_REGENT,
-      description: 'Master of persuasion and social manipulation',
-      abilities: ['Persuasion Mastery', 'Charm Person', 'Leadership Aura'],
-      features: [
-        {
-          name: 'Golden Voice',
-          description: 'Words have magical persuasive power',
-          type: 'social'
-        }
-      ],
-      spells: ['Charm Monster', 'Suggestion', 'Mass Suggestion'],
-      requirements: { level: 10, statThreshold: 16 }
-    },
-    {
-      id: 'royal_commander_regent',
-      name: 'Royal Commander Regent',
-      type: RegentType.PRESENCE_REGENT,
-      description: 'Natural leader with royal authority',
-      abilities: ['Royal Command', 'Inspire Loyalty', 'Noble Presence'],
-      features: [
-        {
-          name: 'Royal Authority',
-          description: 'Commands must be obeyed by subjects',
-          type: 'authority'
-        }
-      ],
-      spells: ['Command', 'Heroism', 'Mass Heroism'],
-      requirements: { level: 15, statThreshold: 18 }
-    },
-    {
-      id: 'soul_binder_regent',
-      name: 'Soul Binder Regent',
-      type: RegentType.PRESENCE_REGENT,
-      description: 'Master of souls and spiritual contracts',
-      abilities: ['Soul Binding', 'Spirit Contracts', 'Life Force Manipulation'],
-      features: [
-        {
-          name: 'Soul Pact',
-          description: 'Make binding contracts with powerful spirits',
-          type: 'spiritual'
-        }
-      ],
-      spells: ['Soul Bind', 'Spiritual Weapon', 'True Resurrection'],
-      requirements: { level: 12, statThreshold: 17 }
-    }
-  ];
+  // Import the Nine Regents from nineRegents.ts
+  static readonly REGENT_DATABASE: RegentPath[] = NINE_REGENTS;
+  static readonly MAX_REGENTS_PER_CHARACTER = 2;
 
-  // Generate regent choices based on character's highest stat
-  static async generateRegentChoices(character: Character): Promise<RegentChoice[]> {
+  /**
+   * Generate 3 regent choices on quest unlock
+   * AI considers: character stats, job type (martial/caster), playstyle, current regents
+   */
+  static async generateRegentChoices(
+    character: Character,
+    currentRegents: string[] = [] // IDs of regents already chosen
+  ): Promise<RegentChoice[]> {
+    // Cannot have more than 2 regents
+    if (currentRegents.length >= this.MAX_REGENTS_PER_CHARACTER) {
+      throw new Error(`Character already has maximum ${this.MAX_REGENTS_PER_CHARACTER} regents. Cannot choose more.`);
+    }
+
     const abilities = this.getCharacterAbilities(character);
-    const highestStat = this.getHighestStat(abilities);
-    const availableRegents = this.REGENT_DATABASE.filter(regent => 
-      regent.type === this.getRegentType(highestStat) &&
-      regent.requirements.statThreshold <= abilities[highestStat]
+    const job = this.getCharacterJob(character);
+    const jobType = this.getJobType(job); // 'martial', 'caster', 'halfcaster', 'pactcaster'
+
+    // Filter out regents already chosen
+    const availableRegents = this.REGENT_DATABASE.filter(
+      regent => !currentRegents.includes(regent.id) &&
+        regent.requirements.statThreshold <= this.getHighestAbilityScore(abilities)
     );
 
     // Use AI to select and rank the best 3 options
-    const aiChoices = await this.aiSelectRegents(character, availableRegents, highestStat);
-    
+    // AI considers stat alignment, job compatibility, and adaptation needs
+    const aiChoices = await this.aiSelectRegents(character, availableRegents, jobType);
+
     return aiChoices.slice(0, 3); // Return top 3 choices
   }
 
-  // Create Gemini Protocol fusion
+  /**
+   * Create Gemini Protocol fusion (Sovereign)
+   * ALL 9x9 combinations are possible (81 total sovereigns)
+   * AI generates unique fusion based on: Job + Path + Regent A + Regent B
+   */
   static async createGeminiFusion(
     character: Character,
     regent1: RegentPath,
@@ -410,10 +144,15 @@ export class RegentGeminiSystem {
   ): Promise<GeminiSovereign> {
     const baseJob = this.getCharacterJob(character);
     const basePath = this.getCharacterPath(character);
-    
+    const jobType = this.getJobType(baseJob);
+
     // AI generates fusion based on regents and base job
+    // Adapts regent features for martial/caster compatibility if needed
     const fusion = await this.aiGenerateFusion(character, regent1, regent2, baseJob, basePath);
-    
+
+    // Calculate fusion quality based on thematic/mechanical synergy (not stats)
+    const fusionType = this.calculateFusionSynergy(regent1, regent2, jobType);
+
     return {
       id: fusion.id,
       name: fusion.name,
@@ -423,13 +162,13 @@ export class RegentGeminiSystem {
       spells: fusion.spells,
       techniques: fusion.techniques,
       traits: fusion.traits,
-      statBonuses: fusion.statBonuses,
+      statBonuses: {}, // NO stat bonuses - sovereigns are powerful subclass overlays
       specialAbilities: fusion.specialAbilities,
       baseJob,
       basePath,
       regent1,
       regent2,
-      fusionType: this.calculateFusionType(regent1, regent2)
+      fusionType
     };
   }
 
@@ -457,49 +196,161 @@ export class RegentGeminiSystem {
     return statToRegent[stat];
   }
 
+  private static getHighestAbilityScore(abilities: Record<AbilityScore, number>): number {
+    return Math.max(...Object.values(abilities));
+  }
+
+  /**
+   * Determine job type for regent adaptation
+   * Martial jobs: Destroyer, Berserker, Assassin, Holy Knight, Stalker, Striker
+   * Casters: Mage, Herald, Summoner, Esper, Revenant, Idol
+   * Halfcasters: None currently (but supported for future)
+   * Pactcasters: Contractor, Technomancer
+   */
+  private static getJobType(job: string): 'martial' | 'caster' | 'halfcaster' | 'pactcaster' {
+    const martialJobs = ['destroyer', 'berserker', 'assassin', 'holy knight', 'stalker', 'striker'];
+    const casterJobs = ['mage', 'herald', 'summoner', 'esper', 'revenant', 'idol'];
+    const pactcasterJobs = ['contractor', 'technomancer'];
+
+    const jobLower = job.toLowerCase();
+
+    if (martialJobs.includes(jobLower)) return 'martial';
+    if (casterJobs.includes(jobLower)) return 'caster';
+    if (pactcasterJobs.includes(jobLower)) return 'pactcaster';
+
+    return 'halfcaster'; // Default for unknown jobs
+  }
+
+  /**
+   * Calculate fusion synergy based on thematic/mechanical compatibility
+   * ALL 9x9 combinations are valid, but some synergize better
+   * Returns: Perfect (complementary themes), Good (neutral themes), Average (opposed themes)
+   */
+  private static calculateFusionSynergy(
+    regent1: RegentPath,
+    regent2: RegentPath,
+    jobType: string
+  ): 'Perfect' | 'Good' | 'Average' {
+    // Perfect synergy examples:
+    // - Shadow + Mimic (both deception/adaptation)
+    // - Dragon + Beast (both primal transformation)
+    // - Architect + Frost (both reality manipulation)
+    // - Plague + Shadow (both death/decay themes)
+    // - Titan + Beast (both physical dominance)
+
+    const synergies: Record<string, string[]> = {
+      shadow_regent: ['mimic_regent', 'plague_regent', 'architect_regent'],
+      dragon_regent: ['beast_regent', 'titan_regent'],
+      frost_regent: ['architect_regent', 'plague_regent'],
+      beast_regent: ['dragon_regent', 'titan_regent'],
+      titan_regent: ['beast_regent', 'dragon_regent'],
+      plague_regent: ['shadow_regent', 'frost_regent'],
+      architect_regent: ['shadow_regent', 'frost_regent', 'radiant_regent'],
+      radiant_regent: ['architect_regent', 'titan_regent'],
+      mimic_regent: ['shadow_regent', 'plague_regent']
+    };
+
+    // Check if regents have perfect synergy
+    if (synergies[regent1.id]?.includes(regent2.id) || synergies[regent2.id]?.includes(regent1.id)) {
+      return 'Perfect';
+    }
+
+    // Opposed themes (still valid, just less synergy):
+    // - Radiant vs Shadow (light vs dark)
+    // - Titan vs Mimic (immovable vs adaptable)
+    const oppositions: Record<string, string[]> = {
+      radiant_regent: ['shadow_regent', 'plague_regent'],
+      shadow_regent: ['radiant_regent'],
+      titan_regent: ['mimic_regent'],
+      mimic_regent: ['titan_regent']
+    };
+
+    if (oppositions[regent1.id]?.includes(regent2.id) || oppositions[regent2.id]?.includes(regent1.id)) {
+      return 'Average';
+    }
+
+    // Everything else is Good synergy
+    return 'Good';
+  }
+
   // AI integration for regent selection
   private static async aiSelectRegents(
-    character: Character, 
-    availableRegents: RegentPath[], 
-    highestStat: AbilityScore
+    character: Character,
+    availableRegents: RegentPath[],
+    jobType: string
   ): Promise<RegentChoice[]> {
-    
+
     // Simulate AI analysis with comprehensive scoring
     const choices: RegentChoice[] = [];
-    
+
     for (const regent of availableRegents) {
-      const score = await this.aiAnalyzeRegentChoice(character, regent, highestStat);
+      const score = await this.aiAnalyzeRegentChoice(character, regent, jobType);
+
+      // Check if regent needs adaptation for job type compatibility
+      const adaptationNote = this.generateAdaptationNote(regent, jobType);
+
       choices.push({
         regent,
         aiReasoning: score.reasoning,
-        statAlignment: score.alignment,
+        adaptationNote,
         compatibilityScore: score.compatibility
       });
     }
-    
+
     // Sort by compatibility score
     return choices.sort((a, b) => b.compatibilityScore - a.compatibilityScore);
+  }
+
+  /**
+   * Generate adaptation note if regent needs to be adapted for job type
+   * Martial selecting caster regent: Adapt spells to martial techniques
+   * Caster selecting martial regent: Adapt physical abilities to magical versions
+   */
+  private static generateAdaptationNote(regent: RegentPath, jobType: string): string | undefined {
+    // Determine if regent is spell-heavy or martial-heavy
+    const isSpellHeavyRegent = regent.spells.length > 3;
+    const isMartialHeavyRegent = regent.features.some(f =>
+      f.description.toLowerCase().includes('weapon') ||
+      f.description.toLowerCase().includes('attack') ||
+      f.description.toLowerCase().includes('physical')
+    );
+
+    if (jobType === 'martial' && isSpellHeavyRegent) {
+      return `ADAPTED FOR MARTIAL: Spells converted to martial techniques. Example: "${regent.spells[0]}" becomes a physical technique with similar effect.`;
+    }
+
+    if ((jobType === 'caster' || jobType === 'pactcaster') && isMartialHeavyRegent) {
+      return `ADAPTED FOR CASTER: Physical abilities converted to magical versions. Example: Natural weapons become force constructs, transformations become magical polymorphs.`;
+    }
+
+    // Halfcasters get hybrid versions
+    if (jobType === 'halfcaster' && (isSpellHeavyRegent || isMartialHeavyRegent)) {
+      return `ADAPTED FOR HALFCASTER: Abilities balanced between martial and magical. You can use both versions (physical techniques OR spells) as appropriate.`;
+    }
+
+    return undefined; // No adaptation needed
   }
 
   // AI analysis for regent compatibility
   private static async aiAnalyzeRegentChoice(
     character: Character,
     regent: RegentPath,
-    highestStat: AbilityScore
+    jobType: string
   ): Promise<{ reasoning: string; alignment: number; compatibility: number }> {
     const abilities = this.getCharacterAbilities(character);
     const job = this.getCharacterJob(character);
-    
+    const highestStat = this.getHighestStat(abilities);
+
     // Simulate AI reasoning process
     const statAlignment = abilities[highestStat] - regent.requirements.statThreshold;
     const levelAlignment = character.level - (regent.requirements.level ?? 0);
     const jobCompatibility = this.calculateJobCompatibility(job, regent);
     const playstyleMatch = this.calculatePlaystyleMatch(character, regent);
-    
+
     const compatibility = (statAlignment * 2) + (levelAlignment * 1.5) + (jobCompatibility * 2) + (playstyleMatch * 1.5);
-    
+
     const reasoning = `This regent aligns ${statAlignment > 0 ? 'perfectly' : 'well'} with your ${highestStat} stat (${abilities[highestStat]} vs ${regent.requirements.statThreshold} needed), matches your ${job} class at ${jobCompatibility}% compatibility, and suits your playstyle at ${playstyleMatch}% match.`;
-    
+
     return {
       reasoning,
       alignment: statAlignment,
@@ -526,7 +377,7 @@ export class RegentGeminiSystem {
     statBonuses: Partial<Record<AbilityScore, number>>;
     specialAbilities: string[];
   }> {
-    
+
     // AI generates unique fusion name and abilities
     const fusionName = await this.aiGenerateFusionName(regent1, regent2, baseJob, basePath);
     const fusionAbilities = await this.aiMergeAbilities(regent1, regent2, baseJob, basePath);
@@ -538,7 +389,7 @@ export class RegentGeminiSystem {
     const specialAbilities = await this.aiGenerateSpecialAbilities(regent1, regent2, character, baseJob, basePath);
     const basePathLabel = basePath || 'Base Path';
     const safeJob = baseJob.toLowerCase().replace(/\s+/g, '_');
-    
+
     return {
       id: `gemini_${safeJob}_${regent1.id}_${regent2.id}`,
       name: fusionName,
@@ -571,7 +422,7 @@ export class RegentGeminiSystem {
       `${regent1.name.split(' ')[0]} Master ${regent2.name.split(' ')[0]} Lord`,
       `Dual ${regent1.name.split(' ')[0]}-${regent2.name.split(' ')[0]} Sovereign`
     ];
-    
+
     // AI would select the most epic-sounding name
     return namePatterns[Math.floor(Math.random() * namePatterns.length)];
   }
@@ -585,7 +436,7 @@ export class RegentGeminiSystem {
   ): Promise<string[]> {
     const basePathLabel = basePath || 'Base';
     const allAbilities = [...regent1.abilities, ...regent2.abilities];
-    
+
     // AI creates unique fusion abilities
     const fusionAbilities = [
       ...allAbilities,
@@ -595,7 +446,7 @@ export class RegentGeminiSystem {
       `Dual ${regent1.name.split(' ')[0]} ${regent2.name.split(' ')[0]} Mastery`,
       `Sovereign ${regent1.name.split(' ')[0]}-${regent2.name.split(' ')[0]} Power`
     ];
-    
+
     return fusionAbilities;
   }
 
@@ -608,14 +459,14 @@ export class RegentGeminiSystem {
   ): Promise<Feature[]> {
     const basePathLabel = basePath || 'Base';
     const mergedFeatures = [...regent1.features, ...regent2.features];
-    
+
     // AI creates fusion-specific features
     const fusionFeature: Feature = {
       name: `Fusion Mastery: ${regent1.name.split(' ')[0]}-${regent2.name.split(' ')[0]}`,
       description: `${baseJob} (${basePathLabel}) techniques fused with ${regent1.name} and ${regent2.name} powers`,
       type: 'fusion'
     };
-    
+
     return [...mergedFeatures, fusionFeature];
   }
 
@@ -629,7 +480,7 @@ export class RegentGeminiSystem {
   ): Promise<Spell[]> {
     const basePathLabel = basePath || 'Base';
     const allSpells = [...regent1.spells, ...regent2.spells];
-    
+
     // AI creates fusion-specific spells
     const fusionSpells: Spell[] = [
       {
@@ -645,7 +496,7 @@ export class RegentGeminiSystem {
         school: 'aura'
       }
     ];
-    
+
     return [...allSpells, ...fusionSpells];
   }
 
@@ -687,18 +538,18 @@ export class RegentGeminiSystem {
         `Unique fusion abilities and techniques`
       ]
     };
-    
+
     return [fusionTrait];
   }
 
   // AI stat bonus calculation
   private static async aiCalculateStatBonuses(regent1: RegentPath, regent2: RegentPath): Promise<Partial<Record<AbilityScore, number>>> {
     const bonuses: Partial<Record<AbilityScore, number>> = {};
-    
+
     // AI calculates optimal stat distribution
     const regent1Type = regent1.type;
     const regent2Type = regent2.type;
-    
+
     if (regent1Type === RegentType.STRENGTH_REGENT || regent2Type === RegentType.STRENGTH_REGENT) {
       bonuses.STR = 4;
     }
@@ -717,7 +568,7 @@ export class RegentGeminiSystem {
     if (regent1Type === RegentType.PRESENCE_REGENT || regent2Type === RegentType.PRESENCE_REGENT) {
       bonuses.PRE = 4;
     }
-    
+
     // Fusion bonus
     bonuses.STR = (bonuses.STR || 0) + 2;
     bonuses.AGI = (bonuses.AGI || 0) + 2;
@@ -725,7 +576,7 @@ export class RegentGeminiSystem {
     bonuses.INT = (bonuses.INT || 0) + 2;
     bonuses.SENSE = (bonuses.SENSE || 0) + 2;
     bonuses.PRE = (bonuses.PRE || 0) + 2;
-    
+
     return bonuses;
   }
 
@@ -767,7 +618,7 @@ export class RegentGeminiSystem {
       'Striker': ['Agility Regent', 'Sense Regent', 'Strength Regent'],
       'Idol': ['Presence Regent', 'Agility Regent', 'Intelligence Regent']
     };
-    
+
     const compatibleRegents = jobRegentMap[job] || [];
     return compatibleRegents.includes(regent.type) ? 85 : 60;
   }
@@ -781,7 +632,7 @@ export class RegentGeminiSystem {
   private static calculateFusionType(regent1: RegentPath, regent2: RegentPath): 'Perfect' | 'Good' | 'Average' {
     const levelDiff = Math.abs((regent1.requirements.level ?? 0) - (regent2.requirements.level ?? 0));
     const statDiff = Math.abs(regent1.requirements.statThreshold - regent2.requirements.statThreshold);
-    
+
     if (levelDiff <= 2 && statDiff <= 2) return 'Perfect';
     if (levelDiff <= 5 && statDiff <= 5) return 'Good';
     return 'Average';
@@ -879,13 +730,13 @@ export class RegentQuestManager {
 
   // Get available regents for character
   static getAvailableRegents(characterId: string): RegentPath[] {
-    const completedQuests = this.QUEST_DATABASE.filter(q => 
+    const completedQuests = this.QUEST_DATABASE.filter(q =>
       q.completed && q.completedBy === characterId
     );
-    
+
     const unlockedRegentIds = completedQuests.map(q => q.regentUnlock);
-    
-    return RegentGeminiSystem.REGENT_DATABASE.filter(regent => 
+
+    return RegentGeminiSystem.REGENT_DATABASE.filter(regent =>
       unlockedRegentIds.includes(regent.id)
     );
   }

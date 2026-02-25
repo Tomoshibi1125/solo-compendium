@@ -33,7 +33,7 @@ interface JobData {
   starting_equipment?: string[][] | null;
   hit_points_at_first_level?: string | null;
   hit_points_at_higher_levels?: string | null;
-  multiclass_prerequisites?: string | null;
+  regent_prerequisites?: string | null;
   spellcasting_ability?: string | null;
   spellcasting_focus?: string | null;
   class_features?: Array<{ level: number; name: string; description: string }> | null;
@@ -73,14 +73,14 @@ export const JobDetail = ({ data }: { data: JobData }) => {
   const totalChoices = useMemo(() => {
     const staticJob = staticJobs.find(job => job.name === data.name);
     if (!staticJob) return { skills: data.skill_choice_count, feats: 0, spells: 0, powers: 0, techniques: 0, runes: 0, items: 0, tools: 0, languages: 0, expertise: 0 };
-    
+
     // Create enhanced job data that includes both database fields and static awakening features/traits
     const enhancedJobData = {
       ...data,
       awakeningFeatures: staticJob.awakeningFeatures || [],
       jobTraits: staticJob.jobTraits || [],
     };
-    
+
     return calculateTotalChoices(enhancedJobData, null, [], 1);
   }, [data]);
 
@@ -88,14 +88,14 @@ export const JobDetail = ({ data }: { data: JobData }) => {
   const choiceGrantDetails = useMemo(() => {
     const staticJob = staticJobs.find(job => job.name === data.name);
     if (!staticJob) return [];
-    
+
     // Create enhanced job data that includes both database fields and static awakening features/traits
     const enhancedJobData = {
       ...data,
       awakeningFeatures: staticJob.awakeningFeatures || [],
       jobTraits: staticJob.jobTraits || [],
     };
-    
+
     return getChoiceGrantDetails(enhancedJobData, null, [], 1);
   }, [data]);
 
@@ -170,7 +170,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
           />
         </div>
       )}
-      
+
       {/* Header */}
       <DetailHeader
         entryType="jobs"
@@ -186,7 +186,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
             </p>
           )}
           <p className="text-foreground">{formatMonarchVernacular(data.description)}</p>
-          
+
           {data.tags && data.tags.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {data.tags.map((tag) => (
@@ -205,21 +205,21 @@ export const JobDetail = ({ data }: { data: JobData }) => {
             <span className="font-display text-2xl">d{data.hit_die}</span>
           </div>
         </SystemWindow>
-        
+
         <SystemWindow title="PRIMARY ABILITIES" compact>
           <div className="flex items-center gap-2">
             <Zap className="w-5 h-5 text-yellow-400" />
             <span className="font-heading">{data.primary_abilities?.map(formatMonarchVernacular).join(', ') || 'None'}</span>
           </div>
         </SystemWindow>
-        
+
         <SystemWindow title="SAVING THROWS" compact>
           <div className="flex items-center gap-2">
             <Shield className="w-5 h-5 text-blue-400" />
             <span className="font-heading">{data.saving_throw_proficiencies?.map(formatMonarchVernacular).join(', ') || 'None'}</span>
           </div>
         </SystemWindow>
-        
+
         <SystemWindow title="SKILL CHOICES" compact>
           <div className="flex items-center gap-2">
             <Swords className="w-5 h-5 text-green-400" />
@@ -315,10 +315,10 @@ export const JobDetail = ({ data }: { data: JobData }) => {
         </SystemWindow>
       )}
 
-      {/* Multiclass Prerequisites */}
-      {data.multiclass_prerequisites && (
-        <SystemWindow title="MULTICLASS PREREQUISITES">
-          <p className="font-heading">{data.multiclass_prerequisites}</p>
+      {/* Regent Prerequisites */}
+      {data.regent_prerequisites && (
+        <SystemWindow title="REGENT PREREQUISITES">
+          <p className="font-heading">{data.regent_prerequisites}</p>
         </SystemWindow>
       )}
 

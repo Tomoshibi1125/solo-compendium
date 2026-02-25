@@ -14,13 +14,13 @@ export class LocalAIIntegration {
       // Check if Ollama is running
       const response = await fetch('http://localhost:11434/api/tags');
       const data = await response.json();
-      
+
       if (data.models && data.models.length > 0) {
         this.isAvailable = true;
         log('✅ Local AI (Ollama) connected with Mixtral 8x7B');
         return true;
       }
-      
+
       this.isAvailable = false;
       log('⚠️ Ollama not available, using fallback logic');
       return false;
@@ -37,7 +37,7 @@ export class LocalAIIntegration {
     availableRegents: any[],
     highestStat: string
   ): Promise<any[]> {
-    
+
     if (this.isAvailable) {
       try {
         const prompt = `
@@ -83,7 +83,7 @@ Focus on: stat synergy, class compatibility, and playstyle enhancement.
 
         const choices = await this.callLocalAI(prompt);
         return this.parseAIResponse(choices);
-        
+
       } catch (error: unknown) {
         logError('AI generation failed:', error);
         return this.generateFallbackChoices(character, availableRegents, highestStat);
@@ -99,7 +99,7 @@ Focus on: stat synergy, class compatibility, and playstyle enhancement.
     regent1: any,
     regent2: any
   ): Promise<any> {
-    
+
     if (this.isAvailable) {
       try {
         const prompt = `
@@ -158,7 +158,7 @@ Be creative! Features should include action types (action/bonus action/reaction/
 
         const fusion = await this.callLocalAI(prompt);
         return this.parseAIResponse(fusion);
-        
+
       } catch (error: any) {
         logError('Fusion generation failed:', error);
         return this.generateFallbackFusion(character, regent1, regent2);
@@ -173,7 +173,7 @@ Be creative! Features should include action types (action/bonus action/reaction/
     character: any,
     availableQuests: any[]
   ): Promise<any[]> {
-    
+
     if (this.isAvailable) {
       try {
         const prompt = `
@@ -215,7 +215,7 @@ Focus on: level appropriateness, class synergy, and character strengths.
 
         const recommendations = await this.callLocalAI(prompt);
         return this.parseAIResponse(recommendations);
-        
+
       } catch (error: any) {
         logError('Quest recommendations failed:', error);
         return this.generateFallbackQuests(character, availableQuests);
@@ -251,7 +251,7 @@ Focus on: level appropriateness, class synergy, and character strengths.
 
       const data = await response.json();
       return data.response || data.content || '';
-      
+
     } catch (error: any) {
       logError('Local AI call failed:', error);
       throw error;
@@ -266,7 +266,7 @@ Focus on: level appropriateness, class synergy, and character strengths.
       if (jsonMatch) {
         return JSON.parse(jsonMatch[0]);
       }
-      
+
       // Fallback: try to parse entire response
       return JSON.parse(response);
     } catch (error: any) {
@@ -281,7 +281,7 @@ Focus on: level appropriateness, class synergy, and character strengths.
     availableRegents: any[],
     highestStat: string
   ): any[] {
-    
+
     return availableRegents.slice(0, 3).map((regent, index) => ({
       regent,
       name: regent.name,
@@ -298,9 +298,9 @@ Focus on: level appropriateness, class synergy, and character strengths.
     regent1: any,
     regent2: any
   ): any {
-    
+
     const fusionName = `${regent1.name.split(' ')[0]}-${regent2.name.split(' ')[0]} Sovereign`;
-    
+
     return {
       id: `gemini_${regent1.id}_${regent2.id}`,
       name: fusionName,
@@ -359,15 +359,15 @@ Focus on: level appropriateness, class synergy, and character strengths.
     character: any,
     availableQuests: any[]
   ): any[] {
-    
+
     return availableQuests
       .filter(quest => quest.requirements.level <= character.level)
       .slice(0, 3)
       .map((quest, index) => ({
         quest: quest.id,
         name: quest.name,
-        difficulty: character.level >= quest.requirements.level - 2 ? 'Easy' : 
-                   character.level >= quest.requirements.level ? 'Medium' : 'Hard',
+        difficulty: character.level >= quest.requirements.level - 2 ? 'Easy' :
+          character.level >= quest.requirements.level ? 'Medium' : 'Hard',
         successChance: Math.max(50, 100 - (quest.requirements.level - character.level) * 10),
         reasoning: `This quest matches your level ${character.level} and ${character.job} class.`,
         preparation: [
@@ -391,7 +391,7 @@ Focus on: level appropriateness, class synergy, and character strengths.
     lastCheck: Date;
   }> {
     await this.initializeAI();
-    
+
     return {
       available: this.isAvailable,
       model: this.model,
@@ -404,7 +404,7 @@ Focus on: level appropriateness, class synergy, and character strengths.
   static async generateOptimizationSuggestions(
     character: any
   ): Promise<any> {
-    
+
     if (this.isAvailable) {
       try {
         const prompt = `
@@ -440,7 +440,7 @@ Focus on maximizing character effectiveness and synergy.
 
         const suggestions = await this.callLocalAI(prompt);
         return this.parseAIResponse(suggestions);
-        
+
       } catch (error: any) {
         logError('Optimization suggestions failed:', error);
         return this.generateFallbackOptimizations(character);
@@ -467,7 +467,7 @@ Focus on maximizing character effectiveness and synergy.
       equipment: ['Magic Weapon', 'Protective Armor', 'Healing Potions'],
       feats: ['Ability Score Improvement', 'Reinforced Vitality', 'Weapon Attunement'],
       abilities: ['Devastating Blow', 'Honed Instinct', 'Threat Processor'],
-      levelUp: ['Focus on core stats', 'Consider multiclass options', 'Plan equipment upgrades']
+      levelUp: ['Focus on core stats', 'Consider regent overlay options', 'Plan equipment upgrades']
     };
   }
 }

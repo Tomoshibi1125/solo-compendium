@@ -379,3 +379,34 @@ export function getSystemFavorMax(level: number): number {
   if (level <= 16) return 5;
   return 6;
 }
+
+/**
+ * Calculate cantrips known limit (standard 5e progression)
+ * Returns null if the job doesn't learn cantrips
+ */
+export function getCantripsKnownLimit(job: string | null | undefined, level: number): number | null {
+  if (!job) return null;
+  const j = job.toLowerCase();
+
+  // Full casters: Mage (Wizard), Herald (Cleric), Esper (Sorcerer), Idol (Bard), Summoner (Druid)
+  const fullCasterCantrips: Record<string, number[]> = {
+    // [levels 1-20] cantrips known
+    mage:      [3,3,3,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5],
+    herald:    [3,3,3,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5],
+    esper:     [4,4,4,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,6],
+    idol:      [2,2,2,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4],
+    summoner:  [2,2,2,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4],
+  };
+
+  // Pactcasters: Contractor (Warlock)
+  const pactcasterCantrips: Record<string, number[]> = {
+    contractor: [2,2,2,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4],
+    technomancer: [2,2,2,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4],
+  };
+
+  const table = fullCasterCantrips[j] ?? pactcasterCantrips[j];
+  if (!table) return null; // Martial jobs don't get cantrips
+
+  const idx = Math.max(0, Math.min(level - 1, 19));
+  return table[idx];
+}

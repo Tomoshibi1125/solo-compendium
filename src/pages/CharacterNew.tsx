@@ -122,7 +122,7 @@ const CharacterNew = () => {
         display_name: job.name,
         description: job.description,
         hit_die: parseInt(job.hitDie?.replace('1d', '') || '8'),
-        primary_abilities: (job.primaryAbility ? [mapAbilityToSA(job.primaryAbility)] : 
+        primary_abilities: (job.primaryAbility ? [mapAbilityToSA(job.primaryAbility)] :
           (job.primary_abilities || []).map(mapAbilityToSA)) as Array<"STR" | "AGI" | "VIT" | "INT" | "SENSE" | "PRE">,
         saving_throw_proficiencies: (job.savingThrows || []).map(mapAbilityToSA) as Array<"STR" | "AGI" | "VIT" | "INT" | "SENSE" | "PRE">,
         armor_proficiencies: job.armorProficiencies || [],
@@ -136,7 +136,7 @@ const CharacterNew = () => {
         starting_equipment: job.startingEquipment || null,
         hit_points_at_first_level: job.hitPointsAtFirstLevel || null,
         hit_points_at_higher_levels: job.hitPointsAtHigherLevels || null,
-        multiclass_prerequisites: null,
+        regent_prerequisites: null,
         // Add missing database fields
         aliases: null,
         flavor_text: null,
@@ -158,10 +158,10 @@ const CharacterNew = () => {
           .from('compendium_jobs')
           .select('*')
           .order('name');
-        
+
         if (!error && dbJobs && dbJobs.length > 0) {
           // Use database jobs if they exist and have proper names
-          const validDbJobs = dbJobs.filter(job => 
+          const validDbJobs = dbJobs.filter(job =>
             staticJobs.some(staticJob => staticJob.name === job.name)
           );
           if (validDbJobs.length === staticJobs.length) {
@@ -721,8 +721,8 @@ const CharacterNew = () => {
                         index < currentStepIndex
                           ? "bg-primary text-primary-foreground border-primary shadow-lg"
                           : index === currentStepIndex
-                          ? "bg-primary text-primary-foreground border-primary shadow-lg ring-4 ring-primary/20"
-                          : "bg-muted text-muted-foreground border-border"
+                            ? "bg-primary text-primary-foreground border-primary shadow-lg ring-4 ring-primary/20"
+                            : "bg-muted text-muted-foreground border-border"
                       )}
                     >
                       {index < currentStepIndex ? (
@@ -731,7 +731,7 @@ const CharacterNew = () => {
                         index + 1
                       )}
                     </div>
-                    
+
                     {/* Step Name */}
                     <span className={cn(
                       "text-xs sm:text-sm font-heading text-center transition-colors",
@@ -739,34 +739,34 @@ const CharacterNew = () => {
                     )}>
                       {step.name}
                     </span>
-                    
+
                     {/* Current Step Indicator */}
                     {index === currentStepIndex && (
                       <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-primary rounded-full animate-pulse" />
                     )}
                   </div>
-                  
+
                   {/* Connector Line */}
                   {index < steps.length - 1 && (
                     <div className={cn(
                       "h-0.5 flex-1 mx-2 sm:mx-4 mb-6 transition-all duration-300",
-                      index < currentStepIndex 
-                        ? "bg-primary shadow-sm" 
+                      index < currentStepIndex
+                        ? "bg-primary shadow-sm"
                         : "bg-muted"
                     )} />
                   )}
                 </div>
               ))}
             </div>
-            
+
             {/* Step Progress Bar */}
             <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
-              <div 
+              <div
                 className="bg-primary h-full transition-all duration-500 ease-out character-creation-progress-bar"
                 data-progress={((currentStepIndex + 1) / steps.length) * 100}
               />
             </div>
-            
+
             {/* Step Description */}
             <div className="mt-4 text-center">
               <p className="text-sm text-muted-foreground">
@@ -1134,7 +1134,7 @@ const CharacterNew = () => {
                   {/* Show other choice types if available */}
                   {(totalChoices.feats > 0 || totalChoices.spells > 0 || totalChoices.powers > 0 || totalChoices.techniques > 0 || totalChoices.runes > 0 || totalChoices.items > 0 || totalChoices.tools > 0 || totalChoices.languages > 0) && (
                     <div className="text-xs text-amber-600 dark:text-amber-400 mb-2">
-                      Additional choices available: 
+                      Additional choices available:
                       {totalChoices.feats > 0 && `${totalChoices.feats} feats`}
                       {totalChoices.spells > 0 && `${totalChoices.spells} spells`}
                       {totalChoices.powers > 0 && `${totalChoices.powers} powers`}
