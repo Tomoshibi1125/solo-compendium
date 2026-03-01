@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { Package, Plus, Shield, Zap, Gem, Heart, Coins, Weight, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
@@ -6,11 +6,14 @@ import { SortableList } from '@/components/ui/SortableList';
 import { useEquipment } from '@/hooks/useEquipment';
 import { useCharacter } from '@/hooks/useCharacters';
 import { useToast } from '@/hooks/use-toast';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 import { cn } from '@/lib/utils';
 import { AddEquipmentDialog } from './AddEquipmentDialog';
 import { EquipmentItem } from './EquipmentItem';
 import { calculateTotalWeight, calculateEncumbrance, calculateCarryingCapacity } from '@/lib/encumbrance';
+import { EncumbranceWidget } from './EncumbranceWidget';
 import { formatMonarchVernacular } from '@/lib/vernacular';
+import { useEncumbranceSettings } from '@/hooks/useEncumbranceSettings';
 import type { Database } from '@/integrations/supabase/types';
 
 type Equipment = Database['public']['Tables']['character_equipment']['Row'];
@@ -38,14 +41,41 @@ export function EquipmentList({ characterId }: { characterId: string }) {
   const { data: character } = useCharacter(characterId);
   const { toast } = useToast();
   const [addDialogOpen, setAddDialogOpen] = useState(false);
+  const { ignoreCurrencyWeight, setIgnoreCurrencyWeight, isLoaded } = useEncumbranceSettings(characterId);
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const ddbEnhancements = usePlayerToolsEnhancements();
 
-  // Calculate weight and encumbrance
+  // Weight is now managed inside EncumbranceWidget; keep these for the DDB
+  // encumbrance-condition-change side effect below.
   const strScore = character?.abilities?.STR || 10;
-  const totalWeight = calculateTotalWeight(equipment);
+  const totalWeight = calculateTotalWeight(equipment, ignoreCurrencyWeight);
   const carryingCapacity = calculateCarryingCapacity(strScore);
   const encumbrance = calculateEncumbrance(totalWeight, carryingCapacity);
 
-  const groupedEquipment = equipment.reduce((acc, item) => {
+  const prevEncumbranceRef = useRef(encumbrance.status);
+
+  useEffect(() => {
+    if (prevEncumbranceRef.current !== encumbrance.status) {
+      if (encumbrance.status === 'heavy' || encumbrance.status === 'overloaded') {
+        ddbEnhancements.trackConditionChange(characterId, `Encumbered: ${encumbrance.status === 'heavy' ? 'Heavy Load' : 'Overloaded'}`, 'add').catch(console.error);
+      } else if (prevEncumbranceRef.current === 'heavy' || prevEncumbranceRef.current === 'overloaded') {
+        // Removing encumbrance condition when it steps down below heavy
+        ddbEnhancements.trackConditionChange(characterId, `Encumbrance`, 'remove').catch(console.error);
+      }
+      prevEncumbranceRef.current = encumbrance.status;
+    }
+  }, [encumbrance.status, characterId, ddbEnhancements]);
+
+  const topLevelEquipment = equipment.filter((item) => !item.container_id);
+  const equipmentByContainer = equipment.reduce((acc, item) => {
+    if (item.container_id) {
+      if (!acc[item.container_id]) acc[item.container_id] = [];
+      acc[item.container_id].push(item);
+    }
+    return acc;
+  }, {} as Record<string, Equipment[]>);
+
+  const groupedEquipment = topLevelEquipment.reduce((acc, item) => {
     const type = item.item_type || 'gear';
     if (!acc[type]) acc[type] = [];
     acc[type].push(item);
@@ -65,6 +95,23 @@ export function EquipmentList({ characterId }: { characterId: string }) {
     }
   }, [reorderEquipment]);
 
+  const containers = equipment.filter(e => e.is_container);
+
+  const handleChangeContainer = async (item: Equipment, containerId: string | null) => {
+    try {
+      await updateEquipment({
+        id: item.id,
+        updates: { container_id: containerId },
+      });
+    } catch {
+      toast({
+        title: 'Error',
+        description: 'Failed to move equipment.',
+        variant: 'destructive',
+      });
+    }
+  };
+
   const handleToggleEquipped = async (item: Equipment) => {
     const displayName = formatMonarchVernacular(item.name);
     try {
@@ -72,6 +119,13 @@ export function EquipmentList({ characterId }: { characterId: string }) {
         id: item.id,
         updates: { is_equipped: !item.is_equipped },
       });
+
+      ddbEnhancements.trackInventoryChange(
+        characterId,
+        item.name,
+        item.is_equipped ? 'unequip' : 'equip'
+      ).catch(console.error);
+
       toast({
         title: item.is_equipped ? 'Unequipped' : 'Equipped',
         description: `${displayName} has been ${item.is_equipped ? 'unequipped' : 'equipped'}.`,
@@ -101,6 +155,13 @@ export function EquipmentList({ characterId }: { characterId: string }) {
         id: item.id,
         updates: { is_attuned: !item.is_attuned },
       });
+
+      ddbEnhancements.trackConditionChange(
+        characterId,
+        `Attuned: ${item.name}`,
+        item.is_attuned ? 'remove' : 'add'
+      ).catch(console.error);
+
       toast({
         title: item.is_attuned ? 'Attunement removed' : 'Attuned',
         description: `${displayName} has been ${item.is_attuned ? 'unattuned' : 'attuned'}.`,
@@ -120,6 +181,13 @@ export function EquipmentList({ characterId }: { characterId: string }) {
 
     try {
       await removeEquipment(item.id);
+
+      ddbEnhancements.trackInventoryChange(
+        characterId,
+        item.name,
+        'remove'
+      ).catch(console.error);
+
       toast({
         title: 'Removed',
         description: `${displayName} has been removed.`,
@@ -136,52 +204,23 @@ export function EquipmentList({ characterId }: { characterId: string }) {
   return (
     <SystemWindow title="EQUIPMENT">
       <div className="space-y-4">
-        {/* Weight & Encumbrance Display */}
-        <div className="p-3 rounded-lg border border-border bg-muted/30">
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-2">
-              <Weight className="w-4 h-4 text-muted-foreground" />
-              <span className="text-xs font-display text-muted-foreground">CARRYING CAPACITY</span>
+        {/* Weight & Encumbrance — rendered by EncumbranceWidget */}
+        {isLoaded && (
+          <div className="space-y-2">
+            <div className="flex items-center justify-end gap-2">
+              <Switch
+                id="ignore-coin"
+                checked={ignoreCurrencyWeight}
+                onCheckedChange={setIgnoreCurrencyWeight}
+                className="scale-75"
+              />
+              <Label htmlFor="ignore-coin" className="text-[10px] text-muted-foreground leading-none cursor-pointer">
+                Ignore Coin Weight
+              </Label>
             </div>
-            <span className={cn("text-xs font-display font-semibold", encumbrance.statusColor)}>
-              {encumbrance.statusMessage}
-            </span>
+            <EncumbranceWidget characterId={characterId} />
           </div>
-          <div className="flex items-center justify-between">
-            <div className="flex-1">
-              <div className="h-2 bg-muted rounded-full overflow-hidden">
-                <div
-                  className={cn(
-                    "h-full transition-all",
-                    encumbrance.status === 'unencumbered' && "bg-green-500",
-                    encumbrance.status === 'light' && "bg-blue-500",
-                    encumbrance.status === 'medium' && "bg-yellow-500",
-                    encumbrance.status === 'heavy' && "bg-orange-500",
-                    encumbrance.status === 'overloaded' && "bg-red-500"
-                  )}
-                  // eslint-disable-next-line react/forbid-dom-props -- dynamic width requires inline style
-                  style={{ width: `${Math.min((totalWeight / carryingCapacity) * 100, 100)}%` }}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center justify-between mt-2 text-xs">
-            <span className="text-muted-foreground">
-              {totalWeight.toFixed(1)} / {carryingCapacity} lbs
-            </span>
-            {encumbrance.status === 'overloaded' && (
-              <div className="flex items-center gap-1 text-red-400">
-                <AlertTriangle className="w-3 h-3" />
-                <span>Overloaded!</span>
-              </div>
-            )}
-          </div>
-          {encumbrance.status === 'heavy' || encumbrance.status === 'overloaded' ? (
-            <p className="text-xs text-muted-foreground mt-1">
-              Speed penalty: {encumbrance.status === 'heavy' ? '-10 ft' : '-20 ft'}
-            </p>
-          ) : null}
-        </div>
+        )}
 
         <div className="flex items-center justify-between">
           <div className="text-sm text-muted-foreground">
@@ -222,10 +261,13 @@ export function EquipmentList({ characterId }: { characterId: string }) {
                     <EquipmentItem
                       key={item.id}
                       item={item}
-                      onToggleEquipped={() => handleToggleEquipped(item)}
-                      onToggleAttuned={() => handleToggleAttuned(item)}
-                      onRemove={() => handleRemove(item)}
+                      onToggleEquipped={handleToggleEquipped}
+                      onToggleAttuned={handleToggleAttuned}
+                      onRemove={handleRemove}
+                      onChangeContainer={handleChangeContainer}
+                      containers={containers.filter(c => c.id !== item.id)} // Prevent putting a container in itself
                       canAttune={canAttune}
+                      nestedItems={equipmentByContainer[item.id] || []}
                     />
                   )}
                   itemClassName="mb-2"
