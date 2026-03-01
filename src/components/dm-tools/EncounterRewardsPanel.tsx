@@ -8,12 +8,13 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
 import { useEncounterRewards } from '@/hooks/useEncounterRewards';
 import { useCombatSessionManager } from '@/hooks/useCombatSessionManager';
 import { useCampaignAnalytics } from '@/hooks/useCampaignAnalytics';
 import { useToast } from '@/hooks/use-toast';
-import { Calculator, Coins, Trophy, Users, Star, Target, Sparkles } from 'lucide-react';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
+import { Calculator, Coins, Trophy, Star, Target, Sparkles, CheckCircle } from 'lucide-react';
 
 interface EncounterRewardsPanelProps {
   campaignId: string;
@@ -38,6 +39,8 @@ export function EncounterRewardsPanel({
   const { calculateEncounterRewards, distributeRewards } = useEncounterRewards();
   const { generateSessionSummary } = useCombatSessionManager();
   const { getCampaignAnalytics } = useCampaignAnalytics();
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const ddbEnhancements = usePlayerToolsEnhancements();
 
   const [isCalculating, setIsCalculating] = useState(false);
   const [isDistributing, setIsDistributing] = useState(false);
@@ -46,6 +49,7 @@ export function EncounterRewardsPanel({
   const [customXP, setCustomXP] = useState<Record<string, number>>({});
   const [sessionNotes, setSessionNotes] = useState('');
   const [includeInLog, setIncludeInLog] = useState(true);
+  const [grantMilestone, setGrantMilestone] = useState(false);
   const [rewardDistribution, setRewardDistribution] = useState<RewardDistribution[]>([]);
 
   const handleCalculateRewards = async () => {
@@ -53,7 +57,7 @@ export function EncounterRewardsPanel({
     try {
       const rewards = await calculateEncounterRewards(sessionId);
       setCalculatedRewards(rewards);
-      
+
       // Initialize distribution with calculated values
       if (rewards && rewards.combatants) {
         const xpPerCharacter = Math.floor(rewards.xpTotal / rewards.combatants.length);
@@ -103,6 +107,17 @@ export function EncounterRewardsPanel({
             description: 'Combat session has been logged and summarized',
           });
         }
+
+        if (grantMilestone) {
+          for (const characterId of selectedCharacters) {
+            await ddbEnhancements.trackCustomFeatureUsage(
+              characterId,
+              'Milestone Reached',
+              'Level Up Available',
+              '5e'
+            ).catch(console.error);
+          }
+        }
       }
     } catch (error) {
       toast({
@@ -117,9 +132,9 @@ export function EncounterRewardsPanel({
 
   const updateCharacterXP = (characterId: string, xp: number) => {
     setCustomXP(prev => ({ ...prev, [characterId]: xp }));
-    setRewardDistribution(prev => 
-      prev.map(dist => 
-        dist.characterId === characterId 
+    setRewardDistribution(prev =>
+      prev.map(dist =>
+        dist.characterId === characterId
           ? { ...dist, xpAwarded: xp, splitEvenly: false }
           : dist
       )
@@ -149,11 +164,11 @@ export function EncounterRewardsPanel({
         </p>
       </CardHeader>
       <CardContent className="space-y-6">
-        
+
         {/* Calculation Section */}
         <div>
-          <Button 
-            onClick={handleCalculateRewards} 
+          <Button
+            onClick={handleCalculateRewards}
             disabled={isCalculating}
             className="w-full"
           >
@@ -175,7 +190,7 @@ export function EncounterRewardsPanel({
                 </div>
                 <div className="text-2xl font-bold">{calculatedRewards.xpTotal || 0}</div>
               </Card>
-              
+
               <Card className="p-4">
                 <div className="flex items-center gap-2">
                   <Target className="h-4 w-4 text-red-500" />
@@ -248,12 +263,23 @@ export function EncounterRewardsPanel({
               <Label className="text-base font-medium">Session Options</Label>
               <div className="space-y-3">
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="include-log" 
+                  <Checkbox
+                    id="include-log"
                     checked={includeInLog}
                     onCheckedChange={(checked) => setIncludeInLog(checked as boolean)}
                   />
                   <Label htmlFor="include-log">Include in campaign log</Label>
+                </div>
+                <div className="flex items-center space-x-2 p-3 bg-purple-500/10 border border-purple-500/30 rounded-lg">
+                  <Checkbox
+                    id="grant-milestone"
+                    checked={grantMilestone}
+                    onCheckedChange={(checked) => setGrantMilestone(checked as boolean)}
+                  />
+                  <Label htmlFor="grant-milestone" className="font-heading font-medium text-purple-400 flex items-center gap-2 cursor-pointer">
+                    <CheckCircle className="w-4 h-4" />
+                    Grant Party Milestone (Broadcast Level Up Available)
+                  </Label>
                 </div>
                 <div>
                   <Label htmlFor="session-notes">Session Notes</Label>
@@ -271,8 +297,8 @@ export function EncounterRewardsPanel({
             <Separator />
 
             {/* Distribution Action */}
-            <Button 
-              onClick={handleDistributeRewards} 
+            <Button
+              onClick={handleDistributeRewards}
               disabled={isDistributing}
               className="w-full"
               size="lg"

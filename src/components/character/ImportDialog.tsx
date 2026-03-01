@@ -14,6 +14,7 @@ import { useCreateCharacter } from '@/hooks/useCharacters';
 import { useToast } from '@/hooks/use-toast';
 import { validateCharacterImport, type CharacterExportSchema } from '@/lib/characterSchema';
 import { ABILITY_NAMES } from '@/types/system-rules';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 
 export function ImportDialog({
   open,
@@ -31,6 +32,8 @@ export function ImportDialog({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const createCharacter = useCreateCharacter();
   const { toast } = useToast();
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const ddbEnhancements = usePlayerToolsEnhancements();
 
   const handleFileSelect = async (selectedFile: File) => {
     setFile(selectedFile);
@@ -94,6 +97,14 @@ export function ImportDialog({
         title: 'Character imported',
         description: `${preview.name} has been created from the import file.`,
       });
+
+      ddbEnhancements.trackCustomFeatureUsage(
+        character.id,
+        'Character Imported',
+        `Level ${preview.level}`,
+        '5e',
+        { skipBroadcast: true }
+      ).catch(console.error);
 
       onOpenChange(false);
       resetState();

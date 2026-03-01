@@ -11,6 +11,7 @@ import { formatMonarchVernacular, MONARCH_LABEL } from '@/lib/vernacular';
 import { getMaxPowerLevelForJobAtLevel } from '@/lib/characterCreation';
 import type { AbilityScore } from '@/types/system-rules';
 import type { FeatureModifier } from '@/hooks/useCharacterFeatures';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 
 type ChoiceGroupRow = {
   id: string;
@@ -64,6 +65,8 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
   const { toast } = useToast();
   const [saving, setSaving] = useState(false);
   const [selectedOptionByGroupId, setSelectedOptionByGroupId] = useState<Record<string, string>>({});
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const playerTools = usePlayerToolsEnhancements();
 
   const { data: character } = useQuery({
     queryKey: ['feature-choice-character', characterId],
@@ -287,6 +290,13 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
             continue;
           }
         }
+
+        playerTools.trackCustomFeatureUsage(
+          characterId,
+          `Bound Option: ${option.name}`,
+          option.description || '',
+          '5e'
+        ).catch(console.error);
 
         await (supabase as any).from('character_feature_choices').upsert({
           character_id: characterId,
@@ -514,12 +524,12 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
           if (grant.type === 'technique' && typeof grant.name === 'string') {
             const techName = grant.name;
             const { data: techRow } = await supabase
-        .from('compendium_techniques' as any)
-        .select('id')
-        .eq('name', techName)
-        .maybeSingle();
-      const techId = (techRow as {id?: string} | null)?.id;
-      if (!techId) continue;
+              .from('compendium_techniques' as any)
+              .select('id')
+              .eq('name', techName)
+              .maybeSingle();
+            const techId = (techRow as { id?: string } | null)?.id;
+            if (!techId) continue;
 
             await supabase
               .from('character_techniques' as any)

@@ -174,14 +174,23 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
       const value = parseInt(skillMatch[1] || '0');
       if (!modifiers.skills) modifiers.skills = {};
       if (lowerProp.includes('all')) {
-        // Would need skill list - for now, just note it
-        modifiers.skills['*'] = value;
+        // Expand "*" into all 18 SRD5e/SA skills
+        const ALL_SKILLS = [
+          'Athletics', 'Acrobatics', 'Sleight Of Hand', 'Stealth',
+          'Arcana', 'History', 'Investigation', 'Nature', 'Religion',
+          'Animal Handling', 'Insight', 'Medicine', 'Perception', 'Survival',
+          'Deception', 'Intimidation', 'Performance', 'Persuasion',
+        ];
+        for (const skill of ALL_SKILLS) {
+          modifiers.skills[skill] = (modifiers.skills[skill] || 0) + value;
+        }
+        modifiers.skills['*'] = (modifiers.skills['*'] || 0) + value;
       }
     }
 
-    // Per-skill modifiers: "+2 to Investigation", "+1 to Sleight of Hand"
+    // Per-skill modifiers: "+2 to Investigation", "+1 to Sleight of Hand", "+2 in Investigation"
     // We store exact canonical skill name keys (title-cased) and consume them in CharacterSheet.
-    const specificSkillMatch = lowerProp.match(/(\+?\d+)\s+to\s+([a-z][a-z\s']+)/i);
+    const specificSkillMatch = lowerProp.match(/(\+?\d+)\s+(?:to|in)\s+([a-z][a-z\s']+)/i);
     if (specificSkillMatch?.[1] && specificSkillMatch?.[2]) {
       const value = parseInt(specificSkillMatch[1] || '0', 10);
       const raw = specificSkillMatch[2].trim();
@@ -214,11 +223,11 @@ export function combineModifiers(...modifierSets: EquipmentModifiers[]): Equipme
       if (key === 'savingThrows' || key === 'skills') {
         if (!combined[key]) combined[key] = {};
         Object.entries(value as Record<string, number>).forEach(([subKey, subValue]) => {
-          (combined[key] as Record<string, number>)[subKey] = 
+          (combined[key] as Record<string, number>)[subKey] =
             ((combined[key] as Record<string, number>)[subKey] || 0) + subValue;
         });
       } else if (typeof value === 'number') {
-        (combined as Record<string, number | Record<string, number> | undefined>)[key] = 
+        (combined as Record<string, number | Record<string, number> | undefined>)[key] =
           ((combined as Record<string, number | undefined>)[key] || 0) + value;
       }
     });

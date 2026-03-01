@@ -52,7 +52,7 @@ export function useMySovereigns() {
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return []; // Return empty array if not authenticated
-      
+
       const { data, error } = await supabase
         .from('saved_sovereigns')
         .select(`
@@ -70,12 +70,45 @@ export function useMySovereigns() {
   });
 }
 
+/** Returns the saved sovereign that is currently linked to a character (if any). */
+export function useCharacterSovereign(characterId: string | undefined) {
+  return useQuery({
+    queryKey: ['character-sovereign', characterId],
+    enabled: !!characterId,
+    retry: false,
+    queryFn: async () => {
+      if (!characterId) return null;
+      // Fetch the character to get active_sovereign_id
+      const { data: char, error: charErr } = await supabase
+        .from('characters')
+        .select('id, active_sovereign_id')
+        .eq('id', characterId)
+        .maybeSingle();
+      if (charErr || !char?.active_sovereign_id) return null;
+
+      const { data, error } = await supabase
+        .from('saved_sovereigns')
+        .select('*')
+        .eq('id', char.active_sovereign_id)
+        .maybeSingle();
+      if (error) return null;
+      return data as SavedSovereign | null;
+    },
+  });
+}
+
 export function useSaveSovereign() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async (sovereign: GeneratedSovereign) => {
+    mutationFn: async ({
+      sovereign,
+      characterId,
+    }: {
+      sovereign: GeneratedSovereign;
+      characterId?: string;
+    }) => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new AppError('Must be logged in to save Sovereigns', 'AUTH_REQUIRED');
 
@@ -103,14 +136,28 @@ export function useSaveSovereign() {
         .single();
 
       if (error) throw error;
+
+      // If a character is specified, stamp the new sovereign onto the character
+      if (characterId && data?.id) {
+        await supabase
+          .from('characters')
+          .update({ active_sovereign_id: data.id } as never)
+          .eq('id', characterId)
+          .eq('user_id', user.id);
+      }
+
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['saved-sovereigns'] });
       queryClient.invalidateQueries({ queryKey: ['my-sovereigns'] });
+      if (variables.characterId) {
+        queryClient.invalidateQueries({ queryKey: ['character', variables.characterId] });
+        queryClient.invalidateQueries({ queryKey: ['character-sovereign', variables.characterId] });
+      }
       toast({
-        title: 'Sovereign Saved!',
-        description: 'Your fusion has been preserved in the Gemini Archive.',
+        title: 'Sovereign Locked In!',
+        description: 'Your Sovereign overlay has been preserved in the Gemini Archive.',
       });
     },
     onError: (error) => {

@@ -15,18 +15,9 @@ import { SharedPage } from './pages/SharedPage';
  * across the entire System Ascendant application as both DM and Player.
  *
  * Uses dual browser contexts (isolated cookies/storage) per role.
- *
- * Environment variables (with defaults):
- *   E2E_DM_EMAIL     – default dm@test.com
- *   E2E_DM_PASSWORD  – default test1234
- *   E2E_PLAYER_EMAIL – default player@test.com
- *   E2E_PLAYER_PASSWORD – default test1234
  */
 
-const DM_EMAIL = process.env.E2E_DM_EMAIL ?? 'dm@test.com';
-const DM_PASSWORD = process.env.E2E_DM_PASSWORD ?? 'test1234';
-const PLAYER_EMAIL = process.env.E2E_PLAYER_EMAIL ?? 'player@test.com';
-const PLAYER_PASSWORD = process.env.E2E_PLAYER_PASSWORD ?? 'test1234';
+// Global App-Wide E2E: DM + Player full functionality
 
 // Shared state across tests within the describe block
 let dmContext: BrowserContext;
@@ -62,7 +53,7 @@ test.describe.serial('Global App-Wide E2E: DM + Player full functionality', () =
     // ── 1. Auth: DM Sign In ──────────────────────────────────────
     test('1. DM signs in and lands on /dm-tools', async () => {
       const auth = new AuthPage(dmPage);
-      await auth.signIn(DM_EMAIL, DM_PASSWORD, 'dm');
+      await auth.continueAsGuest('dm');
       await expect(dmPage.getByTestId('dm-tools')).toBeVisible({ timeout: 15_000 });
     });
 
@@ -374,7 +365,7 @@ test.describe.serial('Global App-Wide E2E: DM + Player full functionality', () =
     // ── 32. Auth: Player Sign In ────────────────────────────────
     test('32. Player signs in and lands on /player-tools', async () => {
       const auth = new AuthPage(playerPage);
-      await auth.signIn(PLAYER_EMAIL, PLAYER_PASSWORD, 'player');
+      await auth.continueAsGuest('player');
       // Player should land on /player-tools
       await playerPage.waitForURL(/\/player-tools/, { timeout: 15_000 });
     });
@@ -560,7 +551,7 @@ test.describe.serial('Global App-Wide E2E: DM + Player full functionality', () =
       playerContext = await browser.newContext();
       playerPage = await playerContext.newPage();
       const auth = new AuthPage(playerPage);
-      await auth.signIn(PLAYER_EMAIL, PLAYER_PASSWORD, 'player');
+      await auth.continueAsGuest('player');
       await playerPage.waitForURL(/\/player-tools/, { timeout: 15_000 });
     });
 
@@ -614,7 +605,7 @@ test.describe.serial('Global App-Wide E2E: DM + Player full functionality', () =
       dmContext = await browser.newContext();
       dmPage = await dmContext.newPage();
       const auth = new AuthPage(dmPage);
-      await auth.signIn(DM_EMAIL, DM_PASSWORD, 'dm');
+      await auth.continueAsGuest('dm');
       await expect(dmPage.getByTestId('dm-tools')).toBeVisible({ timeout: 15_000 });
     });
 

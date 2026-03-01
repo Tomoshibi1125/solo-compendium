@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Navigate } from 'react-router-dom';
+
 import { useAuth } from '@/lib/auth/authContext';
 import { isSupabaseConfigured } from '@/integrations/supabase/client';
 import { AlertCircle, Lock, Shield, User } from 'lucide-react';
@@ -32,14 +32,14 @@ const LoadingState = ({ message }: { message?: string }) => (
 );
 
 // Enhanced access denied component
-const AccessDenied = ({ 
-  title, 
-  message, 
-  icon: Icon 
-}: { 
-  title: string; 
-  message: string; 
-  icon: React.ComponentType<{ className?: string }> 
+const AccessDenied = ({
+  title,
+  message,
+  icon: Icon
+}: {
+  title: string;
+  message: string;
+  icon: React.ComponentType<{ className?: string }>
 }) => (
   <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-destructive/10 to-background p-4">
     <div className="text-center space-y-6 max-w-md w-full bg-background/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-destructive/20">
@@ -89,10 +89,10 @@ export function ProtectedRoute({ children, requireDM = false, allowGuest }: Prot
   if (isE2E) {
     // In E2E mode, we need to simulate authentication but still enforce DM requirements
     if (requireDM && !isDM) {
-      return <AccessDenied 
-        title="Access Denied" 
-        message="You need DM privileges to access this area. Please login with a DM account." 
-        icon={Lock} 
+      return <AccessDenied
+        title="Access Denied"
+        message="You need DM privileges to access this area. Please login with a DM account."
+        icon={Lock}
       />;
     }
     return <>{children}</>;
@@ -104,10 +104,10 @@ export function ProtectedRoute({ children, requireDM = false, allowGuest }: Prot
       return <>{children}</>;
     }
     return (
-      <AccessDenied 
-        title="Authentication Required" 
-        message="Please configure Supabase to enable authentication, or enable guest mode to continue." 
-        icon={AlertCircle} 
+      <AccessDenied
+        title="Authentication Required"
+        message="Please configure Supabase to enable authentication, or enable guest mode to continue."
+        icon={AlertCircle}
       />
     );
   }
@@ -126,10 +126,10 @@ export function ProtectedRoute({ children, requireDM = false, allowGuest }: Prot
       return <>{children}</>;
     }
     return (
-      <AccessDenied 
-        title="Authentication Required" 
-        message="Please sign in to access this area. Guest access is not enabled for this page." 
-        icon={User} 
+      <AccessDenied
+        title="Authentication Required"
+        message="Please sign in to access this area. Guest access is not enabled for this page."
+        icon={User}
       />
     );
   }
@@ -137,10 +137,10 @@ export function ProtectedRoute({ children, requireDM = false, allowGuest }: Prot
   // Require DM but user is not DM - show role-based access denied
   if (requireDM && !isDM) {
     return (
-      <AccessDenied 
-        title="DM Access Required" 
-        message="This area requires Protocol Warden (DM) privileges. Please login with a DM account to continue." 
-        icon={Shield} 
+      <AccessDenied
+        title="DM Access Required"
+        message="This area requires Protocol Warden (DM) privileges. Please login with a DM account to continue."
+        icon={Shield}
       />
     );
   }

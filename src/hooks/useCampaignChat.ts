@@ -160,20 +160,22 @@ export const useSendCampaignMessage = () => {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ 
-      campaignId, 
+    mutationFn: async ({
+      campaignId,
       content,
       characterName,
       messageType = 'chat',
       metadata = {}
-    }: { 
-      campaignId: string; 
+    }: {
+      campaignId: string;
       content: string;
       characterName?: string;
       messageType?: 'chat' | 'roll' | 'system' | 'whisper';
       metadata?: Json;
     }) => {
-      if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true') {
+      const isOfflineMode = typeof navigator !== 'undefined' && !navigator.onLine;
+
+      if (!isSupabaseConfigured || import.meta.env.VITE_E2E === 'true' || isOfflineMode) {
         const now = new Date().toISOString();
         const next: CampaignMessage = {
           id: crypto.randomUUID(),
@@ -188,6 +190,18 @@ export const useSendCampaignMessage = () => {
         const updated = [...loadLocalMessages(campaignId), next];
         saveLocalMessages(campaignId, updated);
         broadcastLocalMessage(campaignId, next);
+
+        if (isOfflineMode && isSupabaseConfigured) {
+          const { enqueueMessage } = await import('@/lib/offlineSyncQueue');
+          await enqueueMessage({
+            campaign_id: campaignId,
+            user_id: getLocalUserId(),
+            message_type: messageType,
+            content,
+            metadata,
+            character_name: characterName || null,
+          });
+        }
         return next;
       }
 

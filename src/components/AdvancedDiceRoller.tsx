@@ -6,6 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Save, Trash2, Copy, Play } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useParams } from 'react-router-dom';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 
 export interface DiceMacro {
   id: string;
@@ -57,7 +59,7 @@ class AdvancedDiceEngine implements DiceFormulaParser {
 
   parse(formula: string): ParsedFormula {
     const cleanFormula = formula.toLowerCase().trim();
-    
+
     // Check for advantage/disadvantage
     const hasAdvantage = cleanFormula.includes('advantage') || cleanFormula.includes('adv');
     const hasDisadvantage = cleanFormula.includes('disadvantage') || cleanFormula.includes('dis');
@@ -79,10 +81,10 @@ class AdvancedDiceEngine implements DiceFormulaParser {
       const [_, countStr, sidesStr, modifierStr] = match;
       const count = countStr ? parseInt(countStr) : 1;
       const sides = parseInt(sidesStr);
-      
+
       let modifier = 0;
       let operation: '+' | '-' = '+';
-      
+
       if (modifierStr) {
         operation = modifierStr[0] as '+' | '-';
         modifier = parseInt(modifierStr.slice(1));
@@ -118,14 +120,14 @@ class AdvancedDiceEngine implements DiceFormulaParser {
     parsed.dice.forEach((die, index) => {
       const dieRolls = this.rollMultiple(die.count, die.sides);
       rolls.push(...dieRolls);
-      
+
       const dieTotal = dieRolls.reduce((sum, roll) => sum + roll, 0);
-      const modifiedTotal = die.operation === '+' 
+      const modifiedTotal = die.operation === '+'
         ? dieTotal + (die.modifier || 0)
         : dieTotal - (die.modifier || 0);
-      
+
       total += modifiedTotal;
-      
+
       breakdown += `${index > 0 ? ' + ' : ''}${die.count}d${die.sides}`;
       if (die.modifier) {
         breakdown += `${die.operation}${die.modifier}`;
@@ -135,16 +137,16 @@ class AdvancedDiceEngine implements DiceFormulaParser {
 
     // Handle advantage/disadvantage for d20 rolls
     if (parsed.hasAdvantage || parsed.hasDisadvantage) {
-      const d20Rolls = rolls.filter((_, index) => 
+      const d20Rolls = rolls.filter((_, index) =>
         parsed.dice[index]?.sides === 20
       );
-      
+
       if (d20Rolls.length > 0) {
         const [roll1, roll2] = d20Rolls.slice(0, 2);
-        const advantageRoll = parsed.hasAdvantage 
+        const advantageRoll = parsed.hasAdvantage
           ? Math.max(roll1, roll2)
           : Math.min(roll1, roll2);
-        
+
         total = total - d20Rolls[0] + advantageRoll;
         breakdown += ` (${parsed.hasAdvantage ? 'advantage' : 'disadvantage'}: ${roll1}, ${roll2} → ${advantageRoll})`;
       }
@@ -234,10 +236,10 @@ export function useAdvancedDiceRoller() {
     try {
       const result = engine.roll(formula);
       setHistory(prev => [result, ...prev.slice(0, 49)]); // Keep last 50 rolls
-      
+
       // Update macro usage
-      setMacros(prev => prev.map(macro => 
-        macro.formula === formula 
+      setMacros(prev => prev.map(macro =>
+        macro.formula === formula
           ? { ...macro, lastUsed: Date.now() }
           : macro
       ));
@@ -261,7 +263,7 @@ export function useAdvancedDiceRoller() {
     };
 
     setMacros(prev => [...prev, newMacro]);
-    
+
     if (macro.isFavorite) {
       setFavorites(prev => [...prev, newMacro]);
     }
@@ -277,7 +279,7 @@ export function useAdvancedDiceRoller() {
   const deleteMacro = useCallback((id: string) => {
     setMacros(prev => prev.filter(macro => macro.id !== id));
     setFavorites(prev => prev.filter(macro => macro.id !== id));
-    
+
     toast({
       title: 'Macro Deleted',
       description: 'The macro has been removed.',
@@ -285,8 +287,8 @@ export function useAdvancedDiceRoller() {
   }, [toast]);
 
   const toggleFavorite = useCallback((id: string) => {
-    setMacros(prev => prev.map(macro => 
-      macro.id === id 
+    setMacros(prev => prev.map(macro =>
+      macro.id === id
         ? { ...macro, isFavorite: !macro.isFavorite }
         : macro
     ));
@@ -337,6 +339,9 @@ export function AdvancedDiceRoller() {
     toggleFavorite,
     clearHistory,
   } = useAdvancedDiceRoller();
+  const { campaignId } = useParams<{ campaignId?: string }>();
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const playerTools = usePlayerToolsEnhancements();
 
   const handleRoll = useCallback(async () => {
     if (!formula.trim()) return;
@@ -346,10 +351,23 @@ export function AdvancedDiceRoller() {
       const result = rollDice(formula);
       setLastResult(result);
       setFormula('');
+
+      // Broadcast to DDB if applicable
+      if (campaignId) {
+        playerTools.rollInCampaign(campaignId, {
+          characterId: 'dm', // Generic fallback
+          characterName: 'Advanced Dice Roller',
+          formula: result.formula,
+          total: result.total,
+          rolls: result.rolls,
+          type: 'custom',
+          context: result.formula,
+        }).catch(console.error);
+      }
     } finally {
       setIsRolling(false);
     }
-  }, [formula, rollDice]);
+  }, [formula, rollDice, campaignId, playerTools]);
 
   const handleSaveMacro = useCallback(() => {
     if (!formula.trim()) return;
@@ -562,7 +580,7 @@ export function AdvancedDiceRoller() {
                   </Button>
                 )}
               </div>
-              
+
               {history.length === 0 ? (
                 <p className="text-muted-foreground text-center py-8">
                   No rolls yet. Start rolling to see your history.

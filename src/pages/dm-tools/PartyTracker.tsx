@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, ExternalLink, Plus, Trash2, Heart, Shield } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Plus, Trash2, Heart, Shield, Package } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
@@ -14,6 +14,8 @@ import { cn } from '@/lib/utils';
 import { useCampaignToolState } from '@/hooks/useToolState';
 import { useJoinedCampaigns, useMyCampaigns } from '@/hooks/useCampaigns';
 import { useHydratedPreferredCampaignId } from '@/hooks/usePreferredCampaignSelection';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
+import { CampaignExtrasPanel } from '@/components/campaign/CampaignExtrasPanel';
 
 interface PartyMember {
   id: string;
@@ -70,6 +72,10 @@ const PartyTracker = () => {
     conditions: [] as string[],
     notes: '',
   });
+
+  // DDB Parity Integration
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const playerTools = usePlayerToolsEnhancements();
 
   const manageableCampaigns = useMemo<CampaignWithRole[]>(() => {
     const byId = new Map<string, CampaignWithRole>();
@@ -191,6 +197,10 @@ const PartyTracker = () => {
       members.map((member) => {
         if (member.id !== id) return member;
         const nextHp = Math.max(0, Math.min(member.maxHp, member.hp + delta));
+
+        // DDB Parity: Broadcast explicit HP override
+        playerTools.trackHealthChange(member.id || member.name, Math.abs(delta), delta < 0 ? 'damage' : 'healing').catch(console.error);
+
         return { ...member, hp: nextHp };
       })
     );
@@ -201,6 +211,10 @@ const PartyTracker = () => {
       members.map((member) => {
         if (member.id !== memberId) return member;
         const hasCondition = member.conditions.includes(condition);
+
+        // DDB Parity: Broadcast Condition Toggles
+        playerTools.trackConditionChange(member.id || member.name, condition, !hasCondition ? 'add' : 'remove').catch(console.error);
+
         return {
           ...member,
           conditions: hasCondition
@@ -286,6 +300,12 @@ const PartyTracker = () => {
                       <Link to={`/campaigns/${selectedCampaign.id}`}>
                         Open Campaign
                         <ExternalLink className="w-4 h-4 ml-2" />
+                      </Link>
+                    </Button>
+                    <Button variant="outline" asChild className="border-secondary text-secondary-foreground">
+                      <Link to={`/party-stash?campaignId=${selectedCampaign.id}`}>
+                        Party Stash
+                        <Package className="w-4 h-4 ml-2" />
                       </Link>
                     </Button>
                   </div>
@@ -406,106 +426,113 @@ const PartyTracker = () => {
               </div>
 
               <div className="space-y-6">
-            <SystemWindow title="ADD PARTY MEMBER">
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="name">Name</Label>
-                  <Input
-                    id="name"
-                    value={newMember.name || ''}
-                    onChange={(e) => setNewMember({ ...newMember, name: e.target.value })}
-                    placeholder="Character name"
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <Label htmlFor="level">Level</Label>
-                    <Input
-                      id="level"
-                      type="number"
-                      value={newMember.level || 1}
-                      onChange={(e) => setNewMember({ ...newMember, level: parseInt(e.target.value) || 1 })}
-                      min={1}
-                      max={20}
-                    />
+                <SystemWindow title="ADD PARTY MEMBER">
+                  <div className="space-y-4">
+                    <div>
+                      <Label htmlFor="name">Name</Label>
+                      <Input
+                        id="name"
+                        value={newMember.name || ''}
+                        onChange={(e) => setNewMember({ ...newMember, name: e.target.value })}
+                        placeholder="Character name"
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <Label htmlFor="level">Level</Label>
+                        <Input
+                          id="level"
+                          type="number"
+                          value={newMember.level || 1}
+                          onChange={(e) => setNewMember({ ...newMember, level: parseInt(e.target.value) || 1 })}
+                          min={1}
+                          max={20}
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="ac">AC</Label>
+                        <Input
+                          id="ac"
+                          type="number"
+                          value={newMember.ac || 10}
+                          onChange={(e) => setNewMember({ ...newMember, ac: parseInt(e.target.value) || 10 })}
+                          min={1}
+                        />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <Label htmlFor="hp">Current HP</Label>
+                        <Input
+                          id="hp"
+                          type="number"
+                          value={newMember.hp || 0}
+                          onChange={(e) => setNewMember({ ...newMember, hp: parseInt(e.target.value) || 0 })}
+                          min={0}
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="maxHp">Max HP</Label>
+                        <Input
+                          id="maxHp"
+                          type="number"
+                          value={newMember.maxHp || 1}
+                          onChange={(e) => setNewMember({ ...newMember, maxHp: parseInt(e.target.value) || 1 })}
+                          min={1}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <Label htmlFor="notes">Notes (Optional)</Label>
+                      <Input
+                        id="notes"
+                        value={newMember.notes || ''}
+                        onChange={(e) => setNewMember({ ...newMember, notes: e.target.value })}
+                        placeholder="Quick notes..."
+                      />
+                    </div>
+                    <Button onClick={addMember} className="w-full">
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add Member
+                    </Button>
                   </div>
-                  <div>
-                    <Label htmlFor="ac">AC</Label>
-                    <Input
-                      id="ac"
-                      type="number"
-                      value={newMember.ac || 10}
-                      onChange={(e) => setNewMember({ ...newMember, ac: parseInt(e.target.value) || 10 })}
-                      min={1}
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <Label htmlFor="hp">Current HP</Label>
-                    <Input
-                      id="hp"
-                      type="number"
-                      value={newMember.hp || 0}
-                      onChange={(e) => setNewMember({ ...newMember, hp: parseInt(e.target.value) || 0 })}
-                      min={0}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="maxHp">Max HP</Label>
-                    <Input
-                      id="maxHp"
-                      type="number"
-                      value={newMember.maxHp || 1}
-                      onChange={(e) => setNewMember({ ...newMember, maxHp: parseInt(e.target.value) || 1 })}
-                      min={1}
-                    />
-                  </div>
-                </div>
-                <div>
-                  <Label htmlFor="notes">Notes (Optional)</Label>
-                  <Input
-                    id="notes"
-                    value={newMember.notes || ''}
-                    onChange={(e) => setNewMember({ ...newMember, notes: e.target.value })}
-                    placeholder="Quick notes..."
-                  />
-                </div>
-                <Button onClick={addMember} className="w-full">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add Member
-                </Button>
-              </div>
-            </SystemWindow>
+                </SystemWindow>
 
-            {members.length > 0 && (
-              <SystemWindow title="PARTY SUMMARY" variant="quest">
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Total Members:</span>
-                    <span className="font-semibold">{members.length}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Average Level:</span>
-                    <span className="font-semibold">
-                      {Math.round(members.reduce((sum, m) => sum + m.level, 0) / members.length)}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Total HP:</span>
-                    <span className="font-semibold">
-                      {members.reduce((sum, m) => sum + m.hp, 0)} / {members.reduce((sum, m) => sum + m.maxHp, 0)}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Members with Conditions:</span>
-                    <span className="font-semibold">
-                      {members.filter(m => m.conditions.length > 0).length}
-                    </span>
-                  </div>
-                </div>
-              </SystemWindow>
-            )}
+                {members.length > 0 && (
+                  <SystemWindow title="PARTY SUMMARY" variant="quest">
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Total Members:</span>
+                        <span className="font-semibold">{members.length}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Average Level:</span>
+                        <span className="font-semibold">
+                          {Math.round(members.reduce((sum, m) => sum + m.level, 0) / members.length)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Total HP:</span>
+                        <span className="font-semibold">
+                          {members.reduce((sum, m) => sum + m.hp, 0)} / {members.reduce((sum, m) => sum + m.maxHp, 0)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Members with Conditions:</span>
+                        <span className="font-semibold">
+                          {members.filter(m => m.conditions.length > 0).length}
+                        </span>
+                      </div>
+                    </div>
+                  </SystemWindow>
+                )}
+
+                {activeCampaignId && (
+                  <CampaignExtrasPanel
+                    campaignId={activeCampaignId}
+                    isDM={selectedCampaign?.access === 'owner' || selectedCampaign?.access === 'co-system'}
+                  />
+                )}
               </div>
             </div>
           </>

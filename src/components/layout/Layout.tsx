@@ -1,13 +1,44 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Header } from './Header';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/lib/auth/authContext';
 import { useAccessibility } from '@/hooks/useAccessibility';
+import { usePWA } from '@/hooks/usePWA';
+import { PWAInstallPrompt, OfflineStatus } from '@/components/pwa/PWAComponents';
+import { WardenChatbot } from '@/components/dm-tools/WardenChatbot';
+import { OfflineBanner } from '@/components/ui/OfflineBanner';
 
 interface LayoutProps {
   children?: React.ReactNode;
   className?: string;
+}
+
+// Module-level custom hook (must not be defined inside a component)
+function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(() =>
+    typeof window !== 'undefined' ? window.matchMedia(query).matches : false
+  );
+
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    setMatches(media.matches);
+    const listener = (event: MediaQueryListEvent) => setMatches(event.matches);
+    if (media.addEventListener) {
+      media.addEventListener('change', listener);
+    } else {
+      (media as MediaQueryList).addListener(listener);
+    }
+    return () => {
+      if (media.removeEventListener) {
+        media.removeEventListener('change', listener);
+      } else {
+        (media as MediaQueryList).removeListener(listener);
+      }
+    };
+  }, [query]);
+
+  return matches;
 }
 
 // Derive SA zone from current route
@@ -29,41 +60,12 @@ export function Layout({ children, className }: LayoutProps) {
   const { user, signOut } = useAuth();
   const { reducedMotion, highContrast } = useAccessibility();
   const saZone = useSAZone();
+  const { isInstallable, isInstalled, isOnline, installPrompt, syncQueueLength } = usePWA();
 
-  // Complete responsive design system
-  const useMediaQuery = (query: string): boolean => {
-    const [matches, setMatches] = useState(false);
-    
-    useEffect(() => {
-      const media = window.matchMedia(query);
-      setMatches(media.matches);
-      
-      const listener = (event: MediaQueryListEvent) => {
-        setMatches(event.matches);
-      };
-      
-      if (media.addEventListener) {
-        media.addEventListener('change', listener);
-      } else {
-        media.addListener(listener);
-      }
-      
-      return () => {
-        if (media.removeEventListener) {
-          media.removeEventListener('change', listener);
-        } else {
-          media.removeListener(listener);
-        }
-      };
-    }, [query]);
-    
-    return matches;
-  };
-  
   const isMobile = useMediaQuery('(max-width: 768px)');
   const isTablet = useMediaQuery('(max-width: 1024px)');
   const isDesktop = !isMobile && !isTablet;
-  
+
   // Responsive layout classes
   const layoutClasses = cn(
     'min-h-screen bg-background',
@@ -82,6 +84,8 @@ export function Layout({ children, className }: LayoutProps) {
 
   return (
     <div className={cn(layoutClasses, "relative overflow-hidden")} data-sa-zone={saZone}>
+      {/* Offline connectivity banner */}
+      <OfflineBanner />
       {/* Global Background Effects */}
       <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
         <div className="absolute inset-0 bg-background" />
@@ -101,10 +105,10 @@ export function Layout({ children, className }: LayoutProps) {
         user={
           user
             ? {
-                email: user.email,
-                name: user.displayName ?? user.email?.split('@')[0] ?? 'User',
-                avatar: user.avatar,
-              }
+              email: user.email,
+              name: user.displayName ?? user.email?.split('@')[0] ?? 'User',
+              avatar: user.avatar,
+            }
             : undefined
         }
         onLogout={() => {
@@ -121,6 +125,20 @@ export function Layout({ children, className }: LayoutProps) {
       >
         {children || <Outlet />}
       </main>
+
+      {/* PWA Components */}
+      <PWAInstallPrompt
+        isInstallable={isInstallable}
+        isInstalled={isInstalled}
+        onInstall={installPrompt}
+      />
+      <OfflineStatus
+        isOnline={isOnline}
+        connectionType="unknown"
+        syncQueueLength={syncQueueLength}
+      />
+
+      {saZone === 'dm' && <WardenChatbot />}
     </div>
   );
 }

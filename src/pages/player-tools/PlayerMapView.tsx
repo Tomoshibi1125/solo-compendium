@@ -15,10 +15,14 @@ import { useCampaignMembers } from '@/hooks/useCampaigns';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import { VTTCharacterPanel } from '@/components/vtt/VTTCharacterPanel';
 import { VTTAssetBrowser } from '@/components/vtt/VTTAssetBrowser';
+import { cn } from '@/lib/utils';
 import { PlayerToolsPanel } from '@/components/vtt/PlayerToolsPanel';
 import '@/styles/vtt-player-map.css';
 import './PlayerMapView.css';
-import { cn } from '@/lib/utils';
+import { type HexGridConfig, snapToHexCenter } from '@/lib/vtt';
+import { type VTTDrawing } from '@/lib/vtt';
+import { type TerrainZone, type WeatherType, getWeatherCSSAnimation, WEATHER_PRESETS } from '@/lib/vtt';
+import { type AmbientSoundZone } from '@/lib/vtt';
 import type { LibraryToken } from '@/data/tokenLibraryDefaults';
 
 interface PlacedToken {
@@ -64,7 +68,13 @@ interface Scene {
   tokens: PlacedToken[];
   fogOfWar: boolean;
   fogData?: boolean[][];
+  drawings?: VTTDrawing[];
+  weather?: WeatherType;
+  terrain?: TerrainZone[];
+  ambientSounds?: AmbientSoundZone[];
 }
+
+const toSafeClassName = (id: string) => id.replace(/[^a-zA-Z0-9-]/g, '-');
 
 type VTTScenesState = {
   scenes: Scene[];
@@ -348,6 +358,51 @@ const PlayerMapView = ({ campaignId, sessionId }: { campaignId?: string; session
   const sceneWidth = currentScene?.width ?? 20;
   const sceneHeight = currentScene?.height ?? 20;
 
+  const overlayStyles = useMemo(() => {
+    const parts: string[] = [];
+    const sceneWidthPx = sceneWidth * gridSize * zoom;
+    const sceneHeightPx = sceneHeight * gridSize * zoom;
+    parts.push(`.vtt-map-scene { --scene-width: ${sceneWidthPx}px; --scene-height: ${sceneHeightPx}px; }`);
+
+    if (currentScene?.drawings) {
+      currentScene.drawings.forEach((drawing) => {
+        if (drawing.layer === 'gm') return;
+        const safeId = toSafeClassName(drawing.id);
+
+        if (drawing.type === 'line' || drawing.type === 'rectangle' || drawing.type === 'circle') {
+          const p1 = drawing.points[0];
+          const p2 = drawing.points[1] || p1;
+          const x1 = Math.min(p1.x, p2.x) * gridSize * zoom;
+          const y1 = Math.min(p1.y, p2.y) * gridSize * zoom;
+          const x2 = Math.max(p1.x, p2.x) * gridSize * zoom;
+          const y2 = Math.max(p1.y, p2.y) * gridSize * zoom;
+
+          if (drawing.type === 'line') {
+            const startX = (p1.x + 0.5) * gridSize * zoom;
+            const startY = (p1.y + 0.5) * gridSize * zoom;
+            const endX = (p2.x + 0.5) * gridSize * zoom;
+            const endY = (p2.y + 0.5) * gridSize * zoom;
+            const length = Math.hypot(endX - startX, endY - startY);
+            const angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
+            parts.push(
+              `.vtt-drawing-line-${safeId} { left: ${startX}px; top: ${startY}px; width: ${length}px; height: ${drawing.strokeWidth}px; background-color: ${drawing.color}; transform: rotate(${angle}deg); transform-origin: 0 50%; opacity: ${drawing.fillOpacity ?? 1}; }`
+            );
+            return;
+          }
+
+          const width = Math.max(1, (x2 - x1)) + (gridSize * zoom);
+          const height = Math.max(1, (y2 - y1)) + (gridSize * zoom);
+          const fill = drawing.fillColor ?? 'transparent';
+
+          parts.push(
+            `.vtt-drawing-shape-${safeId} { left: ${x1}px; top: ${y1}px; width: ${width}px; height: ${height}px; border-color: ${drawing.color}; border-width: ${drawing.strokeWidth}px; background-color: ${fill}; opacity: ${drawing.fillOpacity ?? 0.18}; }`
+          );
+        }
+      });
+    }
+    return parts.join('\n');
+  }, [currentScene?.drawings, gridSize, sceneWidth, sceneHeight, zoom]);
+
   return (
     <Layout>
       <div className="container mx-auto px-4 py-4 max-w-[1920px]">
@@ -468,22 +523,120 @@ const PlayerMapView = ({ campaignId, sessionId }: { campaignId?: string; session
 
                     {/* Fog of war */}
                     {currentScene?.fogOfWar && currentScene.fogData && (
-                      <div className="absolute inset-0 pointer-events-none vtt-fog-overlay-layer">
+                      <div className="absolute inset-0 pointer-events-none vtt-fog-overlay-layer z-[90]">
                         {currentScene.fogData.map((row, ry) =>
                           row.map((revealed, rx) =>
                             !revealed ? (
                               <div
                                 key={`fog-${rx}-${ry}`}
-                                className="absolute vtt-fog-cell"
+                                className="absolute vtt-fog-cell bg-black"
                                 style={{
-                                  '--fog-left': rx * gridSize * zoom,
-                                  '--fog-top': ry * gridSize * zoom,
-                                  '--fog-size': gridSize * zoom,
+                                  left: `${rx * gridSize * zoom}px`,
+                                  top: `${ry * gridSize * zoom}px`,
+                                  width: `${gridSize * zoom}px`,
+                                  height: `${gridSize * zoom}px`,
+                                  opacity: 0.9,
                                 } as React.CSSProperties}
                               />
                             ) : null,
                           ),
                         )}
+                      </div>
+                    )}
+
+                    {/* DOM Overlays (Drawings, Terrain, Weather, Ambient Sounds) */}
+                    {currentScene?.terrain && currentScene.terrain.length > 0 && (
+                      <div className="absolute inset-0 pointer-events-none z-[1]">
+                        <svg className="absolute inset-0 w-full h-full overflow-visible">
+                          {currentScene.terrain.map((zone) => {
+                            if (!zone.visible) return null;
+                            const gZoom = gridSize * zoom;
+                            const pointsStr = zone.vertices.map(v => `${(v.x + 0.5) * gZoom},${(v.y + 0.5) * gZoom}`).join(' ');
+                            return (
+                              <polygon
+                                key={zone.id}
+                                points={pointsStr}
+                                fill={zone.fillColor}
+                                stroke={zone.fillColor.replace(/[\d.]+\)$/g, '1)')}
+                                strokeWidth={2}
+                              />
+                            );
+                          })}
+                        </svg>
+                      </div>
+                    )}
+
+                    {currentScene?.drawings && currentScene.drawings.length > 0 && (
+                      <div className="absolute inset-0 pointer-events-none z-[2]">
+                        {currentScene.drawings.map((drawing) => {
+                          if (drawing.layer === 'gm') return null; // Only player layers
+
+                          if (drawing.type === 'freehand') {
+                            const gZoom = gridSize * zoom;
+                            const pointsStr = drawing.points.map(p => `${(p.x + 0.5) * gZoom},${(p.y + 0.5) * gZoom}`).join(' ');
+                            return (
+                              <svg key={drawing.id} className="absolute inset-0 w-full h-full overflow-visible pointer-events-none">
+                                <polyline
+                                  points={pointsStr}
+                                  fill="none"
+                                  stroke={drawing.color}
+                                  strokeWidth={drawing.strokeWidth}
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  opacity={drawing.fillOpacity ?? 1}
+                                />
+                              </svg>
+                            );
+                          }
+
+                          if (drawing.type === 'line') {
+                            return (
+                              <div
+                                key={drawing.id}
+                                className={cn('vtt-drawing-line absolute origin-left rounded-full pointer-events-none', `vtt-drawing-line-${toSafeClassName(drawing.id)}`)}
+                              />
+                            );
+                          }
+                          return (
+                            <div
+                              key={drawing.id}
+                              className={cn(
+                                'vtt-drawing-shape absolute border-solid box-border pointer-events-none',
+                                drawing.type === 'circle' && 'rounded-full',
+                                `vtt-drawing-shape-${toSafeClassName(drawing.id)}`
+                              )}
+                            />
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {/* Weather overlay */}
+                    {currentScene?.weather && currentScene.weather !== 'clear' && WEATHER_PRESETS[currentScene.weather as keyof typeof WEATHER_PRESETS] && (
+                      <div className="absolute inset-0 pointer-events-none z-[100] overflow-hidden mix-blend-screen opacity-80" data-testid="vtt-weather-overlay">
+                        <style>{getWeatherCSSAnimation(WEATHER_PRESETS[currentScene.weather as keyof typeof WEATHER_PRESETS])}</style>
+                        {Array.from({ length: Math.min(WEATHER_PRESETS[currentScene.weather as keyof typeof WEATHER_PRESETS].particleCount, 200) }).map((_, i) => {
+                          const size = Math.random() * 4 + 2;
+                          const left = Math.random() * 100;
+                          const top = Math.random() * 100;
+                          const animDuration = Math.random() * 2 + 1;
+                          const delay = Math.random() * -2;
+                          return (
+                            <div
+                              key={i}
+                              className="absolute rounded-full"
+                              style={{
+                                width: `${size}px`,
+                                height: `${size}px`,
+                                left: `${left}%`,
+                                top: `${top}%`,
+                                backgroundColor: WEATHER_PRESETS[currentScene!.weather as keyof typeof WEATHER_PRESETS].particleColor,
+                                animation: `weather-particle-${currentScene!.weather} ${animDuration}s linear infinite`,
+                                animationDelay: `${delay}s`,
+                              }}
+                            />
+                          );
+                        })}
                       </div>
                     )}
 
@@ -592,15 +745,22 @@ const PlayerMapView = ({ campaignId, sessionId }: { campaignId?: string; session
 
                     {/* Pings overlay */}
                     {vttRealtime.pings.length > 0 && (
-                      <div className="absolute inset-0 pointer-events-none vtt-pings-overlay">
+                      <div className="absolute inset-0 pointer-events-none vtt-pings-overlay z-[100]">
                         {vttRealtime.pings.map((ping) => (
                           <div
-                            key={ping.timestamp}
+                            key={ping.createdAt}
                             className="absolute animate-ping vtt-ping"
                             style={{
                               '--ping-left': (ping.x + 0.5) * gridSize * zoom,
                               '--ping-top': (ping.y + 0.5) * gridSize * zoom,
                               '--ping-color': ping.color,
+                              left: 'var(--ping-left)px',
+                              top: 'var(--ping-top)px',
+                              width: '40px',
+                              height: '40px',
+                              borderRadius: '50%',
+                              transform: 'translate(-50%, -50%)',
+                              border: `4px solid ${ping.color}`,
                             } as React.CSSProperties}
                           />
                         ))}
@@ -688,6 +848,7 @@ const PlayerMapView = ({ campaignId, sessionId }: { campaignId?: string; session
                           characterId={charId}
                           onRoll={(formula) => vttRealtime.rollAndBroadcast(formula)}
                           onChat={(msg, type) => vttRealtime.sendChatMessage(msg, type)}
+                          campaignId={effectiveCampaignId}
                         />
                       );
                     }
@@ -942,8 +1103,8 @@ const PlayerMapView = ({ campaignId, sessionId }: { campaignId?: string; session
                       ))}
                     </div>
                     <div className="flex gap-1">
-                      <Input value={newMessage} onChange={(e) => setNewMessage(e.target.value)} placeholder="Type..." className="h-9 text-sm" onKeyPress={(e) => { if (e.key === 'Enter' && newMessage.trim()) { vttRealtime.processChat(newMessage); setNewMessage(''); }}} />
-                      <Button size="sm" className="h-9 px-3" onClick={() => { if (newMessage.trim()) { vttRealtime.processChat(newMessage); setNewMessage(''); }}}>Send</Button>
+                      <Input value={newMessage} onChange={(e) => setNewMessage(e.target.value)} placeholder="Type..." className="h-9 text-sm" onKeyPress={(e) => { if (e.key === 'Enter' && newMessage.trim()) { vttRealtime.processChat(newMessage); setNewMessage(''); } }} />
+                      <Button size="sm" className="h-9 px-3" onClick={() => { if (newMessage.trim()) { vttRealtime.processChat(newMessage); setNewMessage(''); } }}>Send</Button>
                     </div>
                   </div>
                 )}
@@ -977,6 +1138,7 @@ const PlayerMapView = ({ campaignId, sessionId }: { campaignId?: string; session
                         characterId={charId}
                         onRoll={(formula) => vttRealtime.rollAndBroadcast(formula)}
                         onChat={(msg, type) => vttRealtime.sendChatMessage(msg, type)}
+                        campaignId={effectiveCampaignId}
                       />
                     );
                   }

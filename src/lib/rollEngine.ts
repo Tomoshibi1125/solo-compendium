@@ -4,11 +4,35 @@
 
 import { AppError } from '@/lib/appError';
 
+// Re-export advanced dice mechanics (Roll20 parity — exploding, keep, reroll, penetrating, pools)
+export {
+  rollWithAdvantage,
+  rollCritical,
+  rollWithReroll,
+  rollWithMinimum,
+  rollExploding,
+  rollCompounding,
+  rollPenetrating,
+  rollDicePool,
+  rollKeepHighest,
+  rollKeepLowest,
+  applyAbilityModifier,
+  applyProficiencyBonus,
+  applyExpertise,
+} from './advancedDiceEngine';
+export type {
+  SkillCheckResult,
+  AttackResult,
+  DamageResult,
+  InitiativeResult,
+  SpellSaveResult,
+  DeathSaveResult,
+} from './advancedDiceEngine';
 
 // Validate dice string format
 export function validateDiceString(diceString: string): boolean {
   if (!diceString || typeof diceString !== 'string') return false;
-  
+
   // Basic pattern: NdS+/-M where N=dice count, S=sides, M=modifier
   const pattern = /^\d+d\d+(?:[+-]\d+)?$/;
   return pattern.test(diceString);
@@ -69,7 +93,7 @@ export function roll(diceRoll: DiceRoll): RollResult {
   if (sides === 20 && dice === 1 && advantage !== 'normal') {
     const roll1 = rollDie(sides);
     const roll2 = rollDie(sides);
-    
+
     if (advantage === 'advantage') {
       rolls.push(Math.max(roll1, roll2));
       droppedRolls = [Math.min(roll1, roll2)];
@@ -169,14 +193,14 @@ export function rollMultiple(formulas: string[]): { results: RollResult[]; grand
  * Format roll result for display
  */
 export function formatRollResult(result: RollResult): string {
-  const rollsStr = result.rolls.length > 1 
+  const rollsStr = result.rolls.length > 1
     ? `[${result.rolls.join(' + ')}]`
     : `[${result.rolls[0]}]`;
-  
-  const modStr = result.modifier !== 0 
-    ? ` ${result.modifier >= 0 ? '+' : ''}${result.modifier}` 
+
+  const modStr = result.modifier !== 0
+    ? ` ${result.modifier >= 0 ? '+' : ''}${result.modifier}`
     : '';
-  
+
   let prefix = '';
   if (result.isNatural20) prefix = '🎯 Critical! ';
   if (result.isNatural1) prefix = '💀 Critical Fail! ';

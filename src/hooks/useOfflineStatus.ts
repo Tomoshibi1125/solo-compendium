@@ -13,7 +13,12 @@ export function useOfflineStatus() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const handleOnline = () => setIsOnline(true);
+    const handleOnline = () => {
+      setIsOnline(true);
+      import('@/lib/offlineSyncQueue').then(({ flushOfflineQueue }) => {
+        flushOfflineQueue().catch(console.error);
+      });
+    };
     const handleOffline = () => setIsOnline(false);
 
     window.addEventListener('online', handleOnline);

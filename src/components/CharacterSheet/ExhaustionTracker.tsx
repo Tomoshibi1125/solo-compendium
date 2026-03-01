@@ -4,14 +4,27 @@ import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/comp
 import { Button } from '@/components/ui/button';
 import { Minus, Plus, Zap } from 'lucide-react';
 import { EXHAUSTION_TABLE } from '@/lib/conditionEffects';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 
 interface ExhaustionTrackerProps {
   level: number;
   onChangeLevel: (level: number) => void;
+  characterId: string;
 }
 
-export function ExhaustionTracker({ level, onChangeLevel }: ExhaustionTrackerProps) {
+export function ExhaustionTracker({ level, onChangeLevel, characterId }: ExhaustionTrackerProps) {
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const playerTools = usePlayerToolsEnhancements();
   const info = EXHAUSTION_TABLE[Math.min(level, 6)];
+
+  const handleChange = (newLevel: number) => {
+    onChangeLevel(newLevel);
+    if (newLevel > level) {
+      playerTools.trackConditionChange(characterId, `Exhaustion Level ${newLevel}`, 'add').catch(console.error);
+    } else {
+      playerTools.trackConditionChange(characterId, `Exhaustion Level ${level}`, 'remove').catch(console.error);
+    }
+  };
 
   return (
     <div className="flex items-center gap-3">
@@ -39,7 +52,7 @@ export function ExhaustionTracker({ level, onChangeLevel }: ExhaustionTrackerPro
           variant="ghost"
           className="h-6 w-6 p-0"
           disabled={level <= 0}
-          onClick={() => onChangeLevel(Math.max(0, level - 1))}
+          onClick={() => handleChange(Math.max(0, level - 1))}
         >
           <Minus className="h-3 w-3" />
         </Button>
@@ -69,7 +82,7 @@ export function ExhaustionTracker({ level, onChangeLevel }: ExhaustionTrackerPro
           variant="ghost"
           className="h-6 w-6 p-0"
           disabled={level >= 6}
-          onClick={() => onChangeLevel(Math.min(6, level + 1))}
+          onClick={() => handleChange(Math.min(6, level + 1))}
         >
           <Plus className="h-3 w-3" />
         </Button>

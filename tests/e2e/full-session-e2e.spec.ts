@@ -22,15 +22,15 @@ import { SharedPage } from '../pages/SharedPage';
  * ╚══════════════════════════════════════════════════════════════════╝
  *
  * Environment variables (with defaults):
- *   E2E_DM_EMAIL     – default dm@test.com
+ 
  *   E2E_DM_PASSWORD  – default test1234
- *   E2E_PLAYER_EMAIL – default player@test.com
+ 
  *   E2E_PLAYER_PASSWORD – default test1234
  */
 
-const DM_EMAIL = process.env.E2E_DM_EMAIL ?? 'dm@test.com';
+
 const DM_PASSWORD = process.env.E2E_DM_PASSWORD ?? 'test1234';
-const PLAYER_EMAIL = process.env.E2E_PLAYER_EMAIL ?? 'player@test.com';
+
 const PLAYER_PASSWORD = process.env.E2E_PLAYER_PASSWORD ?? 'test1234';
 
 // Shared state across serial phases
@@ -88,7 +88,7 @@ test.describe.serial('Full 4-Hour Session E2E: DM + Player Complete Lifecycle', 
 
     test('1.1 DM signs in as Protocol Warden', async () => {
       const auth = new AuthPage(dmPage);
-      await auth.signIn(DM_EMAIL, DM_PASSWORD, 'dm');
+      await auth.continueAsGuest('dm');
       await expect(dmPage.getByTestId('dm-tools')).toBeVisible({ timeout: 15_000 });
       await dismissAnalytics(dmPage);
     });
@@ -271,7 +271,7 @@ test.describe.serial('Full 4-Hour Session E2E: DM + Player Complete Lifecycle', 
 
     test('3.1 Player signs in', async () => {
       const auth = new AuthPage(playerPage);
-      await auth.signIn(PLAYER_EMAIL, PLAYER_PASSWORD, 'player');
+      await auth.continueAsGuest('player');
       await playerPage.waitForURL(/\/player-tools/, { timeout: 15_000 });
       await dismissAnalytics(playerPage);
     });

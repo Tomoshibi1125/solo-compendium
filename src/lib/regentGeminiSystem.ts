@@ -9,54 +9,9 @@ import { NINE_REGENTS } from './nineRegents';
 type AbilityScore = 'STR' | 'AGI' | 'VIT' | 'INT' | 'SENSE' | 'PRE';
 type Job = string;
 
-interface Feature {
-  name: string;
-  description: string;
-  type: string;
-}
-
-interface StructuredSpell {
-  name: string;
-  description: string;
-  level: number;
-  school: string;
-}
-
-type Spell = string | StructuredSpell;
-
-interface Trait {
-  name: string;
-  description: string;
-  type: string;
-  benefits: string[];
-}
-
-// Regent types based on highest stat
-export enum RegentType {
-  STRENGTH_REGENT = 'Strength Regent',
-  AGILITY_REGENT = 'Agility Regent',
-  VITALITY_REGENT = 'Vitality Regent',
-  INTELLIGENCE_REGENT = 'Intelligence Regent',
-  SENSE_REGENT = 'Sense Regent',
-  PRESENCE_REGENT = 'Presence Regent'
-}
-
-// Regent paths with unique abilities
-export interface RegentPath {
-  id: string;
-  name: string;
-  type: RegentType;
-  description: string;
-  abilities: string[];
-  features: Feature[];
-  spells: Spell[];
-  requirements: {
-    /** @deprecated Regents are quest/DM-gated — level is advisory only */
-    level?: number;
-    questCompleted?: string;
-    statThreshold: number;
-  };
-}
+export { RegentType } from './regentTypes';
+export type { RegentPath, Feature, Spell, Trait, StructuredSpell } from './regentTypes';
+import { RegentType, type RegentPath, type Feature, type Spell, type Trait } from './regentTypes';
 
 // Gemini Protocol fusion result
 export interface GeminiSovereign {

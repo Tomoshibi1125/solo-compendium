@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   Download,
   Edit,
@@ -8,6 +8,7 @@ import {
   Star,
   Trash2,
   Upload,
+  Plus
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -188,6 +189,48 @@ export function MarketplaceWorkbench() {
     await proceedDownload(item);
   };
 
+  const handleImportToCompendium = (item: MarketplaceItemRecord) => {
+    if (!item.has_access && item.price_type !== 'free') {
+      toast({
+        title: 'Access required',
+        description: 'You do not currently have entitlement to this listing.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    try {
+      const saved = localStorage.getItem('sa_homebrew_content');
+      const homebrewList = saved ? JSON.parse(saved) : [];
+      let mappedType = 'job';
+      if (item.tags?.includes('path')) mappedType = 'path';
+      if (item.tags?.includes('relic') || item.item_type === 'item') mappedType = 'relic';
+
+      homebrewList.push({
+        id: item.id || crypto.randomUUID(),
+        name: item.title,
+        type: mappedType,
+        description: item.description,
+        data: item.content,
+        isPublic: false,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      });
+
+      localStorage.setItem('sa_homebrew_content', JSON.stringify(homebrewList));
+      toast({
+        title: 'Imported to Compendium',
+        description: `${item.title} has been added to your Homebrew collection.`,
+      });
+    } catch (e) {
+      toast({
+        title: 'Import Failed',
+        description: 'Failed to import to Compendium.',
+        variant: 'destructive',
+      });
+    }
+  };
+
   const handleReview = async (itemId: string) => {
     const rating = Math.min(Math.max(ratingByItem[itemId] || 5, 1), 5);
     const comment = commentByItem[itemId]?.trim();
@@ -207,314 +250,322 @@ export function MarketplaceWorkbench() {
           <TabsTrigger value="publish">Publish / Manage Listing</TabsTrigger>
         </TabsList>
 
-      <TabsContent value="browse" className="space-y-4">
-        <SystemWindow title="MARKETPLACE BROWSE">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-            <div>
-              <Label htmlFor="market-scope">Scope</Label>
-              <Select value={scope} onValueChange={(value) => setScope(value as 'listed' | 'mine' | 'all')}>
-                <SelectTrigger id="market-scope">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="listed">Public Listings</SelectItem>
-                  <SelectItem value="mine">My Listings</SelectItem>
-                  <SelectItem value="all">All Accessible</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+        <TabsContent value="browse" className="space-y-4">
+          <SystemWindow title="MARKETPLACE BROWSE">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+              <div>
+                <Label htmlFor="market-scope">Scope</Label>
+                <Select value={scope} onValueChange={(value) => setScope(value as 'listed' | 'mine' | 'all')}>
+                  <SelectTrigger id="market-scope">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="listed">Public Listings</SelectItem>
+                    <SelectItem value="mine">My Listings</SelectItem>
+                    <SelectItem value="all">All Accessible</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-            <div>
-              <Label htmlFor="market-type">Type</Label>
-              <Select value={typeFilter} onValueChange={(value) => setTypeFilter(value as MarketplaceItemType | 'all')}>
-                <SelectTrigger id="market-type">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Types</SelectItem>
-                  {ITEM_TYPES.map((type) => (
-                    <SelectItem key={type} value={type}>
-                      {type}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+              <div>
+                <Label htmlFor="market-type">Type</Label>
+                <Select value={typeFilter} onValueChange={(value) => setTypeFilter(value as MarketplaceItemType | 'all')}>
+                  <SelectTrigger id="market-type">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Types</SelectItem>
+                    {ITEM_TYPES.map((type) => (
+                      <SelectItem key={type} value={type}>
+                        {type}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
-            <div className="md:col-span-2">
-              <Label htmlFor="market-search">Search</Label>
-              <div className="relative">
-                <Search className="absolute left-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input
-                  id="market-search"
-                  className="pl-8"
-                  placeholder="Search marketplace listings"
-                  value={search}
-                  onChange={(event) => setSearch(event.target.value)}
-                />
+              <div className="md:col-span-2">
+                <Label htmlFor="market-search">Search</Label>
+                <div className="relative">
+                  <Search className="absolute left-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input
+                    id="market-search"
+                    className="pl-8"
+                    placeholder="Search marketplace listings"
+                    value={search}
+                    onChange={(event) => setSearch(event.target.value)}
+                  />
+                </div>
               </div>
             </div>
-          </div>
 
-          {error instanceof Error && (
-            <p className="mt-4 text-sm text-destructive">{error.message}</p>
-          )}
-        </SystemWindow>
+            {error instanceof Error && (
+              <p className="mt-4 text-sm text-destructive">{error.message}</p>
+            )}
+          </SystemWindow>
 
-        <SystemWindow title="LISTINGS">
-          {isLoading ? (
-            <p className="text-sm text-muted-foreground">Loading marketplace...</p>
-          ) : items.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No listings matched your filters.</p>
-          ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {items.map((item) => {
-                const isOwner = user?.id === item.author_id;
-                return (
-                  <div key={item.id} className="rounded-lg border border-border bg-muted/30 p-4">
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <p className="font-heading text-lg font-semibold">{item.title}</p>
-                        <p className="text-xs text-muted-foreground">
-                          {item.item_type} · {item.category}
-                        </p>
+          <SystemWindow title="LISTINGS">
+            {isLoading ? (
+              <p className="text-sm text-muted-foreground">Loading marketplace...</p>
+            ) : items.length === 0 ? (
+              <p className="text-sm text-muted-foreground">No listings matched your filters.</p>
+            ) : (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                {items.map((item) => {
+                  const isOwner = user?.id === item.author_id;
+                  return (
+                    <div key={item.id} className="rounded-lg border border-border bg-muted/30 p-4">
+                      <div className="flex items-start justify-between gap-2">
+                        <div>
+                          <p className="font-heading text-lg font-semibold">{item.title}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {item.item_type} · {item.category}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-xs text-muted-foreground">Rating</p>
+                          <p className="font-semibold">{item.rating_avg.toFixed(2)} ({item.rating_count})</p>
+                        </div>
                       </div>
-                      <div className="text-right">
-                        <p className="text-xs text-muted-foreground">Rating</p>
-                        <p className="font-semibold">{item.rating_avg.toFixed(2)} ({item.rating_count})</p>
+
+                      <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
+
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        <Badge variant={item.price_type === 'free' ? 'secondary' : 'outline'}>
+                          {item.price_type === 'paid'
+                            ? `${item.price_currency || 'USD'} ${item.price_amount || 0}`
+                            : item.price_type}
+                        </Badge>
+                        <Badge variant={item.is_listed ? 'default' : 'outline'}>
+                          {item.is_listed ? 'listed' : 'unlisted'}
+                        </Badge>
+                        {item.is_verified && <Badge>verified</Badge>}
+                        {!item.has_access && <Badge variant="destructive">locked</Badge>}
                       </div>
-                    </div>
 
-                    <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
-
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      <Badge variant={item.price_type === 'free' ? 'secondary' : 'outline'}>
-                        {item.price_type === 'paid'
-                          ? `${item.price_currency || 'USD'} ${item.price_amount || 0}`
-                          : item.price_type}
-                      </Badge>
-                      <Badge variant={item.is_listed ? 'default' : 'outline'}>
-                        {item.is_listed ? 'listed' : 'unlisted'}
-                      </Badge>
-                      {item.is_verified && <Badge>verified</Badge>}
-                      {!item.has_access && <Badge variant="destructive">locked</Badge>}
-                    </div>
-
-                    {item.tags.length > 0 && (
-                      <div className="mt-2 flex flex-wrap gap-1">
-                        {item.tags.map((tag) => (
-                          <Badge key={tag} variant="outline" className="text-[10px]">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    )}
-
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => handleDownload(item)}
-                        disabled={recordDownload.isPending}
-                      >
-                        <Download className="w-4 h-4 mr-2" />
-                        Download
-                      </Button>
-                      {isOwner && (
-                        <>
-                          <Button size="sm" variant="outline" onClick={() => loadForEdit(item)}>
-                            <Edit className="w-4 h-4 mr-2" />
-                            Edit
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="destructive"
-                            onClick={() => handleDelete(item.id)}
-                            disabled={deleteItem.isPending}
-                          >
-                            <Trash2 className="w-4 h-4 mr-2" />
-                            Delete
-                          </Button>
-                        </>
+                      {item.tags.length > 0 && (
+                        <div className="mt-2 flex flex-wrap gap-1">
+                          {item.tags.map((tag) => (
+                            <Badge key={tag} variant="outline" className="text-[10px]">
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
                       )}
-                    </div>
 
-                    <div className="mt-4 rounded border border-border p-3">
-                      <p className="text-xs font-semibold text-muted-foreground mb-2">Submit Review</p>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                        <Select
-                          value={String(ratingByItem[item.id] || 5)}
-                          onValueChange={(value) =>
-                            setRatingByItem((prev) => ({ ...prev, [item.id]: Number(value) }))
-                          }
-                        >
-                          <SelectTrigger aria-label={`Rating for ${item.title}`}>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {[1, 2, 3, 4, 5].map((value) => (
-                              <SelectItem key={value} value={String(value)}>
-                                {value} Star{value > 1 ? 's' : ''}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <Input
-                          placeholder="Comment (optional)"
-                          value={commentByItem[item.id] || ''}
-                          onChange={(event) =>
-                            setCommentByItem((prev) => ({ ...prev, [item.id]: event.target.value }))
-                          }
-                        />
+                      <div className="mt-4 flex flex-wrap gap-2">
                         <Button
+                          size="sm"
                           variant="outline"
-                          onClick={() => handleReview(item.id)}
-                          disabled={submitReview.isPending}
+                          onClick={() => handleDownload(item)}
+                          disabled={recordDownload.isPending}
                         >
-                          <Star className="w-4 h-4 mr-2" />
-                          Save Review
+                          <Download className="w-4 h-4 mr-2" />
+                          Download
                         </Button>
+                        <Button
+                          size="sm"
+                          variant="default"
+                          onClick={() => handleImportToCompendium(item)}
+                        >
+                          <Plus className="w-4 h-4 mr-2" />
+                          Add to Compendium
+                        </Button>
+                        {isOwner && (
+                          <>
+                            <Button size="sm" variant="outline" onClick={() => loadForEdit(item)}>
+                              <Edit className="w-4 h-4 mr-2" />
+                              Edit
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="destructive"
+                              onClick={() => handleDelete(item.id)}
+                              disabled={deleteItem.isPending}
+                            >
+                              <Trash2 className="w-4 h-4 mr-2" />
+                              Delete
+                            </Button>
+                          </>
+                        )}
+                      </div>
+
+                      <div className="mt-4 rounded border border-border p-3">
+                        <p className="text-xs font-semibold text-muted-foreground mb-2">Submit Review</p>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                          <Select
+                            value={String(ratingByItem[item.id] || 5)}
+                            onValueChange={(value) =>
+                              setRatingByItem((prev) => ({ ...prev, [item.id]: Number(value) }))
+                            }
+                          >
+                            <SelectTrigger aria-label={`Rating for ${item.title}`}>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {[1, 2, 3, 4, 5].map((value) => (
+                                <SelectItem key={value} value={String(value)}>
+                                  {value} Star{value > 1 ? 's' : ''}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <Input
+                            placeholder="Comment (optional)"
+                            value={commentByItem[item.id] || ''}
+                            onChange={(event) =>
+                              setCommentByItem((prev) => ({ ...prev, [item.id]: event.target.value }))
+                            }
+                          />
+                          <Button
+                            variant="outline"
+                            onClick={() => handleReview(item.id)}
+                            disabled={submitReview.isPending}
+                          >
+                            <Star className="w-4 h-4 mr-2" />
+                            Save Review
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </SystemWindow>
-      </TabsContent>
+                  );
+                })}
+              </div>
+            )}
+          </SystemWindow>
+        </TabsContent>
 
         <TabsContent value="publish">
           <SystemWindow title="PUBLISH / MANAGE">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div>
-              <Label htmlFor="publish-title">Title</Label>
-              <Input id="publish-title" value={title} onChange={(event) => setTitle(event.target.value)} />
-            </div>
-            <div>
-              <Label htmlFor="publish-type">Type</Label>
-              <Select value={itemType} onValueChange={(value) => setItemType(value as MarketplaceItemType)}>
-                <SelectTrigger id="publish-type">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {ITEM_TYPES.map((type) => (
-                    <SelectItem key={type} value={type}>
-                      {type}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="md:col-span-2">
-              <Label htmlFor="publish-description">Description</Label>
-              <Textarea
-                id="publish-description"
-                rows={3}
-                value={description}
-                onChange={(event) => setDescription(event.target.value)}
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="publish-category">Category</Label>
-              <Input id="publish-category" value={category} onChange={(event) => setCategory(event.target.value)} />
-            </div>
-            <div>
-              <Label htmlFor="publish-tags">Tags (comma separated)</Label>
-              <Input id="publish-tags" value={tagsText} onChange={(event) => setTagsText(event.target.value)} />
-            </div>
-
-            <div>
-              <Label htmlFor="publish-price-type">Price Type</Label>
-              <Select value={priceType} onValueChange={(value) => setPriceType(value as MarketplacePriceType)}>
-                <SelectTrigger id="publish-price-type">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {PRICE_TYPES.map((type) => (
-                    <SelectItem key={type} value={type}>
-                      {type}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            {priceType === 'paid' && (
-              <>
-                <div>
-                  <Label htmlFor="publish-price-amount">Amount</Label>
-                  <Input
-                    id="publish-price-amount"
-                    type="number"
-                    min={0}
-                    value={priceAmount}
-                    onChange={(event) => setPriceAmount(event.target.value)}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="publish-price-currency">Currency</Label>
-                  <Input
-                    id="publish-price-currency"
-                    value={priceCurrency}
-                    onChange={(event) => setPriceCurrency(event.target.value)}
-                  />
-                </div>
-              </>
-            )}
-
-            <div>
-              <Label htmlFor="publish-license">License</Label>
-              <Input id="publish-license" value={license} onChange={(event) => setLicense(event.target.value)} />
-            </div>
-            <div>
-              <Label htmlFor="publish-file-url">File URL</Label>
-              <Input id="publish-file-url" value={fileUrl} onChange={(event) => setFileUrl(event.target.value)} />
-            </div>
-
-            <div className="md:col-span-2">
-              <Label htmlFor="publish-content">Content JSON</Label>
-              <Textarea
-                id="publish-content"
-                rows={10}
-                className="font-mono text-xs"
-                value={contentJson}
-                onChange={(event) => setContentJson(event.target.value)}
-              />
-            </div>
-
-            <div className="md:col-span-2 flex items-center justify-between rounded border border-border px-3 py-2">
-              <div className="flex items-center gap-2 text-sm">
-                <Package className="w-4 h-4 text-muted-foreground" />
-                <span>Listing visibility in browse feed</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div>
+                <Label htmlFor="publish-title">Title</Label>
+                <Input id="publish-title" value={title} onChange={(event) => setTitle(event.target.value)} />
               </div>
-              <Select value={isListed ? 'listed' : 'hidden'} onValueChange={(value) => setIsListed(value === 'listed')}>
-                <SelectTrigger className="w-28" aria-label="Listing visibility">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="listed">Listed</SelectItem>
-                  <SelectItem value="hidden">Hidden</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
+              <div>
+                <Label htmlFor="publish-type">Type</Label>
+                <Select value={itemType} onValueChange={(value) => setItemType(value as MarketplaceItemType)}>
+                  <SelectTrigger id="publish-type">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {ITEM_TYPES.map((type) => (
+                      <SelectItem key={type} value={type}>
+                        {type}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
-          <div className="mt-4 flex flex-wrap gap-2">
-            <Button onClick={handleSubmit} disabled={saveItem.isPending}>
-              {editingId ? <Edit className="w-4 h-4 mr-2" /> : <Upload className="w-4 h-4 mr-2" />}
-              {editingId ? 'Update Listing' : 'Publish Listing'}
-            </Button>
-            <Button variant="outline" onClick={resetForm}>
-              <Save className="w-4 h-4 mr-2" />
-              Reset Form
-            </Button>
-          </div>
-        </SystemWindow>
-      </TabsContent>
-    </Tabs>
+              <div className="md:col-span-2">
+                <Label htmlFor="publish-description">Description</Label>
+                <Textarea
+                  id="publish-description"
+                  rows={3}
+                  value={description}
+                  onChange={(event) => setDescription(event.target.value)}
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="publish-category">Category</Label>
+                <Input id="publish-category" value={category} onChange={(event) => setCategory(event.target.value)} />
+              </div>
+              <div>
+                <Label htmlFor="publish-tags">Tags (comma separated)</Label>
+                <Input id="publish-tags" value={tagsText} onChange={(event) => setTagsText(event.target.value)} />
+              </div>
+
+              <div>
+                <Label htmlFor="publish-price-type">Price Type</Label>
+                <Select value={priceType} onValueChange={(value) => setPriceType(value as MarketplacePriceType)}>
+                  <SelectTrigger id="publish-price-type">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {PRICE_TYPES.map((type) => (
+                      <SelectItem key={type} value={type}>
+                        {type}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {priceType === 'paid' && (
+                <>
+                  <div>
+                    <Label htmlFor="publish-price-amount">Amount</Label>
+                    <Input
+                      id="publish-price-amount"
+                      type="number"
+                      min={0}
+                      value={priceAmount}
+                      onChange={(event) => setPriceAmount(event.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="publish-price-currency">Currency</Label>
+                    <Input
+                      id="publish-price-currency"
+                      value={priceCurrency}
+                      onChange={(event) => setPriceCurrency(event.target.value)}
+                    />
+                  </div>
+                </>
+              )}
+
+              <div>
+                <Label htmlFor="publish-license">License</Label>
+                <Input id="publish-license" value={license} onChange={(event) => setLicense(event.target.value)} />
+              </div>
+              <div>
+                <Label htmlFor="publish-file-url">File URL</Label>
+                <Input id="publish-file-url" value={fileUrl} onChange={(event) => setFileUrl(event.target.value)} />
+              </div>
+
+              <div className="md:col-span-2">
+                <Label htmlFor="publish-content">Content JSON</Label>
+                <Textarea
+                  id="publish-content"
+                  rows={10}
+                  className="font-mono text-xs"
+                  value={contentJson}
+                  onChange={(event) => setContentJson(event.target.value)}
+                />
+              </div>
+
+              <div className="md:col-span-2 flex items-center justify-between rounded border border-border px-3 py-2">
+                <div className="flex items-center gap-2 text-sm">
+                  <Package className="w-4 h-4 text-muted-foreground" />
+                  <span>Listing visibility in browse feed</span>
+                </div>
+                <Select value={isListed ? 'listed' : 'hidden'} onValueChange={(value) => setIsListed(value === 'listed')}>
+                  <SelectTrigger className="w-28" aria-label="Listing visibility">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="listed">Listed</SelectItem>
+                    <SelectItem value="hidden">Hidden</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              <Button onClick={handleSubmit} disabled={saveItem.isPending}>
+                {editingId ? <Edit className="w-4 h-4 mr-2" /> : <Upload className="w-4 h-4 mr-2" />}
+                {editingId ? 'Update Listing' : 'Publish Listing'}
+              </Button>
+              <Button variant="outline" onClick={resetForm}>
+                <Save className="w-4 h-4 mr-2" />
+                Reset Form
+              </Button>
+            </div>
+          </SystemWindow>
+        </TabsContent>
+      </Tabs>
     </>
   );
 }

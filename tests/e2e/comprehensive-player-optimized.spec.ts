@@ -10,8 +10,8 @@ import { AuthPage } from '../pages/AuthPage';
  * ╚══════════════════════════════════════════════════════════════════╝
  */
 
-const PLAYER_EMAIL = process.env.E2E_PLAYER_EMAIL ?? 'player@test.com';
-const PLAYER_PASSWORD = process.env.E2E_PLAYER_PASSWORD ?? 'test1234';
+
+// Manual auth variables removed for Guest Mode E2E
 
 test.describe('Optimized Player Complete Test', () => {
   let context: BrowserContext;
@@ -30,7 +30,7 @@ test.describe('Optimized Player Complete Test', () => {
     });
     page = await context.newPage();
     authPage = new AuthPage(page);
-    
+
     // Set default timeouts for stability
     page.setDefaultTimeout(30000);
     page.setDefaultNavigationTimeout(45000);
@@ -62,7 +62,7 @@ test.describe('Optimized Player Complete Test', () => {
     try {
       const element = page.locator(selector);
       await element.waitFor({ state: 'visible', timeout: 10000 });
-      
+
       switch (action) {
         case 'click':
           await element.click({ timeout: 5000 });
@@ -77,7 +77,7 @@ test.describe('Optimized Player Complete Test', () => {
           await element.focus({ timeout: 5000 });
           break;
       }
-      
+
       console.log(`✅ ${description} successful`);
       return true;
     } catch (error) {
@@ -88,7 +88,7 @@ test.describe('Optimized Player Complete Test', () => {
 
   test('Player Optimized Journey - Stable & Complete', async () => {
     console.log('🚀 Starting OPTIMIZED PLAYER Complete Test...');
-    
+
     const testResults: Record<string, boolean> = {
       authentication: false,
       navigation: false,
@@ -104,7 +104,7 @@ test.describe('Optimized Player Complete Test', () => {
       // PHASE 1: AUTHENTICATION - OPTIMIZED
       // ============================================================================
       console.log('📝 PHASE 1: AUTHENTICATION');
-      
+
       if (await safeNavigate('http://localhost:8080', 'Landing Page')) {
         // Test landing page quickly
         try {
@@ -113,15 +113,15 @@ test.describe('Optimized Player Complete Test', () => {
         } catch (error) {
           console.log('⚠️ Landing page issue:', (error as Error).message);
         }
-        
+
         // Test authentication with retry logic
         let authSuccess = false;
         for (let attempt = 1; attempt <= 3; attempt++) {
           try {
             console.log(`🔐 Authentication attempt ${attempt}/3`);
-            await authPage.signIn(PLAYER_EMAIL, PLAYER_PASSWORD, 'player');
+            await authPage.continueAsGuest('player');
             await page.waitForTimeout(2000);
-            
+
             // Verify successful auth
             const currentUrl = page.url();
             if (currentUrl.includes('/player-tools') || currentUrl.includes('/characters') || currentUrl !== 'http://localhost:8080/') {
@@ -137,17 +137,11 @@ test.describe('Optimized Player Complete Test', () => {
             }
           }
         }
-        
+
         if (!authSuccess) {
           console.log('🔄 Trying alternative authentication...');
           // Fallback auth method
-          if (await safeNavigate('http://localhost:8080/login', 'Login Page')) {
-            await safeInteraction('input[type="email"], input[name="email"]', 'fill', 'Email input');
-            await safeInteraction('input[type="password"], input[name="password"]', 'fill', 'Password input');
-            await safeInteraction('button[type="submit"], button:has-text("sign in")', 'click', 'Submit button');
-            await page.waitForTimeout(3000);
-            testResults.authentication = true;
-          }
+          // Fallback auth removed in favor of strict Guest Mode testing
         }
       }
 
@@ -155,24 +149,24 @@ test.describe('Optimized Player Complete Test', () => {
       // PHASE 2: NAVIGATION - OPTIMIZED
       // ============================================================================
       console.log('🧭 PHASE 2: NAVIGATION');
-      
+
       const navigationTests = [
         { selector: 'nav', name: 'Main Navigation' },
         { selector: '[data-testid*="nav"]', name: 'Test Navigation' },
         { selector: 'header', name: 'Header Navigation' },
         { selector: '.navigation', name: 'Class Navigation' }
       ];
-      
+
       for (const navTest of navigationTests) {
         try {
           const nav = page.locator(navTest.selector);
           if (await nav.isVisible({ timeout: 5000 })) {
             console.log(`✅ ${navTest.name} found`);
-            
+
             // Test a few navigation links
             const links = nav.locator('a, button[role="link"]');
             const linkCount = await links.count();
-            
+
             if (linkCount > 0) {
               // Test first 3 links only for stability
               for (let i = 0; i < Math.min(3, linkCount); i++) {
@@ -191,7 +185,7 @@ test.describe('Optimized Player Complete Test', () => {
       // PHASE 3: PLAYER TOOLS - OPTIMIZED
       // ============================================================================
       console.log('🛠️ PHASE 3: PLAYER TOOLS');
-      
+
       if (await safeNavigate('http://localhost:8080/player-tools', 'Player Tools Dashboard')) {
         // Test key player tools only (reduced set for stability)
         const playerTools = [
@@ -199,27 +193,27 @@ test.describe('Optimized Player Complete Test', () => {
           { path: '/character', name: 'Character Sheet' },
           { path: '/compendium', name: 'Compendium' }
         ];
-        
+
         let toolsTested = 0;
         for (const tool of playerTools) {
           if (await safeNavigate(`http://localhost:8080${tool.path}`, tool.name)) {
             // Test basic functionality - look for buttons
             const buttons = page.locator('button');
             const buttonCount = await buttons.count();
-            
+
             if (buttonCount > 0) {
               console.log(`✅ ${tool.name}: ${buttonCount} buttons found`);
               // Test first button only
               await safeInteraction('button', 'hover', `${tool.name} button hover`);
               toolsTested++;
             }
-            
+
             // Go back to player tools
             await page.goto('http://localhost:8080/player-tools', { timeout: 15000 });
             await page.waitForTimeout(1000);
           }
         }
-        
+
         if (toolsTested >= 2) {
           testResults.playerTools = true;
           console.log(`✅ Player Tools tested: ${toolsTested}/${playerTools.length}`);
@@ -230,19 +224,19 @@ test.describe('Optimized Player Complete Test', () => {
       // PHASE 4: CHARACTER MANAGEMENT - OPTIMIZED
       // ============================================================================
       console.log('👥 PHASE 4: CHARACTER MANAGEMENT');
-      
+
       if (await safeNavigate('http://localhost:8080/characters', 'Character List')) {
         // Test character creation
         if (await safeNavigate('http://localhost:8080/character/new', 'Character Creation')) {
           const formElements = ['input[name="name"]', 'select[name="job"]', 'button[type="submit"]'];
           let formWorking = false;
-          
+
           for (const element of formElements) {
             if (await safeInteraction(element, 'hover', `Form element: ${element}`)) {
               formWorking = true;
             }
           }
-          
+
           if (formWorking) {
             testResults.characterManagement = true;
             console.log('✅ Character creation form functional');
@@ -254,23 +248,23 @@ test.describe('Optimized Player Complete Test', () => {
       // PHASE 5: COMPENDIUM - OPTIMIZED
       // ============================================================================
       console.log('📚 PHASE 5: COMPENDIUM');
-      
+
       if (await safeNavigate('http://localhost:8080/compendium', 'Compendium')) {
         // Test compendium categories
         const categories = page.locator('[data-testid*="category"], .category, .compendium-section');
         const categoryCount = await categories.count();
-        
+
         if (categoryCount > 0) {
           console.log(`✅ Found ${categoryCount} compendium categories`);
-          
+
           // Test first category only
           await safeInteraction('nth=0', 'click', 'First category');
           await page.waitForTimeout(1000);
-          
+
           // Test items in category
           const items = page.locator('[data-testid*="item"], .item, .entry');
           const itemCount = await items.count();
-          
+
           if (itemCount > 0) {
             console.log(`✅ Found ${itemCount} items in category`);
             testResults.compendium = true;
@@ -282,11 +276,11 @@ test.describe('Optimized Player Complete Test', () => {
       // PHASE 6: VTT PLAYER VIEW - OPTIMIZED
       // ============================================================================
       console.log('🗺️ PHASE 6: VTT PLAYER VIEW');
-      
+
       if (await safeNavigate('http://localhost:8080/vtt', 'VTT Player View')) {
         // Test VTT interface elements
         const vttElements = ['[data-testid*="map"]', '.vtt-canvas', '.map-container'];
-        
+
         for (const element of vttElements) {
           try {
             const el = page.locator(element);
@@ -300,7 +294,7 @@ test.describe('Optimized Player Complete Test', () => {
             continue;
           }
         }
-        
+
         if (!testResults.vtt) {
           console.log('⚠️ VTT not accessible to player (expected behavior)');
           testResults.vtt = true; // Expected behavior for players
@@ -311,11 +305,11 @@ test.describe('Optimized Player Complete Test', () => {
       // PHASE 7: ERROR HANDLING - OPTIMIZED
       // ============================================================================
       console.log('🚨 PHASE 7: ERROR HANDLING');
-      
+
       // Test a few invalid URLs
       const invalidUrls = ['/invalid-page', '/player-tools/nonexistent'];
       let errorHandlingWorking = false;
-      
+
       for (const url of invalidUrls) {
         try {
           await page.goto(`http://localhost:8080${url}`, { timeout: 10000 });
@@ -328,7 +322,7 @@ test.describe('Optimized Player Complete Test', () => {
           console.log(`✅ Error handling caught: ${url}`);
         }
       }
-      
+
       testResults.errorHandling = errorHandlingWorking;
 
       // ============================================================================
@@ -336,29 +330,29 @@ test.describe('Optimized Player Complete Test', () => {
       // ============================================================================
       console.log('\n🎯 OPTIMIZED PLAYER TEST RESULTS');
       console.log('='.repeat(50));
-      
+
       let totalTests = 0;
       let passedTests = 0;
-      
+
       for (const [category, result] of Object.entries(testResults)) {
         totalTests++;
         if (result) passedTests++;
         console.log(`${result ? '✅' : '❌'} ${category.toUpperCase()}: ${result ? 'PASS' : 'FAIL'}`);
       }
-      
+
       console.log('\n' + '='.repeat(50));
       console.log(`📈 FINAL SCORE: ${passedTests}/${totalTests} tests passed`);
       console.log(`📊 SUCCESS RATE: ${Math.round((passedTests / totalTests) * 100)}%`);
-      
+
       if (passedTests / totalTests >= 0.7) {
         console.log('🎉 OPTIMIZED PLAYER TEST PASSED - SYSTEM IS FUNCTIONAL!');
       } else {
         console.log('⚠️ SOME TESTS FAILED - INVESTIGATION NEEDED');
       }
-      
+
       // Final assertion
       expect(passedTests / totalTests).toBeGreaterThanOrEqual(0.6);
-      
+
     } catch (error) {
       console.log('🚨 CRITICAL TEST ERROR:', (error as Error).message);
       throw error;

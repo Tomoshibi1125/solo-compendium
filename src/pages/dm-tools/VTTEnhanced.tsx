@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
 import '@/styles/vtt-enhanced.css';
 import '@/styles/vtt-enhanced-dynamic.css';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -21,7 +22,6 @@ import { VttPixiStage } from '@/components/vtt/VttPixiStage';
 import { VTTCharacterPanel } from '@/components/vtt/VTTCharacterPanel';
 import { VTTAssetBrowser } from '@/components/vtt/VTTAssetBrowser';
 import { DMToolsPanel } from '@/components/vtt/DMToolsPanel';
-import { PlayerToolsPanel } from '@/components/vtt/PlayerToolsPanel';
 import { VTTInitiativePanel } from '@/components/vtt/VTTInitiativePanel';
 import { useCampaignMembers, useCampaignRole, type CampaignMember } from '@/hooks/useCampaigns';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
@@ -31,6 +31,12 @@ import { readLocalToolState, useCampaignToolState, useUserToolState } from '@/ho
 import PlayerMapView from '@/pages/player-tools/PlayerMapView';
 import { useAuth } from '@/lib/auth/authContext';
 import { useVTTRealtime, type VTTInitiativeState, type VTTPing } from '@/hooks/useVTTRealtime';
+import { useVTTAudioTracks, useCreateVTTAudioTrack, useUpdateVTTAudioTrack, useDeleteVTTAudioTrack, vttAudioManager } from '@/hooks/useVTTAudio';
+import { type WallSegment, type LightSource, createWall, computeLightLevel } from '@/lib/vtt';
+import { type HexGridConfig, snapToHexCenter } from '@/lib/vtt';
+import { type VTTDrawing, createDrawing, measureDistance, type DrawingPoint } from '@/lib/vtt';
+import { type TerrainZone, type WeatherType, getWeatherCSSAnimation, WEATHER_PRESETS } from '@/lib/vtt';
+import { type AmbientSoundZone, AMBIENT_SOUND_PRESETS } from '@/lib/vtt';
 
 import {
   DEFAULT_TOKENS,
@@ -39,6 +45,8 @@ import {
   type LibraryToken,
 } from '@/data/tokenLibraryDefaults';
 import PREMADE_MAPS, { type PremadeMap } from '@/data/premadeMaps';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
+import { useCampaignCombatSession } from '@/hooks/useCampaignCombat';
 
 interface PlacedToken {
   id: string;
@@ -74,20 +82,7 @@ interface PlacedToken {
   barVisibility?: 'always' | 'owner' | 'gm'; // who can see HP bar
 }
 
-type DrawingType = 'line' | 'rect' | 'circle';
-
-interface VTTDrawing {
-  id: string;
-  type: DrawingType;
-  color: string;
-  width: number;
-  fill?: string;
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
-  layer: number;
-}
+// Removed legacy local drawing types here
 
 interface VTTAnnotation {
   id: string;
@@ -110,8 +105,14 @@ interface Scene {
   drawings?: VTTDrawing[];
   annotations?: VTTAnnotation[];
   tokens: PlacedToken[];
+  walls?: WallSegment[];
+  lights?: LightSource[];
   fogOfWar: boolean;
   fogData?: boolean[][]; // Grid of revealed areas
+  gridType?: 'square' | 'hex';
+  weather?: WeatherType;
+  terrain?: TerrainZone[];
+  ambientSounds?: AmbientSoundZone[];
 }
 
 interface DiceRoll {
@@ -155,7 +156,7 @@ type CharacterSummary = {
 };
 
 type CampaignMemberWithCharacters = CampaignMember & { characters?: CharacterSummary | Record<string, unknown> | null };
-type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
+
 
 type GridPosition = {
   x: number;
@@ -210,6 +211,12 @@ const normalizeScene = (scene: Scene): Scene => ({
   backgroundOffsetY: scene.backgroundOffsetY ?? DEFAULT_SCENE_SETTINGS.backgroundOffsetY,
   drawings: Array.isArray(scene.drawings) ? scene.drawings : [],
   annotations: Array.isArray(scene.annotations) ? scene.annotations : [],
+  walls: Array.isArray(scene.walls) ? scene.walls : [],
+  lights: Array.isArray(scene.lights) ? scene.lights : [],
+  terrain: Array.isArray(scene.terrain) ? scene.terrain : [],
+  ambientSounds: Array.isArray(scene.ambientSounds) ? scene.ambientSounds : [],
+  weather: scene.weather,
+  gridType: scene.gridType ?? 'square',
 });
 
 const upsertScene = (scenes: Scene[], nextScene: Scene): Scene[] => {
@@ -242,8 +249,23 @@ const VTTEnhanced = () => {
   const [selectedLibraryTokenId, setSelectedLibraryTokenId] = useState<string | null>(null);
   const [activeTokenId, setActiveTokenId] = useState<string | null>(null);
   const [damageDialogOpen, setDamageDialogOpen] = useState(false);
+
   const [damageAmount, setDamageAmount] = useState('');
   const [currentScene, setCurrentScene] = useState<Scene | null>(null);
+
+  // Derive Active Initiative Token
+  const { data: combatData } = useCampaignCombatSession(campaignId || '', sessionId);
+  const activeInitiativeTokenId = useMemo(() => {
+    if (!combatData?.session || !combatData?.combatants?.length || !currentScene) return null;
+    const sorted = [...combatData.combatants].sort((a, b) => b.initiative - a.initiative);
+    const activeCombatant = sorted[combatData.session.current_turn ?? 0];
+    if (!activeCombatant) return null;
+    const token = currentScene.tokens.find(t =>
+      (activeCombatant.member_id && t.characterId === activeCombatant.member_id) ||
+      t.name === activeCombatant.name
+    );
+    return token?.id ?? null;
+  }, [combatData, currentScene]);
   const [scenes, setScenes] = useState<Scene[]>([]);
   const [draggedToken, setDraggedToken] = useState<PlacedToken | null>(null);
   const [currentLayer, setCurrentLayer] = useState(1);
@@ -253,8 +275,11 @@ const VTTEnhanced = () => {
     2: true,
     3: true,
   });
+
+  const { useDMToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const { saveVTTScene, uploadVTTAsset } = useDMToolsEnhancements(campaignId);
   const [selectedTool, setSelectedTool] = useState<'select' | 'fog' | 'measure' | 'draw' | 'effect' | 'note'>('select');
-  const [drawingMode, setDrawingMode] = useState<DrawingType>('line');
+  const [drawingMode, setDrawingMode] = useState<VTTDrawing['type']>('freehand');
   const [drawingColor, setDrawingColor] = useState('#38bdf8');
   const [drawingWidth, setDrawingWidth] = useState(3);
   const [activeDrawing, setActiveDrawing] = useState<VTTDrawing | null>(null);
@@ -478,7 +503,13 @@ const VTTEnhanced = () => {
       tokens: [],
       drawings: [],
       annotations: [],
+      walls: [],
+      lights: [],
       fogOfWar: false,
+      gridType: 'square',
+      weather: 'clear',
+      terrain: [],
+      ambientSounds: [],
     };
     setScenes(prev => [...prev, scene]);
     setCurrentScene(scene);
@@ -618,6 +649,15 @@ const VTTEnhanced = () => {
       savedAt: new Date().toISOString(),
     };
     void saveNow(state);
+
+    if (currentScene) {
+      void saveVTTScene(campaignId, {
+        name: currentScene.name,
+        backgroundImage: currentScene.backgroundImage,
+        tokens: currentScene.tokens,
+      });
+    }
+
     toast({
       title: 'Saved!',
       description: 'Scene saved.',
@@ -741,6 +781,14 @@ const VTTEnhanced = () => {
       const size = gridSize * zoom;
       const gridX = Math.floor(x / size);
       const gridY = Math.floor(y / size);
+
+      // Support for Hex Grid snapping
+      if (currentSceneRef.current?.gridType === 'hex') {
+        const hexConfig: HexGridConfig = { size, orientation: 'flat', originX: 0, originY: 0, cols: currentSceneRef.current.width, rows: currentSceneRef.current.height };
+        const snapped = snapToHexCenter(x, y, hexConfig);
+        return { x, y, gridX: snapped.x / size, gridY: snapped.y / size };
+      }
+
       return { x, y, gridX, gridY };
     },
     [gridSize, zoom]
@@ -788,24 +836,12 @@ const VTTEnhanced = () => {
     try {
       let publicUrl = '';
       if (isAuthed && isSupabaseConfigured) {
-        const { compressImage } = await import('@/lib/imageOptimization');
-        const compressed = await compressImage(file, {
-          maxWidth: 4096,
-          maxHeight: 4096,
-          quality: 0.85,
-          format: 'webp',
-        });
-        const fileName = `vtt/maps/${campaignId || 'global'}/map-${Date.now()}-${Math.random().toString(36).slice(2)}.webp`;
-        const { error: uploadError } = await supabase.storage
-          .from('compendium-images')
-          .upload(fileName, compressed, {
-            cacheControl: '3600',
-            upsert: false,
-            contentType: 'image/webp',
-          });
-        if (uploadError) throw uploadError;
-        const { data } = supabase.storage.from('compendium-images').getPublicUrl(fileName);
-        publicUrl = data.publicUrl;
+        const asset = await uploadVTTAsset(campaignId || 'global', file, 'map');
+        if (asset && asset.imageUrl) {
+          publicUrl = asset.imageUrl;
+        } else {
+          throw new Error('Asset upload failed');
+        }
       } else {
         publicUrl = await new Promise<string>((resolve, reject) => {
           const reader = new FileReader();
@@ -901,18 +937,19 @@ const VTTEnhanced = () => {
 
     if (selectedTool === 'effect' && isGM) {
       const size = 3;
-      const effect: VTTDrawing = {
-        id: `effect-${Date.now()}`,
-        type: 'circle',
-        color: '#ef4444',
-        width: 2,
-        fill: 'rgba(239, 68, 68, 0.18)',
-        x1: grid.gridX - size,
-        y1: grid.gridY - size,
-        x2: grid.gridX + size,
-        y2: grid.gridY + size,
-        layer: currentLayer,
-      };
+      const effect = createDrawing(
+        'circle',
+        [
+          { x: grid.gridX - size, y: grid.gridY - size },
+          { x: grid.gridX + size, y: grid.gridY + size }
+        ],
+        '#ef4444',
+        2,
+        vttRealtime.userId,
+        currentLayer === 3 ? 'gm' : 'drawing'
+      );
+      effect.fillColor = '#ef4444';
+      effect.fillOpacity = 0.18;
       updateScene({ drawings: [...(currentScene.drawings ?? []), effect] });
       return;
     }
@@ -1017,6 +1054,12 @@ const VTTEnhanced = () => {
     toast,
   ]);
 
+  // Audio Hooks
+  const { data: audioTracks = [] } = useVTTAudioTracks(sessionId || '');
+  const { mutate: createTrack } = useCreateVTTAudioTrack();
+  const { mutate: updateTrack } = useUpdateVTTAudioTrack();
+  const { mutate: deleteTrack } = useDeleteVTTAudioTrack();
+
   const handleMapClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       if (suppressNextMapActionRef.current) {
@@ -1046,19 +1089,18 @@ const VTTEnhanced = () => {
     }
 
     if (selectedTool === 'draw' && isGM) {
-      const fill = drawingMode === 'line' ? undefined : toRgba(drawingColor, 0.18);
-      const drawing: VTTDrawing = {
-        id: `draw-${Date.now()}`,
-        type: drawingMode,
-        color: drawingColor,
-        width: drawingWidth,
-        fill,
-        x1: grid.gridX,
-        y1: grid.gridY,
-        x2: grid.gridX,
-        y2: grid.gridY,
-        layer: currentLayer,
-      };
+      const drawing = createDrawing(
+        drawingMode,
+        [{ x: grid.x, y: grid.y }],
+        drawingColor,
+        drawingWidth,
+        vttRealtime.userId,
+        currentLayer === 3 ? 'gm' : 'drawing'
+      );
+      if (drawingMode !== 'freehand' && drawingMode !== 'line') {
+        drawing.fillColor = drawingColor;
+        drawing.fillOpacity = 0.18;
+      }
       setActiveDrawing(drawing);
     }
   };
@@ -1173,7 +1215,16 @@ const VTTEnhanced = () => {
     }
 
     if (activeDrawing && selectedTool === 'draw' && isGM) {
-      setActiveDrawing((prev) => (prev ? { ...prev, x2: grid.gridX, y2: grid.gridY } : prev));
+      setActiveDrawing((prev) => {
+        if (!prev) return prev;
+        if (prev.type === 'freehand') {
+          return { ...prev, points: [...prev.points, { x: grid.x, y: grid.y }] };
+        } else {
+          // for rect/circle/line, points[0] is start, points[1] is end
+          const nextPoints = [prev.points[0], { x: grid.x, y: grid.y }];
+          return { ...prev, points: nextPoints };
+        }
+      });
     }
 
     // Broadcast DM cursor position (throttled)
@@ -1240,12 +1291,41 @@ const VTTEnhanced = () => {
 
   const visibleTokens = useMemo(() => {
     if (!currentScene?.tokens) return [];
-    return currentScene.tokens.filter((token) => {
+    return currentScene.tokens.reduce<PlacedToken[]>((acc, token) => {
       const layerVisible = !!effectiveVisibleLayers[token.layer];
-      if (!layerVisible) return false;
-      return isGM ? true : token.visible;
-    });
-  }, [currentScene?.tokens, effectiveVisibleLayers, isGM]);
+      if (!layerVisible || (!isGM && !token.visible)) return acc;
+
+      // 1. Try to get stats from realtime combatData first
+      let hp = token.hp;
+      let maxHp = token.maxHp;
+      let conditions = token.conditions || [];
+
+      const combatant = combatData?.combatants?.find(c =>
+        (c.member_id && c.member_id === token.characterId) ||
+        c.name === token.name
+      );
+
+      if (combatant) {
+        const stats = combatant.stats as Record<string, any>;
+        if (typeof stats?.hp === 'number') hp = stats.hp;
+        if (typeof stats?.maxHp === 'number') maxHp = stats.maxHp;
+        if (Array.isArray(combatant.conditions)) {
+          // Merge token-local conditions with combat tracker conditions uniquely
+          conditions = Array.from(new Set([...conditions, ...(combatant.conditions as string[])]));
+        }
+      } else if (token.characterId) {
+        // 2. Fall back to resolvedCharacters if no combatData
+        const char = resolvedCharacters.find(c => c.id === token.characterId);
+        if (char) {
+          if (hp === undefined || hp === null) hp = char.hp_current || undefined;
+          if (maxHp === undefined || maxHp === null) maxHp = char.hp_max || undefined;
+        }
+      }
+
+      acc.push({ ...token, hp, maxHp, conditions });
+      return acc;
+    }, []);
+  }, [currentScene?.tokens, effectiveVisibleLayers, isGM, combatData, resolvedCharacters]);
   const activeToken = useMemo(
     () => currentScene?.tokens.find((token) => token.id === activeTokenId) ?? null,
     [activeTokenId, currentScene?.tokens]
@@ -1266,29 +1346,39 @@ const VTTEnhanced = () => {
     parts.push(`.${sceneClass} { --scene-width: ${sceneWidthPx}px; --scene-height: ${sceneHeightPx}px; }`);
 
     drawingsToRender.forEach((drawing) => {
-      if (!effectiveVisibleLayers[drawing.layer]) return;
+      if (drawing.layer === 'gm' && !isGM) return;
       const safeId = toSafeClassName(drawing.id);
-      if (drawing.type === 'line') {
-        const startX = (drawing.x1 + 0.5) * gridSize * zoom;
-        const startY = (drawing.y1 + 0.5) * gridSize * zoom;
-        const endX = (drawing.x2 + 0.5) * gridSize * zoom;
-        const endY = (drawing.y2 + 0.5) * gridSize * zoom;
-        const length = Math.hypot(endX - startX, endY - startY);
-        const angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
-        parts.push(
-          `.vtt-drawing-line-${safeId} { left: ${startX}px; top: ${startY}px; width: ${length}px; height: ${drawing.width}px; background-color: ${drawing.color}; transform: rotate(${angle}deg); }`
-        );
-        return;
-      }
 
-      const left = Math.min(drawing.x1, drawing.x2) * gridSize * zoom;
-      const top = Math.min(drawing.y1, drawing.y2) * gridSize * zoom;
-      const width = (Math.abs(drawing.x2 - drawing.x1) + 1) * gridSize * zoom;
-      const height = (Math.abs(drawing.y2 - drawing.y1) + 1) * gridSize * zoom;
-      const fill = drawing.fill ?? 'transparent';
-      parts.push(
-        `.vtt-drawing-shape-${safeId} { left: ${left}px; top: ${top}px; width: ${width}px; height: ${height}px; border-color: ${drawing.color}; border-width: ${drawing.width}px; background-color: ${fill}; }`
-      );
+      // Points in normalized grid units need to be scaled up
+      if (drawing.type === 'line' || drawing.type === 'rectangle' || drawing.type === 'circle') {
+        const p1 = drawing.points[0];
+        const p2 = drawing.points[1] || p1;
+        const x1 = Math.min(p1.x, p2.x) * gridSize * zoom;
+        const y1 = Math.min(p1.y, p2.y) * gridSize * zoom;
+        const x2 = Math.max(p1.x, p2.x) * gridSize * zoom;
+        const y2 = Math.max(p1.y, p2.y) * gridSize * zoom;
+
+        if (drawing.type === 'line') {
+          const startX = (p1.x + 0.5) * gridSize * zoom;
+          const startY = (p1.y + 0.5) * gridSize * zoom;
+          const endX = (p2.x + 0.5) * gridSize * zoom;
+          const endY = (p2.y + 0.5) * gridSize * zoom;
+          const length = Math.hypot(endX - startX, endY - startY);
+          const angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
+          parts.push(
+            `.vtt-drawing-line-${safeId} { left: ${startX}px; top: ${startY}px; width: ${length}px; height: ${drawing.strokeWidth}px; background-color: ${drawing.color}; transform: rotate(${angle}deg); transform-origin: 0 50%; opacity: ${drawing.fillOpacity ?? 1}; }`
+          );
+          return;
+        }
+
+        const width = Math.max(1, (x2 - x1)) + (gridSize * zoom);
+        const height = Math.max(1, (y2 - y1)) + (gridSize * zoom);
+        const fill = drawing.fillColor ?? 'transparent';
+
+        parts.push(
+          `.vtt-drawing-shape-${safeId} { left: ${x1}px; top: ${y1}px; width: ${width}px; height: ${height}px; border-color: ${drawing.color}; border-width: ${drawing.strokeWidth}px; background-color: ${fill}; opacity: ${drawing.fillOpacity ?? 0.18}; }`
+        );
+      }
     });
 
     annotationsToRender.forEach((note) => {
@@ -1378,24 +1468,16 @@ const VTTEnhanced = () => {
                   )}
                   {vttRealtime.activeUsers.length > 0 && (
                     <div className="flex -space-x-1.5">
-                      {vttRealtime.activeUsers.slice(0, 6).map((u) => {
-                        const divRef = useRef<HTMLDivElement>(null);
-                        useEffect(() => {
-                          if (divRef.current) {
-                            divRef.current.style.setProperty('--user-color', u.color);
-                          }
-                        }, [u.color]);
-                        return (
-                          <div
-                            key={u.userId}
-                            ref={divRef}
-                            className="w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center text-[8px] sm:text-[9px] font-bold text-white border border-background vtt-user-avatar"
-                            title={`${u.userName} (${u.role})`}
-                          >
-                            {u.userName.charAt(0).toUpperCase()}
-                          </div>
-                        );
-                      })}
+                      {vttRealtime.activeUsers.slice(0, 6).map((u) => (
+                        <div
+                          key={u.userId}
+                          className="w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center text-[8px] sm:text-[9px] font-bold text-white border border-background vtt-user-avatar"
+                          style={{ ['--user-color' as string]: u.color } as React.CSSProperties}
+                          title={`${u.userName} (${u.role})`}
+                        >
+                          {u.userName.charAt(0).toUpperCase()}
+                        </div>
+                      ))}
                     </div>
                   )}
                 </div>
@@ -1730,14 +1812,14 @@ const VTTEnhanced = () => {
                         {selectedTool === 'draw' && isGM && (
                           <div className="space-y-2 border-t border-border/50 pt-2">
                             <Label className="text-xs">Draw Mode</Label>
-                            <div className="grid grid-cols-3 gap-2">
-                              {(['line', 'rect', 'circle'] as const).map((mode) => (
+                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+                              {(['freehand', 'line', 'rectangle', 'circle'] as const).map((mode) => (
                                 <Button
                                   key={mode}
                                   variant={drawingMode === mode ? 'default' : 'outline'}
                                   size="sm"
                                   onClick={() => setDrawingMode(mode)}
-                                  className="text-xs"
+                                  className="text-xs capitalize"
                                 >
                                   {mode}
                                 </Button>
@@ -1903,6 +1985,40 @@ const VTTEnhanced = () => {
                           />
                         </div>
                         <div>
+                          <Label className="text-xs">Grid Type</Label>
+                          <Select
+                            value={currentScene?.gridType ?? 'square'}
+                            onValueChange={(val: 'square' | 'hex') => updateScene({ gridType: val })}
+                          >
+                            <SelectTrigger className="h-8 text-xs">
+                              <SelectValue placeholder="Square" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="square">Square</SelectItem>
+                              <SelectItem value="hex">Hex (Flat)</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div>
+                          <Label className="text-xs">Weather</Label>
+                          <Select
+                            value={currentScene?.weather ?? 'none'}
+                            onValueChange={(val: WeatherType | 'none') => updateScene({ weather: val === 'none' ? undefined : val })}
+                          >
+                            <SelectTrigger className="h-8 text-xs">
+                              <SelectValue placeholder="None" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="none">None</SelectItem>
+                              {Object.keys(WEATHER_PRESETS).map((key) => (
+                                <SelectItem key={key} value={key}>
+                                  {key.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div>
                           <Label className="text-xs">Background Scale</Label>
                           <Input
                             type="number"
@@ -2005,10 +2121,79 @@ const VTTEnhanced = () => {
                   </SystemWindow>
                 )}
 
+                {/* Audio Manager */}
+                {isGM && sessionId && (
+                  <SystemWindow title="AUDIO TRACKS">
+                    <div className="space-y-4">
+                      {audioTracks.length === 0 ? (
+                        <p className="text-xs text-muted-foreground text-center py-2">No tracks uploaded for this session yet.</p>
+                      ) : (
+                        <div className="space-y-2 max-h-48 overflow-y-auto">
+                          {audioTracks.map(track => (
+                            <div key={track.id} className="flex items-center justify-between p-2 text-xs border border-border rounded bg-muted/20">
+                              <span className="truncate flex-1 font-medium">{track.name}</span>
+                              <div className="flex items-center gap-1">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-6 w-6 p-0"
+                                  onClick={() => {
+                                    if (track.is_playing) {
+                                      vttAudioManager.stopTrack(track.id);
+                                      updateTrack({ track_id: track.id, session_id: sessionId, is_playing: false });
+                                    } else {
+                                      vttAudioManager.playTrack(track);
+                                      updateTrack({ track_id: track.id, session_id: sessionId, is_playing: true });
+                                    }
+                                  }}
+                                >
+                                  {track.is_playing ? '⏹' : '▶'}
+                                </Button>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-6 w-6 p-0 text-destructive"
+                                  onClick={() => deleteTrack({ trackId: track.id, sessionId })}
+                                >
+                                  ×
+                                </Button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full text-xs"
+                        onClick={() => {
+                          const url = window.prompt('Enter valid audio URL (mp3/wav/ogg):');
+                          const name = window.prompt('Enter track name:');
+                          if (url && name) {
+                            createTrack({
+                              session_id: sessionId,
+                              name,
+                              url,
+                              type: 'music',
+                              volume: 0.5,
+                              loop: true,
+                              is_playing: false,
+                              created_by: user?.id || ''
+                            });
+                          }
+                        }}
+                      >
+                        + Add Audio Track URL
+                      </Button>
+                    </div>
+                  </SystemWindow>
+                )}
+
                 {/* Comprehensive DM Tools Panel */}
                 {isGM && (
                   <DMToolsPanel
                     campaignId={campaignId || ''}
+                    onRoll={vttRealtime.rollAndBroadcast}
                     onAddToken={(token) => {
                       // Add token to current scene
                       if (currentScene) {
@@ -2276,12 +2461,16 @@ const VTTEnhanced = () => {
                         containerRef={mapRef}
                         scene={currentScene}
                         tokens={visibleTokens}
+                        walls={currentScene?.walls ?? []}
+                        lightSources={currentScene?.lights ?? []}
+                        gridConfig={{ type: currentScene?.gridType ?? 'square', size: gridSize }}
                         gridSize={gridSize}
                         zoom={zoom}
                         showGrid={showGrid}
                         isGM={isGM}
                         effectiveVisibleLayers={effectiveVisibleLayers}
                         activeTokenId={activeTokenId}
+                        activeInitiativeTokenId={activeInitiativeTokenId}
                         setActiveTokenId={setActiveTokenId}
                         updateToken={updateToken}
                         onRequestZoom={handleRequestZoom}
@@ -2290,15 +2479,104 @@ const VTTEnhanced = () => {
                       />
 
                       {/* TEMP: keep these DOM overlays until they are migrated to Pixi in follow-up commits */}
+                      {/* Terrain overlay */}
+                      {currentScene?.terrain && currentScene.terrain.length > 0 && (
+                        <div className="absolute inset-0 pointer-events-none z-[1]">
+                          <svg className="absolute inset-0 w-full h-full overflow-visible">
+                            {currentScene.terrain.map((zone) => {
+                              if (!zone.visible && !isGM) return null;
+                              const gZoom = gridSize * zoom;
+                              const pointsStr = zone.vertices.map(v => `${(v.x + 0.5) * gZoom},${(v.y + 0.5) * gZoom}`).join(' ');
+                              return (
+                                <polygon
+                                  key={zone.id}
+                                  points={pointsStr}
+                                  fill={zone.fillColor}
+                                  stroke={zone.fillColor.replace(/[\d.]+\)$/g, '1)')} // Try to extract fully opaque stroke
+                                  strokeWidth={2}
+                                  opacity={zone.visible ? 1 : 0.4}
+                                />
+                              );
+                            })}
+                          </svg>
+                        </div>
+                      )}
+
+                      {/* Ambient Sounds GM Overlay */}
+                      {isGM && currentScene?.ambientSounds && currentScene.ambientSounds.length > 0 && (
+                        <div className="absolute inset-0 pointer-events-none z-[1]">
+                          <svg className="absolute inset-0 w-full h-full overflow-visible">
+                            {currentScene.ambientSounds.map((zone) => {
+                              const gZoom = gridSize * zoom;
+                              const cx = (zone.x + 0.5) * gZoom;
+                              const cy = (zone.y + 0.5) * gZoom;
+
+                              if (zone.shape === 'circle') {
+                                const r = zone.radius * gZoom;
+                                return (
+                                  <circle
+                                    key={zone.id}
+                                    cx={cx}
+                                    cy={cy}
+                                    r={r}
+                                    fill="rgba(0, 255, 128, 0.1)"
+                                    stroke="rgba(0, 255, 128, 0.6)"
+                                    strokeWidth={1}
+                                    strokeDasharray="4 4"
+                                  />
+                                );
+                              } else if (zone.shape === 'rectangle' && zone.width && zone.height) {
+                                const w = zone.width * gZoom;
+                                const h = zone.height * gZoom;
+                                return (
+                                  <rect
+                                    key={zone.id}
+                                    x={cx - w / 2}
+                                    y={cy - h / 2}
+                                    width={w}
+                                    height={h}
+                                    fill="rgba(0, 255, 128, 0.1)"
+                                    stroke="rgba(0, 255, 128, 0.6)"
+                                    strokeWidth={1}
+                                    strokeDasharray="4 4"
+                                  />
+                                );
+                              }
+                              return null;
+                            })}
+                          </svg>
+                        </div>
+                      )}
+
                       {drawingsToRender.length > 0 && (
                         <div className="absolute inset-0 pointer-events-none">
                           {drawingsToRender.map((drawing) => {
-                            if (!effectiveVisibleLayers[drawing.layer]) return null;
+                            if (drawing.layer === 'gm' && !isGM) return null;
+
+                            if (drawing.type === 'freehand') {
+                              // SVG freehand
+                              const gZoom = gridSize * zoom;
+                              const pointsStr = drawing.points.map(p => `${(p.x + 0.5) * gZoom},${(p.y + 0.5) * gZoom}`).join(' ');
+                              return (
+                                <svg key={drawing.id} className="absolute inset-0 w-full h-full overflow-visible">
+                                  <polyline
+                                    points={pointsStr}
+                                    fill="none"
+                                    stroke={drawing.color}
+                                    strokeWidth={drawing.strokeWidth}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    opacity={drawing.fillOpacity ?? 1}
+                                  />
+                                </svg>
+                              );
+                            }
+
                             if (drawing.type === 'line') {
                               return (
                                 <div
                                   key={drawing.id}
-                                  className={cn('vtt-drawing-line', `vtt-drawing-line-${toSafeClassName(drawing.id)}`)}
+                                  className={cn('vtt-drawing-line absolute origin-left rounded-full', `vtt-drawing-line-${toSafeClassName(drawing.id)}`)}
                                 />
                               );
                             }
@@ -2306,8 +2584,8 @@ const VTTEnhanced = () => {
                               <div
                                 key={drawing.id}
                                 className={cn(
-                                  'vtt-drawing-shape',
-                                  drawing.type === 'circle' && 'is-circle',
+                                  'vtt-drawing-shape absolute border-solid box-border',
+                                  drawing.type === 'circle' && 'rounded-full',
                                   `vtt-drawing-shape-${toSafeClassName(drawing.id)}`
                                 )}
                               />
@@ -2372,19 +2650,42 @@ const VTTEnhanced = () => {
                       {/* Ping overlay */}
                       {vttRealtime.pings.length > 0 && (
                         <div className="absolute inset-0 pointer-events-none vtt-ping-layer">
-                          {vttRealtime.pings.map((ping) => {
-                            const pingRef = useRef<HTMLDivElement>(null);
-                            useEffect(() => {
-                              if (pingRef.current) {
-                                pingRef.current.style.setProperty('--ping-x', `${(ping.x + 0.5) * gridSize * zoom}px`);
-                                pingRef.current.style.setProperty('--ping-y', `${(ping.y + 0.5) * gridSize * zoom}px`);
-                              }
-                            }, [ping.x, ping.y, gridSize, zoom]);
+                          {vttRealtime.pings.map((ping) => (
+                            <div
+                              key={ping.createdAt}
+                              className="absolute animate-ping vtt-ping"
+                              style={{
+                                ['--ping-x' as string]: `${(ping.x + 0.5) * gridSize * zoom}px`,
+                                ['--ping-y' as string]: `${(ping.y + 0.5) * gridSize * zoom}px`,
+                              } as React.CSSProperties}
+                            />
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Weather overlay */}
+                      {currentScene?.weather && currentScene.weather !== 'clear' && WEATHER_PRESETS[currentScene.weather as keyof typeof WEATHER_PRESETS] && (
+                        <div className="absolute inset-0 pointer-events-none z-[10] overflow-hidden mix-blend-screen opacity-80" data-testid="vtt-weather-overlay">
+                          <style>{getWeatherCSSAnimation(WEATHER_PRESETS[currentScene.weather as keyof typeof WEATHER_PRESETS])}</style>
+                          {Array.from({ length: Math.min(WEATHER_PRESETS[currentScene.weather as keyof typeof WEATHER_PRESETS].particleCount, 200) }).map((_, i) => {
+                            const size = Math.random() * 4 + 2;
+                            const left = Math.random() * 100;
+                            const top = Math.random() * 100;
+                            const animDuration = Math.random() * 2 + 1;
+                            const delay = Math.random() * -2;
                             return (
                               <div
-                                key={ping.timestamp}
-                                ref={pingRef}
-                                className="absolute animate-ping vtt-ping"
+                                key={i}
+                                className="absolute rounded-full"
+                                style={{
+                                  width: `${size}px`,
+                                  height: `${size}px`,
+                                  left: `${left}%`,
+                                  top: `${top}%`,
+                                  backgroundColor: WEATHER_PRESETS[currentScene!.weather as keyof typeof WEATHER_PRESETS].particleColor,
+                                  animation: `weather-particle-${currentScene!.weather} ${animDuration}s linear infinite`,
+                                  animationDelay: `${delay}s`,
+                                }}
                               />
                             );
                           })}
@@ -2396,41 +2697,27 @@ const VTTEnhanced = () => {
                         <div className="absolute inset-0 pointer-events-none vtt-cursor-layer">
                           {vttRealtime.activeUsers
                             .filter((u) => u.cursor)
-                            .map((u) => {
-                              const cursorRef = useRef<HTMLDivElement>(null);
-                              const cursorDotRef = useRef<HTMLDivElement>(null);
-                              const cursorLabelRef = useRef<HTMLDivElement>(null);
-                              useEffect(() => {
-                                if (cursorRef.current) {
-                                  cursorRef.current.style.setProperty('--cursor-x', `${(u.cursor!.x + 0.5) * gridSize * zoom}px`);
-                                  cursorRef.current.style.setProperty('--cursor-y', `${(u.cursor!.y + 0.5) * gridSize * zoom}px`);
-                                }
-                                if (cursorDotRef.current) {
-                                  cursorDotRef.current.style.setProperty('--user-color', u.color);
-                                }
-                                if (cursorLabelRef.current) {
-                                  cursorLabelRef.current.style.setProperty('--user-color', u.color);
-                                }
-                              }, [u.cursor, u.color, gridSize, zoom]);
-                              return (
+                            .map((u) => (
+                              <div
+                                key={u.userId}
+                                className="absolute transition-all duration-100 vtt-cursor"
+                                style={{
+                                  ['--cursor-x' as string]: `${(u.cursor!.x + 0.5) * gridSize * zoom}px`,
+                                  ['--cursor-y' as string]: `${(u.cursor!.y + 0.5) * gridSize * zoom}px`,
+                                } as React.CSSProperties}
+                              >
                                 <div
-                                  key={u.userId}
-                                  ref={cursorRef}
-                                  className="absolute transition-all duration-100 vtt-cursor"
+                                  className="w-3 h-3 rounded-full border-2 border-white vtt-cursor-dot"
+                                  style={{ ['--user-color' as string]: u.color } as React.CSSProperties}
+                                />
+                                <div
+                                  className="absolute top-4 left-0 text-[10px] px-1 rounded text-white whitespace-nowrap vtt-cursor-label"
+                                  style={{ ['--user-color' as string]: u.color } as React.CSSProperties}
                                 >
-                                  <div
-                                    ref={cursorDotRef}
-                                    className="w-3 h-3 rounded-full border-2 border-white vtt-cursor-dot"
-                                  />
-                                  <div
-                                    ref={cursorLabelRef}
-                                    className="absolute top-4 left-0 text-[10px] px-1 rounded text-white whitespace-nowrap vtt-cursor-label"
-                                  >
-                                    {u.userName}
-                                  </div>
+                                  {u.userName}
                                 </div>
-                              );
-                            })}
+                              </div>
+                            ))}
                         </div>
                       )}
                     </div>
@@ -2700,6 +2987,7 @@ const VTTEnhanced = () => {
                       onRoll={(formula) => vttRealtime.rollAndBroadcast(formula)}
                       onChat={(msg, type) => vttRealtime.sendChatMessage(msg, type)}
                       readOnly={false}
+                      campaignId={campaignId}
                     />
                   </div>
                 )}
@@ -2850,18 +3138,17 @@ const VTTEnhanced = () => {
                                 <div className="flex-1 min-w-0">
                                   <span className="truncate text-sm block">{token.name}</span>
                                   {token.hp !== undefined && token.maxHp !== undefined && (() => {
-                                    const hpBarRef = useRef<HTMLDivElement>(null);
                                     const hpPercent = Math.max(0, Math.min(100, token.maxHp > 0 ? (token.hp / token.maxHp) * 100 : 0));
                                     const hpColor = (token.hp / (token.maxHp || 1)) > 0.5 ? '#22c55e' : (token.hp / (token.maxHp || 1)) > 0.25 ? '#eab308' : '#ef4444';
-                                    useEffect(() => {
-                                      if (hpBarRef.current) {
-                                        hpBarRef.current.style.setProperty('--hp-percent', `${hpPercent}%`);
-                                        hpBarRef.current.style.setProperty('--hp-color', hpColor);
-                                      }
-                                    }, [hpPercent, hpColor]);
                                     return (
                                       <div className="h-1 rounded-full bg-black/30 mt-0.5 w-full">
-                                        <div ref={hpBarRef} className="h-full rounded-full transition-all vtt-hp-bar" />
+                                        <div
+                                          className="h-full rounded-full transition-all vtt-hp-bar"
+                                          style={{
+                                            ['--hp-percent' as string]: `${hpPercent}%`,
+                                            ['--hp-color' as string]: hpColor,
+                                          } as React.CSSProperties}
+                                        />
                                       </div>
                                     );
                                   })()}
@@ -2895,24 +3182,16 @@ const VTTEnhanced = () => {
                       {vttRealtime.activeUsers.length > 0 && (
                         <div className="flex items-center gap-1 mb-2 px-1">
                           <div className="flex -space-x-1.5">
-                            {vttRealtime.activeUsers.map((u) => {
-                              const avatarRef = useRef<HTMLDivElement>(null);
-                              useEffect(() => {
-                                if (avatarRef.current) {
-                                  avatarRef.current.style.setProperty('--user-color', u.color);
-                                }
-                              }, [u.color]);
-                              return (
-                                <div
-                                  key={u.userId}
-                                  ref={avatarRef}
-                                  className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white border border-background vtt-user-avatar"
-                                  title={`${u.userName} (${u.role})`}
-                                >
-                                  {u.userName.charAt(0).toUpperCase()}
-                                </div>
-                              );
-                            })}
+                            {vttRealtime.activeUsers.map((u) => (
+                              <div
+                                key={u.userId}
+                                className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white border border-background vtt-user-avatar"
+                                style={{ ['--user-color' as string]: u.color } as React.CSSProperties}
+                                title={`${u.userName} (${u.role})`}
+                              >
+                                {u.userName.charAt(0).toUpperCase()}
+                              </div>
+                            ))}
                           </div>
                           <span className="text-[10px] text-muted-foreground ml-1">
                             {vttRealtime.activeUsers.length + 1} online
@@ -3348,17 +3627,16 @@ const VTTEnhanced = () => {
         {contextMenu && (() => {
           const token = visibleTokens.find((t) => t.id === contextMenu.tokenId);
           if (!token) return null;
-          const contextMenuRef = useRef<HTMLDivElement>(null);
-          useEffect(() => {
-            if (contextMenuRef.current) {
-              contextMenuRef.current.style.setProperty('--menu-x', `${contextMenu.x}px`);
-              contextMenuRef.current.style.setProperty('--menu-y', `${contextMenu.y}px`);
-            }
-          }, [contextMenu.x, contextMenu.y]);
           return (
             <>
               <div className="fixed inset-0 z-[99]" onClick={() => setContextMenu(null)} />
-              <div ref={contextMenuRef} className="vtt-context-menu">
+              <div
+                className="vtt-context-menu"
+                style={{
+                  ['--menu-x' as string]: `${contextMenu.x}px`,
+                  ['--menu-y' as string]: `${contextMenu.y}px`,
+                } as React.CSSProperties}
+              >
                 <button onClick={() => { setActiveTokenId(token.id); setContextMenu(null); }}>✎ Select</button>
                 {isGM && <button onClick={() => { updateToken(token.id, { locked: !token.locked }); setContextMenu(null); }}>{token.locked ? '🔓 Unlock' : '🔒 Lock'}</button>}
                 {isGM && <button onClick={() => { updateToken(token.id, { visible: !token.visible }); setContextMenu(null); }}>{token.visible ? '👁 Hide' : '👁 Show'}</button>}

@@ -13,6 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useDailyQuests } from '@/hooks/useDailyQuests';
 import { useCharacter, useUpdateCharacter } from '@/hooks/useCharacters';
 import { useEquipment } from '@/hooks/useEquipment';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 import { useCampaignByCharacterId } from '@/hooks/useCampaigns';
 import { isQuestActive, isQuestCompleted, isQuestExpired, getQuestProgress } from '@/lib/dailyQuests/types';
 import { getLevelingMode } from '@/lib/campaignSettings';
@@ -77,6 +78,8 @@ export function QuestLog({ characterId }: { characterId: string }) {
   const allowExperienceRewards = levelingMode === 'xp';
   const updateCharacter = useUpdateCharacter();
   const { equipment, addEquipment, updateEquipment } = useEquipment(characterId);
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const ddbEnhancements = usePlayerToolsEnhancements();
   const {
     templates,
     config,
@@ -204,6 +207,15 @@ export function QuestLog({ characterId }: { characterId: string }) {
           id: characterId,
           data: updates,
         });
+
+        if (reward.system_favor) {
+          ddbEnhancements.trackCustomFeatureUsage(
+            characterId,
+            'System Favor',
+            'regain',
+            'SA'
+          ).catch(console.error);
+        }
       }
 
       if (reward.gold) {

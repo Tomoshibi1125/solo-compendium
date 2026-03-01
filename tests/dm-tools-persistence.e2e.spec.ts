@@ -1,7 +1,7 @@
 import { test, expect, BrowserContext, Page } from '@playwright/test';
 import { AuthPage } from './pages/AuthPage';
 
-const DM_EMAIL = process.env.E2E_DM_EMAIL ?? 'dm@test.com';
+
 const DM_PASSWORD = process.env.E2E_DM_PASSWORD ?? 'test1234';
 
 test.describe.serial('DM tools persistence: reload restores state', () => {
@@ -13,7 +13,7 @@ test.describe.serial('DM tools persistence: reload restores state', () => {
     dmPage = await dmContext.newPage();
 
     const auth = new AuthPage(dmPage);
-    await auth.signIn(DM_EMAIL, DM_PASSWORD, 'dm');
+    await auth.continueAsGuest('dm');
     await expect(dmPage.getByTestId('dm-tools')).toBeVisible({ timeout: 15_000 });
   });
 

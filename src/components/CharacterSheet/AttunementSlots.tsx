@@ -1,6 +1,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/components/ui/tooltip';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 import { Button } from '@/components/ui/button';
 import { Gem, X } from 'lucide-react';
 import { MAX_ATTUNEMENT_SLOTS } from '@/hooks/useAttunement';
@@ -16,9 +17,17 @@ interface AttunementSlotsProps {
   attunedItems: AttunedItem[];
   slotsRemaining: number;
   onUnattune: (itemId: string) => void;
+  characterId: string;
 }
 
-export function AttunementSlots({ attunedItems, slotsRemaining, onUnattune }: AttunementSlotsProps) {
+export function AttunementSlots({ attunedItems, slotsRemaining, onUnattune, characterId }: AttunementSlotsProps) {
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const playerTools = usePlayerToolsEnhancements();
+
+  const handleUnattune = (item: AttunedItem) => {
+    onUnattune(item.id);
+    playerTools.trackInventoryChange(characterId, item.name, 'unequip').catch(console.error);
+  };
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2">
@@ -49,7 +58,7 @@ export function AttunementSlots({ attunedItems, slotsRemaining, onUnattune }: At
                         <Gem className="h-3 w-3 flex-shrink-0 text-cyan-500" />
                         <span className="truncate">{item.name}</span>
                         <button
-                          onClick={() => onUnattune(item.id)}
+                          onClick={() => handleUnattune(item)}
                           className="flex-shrink-0 hover:text-red-500 transition-colors"
                           aria-label={`Unattune ${item.name}`}
                         >

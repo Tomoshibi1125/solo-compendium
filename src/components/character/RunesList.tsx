@@ -7,6 +7,8 @@ import { useCharacterRuneKnowledge, useAbsorbRune } from '@/hooks/useRunes';
 import { useCharacter } from '@/hooks/useCharacters';
 import { useFeatures } from '@/hooks/useFeatures';
 import { useToast } from '@/hooks/use-toast';
+import { useRecordRoll } from '@/hooks/useRollHistory';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 import { cn } from '@/lib/utils';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 import { resolveRuneAbsorption } from '@/lib/runeAutomation';
@@ -30,12 +32,16 @@ const RUNE_TYPE_ICONS: Record<string, React.ComponentType<{ className?: string }
   offensive: Zap,
 };
 
-export function RunesList({ characterId }: { characterId: string }) {
+export function RunesList({ characterId, campaignId }: { characterId: string; campaignId?: string }) {
   const { data: runeKnowledge = [] } = useCharacterRuneKnowledge(characterId);
   const { data: character } = useCharacter(characterId);
   const { features = [] } = useFeatures(characterId);
   const absorbRune = useAbsorbRune();
   const { toast } = useToast();
+  const recordRoll = useRecordRoll();
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const ddbEnhancements = usePlayerToolsEnhancements();
+  const { rollInCampaign } = ddbEnhancements;
 
   // Split runes into unabsorbed (available to consume) and absorbed (mastery_level 5)
   const unabsorbedRunes = runeKnowledge.filter((rk) => (rk.mastery_level || 0) < 5);
@@ -63,10 +69,37 @@ export function RunesList({ characterId }: { characterId: string }) {
     const displayName = formatMonarchVernacular(runeName);
     try {
       const result = await absorbRune.mutateAsync({ characterId, runeId });
+
+      const successMessage = `${displayName} permanently learned. ${result.absorption.adaptationNote}`;
+
+      if (campaignId) {
+        rollInCampaign(campaignId, {
+          dice_formula: '0',
+          result: 0,
+          rolls: [],
+          roll_type: 'ability',
+          context: `Absorbs Rune: ${successMessage}`,
+          character_id: characterId,
+        });
+      }
+
+      recordRoll.mutate({
+        dice_formula: '0',
+        result: 0,
+        rolls: [],
+        roll_type: 'ability',
+        context: `Absorbs Rune: ${successMessage}`,
+        campaign_id: campaignId ?? null,
+        character_id: characterId,
+      });
+
       toast({
         title: 'Rune Absorbed!',
-        description: `${displayName} permanently learned. ${result.absorption.adaptationNote}`,
+        description: successMessage,
       });
+
+      ddbEnhancements.trackCustomFeatureUsage(characterId, runeName, 'absorb', 'SA').catch(console.error);
+
     } catch (error) {
       toast({
         title: 'Absorption Failed',

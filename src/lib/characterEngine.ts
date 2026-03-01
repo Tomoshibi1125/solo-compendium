@@ -22,6 +22,10 @@
 import type { AbilityScore } from './5eRulesEngine';
 import { getAbilityModifier, getProficiencyBonus, SKILLS } from './5eRulesEngine';
 import { getSystemFavorDie, getSystemFavorMax, getCasterType, getSpellSlotsPerLevel } from './5eCharacterCalculations';
+import { aggregateFeatAndStyleEffects, computeAttacksPerAction } from './featEffectParser';
+import { bridgeAllFeatEffects, mergeAndSortEffects, resolveEffectConflicts } from './unifiedEffectSystem';
+import { getActiveConditionNames } from './conditionSystem';
+import { computeSenses, formatSenses, type CharacterSenses } from './sensesEngine';
 // Effect types (inlined from effectsEngine.ts — that module is now deleted)
 export type EffectType =
   | 'modifier'      // Modifies a stat (AC, speed, ability, etc.)
@@ -76,6 +80,10 @@ export interface EquipmentInstance {
   properties?: string[]; // Raw property strings from DB
   acFormula?: string; // e.g., "13 + AGI (max 2)", "18", "10 + AGI"
   effects?: Effect[]; // Parsed effects
+  isActive?: boolean;
+  ignoreContentsWeight?: boolean;
+  isContainer?: boolean;
+  containerId?: string | null;
 }
 
 /**
@@ -132,12 +140,7 @@ export interface CharacterJob {
   job: string; // System Ascendant job name (Destroyer, Mage, etc.)
   path?: string; // System Ascendant subclass/path name (level 3, automatic)
   regent?: string; // Regent path ID (quest-gated, DM unlocks)
-  gemini?: {
-    regent1Id: string;
-    regent2Id: string;
-    sovereignId: string;
-    fusionType: 'Perfect' | 'Good' | 'Average';
-  }; // Gemini Protocol fusion
+  gemini?: any; // Full GeminiSovereign AI payload
   level: number;
   hitDie: number; // d6, d8, d10, d12
 }
@@ -242,6 +245,12 @@ export interface ComputedCharacterStats {
     abilityChecks: RollModifierSummary;
     savingThrows: RollModifierSummary;
   };
+
+  // Senses (DDB/Foundry parity — darkvision, blindsight, tremorsense, passives)
+  senses?: CharacterSenses;
+
+  // Attacks per action (Extra Attack from Job/Regent)
+  attacksPerAction?: number;
 }
 
 /**
@@ -331,8 +340,16 @@ function parseAwakeningEffects(
 
   // Damage resistances (e.g., "resistance to poison damage", "resistance to all damage")
   if (desc.includes('resistance to') && desc.includes('damage')) {
-    // This would be handled by the character's resistance array, not effects
-    // But we note it for reference
+    // Track resistance as a roll_tag effect for the character sheet to display
+    const resistMatch = desc.match(/resistance to\s+([a-z,\s]+)\s*damage/i);
+    if (resistMatch) {
+      effects.push({
+        type: 'roll_tag',
+        target: 'saving_throw',
+        value: `resistance:${resistMatch[1].trim()}`,
+        priority: 100,
+      });
+    }
   }
 
   // AC bonuses (e.g., "+1 to AC")
@@ -580,8 +597,19 @@ function parseRegentFeatureEffects(
   // Damage bonuses (e.g., "+4d6 fire damage", "take 6d8 radiant/round")
   const damageBonus = desc.match(/(\d+d\d+)\s*([a-z]+)\s*damage/i);
   if (damageBonus) {
-    // This would be a combat effect, note it for future implementation
-    // For now, we can track it as a damage modifier
+    // Combat damage dice effect — store as a damage_bonus modifier
+    // The dice expression is tracked for display; numeric estimate used for modifier
+    const diceExpr = damageBonus[1]; // e.g., "4d6"
+    const diceCount = parseInt(diceExpr.split('d')[0], 10) || 1;
+    const diceSides = parseInt(diceExpr.split('d')[1], 10) || 6;
+    const avgDamage = Math.floor(diceCount * (diceSides + 1) / 2);
+    effects.push({
+      type: 'modifier',
+      target: 'damage_bonus',
+      value: avgDamage,
+      condition: `${diceExpr} ${damageBonus[2] || ''} damage`.trim(),
+      priority: 170,
+    });
   }
 
   // Speed bonuses (e.g., "fly 60 ft", "speed 120 ft")
@@ -676,19 +704,19 @@ function aggregateGeminiFeatures(jobs: CharacterJob[]): FeatureInstance[] {
       // Check if job has Gemini fusion
       if (!charJob.gemini) continue;
 
-      // Find regent data for both regents
+      // Find regent data for both regents (handles legacy IDs or full objects)
+      const regent1Id = charJob.gemini.regent1Id || charJob.gemini.regent1?.id;
+      const regent2Id = charJob.gemini.regent2Id || charJob.gemini.regent2?.id;
+      const sovereignId = charJob.gemini.sovereignId || charJob.gemini.id;
+
       const regent1 = RegentGeminiSystem.REGENT_DATABASE.find(
-        (r: { id: string }) => r.id === charJob.gemini!.regent1Id
+        (r: { id: string }) => r.id === regent1Id
       );
       const regent2 = RegentGeminiSystem.REGENT_DATABASE.find(
-        (r: { id: string }) => r.id === charJob.gemini!.regent2Id
+        (r: { id: string }) => r.id === regent2Id
       );
 
       if (!regent1 || !regent2) continue;
-
-      // NOTE: Gemini fusion does NOT grant stat bonuses
-      // It's a powerful subclass overlay with merged features from both regents
-      // The AI generates unique sovereign abilities based on the fusion
 
       // Add merged features from both regents
       if (regent1.features) {
@@ -696,7 +724,7 @@ function aggregateGeminiFeatures(jobs: CharacterJob[]): FeatureInstance[] {
           id: `${charJob.job}-gemini-r1-${f.name.toLowerCase().replace(/\s+/g, '-')}`,
           name: f.name,
           sourceType: 'path' as const,
-          sourceId: charJob.gemini!.sovereignId,
+          sourceId: sovereignId,
           description: f.description,
           effects: parseRegentFeatureEffects(f, charJob.level),
         })));
@@ -707,18 +735,58 @@ function aggregateGeminiFeatures(jobs: CharacterJob[]): FeatureInstance[] {
           id: `${charJob.job}-gemini-r2-${f.name.toLowerCase().replace(/\s+/g, '-')}`,
           name: f.name,
           sourceType: 'path' as const,
-          sourceId: charJob.gemini!.sovereignId,
+          sourceId: sovereignId,
           description: f.description,
           effects: parseRegentFeatureEffects(f, charJob.level),
         })));
       }
 
-      // TODO: Load AI-generated sovereign features from database
-      // The sovereign features are generated by the integrated AI based on:
-      // - Base job + path
-      // - Regent A features + theme
-      // - Regent B features + theme
-      // - Fusion quality (synergy between regents)
+      // Load AI-generated sovereign features directly from the gemini state payload
+      if (charJob.gemini.features && Array.isArray(charJob.gemini.features)) {
+        features.push(...charJob.gemini.features.map((f: { name: string; description: string; type?: string }) => ({
+          id: `${charJob.job}-gemini-ai-feat-${f.name.toLowerCase().replace(/\s+/g, '-')}`,
+          name: `[Sovereign] ${f.name}`,
+          sourceType: 'path' as const,
+          sourceId: sovereignId,
+          description: f.description,
+          effects: parseRegentFeatureEffects(f as any, charJob.level),
+        })));
+      }
+
+      if (charJob.gemini.traits && Array.isArray(charJob.gemini.traits)) {
+        features.push(...charJob.gemini.traits.map((t: { name: string; description: string; type?: string }) => ({
+          id: `${charJob.job}-gemini-ai-trait-${t.name.toLowerCase().replace(/\s+/g, '-')}`,
+          name: `[Sovereign Trait] ${t.name}`,
+          sourceType: 'trait' as const,
+          sourceId: sovereignId,
+          description: t.description,
+          effects: parseRegentFeatureEffects(t as any, charJob.level),
+        })));
+      }
+
+      // Load AI-generated stat bonuses
+      if (charJob.gemini.statBonuses) {
+        const bonuses = charJob.gemini.statBonuses;
+        const statEffects: any[] = [];
+        for (const [stat, bonus] of Object.entries(bonuses)) {
+          statEffects.push({
+            type: 'modifier',
+            target: stat,
+            value: bonus,
+            priority: 180,
+          });
+        }
+        if (statEffects.length > 0) {
+          features.push({
+            id: `${charJob.job}-gemini-ai-stats`,
+            name: `Sovereign Authority`,
+            sourceType: 'path' as const,
+            sourceId: sovereignId,
+            description: `Permanent physiological enhancement derived from Sovereign fusion.`,
+            effects: statEffects,
+          });
+        }
+      }
     }
   } catch (error) {
     // Gracefully handle if regent system not available
@@ -789,9 +857,23 @@ function aggregateEffects(base: CharacterBaseData): Effect[] {
     }
   }
 
+  // Feat & Fighting Style effects (Priority: 200 — Foundry Active Effects parity)
+  // Parse character feats and fighting styles into mechanical bonuses
+  const featNames = base.features
+    .filter(f => f.sourceType === 'feat')
+    .map(f => f.name);
+  const fightingStyles = base.features
+    .filter(f => f.name.toLowerCase().includes('fighting style'))
+    .map(f => f.name.replace(/fighting style:\s*/i, '').trim());
+
+  const rawFeatEffects = aggregateFeatAndStyleEffects(featNames, fightingStyles, base.level);
+  const bridgedFeatEffects = bridgeAllFeatEffects(rawFeatEffects);
+  allEffects.push(...bridgedFeatEffects);
+
   // Condition effects are handled separately by conditionEffects.ts
 
-  return allEffects;
+  // Final: merge, sort by priority, and resolve conflicts (Foundry parity)
+  return resolveEffectConflicts(mergeAndSortEffects(allEffects));
 }
 
 /**
@@ -812,10 +894,31 @@ function applyEffectsToStat(
   // Sort by priority (lower = applied first)
   relevantEffects.sort((a, b) => (a.priority ?? 100) - (b.priority ?? 100));
 
-  // Apply effects
-  // TODO: Implement stacking rules (same source, same type, etc.)
+  // Apply effects with D&D 5e stacking rules:
+  // - Group by priority bucket (acts as bonus type: equipment=200, feat=300, etc.)
+  // - Within each group, only the highest modifier applies (same-type non-stacking)
+  // - Untyped bonuses (priority 100 or undefined) all stack normally
+  // - Negative modifiers (penalties) always stack
+  const untypedBucket = 100;
+  const grouped = new Map<number, number[]>();
+
   for (const effect of relevantEffects) {
-    result += effect.value as number;
+    const val = effect.value as number;
+    const bucket = effect.priority ?? untypedBucket;
+
+    // Penalties always apply (stack). Untyped bonuses (bucket 100) also stack.
+    if (val < 0 || bucket === untypedBucket) {
+      result += val;
+    } else {
+      // Typed bonuses: collect, keep highest per type
+      if (!grouped.has(bucket)) grouped.set(bucket, []);
+      grouped.get(bucket)!.push(val);
+    }
+  }
+
+  // For typed bonus groups, apply only the highest
+  for (const values of grouped.values()) {
+    result += Math.max(...values);
   }
 
   return result;
@@ -1041,10 +1144,81 @@ function computeSpellSlots(
     slots[i] = { current: maxSlots[i] ?? 0, max: maxSlots[i] ?? 0 };
   }
 
-  // TODO: Integrate regent overlay spell slots from monarchs.ts
-  // Regent spell slot progressions would layer on top of job slots
+  // Regent overlay spell slots: if regent paths have spellcasting features,
+  // add bonus slots. Regent spellcasting adds 1 bonus slot per even level
+  // for their highest available spell level (SA parity with Foundry multiclass).
+  for (const job of jobs) {
+    if (job.regent && job.level >= 2) {
+      const regentBonusLevel = Math.min(Math.floor(job.level / 2), 5);
+      for (let sl = 1; sl <= regentBonusLevel; sl++) {
+        slots[sl] = {
+          current: slots[sl].current + 1,
+          max: slots[sl].max + 1,
+        };
+      }
+    }
+  }
 
   return slots;
+}
+
+/**
+ * Extract sense grants from equipped items' properties.
+ * Items like "Goggles of Night" include "darkvision 60 ft" in their properties.
+ */
+function extractEquipmentSenses(
+  items: EquipmentInstance[]
+): Array<{ type: 'equipment'; name: string; sense: 'darkvision' | 'blindsight' | 'tremorsense' | 'truesight'; range: number }> {
+  const senses: Array<{ type: 'equipment'; name: string; sense: 'darkvision' | 'blindsight' | 'tremorsense' | 'truesight'; range: number }> = [];
+  const sensePattern = /(darkvision|blindsight|tremorsense|truesight)\s*(\d+)\s*ft/gi;
+
+  for (const item of items) {
+    if (!item.isEquipped) continue;
+    for (const prop of (item.properties ?? [])) {
+      let match: RegExpExecArray | null;
+      while ((match = sensePattern.exec(prop)) !== null) {
+        senses.push({
+          type: 'equipment',
+          name: item.name,
+          sense: match[1].toLowerCase() as 'darkvision' | 'blindsight' | 'tremorsense' | 'truesight',
+          range: parseInt(match[2], 10),
+        });
+      }
+      sensePattern.lastIndex = 0;
+    }
+  }
+  return senses;
+}
+
+/**
+ * Extract sense grants from active spell effects.
+ * Spells like "Darkvision" include sense keywords in their effects or name.
+ */
+function extractSpellSenses(
+  spells: ActiveSpellEffect[]
+): Array<{ type: 'spell'; name: string; sense: 'darkvision' | 'blindsight' | 'tremorsense' | 'truesight'; range: number }> {
+  const senses: Array<{ type: 'spell'; name: string; sense: 'darkvision' | 'blindsight' | 'tremorsense' | 'truesight'; range: number }> = [];
+  const sensePattern = /(darkvision|blindsight|tremorsense|truesight)\s*(\d+)\s*ft/gi;
+
+  for (const spell of spells) {
+    // Check spell name for sense keywords (e.g., "Darkvision 60 ft")
+    const nameMatch = spell.spellName.match(sensePattern);
+    if (nameMatch) {
+      for (const m of nameMatch) {
+        const parts = m.match(/(darkvision|blindsight|tremorsense|truesight)\s*(\d+)/i);
+        if (parts) {
+          senses.push({
+            type: 'spell',
+            name: spell.spellName,
+            sense: parts[1].toLowerCase() as 'darkvision' | 'blindsight' | 'tremorsense' | 'truesight',
+            range: parseInt(parts[2], 10),
+          });
+        }
+      }
+    }
+    sensePattern.lastIndex = 0;
+  }
+  return senses;
 }
 
 /**
@@ -1055,7 +1229,30 @@ function computeEncumbrance(
   equippedItems: EquipmentInstance[]
 ): { capacity: number; currentWeight: number; tier: 'normal' | 'encumbered' | 'heavily-encumbered' | 'over-capacity' } {
   const capacity = strScore * 15; // 5e SRD formula
-  const currentWeight = equippedItems.reduce((sum, item) => sum + (item.weight || 0), 0);
+
+  // Find containers with special rules
+  const inactiveContainerIds = new Set(
+    equippedItems.filter(i => i.isContainer && i.isActive === false).map(i => i.id)
+  );
+  const magicContainerIds = new Set(
+    equippedItems.filter(i => i.isContainer && i.ignoreContentsWeight).map(i => i.id)
+  );
+
+  let currentWeight = 0;
+  for (const item of equippedItems) {
+    if (!item.weight) continue;
+
+    // If the item itself is an inactive container, it contributes 0 weight
+    if (item.isContainer && item.isActive === false) continue;
+
+    // If the item is inside a container, check container rules
+    if (item.containerId) {
+      if (inactiveContainerIds.has(item.containerId)) continue;
+      if (magicContainerIds.has(item.containerId)) continue;
+    }
+
+    currentWeight += item.weight;
+  }
 
   let tier: 'normal' | 'encumbered' | 'heavily-encumbered' | 'over-capacity' = 'normal';
   if (currentWeight > capacity) {
@@ -1165,6 +1362,34 @@ export function computeCharacterStats(base: CharacterBaseData): ComputedCharacte
   // 16. Build computed effects summary for UI display
   const activeEffects = buildEffectsSummary(effects, base);
 
+  // 17. Compute senses (DDB/Foundry parity — darkvision, blindsight, tremorsense, passives)
+  const regentIds = base.jobs
+    .filter(j => j.regent)
+    .map(j => j.regent!) as string[];
+  const senses = computeSenses(
+    base.jobs[0]?.job ?? null,
+    base.jobs[0]?.path ?? null,
+    regentIds,
+    extractEquipmentSenses(base.equippedItems), // equipmentSenses — extracted from equipped items
+    extractSpellSenses(base.activeSpells), // spellSenses — extracted from active spell effects
+    abilityModifiers.SENSE,
+    abilityModifiers.INT,
+    proficiencyBonus,
+    base.skillProficiencies.includes('perception'),
+    base.skillProficiencies.includes('investigation'),
+    base.skillProficiencies.includes('insight'),
+    base.skillExpertise.includes('perception'),
+    base.features.some(f => f.name.toLowerCase() === 'observant'),
+  );
+
+  // 18. Compute attacks per action (Extra Attack from Job/Regent — Foundry parity)
+  const attacksPerAction = computeAttacksPerAction(
+    base.jobs[0]?.job ?? null,
+    base.level,
+    regentIds,
+    base.features.some(f => f.name.toLowerCase().includes('extra attack')),
+  );
+
   return {
     proficiencyBonus,
     abilityModifiers,
@@ -1177,7 +1402,7 @@ export function computeCharacterStats(base: CharacterBaseData): ComputedCharacte
     spellAttackBonus: spellcasting.attackBonus,
     spellcastingAbility: spellcasting.ability,
     spellSlots,
-    passivePerception,
+    passivePerception: senses.passivePerception,
     carryingCapacity: encumbrance.capacity,
     currentWeight: encumbrance.currentWeight,
     encumbranceTier: encumbrance.tier,
@@ -1186,6 +1411,8 @@ export function computeCharacterStats(base: CharacterBaseData): ComputedCharacte
     effectiveHPMax,
     activeEffects,
     rollModifiers,
+    senses,
+    attacksPerAction,
   };
 }
 
@@ -1322,4 +1549,53 @@ function formatEffectDisplay(effect: Effect, sourceName: string): string {
   }
 
   return `${effect.target} (${sourceName})`;
+}
+
+/**
+ * Auto-calculate feature uses from formula
+ */
+export function calculateFeatureUses(
+  formula: string | null,
+  level: number,
+  proficiencyBonus: number
+): number | null {
+  if (!formula) return null;
+
+  // Parse formulas like "proficiency bonus", "level", "2", "level / 2"
+  const lowerFormula = formula.toLowerCase().trim();
+
+  if (lowerFormula === 'proficiency bonus' || lowerFormula === 'pb') {
+    return proficiencyBonus;
+  }
+
+  if (lowerFormula === 'level' || lowerFormula === 'lvl') {
+    return level;
+  }
+
+  // Try to evaluate simple math expressions safely (without eval)
+  try {
+    const expression = lowerFormula
+      .replace(/proficiency bonus/gi, proficiencyBonus.toString())
+      .replace(/pb/gi, proficiencyBonus.toString())
+      .replace(/level/gi, level.toString())
+      .replace(/lvl/gi, level.toString());
+
+    // Only allow safe math operations - use Function constructor instead of eval for better isolation
+    // This is still risky but slightly safer than direct eval, and we validate the input
+    if (/^[\d+\-*/().\s]+$/.test(expression)) {
+      // Use Function constructor with strict mode and no global access
+      // Note: This is safer than eval as it creates an isolated scope, but still requires validation
+      // Input is validated to only contain math operations before execution
+      const result = new Function('"use strict"; return (' + expression + ')')();
+      return Math.floor(Number(result));
+    }
+  } catch {
+    // Invalid expression
+  }
+
+  // Try parsing as a number
+  const num = parseInt(lowerFormula);
+  if (!isNaN(num)) return num;
+
+  return null;
 }

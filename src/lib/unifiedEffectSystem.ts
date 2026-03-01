@@ -17,6 +17,7 @@
 import type { Effect, EffectTarget, EffectType, EffectSource } from './characterEngine';
 import type { FeatEffect } from './featEffectParser';
 import type { SpellEngineEffect } from './spellEffectPipeline';
+import { parseModifiers } from './equipmentModifiers';
 
 // ─── Canonical EffectTarget expansions ──────────────────────
 // Define the expanded target set that feat/spell modules produce.
@@ -139,6 +140,43 @@ export function bridgeSpellEffect(spell: SpellEngineEffect): { effect: Effect; s
             sourceName: spell.source,
         },
     };
+}
+
+/**
+     * Bridge equipment property strings → Effect[] via parseModifiers.
+     * Equipment modifiers use priority 200 (typed equipment bonus bucket).
+     */
+export function bridgeEquipmentEffects(properties: string[]): Effect[] {
+    const mods = parseModifiers(properties);
+    const effects: Effect[] = [];
+    const EQUIP_PRIORITY = 200;
+
+    if (mods.ac) effects.push({ type: 'modifier', target: 'ac', value: mods.ac, priority: EQUIP_PRIORITY });
+    if (mods.attack) effects.push({ type: 'modifier', target: 'attack_bonus', value: mods.attack, priority: EQUIP_PRIORITY });
+    if (mods.damage) effects.push({ type: 'modifier', target: 'damage_bonus', value: mods.damage, priority: EQUIP_PRIORITY });
+    if (mods.speed) effects.push({ type: 'modifier', target: 'speed', value: mods.speed, priority: EQUIP_PRIORITY });
+    if (mods.str) effects.push({ type: 'modifier', target: 'str', value: mods.str, priority: EQUIP_PRIORITY });
+    if (mods.agi) effects.push({ type: 'modifier', target: 'agi', value: mods.agi, priority: EQUIP_PRIORITY });
+    if (mods.vit) effects.push({ type: 'modifier', target: 'vit', value: mods.vit, priority: EQUIP_PRIORITY });
+    if (mods.int) effects.push({ type: 'modifier', target: 'int', value: mods.int, priority: EQUIP_PRIORITY });
+    if (mods.sense) effects.push({ type: 'modifier', target: 'sense', value: mods.sense, priority: EQUIP_PRIORITY });
+    if (mods.pre) effects.push({ type: 'modifier', target: 'pre', value: mods.pre, priority: EQUIP_PRIORITY });
+
+    // Saving throw bonuses
+    if (mods.savingThrows) {
+        for (const [, value] of Object.entries(mods.savingThrows)) {
+            if (value) effects.push({ type: 'modifier', target: 'saving_throw', value, priority: EQUIP_PRIORITY });
+        }
+    }
+
+    // Skill bonuses
+    if (mods.skills) {
+        for (const [, value] of Object.entries(mods.skills)) {
+            if (value) effects.push({ type: 'modifier', target: 'skill', value, priority: EQUIP_PRIORITY });
+        }
+    }
+
+    return effects;
 }
 
 /**

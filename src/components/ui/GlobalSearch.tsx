@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Search, Loader2, Clock, X } from 'lucide-react';
@@ -38,6 +38,19 @@ export function GlobalSearch({ className }: { className?: string }) {
   const debouncedQuery = useDebounce(query, 300);
   const [isOpen, setIsOpen] = useState(false);
   const { recentItems, addRecentItem } = useRecentItems();
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        inputRef.current?.focus();
+        setIsOpen(true);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const { data: results = [], isLoading } = useQuery({
     queryKey: ['global-search', debouncedQuery],
@@ -165,6 +178,7 @@ export function GlobalSearch({ className }: { className?: string }) {
       <div className="relative">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
         <Input
+          ref={inputRef}
           type="search"
           placeholder="Search everything... (Ctrl+K)"
           value={query}

@@ -342,6 +342,13 @@ export function addLocalEquipment(characterId: string, item: Omit<EquipmentInser
     relic_tier: item.relic_tier ?? null,
     charges_current: item.charges_current ?? null,
     charges_max: item.charges_max ?? null,
+    container_id: item.container_id ?? null,
+    is_container: item.is_container ?? false,
+    capacity_weight: item.capacity_weight ?? null,
+    capacity_volume: item.capacity_volume ?? null,
+    is_active: item.is_active ?? true,
+    ignore_contents_weight: item.ignore_contents_weight ?? false,
+    custom_modifiers: item.custom_modifiers ?? null,
   };
 
   const equipment = [...entry.equipment, next];
@@ -583,21 +590,21 @@ export function upsertLocalSpellSlot(
 
   const row: SpellSlotRow = existing
     ? {
-        ...existing,
-        ...insert,
-        updated_at: now,
-      }
+      ...existing,
+      ...insert,
+      updated_at: now,
+    }
     : {
-        id: createLocalId('local_slot'),
-        character_id: characterId,
-        created_at: now,
-        updated_at: now,
-        spell_level: insert.spell_level,
-        slots_max: insert.slots_max ?? 0,
-        slots_current: insert.slots_current ?? insert.slots_max ?? 0,
-        slots_recovered_on_short_rest: insert.slots_recovered_on_short_rest ?? 0,
-        slots_recovered_on_long_rest: insert.slots_recovered_on_long_rest ?? 1,
-      };
+      id: createLocalId('local_slot'),
+      character_id: characterId,
+      created_at: now,
+      updated_at: now,
+      spell_level: insert.spell_level,
+      slots_max: insert.slots_max ?? 0,
+      slots_current: insert.slots_current ?? insert.slots_max ?? 0,
+      slots_recovered_on_short_rest: insert.slots_recovered_on_short_rest ?? 0,
+      slots_recovered_on_long_rest: insert.slots_recovered_on_long_rest ?? 1,
+    };
 
   const nextSlots = existing
     ? entry.spellSlots.map((s) => (s.spell_level === row.spell_level ? row : s))

@@ -16,7 +16,8 @@ import {
   getCharacterCampaignId,
   isSourcebookAccessible,
 } from '@/lib/sourcebookAccess';
-import { calculateFeatureUses } from '@/lib/automation';
+import { calculateFeatureUses } from '@/lib/characterEngine';
+import { getProficiencyBonus } from '@/types/system-rules';
 import { jobs as staticJobs } from '@/data/compendium/jobs';
 import { items as staticItems } from '@/data/compendium/items';
 import { backgrounds as staticBackgrounds } from '@/data/compendium/backgrounds';
@@ -138,6 +139,49 @@ function buildItemProperties(item: (typeof staticItems)[number]): string[] {
   }
 
   return props;
+}
+
+/**
+ * Auto-update feature uses when level changes
+ */
+export async function autoUpdateFeatureUses(characterId: string): Promise<void> {
+  const { data: character } = await supabase
+    .from('characters')
+    .select('level')
+    .eq('id', characterId)
+    .single();
+
+  if (!character) return;
+
+  const proficiencyBonus = getProficiencyBonus(character.level);
+
+  const { data: features } = await supabase
+    .from('character_features')
+    .select('*')
+    .eq('character_id', characterId);
+
+  if (!features) return;
+
+  for (const feature of features) {
+    const usesFormula = (feature as any).uses_formula;
+    if (usesFormula) {
+      const newMax = calculateFeatureUses(
+        usesFormula,
+        character.level,
+        proficiencyBonus
+      );
+
+      if (newMax !== null && feature.uses_max !== newMax) {
+        await supabase
+          .from('character_features')
+          .update({
+            uses_max: newMax,
+            uses_current: Math.min(feature.uses_current ?? newMax, newMax),
+          })
+          .eq('id', feature.id);
+      }
+    }
+  }
 }
 
 function isChoiceFeatureText(value: string | null | undefined): boolean {
@@ -923,38 +967,150 @@ function getRegentFeatureModifiers(regentName: string, featureName: string, leve
   const regent = regentName.trim().toLowerCase();
   const feature = featureName.trim().toLowerCase();
 
-  if (regent === 'umbral regent') {
-    if (feature === 'umbral command') return [{ type: 'summon_max', value: 20, target: 'umbral_creatures', source: featureName }];
-    if (feature === 'veilstep supreme') return [{ type: 'teleport_range', value: 120, target: 'dim_light', source: featureName }];
+  // 1. Shadow/Umbral Regent
+  if (regent === 'umbral regent' || regent === 'shadow regent') {
+    if (feature === 'umbral command' || feature === 'shadow extraction') return [{ type: 'summon_max', value: 20, target: 'umbral_creatures', source: featureName }];
+    if (feature === 'veilstep supreme' || feature === 'shadow exchange') return [{ type: 'teleport_range', value: 120, target: 'dim_light', source: featureName }];
     if (feature === 'umbral dominion') return [
       { type: 'immunity', value: 0, target: 'necrotic', source: featureName },
       { type: 'advantage', value: 0, target: 'save:umbral', source: featureName }
     ];
-    if (feature === 'regent\'s presence') return [{ type: 'aura_fear', value: 30, target: 'radius', source: featureName }];
+    if (feature === "regent's presence") return [{ type: 'aura_fear', value: 30, target: 'radius', source: featureName }];
     if (feature === 'absolute umbral') return [{ type: 'immunity', value: 0, target: 'all', source: featureName }];
     if (feature === 'legion of the veil') return [{ type: 'summon_count', value: 0, target: '2d6_shadows', source: featureName }];
     if (feature === 'umbral mastery') return [{ type: 'at_will_spell', value: 0, target: 'umbral_spells', source: featureName }];
-    if (feature === 'death\'s command') return [{ type: 'command_undead', value: 0, target: 'all', source: featureName }];
+    if (feature === "death's command") return [{ type: 'command_undead', value: 0, target: 'all', source: featureName }];
   }
 
-  if (regent === 'flame monarch') {
+  // 2. Dragon Regent
+  if (regent === 'dragon regent') {
+    if (feature === 'breath of annihilation') return [{ type: 'aoe_damage', value: 0, target: '12d10_fire', source: featureName }];
+    if (feature === 'destruction aura') return [{ type: 'aura_damage', value: 4, target: '4d6_fire', source: featureName }];
+    if (feature === 'cataclysm wings') return [{ type: 'fly_speed', value: 90, target: undefined, source: featureName }];
+    if (feature === 'scale armor') return [{ type: 'ac_set', value: 17, target: 'natural_armor', source: featureName }];
+    if (feature === 'true dragon form') return [
+      { type: 'ac_set', value: 22, target: 'transformation', source: featureName },
+      { type: 'fly_speed', value: 120, target: undefined, source: featureName },
+      { type: 'immunity', value: 0, target: 'fire', source: featureName }
+    ];
+    if (feature === 'primordial flame') return [{ type: 'ignore_resistance', value: 0, target: 'fire', source: featureName }];
+    if (feature === 'absolute dragon') return [
+      { type: 'immunity', value: 0, target: 'fire', source: featureName },
+      { type: 'immunity', value: 0, target: 'physical', source: featureName }
+    ];
+  }
+
+  // 3. Frost Regent
+  if (regent === 'frost regent' || regent === 'frost sovereign') {
+    if (feature === 'frost dominion' || feature === 'glacial domain') return [
+      { type: 'immunity', value: 0, target: 'cold', source: featureName },
+      { type: 'resistance', value: 0, target: 'fire', source: featureName }
+    ];
+    if (feature === 'absolute zero') return [{ type: 'aura_speed_reduction', value: 20, target: 'radius:30', source: featureName }];
+    if (feature === 'ice age advent') return [{ type: 'aoe_damage', value: 0, target: 'cold_zone', source: featureName }];
+    if (feature === 'glacial time') return [{ type: 'speed_reduction', value: 50, target: 'radius:60', source: featureName }];
+    if (feature === "winter's immortality") return [
+      { type: 'immunity', value: 0, target: 'cold', source: featureName },
+      { type: 'immunity', value: 0, target: 'fire', source: featureName },
+      { type: 'hp_regen', value: 20, target: 'per_round', source: featureName }
+    ];
+    if (feature === 'temporal frost') return [{ type: 'time_stop', value: 1, target: '120ft_radius', source: featureName }];
+    if (feature === 'absolute frost') return [{ type: 'maximize_damage', value: 0, target: 'cold', source: featureName }];
+  }
+
+  // 4. Beast Regent
+  if (regent === 'beast regent') {
+    if (feature === 'apex form') return [
+      { type: 'stat_bonus', value: 6, target: 'str', source: featureName },
+      { type: 'stat_bonus', value: 6, target: 'agi', source: featureName },
+      { type: 'stat_bonus', value: 6, target: 'vit', source: featureName },
+      { type: 'hp_regen', value: 15, target: 'per_turn', source: featureName }
+    ];
+    if (feature === "alpha's presence") return [{ type: 'aura_fear', value: 120, target: 'radius', source: featureName }];
+    if (feature === "beast king's call") return [{ type: 'command_beasts', value: 10, target: 'miles', source: featureName }];
+    if (feature === 'primordial regeneration') return [
+      { type: 'hp_regen', value: 25, target: 'per_turn', source: featureName },
+      { type: 'immunity', value: 0, target: 'disease', source: featureName }
+    ];
+    if (feature === 'pack tactics') return [{ type: 'advantage', value: 0, target: 'attack_allies', source: featureName }];
+    if (feature === 'absolute beast') return [{ type: 'immunity', value: 0, target: 'physical', source: featureName }];
+  }
+
+  // 5. Titan Regent (maps to Steel Monarch in compendium)
+  if (regent === 'titan regent' || regent === 'steel monarch') {
+    if (feature === 'true invulnerability' || feature === 'flesh reconstruction') return [{ type: 'immunity', value: 0, target: 'all_damage', source: featureName }];
+    if (feature === 'immovable anchor' || feature === 'steel weaving') return [
+      { type: 'ac_bonus', value: 3, target: undefined, source: featureName },
+      { type: 'resistance', value: 0, target: 'physical', source: featureName }
+    ];
+    if (feature === 'infinite stamina' || feature === 'regeneration core') return [
+      { type: 'hp_regen', value: 1, target: 'per_turn', source: featureName },
+      { type: 'immunity', value: 0, target: 'exhaustion', source: featureName }
+    ];
+    if (feature === "titan's retaliation" || feature === 'adaptive defense') return [{ type: 'damage_reflect', value: 0, target: 'melee', source: featureName }];
+    if (feature === 'absolute titan' || feature === 'absolute steel') return [{ type: 'immunity', value: 0, target: 'all', source: featureName }];
+  }
+
+  // 6. Plague Regent
+  if (regent === 'plague regent') {
+    if (feature === 'typhoid incarnate' || feature === 'apocalypse plague') return [{ type: 'aura_damage', value: 0, target: 'disease_aura:60', source: featureName }];
+    if (feature === 'insect god') return [{ type: 'command_insects', value: 5, target: 'miles', source: featureName }];
+    if (feature === 'billion swarm') return [
+      { type: 'fly_speed', value: 60, target: undefined, source: featureName },
+      { type: 'immunity', value: 0, target: 'non_aoe', source: featureName }
+    ];
+    if (feature === 'pathogen mastery') return [
+      { type: 'immunity', value: 0, target: 'disease', source: featureName },
+      { type: 'immunity', value: 0, target: 'poison', source: featureName }
+    ];
+    if (feature === 'biological apocalypse') return [{ type: 'aoe_damage', value: 0, target: '8d10_necrotic', source: featureName }];
+    if (feature === 'absolute plague') return [{ type: 'permanent_disease', value: 0, target: 'incurable', source: featureName }];
+  }
+
+  // 7. Architect Regent
+  if (regent === 'architect regent') {
+    if (feature === 'world creation') return [{ type: 'create_demiplane', value: 1, target: 'mile_cube', source: featureName }];
+    if (feature === 'instant architecture') return [{ type: 'create_structure', value: 300, target: 'cube_ft', source: featureName }];
+    if (feature === 'spatial anchors') return [{ type: 'teleport_anchors', value: 12, target: 'permanent', source: featureName }];
+    if (feature === 'living lair') return [{ type: 'lair_control', value: 0, target: 'own_structures', source: featureName }];
+    if (feature === 'dimensional lock') return [{ type: 'antimagic_zone', value: 1, target: 'mile_radius', source: featureName }];
+    if (feature === 'blueprint vision') return [{ type: 'truesight', value: 5, target: 'miles', source: featureName }];
+    if (feature === 'reality rewrite') return [{ type: 'terrain_reshape', value: 1, target: 'mile_radius', source: featureName }];
+    if (feature === 'absolute architect') return [{ type: 'at_will_creation', value: 0, target: 'demiplanes', source: featureName }];
+  }
+
+  // 8. Radiant Regent (maps to Flame Monarch in compendium)
+  if (regent === 'radiant regent' || regent === 'flame monarch') {
     if (feature === 'flame step') return [{ type: 'teleport_range', value: 120, target: 'flames', source: featureName }];
-    if (feature === 'flame dominion') return [
+    if (feature === 'flame dominion' || feature === 'white fire') return [
       { type: 'immunity', value: 0, target: 'fire', source: featureName },
       { type: 'resistance', value: 0, target: 'radiant', source: featureName }
     ];
     if (feature === 'immolation aura') return [{ type: 'aura_damage', value: 1, target: '1d6_fire', source: featureName }];
     if (feature === 'white flame burst') return [{ type: 'aoe_damage', value: 0, target: '10d10_fire', source: featureName }];
-    if (feature === 'purification flame') return [{ type: 'aoe_cleanse', value: 60, target: 'radius', source: featureName }];
+    if (feature === 'purification flame' || feature === 'divine purge') return [{ type: 'aoe_cleanse', value: 60, target: 'radius', source: featureName }];
     if (feature === 'phoenix rebirth') return [{ type: 'auto_resurrection', value: 1, target: 'self', source: featureName }];
+    if (feature === 'seraphim form') return [
+      { type: 'fly_speed', value: 120, target: undefined, source: featureName },
+      { type: 'immunity', value: 0, target: 'all', source: featureName },
+      { type: 'aura_damage', value: 6, target: '6d8_radiant', source: featureName }
+    ];
+    if (feature === 'judgment day') return [{ type: 'aoe_damage', value: 0, target: '20d10_radiant', source: featureName }];
   }
 
-  if (regent === 'frost sovereign') {
-    if (feature === 'glacial domain') return [
-      { type: 'immunity', value: 0, target: 'cold', source: featureName },
-      { type: 'resistance', value: 0, target: 'fire', source: featureName }
+  // 9. Mimic Regent
+  if (regent === 'mimic regent') {
+    if (feature === 'perfect imitation') return [{ type: 'shapeshift', value: 0, target: 'unlimited', source: featureName }];
+    if (feature === 'power theft') return [{ type: 'copy_ability', value: 0, target: 'permanent', source: featureName }];
+    if (feature === 'reactive evolution') return [
+      { type: 'adaptive_immunity', value: 0, target: 'last_damage_type', source: featureName },
+      { type: 'adaptive_save', value: 0, target: 'last_failed_save', source: featureName }
     ];
-    if (feature === 'absolute zero') return [{ type: 'aura_speed_reduction', value: 20, target: 'radius:30', source: featureName }];
+    if (feature === 'quantum existence') return [{ type: 'illusion', value: 0, target: 'per_observer', source: featureName }];
+    if (feature === 'memory access') return [{ type: 'skill_copy', value: 0, target: 'mimicked_target', source: featureName }];
+    if (feature === 'form archive') return [{ type: 'form_storage', value: 0, target: 'unlimited', source: featureName }];
+    if (feature === 'perfect copy') return [{ type: 'legendary_copy', value: 0, target: 'observed', source: featureName }];
+    if (feature === 'absolute mimic') return [{ type: 'copy_concepts', value: 0, target: 'no_limit', source: featureName }];
   }
 
   return [];
@@ -1020,7 +1176,7 @@ export async function addJobAwakeningBenefitsForLevel(
   const { data: regentChoices } = await (supabase as any).from('character_regents').select('regent_id').eq('character_id', characterId);
   if (regentChoices && regentChoices.length > 0) {
     const { monarchs: staticRegents } = await import('@/data/compendium/monarchs');
-    for (const choice of regentChoices as Array<{regent_id: string}>) {
+    for (const choice of regentChoices as Array<{ regent_id: string }>) {
       const regentData = staticRegents.find(r => r.id === choice.regent_id);
       if (regentData) {
         const regentFeaturesAtLevel = (regentData.class_features || []).filter(f => f.level === level);
@@ -1272,21 +1428,21 @@ export async function addStartingEquipment(
       const shouldAutoEquip = ['armor', 'shield', 'weapon'].includes(itemType);
       const equipData = compendiumItem
         ? {
-            name: compendiumItem.name,
-            item_type: itemType,
-            weight: compendiumItem.weight ?? null,
-            description: compendiumItem.description ?? null,
-            properties: buildItemProperties(compendiumItem),
-            rarity: (compendiumItem.rarity as 'common' | 'uncommon' | 'rare' | 'legendary' | 'very_rare') ?? null,
-            quantity: 1,
-            is_equipped: shouldAutoEquip,
-          }
+          name: compendiumItem.name,
+          item_type: itemType,
+          weight: compendiumItem.weight ?? null,
+          description: compendiumItem.description ?? null,
+          properties: buildItemProperties(compendiumItem),
+          rarity: (compendiumItem.rarity as 'common' | 'uncommon' | 'rare' | 'legendary' | 'very_rare') ?? null,
+          quantity: 1,
+          is_equipped: shouldAutoEquip,
+        }
         : {
-            name: itemName,
-            item_type: 'gear',
-            quantity: 1,
-            is_equipped: false,
-          };
+          name: itemName,
+          item_type: 'gear',
+          quantity: 1,
+          is_equipped: false,
+        };
 
       if (isLocalCharacterId(characterId)) {
         addLocalEquipment(characterId, equipData);
@@ -1302,7 +1458,7 @@ export async function addStartingEquipment(
   // Add background starting equipment (DB field)
   if (background?.starting_equipment) {
     const equipmentItems = background.starting_equipment.split(',').map(e => e.trim());
-    
+
     for (const itemName of equipmentItems) {
       const { data: equipment } = await supabase
         .from('compendium_equipment')

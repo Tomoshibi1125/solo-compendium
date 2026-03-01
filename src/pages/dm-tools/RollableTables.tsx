@@ -10,6 +10,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useUserToolState } from '@/hooks/useToolState';
+import { usePreferredCampaignSelection } from '@/hooks/usePreferredCampaignSelection';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/lib/auth/authContext';
+import { useToast } from '@/hooks/use-toast';
 
 // System Ascendant themed reference tables
 const GATE_COMPLICATIONS = [
@@ -181,6 +185,10 @@ const RollableTables = () => {
     storageKey: 'solo-compendium.dm-tools.rollable-tables.v1',
   });
 
+  const { user } = useAuth();
+  const { campaignId: selectedCampaignId } = usePreferredCampaignSelection('rollable_tables');
+  const { toast } = useToast();
+
   const [activeTab, setActiveTab] = useState<RollableTablesState['activeTab']>('gates');
   const [results, setResults] = useState<Record<string, string>>({});
 
@@ -242,6 +250,25 @@ For EACH result, provide:
     });
   };
 
+  const shareToCampaign = async (title: string, content: string) => {
+    if (!selectedCampaignId || !user) {
+      toast({ title: 'Cannot Share', description: 'Select a campaign first.', variant: 'destructive' });
+      return;
+    }
+
+    try {
+      await supabase.from('campaign_messages').insert({
+        campaign_id: selectedCampaignId,
+        user_id: user.id,
+        message_type: 'system',
+        content: `**[DM Rolled ${title}]**\n${content}`
+      });
+      toast({ title: 'Shared to Campaign', description: `${title} shared with players.` });
+    } catch (e) {
+      toast({ title: 'Error', description: 'Failed to share to campaign.', variant: 'destructive' });
+    }
+  };
+
   return (
     <Layout>
       <div className="container mx-auto px-4 py-8">
@@ -292,9 +319,17 @@ For EACH result, provide:
                     Roll Complication
                   </Button>
                   {results.complication && (
-                    <div className="p-3 rounded border bg-muted/30">
+                    <div className="p-3 rounded border bg-muted/30 relative group">
                       <Badge variant="destructive" className="mb-2">Complication</Badge>
                       <p className="font-heading">{results.complication}</p>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                        onClick={() => shareToCampaign('Rift Complication', results.complication)}
+                      >
+                        Share
+                      </Button>
                     </div>
                   )}
                 </div>
@@ -310,9 +345,17 @@ For EACH result, provide:
                     Roll Hazard
                   </Button>
                   {results.hazard && (
-                    <div className="p-3 rounded border bg-muted/30">
+                    <div className="p-3 rounded border bg-muted/30 relative group">
                       <Badge variant="destructive" className="mb-2">Hazard</Badge>
                       <p className="font-heading">{results.hazard}</p>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                        onClick={() => shareToCampaign('Rift Hazard', results.hazard)}
+                      >
+                        Share
+                      </Button>
                     </div>
                   )}
                 </div>
@@ -328,9 +371,17 @@ For EACH result, provide:
                     Roll Theme
                   </Button>
                   {results.theme && (
-                    <div className="p-3 rounded border bg-muted/30">
+                    <div className="p-3 rounded border bg-muted/30 relative group">
                       <Badge variant="secondary" className="mb-2">Theme</Badge>
                       <p className="font-heading">{results.theme}</p>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                        onClick={() => shareToCampaign('Rift Theme', results.theme)}
+                      >
+                        Share
+                      </Button>
                     </div>
                   )}
                 </div>
@@ -346,9 +397,17 @@ For EACH result, provide:
                     Roll Biome
                   </Button>
                   {results.biome && (
-                    <div className="p-3 rounded border bg-muted/30">
+                    <div className="p-3 rounded border bg-muted/30 relative group">
                       <Badge variant="secondary" className="mb-2">Biome</Badge>
                       <p className="font-heading">{results.biome}</p>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                        onClick={() => shareToCampaign('Rift Biome', results.biome)}
+                      >
+                        Share
+                      </Button>
                     </div>
                   )}
                 </div>
@@ -367,9 +426,17 @@ For EACH result, provide:
                   Roll Reward
                 </Button>
                 {results.reward && (
-                  <div className="p-3 rounded border bg-muted/30">
+                  <div className="p-3 rounded border bg-muted/30 relative group">
                     <Badge variant="default" className="mb-2">Reward</Badge>
                     <p className="font-heading">{results.reward}</p>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                      onClick={() => shareToCampaign('Rift Reward', results.reward)}
+                    >
+                      Share
+                    </Button>
                   </div>
                 )}
               </div>
@@ -388,9 +455,17 @@ For EACH result, provide:
                     Roll Motivation
                   </Button>
                   {results.motivation && (
-                    <div className="p-3 rounded border bg-muted/30">
+                    <div className="p-3 rounded border bg-muted/30 relative group">
                       <Badge variant="secondary" className="mb-2">Motivation</Badge>
                       <p className="font-heading">{results.motivation}</p>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                        onClick={() => shareToCampaign('NPC Motivation', results.motivation)}
+                      >
+                        Share
+                      </Button>
                     </div>
                   )}
                 </div>
@@ -406,9 +481,17 @@ For EACH result, provide:
                     Roll Secret
                   </Button>
                   {results.secret && (
-                    <div className="p-3 rounded border bg-muted/30">
+                    <div className="p-3 rounded border bg-muted/30 relative group">
                       <Badge variant="destructive" className="mb-2">Secret</Badge>
                       <p className="font-heading">{results.secret}</p>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                        onClick={() => shareToCampaign('NPC Secret', results.secret)}
+                      >
+                        Share
+                      </Button>
                     </div>
                   )}
                 </div>
@@ -434,9 +517,17 @@ For EACH result, provide:
                       </Button>
                     </div>
                     {results[`treasure-${rank}`] && (
-                      <div className="mt-2 p-2 rounded bg-muted/30">
+                      <div className="mt-2 p-2 rounded bg-muted/30 relative group">
                         <Badge variant="default" className="mb-1">{rank}</Badge>
                         <p className="font-heading text-sm">{results[`treasure-${rank}`]}</p>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity h-6 px-2 text-xs"
+                          onClick={() => shareToCampaign(`Treasure (${rank})`, results[`treasure-${rank}`])}
+                        >
+                          Share
+                        </Button>
                       </div>
                     )}
                     <div className="text-xs text-muted-foreground mt-2">

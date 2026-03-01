@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/dialog';
 import { useCampaignSharedCharacters, useShareCharacter, useUnshareCharacter } from '@/hooks/useCampaignCharacters';
 import { useCharacters } from '@/hooks/useCharacters';
+import { useSendCampaignMessage } from '@/hooks/useCampaignChat';
 import { Link } from 'react-router-dom';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 
@@ -28,20 +29,40 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
   const { data: myCharacters = [] } = useCharacters();
   const shareCharacter = useShareCharacter();
   const unshareCharacter = useUnshareCharacter();
+  const sendMessage = useSendCampaignMessage();
 
   const sharedCharacterIds = new Set(sharedCharacters.map(sc => sc.character_id));
   const availableCharacters = myCharacters.filter(c => !sharedCharacterIds.has(c.id));
 
   const handleShare = async () => {
     if (!selectedCharacter) return;
+    const char = availableCharacters.find(c => c.id === selectedCharacter);
     await shareCharacter.mutateAsync({ campaignId, characterId: selectedCharacter });
+
+    if (char) {
+      // System broadcast when sharing
+      await sendMessage.mutateAsync({
+        campaignId,
+        content: `**System**: ${char.name} has joined the campaign.`
+      });
+    }
+
     setShareDialogOpen(false);
     setSelectedCharacter('');
   };
 
   const handleUnshare = async (characterId: string) => {
     if (confirm('Stop sharing this character with the campaign?')) {
+      const char = sharedCharacters.find(sc => sc.character_id === characterId)?.characters;
       await unshareCharacter.mutateAsync({ campaignId, characterId });
+
+      if (char) {
+        // System broadcast when unsharing
+        await sendMessage.mutateAsync({
+          campaignId,
+          content: `**System**: ${char.name} has left the campaign.`
+        });
+      }
     }
   };
 

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Save, Download, Plus, Minus, RotateCw, Trash2, Lock, Unlock } from 'lucide-react';
+import { ArrowLeft, Save, Download, Plus, Minus, RotateCw, Trash2, Lock, Unlock, Ruler, Triangle, Circle, Square, BrickWall, CloudRain, CloudSnow, Flame, Wind } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
@@ -11,6 +11,7 @@ import { DEFAULT_TOKENS, mergeBaseTokens, normalizeLibraryTokens, type LibraryTo
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useUserToolState } from '@/hooks/useToolState';
+import { type WallSegment } from '@/lib/vtt';
 
 interface PlacedToken {
   id: string;
@@ -37,6 +38,8 @@ type MapToken = Pick<
 type VTTMapState = {
   tokens: PlacedToken[];
   currentLayer: number;
+  walls?: WallSegment[];
+  weather?: 'none' | 'rain' | 'snow' | 'embers' | 'gas';
   savedAt?: string;
 };
 
@@ -59,6 +62,8 @@ const VTTMap = () => {
   const [draggedToken, setDraggedToken] = useState<PlacedToken | null>(null);
   const [availableTokens, setAvailableTokens] = useState<MapToken[]>([]);
   const [currentLayer, setCurrentLayer] = useState(0);
+  const [drawMode, setDrawMode] = useState<'none' | 'ruler' | 'cone' | 'sphere' | 'cube' | 'wall'>('none');
+  const [weather, setWeather] = useState<'none' | 'rain' | 'snow' | 'embers' | 'gas'>('none');
   const mapHydratedRef = useRef(false);
 
   const { state: storedTokens, isLoading: tokensLoading, saveNow: saveTokenLibrary } = useUserToolState<LibraryToken[]>(
@@ -73,8 +78,8 @@ const VTTMap = () => {
     storageKey: 'vtt-map-state',
   });
   const mapSavePayload = useMemo(
-    () => ({ tokens: placedTokens, currentLayer }),
-    [currentLayer, placedTokens]
+    () => ({ tokens: placedTokens, currentLayer, walls: storedMapState.walls, weather }),
+    [currentLayer, placedTokens, storedMapState.walls, weather]
   );
   const debouncedMapState = useDebounce(mapSavePayload, 500);
 
@@ -108,8 +113,11 @@ const VTTMap = () => {
     if (typeof storedMapState.currentLayer === 'number') {
       setCurrentLayer(storedMapState.currentLayer);
     }
+    if (storedMapState.weather) {
+      setWeather(storedMapState.weather);
+    }
     mapHydratedRef.current = true;
-  }, [mapLoading, storedMapState.currentLayer, storedMapState.tokens]);
+  }, [mapLoading, storedMapState.currentLayer, storedMapState.tokens, storedMapState.weather]);
 
   useEffect(() => {
     if (!mapHydratedRef.current) return;
@@ -121,8 +129,10 @@ const VTTMap = () => {
 
   const saveMapState = () => {
     const state = {
+      ...storedMapState,
       tokens: placedTokens,
       currentLayer,
+      weather,
       savedAt: new Date().toISOString(),
     };
     void saveMapNow(state);
@@ -145,22 +155,22 @@ const VTTMap = () => {
 
     const token = availableTokens.find(t => t.id === selectedToken);
     if (token) {
-        const placed: PlacedToken = {
-          id: `placed-${Date.now()}`,
-          tokenId: token.id,
-          name: token.name,
-          emoji: token.emoji,
-          imageUrl: token.imageUrl,
-          color: token.color,
-          size: token.size,
-          tokenType: token.type,
-          render: token.render,
-          x: gridX,
-          y: gridY,
-          rotation: 0,
-          layer: currentLayer,
-          locked: false,
-        };
+      const placed: PlacedToken = {
+        id: `placed-${Date.now()}`,
+        tokenId: token.id,
+        name: token.name,
+        emoji: token.emoji,
+        imageUrl: token.imageUrl,
+        color: token.color,
+        size: token.size,
+        tokenType: token.type,
+        render: token.render,
+        x: gridX,
+        y: gridY,
+        rotation: 0,
+        layer: currentLayer,
+        locked: false,
+      };
       setPlacedTokens([...placedTokens, placed]);
       setSelectedToken(null);
     }
@@ -225,6 +235,37 @@ const VTTMap = () => {
         t.id === id ? { ...t, locked: !t.locked } : t
       )
     );
+  };
+
+  const handleWallCreated = (x1: number, y1: number, x2: number, y2: number) => {
+    // Convert screen coordinates back to grid units
+    const gx1 = x1 / (50 * zoom);
+    const gy1 = y1 / (50 * zoom);
+    const gx2 = x2 / (50 * zoom);
+    const gy2 = y2 / (50 * zoom);
+
+    // Ignore tiny accidental clicks
+    if (Math.hypot(gx2 - gx1, gy2 - gy1) < 0.2) return;
+
+    const currentWalls = storedMapState.walls || [];
+    void saveMapNow({
+      ...storedMapState,
+      walls: [
+        ...currentWalls,
+        {
+          id: `wall-${Date.now()}`,
+          x1: Math.round(gx1 * 10) / 10,
+          y1: Math.round(gy1 * 10) / 10,
+          x2: Math.round(gx2 * 10) / 10,
+          y2: Math.round(gy2 * 10) / 10,
+          type: 'wall'
+        }
+      ]
+    });
+  };
+
+  const clearWalls = () => {
+    void saveMapNow({ ...storedMapState, walls: [] });
   };
 
   const handleTokenKeyDown = (token: PlacedToken, e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -367,6 +408,60 @@ const VTTMap = () => {
                     Export
                   </Button>
                 </div>
+
+                <div className="space-y-2 pt-4 border-t border-border">
+                  <span className="text-xs text-muted-foreground font-semibold">MEASURE & LoS</span>
+                  <div className="flex flex-wrap gap-1">
+                    <Button variant={drawMode === 'none' ? 'default' : 'outline'} size="sm" onClick={() => setDrawMode('none')} title="Select / Move">
+                      Select
+                    </Button>
+                    <Button variant={drawMode === 'ruler' ? 'default' : 'outline'} size="sm" onClick={() => setDrawMode('ruler')} title="Ruler">
+                      <Ruler className="w-4 h-4" />
+                    </Button>
+                    <Button variant={drawMode === 'cone' ? 'default' : 'outline'} size="sm" onClick={() => setDrawMode('cone')} title="Cone">
+                      <Triangle className="w-4 h-4" />
+                    </Button>
+                    <Button variant={drawMode === 'sphere' ? 'default' : 'outline'} size="sm" onClick={() => setDrawMode('sphere')} title="Sphere/Radius">
+                      <Circle className="w-4 h-4" />
+                    </Button>
+                    <Button variant={drawMode === 'cube' ? 'default' : 'outline'} size="sm" onClick={() => setDrawMode('cube')} title="Cube">
+                      <Square className="w-4 h-4" />
+                    </Button>
+                    <Button variant={drawMode === 'wall' ? 'default' : 'outline'} size="sm" onClick={() => setDrawMode('wall')} title="Draw Wall (LoS Blocking)">
+                      <BrickWall className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="space-y-2 pt-4 border-t border-border">
+                  <span className="text-xs text-muted-foreground font-semibold">ENVIRONMENTALS</span>
+                  <div className="flex flex-wrap gap-1">
+                    <Button variant={weather === 'none' ? 'default' : 'outline'} size="sm" onClick={() => setWeather('none')} title="Clear Weather">
+                      Clear
+                    </Button>
+                    <Button variant={weather === 'rain' ? 'default' : 'outline'} size="sm" onClick={() => setWeather('rain')} title="Rain">
+                      <CloudRain className="w-4 h-4" />
+                    </Button>
+                    <Button variant={weather === 'snow' ? 'default' : 'outline'} size="sm" onClick={() => setWeather('snow')} title="Snow">
+                      <CloudSnow className="w-4 h-4" />
+                    </Button>
+                    <Button variant={weather === 'embers' ? 'default' : 'outline'} size="sm" onClick={() => setWeather('embers')} title="Embers/Fire">
+                      <Flame className="w-4 h-4" />
+                    </Button>
+                    <Button variant={weather === 'gas' ? 'default' : 'outline'} size="sm" onClick={() => setWeather('gas')} title="Toxic Gas">
+                      <Wind className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+
+                {storedMapState.walls && storedMapState.walls.length > 0 && (
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-muted-foreground">{storedMapState.walls.length} Walls Drawn</span>
+                    <Button variant="ghost" size="sm" onClick={clearWalls} className="h-6 px-2 text-destructive">
+                      Clear Walls
+                    </Button>
+                  </div>
+                )}
               </div>
             </SystemWindow>
 
@@ -569,9 +664,9 @@ const VTTMap = () => {
                         (token.imageUrl.includes('/generated/props/') || token.imageUrl.includes('/generated/effects/')));
                     const imageStyle = isOverlayToken
                       ? {
-                          mixBlendMode: token.render?.blendMode ?? 'normal',
-                          opacity: token.render?.opacity ?? 1,
-                        }
+                        mixBlendMode: token.render?.blendMode ?? 'normal',
+                        opacity: token.render?.opacity ?? 1,
+                      }
                       : undefined;
                     return (
                       <div

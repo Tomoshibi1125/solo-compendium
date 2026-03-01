@@ -6,6 +6,7 @@ import { CompendiumImage } from '@/components/compendium/CompendiumImage';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 import { useNavigate } from 'react-router-dom';
 import { setPendingResolution, type ActionResolutionPayload } from '@/lib/actionResolution';
+import { ShareToVTTButton } from '@/components/compendium/ShareToVTTButton';
 
 interface ItemData {
   id: string;
@@ -169,7 +170,10 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
         </div>
       )}
 
-      <SystemWindow title={displayName.toUpperCase()}>
+      <SystemWindow
+        title={displayName.toUpperCase()}
+        actions={<ShareToVTTButton itemType="Item" itemName={displayName} />}
+      >
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-2">
             {data.item_type && <Badge variant="secondary">{formatMonarchVernacular(data.item_type)}</Badge>}

@@ -171,6 +171,13 @@ export const useEquipment = (characterId: string) => {
             relic_tier: item.relic_tier ?? null,
             charges_current: item.charges_current ?? null,
             charges_max: item.charges_max ?? null,
+            container_id: item.container_id ?? null,
+            is_container: item.is_container ?? false,
+            capacity_weight: item.capacity_weight ?? null,
+            capacity_volume: item.capacity_volume ?? null,
+            is_active: item.is_active ?? true,
+            ignore_contents_weight: item.ignore_contents_weight ?? false,
+            custom_modifiers: item.custom_modifiers ?? null,
           };
           writeCachedEquipment(cacheKey, [...cached, optimistic]);
         }
@@ -208,13 +215,7 @@ export const useEquipment = (characterId: string) => {
       queryClient.invalidateQueries({ queryKey: ['equipment', characterId] });
       // D&D Beyond parity: auto-recalculate AC/speed when equipment is added
       if (!isLocalCharacterId(characterId)) {
-        try {
-          const { autoApplyEquipmentModifiers } = await import('@/lib/automation');
-          await autoApplyEquipmentModifiers(characterId);
-          queryClient.invalidateQueries({ queryKey: ['character', characterId] });
-        } catch {
-          // Best-effort
-        }
+        queryClient.invalidateQueries({ queryKey: ['character', characterId] });
       }
     },
     onError: (error) => {
@@ -261,13 +262,7 @@ export const useEquipment = (characterId: string) => {
       queryClient.invalidateQueries({ queryKey: ['character', characterId] });
       // D&D Beyond parity: auto-recalculate AC/speed when equipment changes
       if (!isLocalCharacterId(characterId)) {
-        try {
-          const { autoApplyEquipmentModifiers } = await import('@/lib/automation');
-          await autoApplyEquipmentModifiers(characterId);
-          queryClient.invalidateQueries({ queryKey: ['character', characterId] });
-        } catch {
-          // Best-effort — don't block the UI
-        }
+        queryClient.invalidateQueries({ queryKey: ['character', characterId] });
       }
     },
     onError: (error) => {
@@ -310,13 +305,7 @@ export const useEquipment = (characterId: string) => {
       queryClient.invalidateQueries({ queryKey: ['character', characterId] });
       // D&D Beyond parity: auto-recalculate AC/speed when equipment is removed
       if (!isLocalCharacterId(characterId)) {
-        try {
-          const { autoApplyEquipmentModifiers } = await import('@/lib/automation');
-          await autoApplyEquipmentModifiers(characterId);
-          queryClient.invalidateQueries({ queryKey: ['character', characterId] });
-        } catch {
-          // Best-effort
-        }
+        queryClient.invalidateQueries({ queryKey: ['character', characterId] });
       }
     },
     onError: (error) => {
@@ -360,10 +349,10 @@ export const useEquipment = (characterId: string) => {
           .update({ display_order })
           .eq('id', id)
       );
-      
+
       const results = await Promise.all(updates);
       const errors = results.filter(r => r.error).map(r => r.error);
-      
+
       if (errors.length > 0) {
         const error = errors[0];
         logErrorWithContext(error, 'useEquipment.reorderEquipment');

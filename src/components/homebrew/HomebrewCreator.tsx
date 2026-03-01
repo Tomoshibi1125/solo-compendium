@@ -8,13 +8,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { 
-  Plus, 
-  Sword, 
-  BookOpen, 
-  Gem, 
-  Save, 
-  Eye, 
+import {
+  Plus,
+  Sword,
+  BookOpen,
+  Gem,
+  Save,
+  Eye,
   Edit,
   Trash2,
   Copy,
@@ -25,10 +25,12 @@ import {
   Shield,
   Zap,
   Loader2,
-  Brain
+  Brain,
+  Share
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useAIEnhance } from '@/hooks/useAIEnhance';
+import { useSaveMarketplaceItem } from '@/hooks/useMarketplaceData';
 import { cn } from '@/lib/utils';
 
 interface HomebrewContent {
@@ -46,9 +48,49 @@ const HomebrewCreator = () => {
   const [currentForm, setCurrentForm] = useState<any>({});
   const [activeTab, setActiveTab] = useState('job');
   const [isPreview, setIsPreview] = useState(false);
-  const [savedContent, setSavedContent] = useState<HomebrewContent[]>([]);
+  const [savedContent, setSavedContent] = useState<HomebrewContent[]>(() => {
+    try {
+      const saved = localStorage.getItem('sa_homebrew_content');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem('sa_homebrew_content', JSON.stringify(savedContent));
+  }, [savedContent]);
   const { toast } = useToast();
   const { isEnhancing, enhancedText, enhance, clearEnhanced } = useAIEnhance();
+  const saveItem = useSaveMarketplaceItem();
+
+  const handlePublish = async (content: HomebrewContent) => {
+    try {
+      await saveItem.mutateAsync({
+        title: content.name,
+        description: content.description,
+        itemType: content.type === 'relic' || content.type === 'item' ? 'item' : 'template',
+        category: 'homebrew',
+        tags: [content.type, 'homebrew'],
+        priceType: 'free',
+        content: content.data,
+        isListed: true,
+        version: '1.0.0',
+      });
+      toast({
+        title: 'Published to Marketplace',
+        description: `${content.name} is now available in the marketplace!`,
+      });
+      const updated = savedContent.map(c => (c.id === content.id ? { ...c, isPublic: true } : c));
+      setSavedContent(updated);
+    } catch (err: any) {
+      toast({
+        title: 'Publish Failed',
+        description: err.message || 'An unknown error occurred.',
+        variant: 'destructive',
+      });
+    }
+  };
 
   const handleAIEnhance = async () => {
     if (!currentForm.name && !currentForm.description) {
@@ -319,7 +361,7 @@ Provide a fully enhanced version with:
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="hitDie">Hit Die</Label>
-                <Select value={jobForm.hitDie} onValueChange={(value) => setJobForm({...jobForm, hitDie: value})}>
+                <Select value={jobForm.hitDie} onValueChange={(value) => setJobForm({ ...jobForm, hitDie: value })}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -333,7 +375,7 @@ Provide a fully enhanced version with:
               </div>
               <div className="space-y-2">
                 <Label htmlFor="primaryAbility">Primary Ability</Label>
-                <Select value={jobForm.primaryAbility} onValueChange={(value) => setJobForm({...jobForm, primaryAbility: value})}>
+                <Select value={jobForm.primaryAbility} onValueChange={(value) => setJobForm({ ...jobForm, primaryAbility: value })}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -354,7 +396,7 @@ Provide a fully enhanced version with:
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="rarity">Rarity</Label>
-                <Select value={relicForm.rarity} onValueChange={(value) => setRelicForm({...relicForm, rarity: value})}>
+                <Select value={relicForm.rarity} onValueChange={(value) => setRelicForm({ ...relicForm, rarity: value })}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -374,7 +416,7 @@ Provide a fully enhanced version with:
                   type="number"
                   placeholder="0"
                   value={relicForm.cost}
-                  onChange={(e) => setRelicForm({...relicForm, cost: e.target.value})}
+                  onChange={(e) => setRelicForm({ ...relicForm, cost: e.target.value })}
                 />
               </div>
             </div>
@@ -385,9 +427,9 @@ Provide a fully enhanced version with:
             <Label htmlFor="features">Advanced Options</Label>
             <Textarea
               id="features"
-              placeholder={activeTab === 'job' ? 'Features (one per line)...' : 
-                       activeTab === 'path' ? 'Path requirements and features...' :
-                       'Magical properties and effects...'}
+              placeholder={activeTab === 'job' ? 'Features (one per line)...' :
+                activeTab === 'path' ? 'Path requirements and features...' :
+                  'Magical properties and effects...'}
               value={currentForm.features}
               onChange={(e) => updateCurrentForm({ features: e.target.value })}
               rows={6}
@@ -465,7 +507,7 @@ Provide a fully enhanced version with:
                 Relic
               </TabsTrigger>
             </TabsList>
-            
+
             <TabsContent value="job" className="mt-6">
               {renderForm()}
             </TabsContent>
@@ -520,10 +562,13 @@ Provide a fully enhanced version with:
                         </Badge>
                       </div>
                       <div className="flex gap-1">
-                        <Button size="sm" variant="ghost" onClick={() => handleDuplicate(content)}>
+                        <Button size="sm" variant="ghost" onClick={() => handlePublish(content)} title="Publish to Marketplace">
+                          <Share className={cn("w-3 h-3", content.isPublic ? "text-emerald-500" : "")} />
+                        </Button>
+                        <Button size="sm" variant="ghost" onClick={() => handleDuplicate(content)} title="Duplicate">
                           <Copy className="w-3 h-3" />
                         </Button>
-                        <Button size="sm" variant="ghost" onClick={() => handleDelete(content.id)}>
+                        <Button size="sm" variant="ghost" onClick={() => handleDelete(content.id)} title="Delete">
                           <Trash2 className="w-3 h-3" />
                         </Button>
                       </div>

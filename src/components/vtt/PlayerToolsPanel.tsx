@@ -4,16 +4,16 @@
  */
 
 import React, { useState } from 'react';
-import { 
-  User, 
-  Dice1, 
-  Heart, 
-  Shield, 
-  Sword, 
-  BookOpen, 
-  Zap, 
-  MessageSquare, 
-  Users, 
+import {
+  User,
+  Dice1,
+  Heart,
+  Shield,
+  Sword,
+  BookOpen,
+  Zap,
+  MessageSquare,
+  Users,
   Settings,
   Plus,
   Minus,
@@ -32,6 +32,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 import { cn } from '@/lib/utils';
 
 interface PlayerToolsPanelProps {
@@ -54,6 +55,9 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
   className
 }) => {
   const { toast } = useToast();
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const { trackCustomFeatureUsage } = usePlayerToolsEnhancements();
+
   const [activeTool, setActiveTool] = useState<string>('actions');
   const [quickRollValue, setQuickRollValue] = useState('1d20');
   const [quickRollResult, setQuickRollResult] = useState<number | null>(null);
@@ -61,31 +65,32 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
   const [selectedSpell, setSelectedSpell] = useState('');
   const [selectedAbility, setSelectedAbility] = useState('');
 
-  // Quick roll function
+  // Quick roll — routes through VTT realtime engine if wired, else local fallback
   const handleQuickRoll = () => {
     try {
-      // Simple dice roll parser
-      const match = quickRollValue.match(/(\d+)d(\d+)(?:\s*([+-]\s*\d+))?/);
-      if (match) {
-        const numDice = parseInt(match[1]);
-        const dieSize = parseInt(match[2]);
-        const modifier = match[3] ? parseInt(match[3].replace(/\s/g, '')) : 0;
-        let total = modifier;
-        for (let i = 0; i < numDice; i++) {
-          total += Math.floor(Math.random() * dieSize) + 1;
+      if (onRollDice) {
+        onRollDice(quickRollValue);
+        setQuickRollResult(null);
+      } else {
+        // Offline fallback
+        const match = quickRollValue.match(/(\d+)d(\d+)(?:\s*([+-]\s*\d+))?/);
+        if (match) {
+          const numDice = parseInt(match[1]);
+          const dieSize = parseInt(match[2]);
+          const modifier = match[3] ? parseInt(match[3].replace(/\s/g, '')) : 0;
+          let total = modifier;
+          for (let i = 0; i < numDice; i++) {
+            total += Math.floor(Math.random() * dieSize) + 1;
+          }
+          setQuickRollResult(total);
+          toast({ title: 'Dice Roll', description: `${quickRollValue} = ${total}` });
         }
-        setQuickRollResult(total);
-        onRollDice?.(quickRollValue);
-        toast({
-          title: "Dice Roll",
-          description: `${quickRollValue} = ${total}`,
-        });
       }
     } catch (error) {
       toast({
-        title: "Invalid Roll",
+        title: 'Invalid Roll',
         description: "Please use format like '1d20', '2d6+3', etc.",
-        variant: "destructive",
+        variant: 'destructive',
       });
     }
   };
@@ -120,14 +125,14 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
     { id: 'teleport', name: 'Teleport', icon: '🌀', level: 7, description: 'Instant transportation' },
   ];
 
-  // Quick abilities
+  // Quick abilities — System Ascendant names (STR, AGI, VIT, INT, SENSE, PRE)
   const quickAbilities = [
-    { id: 'strength-save', name: 'Strength Save', icon: '💪', ability: 'STR' },
-    { id: 'dexterity-save', name: 'Dexterity Save', icon: '🏃', ability: 'DEX' },
-    { id: 'constitution-save', name: 'Constitution Save', icon: '❤️', ability: 'CON' },
-    { id: 'intelligence-save', name: 'Intelligence Save', icon: '🧠', ability: 'INT' },
-    { id: 'wisdom-save', name: 'Wisdom Save', icon: '👁️', ability: 'WIS' },
-    { id: 'charisma-save', name: 'Charisma Save', icon: '✨', ability: 'CHA' },
+    { id: 'strength-save', name: 'STR Save', icon: '💪', ability: 'STR' },
+    { id: 'agility-save', name: 'AGI Save', icon: '🏃', ability: 'AGI' },
+    { id: 'vitality-save', name: 'VIT Save', icon: '❤️', ability: 'VIT' },
+    { id: 'intelligence-save', name: 'INT Save', icon: '🧠', ability: 'INT' },
+    { id: 'sense-save', name: 'SENSE Save', icon: '👁️', ability: 'SENSE' },
+    { id: 'presence-save', name: 'PRE Save', icon: '✨', ability: 'PRE' },
   ];
 
   // Quick messages
@@ -176,8 +181,8 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
                 placeholder="Type message..."
                 className="h-8 text-xs"
               />
-              <Button 
-                size="sm" 
+              <Button
+                size="sm"
                 onClick={() => {
                   if (customMessage.trim()) {
                     onSendMessage?.(customMessage);
@@ -251,6 +256,9 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
                     variant="outline"
                     onClick={() => {
                       onTakeAction?.(action.id);
+                      if (characterId) {
+                        trackCustomFeatureUsage(characterId, action.name, 'used', 'SA').catch(console.error);
+                      }
                       toast({
                         title: "Action Taken",
                         description: action.description,
@@ -345,6 +353,9 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
                     variant="outline"
                     onClick={() => {
                       onCastSpell?.(spell.id);
+                      if (characterId) {
+                        trackCustomFeatureUsage(characterId, spell.name, 'cast', 'SA').catch(console.error);
+                      }
                       toast({
                         title: "Spell Cast",
                         description: `${spell.name} cast successfully`,
@@ -375,11 +386,14 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
                         <SelectItem value="custom-shield">Custom Shield</SelectItem>
                       </SelectContent>
                     </Select>
-                    <Button 
-                      size="sm" 
+                    <Button
+                      size="sm"
                       onClick={() => {
                         if (selectedSpell) {
                           onCastSpell?.(selectedSpell);
+                          if (characterId) {
+                            trackCustomFeatureUsage(characterId, selectedSpell, 'cast', 'SA').catch(console.error);
+                          }
                           toast({
                             title: "Spell Cast",
                             description: `${selectedSpell} cast successfully`,
@@ -444,16 +458,16 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
                         <SelectValue placeholder="Select ability" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="STR">Strength</SelectItem>
-                        <SelectItem value="DEX">Dexterity</SelectItem>
-                        <SelectItem value="CON">Constitution</SelectItem>
-                        <SelectItem value="INT">Intelligence</SelectItem>
-                        <SelectItem value="WIS">Wisdom</SelectItem>
-                        <SelectItem value="CHA">Charisma</SelectItem>
+                        <SelectItem value="STR">Strength (STR)</SelectItem>
+                        <SelectItem value="AGI">Agility (AGI)</SelectItem>
+                        <SelectItem value="VIT">Vitality (VIT)</SelectItem>
+                        <SelectItem value="INT">Intelligence (INT)</SelectItem>
+                        <SelectItem value="SENSE">Sense (SENSE)</SelectItem>
+                        <SelectItem value="PRE">Presence (PRE)</SelectItem>
                       </SelectContent>
                     </Select>
-                    <Button 
-                      size="sm" 
+                    <Button
+                      size="sm"
                       onClick={() => {
                         if (selectedAbility) {
                           onRollDice?.(`1d20+${selectedAbility}`);
@@ -521,7 +535,7 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
                     className="w-full h-20 p-2 text-xs bg-background border border-border rounded resize-none"
                   />
                 </div>
-                <Button 
+                <Button
                   onClick={() => {
                     if (customMessage.trim()) {
                       onSendMessage?.(customMessage);

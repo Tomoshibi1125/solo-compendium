@@ -680,3 +680,42 @@ button[aria-label*="roll"]:hover {
     box-shadow: none;
   }
 }
+
+
+/* --- Landscape Mobile Orientation Support ---
+   Applied when device is in landscape with a short screen height (phones).
+   Does NOT lock orientation -- just adapts the layout gracefully.
+   ------------------------------------------------------------------ */
+@media (orientation: landscape) and (max-height: 500px) {
+  .character-sheet-stats-grid {
+    display: flex !important;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0.5rem;
+    padding-bottom: 0.25rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .character-sheet-stats-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .character-sheet-stats-grid > * {
+    min-width: 120px;
+    flex-shrink: 0;
+  }
+
+  .sa-hunter-header {
+    padding: 0.75rem 1rem;
+  }
+
+  [role="tablist"] {
+    padding: 0.25rem !important;
+  }
+
+  [role="tab"] {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+}

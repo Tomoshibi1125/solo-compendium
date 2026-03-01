@@ -3,6 +3,7 @@ import { Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 import type { Database } from '@/integrations/supabase/types';
@@ -11,10 +12,14 @@ type Equipment = Database['public']['Tables']['character_equipment']['Row'];
 
 interface EquipmentItemProps {
   item: Equipment;
-  onToggleEquipped: () => void;
-  onToggleAttuned: () => void;
-  onRemove: () => void;
+  onToggleEquipped: (item: Equipment) => void;
+  onToggleAttuned: (item: Equipment) => void;
+  onRemove: (item: Equipment) => void;
   canAttune: boolean;
+  nestedItems?: Equipment[];
+  containers?: Equipment[];
+  onChangeContainer?: (item: Equipment, containerId: string | null) => void;
+  onToggleActive?: (item: Equipment) => void;
 }
 
 function EquipmentItemComponent({
@@ -23,6 +28,10 @@ function EquipmentItemComponent({
   onToggleAttuned,
   onRemove,
   canAttune,
+  nestedItems,
+  containers,
+  onChangeContainer,
+  onToggleActive,
 }: EquipmentItemProps) {
   const displayName = formatMonarchVernacular(item.name);
   const displayDescription = item.description ? formatMonarchVernacular(item.description) : null;
@@ -65,44 +74,85 @@ function EquipmentItemComponent({
               ))}
             </div>
           )}
+          {containers && containers.length > 0 && (
+            <div className="mt-2 w-[140px]">
+              <Select
+                value={item.container_id || 'none'}
+                onValueChange={(val) => onChangeContainer?.(item, val === 'none' ? null : val)}
+              >
+                <SelectTrigger className="h-6 text-[10px] px-2 border-border/50">
+                  <SelectValue placeholder="Move to container..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none" className="text-xs">No container</SelectItem>
+                  {containers.map(c => (
+                    <SelectItem key={c.id} value={c.id} className="text-xs">
+                      {formatMonarchVernacular(c.name)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+          {nestedItems && nestedItems.length > 0 && (
+            <div className="mt-3 pl-3 sm:pl-4 border-l-2 border-border/50 flex flex-col gap-2">
+              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">Contents</span>
+              {nestedItems.map(nestedItem => (
+                <EquipmentItem
+                  key={nestedItem.id}
+                  item={nestedItem}
+                  onToggleEquipped={onToggleEquipped}
+                  onToggleAttuned={onToggleAttuned}
+                  onRemove={onRemove}
+                  canAttune={canAttune}
+                  onChangeContainer={onChangeContainer}
+                  onToggleActive={onToggleActive}
+                  containers={containers?.filter(c => c.id !== nestedItem.id)}
+                />
+              ))}
+            </div>
+          )}
         </div>
         <div className="flex items-center gap-2">
           <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-2">
-              <Checkbox
-                id={`equipped-${item.id}`}
-                checked={item.is_equipped}
-                onCheckedChange={onToggleEquipped}
-              />
-              <label
-                htmlFor={`equipped-${item.id}`}
-                className="text-xs cursor-pointer"
-              >
-                Equip
-              </label>
-            </div>
+            <Button
+              variant={item.is_equipped ? "default" : "outline"}
+              size="sm"
+              className={cn("h-7 px-2 text-[10px]", item.is_equipped && "bg-primary text-primary-foreground")}
+              onClick={() => onToggleEquipped(item)}
+            >
+              {item.is_equipped ? 'Equipped' : 'Equip'}
+            </Button>
+
             {item.requires_attunement && (
-              <div className="flex items-center gap-2">
-                <Checkbox
-                  id={`attuned-${item.id}`}
-                  checked={item.is_attuned}
-                  onCheckedChange={onToggleAttuned}
-                  disabled={!item.is_attuned && !canAttune}
-                />
-                <label
-                  htmlFor={`attuned-${item.id}`}
-                  className="text-xs cursor-pointer"
-                >
-                  Attune
-                </label>
-              </div>
+              <Button
+                variant={item.is_attuned ? "destructive" : "outline"}
+                size="sm"
+                className={cn("h-7 px-2 text-[10px]", item.is_attuned && "bg-destructive text-destructive-foreground")}
+                onClick={() => onToggleAttuned(item)}
+                disabled={!item.is_attuned && !canAttune}
+              >
+                {item.is_attuned ? 'Attuned' : 'Attune'}
+              </Button>
             )}
-            </div>
+
+            {item.is_container && onToggleActive && (
+              <Button
+                variant={item.is_active ? "secondary" : "ghost"}
+                size="sm"
+                className={cn("h-7 px-2 text-[10px]", !item.is_active && "opacity-50 line-through")}
+                onClick={() => onToggleActive(item)}
+                title="If inactive, the container and contents do not count towards encumbrance."
+              >
+                {item.is_active ? 'Active' : 'Inactive'}
+              </Button>
+            )}
+          </div>
           <Button
             variant="ghost"
             size="icon"
             className="h-8 w-8"
-            onClick={onRemove}
+            onClick={() => onRemove(item)}
             aria-label={`Remove ${displayName}`}
           >
             <Trash2 className="w-4 h-4" />
@@ -117,9 +167,12 @@ export const EquipmentItem = memo(EquipmentItemComponent, (prevProps, nextProps)
   // Custom comparison function for better performance
   return (
     prevProps.item.id === nextProps.item.id &&
-    prevProps.item.is_equipped === nextProps.item.is_equipped &&
     prevProps.item.is_attuned === nextProps.item.is_attuned &&
+    prevProps.item.is_active === nextProps.item.is_active &&
+    prevProps.item.container_id === nextProps.item.container_id &&
     prevProps.canAttune === nextProps.canAttune &&
-    prevProps.item.properties?.length === nextProps.item.properties?.length
+    prevProps.item.properties?.length === nextProps.item.properties?.length &&
+    prevProps.nestedItems?.length === nextProps.nestedItems?.length &&
+    prevProps.containers?.length === nextProps.containers?.length
   );
 });

@@ -266,24 +266,27 @@ export const useMonarchUnlocks = useRegentUnlocks;
 export const useCharacterMonarchUnlocks = useRegentUnlocks;
 export const useCharacterRegentUnlocks = useRegentUnlocks;
 
-// Export individual mutation functions for backward compatibility
+/**
+ * @deprecated Use `useRegentUnlocks(characterId).unlockRegent` instead.
+ * This standalone stub exists only for backward compatibility with legacy callsites.
+ */
 export const useUnlockMonarch = () => {
-  // This will be called with the proper characterId context
   return {
-    mutate: (params: any, options?: any) => {
-      // Placeholder - the actual implementation will be called from the hook
-      console.warn('useUnlockMonarch called without proper hook context');
+    mutate: (_params: any, _options?: any) => {
+      console.warn('[DEPRECATED] useUnlockMonarch: use useRegentUnlocks(characterId).unlockRegent instead');
     },
     isPending: false
   };
 };
 
+/**
+ * @deprecated Use `useRegentUnlocks(characterId).updateUnlock` instead.
+ * This standalone stub exists only for backward compatibility with legacy callsites.
+ */
 export const useSetPrimaryMonarch = () => {
-  // This will be called with the proper characterId context
   return {
-    mutate: (params: any) => {
-      // Placeholder - the actual implementation will be called from the hook
-      console.warn('useSetPrimaryMonarch called without proper hook context');
+    mutate: (_params: any) => {
+      console.warn('[DEPRECATED] useSetPrimaryMonarch: use useRegentUnlocks(characterId).updateUnlock instead');
     },
     isPending: false
   };

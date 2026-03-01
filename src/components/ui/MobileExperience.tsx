@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { cn } from '@/lib/utils';
-import { 
-  Menu, 
-  X, 
-  ChevronLeft, 
+import {
+  Menu,
+  X,
+  ChevronLeft,
   ChevronRight,
   Home,
   Search,
@@ -54,6 +54,9 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
   const [touchStart, setTouchStart] = useState<{ x: number; y: number; timestamp: number } | null>(null);
   const [gestures, setGestures] = useState<TouchGesture[]>([]);
   const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
+  const [isLandscapeMobile, setIsLandscapeMobile] = useState(
+    () => window.innerWidth > window.innerHeight && window.innerHeight < 500
+  );
 
   // Default breakpoints
   const defaultBreakpoints = {
@@ -72,14 +75,14 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
     };
 
     setIsMobile(checkMobile());
-    
+
     // Detect offline status
     const handleOffline = () => setIsOffline(!navigator.onLine);
     const handleOnline = () => setIsOffline(false);
-    
+
     window.addEventListener('offline', handleOffline);
     window.addEventListener('online', handleOnline);
-    
+
     // Set initial offline status
     setIsOffline(!navigator.onLine);
 
@@ -90,10 +93,18 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
 
     window.addEventListener('resize', handleResize);
 
+    // Orientation support — detect landscape-mobile (width > height AND short screen)
+    const checkOrientation = () => {
+      setIsLandscapeMobile(window.innerWidth > window.innerHeight && window.innerHeight < 500);
+    };
+    window.addEventListener('orientationchange', checkOrientation);
+    window.addEventListener('resize', checkOrientation);
+
     return () => {
       window.removeEventListener('offline', handleOffline);
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', checkOrientation);
     };
   }, [breakpoints, enableOfflineMode]);
 
@@ -147,22 +158,11 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
     }
   }, [enableHaptics]);
 
-  // Swipe actions
+  // Swipe actions — dispatch a custom DOM event so CharacterSheet tabs can subscribe
   const handleSwipe = useCallback((direction: TouchGesture['direction']) => {
     triggerHaptic('light', 50);
-    
-    // Handle swipe actions based on direction
-    switch (direction) {
-      case 'left':
-        break;
-      case 'right':
-        break;
-      case 'up':
-        break;
-      case 'down':
-        break;
-    }
-  }, []);
+    window.dispatchEvent(new CustomEvent('sa:tabSwipe', { detail: { direction } }));
+  }, [triggerHaptic]);
 
   // Mobile menu
   const toggleMobileMenu = useCallback(() => {
@@ -180,8 +180,8 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
 
   // Filter functionality
   const toggleFilter = useCallback((filter: string) => {
-    setSelectedFilters(prev => 
-      prev.includes(filter) 
+    setSelectedFilters(prev =>
+      prev.includes(filter)
         ? prev.filter(f => f !== filter)
         : [...prev, filter]
     );
@@ -189,7 +189,7 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
 
   const getBreakpoint = useCallback(() => {
     const width = windowSize.width;
-    
+
     for (const [name, value] of Object.entries(breakpoints)) {
       if (width >= value) {
         return name;
@@ -247,7 +247,8 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
       'mobile-experience',
       isMobile && 'mobile-device',
       isOffline && 'offline-mode',
-      enableReducedMotion && 'reduce-motion'
+      enableReducedMotion && 'reduce-motion',
+      isLandscapeMobile && 'landscape-mobile'
     )}>
       {/* Mobile Header */}
       {isMobile && (
@@ -264,7 +265,7 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
               </button>
               <h1 className="text-lg font-semibold text-foreground">System Ascendant</h1>
             </div>
-            
+
             <div className="flex items-center space-x-2">
               <div className="relative">
                 <Search className="h-4 w-4 text-muted-foreground" />
@@ -292,7 +293,7 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
                       <X className="h-6 w-6" />
                     </button>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <a href="#main-content" className="block px-4 py-2 text-sm text-muted-foreground hover:text-foreground">
                       Home
@@ -308,7 +309,7 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
               </div>
             )}
           </div>
-          </header>
+        </header>
       )}
 
       {/* Pull-to-refresh indicator */}
@@ -322,7 +323,7 @@ const MobileExperience: React.FC<MobileExperienceProps> = ({
       )}
 
       {/* Main Content */}
-      <main 
+      <main
         id="main-content"
         className={cn(
           "flex-1",

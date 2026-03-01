@@ -11,7 +11,13 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { usePowers } from '@/hooks/usePowers';
 import { useToast } from '@/hooks/use-toast';
+import { useRecordRoll } from '@/hooks/useRollHistory';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 import { useCharacter } from '@/hooks/useCharacters';
+import { type useSpellCasting } from '@/hooks/useSpellCasting';
+import type { Database } from '@/integrations/supabase/types';
+
+type Power = Database['public']['Tables']['character_powers']['Row'];
 import { useSpellSlots, useUpdateSpellSlot } from '@/hooks/useSpellSlots';
 import { getCantripsKnownLimit, getSpellcastingAbility, getSpellsKnownLimit, getSpellsPreparedLimit, getAbilityModifier } from '@/lib/characterCalculations';
 import { cn } from '@/lib/utils';
@@ -27,8 +33,17 @@ function CompendiumLink({ type, id, name, className }: { type: string; id: strin
   );
 }
 
-export function PowersList({ characterId }: { characterId: string }) {
-  const { powers, updatePower, removePower, reorderPowers, concentrationPower } = usePowers(characterId);
+export function PowersList({
+  characterId,
+  spellCasting,
+  campaignId,
+}: {
+  characterId: string;
+  spellCasting?: ReturnType<typeof useSpellCasting>;
+  campaignId?: string;
+}) {
+  const { powers: rawPowers, updatePower, removePower, reorderPowers, concentrationPower } = usePowers(characterId);
+  const powers = rawPowers as Power[];
   const { data: character } = useCharacter(characterId);
   const { data: spellSlots = [] } = useSpellSlots(
     characterId,
@@ -37,6 +52,11 @@ export function PowersList({ characterId }: { characterId: string }) {
   );
   const updateSpellSlot = useUpdateSpellSlot();
   const { toast } = useToast();
+  const recordRoll = useRecordRoll();
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const ddbEnhancements = usePlayerToolsEnhancements();
+  const { rollInCampaign } = ddbEnhancements;
+
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [filterLevel, setFilterLevel] = useState<string>('all');
   const [filterPrepared, setFilterPrepared] = useState<string>('all');
@@ -53,7 +73,7 @@ export function PowersList({ characterId }: { characterId: string }) {
       // Static fallback
       const { staticDataProvider } = await import('@/data/compendium/staticDataProvider');
       const staticPowers = await staticDataProvider.getPowers('');
-      return staticPowers.map(p => ({ id: p.id, name: p.name }));
+      return staticPowers.map((p: any) => ({ id: p.id, name: p.name }));
     },
   });
 
@@ -68,12 +88,12 @@ export function PowersList({ characterId }: { characterId: string }) {
     return true;
   });
 
-  const groupedPowers = filteredPowers.reduce((acc, power) => {
+  const groupedPowers = filteredPowers.reduce((acc: Record<string, Power[]>, power) => {
     const level = power.power_level === 0 ? 'Cantrip' : `Level ${power.power_level}`;
     if (!acc[level]) acc[level] = [];
     acc[level].push(power);
     return acc;
-  }, {} as Record<string, typeof powers>);
+  }, {});
 
   // Calculate spell limits
   const spellcastingAbility = character ? getSpellcastingAbility(character.job) : null;
@@ -83,9 +103,9 @@ export function PowersList({ characterId }: { characterId: string }) {
   const spellsPreparedLimit = character ? getSpellsPreparedLimit(character.job, character.level, abilityModifier) : null;
   const spellsKnownLimit = character ? getSpellsKnownLimit(character.job, character.level) : null;
   const cantripsKnownLimit = character ? getCantripsKnownLimit(character.job, character.level) : null;
-  const preparedCount = powers.filter(p => p.is_prepared).length;
-  const knownCount = powers.filter((p) => (p.power_level ?? 0) > 0).length;
-  const cantripCount = powers.filter((p) => (p.power_level ?? 0) === 0).length;
+  const preparedCount = powers.filter((p: Power) => p.is_prepared).length;
+  const knownCount = powers.filter((p: Power) => (p.power_level ?? 0) > 0).length;
+  const cantripCount = powers.filter((p: Power) => (p.power_level ?? 0) === 0).length;
   const isOverPreparedLimit = spellsPreparedLimit !== null && preparedCount > spellsPreparedLimit;
   const isOverKnownLimit = spellsKnownLimit !== null && knownCount > spellsKnownLimit;
   const isOverCantripLimit = cantripsKnownLimit !== null && cantripCount > cantripsKnownLimit;
@@ -102,7 +122,7 @@ export function PowersList({ characterId }: { characterId: string }) {
     }
   }, [reorderPowers]);
 
-  const handleTogglePrepared = async (power: typeof powers[0]) => {
+  const handleTogglePrepared = async (power: Power) => {
     const displayName = formatMonarchVernacular(power.name);
     // Check if preparing would exceed limit
     if (!power.is_prepared && spellsPreparedLimit !== null) {
@@ -134,10 +154,51 @@ export function PowersList({ characterId }: { characterId: string }) {
     }
   };
 
-  const handleCastSpell = async (power: typeof powers[0]) => {
+  const handleCastSpell = async (power: Power) => {
     const displayName = formatMonarchVernacular(power.name);
-    // Cantrips don't use spell slots
+
+    if (spellCasting) {
+      const result = await spellCasting.castSpell({
+        spell: {
+          id: power.id,
+          name: power.name,
+          level: power.power_level,
+          isRitual: false,
+          isConcentration: power.concentration ?? false,
+          castingTime: power.casting_time,
+          range: power.range,
+          duration: power.duration,
+          description: power.description,
+          higherLevels: null,
+        },
+        characterId,
+        characterName: character?.name || 'Character',
+        jobName: character?.job || null,
+        pathName: character?.path || null,
+        level: character?.level || 1,
+        campaignId: null,
+      });
+
+      if (!result.success) {
+        toast({
+          title: 'Cast Failed',
+          description: result.message,
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      ddbEnhancements.trackCustomFeatureUsage(characterId, power.name, 'activate', 'SA').catch(console.error);
+
+      toast({
+        title: 'Spell Cast',
+        description: result.message,
+      });
+      return;
+    }
+
     if (power.power_level === 0) {
+      ddbEnhancements.trackCustomFeatureUsage(characterId, power.name, 'activate', 'SA').catch(console.error);
       toast({
         title: 'Cantrip Cast',
         description: `${displayName} is cast without using a spell slot.`,
@@ -145,9 +206,7 @@ export function PowersList({ characterId }: { characterId: string }) {
       return;
     }
 
-    // Find available spell slot
     const slot = spellSlots.find(s => s.level === power.power_level && s.current > 0);
-    
     if (!slot) {
       toast({
         title: 'No Spell Slots Available',
@@ -163,9 +222,33 @@ export function PowersList({ characterId }: { characterId: string }) {
         spellLevel: power.power_level,
         current: slot.current - 1,
       });
+
+      if (campaignId) {
+        rollInCampaign(campaignId, {
+          dice_formula: '0',
+          result: 0,
+          rolls: [],
+          roll_type: 'ability',
+          context: `Activates Power: ${displayName} (Level ${power.power_level})`,
+          character_id: characterId,
+        });
+      }
+
+      recordRoll.mutate({
+        dice_formula: '0',
+        result: 0,
+        rolls: [],
+        roll_type: 'ability',
+        context: `Activates Power: ${displayName} (Level ${power.power_level})`,
+        campaign_id: campaignId ?? null,
+        character_id: characterId,
+      });
+
+      ddbEnhancements.trackCustomFeatureUsage(characterId, power.name, 'activate', 'SA').catch(console.error);
+
       toast({
-        title: 'Spell Cast',
-        description: `${displayName} cast! Used 1 Tier ${power.power_level} spell slot.`,
+        title: 'Power Used',
+        description: `${displayName} activated! Used 1 Tier ${power.power_level} spell slot.`,
       });
     } catch {
       toast({
@@ -176,7 +259,7 @@ export function PowersList({ characterId }: { characterId: string }) {
     }
   };
 
-  const handleRemove = async (power: typeof powers[0]) => {
+  const handleRemove = async (power: Power) => {
     const displayName = formatMonarchVernacular(power.name);
     if (!confirm(`Remove ${displayName}?`)) return;
 
@@ -320,9 +403,10 @@ export function PowersList({ characterId }: { characterId: string }) {
                 {level}
               </div>
               <SortableList
-                items={levelPowers}
-                onReorder={(newOrder) => handleReorderGroup(level, newOrder)}
-                renderItem={(power) => {
+                items={levelPowers as { id: string }[]}
+                onReorder={(newOrder) => handleReorderGroup(level, newOrder as any)}
+                renderItem={(item) => {
+                  const power = item as unknown as Power;
                   const displayName = formatMonarchVernacular(power.name);
                   const displayDescription = power.description
                     ? formatMonarchVernacular(power.description)
@@ -345,18 +429,18 @@ export function PowersList({ characterId }: { characterId: string }) {
                       )}
                     >
                       <div className="flex items-start justify-between gap-2">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          {getPowerId(power.name) ? (
-                            <CompendiumLink
-                              type="powers"
-                              id={getPowerId(power.name)!}
-                              name={displayName}
-                              className="font-heading font-semibold hover:text-primary"
-                            />
-                          ) : (
-                            <span className="font-heading font-semibold">{displayName}</span>
-                          )}
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            {getPowerId(power.name) ? (
+                              <CompendiumLink
+                                type="powers"
+                                id={getPowerId(power.name)!}
+                                name={displayName}
+                                className="font-heading font-semibold hover:text-primary"
+                              />
+                            ) : (
+                              <span className="font-heading font-semibold">{displayName}</span>
+                            )}
                             {power.power_level > 0 && (
                               <Badge variant="secondary" className="text-xs">
                                 Level {power.power_level}

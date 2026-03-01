@@ -6,6 +6,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Sparkles, BookOpen, Focus, Flame, ChevronDown, ChevronUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { scaleCantripDamage, COMMON_CANTRIP_DICE } from '@/lib/cantripScaling';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
+import { useToast } from '@/hooks/use-toast';
+import { useRecordRoll } from '@/hooks/useRollHistory';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -44,6 +47,8 @@ interface SpellPanelProps {
   onCastSpell: (spellId: string, atLevel: number, asRitual: boolean) => void;
   onTogglePrepared: (spellId: string, prepared: boolean) => void;
   onRestoreSlot?: (level: number) => void;
+  characterId: string;
+  campaignId?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -61,10 +66,17 @@ export function SpellPanel({
   onCastSpell,
   onTogglePrepared,
   onRestoreSlot,
+  characterId,
+  campaignId,
 }: SpellPanelProps) {
   const [expandedLevel, setExpandedLevel] = useState<number | null>(null);
   const [castDialog, setCastDialog] = useState<{ spell: SpellEntry; open: boolean } | null>(null);
   const [castLevel, setCastLevel] = useState<number>(0);
+
+  const { toast } = useToast();
+  const recordRoll = useRecordRoll();
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const { rollInCampaign } = usePlayerToolsEnhancements();
 
   const preparedCount = spells.filter((s) => s.isPrepared && s.level > 0).length;
 
@@ -85,7 +97,43 @@ export function SpellPanel({
 
   const confirmCast = (asRitual: boolean) => {
     if (!castDialog) return;
-    onCastSpell(castDialog.spell.id, asRitual ? castDialog.spell.level : castLevel, asRitual);
+    const finalLevel = asRitual ? castDialog.spell.level : castLevel;
+
+    // Execute the actual game-logic state change
+    onCastSpell(castDialog.spell.id, finalLevel, asRitual);
+
+    // Broadcast to VTT/Campaign Log for parity
+    const spellName = castDialog.spell.name;
+    const contextStr = asRitual ? `${spellName} (Ritual)` : `${spellName} (Level ${finalLevel})`;
+
+    if (campaignId) {
+      rollInCampaign(campaignId, {
+        dice_formula: '0',
+        result: 0,
+        rolls: [],
+        roll_type: 'ability', // using ability as a generic cast marker
+        context: `Casts ${contextStr}`,
+        character_id: characterId,
+      });
+    }
+
+    recordRoll.mutate({
+      dice_formula: '0',
+      result: 0,
+      rolls: [],
+      roll_type: 'ability',
+      context: `Casts ${contextStr}`,
+      campaign_id: campaignId ?? null,
+      character_id: characterId,
+    });
+
+    usePlayerToolsEnhancements().trackCustomFeatureUsage(characterId, spellName, 'cast', '5e').catch(console.error);
+
+    toast({
+      title: "Spell Cast",
+      description: `You cast ${contextStr}.`,
+    });
+
     setCastDialog(null);
   };
 
@@ -166,7 +214,30 @@ export function SpellPanel({
                         size="sm"
                         variant="outline"
                         className="h-7 text-xs gap-1"
-                        onClick={() => onCastSpell(spell.id, 0, false)}
+                        onClick={() => {
+                          onCastSpell(spell.id, 0, false);
+
+                          if (campaignId) {
+                            rollInCampaign(campaignId, {
+                              dice_formula: '0',
+                              result: 0,
+                              rolls: [],
+                              roll_type: 'ability',
+                              context: `Casts ${spell.name} (Cantrip)`,
+                              character_id: characterId,
+                            });
+                          }
+                          recordRoll.mutate({
+                            dice_formula: '0',
+                            result: 0,
+                            rolls: [],
+                            roll_type: 'ability',
+                            context: `Casts ${spell.name} (Cantrip)`,
+                            campaign_id: campaignId ?? null,
+                            character_id: characterId,
+                          });
+                          toast({ title: "Cantrip Cast", description: `You cast ${spell.name}.` });
+                        }}
                       >
                         <Flame className="h-3 w-3 text-orange-500" />
                         {spell.name}

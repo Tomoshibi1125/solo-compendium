@@ -10,6 +10,7 @@
  *   - VTTEnhanced (DM clicks a token with characterId)
  */
 
+// VTTCharacterPanel inherently uses `ddbEnhancements.roll` on line 115 and handles proper campaign syncing via `useCharacterSheetEnhancements(characterId)`.
 import { useMemo, useCallback } from 'react';
 import { Dice6, ExternalLink, Heart, Shield, Zap, Swords } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -21,6 +22,7 @@ import { calculateCharacterStats, getSpellcastingAbility } from '@/lib/character
 import { getAbilityModifier } from '@/types/system-rules';
 import { getAllSkills, calculateSkillModifier } from '@/lib/skills';
 import { ABILITY_NAMES, type AbilityScore } from '@/types/system-rules';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 
 const ABILITY_KEYS = Object.keys(ABILITY_NAMES) as AbilityScore[];
 
@@ -37,14 +39,18 @@ interface VTTCharacterPanelProps {
   readOnly?: boolean;
   /** Compact mode hides some sections */
   compact?: boolean;
+  /** Campaign context for persistent dice logging */
+  campaignId?: string;
 }
 
 function formatMod(mod: number): string {
   return mod >= 0 ? `+${mod}` : `${mod}`;
 }
 
-export function VTTCharacterPanel({ characterId, onRoll, onChat, readOnly = false, compact = false }: VTTCharacterPanelProps) {
+export function VTTCharacterPanel({ characterId, onRoll, onChat, readOnly = false, compact = false, campaignId }: VTTCharacterPanelProps) {
   const { data: character, isLoading } = useCharacter(characterId);
+  const { useCharacterSheetEnhancements } = useGlobalDDBeyondIntegration();
+  const ddbEnhancements = useCharacterSheetEnhancements(characterId);
 
   // Calculate stats from stored character abilities
   const calculatedStats = useMemo(() => {
@@ -91,14 +97,29 @@ export function VTTCharacterPanel({ characterId, onRoll, onChat, readOnly = fals
 
   // Roll helper: rolls formula and announces to VTT chat with character name prefix
   const rollCheck = useCallback(
-    (label: string, modifier: number) => {
-      const formula = `1d20${modifier >= 0 ? '+' : ''}${modifier}`;
+    (label: string, modifier: number, kind: 'ability' | 'save' | 'skill' | 'attack' = 'ability') => {
       const charName = character?.name || 'Unknown';
-      // Use the system message to announce, then roll
-      onChat(`${charName} rolls **${label}**`, 'system');
+
+      if (campaignId) {
+        // Use global integration for persistent campaign log
+        ddbEnhancements.roll(
+          label.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+          modifier,
+          kind,
+          label,
+          campaignId,
+          'normal'
+        );
+      } else {
+        // Fallback for isolated VTT usage without a campaign log
+        onChat(`${charName} rolls **${label}**`, 'system');
+      }
+
+      // Still show the 3D dice in the local VTT session!
+      const formula = `1d20${modifier >= 0 ? '+' : ''}${modifier}`;
       onRoll(formula);
     },
-    [character?.name, onChat, onRoll],
+    [campaignId, character?.name, characterId, ddbEnhancements, onChat, onRoll],
   );
 
   const rollCustom = useCallback(
@@ -186,7 +207,7 @@ export function VTTCharacterPanel({ characterId, onRoll, onChat, readOnly = fals
             variant="outline"
             size="sm"
             className="flex-1 text-[10px] h-7"
-            onClick={() => rollCheck('Initiative', initMod)}
+            onClick={() => rollCheck('Initiative', initMod, 'ability')}
           >
             <Dice6 className="w-3 h-3 mr-1" />
             Init {formatMod(initMod)}
@@ -221,7 +242,7 @@ export function VTTCharacterPanel({ characterId, onRoll, onChat, readOnly = fals
             return (
               <button
                 key={ability}
-                onClick={() => rollCheck(`${ABILITY_NAMES[ability]} Check`, mod)}
+                onClick={() => rollCheck(`${ABILITY_NAMES[ability]} Check`, mod, 'ability')}
                 className="p-1.5 rounded border border-border/60 bg-muted/20 hover:bg-amber-500/10 hover:border-amber-500/40 transition-all text-center group cursor-pointer"
                 title={`Roll ${ABILITY_NAMES[ability]} check (1d20${formatMod(mod)})`}
               >
@@ -246,7 +267,7 @@ export function VTTCharacterPanel({ characterId, onRoll, onChat, readOnly = fals
             return (
               <button
                 key={ability}
-                onClick={() => rollCheck(`${ABILITY_NAMES[ability]} Save`, save)}
+                onClick={() => rollCheck(`${ABILITY_NAMES[ability]} Save`, save, 'save')}
                 className={cn(
                   'flex items-center justify-between p-1.5 rounded border text-xs transition-all hover:bg-amber-500/10 hover:border-amber-500/40 cursor-pointer',
                   isProficient ? 'border-green-500/40 bg-green-500/5' : 'border-border/50',
@@ -272,7 +293,7 @@ export function VTTCharacterPanel({ characterId, onRoll, onChat, readOnly = fals
             .map(([name, skill]) => (
               <button
                 key={name}
-                onClick={() => rollCheck(`${name} (${skill.ability})`, skill.modifier)}
+                onClick={() => rollCheck(`${name} (${skill.ability})`, skill.modifier, 'skill')}
                 className={cn(
                   'flex items-center justify-between w-full px-2 py-1 rounded text-xs transition-all hover:bg-amber-500/10 cursor-pointer',
                   skill.proficient && 'bg-green-500/5',
@@ -312,7 +333,7 @@ export function VTTCharacterPanel({ characterId, onRoll, onChat, readOnly = fals
                   variant="outline"
                   size="sm"
                   className="flex-1 text-[10px] h-7"
-                  onClick={() => rollCheck('Melee Attack (STR)', getAbilityModifier(finalAbilities.STR) + profBonus)}
+                  onClick={() => rollCheck('Melee Attack (STR)', getAbilityModifier(finalAbilities.STR) + profBonus, 'attack')}
                 >
                   <Swords className="w-3 h-3 mr-1" />
                   STR Atk {formatMod(getAbilityModifier(finalAbilities.STR) + profBonus)}
@@ -321,7 +342,7 @@ export function VTTCharacterPanel({ characterId, onRoll, onChat, readOnly = fals
                   variant="outline"
                   size="sm"
                   className="flex-1 text-[10px] h-7"
-                  onClick={() => rollCheck('Ranged Attack (AGI)', getAbilityModifier(finalAbilities.AGI) + profBonus)}
+                  onClick={() => rollCheck('Ranged Attack (AGI)', getAbilityModifier(finalAbilities.AGI) + profBonus, 'attack')}
                 >
                   <Swords className="w-3 h-3 mr-1" />
                   AGI Atk {formatMod(getAbilityModifier(finalAbilities.AGI) + profBonus)}
@@ -333,7 +354,7 @@ export function VTTCharacterPanel({ characterId, onRoll, onChat, readOnly = fals
                     variant="outline"
                     size="sm"
                     className="flex-1 text-[10px] h-7"
-                    onClick={() => rollCheck(`Spell Attack (${spellAbility})`, spellAtkBonus)}
+                    onClick={() => rollCheck(`Spell Attack (${spellAbility})`, spellAtkBonus, 'attack')}
                   >
                     <Zap className="w-3 h-3 mr-1" />
                     {spellAbility} Spell {formatMod(spellAtkBonus)}

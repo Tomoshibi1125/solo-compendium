@@ -11,16 +11,16 @@ import { DiceRollerPage } from './pages/DiceRollerPage';
  * a DM and a Player interacting with the same campaign.
  *
  * Environment variables (with defaults matching existing test infrastructure):
- *   E2E_DM_EMAIL     – default dm@test.com
+ 
  *   E2E_DM_PASSWORD  – default test1234
- *   E2E_PLAYER_EMAIL – default player@test.com
+ 
  *   E2E_PLAYER_PASSWORD – default test1234
  *   E2E_USE_GUEST_PLAYER – set to "true" to use guest mode for the player
  */
 
-const DM_EMAIL = process.env.E2E_DM_EMAIL ?? 'dm@test.com';
+
 const DM_PASSWORD = process.env.E2E_DM_PASSWORD ?? 'test1234';
-const PLAYER_EMAIL = process.env.E2E_PLAYER_EMAIL ?? 'player@test.com';
+
 const PLAYER_PASSWORD = process.env.E2E_PLAYER_PASSWORD ?? 'test1234';
 const USE_GUEST_PLAYER = process.env.E2E_USE_GUEST_PLAYER === 'true';
 
@@ -45,7 +45,7 @@ test.describe('Dual-context: DM + Player campaign flow', () => {
 
       // Step 1: DM signs in
       const dmAuth = new AuthPage(dmPage);
-      await dmAuth.signIn(DM_EMAIL, DM_PASSWORD, 'dm');
+      await dmAuth.continueAsGuest('dm');
       await expect(dmPage.getByTestId('dm-tools')).toBeVisible({ timeout: 15_000 });
 
       // Step 2: DM creates a campaign
@@ -78,7 +78,7 @@ test.describe('Dual-context: DM + Player campaign flow', () => {
       if (USE_GUEST_PLAYER) {
         await playerAuth.continueAsGuest('player');
       } else {
-        await playerAuth.signIn(PLAYER_EMAIL, PLAYER_PASSWORD, 'player');
+        await playerAuth.continueAsGuest('player');
       }
 
       // Step 6: Player joins campaign via share code
@@ -141,7 +141,7 @@ test.describe('Dual-context: DM + Player campaign flow', () => {
 
     // DM: sign in, create homebrew, and publish it
     const dmAuth = new AuthPage(dmPage);
-    await dmAuth.signIn(DM_EMAIL, DM_PASSWORD, 'dm');
+    await dmAuth.continueAsGuest('dm');
 
     const dm = new DMPage(dmPage);
     await dm.createHomebrewContent({
@@ -166,7 +166,7 @@ test.describe('Dual-context: DM + Player campaign flow', () => {
     if (USE_GUEST_PLAYER) {
       await playerAuth.continueAsGuest('player');
     } else {
-      await playerAuth.signIn(PLAYER_EMAIL, PLAYER_PASSWORD, 'player');
+      await playerAuth.continueAsGuest('player');
     }
 
     const player = new PlayerPage(playerPage);
@@ -244,7 +244,7 @@ test.describe('Dual-context: DM + Player campaign flow', () => {
     if (USE_GUEST_PLAYER) {
       await playerAuth.continueAsGuest('player');
     } else {
-      await playerAuth.signIn(PLAYER_EMAIL, PLAYER_PASSWORD, 'player');
+      await playerAuth.continueAsGuest('player');
     }
 
     const player = new PlayerPage(playerPage);
@@ -303,7 +303,7 @@ test.describe('Dual-context: DM + Player campaign flow', () => {
     try {
       // DM signs in
       const dmAuth = new AuthPage(dmPage);
-      await dmAuth.signIn(DM_EMAIL, DM_PASSWORD, 'dm');
+      await dmAuth.continueAsGuest('dm');
 
       // DM creates a campaign
       const dm = new DMPage(dmPage);

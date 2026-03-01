@@ -5,6 +5,7 @@ import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Input } from '@/components/ui/input';
 import { useEquipment } from '@/hooks/useEquipment';
 import { useToast } from '@/hooks/use-toast';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 import { cn } from '@/lib/utils';
 
 const CURRENCY_TYPES = [
@@ -16,6 +17,8 @@ const CURRENCY_TYPES = [
 export function CurrencyManager({ characterId }: { characterId: string }) {
   const { equipment, updateEquipment, addEquipment } = useEquipment(characterId);
   const { toast } = useToast();
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const ddbEnhancements = usePlayerToolsEnhancements();
   const [editing, setEditing] = useState<string | null>(null);
   const [editValue, setEditValue] = useState('');
 
@@ -57,6 +60,13 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
           description: `Added ${amount} ${currencyType.symbol}`,
         });
       }
+
+      ddbEnhancements.trackInventoryChange(
+        characterId,
+        currencyType.name,
+        amount > 0 ? 'add' : 'remove'
+      ).catch(console.error);
+
     } catch {
       toast({
         title: 'Error',
@@ -87,6 +97,13 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
           description: `Rift rewards - ${currencyType.name} coins`,
         });
       }
+
+      ddbEnhancements.trackInventoryChange(
+        characterId,
+        currencyType.name,
+        existing && (existing.quantity || 0) > amount ? 'remove' : 'add'
+      ).catch(console.error);
+
       setEditing(null);
       toast({
         title: 'Currency updated',

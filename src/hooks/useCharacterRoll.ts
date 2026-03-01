@@ -3,6 +3,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useRecordRoll } from '@/hooks/useRollHistory';
 import { useAuth } from '@/lib/auth/authContext';
 import { rollCheck } from '@/lib/rollEngine';
+import { useCampaignDice } from '@/hooks/useCampaignDice';
 
 interface CharacterRollProps {
   characterId: string;
@@ -24,6 +25,7 @@ export function useCharacterRoll({
   const { toast } = useToast();
   const { user } = useAuth();
   const recordRoll = useRecordRoll();
+  const { rollInCampaign } = useCampaignDice();
 
   const getAbilityModifier = (ability: string): number => {
     const score = abilities[ability] || 10;
@@ -74,7 +76,7 @@ export function useCharacterRoll({
       'persuasion': 'pre',
       'Persuasion': 'pre',
     };
-    
+
     const ability = skillAbilityMap[skill] || 'str';
     const baseMod = getAbilityModifier(ability);
     const isProficient = skillProficiencies.includes(skill);
@@ -106,12 +108,12 @@ export function useCharacterRoll({
     // Determine if it's a critical success/failure
     const isCritical = result.isNatural20;
     const isFumble = result.isNatural1;
-    
+
     // Create roll description
     const rollDescription = label || rollKey;
-    const rollType = kind === 'ability' ? 'Ability Check' : 
-                    kind === 'save' ? 'Saving Throw' : 'Skill Check';
-    
+    const rollType = kind === 'ability' ? 'Ability Check' :
+      kind === 'save' ? 'Saving Throw' : 'Skill Check';
+
     // Record the roll
     recordRoll.mutate({
       character_id: characterId,
@@ -128,7 +130,24 @@ export function useCharacterRoll({
         dropped: result.droppedRolls ?? null,
       },
     });
-    
+
+    if (campaignId) {
+      rollInCampaign(campaignId, {
+        dice_formula: `1d20+${modifier}`,
+        result: total,
+        roll_type: kind,
+        rolls: result.droppedRolls ? [d20, ...(result.droppedRolls || [])] : [d20],
+        context: rollDescription,
+        modifiers: {
+          base: modifier,
+          proficiency: proficiencyBonus,
+          advantage: advantage ?? 'normal',
+          dropped: result.droppedRolls ?? null,
+        },
+        character_id: characterId,
+      });
+    }
+
     // Show toast notification
     toast({
       title: `${characterName} - ${rollType}`,
@@ -155,10 +174,10 @@ export function useCharacterRoll({
     return roll(skill, modifier, 'skill', undefined, campaignId);
   }, [roll]);
 
-  return { 
-    roll, 
-    rollAbilityCheck, 
-    rollSavingThrow, 
+  return {
+    roll,
+    rollAbilityCheck,
+    rollSavingThrow,
     rollSkillCheck,
     getAbilityModifier,
     getSaveModifier,

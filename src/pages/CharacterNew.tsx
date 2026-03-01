@@ -12,12 +12,14 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useCreateCharacter } from '@/hooks/useCharacters';
+import { useCharacterTemplates, type CharacterTemplate } from '@/hooks/useCharacterTemplates';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { calculateHPMax } from '@/lib/characterCalculations';
 import { ABILITY_NAMES, type AbilityScore } from '@/types/system-rules';
 import { RegentSelection } from '@/components/character/RegentSelection';
 import { monarchs } from '@/data/compendium/monarchs';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 
 // Map standard D&D ability names to System Ascendant names
 const mapAbilityToSA = (ability: string): AbilityScore => {
@@ -71,6 +73,9 @@ const CharacterNew = () => {
   const safeNext = isSafeNextPath(requestedNext) ? requestedNext : null;
   const { toast } = useToast();
   const createCharacter = useCreateCharacter();
+  const { data: templates } = useCharacterTemplates();
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const ddbEnhancements = usePlayerToolsEnhancements();
   const [currentStep, setCurrentStep] = useState<Step>('concept');
   const [loading, setLoading] = useState(false);
 
@@ -382,6 +387,30 @@ const CharacterNew = () => {
     enabled: !!jobData?.name,
   });
 
+  const handleApplyTemplate = (template: CharacterTemplate) => {
+    // Find matching job and background
+    const job = allJobs.find(j => j.name === template.job);
+    const bg = allBackgrounds.find(b => b.name === template.background);
+
+    if (job) {
+      setSelectedJob(job.id);
+      setSelectedPath('');
+    }
+    if (bg) {
+      setSelectedBackground(bg.id);
+    }
+
+    setAbilities(template.abilities);
+    setAbilityMethod('manual');
+    setSelectedSkills(template.skills);
+    setEquipmentChoices(template.equipment as Record<number, string>);
+
+    toast({
+      title: "Template Applied",
+      description: `Applied ${template.name}. Review the steps and click Next.`
+    });
+  };
+
   const steps: { id: Step; name: string }[] = [
     { id: 'concept', name: 'Concept' },
     { id: 'job', name: 'Job' },
@@ -597,15 +626,7 @@ const CharacterNew = () => {
 
       // D&D Beyond parity: auto-calculate derived stats after all creation data is saved
       if (!isLocalCharacterId(character.id)) {
-        try {
-          const { autoRecalcDerivedStats, autoApplyEquipmentModifiers } = await import('@/lib/automation');
-          await Promise.all([
-            autoRecalcDerivedStats(character.id),
-            autoApplyEquipmentModifiers(character.id),
-          ]);
-        } catch {
-          // Best-effort — don't block creation
-        }
+        // Handled dynamically by characterEngine
       }
 
       // If any level-1 features require selections, prompt the player to complete them.
@@ -640,6 +661,14 @@ const CharacterNew = () => {
         description: `${name} has awakened successfully. The System has granted features and equipment.`,
       });
 
+      ddbEnhancements.trackCustomFeatureUsage(
+        character.id,
+        'Character Created',
+        `Started at Level 1`,
+        '5e',
+        { skipBroadcast: true }
+      ).catch(console.error);
+
       navigate(safeNext ?? `/characters/${character.id}`);
     } catch (error) {
       // Error is handled by React Query's error state
@@ -656,15 +685,21 @@ const CharacterNew = () => {
 
   // Calculate comprehensive total choices including awakening features and traits
   const totalChoices = useMemo(() => {
-    // Temporarily disable choice calculations to isolate error
-    return { skills: jobData?.skill_choice_count || 0, feats: 0, spells: 0, powers: 0, techniques: 0, runes: 0, items: 0, tools: 0, languages: 0, expertise: 0 };
-  }, [jobData?.skill_choice_count]);
+    const selectedPathRow = selectedPath && selectedPath !== 'none'
+      ? pathsAvailableAtCreation.find((p: any) => p.id === selectedPath)
+      : null;
+    const combinedJobData = jobData || staticJobData ? { ...jobData, ...staticJobData } : null;
+    return calculateTotalChoices(combinedJobData, selectedPathRow, [], 1);
+  }, [jobData, staticJobData, selectedPath, pathsAvailableAtCreation]);
 
   // Get choice grant details for UI display
   const choiceGrantDetails = useMemo(() => {
-    // Temporarily disable choice grant details to isolate error
-    return [];
-  }, []);
+    const selectedPathRow = selectedPath && selectedPath !== 'none'
+      ? pathsAvailableAtCreation.find((p: any) => p.id === selectedPath)
+      : null;
+    const combinedJobData = jobData || staticJobData ? { ...jobData, ...staticJobData } : null;
+    return getChoiceGrantDetails(combinedJobData, selectedPathRow, [], 1);
+  }, [jobData, staticJobData, selectedPath, pathsAvailableAtCreation]);
 
   const canProceed = () => {
     switch (currentStep) {
@@ -786,6 +821,25 @@ const CharacterNew = () => {
         <SystemWindow title={steps[currentStepIndex].name.toUpperCase()}>
           {currentStep === 'concept' && (
             <div className="space-y-4">
+              {templates && templates.length > 0 && (
+                <div className="mb-6 p-4 border border-primary/20 rounded-lg bg-primary/5">
+                  <Label className="text-base mb-2 block font-heading text-primary">Quick Start Templates</Label>
+                  <p className="text-sm text-muted-foreground mb-4">Choose a preset to instantly configure your job, abilities, and equipment.</p>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    {templates.map(t => (
+                      <Button
+                        key={t.id}
+                        variant="outline"
+                        className="h-auto py-3 px-4 justify-start text-left flex-col items-start bg-background hover:border-primary transition-all"
+                        onClick={() => handleApplyTemplate(t)}
+                      >
+                        <div className="font-heading font-semibold text-foreground">{t.name}</div>
+                        <div className="text-xs text-muted-foreground mt-1">{t.job} • {t.background}</div>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              )}
               <div>
                 <Label htmlFor="name">Character Name *</Label>
                 <Input

@@ -14,6 +14,8 @@
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { bridgeEquipmentEffects } from '@/lib/unifiedEffectSystem';
+import { parseModifiers } from '@/lib/equipmentModifiers';
 import {
   computeCharacterStats,
   type CharacterBaseData,
@@ -27,6 +29,8 @@ import {
 import type { AbilityScore } from '@/lib/5eRulesEngine';
 import type { Effect } from '@/lib/characterEngine';
 import { getErrorMessage, logErrorWithContext } from '@/lib/errorHandling';
+
+// Imported bridgeEquipmentEffects from unifiedEffectSystem.ts
 
 /**
  * Fetch all base character data needed for computation
@@ -76,7 +80,11 @@ async function fetchCharacterBaseData(characterId: string): Promise<CharacterBas
     weight: typeof item.weight === 'number' ? item.weight : 0,
     properties: Array.isArray(item.properties) ? item.properties : [],
     acFormula: typeof (item as any).ac_formula === 'string' ? (item as any).ac_formula : undefined,
-    effects: [], // TODO: Parse effects from properties
+    effects: bridgeEquipmentEffects(Array.isArray(item.properties) ? item.properties : []),
+    isActive: (item as any).is_active ?? true,
+    ignoreContentsWeight: (item as any).ignore_contents_weight ?? false,
+    isContainer: (item as any).is_container ?? false,
+    containerId: (item as any).container_id ?? null,
   }));
 
   // 4. Fetch conditions (stored in character.conditions array)
@@ -106,9 +114,31 @@ async function fetchCharacterBaseData(characterId: string): Promise<CharacterBas
     effects: parseFeatureDescriptionEffects(f.description || '', f.name),
   }));
 
-  // 6. Fetch active spells
-  // TODO: Fetch from active_spell_effects table when it exists
-  const activeSpells: ActiveSpellEffect[] = [];
+  // 6. Fetch active spells from DB (graceful fallback if table doesn't exist yet)
+  let activeSpells: ActiveSpellEffect[] = [];
+  try {
+    // Use untyped fetch — table may not exist in generated Supabase types yet
+    const { data: spellRows } = await (supabase as any)
+      .from('character_active_spells')
+      .select('*')
+      .eq('character_id', characterId);
+    if (Array.isArray(spellRows)) {
+      activeSpells = spellRows.map((s: any) => ({
+        spellId: s.spell_id || s.id || `spell-${Date.now()}`,
+        spellName: s.spell_name || s.name || 'Unknown',
+        level: s.level ?? 0,
+        castAt: s.cast_at ? new Date(s.cast_at) : new Date(),
+        concentration: s.concentration ?? false,
+        duration: s.duration_value ? {
+          type: s.duration_type || 'rounds',
+          value: s.duration_value,
+        } : undefined,
+        effects: Array.isArray(s.effects) ? s.effects : [],
+      }));
+    }
+  } catch {
+    // Table may not exist yet — gracefully fall back to empty
+  }
 
   // 7. Build jobs array (single job + regent overlays)
   const jobs: CharacterJob[] = [];
@@ -116,6 +146,8 @@ async function fetchCharacterBaseData(characterId: string): Promise<CharacterBas
     jobs.push({
       job: character.job,
       path: character.path || undefined,
+      regent: (character as any).regent || undefined,
+      gemini: (character as any).gemini_state || undefined,
       level: character.level,
       hitDie: getHitDieForJob(character.job),
     });

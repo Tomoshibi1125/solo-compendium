@@ -15,6 +15,7 @@ import { isLocalCharacterId, updateLocalSpellSlotRow, listLocalSpellSlots } from
 import { useQueryClient } from '@tanstack/react-query';
 import { DomainEventBus, buildCorePayload, type SpellCastEvent } from '@/lib/domainEvents';
 import type { SpellSlotData } from '@/hooks/useSpellSlots';
+import { createActiveSpellEffect, hasKnownEffects, type ActiveSpellEffectEntry } from '@/lib/spellEffectPipeline';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -190,6 +191,27 @@ export function useSpellCasting(
 
   return { canCast, castSpell, getUpcastLevels };
 }
+
+// ---------------------------------------------------------------------------
+// Spell effect pipeline helper — creates ActiveSpellEffectEntry for stat tracking
+// ---------------------------------------------------------------------------
+
+/**
+ * Create an active spell effect entry if the spell has known mechanical effects.
+ * This feeds into computeCharacterStats() so buff/debuff spells auto-apply
+ * stat modifiers (AC, attack, speed, etc.) — full DDB/Foundry parity.
+ */
+export function buildActiveSpellEffectEntry(
+  spellName: string,
+  casterId: string,
+  targetId: string,
+  isConcentration: boolean,
+  durationRounds: number | null
+): ActiveSpellEffectEntry | null {
+  if (!hasKnownEffects(spellName)) return null;
+  return createActiveSpellEffect(spellName, casterId, targetId, isConcentration, durationRounds);
+}
+
 
 // ---------------------------------------------------------------------------
 // Domain event helper

@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Zap, Sword, Wand2, Shield } from 'lucide-react';
+import { Zap, Sword, Wand2, Shield, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
@@ -8,12 +8,13 @@ import { useNavigate } from 'react-router-dom';
 import { rollDiceString, formatRollResult } from '@/lib/diceRoller';
 import { useToast } from '@/hooks/use-toast';
 import { useRecordRoll } from '@/hooks/useRollHistory';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 import { cn } from '@/lib/utils';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 
 interface ActionCardProps {
   name: string;
-  type: 'action' | 'bonus-action' | 'reaction' | 'passive';
+  type?: string;
   description: string;
   attackBonus?: number;
   damage?: string;
@@ -24,21 +25,28 @@ interface ActionCardProps {
   inscriptionId?: string;
   onUse?: () => void;
   characterId?: string;
+  campaignId?: string;
   className?: string;
 }
 
-const TYPE_ICONS = {
+const TYPE_ICONS: Record<string, any> = {
   'action': Sword,
   'bonus-action': Zap,
+  'bonus action': Zap,
   'reaction': Shield,
   'passive': Wand2,
+  'other': Star,
+  'special': Star,
 };
 
-const TYPE_LABELS = {
+const TYPE_LABELS: Record<string, string> = {
   'action': 'Action',
   'bonus-action': 'Bonus Action',
+  'bonus action': 'Bonus Action',
   'reaction': 'Reaction',
   'passive': 'Passive',
+  'other': 'Other',
+  'special': 'Special',
 };
 
 function ActionCardComponent({
@@ -54,12 +62,17 @@ function ActionCardComponent({
   inscriptionId,
   onUse,
   characterId,
+  campaignId,
   className,
 }: ActionCardProps) {
   const navigate = useNavigate();
   const { toast } = useToast();
   const recordRoll = useRecordRoll();
-  const Icon = TYPE_ICONS[type];
+  const { usePlayerToolsEnhancements, useCharacterSheetEnhancements } = useGlobalDDBeyondIntegration();
+  const { rollInCampaign } = usePlayerToolsEnhancements();
+  const { quickRoll } = useCharacterSheetEnhancements(characterId || '');
+
+  const Icon = type ? (TYPE_ICONS[type] || Star) : Star;
   const displayName = formatMonarchVernacular(name);
   const displayDescription = formatMonarchVernacular(description);
   const displayRange = range ? formatMonarchVernacular(range) : undefined;
@@ -124,6 +137,18 @@ function ActionCardComponent({
       });
 
       if (roll && formula) {
+        if (campaignId) {
+          rollInCampaign(campaignId, {
+            dice_formula: formula,
+            result: roll.result,
+            rolls: roll.rolls,
+            roll_type: rollType === 'attack' ? 'attack' : 'damage',
+            context: rollType === 'attack' ? `${displayName} Attack` : `${displayName} Damage`,
+            modifiers: roll.modifier ? { modifier: roll.modifier } : null,
+            character_id: characterId ?? null,
+          });
+        }
+
         recordRoll.mutate({
           dice_formula: formula,
           result: roll.result,
@@ -131,7 +156,7 @@ function ActionCardComponent({
           roll_type: rollType === 'attack' ? 'attack' : 'damage',
           context: rollType === 'attack' ? `${displayName} Attack` : `${displayName} Damage`,
           modifiers: roll.modifier ? { modifier: roll.modifier } : null,
-          campaign_id: null,
+          campaign_id: campaignId ?? null,
           character_id: characterId ?? null,
         });
       }
@@ -149,9 +174,11 @@ function ActionCardComponent({
       <div className="space-y-3">
         <div className="flex items-center gap-2 flex-wrap">
           <Icon className="w-4 h-4 text-primary" />
-          <Badge variant="secondary" className="text-xs">
-            {TYPE_LABELS[type]}
-          </Badge>
+          {type && (
+            <Badge variant="secondary" className="text-xs">
+              {TYPE_LABELS[type] || 'Action'}
+            </Badge>
+          )}
           {displayRange && (
             <Badge variant="outline" className="text-xs">
               {displayRange}
@@ -181,8 +208,8 @@ function ActionCardComponent({
 
         <p className="text-sm text-muted-foreground">{displayDescription}</p>
 
-        {(attackBonus !== undefined || damage) && (
-          <div className="flex gap-2 pt-2 border-t border-border/50">
+        {(attackBonus !== undefined || damage || campaignId) && (
+          <div className="flex gap-2 pt-2 border-t border-border/50 flex-wrap">
             {attackBonus !== undefined && (
               <Button
                 variant="outline"
@@ -207,6 +234,41 @@ function ActionCardComponent({
                 Damage: {displayDamage || damage}
               </Button>
             )}
+            {attackBonus === undefined && !damage && campaignId && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  toast({ title: 'Action Announced', description: `${displayName} announced to campaign log.` });
+                  if (campaignId) {
+                    rollInCampaign(campaignId, {
+                      dice_formula: 'none',
+                      result: 0,
+                      rolls: [],
+                      roll_type: 'feature',
+                      context: `Uses Action: ${displayName}`,
+                      modifiers: null,
+                      character_id: characterId ?? null,
+                    });
+                  }
+                  recordRoll.mutate({
+                    dice_formula: 'none',
+                    result: 0,
+                    rolls: [],
+                    roll_type: 'feature',
+                    context: `Uses Action: ${displayName}`,
+                    modifiers: null,
+                    campaign_id: campaignId ?? null,
+                    character_id: characterId ?? null,
+                  });
+                }}
+                className="flex-1 gap-2 border-primary/20 hover:bg-primary/10"
+                aria-label={`Announce ${displayName}`}
+              >
+                <Zap className="w-4 h-4 text-primary" />
+                Announce
+              </Button>
+            )}
           </div>
         )}
       </div>
@@ -214,7 +276,7 @@ function ActionCardComponent({
   );
 }
 
-export const ActionCard = memo(ActionCardComponent, (prevProps, nextProps) => {
+export const ActionCard = memo(ActionCardComponent, (prevProps: ActionCardProps, nextProps: ActionCardProps) => {
   // Custom comparison - only re-render if props actually change
   return (
     prevProps.name === nextProps.name &&
@@ -226,7 +288,8 @@ export const ActionCard = memo(ActionCardComponent, (prevProps, nextProps) => {
     prevProps.uses?.max === nextProps.uses?.max &&
     prevProps.recharge === nextProps.recharge &&
     prevProps.inscriptionId === nextProps.inscriptionId &&
-    prevProps.characterId === nextProps.characterId
+    prevProps.characterId === nextProps.characterId &&
+    prevProps.campaignId === nextProps.campaignId
   );
 });
 

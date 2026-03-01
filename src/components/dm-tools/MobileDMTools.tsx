@@ -3,11 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { 
-  Sword, 
-  Clock, 
-  Flame, 
-  Users, 
+import {
+  Sword,
+  Clock,
+  Flame,
+  Users,
   BookOpen,
   Dice6,
   Settings2,
@@ -32,6 +32,8 @@ import {
   Edit,
   Trash2
 } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 
 interface MobileToolCardProps {
   tool: {
@@ -50,9 +52,9 @@ interface MobileToolCardProps {
 
 const MobileToolCard = ({ tool, isMobile = false, onToolSelect, isSelected }: MobileToolCardProps) => {
   const Icon = tool.icon;
-  
+
   return (
-    <Card 
+    <Card
       className={cn(
         "cursor-pointer transition-all duration-200 hover:shadow-md",
         isMobile ? "border-l-4" : "border-l-0",
@@ -72,7 +74,7 @@ const MobileToolCard = ({ tool, isMobile = false, onToolSelect, isSelected }: Mo
               isMobile ? "w-5 h-5" : "w-6 h-6"
             )} />
           </div>
-          
+
           <div className="flex-1 min-w-0">
             <h3 className={cn(
               "font-semibold text-sm leading-tight",
@@ -86,9 +88,9 @@ const MobileToolCard = ({ tool, isMobile = false, onToolSelect, isSelected }: Mo
             )}>
               {tool.description}
             </p>
-            
+
             {tool.status && (
-              <Badge 
+              <Badge
                 variant={tool.status === 'available' ? 'default' : 'secondary'}
                 className="mt-2 text-xs"
               >
@@ -96,7 +98,7 @@ const MobileToolCard = ({ tool, isMobile = false, onToolSelect, isSelected }: Mo
               </Badge>
             )}
           </div>
-          
+
           {isMobile && (
             <ChevronRight className="w-4 h-4 text-muted-foreground mt-1 flex-shrink-0" />
           )}
@@ -123,7 +125,15 @@ interface MobileDMToolsProps {
 
 const MobileDMTools = ({ tools, onToolSelect, selectedTool, isMobile }: MobileDMToolsProps) => {
   const [showMobileMenu, setShowMobileMenu] = React.useState(false);
-  
+  const { toast } = useToast();
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const ddbTools = usePlayerToolsEnhancements();
+
+  const handleQuickAction = (actionName: string) => {
+    toast({ title: 'Quick Action', description: `Executing ${actionName}...` });
+    ddbTools.trackCustomFeatureUsage('DM', 'DM Quick Action', actionName, 'SA').catch(console.error);
+  };
+
   if (isMobile) {
     return (
       <div className="space-y-4">
@@ -164,16 +174,16 @@ const MobileDMTools = ({ tools, onToolSelect, selectedTool, isMobile }: MobileDM
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="grid grid-cols-2 gap-2">
-                <Button variant="outline" size="sm" className="w-full">
+                <Button variant="outline" size="sm" className="w-full" onClick={() => handleQuickAction('Edit Content')}>
                   <Edit className="w-4 h-4 mr-2" />
                   Edit
                 </Button>
-                <Button variant="outline" size="sm" className="w-full">
+                <Button variant="outline" size="sm" className="w-full" onClick={() => handleQuickAction('New Content')}>
                   <Plus className="w-4 h-4 mr-2" />
                   New
                 </Button>
               </div>
-              <Button variant="destructive" size="sm" className="w-full">
+              <Button variant="destructive" size="sm" className="w-full" onClick={() => handleQuickAction('Delete Content')}>
                 <Trash2 className="w-4 h-4 mr-2" />
                 Delete
               </Button>
@@ -228,23 +238,23 @@ const MobileDMTools = ({ tools, onToolSelect, selectedTool, isMobile }: MobileDM
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <Button variant="outline" className="justify-start">
+              <Button variant="outline" className="justify-start" onClick={() => handleQuickAction('Create New Content')}>
                 <Plus className="w-4 h-4 mr-2" />
                 Create New Content
               </Button>
-              <Button variant="outline" className="justify-start">
+              <Button variant="outline" className="justify-start" onClick={() => handleQuickAction('Manage Players')}>
                 <Users className="w-4 h-4 mr-2" />
                 Manage Players
               </Button>
-              <Button variant="outline" className="justify-start">
+              <Button variant="outline" className="justify-start" onClick={() => handleQuickAction('Schedule Session')}>
                 <Calendar className="w-4 h-4 mr-2" />
                 Schedule Session
               </Button>
-              <Button variant="outline" className="justify-start">
+              <Button variant="outline" className="justify-start" onClick={() => handleQuickAction('Quick Encounter')}>
                 <Target className="w-4 h-4 mr-2" />
                 Quick Encounter
               </Button>
-              <Button variant="outline" className="justify-start">
+              <Button variant="outline" className="justify-start" onClick={() => handleQuickAction('World Builder')}>
                 <Globe className="w-4 h-4 mr-2" />
                 World Builder
               </Button>

@@ -7,22 +7,28 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { SystemWindow } from '@/components/ui/SystemWindow';
-import { 
-  useCharacterShadowSoldiers, 
-  useCompendiumShadowSoldiers, 
-  useExtractShadowSoldier, 
+import {
+  useCharacterShadowSoldiers,
+  useCompendiumShadowSoldiers,
+  useExtractShadowSoldier,
   useToggleSummon,
   useUpdateSoldierHP,
-  type ShadowSoldier 
+  type ShadowSoldier
 } from '@/hooks/useShadowSoldiers';
 import { useCharacterRegentUnlocks } from '@/hooks/useRegentUnlocks';
-import { Ghost, Sword, Shield, Heart, Zap, Plus, Minus, Crown, Skull, Flame, Bird, Dog, Mountain, Crosshair } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { useUserToolState } from '@/hooks/useToolState';
+import { type LibraryToken } from '@/data/tokenLibraryDefaults';
+import { Ghost, Sword, Shield, Heart, Zap, Plus, Minus, Crown, Skull, Flame, Bird, Dog, Mountain, Crosshair, Map } from 'lucide-react';
 import { formatRegentVernacular, REGENT_LABEL, normalizeRegentSearch } from '@/lib/vernacular';
+import { cn } from '@/lib/utils';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
+import { useToast } from '@/hooks/use-toast';
+import { useRecordRoll } from '@/hooks/useRollHistory';
 
 interface ShadowSoldiersPanelProps {
   characterId: string;
   characterLevel: number;
+  campaignId?: string;
 }
 
 // Enhanced rank colors with System Ascendant theme
@@ -47,7 +53,7 @@ const typeIcons: Record<string, { icon: React.ReactNode; color: string }> = {
   giant: { icon: <Mountain className="h-4 w-4" />, color: 'text-regent-gold' },
 };
 
-export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldiersPanelProps) {
+export function ShadowSoldiersPanel({ characterId, characterLevel, campaignId }: ShadowSoldiersPanelProps) {
   const [selectedSoldier, setSelectedSoldier] = useState<ShadowSoldier | null>(null);
   const { data: mySoldiers = [] } = useCharacterShadowSoldiers(characterId);
   const { data: allSoldiers = [] } = useCompendiumShadowSoldiers();
@@ -56,6 +62,55 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
   const toggleSummon = useToggleSummon();
   const updateHP = useUpdateSoldierHP();
 
+  const { toast } = useToast();
+  const recordRoll = useRecordRoll();
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const ddbEnhancements = usePlayerToolsEnhancements();
+  const { rollInCampaign } = ddbEnhancements;
+
+  const { state: storedTokens, saveNow: saveTokenLibrary } = useUserToolState<LibraryToken[]>(
+    'token_library',
+    {
+      initialState: [],
+      storageKey: 'vtt-tokens',
+    }
+  );
+
+  const handleExportToVTT = (soldier: ShadowSoldier, nickname: string | null) => {
+    const existingTokens = Array.isArray(storedTokens) ? storedTokens : [];
+    const displayName = nickname || soldier.name;
+    const tokenId = `shadow-${soldier.id}`;
+
+    // Check if it already exists
+    if (existingTokens.some(t => t.id === tokenId)) {
+      toast({
+        title: 'Already in Library',
+        description: `${formatRegentVernacular(displayName)} is already in your VTT library.`
+      });
+      return;
+    }
+
+    const newToken: LibraryToken = {
+      id: tokenId,
+      name: `[Umbral] ${formatRegentVernacular(displayName)}`,
+      type: 'monster',
+      category: 'other',
+      emoji: '👻',
+      size: 'medium',
+      color: '#a855f7', // shadow-purple
+      tags: ['shadow', 'summon', soldier.shadow_type],
+      notes: `${soldier.rank} - AC: ${soldier.armor_class} HP: ${soldier.hit_points}`,
+      createdAt: new Date().toISOString(),
+    };
+
+    void saveTokenLibrary([...existingTokens, newToken]);
+
+    toast({
+      title: 'Added to VTT Map',
+      description: `${formatRegentVernacular(displayName)} is now available in your token library.`,
+    });
+  };
+
   // Check if character has Umbral Regent unlock
   const hasUmbralRegent = regentUnlocks.some((unlock: any) => {
     const theme = unlock.regent?.theme?.toLowerCase() || '';
@@ -63,17 +118,17 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
     return theme.includes('umbral') || name.includes('umbral regent') || name.includes('umbral regent');
   });
   const umbralTitle = `Umbral ${REGENT_LABEL}`;
-  
+
   // Get soldiers this character can extract
   const extractedIds = new Set(mySoldiers.map(s => s.soldier_id));
   const availableSoldiers = allSoldiers.filter(s => {
     if (extractedIds.has(s.id)) return false;
-    
+
     // Parse requirements
     const req = s.summon_requirements || '';
     const levelMatch = req.match(/Level (\d+)\+/);
     const requiredLevel = levelMatch ? parseInt(levelMatch[1]) : 0;
-    
+
     return characterLevel >= requiredLevel && hasUmbralRegent;
   });
 
@@ -114,8 +169,8 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
               <p className="font-display text-lg text-shadow-purple">{mySoldiers.length} Legionnaires</p>
             </div>
           </div>
-          <Badge 
-            variant="outline" 
+          <Badge
+            variant="outline"
             className="bg-arise-violet/10 text-arise-violet border-arise-violet/40 font-display"
           >
             {summonedCount} Summoned
@@ -130,17 +185,17 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
             {mySoldiers.map((css, index) => {
               const soldier = css.soldier;
               if (!soldier) return null;
-              
+
               const hpPercent = (css.current_hp / soldier.hit_points) * 100;
               const typeData = typeIcons[soldier.shadow_type] || { icon: <Ghost className="h-4 w-4" />, color: 'text-shadow-purple' };
-              
+
               return (
                 <div
                   key={css.id}
                   className={cn(
                     "p-4 rounded-lg border transition-all duration-300",
-                    css.is_summoned 
-                      ? "border-shadow-purple/50 bg-shadow-purple/5 shadow-[0_0_15px_hsl(var(--shadow-purple)/0.15)]" 
+                    css.is_summoned
+                      ? "border-shadow-purple/50 bg-shadow-purple/5 shadow-[0_0_15px_hsl(var(--shadow-purple)/0.15)]"
                       : "border-border bg-background/50 hover:border-shadow-purple/30",
                     index < 3 && "animate-arise"
                   )}
@@ -155,8 +210,8 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                           <span className={cn("font-heading font-semibold", css.is_summoned && "text-shadow-purple")}>
                             {formatRegentVernacular(css.nickname || soldier.name)}
                           </span>
-                          <Badge 
-                            variant="outline" 
+                          <Badge
+                            variant="outline"
                             className={cn("text-xs", rankColors[soldier.rank] || '')}
                           >
                             {soldier.rank}
@@ -168,29 +223,62 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                     <Button
                       size="sm"
                       variant={css.is_summoned ? 'default' : 'outline'}
-                      onClick={() => toggleSummon.mutate({
-                        characterId,
-                        shadowSoldierId: css.id,
-                        summon: !css.is_summoned,
-                      })}
+                      onClick={() => {
+                        toggleSummon.mutate({
+                          characterId,
+                          shadowSoldierId: css.id,
+                          summon: !css.is_summoned,
+                        });
+
+                        ddbEnhancements.trackCustomFeatureUsage(
+                          characterId,
+                          css.nickname || soldier.name,
+                          css.is_summoned ? 'dismiss' : 'summon',
+                          'SA'
+                        ).catch(console.error);
+
+                        const actionText = !css.is_summoned ? 'Summons' : 'Dismisses';
+                        const soldierName = formatRegentVernacular(css.nickname || soldier.name);
+
+                        if (campaignId) {
+                          rollInCampaign(campaignId, {
+                            dice_formula: '0',
+                            result: 0,
+                            rolls: [],
+                            roll_type: 'ability',
+                            context: `${actionText} Shadow Soldier: ${soldierName}`,
+                            character_id: characterId,
+                          });
+                        }
+
+                        recordRoll.mutate({
+                          dice_formula: '0',
+                          result: 0,
+                          rolls: [],
+                          roll_type: 'ability',
+                          context: `${actionText} Shadow Soldier: ${soldierName}`,
+                          campaign_id: campaignId ?? null,
+                          character_id: characterId,
+                        });
+                      }}
                       className={cn(
                         "font-arise tracking-wider",
-                        css.is_summoned 
-                          ? "bg-shadow-purple hover:bg-shadow-purple/80 shadow-[0_0_10px_hsl(var(--shadow-purple)/0.4)]" 
+                        css.is_summoned
+                          ? "bg-shadow-purple hover:bg-shadow-purple/80 shadow-[0_0_10px_hsl(var(--shadow-purple)/0.4)]"
                           : "border-shadow-purple/40 hover:border-shadow-purple hover:bg-shadow-purple/10"
                       )}
                     >
                       {css.is_summoned ? 'Dismiss' : 'ASCEND'}
                     </Button>
                   </div>
-                  
+
                   {css.is_summoned && (
                     <>
                       <div className="flex items-center gap-3 mb-3">
                         <Heart className="h-4 w-4 text-gate-a shrink-0" />
                         <div className="flex-1 relative">
-                          <Progress 
-                            value={hpPercent} 
+                          <Progress
+                            value={hpPercent}
                             className="h-2 bg-muted"
                           />
                         </div>
@@ -216,19 +304,31 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                           </Button>
                         </div>
                       </div>
-                      
-                      <div className="flex gap-4 text-xs font-heading">
-                        <span className="text-shadow-blue">
-                          <Shield className="h-3 w-3 inline mr-1" />
-                          AC {soldier.armor_class}
-                        </span>
-                        <span className="text-accent">
-                          Speed {soldier.speed} ft
-                        </span>
-                        <span className="text-regent-gold">
-                          <Crown className="h-3 w-3 inline mr-1" />
-                          Bond Lv.{css.bond_level}
-                        </span>
+
+                      <div className="flex items-center justify-between text-xs font-heading">
+                        <div className="flex gap-4">
+                          <span className="text-shadow-blue">
+                            <Shield className="h-3 w-3 inline mr-1" />
+                            AC {soldier.armor_class}
+                          </span>
+                          <span className="text-accent">
+                            Speed {soldier.speed} ft
+                          </span>
+                          <span className="text-regent-gold">
+                            <Crown className="h-3 w-3 inline mr-1" />
+                            Bond Lv.{css.bond_level}
+                          </span>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-6 text-xs text-muted-foreground hover:text-shadow-purple"
+                          onClick={() => handleExportToVTT(soldier, css.nickname)}
+                          title="Add Shadow to VTT Map Token Library"
+                        >
+                          <Map className="w-3 h-3 mr-1" />
+                          To Map
+                        </Button>
                       </div>
                     </>
                   )}
@@ -252,8 +352,8 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
         {availableSoldiers.length > 0 && (
           <Dialog>
             <DialogTrigger asChild>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="w-full border-arise-violet/40 hover:border-arise-violet hover:bg-arise-violet/10 font-arise tracking-wider"
               >
                 <Skull className="h-4 w-4 mr-2 text-arise-violet" />
@@ -270,7 +370,7 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                 <div className="space-y-4 p-1">
                   {availableSoldiers.map((soldier) => {
                     const typeData = typeIcons[soldier.shadow_type] || { icon: <Ghost className="h-5 w-5" />, color: 'text-shadow-purple' };
-                    
+
                     return (
                       <Card
                         key={soldier.id}
@@ -298,15 +398,15 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                         </CardHeader>
                         <CardContent>
                           <p className="text-sm text-muted-foreground mb-4">{formatRegentVernacular(soldier.description)}</p>
-                          
+
                           <div className="flex gap-4 text-xs font-heading mb-4">
                             <span className="text-gate-a">HP {soldier.hit_points}</span>
                             <span className="text-shadow-blue">AC {soldier.armor_class}</span>
                             <span className="text-accent">Speed {soldier.speed} ft</span>
                           </div>
-                          
+
                           <Separator className="my-3 bg-shadow-purple/20" />
-                          
+
                           <div className="space-y-2">
                             <p className="text-xs font-display text-shadow-purple tracking-wider">ABILITIES:</p>
                             {soldier.abilities.map((ability, i) => (
@@ -318,7 +418,7 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                               </div>
                             ))}
                           </div>
-                          
+
                           {selectedSoldier?.id === soldier.id && (
                             <Button
                               className="w-full mt-4 font-arise tracking-wider bg-arise-violet hover:bg-arise-violet/80 shadow-[0_0_15px_hsl(var(--arise-violet)/0.4)]"
@@ -328,6 +428,42 @@ export function ShadowSoldiersPanel({ characterId, characterLevel }: ShadowSoldi
                                   characterId,
                                   soldierId: soldier.id,
                                 });
+
+                                ddbEnhancements.trackCustomFeatureUsage(
+                                  characterId,
+                                  soldier.name,
+                                  'extract',
+                                  'SA'
+                                ).catch(console.error);
+
+                                const soldierName = formatRegentVernacular(soldier.name);
+
+                                if (campaignId) {
+                                  rollInCampaign(campaignId, {
+                                    dice_formula: '0',
+                                    result: 0,
+                                    rolls: [],
+                                    roll_type: 'ability',
+                                    context: `Extracts new Shadow Soldier: ${soldierName}`,
+                                    character_id: characterId,
+                                  });
+                                }
+
+                                recordRoll.mutate({
+                                  dice_formula: '0',
+                                  result: 0,
+                                  rolls: [],
+                                  roll_type: 'ability',
+                                  context: `Extracts new Shadow Soldier: ${soldierName}`,
+                                  campaign_id: campaignId ?? null,
+                                  character_id: characterId,
+                                });
+
+                                toast({
+                                  title: 'Shadow Extracted!',
+                                  description: `${soldierName} has joined the Umbral Legion.`,
+                                });
+
                                 setSelectedSoldier(null);
                               }}
                               disabled={extractSoldier.isPending}

@@ -4,9 +4,9 @@ import { DMPage } from '../pages/DMPage';
 import { PlayerPage } from '../pages/PlayerPage';
 import { SharedPage } from '../pages/SharedPage';
 
-const DM_EMAIL = process.env.E2E_DM_EMAIL ?? 'dm@test.com';
+
 const DM_PASSWORD = process.env.E2E_DM_PASSWORD ?? 'test1234';
-const PLAYER_EMAIL = process.env.E2E_PLAYER_EMAIL ?? 'player@test.com';
+
 const PLAYER_PASSWORD = process.env.E2E_PLAYER_PASSWORD ?? 'test1234';
 
 let dmContext: any;
@@ -47,14 +47,14 @@ const isOnLogin = async (page: any) => {
 const ensureDmAuthed = async (page: any) => {
   if (!(await isOnLogin(page))) return;
   const auth = new AuthPage(page);
-  await auth.signIn(DM_EMAIL, DM_PASSWORD, 'dm');
+  await auth.continueAsGuest('dm');
   await expect(page.getByTestId('dm-tools')).toBeVisible({ timeout: 20_000 });
 };
 
 const ensurePlayerAuthed = async (page: any) => {
   if (!(await isOnLogin(page))) return;
   const auth = new AuthPage(page);
-  await auth.signIn(PLAYER_EMAIL, PLAYER_PASSWORD, 'player');
+  await auth.continueAsGuest('player');
   await expect(page.getByTestId('player-tools')).toBeVisible({ timeout: 20_000 });
 };
 
@@ -162,11 +162,11 @@ test.describe.serial('Soak/Stress E2E: Simulated 4-hour DM + Player session', ()
     test.setTimeout(30 * 60 * 1000);
 
     const dmAuth = new AuthPage(dmPage);
-    await dmAuth.signIn(DM_EMAIL, DM_PASSWORD, 'dm');
+    await dmAuth.continueAsGuest('dm');
     await expect(dmPage.getByTestId('dm-tools')).toBeVisible({ timeout: 20_000 });
 
     const playerAuth = new AuthPage(playerPage);
-    await playerAuth.signIn(PLAYER_EMAIL, PLAYER_PASSWORD, 'player');
+    await playerAuth.continueAsGuest('player');
     await expect(playerPage.getByTestId('player-tools')).toBeVisible({ timeout: 20_000 });
 
     // Ensure analytics consent is set for both contexts.
@@ -413,7 +413,7 @@ test.describe.serial('Soak/Stress E2E: Simulated 4-hour DM + Player session', ()
 
     try {
       const dmAuth = new AuthPage(dmNewPage);
-      await dmAuth.signIn(DM_EMAIL, DM_PASSWORD, 'dm');
+      await dmAuth.continueAsGuest('dm');
       await dmNewPage.goto(`/campaigns/${campaignId}`);
       await dismissAnalyticsIfPresent(dmNewPage);
 
@@ -421,7 +421,7 @@ test.describe.serial('Soak/Stress E2E: Simulated 4-hour DM + Player session', ()
       await expect(dmNewPage.getByText(/CAMPAIGN CHAT/i).first()).toBeVisible({ timeout: 20_000 });
 
       const playerAuth = new AuthPage(playerNewPage);
-      await playerAuth.signIn(PLAYER_EMAIL, PLAYER_PASSWORD, 'player');
+      await playerAuth.continueAsGuest('player');
       await playerNewPage.goto(`/campaigns/${campaignId}`);
       await dismissAnalyticsIfPresent(playerNewPage);
 

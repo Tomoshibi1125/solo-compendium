@@ -16,7 +16,9 @@ import { useEquipment } from '@/hooks/useEquipment';
 import { useToast } from '@/hooks/use-toast';
 import { filterRowsBySourcebookAccess, getCharacterCampaignId } from '@/lib/sourcebookAccess';
 import { normalizeRegentSearch, formatMonarchVernacular } from '@/lib/vernacular';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 import { staticDataProvider } from '@/data/compendium/staticDataProvider';
+import { AddCustomItemDialog } from './AddCustomItemDialog';
 
 export function AddEquipmentDialog({
   open,
@@ -28,8 +30,11 @@ export function AddEquipmentDialog({
   characterId: string;
 }) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [customItemOpen, setCustomItemOpen] = useState(false);
   const { addEquipment } = useEquipment(characterId);
   const { toast } = useToast();
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const ddbEnhancements = usePlayerToolsEnhancements();
 
   const { data: equipment = [], isLoading } = useQuery({
     queryKey: ['compendium-equipment', characterId, searchQuery],
@@ -131,12 +136,19 @@ export function AddEquipmentDialog({
         properties: item.properties || [],
         weight: item.weight || null,
         quantity: 1,
+        is_container: /backpack|pouch|sack|bag|chest|barrel|basket|bucket|case|flask|jug|pitcher|pot|vial|waterskin/i.test(item.name || ''),
       });
 
       toast({
         title: 'Equipment added',
         description: `${displayName} has been added to your inventory.`,
       });
+
+      ddbEnhancements.trackInventoryChange(
+        characterId,
+        item.name,
+        'add'
+      ).catch(console.error);
 
       onOpenChange(false);
       setSearchQuery('');
@@ -160,14 +172,19 @@ export function AddEquipmentDialog({
         </DialogHeader>
 
         <div className="space-y-4 flex-1 overflow-hidden flex flex-col">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <Input
-              placeholder="Search equipment..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
-            />
+          <div className="flex items-center gap-2">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input
+                placeholder="Search equipment..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            <Button variant="outline" onClick={() => setCustomItemOpen(true)}>
+              Create Custom Item
+            </Button>
           </div>
 
           <div className="flex-1 overflow-y-auto space-y-2">
@@ -184,13 +201,13 @@ export function AddEquipmentDialog({
                 const eqType = (item.equipment_type || 'gear').toLowerCase();
                 const TypeIcon = eqType === 'weapon' ? Swords
                   : eqType === 'armor' ? Shield
-                  : eqType === 'consumable' ? FlaskConical
-                  : Gem;
+                    : eqType === 'consumable' ? FlaskConical
+                      : Gem;
                 const rarityColor = (item as any).rarity === 'legendary' ? 'text-amber-500'
                   : (item as any).rarity === 'epic' ? 'text-purple-500'
-                  : (item as any).rarity === 'rare' ? 'text-blue-500'
-                  : (item as any).rarity === 'uncommon' ? 'text-green-500'
-                  : 'text-muted-foreground';
+                    : (item as any).rarity === 'rare' ? 'text-blue-500'
+                      : (item as any).rarity === 'uncommon' ? 'text-green-500'
+                        : 'text-muted-foreground';
 
                 return (
                   <div
@@ -247,6 +264,11 @@ export function AddEquipmentDialog({
           </div>
         </div>
       </DialogContent>
+      <AddCustomItemDialog
+        open={customItemOpen}
+        onOpenChange={setCustomItemOpen}
+        characterId={characterId}
+      />
     </Dialog>
   );
 }

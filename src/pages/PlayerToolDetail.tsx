@@ -13,6 +13,7 @@ import { PowersList } from '@/components/character/PowersList';
 import { FeaturesList } from '@/components/character/FeaturesList';
 import { CharacterArtPanel } from '@/components/character/CharacterArtPanel';
 import { useActiveCharacter } from '@/hooks/useActiveCharacter';
+import { useCampaignByCharacterId } from '@/hooks/useCampaigns';
 import { QuestLog } from '@/pages/player-tools/QuestLog';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 
@@ -62,6 +63,8 @@ export default function PlayerToolDetail() {
   const navigate = useNavigate();
   const { toolId } = useParams<{ toolId: string }>();
   const { characters, activeCharacter, activeCharacterId, setActiveCharacter, isLoading } = useActiveCharacter();
+  const { data: campaign } = useCampaignByCharacterId(activeCharacter?.id);
+  const campaignId = campaign?.id;
 
   const tool = toolId ? TOOL_TITLES[toolId] : null;
 
@@ -130,14 +133,14 @@ export default function PlayerToolDetail() {
           <div className="space-y-6">
             <CurrencyManager characterId={activeCharacter.id} />
             <EquipmentList characterId={activeCharacter.id} />
-            <RunesList characterId={activeCharacter.id} />
+            <RunesList characterId={activeCharacter.id} campaignId={campaignId} />
           </div>
         ) : null;
       case 'abilities':
         return activeCharacter ? (
           <div className="space-y-6">
-            <ActionsList characterId={activeCharacter.id} />
-            <PowersList characterId={activeCharacter.id} />
+            <ActionsList characterId={activeCharacter.id} campaignId={campaignId ?? undefined} />
+            <PowersList characterId={activeCharacter.id} campaignId={campaignId} />
             <FeaturesList characterId={activeCharacter.id} />
           </div>
         ) : null;
@@ -214,7 +217,7 @@ export default function PlayerToolDetail() {
             <span className="text-sm text-muted-foreground">Active Ascendant</span>
             <Select value={activeCharacterId || ''} onValueChange={setActiveCharacter}>
               <SelectTrigger className="w-64">
-                  <SelectValue placeholder="Select an ascendant" />
+                <SelectValue placeholder="Select an ascendant" />
               </SelectTrigger>
               <SelectContent>
                 {characters.map((character) => (

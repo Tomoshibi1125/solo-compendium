@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  Search, 
+import {
+  Search,
   Grid3X3,
   List,
   Loader2,
@@ -46,6 +46,7 @@ import { parseSearchQuery } from '@/lib/searchOperators';
 import { SkeletonLoader } from '@/components/compendium/SkeletonLoader';
 import { EmptyState } from '@/components/compendium/EmptyState';
 import { useToast } from '@/hooks/use-toast';
+import { useLicenseEnforcement } from '@/hooks/useLicenseEnforcement';
 import { GeminiProtocolGenerator } from '@/components/compendium/GeminiProtocolGenerator';
 import { CompendiumImage } from '@/components/compendium/CompendiumImage';
 import { staticDataProvider } from '@/data/compendium/staticDataProvider';
@@ -60,31 +61,31 @@ type SortOption = 'name-asc' | 'name-desc' | 'level-asc' | 'level-desc' | 'rarit
 
 const categories = [
   { id: 'all', name: 'All', icon: Grid3X3 },
-  
+
   // Character Foundation
   { id: 'backgrounds', name: 'Backgrounds', icon: Users },
   { id: 'jobs', name: 'Classes', icon: Swords },
   { id: 'paths', name: 'Paths', icon: GitBranch },
   { id: 'regents', name: MONARCH_LABEL_PLURAL, icon: Crown },
-  
+
   // Abilities & Skills
   { id: 'feats', name: 'Feats', icon: Sparkles },
   { id: 'skills', name: 'Skills', icon: Dna },
   { id: 'powers', name: 'Powers', icon: Wand2 },
   { id: 'techniques', name: 'Techniques', icon: Package },
-  
+
   // Magic & Equipment
   { id: 'spells', name: 'Spells', icon: ScrollText },
   { id: 'runes', name: 'Runes', icon: Gem },
   { id: 'relics', name: 'Relics', icon: Skull },
   { id: 'artifacts', name: 'Artifacts', icon: Crown },
-  
+
   // World & Entities
   { id: 'monsters', name: 'Monsters', icon: Skull },
   { id: 'locations', name: 'Locations', icon: MapPin },
   { id: 'conditions', name: 'Conditions', icon: AlertTriangle },
   { id: 'shadow-soldiers', name: 'Umbral Legion', icon: Users },
-  
+
   // Items
   { id: 'items', name: 'Items', icon: Package }
 ];
@@ -140,9 +141,9 @@ const Compendium = () => {
   const [maxCR, setMaxCR] = useState<number | ''>('');
   const [showGeminiProtocol, setShowGeminiProtocol] = useState(false);
   const itemsPerPage = 24;
-  
   const { favorites, toggleFavorite } = useFavorites();
   const { toast } = useToast();
+  const { canAccessMarketplace } = useLicenseEnforcement();
   const isE2E = import.meta.env.VITE_E2E === 'true';
   const setupRouteEnabled = isSetupRouteEnabled();
   const showSetup = !isSupabaseConfigured && setupRouteEnabled && !isE2E;
@@ -152,25 +153,25 @@ const Compendium = () => {
     queryKey: ['compendium', selectedCategory, parsedQuery.text, parsedQuery.operators, currentPage],
     queryFn: async () => {
       logger.debug('=== COMPREHENSIVE DATA LOADING ===');
-      logger.debug('Query called with:', { 
-        selectedCategory, 
+      logger.debug('Query called with:', {
+        selectedCategory,
         searchQuery: parsedQuery.text,
         isSupabaseConfigured
       });
-      
+
       const allEntries: CompendiumEntry[] = [];
 
       // Always use static data provider for comprehensive loading
       logger.debug('Using comprehensive static data provider');
-      
+
       // Use static data provider - fetch ALL categories for comprehensive loading
       const categories = ['backgrounds', 'jobs', 'paths', 'regents', 'feats', 'skills', 'powers', 'techniques', 'spells', 'runes', 'relics', 'artifacts', 'monsters', 'locations', 'conditions', 'shadow-soldiers', 'items'] as const;
-      
+
       for (const category of categories) {
         if (selectedCategory === 'all' || selectedCategory === category) {
           logger.debug(`Fetching ${category} data...`);
           let data: StaticCompendiumEntry[] = [];
-          
+
           try {
             switch (category) {
               case 'backgrounds':
@@ -225,9 +226,9 @@ const Compendium = () => {
                 data = await staticDataProvider.getItems(parsedQuery.text);
                 break;
             }
-            
+
             logger.debug(`Got ${data.length} ${category} entries`);
-            
+
             allEntries.push(...data.map(item => ({
               id: item.id,
               name: item.display_name || item.name,
@@ -499,7 +500,7 @@ const Compendium = () => {
   // Build filter chips
   const filterChips = useMemo(() => {
     const chips: Array<{ id: string; label: string; value: string; onRemove: () => void }> = [];
-    
+
     if (showFavoritesOnly) {
       chips.push({
         id: 'favorites',
@@ -508,7 +509,7 @@ const Compendium = () => {
         onRemove: () => setShowFavoritesOnly(false),
       });
     }
-    
+
     selectedSourceBooks.forEach(book => {
       chips.push({
         id: `source-${book}`,
@@ -517,7 +518,7 @@ const Compendium = () => {
         onRemove: () => setSelectedSourceBooks(selectedSourceBooks.filter(b => b !== book)),
       });
     });
-    
+
     selectedSchools.forEach(school => {
       chips.push({
         id: `school-${school}`,
@@ -526,7 +527,7 @@ const Compendium = () => {
         onRemove: () => setSelectedSchools(selectedSchools.filter(s => s !== school)),
       });
     });
-    
+
     selectedGateRanks.forEach(rank => {
       chips.push({
         id: `rank-${rank}`,
@@ -535,7 +536,7 @@ const Compendium = () => {
         onRemove: () => setSelectedGateRanks(selectedGateRanks.filter(r => r !== rank)),
       });
     });
-    
+
     selectedRarities.forEach(rarity => {
       chips.push({
         id: `rarity-${rarity}`,
@@ -544,7 +545,7 @@ const Compendium = () => {
         onRemove: () => setSelectedRarities(selectedRarities.filter(r => r !== rarity)),
       });
     });
-    
+
     if (minLevel !== '' || maxLevel !== '') {
       chips.push({
         id: 'level',
@@ -556,7 +557,7 @@ const Compendium = () => {
         },
       });
     }
-    
+
     if (minCR !== '' || maxCR !== '') {
       chips.push({
         id: 'cr',
@@ -568,7 +569,7 @@ const Compendium = () => {
         },
       });
     }
-    
+
     return chips;
   }, [showFavoritesOnly, selectedSourceBooks, selectedSchools, selectedGateRanks, selectedRarities, minLevel, maxLevel, minCR, maxCR]);
 
@@ -637,7 +638,7 @@ const Compendium = () => {
     const wasFavorite = favorites.has(`${entry.type}:${entry.id}`);
     toggleFavorite(entry.type, entry.id);
     const displayName = formatMonarchVernacular(entry.name);
-    
+
     if (wasFavorite) {
       toast({ title: 'Removed from favorites', description: `${displayName} has been removed from your favorites` });
     } else {
@@ -690,7 +691,7 @@ const Compendium = () => {
     if (!displayQuery.trim()) return displayText;
     const escapedQuery = displayQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const parts = displayText.split(new RegExp(`(${escapedQuery})`, 'gi'));
-    return parts.map((part, i) => 
+    return parts.map((part, i) =>
       part.toLowerCase() === displayQuery.toLowerCase() ? (
         <mark key={i} className="bg-primary/20 text-primary font-semibold" aria-label={`Search match: ${part}`}>{part}</mark>
       ) : part
@@ -712,7 +713,7 @@ const Compendium = () => {
         {/* System UI Background Effects */}
         <div className="absolute inset-0 hex-grid-overlay opacity-30 pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-b from-amethyst-purple/5 via-transparent to-transparent pointer-events-none" />
-        
+
         {/* Header with System UI styling */}
         <div className="mb-6 sm:mb-8 relative z-10">
           <h1 className="font-arise text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 gradient-text-shadow tracking-wider system-text-glow">
@@ -890,7 +891,7 @@ const Compendium = () => {
               </SystemWindow>
             ) : isLoading ? (
               <div className={cn(
-                viewMode === 'grid' 
+                viewMode === 'grid'
                   ? "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4"
                   : "flex flex-col gap-2"
               )}>
@@ -913,7 +914,7 @@ const Compendium = () => {
               </SystemWindow>
             ) : (
               <div className={cn(
-                viewMode === 'grid' 
+                viewMode === 'grid'
                   ? "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4"
                   : "flex flex-col gap-2"
               )}>
@@ -983,8 +984,11 @@ const Compendium = () => {
                             </span>
                           </div>
                         </div>
-                        <h3 className="font-heading text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
+                        <h3 className="font-heading text-lg font-semibold mb-2 group-hover:text-primary transition-colors flex items-center gap-2">
                           {highlightText(entry.name, searchQuery)}
+                          {entry.source_book !== 'System Ascendant Canon' && !canAccessMarketplace && (
+                            <span title="Premium Content"><AlertTriangle className="w-4 h-4 text-amber-500" /></span>
+                          )}
                         </h3>
                         <p className="text-sm text-muted-foreground line-clamp-2">
                           {highlightText(entry.description, searchQuery)}
@@ -1025,8 +1029,11 @@ const Compendium = () => {
                           {getRarityOrRankLabel(entry)}
                         </span>
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-heading font-semibold group-hover:text-primary transition-colors leading-tight">
+                          <h3 className="font-heading font-semibold group-hover:text-primary transition-colors leading-tight flex items-center gap-2">
                             {highlightText(entry.name, searchQuery)}
+                            {entry.source_book !== 'System Ascendant Canon' && !canAccessMarketplace && (
+                              <span title="Premium Content"><AlertTriangle className="w-3 h-3 text-amber-500" /></span>
+                            )}
                           </h3>
                           <p className="text-sm text-muted-foreground line-clamp-1 mt-1 leading-relaxed">
                             {highlightText(entry.description, searchQuery)}

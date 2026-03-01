@@ -9,7 +9,8 @@ import { Label } from '@/components/ui/label';
 import { useRecordRoll } from '@/hooks/useRollHistory';
 import { useCampaignDice } from '@/hooks/useCampaignDice';
 import { useAuth } from '@/lib/auth/authContext';
-import { useHydratedPreferredCampaignId } from '@/hooks/usePreferredCampaignSelection';
+import { usePreferredCampaignSelection } from '@/hooks/usePreferredCampaignSelection';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { logger } from '@/lib/logger';
 import {
   clearPendingResolution,
@@ -168,8 +169,25 @@ const DiceRoller = () => {
   const [rollHistory, setRollHistory] = useState<DiceRoll[]>([]);
   const [campaignId, setCampaignId] = useState<string | null>(null);
 
+  // Auto-select preferred campaign if none is explicitly selected
+  const { campaignId: preferredCampaignId, setPreferredCampaignId } = usePreferredCampaignSelection('dice-roller');
+  useEffect(() => {
+    if (preferredCampaignId && campaignId === null) {
+      setCampaignId(preferredCampaignId);
+    }
+  }, [preferredCampaignId, campaignId]);
+
   // Get campaigns for rolling
-  const campaignsQuery = getCampaignsForRolling();
+  const [campaigns, setCampaigns] = useState<{ id: string | null; name: string | null; }[]>([]);
+
+  useEffect(() => {
+    let mounted = true;
+    void getCampaignsForRolling().then(data => {
+      if (mounted) setCampaigns(data);
+    });
+    return () => { mounted = false; };
+  }, [getCampaignsForRolling]);
+
   const [lastRoll, setLastRoll] = useState<DiceRoll | null>(null);
   const [rollType, setRollType] = useState<'normal' | 'advantage' | 'disadvantage'>('normal');
   const [isRolling, setIsRolling] = useState(false);
@@ -349,13 +367,13 @@ const DiceRoller = () => {
       selectedDice.forEach(({ sides, count }) => {
         for (let i = 0; i < count; i++) {
           let roll = Math.floor(Math.random() * sides) + 1;
-          
+
           // Handle advantage/disadvantage for d20
           if (sides === 20 && rollType !== 'normal') {
             const roll2 = Math.floor(Math.random() * sides) + 1;
             roll = rollType === 'advantage' ? Math.max(roll, roll2) : Math.min(roll, roll2);
           }
-          
+
           rolls.push(roll);
         }
         diceString += `${count}d${sides} + `;
@@ -467,14 +485,37 @@ const DiceRoller = () => {
                 Roll dice with the <span className="text-primary">System's</span> guidance - may the Prime Architect's favor be with you
               </p>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShow3D(!show3D)}
-              className="gap-2"
-            >
-              {show3D ? '2D View' : '3D View'}
-            </Button>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              {campaigns.length > 0 && (
+                <div className="flex items-center gap-2 bg-muted/50 p-1.5 rounded-lg border border-border">
+                  <span className="text-xs font-heading font-medium text-muted-foreground px-2">BROADCAST TO:</span>
+                  <Select
+                    value={campaignId || "none"}
+                    onValueChange={(value) => setCampaignId(value === "none" ? null : value)}
+                  >
+                    <SelectTrigger className="w-[180px] h-8 text-xs font-mono">
+                      <SelectValue placeholder="Local Only" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="none">Local Only</SelectItem>
+                      {campaigns.map((c: any) => (
+                        <SelectItem key={c.id} value={c.id}>
+                          {c.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShow3D(!show3D)}
+                className="gap-2 shrink-0"
+              >
+                {show3D ? '2D View' : '3D View'}
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -547,7 +588,7 @@ const DiceRoller = () => {
                 </Suspense>
               </SystemWindow>
             )}
-            
+
             {/* Dice Theme Selector */}
             {show3D && (
               <SystemWindow title="DICE THEME" variant="default">
@@ -618,7 +659,7 @@ const DiceRoller = () => {
                           {label}
                         </Button>
                         {selected && selected.count > 0 && (
-                          <span 
+                          <span
                             className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white"
                           >
                             {selected.count}
@@ -730,7 +771,7 @@ const DiceRoller = () => {
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-gradient-radial from-shadow-blue/20 via-shadow-purple/10 to-transparent rounded-full blur-3xl animate-pulse" />
                   <div className="absolute bottom-0 right-0 w-48 h-48 bg-gradient-radial from-arise-violet/15 to-transparent rounded-full blur-2xl animate-pulse" />
                 </div>
-                
+
                 <div className="text-center py-6 relative z-10">
                   <div className="relative inline-block">
                     <div className="absolute inset-0 bg-gradient-to-r from-shadow-blue/30 via-shadow-purple/30 to-arise-violet/30 blur-2xl rounded-full animate-pulse" />
@@ -748,8 +789,8 @@ const DiceRoller = () => {
                         className={cn(
                           "px-3 py-1 rounded-lg text-sm font-display font-bold border",
                           roll === 20 ? 'bg-green-500/20 text-green-400 border-green-500/40 shadow-[0_0_10px_hsl(142_71%_45%/0.3)]' :
-                          roll === 1 ? 'bg-red-500/20 text-red-400 border-red-500/40 shadow-[0_0_10px_hsl(0_84%_60%/0.3)]' :
-                          'bg-primary/20 text-primary border-primary/40'
+                            roll === 1 ? 'bg-red-500/20 text-red-400 border-red-500/40 shadow-[0_0_10px_hsl(0_84%_60%/0.3)]' :
+                              'bg-primary/20 text-primary border-primary/40'
                         )}
                       >
                         {roll}
@@ -764,8 +805,8 @@ const DiceRoller = () => {
                   {lastRoll.type && lastRoll.type !== 'normal' && (
                     <span className={cn(
                       "inline-block mt-4 px-4 py-2 rounded-lg text-xs font-arise uppercase tracking-widest border",
-                      lastRoll.type === 'advantage' 
-                        ? 'bg-accent/20 text-accent border-accent/40 shadow-[0_0_15px_hsl(var(--accent)/0.4)]' 
+                      lastRoll.type === 'advantage'
+                        ? 'bg-accent/20 text-accent border-accent/40 shadow-[0_0_15px_hsl(var(--accent)/0.4)]'
                         : 'bg-gate-a/20 text-gate-a border border-gate-a/40 shadow-[0_0_15px_hsl(var(--gate-a)/0.4)]'
                     )}>
                       {lastRoll.type}

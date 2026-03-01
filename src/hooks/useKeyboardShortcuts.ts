@@ -1,41 +1,56 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
-interface KeyboardShortcut {
-  key: string;
-  ctrl?: boolean;
-  shift?: boolean;
-  alt?: boolean;
-  action: () => void;
-  description?: string;
+type ShortcutCallback = (e: KeyboardEvent) => void;
+
+interface Shortcut {
+    key: string;
+    ctrl?: boolean;
+    alt?: boolean;
+    shift?: boolean;
+    meta?: boolean;
+    handler: ShortcutCallback;
+    preventDefault?: boolean;
 }
 
-/**
- * Hook for managing keyboard shortcuts
- */
-export function useKeyboardShortcuts(shortcuts: KeyboardShortcut[]) {
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      shortcuts.forEach(({ key, ctrl, shift, alt, action }) => {
-        const keyMatches = event.key.toLowerCase() === key.toLowerCase();
-        const ctrlMatches = ctrl ? event.ctrlKey || event.metaKey : !event.ctrlKey && !event.metaKey;
-        const shiftMatches = shift ? event.shiftKey : !event.shiftKey;
-        const altMatches = alt ? event.altKey : !event.altKey;
+export function useKeyboardShortcuts(shortcuts: Shortcut[]) {
+    const shortcutsRef = useRef(shortcuts);
 
-        if (keyMatches && ctrlMatches && shiftMatches && altMatches) {
-          // Don't trigger if user is typing in an input
-          const target = event.target as HTMLElement;
-          if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
-            return;
-          }
+    useEffect(() => {
+        shortcutsRef.current = shortcuts;
+    }, [shortcuts]);
 
-          event.preventDefault();
-          action();
-        }
-      });
-    };
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            // Don't trigger shortcuts if user is typing in an input, textarea, or contenteditable
+            if (
+                e.target instanceof HTMLInputElement ||
+                e.target instanceof HTMLTextAreaElement ||
+                (e.target as HTMLElement).isContentEditable
+            ) {
+                // Exception: allow Ctrl/Cmd+S for saving even when in inputs
+                if (e.key.toLowerCase() !== 's' || (!e.ctrlKey && !e.metaKey)) {
+                    return;
+                }
+            }
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [shortcuts]);
+            for (const shortcut of shortcutsRef.current) {
+                const matchesKey = e.key.toLowerCase() === shortcut.key.toLowerCase();
+                const matchesCtrl = !!shortcut.ctrl === e.ctrlKey;
+                const matchesAlt = !!shortcut.alt === e.altKey;
+                const matchesShift = !!shortcut.shift === e.shiftKey;
+                const matchesMeta = !!shortcut.meta === e.metaKey;
+
+                if (matchesKey && matchesCtrl && matchesAlt && matchesShift && matchesMeta) {
+                    if (shortcut.preventDefault !== false) {
+                        e.preventDefault();
+                    }
+                    shortcut.handler(e);
+                    return; // Stop after first matching shortcut
+                }
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
 }
-

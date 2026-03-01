@@ -1,7 +1,7 @@
 import { test, expect, BrowserContext, Page } from '@playwright/test';
 import { AuthPage } from './pages/AuthPage';
 
-const PLAYER_EMAIL = process.env.E2E_PLAYER_EMAIL ?? 'player@test.com';
+
 const PLAYER_PASSWORD = process.env.E2E_PLAYER_PASSWORD ?? 'test1234';
 
 test.describe.serial('Player persistence: reload restores state', () => {
@@ -12,7 +12,7 @@ test.describe.serial('Player persistence: reload restores state', () => {
     const context = await browser.newContext();
     const page = await context.newPage();
     const auth = new AuthPage(page);
-    await auth.signIn(PLAYER_EMAIL, PLAYER_PASSWORD, 'player');
+    await auth.continueAsGuest('player');
     return { context, page };
   };
 

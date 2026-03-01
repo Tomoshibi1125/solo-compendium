@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Save, X } from 'lucide-react';
+import { Save, X, Wand2, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -9,6 +9,8 @@ import { useUpdateCharacter } from '@/hooks/useCharacters';
 import { useToast } from '@/hooks/use-toast';
 import { logger } from '@/lib/logger';
 import type { CharacterWithAbilities } from '@/hooks/useCharacters';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
+import { aiService } from '@/lib/ai/aiService';
 
 interface CharacterEditDialogProps {
   character: CharacterWithAbilities | null;
@@ -24,6 +26,8 @@ export function CharacterEditDialog({ character, open, onOpenChange, onStateChan
   const [appearance, setAppearance] = useState('');
   const [backstory, setBackstory] = useState('');
   const [notes, setNotes] = useState('');
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const playerTools = usePlayerToolsEnhancements();
 
   // Update form when character changes
   useEffect(() => {
@@ -34,6 +38,65 @@ export function CharacterEditDialog({ character, open, onOpenChange, onStateChan
       setNotes(character.notes || '');
     }
   }, [character]);
+
+  const [isGeneratingApp, setIsGeneratingApp] = useState(false);
+  const [isGeneratingBack, setIsGeneratingBack] = useState(false);
+
+  const handleGenerateAI = async (field: 'appearance' | 'backstory') => {
+    if (!character) return;
+    const isApp = field === 'appearance';
+    const setter = isApp ? setAppearance : setBackstory;
+    const loader = isApp ? setIsGeneratingApp : setIsGeneratingBack;
+
+    loader(true);
+    try {
+      const charDesc = `Level ${character.level} character named ${character.name || 'Unknown'}`;
+      const prompt = isApp
+        ? `Generate a 2-3 sentence evocative, dark-fantasy physical appearance description for a ${charDesc} in the System Ascendant universe. Emphasize their glowing aura and combat readiness.`
+        : `Generate a 1-paragraph dramatic, high-stakes backstory for a ${charDesc} in the System Ascendant universe. They recently awoke to a powerful, mysterious System. Keep it exciting and aligned with manhwa tropes.`;
+
+      const response = await aiService.processRequest({
+        service: aiService.getConfiguration().defaultService,
+        type: 'generate-content',
+        input: prompt,
+        context: {
+          contentType: 'backstory',
+          tone: 'epic',
+          length: isApp ? 'short' : 'medium',
+          complexity: 'moderate',
+          universe: 'System Ascendant',
+        },
+      });
+
+      if (!response.success) {
+        throw new Error(response.error || 'Generation failed.');
+      }
+
+      // the response.data might be a string, or an object containing .content or .output
+      let text = typeof response.data === 'string' ? response.data : '';
+      if (!text && response.data?.content && typeof response.data.content === 'string') {
+        text = response.data.content;
+      }
+      if (!text && response.data?.output && typeof response.data.output === 'string') {
+        text = response.data.output;
+      }
+
+      if (text) {
+        setter(text);
+        toast({ title: `${isApp ? 'Appearance' : 'Backstory'} Generated`, description: 'Feel free to modify the result.' });
+      } else {
+        throw new Error('Received empty response from AI.');
+      }
+    } catch (err: any) {
+      toast({
+        title: 'Generation Failed',
+        description: err.message,
+        variant: 'destructive',
+      });
+    } finally {
+      loader(false);
+    }
+  };
 
   const handleSave = async () => {
     if (!character) return;
@@ -71,6 +134,8 @@ export function CharacterEditDialog({ character, open, onOpenChange, onStateChan
         description: 'Your changes have been saved.',
       });
 
+      playerTools.trackCustomFeatureUsage(character.id, 'Character Details Updated', 'Appearance, backstory, or notes changed', '5e').catch(console.error);
+
       onOpenChange(false);
     } catch (error) {
       logger.error('Failed to update character:', error);
@@ -105,7 +170,19 @@ export function CharacterEditDialog({ character, open, onOpenChange, onStateChan
           </div>
 
           <div>
-            <Label htmlFor="character-appearance">Appearance</Label>
+            <div className="flex items-center justify-between mb-1">
+              <Label htmlFor="character-appearance">Appearance</Label>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-6 text-xs text-muted-foreground hover:text-primary px-2"
+                onClick={() => handleGenerateAI('appearance')}
+                disabled={isGeneratingApp || !name}
+              >
+                {isGeneratingApp ? <Loader2 className="w-3 h-3 mr-1 animate-spin" /> : <Wand2 className="w-3 h-3 mr-1" />}
+                Auto-fill
+              </Button>
+            </div>
             <Textarea
               id="character-appearance"
               value={appearance}
@@ -117,7 +194,19 @@ export function CharacterEditDialog({ character, open, onOpenChange, onStateChan
           </div>
 
           <div>
-            <Label htmlFor="character-backstory">Backstory</Label>
+            <div className="flex items-center justify-between mb-1">
+              <Label htmlFor="character-backstory">Backstory</Label>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-6 text-xs text-muted-foreground hover:text-primary px-2"
+                onClick={() => handleGenerateAI('backstory')}
+                disabled={isGeneratingBack || !name}
+              >
+                {isGeneratingBack ? <Loader2 className="w-3 h-3 mr-1 animate-spin" /> : <Wand2 className="w-3 h-3 mr-1" />}
+                Auto-fill
+              </Button>
+            </div>
             <Textarea
               id="character-backstory"
               value={backstory}
@@ -164,4 +253,3 @@ export function CharacterEditDialog({ character, open, onOpenChange, onStateChan
     </Dialog>
   );
 }
-

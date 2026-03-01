@@ -6,6 +6,7 @@ import { formatMonarchVernacular } from '@/lib/vernacular';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { setPendingResolution, type ActionResolutionPayload } from '@/lib/actionResolution';
+import { ShareToVTTButton } from '@/components/compendium/ShareToVTTButton';
 
 interface SpellData {
   id: string;
@@ -205,7 +206,10 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
         </div>
       )}
 
-      <SystemWindow title={displayName.toUpperCase()}>
+      <SystemWindow
+        title={displayName.toUpperCase()}
+        actions={<ShareToVTTButton itemType="Spell" itemName={displayName} />}
+      >
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-2">
             {data.spell_type && <Badge variant="secondary">{formatMonarchVernacular(data.spell_type)}</Badge>}

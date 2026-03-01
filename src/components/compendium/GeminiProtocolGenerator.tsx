@@ -10,13 +10,16 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Crown, Swords, Shield, Zap, Sparkles, RefreshCw, Dna, Save, Loader2 } from 'lucide-react';
-import { useSaveSovereign } from '@/hooks/useSavedSovereigns';
+import { Crown, Swords, Shield, Zap, Sparkles, RefreshCw, Dna, Save, Loader2, Link2 } from 'lucide-react';
+import { useSaveSovereign, useCharacterSovereign } from '@/hooks/useSavedSovereigns';
 import { useAuth } from '@/lib/auth/authContext';
 import { useActiveCharacter } from '@/hooks/useActiveCharacter';
 import { useCharacterMonarchUnlocks } from '@/hooks/useRegentUnlocks';
 import { useCampaignByCharacterId } from '@/hooks/useCampaigns';
 import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
+import { useRecordRoll } from '@/hooks/useRollHistory';
+import { useToast } from '@/hooks/use-toast';
 
 type RegentOption = {
   id: string;
@@ -39,8 +42,13 @@ export function GeminiProtocolGenerator() {
   const [selectedRegentA, setSelectedRegentA] = useState<string>('');
   const [selectedRegentB, setSelectedRegentB] = useState<string>('');
   const [generatedSovereign, setGeneratedSovereign] = useState<GeneratedSovereign | null>(null);
-  
+
   const saveSovereign = useSaveSovereign();
+  const { data: existingSovereign } = useCharacterSovereign(characterId);
+  const { toast } = useToast();
+  const recordRoll = useRecordRoll();
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const { rollInCampaign } = usePlayerToolsEnhancements();
 
   // Fetch all jobs
   const { data: jobs = [], isLoading: jobsLoading } = useQuery({
@@ -213,6 +221,8 @@ export function GeminiProtocolGenerator() {
   const [isGenerating, setIsGenerating] = useState(false);
 
   const handleGenerate = useCallback(async () => {
+    // Block if the character already has a Sovereign overlay
+    if (autoMode && existingSovereign) return;
     const job = jobs.find(j => j.id === selectedJob);
     const path = paths.find(p => p.id === selectedPath) || allPaths.find((p) => p.id === selectedPath);
     const regentA = regents.find((r) => r.id === selectedRegentA);
@@ -220,12 +230,50 @@ export function GeminiProtocolGenerator() {
 
     if (job && path && regentA && regentB) {
       setIsGenerating(true);
+
+      const broadcastGeneration = (sovereign: GeneratedSovereign) => {
+        const title = formatMonarchVernacular(sovereign.title);
+        const name = formatMonarchVernacular(sovereign.name);
+        const contextMsg = `System Ascendant Gemini Protocol: Generated Sovereign [${name} - ${title}]`;
+
+        if (campaignId && characterId) {
+          rollInCampaign(campaignId, {
+            dice_formula: '0',
+            result: 0,
+            rolls: [],
+            roll_type: 'ability',
+            context: contextMsg,
+            character_id: characterId,
+          });
+        }
+
+        if (characterId) {
+          recordRoll.mutate({
+            dice_formula: '0',
+            result: 0,
+            rolls: [],
+            roll_type: 'ability',
+            context: contextMsg,
+            campaign_id: campaignId ?? null,
+            character_id: characterId,
+          });
+        }
+
+        toast({
+          title: 'Sovereign Generated!',
+          description: `The Gemini Protocol has fused ${name}.`,
+          duration: 4000
+        });
+      };
+
       try {
         const sovereign = await generateSovereignWithAI(job, path, regentA as any, regentB as any);
         setGeneratedSovereign(sovereign);
+        broadcastGeneration(sovereign);
       } catch {
         const sovereign = generateSovereign(job, path, regentA as any, regentB as any);
         setGeneratedSovereign(sovereign);
+        broadcastGeneration(sovereign);
       } finally {
         setIsGenerating(false);
       }
@@ -270,35 +318,35 @@ export function GeminiProtocolGenerator() {
   const dataReady = !jobsLoading && !regentsLoading && !allPathsLoading;
   const templateReady = Boolean(
     selectedJobEntry &&
-      selectedPathEntry &&
-      selectedRegentAEntry &&
-      selectedRegentBEntry &&
-      selectedRegentA !== selectedRegentB
+    selectedPathEntry &&
+    selectedRegentAEntry &&
+    selectedRegentBEntry &&
+    selectedRegentA !== selectedRegentB
   );
   const autoKey = `${selectedJobEntry?.id || ''}:${selectedPathEntry?.id || ''}:${selectedRegentAEntry?.id || ''}:${selectedRegentBEntry?.id || ''}`;
   const lastAutoKey = useRef<string>('');
   const displaySovereign = generatedSovereign
     ? {
-        name: formatMonarchVernacular(generatedSovereign.name),
-        title: formatMonarchVernacular(generatedSovereign.title),
-        jobName: formatMonarchVernacular(generatedSovereign.job.name),
-        pathName: formatMonarchVernacular(generatedSovereign.path.name.replace('Path of the ', '')),
-        regentATheme: formatMonarchVernacular((generatedSovereign as any).regentA.theme),
-        regentBTheme: formatMonarchVernacular((generatedSovereign as any).regentB.theme),
-        fusionTheme: formatMonarchVernacular(generatedSovereign.fusion_theme),
-        powerMultiplier: formatMonarchVernacular(generatedSovereign.power_multiplier),
-        fusionStability: formatMonarchVernacular(generatedSovereign.fusion_stability),
-        description: formatMonarchVernacular(generatedSovereign.description),
-        fusionDescription: formatMonarchVernacular(generatedSovereign.fusion_description),
-        abilities: generatedSovereign.abilities.map((ability) => ({
-          ...ability,
-          name: formatMonarchVernacular(ability.name),
-          description: formatMonarchVernacular(ability.description),
-          action_type: ability.action_type ? formatMonarchVernacular(ability.action_type) : null,
-          recharge: ability.recharge ? formatMonarchVernacular(ability.recharge) : null,
-          origin_sources: ability.origin_sources.map(formatMonarchVernacular),
-        })),
-      }
+      name: formatMonarchVernacular(generatedSovereign.name),
+      title: formatMonarchVernacular(generatedSovereign.title),
+      jobName: formatMonarchVernacular(generatedSovereign.job.name),
+      pathName: formatMonarchVernacular(generatedSovereign.path.name.replace('Path of the ', '')),
+      regentATheme: formatMonarchVernacular((generatedSovereign as any).regentA.theme),
+      regentBTheme: formatMonarchVernacular((generatedSovereign as any).regentB.theme),
+      fusionTheme: formatMonarchVernacular(generatedSovereign.fusion_theme),
+      powerMultiplier: formatMonarchVernacular(generatedSovereign.power_multiplier),
+      fusionStability: formatMonarchVernacular(generatedSovereign.fusion_stability),
+      description: formatMonarchVernacular(generatedSovereign.description),
+      fusionDescription: formatMonarchVernacular(generatedSovereign.fusion_description),
+      abilities: generatedSovereign.abilities.map((ability) => ({
+        ...ability,
+        name: formatMonarchVernacular(ability.name),
+        description: formatMonarchVernacular(ability.description),
+        action_type: ability.action_type ? formatMonarchVernacular(ability.action_type) : null,
+        recharge: ability.recharge ? formatMonarchVernacular(ability.recharge) : null,
+        origin_sources: ability.origin_sources.map(formatMonarchVernacular),
+      })),
+    }
     : null;
 
   const autoIssues: string[] = [];
@@ -312,13 +360,48 @@ export function GeminiProtocolGenerator() {
 
   useEffect(() => {
     if (!autoMode || !dataReady || !templateReady) return;
+    // Don't auto-generate if the character already has a locked-in Sovereign
+    if (existingSovereign) return;
     if (autoKey === lastAutoKey.current) return;
     handleGenerate();
     lastAutoKey.current = autoKey;
-  }, [autoKey, autoMode, dataReady, handleGenerate, templateReady]);
+  }, [autoKey, autoMode, dataReady, existingSovereign, handleGenerate, templateReady]);
 
   return (
     <div className="space-y-6">
+
+      {/* Existing Sovereign Notice (auto player mode only) */}
+      {autoMode && existingSovereign && (
+        <Card className="border-arise-violet/50 bg-arise-violet/5">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-arise-violet">
+              <Crown className="h-5 w-5" />
+              Sovereign Overlay: {existingSovereign.name}
+            </CardTitle>
+            <p className="text-sm text-muted-foreground italic">{existingSovereign.title}</p>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">
+              Your character's Sovereign overlay has already been locked in via the Gemini Protocol.
+              A Sovereign is a <strong>permanent, once-per-character</strong> subclass fusion — it cannot be regenerated or replaced.
+            </p>
+            <div className="flex flex-wrap gap-2 mt-3">
+              {existingSovereign.fusion_theme && (
+                <span className="text-xs bg-arise-violet/20 text-arise-violet border border-arise-violet/30 rounded-full px-2 py-0.5">
+                  {existingSovereign.fusion_theme}
+                </span>
+              )}
+              <span className="text-xs bg-muted text-muted-foreground rounded-full px-2 py-0.5">
+                Fusion Stability: {existingSovereign.fusion_stability}
+              </span>
+              <span className="text-xs bg-muted text-muted-foreground rounded-full px-2 py-0.5">
+                Power: {existingSovereign.power_multiplier}
+              </span>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Header */}
       <div className="text-center space-y-2">
         <div className="flex items-center justify-center gap-2">
@@ -486,22 +569,42 @@ export function GeminiProtocolGenerator() {
                   <Crown className="h-6 w-6 text-primary" />
                   <CardTitle className="text-xl">{displaySovereign.name}</CardTitle>
                 </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => saveSovereign.mutate(generatedSovereign)}
-                  disabled={saveSovereign.isPending}
-                >
-                  {saveSovereign.isPending ? (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  ) : (
-                    <Save className="h-4 w-4 mr-2" />
-                  )}
-                  Save to Archive
-                </Button>
+                {/* Only show save if not already saved to this character */}
+                {!existingSovereign && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => saveSovereign.mutate({ sovereign: generatedSovereign, characterId })}
+                    disabled={saveSovereign.isPending}
+                  >
+                    {saveSovereign.isPending ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <Save className="h-4 w-4 mr-2" />
+                    )}
+                    {characterId ? 'Lock In Sovereign' : 'Save to Archive'}
+                  </Button>
+                )}
               </div>
+              {/* Share button — always shown when sovereign is displayed */}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={async () => {
+                  const shareUrl = `${window.location.origin}/compendium?tab=sovereign&name=${encodeURIComponent(displaySovereign.name)}`;
+                  if (navigator.share) {
+                    await navigator.share({ title: displaySovereign.name, url: shareUrl }).catch(() => { });
+                  } else {
+                    await navigator.clipboard.writeText(shareUrl).catch(() => { });
+                    toast({ title: 'Link copied', description: 'Sovereign link copied to clipboard.' });
+                  }
+                }}
+              >
+                <Link2 className="h-4 w-4 mr-1" />
+                Share
+              </Button>
               <p className="text-lg text-muted-foreground italic">{displaySovereign.title}</p>
-              
+
               {/* Component Badges */}
               <div className="flex flex-wrap gap-2">
                 <Badge variant="outline">{displaySovereign.jobName}</Badge>
@@ -547,11 +650,10 @@ export function GeminiProtocolGenerator() {
                     <div
                       key={ability.name || `ability-${index}`}
                       data-testid="fusion-ability-card"
-                      className={`p-3 rounded-lg border ${
-                        ability.is_capstone 
-                          ? 'border-primary bg-primary/5' 
-                          : 'border-border'
-                      }`}
+                      className={`p-3 rounded-lg border ${ability.is_capstone
+                        ? 'border-primary bg-primary/5'
+                        : 'border-border'
+                        }`}
                     >
                       <div className="flex items-start justify-between gap-2 flex-wrap">
                         <div className="flex items-center gap-2 flex-wrap">

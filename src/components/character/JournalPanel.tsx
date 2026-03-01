@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { useCharacterJournal, useCreateJournalEntry, useDeleteJournalEntry } from '@/hooks/useCharacterJournal';
 import { format } from 'date-fns';
 import { logger } from '@/lib/logger';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 
 interface JournalPanelProps {
   characterId: string;
@@ -22,6 +23,8 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
   const [newTitle, setNewTitle] = useState('');
   const [newContent, setNewContent] = useState('');
   const [newTags, setNewTags] = useState('');
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const playerTools = usePlayerToolsEnhancements();
 
   if (hasError) {
     return (
@@ -37,7 +40,7 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
   const handleCreate = async () => {
     try {
       if (!newTitle.trim()) return;
-      
+
       await createEntry.mutateAsync({
         character_id: characterId,
         title: newTitle,
@@ -45,7 +48,9 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
         session_date: new Date().toISOString().split('T')[0],
         tags: newTags.split(',').map(t => t.trim()).filter(Boolean),
       });
-      
+
+      playerTools.trackCustomFeatureUsage(characterId, 'Journal Entry Added', newTitle, '5e').catch(console.error);
+
       setIsCreating(false);
       setNewTitle('');
       setNewContent('');
@@ -59,12 +64,12 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
   const handleDelete = async (id: string) => {
     try {
       await deleteEntry.mutateAsync({ id, characterId });
+      playerTools.trackCustomFeatureUsage(characterId, 'Journal Entry Removed', 'Deleted an entry', '5e').catch(console.error);
     } catch (error) {
       logger.error('Failed to delete journal entry:', error);
       setHasError(true);
     }
   };
-
   if (isLoading) {
     return (
       <div className="space-y-4">
@@ -179,13 +184,13 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
                         <Trash2 className="h-3.5 w-3.5" />
                       </Button>
                     </div>
-                    
+
                     {entry.content && (
                       <p className="text-sm text-muted-foreground mt-2 whitespace-pre-wrap">
                         {entry.content}
                       </p>
                     )}
-                    
+
                     {entry.tags && entry.tags.length > 0 && (
                       <div className="flex flex-wrap gap-1 mt-2">
                         {entry.tags.map((tag, idx) => (

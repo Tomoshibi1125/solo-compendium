@@ -19,6 +19,7 @@ import {
   type CampaignSessionStatus,
 } from '@/hooks/useCampaignSessions';
 import { useToast } from '@/hooks/use-toast';
+import { useSendCampaignMessage } from '@/hooks/useCampaignChat';
 
 const STATUS_OPTIONS: CampaignSessionStatus[] = ['planned', 'in_progress', 'completed', 'cancelled'];
 const LOG_TYPES: CampaignSessionLogType[] = ['session', 'recap', 'loot', 'event', 'note'];
@@ -36,6 +37,7 @@ export function CampaignSessionsPanel({ campaignId, canManage }: CampaignSession
   const upsertSession = useUpsertCampaignSession();
   const deleteSession = useDeleteCampaignSession();
   const addLog = useAddCampaignSessionLog();
+  const sendMessage = useSendCampaignMessage();
 
   const [sessionTitle, setSessionTitle] = useState('');
   const [sessionDescription, setSessionDescription] = useState('');
@@ -75,6 +77,11 @@ export function CampaignSessionsPanel({ campaignId, canManage }: CampaignSession
       status: 'planned',
     });
 
+    await sendMessage.mutateAsync({
+      campaignId,
+      content: `**System**: A new session has been scheduled - "${sessionTitle.trim()}"`
+    }).catch(console.error);
+
     setSessionTitle('');
     setSessionDescription('');
     setSessionScheduledFor('');
@@ -87,6 +94,13 @@ export function CampaignSessionsPanel({ campaignId, canManage }: CampaignSession
       sessionId,
       status,
     });
+
+    // Broadcast status change
+    const title = sessionNameById.get(sessionId) || 'Session';
+    await sendMessage.mutateAsync({
+      campaignId,
+      content: `**System**: Status for "${title}" changed to ${status.replace('_', ' ')}.`
+    }).catch(console.error);
   };
 
   const createLog = async () => {
@@ -108,6 +122,13 @@ export function CampaignSessionsPanel({ campaignId, canManage }: CampaignSession
       isPlayerVisible: logVisible,
       metadata: {},
     });
+
+    if (logVisible) {
+      await sendMessage.mutateAsync({
+        campaignId,
+        content: `**System**: A new campaign log ("${logTitle.trim()}") has been added.`
+      }).catch(console.error);
+    }
 
     setLogTitle('');
     setLogContent('');

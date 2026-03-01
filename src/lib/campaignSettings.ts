@@ -6,3 +6,7 @@ export function getLevelingMode(settings?: Record<string, unknown>): LevelingMod
   const raw = settings?.leveling_mode;
   return VALID_LEVELING_MODES.includes(raw as LevelingMode) ? (raw as LevelingMode) : 'milestone';
 }
+
+export function getAutomatedCombat(settings?: Record<string, unknown>): boolean {
+  return settings?.automated_combat === true;
+}

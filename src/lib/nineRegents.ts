@@ -29,7 +29,7 @@
  * Quest-gated, NOT level-gated (DM/Protocol Warden approval required)
  */
 
-import { RegentType, type RegentPath } from './regentGeminiSystem';
+import { RegentType, type RegentPath } from './regentTypes';
 
 export const NINE_REGENTS: RegentPath[] = [
   // 1. SHADOW REGENT (Shadow Monarch - Ashborn)
@@ -40,6 +40,7 @@ export const NINE_REGENTS: RegentPath[] = [
     id: 'shadow_regent',
     name: 'Shadow Regent',
     type: RegentType.INTELLIGENCE_REGENT,
+    compendiumId: 'umbral-monarch-overlay',
     description: 'Ruler of death and the shadow realm. Command an eternal army extracted from fallen foes. Your System displays [SHADOW MONARCH PROTOCOL]. Hunter Bureau: S-Rank necromancy threat.',
     abilities: ['Shadow Extraction', 'Shadow Storage Dimension', 'Shadow Exchange', 'Eternal Army Command'],
     features: [
@@ -80,6 +81,7 @@ export const NINE_REGENTS: RegentPath[] = [
     id: 'dragon_regent',
     name: 'Dragon Regent',
     type: RegentType.STRENGTH_REGENT,
+    compendiumId: 'dragon-regent-overlay',
     description: 'Incarnation of primordial destruction. Transform into dragon of apocalypse. Your presence melts asphalt. Hunter Bureau: Kaiju-class extinction event.',
     abilities: ['Breath of Annihilation', 'True Dragon Form', 'Destruction Embodiment', 'Calamity Wings'],
     features: [
@@ -120,6 +122,7 @@ export const NINE_REGENTS: RegentPath[] = [
     id: 'frost_regent',
     name: 'Frost Regent',
     type: RegentType.INTELLIGENCE_REGENT,
+    compendiumId: 'frost-regent-overlay',
     description: 'Herald of the eternal winter. Bring ice age to modern cities. Thermometers break showing impossible temperatures. Hunter Bureau: Climate catastrophe event.',
     abilities: ['Ice Age Protocol', 'Absolute Zero Touch', 'Glacial Eternity', 'Winter\'s End'],
     features: [
@@ -160,6 +163,7 @@ export const NINE_REGENTS: RegentPath[] = [
     id: 'beast_regent',
     name: 'Beast Regent',
     type: RegentType.STRENGTH_REGENT,
+    compendiumId: 'beast-regent-overlay',
     description: 'Avatar of primordial evolution. All beasts recognize you as alpha. Transform into apex predator from before human history. Hunter Bureau: Alpha-class biodiversity threat.',
     abilities: ['Apex Evolution', 'Worldwide Beast Command', 'Primordial Instinct', 'Alpha Dominance'],
     features: [
@@ -200,6 +204,7 @@ export const NINE_REGENTS: RegentPath[] = [
     id: 'titan_regent',
     name: 'Titan Regent',
     type: RegentType.VITALITY_REGENT,
+    compendiumId: 'steel-flesh-monarch-overlay',
     description: 'Embodiment of absolute defense. Invulnerable to all harm. Laws of physics bend around you. Hunter Bureau: Unkillable entity - containment impossible.',
     abilities: ['Conceptual Invulnerability', 'Immovable', 'Infinite Endurance', 'Titan\'s Law'],
     features: [
@@ -240,6 +245,7 @@ export const NINE_REGENTS: RegentPath[] = [
     id: 'plague_regent',
     name: 'Plague Regent',
     type: RegentType.INTELLIGENCE_REGENT,
+    compendiumId: 'plague-regent-overlay',
     description: 'Incarnation of plague and pestilence. Walking biological apocalypse. CDC tracks 47 unknown pathogens in your wake. Hunter Bureau: Pandemic-class bioweapon.',
     abilities: ['Pandemic Protocol', 'Swarm Incarnation', 'Plague Vector', 'Disease God'],
     features: [
@@ -280,6 +286,7 @@ export const NINE_REGENTS: RegentPath[] = [
     id: 'architect_regent',
     name: 'Architect Regent',
     type: RegentType.INTELLIGENCE_REGENT,
+    compendiumId: 'architect-regent-overlay',
     description: 'Reality\'s architect. Reshape space, time, and dimensions. Create permanent worlds. Your System HUD shows universe blueprint. Hunter Bureau: Dimensional sovereignty threat.',
     abilities: ['Reality Blueprint', 'Dimensional Genesis', 'Spatial Sovereignty', 'Time Architecture'],
     features: [
@@ -320,6 +327,7 @@ export const NINE_REGENTS: RegentPath[] = [
     id: 'radiant_regent',
     name: 'Radiant Regent',
     type: RegentType.PRESENCE_REGENT,
+    compendiumId: 'flame-monarch-overlay',
     description: 'Purifying flame incarnate. White fire that erases evil. Visible from space. Every religion claims you as prophet/devil. Hunter Bureau: Apocalypse-class sanctification event.',
     abilities: ['White Flame Apocalypse', 'Purification Protocol', 'Radiant Judgment', 'Holy Extinction'],
     features: [
@@ -360,6 +368,7 @@ export const NINE_REGENTS: RegentPath[] = [
     id: 'mimic_regent',
     name: 'Mimic Regent',
     type: RegentType.AGILITY_REGENT,
+    compendiumId: 'mimic-regent-overlay',
     description: 'Embodiment of infinite forms. Copy anything - creatures, objects, concepts. No detection possible. Hunter Bureau: Identity unknown - all records contradictory.',
     abilities: ['Perfect Mimicry', 'Reality Copy', 'Adaptive Genesis', 'Thousand True Forms'],
     features: [

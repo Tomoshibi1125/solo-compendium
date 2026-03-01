@@ -19,6 +19,7 @@ import { useCampaignNotes, useCreateCampaignNote, useUpdateCampaignNote, useDele
 import { useHasDMAccess } from '@/hooks/useCampaigns';
 import { format } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
+import { canViewNote, canEditNote, filterVisibleNotes, type SecuredNote } from '@/lib/notePrivacy';
 
 interface CampaignNotesProps {
   campaignId: string;

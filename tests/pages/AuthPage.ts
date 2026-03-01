@@ -11,7 +11,7 @@ export type Role = 'dm' | 'player';
  *   3. CSS          – button[type="submit"]
  */
 export class AuthPage {
-  constructor(public page: Page) {}
+  constructor(public page: Page) { }
 
   /** Dismiss analytics consent banner via localStorage (matches existing E2E pattern). */
   async dismissAnalytics() {
@@ -27,45 +27,21 @@ export class AuthPage {
     await this.page.goto('/login');
   }
 
-  /** Sign in with email/password and a role. Waits for post-login navigation. */
-  async signIn(email: string, password: string, role: Role) {
-    await this.dismissAnalytics();
-    await this.goto();
-
-    // Select role
-    if (role === 'dm') {
-      await this.page.getByRole('button', { name: /Protocol Warden/i }).click();
-    } else {
-      await this.page.getByRole('button', { name: /Player/i }).first().click();
-    }
-
-    // Fill credentials
-    await this.page.getByTestId('email-input').fill(email);
-    await this.page.getByTestId('password-input').fill(password);
-
-    // Submit and wait for navigation
-    await this.page.locator('button[type="submit"]').click();
-
-    const expectedUrl = role === 'dm' ? /\/dm-tools/ : /\/player-tools/;
-    await this.page.waitForURL(expectedUrl, { timeout: 20_000 });
-  }
-
   /** Continue as guest with the chosen role (no Supabase account required). */
   async continueAsGuest(role: Role) {
     await this.dismissAnalytics();
     await this.goto();
 
-    // Select role
+    // Select role (this sets the role state in Login.tsx)
     if (role === 'dm') {
       await this.page.getByRole('button', { name: /Protocol Warden/i }).click();
     } else {
       await this.page.getByRole('button', { name: /Player/i }).first().click();
     }
 
-    // Click guest button
-    await this.page
-      .getByRole('button', { name: new RegExp(`Continue as Guest.*${role === 'dm' ? 'Protocol Warden' : 'Player'}`, 'i') })
-      .click();
+    // Click the specific guest button
+    const buttonText = `Continue as Guest (${role === 'dm' ? 'Protocol Warden' : 'Player'})`;
+    await this.page.getByRole('button', { name: buttonText, exact: true }).click();
 
     const expectedUrl = role === 'dm' ? /\/dm-tools/ : /\/player-tools/;
     await this.page.waitForURL(expectedUrl, { timeout: 15_000 });

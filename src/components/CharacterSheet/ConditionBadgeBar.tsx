@@ -29,9 +29,11 @@ interface ConditionBadgeBarProps {
   conditions: string[];
   onAddCondition: (condition: string) => void;
   onRemoveCondition: (condition: string) => void;
+  exhaustionLevel?: number;
+  onClearExhaustion?: () => void;
 }
 
-export function ConditionBadgeBar({ conditions, onAddCondition, onRemoveCondition }: ConditionBadgeBarProps) {
+export function ConditionBadgeBar({ conditions, onAddCondition, onRemoveCondition, exhaustionLevel = 0, onClearExhaustion }: ConditionBadgeBarProps) {
   const [showPicker, setShowPicker] = useState(false);
 
   const available = ALL_CONDITIONS.filter(
@@ -41,7 +43,7 @@ export function ConditionBadgeBar({ conditions, onAddCondition, onRemoveConditio
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 flex-wrap">
-        {conditions.length === 0 && (
+        {conditions.length === 0 && exhaustionLevel === 0 && (
           <span className="text-xs text-muted-foreground">No active conditions</span>
         )}
         <TooltipProvider>
@@ -85,6 +87,37 @@ export function ConditionBadgeBar({ conditions, onAddCondition, onRemoveConditio
               </Tooltip>
             );
           })}
+          {exhaustionLevel > 0 && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Badge className="bg-orange-600 text-white gap-1 cursor-default select-none">
+                  <AlertTriangle className="h-3 w-3" />
+                  Exhaustion {exhaustionLevel}
+                  {onClearExhaustion && (
+                    <button
+                      onClick={onClearExhaustion}
+                      className="ml-0.5 hover:opacity-70"
+                      aria-label="Clear Exhaustion"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  )}
+                </Badge>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" className="max-w-xs text-left">
+                <p className="font-semibold mb-1">Exhaustion Level {exhaustionLevel}</p>
+                <p className="text-xs mb-1">Some special abilities or environments can lead to exhaustion.</p>
+                <ul className="text-xs list-disc pl-3">
+                  {exhaustionLevel >= 1 && <li>Disadvantage on ability checks</li>}
+                  {exhaustionLevel >= 2 && <li>Speed halved</li>}
+                  {exhaustionLevel >= 3 && <li>Disadvantage on attack rolls and saving throws</li>}
+                  {exhaustionLevel >= 4 && <li>Hit point maximum halved</li>}
+                  {exhaustionLevel >= 5 && <li>Speed reduced to 0</li>}
+                  {exhaustionLevel >= 6 && <li>Death</li>}
+                </ul>
+              </TooltipContent>
+            </Tooltip>
+          )}
         </TooltipProvider>
 
         <Button

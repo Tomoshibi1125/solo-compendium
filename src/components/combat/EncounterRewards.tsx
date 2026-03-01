@@ -11,6 +11,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useCampaignMembers } from '@/hooks/useCampaigns';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 
 interface EncounterRewardsProps {
   campaignId: string;
@@ -40,6 +41,10 @@ export const EncounterRewards = ({ campaignId, sessionId, onComplete }: Encounte
   const [totalXP, setTotalXP] = useState(0);
   const [totalLoot, setTotalLoot] = useState<string[]>([]);
   const [distributionMode, setDistributionMode] = useState<'equal' | 'custom'>('equal');
+  const [grantMilestone, setGrantMilestone] = useState(false);
+
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const ddbEnhancements = usePlayerToolsEnhancements();
 
   const { data: campaignMembers } = useCampaignMembers(campaignId);
   const { data: combatants } = useQuery({
@@ -157,6 +162,17 @@ export const EncounterRewards = ({ campaignId, sessionId, onComplete }: Encounte
           if (error) throw error;
         }
       }
+
+      if (grantMilestone) {
+        for (const dist of distributions) {
+          await ddbEnhancements.trackCustomFeatureUsage(
+            dist.characterId,
+            'Milestone Reached',
+            'Level Up Available',
+            '5e'
+          ).catch(console.error);
+        }
+      }
     },
     onSuccess: () => {
       toast({
@@ -237,6 +253,18 @@ export const EncounterRewards = ({ campaignId, sessionId, onComplete }: Encounte
               </Button>
             </div>
           )}
+
+          <div className="flex items-center space-x-2 mt-4 p-3 bg-arise/10 border border-arise/30 rounded-lg">
+            <Checkbox
+              id="grant-milestone"
+              checked={grantMilestone}
+              onCheckedChange={(checked) => setGrantMilestone(checked as boolean)}
+            />
+            <Label htmlFor="grant-milestone" className="font-heading font-medium text-arise flex items-center gap-2 cursor-pointer">
+              <CheckCircle className="w-4 h-4" />
+              Grant Party Milestone (Broadcast Level Up Available)
+            </Label>
+          </div>
 
           <div className="grid gap-3">
             {distributions.map((dist) => (

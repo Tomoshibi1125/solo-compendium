@@ -1,4 +1,4 @@
-import { useEffect, useRef, useMemo } from 'react';
+import { useRef, useMemo } from 'react';
 import { cn } from '@/lib/utils';
 import { usePerformanceProfile } from '@/lib/performanceProfile';
 

@@ -10,6 +10,7 @@ import { formatMonarchVernacular, MONARCH_LABEL } from '@/lib/vernacular';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { setPendingResolution, type ActionResolutionPayload } from '@/lib/actionResolution';
+import { ShareToVTTButton } from '@/components/compendium/ShareToVTTButton';
 
 interface MonsterData {
   id: string;
@@ -269,22 +270,22 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
 
     const payload: ActionResolutionPayload = toHit !== null
       ? {
-          version: 1,
-          id,
-          name: `${displayName}: ${formatMonarchVernacular(action.name)}`,
-          source: { type: 'monster_action', entryId: data.id },
-          kind: 'attack',
-          attack: { roll: `1d20+${toHit}` },
-          damage: damageRoll ? { roll: damageRoll, type: action.damage_type } : undefined,
-        }
+        version: 1,
+        id,
+        name: `${displayName}: ${formatMonarchVernacular(action.name)}`,
+        source: { type: 'monster_action', entryId: data.id },
+        kind: 'attack',
+        attack: { roll: `1d20+${toHit}` },
+        damage: damageRoll ? { roll: damageRoll, type: action.damage_type } : undefined,
+      }
       : {
-          version: 1,
-          id,
-          name: `${displayName}: ${formatMonarchVernacular(action.name)}`,
-          source: { type: 'monster_action', entryId: data.id },
-          kind: 'damage',
-          damage: { roll: damageRoll ?? '1d6', type: action.damage_type },
-        };
+        version: 1,
+        id,
+        name: `${displayName}: ${formatMonarchVernacular(action.name)}`,
+        source: { type: 'monster_action', entryId: data.id },
+        kind: 'damage',
+        damage: { roll: damageRoll ?? '1d6', type: action.damage_type },
+      };
 
     setPendingResolution(payload);
     navigate(path);
@@ -309,6 +310,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
       {/* Header */}
       <SystemWindow
         title={displayName.toUpperCase()}
+        actions={<ShareToVTTButton itemType="Monster" itemName={displayName} />}
         variant={isBoss ? 'alert' : data.tags?.includes('monarch') ? 'arise' : 'default'}
         className={cn(
           isBoss && 'border-gate-a/50 border-2',
@@ -372,7 +374,7 @@ export const MonsterDetail = ({ data }: { data: MonsterData }) => {
             <span className="font-display text-2xl">{armorClass}</span>
           </div>
           {data.armor_type && (
-          <span className="text-xs text-muted-foreground">{formatMonarchVernacular(data.armor_type)}</span>
+            <span className="text-xs text-muted-foreground">{formatMonarchVernacular(data.armor_type)}</span>
           )}
         </SystemWindow>
 

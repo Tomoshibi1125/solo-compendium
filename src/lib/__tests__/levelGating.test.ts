@@ -284,6 +284,7 @@ describe('buildLevelUpGatingSummary', () => {
     const summary = buildLevelUpGatingSummary(3, 'Vanguard', null, paths, features);
     expect(summary.isPathUnlockLevel).toBe(true);
     expect(summary.newFeatureCount).toBe(1); // Champion Feature at level 3
+    expect(summary.spellsKnownLimit).toBeNull();
   });
 
   it('identifies ASI levels', () => {

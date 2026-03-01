@@ -17,6 +17,8 @@ import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import type { RealtimeChannel } from '@supabase/supabase-js';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useAuth } from '@/lib/auth/authContext';
+import { parseInlineRolls, formatInlineRoll, hasInlineRolls, generateCharacterMacros } from '@/lib/vtt';
+import { createPing, type MapPing, parseWhisperCommand, type ChatParticipant } from '@/lib/vtt';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -27,7 +29,7 @@ export interface VTTChatMessage {
   userId: string;
   userName: string;
   message: string;
-  type: 'chat' | 'dice' | 'system' | 'whisper' | 'emote' | 'desc' | 'gmroll';
+  type: 'chat' | 'dice' | 'system' | 'whisper' | 'emote' | 'desc' | 'gmroll' | 'gm_whisper' | 'roll_whisper';
   diceFormula?: string;
   diceResult?: number;
   diceCritical?: boolean;
@@ -76,14 +78,8 @@ export interface VTTInitiativeState {
   active: boolean;
 }
 
-export interface VTTPing {
-  x: number;
-  y: number;
-  userId: string;
-  userName: string;
-  color: string;
-  timestamp: number;
-}
+import type { MapPing as VTTPing } from '@/lib/vtt';
+export type { VTTPing };
 
 export interface VTTCursorPosition {
   x: number;
@@ -254,17 +250,17 @@ function formatTermDisplay(term: DiceTermResult): string {
   const droppedSet = new Set(
     term.dropped.length > 0
       ? (() => {
-          const indices: number[] = [];
-          const remaining = [...term.dropped];
-          for (let i = 0; i < term.rolls.length && remaining.length > 0; i++) {
-            const idx = remaining.indexOf(term.rolls[i]);
-            if (idx !== -1 && !indices.includes(i)) {
-              indices.push(i);
-              remaining.splice(idx, 1);
-            }
+        const indices: number[] = [];
+        const remaining = [...term.dropped];
+        for (let i = 0; i < term.rolls.length && remaining.length > 0; i++) {
+          const idx = remaining.indexOf(term.rolls[i]);
+          if (idx !== -1 && !indices.includes(i)) {
+            indices.push(i);
+            remaining.splice(idx, 1);
           }
-          return indices;
-        })()
+        }
+        return indices;
+      })()
       : [],
   );
   const parts = term.rolls.map((r, i) =>
@@ -430,7 +426,7 @@ export function useVTTRealtime({ campaignId, sessionId, isDM = false }: UseVTTRe
   const [isConnected, setIsConnected] = useState(false);
   const [presenceUsers, setPresenceUsers] = useState<Map<string, VTTPresenceUser>>(new Map());
   const [chatMessages, setChatMessages] = useState<VTTChatMessage[]>([]);
-  const [pings, setPings] = useState<VTTPing[]>([]);
+  const [pings, setPings] = useState<MapPing[]>([]);
   const [initiativeState, setInitiativeState] = useState<VTTInitiativeState>({
     order: [],
     currentTurnIndex: 0,
@@ -455,9 +451,9 @@ export function useVTTRealtime({ campaignId, sessionId, isDM = false }: UseVTTRe
     if (!eventHandlersRef.current.has(eventType)) {
       eventHandlersRef.current.set(eventType, new Set());
     }
-    eventHandlersRef.current.get(eventType)!.add(handler);
+    eventHandlersRef.current.get(eventType)!.add(handler as (payload: any) => void);
     return () => {
-      eventHandlersRef.current.get(eventType)?.delete(handler);
+      eventHandlersRef.current.get(eventType)?.delete(handler as (payload: any) => void);
     };
   }, []);
 
@@ -570,7 +566,7 @@ export function useVTTRealtime({ campaignId, sessionId, isDM = false }: UseVTTRe
             message_type: type,
             whisper_to: whisperTo || null,
           })
-          .then(() => {});
+          .then(() => { });
       }
       return msg;
     },
@@ -610,7 +606,7 @@ export function useVTTRealtime({ campaignId, sessionId, isDM = false }: UseVTTRe
             dice_formula: formula,
             dice_result: roll.result,
           })
-          .then(() => {});
+          .then(() => { });
       }
       return roll;
     },
@@ -620,6 +616,51 @@ export function useVTTRealtime({ campaignId, sessionId, isDM = false }: UseVTTRe
   // Process chat input with slash command support
   const processChat = useCallback(
     (input: string) => {
+      const participants: ChatParticipant[] = Array.from(presenceUsers.values()).map(u => ({
+        id: u.userId,
+        name: u.userName,
+        role: u.role as 'gm' | 'player',
+      }));
+      participants.push({ id: userId, name: userName, role: isDM ? 'gm' : 'player' });
+
+      const whisperCmd = parseWhisperCommand(input, participants, userId);
+
+      if (whisperCmd) {
+        if (whisperCmd.type === 'roll_whisper') {
+          const roll = rollDiceFormulaDetailed(whisperCmd.content);
+          const msg: VTTChatMessage = {
+            id: `msg-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+            userId,
+            userName,
+            message: `${whisperCmd.content} = ${roll.result}${roll.critical ? ' CRITICAL!' : roll.fumble ? ' FUMBLE!' : ''}`,
+            type: whisperCmd.type,
+            whisperTo: whisperCmd.recipientIds.join(','),
+            timestamp: Date.now(),
+            diceFormula: roll.formula,
+            diceResult: roll.result,
+            diceCritical: roll.critical,
+            diceFumble: roll.fumble,
+            diceDisplayText: roll.displayText,
+          };
+          setChatMessages((prev) => [...prev, msg].slice(-200));
+          broadcast({ type: 'chat_message', payload: msg });
+          return;
+        }
+
+        const msg: VTTChatMessage = {
+          id: `msg-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+          userId,
+          userName,
+          message: whisperCmd.content,
+          type: whisperCmd.type,
+          whisperTo: whisperCmd.recipientIds.join(','),
+          timestamp: Date.now(),
+        };
+        setChatMessages((prev) => [...prev, msg].slice(-200));
+        broadcast({ type: 'chat_message', payload: msg });
+        return;
+      }
+
       const cmd = parseChatCommand(input);
       switch (cmd.type) {
         case 'roll':
@@ -638,12 +679,23 @@ export function useVTTRealtime({ campaignId, sessionId, isDM = false }: UseVTTRe
           sendChatMessage(cmd.message, 'desc');
           break;
         case 'chat':
-        default:
-          sendChatMessage(cmd.message, 'chat');
+        default: {
+          // Roll20 parity: resolve [[2d6+3]] inline dice expressions before sending
+          if (hasInlineRolls(cmd.message)) {
+            const parsed = parseInlineRolls(cmd.message);
+            const resolvedText = parsed.segments.map((seg) => {
+              if (seg.type === 'roll') return `⟨${formatInlineRoll(seg.result)}⟩`;
+              return seg.content;
+            }).join('');
+            sendChatMessage(resolvedText, 'chat');
+          } else {
+            sendChatMessage(cmd.message, 'chat');
+          }
           break;
+        }
       }
     },
-    [rollAndBroadcast, sendChatMessage],
+    [rollAndBroadcast, sendChatMessage, presenceUsers, userId, userName, isDM, broadcast],
   );
 
   // Initiative
@@ -754,12 +806,13 @@ export function useVTTRealtime({ campaignId, sessionId, isDM = false }: UseVTTRe
   // Ping
   const sendPing = useCallback(
     (x: number, y: number) => {
-      const ping: VTTPing = { x, y, userId, userName, color: userColor, timestamp: Date.now() };
+      const ping = createPing(x, y, userId, userName, 'look');
+      ping.color = userColor; // override with user color
       setPings((prev) => [...prev, ping].slice(-20));
-      broadcast({ type: 'ping', payload: ping });
+      broadcast({ type: 'ping', payload: ping as any });
       // Auto-remove after 3s
       setTimeout(() => {
-        setPings((prev) => prev.filter((p) => p.timestamp !== ping.timestamp));
+        setPings((prev) => prev.filter((p) => p.createdAt !== ping.createdAt));
       }, 3000);
     },
     [broadcast, userColor, userId, userName],
@@ -800,10 +853,10 @@ export function useVTTRealtime({ campaignId, sessionId, isDM = false }: UseVTTRe
             setInitiativeState(payload.payload as VTTInitiativeState);
             break;
           case 'ping': {
-            const ping = payload.payload as VTTPing;
+            const ping = payload.payload as any; // VTTPing / MapPing mismatch typing bridging
             setPings((prev) => [...prev, ping].slice(-20));
             setTimeout(() => {
-              setPings((prev) => prev.filter((p) => p.timestamp !== ping.timestamp));
+              setPings((prev) => prev.filter((p) => p.createdAt !== ping.createdAt));
             }, 3000);
             break;
           }

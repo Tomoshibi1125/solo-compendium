@@ -51,16 +51,7 @@ export const useUpdateCharacterAbilities = () => {
       });
       // D&D Beyond parity: auto-recalculate derived stats when abilities change
       if (!isLocalCharacterId(variables.characterId)) {
-        try {
-          const { autoRecalcDerivedStats, autoApplyEquipmentModifiers } = await import('@/lib/automation');
-          await Promise.all([
-            autoRecalcDerivedStats(variables.characterId),
-            autoApplyEquipmentModifiers(variables.characterId),
-          ]);
-          queryClient.invalidateQueries({ queryKey: ['character', variables.characterId] });
-        } catch {
-          // Best-effort — don't block the UI
-        }
+        queryClient.invalidateQueries({ queryKey: ['character', variables.characterId] });
       }
     },
     onError: (error) => {

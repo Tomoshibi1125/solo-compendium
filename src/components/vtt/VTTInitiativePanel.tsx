@@ -20,9 +20,9 @@ import {
     ChevronUp,
     Plus,
     SkipForward,
-    Trash2,
     RotateCcw,
 } from 'lucide-react';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 
 // ── Types ──────────────────────────────────────────────────────────────
 
@@ -81,6 +81,8 @@ export function VTTInitiativePanel({
     const { data } = useCampaignCombatSession(campaignId, sessionId);
     const updateSession = useUpdateCombatSession();
     const upsertCombatants = useUpsertCombatants();
+    const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+    const ddbTools = usePlayerToolsEnhancements();
 
     // Real-time sync
     useCampaignCombatRealtime(campaignId, sessionId ?? '');
@@ -128,7 +130,17 @@ export function VTTInitiativePanel({
             sessionId: activeSessionId,
             updates: { current_turn: nextIdx, round: nextRound },
         });
-    }, [campaignId, activeSessionId, currentTurn, round, sorted.length, updateSession]);
+
+        const nextCombatant = sorted[nextIdx];
+        if (nextCombatant) {
+            ddbTools.trackCustomFeatureUsage(
+                nextCombatant.characterId || 'monster',
+                'Turn Start',
+                `Round ${nextRound} - ${nextCombatant.name}'s Turn`,
+                'SA'
+            ).catch(console.error);
+        }
+    }, [campaignId, activeSessionId, currentTurn, round, sorted, updateSession, ddbTools]);
 
     const resetCombat = useCallback(() => {
         if (!activeSessionId) return;

@@ -4,16 +4,16 @@
  */
 
 import React, { useState } from 'react';
-import { 
-  Users, 
-  Sword, 
-  MapPin, 
-  Dice1, 
-  BookOpen, 
-  Package, 
-  Sparkles, 
-  Heart, 
-  Music, 
+import {
+  Users,
+  Sword,
+  MapPin,
+  Dice1,
+  BookOpen,
+  Package,
+  Sparkles,
+  Heart,
+  Music,
   Settings,
   Plus,
   Minus,
@@ -49,9 +49,12 @@ import DungeonMapGenerator from '@/pages/dm-tools/DungeonMapGenerator';
 import ArtGenerator from '@/pages/dm-tools/ArtGenerator';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 
 interface DMToolsPanelProps {
   campaignId?: string;
+  /** Callback to roll dice into VTT chat (typically vttRealtime.rollAndBroadcast) */
+  onRoll?: (formula: string, type?: 'dice' | 'gmroll') => void;
   onAddToken?: (token: any) => void;
   onAddEffect?: (effect: any) => void;
   onPlaySound?: (soundId: string) => void;
@@ -61,6 +64,7 @@ interface DMToolsPanelProps {
 
 export const DMToolsPanel: React.FC<DMToolsPanelProps> = ({
   campaignId,
+  onRoll,
   onAddToken,
   onAddEffect,
   onPlaySound,
@@ -68,33 +72,44 @@ export const DMToolsPanel: React.FC<DMToolsPanelProps> = ({
   className
 }) => {
   const { toast } = useToast();
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const ddbTools = usePlayerToolsEnhancements();
   const [activeTool, setActiveTool] = useState<string>('encounter');
   const [quickRollValue, setQuickRollValue] = useState('1d20');
   const [quickRollResult, setQuickRollResult] = useState<number | null>(null);
 
-  // Quick roll function
+  const logDMMacro = (macroName: string, detail: string) => {
+    ddbTools.trackCustomFeatureUsage('DM', `DM Macro: ${macroName}`, detail, 'SA').catch(console.error);
+  };
+
+  // Quick roll — routes through VTT realtime engine (crit detection, chat broadcast, Supabase persistence)
   const handleQuickRoll = () => {
     try {
-      // Simple dice roll parser
-      const match = quickRollValue.match(/(\d+)d(\d+)/);
-      if (match) {
-        const numDice = parseInt(match[1]);
-        const dieSize = parseInt(match[2]);
-        let total = 0;
-        for (let i = 0; i < numDice; i++) {
-          total += Math.floor(Math.random() * dieSize) + 1;
+      if (onRoll) {
+        // Use VTT engine (Roll20-class: kh/kl, exploding, multi-term, crit detection)
+        onRoll(quickRollValue, 'dice');
+        logDMMacro('Quick Roll', quickRollValue);
+        // We don't have the result here; it will appear in VTT chat
+        setQuickRollResult(null);
+      } else {
+        // Offline fallback: simple local parser
+        const match = quickRollValue.match(/(\d+)d(\d+)/);
+        if (match) {
+          const numDice = parseInt(match[1]);
+          const dieSize = parseInt(match[2]);
+          let total = 0;
+          for (let i = 0; i < numDice; i++) {
+            total += Math.floor(Math.random() * dieSize) + 1;
+          }
+          setQuickRollResult(total);
+          toast({ title: 'Quick Roll', description: `${quickRollValue} = ${total}` });
         }
-        setQuickRollResult(total);
-        toast({
-          title: "Quick Roll",
-          description: `${quickRollValue} = ${total}`,
-        });
       }
     } catch (error) {
       toast({
-        title: "Invalid Roll",
+        title: 'Invalid Roll',
         description: "Please use format like '1d20', '2d6', etc.",
-        variant: "destructive",
+        variant: 'destructive',
       });
     }
   };
@@ -152,7 +167,10 @@ export const DMToolsPanel: React.FC<DMToolsPanelProps> = ({
                   key={sound.id}
                   size="sm"
                   variant="outline"
-                  onClick={() => onPlaySound?.(sound.id)}
+                  onClick={() => {
+                    onPlaySound?.(sound.id);
+                    logDMMacro('Sound Effect', sound.name);
+                  }}
                   className="h-8 text-xs p-1"
                   title={sound.name}
                 >
@@ -172,7 +190,10 @@ export const DMToolsPanel: React.FC<DMToolsPanelProps> = ({
                 key={music.id}
                 size="sm"
                 variant="outline"
-                onClick={() => onMusicChange?.(music.id)}
+                onClick={() => {
+                  onMusicChange?.(music.id);
+                  logDMMacro('Music Change', music.name);
+                }}
                 className="h-8 text-xs"
               >
                 {music.name}
@@ -343,6 +364,7 @@ export const DMToolsPanel: React.FC<DMToolsPanelProps> = ({
                               radius: 2,
                               color: effect === 'Fireball' ? '#ff6b6b' : effect === 'Healing' ? '#51cf66' : '#339af0',
                             });
+                            logDMMacro('Visual Effect', effect);
                             toast({
                               title: "Effect Added",
                               description: `${effect} effect placed on map`,
@@ -425,13 +447,13 @@ export const DMToolsPanel: React.FC<DMToolsPanelProps> = ({
                 <div>
                   <Label className="text-xs">Lighting</Label>
                   <div className="flex gap-2">
-                    <Button size="sm" variant="outline" onClick={() => onAddEffect?.({ id: 'bright', name: 'Bright Light', type: 'light', radius: 10, color: '#fff59d' })}>
+                    <Button size="sm" variant="outline" onClick={() => { onAddEffect?.({ id: 'bright', name: 'Bright Light', type: 'light', radius: 10, color: '#fff59d' }); logDMMacro('Lighting', 'Bright Light'); }}>
                       <Eye className="w-3 h-3" />
                     </Button>
-                    <Button size="sm" variant="outline" onClick={() => onAddEffect?.({ id: 'dim', name: 'Dim Light', type: 'light', radius: 5, color: '#ffecb3' })}>
+                    <Button size="sm" variant="outline" onClick={() => { onAddEffect?.({ id: 'dim', name: 'Dim Light', type: 'light', radius: 5, color: '#ffecb3' }); logDMMacro('Lighting', 'Dim Light'); }}>
                       <EyeOff className="w-3 h-3" />
                     </Button>
-                    <Button size="sm" variant="outline" onClick={() => onAddEffect?.({ id: 'darkness', name: 'Darkness', type: 'dark', radius: 8, color: '#000000' })}>
+                    <Button size="sm" variant="outline" onClick={() => { onAddEffect?.({ id: 'darkness', name: 'Darkness', type: 'dark', radius: 8, color: '#000000' }); logDMMacro('Lighting', 'Darkness'); }}>
                       <Minus className="w-3 h-3" />
                     </Button>
                   </div>
@@ -439,13 +461,13 @@ export const DMToolsPanel: React.FC<DMToolsPanelProps> = ({
                 <div>
                   <Label className="text-xs">Weather</Label>
                   <div className="flex gap-2">
-                    <Button size="sm" variant="outline" onClick={() => onPlaySound?.('rain')}>
+                    <Button size="sm" variant="outline" onClick={() => { onPlaySound?.('rain'); logDMMacro('Weather', 'Rain'); }}>
                       🌧️
                     </Button>
-                    <Button size="sm" variant="outline" onClick={() => onPlaySound?.('thunder')}>
+                    <Button size="sm" variant="outline" onClick={() => { onPlaySound?.('thunder'); logDMMacro('Weather', 'Thunder'); }}>
                       ⛈️
                     </Button>
-                    <Button size="sm" variant="outline" onClick={() => onPlaySound?.('wind')}>
+                    <Button size="sm" variant="outline" onClick={() => { onPlaySound?.('wind'); logDMMacro('Weather', 'Wind'); }}>
                       💨
                     </Button>
                   </div>

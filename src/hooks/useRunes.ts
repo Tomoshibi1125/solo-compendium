@@ -324,16 +324,7 @@ export function useInscribeRune() {
       queryClient.invalidateQueries({ queryKey: ['character-rune-knowledge', variables.characterId] });
       queryClient.invalidateQueries({ queryKey: ['equipment', variables.characterId] });
       // D&D Beyond parity: rune bonuses affect AC/speed/abilities — auto-recalc
-      try {
-        const { autoRecalcDerivedStats, autoApplyEquipmentModifiers } = await import('@/lib/automation');
-        await Promise.all([
-          autoRecalcDerivedStats(variables.characterId),
-          autoApplyEquipmentModifiers(variables.characterId),
-        ]);
-        queryClient.invalidateQueries({ queryKey: ['character', variables.characterId] });
-      } catch {
-        // Best-effort
-      }
+      queryClient.invalidateQueries({ queryKey: ['character', variables.characterId] });
     },
   });
 }
@@ -615,7 +606,7 @@ export function checkRuneRequirements(
   // Determine if cross-learning penalty applies
   const isCaster = ['Mage', 'Esper', 'Herald', 'Revenant', 'Contractor', 'Technomancer', 'Resonant', 'Summoner'].includes(characterJob || '');
   const isMartial = !isCaster && characterJob !== null;
-  
+
   if (!isNaturalUser) {
     if (isCaster && rune.rune_type === 'martial') {
       requirementMultiplier = Number(rune.caster_requirement_multiplier || 1.5);
@@ -640,7 +631,7 @@ export function checkRuneRequirements(
     if (req.score > 0) {
       const requiredScore = Math.ceil(req.score * requirementMultiplier);
       const actualScore = characterAbilities[req.ability] || 0;
-      
+
       if (actualScore < requiredScore) {
         return {
           canUse: false,

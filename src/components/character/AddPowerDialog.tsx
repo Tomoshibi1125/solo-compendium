@@ -21,6 +21,7 @@ import { filterRowsBySourcebookAccess } from '@/lib/sourcebookAccess';
 import { useCharacter } from '@/hooks/useCharacters';
 import { getCantripsKnownLimit, getSpellsKnownLimit } from '@/lib/characterCalculations';
 import { getMaxPowerLevelForJobAtLevel } from '@/lib/characterCreation';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 
 export function AddPowerDialog({
   open,
@@ -38,6 +39,8 @@ export function AddPowerDialog({
   const { data: character } = useCharacter(characterId);
   const { data: characterCampaign } = useCampaignByCharacterId(characterId);
   const campaignId = characterCampaign?.id ?? null;
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const playerTools = usePlayerToolsEnhancements();
 
   const [replaceTarget, setReplaceTarget] = useState<null | {
     powerToLearn: { name: string; power_level: number };
@@ -262,6 +265,8 @@ export function AddPowerDialog({
         description: `${displayName} has been added to your powers.`,
       });
 
+      playerTools.trackCustomFeatureUsage(characterId, `Learned: ${displayName}`, 'Acquired Power', '5e').catch(console.error);
+
       onOpenChange(false);
       setSearchQuery('');
       setReplaceTarget(null);
@@ -302,6 +307,8 @@ export function AddPowerDialog({
         title: 'Power replaced',
         description: `${displayName} has been learned.`,
       });
+
+      playerTools.trackCustomFeatureUsage(characterId, `Learned: ${displayName}`, 'Replaced Power', '5e').catch(console.error);
 
       setReplaceTarget(null);
       onOpenChange(false);
@@ -411,8 +418,8 @@ export function AddPowerDialog({
                   {maxPowerLevel === 0
                     ? 'This job has no spellcasting progression. Powers cannot be added.'
                     : searchQuery
-                    ? 'No powers found matching your search.'
-                    : 'No powers available for this job at your current level.'}
+                      ? 'No powers found matching your search.'
+                      : 'No powers available for this job at your current level.'}
                 </div>
               ) : (
                 visiblePowers.map((power) => (

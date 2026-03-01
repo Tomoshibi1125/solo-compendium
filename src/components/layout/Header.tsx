@@ -3,17 +3,17 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuTrigger 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { 
-  Bell, 
-  Settings, 
-  LogOut, 
-  User, 
+import {
+  Bell,
+  Settings,
+  LogOut,
+  User,
   Dice6,
   Heart,
   Menu,
@@ -29,6 +29,7 @@ import {
 import { SystemSigilLogo } from '@/components/ui/SystemSigilLogo';
 import { logger } from '@/lib/logger';
 import { GlobalSearch } from '@/components/ui/GlobalSearch';
+import { NotificationCenter } from '@/components/ui/NotificationCenter';
 import { cn } from '@/lib/utils';
 
 type HeaderUser = {
@@ -103,6 +104,9 @@ export function Header({ user, onLogout }: HeaderProps) {
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Global Search - responsive width */}
             <GlobalSearch className="hidden sm:block w-48 lg:w-64 xl:w-80" />
+
+            {/* Notification Center */}
+            <NotificationCenter />
 
             {/* User Menu */}
             {user ? (

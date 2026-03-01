@@ -6,22 +6,35 @@ import { useEquipment } from '@/hooks/useEquipment';
 import { usePowers } from '@/hooks/usePowers';
 import { useFeatures } from '@/hooks/useFeatures';
 import { useCharacter } from '@/hooks/useCharacters';
+import { useCharacterExtras } from '@/hooks/useCharacterExtras';
 import { useCharacterSheetState } from '@/hooks/useCharacterSheetState';
 import { getAbilityModifier, getProficiencyBonus } from '@/types/system-rules';
 import { parseModifiers, applyEquipmentModifiers } from '@/lib/equipmentModifiers';
-import { logger } from '@/lib/logger';
-import { useToast } from '@/hooks/use-toast';
+
+
 import { normalizeCustomModifiers, sumCustomModifiers } from '@/lib/customModifiers';
 import { useCharacterFeatures, featureModifiersToCustomModifiers } from '@/hooks/useCharacterFeatures';
-import { formatMonarchVernacular } from '@/lib/vernacular';
+
 import type { AbilityScore } from '@/types/system-rules';
 
-export function ActionsList({ characterId }: { characterId: string }) {
+export interface ActionItem {
+  name: string;
+  type: string;
+  description: string;
+  attackBonus?: number;
+  damage?: string;
+  range?: string;
+  uses?: { current: number; max: number };
+  recharge?: string;
+}
+
+export function ActionsList({ characterId, campaignId }: { characterId: string, campaignId?: string }) {
   const { data: character } = useCharacter(characterId);
   const { equipment } = useEquipment(characterId);
   const { powers } = usePowers(characterId);
   const { features } = useFeatures(characterId);
   const { state: sheetState } = useCharacterSheetState(characterId);
+  const { extras } = useCharacterExtras(characterId);
   const { data: charFeatures = [] } = useCharacterFeatures(characterId);
   const baseModifiers = normalizeCustomModifiers(sheetState.customModifiers);
   const homebrewModifiers = featureModifiersToCustomModifiers(charFeatures);
@@ -82,10 +95,10 @@ export function ActionsList({ characterId }: { characterId: string }) {
   );
 
   // Calculate attack bonuses for weapons
-  const weaponActions = weapons.map(weapon => {
+  const weaponActions: ActionItem[] = weapons.map(weapon => {
     const modifiers = parseModifiers(weapon.properties || []);
     const attackMod = modifiers.attack || 0;
-    
+
     const abilityMod = getWeaponAbilityMod(weapon);
     const props = (weapon.properties || []).map((p) => p.toLowerCase());
     const isRanged = props.some((p) => p.startsWith('range')) || props.includes('ammunition');
@@ -107,7 +120,7 @@ export function ActionsList({ characterId }: { characterId: string }) {
         damage += abilityMod >= 0 ? `+${abilityMod}` : `${abilityMod}`;
       }
     }
-    
+
     const customDamageBonus = sumCustomModifiers(customModifiers, 'damage', isRanged ? 'ranged' : 'melee');
     if (customDamageBonus !== 0) {
       const normalized = damage.replace(/\s+/g, '');
@@ -126,31 +139,55 @@ export function ActionsList({ characterId }: { characterId: string }) {
 
     return {
       name: weapon.name,
-      type: 'action' as const,
+      type: 'action' as string,
       description: weapon.description || 'Weapon attack',
       attackBonus,
       damage,
-      range: 'Melee' as const,
+      range: 'Melee',
     };
   });
+
+  // Get Wildshape extra attacks
+  const activeWildshape = extras.find(e => e.is_active && e.extra_type === 'wildshape' && e.monster);
+  const wildshapeActions: ActionItem[] = (activeWildshape?.monster?.actions || []).map(action => ({
+    name: `[${activeWildshape?.name}] ${action.name}`,
+    type: (action.action_type || 'action') as string,
+    description: action.description,
+    attackBonus: action.attack_bonus || undefined,
+    damage: action.damage || undefined,
+    range: undefined,
+  }));
+
+  const allAttacks = [...weaponActions, ...wildshapeActions];
+
+  const standardActions: ActionItem[] = [
+    { name: 'Dash', type: 'action', description: 'Gain extra movement for the current turn equal to your speed.' },
+    { name: 'Disengage', type: 'action', description: "Your movement doesn't provoke opportunity attacks." },
+    { name: 'Dodge', type: 'action', description: 'Until your next turn, attacks against you have disadvantage and you have advantage on Dex saves.' },
+    { name: 'Help', type: 'action', description: 'Give an ally advantage on their next ability check or attack roll.' },
+    { name: 'Hide', type: 'action', description: 'Make a Stealth check to become unseen.' },
+    { name: 'Ready', type: 'action', description: 'Decide a trigger and what perceivable circumstance will trigger your reaction.' },
+    { name: 'Search', type: 'action', description: 'Make a Perception or Investigation check to find something.' },
+    { name: 'Use an Object', type: 'action', description: 'Interact with an object that requires your action.' },
+  ];
 
   // Get prepared powers
   const preparedPowers = powers.filter(p => p.is_prepared);
 
-  const powerActions = preparedPowers.map(power => ({
+  const powerActions: ActionItem[] = preparedPowers.map(power => ({
     name: power.name,
-    type: 'action' as const, // Could be enhanced to read from power data
+    type: 'action' as string, // Could be enhanced to read from power data
     description: power.description || '',
     range: power.range || undefined,
     // Powers don't have attack/damage rolls in the same way
   }));
 
   // Get active features with action types
-  const featureActions = features
+  const featureActions: ActionItem[] = features
     .filter(f => f.is_active && f.action_type && f.action_type !== 'passive')
     .map(feature => ({
       name: feature.name,
-      type: (feature.action_type || 'action') as 'action' | 'bonus-action' | 'reaction',
+      type: (feature.action_type || 'action') as string,
       description: feature.description || '',
       uses: feature.uses_max !== null ? {
         current: feature.uses_current || 0,
@@ -159,90 +196,92 @@ export function ActionsList({ characterId }: { characterId: string }) {
       recharge: feature.recharge || undefined,
     }));
 
+  // Group all actions by their action economy type
+  const groupedActions = {
+    action: [...weaponActions, ...wildshapeActions, ...powerActions, ...featureActions, ...standardActions].filter(a => a.type === 'action' || !a.type),
+    bonusAction: [...weaponActions, ...wildshapeActions, ...powerActions, ...featureActions].filter(a => a.type === 'bonus-action' || a.type === 'bonus action' || a.type === 'bonus action (bonus action)'),
+    reaction: [...weaponActions, ...wildshapeActions, ...powerActions, ...featureActions].filter(a => a.type === 'reaction'),
+    other: [...weaponActions, ...wildshapeActions, ...powerActions, ...featureActions].filter(a => a.type === 'passive' || a.type === 'special' || a.type === 'other')
+  };
+
   return (
     <SystemWindow title="ACTIONS">
-      <Tabs defaultValue="weapons" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="weapons" className="gap-2">
-            <Swords className="w-4 h-4" />
-            Attacks ({weaponActions.length})
+      <Tabs defaultValue="action" className="w-full">
+        <TabsList className="grid w-full grid-cols-4 h-12">
+          <TabsTrigger value="action" className="text-xs sm:text-sm flex flex-col items-center justify-center p-1">
+            <Swords className="w-3 h-3 mb-0.5" />
+            <span className="leading-tight">Action</span>
+            <span className="text-[10px] opacity-70">({groupedActions.action.length})</span>
           </TabsTrigger>
-          <TabsTrigger value="powers" className="gap-2">
-            <Wand2 className="w-4 h-4" />
-            Powers ({powerActions.length})
+          <TabsTrigger value="bonusAction" className="text-xs sm:text-sm flex flex-col items-center justify-center p-1">
+            <Star className="w-3 h-3 mb-0.5" />
+            <span className="leading-tight">Bonus</span>
+            <span className="text-[10px] opacity-70">({groupedActions.bonusAction.length})</span>
           </TabsTrigger>
-          <TabsTrigger value="features" className="gap-2">
-            <Star className="w-4 h-4" />
-            Features ({featureActions.length})
+          <TabsTrigger value="reaction" className="text-xs sm:text-sm flex flex-col items-center justify-center p-1">
+            <Wand2 className="w-3 h-3 mb-0.5" />
+            <span className="leading-tight">Reaction</span>
+            <span className="text-[10px] opacity-70">({groupedActions.reaction.length})</span>
+          </TabsTrigger>
+          <TabsTrigger value="other" className="text-xs sm:text-sm flex flex-col items-center justify-center p-1">
+            <span className="w-3 h-3 mb-0.5 flex items-center justify-center rounded-full border text-[8px]">?</span>
+            <span className="leading-tight">Other</span>
+            <span className="text-[10px] opacity-70">({groupedActions.other.length})</span>
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="weapons" className="space-y-3 mt-4">
-          {weaponActions.length === 0 ? (
+        <TabsContent value="action" className="space-y-3 mt-4">
+          {groupedActions.action.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
               <Swords className="w-12 h-12 mx-auto mb-2 opacity-50" />
-              <p>No weapons equipped</p>
-              <p className="text-xs mt-1">Equip a weapon to see attack actions</p>
+              <p>No Actions Available</p>
+              <p className="text-xs mt-1">Equip weapons or prepare powers</p>
             </div>
           ) : (
-            weaponActions.map((action, i) => (
-              <ActionCard
-                key={i}
-                name={action.name}
-                type={action.type}
-                description={action.description}
-                attackBonus={action.attackBonus}
-                damage={action.damage}
-                range={action.range}
-                characterId={characterId}
-              />
+            groupedActions.action.map((action, i) => (
+              <ActionCard key={i} {...action} characterId={characterId} campaignId={campaignId} />
             ))
           )}
         </TabsContent>
 
-        <TabsContent value="powers" className="space-y-3 mt-4">
-          {powerActions.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
-              <Wand2 className="w-12 h-12 mx-auto mb-2 opacity-50" />
-              <p>No prepared powers</p>
-              <p className="text-xs mt-1">Prepare powers to see them here</p>
-            </div>
-          ) : (
-            powerActions.map((action, i) => (
-              <ActionCard
-                key={i}
-                name={action.name}
-                type={action.type}
-                description={action.description}
-                range={action.range}
-                characterId={characterId}
-              />
-            ))
-          )}
-        </TabsContent>
-
-        <TabsContent value="features" className="space-y-3 mt-4">
-          {featureActions.length === 0 ? (
+        <TabsContent value="bonusAction" className="space-y-3 mt-4">
+          {groupedActions.bonusAction.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
               <Star className="w-12 h-12 mx-auto mb-2 opacity-50" />
-              <p>No active features</p>
-              <p className="text-xs mt-1">Features with actions will appear here</p>
+              <p>No Bonus Actions</p>
             </div>
           ) : (
-            featureActions.map((action, i) => (
-              <ActionCard
-                key={i}
-                name={action.name}
-                type={action.type}
-                description={action.description}
-                uses={action.uses}
-                recharge={action.recharge}
-                characterId={characterId}
-              />
+            groupedActions.bonusAction.map((action, i) => (
+              <ActionCard key={i} {...action} characterId={characterId} campaignId={campaignId} />
             ))
           )}
         </TabsContent>
 
+        <TabsContent value="reaction" className="space-y-3 mt-4">
+          {groupedActions.reaction.length === 0 ? (
+            <div className="text-center py-8 text-muted-foreground">
+              <Wand2 className="w-12 h-12 mx-auto mb-2 opacity-50" />
+              <p>No Reactions</p>
+            </div>
+          ) : (
+            groupedActions.reaction.map((action, i) => (
+              <ActionCard key={i} {...action} characterId={characterId} campaignId={campaignId} />
+            ))
+          )}
+        </TabsContent>
+
+        <TabsContent value="other" className="space-y-3 mt-4">
+          {groupedActions.other.length === 0 ? (
+            <div className="text-center py-8 text-muted-foreground">
+              <span className="w-12 h-12 mx-auto mb-2 opacity-50 flex items-center justify-center rounded-full border text-2xl">?</span>
+              <p>No Other Actions</p>
+            </div>
+          ) : (
+            groupedActions.other.map((action, i) => (
+              <ActionCard key={i} {...action} characterId={characterId} campaignId={campaignId} />
+            ))
+          )}
+        </TabsContent>
       </Tabs>
     </SystemWindow>
   );

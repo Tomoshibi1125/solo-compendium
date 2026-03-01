@@ -2,8 +2,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Dice1 } from 'lucide-react';
-import { useCharacterRoll } from '@/hooks/useCharacterRoll';
-import { useCampaignDice } from '@/hooks/useCampaignDice';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 import { useAuth } from '@/lib/auth/authContext';
 import { rollCheck } from '@/lib/rollEngine';
 import type { AdvantageState } from '@/lib/rollAdvantage';
@@ -36,42 +35,31 @@ export function InlineRollButton({
   variant = 'outline'
 }: InlineRollButtonProps) {
   const { user } = useAuth();
-  const characterRoll = useCharacterRoll({
-    characterId,
-    characterName,
-    abilities: {},
-    proficiencyBonus: 2,
-    savingThrowProficiencies: [],
-    skillProficiencies: []
-  });
-
-  const { rollInCampaign } = useCampaignDice();
+  const { useCharacterSheetEnhancements, usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const { roll } = useCharacterSheetEnhancements(characterId);
+  const { rollInCampaign } = usePlayerToolsEnhancements();
 
   const handleRoll = async () => {
     try {
       const resolvedModifier = Number.isFinite(modifier) ? (modifier as number) : 0;
       const resolvedAdvantage: AdvantageState = advantageState ?? 'normal';
       let result;
-      
+
       if (campaignId) {
-        const roll = rollCheck(resolvedModifier, resolvedAdvantage);
-        const d20 = roll.rolls[0] ?? 0;
-        await rollInCampaign(campaignId, {
+        // Send roll to campaign using the DDB parity hook
+        result = await rollInCampaign(campaignId, {
           dice_formula: `1d20${resolvedModifier >= 0 ? `+${resolvedModifier}` : `${resolvedModifier}`}`,
-          result: roll.total,
           roll_type: rollType,
-          rolls: roll.droppedRolls ? [d20, ...(roll.droppedRolls || [])] : [d20],
           context: label,
           modifiers: {
             base: resolvedModifier,
             advantage: resolvedAdvantage,
-            dropped: roll.droppedRolls ?? null,
           },
           character_id: characterId,
         });
-        result = { d20, modifier: resolvedModifier, total: roll.total };
       } else {
-        result = await characterRoll.roll(rollKey, resolvedModifier, rollType, label, campaignId, resolvedAdvantage);
+        // Perform local roll using the DDB parity hook
+        result = await roll(rollKey, resolvedModifier, rollType, label, campaignId, resolvedAdvantage);
       }
 
       // The roll result will be displayed via toast from the hooks

@@ -11,7 +11,7 @@ import { DMPage } from '../pages/DMPage';
  * ╚══════════════════════════════════════════════════════════════════╝
  */
 
-const DM_EMAIL = process.env.E2E_DM_EMAIL ?? 'dm@test.com';
+
 const DM_PASSWORD = process.env.E2E_DM_PASSWORD ?? 'test1234';
 
 test.describe('Comprehensive DM UI/UX Test', () => {
@@ -44,7 +44,7 @@ test.describe('Comprehensive DM UI/UX Test', () => {
     await expect(page.locator('[data-testid="auth-button"]')).toBeVisible();
     
     // Sign in as DM
-    await authPage.signIn(DM_EMAIL, DM_PASSWORD, 'dm');
+    await authPage.continueAsGuest('dm');
     await expect(page).toHaveURL(/\/dashboard/);
     
     // Test dashboard UI elements

@@ -8,9 +8,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useCampaign, useHasDMAccess, useUpdateCampaign } from '@/hooks/useCampaigns';
+import { useSendCampaignMessage } from '@/hooks/useCampaignChat';
 import { useToast } from '@/hooks/use-toast';
 import type { Json } from '@/integrations/supabase/types';
-import { getLevelingMode, type LevelingMode } from '@/lib/campaignSettings';
+import { getLevelingMode, getAutomatedCombat, type LevelingMode } from '@/lib/campaignSettings';
 
 interface CampaignSettingsProps {
   campaignId: string;
@@ -24,6 +25,7 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
   const [description, setDescription] = useState(campaign?.description || '');
   const [isActive, setIsActive] = useState(campaign?.is_active ?? true);
   const [levelingMode, setLevelingMode] = useState<LevelingMode>(getLevelingMode(campaign?.settings));
+  const [automatedCombat, setAutomatedCombat] = useState<boolean>(getAutomatedCombat(campaign?.settings));
 
   // Update when campaign data loads
   useEffect(() => {
@@ -32,12 +34,14 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
       setDescription(campaign.description || '');
       setIsActive(campaign.is_active);
       setLevelingMode(getLevelingMode(campaign.settings));
+      setAutomatedCombat(getAutomatedCombat(campaign.settings));
     }
   }, [campaign]);
 
   const updateCampaign = useUpdateCampaign();
+  const sendMessage = useSendCampaignMessage();
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!name.trim()) {
       toast({
         title: 'Name required',
@@ -57,8 +61,8 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 
     const baseSettings =
       campaign.settings &&
-      typeof campaign.settings === 'object' &&
-      !Array.isArray(campaign.settings)
+        typeof campaign.settings === 'object' &&
+        !Array.isArray(campaign.settings)
         ? (campaign.settings as Record<string, Json>)
         : {};
 
@@ -68,8 +72,16 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
         name: name.trim(),
         description: description.trim() || null,
         is_active: isActive,
-        settings: { ...baseSettings, leveling_mode: levelingMode },
+        settings: { ...baseSettings, leveling_mode: levelingMode, automated_combat: automatedCombat },
       },
+    }, {
+      onSuccess: () => {
+        // Broadcast settings update to the campaign chat
+        sendMessage.mutateAsync({
+          campaignId,
+          content: `**System**: The Warden has updated the campaign rules/settings.`
+        }).catch(console.error);
+      }
     });
   };
 

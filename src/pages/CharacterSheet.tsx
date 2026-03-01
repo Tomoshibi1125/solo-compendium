@@ -1,28 +1,30 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useParams, useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { 
-  ArrowLeft, 
+import {
+  ArrowLeft,
   Backpack,
   BookOpen,
   Check,
   CheckCircle2,
   Copy,
+  Crown,
   Dice6,
   Download,
   Edit,
-  Heart, 
+  Heart,
   Loader2,
   Moon,
   Move,
   Plus,
   Redo2,
+  ScrollText,
   Share2,
-  Shield, 
+  Shield,
   SlidersHorizontal,
   Sparkles,
   Sun,
-  Swords, 
+  Swords,
   Trash2,
   Undo2,
   User,
@@ -46,6 +48,7 @@ import { useCharacter, useUpdateCharacter, useGenerateShareToken } from '@/hooks
 import { useUpdateCharacterAbilities } from '@/hooks/useCharacterAbilities';
 import { useCharacterSheetState } from '@/hooks/useCharacterSheetState';
 import { useRecordRoll } from '@/hooks/useRollHistory';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 import { calculateCharacterStats, formatModifier, calculateHPMax } from '@/lib/characterCalculations';
 import { getAvailableFavorOptions } from '@/lib/systemFavor';
 import { getAbilityModifier } from '@/types/system-rules';
@@ -79,6 +82,12 @@ import { MonarchUnlocksPanel } from '@/components/character/MonarchUnlocksPanel'
 import { MONARCH_LABEL, formatMonarchVernacular } from '@/lib/vernacular';
 import { ShadowSoldiersPanel } from '@/components/character/ShadowSoldiersPanel';
 import { CharacterEditDialog } from '@/components/character/CharacterEditDialog';
+import { CharacterFAB } from '@/components/character/CharacterFAB';
+import { SovereignOverlayPanel } from '@/components/character/SovereignOverlayPanel';
+import { CharacterExtrasPanel } from '@/components/character/CharacterExtrasPanel';
+import { EncumbranceWidget } from '@/components/character/EncumbranceWidget';
+import { QuestLog } from '@/pages/player-tools/QuestLog';
+import { CharacterBackupPanel } from '@/components/character/CharacterBackupPanel';
 import { useCharacterUndoRedo } from '@/hooks/useCharacterUndoRedo';
 import { ABILITY_NAMES, type AbilityScore } from '@/types/system-rules';
 import { cn } from '@/lib/utils';
@@ -108,14 +117,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import { DeathSaveTracker } from '@/components/CharacterSheet/DeathSaveTracker';
 import { ShortRestDialog } from '@/components/CharacterSheet/ShortRestDialog';
+import { LongRestDialog } from '@/components/CharacterSheet/LongRestDialog';
 import { ConcentrationBanner } from '@/components/CharacterSheet/ConcentrationBanner';
 import { AttunementSlots } from '@/components/CharacterSheet/AttunementSlots';
 import { ProficienciesLanguages } from '@/components/CharacterSheet/ProficienciesLanguages';
 import { SpellPanel, type SpellEntry, type SpellSlotDisplay } from '@/components/CharacterSheet/SpellPanel';
-import { ACBreakdownTooltip } from '@/components/CharacterSheet/ACBreakdownTooltip';
 import { ConditionBadgeBar } from '@/components/CharacterSheet/ConditionBadgeBar';
 import { SensesDisplay } from '@/components/CharacterSheet/SensesDisplay';
-import { ResistancesDisplay } from '@/components/CharacterSheet/ResistancesDisplay';
+import { DefensesModal } from '@/components/CharacterSheet/DefensesModal';
+import { LimitedUseTracker } from '@/components/character/LimitedUseTracker';
 import { useDeathSaves } from '@/hooks/useDeathSaves';
 import { useConcentration } from '@/hooks/useConcentration';
 import { useAttunement } from '@/hooks/useAttunement';
@@ -154,6 +164,9 @@ const CharacterSheet = () => {
   const campaignId = characterCampaign?.id ?? null;
 
   const { broadcastDiceRoll, isConnected: isCampaignConnected } = useRealtimeCollaboration(campaignId || '');
+  const { useCharacterSheetEnhancements, usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const ddbEnhancements = useCharacterSheetEnhancements(character?.id || '');
+  const playerTools = usePlayerToolsEnhancements();
 
   const { data: jobDisplayRow } = useQuery({
     queryKey: ['compendium-display-job', character?.job, campaignId],
@@ -245,7 +258,6 @@ const CharacterSheet = () => {
   const updateAbilities = useUpdateCharacterAbilities();
   const recordRoll = useRecordRoll();
   const generateShareToken = useGenerateShareToken();
-  const { equipment } = useEquipment(id || '');
   const { state: sheetState, saveSheetState } = useCharacterSheetState(character?.id || '');
   const { data: charFeatures = [] } = useCharacterFeatures(character?.id || '');
   const baseCustomModifiers = normalizeCustomModifiers(sheetState.customModifiers);
@@ -259,6 +271,8 @@ const CharacterSheet = () => {
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [shortRestOpen, setShortRestOpen] = useState(false);
+  const [longRestOpen, setLongRestOpen] = useState(false);
   const [abilityDrafts, setAbilityDrafts] = useState<Record<AbilityScore, string>>(() => {
     return ABILITY_KEYS.reduce((acc, ability) => {
       acc[ability] = '10';
@@ -284,15 +298,45 @@ const CharacterSheet = () => {
     character?.level ?? 1,
     character?.saving_throw_proficiencies ?? []
   );
-  const attunement = useAttunement();
+  const { equipment, updateEquipment } = useEquipment(character?.id || '');
+  const attunedItems = useMemo(() => {
+    return equipment.filter(e => e.is_attuned).map(e => ({
+      id: e.id,
+      name: e.name,
+      requiresAttunement: e.requires_attunement,
+      isAttuned: !!e.is_attuned
+    }));
+  }, [equipment]);
+  const slotsRemaining = 3 - attunedItems.length;
 
   // Spell system hooks
   const { data: spellSlotData = [] } = useSpellSlots(character?.id || '', character?.job || null, character?.level || 1);
   const { powers: characterPowers = [] } = usePowers(character?.id || '');
   const spellCasting = useSpellCasting(
     spellSlotData,
-    (spellName, duration) => concentration.concentrate({ id: spellName, name: spellName, description: `Concentrating on ${spellName}`, duration }),
-    () => concentration.drop()
+    (spellName, duration) => {
+      concentration.concentrate({ id: spellName, name: spellName, description: `Concentrating on ${spellName}`, duration });
+      const scope = campaignId && isCampaignConnected ? 'campaign' : 'local';
+      if (scope === 'campaign') {
+        playerTools.trackConditionChange(
+          character?.id || '',
+          `Concentrating on ${spellName}`,
+          'add'
+        ).catch(console.error);
+      }
+    },
+    () => {
+      const activeSpell = concentration.state.currentEffect?.name;
+      concentration.drop();
+      const scope = campaignId && isCampaignConnected ? 'campaign' : 'local';
+      if (scope === 'campaign' && activeSpell) {
+        playerTools.trackConditionChange(
+          character?.id || '',
+          `Concentrating on ${activeSpell}`,
+          'remove'
+        ).catch(console.error);
+      }
+    }
   );
 
   const primaryRegentUnlock = regentUnlocks.find(u => u.is_primary) ?? regentUnlocks[0];
@@ -360,7 +404,7 @@ const CharacterSheet = () => {
     };
   }, [isPrintMode, isLoading, character?.id]);
 
-  const shareLink = character?.share_token 
+  const shareLink = character?.share_token
     ? `${window.location.origin}/characters/${character.id}?token=${character.share_token}`
     : null;
 
@@ -443,20 +487,20 @@ const CharacterSheet = () => {
     });
 
     // Apply rune bonuses from equipped items
-    const equippedActiveRunes = activeRunes.filter(ri => 
-      ri.equipment?.is_equipped && 
+    const equippedActiveRunes = activeRunes.filter(ri =>
+      ri.equipment?.is_equipped &&
       (!ri.equipment.requires_attunement || ri.equipment.is_attuned) &&
       ri.is_active
     );
-    
+
     const runeBonuses = applyRuneBonuses(
       {
         ac: equipmentMods.armorClass,
         speed: equipmentMods.speed,
         abilities: equipmentModifiedAbilities,
         attackBonus: equipmentMods.attackBonus,
-        damageBonus: typeof equipmentMods.damageBonus === 'number' 
-          ? (equipmentMods.damageBonus > 0 ? `+${equipmentMods.damageBonus}` : '') 
+        damageBonus: typeof equipmentMods.damageBonus === 'number'
+          ? (equipmentMods.damageBonus > 0 ? `+${equipmentMods.damageBonus}` : '')
           : (equipmentMods.damageBonus || ''),
       },
       equippedActiveRunes.map(ri => ({ rune: ri.rune, is_active: ri.is_active }))
@@ -478,8 +522,8 @@ const CharacterSheet = () => {
     }, 0);
 
     ABILITY_KEYS.forEach((ability) => {
-      const bonus = sumCustomModifiers(customModifiers, 'ability', ability) + 
-                    sumCustomModifiers(customModifiers, 'ability_bonus' as any, ability);
+      const bonus = sumCustomModifiers(customModifiers, 'ability', ability) +
+        sumCustomModifiers(customModifiers, 'ability_bonus' as any, ability);
       if (bonus !== 0) {
         finalAbilities[ability] = (finalAbilities[ability] || 0) + bonus;
       }
@@ -487,18 +531,18 @@ const CharacterSheet = () => {
 
     // Calculate initiative (AGI modifier + initiative bonuses)
     const initiativeAdvantage = resolveAdvantageFromCustomModifiers(customModifiers, ['initiative', 'initiative_advantage']);
-    const initiativeBonus = sumCustomModifiers(customModifiers, 'initiative_bonus' as any) + 
-                            sumCustomModifiers(customModifiers, 'initiative');
+    const initiativeBonus = sumCustomModifiers(customModifiers, 'initiative_bonus' as any) +
+      sumCustomModifiers(customModifiers, 'initiative');
     const finalInitiative = getAbilityModifier(finalAbilities.AGI) + initiativeBonus;
 
     // HP calculation (with feature bonuses like Mana-Dense Physiology)
-    const hpMaxBonus = sumCustomModifiers(customModifiers, 'hp-max') + 
-                       sumCustomModifiers(customModifiers, 'hp_max' as any);
+    const hpMaxBonus = sumCustomModifiers(customModifiers, 'hp-max') +
+      sumCustomModifiers(customModifiers, 'hp_max' as any);
     const finalHPMax = calculateHPMax(character.level, character.hit_dice_size || 8, getAbilityModifier(finalAbilities.VIT)) + hpMaxBonus;
-    
+
     // Speed (with feature bonuses)
-    const speedBonus = sumCustomModifiers(customModifiers, 'speed') + 
-                       sumCustomModifiers(customModifiers, 'speed_bonus' as any);
+    const speedBonus = sumCustomModifiers(customModifiers, 'speed') +
+      sumCustomModifiers(customModifiers, 'speed_bonus' as any);
     let finalSpeed = (character.speed || 30) + speedBonus;
 
     // AC calculation
@@ -527,7 +571,7 @@ const CharacterSheet = () => {
     const totalWeight = calculateTotalWeight(equipment);
     const carryingCapacity = calculateCarryingCapacity(finalAbilities.STR);
     const encumbrance = calculateEncumbrance(totalWeight, carryingCapacity);
-    
+
     // Apply speed penalty from encumbrance
     finalSpeed = runeBonuses.speed;
     if (encumbrance.status === 'heavy') {
@@ -636,6 +680,27 @@ const CharacterSheet = () => {
         title: 'Short rest completed',
         description: 'Hit dice restored. Short-rest features recharged.',
       });
+
+      const scope = campaignId && isCampaignConnected ? 'campaign' : 'local';
+      recordRoll.mutate({
+        dice_formula: 'Rest',
+        result: 0,
+        rolls: [],
+        roll_type: 'rest',
+        context: 'Short Rest completed',
+        modifiers: null,
+        campaign_id: campaignId ?? null,
+        character_id: character.id,
+      });
+
+      if (scope === 'campaign') {
+        broadcastDiceRoll('Rest', 0, {
+          characterName: character.name,
+          rollType: 'rest',
+          context: 'Short Rest completed',
+          rolls: [],
+        });
+      }
     } catch {
       toast({
         title: 'Failed to rest',
@@ -643,7 +708,7 @@ const CharacterSheet = () => {
         variant: 'destructive',
       });
     }
-  }, [character?.id, queryClient, applyRestResourceUpdates, toast]);
+  }, [character?.id, queryClient, applyRestResourceUpdates, toast, campaignId, isCampaignConnected, broadcastDiceRoll, recordRoll, character?.name]);
 
   if (isLoading) {
     return (
@@ -724,10 +789,40 @@ const CharacterSheet = () => {
       queryClient.invalidateQueries({ queryKey: ['features', character.id] });
       await applyRestResourceUpdates('long');
 
+      const hpHealed = character.hp_max - character.hp_current;
+      if (hpHealed > 0) {
+        playerTools.trackHealthChange(character.id, hpHealed, 'healing').catch(console.error);
+      }
+
+      if (character.exhaustion_level > 0) {
+        playerTools.trackConditionChange(character.id, 'Exhaustion', 'remove').catch(console.error);
+      }
+
       toast({
         title: 'Long rest completed',
         description: 'All resources restored. Features recharged. Exhaustion reduced by 1.',
       });
+
+      const scope = campaignId && isCampaignConnected ? 'campaign' : 'local';
+      recordRoll.mutate({
+        dice_formula: 'Rest',
+        result: 0,
+        rolls: [],
+        roll_type: 'rest',
+        context: 'Long Rest completed',
+        modifiers: null,
+        campaign_id: campaignId ?? null,
+        character_id: character.id,
+      });
+
+      if (scope === 'campaign') {
+        broadcastDiceRoll('Rest', 0, {
+          characterName: character.name,
+          rollType: 'rest',
+          context: 'Long Rest completed',
+          rolls: [],
+        });
+      }
 
       if (result?.questAssignmentError) {
         toast({
@@ -823,12 +918,23 @@ const CharacterSheet = () => {
     }
 
     try {
+      const clampedHP = Math.min(newHP, character.hp_max + effectiveTempHp);
       await updateCharacter.mutateAsync({
         id: character.id,
         data: {
-          hp_current: Math.min(newHP, character.hp_max + effectiveTempHp),
+          hp_current: clampedHP,
         },
       });
+
+      const diff = clampedHP - character.hp_current;
+      if (diff !== 0) {
+        playerTools.trackHealthChange(
+          character.id,
+          Math.abs(diff),
+          diff > 0 ? 'healing' : 'damage'
+        ).catch(console.error);
+      }
+
       setHpEditOpen(false);
       setHpEditValue('');
     } catch {
@@ -862,6 +968,48 @@ const CharacterSheet = () => {
         id: character.id,
         data: { hp_current: nextHp },
       });
+
+      playerTools.trackHealthChange(character.id, delta, direction === 'damage' ? 'damage' : 'healing').catch(console.error);
+
+      if (direction === 'damage' && concentration.state.isConcentrating) {
+        const result = concentration.takeDamage(delta);
+        if (result) {
+          const scope = campaignId && isCampaignConnected ? 'campaign' : 'local';
+          if (scope === 'campaign') {
+            const context = `Concentration Save (DC ${result.dc}) - ${result.success ? 'Success' : 'Failed!'}`;
+
+            recordRoll.mutate({
+              dice_formula: '1d20',
+              result: result.total,
+              rolls: [result.roll],
+              roll_type: 'save',
+              context,
+              modifiers: { modifier: result.modifier },
+              campaign_id: campaignId ?? null,
+              character_id: character.id,
+            });
+
+            broadcastDiceRoll('1d20', result.total, {
+              characterName: character.name,
+              rollType: 'save',
+              context,
+              rolls: [result.roll],
+            });
+
+            if (result.concentrationLost && result.spellName) {
+              playerTools.trackConditionChange(
+                character.id,
+                `Concentrating on ${result.spellName}`,
+                'remove'
+              ).catch(console.error);
+              toast({ title: 'Concentration Lost!', description: `Failed save for ${result.spellName}`, variant: 'destructive' });
+            } else {
+              toast({ title: 'Concentration Maintained', description: `Passed save for ${result.spellName}` });
+            }
+          }
+        }
+      }
+
       setHpDeltaValue('');
       toast({
         title: direction === 'damage' ? 'Damage applied' : 'Healed',
@@ -1049,6 +1197,17 @@ const CharacterSheet = () => {
         id: character.id,
         data: { hp_temp: nextTempHp },
       });
+
+      playerTools.trackHealthChange(character.id, nextTempHp, 'temp').catch(console.error);
+    }
+
+    const currentInspiration = characterResources.inspiration;
+    const nextInspiration = nextResources.inspiration;
+
+    if (nextInspiration.inspiration_points > currentInspiration.inspiration_points) {
+      playerTools.trackConditionChange(character.id, 'Inspiration', 'add').catch(console.error);
+    } else if (nextInspiration.inspiration_points < currentInspiration.inspiration_points) {
+      playerTools.trackConditionChange(character.id, 'Inspiration', 'remove').catch(console.error);
     }
   };
 
@@ -1070,6 +1229,24 @@ const CharacterSheet = () => {
       id: character.id,
       data: updates,
     });
+
+    // DDB Parity Integration
+    if (field === 'hit_dice_current' && delta !== 0) {
+      playerTools.trackCustomFeatureUsage(
+        character.id,
+        'Hit Dice',
+        delta < 0 ? 'spend' : 'regain',
+        '5e'
+      ).catch(console.error);
+    }
+    if (field === 'system_favor_current' && delta !== 0) {
+      playerTools.trackCustomFeatureUsage(
+        character.id,
+        'System Favor',
+        delta < 0 ? 'spend' : 'regain',
+        'SA'
+      ).catch(console.error);
+    }
   };
 
   const handleExhaustionChange = (delta: number) => {
@@ -1079,6 +1256,15 @@ const CharacterSheet = () => {
       id: character.id,
       data: { exhaustion_level: nextValue },
     });
+
+    // DDB Parity Integration
+    if (delta !== 0) {
+      playerTools.trackConditionChange(
+        character.id,
+        `Exhaustion Level ${nextValue}`,
+        delta > 0 ? 'add' : 'remove'
+      ).catch(console.error);
+    }
   };
 
   const handleToggleCondition = (conditionName: string) => {
@@ -1093,6 +1279,13 @@ const CharacterSheet = () => {
       id: character.id,
       data: { conditions: next },
     });
+
+    // DDB Parity Integration
+    playerTools.trackConditionChange(
+      character.id,
+      conditionName,
+      !exists ? 'add' : 'remove'
+    ).catch(console.error);
   };
 
   const handleAddCustomCondition = () => {
@@ -1110,6 +1303,13 @@ const CharacterSheet = () => {
       data: { conditions: [...current, trimmed] },
     });
     setCustomConditionDraft('');
+
+    // DDB Parity Integration
+    playerTools.trackConditionChange(
+      character.id,
+      trimmed,
+      'add'
+    ).catch(console.error);
   };
 
   const openProficiencyDialog = () => {
@@ -1194,7 +1394,7 @@ const CharacterSheet = () => {
 
   return (
     <Layout className={isPrintMode ? 'print-mode' : ''}>
-        <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 max-w-7xl">
+      <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 max-w-7xl">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <Button
@@ -1346,17 +1546,17 @@ const CharacterSheet = () => {
               <span className={cn(
                 'sa-rank-badge px-2',
                 character.level >= 17 ? 'sa-rank-badge--s' :
-                character.level >= 13 ? 'sa-rank-badge--a' :
-                character.level >= 9 ? 'sa-rank-badge--b' :
-                character.level >= 5 ? 'sa-rank-badge--c' :
-                character.level >= 2 ? 'sa-rank-badge--d' :
-                'sa-rank-badge--e'
+                  character.level >= 13 ? 'sa-rank-badge--a' :
+                    character.level >= 9 ? 'sa-rank-badge--b' :
+                      character.level >= 5 ? 'sa-rank-badge--c' :
+                        character.level >= 2 ? 'sa-rank-badge--d' :
+                          'sa-rank-badge--e'
               )}>
                 {character.level >= 17 ? 'S' :
-                 character.level >= 13 ? 'A' :
-                 character.level >= 9 ? 'B' :
-                 character.level >= 5 ? 'C' :
-                 character.level >= 2 ? 'D' : 'E'}
+                  character.level >= 13 ? 'A' :
+                    character.level >= 9 ? 'B' :
+                      character.level >= 5 ? 'C' :
+                        character.level >= 2 ? 'D' : 'E'}
               </span>
             </div>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-sm">
@@ -1396,24 +1596,45 @@ const CharacterSheet = () => {
                 hitDiceAvailable={character.hit_dice_current}
                 hitDiceMax={character.hit_dice_max}
                 hitDieSize={character.hit_dice_size}
+                vitScore={finalAbilities?.VIT ?? character.abilities.VIT}
                 hpCurrent={character.hp_current}
                 hpMax={character.hp_max}
-                onSpendHitDie={() => {
-                  const vitMod = getAbilityModifier(finalAbilities?.VIT ?? character.abilities.VIT);
-                  const roll = Math.floor(Math.random() * character.hit_dice_size) + 1;
-                  const hpGain = Math.max(0, roll + vitMod);
-                  const currentHP = character.hp_current;
-                  const actualGain = Math.min(hpGain, character.hp_max - currentHP);
-                  const remaining = character.hit_dice_current - 1;
-                  handleResourceAdjust('hit_dice_current', -1);
-                  return { roll, vitModifier: vitMod, hpRecovered: actualGain, hitDiceRemaining: remaining };
-                }}
-                onFinishRest={async (totalRecovered) => {
+                onFinishRest={async (totalRecovered, hitDiceSpent) => {
                   if (totalRecovered > 0) {
                     const newHP = Math.min(character.hp_current + totalRecovered, character.hp_max);
                     await updateCharacter.mutateAsync({ id: character.id, data: { hp_current: newHP } });
                   }
+                  if (hitDiceSpent > 0) {
+                    await handleResourceAdjust('hit_dice_current', -hitDiceSpent);
+                  }
+
+                  // Broadcast Short Rest completion
+                  playerTools.trackConditionChange(character.id, 'Short Rest', 'add').catch(console.error);
+
                   await handleShortRest();
+                }}
+                onHitDieSpent={(result) => {
+                  const scope = campaignId && isCampaignConnected ? 'campaign' : 'local';
+                  const totalRoll = result.roll + result.vitModifier;
+                  recordRoll.mutate({
+                    dice_formula: `1d${result.hitDieSize}`,
+                    result: totalRoll,
+                    rolls: [result.roll],
+                    roll_type: 'healing',
+                    context: `Hit Die Spent (+${result.hpRecovered} HP)`,
+                    modifiers: { modifier: result.vitModifier },
+                    campaign_id: campaignId ?? null,
+                    character_id: character.id,
+                  });
+
+                  if (scope === 'campaign') {
+                    broadcastDiceRoll(`1d${result.hitDieSize}`, totalRoll, {
+                      characterName: character.name,
+                      rollType: 'healing',
+                      context: `Hit Die Spent (+${result.hpRecovered} HP)`,
+                      rolls: [result.roll],
+                    });
+                  }
                 }}
               />
               <Button
@@ -1446,13 +1667,24 @@ const CharacterSheet = () => {
           isConcentrating={concentration.state.isConcentrating}
           effectName={concentration.state.currentEffect?.name}
           remainingRounds={concentration.state.currentEffect?.remainingRounds}
-          onDrop={concentration.drop}
+          onDrop={() => {
+            if (concentration.state.currentEffect) {
+              playerTools.trackConditionChange(
+                character.id,
+                `Concentrating: ${concentration.state.currentEffect.name}`,
+                'remove'
+              ).catch(console.error);
+            }
+            concentration.drop();
+          }}
         />
 
         {/* Persistent Condition Badge Bar (always visible above tabs) */}
         {((character.conditions && character.conditions.length > 0) || character.exhaustion_level > 0) && !isReadOnly && (
           <ConditionBadgeBar
             conditions={character.conditions || []}
+            exhaustionLevel={character.exhaustion_level}
+            onClearExhaustion={() => handleExhaustionChange(-character.exhaustion_level)}
             onAddCondition={(condition) => {
               const current = character.conditions || [];
               if (!current.some(c => c.toLowerCase() === condition.toLowerCase())) {
@@ -1460,6 +1692,7 @@ const CharacterSheet = () => {
                   id: character.id,
                   data: { conditions: [...current, condition] },
                 });
+                playerTools.trackConditionChange(character.id, condition, 'add').catch(console.error);
               }
             }}
             onRemoveCondition={(condition) => {
@@ -1468,13 +1701,14 @@ const CharacterSheet = () => {
                 id: character.id,
                 data: { conditions: current.filter(c => c.toLowerCase() !== condition.toLowerCase()) },
               });
+              playerTools.trackConditionChange(character.id, condition, 'remove').catch(console.error);
             }}
           />
         )}
 
         {/* D&D Beyond Style Tabbed Content */}
         <Tabs defaultValue="overview" className="space-y-4 sm:space-y-6">
-          <TabsList className="grid w-full grid-cols-6 h-auto p-1 bg-obsidian-charcoal/40 border border-amethyst-purple/20 backdrop-blur-md hud-brackets relative overflow-hidden rounded-lg shadow-lg">
+          <TabsList className="grid w-full grid-cols-8 h-auto p-1 bg-obsidian-charcoal/40 border border-amethyst-purple/20 backdrop-blur-md hud-brackets relative overflow-hidden rounded-lg shadow-lg">
             <div className="absolute inset-0 bg-gradient-to-b from-amethyst-purple/5 to-transparent pointer-events-none" />
             <TabsTrigger value="overview" className="gap-1.5 text-[10px] xs:text-xs sm:text-sm py-2.5 font-mono tracking-wider uppercase relative group data-[state=active]:bg-amethyst-purple/20 data-[state=active]:text-amethyst-purple">
               <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 relative z-10" />
@@ -1512,6 +1746,18 @@ const CharacterSheet = () => {
               <span className="xs:hidden relative z-10">B</span>
               <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-amethyst-purple scale-x-0 group-data-[state=active]:scale-x-100 transition-transform duration-500 origin-center shadow-[0_0_10px_rgba(155,109,255,0.8)]" />
             </TabsTrigger>
+            <TabsTrigger value="extras" className="gap-1.5 text-[10px] xs:text-xs sm:text-sm py-2.5 font-mono tracking-wider uppercase relative group data-[state=active]:bg-amethyst-purple/20 data-[state=active]:text-amethyst-purple">
+              <Crown className="w-3.5 h-3.5 sm:w-4 sm:h-4 relative z-10" />
+              <span className="hidden xs:inline relative z-10">Extras</span>
+              <span className="xs:hidden relative z-10">X</span>
+              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-amethyst-purple scale-x-0 group-data-[state=active]:scale-x-100 transition-transform duration-500 origin-center shadow-[0_0_10px_rgba(155,109,255,0.8)]" />
+            </TabsTrigger>
+            <TabsTrigger value="quests" className="gap-1.5 text-[10px] xs:text-xs sm:text-sm py-2.5 font-mono tracking-wider uppercase relative group data-[state=active]:bg-amethyst-purple/20 data-[state=active]:text-amethyst-purple">
+              <ScrollText className="w-3.5 h-3.5 sm:w-4 sm:h-4 relative z-10" />
+              <span className="hidden xs:inline relative z-10">Quests</span>
+              <span className="xs:hidden relative z-10">Q</span>
+              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-amethyst-purple scale-x-0 group-data-[state=active]:scale-x-100 transition-transform duration-500 origin-center shadow-[0_0_10px_rgba(155,109,255,0.8)]" />
+            </TabsTrigger>
           </TabsList>
 
           {/* â”€â”€ TAB: Overview â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
@@ -1519,7 +1765,7 @@ const CharacterSheet = () => {
 
             {/* Character Level Up */}
             {!isReadOnly && (
-              <CharacterLevelUp 
+              <CharacterLevelUp
                 characterId={character.id}
                 levelingMode={levelingMode}
                 onLevelUp={() => {
@@ -1527,6 +1773,9 @@ const CharacterSheet = () => {
                 }}
               />
             )}
+
+            {/* Sovereign Overlay */}
+            <SovereignOverlayPanel characterId={character.id} />
 
             {/* Core Stats - D&D Beyond Style */}
             <div className="character-sheet-stats-grid grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -1536,8 +1785,8 @@ const CharacterSheet = () => {
                   <Heart className={cn(
                     "w-5 h-5 sm:w-6 sm:h-6 transition-transform group-hover:scale-110",
                     character.hp_current < character.hp_max * 0.25 ? "text-destructive animate-pulse" :
-                    character.hp_current < character.hp_max * 0.5 ? "text-orange-400" :
-                    "text-red-400"
+                      character.hp_current < character.hp_max * 0.5 ? "text-orange-400" :
+                        "text-red-400"
                   )} />
                 </div>
                 <div className="pt-6 sm:pt-8">
@@ -1557,16 +1806,16 @@ const CharacterSheet = () => {
                       )}
                     </div>
                   </div>
-                  
+
                   {/* Status Bar Visualization */}
                   <div className="mt-4 px-2">
                     <div className="h-1.5 w-full bg-obsidian-charcoal rounded-full overflow-hidden border border-white/5">
-                      <div 
+                      <div
                         className={cn(
                           "h-full transition-all duration-500 ease-out",
                           character.hp_current < character.hp_max * 0.25 ? "bg-destructive shadow-[0_0_8px_rgba(239,68,68,0.5)]" :
-                          character.hp_current < character.hp_max * 0.5 ? "bg-orange-500" :
-                          "bg-red-500"
+                            character.hp_current < character.hp_max * 0.5 ? "bg-orange-500" :
+                              "bg-red-500"
                         )}
                         // eslint-disable-next-line react/no-inline-styles
                         style={{ width: `${Math.min(100, (character.hp_current / character.hp_max) * 100)}%` }}
@@ -1656,8 +1905,8 @@ const CharacterSheet = () => {
                   <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-400 transition-transform group-hover:rotate-12" />
                 </div>
                 <div className="pt-6 sm:pt-8 text-center">
-                  <ACBreakdownTooltip
-                    breakdown={{
+                  <DefensesModal
+                    acBreakdown={{
                       base: baseStats.armorClass,
                       agiModifier: getAbilityModifier(finalAbilities.AGI),
                       agiApplied: getAbilityModifier(finalAbilities.AGI),
@@ -1669,12 +1918,13 @@ const CharacterSheet = () => {
                       formula: `${baseStats.armorClass} base${equipmentMods.armorClass !== baseStats.armorClass ? ` + ${equipmentMods.armorClass - baseStats.armorClass} equip` : ''}${runeBonuses.ac !== equipmentMods.armorClass ? ` + ${runeBonuses.ac - equipmentMods.armorClass} runes` : ''}`,
                       warnings: [],
                     }}
-                  >
-                    <div className="font-display text-3xl sm:text-4xl font-bold mb-1 tracking-tighter text-white" data-testid="ac-display">
-                      {calculatedStats.armorClass}
-                    </div>
-                  </ACBreakdownTooltip>
-                  <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+                    resistances={(character as unknown as Record<string, unknown>).damage_resistances as string[] | undefined}
+                    immunities={(character as unknown as Record<string, unknown>).damage_immunities as string[] | undefined}
+                    vulnerabilities={(character as unknown as Record<string, unknown>).damage_vulnerabilities as string[] | undefined}
+                    conditionImmunities={(character as unknown as Record<string, unknown>).condition_immunities as string[] | undefined}
+                    characterId={character.id}
+                  />
+                  <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground mt-2">
                     DEFENSE RATING
                   </div>
                   {isEditMode && !isReadOnly && (
@@ -1705,13 +1955,21 @@ const CharacterSheet = () => {
                 <div className="absolute top-2 right-2">
                   <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400 transition-transform group-hover:scale-110" />
                 </div>
-                <div className="pt-6 sm:pt-8 text-center">
-                  <div className="font-display text-3xl sm:text-4xl font-bold mb-1 tracking-tighter text-white" data-testid="initiative-display">
-                    {formatModifier(finalInitiative)}
-                  </div>
-                  <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
-                    REACTION SPEED
-                  </div>
+                <div className="pt-6 sm:pt-8 text-center relative">
+                  <button
+                    type="button"
+                    onClick={() => ddbEnhancements.roll('initiative', finalInitiative, 'ability', 'Initiative', campaignId || undefined, initiativeAdvantage as any)}
+                    className="w-full hover:bg-white/5 rounded-lg py-1 transition-colors group/btn cursor-pointer"
+                    aria-label="Roll Initiative"
+                  >
+                    <div className="font-display text-3xl sm:text-4xl font-bold mb-1 tracking-tighter text-white inline-flex items-center gap-2" data-testid="initiative-display">
+                      {formatModifier(finalInitiative)}
+                      <Dice6 className="w-4 h-4 opacity-0 group-hover/btn:opacity-100 transition-opacity text-amber-400" />
+                    </div>
+                    <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+                      REACTION SPEED
+                    </div>
+                  </button>
                   {initiativeAdvantage !== 'normal' && (
                     <Badge variant="outline" className="mt-2 text-[10px] border-amber-500/50 text-amber-400 px-1 py-0 h-4">
                       {initiativeAdvantage.toUpperCase()}
@@ -1760,6 +2018,9 @@ const CharacterSheet = () => {
                   )}
                 </div>
               </SystemWindow>
+
+              {/* Encumbrance — compact weight bar */}
+              <EncumbranceWidget characterId={character.id} compact />
             </div>
 
             {/* Ability Scores - D&D Beyond Style */}
@@ -1774,7 +2035,7 @@ const CharacterSheet = () => {
                   const modifier = calculatedStats.abilityModifiers[ability];
                   const isProficient = character.saving_throw_proficiencies?.includes(ability);
                   const isEditingAbility = isEditMode && !isReadOnly;
-                  
+
                   return (
                     <div key={ability} className="text-center group bg-card border border-border rounded-lg p-3 sm:p-4 relative">
                       <div className="text-xs text-muted-foreground mb-1 font-heading">{ABILITY_NAMES[ability]}</div>
@@ -1815,13 +2076,7 @@ const CharacterSheet = () => {
                           "w-full mt-2 text-sm font-heading cursor-pointer hover:bg-primary/10 rounded py-1 transition-colors flex items-center justify-center gap-1",
                           modifier >= 0 ? "text-green-400" : "text-red-400"
                         )}
-                        onClick={() => rollAndRecord({
-                          title: `${ABILITY_NAMES[ability]} Check`,
-                          formula: formatRollFormula('1d20', modifier),
-                          rollType: 'ability',
-                          context: `${ABILITY_NAMES[ability]} Check`,
-                          modifier,
-                        })}
+                        onClick={() => ddbEnhancements.rollAbilityCheck(ability)}
                         aria-label={`Roll ${ABILITY_NAMES[ability]} check`}
                       >
                         {formatModifier(modifier)}
@@ -1843,7 +2098,7 @@ const CharacterSheet = () => {
                   const save = calculatedStats.savingThrows[ability];
                   const isProficient = character.saving_throw_proficiencies?.includes(ability);
                   const isEditingSave = isEditMode && !isReadOnly;
-                  
+
                   return (
                     <div key={ability} className="flex items-center justify-between p-3 sm:p-2 rounded-lg bg-card border border-border group hover:bg-muted/50 transition-colors">
                       <div className="flex items-center gap-2">
@@ -1877,13 +2132,7 @@ const CharacterSheet = () => {
                           type="button"
                           variant="ghost"
                           size="sm"
-                          onClick={() => rollAndRecord({
-                            title: `${ABILITY_NAMES[ability]} Save`,
-                            formula: formatRollFormula('1d20', save),
-                            rollType: 'save',
-                            context: `${ABILITY_NAMES[ability]} Save`,
-                            modifier: save,
-                          })}
+                          onClick={() => ddbEnhancements.rollSavingThrow(ability)}
                           className="h-7 w-7 p-0 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity character-sheet-touch-small"
                           aria-label={`Roll ${ABILITY_NAMES[ability]} save`}
                         >
@@ -1947,13 +2196,7 @@ const CharacterSheet = () => {
                           type="button"
                           variant="ghost"
                           size="sm"
-                          onClick={() => rollAndRecord({
-                            title: `${skill.name}`,
-                            formula: formatRollFormula('1d20', s.modifier),
-                            rollType: 'skill',
-                            context: `${skill.name} (${skill.ability})`,
-                            modifier: s.modifier,
-                          })}
+                          onClick={() => ddbEnhancements.rollSkillCheck(skill.name)}
                           className="h-6 w-6 p-0 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
                           aria-label={`Roll ${skill.name} check`}
                         >
@@ -1996,34 +2239,69 @@ const CharacterSheet = () => {
               passiveInsight={skills['Insight']?.passive ?? 10}
             />
 
-            {/* Resistances & Immunities (from equipment, regents, features) */}
-            <ResistancesDisplay
-              resistances={(character as unknown as Record<string, unknown>).damage_resistances as string[] | undefined}
-              immunities={(character as unknown as Record<string, unknown>).damage_immunities as string[] | undefined}
-              vulnerabilities={(character as unknown as Record<string, unknown>).damage_vulnerabilities as string[] | undefined}
-              conditionImmunities={(character as unknown as Record<string, unknown>).condition_immunities as string[] | undefined}
-            />
-
-            {/* Death Save Tracker (only shown at 0 HP) */}
             <DeathSaveTracker
               successes={deathSaves.state.successes}
               failures={deathSaves.state.failures}
               isStable={deathSaves.state.isStable}
               isDead={deathSaves.state.isDead}
               hpCurrent={character.hp_current}
+              characterId={character.id}
               onRollDeathSave={() => {
                 const result = deathSaves.rollDeathSave();
                 setLastDeathSaveResult({ roll: result.roll, message: result.message });
                 deathSaves.persist(character.id);
+
+                if (result.isNat20) {
+                  updateCharacter.mutate({ id: character.id, data: { hp_current: 1 } });
+                  playerTools.trackHealthChange(character.id, 1, 'healing').catch(console.error);
+                }
+
                 toast({ title: 'Death Save', description: result.message });
+
+                const scope = campaignId && isCampaignConnected ? 'campaign' : 'local';
+                recordRoll.mutate({
+                  dice_formula: '1d20',
+                  result: result.roll,
+                  rolls: [result.roll],
+                  roll_type: 'save',
+                  context: 'Death Save',
+                  modifiers: null,
+                  campaign_id: campaignId ?? null,
+                  character_id: character.id,
+                });
+
+                if (scope === 'campaign') {
+                  broadcastDiceRoll('1d20', result.roll, {
+                    characterName: character.name,
+                    rollType: 'save',
+                    context: 'Death Save',
+                    rolls: [result.roll],
+                  });
+                  // Broadcast state change explicitly if they die or stabilize from this roll
+                  if (result.message.includes('died') || result.message.includes('stable')) {
+                    playerTools.trackConditionChange(
+                      character.id,
+                      result.message.includes('died') ? 'Dead' : 'Stable',
+                      'add'
+                    ).catch(console.error);
+                  }
+                }
               }}
               onStabilize={() => {
                 deathSaves.stabilize();
                 deathSaves.persist(character.id);
                 toast({ title: 'Stabilized', description: 'Character is stable.' });
+
+                playerTools.trackConditionChange(
+                  character.id,
+                  'Stable',
+                  'add'
+                ).catch(console.error);
               }}
               lastRollResult={lastDeathSaveResult}
             />
+
+            <LimitedUseTracker characterId={character.id} />
 
             {/* Resources */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -2255,7 +2533,7 @@ const CharacterSheet = () => {
             )}
 
             {/* Proficiencies */}
-            </TabsContent>
+          </TabsContent>
 
           {/* â”€â”€ TAB: Actions & Spells â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           <TabsContent value="actions" className="space-y-6 mt-0">
@@ -2285,8 +2563,8 @@ const CharacterSheet = () => {
             />
 
             {/* Spell Slots */}
-            <SpellSlotsDisplay 
-              characterId={character.id} 
+            <SpellSlotsDisplay
+              characterId={character.id}
               job={character.job}
               level={character.level}
               abilities={character.abilities as Record<string, number>}
@@ -2300,10 +2578,22 @@ const CharacterSheet = () => {
           <TabsContent value="inventory" className="space-y-6 mt-0">
             {/* Attunement Slots */}
             <AttunementSlots
-              attunedItems={attunement.attunedItems}
-              slotsRemaining={attunement.slotsRemaining}
-              onUnattune={(itemId) => {
-                attunement.unattune(itemId);
+              attunedItems={attunedItems}
+              slotsRemaining={slotsRemaining}
+              characterId={character.id}
+              onUnattune={async (itemId) => {
+                await updateEquipment({ id: itemId, updates: { is_attuned: false } });
+                const item = equipment.find(e => e.id === itemId);
+                if (item) {
+                  const scope = campaignId && isCampaignConnected ? 'campaign' : 'local';
+                  if (scope === 'campaign') {
+                    playerTools.trackConditionChange(
+                      character.id,
+                      `Attuned: ${item.name}`,
+                      'remove'
+                    ).catch(console.error);
+                  }
+                }
               }}
             />
 
@@ -2360,6 +2650,8 @@ const CharacterSheet = () => {
                   spellAttackBonus={spellAttackBonus}
                   maxPrepared={maxPrepared}
                   canPrepare={canPrepare}
+                  characterId={character.id}
+                  campaignId={campaignId || undefined}
                   onCastSpell={async (spellId, atLevel, asRitual) => {
                     const power = characterPowers.find(p => p.id === spellId);
                     if (!power) return;
@@ -2385,10 +2677,23 @@ const CharacterSheet = () => {
                       level: character.level,
                       campaignId: campaignId,
                     });
+                    const title = asRitual ? `${power.name} (Ritual)` : `${power.name} Cast`;
                     toast({
-                      title: asRitual ? `${power.name} (Ritual)` : `${power.name} Cast`,
+                      title,
                       description: result.message,
                     });
+
+                    const scope = campaignId && isCampaignConnected ? 'campaign' : 'local';
+                    if (scope === 'campaign') {
+                      // Broadcast the spell casting event to the campaign
+                      playerTools.trackCustomFeatureUsage(
+                        character.id,
+                        title,
+                        `spend (Level ${atLevel})`,
+                        '5e'
+                      ).catch(console.error);
+                    }
+
                     queryClient.invalidateQueries({ queryKey: ['spell-slots', character.id] });
                   }}
                   onTogglePrepared={async (spellId, prepared) => {
@@ -2536,6 +2841,11 @@ const CharacterSheet = () => {
               </div>
             </SystemWindow>
 
+            {/* Backup Snapshots */}
+            <SystemWindow title="CHARACTER SNAPSHOTS">
+              <CharacterBackupPanel characterId={character.id} />
+            </SystemWindow>
+
             {/* Adventure Journal */}
             {!isLocal && (
               <JournalPanel characterId={character.id} />
@@ -2543,6 +2853,23 @@ const CharacterSheet = () => {
 
             {/* Roll History */}
             <RollHistoryPanel characterId={character.id} />
+          </TabsContent>
+
+          {/* ── TAB: Extras ──────────────────────────────────────────── */}
+          <TabsContent value="extras" className="space-y-6 mt-0">
+            <SovereignOverlayPanel characterId={character.id} />
+            <CharacterExtrasPanel characterId={character.id} isReadOnly={isReadOnly} />
+          </TabsContent>
+
+          {/* ── TAB: Quests ──────────────────────────────────────────── */}
+          <TabsContent value="quests" className="space-y-6 mt-0">
+            {isLocal ? (
+              <SystemWindow title="QUESTS">
+                <p className="text-sm text-muted-foreground">Sign in to access Daily Quests.</p>
+              </SystemWindow>
+            ) : (
+              <QuestLog characterId={character.id} />
+            )}
           </TabsContent>
         </Tabs>
 
@@ -2648,6 +2975,53 @@ const CharacterSheet = () => {
         </DialogContent>
       </Dialog>
 
+      {character && (
+        <>
+          <ShortRestDialog
+            open={shortRestOpen}
+            onOpenChange={setShortRestOpen}
+            characterId={character.id}
+            hitDiceMax={character.hit_dice_max}
+            hitDiceAvailable={character.hit_dice_current}
+            hitDieSize={character.hit_dice_size || 8}
+            vitScore={character.abilities.VIT}
+            hpCurrent={character.hp_current}
+            hpMax={character.hp_max}
+            onHitDieSpent={(result) => {
+              handleResourceAdjust('hit_dice_current', -1);
+            }}
+            onFinishRest={(totalRecovered, hitDiceSpent) => {
+              updateCharacter.mutate({
+                id: character.id,
+                data: {
+                  hp_current: Math.min(character.hp_max, character.hp_current + totalRecovered),
+                  hit_dice_current: Math.max(0, character.hit_dice_current - hitDiceSpent),
+                }
+              });
+              setShortRestOpen(false);
+            }}
+          />
+          <LongRestDialog
+            open={longRestOpen}
+            onOpenChange={setLongRestOpen}
+            characterId={character.id}
+            onConfirmRest={() => {
+              const nextHitDice = Math.min(character.hit_dice_max, character.hit_dice_current + Math.max(1, Math.floor(character.hit_dice_max / 2)));
+              updateCharacter.mutate({
+                id: character.id,
+                data: { hp_current: character.hp_max, hit_dice_current: nextHitDice, exhaustion_level: Math.max(0, character.exhaustion_level - 1) }
+              });
+
+              // Broadcast Long Rest completion
+              playerTools.trackConditionChange(character.id, 'Long Rest', 'add').catch(console.error);
+              playerTools.trackHealthChange(character.id, character.hp_max, 'healing').catch(console.error);
+
+              setLongRestOpen(false);
+            }}
+          />
+        </>
+      )}
+
       {/* Character Edit Dialog */}
       <CharacterEditDialog
         character={character}
@@ -2659,6 +3033,16 @@ const CharacterSheet = () => {
           }
         }}
       />
+
+      {/* Mobile FAB */}
+      {!isReadOnly && (
+        <CharacterFAB
+          characterId={character.id}
+          campaignId={campaignId ?? undefined}
+          onShortRest={() => setShortRestOpen(true)}
+          onLongRest={() => setLongRestOpen(true)}
+        />
+      )}
     </Layout>
   );
 };

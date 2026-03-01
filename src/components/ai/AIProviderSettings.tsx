@@ -19,9 +19,9 @@ interface AIProviderSettingsProps {
   className?: string;
 }
 
-const FREE_PROVIDER_LABEL = 'Pollinations (Free, No Key)';
-const FREE_PROVIDER_ENDPOINT = 'https://text.pollinations.ai';
-const FREE_PROVIDER_MODEL = 'openai-large';
+const FREE_PROVIDER_LABEL = 'Google Gemini 2.0 Flash (Free, Integrated)';
+const FREE_PROVIDER_ENDPOINT = 'Integrated Server-side Proxy';
+const FREE_PROVIDER_MODEL = 'gemini-2.0-flash';
 const LOCAL_FALLBACK_LABEL = 'Ollama (Local Fallback)';
 const LOCAL_FALLBACK_MODEL = 'qwen2.5:14b-instruct';
 

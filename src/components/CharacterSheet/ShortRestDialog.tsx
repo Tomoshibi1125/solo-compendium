@@ -3,58 +3,73 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Button } from '@/components/ui/button';
 import { Moon, Dices, Heart } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-interface HitDieRoll {
-  roll: number;
-  vitModifier: number;
-  hpRecovered: number;
-  hitDiceRemaining: number;
-}
+import { useHitDiceSpending } from '@/hooks/useHitDiceSpending';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 
 interface ShortRestDialogProps {
   hitDiceAvailable: number;
   hitDiceMax: number;
   hitDieSize: number;
+  vitScore: number;
   hpCurrent: number;
   hpMax: number;
-  onSpendHitDie: () => HitDieRoll | null;
-  onFinishRest: (totalRecovered: number) => void;
+  onFinishRest: (totalRecovered: number, hitDiceSpent: number) => void;
+  onHitDieSpent?: (result: { roll: number; vitModifier: number; hpRecovered: number; hitDieSize: number; hitDiceRemaining: number }) => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  characterId?: string;
 }
 
 export function ShortRestDialog({
   hitDiceAvailable,
   hitDiceMax,
   hitDieSize,
+  vitScore,
   hpCurrent,
   hpMax,
-  onSpendHitDie,
   onFinishRest,
+  onHitDieSpent,
+  open: controlledOpen,
+  onOpenChange,
+  characterId,
 }: ShortRestDialogProps) {
-  const [open, setOpen] = useState(false);
-  const [rolls, setRolls] = useState<HitDieRoll[]>([]);
-  const [totalRecovered, setTotalRecovered] = useState(0);
-  const [remainingDice, setRemainingDice] = useState(hitDiceAvailable);
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : uncontrolledOpen;
+  const setOpen = isControlled && onOpenChange ? onOpenChange : setUncontrolledOpen;
+  const {
+    hitDiceAvailable: remainingDice,
+    totalHPRecovered: totalRecovered,
+    rolls,
+    spendHitDie,
+    resetSession,
+  } = useHitDiceSpending(hitDiceAvailable, hitDiceMax, hitDieSize, vitScore, hpCurrent, hpMax);
+
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const playerTools = usePlayerToolsEnhancements();
 
   const handleOpen = (isOpen: boolean) => {
     if (isOpen) {
-      setRolls([]);
-      setTotalRecovered(0);
-      setRemainingDice(hitDiceAvailable);
+      resetSession();
     }
     setOpen(isOpen);
   };
 
   const handleSpend = () => {
-    const result = onSpendHitDie();
+    const result = spendHitDie();
     if (result) {
-      setRolls((prev) => [...prev, result]);
-      setTotalRecovered((prev) => prev + result.hpRecovered);
-      setRemainingDice(result.hitDiceRemaining);
+      if (characterId && result.hpRecovered > 0) {
+        playerTools.trackHealthChange(characterId, result.hpRecovered, 'healing').catch(console.error);
+      }
+      if (onHitDieSpent) {
+        onHitDieSpent({ ...result, hitDieSize });
+      }
     }
   };
 
   const handleFinish = () => {
-    onFinishRest(totalRecovered);
+    const hitDiceSpent = hitDiceAvailable - remainingDice;
+    onFinishRest(totalRecovered, hitDiceSpent);
     setOpen(false);
   };
 

@@ -2,6 +2,7 @@ import { useSpellSlots, useUpdateSpellSlot } from '@/hooks/useSpellSlots';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Plus, Minus, Zap } from 'lucide-react';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 import { Badge } from '@/components/ui/badge';
 import { logger } from '@/lib/logger';
 import { getSpellcastingAbility, getCasterType } from '@/lib/characterCalculations';
@@ -18,6 +19,8 @@ interface SpellSlotsDisplayProps {
 export function SpellSlotsDisplay({ characterId, job, level, abilities, className }: SpellSlotsDisplayProps) {
   const { data: slots = [], isLoading } = useSpellSlots(characterId, job, level);
   const updateSlot = useUpdateSpellSlot();
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const playerTools = usePlayerToolsEnhancements();
 
   const casterType = getCasterType(job);
   const castingAbility = getSpellcastingAbility(job);
@@ -46,13 +49,17 @@ export function SpellSlotsDisplay({ characterId, job, level, abilities, classNam
     if (!slot) return;
 
     const newCurrent = Math.max(0, Math.min(slot.max, slot.current + delta));
-    
+
     try {
       await updateSlot.mutateAsync({
         characterId,
         spellLevel,
         current: newCurrent,
       });
+
+      if (delta < 0) {
+        playerTools.trackCustomFeatureUsage(characterId, `Tier ${spellLevel} Spell Slot`, 'cast', '5e').catch(console.error);
+      }
     } catch (error) {
       logger.error('Failed to update spell slot:', error);
     }

@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 import { Skull, Heart, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/components/ui/tooltip';
-
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 interface DeathSaveTrackerProps {
   successes: number;
   failures: number;
@@ -24,8 +24,17 @@ export function DeathSaveTracker({
   onRollDeathSave,
   onStabilize,
   lastRollResult,
-}: DeathSaveTrackerProps) {
+  characterId,
+}: DeathSaveTrackerProps & { characterId: string }) {
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const playerTools = usePlayerToolsEnhancements();
+
   if (hpCurrent > 0) return null;
+
+  const handleStabilize = () => {
+    onStabilize();
+    playerTools.trackConditionChange(characterId, 'Stable', 'add').catch(console.error);
+  };
 
   return (
     <div className="rounded-lg border border-red-300 bg-red-50/80 p-4 space-y-3">
@@ -102,7 +111,7 @@ export function DeathSaveTracker({
           <Button size="sm" variant="destructive" onClick={onRollDeathSave} className="text-xs">
             Roll Death Save
           </Button>
-          <Button size="sm" variant="outline" onClick={onStabilize} className="text-xs">
+          <Button size="sm" variant="outline" onClick={handleStabilize} className="text-xs">
             <Heart className="h-3 w-3 mr-1" /> Stabilize (Medicine DC 10)
           </Button>
         </div>

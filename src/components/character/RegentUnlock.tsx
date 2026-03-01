@@ -8,6 +8,7 @@ import { Crown, Lock, CheckCircle, AlertTriangle, User } from 'lucide-react';
 import { monarchs } from '@/data/compendium/monarchs';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 
 interface RegentUnlockProps {
   characterId: string;
@@ -29,6 +30,8 @@ export function RegentUnlock({
   const [isUnlocking, setIsUnlocking] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const { toast } = useToast();
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const ddbEnhancements = usePlayerToolsEnhancements();
 
   const selectedRegentData = monarchs.find(r => r.id === selectedRegent);
 
@@ -48,6 +51,13 @@ export function RegentUnlock({
         title: "Regent Unlocked!",
         description: `${characterName} has unlocked the ${selectedRegentData.name} regent at level ${selectedLevel}.`,
       });
+
+      ddbEnhancements.trackCustomFeatureUsage(
+        characterId,
+        'Regent Unlocked',
+        `${selectedRegentData.name} (Rank ${selectedRegentData.rank})`,
+        'SA'
+      ).catch(console.error);
 
       setShowConfirmDialog(false);
       setSelectedRegent('');

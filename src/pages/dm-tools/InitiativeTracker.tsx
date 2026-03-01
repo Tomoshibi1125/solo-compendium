@@ -10,10 +10,12 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { useSendCampaignMessage } from '@/hooks/useCampaignChat';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useCampaignToolState, useUserToolState } from '@/hooks/useToolState';
 import { useJoinedCampaigns, useMyCampaigns, useCampaignMembers } from '@/hooks/useCampaigns';
 import { useHydratedPreferredCampaignId } from '@/hooks/usePreferredCampaignSelection';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
 import { cleanupExpiredConditions as cleanupExpiredConditionsHelper } from '@/lib/conditionTimers';
 import {
   useCampaignCombatSession,
@@ -159,6 +161,7 @@ const InitiativeTracker = () => {
   const { data: myCampaigns = [], isLoading: myCampaignsLoading } = useMyCampaigns();
   const { data: joinedCampaigns = [], isLoading: joinedCampaignsLoading } = useJoinedCampaigns();
   const campaignId = searchParams.get('campaignId')?.trim() || null;
+  const sendMessage = useSendCampaignMessage();
   const sessionId = searchParams.get('sessionId')?.trim() || null;
   const isCampaignScoped = !!campaignId;
   const persistenceContext = campaignId ? `campaign:${campaignId}` : 'user';
@@ -178,6 +181,10 @@ const InitiativeTracker = () => {
     ac: 0,
     isHunter: true,
   });
+
+  // DDB Parity Integration
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const playerTools = usePlayerToolsEnhancements();
 
   const manageableCampaigns = useMemo<CampaignWithRole[]>(() => {
     const byId = new Map<string, CampaignWithRole>();
@@ -452,6 +459,10 @@ const InitiativeTracker = () => {
       if (c.id !== id) return c;
       const maxHp = typeof c.maxHp === 'number' && c.maxHp > 0 ? c.maxHp : undefined;
       const nextHp = maxHp !== undefined ? Math.min(Math.max(0, hp), maxHp) : Math.max(0, hp);
+
+      // DDB Parity: Broadcast explicit HP override
+      playerTools.trackHealthChange(c.id || c.name, nextHp, 'healing').catch(console.error);
+
       return { ...c, hp: nextHp };
     }));
   };
@@ -475,6 +486,10 @@ const InitiativeTracker = () => {
       const nextHp = maxHp !== undefined
         ? Math.min(Math.max(0, base + delta), maxHp)
         : Math.max(0, base + delta);
+
+      // DDB Parity: Broadcast HP change
+      playerTools.trackHealthChange(c.id || c.name, Math.abs(delta), delta < 0 ? 'damage' : 'healing').catch(console.error);
+
       return { ...c, hp: nextHp };
     }));
   };
@@ -486,6 +501,12 @@ const InitiativeTracker = () => {
       const nextTimers = expiresAtRound
         ? { ...(c.condition_timers ?? {}), [condition]: expiresAtRound }
         : c.condition_timers;
+
+      // DDB Parity: Broadcast Condition Added
+      if (!c.conditions.includes(condition)) {
+        playerTools.trackConditionChange(c.id || c.name, condition, 'add').catch(console.error);
+      }
+
       return { ...c, conditions: nextConditions, condition_timers: nextTimers };
     }));
   };
@@ -498,6 +519,12 @@ const InitiativeTracker = () => {
       if (nextTimers && condition in nextTimers) {
         delete nextTimers[condition];
       }
+
+      // DDB Parity: Broadcast Condition Removed
+      if (c.conditions.includes(condition)) {
+        playerTools.trackConditionChange(c.id || c.name, condition, 'remove').catch(console.error);
+      }
+
       return {
         ...c,
         conditions: nextConditions,
@@ -507,15 +534,43 @@ const InitiativeTracker = () => {
   };
 
   const cleanupExpiredConditions = (nextRound: number) => {
-    setCombatants((prev) => prev.map((c) => {
-      const next = cleanupExpiredConditionsHelper(c.conditions, c.condition_timers, nextRound);
-      if (next.conditions === c.conditions && next.timers === c.condition_timers) return c;
-      return {
-        ...c,
-        conditions: next.conditions,
-        condition_timers: next.timers,
-      };
-    }));
+    let expiredAnnouncements: string[] = [];
+
+    setCombatants((prev) => {
+      const updated = prev.map((c) => {
+        if (!c.condition_timers) return c;
+
+        // Find conditions that are expiring this round
+        const expiringThisRound = Object.entries(c.condition_timers)
+          .filter(([, expiresAt]) => expiresAt <= nextRound)
+          .map(([cond]) => cond);
+
+        if (expiringThisRound.length > 0) {
+          expiredAnnouncements.push(`**${c.name}** is no longer ${expiringThisRound.join(', ')}.`);
+          expiringThisRound.forEach(cond => {
+            playerTools.trackConditionChange(c.id || c.name, cond, 'remove').catch(console.error);
+          });
+        }
+
+        const next = cleanupExpiredConditionsHelper(c.conditions, c.condition_timers, nextRound);
+        if (next.conditions === c.conditions && next.timers === c.condition_timers) return c;
+        return {
+          ...c,
+          conditions: next.conditions,
+          condition_timers: next.timers,
+        };
+      });
+
+      if (expiredAnnouncements.length > 0 && campaignId) {
+        sendMessage.mutateAsync({
+          campaignId,
+          messageType: 'system',
+          content: expiredAnnouncements.join('\n')
+        }).catch(console.error);
+      }
+
+      return updated;
+    });
   };
 
   const nextTurn = () => {
@@ -527,6 +582,13 @@ const InitiativeTracker = () => {
         setRound(nextRound);
         cleanupExpiredConditions(nextRound);
       }
+
+      // DDB Parity: Broadcast turn change
+      const activeCombatant = sortedCombatants[next];
+      if (activeCombatant) {
+        playerTools.trackCustomFeatureUsage(activeCombatant.id || activeCombatant.name, 'Turn Start', 'start', '5e').catch(console.error);
+      }
+
       return next;
     });
   };
@@ -617,20 +679,20 @@ const InitiativeTracker = () => {
 
     const pendingWithMode = pending.kind === 'attack' && pending.attack
       ? {
-          ...pending,
-          attack: {
-            ...pending.attack,
-            rollMode: attackRollMode,
-          },
-        }
+        ...pending,
+        attack: {
+          ...pending.attack,
+          rollMode: attackRollMode,
+        },
+      }
       : pending.kind === 'save' && pending.save
         ? {
-            ...pending,
-            save: {
-              ...pending.save,
-              rollMode: saveRollMode,
-            },
-          }
+          ...pending,
+          save: {
+            ...pending.save,
+            rollMode: saveRollMode,
+          },
+        }
         : pending;
 
     let outcome =

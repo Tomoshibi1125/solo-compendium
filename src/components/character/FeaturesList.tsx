@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 import { Star, Minus, Plus, Power, PowerOff, Zap } from 'lucide-react';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Badge } from '@/components/ui/badge';
@@ -10,12 +10,24 @@ import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import { formatMonarchVernacular } from '@/lib/vernacular';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
+import { useRecordRoll } from '@/hooks/useRollHistory';
+import { useRealtimeCollaboration } from '@/hooks/useRealtimeCollaboration';
+import { useCampaignByCharacterId } from '@/hooks/useCampaigns';
 
 export function FeaturesList({ characterId }: { characterId: string }) {
   const { features, updateFeature, reorderFeatures } = useFeatures(characterId);
   const { toast } = useToast();
   const [filterSource, setFilterSource] = useState<string>('all');
   const [filterLevel, setFilterLevel] = useState<string>('all');
+
+  // D&D Beyond Parity Integration
+  const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const playerTools = usePlayerToolsEnhancements();
+  const recordRoll = useRecordRoll();
+  const { data: characterCampaign } = useCampaignByCharacterId(characterId);
+  const campaignId = characterCampaign?.id ?? null;
+  const { broadcastDiceRoll, isConnected: isCampaignConnected } = useRealtimeCollaboration(campaignId || '');
 
   const filteredFeatures = features.filter(feature => {
     if (filterSource !== 'all' && !feature.source.includes(filterSource)) return false;
@@ -46,12 +58,40 @@ export function FeaturesList({ characterId }: { characterId: string }) {
     if (feature.uses_max === null) return;
 
     const newUses = Math.max(0, Math.min(feature.uses_max, (feature.uses_current || 0) + delta));
-    
+
     try {
       await updateFeature({
         id: feature.id,
         updates: { uses_current: newUses },
       });
+
+      // Broadcast feature usage for DDB Parity
+      const actionType = delta < 0 ? 'spend' : 'regain';
+      playerTools.trackCustomFeatureUsage(characterId, feature.name, actionType, '5e').catch(console.error);
+
+      if (delta < 0) {
+        const scope = campaignId && isCampaignConnected ? 'campaign' : 'local';
+        recordRoll.mutate({
+          dice_formula: 'Feature',
+          result: 0,
+          rolls: [],
+          roll_type: 'ability', // 'feature' or 'ability' is standard for logging
+          context: `Uses ${feature.name}`,
+          modifiers: null,
+          campaign_id: campaignId ?? null,
+          character_id: characterId,
+        });
+
+        if (scope === 'campaign') {
+          broadcastDiceRoll('Feature', 0, {
+            characterName: 'Character', // Ideally passed in down the prop tree, but 'Character' is fine if not available
+            rollType: 'ability',
+            context: `Uses ${feature.name}`,
+            rolls: [],
+          });
+        }
+      }
+
     } catch {
       toast({
         title: 'Failed to update',
@@ -63,10 +103,14 @@ export function FeaturesList({ characterId }: { characterId: string }) {
 
   const handleToggleActive = async (feature: typeof features[0]) => {
     try {
+      const newActiveState = !feature.is_active;
       await updateFeature({
         id: feature.id,
-        updates: { is_active: !feature.is_active },
+        updates: { is_active: newActiveState },
       });
+
+      // Broadcast toggle for DDB parity
+      playerTools.trackCustomFeatureUsage(characterId, feature.name, newActiveState ? 'activate' : 'deactivate', '5e').catch(console.error);
     } catch {
       toast({
         title: 'Failed to update',
@@ -199,8 +243,8 @@ export function FeaturesList({ characterId }: { characterId: string }) {
                             onClick={() => handleToggleActive(feature)}
                             className={cn(
                               "text-xs gap-1.5 h-8",
-                              feature.is_active 
-                                ? "bg-primary/20 text-primary border-primary/30 hover:bg-primary/30" 
+                              feature.is_active
+                                ? "bg-primary/20 text-primary border-primary/30 hover:bg-primary/30"
                                 : "text-muted-foreground hover:text-foreground"
                             )}
                           >

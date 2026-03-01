@@ -1,25 +1,26 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-import { 
-  ZoomIn, 
-  ZoomOut, 
-  Move, 
-  Grid3x3, 
-  Maximize2, 
-  RotateCw,
-  Eye,
-  EyeOff,
+import {
+  ZoomIn,
+  ZoomOut,
+  Grid3x3,
+  Maximize2,
   Users,
-  MapPin
+  Ruler,
+  Triangle,
+  Circle,
+  Square
 } from 'lucide-react';
-import { useVTTManager } from '@/hooks/useVTTManager';
 import { useAuth } from '@/lib/auth/authContext';
 import { useToast } from '@/hooks/use-toast';
+import { useCampaignToolState } from '@/hooks/useToolState';
+import { useVTTRealtime } from '@/hooks/useVTTRealtime';
+import { useCampaignCombatSession } from '@/hooks/useCampaignCombat';
+import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
+import { VttPixiStage } from '@/components/vtt/VttPixiStage';
 import './PlayerVTTView.css';
 
 interface PlayerVTTViewProps {
@@ -28,24 +29,51 @@ interface PlayerVTTViewProps {
   className?: string;
 }
 
-interface VTTToken {
+// Minimal matching types for the scenes
+interface Scene {
   id: string;
   name: string;
-  imageUrl: string;
-  x: number;
-  y: number;
-  isPlayerToken?: boolean;
-  isVisible?: boolean;
+  width: number;
+  height: number;
+  backgroundImage?: string;
+  backgroundScale?: number;
+  backgroundOffsetX?: number;
+  backgroundOffsetY?: number;
+  gridSize?: number;
+  tokens: any[];
+  walls?: any[];
+  lights?: any[];
+  fogOfWar: boolean;
+  fogData?: boolean[][];
+  gridType?: 'square' | 'hex';
+  weather?: string;
 }
 
-interface VTTScene {
-  id: string;
-  name: string;
-  backgroundImage?: string;
-  gridSize: number;
-  showGrid: boolean;
-  tokens: VTTToken[];
-}
+type VTTScenesState = {
+  scenes: Scene[];
+  currentSceneId: string | null;
+  savedAt?: string;
+};
+
+const normalizeScene = (scene: any): Scene => ({
+  ...scene,
+  gridSize: scene.gridSize ?? 50,
+  backgroundScale: scene.backgroundScale ?? 1,
+  backgroundOffsetX: scene.backgroundOffsetX ?? 0,
+  backgroundOffsetY: scene.backgroundOffsetY ?? 0,
+  walls: Array.isArray(scene.walls) ? scene.walls : [],
+  lights: Array.isArray(scene.lights) ? scene.lights : [],
+  gridType: scene.gridType ?? 'square',
+  weather: scene.weather ?? 'none',
+});
+
+// For Pixi: Only layers 0, 1, 2 are visible to players (3 is GM only)
+const PLAYER_VISIBLE_LAYERS: Record<number, boolean> = {
+  0: true,
+  1: true,
+  2: true,
+  3: false,
+};
 
 export function PlayerVTTView({
   campaignId,
@@ -53,155 +81,181 @@ export function PlayerVTTView({
   className
 }: PlayerVTTViewProps) {
   const { user } = useAuth();
-  const { loadVTTScene, getVTTAssets } = useVTTManager();
   const { toast } = useToast();
 
-  const [scene, setScene] = useState<VTTScene | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [zoom, setZoom] = useState(1);
-  const [pan, setPan] = useState({ x: 0, y: 0 });
   const [showGrid, setShowGrid] = useState(true);
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  const [selectedToken, setSelectedToken] = useState<string | null>(null);
+  const [activeTokenId, setActiveTokenId] = useState<string | null>(null);
+  const [drawMode, setDrawMode] = useState<'none' | 'ruler' | 'cone' | 'sphere' | 'cube'>('none');
 
-  // Refs for dynamic styling to avoid inline styles
-  const viewportRef = useRef<HTMLDivElement>(null);
-  const backgroundRef = useRef<HTMLDivElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
-  const tokenRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+  const [scenes, setScenes] = useState<Scene[]>([]);
+  const [currentScene, setCurrentScene] = useState<Scene | null>(null);
 
-  useEffect(() => {
-    loadScene();
-  }, [sessionId]);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const loadScene = async () => {
-    setIsLoading(true);
-    try {
-      const loadedScene = await loadVTTScene(campaignId, sessionId);
-      if (loadedScene) {
-        // Transform database tokens to VTTToken format
-        const transformedTokens = (loadedScene.tokens || []).map(token => ({
-          id: token.id,
-          name: token.name,
-          imageUrl: token.image_url || '/default-token.png',
-          x: token.x,
-          y: token.y,
-          isPlayerToken: !token.is_dm_token,
-          isVisible: true
-        }));
-        
-        setScene({
-          id: loadedScene.id,
-          name: loadedScene.name,
-          backgroundImage: (loadedScene as any).background_image || undefined,
-          gridSize: 50,
-          showGrid: true,
-          tokens: transformedTokens
-        });
-      } else {
-        // Create default scene if none exists
-        const defaultScene: VTTScene = {
-          id: sessionId,
-          name: 'Battle Map',
-          gridSize: 50,
-          showGrid: true,
-          tokens: []
-        };
-        setScene(defaultScene);
-      }
-    } catch (error) {
-      toast({
-        title: 'Failed to Load Scene',
-        description: error instanceof Error ? error.message : 'Unknown error',
-        variant: 'destructive'
-      });
-    } finally {
-      setIsLoading(false);
+  const toolKey = sessionId ? `vtt_scenes:${sessionId}` : 'vtt_scenes';
+  const legacyStorageKey = campaignId
+    ? `vtt-scenes-${campaignId}${sessionId ? `-${sessionId}` : ''}`
+    : 'vtt-scenes';
+
+  const { state: storedState, isLoading: isStateLoading } = useCampaignToolState<VTTScenesState>(
+    campaignId || null,
+    toolKey,
+    {
+      initialState: { scenes: [], currentSceneId: null },
+      storageKey: legacyStorageKey,
     }
-  };
+  );
 
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (e.button === 0) { // Left click only
-      setIsDragging(true);
-      setDragStart({ x: e.clientX - pan.x, y: e.clientY - pan.y });
-    }
-  };
+  const vttRealtime = useVTTRealtime({
+    campaignId: campaignId || '',
+    sessionId,
+    isDM: false,
+  });
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (isDragging) {
-      setPan({
-        x: e.clientX - dragStart.x,
-        y: e.clientY - dragStart.y
-      });
-    }
-  };
+  // Derive Active Initiative Token
+  const { data: combatData } = useCampaignCombatSession(campaignId || '', sessionId);
+  const activeInitiativeTokenId = useMemo(() => {
+    if (!combatData?.session || !combatData?.combatants?.length || !currentScene) return null;
+    const sorted = [...combatData.combatants].sort((a, b) => b.initiative - a.initiative);
+    const activeCombatant = sorted[combatData.session.current_turn ?? 0];
+    if (!activeCombatant) return null;
+    const token = currentScene.tokens.find(t =>
+      (activeCombatant.member_id && t.characterId === activeCombatant.member_id) ||
+      t.name === activeCombatant.name
+    );
+    return token?.id ?? null;
+  }, [combatData, currentScene]);
 
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
+  const visibleTokens = useMemo(() => {
+    if (!currentScene?.tokens) return [];
+    return currentScene.tokens.reduce<any[]>((acc, token) => {
+      const layerVisible = !!PLAYER_VISIBLE_LAYERS[token.layer];
+      if (!layerVisible || !token.visible) return acc;
 
-  const handleZoomIn = () => {
-    setZoom(prev => Math.min(prev * 1.2, 3));
-  };
+      let hp = token.hp;
+      let maxHp = token.maxHp;
+      let conditions = token.conditions || [];
 
-  const handleZoomOut = () => {
-    setZoom(prev => Math.max(prev / 1.2, 0.5));
-  };
+      const combatant = combatData?.combatants?.find(c =>
+        (c.member_id && c.member_id === token.characterId) ||
+        c.name === token.name
+      );
 
-  const handleResetView = () => {
-    setZoom(1);
-    setPan({ x: 0, y: 0 });
-  };
-
-  const handleTokenClick = (tokenId: string) => {
-    setSelectedToken(tokenId === selectedToken ? null : tokenId);
-  };
-
-  const getGridPosition = (x: number, y: number) => {
-    if (!scene) return { gridX: 0, gridY: 0 };
-    const gridSize = scene.gridSize || 50;
-    return {
-      gridX: Math.floor(x / gridSize),
-      gridY: Math.floor(y / gridSize)
-    };
-  };
-
-  useEffect(() => {
-    if (viewportRef.current) {
-      viewportRef.current.style.transform = `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`;
-    }
-  }, [pan, zoom]);
-
-  useEffect(() => {
-    if (backgroundRef.current && scene?.backgroundImage) {
-      backgroundRef.current.style.backgroundImage = `url(${scene.backgroundImage})`;
-    }
-  }, [scene?.backgroundImage]);
-
-  useEffect(() => {
-    if (gridRef.current && showGrid && scene) {
-      gridRef.current.style.backgroundImage = `
-        repeating-linear-gradient(0deg, rgba(255,255,255,0.1) 0px, transparent 1px, transparent ${scene.gridSize}px),
-        repeating-linear-gradient(90deg, rgba(255,255,255,0.1) 0px, transparent 1px, transparent ${scene.gridSize}px)
-      `;
-      gridRef.current.style.backgroundSize = `${scene.gridSize}px ${scene.gridSize}px`;
-    }
-  }, [showGrid, scene?.gridSize]);
-
-  useEffect(() => {
-    if (scene?.tokens) {
-      scene.tokens.forEach(token => {
-        const tokenElement = tokenRefs.current.get(token.id);
-        if (tokenElement) {
-          tokenElement.style.left = `${token.x}px`;
-          tokenElement.style.top = `${token.y}px`;
+      if (combatant) {
+        const stats = combatant.stats as Record<string, any>;
+        if (typeof stats?.hp === 'number') hp = stats.hp;
+        if (typeof stats?.maxHp === 'number') maxHp = stats.maxHp;
+        if (Array.isArray(combatant.conditions)) {
+          conditions = Array.from(new Set([...conditions, ...(combatant.conditions as string[])]));
         }
-      });
-    }
-  }, [scene?.tokens]);
+      }
 
-  if (isLoading) {
+      acc.push({ ...token, hp, maxHp, conditions });
+      return acc;
+    }, []);
+  }, [currentScene?.tokens, combatData]);
+
+  // Load initial state
+  useEffect(() => {
+    if (!campaignId || isStateLoading) return;
+    const storedScenes = Array.isArray(storedState.scenes) ? storedState.scenes : [];
+    const nextScenes = storedScenes.map(normalizeScene);
+    const nextCurrentId = storedState.currentSceneId;
+
+    if (nextScenes.length > 0) {
+      setScenes(nextScenes);
+      const selected = nextScenes.find((scene) => scene.id === nextCurrentId) || nextScenes[0];
+      setCurrentScene(selected);
+    }
+  }, [campaignId, isStateLoading, storedState.currentSceneId, storedState.scenes]);
+
+  // Handle Realtime sync from DB
+  useEffect(() => {
+    if (!campaignId || !isSupabaseConfigured || !user?.id) return;
+    const channel = supabase
+      .channel(`player-vtt-scenes-${campaignId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'campaign_tool_states',
+          filter: `campaign_id=eq.${campaignId}`,
+        },
+        (payload) => {
+          const row = payload.new as { tool_key?: string; state?: VTTScenesState; updated_by?: string | null } | null;
+          if (!row || row.tool_key !== toolKey || !row.state) return;
+          // Accept all changes, even own, since player view is read-only for scenes
+          const incoming = row.state;
+          if (!Array.isArray(incoming.scenes)) return;
+          const nextScenes = incoming.scenes.map(normalizeScene);
+          setScenes(nextScenes);
+          const selected = nextScenes.find((scene) => scene.id === incoming.currentSceneId) || nextScenes[0] || null;
+          setCurrentScene(selected);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [campaignId, toolKey, user?.id]);
+
+  // Handle Realtime transient moves
+  useEffect(() => {
+    if (!campaignId) return;
+    const unsub1 = vttRealtime.on('token_move', (payload) => {
+      if (payload.movedBy === vttRealtime.userId) return;
+      setCurrentScene(prev => {
+        if (!prev) return prev;
+        const nextTokens = prev.tokens.map((token) => (token.id === payload.tokenId ? { ...token, x: payload.x, y: payload.y } : token));
+        return { ...prev, tokens: nextTokens };
+      });
+    });
+    const unsub2 = vttRealtime.on('token_update', (payload) => {
+      if (payload.updatedBy === vttRealtime.userId) return;
+      setCurrentScene(prev => {
+        if (!prev) return prev;
+        const nextTokens = prev.tokens.map((token) => (token.id === payload.tokenId ? { ...token, ...(payload.updates as any) } : token));
+        return { ...prev, tokens: nextTokens };
+      });
+    });
+    return () => { unsub1(); unsub2(); };
+  }, [campaignId, vttRealtime]);
+
+  const handleZoomIn = () => setZoom(prev => Math.min(prev + 0.2, 3));
+  const handleZoomOut = () => setZoom(prev => Math.max(prev - 0.2, 0.5));
+  const handleResetView = () => setZoom(1);
+
+  // Read-only handlers for Pixi Stage
+  const updateToken = useCallback((tokenId: string, updates: Partial<any>) => {
+    setCurrentScene((prev) => {
+      if (!prev) return prev;
+      const token = prev.tokens.find(t => t.id === tokenId);
+      if (!token) return prev;
+
+      // Ownership check: Players can only drag their own tokens
+      const isOwner = token.characterId === user?.id || (combatData?.combatants?.find(c => c.name === token.name)?.member_id === user?.id);
+      if (!isOwner) return prev;
+
+      const nextTokens = prev.tokens.map((t) => (t.id === tokenId ? { ...t, ...updates } : t));
+      return { ...prev, tokens: nextTokens };
+    });
+  }, [user?.id, combatData?.combatants]);
+
+  const handleTokenDragEnd = useCallback((tokenId: string) => {
+    if (!currentScene) return;
+    const token = currentScene.tokens.find((t) => t.id === tokenId);
+    if (token) {
+      const isOwner = token.characterId === user?.id || (combatData?.combatants?.find(c => c.name === token.name)?.member_id === user?.id);
+      if (isOwner) {
+        vttRealtime.broadcastTokenMove(tokenId, token.x, token.y);
+      }
+    }
+  }, [currentScene, vttRealtime, user?.id, combatData?.combatants]);
+
+  if (isStateLoading) {
     return (
       <Card className={className}>
         <CardContent className="flex items-center justify-center h-96">
@@ -214,187 +268,98 @@ export function PlayerVTTView({
     );
   }
 
-  if (!scene) {
+  if (!currentScene) {
     return (
       <Card className={className}>
         <CardContent className="flex items-center justify-center h-96">
           <div className="text-center">
             <div className="h-8 w-8 mx-auto mb-2 text-muted-foreground bg-muted rounded" />
-            <p className="text-muted-foreground">No battle map available</p>
+            <p className="text-muted-foreground">Waiting for DM to load a map...</p>
           </div>
         </CardContent>
       </Card>
     );
   }
 
+  const gridSize = currentScene.gridSize || 50;
+
   return (
     <Card className={className}>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <div className="h-5 w-5 bg-muted rounded" />
-          {scene.name}
+          {currentScene.name}
           <Badge variant="outline" className="ml-auto">
             <Users className="h-3 w-3 mr-1" />
             Player View
           </Badge>
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-0">
+      <CardContent className="p-0 flex flex-col h-[600px]">
         {/* Toolbar */}
-        <div className="flex items-center justify-between p-4 border-b">
+        <div className="flex items-center justify-between p-4 border-b shrink-0">
           <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleZoomOut}
-              disabled={zoom <= 0.5}
-            >
+            <Button variant="outline" size="sm" onClick={handleZoomOut} disabled={zoom <= 0.5}>
               <ZoomOut className="h-4 w-4" />
             </Button>
-            <span className="text-sm font-medium">{Math.round(zoom * 100)}%</span>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleZoomIn}
-              disabled={zoom >= 3}
-            >
+            <span className="text-sm font-medium w-12 text-center">{Math.round(zoom * 100)}%</span>
+            <Button variant="outline" size="sm" onClick={handleZoomIn} disabled={zoom >= 3}>
               <ZoomIn className="h-4 w-4" />
             </Button>
             <Separator orientation="vertical" className="h-6" />
-            <Button
-              variant={showGrid ? "default" : "outline"}
-              size="sm"
-              onClick={() => setShowGrid(!showGrid)}
-            >
+            <Button variant={showGrid ? "default" : "outline"} size="sm" onClick={() => setShowGrid(!showGrid)} title="Toggle Grid">
               <Grid3x3 className="h-4 w-4" />
             </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleResetView}
-            >
+            <Button variant="outline" size="sm" onClick={handleResetView} title="Reset View">
               <Maximize2 className="h-4 w-4" />
             </Button>
-          </div>
-          <div className="flex items-center gap-2">
-            <Badge variant="secondary">
-              {scene.tokens?.length || 0} tokens
-            </Badge>
-            {selectedToken && (
-              <Badge variant="outline">
-                Token selected
-              </Badge>
-            )}
+            <Separator orientation="vertical" className="h-6 mx-2" />
+            <Button variant={drawMode === 'none' ? 'default' : 'outline'} size="sm" onClick={() => setDrawMode('none')} title="Select / Move">
+              Select
+            </Button>
+            <Button variant={drawMode === 'ruler' ? 'default' : 'outline'} size="sm" onClick={() => setDrawMode('ruler')} title="Ruler">
+              <Ruler className="h-4 w-4" />
+            </Button>
+            <Button variant={drawMode === 'cone' ? 'default' : 'outline'} size="sm" onClick={() => setDrawMode('cone')} title="Cone">
+              <Triangle className="h-4 w-4" />
+            </Button>
+            <Button variant={drawMode === 'sphere' ? 'default' : 'outline'} size="sm" onClick={() => setDrawMode('sphere')} title="Sphere/Radius">
+              <Circle className="h-4 w-4" />
+            </Button>
+            <Button variant={drawMode === 'cube' ? 'default' : 'outline'} size="sm" onClick={() => setDrawMode('cube')} title="Cube">
+              <Square className="h-4 w-4" />
+            </Button>
           </div>
         </div>
 
-        {/* VTT Canvas */}
+        {/* VTT Pixi Canvas */}
         <div
-          className={`relative overflow-hidden bg-slate-900 player-vtt-canvas ${
-            isDragging ? 'dragging' : ''
-          }`}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
+          ref={containerRef}
+          className="w-full flex-1 overflow-auto bg-slate-900 relative"
+          style={{ touchAction: 'none' }}
         >
-          <div
-            ref={viewportRef}
-            className={`relative w-full h-full player-vtt-viewport player-vtt-viewport-transform ${
-              isDragging ? 'dragging' : ''
-            }`}
-          >
-            {/* Background Image */}
-            {scene.backgroundImage && (
-              <div
-                ref={backgroundRef}
-                className="absolute inset-0 bg-cover bg-center player-vtt-background player-vtt-background-image"
-              />
-            )}
-
-            {/* Grid */}
-            {showGrid && (
-              <div
-                ref={gridRef}
-                className="absolute inset-0 pointer-events-none player-vtt-grid player-vtt-grid-background"
-              />
-            )}
-
-            {/* Tokens */}
-            {scene.tokens?.map((token) => (
-              <div
-                key={token.id}
-                ref={(el) => {
-                  if (el) {
-                    tokenRefs.current.set(token.id, el);
-                  }
-                }}
-                className={`absolute cursor-pointer transition-all duration-200 player-vtt-token ${
-                  selectedToken === token.id ? 'ring-2 ring-yellow-400' : ''
-                } ${token.isPlayerToken ? 'ring-2 ring-blue-400' : ''}`}
-                onClick={() => handleTokenClick(token.id)}
-              >
-                <div className="relative">
-                  <img
-                    src={token.imageUrl}
-                    alt={token.name}
-                    className={`w-12 h-12 rounded-full border-2 border-white shadow-lg ${
-                      token.isVisible === false ? 'brightness-50' : ''
-                    }`}
-                  />
-                  {token.isPlayerToken && (
-                    <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-blue-500 rounded-full border-2 border-white" />
-                  )}
-                  <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
-                    {token.name}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <VttPixiStage
+            containerRef={containerRef}
+            scene={currentScene}
+            tokens={visibleTokens}
+            gridSize={gridSize}
+            zoom={zoom}
+            showGrid={showGrid}
+            isGM={false}
+            effectiveVisibleLayers={PLAYER_VISIBLE_LAYERS}
+            activeTokenId={activeTokenId}
+            activeInitiativeTokenId={activeInitiativeTokenId}
+            setActiveTokenId={setActiveTokenId}
+            updateToken={updateToken}
+            walls={currentScene.walls}
+            lightSources={currentScene.lights}
+            gridConfig={{ type: currentScene.gridType || 'square', size: gridSize }}
+            onRequestZoom={setZoom}
+            onTokenDragEnd={handleTokenDragEnd}
+            drawMode={drawMode}
+            weather={currentScene.weather as any}
+          />
         </div>
-
-        {/* Token Details */}
-        {selectedToken && (
-          <div className="p-4 border-t">
-            {(() => {
-              const token = scene.tokens?.find(t => t.id === selectedToken);
-              if (!token) return null;
-              
-              const { gridX, gridY } = getGridPosition(token.x, token.y);
-              
-              return (
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <img
-                      src={token.imageUrl}
-                      alt={token.name}
-                      className="w-10 h-10 rounded-full border-2 border-white"
-                    />
-                    <div>
-                      <h4 className="font-medium">{token.name}</h4>
-                      <p className="text-sm text-muted-foreground">
-                        Position: ({gridX}, {gridY})
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {token.isPlayerToken && (
-                      <Badge variant="default">Player</Badge>
-                    )}
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setSelectedToken(null)}
-                    >
-                      <EyeOff className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              );
-            })()}
-          </div>
-        )}
       </CardContent>
     </Card>
   );

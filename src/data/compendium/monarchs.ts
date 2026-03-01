@@ -17,7 +17,7 @@ export interface Monarch {
   tags?: string[];
   created_at?: string;
   source_book?: string;
-  
+
   // System Ascendant 5e-style Hunter progression
   hit_dice: string;                 // "1d12", "1d8", etc.
   primary_ability: string[];        // Primary abilities for the Hunter
@@ -26,7 +26,7 @@ export interface Monarch {
   armor_proficiencies: string[];    // Any armor proficiencies granted
   weapon_proficiencies: string[];   // Any weapon proficiencies granted
   tool_proficiencies: string[];     // Any tool proficiencies granted
-  
+
   // Level-based progression (1-20) - Hunter Rank Advancement
   class_features: {
     level: number;
@@ -35,7 +35,7 @@ export interface Monarch {
     type: 'passive' | 'active' | 'action' | 'bonus-action' | 'reaction';
     frequency?: 'at-will' | 'short-rest' | 'long-rest' | 'once-per-day' | 'once-per-long-rest';
   }[];
-  
+
   // Spellcasting integration (if applicable) - System Awakening Powers
   spellcasting?: {
     ability: string;
@@ -45,7 +45,7 @@ export interface Monarch {
     spell_preparation?: boolean;
     additional_spells?: string[];   // Hunter-specific spells
   };
-  
+
   // Feature progression mapping - Hunter Level Progression
   progression_table: {
     [level: number]: {
@@ -55,7 +55,7 @@ export interface Monarch {
       special_abilities?: string[];
     };
   };
-  
+
   // Integration requirements - Quest-based Hunter Qualification
   regent_requirements?: {
     level: number;
@@ -63,7 +63,7 @@ export interface Monarch {
     quest_completion: string;
     dm_approval: boolean;
   };
-  
+
   // System Ascendant Hunter mechanics
   requirements: {
     quest_completion: string;
@@ -72,7 +72,7 @@ export interface Monarch {
     power_level: number; // 1-10 scale matching System Ascendant power levels
     system_awakening?: boolean;     // Requires System Awakening
   };
-  
+
   abilities: {
     name: string;
     description: string;
@@ -83,13 +83,13 @@ export interface Monarch {
     power_level?: number; // When this ability is unlocked
     essence_cost?: number; // Essence cost to use
   }[];
-  
+
   features: {
     name: string;
     description: string;
     power_level: number; // When this feature is unlocked
   }[];
-  
+
   mechanics: {
     stat_bonuses: {
       strength?: number;
@@ -140,7 +140,7 @@ export const monarchs = [
     ],
     "created_at": "2026-01-13T22:03:39.601Z",
     "source_book": "System Ascendant Canon",
-    
+
     // System Ascendant 5e-style Hunter progression
     "hit_dice": "1d12",
     "primary_ability": ["Charisma", "Wisdom"],
@@ -149,7 +149,7 @@ export const monarchs = [
     "armor_proficiencies": ["Light armor", "Medium armor", "Shields"],
     "weapon_proficiencies": ["Simple weapons", "Martial weapons"],
     "tool_proficiencies": [],
-    
+
     // Level-based progression (1-20) - Hunter Rank Advancement
     "class_features": [
       { "level": 1, "name": "Umbral Command", "description": "Command up to 20 umbral creatures as if they were your loyal followers. They obey your telepathic commands.", "type": "action", "frequency": "at-will" },
@@ -170,7 +170,7 @@ export const monarchs = [
       { "level": 9, "name": "Umbral Emperor", "description": "Your umbral powers extend across multiple planes, allowing you to affect the veil anywhere.", "type": "passive" },
       { "level": 10, "name": "Absolute Umbral", "description": "You achieve the ultimate umbral power, becoming immune to all effects and able to reshape reality through the veil.", "type": "passive" }
     ],
-    
+
     // Spellcasting integration - System Awakening Powers
     "spellcasting": {
       "ability": "Charisma",
@@ -190,7 +190,7 @@ export const monarchs = [
       "spell_preparation": false,
       "additional_spells": ["Shadow Bolt", "Void Bolt", "Abyssal Bolt", "Dimensional Lock", "Plane Shift"]
     },
-    
+
     // Feature progression mapping - Hunter Level Progression
     "progression_table": {
       1: { "features_gained": ["Umbral Command", "Veilstep Supreme", "Umbral Dominion"], "spell_slots": { "1st": 4 } },
@@ -214,7 +214,7 @@ export const monarchs = [
       19: { "features_gained": ["Shadow Omnipotence", "Dimensional Emperor", "Death Regent"], "spell_slots": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 3, "6th": 3, "7th": 3, "8th": 3, "9th": 3 } },
       20: { "features_gained": ["Shadow Supremacy", "Absolute Shadow", "Ultimate Umbral Power"], "spell_slots": { "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 3, "6th": 3, "7th": 3, "8th": 3, "9th": 4 } }
     },
-    
+
     // Integration requirements - Quest-based Hunter Qualification
     "regent_requirements": {
       "level": 5,
@@ -2790,6 +2790,583 @@ export const monarchs = [
         "level_17": ["Command Transcendence", "Tactical Emperor", "Essence Emperor"],
         "level_19": ["Command Omnipotence", "Tactical Monarch", "Leadership Monarch"],
         "level_20": ["Command Supremacy", "Absolute Command", "Monarch Power"]
+      }
+    }
+  },
+  {
+    "id": "dragon-regent-overlay",
+    "name": "Dragon Regent",
+    "title": "Dragon Regent Hunter Class",
+    "theme": "Draconic Apocalypse",
+    "description": "The incarnation of primordial destruction. Transform into an ancient dragon of apocalypse whose breath erases matter from existence. Asphalt melts under your feet, satellites detect thermal spikes, and the Hunter Bureau classifies you as a Kaiju-class extinction event. Your awakening tapped into the primal draconic force that predates the System itself — a power from the original gates that opened before humanity had words for fire.",
+    "rank": "S",
+    "image": "/generated/compendium/monarchs/dragon-regent.webp",
+    "type": "hunter-class-overlay",
+    "tags": ["regent", "dragon", "fire", "destruction", "class-overlay"],
+    "created_at": "2026-02-26T00:00:00.000Z",
+    "source_book": "System Ascendant Canon",
+    "hit_dice": "1d12",
+    "primary_ability": ["Strength", "Vitality"],
+    "saving_throws": ["Strength", "Vitality"],
+    "skill_proficiencies": ["Athletics", "Intimidation", "Perception", "Survival"],
+    "armor_proficiencies": ["All armor", "Shields"],
+    "weapon_proficiencies": ["Simple weapons", "Martial weapons"],
+    "tool_proficiencies": [],
+    "class_features": [
+      { "level": 1, "name": "Breath of Annihilation", "description": "120-ft cone: 12d10 fire damage (AGI save DC 8+prof+STR). On kill, target is erased (no resurrection). Recharge 4-6.", "type": "action", "frequency": "short-rest" },
+      { "level": 1, "name": "Destruction Aura", "description": "Constant 60-ft aura of apocalyptic heat. Enemies: 4d6 fire/round. Objects ignite. Concrete cracks.", "type": "passive" },
+      { "level": 2, "name": "Draconic Pressure", "description": "Your presence generates crushing gravitational force. Creatures within 30 ft: STR save or speed halved and disadvantage on attacks.", "type": "action", "frequency": "short-rest" },
+      { "level": 3, "name": "Cataclysm Wings", "description": "Manifest draconic wings (bonus action). Fly 90 ft. Wing buffet (30-ft cone, STR save or 6d6 + prone).", "type": "bonus-action", "frequency": "at-will" },
+      { "level": 4, "name": "Scale Armor", "description": "Dragon scales harden your skin. AC = 17 + AGI mod (max 2). Resistance to fire and physical damage.", "type": "passive" },
+      { "level": 5, "name": "True Dragon Form", "description": "Transform into ancient red dragon (1 hour, 1/long rest). Gargantuan, fly 120 ft, AC 22, 4d10+STR, immunity fire/physical.", "type": "action", "frequency": "long-rest" },
+      { "level": 6, "name": "Primordial Flame", "description": "Your fire damage ignores resistance and treats immunity as resistance.", "type": "passive" },
+      { "level": 7, "name": "World Burn", "description": "1-mile radius: all flammable objects ignite, temperature rises 100°C. 1/long rest, 10 minutes.", "type": "action", "frequency": "long-rest" },
+      { "level": 8, "name": "Dragon's Hoard", "description": "Sense all magical items within 1 mile. Know their rarity and school.", "type": "passive" },
+      { "level": 9, "name": "Apocalypse Breath", "description": "Breath upgrades to 20d10. Terrain hit becomes magma (difficult, 4d10 fire/round) for 1 hour.", "type": "passive" },
+      { "level": 10, "name": "Absolute Dragon", "description": "True Dragon Form becomes permanent toggle. You are immune to all fire and physical damage at all times.", "type": "passive" }
+    ],
+    "spellcasting": {
+      "ability": "Strength",
+      "spell_slots": {
+        "1st": [4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "2nd": [2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "3rd": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "4th": [0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "5th": [0, 0, 0, 0, 1, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "6th": [0, 0, 0, 0, 0, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "7th": [0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "8th": [0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "9th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4]
+      },
+      "cantrips_known": [3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+      "spells_known": [4, 5, 7, 8, 10, 12, 13, 13, 14, 16, 17, 17, 18, 20, 20, 22, 22, 23, 24, 25],
+      "spell_preparation": false,
+      "additional_spells": ["Burning Hands", "Fireball", "Wall of Fire", "Delayed Blast Fireball", "Meteor Swarm"]
+    },
+    "progression_table": {
+      1: { "features_gained": ["Breath of Annihilation", "Destruction Aura"] },
+      2: { "features_gained": ["Draconic Pressure"] },
+      3: { "features_gained": ["Cataclysm Wings"] },
+      4: { "features_gained": ["Scale Armor"] },
+      5: { "features_gained": ["True Dragon Form"] },
+      6: { "features_gained": ["Primordial Flame"] },
+      7: { "features_gained": ["World Burn"] },
+      8: { "features_gained": ["Dragon's Hoard"] },
+      9: { "features_gained": ["Apocalypse Breath"] },
+      10: { "features_gained": ["Absolute Dragon"] },
+      11: { "features_gained": ["Dragon Ascendant", "Flame Lord", "Destruction God"] },
+      13: { "features_gained": ["Dragon Apocalypse", "Fire Dominion", "Essence God"] },
+      15: { "features_gained": ["Dragon Reality", "Flame God", "Destruction Emperor"] },
+      17: { "features_gained": ["Dragon Transcendence", "Fire Emperor", "Essence Emperor"] },
+      19: { "features_gained": ["Dragon Omnipotence", "Flame Monarch", "Destruction Monarch"] },
+      20: { "features_gained": ["Dragon Supremacy", "Absolute Dragon", "Monarch Power"] }
+    },
+    "regent_requirements": { "level": 12, "abilities": { "strength": 18 }, "quest_completion": "Complete the Trial of the Dragon Gate", "dm_approval": true },
+    "requirements": { "quest_completion": "Complete the Trial of the Dragon Gate", "dm_verification": true, "prerequisite_job": "Any base job", "power_level": 10 },
+    "abilities": [
+      { "name": "Breath of Annihilation", "description": "120-ft cone: 12d10 fire. On kill, target erased from reality.", "type": "action", "frequency": "short-rest", "power_level": 1 },
+      { "name": "True Dragon Form", "description": "Ancient red dragon form. Gargantuan, fly 120 ft, AC 22, immunity fire/physical.", "type": "action", "frequency": "long-rest", "power_level": 5 },
+      { "name": "Cataclysm Wings", "description": "Fly 90 ft. Wing buffet 30-ft cone, 6d6 + prone.", "type": "bonus-action", "frequency": "at-will", "power_level": 3 },
+      { "name": "Destruction Aura", "description": "60-ft aura: 4d6 fire/round to enemies. Objects ignite.", "type": "passive", "frequency": "at-will", "power_level": 1 },
+      { "name": "World Burn", "description": "1-mile radius incendiary apocalypse. 10 min duration.", "type": "action", "frequency": "long-rest", "power_level": 7 },
+      { "name": "Absolute Dragon", "description": "Permanent dragon form. Immune to fire and physical at all times.", "type": "passive", "frequency": "at-will", "power_level": 10 }
+    ],
+    "features": [
+      { "name": "Destruction Aura", "description": "60-ft aura of apocalyptic heat. 4d6 fire/round to enemies.", "power_level": 1 },
+      { "name": "Draconic Pressure", "description": "Crushing gravitational force. Speed halved, disadvantage on attacks.", "power_level": 2 },
+      { "name": "Cataclysm Wings", "description": "Manifest wings, fly 90 ft, wing buffet attack.", "power_level": 3 },
+      { "name": "Scale Armor", "description": "Natural AC 17 + AGI (max 2). Resistance fire/physical.", "power_level": 4 },
+      { "name": "True Dragon Form", "description": "Transform into ancient dragon with full stats.", "power_level": 5 },
+      { "name": "Primordial Flame", "description": "Fire ignores resistance, treats immunity as resistance.", "power_level": 6 },
+      { "name": "World Burn", "description": "1-mile incendiary zone.", "power_level": 7 },
+      { "name": "Dragon's Hoard", "description": "Sense all magic items within 1 mile.", "power_level": 8 },
+      { "name": "Apocalypse Breath", "description": "Breath upgrades to 20d10, creates magma terrain.", "power_level": 9 },
+      { "name": "Absolute Dragon", "description": "Permanent dragon form, total fire/physical immunity.", "power_level": 10 },
+      { "name": "Dragon Ascendant", "description": "Exist as pure draconic force across dimensions.", "power_level": 11 },
+      { "name": "Dragon Apocalypse", "description": "10-mile radius destruction zone.", "power_level": 13 },
+      { "name": "Dragon Reality", "description": "Reshape reality through draconic will.", "power_level": 15 },
+      { "name": "Dragon Transcendence", "description": "Transcend concept of destruction.", "power_level": 17 },
+      { "name": "Dragon Omnipotence", "description": "Control all fire across all timelines.", "power_level": 19 },
+      { "name": "Dragon Supremacy", "description": "Ultimate draconic power.", "power_level": 20 },
+      { "name": "Monarch Power", "description": "Full Monarch power: reshape reality, command infinite armies, transcend existence.", "power_level": 20 }
+    ],
+    "mechanics": {
+      "stat_bonuses": { "strength": 4, "dexterity": 2, "constitution": 4, "intelligence": 2, "wisdom": 2, "charisma": 2 },
+      "special_abilities": ["Immune to fire damage", "Resistance to physical damage", "Fly 90 ft with wings", "Sense magic items within 1 mile"],
+      "restrictions": ["Requires Warden verification of quest completion", "STR 18+ required"],
+      "progression": {
+        "level_1": ["Breath of Annihilation", "Destruction Aura"],
+        "level_3": ["Cataclysm Wings", "Draconic Pressure"],
+        "level_5": ["True Dragon Form", "Scale Armor"],
+        "level_7": ["World Burn", "Primordial Flame"],
+        "level_9": ["Apocalypse Breath", "Dragon's Hoard"],
+        "level_10": ["Absolute Dragon"],
+        "level_11": ["Dragon Ascendant", "Flame Lord", "Destruction God"],
+        "level_13": ["Dragon Apocalypse", "Fire Dominion", "Essence God"],
+        "level_15": ["Dragon Reality", "Flame God", "Destruction Emperor"],
+        "level_17": ["Dragon Transcendence", "Fire Emperor", "Essence Emperor"],
+        "level_19": ["Dragon Omnipotence", "Flame Monarch", "Destruction Monarch"],
+        "level_20": ["Dragon Supremacy", "Absolute Dragon", "Monarch Power"]
+      }
+    }
+  },
+  {
+    "id": "frost-regent-overlay",
+    "name": "Frost Regent",
+    "title": "Frost Regent Hunter Class",
+    "theme": "Eternal Winter",
+    "description": "Herald of the eternal winter. Bring ice age to modern cities. Thermometers break showing impossible temperatures and the Hunter Bureau classifies you as a climate catastrophe event. Your power taps into the absolute zero boundary — the point where molecular motion ceases and time itself slows to a crawl. Scientists monitoring your activities have documented localized temporal distortions near frost zones.",
+    "rank": "S",
+    "image": "/generated/compendium/monarchs/frost-regent.webp",
+    "type": "hunter-class-overlay",
+    "tags": ["regent", "frost", "ice", "cold", "time", "class-overlay"],
+    "created_at": "2026-02-26T00:00:00.000Z",
+    "source_book": "System Ascendant Canon",
+    "hit_dice": "1d10",
+    "primary_ability": ["Intelligence", "Sense"],
+    "saving_throws": ["Intelligence", "Sense"],
+    "skill_proficiencies": ["Arcana", "Investigation", "Nature", "Perception"],
+    "armor_proficiencies": ["Light armor", "Medium armor"],
+    "weapon_proficiencies": ["Simple weapons", "Martial weapons"],
+    "tool_proficiencies": [],
+    "class_features": [
+      { "level": 1, "name": "Ice Age Advent", "description": "5-mile radius ice storm (1/long rest, 8 hours). Temperature -100°C. Fire impossible.", "type": "action", "frequency": "long-rest" },
+      { "level": 1, "name": "Frost Dominion", "description": "Immune to cold. Resistance to fire. Cannot slip on ice. Move at full speed on frozen surfaces.", "type": "passive" },
+      { "level": 2, "name": "Absolute Zero", "description": "Touch: 10d10 cold + paralyzed (VIT save). On kill: diamond-hard ice statue at -273.15°C.", "type": "action", "frequency": "short-rest" },
+      { "level": 3, "name": "Glacial Time", "description": "60-ft radius: enemies half speed, disadvantage AGI, no reactions. 1 min, prof/long rest.", "type": "action", "frequency": "long-rest" },
+      { "level": 5, "name": "Winter's Immortality", "description": "Immune to cold, fire, aging. Regenerate 20 HP/round below freezing. Auto-stabilize at 0 HP.", "type": "passive" },
+      { "level": 7, "name": "Cryogenic Prison", "description": "Encase target in absolute-zero ice. VIT save DC 20 or imprisoned (only Wish frees).", "type": "action", "frequency": "long-rest" },
+      { "level": 9, "name": "Temporal Frost", "description": "Freeze time in 120-ft radius for 1 round. Only you act. 1/long rest.", "type": "action", "frequency": "long-rest" },
+      { "level": 10, "name": "Absolute Frost", "description": "All cold damage you deal is maximized. Ice structures you create are permanent.", "type": "passive" }
+    ],
+    "spellcasting": {
+      "ability": "Intelligence",
+      "spell_slots": {
+        "1st": [4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "2nd": [2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "3rd": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "4th": [0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "5th": [0, 0, 0, 0, 1, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "6th": [0, 0, 0, 0, 0, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "7th": [0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "8th": [0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+        "9th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4]
+      },
+      "additional_spells": ["Ice Knife", "Sleet Storm", "Cone of Cold", "Freezing Sphere", "Time Stop"]
+    },
+    "progression_table": {
+      1: { "features_gained": ["Ice Age Advent", "Frost Dominion"] },
+      2: { "features_gained": ["Absolute Zero"] },
+      3: { "features_gained": ["Glacial Time"] },
+      5: { "features_gained": ["Winter's Immortality"] },
+      7: { "features_gained": ["Cryogenic Prison"] },
+      9: { "features_gained": ["Temporal Frost"] },
+      10: { "features_gained": ["Absolute Frost"] },
+      11: { "features_gained": ["Frost Ascendant", "Temporal Lord", "Ice God"] },
+      13: { "features_gained": ["Frost Apocalypse", "Time Dominion", "Cryo God"] },
+      15: { "features_gained": ["Frost Reality", "Temporal God", "Ice Emperor"] },
+      17: { "features_gained": ["Frost Transcendence", "Time Emperor", "Cryo Emperor"] },
+      19: { "features_gained": ["Frost Omnipotence", "Temporal Monarch", "Ice Monarch"] },
+      20: { "features_gained": ["Frost Supremacy", "Absolute Frost", "Monarch Power"] }
+    },
+    "regent_requirements": { "level": 10, "abilities": { "intelligence": 16 }, "quest_completion": "Complete the Trial of the Frost Gate", "dm_approval": true },
+    "requirements": { "quest_completion": "Complete the Trial of the Frost Gate", "dm_verification": true, "prerequisite_job": "Any base job", "power_level": 10 },
+    "abilities": [
+      { "name": "Ice Age Advent", "description": "5-mile ice storm, 8 hours. -100°C.", "type": "action", "frequency": "long-rest", "power_level": 1 },
+      { "name": "Absolute Zero", "description": "Touch: 10d10 cold + paralyzed.", "type": "action", "frequency": "short-rest", "power_level": 2 },
+      { "name": "Glacial Time", "description": "Slow time in 60-ft radius.", "type": "action", "frequency": "long-rest", "power_level": 3 },
+      { "name": "Temporal Frost", "description": "Freeze time 120-ft for 1 round.", "type": "action", "frequency": "long-rest", "power_level": 9 },
+      { "name": "Absolute Frost", "description": "Maximize cold damage. Permanent ice structures.", "type": "passive", "frequency": "at-will", "power_level": 10 }
+    ],
+    "features": [
+      { "name": "Frost Dominion", "description": "Immune to cold, resistance to fire.", "power_level": 1 },
+      { "name": "Absolute Zero", "description": "Touch attack: 10d10 cold + paralyzed.", "power_level": 2 },
+      { "name": "Glacial Time", "description": "Slow time in 60-ft radius.", "power_level": 3 },
+      { "name": "Winter's Immortality", "description": "Immune to cold/fire/aging, regeneration.", "power_level": 5 },
+      { "name": "Cryogenic Prison", "description": "Imprison in absolute-zero ice.", "power_level": 7 },
+      { "name": "Temporal Frost", "description": "Freeze time for 1 round.", "power_level": 9 },
+      { "name": "Absolute Frost", "description": "Maximize cold, permanent ice.", "power_level": 10 },
+      { "name": "Frost Ascendant", "description": "Transcend mortal limitations of cold.", "power_level": 11 },
+      { "name": "Frost Apocalypse", "description": "Continental ice age.", "power_level": 13 },
+      { "name": "Frost Reality", "description": "Reshape reality through ice.", "power_level": 15 },
+      { "name": "Frost Transcendence", "description": "Become fundamental force of entropy.", "power_level": 17 },
+      { "name": "Frost Omnipotence", "description": "Control cold across all timelines.", "power_level": 19 },
+      { "name": "Frost Supremacy", "description": "Ultimate frost power.", "power_level": 20 },
+      { "name": "Monarch Power", "description": "Full Monarch power.", "power_level": 20 }
+    ],
+    "mechanics": {
+      "stat_bonuses": { "strength": 2, "dexterity": 2, "constitution": 4, "intelligence": 4, "wisdom": 2, "charisma": 2 },
+      "special_abilities": ["Immune to cold damage", "Resistance to fire damage", "Cannot slip on ice", "Slow time in radius"],
+      "restrictions": ["Requires Warden verification", "INT 16+ required"],
+      "progression": {
+        "level_1": ["Ice Age Advent", "Frost Dominion"],
+        "level_3": ["Absolute Zero", "Glacial Time"],
+        "level_5": ["Winter's Immortality"],
+        "level_7": ["Cryogenic Prison", "Primordial Frost"],
+        "level_9": ["Temporal Frost"],
+        "level_10": ["Absolute Frost"],
+        "level_11": ["Frost Ascendant", "Temporal Lord", "Ice God"],
+        "level_13": ["Frost Apocalypse", "Time Dominion", "Cryo God"],
+        "level_15": ["Frost Reality", "Temporal God", "Ice Emperor"],
+        "level_17": ["Frost Transcendence", "Time Emperor", "Cryo Emperor"],
+        "level_19": ["Frost Omnipotence", "Temporal Monarch", "Ice Monarch"],
+        "level_20": ["Frost Supremacy", "Absolute Frost", "Monarch Power"]
+      }
+    }
+  },
+  {
+    "id": "beast-regent-overlay",
+    "name": "Beast Regent",
+    "title": "Beast Regent Hunter Class",
+    "theme": "Primal Evolution",
+    "description": "Avatar of primordial evolution. All beasts recognize you as alpha. Transform into an apex predator from before human history. The Hunter Bureau classifies you as an Alpha-class biodiversity threat. Zoo animals break containment when you pass, police K-9 units refuse to engage, and wildlife documentarians film you instead of their subjects.",
+    "rank": "S",
+    "image": "/generated/compendium/monarchs/beast-regent.webp",
+    "type": "hunter-class-overlay",
+    "tags": ["regent", "beast", "primal", "evolution", "class-overlay"],
+    "created_at": "2026-02-26T00:00:00.000Z",
+    "source_book": "System Ascendant Canon",
+    "hit_dice": "1d12",
+    "primary_ability": ["Strength", "Vitality"],
+    "saving_throws": ["Strength", "Vitality"],
+    "skill_proficiencies": ["Athletics", "Animal Handling", "Nature", "Survival"],
+    "armor_proficiencies": ["Light armor", "Medium armor", "Shields"],
+    "weapon_proficiencies": ["Simple weapons", "Martial weapons"],
+    "tool_proficiencies": [],
+    "class_features": [
+      { "level": 1, "name": "Apex Form", "description": "Transform into primordial beast (10 min, prof/long rest). Huge, +6 STR/AGI/VIT (max 26), 3d10+STR natural weapons, regen 15 HP/turn, tremorsense 120 ft.", "type": "action", "frequency": "long-rest" },
+      { "level": 1, "name": "Alpha's Presence", "description": "120-ft aura. Beasts friendly. Enemies: SENSE save or frightened + cannot attack you.", "type": "passive" },
+      { "level": 2, "name": "Beast King's Call", "description": "Command ALL beasts within 10 miles (CR ≤ level). 1 hour, 1/week.", "type": "action", "frequency": "once-per-day" },
+      { "level": 3, "name": "Primordial Regeneration", "description": "Regrow limbs in 1 min. 25 HP/turn below half. Immune to age/disease. Toxins metabolize instantly.", "type": "passive" },
+      { "level": 5, "name": "Evolutionary Leap", "description": "Adapt to any environment. Grow gills, wings, or thermal insulation as needed. 1 action.", "type": "bonus-action", "frequency": "at-will" },
+      { "level": 7, "name": "Pack Tactics", "description": "All allies within 30 ft gain advantage on attack rolls against targets you've damaged this turn.", "type": "passive" },
+      { "level": 9, "name": "Extinction Event", "description": "1-mile radius: all hostile creatures take 6d10 force + frightened (SENSE save). 1/long rest.", "type": "action", "frequency": "long-rest" },
+      { "level": 10, "name": "Absolute Beast", "description": "Apex Form becomes permanent. Command any beast worldwide. Immune to all physical damage.", "type": "passive" }
+    ],
+    "progression_table": {
+      1: { "features_gained": ["Apex Form", "Alpha's Presence"] },
+      2: { "features_gained": ["Beast King's Call"] },
+      3: { "features_gained": ["Primordial Regeneration"] },
+      5: { "features_gained": ["Evolutionary Leap"] },
+      7: { "features_gained": ["Pack Tactics"] },
+      9: { "features_gained": ["Extinction Event"] },
+      10: { "features_gained": ["Absolute Beast"] },
+      11: { "features_gained": ["Beast Ascendant", "Primal Lord", "Evolution God"] },
+      13: { "features_gained": ["Beast Apocalypse", "Primal Dominion", "Essence God"] },
+      15: { "features_gained": ["Beast Reality", "Primal God", "Evolution Emperor"] },
+      17: { "features_gained": ["Beast Transcendence", "Primal Emperor", "Essence Emperor"] },
+      19: { "features_gained": ["Beast Omnipotence", "Primal Monarch", "Evolution Monarch"] },
+      20: { "features_gained": ["Beast Supremacy", "Absolute Beast", "Monarch Power"] }
+    },
+    "regent_requirements": { "level": 11, "abilities": { "strength": 17 }, "quest_completion": "Complete the Trial of the Beast Gate", "dm_approval": true },
+    "requirements": { "quest_completion": "Complete the Trial of the Beast Gate", "dm_verification": true, "prerequisite_job": "Any base job", "power_level": 10 },
+    "abilities": [
+      { "name": "Apex Form", "description": "Huge primordial beast. +6 STR/AGI/VIT, 3d10 natural weapons, regen.", "type": "action", "frequency": "long-rest", "power_level": 1 },
+      { "name": "Beast King's Call", "description": "Command all beasts within 10 miles.", "type": "action", "frequency": "once-per-day", "power_level": 2 },
+      { "name": "Extinction Event", "description": "1-mile AoE: 6d10 force + frightened.", "type": "action", "frequency": "long-rest", "power_level": 9 },
+      { "name": "Absolute Beast", "description": "Permanent Apex Form. Global beast command. Physical immunity.", "type": "passive", "frequency": "at-will", "power_level": 10 }
+    ],
+    "features": [
+      { "name": "Alpha's Presence", "description": "120-ft aura. Beasts friendly, enemies frightened.", "power_level": 1 },
+      { "name": "Beast King's Call", "description": "Command all beasts within 10 miles.", "power_level": 2 },
+      { "name": "Primordial Regeneration", "description": "Regrow limbs, 25 HP/turn below half, immune age/disease.", "power_level": 3 },
+      { "name": "Evolutionary Leap", "description": "Adapt to any environment on demand.", "power_level": 5 },
+      { "name": "Pack Tactics", "description": "Allies gain advantage on your targets.", "power_level": 7 },
+      { "name": "Extinction Event", "description": "1-mile AoE devastation.", "power_level": 9 },
+      { "name": "Absolute Beast", "description": "Permanent form, total physical immunity.", "power_level": 10 },
+      { "name": "Beast Ascendant", "description": "Transcend biology.", "power_level": 11 },
+      { "name": "Beast Apocalypse", "description": "Global primal event.", "power_level": 13 },
+      { "name": "Beast Reality", "description": "Reshape reality through evolution.", "power_level": 15 },
+      { "name": "Beast Transcendence", "description": "Fundamental force of nature.", "power_level": 17 },
+      { "name": "Beast Omnipotence", "description": "Control all life.", "power_level": 19 },
+      { "name": "Beast Supremacy", "description": "Ultimate primal power.", "power_level": 20 },
+      { "name": "Monarch Power", "description": "Full Monarch power.", "power_level": 20 }
+    ],
+    "mechanics": {
+      "stat_bonuses": { "strength": 4, "dexterity": 2, "constitution": 4, "intelligence": 2, "wisdom": 2, "charisma": 2 },
+      "special_abilities": ["Beasts automatically friendly", "Regeneration 15 HP/turn", "Tremorsense 120 ft", "Immune to disease and aging"],
+      "restrictions": ["Requires Warden verification", "STR or VIT 17+ required"],
+      "progression": {
+        "level_1": ["Apex Form", "Alpha's Presence"],
+        "level_3": ["Beast King's Call", "Primordial Regeneration"],
+        "level_5": ["Evolutionary Leap"],
+        "level_7": ["Pack Tactics"],
+        "level_9": ["Extinction Event"],
+        "level_10": ["Absolute Beast"],
+        "level_11": ["Beast Ascendant", "Primal Lord", "Evolution God"],
+        "level_13": ["Beast Apocalypse", "Primal Dominion", "Essence God"],
+        "level_15": ["Beast Reality", "Primal God", "Evolution Emperor"],
+        "level_17": ["Beast Transcendence", "Primal Emperor", "Essence Emperor"],
+        "level_19": ["Beast Omnipotence", "Primal Monarch", "Evolution Monarch"],
+        "level_20": ["Beast Supremacy", "Absolute Beast", "Monarch Power"]
+      }
+    }
+  },
+  {
+    "id": "plague-regent-overlay",
+    "name": "Plague Regent",
+    "title": "Plague Regent Hunter Class",
+    "theme": "Pandemic Incarnate",
+    "description": "Incarnation of plague and pestilence. Walking biological apocalypse. The CDC tracks 47 unknown pathogens in your wake. The Hunter Bureau classifies you as a Pandemic-class bioweapon. Insects obey your will, diseases are your art form, and quarantine zones form wherever you walk. Hospitals refuse your admittance, biohazard teams follow your movements, and the WHO has a dedicated task force assigned to you.",
+    "rank": "S",
+    "image": "/generated/compendium/monarchs/plague-regent.webp",
+    "type": "hunter-class-overlay",
+    "tags": ["regent", "plague", "disease", "swarm", "class-overlay"],
+    "created_at": "2026-02-26T00:00:00.000Z",
+    "source_book": "System Ascendant Canon",
+    "hit_dice": "1d10",
+    "primary_ability": ["Intelligence", "Sense"],
+    "saving_throws": ["Intelligence", "Vitality"],
+    "skill_proficiencies": ["Arcana", "Medicine", "Nature", "Survival"],
+    "armor_proficiencies": ["Light armor"],
+    "weapon_proficiencies": ["Simple weapons"],
+    "tool_proficiencies": ["Poisoner's kit", "Herbalism kit"],
+    "class_features": [
+      { "level": 1, "name": "Typhoid Incarnate", "description": "60-ft aura: VIT save DC 8+prof+INT or contract supernatural disease (4d12 necrotic/day, spreads). Only you or Wish can cure.", "type": "passive" },
+      { "level": 1, "name": "Insect God", "description": "Command all insects within 5 miles. Insect Plague centered on any point.", "type": "action", "frequency": "at-will" },
+      { "level": 2, "name": "Pandemic Protocol", "description": "Create supernatural pandemic (1/month). Choose properties. R0=10. Only you can cure.", "type": "action", "frequency": "once-per-day" },
+      { "level": 3, "name": "Billion Swarm", "description": "Dissolve into insect swarm (1 hour). Fly 60 ft, squeeze 1-inch gaps, immune to non-AoE.", "type": "action", "frequency": "long-rest" },
+      { "level": 5, "name": "Pathogen Mastery", "description": "Immune to all disease/poison. Detect diseases within 1 mile.", "type": "passive" },
+      { "level": 7, "name": "Plague Vector", "description": "Touch: transfer any disease to target (no save). Cure any disease by touch.", "type": "action", "frequency": "at-will" },
+      { "level": 9, "name": "Biological Apocalypse", "description": "1-mile radius: all organic matter begins rapid decay. 8d10 necrotic/round. 1/long rest.", "type": "action", "frequency": "long-rest" },
+      { "level": 10, "name": "Absolute Plague", "description": "Diseases you create are permanent, resist all curing. Swarm form is permanent toggle.", "type": "passive" }
+    ],
+    "progression_table": {
+      1: { "features_gained": ["Typhoid Incarnate", "Insect God"] },
+      2: { "features_gained": ["Pandemic Protocol"] },
+      3: { "features_gained": ["Billion Swarm"] },
+      5: { "features_gained": ["Pathogen Mastery"] },
+      7: { "features_gained": ["Plague Vector"] },
+      9: { "features_gained": ["Biological Apocalypse"] },
+      10: { "features_gained": ["Absolute Plague"] },
+      11: { "features_gained": ["Plague Ascendant", "Swarm Lord", "Disease God"] },
+      13: { "features_gained": ["Plague Apocalypse", "Swarm Dominion", "Pathogen God"] },
+      15: { "features_gained": ["Plague Reality", "Swarm God", "Disease Emperor"] },
+      17: { "features_gained": ["Plague Transcendence", "Swarm Emperor", "Pathogen Emperor"] },
+      19: { "features_gained": ["Plague Omnipotence", "Swarm Monarch", "Disease Monarch"] },
+      20: { "features_gained": ["Plague Supremacy", "Absolute Plague", "Monarch Power"] }
+    },
+    "regent_requirements": { "level": 10, "abilities": { "intelligence": 16 }, "quest_completion": "Complete the Trial of the Plague Gate", "dm_approval": true },
+    "requirements": { "quest_completion": "Complete the Trial of the Plague Gate", "dm_verification": true, "prerequisite_job": "Any base job", "power_level": 10 },
+    "abilities": [
+      { "name": "Typhoid Incarnate", "description": "60-ft disease aura. Incurable except by you.", "type": "passive", "frequency": "at-will", "power_level": 1 },
+      { "name": "Billion Swarm", "description": "Dissolve into insect swarm. Immune to non-AoE.", "type": "action", "frequency": "long-rest", "power_level": 3 },
+      { "name": "Biological Apocalypse", "description": "1-mile decay zone. 8d10 necrotic/round.", "type": "action", "frequency": "long-rest", "power_level": 9 },
+      { "name": "Absolute Plague", "description": "Permanent incurable diseases. Permanent swarm.", "type": "passive", "frequency": "at-will", "power_level": 10 }
+    ],
+    "features": [
+      { "name": "Typhoid Incarnate", "description": "Permanent disease aura.", "power_level": 1 },
+      { "name": "Insect God", "description": "Command insects within 5 miles.", "power_level": 1 },
+      { "name": "Pandemic Protocol", "description": "Create supernatural pandemics.", "power_level": 2 },
+      { "name": "Billion Swarm", "description": "Insect swarm form.", "power_level": 3 },
+      { "name": "Pathogen Mastery", "description": "Immune to disease/poison, detect diseases.", "power_level": 5 },
+      { "name": "Plague Vector", "description": "Transfer or cure any disease.", "power_level": 7 },
+      { "name": "Biological Apocalypse", "description": "1-mile decay zone.", "power_level": 9 },
+      { "name": "Absolute Plague", "description": "Permanent diseases, permanent swarm.", "power_level": 10 },
+      { "name": "Plague Ascendant", "description": "Transcend biological limitations.", "power_level": 11 },
+      { "name": "Plague Apocalypse", "description": "Continental pandemic.", "power_level": 13 },
+      { "name": "Plague Reality", "description": "Reshape reality through disease.", "power_level": 15 },
+      { "name": "Plague Transcendence", "description": "Become fundamental force of decay.", "power_level": 17 },
+      { "name": "Plague Omnipotence", "description": "Control all disease everywhere.", "power_level": 19 },
+      { "name": "Plague Supremacy", "description": "Ultimate plague power.", "power_level": 20 },
+      { "name": "Monarch Power", "description": "Full Monarch power.", "power_level": 20 }
+    ],
+    "mechanics": {
+      "stat_bonuses": { "strength": 2, "dexterity": 2, "constitution": 4, "intelligence": 4, "wisdom": 2, "charisma": 2 },
+      "special_abilities": ["Immune to disease and poison", "Command insects within 5 miles", "Disease aura 60 ft", "Detect diseases within 1 mile"],
+      "restrictions": ["Requires Warden verification", "INT or SENSE 16+ required"],
+      "progression": {
+        "level_1": ["Typhoid Incarnate", "Insect God"],
+        "level_3": ["Pandemic Protocol", "Billion Swarm"],
+        "level_5": ["Pathogen Mastery"],
+        "level_7": ["Plague Vector"],
+        "level_9": ["Biological Apocalypse"],
+        "level_10": ["Absolute Plague"],
+        "level_11": ["Plague Ascendant", "Swarm Lord", "Disease God"],
+        "level_13": ["Plague Apocalypse", "Swarm Dominion", "Pathogen God"],
+        "level_15": ["Plague Reality", "Swarm God", "Disease Emperor"],
+        "level_17": ["Plague Transcendence", "Swarm Emperor", "Pathogen Emperor"],
+        "level_19": ["Plague Omnipotence", "Swarm Monarch", "Disease Monarch"],
+        "level_20": ["Plague Supremacy", "Absolute Plague", "Monarch Power"]
+      }
+    }
+  },
+  {
+    "id": "architect-regent-overlay",
+    "name": "Architect Regent",
+    "title": "Architect Regent Hunter Class",
+    "theme": "Reality Architecture",
+    "description": "Reality's architect. Reshape space, time, and dimensions. Create permanent worlds. Your System HUD shows universe blueprints. The Hunter Bureau classifies you as a Dimensional sovereignty threat. You build structures from nothing, create pocket dimensions for storage/bases/prisons, and place dimensional anchors worldwide for instant teleportation. Building inspectors have given up filing reports on your constructions.",
+    "rank": "S",
+    "image": "/generated/compendium/monarchs/architect-regent.webp",
+    "type": "hunter-class-overlay",
+    "tags": ["regent", "architect", "dimensional", "construction", "class-overlay"],
+    "created_at": "2026-02-26T00:00:00.000Z",
+    "source_book": "System Ascendant Canon",
+    "hit_dice": "1d8",
+    "primary_ability": ["Intelligence"],
+    "saving_throws": ["Intelligence", "Sense"],
+    "skill_proficiencies": ["Arcana", "Investigation", "History", "Perception"],
+    "armor_proficiencies": ["Light armor"],
+    "weapon_proficiencies": ["Simple weapons"],
+    "tool_proficiencies": ["Mason's tools", "Cartographer's tools"],
+    "class_features": [
+      { "level": 1, "name": "World Creation", "description": "Create permanent demiplane (1 mile cube, 1/month). Full control: gravity, time flow, atmosphere, structures.", "type": "action", "frequency": "once-per-day" },
+      { "level": 1, "name": "Instant Architecture", "description": "Create any structure (300 ft cube) as action. AC 25, 500 HP, permanent.", "type": "action", "frequency": "short-rest" },
+      { "level": 2, "name": "Spatial Anchors", "description": "Place 12 invisible anchors anywhere. Teleport between them (action, unlimited). Permanent.", "type": "action", "frequency": "at-will" },
+      { "level": 3, "name": "Living Lair", "description": "In your structures: reshape layout as bonus action, create/remove doors/walls/floors, control gravity per room.", "type": "passive" },
+      { "level": 5, "name": "Dimensional Lock", "description": "Prevent all teleportation/plane shifting in 1-mile radius. 1 hour, 1/long rest.", "type": "action", "frequency": "long-rest" },
+      { "level": 7, "name": "Blueprint Vision", "description": "See structural weaknesses, hidden rooms, and dimensional instabilities. Detect all portals/gates within 5 miles.", "type": "passive" },
+      { "level": 9, "name": "Reality Rewrite", "description": "Reshape 1-mile area: change terrain, gravity direction, physics rules. Permanent. 1/week.", "type": "action", "frequency": "once-per-day" },
+      { "level": 10, "name": "Absolute Architect", "description": "Create demiplanes at will. All structures are indestructible. Reality Rewrite becomes daily.", "type": "passive" }
+    ],
+    "progression_table": {
+      1: { "features_gained": ["World Creation", "Instant Architecture"] },
+      2: { "features_gained": ["Spatial Anchors"] },
+      3: { "features_gained": ["Living Lair"] },
+      5: { "features_gained": ["Dimensional Lock"] },
+      7: { "features_gained": ["Blueprint Vision"] },
+      9: { "features_gained": ["Reality Rewrite"] },
+      10: { "features_gained": ["Absolute Architect"] },
+      11: { "features_gained": ["Architect Ascendant", "Spatial Lord", "Dimensional God"] },
+      13: { "features_gained": ["Architect Apocalypse", "Space Dominion", "Reality God"] },
+      15: { "features_gained": ["Architect Reality", "Spatial God", "Dimensional Emperor"] },
+      17: { "features_gained": ["Architect Transcendence", "Space Emperor", "Reality Emperor"] },
+      19: { "features_gained": ["Architect Omnipotence", "Spatial Monarch", "Dimensional Monarch"] },
+      20: { "features_gained": ["Architect Supremacy", "Absolute Architect", "Monarch Power"] }
+    },
+    "regent_requirements": { "level": 13, "abilities": { "intelligence": 18 }, "quest_completion": "Complete the Trial of the Architect Gate", "dm_approval": true },
+    "requirements": { "quest_completion": "Complete the Trial of the Architect Gate", "dm_verification": true, "prerequisite_job": "Any base job", "power_level": 10 },
+    "abilities": [
+      { "name": "World Creation", "description": "Create permanent 1-mile demiplane.", "type": "action", "frequency": "once-per-day", "power_level": 1 },
+      { "name": "Instant Architecture", "description": "Create 300-ft structure instantly.", "type": "action", "frequency": "short-rest", "power_level": 1 },
+      { "name": "Spatial Anchors", "description": "12 teleport anchors, unlimited use.", "type": "action", "frequency": "at-will", "power_level": 2 },
+      { "name": "Reality Rewrite", "description": "Reshape 1-mile area permanently.", "type": "action", "frequency": "once-per-day", "power_level": 9 },
+      { "name": "Absolute Architect", "description": "At-will demiplanes, indestructible structures.", "type": "passive", "frequency": "at-will", "power_level": 10 }
+    ],
+    "features": [
+      { "name": "Instant Architecture", "description": "Create any structure as action.", "power_level": 1 },
+      { "name": "Spatial Anchors", "description": "12 permanent teleport points.", "power_level": 2 },
+      { "name": "Living Lair", "description": "Control structures you created.", "power_level": 3 },
+      { "name": "Dimensional Lock", "description": "Block teleportation in 1-mile.", "power_level": 5 },
+      { "name": "Blueprint Vision", "description": "See structure internals and portals.", "power_level": 7 },
+      { "name": "Reality Rewrite", "description": "Reshape 1-mile permanently.", "power_level": 9 },
+      { "name": "Absolute Architect", "description": "At-will creation, indestructible.", "power_level": 10 },
+      { "name": "Architect Ascendant", "description": "Build across dimensions.", "power_level": 11 },
+      { "name": "Architect Apocalypse", "description": "Reshape continents.", "power_level": 13 },
+      { "name": "Architect Reality", "description": "Create/destroy planes.", "power_level": 15 },
+      { "name": "Architect Transcendence", "description": "Fundamental force of space.", "power_level": 17 },
+      { "name": "Architect Omnipotence", "description": "Control all space.", "power_level": 19 },
+      { "name": "Architect Supremacy", "description": "Ultimate spatial power.", "power_level": 20 },
+      { "name": "Monarch Power", "description": "Full Monarch power.", "power_level": 20 }
+    ],
+    "mechanics": {
+      "stat_bonuses": { "strength": 2, "dexterity": 2, "constitution": 2, "intelligence": 4, "wisdom": 4, "charisma": 2 },
+      "special_abilities": ["Create permanent demiplanes", "Instant construction", "Teleport via spatial anchors", "Detect portals within 5 miles"],
+      "restrictions": ["Requires Warden verification", "INT 18+ required"],
+      "progression": {
+        "level_1": ["World Creation", "Instant Architecture"],
+        "level_3": ["Spatial Anchors", "Living Lair"],
+        "level_5": ["Dimensional Lock"],
+        "level_7": ["Blueprint Vision"],
+        "level_9": ["Reality Rewrite"],
+        "level_10": ["Absolute Architect"],
+        "level_11": ["Architect Ascendant", "Spatial Lord", "Dimensional God"],
+        "level_13": ["Architect Apocalypse", "Space Dominion", "Reality God"],
+        "level_15": ["Architect Reality", "Spatial God", "Dimensional Emperor"],
+        "level_17": ["Architect Transcendence", "Space Emperor", "Reality Emperor"],
+        "level_19": ["Architect Omnipotence", "Spatial Monarch", "Dimensional Monarch"],
+        "level_20": ["Architect Supremacy", "Absolute Architect", "Monarch Power"]
+      }
+    }
+  },
+  {
+    "id": "mimic-regent-overlay",
+    "name": "Mimic Regent",
+    "title": "Mimic Regent Hunter Class",
+    "theme": "Infinite Forms",
+    "description": "Embodiment of infinite forms. Copy anything — creatures, objects, concepts. No detection possible. The Hunter Bureau has contradictory records on you because you appear as a different person in every database. DNA tests return different results each time. Your awakening unlocked the ability to become ANYTHING you observe, perfectly and undetectably, making you the ultimate infiltrator, spy, and adaptive combatant.",
+    "rank": "S",
+    "image": "/generated/compendium/monarchs/mimic-regent.webp",
+    "type": "hunter-class-overlay",
+    "tags": ["regent", "mimic", "shapeshifting", "adaptation", "class-overlay"],
+    "created_at": "2026-02-26T00:00:00.000Z",
+    "source_book": "System Ascendant Canon",
+    "hit_dice": "1d10",
+    "primary_ability": ["Agility", "Presence"],
+    "saving_throws": ["Agility", "Presence"],
+    "skill_proficiencies": ["Deception", "Stealth", "Perception", "Performance"],
+    "armor_proficiencies": ["Light armor", "Medium armor"],
+    "weapon_proficiencies": ["Simple weapons", "Martial weapons"],
+    "tool_proficiencies": ["Disguise kit", "Forgery kit"],
+    "class_features": [
+      { "level": 1, "name": "Perfect Imitation", "description": "Transform into ANYTHING you've seen (Tiny to Gargantuan, CR ≤ level). Undetectable. DNA matches. Unlimited duration.", "type": "action", "frequency": "at-will" },
+      { "level": 1, "name": "Power Theft", "description": "Observe any ability: copy it permanently (no save). Store up to level/2 stolen powers. Prof uses/long rest.", "type": "reaction", "frequency": "long-rest" },
+      { "level": 2, "name": "Reactive Evolution", "description": "Damaged by element: gain immunity. Failed save: auto-succeed next. Attacked by weapon: gain resistance.", "type": "reaction", "frequency": "at-will" },
+      { "level": 3, "name": "Quantum Existence", "description": "Each observer sees different form (1 hour, 1/long rest). Appear as most trusted/feared/irrelevant.", "type": "action", "frequency": "long-rest" },
+      { "level": 5, "name": "Memory Access", "description": "While mimicking a creature, access all their memories and skills.", "type": "passive" },
+      { "level": 7, "name": "Form Archive", "description": "Store unlimited forms. Switch between archived forms as bonus action.", "type": "passive" },
+      { "level": 9, "name": "Perfect Copy", "description": "Copy legendary actions, lair actions, and regional effects of observed creatures.", "type": "passive" },
+      { "level": 10, "name": "Absolute Mimic", "description": "Copy anything including concepts (copy 'invulnerability', 'flight', 'time stop'). No CR limit.", "type": "passive" }
+    ],
+    "progression_table": {
+      1: { "features_gained": ["Perfect Imitation", "Power Theft"] },
+      2: { "features_gained": ["Reactive Evolution"] },
+      3: { "features_gained": ["Quantum Existence"] },
+      5: { "features_gained": ["Memory Access"] },
+      7: { "features_gained": ["Form Archive"] },
+      9: { "features_gained": ["Perfect Copy"] },
+      10: { "features_gained": ["Absolute Mimic"] },
+      11: { "features_gained": ["Mimic Ascendant", "Form Lord", "Copy God"] },
+      13: { "features_gained": ["Mimic Apocalypse", "Form Dominion", "Copy Dominion"] },
+      15: { "features_gained": ["Mimic Reality", "Form God", "Copy Emperor"] },
+      17: { "features_gained": ["Mimic Transcendence", "Form Emperor", "Copy Transcendence"] },
+      19: { "features_gained": ["Mimic Omnipotence", "Form Monarch", "Copy Monarch"] },
+      20: { "features_gained": ["Mimic Supremacy", "Absolute Mimic", "Monarch Power"] }
+    },
+    "regent_requirements": { "level": 11, "abilities": { "dexterity": 17 }, "quest_completion": "Complete the Trial of the Mimic Gate", "dm_approval": true },
+    "requirements": { "quest_completion": "Complete the Trial of the Mimic Gate", "dm_verification": true, "prerequisite_job": "Any base job", "power_level": 10 },
+    "abilities": [
+      { "name": "Perfect Imitation", "description": "Become anything. Undetectable. Unlimited duration.", "type": "action", "frequency": "at-will", "power_level": 1 },
+      { "name": "Power Theft", "description": "Copy any observed ability permanently.", "type": "reaction", "frequency": "long-rest", "power_level": 1 },
+      { "name": "Reactive Evolution", "description": "Auto-adapt to any threat.", "type": "reaction", "frequency": "at-will", "power_level": 2 },
+      { "name": "Perfect Copy", "description": "Copy legendary/lair/regional effects.", "type": "passive", "frequency": "at-will", "power_level": 9 },
+      { "name": "Absolute Mimic", "description": "Copy concepts. No CR limit.", "type": "passive", "frequency": "at-will", "power_level": 10 }
+    ],
+    "features": [
+      { "name": "Perfect Imitation", "description": "Transform into anything observed.", "power_level": 1 },
+      { "name": "Power Theft", "description": "Permanently copy abilities.", "power_level": 1 },
+      { "name": "Reactive Evolution", "description": "Auto-adapt to threats.", "power_level": 2 },
+      { "name": "Quantum Existence", "description": "Different form per observer.", "power_level": 3 },
+      { "name": "Memory Access", "description": "Access mimicked creature's memories.", "power_level": 5 },
+      { "name": "Form Archive", "description": "Unlimited stored forms.", "power_level": 7 },
+      { "name": "Perfect Copy", "description": "Copy legendary actions.", "power_level": 9 },
+      { "name": "Absolute Mimic", "description": "Copy concepts, no limits.", "power_level": 10 },
+      { "name": "Mimic Ascendant", "description": "Transcend form limitations.", "power_level": 11 },
+      { "name": "Mimic Apocalypse", "description": "Become everything simultaneously.", "power_level": 13 },
+      { "name": "Mimic Reality", "description": "Reshape reality by becoming it.", "power_level": 15 },
+      { "name": "Mimic Transcendence", "description": "Fundamental force of adaptation.", "power_level": 17 },
+      { "name": "Mimic Omnipotence", "description": "Copy reality itself.", "power_level": 19 },
+      { "name": "Mimic Supremacy", "description": "Ultimate mimic power.", "power_level": 20 },
+      { "name": "Monarch Power", "description": "Full Monarch power.", "power_level": 20 }
+    ],
+    "mechanics": {
+      "stat_bonuses": { "strength": 2, "dexterity": 4, "constitution": 2, "intelligence": 2, "wisdom": 2, "charisma": 4 },
+      "special_abilities": ["Undetectable shapeshifting", "Copy any ability permanently", "Auto-adapt to threats", "Access mimicked memories"],
+      "restrictions": ["Requires Warden verification", "AGI or PRE 17+ required"],
+      "progression": {
+        "level_1": ["Perfect Imitation", "Power Theft"],
+        "level_3": ["Reactive Evolution", "Quantum Existence"],
+        "level_5": ["Memory Access"],
+        "level_7": ["Form Archive"],
+        "level_9": ["Perfect Copy"],
+        "level_10": ["Absolute Mimic"],
+        "level_11": ["Mimic Ascendant", "Form Lord", "Copy God"],
+        "level_13": ["Mimic Apocalypse", "Form Dominion", "Copy Dominion"],
+        "level_15": ["Mimic Reality", "Form God", "Copy Emperor"],
+        "level_17": ["Mimic Transcendence", "Form Emperor", "Copy Transcendence"],
+        "level_19": ["Mimic Omnipotence", "Form Monarch", "Copy Monarch"],
+        "level_20": ["Mimic Supremacy", "Absolute Mimic", "Monarch Power"]
       }
     }
   }

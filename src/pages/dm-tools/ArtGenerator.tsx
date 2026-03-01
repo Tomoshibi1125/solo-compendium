@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { ArtGenerator } from '@/components/art/ArtGenerator';
+import { DEFAULT_TOKENS, type LibraryToken } from '@/data/tokenLibraryDefaults';
 import { AIEnhancedArtGenerator } from '@/components/art/AIEnhancedArtGenerator';
 import { artPipeline } from '@/lib/artPipeline/service';
 import type { ArtAsset } from '@/lib/artPipeline/types';
@@ -17,12 +18,17 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Camera, Sparkles, Sword, Shield, MapPin } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { ArrowLeft, Share2, Target } from 'lucide-react';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useUserToolState } from '@/hooks/useToolState';
 import { getRuntimeEnvValue } from '@/lib/runtimeEnv';
+import { useMyCampaigns } from '@/hooks/useCampaigns';
+import { useHydratedPreferredCampaignId } from '@/hooks/usePreferredCampaignSelection';
+import { useVTTRealtime } from '@/hooks/useVTTRealtime';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useToast } from '@/hooks/use-toast';
 
 type ContentType = 'monster' | 'npc' | 'item' | 'location';
 
@@ -44,6 +50,36 @@ interface GeneratedContent {
 
 export default function ArtGeneratorDM() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { toast } = useToast();
+
+  const activeCampaignId = searchParams.get('campaignId')?.trim() || '';
+  const { data: myCampaigns = [] } = useMyCampaigns();
+
+  useHydratedPreferredCampaignId({
+    toolKey: 'art_generator',
+    campaigns: myCampaigns.map(c => ({ id: c.id, name: c.name, access: 'owner' })),
+    urlCampaignId: activeCampaignId || null,
+    isCampaignIdValid: (id) => myCampaigns.some((c) => c.id === id),
+    onResolveCampaignId: (id) => {
+      const nextParams = new URLSearchParams(searchParams);
+      nextParams.set('campaignId', id);
+      setSearchParams(nextParams, { replace: true });
+    },
+  });
+
+  const handleCampaignChange = (nextCampaignId: string) => {
+    const nextParams = new URLSearchParams(searchParams);
+    nextParams.set('campaignId', nextCampaignId);
+    setSearchParams(nextParams, { replace: true });
+  };
+
+  const vttRealtime = useVTTRealtime({
+    campaignId: activeCampaignId,
+    sessionId: 'global',
+    isDM: true
+  });
+
   const STORAGE_KEY = 'solo-compendium.dm-tools.art-generator.v1';
   const [contentType, setContentType] = useState<ContentType>('monster');
   const [generatedContent, setGeneratedContent] = useState<GeneratedContent[]>([]);
@@ -57,6 +93,12 @@ export default function ArtGeneratorDM() {
     initialState: [],
     storageKey: STORAGE_KEY,
   });
+
+  const { state: storedTokens, saveNow: saveTokenLibrary } = useUserToolState<LibraryToken[]>('token_library', {
+    initialState: DEFAULT_TOKENS,
+    storageKey: 'vtt-tokens',
+  });
+
   const debouncedContent = useDebounce(generatedContent, 800);
 
   useEffect(() => {
@@ -266,6 +308,44 @@ export default function ArtGeneratorDM() {
     setGeneratedContent(prev => prev.filter(item => item.id !== id));
   };
 
+  const handleShareToVTT = (item: GeneratedContent, artSrc: string) => {
+    if (!activeCampaignId) {
+      toast({
+        title: 'Error',
+        description: 'Please select a campaign to share art to.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    vttRealtime.shareHandout(item.name || 'Untitled Art', artSrc, item.data?.description);
+    toast({
+      title: 'Shared to VTT',
+      description: `Shared ${item.name || 'Untitled Art'} to players as a handout.`,
+    });
+  };
+
+  const handleSaveAsToken = async (item: GeneratedContent, artSrc: string) => {
+    const newToken: LibraryToken = {
+      id: `generated-${Date.now()}`,
+      name: item.name || 'Generated Art Token',
+      type: item.type === 'monster' ? 'monster' : item.type === 'npc' ? 'npc' : 'custom',
+      category: item.type === 'monster' ? 'monster' : item.type === 'npc' ? 'npc' : 'other',
+      imageUrl: artSrc,
+      size: 'medium',
+      tags: ['generated', item.type, ...(item.data?.tags || [])],
+      notes: item.data?.description,
+      createdAt: new Date().toISOString()
+    };
+
+    const currentTokens = Array.isArray(storedTokens) ? storedTokens : DEFAULT_TOKENS;
+    await saveTokenLibrary([...currentTokens, newToken]);
+
+    toast({
+      title: 'Saved to Token Library',
+      description: `${newToken.name} has been added to your map tokens.`
+    });
+  };
+
   const formatContentTypeLabel = (type: ContentType) =>
     type.charAt(0).toUpperCase() + type.slice(1);
 
@@ -303,6 +383,21 @@ export default function ArtGeneratorDM() {
           <div className="flex-1">
             <h1 className="text-3xl font-bold">Art Generator</h1>
             <p className="text-muted-foreground">Generate custom art for your campaign content</p>
+          </div>
+          <div className="w-64">
+            <Select value={activeCampaignId} onValueChange={handleCampaignChange}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select Campaign..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="none" disabled className="text-muted-foreground italic">No Campaign Active</SelectItem>
+                {myCampaigns.map((campaign) => (
+                  <SelectItem key={campaign.id} value={campaign.id}>
+                    {campaign.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
@@ -351,8 +446,8 @@ export default function ArtGeneratorDM() {
                       (item.artId && item.artId.startsWith('http') ? item.artId : null);
 
                     return (
-                      <Card 
-                        key={item.id} 
+                      <Card
+                        key={item.id}
                         className={`border ${getContentTypeColor(item.type)} hover:shadow-lg transition-shadow`}
                         data-testid="generated-content-card"
                       >
@@ -417,34 +512,56 @@ export default function ArtGeneratorDM() {
                                 className="flex-1"
                               >
                                 <Camera className="w-3 h-3 mr-1" />
-                                Regenerate
+                                Regen
                               </Button>
+                              {activeCampaignId && artSrc && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => handleShareToVTT(item, artSrc)}
+                                  className="flex-1"
+                                >
+                                  <Share2 className="w-3 h-3 mr-1" />
+                                  VTT
+                                </Button>
+                              )}
+                              {artSrc && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => handleSaveAsToken(item, artSrc)}
+                                  className="flex-1"
+                                >
+                                  <Target className="w-3 h-3 mr-1" />
+                                  Token
+                                </Button>
+                              )}
                             </div>
                           </div>
                         </CardContent>
                       </Card>
                     );
                   })}
-                </div>
+              </div>
 
-                {/* Empty State */}
-                {generatedContent.filter(item => item.type === type).length === 0 && (
-                  <div className="text-center py-12">
-                    {getContentTypeIcon(type)}
-                    <h3 className="text-lg font-semibold mt-4 mb-2">
-                      No {type} Art Generated Yet
-                    </h3>
-                    <p className="text-muted-foreground mb-4">
-                      Create your first {type} art to get started
-                    </p>
-                    <Button onClick={() => createNewContent(type)}>
-                      <Camera className="w-4 h-4 mr-2" />
-                      Generate {formatContentTypeLabel(type)} Art
-                    </Button>
-                  </div>
-                )}
-              </TabsContent>
-            ))}
+              {/* Empty State */}
+              {generatedContent.filter(item => item.type === type).length === 0 && (
+                <div className="text-center py-12">
+                  {getContentTypeIcon(type)}
+                  <h3 className="text-lg font-semibold mt-4 mb-2">
+                    No {type} Art Generated Yet
+                  </h3>
+                  <p className="text-muted-foreground mb-4">
+                    Create your first {type} art to get started
+                  </p>
+                  <Button onClick={() => createNewContent(type)}>
+                    <Camera className="w-4 h-4 mr-2" />
+                    Generate {formatContentTypeLabel(type)} Art
+                  </Button>
+                </div>
+              )}
+            </TabsContent>
+          ))}
         </Tabs>
 
         {/* Art Generator Dialog */}

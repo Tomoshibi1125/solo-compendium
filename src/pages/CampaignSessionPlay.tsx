@@ -1,11 +1,14 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { useCampaignCombatSession } from '@/hooks/useCampaignCombat';
+import { useCampaignCombatSession, useUpdateCombatSession, useEndCombatSession } from '@/hooks/useCampaignCombat';
 import { useCampaignCombatRealtime } from '@/hooks/useCampaignCombatRealtime';
+import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
+import { ChevronRight, Swords, X, Plus, Minus, AlertTriangle } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const CampaignSessionPlay = () => {
   const { campaignId, sessionId } = useParams<{ campaignId: string; sessionId: string }>();
@@ -15,15 +18,52 @@ const CampaignSessionPlay = () => {
 
   useCampaignCombatRealtime(resolvedCampaignId || null, resolvedSessionId || null);
 
+  // Master integration: encounter rewards, combat tracking, VTT mgmt, analytics (DDB parity)
+  const { useDMToolsEnhancements } = useGlobalDDBeyondIntegration();
+  const _dmTools = useDMToolsEnhancements(resolvedCampaignId || undefined);
+
   const { data, isLoading, error } = useCampaignCombatSession(resolvedCampaignId, resolvedSessionId);
   const session = data?.session ?? null;
   const combatants = data?.combatants ?? [];
+
+  // Combat mutations
+  const updateSession = useUpdateCombatSession();
+  const endCombat = useEndCombatSession();
+
+  // HP quick-adjust state (local, per combatant)
+  const [adjustments, setAdjustments] = useState<Record<string, number>>({});
 
   const sorted = useMemo(() => {
     return [...combatants].sort((a, b) => (b.initiative ?? 0) - (a.initiative ?? 0));
   }, [combatants]);
 
   const currentTurnIndex = session?.current_turn ?? 0;
+  const currentRound = session?.round ?? 1;
+  const isActive = session?.status === 'active';
+
+  const handleNextTurn = async () => {
+    if (!session) return;
+    const nextTurn = (currentTurnIndex + 1) % Math.max(sorted.length, 1);
+    const nextRound = nextTurn === 0 ? currentRound + 1 : currentRound;
+    await updateSession.mutateAsync({
+      campaignId: resolvedCampaignId,
+      sessionId: resolvedSessionId,
+      updates: { current_turn: nextTurn, round: nextRound },
+    });
+  };
+
+  const handleEndCombat = async () => {
+    if (!session || !window.confirm('End this combat session?')) return;
+    await endCombat.mutateAsync({ campaignId: resolvedCampaignId, sessionId: resolvedSessionId });
+  };
+
+  const getHP = (c: typeof sorted[number]) => {
+    const stats = c.stats as Record<string, unknown> | null;
+    return {
+      hp: typeof stats?.hp === 'number' ? stats.hp : 0,
+      maxHp: typeof stats?.max_hp === 'number' ? stats.max_hp : 0,
+    };
+  };
 
   return (
     <Layout>
@@ -56,37 +96,84 @@ const CampaignSessionPlay = () => {
             <p className="text-sm text-muted-foreground">No active session found.</p>
           ) : (
             <div className="space-y-4">
+              {/* Status Bar */}
               <div className="flex flex-wrap items-center gap-3">
-                <Badge variant="outline">Round {session.round ?? 1}</Badge>
-                <Badge variant="outline">Turn {currentTurnIndex + 1}</Badge>
-                <Badge variant={session.status === 'active' ? 'default' : 'outline'}>
+                <Badge variant="outline">Round {currentRound}</Badge>
+                <Badge variant="outline">Turn {currentTurnIndex + 1} / {Math.max(sorted.length, 1)}</Badge>
+                <Badge variant={isActive ? 'default' : 'outline'}>
                   {String(session.status ?? 'unknown').toUpperCase()}
                 </Badge>
               </div>
 
+              {/* Combatant Initiative List */}
               <div className="space-y-2" data-testid="session-initiative-list">
                 {sorted.length === 0 ? (
                   <p className="text-sm text-muted-foreground">No combatants yet.</p>
                 ) : (
                   sorted.map((c, idx) => {
-                    const isActive = idx === currentTurnIndex;
+                    const isCurrentTurn = idx === currentTurnIndex;
+                    const { hp, maxHp } = getHP(c);
+                    const adj = adjustments[c.id] ?? 0;
+
                     return (
                       <div
                         key={c.id}
-                        className={
-                          `flex items-center justify-between rounded border px-3 py-2 ` +
-                          (isActive ? 'border-primary bg-primary/10' : 'border-border bg-muted/20')
-                        }
-                        data-testid={isActive ? 'initiative-active-combatant' : undefined}
+                        className={cn(
+                          'flex items-center justify-between rounded border px-3 py-2 gap-3 flex-wrap',
+                          isCurrentTurn ? 'border-primary bg-primary/10' : 'border-border bg-muted/20',
+                        )}
+                        data-testid={isCurrentTurn ? 'initiative-active-combatant' : undefined}
                       >
-                        <div className="min-w-0">
-                          <div className="font-heading font-semibold truncate">{c.name}</div>
-                          <div className="text-xs text-muted-foreground truncate">
-                            HP {(c.stats as any)?.hp ?? '-'} / {(c.stats as any)?.max_hp ?? '-'}
+                        {/* Name + HP */}
+                        <div className="min-w-0 flex-1">
+                          <div className="font-heading font-semibold truncate flex items-center gap-2">
+                            {isCurrentTurn && <ChevronRight className="w-4 h-4 text-primary shrink-0" />}
+                            {c.name}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            HP {hp + adj} / {maxHp > 0 ? maxHp : '—'}
+                            {adj !== 0 && (
+                              <span className={cn('ml-1 font-semibold', adj > 0 ? 'text-green-400' : 'text-red-400')}>
+                                ({adj > 0 ? '+' : ''}{adj})
+                              </span>
+                            )}
                           </div>
                         </div>
-                        <div className="flex items-center gap-3">
+
+                        {/* Initiative + HP Quick-Adjust */}
+                        <div className="flex items-center gap-2 shrink-0">
                           <Badge variant="outline">Init {c.initiative ?? 0}</Badge>
+                          {_dmTools.isDM && (
+                            <div className="flex items-center gap-1">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-6 w-6 text-red-400 hover:bg-red-500/10"
+                                onClick={() => setAdjustments(prev => ({ ...prev, [c.id]: (prev[c.id] ?? 0) - 1 }))}
+                                aria-label={`Decrease HP for ${c.name}`}
+                              >
+                                <Minus className="w-3 h-3" />
+                              </Button>
+                              {adj !== 0 && (
+                                <button
+                                  className="text-xs text-muted-foreground w-5 text-center hover:text-foreground"
+                                  onClick={() => setAdjustments(prev => { const n = { ...prev }; delete n[c.id]; return n; })}
+                                  aria-label="Reset HP adjustment"
+                                >
+                                  ×
+                                </button>
+                              )}
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-6 w-6 text-green-400 hover:bg-green-500/10"
+                                onClick={() => setAdjustments(prev => ({ ...prev, [c.id]: (prev[c.id] ?? 0) + 1 }))}
+                                aria-label={`Increase HP for ${c.name}`}
+                              >
+                                <Plus className="w-3 h-3" />
+                              </Button>
+                            </div>
+                          )}
                         </div>
                       </div>
                     );
@@ -94,11 +181,66 @@ const CampaignSessionPlay = () => {
                 )}
               </div>
 
-              <div className="pt-4 border-t border-border">
-                <p className="text-xs text-muted-foreground">
-                  This view updates live while the DM advances turns in Initiative Tracker.
-                </p>
+              <div className="pt-2 text-xs text-muted-foreground border-t border-border">
+                This view updates live while the DM advances turns in Initiative Tracker.
               </div>
+
+              {/* DM Controls */}
+              {_dmTools.isDM && (
+                <div className="mt-6 pt-4 border-t border-border/50 space-y-4">
+                  <h3 className="font-heading font-semibold text-lg text-primary">DM Controls</h3>
+
+                  {/* Turn / Combat Actions */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <Button
+                      className="btn-umbral gap-2"
+                      onClick={handleNextTurn}
+                      disabled={updateSession.isPending || !isActive || sorted.length === 0}
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                      Next Turn
+                      {currentTurnIndex + 1 >= sorted.length && sorted.length > 0 && (
+                        <span className="text-xs opacity-70 block text-center w-full">(→ Round {currentRound + 1})</span>
+                      )}
+                    </Button>
+
+                    <Button
+                      variant="destructive"
+                      className="gap-2"
+                      onClick={handleEndCombat}
+                      disabled={endCombat.isPending || !isActive}
+                    >
+                      <X className="w-4 h-4" />
+                      End Combat
+                    </Button>
+                  </div>
+
+                  {/* Encounter Builder link — replaces old alert() stub */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <Button
+                      variant="outline"
+                      className="flex flex-col items-center justify-center h-20 gap-1.5 border-primary/20 hover:border-primary/50"
+                      asChild
+                    >
+                      <Link to={`/dm-tools/encounter-builder?campaignId=${resolvedCampaignId}&sessionId=${resolvedSessionId}`}>
+                        <Swords className="w-5 h-5" />
+                        <span className="font-heading text-sm">Manage Encounter</span>
+                        <span className="text-[10px] text-muted-foreground">Add/Remove Combatants</span>
+                      </Link>
+                    </Button>
+
+                    <Button
+                      variant="outline"
+                      className="flex flex-col items-center justify-center h-20 gap-1.5 border-amber-500/20 hover:border-amber-500/50"
+                      onClick={() => _dmTools.awardEncounterRewards(resolvedSessionId)}
+                    >
+                      <AlertTriangle className="w-4 h-4 text-amber-500" />
+                      <span className="font-heading text-sm">Award Rewards</span>
+                      <span className="text-[10px] text-muted-foreground">Distribute XP & Loot</span>
+                    </Button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </SystemWindow>

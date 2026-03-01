@@ -227,7 +227,7 @@ export const useCampaign = (campaignId: string) => {
 };
 
 // Fetch campaign by character membership
-export const useCampaignByCharacterId = (characterId: string) => {
+export const useCampaignByCharacterId = (characterId?: string) => {
   return useQuery({
     queryKey: ['campaigns', 'by-character', characterId],
     queryFn: async () => {
@@ -297,16 +297,16 @@ export const useCampaignMembers = (campaignId: string) => {
             ...member,
             characters: member.character_id
               ? (() => {
-                  const character = localCharacters.find((entry) => entry.id === member.character_id);
-                  return character
-                    ? {
-                        id: character.id,
-                        name: character.name,
-                        level: character.level ?? 1,
-                        job: character.job ?? 'Unknown',
-                      }
-                    : null;
-                })()
+                const character = localCharacters.find((entry) => entry.id === member.character_id);
+                return character
+                  ? {
+                    id: character.id,
+                    name: character.name,
+                    level: character.level ?? 1,
+                    job: character.job ?? 'Unknown',
+                  }
+                  : null;
+              })()
               : null,
           }));
       }
@@ -319,16 +319,16 @@ export const useCampaignMembers = (campaignId: string) => {
               ...member,
               characters: member.character_id
                 ? (() => {
-                    const character = localCharacters.find((entry) => entry.id === member.character_id);
-                    return character
-                      ? {
-                          id: character.id,
-                          name: character.name,
-                          level: character.level ?? 1,
-                          job: character.job ?? 'Unknown',
-                        }
-                      : null;
-                  })()
+                  const character = localCharacters.find((entry) => entry.id === member.character_id);
+                  return character
+                    ? {
+                      id: character.id,
+                      name: character.name,
+                      level: character.level ?? 1,
+                      job: character.job ?? 'Unknown',
+                    }
+                    : null;
+                })()
                 : null,
             }));
         }

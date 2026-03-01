@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Users, Copy, Loader2, Crown, MessageSquare, FileText, Share2, Settings, Layers, CalendarClock } from 'lucide-react';
+import { ArrowLeft, Users, Copy, Loader2, Crown, MessageSquare, FileText, Share2, Settings, Layers, CalendarClock, BookOpen } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
@@ -19,6 +19,7 @@ import { CampaignSettings } from '@/components/campaign/CampaignSettings';
 import { CampaignProtocolControls } from '@/components/campaign/CampaignProtocolControls';
 import { CampaignSessionsPanel } from '@/components/campaign/CampaignSessionsPanel';
 import { CampaignRollFeed } from '@/components/campaign/CampaignRollFeed';
+import { CampaignWiki } from '@/components/campaign/CampaignWiki';
 import { useAuth } from '@/lib/auth/authContext';
 import { formatMonarchVernacular } from '@/lib/vernacular';
 import { cn } from '@/lib/utils';
@@ -61,7 +62,7 @@ const CampaignDetail = () => {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [guestEnabled, id, isE2E, loading, queryClient, user]);  
+  }, [guestEnabled, id, isE2E, loading, queryClient, user]);
 
   const handleCopyShareLink = () => {
     if (!campaign) return;
@@ -127,8 +128,8 @@ const CampaignDetail = () => {
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className={cn(
-            hasDMAccess 
-              ? "grid w-full grid-cols-4 sm:grid-cols-6 lg:grid-cols-8" 
+            hasDMAccess
+              ? "grid w-full grid-cols-4 sm:grid-cols-6 lg:grid-cols-8"
               : "grid w-full grid-cols-3 sm:grid-cols-5 lg:grid-cols-7"
           )}>
             <TabsTrigger value="overview" className="gap-2 text-xs sm:text-sm min-h-[44px]">
@@ -140,6 +141,11 @@ const CampaignDetail = () => {
               <Layers className="w-3 h-3 sm:w-4 sm:h-4" />
               <span className="hidden sm:inline">VTT</span>
               <span className="sm:hidden">VTT</span>
+            </TabsTrigger>
+            <TabsTrigger value="wiki" className="gap-2 text-xs sm:text-sm min-h-[44px]">
+              <BookOpen className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Wiki</span>
+              <span className="sm:hidden">Wiki</span>
             </TabsTrigger>
             <TabsTrigger value="sessions" className="gap-2 text-xs sm:text-sm min-h-[44px]">
               <CalendarClock className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -181,7 +187,7 @@ const CampaignDetail = () => {
                 <Layers className="w-16 h-16 text-primary mx-auto mb-4 opacity-50" />
                 <h2 className="font-arise text-2xl font-bold mb-4">Full-Featured VTT System</h2>
                 <p className="text-muted-foreground font-heading max-w-2xl mx-auto mb-6">
-                  Access the complete Virtual Tabletop system with maps, tokens, initiative tracking, 
+                  Access the complete Virtual Tabletop system with maps, tokens, initiative tracking,
                   dice rolling, chat, fog of war, and more. Everything you need for running sessions online.
                 </p>
                 <Button className="btn-umbral" size="lg" asChild>
@@ -312,6 +318,10 @@ const CampaignDetail = () => {
 
           <TabsContent value="sessions">
             <CampaignSessionsPanel campaignId={id || ''} canManage={hasDMAccess} />
+          </TabsContent>
+
+          <TabsContent value="wiki">
+            <CampaignWiki campaignId={id || ''} />
           </TabsContent>
 
           <TabsContent value="notes">

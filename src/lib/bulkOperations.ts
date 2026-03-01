@@ -210,7 +210,7 @@ export async function bulkLevelUp(
 
       // Auto-update existing feature uses (proficiency-based features scale with level)
       try {
-        const { autoUpdateFeatureUses } = await import('@/lib/automation');
+        const { autoUpdateFeatureUses } = await import('@/lib/characterCreation');
         await autoUpdateFeatureUses(id);
       } catch {
         // Best-effort

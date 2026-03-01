@@ -28,12 +28,57 @@ export function calculatePushDragLift(strScore: number): number {
 }
 
 /**
- * Calculate total weight from equipment
+ * Calculate total weight from equipment, respecting magical containers
  */
 export function calculateTotalWeight(
-  equipment: Array<{ weight?: number | null; quantity?: number | null }>
+  equipment: Array<{
+    id?: string;
+    container_id?: string | null;
+    weight?: number | null;
+    quantity?: number | null;
+    is_container?: boolean | null;
+    is_active?: boolean | null;
+    name?: string;
+    item_type?: string | null;
+  }>,
+  ignoreCurrencyWeight: boolean = false
 ): number {
+  const magicalContainerIds = new Set<string>();
+  const inactiveContainerIds = new Set<string>();
+
+  equipment.forEach(item => {
+    if (item.is_container && item.id) {
+      if (item.is_active === false) {
+        inactiveContainerIds.add(item.id);
+      } else if (item.name?.toLowerCase().includes('bag of holding') ||
+        item.name?.toLowerCase().includes('haversack') ||
+        item.name?.toLowerCase().includes('portable hole')) {
+        magicalContainerIds.add(item.id);
+      }
+    }
+  });
+
+  const isInsideIgnoredContainer = (item: any): boolean => {
+    let currentId = item.container_id;
+    let depth = 0;
+    while (currentId && depth < 10) {
+      if (inactiveContainerIds.has(currentId) || magicalContainerIds.has(currentId)) {
+        return true;
+      }
+      const parent = equipment.find(e => e.id === currentId);
+      currentId = parent?.container_id;
+      depth++;
+    }
+    return false;
+  };
+
   return equipment.reduce((total, item) => {
+    if (item.is_active === false || isInsideIgnoredContainer(item)) {
+      return total;
+    }
+    if (ignoreCurrencyWeight && item.item_type === 'currency') {
+      return total;
+    }
     const weight = item.weight || 0;
     const quantity = item.quantity || 1;
     return total + (weight * quantity);
@@ -53,7 +98,7 @@ export function calculateEncumbrance(
   carryingCapacity: number
 ): EncumbranceStatus {
   const percentage = (totalWeight / carryingCapacity) * 100;
-  
+
   let status: EncumbranceStatus['status'];
   let statusColor: string;
   let statusMessage: string;
