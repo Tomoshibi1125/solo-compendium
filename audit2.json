@@ -1,0 +1,10 @@
+{
+  "missingTables": [
+    "campaign_details",
+    "user_characters",
+    "character_spells",
+    "character_active_spells",
+    "character_regents"
+  ],
+  "missingRpcs": []
+}

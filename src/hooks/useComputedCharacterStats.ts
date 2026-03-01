@@ -114,30 +114,29 @@ async function fetchCharacterBaseData(characterId: string): Promise<CharacterBas
     effects: parseFeatureDescriptionEffects(f.description || '', f.name),
   }));
 
-  // 6. Fetch active spells from DB (graceful fallback if table doesn't exist yet)
+  // 6. Fetch active spells from DB
   let activeSpells: ActiveSpellEffect[] = [];
   try {
-    // Use untyped fetch — table may not exist in generated Supabase types yet
-    const { data: spellRows } = await (supabase as any)
+    const { data: spellRows } = await supabase
       .from('character_active_spells')
       .select('*')
       .eq('character_id', characterId);
     if (Array.isArray(spellRows)) {
-      activeSpells = spellRows.map((s: any) => ({
+      activeSpells = spellRows.map((s) => ({
         spellId: s.spell_id || s.id || `spell-${Date.now()}`,
-        spellName: s.spell_name || s.name || 'Unknown',
+        spellName: s.spell_name || (s as any).name || 'Unknown',
         level: s.level ?? 0,
         castAt: s.cast_at ? new Date(s.cast_at) : new Date(),
         concentration: s.concentration ?? false,
         duration: s.duration_value ? {
-          type: s.duration_type || 'rounds',
+          type: s.duration_type as any || 'rounds',
           value: s.duration_value,
         } : undefined,
-        effects: Array.isArray(s.effects) ? s.effects : [],
+        effects: Array.isArray(s.effects) ? (s.effects as any) : [],
       }));
     }
   } catch {
-    // Table may not exist yet — gracefully fall back to empty
+    // Graceful fallback
   }
 
   // 7. Build jobs array (single job + regent overlays)

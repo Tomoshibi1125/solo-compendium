@@ -1173,7 +1173,7 @@ export async function addJobAwakeningBenefitsForLevel(
   }
 
   // Regent benefits
-  const { data: regentChoices } = await (supabase as any).from('character_regents').select('regent_id').eq('character_id', characterId);
+  const { data: regentChoices } = await supabase.from('character_regents').select('regent_id').eq('character_id', characterId);
   if (regentChoices && regentChoices.length > 0) {
     const { monarchs: staticRegents } = await import('@/data/compendium/monarchs');
     for (const choice of regentChoices as Array<{ regent_id: string }>) {

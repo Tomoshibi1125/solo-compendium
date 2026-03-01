@@ -1,0 +1,32 @@
+{
+  "tables": [
+    "campaign_messages",
+    "campaign_rule_events",
+    "campaigns",
+    "character_abilities",
+    "character_equipment",
+    "character_features",
+    "character_powers",
+    "character_spells",
+    "characters",
+    "compendium_backgrounds",
+    "compendium_equipment",
+    "compendium_feats",
+    "compendium_job_paths",
+    "compendium_jobs",
+    "compendium_monarchs",
+    "compendium_monster_actions",
+    "compendium_monster_traits",
+    "compendium_monsters",
+    "compendium_powers",
+    "compendium_relics",
+    "compendium_shadow_soldiers",
+    "homebrew_content",
+    "marketplace_items",
+    "roll_history"
+  ],
+  "rpcs": [],
+  "buckets": [
+    "compendium-images"
+  ]
+}
