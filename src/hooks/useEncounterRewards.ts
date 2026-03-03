@@ -64,18 +64,18 @@ export function useEncounterRewards() {
       const combatantRewards: Array<{ id: string; name: string; xp: number }> = [];
 
       for (const combatant of combatants) {
-        const stats = combatant.stats as any;
-        const conditions = combatant.conditions as any[];
+        const stats = combatant.stats as Record<string, unknown> | null;
+        const conditions = combatant.conditions as string[] | null;
 
         // Check if combatant is defeated (has 'defeated' condition)
         const isDefeated = conditions && (
-          (conditions as any).defeated === true ||
           Array.isArray(conditions) && conditions.includes('defeated')
         );
 
         if (isDefeated) {
           // Calculate XP based on CR or challenge rating in stats
-          const cr = parseFloat(stats?.challenge_rating || stats?.cr || '0');
+          const crRaw = stats?.challenge_rating ?? stats?.cr ?? '0';
+          const cr = parseFloat(String(crRaw));
           const xp = calculateXPByCR(cr);
           xpTotal += xp;
 
@@ -262,7 +262,7 @@ function calculateXPByCR(cr: number): number {
 }
 
 // Generate loot based on encounter difficulty
-function generateLootForEncounter(combatants: any[], totalXP: number): Array<{ name: string; value: number; description?: string }> {
+function generateLootForEncounter(combatants: Array<{ id: string; name: string; xp: number }>, totalXP: number): Array<{ name: string; value: number; description?: string }> {
   const loot: Array<{ name: string; value: number; description?: string }> = [];
 
   // Basic loot generation based on total XP

@@ -1,6 +1,7 @@
 import { get, set } from 'idb-keyval';
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
+import type { Json } from '@/integrations/supabase/types';
 
 export type QueueItemType = 'roll' | 'message';
 
@@ -10,7 +11,7 @@ export interface RollPayload {
     roll_type: string;
     rolls: number[];
     context?: string;
-    modifiers?: any;
+    modifiers?: Json;
     character_id?: string;
     campaign_id: string;
     user_id: string;
@@ -21,7 +22,7 @@ export interface MessagePayload {
     user_id: string;
     message_type: 'chat' | 'roll' | 'system' | 'whisper';
     content: string;
-    metadata?: any;
+    metadata?: Json;
     character_name?: string | null;
 }
 
@@ -61,7 +62,7 @@ export const enqueueRoll = async (payload: RollPayload) => {
         payload,
     });
     await saveOfflineQueue(queue);
-    console.log('Roll queued for offline sync');
+    logger.log('Roll queued for offline sync');
 };
 
 export const enqueueMessage = async (payload: MessagePayload) => {
@@ -73,7 +74,7 @@ export const enqueueMessage = async (payload: MessagePayload) => {
         payload,
     });
     await saveOfflineQueue(queue);
-    console.log('Message queued for offline sync');
+    logger.log('Message queued for offline sync');
 };
 
 export const flushOfflineQueue = async () => {
@@ -110,7 +111,7 @@ export const flushOfflineQueue = async () => {
                     user_id: payload.user_id,
                     message_type: 'roll',
                     content: `${payload.context || 'Roll'}: ${payload.dice_formula} = ${payload.result}`,
-                    metadata: { roll_data: payload as any },
+                    metadata: { roll_data: payload } as unknown as Json,
                 });
                 if (msgError) throw msgError;
 
@@ -121,7 +122,7 @@ export const flushOfflineQueue = async () => {
                     user_id: payload.user_id,
                     message_type: payload.message_type,
                     content: payload.content,
-                    metadata: payload.metadata as any,
+                    metadata: (payload.metadata ?? null) as Json,
                     character_name: payload.character_name,
                 });
                 if (msgError) throw msgError;
@@ -136,6 +137,6 @@ export const flushOfflineQueue = async () => {
 
     await saveOfflineQueue(remainingQueue);
     if (successCount > 0) {
-        console.log(`Successfully flushed ${successCount} items from offline queue`);
+        logger.log(`Successfully flushed ${successCount} items from offline queue`);
     }
 };

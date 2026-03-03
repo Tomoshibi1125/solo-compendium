@@ -883,7 +883,7 @@ function transformBackground(background: StaticBackgroundSource): StaticCompendi
 function deriveMonarchClassFeatures(monarch: StaticMonarchSource): Array<{ level: number; name: string; description: string }> | null {
   // If the monarch already has class_features (like Umbral Regent), use them
   const raw = (monarch as MonarchExtended).class_features;
-  if (Array.isArray(raw) && raw.length > 0) return raw as any;
+  if (Array.isArray(raw) && raw.length > 0) return raw as Array<{ level: number; name: string; description: string }>;
 
   const features = (monarch as MonarchExtended).features as Array<{ name: string; description: string; power_level?: number }> | undefined;
   const abilities = monarch.abilities as Array<{ name: string; description: string; power_level?: number; type?: string; frequency?: string }> | undefined;

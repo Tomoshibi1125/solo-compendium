@@ -1311,7 +1311,7 @@ const VTTEnhanced = () => {
         if (typeof stats?.maxHp === 'number') maxHp = stats.maxHp;
         if (Array.isArray(combatant.conditions)) {
           // Merge token-local conditions with combat tracker conditions uniquely
-          conditions = Array.from(new Set([...conditions, ...(combatant.conditions as any[])]));
+          conditions = Array.from(new Set([...conditions, ...(combatant.conditions as string[])]));
         }
       } else if (token.characterId) {
         // 2. Fall back to resolvedCharacters if no combatData

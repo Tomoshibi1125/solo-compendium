@@ -36,6 +36,11 @@ ts-prune-output.txt
 test_output.log
 vitest_utf8.log
 typecheck.log
+git_status.json
+.git_status.txt
+
+# Downloaded Node binary
+node-v*/
 
 # Python
 __pycache__/

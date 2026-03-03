@@ -605,7 +605,7 @@ export function VttPixiStage({
             sprite.height = size;
             sprite.anchor.set(0);
             sprite.alpha = token.render?.opacity ?? 1;
-            sprite.blendMode = blendModeToPixi(token.render?.blendMode) as any;
+            sprite.blendMode = blendModeToPixi(token.render?.blendMode) as Sprite['blendMode'];
             if (!isOverlayToken) {
               sprite.mask = tokenBg;
             }

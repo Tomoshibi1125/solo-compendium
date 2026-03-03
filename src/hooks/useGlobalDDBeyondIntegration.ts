@@ -11,6 +11,7 @@ import { useCampaignAnalytics } from '@/hooks/useCampaignAnalytics';
 import { useVTTManager } from '@/hooks/useVTTManager';
 import { useCharacterExport, useCharacterImport } from '@/hooks/useCharacterExportImport';
 import { supabase } from '@/integrations/supabase/client';
+import { logger } from '@/lib/logger';
 
 interface CharacterSheetEnhancements {
   rollAbilityCheck: (ability: string) => Promise<any>;
@@ -303,7 +304,7 @@ export function useGlobalDDBeyondIntegration() {
 
     // Development-only parity check logging
     if (import.meta.env.DEV) {
-      console.log('D&D Beyond Parity Check:', {
+      logger.debug('D&D Beyond Parity Check:', {
         features,
         score: `${Math.round(parityScore * 100)}%`,
         status: parityScore === 1 ? 'COMPLETE' : 'IN PROGRESS'
