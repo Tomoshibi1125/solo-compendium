@@ -3,337 +3,360 @@
  * System Ascendant styled authentication page
  */
 
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { useAuth } from '@/lib/auth/authContext';
-import { Eye, EyeOff, Shield, Sword, Users } from 'lucide-react';
-import { OptimizedImage } from '@/components/ui/OptimizedImage';
-import { OAuthButtons } from '@/components/auth/OAuthButton';
-import { OAuthProvider, useOAuth } from '@/hooks/useOAuth';
-import { setLocalGuestRole } from '@/lib/guestStore';
-import { isSafeNextPath } from '@/lib/campaignInviteUtils';
+import { Eye, EyeOff, Shield, Sword, Users } from "lucide-react";
+import type React from "react";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { OAuthButtons } from "@/components/auth/OAuthButton";
+import { OptimizedImage } from "@/components/ui/OptimizedImage";
+import { type OAuthProvider, useOAuth } from "@/hooks/useOAuth";
+import { useAuth } from "@/lib/auth/authContext";
+import { isSafeNextPath } from "@/lib/campaignInviteUtils";
+import { setLocalGuestRole } from "@/lib/guestStore";
 
 export default function Login() {
-  const [isSignUp, setIsSignUp] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [displayName, setDisplayName] = useState('');
-  const [role, setRole] = useState<'dm' | 'player'>('player');
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [notice, setNotice] = useState('');
-  
-  const { signIn, signUp } = useAuth();
-  const { isLoading: oauthLoading, signInWithProvider } = useOAuth();
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const requestedNext = searchParams.get('next');
-  const safeNext = isSafeNextPath(requestedNext) ? requestedNext : null;
-  const oauthEnabled = import.meta.env.VITE_OAUTH_ENABLED === 'true';
-  const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== 'false';
+	const [isSignUp, setIsSignUp] = useState(false);
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [displayName, setDisplayName] = useState("");
+	const [role, setRole] = useState<"dm" | "player">("player");
+	const [showPassword, setShowPassword] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState("");
+	const [notice, setNotice] = useState("");
 
-  useEffect(() => {
-    const authError = searchParams.get('error');
-    if (authError) {
-      setError(authError);
-    }
-  }, [searchParams]);
+	const { signIn, signUp } = useAuth();
+	const { isLoading: oauthLoading, signInWithProvider } = useOAuth();
+	const navigate = useNavigate();
+	const [searchParams] = useSearchParams();
+	const requestedNext = searchParams.get("next");
+	const safeNext = isSafeNextPath(requestedNext) ? requestedNext : null;
+	const oauthEnabled = import.meta.env.VITE_OAUTH_ENABLED === "true";
+	const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-    setNotice('');
+	useEffect(() => {
+		const authError = searchParams.get("error");
+		if (authError) {
+			setError(authError);
+		}
+	}, [searchParams]);
 
-    if (typeof window !== 'undefined') {
-      if (safeNext) {
-        localStorage.setItem('pending-auth-next', safeNext);
-      } else {
-        localStorage.removeItem('pending-auth-next');
-      }
-    }
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
+		setLoading(true);
+		setError("");
+		setNotice("");
 
-    try {
-      const result = isSignUp 
-        ? await signUp(email, password, displayName, role)
-        : await signIn(email, password, role);
+		if (typeof window !== "undefined") {
+			if (safeNext) {
+				localStorage.setItem("pending-auth-next", safeNext);
+			} else {
+				localStorage.removeItem("pending-auth-next");
+			}
+		}
 
-      if (result.error) {
-        setError(result.error);
-      } else if (result.needsEmailConfirmation) {
-        setNotice('Check your email to confirm your account, then sign in.');
-      } else {
-        if (typeof window !== 'undefined') {
-          localStorage.removeItem('pending-auth-next');
-        }
-        if (safeNext) {
-          navigate(safeNext);
-        } else if (role === 'dm') {
-          navigate('/dm-tools');
-        } else {
-          navigate('/player-tools');
-        }
-      }
-    } catch {
-      setError('An unexpected error occurred');
-    } finally {
-      setLoading(false);
-    }
-  };
+		try {
+			const result = isSignUp
+				? await signUp(email, password, displayName, role)
+				: await signIn(email, password, role);
 
-  const handleOAuthSignIn = async (provider: OAuthProvider) => {
-    setError('');
-    setNotice('');
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('pending-oauth-role', role);
-      if (safeNext) {
-        localStorage.setItem('pending-auth-next', safeNext);
-      } else {
-        localStorage.removeItem('pending-auth-next');
-      }
-    }
-    await signInWithProvider(provider);
-  };
+			if (result.error) {
+				setError(result.error);
+			} else if (result.needsEmailConfirmation) {
+				setNotice("Check your email to confirm your account, then sign in.");
+			} else {
+				if (typeof window !== "undefined") {
+					localStorage.removeItem("pending-auth-next");
+				}
+				if (safeNext) {
+					navigate(safeNext);
+				} else if (role === "dm") {
+					navigate("/dm-tools");
+				} else {
+					navigate("/player-tools");
+				}
+			}
+		} catch {
+			setError("An unexpected error occurred");
+		} finally {
+			setLoading(false);
+		}
+	};
 
-  const handleContinueAsGuest = () => {
-    setError('');
-    setNotice('');
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('pending-auth-next');
-    }
-    setLocalGuestRole(role);
-    navigate(role === 'dm' ? '/dm-tools' : '/player-tools');
-  };
+	const handleOAuthSignIn = async (provider: OAuthProvider) => {
+		setError("");
+		setNotice("");
+		if (typeof window !== "undefined") {
+			localStorage.setItem("pending-oauth-role", role);
+			if (safeNext) {
+				localStorage.setItem("pending-auth-next", safeNext);
+			} else {
+				localStorage.removeItem("pending-auth-next");
+			}
+		}
+		await signInWithProvider(provider);
+	};
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-4">
-      {/* Background Art */}
-      <div className="absolute inset-0 bg-cover bg-center opacity-20 login-page-bg" />
-      
-      {/* Umbral Energy Effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full filter blur-3xl opacity-10 animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600 rounded-full filter blur-3xl opacity-10 animate-pulse" />
-      </div>
+	const handleContinueAsGuest = () => {
+		setError("");
+		setNotice("");
+		if (typeof window !== "undefined") {
+			localStorage.removeItem("pending-auth-next");
+		}
+		setLocalGuestRole(role);
+		navigate(role === "dm" ? "/dm-tools" : "/player-tools");
+	};
 
-      <div className="relative z-10 w-full max-w-md">
-        <div className="mb-6 flex justify-start">
-          <Link to="/landing" className="text-sm text-gray-300 hover:text-white transition-colors">
-            View landing page
-          </Link>
-        </div>
-        {/* Logo and Title */}
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <OptimizedImage
-              src="/ui-art/shadow-soldier-emblem.webp"
-              alt="Umbral Legionnaire Emblem"
-              className="w-20 h-20 rounded-full border-2 border-purple-500 shadow-lg shadow-purple-500/50"
-              size="small"
-            />
-          </div>
-          <h1 className="text-4xl font-bold text-white mb-2">
-            System Ascendant
-          </h1>
-          <p className="text-gray-400 text-lg">
-            {isSignUp ? 'Join the Shadow Realm' : 'Enter the Shadow Realm'}
-          </p>
-        </div>
+	return (
+		<div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-4">
+			{/* Background Art */}
+			<div className="absolute inset-0 bg-cover bg-center opacity-20 login-page-bg" />
 
-        {/* Login Form */}
-        <div className="bg-gray-800/50 backdrop-blur-lg rounded-2xl p-8 border border-gray-700 shadow-2xl">
-          {oauthEnabled && (
-            <div className="mb-6 space-y-4">
-              <OAuthButtons
-                isLoading={oauthLoading}
-                onSignIn={handleOAuthSignIn}
-              />
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-700"></div>
-                </div>
-                <div className="relative flex justify-center text-xs">
-                  <span className="bg-gray-800/60 px-2 text-gray-400">or continue with email</span>
-                </div>
-              </div>
-            </div>
-          )}
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Role Selection */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-              <button
-                type="button"
-                onClick={() => setRole('player')}
-                aria-label="Select Player role"
-                className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
-                  role === 'player'
-                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/50'
-                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                }`}
-              >
-                <Users className="w-4 h-4" />
-                Player
-              </button>
-              <button
-                type="button"
-                onClick={() => setRole('dm')}
-                aria-label="Select Protocol Warden role"
-                className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
-                  role === 'dm'
-                    ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/50'
-                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                }`}
-              >
-                <Shield className="w-4 h-4" />
-                Protocol Warden
-              </button>
-            </div>
+			{/* Umbral Energy Effects */}
+			<div className="absolute inset-0">
+				<div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full filter blur-3xl opacity-10 animate-pulse" />
+				<div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600 rounded-full filter blur-3xl opacity-10 animate-pulse" />
+			</div>
 
-            {/* Sign Up Additional Fields */}
-            {isSignUp && (
-              <div>
-              <label htmlFor="display-name" className="block text-sm font-medium text-gray-300 mb-2">
-                Display Name
-              </label>
-              <input
-                id="display-name"
-                type="text"
-                value={displayName}
-                onChange={(e) => setDisplayName(e.target.value)}
-                  className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                  placeholder="Character name (e.g., Kael Voss)"
-                  required
-                />
-              </div>
-            )}
+			<div className="relative z-10 w-full max-w-md">
+				<div className="mb-6 flex justify-start">
+					<Link
+						to="/landing"
+						className="text-sm text-gray-300 hover:text-white transition-colors"
+					>
+						View landing page
+					</Link>
+				</div>
+				{/* Logo and Title */}
+				<div className="text-center mb-8">
+					<div className="flex justify-center mb-4">
+						<OptimizedImage
+							src="/ui-art/shadow-soldier-emblem.webp"
+							alt="Umbral Legionnaire Emblem"
+							className="w-20 h-20 rounded-full border-2 border-purple-500 shadow-lg shadow-purple-500/50"
+							size="small"
+						/>
+					</div>
+					<h1 className="text-4xl font-bold text-white mb-2">
+						System Ascendant
+					</h1>
+					<p className="text-gray-400 text-lg">
+						{isSignUp ? "Join the Shadow Realm" : "Enter the Shadow Realm"}
+					</p>
+				</div>
 
-            {/* Email */}
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                Email Address
-              </label>
-              <input
-                id="email"
-                data-testid="email-input"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                placeholder="ascendant@system-ascendant.world"
-                required
-              />
-            </div>
+				{/* Login Form */}
+				<div className="bg-gray-800/50 backdrop-blur-lg rounded-2xl p-8 border border-gray-700 shadow-2xl">
+					{oauthEnabled && (
+						<div className="mb-6 space-y-4">
+							<OAuthButtons
+								isLoading={oauthLoading}
+								onSignIn={handleOAuthSignIn}
+							/>
+							<div className="relative">
+								<div className="absolute inset-0 flex items-center">
+									<div className="w-full border-t border-gray-700"></div>
+								</div>
+								<div className="relative flex justify-center text-xs">
+									<span className="bg-gray-800/60 px-2 text-gray-400">
+										or continue with email
+									</span>
+								</div>
+							</div>
+						</div>
+					)}
+					<form onSubmit={handleSubmit} className="space-y-6">
+						{/* Role Selection */}
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+							<button
+								type="button"
+								onClick={() => setRole("player")}
+								aria-label="Select Player role"
+								className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
+									role === "player"
+										? "bg-blue-600 text-white shadow-lg shadow-blue-600/50"
+										: "bg-gray-700 text-gray-300 hover:bg-gray-600"
+								}`}
+							>
+								<Users className="w-4 h-4" />
+								Player
+							</button>
+							<button
+								type="button"
+								onClick={() => setRole("dm")}
+								aria-label="Select Protocol Warden role"
+								className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
+									role === "dm"
+										? "bg-purple-600 text-white shadow-lg shadow-purple-600/50"
+										: "bg-gray-700 text-gray-300 hover:bg-gray-600"
+								}`}
+							>
+								<Shield className="w-4 h-4" />
+								Protocol Warden
+							</button>
+						</div>
 
-            {/* Password */}
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  id="password"
-                  data-testid="password-input"
-                  type={showPassword ? 'text' : 'password'}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent pr-12"
-                  placeholder="Ascendant access code"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  aria-label={showPassword ? 'Hide password' : 'Show password'}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300"
-                >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                </button>
-              </div>
-            </div>
+						{/* Sign Up Additional Fields */}
+						{isSignUp && (
+							<div>
+								<label
+									htmlFor="display-name"
+									className="block text-sm font-medium text-gray-300 mb-2"
+								>
+									Display Name
+								</label>
+								<input
+									id="display-name"
+									type="text"
+									value={displayName}
+									onChange={(e) => setDisplayName(e.target.value)}
+									className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+									placeholder="Character name (e.g., Kael Voss)"
+									required
+								/>
+							</div>
+						)}
 
-            {/* Error Message */}
-            {error && (
-              <div className="bg-red-900/50 border border-red-700 text-red-200 px-4 py-3 rounded-lg">
-                {error}
-              </div>
-            )}
+						{/* Email */}
+						<div>
+							<label
+								htmlFor="email"
+								className="block text-sm font-medium text-gray-300 mb-2"
+							>
+								Email Address
+							</label>
+							<input
+								id="email"
+								data-testid="email-input"
+								type="email"
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+								className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+								placeholder="ascendant@system-ascendant.world"
+								required
+							/>
+						</div>
 
-            {/* Notice Message */}
-            {notice && (
-              <div className="bg-green-900/40 border border-green-700 text-green-200 px-4 py-3 rounded-lg">
-                {notice}
-              </div>
-            )}
+						{/* Password */}
+						<div>
+							<label
+								htmlFor="password"
+								className="block text-sm font-medium text-gray-300 mb-2"
+							>
+								Password
+							</label>
+							<div className="relative">
+								<input
+									id="password"
+									data-testid="password-input"
+									type={showPassword ? "text" : "password"}
+									value={password}
+									onChange={(e) => setPassword(e.target.value)}
+									className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent pr-12"
+									placeholder="Ascendant access code"
+									required
+								/>
+								<button
+									type="button"
+									onClick={() => setShowPassword(!showPassword)}
+									aria-label={showPassword ? "Hide password" : "Show password"}
+									className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300"
+								>
+									{showPassword ? (
+										<EyeOff className="w-5 h-5" />
+									) : (
+										<Eye className="w-5 h-5" />
+									)}
+								</button>
+							</div>
+						</div>
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={loading || oauthLoading}
-              className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-200 shadow-lg shadow-purple-600/50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {loading ? (
-                <span className="flex items-center justify-center gap-2">
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Processing...
-                </span>
-              ) : (
-                <span className="flex items-center justify-center gap-2">
-                  <Sword className="w-5 h-5" />
-                  {isSignUp ? 'Join Shadow Realm' : 'Enter Shadow Realm'}
-                </span>
-              )}
-            </button>
+						{/* Error Message */}
+						{error && (
+							<div className="bg-red-900/50 border border-red-700 text-red-200 px-4 py-3 rounded-lg">
+								{error}
+							</div>
+						)}
 
-            {guestEnabled && (
-              <div className="space-y-3">
-                <div className="relative">
-                  <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-700"></div>
-                  </div>
-                  <div className="relative flex justify-center text-xs">
-                    <span className="bg-gray-800/60 px-2 text-gray-400">or continue as guest</span>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={handleContinueAsGuest}
-                  className="w-full border border-gray-600 text-gray-200 font-semibold py-3 px-4 rounded-lg hover:border-gray-500 hover:bg-gray-700/60 transition-all duration-200"
-                >
-                  Continue as Guest ({role === 'dm' ? 'Protocol Warden' : 'Player'})
-                </button>
-                <p className="text-xs text-gray-400 text-center">
-                  Guest mode saves data only in this browser.
-                </p>
-              </div>
-            )}
-          </form>
+						{/* Notice Message */}
+						{notice && (
+							<div className="bg-green-900/40 border border-green-700 text-green-200 px-4 py-3 rounded-lg">
+								{notice}
+							</div>
+						)}
 
-          {/* Toggle Sign Up/In */}
-          <div className="mt-6 text-center">
-            <p className="text-gray-400">
-              {isSignUp ? 'Already have an account?' : "Don't have an account?"}
-              <button
-                type="button"
-                onClick={() => setIsSignUp(!isSignUp)}
-                aria-label={isSignUp ? 'Switch to sign in' : 'Switch to sign up'}
-                className="ml-2 text-purple-400 hover:text-purple-300 font-medium"
-              >
-                {isSignUp ? 'Sign In' : 'Sign Up'}
-              </button>
-            </p>
-          </div>
-        </div>
+						{/* Submit Button */}
+						<button
+							type="submit"
+							disabled={loading || oauthLoading}
+							className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-200 shadow-lg shadow-purple-600/50 disabled:opacity-50 disabled:cursor-not-allowed"
+						>
+							{loading ? (
+								<span className="flex items-center justify-center gap-2">
+									<div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+									Processing...
+								</span>
+							) : (
+								<span className="flex items-center justify-center gap-2">
+									<Sword className="w-5 h-5" />
+									{isSignUp ? "Join Shadow Realm" : "Enter Shadow Realm"}
+								</span>
+							)}
+						</button>
 
-        {/* Footer */}
-        <div className="mt-8 text-center text-gray-500 text-sm">
-          <p>System Ascendant SRD Companion</p>
-          <p className="mt-1">Enter the shadows, become the ultimate ascendant</p>
-        </div>
-      </div>
-    </div>
-  );
+						{guestEnabled && (
+							<div className="space-y-3">
+								<div className="relative">
+									<div className="absolute inset-0 flex items-center">
+										<div className="w-full border-t border-gray-700"></div>
+									</div>
+									<div className="relative flex justify-center text-xs">
+										<span className="bg-gray-800/60 px-2 text-gray-400">
+											or continue as guest
+										</span>
+									</div>
+								</div>
+								<button
+									type="button"
+									onClick={handleContinueAsGuest}
+									className="w-full border border-gray-600 text-gray-200 font-semibold py-3 px-4 rounded-lg hover:border-gray-500 hover:bg-gray-700/60 transition-all duration-200"
+								>
+									Continue as Guest (
+									{role === "dm" ? "Protocol Warden" : "Player"})
+								</button>
+								<p className="text-xs text-gray-400 text-center">
+									Guest mode saves data only in this browser.
+								</p>
+							</div>
+						)}
+					</form>
+
+					{/* Toggle Sign Up/In */}
+					<div className="mt-6 text-center">
+						<p className="text-gray-400">
+							{isSignUp ? "Already have an account?" : "Don't have an account?"}
+							<button
+								type="button"
+								onClick={() => setIsSignUp(!isSignUp)}
+								aria-label={
+									isSignUp ? "Switch to sign in" : "Switch to sign up"
+								}
+								className="ml-2 text-purple-400 hover:text-purple-300 font-medium"
+							>
+								{isSignUp ? "Sign In" : "Sign Up"}
+							</button>
+						</p>
+					</div>
+				</div>
+
+				{/* Footer */}
+				<div className="mt-8 text-center text-gray-500 text-sm">
+					<p>System Ascendant SRD Companion</p>
+					<p className="mt-1">
+						Enter the shadows, become the ultimate ascendant
+					</p>
+				</div>
+			</div>
+		</div>
+	);
 }
-
-
-

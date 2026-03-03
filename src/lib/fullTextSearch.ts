@@ -3,48 +3,48 @@
  * Converts search queries to PostgreSQL full-text search format
  */
 
-import type { SupabaseClient } from '@supabase/supabase-js';
-import { normalizeRegentSearch } from '@/lib/vernacular';
+import type { SupabaseClient } from "@supabase/supabase-js";
+import { normalizeRegentSearch } from "@/lib/vernacular";
 
 /**
  * Prepare search text for PostgreSQL tsquery
  * Sanitizes input and converts to safe format
  */
 export function normalizeSearchText(searchQuery: string): string {
-  if (!searchQuery.trim()) return '';
+	if (!searchQuery.trim()) return "";
 
-  // Remove special characters that could break tsquery
-  // Keep alphanumeric and spaces
-  const cleaned = searchQuery
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, ' ') // Remove special chars
-    .replace(/\s+/g, ' ') // Normalize whitespace
-    .trim();
+	// Remove special characters that could break tsquery
+	// Keep alphanumeric and spaces
+	const cleaned = searchQuery
+		.trim()
+		.toLowerCase()
+		.replace(/[^a-z0-9\s]/g, " ") // Remove special chars
+		.replace(/\s+/g, " ") // Normalize whitespace
+		.trim();
 
-  return normalizeRegentSearch(cleaned);
+	return normalizeRegentSearch(cleaned);
 }
 
 export function prepareSearchText(searchQuery: string): string {
-  const cleaned = normalizeSearchText(searchQuery);
+	const cleaned = normalizeSearchText(searchQuery);
 
-  if (!cleaned) return '';
+	if (!cleaned) return "";
 
-  // Split into words and add prefix matching
-  const words = cleaned
-    .split(' ')
-    .filter(word => word.length > 0)
-    .map(word => word.replace(/'/g, "''")); // Escape single quotes
+	// Split into words and add prefix matching
+	const words = cleaned
+		.split(" ")
+		.filter((word) => word.length > 0)
+		.map((word) => word.replace(/'/g, "''")); // Escape single quotes
 
-  // Join with AND operator and add prefix matching
-  return words.map(word => `'${word}':*`).join(' & ');
+	// Join with AND operator and add prefix matching
+	return words.map((word) => `'${word}':*`).join(" & ");
 }
 
 /**
  * Convert a search query to PostgreSQL tsquery format (alias for prepareSearchText)
  */
 export function toTsQuery(searchQuery: string): string {
-  return prepareSearchText(searchQuery);
+	return prepareSearchText(searchQuery);
 }
 
 /**
@@ -52,30 +52,30 @@ export function toTsQuery(searchQuery: string): string {
  * This is the recommended approach with Supabase
  */
 export async function searchWithRPC(
-  supabase: Pick<SupabaseClient, 'rpc'>,
-  table: 'jobs' | 'powers' | 'relics' | 'monsters' | 'paths' | 'regents',
-  searchQuery: string,
-  limit: number = 50
+	supabase: Pick<SupabaseClient, "rpc">,
+	table: "jobs" | "powers" | "relics" | "monsters" | "paths" | "regents",
+	searchQuery: string,
+	limit: number = 50,
 ) {
-  if (!searchQuery.trim()) return [];
+	if (!searchQuery.trim()) return [];
 
-  const functionName = `search_compendium_${table}`;
-  const preparedQuery = normalizeSearchText(searchQuery);
+	const functionName = `search_compendium_${table}`;
+	const preparedQuery = normalizeSearchText(searchQuery);
 
-  if (!preparedQuery) return [];
+	if (!preparedQuery) return [];
 
-  const { data, error } = await supabase.rpc(functionName, {
-    p_query: preparedQuery,
-    p_limit: limit,
-    p_offset: 0,
-  });
+	const { data, error } = await supabase.rpc(functionName, {
+		p_query: preparedQuery,
+		p_limit: limit,
+		p_offset: 0,
+	});
 
-  if (error) {
-    // Fallback to ILIKE if RPC fails
-    return [];
-  }
+	if (error) {
+		// Fallback to ILIKE if RPC fails
+		return [];
+	}
 
-  return (data || []).slice(0, limit);
+	return (data || []).slice(0, limit);
 }
 
 /**
@@ -83,31 +83,30 @@ export async function searchWithRPC(
  * This provides the best of both worlds
  */
 interface OrCapableQuery<T> {
-  or: (filters: string) => T;
+	or: (filters: string) => T;
 }
 
 export function hybridSearchQuery<T extends OrCapableQuery<T>>(
-  baseQuery: T,
-  searchQuery: string,
-  searchFields: string[] = ['name', 'description'],
-  useFullText: boolean = true
+	baseQuery: T,
+	searchQuery: string,
+	searchFields: string[] = ["name", "description"],
+	useFullText: boolean = true,
 ): T {
-  if (!searchQuery.trim()) {
-    return baseQuery;
-  }
+	if (!searchQuery.trim()) {
+		return baseQuery;
+	}
 
-  // For short queries (1-2 chars), ILIKE is better
-  if (searchQuery.length <= 2 || !useFullText) {
-    return baseQuery.or(
-      searchFields.map(field => `${field}.ilike.%${searchQuery}%`).join(',')
-    );
-  }
+	// For short queries (1-2 chars), ILIKE is better
+	if (searchQuery.length <= 2 || !useFullText) {
+		return baseQuery.or(
+			searchFields.map((field) => `${field}.ilike.%${searchQuery}%`).join(","),
+		);
+	}
 
-  // For longer queries, prefer full-text search via RPC
-  // But for now, use ILIKE as fallback until RPC is integrated
-  // The RPC functions should be called directly from components
-  return baseQuery.or(
-    searchFields.map(field => `${field}.ilike.%${searchQuery}%`).join(',')
-  );
+	// For longer queries, prefer full-text search via RPC
+	// But for now, use ILIKE as fallback until RPC is integrated
+	// The RPC functions should be called directly from components
+	return baseQuery.or(
+		searchFields.map((field) => `${field}.ilike.%${searchQuery}%`).join(","),
+	);
 }
-

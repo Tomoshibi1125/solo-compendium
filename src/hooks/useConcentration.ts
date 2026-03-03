@@ -11,46 +11,46 @@
  *  - Persists concentration status in character conditions
  */
 
-import { useState, useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from "react";
+import { rollCheck } from "@/lib/rollEngine";
 import {
-  initializeConcentration,
-  startConcentration,
-  endConcentration,
-  makeConcentrationSave,
-  getConcentrationStatus,
-  type ConcentrationState,
-  type ConcentrationEffect,
-} from '@/lib/srd5e/concentration';
-import { getAbilityModifier, getProficiencyBonus } from '@/types/system-rules';
-import { rollCheck } from '@/lib/rollEngine';
+	type ConcentrationEffect,
+	type ConcentrationState,
+	endConcentration,
+	getConcentrationStatus,
+	initializeConcentration,
+	makeConcentrationSave,
+	startConcentration,
+} from "@/lib/srd5e/concentration";
+import { getAbilityModifier, getProficiencyBonus } from "@/types/system-rules";
 
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
 
 export interface ConcentrationCheckResult {
-  success: boolean;
-  roll: number;
-  dc: number;
-  modifier: number;
-  total: number;
-  spellName: string | null;
-  concentrationLost: boolean;
+	success: boolean;
+	roll: number;
+	dc: number;
+	modifier: number;
+	total: number;
+	spellName: string | null;
+	concentrationLost: boolean;
 }
 
 export interface UseConcentrationReturn {
-  /** Current concentration state */
-  state: ConcentrationState;
-  /** Display-friendly status */
-  status: ReturnType<typeof getConcentrationStatus>;
-  /** Start concentrating on a new spell/effect */
-  concentrate: (effect: Omit<ConcentrationEffect, 'remainingRounds'>) => void;
-  /** Voluntarily drop concentration */
-  drop: () => void;
-  /** Process damage taken — returns the concentration check result */
-  takeDamage: (damage: number) => ConcentrationCheckResult | null;
-  /** Advance one round (decrement remaining duration) */
-  advanceRound: () => void;
+	/** Current concentration state */
+	state: ConcentrationState;
+	/** Display-friendly status */
+	status: ReturnType<typeof getConcentrationStatus>;
+	/** Start concentrating on a new spell/effect */
+	concentrate: (effect: Omit<ConcentrationEffect, "remainingRounds">) => void;
+	/** Voluntarily drop concentration */
+	drop: () => void;
+	/** Process damage taken — returns the concentration check result */
+	takeDamage: (damage: number) => ConcentrationCheckResult | null;
+	/** Advance one round (decrement remaining duration) */
+	advanceRound: () => void;
 }
 
 // ---------------------------------------------------------------------------
@@ -58,70 +58,80 @@ export interface UseConcentrationReturn {
 // ---------------------------------------------------------------------------
 
 export function useConcentration(
-  vitScore: number,
-  characterLevel: number,
-  saveProficiencies: string[]
+	vitScore: number,
+	characterLevel: number,
+	saveProficiencies: string[],
 ): UseConcentrationReturn {
-  const [state, setState] = useState<ConcentrationState>(initializeConcentration);
+	const [state, setState] = useState<ConcentrationState>(
+		initializeConcentration,
+	);
 
-  const vitMod = useMemo(() => getAbilityModifier(vitScore), [vitScore]);
-  const profBonus = useMemo(() => getProficiencyBonus(characterLevel), [characterLevel]);
-  const isProficient = saveProficiencies.includes('VIT');
-  const saveModifier = vitMod + (isProficient ? profBonus : 0);
+	const vitMod = useMemo(() => getAbilityModifier(vitScore), [vitScore]);
+	const profBonus = useMemo(
+		() => getProficiencyBonus(characterLevel),
+		[characterLevel],
+	);
+	const isProficient = saveProficiencies.includes("VIT");
+	const saveModifier = vitMod + (isProficient ? profBonus : 0);
 
-  const status = useMemo(() => getConcentrationStatus(state), [state]);
+	const status = useMemo(() => getConcentrationStatus(state), [state]);
 
-  const concentrate = useCallback(
-    (effect: Omit<ConcentrationEffect, 'remainingRounds'>) => {
-      setState((prev) => startConcentration(prev, effect));
-    },
-    []
-  );
+	const concentrate = useCallback(
+		(effect: Omit<ConcentrationEffect, "remainingRounds">) => {
+			setState((prev) => startConcentration(prev, effect));
+		},
+		[],
+	);
 
-  const drop = useCallback(() => {
-    setState((prev) => endConcentration(prev));
-  }, []);
+	const drop = useCallback(() => {
+		setState((prev) => endConcentration(prev));
+	}, []);
 
-  const takeDamage = useCallback(
-    (damage: number): ConcentrationCheckResult | null => {
-      if (!state.isConcentrating || !state.currentEffect) return null;
+	const takeDamage = useCallback(
+		(damage: number): ConcentrationCheckResult | null => {
+			if (!state.isConcentrating || !state.currentEffect) return null;
 
-      const dc = Math.max(10, Math.floor(damage / 2));
-      const roll = rollCheck(0, 'normal').rolls[0] ?? 0;
-      const total = roll + saveModifier;
-      const success = total >= dc;
+			const dc = Math.max(10, Math.floor(damage / 2));
+			const roll = rollCheck(0, "normal").rolls[0] ?? 0;
+			const total = roll + saveModifier;
+			const success = total >= dc;
 
-      if (!success) {
-        setState((prev) => endConcentration(prev));
-      }
+			if (!success) {
+				setState((prev) => endConcentration(prev));
+			}
 
-      return {
-        success,
-        roll,
-        dc,
-        modifier: saveModifier,
-        total,
-        spellName: state.currentEffect.name,
-        concentrationLost: !success,
-      };
-    },
-    [state, saveModifier]
-  );
+			return {
+				success,
+				roll,
+				dc,
+				modifier: saveModifier,
+				total,
+				spellName: state.currentEffect.name,
+				concentrationLost: !success,
+			};
+		},
+		[state, saveModifier],
+	);
 
-  const advanceRound = useCallback(() => {
-    setState((prev) => {
-      if (!prev.isConcentrating || !prev.currentEffect) return prev;
-      const remaining = prev.currentEffect.remainingRounds - 1;
-      if (remaining <= 0) {
-        return { ...prev, isConcentrating: false, currentEffect: null, damageTakenThisRound: 0 };
-      }
-      return {
-        ...prev,
-        currentEffect: { ...prev.currentEffect, remainingRounds: remaining },
-        damageTakenThisRound: 0,
-      };
-    });
-  }, []);
+	const advanceRound = useCallback(() => {
+		setState((prev) => {
+			if (!prev.isConcentrating || !prev.currentEffect) return prev;
+			const remaining = prev.currentEffect.remainingRounds - 1;
+			if (remaining <= 0) {
+				return {
+					...prev,
+					isConcentrating: false,
+					currentEffect: null,
+					damageTakenThisRound: 0,
+				};
+			}
+			return {
+				...prev,
+				currentEffect: { ...prev.currentEffect, remainingRounds: remaining },
+				damageTakenThisRound: 0,
+			};
+		});
+	}, []);
 
-  return { state, status, concentrate, drop, takeDamage, advanceRound };
+	return { state, status, concentrate, drop, takeDamage, advanceRound };
 }

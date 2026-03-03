@@ -3,424 +3,441 @@
  * Legal-safe sounds and music management for Wardens
  */
 
-import type { AudioTrack, Playlist, AudioPlayerState, AudioSettings } from './types';
-import { DEFAULT_AUDIO_SETTINGS } from './types';
-import { logger } from '@/lib/logger';
-import { loadAudioFile } from './storage';
+import { logger } from "@/lib/logger";
+import { loadAudioFile } from "./storage";
+import type {
+	AudioPlayerState,
+	AudioSettings,
+	AudioTrack,
+	Playlist,
+} from "./types";
+import { DEFAULT_AUDIO_SETTINGS } from "./types";
 
 export class AudioService {
-  private audio: HTMLAudioElement | null = null;
-  private state: AudioPlayerState = {
-    currentTrack: null,
-    isPlaying: false,
-    volume: DEFAULT_AUDIO_SETTINGS.masterVolume,
-    currentTime: 0,
-    duration: 0,
-    isLoading: false,
-    error: null,
-    playlist: null,
-    currentTrackIndex: 0,
-    repeat: 'none',
-    shuffle: false,
-  };
-  private settings: AudioSettings = DEFAULT_AUDIO_SETTINGS;
-  private listeners: Set<(state: AudioPlayerState) => void> = new Set();
-  private fadeTimeout: ReturnType<typeof setTimeout> | null = null;
-  private activeObjectUrl: string | null = null;
-  private playlistTracks: AudioTrack[] = [];
+	private audio: HTMLAudioElement | null = null;
+	private state: AudioPlayerState = {
+		currentTrack: null,
+		isPlaying: false,
+		volume: DEFAULT_AUDIO_SETTINGS.masterVolume,
+		currentTime: 0,
+		duration: 0,
+		isLoading: false,
+		error: null,
+		playlist: null,
+		currentTrackIndex: 0,
+		repeat: "none",
+		shuffle: false,
+	};
+	private settings: AudioSettings = DEFAULT_AUDIO_SETTINGS;
+	private listeners: Set<(state: AudioPlayerState) => void> = new Set();
+	private fadeTimeout: ReturnType<typeof setTimeout> | null = null;
+	private activeObjectUrl: string | null = null;
+	private playlistTracks: AudioTrack[] = [];
 
-  constructor() {
-    // Load settings from localStorage
-    this.loadSettings();
-    
-    // Initialize audio context
-    if (typeof window !== 'undefined') {
-      this.setupAudioElement();
-    }
-  }
+	constructor() {
+		// Load settings from localStorage
+		this.loadSettings();
 
-  private setupAudioElement() {
-    this.audio = new Audio();
-    this.audio.preload = 'metadata';
-    
-    // Event listeners
-    this.audio.addEventListener('loadstart', () => {
-      this.updateState({ isLoading: true, error: null });
-    });
+		// Initialize audio context
+		if (typeof window !== "undefined") {
+			this.setupAudioElement();
+		}
+	}
 
-    this.audio.addEventListener('loadeddata', () => {
-      this.updateState({ 
-        isLoading: false,
-        duration: this.audio?.duration || 0,
-      });
-    });
+	private setupAudioElement() {
+		this.audio = new Audio();
+		this.audio.preload = "metadata";
 
-    this.audio.addEventListener('timeupdate', () => {
-      this.updateState({ 
-        currentTime: this.audio?.currentTime || 0,
-      });
-    });
+		// Event listeners
+		this.audio.addEventListener("loadstart", () => {
+			this.updateState({ isLoading: true, error: null });
+		});
 
-    this.audio.addEventListener('ended', () => {
-      this.handleTrackEnd();
-    });
+		this.audio.addEventListener("loadeddata", () => {
+			this.updateState({
+				isLoading: false,
+				duration: this.audio?.duration || 0,
+			});
+		});
 
-    this.audio.addEventListener('error', () => {
-      this.updateState({ 
-        isLoading: false,
-        error: 'Failed to load audio',
-      });
-    });
+		this.audio.addEventListener("timeupdate", () => {
+			this.updateState({
+				currentTime: this.audio?.currentTime || 0,
+			});
+		});
 
-    this.audio.addEventListener('volumechange', () => {
-      this.updateState({ 
-        volume: this.audio?.volume || 0,
-      });
-    });
-  }
+		this.audio.addEventListener("ended", () => {
+			this.handleTrackEnd();
+		});
 
-  private updateState(updates: Partial<AudioPlayerState>) {
-    this.state = { ...this.state, ...updates };
-    this.notifyListeners();
-  }
+		this.audio.addEventListener("error", () => {
+			this.updateState({
+				isLoading: false,
+				error: "Failed to load audio",
+			});
+		});
 
-  private notifyListeners() {
-    this.listeners.forEach(listener => listener(this.state));
-  }
+		this.audio.addEventListener("volumechange", () => {
+			this.updateState({
+				volume: this.audio?.volume || 0,
+			});
+		});
+	}
 
-  private handleTrackEnd() {
-    const { repeat, playlist, currentTrackIndex } = this.state;
-    
-    if (repeat === 'one') {
-      this.play();
-    } else if (repeat === 'all' || (repeat === 'none' && playlist && currentTrackIndex < playlist.tracks.length - 1)) {
-      this.next();
-    } else {
-      this.updateState({ isPlaying: false });
-    }
-  }
+	private updateState(updates: Partial<AudioPlayerState>) {
+		this.state = { ...this.state, ...updates };
+		this.notifyListeners();
+	}
 
-  // Public API
-  async loadTrack(track: AudioTrack) {
-    if (!this.audio) return;
+	private notifyListeners() {
+		this.listeners.forEach((listener) => listener(this.state));
+	}
 
-    try {
-      this.updateState({ isLoading: true, error: null });
-      
-      // Load the audio source
-      if (track.isLocal && track.localPath) {
-        if (track.localPath.startsWith('audio-db:')) {
-          const blob = await loadAudioFile(track.id);
-          if (!blob) {
-            throw new Error('Local audio file not found');
-          }
-          const objectUrl = URL.createObjectURL(blob);
-          this.setActiveObjectUrl(objectUrl);
-          this.audio.src = objectUrl;
-        } else {
-          this.clearActiveObjectUrl();
-          this.audio.src = track.localPath;
-        }
-      } else {
-        this.clearActiveObjectUrl();
-        this.audio.src = track.url;
-      }
-      
-      // Set track properties
-      this.audio.volume = track.volume * this.settings.masterVolume;
-      this.audio.loop = track.loop;
-      
-      // Update state
-      this.updateState({ 
-        currentTrack: track,
-        error: null,
-      });
-      
-      // Load metadata
-      await this.audio.load();
-      
-    } catch (error) {
-      this.updateState({ 
-        isLoading: false,
-        error: error instanceof Error ? error.message : 'Failed to load track',
-      });
-    }
-  }
+	private handleTrackEnd() {
+		const { repeat, playlist, currentTrackIndex } = this.state;
 
-  async play() {
-    if (!this.audio || !this.state.currentTrack) return;
+		if (repeat === "one") {
+			this.play();
+		} else if (
+			repeat === "all" ||
+			(repeat === "none" &&
+				playlist &&
+				currentTrackIndex < playlist.tracks.length - 1)
+		) {
+			this.next();
+		} else {
+			this.updateState({ isPlaying: false });
+		}
+	}
 
-    try {
-      await this.audio.play();
-      this.updateState({ isPlaying: true });
-    } catch (error) {
-      this.updateState({ 
-        error: error instanceof Error ? error.message : 'Failed to play',
-      });
-    }
-  }
+	// Public API
+	async loadTrack(track: AudioTrack) {
+		if (!this.audio) return;
 
-  pause() {
-    if (!this.audio) return;
-    
-    this.audio.pause();
-    this.updateState({ isPlaying: false });
-  }
+		try {
+			this.updateState({ isLoading: true, error: null });
 
-  stop() {
-    if (!this.audio) return;
-    
-    this.audio.pause();
-    this.audio.currentTime = 0;
-    this.updateState({ 
-      isPlaying: false,
-      currentTime: 0,
-    });
-  }
+			// Load the audio source
+			if (track.isLocal && track.localPath) {
+				if (track.localPath.startsWith("audio-db:")) {
+					const blob = await loadAudioFile(track.id);
+					if (!blob) {
+						throw new Error("Local audio file not found");
+					}
+					const objectUrl = URL.createObjectURL(blob);
+					this.setActiveObjectUrl(objectUrl);
+					this.audio.src = objectUrl;
+				} else {
+					this.clearActiveObjectUrl();
+					this.audio.src = track.localPath;
+				}
+			} else {
+				this.clearActiveObjectUrl();
+				this.audio.src = track.url;
+			}
 
-  async next() {
-    const { playlist, currentTrackIndex, shuffle } = this.state;
-    
-    if (!playlist || playlist.tracks.length === 0) return;
-    
-    let nextIndex = currentTrackIndex;
-    
-    if (shuffle) {
-      // Get random index that's not the current one
-      do {
-        nextIndex = Math.floor(Math.random() * playlist.tracks.length);
-      } while (nextIndex === currentTrackIndex && playlist.tracks.length > 1);
-    } else {
-      nextIndex = (currentTrackIndex + 1) % playlist.tracks.length;
-    }
-    
-    this.updateState({ currentTrackIndex: nextIndex });
-    const nextTrack = this.playlistTracks[nextIndex];
-    if (nextTrack) {
-      await this.loadTrack(nextTrack);
-      if (this.state.isPlaying) {
-        await this.play();
-      }
-    }
-  }
+			// Set track properties
+			this.audio.volume = track.volume * this.settings.masterVolume;
+			this.audio.loop = track.loop;
 
-  async previous() {
-    const { playlist, currentTrackIndex, shuffle } = this.state;
-    
-    if (!playlist || playlist.tracks.length === 0) return;
-    
-    let prevIndex = currentTrackIndex;
-    
-    if (shuffle) {
-      // Get random index that's not the current one
-      do {
-        prevIndex = Math.floor(Math.random() * playlist.tracks.length);
-      } while (prevIndex === currentTrackIndex && playlist.tracks.length > 1);
-    } else {
-      prevIndex = currentTrackIndex === 0 ? playlist.tracks.length - 1 : currentTrackIndex - 1;
-    }
-    
-    this.updateState({ currentTrackIndex: prevIndex });
-    const prevTrack = this.playlistTracks[prevIndex];
-    if (prevTrack) {
-      await this.loadTrack(prevTrack);
-      if (this.state.isPlaying) {
-        await this.play();
-      }
-    }
-  }
+			// Update state
+			this.updateState({
+				currentTrack: track,
+				error: null,
+			});
 
-  setVolume(volume: number) {
-    if (!this.audio) return;
-    
-    const clampedVolume = Math.max(0, Math.min(1, volume));
-    this.audio.volume = clampedVolume;
-    this.updateState({ volume: clampedVolume });
-  }
+			// Load metadata
+			await this.audio.load();
+		} catch (error) {
+			this.updateState({
+				isLoading: false,
+				error: error instanceof Error ? error.message : "Failed to load track",
+			});
+		}
+	}
 
-  setMasterVolume(volume: number) {
-    const clampedVolume = Math.max(0, Math.min(1, volume));
-    this.settings.masterVolume = clampedVolume;
-    this.saveSettings();
-    
-    if (this.audio && this.state.currentTrack) {
-      this.audio.volume = this.state.currentTrack.volume * clampedVolume;
-    }
-  }
+	async play() {
+		if (!this.audio || !this.state.currentTrack) return;
 
-  setCurrentTime(time: number) {
-    if (!this.audio) return;
-    
-    this.audio.currentTime = time;
-    this.updateState({ currentTime: time });
-  }
+		try {
+			await this.audio.play();
+			this.updateState({ isPlaying: true });
+		} catch (error) {
+			this.updateState({
+				error: error instanceof Error ? error.message : "Failed to play",
+			});
+		}
+	}
 
-  setRepeat(repeat: 'none' | 'one' | 'all') {
-    this.updateState({ repeat });
-  }
+	pause() {
+		if (!this.audio) return;
 
-  setShuffle(shuffle: boolean) {
-    this.updateState({ shuffle });
-  }
+		this.audio.pause();
+		this.updateState({ isPlaying: false });
+	}
 
-  // Playlist management
-  loadPlaylist(playlist: Playlist, tracks: AudioTrack[] = [], startIndex = 0) {
-    this.playlistTracks = tracks;
-    this.updateState({ 
-      playlist,
-      currentTrackIndex: startIndex,
-    });
+	stop() {
+		if (!this.audio) return;
 
-    const track = this.playlistTracks[startIndex];
-    if (track) {
-      void this.loadTrack(track);
-    }
-  }
+		this.audio.pause();
+		this.audio.currentTime = 0;
+		this.updateState({
+			isPlaying: false,
+			currentTime: 0,
+		});
+	}
 
-  // Volume fading
-  fadeIn(duration = 2000, targetVolume?: number) {
-    if (!this.audio || !this.state.currentTrack) return;
-    
-    const startVolume = this.audio.volume;
-    const target = targetVolume ?? (this.state.currentTrack.volume * this.settings.masterVolume);
-    const steps = 20;
-    const stepDuration = duration / steps;
-    const stepVolume = (target - startVolume) / steps;
-    
-    let currentStep = 0;
-    
-    this.clearFadeTimeout();
-    
-    const fadeInterval = setInterval(() => {
-      currentStep++;
-      const newVolume = startVolume + (stepVolume * currentStep);
-      
-      if (currentStep >= steps || newVolume >= target) {
-        if (this.audio) this.audio.volume = target;
-        clearInterval(fadeInterval);
-      } else {
-        if (this.audio) this.audio.volume = newVolume;
-      }
-    }, stepDuration);
-    
-    this.fadeTimeout = setTimeout(() => {
-      clearInterval(fadeInterval);
-    }, duration);
-  }
+	async next() {
+		const { playlist, currentTrackIndex, shuffle } = this.state;
 
-  fadeOut(duration = 2000) {
-    if (!this.audio) return;
-    
-    const startVolume = this.audio.volume;
-    const steps = 20;
-    const stepDuration = duration / steps;
-    const stepVolume = startVolume / steps;
-    
-    let currentStep = 0;
-    
-    this.clearFadeTimeout();
-    
-    const fadeInterval = setInterval(() => {
-      currentStep++;
-      const newVolume = startVolume - (stepVolume * currentStep);
-      
-      if (currentStep >= steps || newVolume <= 0) {
-        if (this.audio) this.audio.volume = 0;
-        clearInterval(fadeInterval);
-        if (this.state.isPlaying) {
-          this.pause();
-        }
-      } else {
-        if (this.audio) this.audio.volume = newVolume;
-      }
-    }, stepDuration);
-    
-    this.fadeTimeout = setTimeout(() => {
-      clearInterval(fadeInterval);
-    }, duration);
-  }
+		if (!playlist || playlist.tracks.length === 0) return;
 
-  private clearFadeTimeout() {
-    if (this.fadeTimeout) {
-      clearTimeout(this.fadeTimeout);
-      this.fadeTimeout = null;
-    }
-  }
+		let nextIndex = currentTrackIndex;
 
-  private setActiveObjectUrl(url: string) {
-    this.clearActiveObjectUrl();
-    this.activeObjectUrl = url;
-  }
+		if (shuffle) {
+			// Get random index that's not the current one
+			do {
+				nextIndex = Math.floor(Math.random() * playlist.tracks.length);
+			} while (nextIndex === currentTrackIndex && playlist.tracks.length > 1);
+		} else {
+			nextIndex = (currentTrackIndex + 1) % playlist.tracks.length;
+		}
 
-  private clearActiveObjectUrl() {
-    if (this.activeObjectUrl) {
-      URL.revokeObjectURL(this.activeObjectUrl);
-      this.activeObjectUrl = null;
-    }
-  }
+		this.updateState({ currentTrackIndex: nextIndex });
+		const nextTrack = this.playlistTracks[nextIndex];
+		if (nextTrack) {
+			await this.loadTrack(nextTrack);
+			if (this.state.isPlaying) {
+				await this.play();
+			}
+		}
+	}
 
-  // Settings management
-  private loadSettings() {
-    if (typeof window === 'undefined') return;
-    
-    try {
-      const saved = localStorage.getItem('audio-settings');
-      if (saved) {
-        this.settings = { ...DEFAULT_AUDIO_SETTINGS, ...JSON.parse(saved) };
-      }
-    } catch (error) {
-      logger.error('Failed to load audio settings:', error);
-    }
-  }
+	async previous() {
+		const { playlist, currentTrackIndex, shuffle } = this.state;
 
-  private saveSettings() {
-    if (typeof window === 'undefined') return;
-    
-    try {
-      localStorage.setItem('audio-settings', JSON.stringify(this.settings));
-    } catch (error) {
-      logger.error('Failed to save audio settings:', error);
-    }
-  }
+		if (!playlist || playlist.tracks.length === 0) return;
 
-  updateSettings(updates: Partial<AudioSettings>) {
-    this.settings = { ...this.settings, ...updates };
-    this.saveSettings();
-    
-    // Apply master volume change immediately
-    if (updates.masterVolume !== undefined && this.audio && this.state.currentTrack) {
-      this.audio.volume = this.state.currentTrack.volume * updates.masterVolume;
-    }
-  }
+		let prevIndex = currentTrackIndex;
 
-  getSettings(): AudioSettings {
-    return { ...this.settings };
-  }
+		if (shuffle) {
+			// Get random index that's not the current one
+			do {
+				prevIndex = Math.floor(Math.random() * playlist.tracks.length);
+			} while (prevIndex === currentTrackIndex && playlist.tracks.length > 1);
+		} else {
+			prevIndex =
+				currentTrackIndex === 0
+					? playlist.tracks.length - 1
+					: currentTrackIndex - 1;
+		}
 
-  getState(): AudioPlayerState {
-    return { ...this.state };
-  }
+		this.updateState({ currentTrackIndex: prevIndex });
+		const prevTrack = this.playlistTracks[prevIndex];
+		if (prevTrack) {
+			await this.loadTrack(prevTrack);
+			if (this.state.isPlaying) {
+				await this.play();
+			}
+		}
+	}
 
-  // Event listeners
-  subscribe(listener: (state: AudioPlayerState) => void) {
-    this.listeners.add(listener);
-    return () => this.listeners.delete(listener);
-  }
+	setVolume(volume: number) {
+		if (!this.audio) return;
 
-  // Cleanup
-  destroy() {
-    this.clearFadeTimeout();
-    this.clearActiveObjectUrl();
-    this.listeners.clear();
-    
-    if (this.audio) {
-      this.audio.pause();
-      this.audio.src = '';
-      this.audio = null;
-    }
-  }
+		const clampedVolume = Math.max(0, Math.min(1, volume));
+		this.audio.volume = clampedVolume;
+		this.updateState({ volume: clampedVolume });
+	}
+
+	setMasterVolume(volume: number) {
+		const clampedVolume = Math.max(0, Math.min(1, volume));
+		this.settings.masterVolume = clampedVolume;
+		this.saveSettings();
+
+		if (this.audio && this.state.currentTrack) {
+			this.audio.volume = this.state.currentTrack.volume * clampedVolume;
+		}
+	}
+
+	setCurrentTime(time: number) {
+		if (!this.audio) return;
+
+		this.audio.currentTime = time;
+		this.updateState({ currentTime: time });
+	}
+
+	setRepeat(repeat: "none" | "one" | "all") {
+		this.updateState({ repeat });
+	}
+
+	setShuffle(shuffle: boolean) {
+		this.updateState({ shuffle });
+	}
+
+	// Playlist management
+	loadPlaylist(playlist: Playlist, tracks: AudioTrack[] = [], startIndex = 0) {
+		this.playlistTracks = tracks;
+		this.updateState({
+			playlist,
+			currentTrackIndex: startIndex,
+		});
+
+		const track = this.playlistTracks[startIndex];
+		if (track) {
+			void this.loadTrack(track);
+		}
+	}
+
+	// Volume fading
+	fadeIn(duration = 2000, targetVolume?: number) {
+		if (!this.audio || !this.state.currentTrack) return;
+
+		const startVolume = this.audio.volume;
+		const target =
+			targetVolume ??
+			this.state.currentTrack.volume * this.settings.masterVolume;
+		const steps = 20;
+		const stepDuration = duration / steps;
+		const stepVolume = (target - startVolume) / steps;
+
+		let currentStep = 0;
+
+		this.clearFadeTimeout();
+
+		const fadeInterval = setInterval(() => {
+			currentStep++;
+			const newVolume = startVolume + stepVolume * currentStep;
+
+			if (currentStep >= steps || newVolume >= target) {
+				if (this.audio) this.audio.volume = target;
+				clearInterval(fadeInterval);
+			} else {
+				if (this.audio) this.audio.volume = newVolume;
+			}
+		}, stepDuration);
+
+		this.fadeTimeout = setTimeout(() => {
+			clearInterval(fadeInterval);
+		}, duration);
+	}
+
+	fadeOut(duration = 2000) {
+		if (!this.audio) return;
+
+		const startVolume = this.audio.volume;
+		const steps = 20;
+		const stepDuration = duration / steps;
+		const stepVolume = startVolume / steps;
+
+		let currentStep = 0;
+
+		this.clearFadeTimeout();
+
+		const fadeInterval = setInterval(() => {
+			currentStep++;
+			const newVolume = startVolume - stepVolume * currentStep;
+
+			if (currentStep >= steps || newVolume <= 0) {
+				if (this.audio) this.audio.volume = 0;
+				clearInterval(fadeInterval);
+				if (this.state.isPlaying) {
+					this.pause();
+				}
+			} else {
+				if (this.audio) this.audio.volume = newVolume;
+			}
+		}, stepDuration);
+
+		this.fadeTimeout = setTimeout(() => {
+			clearInterval(fadeInterval);
+		}, duration);
+	}
+
+	private clearFadeTimeout() {
+		if (this.fadeTimeout) {
+			clearTimeout(this.fadeTimeout);
+			this.fadeTimeout = null;
+		}
+	}
+
+	private setActiveObjectUrl(url: string) {
+		this.clearActiveObjectUrl();
+		this.activeObjectUrl = url;
+	}
+
+	private clearActiveObjectUrl() {
+		if (this.activeObjectUrl) {
+			URL.revokeObjectURL(this.activeObjectUrl);
+			this.activeObjectUrl = null;
+		}
+	}
+
+	// Settings management
+	private loadSettings() {
+		if (typeof window === "undefined") return;
+
+		try {
+			const saved = localStorage.getItem("audio-settings");
+			if (saved) {
+				this.settings = { ...DEFAULT_AUDIO_SETTINGS, ...JSON.parse(saved) };
+			}
+		} catch (error) {
+			logger.error("Failed to load audio settings:", error);
+		}
+	}
+
+	private saveSettings() {
+		if (typeof window === "undefined") return;
+
+		try {
+			localStorage.setItem("audio-settings", JSON.stringify(this.settings));
+		} catch (error) {
+			logger.error("Failed to save audio settings:", error);
+		}
+	}
+
+	updateSettings(updates: Partial<AudioSettings>) {
+		this.settings = { ...this.settings, ...updates };
+		this.saveSettings();
+
+		// Apply master volume change immediately
+		if (
+			updates.masterVolume !== undefined &&
+			this.audio &&
+			this.state.currentTrack
+		) {
+			this.audio.volume = this.state.currentTrack.volume * updates.masterVolume;
+		}
+	}
+
+	getSettings(): AudioSettings {
+		return { ...this.settings };
+	}
+
+	getState(): AudioPlayerState {
+		return { ...this.state };
+	}
+
+	// Event listeners
+	subscribe(listener: (state: AudioPlayerState) => void) {
+		this.listeners.add(listener);
+		return () => this.listeners.delete(listener);
+	}
+
+	// Cleanup
+	destroy() {
+		this.clearFadeTimeout();
+		this.clearActiveObjectUrl();
+		this.listeners.clear();
+
+		if (this.audio) {
+			this.audio.pause();
+			this.audio.src = "";
+			this.audio = null;
+		}
+	}
 }
 
 // Singleton instance
 export const audioService = new AudioService();
-

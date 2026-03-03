@@ -1,416 +1,514 @@
-import { useState, useEffect, useCallback } from 'react';
-import { RealtimeChannel } from '@supabase/supabase-js';
-import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/hooks/use-toast';
-import { useAuth } from '@/lib/auth/authContext';
-import '@/styles/realtime-collaboration.css';
+import type { RealtimeChannel } from "@supabase/supabase-js";
+import { useCallback, useEffect, useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth/authContext";
+import "@/styles/realtime-collaboration.css";
 
 type CursorPosition = { x: number; y: number };
 
 type TextChangePayload = {
-  elementId: string;
-  content: string;
-  cursorPosition?: number;
+	elementId: string;
+	content: string;
+	cursorPosition?: number;
 };
 
 type CharacterUpdatePayload = {
-  characterId: string;
-  updates: Record<string, unknown>;
+	characterId: string;
+	updates: Record<string, unknown>;
 };
 
 type DiceRollPayload = {
-  formula: string;
-  result: number;
-  details?: Record<string, unknown>;
+	formula: string;
+	result: number;
+	details?: Record<string, unknown>;
 };
 
 type MapUpdatePayload = Record<string, unknown>;
 type CombatStatePayload = Record<string, unknown>;
 
 type CollaborationEventBase = {
-  userId: string;
-  userName: string;
-  timestamp: number;
-  campaignId: string;
+	userId: string;
+	userName: string;
+	timestamp: number;
+	campaignId: string;
 };
 
 export type CollaborationEvent =
-  | (CollaborationEventBase & { type: 'cursor_move'; data: CursorPosition })
-  | (CollaborationEventBase & { type: 'text_change'; data: TextChangePayload })
-  | (CollaborationEventBase & { type: 'character_update'; data: CharacterUpdatePayload })
-  | (CollaborationEventBase & { type: 'dice_roll'; data: DiceRollPayload })
-  | (CollaborationEventBase & { type: 'map_update'; data: MapUpdatePayload })
-  | (CollaborationEventBase & { type: 'combat_state'; data: CombatStatePayload });
+	| (CollaborationEventBase & { type: "cursor_move"; data: CursorPosition })
+	| (CollaborationEventBase & { type: "text_change"; data: TextChangePayload })
+	| (CollaborationEventBase & {
+			type: "character_update";
+			data: CharacterUpdatePayload;
+	  })
+	| (CollaborationEventBase & { type: "dice_roll"; data: DiceRollPayload })
+	| (CollaborationEventBase & { type: "map_update"; data: MapUpdatePayload })
+	| (CollaborationEventBase & {
+			type: "combat_state";
+			data: CombatStatePayload;
+	  });
 
-type TextChangeEvent = Extract<CollaborationEvent, { type: 'text_change' }>;
-type CharacterUpdateEvent = Extract<CollaborationEvent, { type: 'character_update' }>;
-type DiceRollEvent = Extract<CollaborationEvent, { type: 'dice_roll' }>;
-type MapUpdateEvent = Extract<CollaborationEvent, { type: 'map_update' }>;
-type CombatStateEvent = Extract<CollaborationEvent, { type: 'combat_state' }>;
+type TextChangeEvent = Extract<CollaborationEvent, { type: "text_change" }>;
+type CharacterUpdateEvent = Extract<
+	CollaborationEvent,
+	{ type: "character_update" }
+>;
+type DiceRollEvent = Extract<CollaborationEvent, { type: "dice_roll" }>;
+type MapUpdateEvent = Extract<CollaborationEvent, { type: "map_update" }>;
+type CombatStateEvent = Extract<CollaborationEvent, { type: "combat_state" }>;
 
 type PresencePayload = {
-  user_id?: string;
-  user_name?: string;
-  cursor?: CursorPosition;
-  isTyping?: boolean;
-  currentElement?: string;
+	user_id?: string;
+	user_name?: string;
+	cursor?: CursorPosition;
+	isTyping?: boolean;
+	currentElement?: string;
 };
 
 export interface ActiveUser {
-  id: string;
-  name: string;
-  cursor?: { x: number; y: number };
-  lastSeen: number;
-  isTyping?: boolean;
-  currentElement?: string;
+	id: string;
+	name: string;
+	cursor?: { x: number; y: number };
+	lastSeen: number;
+	isTyping?: boolean;
+	currentElement?: string;
 }
 
 export function useRealtimeCollaboration(campaignId: string) {
-  const [channel, setChannel] = useState<RealtimeChannel | null>(null);
-  const [activeUsers, setActiveUsers] = useState<Map<string, ActiveUser>>(new Map());
-  const [isConnected, setIsConnected] = useState(false);
-  const { toast } = useToast();
-  const { user } = useAuth();
-  const currentUserId = user?.id || 'anonymous';
-  const currentUserName = user?.email?.split('@')[0] || 'Anonymous';
+	const [channel, setChannel] = useState<RealtimeChannel | null>(null);
+	const [activeUsers, setActiveUsers] = useState<Map<string, ActiveUser>>(
+		new Map(),
+	);
+	const [isConnected, setIsConnected] = useState(false);
+	const { toast } = useToast();
+	const { user } = useAuth();
+	const currentUserId = user?.id || "anonymous";
+	const currentUserName = user?.email?.split("@")[0] || "Anonymous";
 
-  const updateCursorPosition = useCallback((userId: string, position: { x: number; y: number }) => {
-    setActiveUsers(prev => {
-      const newMap = new Map(prev);
-      const user = newMap.get(userId);
-      if (user) {
-        newMap.set(userId, { ...user, cursor: position, lastSeen: Date.now() });
-      }
-      return newMap;
-    });
-  }, []);
+	const updateCursorPosition = useCallback(
+		(userId: string, position: { x: number; y: number }) => {
+			setActiveUsers((prev) => {
+				const newMap = new Map(prev);
+				const user = newMap.get(userId);
+				if (user) {
+					newMap.set(userId, {
+						...user,
+						cursor: position,
+						lastSeen: Date.now(),
+					});
+				}
+				return newMap;
+			});
+		},
+		[],
+	);
 
-  const handleTextChange = useCallback((event: TextChangeEvent) => {
-    // Emit custom event for text changes
-    window.dispatchEvent(new CustomEvent('collaboration:text_change', {
-      detail: event
-    }));
-  }, []);
+	const handleTextChange = useCallback((event: TextChangeEvent) => {
+		// Emit custom event for text changes
+		window.dispatchEvent(
+			new CustomEvent("collaboration:text_change", {
+				detail: event,
+			}),
+		);
+	}, []);
 
-  const handleCharacterUpdate = useCallback((event: CharacterUpdateEvent) => {
-    // Emit custom event for character updates
-    window.dispatchEvent(new CustomEvent('collaboration:character_update', {
-      detail: event
-    }));
-  }, []);
+	const handleCharacterUpdate = useCallback((event: CharacterUpdateEvent) => {
+		// Emit custom event for character updates
+		window.dispatchEvent(
+			new CustomEvent("collaboration:character_update", {
+				detail: event,
+			}),
+		);
+	}, []);
 
-  const handleDiceRoll = useCallback((event: DiceRollEvent) => {
-    // Emit custom event for dice rolls
-    window.dispatchEvent(new CustomEvent('collaboration:dice_roll', {
-      detail: event
-    }));
-    
-    toast({
-      title: 'Dice Roll',
-      description: `${event.userName} rolled ${event.data.formula}: ${event.data.result}`,
-    });
-  }, [toast]);
+	const handleDiceRoll = useCallback(
+		(event: DiceRollEvent) => {
+			// Emit custom event for dice rolls
+			window.dispatchEvent(
+				new CustomEvent("collaboration:dice_roll", {
+					detail: event,
+				}),
+			);
 
-  const handleMapUpdate = useCallback((event: MapUpdateEvent) => {
-    // Emit custom event for map updates
-    window.dispatchEvent(new CustomEvent('collaboration:map_update', {
-      detail: event
-    }));
-  }, []);
+			toast({
+				title: "Dice Roll",
+				description: `${event.userName} rolled ${event.data.formula}: ${event.data.result}`,
+			});
+		},
+		[toast],
+	);
 
-  const handleCombatStateUpdate = useCallback((event: CombatStateEvent) => {
-    // Emit custom event for combat state updates
-    window.dispatchEvent(new CustomEvent('collaboration:combat_state', {
-      detail: event
-    }));
-  }, []);
+	const handleMapUpdate = useCallback((event: MapUpdateEvent) => {
+		// Emit custom event for map updates
+		window.dispatchEvent(
+			new CustomEvent("collaboration:map_update", {
+				detail: event,
+			}),
+		);
+	}, []);
 
-  const handleCollaborationEvent = useCallback((event: CollaborationEvent) => {
-    switch (event.type) {
-      case 'cursor_move':
-        updateCursorPosition(event.userId, event.data);
-        break;
-      case 'text_change':
-        handleTextChange(event);
-        break;
-      case 'character_update':
-        handleCharacterUpdate(event);
-        break;
-      case 'dice_roll':
-        handleDiceRoll(event);
-        break;
-      case 'map_update':
-        handleMapUpdate(event);
-        break;
-      case 'combat_state':
-        handleCombatStateUpdate(event);
-        break;
-    }
-  }, [updateCursorPosition, handleTextChange, handleCharacterUpdate, handleDiceRoll, handleMapUpdate, handleCombatStateUpdate]);
+	const handleCombatStateUpdate = useCallback((event: CombatStateEvent) => {
+		// Emit custom event for combat state updates
+		window.dispatchEvent(
+			new CustomEvent("collaboration:combat_state", {
+				detail: event,
+			}),
+		);
+	}, []);
 
-  const handleUserJoin = useCallback((key: string, presences: PresencePayload[]) => {
-    presences.forEach((presence) => {
-      const userId = presence.user_id ?? key;
-      const user: ActiveUser = {
-        id: userId,
-        name: presence.user_name || 'Anonymous',
-        lastSeen: Date.now(),
-      };
-      setActiveUsers(prev => new Map(prev.set(key, user)));
-      
-      toast({
-        title: 'User Joined',
-        description: `${user.name} joined the campaign`,
-      });
-    });
-  }, [toast]);
+	const handleCollaborationEvent = useCallback(
+		(event: CollaborationEvent) => {
+			switch (event.type) {
+				case "cursor_move":
+					updateCursorPosition(event.userId, event.data);
+					break;
+				case "text_change":
+					handleTextChange(event);
+					break;
+				case "character_update":
+					handleCharacterUpdate(event);
+					break;
+				case "dice_roll":
+					handleDiceRoll(event);
+					break;
+				case "map_update":
+					handleMapUpdate(event);
+					break;
+				case "combat_state":
+					handleCombatStateUpdate(event);
+					break;
+			}
+		},
+		[
+			updateCursorPosition,
+			handleTextChange,
+			handleCharacterUpdate,
+			handleDiceRoll,
+			handleMapUpdate,
+			handleCombatStateUpdate,
+		],
+	);
 
-  const handleUserLeave = useCallback((key: string, _presences: PresencePayload[]) => {
-    const user = activeUsers.get(key);
-    if (user) {
-      setActiveUsers(prev => {
-        const newMap = new Map(prev);
-        newMap.delete(key);
-        return newMap;
-      });
-      
-      toast({
-        title: 'User Left',
-        description: `${user.name} left the campaign`,
-      });
-    }
-  }, [toast, activeUsers]);
+	const handleUserJoin = useCallback(
+		(key: string, presences: PresencePayload[]) => {
+			presences.forEach((presence) => {
+				const userId = presence.user_id ?? key;
+				const user: ActiveUser = {
+					id: userId,
+					name: presence.user_name || "Anonymous",
+					lastSeen: Date.now(),
+				};
+				setActiveUsers((prev) => new Map(prev.set(key, user)));
 
-  // Initialize real-time connection
-  useEffect(() => {
-    if (!campaignId) return;
+				toast({
+					title: "User Joined",
+					description: `${user.name} joined the campaign`,
+				});
+			});
+		},
+		[toast],
+	);
 
-    const newChannel = supabase
-      .channel(`campaign_${campaignId}`)
-      .on('broadcast', { event: 'collaboration' }, (payload) => {
-        handleCollaborationEvent(payload.payload as CollaborationEvent);
-      })
-      .on('presence', { event: 'join' }, ({ key, newPresences }) => {
-        handleUserJoin(key, newPresences as unknown as PresencePayload[]);
-      })
-      .on('presence', { event: 'leave' }, ({ key, leftPresences }) => {
-        handleUserLeave(key, leftPresences as unknown as PresencePayload[]);
-      })
-      .on('presence', { event: 'sync' }, () => {
-        // Handle initial sync
-      })
-      .subscribe((status) => {
-        setIsConnected(status === 'SUBSCRIBED');
-        if (status === 'SUBSCRIBED') {
-          toast({
-            title: 'Connected to Campaign',
-            description: 'Real-time collaboration enabled',
-          });
-        } else if (status === 'CHANNEL_ERROR') {
-          toast({
-            title: 'Connection Error',
-            description: 'Unable to connect to real-time features',
-            variant: 'destructive',
-          });
-        }
-      });
+	const handleUserLeave = useCallback(
+		(key: string, _presences: PresencePayload[]) => {
+			const user = activeUsers.get(key);
+			if (user) {
+				setActiveUsers((prev) => {
+					const newMap = new Map(prev);
+					newMap.delete(key);
+					return newMap;
+				});
 
-    setChannel(newChannel);
+				toast({
+					title: "User Left",
+					description: `${user.name} left the campaign`,
+				});
+			}
+		},
+		[toast, activeUsers],
+	);
 
-    return () => {
-      newChannel.unsubscribe();
-    };
-  }, [campaignId, handleCollaborationEvent, handleUserJoin, handleUserLeave, toast]);
+	// Initialize real-time connection
+	useEffect(() => {
+		if (!campaignId) return;
 
+		const newChannel = supabase
+			.channel(`campaign_${campaignId}`)
+			.on("broadcast", { event: "collaboration" }, (payload) => {
+				handleCollaborationEvent(payload.payload as CollaborationEvent);
+			})
+			.on("presence", { event: "join" }, ({ key, newPresences }) => {
+				handleUserJoin(key, newPresences as unknown as PresencePayload[]);
+			})
+			.on("presence", { event: "leave" }, ({ key, leftPresences }) => {
+				handleUserLeave(key, leftPresences as unknown as PresencePayload[]);
+			})
+			.on("presence", { event: "sync" }, () => {
+				// Handle initial sync
+			})
+			.subscribe((status) => {
+				setIsConnected(status === "SUBSCRIBED");
+				if (status === "SUBSCRIBED") {
+					toast({
+						title: "Connected to Campaign",
+						description: "Real-time collaboration enabled",
+					});
+				} else if (status === "CHANNEL_ERROR") {
+					toast({
+						title: "Connection Error",
+						description: "Unable to connect to real-time features",
+						variant: "destructive",
+					});
+				}
+			});
 
-  // Broadcasting functions
-  const broadcastCursorMove = useCallback((position: { x: number; y: number }) => {
-    if (!channel || !isConnected) return;
+		setChannel(newChannel);
 
-    channel.send({
-      type: 'broadcast',
-      event: 'collaboration',
-      payload: {
-        type: 'cursor_move',
-        userId: currentUserId,
-        userName: currentUserName,
-        data: position,
-        timestamp: Date.now(),
-        campaignId,
-      } as CollaborationEvent,
-    });
-  }, [channel, isConnected, campaignId]);
+		return () => {
+			newChannel.unsubscribe();
+		};
+	}, [
+		campaignId,
+		handleCollaborationEvent,
+		handleUserJoin,
+		handleUserLeave,
+		toast,
+	]);
 
-  const broadcastTextChange = useCallback((elementId: string, content: string, cursorPosition?: number) => {
-    if (!channel || !isConnected) return;
+	// Broadcasting functions
+	const broadcastCursorMove = useCallback(
+		(position: { x: number; y: number }) => {
+			if (!channel || !isConnected) return;
 
-    channel.send({
-      type: 'broadcast',
-      event: 'collaboration',
-      payload: {
-        type: 'text_change',
-        userId: currentUserId,
-        userName: currentUserName,
-        data: { elementId, content, cursorPosition },
-        timestamp: Date.now(),
-        campaignId,
-      } as CollaborationEvent,
-    });
-  }, [channel, isConnected, campaignId]);
+			channel.send({
+				type: "broadcast",
+				event: "collaboration",
+				payload: {
+					type: "cursor_move",
+					userId: currentUserId,
+					userName: currentUserName,
+					data: position,
+					timestamp: Date.now(),
+					campaignId,
+				} as CollaborationEvent,
+			});
+		},
+		[channel, isConnected, campaignId],
+	);
 
-  const broadcastCharacterUpdate = useCallback((characterId: string, updates: Record<string, unknown>) => {
-    if (!channel || !isConnected) return;
+	const broadcastTextChange = useCallback(
+		(elementId: string, content: string, cursorPosition?: number) => {
+			if (!channel || !isConnected) return;
 
-    channel.send({
-      type: 'broadcast',
-      event: 'collaboration',
-      payload: {
-        type: 'character_update',
-        userId: currentUserId,
-        userName: currentUserName,
-        data: { characterId, updates },
-        timestamp: Date.now(),
-        campaignId,
-      } as CollaborationEvent,
-    });
-  }, [channel, isConnected, campaignId]);
+			channel.send({
+				type: "broadcast",
+				event: "collaboration",
+				payload: {
+					type: "text_change",
+					userId: currentUserId,
+					userName: currentUserName,
+					data: { elementId, content, cursorPosition },
+					timestamp: Date.now(),
+					campaignId,
+				} as CollaborationEvent,
+			});
+		},
+		[channel, isConnected, campaignId],
+	);
 
-  const broadcastDiceRoll = useCallback((formula: string, result: number, details?: Record<string, unknown>) => {
-    if (!channel || !isConnected) return;
+	const broadcastCharacterUpdate = useCallback(
+		(characterId: string, updates: Record<string, unknown>) => {
+			if (!channel || !isConnected) return;
 
-    channel.send({
-      type: 'broadcast',
-      event: 'collaboration',
-      payload: {
-        type: 'dice_roll',
-        userId: currentUserId,
-        userName: currentUserName,
-        data: { formula, result, details },
-        timestamp: Date.now(),
-        campaignId,
-      } as CollaborationEvent,
-    });
-  }, [channel, isConnected, campaignId]);
+			channel.send({
+				type: "broadcast",
+				event: "collaboration",
+				payload: {
+					type: "character_update",
+					userId: currentUserId,
+					userName: currentUserName,
+					data: { characterId, updates },
+					timestamp: Date.now(),
+					campaignId,
+				} as CollaborationEvent,
+			});
+		},
+		[channel, isConnected, campaignId],
+	);
 
-  const broadcastMapUpdate = useCallback((mapData: MapUpdatePayload) => {
-    if (!channel || !isConnected) return;
+	const broadcastDiceRoll = useCallback(
+		(formula: string, result: number, details?: Record<string, unknown>) => {
+			if (!channel || !isConnected) return;
 
-    channel.send({
-      type: 'broadcast',
-      event: 'collaboration',
-      payload: {
-        type: 'map_update',
-        userId: currentUserId,
-        userName: currentUserName,
-        data: mapData,
-        timestamp: Date.now(),
-        campaignId,
-      } as CollaborationEvent,
-    });
-  }, [channel, isConnected, campaignId]);
+			channel.send({
+				type: "broadcast",
+				event: "collaboration",
+				payload: {
+					type: "dice_roll",
+					userId: currentUserId,
+					userName: currentUserName,
+					data: { formula, result, details },
+					timestamp: Date.now(),
+					campaignId,
+				} as CollaborationEvent,
+			});
+		},
+		[channel, isConnected, campaignId],
+	);
 
-  const broadcastCombatState = useCallback((combatState: CombatStatePayload) => {
-    if (!channel || !isConnected) return;
+	const broadcastMapUpdate = useCallback(
+		(mapData: MapUpdatePayload) => {
+			if (!channel || !isConnected) return;
 
-    channel.send({
-      type: 'broadcast',
-      event: 'collaboration',
-      payload: {
-        type: 'combat_state',
-        userId: currentUserId,
-        userName: currentUserName,
-        data: combatState,
-        timestamp: Date.now(),
-        campaignId,
-      } as CollaborationEvent,
-    });
-  }, [channel, isConnected, campaignId]);
+			channel.send({
+				type: "broadcast",
+				event: "collaboration",
+				payload: {
+					type: "map_update",
+					userId: currentUserId,
+					userName: currentUserName,
+					data: mapData,
+					timestamp: Date.now(),
+					campaignId,
+				} as CollaborationEvent,
+			});
+		},
+		[channel, isConnected, campaignId],
+	);
 
-  // Update user presence
-  const updatePresence = useCallback((state: Record<string, unknown>) => {
-    if (!channel || !isConnected) return;
+	const broadcastCombatState = useCallback(
+		(combatState: CombatStatePayload) => {
+			if (!channel || !isConnected) return;
 
-    channel.track({
-      user_id: currentUserId,
-      user_name: currentUserName,
-      ...state,
-    });
-  }, [channel, isConnected]);
+			channel.send({
+				type: "broadcast",
+				event: "collaboration",
+				payload: {
+					type: "combat_state",
+					userId: currentUserId,
+					userName: currentUserName,
+					data: combatState,
+					timestamp: Date.now(),
+					campaignId,
+				} as CollaborationEvent,
+			});
+		},
+		[channel, isConnected, campaignId],
+	);
 
-  return {
-    isConnected,
-    activeUsers: Array.from(activeUsers.values()),
-    broadcastCursorMove,
-    broadcastTextChange,
-    broadcastCharacterUpdate,
-    broadcastDiceRoll,
-    broadcastMapUpdate,
-    broadcastCombatState,
-    updatePresence,
-  };
+	// Update user presence
+	const updatePresence = useCallback(
+		(state: Record<string, unknown>) => {
+			if (!channel || !isConnected) return;
+
+			channel.track({
+				user_id: currentUserId,
+				user_name: currentUserName,
+				...state,
+			});
+		},
+		[channel, isConnected],
+	);
+
+	return {
+		isConnected,
+		activeUsers: Array.from(activeUsers.values()),
+		broadcastCursorMove,
+		broadcastTextChange,
+		broadcastCharacterUpdate,
+		broadcastDiceRoll,
+		broadcastMapUpdate,
+		broadcastCombatState,
+		updatePresence,
+	};
 }
 
 // React component for displaying active users
-export function ActiveUsersList({ activeUsers }: { activeUsers: ActiveUser[] }) {
-  return (
-    <div className="flex items-center space-x-2 p-2 bg-muted rounded-lg">
-      <div className="flex -space-x-2">
-        {activeUsers.map((user) => (
-          <div
-            key={user.id}
-            className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-medium border-2 border-background"
-            title={user.name}
-          >
-            {user.name.charAt(0).toUpperCase()}
-          </div>
-        ))}
-      </div>
-      <span className="text-sm text-muted-foreground">
-        {activeUsers.length} active user{activeUsers.length !== 1 ? 's' : ''}
-      </span>
-    </div>
-  );
+export function ActiveUsersList({
+	activeUsers,
+}: {
+	activeUsers: ActiveUser[];
+}) {
+	return (
+		<div className="flex items-center space-x-2 p-2 bg-muted rounded-lg">
+			<div className="flex -space-x-2">
+				{activeUsers.map((user) => (
+					<div
+						key={user.id}
+						className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-medium border-2 border-background"
+						title={user.name}
+					>
+						{user.name.charAt(0).toUpperCase()}
+					</div>
+				))}
+			</div>
+			<span className="text-sm text-muted-foreground">
+				{activeUsers.length} active user{activeUsers.length !== 1 ? "s" : ""}
+			</span>
+		</div>
+	);
 }
 
 // React component for collaborative cursors
-export function CollaborativeCursors({ activeUsers }: { activeUsers: ActiveUser[] }) {
-  const setCursorVars = (el: HTMLDivElement | null, cursor: { x: number; y: number }, userId: string) => {
-    if (!el) return;
-    el.style.setProperty('--cursor-x', `${cursor.x}px`);
-    el.style.setProperty('--cursor-y', `${cursor.y}px`);
-    el.style.setProperty('--cursor-color', getUserColor(userId));
-  };
+export function CollaborativeCursors({
+	activeUsers,
+}: {
+	activeUsers: ActiveUser[];
+}) {
+	const setCursorVars = (
+		el: HTMLDivElement | null,
+		cursor: { x: number; y: number },
+		userId: string,
+	) => {
+		if (!el) return;
+		el.style.setProperty("--cursor-x", `${cursor.x}px`);
+		el.style.setProperty("--cursor-y", `${cursor.y}px`);
+		el.style.setProperty("--cursor-color", getUserColor(userId));
+	};
 
-  return (
-    <>
-      {activeUsers.map((user) => (
-        user.cursor && (
-          <div
-            key={user.id}
-            className="cursor-indicator"
-            ref={(el) => setCursorVars(el, user.cursor!, user.id)}
-          >
-            <div className="cursor-indicator-inner" />
-            <div className="cursor-indicator-info">{user.name}</div>
-          </div>
-        )
-      ))}
-    </>
-  );
+	return (
+		<>
+			{activeUsers.map(
+				(user) =>
+					user.cursor && (
+						<div
+							key={user.id}
+							className="cursor-indicator"
+							ref={(el) => setCursorVars(el, user.cursor!, user.id)}
+						>
+							<div className="cursor-indicator-inner" />
+							<div className="cursor-indicator-info">{user.name}</div>
+						</div>
+					),
+			)}
+		</>
+	);
 }
 
 // Helper function to get consistent colors for users
 function getUserColor(userId: string): string {
-  const colors = [
-    '#ef4444', '#f97316', '#eab308', '#84cc16', '#22c55e',
-    '#14b8a6', '#06b6d4', '#0ea5e9', '#3b82f6', '#6366f1',
-    '#8b5cf6', '#a855f7', '#d946ef', '#ec4899', '#f43f5e'
-  ];
-  
-  let hash = 0;
-  for (let i = 0; i < userId.length; i++) {
-    hash = userId.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  
-  return colors[Math.abs(hash) % colors.length];
+	const colors = [
+		"#ef4444",
+		"#f97316",
+		"#eab308",
+		"#84cc16",
+		"#22c55e",
+		"#14b8a6",
+		"#06b6d4",
+		"#0ea5e9",
+		"#3b82f6",
+		"#6366f1",
+		"#8b5cf6",
+		"#a855f7",
+		"#d946ef",
+		"#ec4899",
+		"#f43f5e",
+	];
+
+	let hash = 0;
+	for (let i = 0; i < userId.length; i++) {
+		hash = userId.charCodeAt(i) + ((hash << 5) - hash);
+	}
+
+	return colors[Math.abs(hash) % colors.length];
 }

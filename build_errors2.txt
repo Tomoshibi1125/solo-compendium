@@ -1,0 +1,118 @@
+﻿
+> vite_react_shadcn_ts@0.0.0 build:vercel
+> node scripts/write-runtime-env.mjs && vite build
+
+[dotenv@17.3.1] injecting env (4) from .env -- tip: ≡ƒñû agentic secret storage: https://dotenvx.com/as2
+[36mvite v7.3.1 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32mΓ£ô[39m 4028 modules transformed.
+node.exe : 
+[31mΓ£ù[39m Build 
+failed in 8.37s
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: ([31mΓ£ù[39m   
+  Build failed in 8    
+.37s:String) [], R    
+emoteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+[31merror during 
+build:
+[31m[vite-plugin-pwa:b
+uild] [plugin 
+vite-plugin-pwa:build] 
+There was an error 
+during the build:
+  Could not load C:\Use
+rs\jjcal\Documents\solo
+-compendium\src\lib\rap
+ierCompat.ts (imported 
+by node_modules/@react-
+three/rapier/dist/react
+-three-rapier.esm.js): 
+ENOENT: no such file 
+or directory, open 'C:\
+Users\jjcal\Documents\s
+olo-compendium\src\lib\
+rapierCompat.ts'
+Additionally, handling 
+the error in the 
+'buildEnd' hook caused 
+the following error:
+  Could not load C:\Use
+rs\jjcal\Documents\solo
+-compendium\src\lib\rap
+ierCompat.ts (imported 
+by node_modules/@react-
+three/rapier/dist/react
+-three-rapier.esm.js): 
+ENOENT: no such file 
+or directory, open 'C:\
+Users\jjcal\Documents\s
+olo-compendium\src\lib\
+rapierCompat.ts'[31m
+    at getRollupError (
+file:///C:/Users/jjcal/
+Documents/solo-compendi
+um/node_modules/rollup/
+dist/es/shared/parseAst
+.js:402:41)
+    at file:///C:/Users
+/jjcal/Documents/solo-c
+ompendium/node_modules/
+rollup/dist/es/shared/n
+ode-entry.js:23467:39
+    at async catchUnfin
+ishedHookActions (file:
+///C:/Users/jjcal/Docum
+ents/solo-compendium/no
+de_modules/rollup/dist/
+es/shared/node-entry.js
+:22925:16)
+    at async 
+rollupInternal (file://
+/C:/Users/jjcal/Documen
+ts/solo-compendium/node
+_modules/rollup/dist/es
+/shared/node-entry.js:2
+3450:5)
+    at async 
+buildEnvironment (file:
+///C:/Users/jjcal/Docum
+ents/solo-compendium/no
+de_modules/vite/dist/no
+de/chunks/config.js:335
+41:12)
+    at async 
+Object.build (file:///C
+:/Users/jjcal/Documents
+/solo-compendium/node_m
+odules/vite/dist/node/c
+hunks/config.js:33900:1
+9)
+    at async 
+Object.buildApp (file:/
+//C:/Users/jjcal/Docume
+nts/solo-compendium/nod
+e_modules/vite/dist/nod
+e/chunks/config.js:3389
+7:153)
+    at async 
+CAC.<anonymous> (file:/
+//C:/Users/jjcal/Docume
+nts/solo-compendium/nod
+e_modules/vite/dist/nod
+e/cli.js:629:3)[39m

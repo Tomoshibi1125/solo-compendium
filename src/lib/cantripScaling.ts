@@ -11,10 +11,10 @@
 // ---------------------------------------------------------------------------
 
 export interface CantripScalingResult {
-  diceCount: number;
-  dieSize: number;
-  formula: string;
-  level: number;
+	diceCount: number;
+	dieSize: number;
+	formula: string;
+	level: number;
 }
 
 // ---------------------------------------------------------------------------
@@ -26,10 +26,10 @@ export interface CantripScalingResult {
  * Standard 5e: 1 die at level 1, 2 at level 5, 3 at level 11, 4 at level 17.
  */
 export function getCantripDiceCount(characterLevel: number): number {
-  if (characterLevel >= 17) return 4;
-  if (characterLevel >= 11) return 3;
-  if (characterLevel >= 5) return 2;
-  return 1;
+	if (characterLevel >= 17) return 4;
+	if (characterLevel >= 11) return 3;
+	if (characterLevel >= 5) return 2;
+	return 1;
 }
 
 /**
@@ -37,16 +37,16 @@ export function getCantripDiceCount(characterLevel: number): number {
  * Example: Fire Bolt (d10) at level 5 → "2d10"
  */
 export function getCantripDamageFormula(
-  baseDieSize: number,
-  characterLevel: number
+	baseDieSize: number,
+	characterLevel: number,
 ): CantripScalingResult {
-  const diceCount = getCantripDiceCount(characterLevel);
-  return {
-    diceCount,
-    dieSize: baseDieSize,
-    formula: `${diceCount}d${baseDieSize}`,
-    level: characterLevel,
-  };
+	const diceCount = getCantripDiceCount(characterLevel);
+	return {
+		diceCount,
+		dieSize: baseDieSize,
+		formula: `${diceCount}d${baseDieSize}`,
+		level: characterLevel,
+	};
 }
 
 /**
@@ -54,15 +54,15 @@ export function getCantripDamageFormula(
  * level-scaled formula.
  */
 export function scaleCantripDamage(
-  baseDamage: string,
-  characterLevel: number
+	baseDamage: string,
+	characterLevel: number,
 ): string {
-  const match = baseDamage.match(/(\d+)?d(\d+)/i);
-  if (!match) return baseDamage;
+	const match = baseDamage.match(/(\d+)?d(\d+)/i);
+	if (!match) return baseDamage;
 
-  const dieSize = parseInt(match[2], 10);
-  const diceCount = getCantripDiceCount(characterLevel);
-  return `${diceCount}d${dieSize}`;
+	const dieSize = parseInt(match[2], 10);
+	const diceCount = getCantripDiceCount(characterLevel);
+	return `${diceCount}d${dieSize}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -70,16 +70,16 @@ export function scaleCantripDamage(
 // ---------------------------------------------------------------------------
 
 export const COMMON_CANTRIP_DICE: Record<string, number> = {
-  'Fire Bolt': 10,
-  'Eldritch Blast': 10,
-  'Sacred Flame': 8,
-  'Chill Touch': 8,
-  'Toll the Dead': 12,
-  'Poison Spray': 12,
-  'Ray of Frost': 8,
-  'Shocking Grasp': 8,
-  'Acid Splash': 6,
-  'Produce Flame': 8,
-  'Thorn Whip': 6,
-  'Vicious Mockery': 4,
+	"Fire Bolt": 10,
+	"Eldritch Blast": 10,
+	"Sacred Flame": 8,
+	"Chill Touch": 8,
+	"Toll the Dead": 12,
+	"Poison Spray": 12,
+	"Ray of Frost": 8,
+	"Shocking Grasp": 8,
+	"Acid Splash": 6,
+	"Produce Flame": 8,
+	"Thorn Whip": 6,
+	"Vicious Mockery": 4,
 };

@@ -1,87 +1,97 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Share } from 'lucide-react';
+import { Share } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-    DropdownMenuLabel,
-    DropdownMenuSeparator
-} from '@/components/ui/dropdown-menu';
-import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
-import { useToast } from '@/hooks/use-toast';
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useToast } from "@/hooks/use-toast";
+import { useGlobalDDBeyondIntegration } from "@/hooks/useGlobalDDBeyondIntegration";
 
 export interface ShareToVTTButtonProps {
-    itemType: 'Monster' | 'Item' | 'Spell';
-    itemName: string;
+	itemType: "Monster" | "Item" | "Spell";
+	itemName: string;
 }
 
-export function ShareToVTTButton({ itemType, itemName }: ShareToVTTButtonProps) {
-    const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
-    const playerTools = usePlayerToolsEnhancements();
-    const [campaigns, setCampaigns] = useState<any[]>([]);
-    const [loading, setLoading] = useState(false);
-    const { toast } = useToast();
+export function ShareToVTTButton({
+	itemType,
+	itemName,
+}: ShareToVTTButtonProps) {
+	const { usePlayerToolsEnhancements } = useGlobalDDBeyondIntegration();
+	const playerTools = usePlayerToolsEnhancements();
+	const [campaigns, setCampaigns] = useState<any[]>([]);
+	const [loading, setLoading] = useState(false);
+	const { toast } = useToast();
 
-    const loadCampaigns = async () => {
-        setLoading(true);
-        try {
-            const camps = await playerTools.getCampaignsForRolling();
-            setCampaigns(camps || []);
-        } catch (e) {
-            console.error('Error fetching campaigns', e);
-        } finally {
-            setLoading(false);
-        }
-    };
+	const loadCampaigns = async () => {
+		setLoading(true);
+		try {
+			const camps = await playerTools.getCampaignsForRolling();
+			setCampaigns(camps || []);
+		} catch (e) {
+			console.error("Error fetching campaigns", e);
+		} finally {
+			setLoading(false);
+		}
+	};
 
-    const handleShare = async (campaignId: string) => {
-        try {
-            await playerTools.rollInCampaign(campaignId, {
-                character_id: undefined,
-                dice_formula: 'Share',
-                result: 0,
-                roll_type: 'custom',
-                rolls: [],
-                context: `Shared ${itemType}: ${itemName}`,
-            });
-            toast({
-                title: 'Shared to VTT',
-                description: `Successfully shared ${itemName} to campaign.`
-            });
-        } catch (error) {
-            toast({
-                title: 'Share Failed',
-                description: 'Failed to share to the VTT.',
-                variant: 'destructive'
-            });
-        }
-    };
+	const handleShare = async (campaignId: string) => {
+		try {
+			await playerTools.rollInCampaign(campaignId, {
+				character_id: undefined,
+				dice_formula: "Share",
+				result: 0,
+				roll_type: "custom",
+				rolls: [],
+				context: `Shared ${itemType}: ${itemName}`,
+			});
+			toast({
+				title: "Shared to VTT",
+				description: `Successfully shared ${itemName} to campaign.`,
+			});
+		} catch (error) {
+			toast({
+				title: "Share Failed",
+				description: "Failed to share to the VTT.",
+				variant: "destructive",
+			});
+		}
+	};
 
-    return (
-        <DropdownMenu onOpenChange={(open) => { if (open) loadCampaigns(); }}>
-            <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="gap-2">
-                    <Share className="w-4 h-4" />
-                    Share to VTT
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Share to Campaign</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                {loading ? (
-                    <DropdownMenuItem disabled>Loading campaigns...</DropdownMenuItem>
-                ) : campaigns.length === 0 ? (
-                    <DropdownMenuItem disabled>No active campaigns</DropdownMenuItem>
-                ) : (
-                    campaigns.map((camp: any) => (
-                        <DropdownMenuItem key={camp.id} onClick={() => handleShare(camp.id)}>
-                            {camp.name}
-                        </DropdownMenuItem>
-                    ))
-                )}
-            </DropdownMenuContent>
-        </DropdownMenu>
-    );
+	return (
+		<DropdownMenu
+			onOpenChange={(open) => {
+				if (open) loadCampaigns();
+			}}
+		>
+			<DropdownMenuTrigger asChild>
+				<Button variant="outline" size="sm" className="gap-2">
+					<Share className="w-4 h-4" />
+					Share to VTT
+				</Button>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent align="end">
+				<DropdownMenuLabel>Share to Campaign</DropdownMenuLabel>
+				<DropdownMenuSeparator />
+				{loading ? (
+					<DropdownMenuItem disabled>Loading campaigns...</DropdownMenuItem>
+				) : campaigns.length === 0 ? (
+					<DropdownMenuItem disabled>No active campaigns</DropdownMenuItem>
+				) : (
+					campaigns.map((camp: any) => (
+						<DropdownMenuItem
+							key={camp.id}
+							onClick={() => handleShare(camp.id)}
+						>
+							{camp.name}
+						</DropdownMenuItem>
+					))
+				)}
+			</DropdownMenuContent>
+		</DropdownMenu>
+	);
 }

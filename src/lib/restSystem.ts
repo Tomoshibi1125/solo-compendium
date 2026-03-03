@@ -3,16 +3,21 @@
  * Handles short rest and long rest resource restoration
  */
 
-import { supabase } from '@/integrations/supabase/client';
-import { logger } from './logger';
-import { calculateRuneMaxUses } from './runeAutomation';
-import { getProficiencyBonus } from '@/types/system-rules';
-import { AppError } from './appError';
-import type { Database } from '@/integrations/supabase/types';
-import { DomainEventBus, buildCorePayload, type RestShortEvent, type RestLongEvent } from '@/lib/domainEvents';
+import { supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
+import {
+	buildCorePayload,
+	DomainEventBus,
+	type RestLongEvent,
+	type RestShortEvent,
+} from "@/lib/domainEvents";
+import { getProficiencyBonus } from "@/types/system-rules";
+import { AppError } from "./appError";
+import { logger } from "./logger";
+import { calculateRuneMaxUses } from "./runeAutomation";
 
-type CompendiumRuneRow = Database['public']['Tables']['compendium_runes']['Row'];
-
+type CompendiumRuneRow =
+	Database["public"]["Tables"]["compendium_runes"]["Row"];
 
 /**
  * Execute short rest
@@ -20,86 +25,86 @@ type CompendiumRuneRow = Database['public']['Tables']['compendium_runes']['Row']
  * - Reset short-rest recharge features
  */
 export async function executeShortRest(characterId: string): Promise<void> {
-  const { data: character } = await supabase
-    .from('characters')
-    .select('*')
-    .eq('id', characterId)
-    .single();
+	const { data: character } = await supabase
+		.from("characters")
+		.select("*")
+		.eq("id", characterId)
+		.single();
 
-  if (!character) throw new AppError('Ascendant not found', 'NOT_FOUND');
+	if (!character) throw new AppError("Ascendant not found", "NOT_FOUND");
 
-  // Short rest does NOT auto-restore hit dice per 5e SRD.
-  // Players may *spend* hit dice to heal (handled by ShortRestDialog/useHitDiceSpending).
+	// Short rest does NOT auto-restore hit dice per 5e SRD.
+	// Players may *spend* hit dice to heal (handled by ShortRestDialog/useHitDiceSpending).
 
-  // Reset short-rest recharge features
-  const { data: features } = await supabase
-    .from('character_features')
-    .select('*')
-    .eq('character_id', characterId)
-    .eq('recharge', 'short-rest');
+	// Reset short-rest recharge features
+	const { data: features } = await supabase
+		.from("character_features")
+		.select("*")
+		.eq("character_id", characterId)
+		.eq("recharge", "short-rest");
 
-  if (features && features.length > 0) {
-    for (const feature of features) {
-      if (feature.uses_max !== null) {
-        await supabase
-          .from('character_features')
-          .update({ uses_current: feature.uses_max })
-          .eq('id', feature.id);
-      }
-    }
-  }
+	if (features && features.length > 0) {
+		for (const feature of features) {
+			if (feature.uses_max !== null) {
+				await supabase
+					.from("character_features")
+					.update({ uses_current: feature.uses_max })
+					.eq("id", feature.id);
+			}
+		}
+	}
 
-  // Reset rune uses if applicable
-  try {
-    await resetRuneUses(characterId, 'short');
-  } catch (error) {
-    logger.error('Failed to reset rune uses:', error);
-    // Continue even if rune reset fails
-  }
+	// Reset rune uses if applicable
+	try {
+		await resetRuneUses(characterId, "short");
+	} catch (error) {
+		logger.error("Failed to reset rune uses:", error);
+		// Continue even if rune reset fails
+	}
 
-  // Recover spell slots on short rest (only for slots marked for short rest recovery)
-  const recoveredSlotLevels: number[] = [];
-  try {
-    const { data: slots } = await supabase
-      .from('character_spell_slots')
-      .select('*')
-      .eq('character_id', characterId)
-      .eq('slots_recovered_on_short_rest', 1);
+	// Recover spell slots on short rest (only for slots marked for short rest recovery)
+	const recoveredSlotLevels: number[] = [];
+	try {
+		const { data: slots } = await supabase
+			.from("character_spell_slots")
+			.select("*")
+			.eq("character_id", characterId)
+			.eq("slots_recovered_on_short_rest", 1);
 
-    if (slots && slots.length > 0) {
-      for (const slot of slots) {
-        await supabase
-          .from('character_spell_slots')
-          .update({ slots_current: slot.slots_max })
-          .eq('id', slot.id);
-        recoveredSlotLevels.push(slot.spell_level);
-      }
-    }
-  } catch (error) {
-    logger.error('Failed to recover spell slots:', error);
-    // Continue even if spell slot recovery fails
-  }
+		if (slots && slots.length > 0) {
+			for (const slot of slots) {
+				await supabase
+					.from("character_spell_slots")
+					.update({ slots_current: slot.slots_max })
+					.eq("id", slot.id);
+				recoveredSlotLevels.push(slot.spell_level);
+			}
+		}
+	} catch (error) {
+		logger.error("Failed to recover spell slots:", error);
+		// Continue even if spell slot recovery fails
+	}
 
-  // Emit domain event
-  try {
-    const shortRestEvent: RestShortEvent = {
-      ...buildCorePayload({
-        characterId: character.id,
-        characterName: character.name,
-        className: character.job,
-        pathName: character.path,
-        level: character.level,
-      }),
-      type: 'rest:short',
-      hitDiceSpent: 0,
-      hpRecovered: 0,
-      featuresRecharged: (features || []).map((f) => f.name),
-      slotsRecovered: recoveredSlotLevels,
-    };
-    DomainEventBus.emit(shortRestEvent);
-  } catch {
-    // Best-effort event emission
-  }
+	// Emit domain event
+	try {
+		const shortRestEvent: RestShortEvent = {
+			...buildCorePayload({
+				characterId: character.id,
+				characterName: character.name,
+				className: character.job,
+				pathName: character.path,
+				level: character.level,
+			}),
+			type: "rest:short",
+			hitDiceSpent: 0,
+			hpRecovered: 0,
+			featuresRecharged: (features || []).map((f) => f.name),
+			slotsRecovered: recoveredSlotLevels,
+		};
+		DomainEventBus.emit(shortRestEvent);
+	} catch {
+		// Best-effort event emission
+	}
 }
 
 /**
@@ -111,231 +116,238 @@ export async function executeShortRest(characterId: string): Promise<void> {
  * - Reduce exhaustion by 1
  * - Clear conditions
  */
-export async function executeLongRest(characterId: string): Promise<{ questAssignmentError?: string }> {
-  const { data: character } = await supabase
-    .from('characters')
-    .select('*')
-    .eq('id', characterId)
-    .single();
+export async function executeLongRest(
+	characterId: string,
+): Promise<{ questAssignmentError?: string }> {
+	const { data: character } = await supabase
+		.from("characters")
+		.select("*")
+		.eq("id", characterId)
+		.single();
 
-  if (!character) throw new AppError('Ascendant not found', 'NOT_FOUND');
+	if (!character) throw new AppError("Ascendant not found", "NOT_FOUND");
 
-  // Update character
-  await supabase
-    .from('characters')
-    .update({
-      hp_current: character.hp_max,
-      hit_dice_current: Math.min(
-        character.hit_dice_max,
-        character.hit_dice_current + Math.max(1, Math.floor(character.hit_dice_max / 2))
-      ),
-      system_favor_current: character.system_favor_max,
-      exhaustion_level: Math.max(0, character.exhaustion_level - 1),
-      conditions: [],
-    })
-    .eq('id', characterId);
+	// Update character
+	await supabase
+		.from("characters")
+		.update({
+			hp_current: character.hp_max,
+			hit_dice_current: Math.min(
+				character.hit_dice_max,
+				character.hit_dice_current +
+					Math.max(1, Math.floor(character.hit_dice_max / 2)),
+			),
+			system_favor_current: character.system_favor_max,
+			exhaustion_level: Math.max(0, character.exhaustion_level - 1),
+			conditions: [],
+		})
+		.eq("id", characterId);
 
-  // Reset long-rest AND short-rest recharge features (per 5e SRD, long rest also restores short-rest resources)
-  const { data: features } = await supabase
-    .from('character_features')
-    .select('*')
-    .eq('character_id', characterId)
-    .in('recharge', ['long-rest', 'short-rest']);
+	// Reset long-rest AND short-rest recharge features (per 5e SRD, long rest also restores short-rest resources)
+	const { data: features } = await supabase
+		.from("character_features")
+		.select("*")
+		.eq("character_id", characterId)
+		.in("recharge", ["long-rest", "short-rest"]);
 
-  if (features && features.length > 0) {
-    for (const feature of features) {
-      if (feature.uses_max !== null) {
-        await supabase
-          .from('character_features')
-          .update({ uses_current: feature.uses_max })
-          .eq('id', feature.id);
-      }
-    }
-  }
+	if (features && features.length > 0) {
+		for (const feature of features) {
+			if (feature.uses_max !== null) {
+				await supabase
+					.from("character_features")
+					.update({ uses_current: feature.uses_max })
+					.eq("id", feature.id);
+			}
+		}
+	}
 
-  // Reset encounter recharge features (they recharge on long rest too)
-  const { data: encounterFeatures } = await supabase
-    .from('character_features')
-    .select('*')
-    .eq('character_id', characterId)
-    .eq('recharge', 'encounter');
+	// Reset encounter recharge features (they recharge on long rest too)
+	const { data: encounterFeatures } = await supabase
+		.from("character_features")
+		.select("*")
+		.eq("character_id", characterId)
+		.eq("recharge", "encounter");
 
-  if (encounterFeatures && encounterFeatures.length > 0) {
-    for (const feature of encounterFeatures) {
-      if (feature.uses_max !== null) {
-        await supabase
-          .from('character_features')
-          .update({ uses_current: feature.uses_max })
-          .eq('id', feature.id);
-      }
-    }
-  }
+	if (encounterFeatures && encounterFeatures.length > 0) {
+		for (const feature of encounterFeatures) {
+			if (feature.uses_max !== null) {
+				await supabase
+					.from("character_features")
+					.update({ uses_current: feature.uses_max })
+					.eq("id", feature.id);
+			}
+		}
+	}
 
-  // Reset rune uses if applicable
-  try {
-    await resetRuneUses(characterId, 'long');
-  } catch (error) {
-    logger.error('Failed to reset rune uses:', error);
-    // Continue even if rune reset fails
-  }
+	// Reset rune uses if applicable
+	try {
+		await resetRuneUses(characterId, "long");
+	} catch (error) {
+		logger.error("Failed to reset rune uses:", error);
+		// Continue even if rune reset fails
+	}
 
-  // Recover all spell slots on long rest
-  try {
-    const { data: slots } = await supabase
-      .from('character_spell_slots')
-      .select('*')
-      .eq('character_id', characterId);
+	// Recover all spell slots on long rest
+	try {
+		const { data: slots } = await supabase
+			.from("character_spell_slots")
+			.select("*")
+			.eq("character_id", characterId);
 
-    if (slots && slots.length > 0) {
-      for (const slot of slots) {
-        await supabase
-          .from('character_spell_slots')
-          .update({ slots_current: slot.slots_max })
-          .eq('id', slot.id);
-      }
-    }
-  } catch (error) {
-    logger.error('Failed to recover spell slots:', error);
-    // Continue even if spell slot recovery fails
-  }
+		if (slots && slots.length > 0) {
+			for (const slot of slots) {
+				await supabase
+					.from("character_spell_slots")
+					.update({ slots_current: slot.slots_max })
+					.eq("id", slot.id);
+			}
+		}
+	} catch (error) {
+		logger.error("Failed to recover spell slots:", error);
+		// Continue even if spell slot recovery fails
+	}
 
-  // Assign daily quests after long rest (if enabled)
-  try {
-    const { error } = await supabase.rpc('on_long_rest_assign_quests', {
-      p_character_id: characterId,
-    });
-    if (error) {
-      throw error;
-    }
-  } catch (error) {
-    const message = error instanceof Error ? error.message : 'Daily quests could not be assigned';
-    logger.error('Failed to assign daily quests after long rest:', error);
+	// Assign daily quests after long rest (if enabled)
+	try {
+		const { error } = await supabase.rpc("on_long_rest_assign_quests", {
+			p_character_id: characterId,
+		});
+		if (error) {
+			throw error;
+		}
+	} catch (error) {
+		const message =
+			error instanceof Error
+				? error.message
+				: "Daily quests could not be assigned";
+		logger.error("Failed to assign daily quests after long rest:", error);
 
-    // Emit domain event even on partial failure
-    try {
-      const longRestEvent: RestLongEvent = {
-        ...buildCorePayload({
-          characterId: character.id,
-          characterName: character.name,
-          className: character.job,
-          pathName: character.path,
-          level: character.level,
-        }),
-        type: 'rest:long',
-        hpRecovered: character.hp_max - character.hp_current,
-        hitDiceRecovered: character.hit_dice_max - character.hit_dice_current,
-        featuresRecharged: [
-          ...(features || []).map((f) => f.name),
-          ...(encounterFeatures || []).map((f) => f.name),
-        ],
-        slotsRecovered: [],
-        exhaustionReduced: character.exhaustion_level > 0,
-        conditionsCleared: character.conditions || [],
-      };
-      DomainEventBus.emit(longRestEvent);
-    } catch {
-      // Best-effort
-    }
+		// Emit domain event even on partial failure
+		try {
+			const longRestEvent: RestLongEvent = {
+				...buildCorePayload({
+					characterId: character.id,
+					characterName: character.name,
+					className: character.job,
+					pathName: character.path,
+					level: character.level,
+				}),
+				type: "rest:long",
+				hpRecovered: character.hp_max - character.hp_current,
+				hitDiceRecovered: character.hit_dice_max - character.hit_dice_current,
+				featuresRecharged: [
+					...(features || []).map((f) => f.name),
+					...(encounterFeatures || []).map((f) => f.name),
+				],
+				slotsRecovered: [],
+				exhaustionReduced: character.exhaustion_level > 0,
+				conditionsCleared: character.conditions || [],
+			};
+			DomainEventBus.emit(longRestEvent);
+		} catch {
+			// Best-effort
+		}
 
-    return { questAssignmentError: message };
-  }
+		return { questAssignmentError: message };
+	}
 
-  // Emit domain event
-  try {
-    const longRestEvent: RestLongEvent = {
-      ...buildCorePayload({
-        characterId: character.id,
-        characterName: character.name,
-        className: character.job,
-        pathName: character.path,
-        level: character.level,
-      }),
-      type: 'rest:long',
-      hpRecovered: character.hp_max - character.hp_current,
-      hitDiceRecovered: character.hit_dice_max - character.hit_dice_current,
-      featuresRecharged: [
-        ...(features || []).map((f) => f.name),
-        ...(encounterFeatures || []).map((f) => f.name),
-      ],
-      slotsRecovered: [],
-      exhaustionReduced: character.exhaustion_level > 0,
-      conditionsCleared: character.conditions || [],
-    };
-    DomainEventBus.emit(longRestEvent);
-  } catch {
-    // Best-effort
-  }
+	// Emit domain event
+	try {
+		const longRestEvent: RestLongEvent = {
+			...buildCorePayload({
+				characterId: character.id,
+				characterName: character.name,
+				className: character.job,
+				pathName: character.path,
+				level: character.level,
+			}),
+			type: "rest:long",
+			hpRecovered: character.hp_max - character.hp_current,
+			hitDiceRecovered: character.hit_dice_max - character.hit_dice_current,
+			featuresRecharged: [
+				...(features || []).map((f) => f.name),
+				...(encounterFeatures || []).map((f) => f.name),
+			],
+			slotsRecovered: [],
+			exhaustionReduced: character.exhaustion_level > 0,
+			conditionsCleared: character.conditions || [],
+		};
+		DomainEventBus.emit(longRestEvent);
+	} catch {
+		// Best-effort
+	}
 
-  return {};
+	return {};
 }
 
 /**
  * Reset rune uses on rest
  * Runes with uses_per_rest recharge based on their recharge type
  */
-async function resetRuneUses(characterId: string, restType: 'short' | 'long'): Promise<void> {
-  // Get character for level/proficiency bonus
-  const { data: character } = await supabase
-    .from('characters')
-    .select('level')
-    .eq('id', characterId)
-    .single();
+async function resetRuneUses(
+	characterId: string,
+	restType: "short" | "long",
+): Promise<void> {
+	// Get character for level/proficiency bonus
+	const { data: character } = await supabase
+		.from("characters")
+		.select("level")
+		.eq("id", characterId)
+		.single();
 
-  if (!character) return;
+	if (!character) return;
 
-  const proficiencyBonus = getProficiencyBonus(character.level);
+	const proficiencyBonus = getProficiencyBonus(character.level);
 
-  // Get all character's rune inscriptions
-  const { data: inscriptions } = await supabase
-    .from('character_rune_inscriptions')
-    .select(`
+	// Get all character's rune inscriptions
+	const { data: inscriptions } = await supabase
+		.from("character_rune_inscriptions")
+		.select(`
       *,
       rune:compendium_runes(*)
     `)
-    .eq('character_id', characterId)
-    .eq('is_active', true);
+		.eq("character_id", characterId)
+		.eq("is_active", true);
 
-  if (!inscriptions || inscriptions.length === 0) return;
+	if (!inscriptions || inscriptions.length === 0) return;
 
-  // Process each inscription
-  for (const inscription of inscriptions) {
-    const rune = inscription.rune as unknown as CompendiumRuneRow;
-    
-    // Skip if no uses_per_rest (at-will or passive)
-    if (!rune.uses_per_rest || rune.uses_per_rest === 'at-will') {
-      continue;
-    }
+	// Process each inscription
+	for (const inscription of inscriptions) {
+		const rune = inscription.rune as unknown as CompendiumRuneRow;
 
-    // Check if this rune recharges on this rest type
-    const shouldRecharge = 
-      rune.recharge === restType || 
-      (restType === 'long' && rune.recharge === 'short-rest');
+		// Skip if no uses_per_rest (at-will or passive)
+		if (!rune.uses_per_rest || rune.uses_per_rest === "at-will") {
+			continue;
+		}
 
-    if (!shouldRecharge) {
-      continue;
-    }
+		// Check if this rune recharges on this rest type
+		const shouldRecharge =
+			rune.recharge === restType ||
+			(restType === "long" && rune.recharge === "short-rest");
 
-    // Calculate max uses
-    const maxUses = calculateRuneMaxUses(
-      rune.uses_per_rest,
-      character.level,
-      proficiencyBonus
-    );
+		if (!shouldRecharge) {
+			continue;
+		}
 
-    // Skip unlimited uses (-1)
-    if (maxUses === -1) {
-      continue;
-    }
+		// Calculate max uses
+		const maxUses = calculateRuneMaxUses(
+			rune.uses_per_rest,
+			character.level,
+			proficiencyBonus,
+		);
 
-    // Update inscription with new uses
-    await supabase
-      .from('character_rune_inscriptions')
-      .update({
-        uses_max: maxUses,
-        uses_current: maxUses,
-      })
-      .eq('id', inscription.id);
-  }
+		// Skip unlimited uses (-1)
+		if (maxUses === -1) {
+			continue;
+		}
+
+		// Update inscription with new uses
+		await supabase
+			.from("character_rune_inscriptions")
+			.update({
+				uses_max: maxUses,
+				uses_current: maxUses,
+			})
+			.eq("id", inscription.id);
+	}
 }
-
-

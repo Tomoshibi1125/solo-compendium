@@ -1,265 +1,265 @@
 /* Player Map View Styles */
 
 .vtt-canvas {
-  width: 100%;
-  height: 100%;
-  background: #1a1a1a;
-  border-radius: 8px;
-  position: relative;
-  overflow: hidden;
+	width: 100%;
+	height: 100%;
+	background: #1a1a1a;
+	border-radius: 8px;
+	position: relative;
+	overflow: hidden;
 }
 
 .vtt-controls {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  display: flex;
-  gap: 8px;
-  z-index: 10;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	display: flex;
+	gap: 8px;
+	z-index: 10;
 }
 
 .vtt-control-btn {
-  background: rgba(0, 0, 0, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  padding: 8px;
-  color: white;
-  cursor: pointer;
-  transition: all 0.2s ease;
+	background: rgba(0, 0, 0, 0.7);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 4px;
+	padding: 8px;
+	color: white;
+	cursor: pointer;
+	transition: all 0.2s ease;
 }
 
 .vtt-control-btn:hover {
-  background: rgba(0, 0, 0, 0.9);
-  border-color: rgba(255, 255, 255, 0.4);
+	background: rgba(0, 0, 0, 0.9);
+	border-color: rgba(255, 255, 255, 0.4);
 }
 
 .vtt-zoom-display {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  background: rgba(0, 0, 0, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  padding: 8px 12px;
-  color: white;
-  font-size: 12px;
-  z-index: 10;
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	background: rgba(0, 0, 0, 0.7);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 4px;
+	padding: 8px 12px;
+	color: white;
+	font-size: 12px;
+	z-index: 10;
 }
 
 .vtt-info {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: rgba(0, 0, 0, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  padding: 8px 12px;
-  color: white;
-  font-size: 12px;
-  z-index: 10;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	background: rgba(0, 0, 0, 0.7);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 4px;
+	padding: 8px 12px;
+	color: white;
+	font-size: 12px;
+	z-index: 10;
 }
 
 .vtt-grid-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  opacity: 0.3;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	opacity: 0.3;
 }
 
 .vtt-token {
-  position: absolute;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: bold;
-  color: white;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+	position: absolute;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 12px;
+	font-weight: bold;
+	color: white;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .vtt-token:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+	transform: scale(1.1);
+	box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .vtt-token.selected {
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-  border: 2px solid #ffd700;
+	box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+	border: 2px solid #ffd700;
 }
 
 .vtt-token-label {
-  position: absolute;
-  bottom: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 3px;
-  padding: 2px 6px;
-  font-size: 10px;
-  white-space: nowrap;
-  pointer-events: none;
+	position: absolute;
+	bottom: -20px;
+	left: 50%;
+	transform: translateX(-50%);
+	background: rgba(0, 0, 0, 0.8);
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	border-radius: 3px;
+	padding: 2px 6px;
+	font-size: 10px;
+	white-space: nowrap;
+	pointer-events: none;
 }
 
 /* User avatar styles */
 .vtt-user-avatar {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  font-weight: 600;
-  color: white;
-  font-size: 14px;
-  text-transform: uppercase;
-  border: 2px solid;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	font-weight: 600;
+	color: white;
+	font-size: 14px;
+	text-transform: uppercase;
+	border: 2px solid;
 }
 
 /* Map container styles */
 .vtt-map-container {
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
+	position: relative;
+	overflow: hidden;
+	border-radius: 8px;
 }
 
 .vtt-map-scene {
-  position: relative;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+	position: relative;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 .vtt-background-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 
 /* Grid overlay styles */
 .vtt-grid-overlay {
-  background-image: 
-    linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px),
-    linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px);
+	background-image:
+		linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px),
+		linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px);
 }
 
 /* Fog of war styles */
 .vtt-fog-cell {
-  position: absolute;
-  background: rgba(0, 0, 0, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+	position: absolute;
+	background: rgba(0, 0, 0, 0.8);
+	border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Token aura styles */
 .vtt-token-aura {
-  border-radius: 50%;
-  border: 2px solid;
-  opacity: 0.6;
+	border-radius: 50%;
+	border: 2px solid;
+	opacity: 0.6;
 }
 
 /* Token inner styles */
 .vtt-token-inner {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: bold;
 }
 
 .vtt-token-base {
-  border: 2px solid;
+	border: 2px solid;
 }
 
 .vtt-token-overlay {
-  background: transparent;
-  border: none;
+	background: transparent;
+	border: none;
 }
 
 /* HP bar styles */
 .vtt-hp-bar {
-  height: 3px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 2px;
-  overflow: hidden;
-  margin-top: 2px;
+	height: 3px;
+	background: rgba(255, 255, 255, 0.2);
+	border-radius: 2px;
+	overflow: hidden;
+	margin-top: 2px;
 }
 
 .vtt-hp-bar-fill {
-  height: 100%;
-  background: currentColor;
-  transition: width 0.3s ease;
+	height: 100%;
+	background: currentColor;
+	transition: width 0.3s ease;
 }
 
 .vtt-hp-bar-fill.high {
-  color: #22c55e;
+	color: #22c55e;
 }
 
 .vtt-hp-bar-fill.medium {
-  color: #f59e0b;
+	color: #f59e0b;
 }
 
 .vtt-hp-bar-fill.low {
-  color: #ef4444;
+	color: #ef4444;
 }
 
 /* Ping styles */
 .vtt-ping {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 2px solid;
-  opacity: 0.8;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	border: 2px solid;
+	opacity: 0.8;
 }
 
 /* Cursor styles */
 .vtt-cursor-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: 2px solid white;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	border: 2px solid white;
 }
 
 .vtt-cursor-label {
-  background: rgba(0, 0, 0, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 3px;
-  padding: 2px 6px;
-  font-size: 10px;
-  white-space: nowrap;
-  color: white;
+	background: rgba(0, 0, 0, 0.8);
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	border-radius: 3px;
+	padding: 2px 6px;
+	font-size: 10px;
+	white-space: nowrap;
+	color: white;
 }
 
 /* Initiative HP bar styles */
 .vtt-initiative-hp-bar {
-  height: 2px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 1px;
-  overflow: hidden;
-  margin-top: 1px;
+	height: 2px;
+	background: rgba(255, 255, 255, 0.2);
+	border-radius: 1px;
+	overflow: hidden;
+	margin-top: 1px;
 }
 
 .vtt-initiative-hp-bar-fill {
-  height: 100%;
-  transition: width 0.3s ease;
+	height: 100%;
+	transition: width 0.3s ease;
 }
 
 .vtt-initiative-hp-bar-fill.high {
-  background: #22c55e;
+	background: #22c55e;
 }
 
 .vtt-initiative-hp-bar-fill.medium {
-  background: #f59e0b;
+	background: #f59e0b;
 }
 
 .vtt-initiative-hp-bar-fill.low {
-  background: #ef4444;
+	background: #ef4444;
 }

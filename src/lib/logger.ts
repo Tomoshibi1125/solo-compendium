@@ -4,101 +4,105 @@
  */
 
 const isDevelopment = import.meta.env.DEV;
-const isE2E = import.meta.env.VITE_E2E === 'true';
+const isE2E = import.meta.env.VITE_E2E === "true";
 const allowConsole = isDevelopment && !isE2E;
 
 export interface Logger {
-  log: (...args: unknown[]) => void;
-  error: (...args: unknown[]) => void;
-  warn: (...args: unknown[]) => void;
-  debug: (...args: unknown[]) => void;
+	log: (...args: unknown[]) => void;
+	error: (...args: unknown[]) => void;
+	warn: (...args: unknown[]) => void;
+	debug: (...args: unknown[]) => void;
 }
 
-type LoggerMode = 'development' | 'production';
+type LoggerMode = "development" | "production";
 
-type LoggerSink = Pick<Console, 'log' | 'error' | 'warn' | 'debug'>;
+type LoggerSink = Pick<Console, "log" | "error" | "warn" | "debug">;
 
 type LoggerOptions = {
-  mode: LoggerMode;
-  criticalPatterns: string[];
-  sink: LoggerSink;
+	mode: LoggerMode;
+	criticalPatterns: string[];
+	sink: LoggerSink;
 };
 
 /**
  * Critical errors that should always be logged (even in production)
  */
 const defaultCriticalPatterns: string[] = [
-  'Missing Supabase',
-  'Missing required environment variables',
-  'Supabase connection',
-  '[Sentry]',
-  '[SW]',
-  'ErrorBoundary',
-  'Root element not found',
+	"Missing Supabase",
+	"Missing required environment variables",
+	"Supabase connection",
+	"[Sentry]",
+	"[SW]",
+	"ErrorBoundary",
+	"Root element not found",
 ];
 
 /**
  * Check if an error message should be logged in production
  */
 function isCriticalError(args: unknown[], criticalPatterns: string[]): boolean {
-  const message = args
-    .map((arg) => {
-      if (typeof arg === 'string') return arg;
-      if (arg instanceof Error) return arg.message;
-      if (typeof arg === 'object' && arg !== null) {
-        try {
-          return JSON.stringify(arg);
-        } catch {
-          return String(arg);
-        }
-      }
-      return String(arg);
-    })
-    .join(' ');
+	const message = args
+		.map((arg) => {
+			if (typeof arg === "string") return arg;
+			if (arg instanceof Error) return arg.message;
+			if (typeof arg === "object" && arg !== null) {
+				try {
+					return JSON.stringify(arg);
+				} catch {
+					return String(arg);
+				}
+			}
+			return String(arg);
+		})
+		.join(" ");
 
-  return criticalPatterns.some((critical) => message.toLowerCase().includes(critical.toLowerCase()));
+	return criticalPatterns.some((critical) =>
+		message.toLowerCase().includes(critical.toLowerCase()),
+	);
 }
 
 const defaultOptions: LoggerOptions = {
-  mode: allowConsole ? 'development' : 'production',
-  criticalPatterns: defaultCriticalPatterns,
-  sink: console,
+	mode: allowConsole ? "development" : "production",
+	criticalPatterns: defaultCriticalPatterns,
+	sink: console,
 };
 
 export function createLogger(overrides: Partial<LoggerOptions> = {}): Logger {
-  const options: LoggerOptions = {
-    ...defaultOptions,
-    ...overrides,
-    criticalPatterns: overrides.criticalPatterns ?? defaultOptions.criticalPatterns,
-    sink: overrides.sink ?? defaultOptions.sink,
-    mode: overrides.mode ?? defaultOptions.mode,
-  };
+	const options: LoggerOptions = {
+		...defaultOptions,
+		...overrides,
+		criticalPatterns:
+			overrides.criticalPatterns ?? defaultOptions.criticalPatterns,
+		sink: overrides.sink ?? defaultOptions.sink,
+		mode: overrides.mode ?? defaultOptions.mode,
+	};
 
-  const shouldLog = (args: unknown[]) =>
-    options.mode === 'development' || isCriticalError(args, options.criticalPatterns);
+	const shouldLog = (args: unknown[]) =>
+		options.mode === "development" ||
+		isCriticalError(args, options.criticalPatterns);
 
-  return {
-    log: (...args) => {
-      if (options.mode === 'development') {
-        options.sink.log(...args);
-      }
-    },
-    error: (...args) => {
-      if (shouldLog(args)) {
-        options.sink.error(...args);
-      }
-    },
-    warn: (...args) => {
-      if (shouldLog(args)) {
-        options.sink.warn(...args);
-      }
-    },
-    debug: (...args) => {
-      if (options.mode === 'development') {
-        options.sink.debug(...args);
-      }
-    },
-  };
+	return {
+		log: (...args) => {
+			if (options.mode === "development") {
+				options.sink.log(...args);
+			}
+		},
+		error: (...args) => {
+			if (shouldLog(args)) {
+				options.sink.error(...args);
+			}
+		},
+		warn: (...args) => {
+			if (shouldLog(args)) {
+				options.sink.warn(...args);
+			}
+		},
+		debug: (...args) => {
+			if (options.mode === "development") {
+				options.sink.debug(...args);
+			}
+		},
+	};
 }
 
 // Export the appropriate logger based on environment
@@ -110,10 +114,16 @@ export const error = logger.error.bind(logger);
 export const warn = logger.warn.bind(logger);
 export const debug = logger.debug.bind(logger);
 
-
-
-export function logAndToastError(error: unknown, context: string, toast?: (opts: { title: string; description: string; variant?: string }) => void): void {
-  const msg = error instanceof Error ? error.message : String(error);
-  console.error(`[${context}]`, error);
-  toast?.({ title: context, description: msg, variant: 'destructive' });
+export function logAndToastError(
+	error: unknown,
+	context: string,
+	toast?: (opts: {
+		title: string;
+		description: string;
+		variant?: string;
+	}) => void,
+): void {
+	const msg = error instanceof Error ? error.message : String(error);
+	console.error(`[${context}]`, error);
+	toast?.({ title: context, description: msg, variant: "destructive" });
 }

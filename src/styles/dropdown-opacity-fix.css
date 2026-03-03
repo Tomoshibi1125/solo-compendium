@@ -7,87 +7,89 @@
 
 /* Force solid backgrounds for all dropdown menus */
 [data-radix-dropdown-menu-content] {
-  background: hsl(var(--popover)) !important;
-  opacity: 1 !important;
+	background: hsl(var(--popover)) !important;
+	opacity: 1 !important;
 }
 
 @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
-  [data-radix-dropdown-menu-content] {
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-  }
+	[data-radix-dropdown-menu-content] {
+		-webkit-backdrop-filter: none !important;
+		backdrop-filter: none !important;
+	}
 }
 
 /* Force solid backgrounds for all select dropdowns */
 [data-radix-select-content] {
-  background: hsl(var(--popover)) !important;
-  opacity: 1 !important;
+	background: hsl(var(--popover)) !important;
+	opacity: 1 !important;
 }
 
 @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
-  [data-radix-select-content] {
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-  }
+	[data-radix-select-content] {
+		-webkit-backdrop-filter: none !important;
+		backdrop-filter: none !important;
+	}
 }
 
 /* Ensure popover components have solid backgrounds */
 [data-radix-popover-content] {
-  background: hsl(var(--popover)) !important;
-  opacity: 1 !important;
+	background: hsl(var(--popover)) !important;
+	opacity: 1 !important;
 }
 
 @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
-  [data-radix-popover-content] {
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-  }
+	[data-radix-popover-content] {
+		-webkit-backdrop-filter: none !important;
+		backdrop-filter: none !important;
+	}
 }
 
 /* Additional safety for any remaining transparent elements */
 .bg-popover {
-  background-color: hsl(var(--popover)) !important;
-  opacity: 1 !important;
+	background-color: hsl(var(--popover)) !important;
+	opacity: 1 !important;
 }
 
 /* Ensure border visibility for better contrast */
 [data-radix-dropdown-menu-content],
 [data-radix-select-content],
 [data-radix-popover-content] {
-  border: 1px solid hsl(var(--border)) !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2) !important;
+	border: 1px solid hsl(var(--border)) !important;
+	box-shadow:
+		0 10px 25px -5px rgba(0, 0, 0, 0.3),
+		0 10px 10px -5px rgba(0, 0, 0, 0.2) !important;
 }
 
 /* Add backdrop blur to the overlay behind dropdowns for better readability */
 [data-radix-dropdown-menu-portal]::before,
 [data-radix-select-portal]::before,
 [data-radix-popover-portal]::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.1);
-  z-index: -1;
-  pointer-events: none;
+	content: "";
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.1);
+	z-index: -1;
+	pointer-events: none;
 }
 
 @supports (-webkit-backdrop-filter: blur(2px)) or (backdrop-filter: blur(2px)) {
-  [data-radix-dropdown-menu-portal]::before,
-  [data-radix-select-portal]::before,
-  [data-radix-popover-portal]::before {
-    -webkit-backdrop-filter: blur(2px);
-    backdrop-filter: blur(2px);
-  }
+	[data-radix-dropdown-menu-portal]::before,
+	[data-radix-select-portal]::before,
+	[data-radix-popover-portal]::before {
+		-webkit-backdrop-filter: blur(2px);
+		backdrop-filter: blur(2px);
+	}
 }
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
-  [data-radix-dropdown-menu-content],
-  [data-radix-select-content],
-  [data-radix-popover-content] {
-    background: hsl(var(--background)) !important;
-    border: 2px solid hsl(var(--foreground)) !important;
-  }
+	[data-radix-dropdown-menu-content],
+	[data-radix-select-content],
+	[data-radix-popover-content] {
+		background: hsl(var(--background)) !important;
+		border: 2px solid hsl(var(--foreground)) !important;
+	}
 }

@@ -3,38 +3,38 @@
 
 /* User avatar colors */
 .vtt-user-avatar {
-  background-color: var(--user-color);
+	background-color: var(--user-color);
 }
 
 /* VTT Ping animations */
 .vtt-ping {
-  left: var(--ping-x);
-  top: var(--ping-y);
+	left: var(--ping-x);
+	top: var(--ping-y);
 }
 
 /* VTT Cursor tracking */
 .vtt-cursor {
-  left: var(--cursor-x);
-  top: var(--cursor-y);
+	left: var(--cursor-x);
+	top: var(--cursor-y);
 }
 
 .vtt-cursor-dot {
-  background-color: var(--user-color);
-  border-color: var(--user-color);
+	background-color: var(--user-color);
+	border-color: var(--user-color);
 }
 
 .vtt-cursor-label {
-  background-color: var(--user-color);
+	background-color: var(--user-color);
 }
 
 /* HP Bar colors and positioning */
 .vtt-hp-bar {
-  width: var(--hp-percent);
-  background-color: var(--hp-color);
+	width: var(--hp-percent);
+	background-color: var(--hp-color);
 }
 
 /* Context menu positioning */
 .vtt-context-menu {
-  left: var(--menu-x);
-  top: var(--menu-y);
+	left: var(--menu-x);
+	top: var(--menu-y);
 }

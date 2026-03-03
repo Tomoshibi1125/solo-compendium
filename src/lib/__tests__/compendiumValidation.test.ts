@@ -1,112 +1,113 @@
-import { describe, test, expect } from 'vitest';
+import { describe, expect, test } from "vitest";
 
-describe('Compendium Validation', () => {
-  test('All jobs have required fields', () => {
-    // Mock job data
-    const mockJobs = [
-      {
-        id: 'warrior',
-        name: 'Warrior',
-        description: 'A martial combat expert',
-        hitDie: 'd10',
-        primaryAbility: 'STR',
-        savingThrows: ['STR', 'VIT'],
-        features: []
-      }
-    ];
+describe("Compendium Validation", () => {
+	test("All jobs have required fields", () => {
+		// Mock job data
+		const mockJobs = [
+			{
+				id: "warrior",
+				name: "Warrior",
+				description: "A martial combat expert",
+				hitDie: "d10",
+				primaryAbility: "STR",
+				savingThrows: ["STR", "VIT"],
+				features: [],
+			},
+		];
 
-    mockJobs.forEach(job => {
-      expect(job.id).toBeDefined();
-      expect(job.name).toBeDefined();
-      expect(job.description).toBeDefined();
-      expect(job.hitDie).toBeDefined();
-      expect(job.primaryAbility).toBeDefined();
-    });
-  });
-  
-  test('All relics have attunement data', () => {
-    // Mock relic data
-    const mockRelics = [
-      {
-        id: 'flame-sword',
-        name: 'Flame Sword',
-        rarity: 'rare',
-        type: 'weapon',
-        attunement: true,
-        attunementRequirements: 'Requires attunement by a character with flame resistance',
-        description: 'A sword that burns with eternal fire'
-      }
-    ];
+		mockJobs.forEach((job) => {
+			expect(job.id).toBeDefined();
+			expect(job.name).toBeDefined();
+			expect(job.description).toBeDefined();
+			expect(job.hitDie).toBeDefined();
+			expect(job.primaryAbility).toBeDefined();
+		});
+	});
 
-    mockRelics.forEach(relic => {
-      expect(relic.id).toBeDefined();
-      expect(relic.name).toBeDefined();
-      expect(relic.rarity).toBeDefined();
-      expect(relic.type).toBeDefined();
-      expect(typeof relic.attunement).toBe('boolean');
-    });
-  });
-  
-  test('Spell data consistency', () => {
-    // Mock spell data
-    const mockSpells = [
-      {
-        id: 'fireball',
-        name: 'Fireball',
-        level: 3,
-        school: 'Evocation',
-        castingTime: '1 action',
-        range: '150 feet',
-        duration: 'Instantaneous',
-        components: 'V, S, M',
-        concentration: false,
-        description: 'A fiery explosion',
-        classes: ['Mage']
-      }
-    ];
+	test("All relics have attunement data", () => {
+		// Mock relic data
+		const mockRelics = [
+			{
+				id: "flame-sword",
+				name: "Flame Sword",
+				rarity: "rare",
+				type: "weapon",
+				attunement: true,
+				attunementRequirements:
+					"Requires attunement by a character with flame resistance",
+				description: "A sword that burns with eternal fire",
+			},
+		];
 
-    mockSpells.forEach(spell => {
-      expect(spell.id).toBeDefined();
-      expect(spell.name).toBeDefined();
-      expect(spell.level).toBeGreaterThanOrEqual(0);
-      expect(spell.level).toBeLessThanOrEqual(9);
-      expect(spell.castingTime).toBeDefined();
-      expect(spell.range).toBeDefined();
-      expect(spell.duration).toBeDefined();
-      expect(spell.components).toBeDefined();
-      expect(typeof spell.concentration).toBe('boolean');
-    });
-  });
-  
-  test('Path-Job relationships valid', () => {
-    // Mock path data
-    const mockPaths = [
-      {
-        id: 'eldritch-knight',
-        name: 'Eldritch Knight',
-        jobId: 'warrior',
-        description: 'Warrior with magical abilities',
-        features: []
-      }
-    ];
+		mockRelics.forEach((relic) => {
+			expect(relic.id).toBeDefined();
+			expect(relic.name).toBeDefined();
+			expect(relic.rarity).toBeDefined();
+			expect(relic.type).toBeDefined();
+			expect(typeof relic.attunement).toBe("boolean");
+		});
+	});
 
-    mockPaths.forEach(path => {
-      expect(path.id).toBeDefined();
-      expect(path.name).toBeDefined();
-      expect(path.jobId).toBeDefined();
-      // Would validate that jobId matches actual job.id
-    });
-  });
+	test("Spell data consistency", () => {
+		// Mock spell data
+		const mockSpells = [
+			{
+				id: "fireball",
+				name: "Fireball",
+				level: 3,
+				school: "Evocation",
+				castingTime: "1 action",
+				range: "150 feet",
+				duration: "Instantaneous",
+				components: "V, S, M",
+				concentration: false,
+				description: "A fiery explosion",
+				classes: ["Mage"],
+			},
+		];
 
-  test('Compendium data structure validation', () => {
-    const mockCompendium = {
-      jobs: [] as Array<{ id: string; name: string }>,
-      powers: [] as Array<{ id: string; name: string }>,
-      relics: [] as Array<{ id: string; name: string }>,
-    };
+		mockSpells.forEach((spell) => {
+			expect(spell.id).toBeDefined();
+			expect(spell.name).toBeDefined();
+			expect(spell.level).toBeGreaterThanOrEqual(0);
+			expect(spell.level).toBeLessThanOrEqual(9);
+			expect(spell.castingTime).toBeDefined();
+			expect(spell.range).toBeDefined();
+			expect(spell.duration).toBeDefined();
+			expect(spell.components).toBeDefined();
+			expect(typeof spell.concentration).toBe("boolean");
+		});
+	});
 
-    expect(Array.isArray(mockCompendium.jobs)).toBe(true);
-    expect(Array.isArray(mockCompendium.powers)).toBe(true);
-    expect(Array.isArray(mockCompendium.relics)).toBe(true);
-  });
+	test("Path-Job relationships valid", () => {
+		// Mock path data
+		const mockPaths = [
+			{
+				id: "eldritch-knight",
+				name: "Eldritch Knight",
+				jobId: "warrior",
+				description: "Warrior with magical abilities",
+				features: [],
+			},
+		];
+
+		mockPaths.forEach((path) => {
+			expect(path.id).toBeDefined();
+			expect(path.name).toBeDefined();
+			expect(path.jobId).toBeDefined();
+			// Would validate that jobId matches actual job.id
+		});
+	});
+
+	test("Compendium data structure validation", () => {
+		const mockCompendium = {
+			jobs: [] as Array<{ id: string; name: string }>,
+			powers: [] as Array<{ id: string; name: string }>,
+			relics: [] as Array<{ id: string; name: string }>,
+		};
+
+		expect(Array.isArray(mockCompendium.jobs)).toBe(true);
+		expect(Array.isArray(mockCompendium.powers)).toBe(true);
+		expect(Array.isArray(mockCompendium.relics)).toBe(true);
+	});
 });

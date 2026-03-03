@@ -1,107 +1,114 @@
-import { useEffect, useRef } from 'react';
-import Quill from 'quill';
-import 'quill/dist/quill.snow.css';
-import { cn } from '@/lib/utils';
-import { sanitizeRichText } from '@/lib/sanitize';
+import Quill from "quill";
+import { useEffect, useRef } from "react";
+import "quill/dist/quill.snow.css";
+import { sanitizeRichText } from "@/lib/sanitize";
+import { cn } from "@/lib/utils";
 
 interface RichTextNotesProps {
-  value: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
-  className?: string;
-  disabled?: boolean;
+	value: string;
+	onChange: (value: string) => void;
+	placeholder?: string;
+	className?: string;
+	disabled?: boolean;
 }
 
 const QUILL_MODULES = {
-  toolbar: [
-    [{ header: [1, 2, 3, false] }],
-    ['bold', 'italic', 'underline', 'strike'],
-    [{ list: 'ordered' }, { list: 'bullet' }],
-    [{ color: [] }, { background: [] }],
-    ['link', 'blockquote', 'code-block'],
-    ['clean'],
-  ],
+	toolbar: [
+		[{ header: [1, 2, 3, false] }],
+		["bold", "italic", "underline", "strike"],
+		[{ list: "ordered" }, { list: "bullet" }],
+		[{ color: [] }, { background: [] }],
+		["link", "blockquote", "code-block"],
+		["clean"],
+	],
 };
 
 const QUILL_FORMATS = [
-  'header',
-  'bold', 'italic', 'underline', 'strike',
-  'list',
-  'color', 'background',
-  'link', 'blockquote', 'code-block',
+	"header",
+	"bold",
+	"italic",
+	"underline",
+	"strike",
+	"list",
+	"color",
+	"background",
+	"link",
+	"blockquote",
+	"code-block",
 ];
 
 export function RichTextNotes({
-  value,
-  onChange,
-  placeholder: placeholderText = "Add notes about your Ascendant, campaign events, session summaries, or anything else...",
-  className,
-  disabled = false
+	value,
+	onChange,
+	placeholder:
+		placeholderText = "Add notes about your Ascendant, campaign events, session summaries, or anything else...",
+	className,
+	disabled = false,
 }: RichTextNotesProps) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const quillRef = useRef<Quill | null>(null);
-  const lastValueRef = useRef<string>('');
+	const containerRef = useRef<HTMLDivElement | null>(null);
+	const quillRef = useRef<Quill | null>(null);
+	const lastValueRef = useRef<string>("");
 
-  useEffect(() => {
-    if (!containerRef.current || quillRef.current) return;
+	useEffect(() => {
+		if (!containerRef.current || quillRef.current) return;
 
-    const quill = new Quill(containerRef.current, {
-      theme: 'snow',
-      readOnly: disabled,
-      placeholder: placeholderText,
-      modules: QUILL_MODULES,
-      formats: QUILL_FORMATS,
-    });
+		const quill = new Quill(containerRef.current, {
+			theme: "snow",
+			readOnly: disabled,
+			placeholder: placeholderText,
+			modules: QUILL_MODULES,
+			formats: QUILL_FORMATS,
+		});
 
-    quill.on('text-change', () => {
-      const html = quill.root.innerHTML;
-      const normalized = html === '<p><br></p>' ? '' : html;
-      const sanitized = sanitizeRichText(normalized);
-      if (sanitized !== lastValueRef.current) {
-        lastValueRef.current = sanitized;
-        onChange(sanitized);
-      }
-    });
+		quill.on("text-change", () => {
+			const html = quill.root.innerHTML;
+			const normalized = html === "<p><br></p>" ? "" : html;
+			const sanitized = sanitizeRichText(normalized);
+			if (sanitized !== lastValueRef.current) {
+				lastValueRef.current = sanitized;
+				onChange(sanitized);
+			}
+		});
 
-    quillRef.current = quill;
+		quillRef.current = quill;
 
-    if (value) {
-      const sanitized = sanitizeRichText(value);
-      quill.clipboard.dangerouslyPasteHTML(sanitized);
-      lastValueRef.current = quill.root.innerHTML;
-    }
-  }, [disabled, onChange, placeholderText, value]);
+		if (value) {
+			const sanitized = sanitizeRichText(value);
+			quill.clipboard.dangerouslyPasteHTML(sanitized);
+			lastValueRef.current = quill.root.innerHTML;
+		}
+	}, [disabled, onChange, placeholderText, value]);
 
-  useEffect(() => {
-    const quill = quillRef.current;
-    if (!quill) return;
-    quill.enable(!disabled);
-  }, [disabled]);
+	useEffect(() => {
+		const quill = quillRef.current;
+		if (!quill) return;
+		quill.enable(!disabled);
+	}, [disabled]);
 
-  useEffect(() => {
-    const quill = quillRef.current;
-    if (!quill) return;
+	useEffect(() => {
+		const quill = quillRef.current;
+		if (!quill) return;
 
-    const normalized = value || '';
-    const sanitized = sanitizeRichText(normalized);
-    if (sanitized === lastValueRef.current) return;
+		const normalized = value || "";
+		const sanitized = sanitizeRichText(normalized);
+		if (sanitized === lastValueRef.current) return;
 
-    const selection = quill.getSelection();
-    if (sanitized) {
-      quill.clipboard.dangerouslyPasteHTML(sanitized);
-    } else {
-      quill.setText('');
-    }
-    lastValueRef.current = sanitized;
-    if (selection) {
-      quill.setSelection(selection);
-    }
-  }, [value]);
+		const selection = quill.getSelection();
+		if (sanitized) {
+			quill.clipboard.dangerouslyPasteHTML(sanitized);
+		} else {
+			quill.setText("");
+		}
+		lastValueRef.current = sanitized;
+		if (selection) {
+			quill.setSelection(selection);
+		}
+	}, [value]);
 
-  return (
-    <div className={cn("rich-text-editor", className)}>
-      <div ref={containerRef} className="bg-background" />
-      <style>{`
+	return (
+		<div className={cn("rich-text-editor", className)}>
+			<div ref={containerRef} className="bg-background" />
+			<style>{`
         .rich-text-editor .ql-container {
           min-height: 150px;
           font-family: inherit;
@@ -119,6 +126,6 @@ export function RichTextNotes({
           border-bottom-right-radius: 0.5rem;
         }
       `}</style>
-    </div>
-  );
+		</div>
+	);
 }

@@ -11,438 +11,370 @@
 
 :root,
 .dark {
-  /* ── Core UI tokens ──────────────────────────────────────── */
-  --background: 262 45% 4%;
-  /* True system void */
-  --foreground: 43 20% 85%;
-  /* Soft pale bone/gold (complementary to amethyst) */
+	/* ── Core UI tokens ──────────────────────────────────────── */
+	--background: 262 45% 4%;
+	/* True system void */
+	--foreground: 43 20% 85%;
+	/* Soft pale bone/gold (complementary to amethyst) */
 
-  --card: 262 35% 7%;
-  /* Dark obsidian pane */
-  --card-foreground: 43 20% 85%;
+	--card: 262 35% 7%;
+	/* Dark obsidian pane */
+	--card-foreground: 43 20% 85%;
 
-  --popover: 262 35% 10%;
-  /* Hovering dark glass */
-  --popover-foreground: 43 20% 85%;
+	--popover: 262 35% 10%;
+	/* Hovering dark glass */
+	--popover-foreground: 43 20% 85%;
 
-  --primary: 275 72% 59%;
-  /* Vivid amethyst neon */
-  --primary-foreground: 43 40% 95%;
-  /* Bright pale gold */
+	--primary: 275 72% 59%;
+	/* Vivid amethyst neon */
+	--primary-foreground: 43 40% 95%;
+	/* Bright pale gold */
 
-  --secondary: 262 30% 10%;
-  /* Void charcoal */
-  --secondary-foreground: 260 15% 82%;
+	--secondary: 262 30% 10%;
+	/* Void charcoal */
+	--secondary-foreground: 260 15% 82%;
 
-  --muted: 262 22% 15%;
-  /* Faint purple haze */
-  --muted-foreground: 262 12% 52%;
+	--muted: 262 22% 15%;
+	/* Faint purple haze */
+	--muted-foreground: 262 12% 52%;
 
-  --accent: 190 100% 50%;
-  /* Mana cyan */
-  --accent-foreground: 190 10% 5%;
+	--accent: 190 100% 50%;
+	/* Mana cyan */
+	--accent-foreground: 190 10% 5%;
 
-  --destructive: 0 90% 58%;
-  /* System error crimson */
-  --destructive-foreground: 0 15% 95%;
+	--destructive: 0 90% 58%;
+	/* System error crimson */
+	--destructive-foreground: 0 15% 95%;
 
-  --success: 145 75% 45%;
-  /* Gate-D hunter green */
-  --success-foreground: 145 20% 95%;
+	--success: 145 75% 45%;
+	/* Gate-D hunter green */
+	--success-foreground: 145 20% 95%;
 
-  --warning: 43 96% 58%;
-  /* Rank-S sovereign gold */
-  --warning-foreground: 43 20% 8%;
+	--warning: 43 96% 58%;
+	/* Rank-S sovereign gold */
+	--warning-foreground: 43 20% 8%;
 
-  --border: 262 25% 14%;
-  /* Subtle void border */
-  --input: 262 25% 12%;
-  --ring: 275 72% 64%;
-  /* Amethyst neon focus ring */
-  --radius: 0.5rem;
+	--border: 262 25% 14%;
+	/* Subtle void border */
+	--input: 262 25% 12%;
+	--ring: 275 72% 64%;
+	/* Amethyst neon focus ring */
+	--radius: 0.5rem;
 
-  /* ── Sidebar ─────────────────────────────────────────────── */
-  --sidebar-background: 262 45% 4%;
-  --sidebar-foreground: 43 20% 85%;
-  --sidebar-primary: 275 72% 59%;
-  --sidebar-primary-foreground: 43 40% 95%;
-  --sidebar-accent: 190 100% 45%;
-  --sidebar-accent-foreground: 190 10% 5%;
-  --sidebar-border: 262 25% 12%;
-  --sidebar-ring: 275 72% 64%;
+	/* ── Sidebar ─────────────────────────────────────────────── */
+	--sidebar-background: 262 45% 4%;
+	--sidebar-foreground: 43 20% 85%;
+	--sidebar-primary: 275 72% 59%;
+	--sidebar-primary-foreground: 43 40% 95%;
+	--sidebar-accent: 190 100% 45%;
+	--sidebar-accent-foreground: 190 10% 5%;
+	--sidebar-border: 262 25% 12%;
+	--sidebar-ring: 275 72% 64%;
 
-  /* ── System Ascendant: Protocol Palette ──────────────────── */
-  --shadow-blue: 230 80% 50%;
-  /* Deep indigo pulse */
-  --shadow-purple: 275 70% 50%;
-  /* Rich violet core */
-  --shadow-deep: 270 60% 20%;
-  /* Purple abyss */
-  --shadow-dark: 268 50% 8%;
-  /* Near-true void */
+	/* ── System Ascendant: Protocol Palette ──────────────────── */
+	--shadow-blue: 230 80% 50%;
+	/* Deep indigo pulse */
+	--shadow-purple: 275 70% 50%;
+	/* Rich violet core */
+	--shadow-deep: 270 60% 20%;
+	/* Purple abyss */
+	--shadow-dark: 268 50% 8%;
+	/* Near-true void */
 
-  --monarch-gold: 43 95% 60%;
-  /* Sovereign gold */
-  --monarch-silver: 220 15% 78%;
-  /* Cold silver */
+	--monarch-gold: 43 95% 60%;
+	/* Sovereign gold */
+	--monarch-silver: 220 15% 78%;
+	/* Cold silver */
 
-  /* ── Glass/Holographic tokens ────────────────────────────── */
-  --sa-glass-bg: rgba(10, 6, 25, 0.65);
-  /* Base holographic panel */
-  --sa-glass-border: rgba(157, 78, 221, 0.18);
-  /* Amethyst glass edge */
-  --sa-glass-shine: rgba(0, 212, 255, 0.06);
-  /* Cyan refraction layer */
-  --sa-neon-primary: 275, 78, 221;
-  /* Raw RGB for amethyst */
-  --sa-neon-cyan: 0, 212, 255;
-  /* Raw RGB for mana cyan */
+	/* ── Glass/Holographic tokens ────────────────────────────── */
+	--sa-glass-bg: rgba(10, 6, 25, 0.65);
+	/* Base holographic panel */
+	--sa-glass-border: rgba(157, 78, 221, 0.18);
+	/* Amethyst glass edge */
+	--sa-glass-shine: rgba(0, 212, 255, 0.06);
+	/* Cyan refraction layer */
+	--sa-neon-primary: 275, 78, 221;
+	/* Raw RGB for amethyst */
+	--sa-neon-cyan: 0, 212, 255;
+	/* Raw RGB for mana cyan */
 
-  /* ── Gate rank colors (E → National) ─────────────────────── */
-  --gate-red: 0 80% 55%;
-  --gate-e: 0 0% 55%;
-  /* Gray */
-  --gate-d: 145 65% 45%;
-  /* Green */
-  --gate-c: 210 80% 55%;
-  /* Blue */
-  --gate-b: 270 70% 62%;
-  /* Purple */
-  --gate-a: 350 85% 55%;
-  /* Red */
-  --gate-s: 43 95% 60%;
-  /* Gold */
-  --gate-ss: 38 65% 75%;
-  /* Platinum */
-  --gate-national: 330 90% 52%;
-  /* Crimson-violet sovereign */
+	/* ── Gate rank colors (E → National) ─────────────────────── */
+	--gate-red: 0 80% 55%;
+	--gate-e: 0 0% 55%;
+	/* Gray */
+	--gate-d: 145 65% 45%;
+	/* Green */
+	--gate-c: 210 80% 55%;
+	/* Blue */
+	--gate-b: 270 70% 62%;
+	/* Purple */
+	--gate-a: 350 85% 55%;
+	/* Red */
+	--gate-s: 43 95% 60%;
+	/* Gold */
+	--gate-ss: 38 65% 75%;
+	/* Platinum */
+	--gate-national: 330 90% 52%;
+	/* Crimson-violet sovereign */
 
-  /* Gate glow variants (brighter / more saturated) */
-  --gate-e-glow: 0 0% 70%;
-  --gate-d-glow: 145 75% 55%;
-  --gate-c-glow: 210 90% 65%;
-  --gate-b-glow: 270 80% 70%;
-  --gate-a-glow: 350 90% 62%;
-  --gate-s-glow: 43 100% 68%;
-  --gate-ss-glow: 38 75% 82%;
-  --gate-national-glow: 330 95% 60%;
+	/* Gate glow variants (brighter / more saturated) */
+	--gate-e-glow: 0 0% 70%;
+	--gate-d-glow: 145 75% 55%;
+	--gate-c-glow: 210 90% 65%;
+	--gate-b-glow: 270 80% 70%;
+	--gate-a-glow: 350 90% 62%;
+	--gate-s-glow: 43 100% 68%;
+	--gate-ss-glow: 38 75% 82%;
+	--gate-national-glow: 330 95% 60%;
 
-  /* ── Entity accent colors ────────────────────────────────── */
-  --hunter-blue: 210 85% 58%;
-  /* Cool hunter blue */
-  --mana-cyan: 190 100% 50%;
-  /* Arcane mana cyan */
-  --arise-violet: 275 80% 65%;
-  /* Arise / ascension violet */
-  --system-green: 145 85% 45%;
-  /* System matrix green */
-  --system-glow: 145 95% 55%;
-  /* Bright system pulse */
-  --void-black: 265 50% 2%;
-  /* True void core */
+	/* ── Entity accent colors ────────────────────────────────── */
+	--hunter-blue: 210 85% 58%;
+	/* Cool hunter blue */
+	--mana-cyan: 190 100% 50%;
+	/* Arcane mana cyan */
+	--arise-violet: 275 80% 65%;
+	/* Arise / ascension violet */
+	--system-green: 145 85% 45%;
+	/* System matrix green */
+	--system-glow: 145 95% 55%;
+	/* Bright system pulse */
+	--void-black: 265 50% 2%;
+	/* True void core */
 
-  /* ── Named Shadow Soldiers ───────────────────────────────── */
-  --crimson-knight: 350 75% 52%;
-  --gilded-reaper: 43 92% 58%;
-  --silver-commander: 220 20% 72%;
+	/* ── Named Shadow Soldiers ───────────────────────────────── */
+	--crimson-knight: 350 75% 52%;
+	--gilded-reaper: 43 92% 58%;
+	--silver-commander: 220 20% 72%;
 }
 
-
 .system-grid-overlay {
-  background-image:
-    linear-gradient(hsl(var(--shadow-blue)) 1px, transparent 1px),
-    linear-gradient(90deg, hsl(var(--shadow-blue)) 1px, transparent 1px);
-  background-size: 60px 60px;
+	background-image:
+		linear-gradient(hsl(var(--shadow-blue)) 1px, transparent 1px),
+		linear-gradient(90deg, hsl(var(--shadow-blue)) 1px, transparent 1px);
+	background-size: 60px 60px;
 }
 
 .system-grid-overlay-50 {
-  background-image:
-    linear-gradient(hsl(var(--shadow-blue)) 1px, transparent 1px),
-    linear-gradient(90deg, hsl(var(--shadow-blue)) 1px, transparent 1px);
-  background-size: 50px 50px;
+	background-image:
+		linear-gradient(hsl(var(--shadow-blue)) 1px, transparent 1px),
+		linear-gradient(90deg, hsl(var(--shadow-blue)) 1px, transparent 1px);
+	background-size: 50px 50px;
 }
 
 .hero-bg-image {
-  background-image:
-    -webkit-image-set(url('/ui/landing-page-hero.avif') type('image/avif'),
-      url('/ui/landing-page-hero.webp') type('image/webp'));
-  background-image:
-    image-set(url('/ui/landing-page-hero.avif') type('image/avif'),
-      url('/ui/landing-page-hero.webp') type('image/webp'));
-  filter: brightness(0.3) saturate(1.2) contrast(1.1);
+	background-image: -webkit-image-set(
+		url("/ui/landing-page-hero.avif") type("image/avif"),
+		url("/ui/landing-page-hero.webp") type("image/webp")
+	);
+	background-image: image-set(
+		url("/ui/landing-page-hero.avif") type("image/avif"),
+		url("/ui/landing-page-hero.webp") type("image/webp")
+	);
+	filter: brightness(0.3) saturate(1.2) contrast(1.1);
 }
 
 .ambient-opacity {
-  opacity: var(--ambient-opacity, 1);
+	opacity: var(--ambient-opacity, 1);
 }
 
 .anim-delay-0 {
-  animation-delay: 0s;
+	animation-delay: 0s;
 }
 
 .anim-delay-1 {
-  animation-delay: 0.1s;
+	animation-delay: 0.1s;
 }
 
 .anim-delay-2 {
-  animation-delay: 0.2s;
+	animation-delay: 0.2s;
 }
 
 .anim-delay-3 {
-  animation-delay: 0.3s;
+	animation-delay: 0.3s;
 }
 
 .anim-delay-4 {
-  animation-delay: 0.4s;
+	animation-delay: 0.4s;
 }
 
 .anim-delay-5 {
-  animation-delay: 0.5s;
+	animation-delay: 0.5s;
 }
 
 .anim-delay-6 {
-  animation-delay: 0.6s;
+	animation-delay: 0.6s;
 }
 
 .anim-delay-7 {
-  animation-delay: 0.7s;
+	animation-delay: 0.7s;
 }
 
 .anim-delay-8 {
-  animation-delay: 0.8s;
+	animation-delay: 0.8s;
 }
 
 .anim-delay-9 {
-  animation-delay: 0.9s;
+	animation-delay: 0.9s;
 }
 
 .anim-delay-10 {
-  animation-delay: 1s;
+	animation-delay: 1s;
 }
-
-
 
 /* Print Styles - Chronicle of Ascendants */
 
 @media print {
+	@page {
+		margin: 0.5in;
 
-  @page {
+		size: letter;
+	}
 
-    margin: 0.5in;
+	body {
+		background: white !important;
 
-    size: letter;
+		color: black !important;
 
-  }
+		font-size: 11pt;
 
+		line-height: 1.4;
+	}
 
+	/* Hide navigation and interactive elements */
 
-  body {
+	nav,
+	header,
+	footer,
+	button,
+	.no-print,
+	[role="button"],
+	[class~="print:hidden"],
+	aside,
+	.sidebar {
+		display: none !important;
+	}
 
-    background: white !important;
+	/* Character sheet print styles */
 
-    color: black !important;
+	.character-sheet-print {
+		page-break-inside: avoid;
+	}
 
-    font-size: 11pt;
+	.character-sheet-section {
+		page-break-inside: avoid;
+		margin-bottom: 1rem;
+	}
 
-    line-height: 1.4;
+	/* Compendium stat blocks */
 
-  }
+	.glass-card,
+	.SystemWindow {
+		border: 2px solid #000 !important;
 
+		background: white !important;
 
+		page-break-inside: avoid;
 
-  /* Hide navigation and interactive elements */
+		margin-bottom: 0.75rem;
 
-  nav,
-  header,
-  footer,
-  button,
-  .no-print,
+		padding: 0.75rem;
 
-  [role="button"],
-  [class~="print:hidden"],
+		box-shadow: none !important;
+	}
 
-  aside,
-  .sidebar {
+	/* Stat block specific */
 
-    display: none !important;
+	[class*="stat-block"],
+	.stat-block {
+		border: 2px solid #000 !important;
 
-  }
+		background: white !important;
 
+		page-break-inside: avoid;
 
+		font-family: "Times New Roman", serif;
+	}
 
-  /* Character sheet print styles */
+	/* Remove gradients, use black text */
 
-  .character-sheet-print {
-    page-break-inside: avoid;
-  }
+	.gradient-text-shadow,
+	.gradient-text-system,
+	.gradient-text-monarch,
+	.gradient-text-arise,
+	.gradient-text-supreme {
+		-webkit-text-fill-color: black !important;
 
-  .character-sheet-section {
-    page-break-inside: avoid;
-    margin-bottom: 1rem;
-  }
+		color: black !important;
 
+		background: none !important;
+	}
 
+	/* Images */
 
-  /* Compendium stat blocks */
+	img {
+		max-width: 100% !important;
 
-  .glass-card,
+		page-break-inside: avoid;
+	}
 
-  .SystemWindow {
+	/* Remove animations and transitions */
 
-    border: 2px solid #000 !important;
+	* {
+		animation: none !important;
 
-    background: white !important;
+		transition: none !important;
 
-    page-break-inside: avoid;
+		box-shadow: none !important;
+	}
 
-    margin-bottom: 0.75rem;
+	/* Tables */
 
-    padding: 0.75rem;
+	table {
+		page-break-inside: avoid;
 
-    box-shadow: none !important;
+		border-collapse: collapse;
 
-  }
+		width: 100%;
+	}
 
+	th,
+	td {
+		border: 1px solid #000;
 
+		padding: 0.25rem;
+	}
 
-  /* Stat block specific */
+	/* Typography */
 
-  [class*="stat-block"],
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		page-break-after: avoid;
 
-  .stat-block {
+		color: black !important;
+	}
 
-    border: 2px solid #000 !important;
+	/* Links */
 
-    background: white !important;
+	a {
+		color: black !important;
 
-    page-break-inside: avoid;
+		text-decoration: underline;
+	}
 
-    font-family: 'Times New Roman', serif;
+	/* Two-column layout becomes single column */
 
-  }
+	.detail-layout,
+	[class~="lg:flex-row"] {
+		flex-direction: column !important;
+	}
 
+	/* Ensure proper spacing */
 
-
-  /* Remove gradients, use black text */
-
-  .gradient-text-shadow,
-
-  .gradient-text-system,
-
-  .gradient-text-monarch,
-
-  .gradient-text-arise,
-
-  .gradient-text-supreme {
-
-    -webkit-text-fill-color: black !important;
-
-    color: black !important;
-
-    background: none !important;
-
-  }
-
-
-
-  /* Images */
-
-  img {
-
-    max-width: 100% !important;
-
-    page-break-inside: avoid;
-
-  }
-
-
-
-  /* Remove animations and transitions */
-
-  * {
-
-    animation: none !important;
-
-    transition: none !important;
-
-    box-shadow: none !important;
-
-  }
-
-
-
-  /* Tables */
-
-  table {
-
-    page-break-inside: avoid;
-
-    border-collapse: collapse;
-
-    width: 100%;
-
-  }
-
-
-
-  th,
-  td {
-
-    border: 1px solid #000;
-
-    padding: 0.25rem;
-
-  }
-
-
-
-  /* Typography */
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-
-    page-break-after: avoid;
-
-    color: black !important;
-
-  }
-
-
-
-  /* Links */
-
-  a {
-
-    color: black !important;
-
-    text-decoration: underline;
-
-  }
-
-
-
-  /* Two-column layout becomes single column */
-
-  .detail-layout,
-
-  [class~="lg:flex-row"] {
-
-    flex-direction: column !important;
-
-  }
-
-
-
-  /* Ensure proper spacing */
-
-  .space-y-6>*+* {
-
-    margin-top: 1rem;
-
-  }
-
+	.space-y-6 > * + * {
+		margin-top: 1rem;
+	}
 }

@@ -1,1380 +1,1771 @@
 /**
  * Static Data Provider for Compendium
- * 
+ *
  * Bridges the gap between static TS data and the existing Supabase-based UI.
  * Provides the same interface as Supabase queries but uses local static data.
- * 
+ *
  * Authoritative source: internal compendium data packs already ingested into the app.
  */
 
-import { normalizeRegentSearch } from '@/lib/vernacular';
-import type { MonarchExtended } from '@/integrations/supabase/supabaseExtended';
+import type { MonarchExtended } from "@/integrations/supabase/supabaseExtended";
+import { normalizeRegentSearch } from "@/lib/vernacular";
 
 type DataLoader<T> = () => Promise<T[]>;
 
 const dataLoaders = {
-  monsters: () => import('./monsters').then((module) => module.monsters),
-  items: () => import('./items').then((module) => module.items),
-  jobs: () => import('./jobs').then((module) => module.jobs),
-  spells: () => import('./spells').then((module) => module.spells),
-  locations: () => import('./locations').then((module) => module.locations),
-  runesCompendium: () => import('./runes').then((module) => module.runesCompendium),
-  systemAscendantRunes: () => import('./runes').then((module) => module.systemAscendantRunes),
-  backgrounds: () => import('./backgrounds').then((module) => module.backgrounds),
-  monarchs: () => import('./monarchs').then((module) => module.monarchs),
-  regents: () => import('./regents').then((module) => module.regents),
-  paths: () => import('./paths').then((module) => module.paths),
-  conditions: () => import('./conditions').then((module) => module.conditions),
-  comprehensiveFeats: () => import('./feats-comprehensive').then((module) => module.comprehensiveFeats),
-  comprehensiveSkills: () => import('./skills-comprehensive').then((module) => module.comprehensiveSkills),
-  comprehensiveRelics: () => import('./relics-comprehensive').then((module) => module.comprehensiveRelics),
-  powers: () => import('./powers').then((module) => module.powers),
-  techniques: () => import('./techniques').then((module) => module.techniques),
-  artifacts: () => import('./artifacts').then((module) => module.artifacts),
+	monsters: () => import("./monsters").then((module) => module.monsters),
+	items: () => import("./items").then((module) => module.items),
+	jobs: () => import("./jobs").then((module) => module.jobs),
+	spells: () => import("./spells").then((module) => module.spells),
+	locations: () => import("./locations").then((module) => module.locations),
+	runesCompendium: () =>
+		import("./runes").then((module) => module.runesCompendium),
+	systemAscendantRunes: () =>
+		import("./runes").then((module) => module.systemAscendantRunes),
+	backgrounds: () =>
+		import("./backgrounds").then((module) => module.backgrounds),
+	monarchs: () => import("./monarchs").then((module) => module.monarchs),
+	regents: () => import("./regents").then((module) => module.regents),
+	paths: () => import("./paths").then((module) => module.paths),
+	conditions: () => import("./conditions").then((module) => module.conditions),
+	comprehensiveFeats: () =>
+		import("./feats-comprehensive").then((module) => module.comprehensiveFeats),
+	comprehensiveSkills: () =>
+		import("./skills-comprehensive").then(
+			(module) => module.comprehensiveSkills,
+		),
+	comprehensiveRelics: () =>
+		import("./relics-comprehensive").then(
+			(module) => module.comprehensiveRelics,
+		),
+	powers: () => import("./powers").then((module) => module.powers),
+	techniques: () => import("./techniques").then((module) => module.techniques),
+	artifacts: () => import("./artifacts").then((module) => module.artifacts),
 } satisfies Record<string, DataLoader<unknown>>;
 
 type DataKey = keyof typeof dataLoaders;
 const dataCache: Partial<Record<DataKey, Promise<unknown[]>>> = {};
 
 const loadData = async <T>(key: DataKey): Promise<T[]> => {
-  if (!dataCache[key]) {
-    dataCache[key] = dataLoaders[key]();
-  }
-  return (await dataCache[key]) as T[];
+	if (!dataCache[key]) {
+		dataCache[key] = dataLoaders[key]();
+	}
+	return (await dataCache[key]) as T[];
 };
 
 // Type definitions matching the UI expectations
 export interface StaticCompendiumEntry {
-  id: string;
-  name: string;
-  display_name?: string | null;
-  description: string;
-  created_at: string;
-  tags?: string[] | null;
-  source_book?: string | null;
-  image_url?: string | null;
-  // Type-specific fields
-  power_level?: number | null;
-  school?: string | null;
-  title?: string | null;
-  theme?: string | null;
-  prerequisites?: string | Record<string, unknown> | null;
-  requirements?: Record<string, unknown> | null;
-  fusion_theme?: string | null;
-  equipment_type?: string | null;
-  ability?: string | null;
-  rune_type?: string | null;
-  rune_category?: string | null;
-  rune_level?: number | null;
-  cr?: string | null;
-  gate_rank?: string | null;
-  is_boss?: boolean;
-  rarity?: string;
-  level?: number | null;
-  item_type?: string | null;
-  artifact_type?: string | null;
-  technique_type?: string | null;
-  spell_type?: string | null;
-  location_type?: string | null;
-  rank?: string | null;
-  mana_cost?: number | null;
-  damage?: number | null;
-  healing?: number | null;
-  effect?: string | null;
-  range?: number | Record<string, unknown> | null;
-  cooldown?: number | null;
-  encounters?: string[] | null;
-  treasures?: string[] | null;
-  style?: string | null;
-  activation?: Record<string, unknown> | null;
-  duration?: Record<string, unknown> | null;
-  components?: Record<string, unknown> | null;
-  effects?: Record<string, unknown> | null;
-  mechanics?: Record<string, unknown> | null;
-  limitations?: Record<string, unknown> | null;
-  flavor?: string | null;
-  higher_levels?: string | null;
-  atHigherLevels?: string | null;
-  properties?: Record<string, unknown> | null;
-  abilities?: Record<string, unknown> | null;
-  lore?: Record<string, unknown> | null;
-  attunement?: boolean | null;
-  cursed?: boolean | null;
-  charges?: Record<string, unknown> | null;
-  stats?: Record<string, unknown> | null;
-  source?: string | null;
-  role?: string | null;
-  value?: number | null;
-  weight?: number | null;
-  // Monster detail support (static fallback)
-  size?: string | null;
-  creature_type?: string | null;
-  alignment?: string | null;
-  armor_class?: number | null;
-  armor_type?: string | null;
-  hit_points_average?: number | null;
-  hit_points_formula?: string | null;
-  speed_walk?: number | null;
-  speed_fly?: number | null;
-  speed_swim?: number | null;
-  speed_climb?: number | null;
-  speed_burrow?: number | null;
-  str?: number | null;
-  agi?: number | null;
-  vit?: number | null;
-  int?: number | null;
-  sense?: number | null;
-  pre?: number | null;
-  saving_throws?: Record<string, number> | null;
-  skills?: Record<string, number> | null;
-  damage_vulnerabilities?: string[] | null;
-  damage_resistances?: string[] | null;
-  damage_immunities?: string[] | null;
-  condition_immunities?: string[] | null;
-  senses?: Record<string, string> | null;
-  languages?: string[] | null;
-  xp?: number | null;
-  monster_actions?: Record<string, unknown>[] | null;
-  monster_traits?: Record<string, unknown>[] | null;
-  // Background detail support (static fallback)
-  skill_proficiencies?: string[] | null;
-  tool_proficiencies?: string[] | null;
-  language_count?: number | null;
-  starting_equipment?: string | string[][] | null;
-  starting_credits?: number | null;
-  feature_name?: string | null;
-  feature_description?: string | null;
-  personality_traits?: string[] | null;
-  ideals?: string[] | null;
-  bonds?: string[] | null;
-  flaws?: string[] | null;
-  background_features?: Array<{ name: string; description: string }> | null;
-  // Job detail support (static fallback)
-  hit_die?: number | null;
-  primary_abilities?: string[] | null;
-  saving_throw_proficiencies?: string[] | null;
-  armor_proficiencies?: string[] | null;
-  weapon_proficiencies?: string[] | null;
-  skill_choices?: string[] | null;
-  skill_choice_count?: number | null;
-  hit_points_at_first_level?: string | null;
-  hit_points_at_higher_levels?: string | null;
-  regent_prerequisites?: string | null;
-  spellcasting_ability?: string | null;
-  spellcasting_focus?: string | null;
-  awakening_features?: Array<{ name: string; description: string; level: number }> | null;
-  job_traits?: Array<{ name: string; description: string; type: string; frequency?: string }> | null;
-  ability_score_improvements?: Record<string, number> | null;
-  class_features?: Array<{ level: number; name: string; description: string }> | null;
-  spellcasting?: { ability: string; focus?: string; cantripsKnown?: number[]; spellsKnown?: number[]; spellSlots?: Record<string, number[]> } | null;
-  // Condition detail support (static fallback)
-  condition_effects?: string[] | null;
-  condition_duration?: string | null;
-  condition_removal?: string[] | null;
-  condition_save?: { type?: string; dc?: number; description?: string } | null;
-  // Monarch detail support (static fallback)
-  monarch_title?: string | null;
-  monarch_theme?: string | null;
-  monarch_damage_type?: string | null;
-  monarch_manifestation?: string | null;
-  monarch_corruption_risk?: string | null;
-  monarch_lore?: string | null;
-  monarch_abilities?: Array<Record<string, unknown>> | null;
-  monarch_features?: Array<Record<string, unknown>> | null;
-  monarch_mechanics?: Record<string, unknown> | null;
-  monarch_requirements?: Record<string, unknown> | null;
-  // Feat detail support
-  benefits?: string[] | null;
-  // Path detail support
-  path_level?: number | null;
-  job_id?: string | null;
-  job_name?: string | null;
-  path_tier?: number | null;
+	id: string;
+	name: string;
+	display_name?: string | null;
+	description: string;
+	created_at: string;
+	tags?: string[] | null;
+	source_book?: string | null;
+	image_url?: string | null;
+	// Type-specific fields
+	power_level?: number | null;
+	school?: string | null;
+	title?: string | null;
+	theme?: string | null;
+	prerequisites?: string | Record<string, unknown> | null;
+	requirements?: Record<string, unknown> | null;
+	fusion_theme?: string | null;
+	equipment_type?: string | null;
+	ability?: string | null;
+	rune_type?: string | null;
+	rune_category?: string | null;
+	rune_level?: number | null;
+	cr?: string | null;
+	gate_rank?: string | null;
+	is_boss?: boolean;
+	rarity?: string;
+	level?: number | null;
+	item_type?: string | null;
+	artifact_type?: string | null;
+	technique_type?: string | null;
+	spell_type?: string | null;
+	location_type?: string | null;
+	rank?: string | null;
+	mana_cost?: number | null;
+	damage?: number | null;
+	healing?: number | null;
+	effect?: string | null;
+	range?: number | Record<string, unknown> | null;
+	cooldown?: number | null;
+	encounters?: string[] | null;
+	treasures?: string[] | null;
+	style?: string | null;
+	activation?: Record<string, unknown> | null;
+	duration?: Record<string, unknown> | null;
+	components?: Record<string, unknown> | null;
+	effects?: Record<string, unknown> | null;
+	mechanics?: Record<string, unknown> | null;
+	limitations?: Record<string, unknown> | null;
+	flavor?: string | null;
+	higher_levels?: string | null;
+	atHigherLevels?: string | null;
+	properties?: Record<string, unknown> | null;
+	abilities?: Record<string, unknown> | null;
+	lore?: Record<string, unknown> | null;
+	attunement?: boolean | null;
+	cursed?: boolean | null;
+	charges?: Record<string, unknown> | null;
+	stats?: Record<string, unknown> | null;
+	source?: string | null;
+	role?: string | null;
+	value?: number | null;
+	weight?: number | null;
+	// Monster detail support (static fallback)
+	size?: string | null;
+	creature_type?: string | null;
+	alignment?: string | null;
+	armor_class?: number | null;
+	armor_type?: string | null;
+	hit_points_average?: number | null;
+	hit_points_formula?: string | null;
+	speed_walk?: number | null;
+	speed_fly?: number | null;
+	speed_swim?: number | null;
+	speed_climb?: number | null;
+	speed_burrow?: number | null;
+	str?: number | null;
+	agi?: number | null;
+	vit?: number | null;
+	int?: number | null;
+	sense?: number | null;
+	pre?: number | null;
+	saving_throws?: Record<string, number> | null;
+	skills?: Record<string, number> | null;
+	damage_vulnerabilities?: string[] | null;
+	damage_resistances?: string[] | null;
+	damage_immunities?: string[] | null;
+	condition_immunities?: string[] | null;
+	senses?: Record<string, string> | null;
+	languages?: string[] | null;
+	xp?: number | null;
+	monster_actions?: Record<string, unknown>[] | null;
+	monster_traits?: Record<string, unknown>[] | null;
+	// Background detail support (static fallback)
+	skill_proficiencies?: string[] | null;
+	tool_proficiencies?: string[] | null;
+	language_count?: number | null;
+	starting_equipment?: string | string[][] | null;
+	starting_credits?: number | null;
+	feature_name?: string | null;
+	feature_description?: string | null;
+	personality_traits?: string[] | null;
+	ideals?: string[] | null;
+	bonds?: string[] | null;
+	flaws?: string[] | null;
+	background_features?: Array<{ name: string; description: string }> | null;
+	// Job detail support (static fallback)
+	hit_die?: number | null;
+	primary_abilities?: string[] | null;
+	saving_throw_proficiencies?: string[] | null;
+	armor_proficiencies?: string[] | null;
+	weapon_proficiencies?: string[] | null;
+	skill_choices?: string[] | null;
+	skill_choice_count?: number | null;
+	hit_points_at_first_level?: string | null;
+	hit_points_at_higher_levels?: string | null;
+	regent_prerequisites?: string | null;
+	spellcasting_ability?: string | null;
+	spellcasting_focus?: string | null;
+	awakening_features?: Array<{
+		name: string;
+		description: string;
+		level: number;
+	}> | null;
+	job_traits?: Array<{
+		name: string;
+		description: string;
+		type: string;
+		frequency?: string;
+	}> | null;
+	ability_score_improvements?: Record<string, number> | null;
+	class_features?: Array<{
+		level: number;
+		name: string;
+		description: string;
+	}> | null;
+	spellcasting?: {
+		ability: string;
+		focus?: string;
+		cantripsKnown?: number[];
+		spellsKnown?: number[];
+		spellSlots?: Record<string, number[]>;
+	} | null;
+	// Condition detail support (static fallback)
+	condition_effects?: string[] | null;
+	condition_duration?: string | null;
+	condition_removal?: string[] | null;
+	condition_save?: { type?: string; dc?: number; description?: string } | null;
+	// Monarch detail support (static fallback)
+	monarch_title?: string | null;
+	monarch_theme?: string | null;
+	monarch_damage_type?: string | null;
+	monarch_manifestation?: string | null;
+	monarch_corruption_risk?: string | null;
+	monarch_lore?: string | null;
+	monarch_abilities?: Array<Record<string, unknown>> | null;
+	monarch_features?: Array<Record<string, unknown>> | null;
+	monarch_mechanics?: Record<string, unknown> | null;
+	monarch_requirements?: Record<string, unknown> | null;
+	// Feat detail support
+	benefits?: string[] | null;
+	// Path detail support
+	path_level?: number | null;
+	job_id?: string | null;
+	job_name?: string | null;
+	path_tier?: number | null;
 }
 
 export interface StaticDataProvider {
-  getJobs: (search?: string) => Promise<StaticCompendiumEntry[]>;
-  getPaths: (search?: string) => Promise<StaticCompendiumEntry[]>;
-  getMonsters: (search?: string) => Promise<StaticCompendiumEntry[]>;
-  getItems: (search?: string) => Promise<StaticCompendiumEntry[]>;
-  getSpells: (search?: string) => Promise<StaticCompendiumEntry[]>;
-  getLocations: (search?: string) => Promise<StaticCompendiumEntry[]>;
-  getRunes: (search?: string) => Promise<StaticCompendiumEntry[]>;
-  getBackgrounds: (search?: string) => Promise<StaticCompendiumEntry[]>;
-  getRelics: (search?: string) => Promise<StaticCompendiumEntry[]>;
-  getConditions: (search?: string) => Promise<StaticCompendiumEntry[]>;
-  getRegents: (search?: string) => Promise<StaticCompendiumEntry[]>;
-  getMonarchs: (search?: string) => Promise<StaticCompendiumEntry[]>;
-  getFeats: (search?: string) => Promise<StaticCompendiumEntry[]>;
-  getSkills: (search?: string) => Promise<StaticCompendiumEntry[]>;
-  getPowers: (search?: string) => Promise<StaticCompendiumEntry[]>;
-  getTechniques: (search?: string) => Promise<StaticCompendiumEntry[]>;
-  getArtifacts: (search?: string) => Promise<StaticCompendiumEntry[]>;
-  getShadowSoldiers: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getJobs: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getPaths: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getMonsters: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getItems: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getSpells: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getLocations: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getRunes: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getBackgrounds: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getRelics: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getConditions: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getRegents: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getMonarchs: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getFeats: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getSkills: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getPowers: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getTechniques: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getArtifacts: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getShadowSoldiers: (search?: string) => Promise<StaticCompendiumEntry[]>;
 }
 
 // Helper function to filter by search query
 function filterBySearch<T extends Record<string, unknown>>(
-  items: T[],
-  search?: string,
-  searchFields: (keyof T)[] = ['name', 'description']
+	items: T[],
+	search?: string,
+	searchFields: (keyof T)[] = ["name", "description"],
 ): T[] {
-  if (!search?.trim()) return items;
+	if (!search?.trim()) return items;
 
-  const searchLower = normalizeRegentSearch(search.toLowerCase());
-  return items.filter(item =>
-    searchFields.some(field => {
-      const value = item[field];
-      return value && typeof value === 'string' &&
-        value.toLowerCase().includes(searchLower);
-    })
-  );
+	const searchLower = normalizeRegentSearch(search.toLowerCase());
+	return items.filter((item) =>
+		searchFields.some((field) => {
+			const value = item[field];
+			return (
+				value &&
+				typeof value === "string" &&
+				value.toLowerCase().includes(searchLower)
+			);
+		}),
+	);
 }
 
 type StaticMonsterSource = {
-  id?: string;
-  name: string;
-  description: string;
-  type?: string;
-  rank?: string;
-  image?: string;
-  stats?: Record<string, unknown>;
-  skills?: unknown;
-  damageResistances?: unknown;
-  damageImmunities?: unknown;
-  damageVulnerabilities?: unknown;
-  conditionImmunities?: unknown;
-  senses?: unknown;
-  languages?: unknown;
-  traits?: unknown;
-  actions?: unknown;
-  legendary?: unknown;
-  alignment?: unknown;
-  source?: unknown;
-  xp?: unknown;
-  size?: unknown;
+	id?: string;
+	name: string;
+	description: string;
+	type?: string;
+	rank?: string;
+	image?: string;
+	stats?: Record<string, unknown>;
+	skills?: unknown;
+	damageResistances?: unknown;
+	damageImmunities?: unknown;
+	damageVulnerabilities?: unknown;
+	conditionImmunities?: unknown;
+	senses?: unknown;
+	languages?: unknown;
+	traits?: unknown;
+	actions?: unknown;
+	legendary?: unknown;
+	alignment?: unknown;
+	source?: unknown;
+	xp?: unknown;
+	size?: unknown;
 };
 
 type StaticItemSource = {
-  id?: string;
-  name: string;
-  description: string;
-  type?: string;
-  rarity?: string;
-  image?: string;
-  requirements?: Record<string, unknown>;
-  properties?: Record<string, unknown>;
-  effects?: Record<string, unknown>;
-  attunement?: boolean | null;
-  cursed?: boolean | null;
-  charges?: Record<string, unknown>;
-  stats?: Record<string, unknown>;
-  effect?: string;
-  value?: number;
-  weight?: number;
-  source?: string;
+	id?: string;
+	name: string;
+	description: string;
+	type?: string;
+	rarity?: string;
+	image?: string;
+	requirements?: Record<string, unknown>;
+	properties?: Record<string, unknown>;
+	effects?: Record<string, unknown>;
+	attunement?: boolean | null;
+	cursed?: boolean | null;
+	charges?: Record<string, unknown>;
+	stats?: Record<string, unknown>;
+	effect?: string;
+	value?: number;
+	weight?: number;
+	source?: string;
 };
 
 type StaticJobSource = {
-  id?: string;
-  name: string;
-  description: string;
-  primary_abilities?: string[];
-  rank?: string;
-  image?: string;
-  // SRD 5e Class Features
-  hitDie?: string;
-  primaryAbility?: string;
-  savingThrows?: string[];
-  skillChoices?: string[];
-  armorProficiencies?: string[];
-  weaponProficiencies?: string[];
-  toolProficiencies?: string[];
-  startingEquipment?: string[][];
-  hitPointsAtFirstLevel?: string;
-  hitPointsAtHigherLevels?: string;
-  spellcasting?: {
-    ability: string;
-    focus?: string;
-    cantripsKnown?: number[];
-    spellsKnown?: number[];
-    spellSlots?: Record<string, number[]>;
-  };
-  // System Ascendant features
-  awakeningFeatures?: Array<{ name: string; description: string; level: number }>;
-  jobTraits?: Array<{ name: string; description: string; type: string; frequency?: string }>;
-  abilityScoreImprovements?: Record<string, number>;
-  classFeatures?: Array<{ level: number; name: string; description: string }>;
-  source?: string;
+	id?: string;
+	name: string;
+	description: string;
+	primary_abilities?: string[];
+	rank?: string;
+	image?: string;
+	// SRD 5e Class Features
+	hitDie?: string;
+	primaryAbility?: string;
+	savingThrows?: string[];
+	skillChoices?: string[];
+	armorProficiencies?: string[];
+	weaponProficiencies?: string[];
+	toolProficiencies?: string[];
+	startingEquipment?: string[][];
+	hitPointsAtFirstLevel?: string;
+	hitPointsAtHigherLevels?: string;
+	spellcasting?: {
+		ability: string;
+		focus?: string;
+		cantripsKnown?: number[];
+		spellsKnown?: number[];
+		spellSlots?: Record<string, number[]>;
+	};
+	// System Ascendant features
+	awakeningFeatures?: Array<{
+		name: string;
+		description: string;
+		level: number;
+	}>;
+	jobTraits?: Array<{
+		name: string;
+		description: string;
+		type: string;
+		frequency?: string;
+	}>;
+	abilityScoreImprovements?: Record<string, number>;
+	classFeatures?: Array<{ level: number; name: string; description: string }>;
+	source?: string;
 };
 
 type StaticSpellSource = {
-  id?: string;
-  name: string;
-  description: string;
-  type?: string;
-  rank?: string;
-  image?: string;
-  effect?: string;
-  range?: number | string | Record<string, unknown>;
-  activation?: Record<string, unknown>;
-  duration?: string | Record<string, unknown>;
-  components?: Record<string, unknown>;
-  effects?: Record<string, unknown>;
-  mechanics?: Record<string, unknown>;
-  limitations?: Record<string, unknown>;
-  flavor?: string;
-  higher_levels?: string;
-  atHigherLevels?: string;
-  // Fields present on well-formed spells (first 3)
-  level?: number;
-  school?: string;
-  castingTime?: string;
-  concentration?: boolean;
-  ritual?: boolean;
-  classes?: string[];
-  savingThrow?: Record<string, unknown>;
-  spellAttack?: Record<string, unknown>;
-  area?: Record<string, unknown>;
+	id?: string;
+	name: string;
+	description: string;
+	type?: string;
+	rank?: string;
+	image?: string;
+	effect?: string;
+	range?: number | string | Record<string, unknown>;
+	activation?: Record<string, unknown>;
+	duration?: string | Record<string, unknown>;
+	components?: Record<string, unknown>;
+	effects?: Record<string, unknown>;
+	mechanics?: Record<string, unknown>;
+	limitations?: Record<string, unknown>;
+	flavor?: string;
+	higher_levels?: string;
+	atHigherLevels?: string;
+	// Fields present on well-formed spells (first 3)
+	level?: number;
+	school?: string;
+	castingTime?: string;
+	concentration?: boolean;
+	ritual?: boolean;
+	classes?: string[];
+	savingThrow?: Record<string, unknown>;
+	spellAttack?: Record<string, unknown>;
+	area?: Record<string, unknown>;
 };
 
 // ---------------------------------------------------------------------------
 // Spell normalization helpers — derive missing 5e fields from existing data
 // ---------------------------------------------------------------------------
 const SCHOOL_KEYWORDS: [RegExp, string][] = [
-  [/shadow|necrot|death|undead|wither|drain|blight|curse|soul/i, 'Necromancy'],
-  [/void|ward|shield|barrier|protect|banish|counter|dispel|abjur/i, 'Abjuration'],
-  [/fire|ice|frost|lightning|thunder|bolt|blast|storm|radiant|force|beam|ray|burn|scorch|ignite|freeze/i, 'Evocation'],
-  [/heal|restore|cure|mend|revive|resurrect|vitality|regenerat/i, 'Evocation'],
-  [/holy|divine|celestial|sacred|smite|purif/i, 'Evocation'],
-  [/summon|conjur|demon|abyssal|portal|gate|call|manifest|rift/i, 'Conjuration'],
-  [/illus|phantom|mirage|invis|disguise|mirror|decep/i, 'Illusion'],
-  [/transform|enhance|alter|shift|polymorph|enlarge|reduce|haste|slow|mutate/i, 'Transmutation'],
-  [/charm|command|compel|dominate|enchant|hold|stun|sleep|sugges|fear|frighten/i, 'Enchantment'],
-  [/detect|scry|reveal|sense|identify|comprehend|augur|divin|see|sight|locate|find/i, 'Divination'],
+	[/shadow|necrot|death|undead|wither|drain|blight|curse|soul/i, "Necromancy"],
+	[
+		/void|ward|shield|barrier|protect|banish|counter|dispel|abjur/i,
+		"Abjuration",
+	],
+	[
+		/fire|ice|frost|lightning|thunder|bolt|blast|storm|radiant|force|beam|ray|burn|scorch|ignite|freeze/i,
+		"Evocation",
+	],
+	[/heal|restore|cure|mend|revive|resurrect|vitality|regenerat/i, "Evocation"],
+	[/holy|divine|celestial|sacred|smite|purif/i, "Evocation"],
+	[
+		/summon|conjur|demon|abyssal|portal|gate|call|manifest|rift/i,
+		"Conjuration",
+	],
+	[/illus|phantom|mirage|invis|disguise|mirror|decep/i, "Illusion"],
+	[
+		/transform|enhance|alter|shift|polymorph|enlarge|reduce|haste|slow|mutate/i,
+		"Transmutation",
+	],
+	[
+		/charm|command|compel|dominate|enchant|hold|stun|sleep|sugges|fear|frighten/i,
+		"Enchantment",
+	],
+	[
+		/detect|scry|reveal|sense|identify|comprehend|augur|divin|see|sight|locate|find/i,
+		"Divination",
+	],
 ];
 
 function deriveSchool(spell: StaticSpellSource): string {
-  if (spell.school) return spell.school;
-  const text = `${spell.name} ${spell.description} ${spell.effect ?? ''}`;
-  for (const [pattern, school] of SCHOOL_KEYWORDS) {
-    if (pattern.test(text)) return school;
-  }
-  return 'Evocation'; // default for SA combat-heavy setting
+	if (spell.school) return spell.school;
+	const text = `${spell.name} ${spell.description} ${spell.effect ?? ""}`;
+	for (const [pattern, school] of SCHOOL_KEYWORDS) {
+		if (pattern.test(text)) return school;
+	}
+	return "Evocation"; // default for SA combat-heavy setting
 }
 
 function deriveCastingTime(spell: StaticSpellSource): string {
-  if (spell.castingTime) return spell.castingTime;
-  const act = spell.activation as Record<string, unknown> | undefined;
-  if (!act) return '1 action';
-  const t = String(act.type ?? 'action').toLowerCase();
-  const cost = Number(act.cost ?? 1);
-  if (t === 'bonus_action' || t === 'bonus') return '1 bonus action';
-  if (t === 'reaction') return '1 reaction';
-  if (t === 'minute') return `${cost} minute${cost > 1 ? 's' : ''}`;
-  if (t === 'hour') return `${cost} hour${cost > 1 ? 's' : ''}`;
-  return '1 action';
+	if (spell.castingTime) return spell.castingTime;
+	const act = spell.activation as Record<string, unknown> | undefined;
+	if (!act) return "1 action";
+	const t = String(act.type ?? "action").toLowerCase();
+	const cost = Number(act.cost ?? 1);
+	if (t === "bonus_action" || t === "bonus") return "1 bonus action";
+	if (t === "reaction") return "1 reaction";
+	if (t === "minute") return `${cost} minute${cost > 1 ? "s" : ""}`;
+	if (t === "hour") return `${cost} hour${cost > 1 ? "s" : ""}`;
+	return "1 action";
 }
 
 function deriveLevel(spell: StaticSpellSource): number {
-  if (spell.level !== undefined && spell.level !== null) return spell.level;
-  const mana = (spell.limitations as Record<string, unknown>)?.mana_cost;
-  const manaN = typeof mana === 'number' ? mana : 0;
-  const rank = (spell.rank ?? 'D').toUpperCase();
-  // Use mana cost as tiebreaker within rank bands
-  switch (rank) {
-    case 'D': return manaN > 50 ? 1 : 0;
-    case 'C': return manaN > 80 ? 3 : 2;
-    case 'B': return manaN > 100 ? 5 : 4;
-    case 'A': return manaN > 110 ? 7 : 6;
-    case 'S': return manaN > 120 ? 9 : 8;
-    default: return 1;
-  }
+	if (spell.level !== undefined && spell.level !== null) return spell.level;
+	const mana = (spell.limitations as Record<string, unknown>)?.mana_cost;
+	const manaN = typeof mana === "number" ? mana : 0;
+	const rank = (spell.rank ?? "D").toUpperCase();
+	// Use mana cost as tiebreaker within rank bands
+	switch (rank) {
+		case "D":
+			return manaN > 50 ? 1 : 0;
+		case "C":
+			return manaN > 80 ? 3 : 2;
+		case "B":
+			return manaN > 100 ? 5 : 4;
+		case "A":
+			return manaN > 110 ? 7 : 6;
+		case "S":
+			return manaN > 120 ? 9 : 8;
+		default:
+			return 1;
+	}
 }
 
 function deriveConcentration(spell: StaticSpellSource): boolean {
-  if (spell.concentration !== undefined) return spell.concentration;
-  const dur = spell.duration;
-  if (typeof dur === 'string') return /concentrat/i.test(dur);
-  if (dur && typeof dur === 'object') {
-    const t = String((dur as Record<string, unknown>).type ?? '');
-    return /concentrat/i.test(t);
-  }
-  return false;
+	if (spell.concentration !== undefined) return spell.concentration;
+	const dur = spell.duration;
+	if (typeof dur === "string") return /concentrat/i.test(dur);
+	if (dur && typeof dur === "object") {
+		const t = String((dur as Record<string, unknown>).type ?? "");
+		return /concentrat/i.test(t);
+	}
+	return false;
 }
 
 function deriveRitual(spell: StaticSpellSource): boolean {
-  if (spell.ritual !== undefined) return spell.ritual;
-  return /\britual\b/i.test(spell.description ?? '');
+	if (spell.ritual !== undefined) return spell.ritual;
+	return /\britual\b/i.test(spell.description ?? "");
 }
 
 const CLASS_MAP: Record<string, string[]> = {
-  Attack: ['Destroyer', 'Mage', 'Esper', 'Invoker', 'Assassin', 'Berserker'],
-  Defense: ['Mage', 'Herald', 'Holy Knight', 'Technomancer', 'Contractor'],
-  Healing: ['Herald', 'Holy Knight', 'Summoner', 'Idol'],
-  Utility: ['Mage', 'Assassin', 'Contractor', 'Technomancer', 'Stalker', 'Idol'],
+	Attack: ["Destroyer", "Mage", "Esper", "Invoker", "Assassin", "Berserker"],
+	Defense: ["Mage", "Herald", "Holy Knight", "Technomancer", "Contractor"],
+	Healing: ["Herald", "Holy Knight", "Summoner", "Idol"],
+	Utility: [
+		"Mage",
+		"Assassin",
+		"Contractor",
+		"Technomancer",
+		"Stalker",
+		"Idol",
+	],
 };
 
 function deriveClasses(spell: StaticSpellSource): string[] {
-  if (spell.classes && spell.classes.length > 0) return spell.classes;
-  return CLASS_MAP[spell.type ?? 'Utility'] ?? ['Mage'];
+	if (spell.classes && spell.classes.length > 0) return spell.classes;
+	return CLASS_MAP[spell.type ?? "Utility"] ?? ["Mage"];
 }
 
 type StaticLocationSource = {
-  id?: string;
-  name: string;
-  description: string;
-  type?: string;
-  rank?: string;
-  image?: string;
-  encounters?: string[];
-  treasures?: string[];
+	id?: string;
+	name: string;
+	description: string;
+	type?: string;
+	rank?: string;
+	image?: string;
+	encounters?: string[];
+	treasures?: string[];
 };
 
 type StaticRuneSource = {
-  id?: string;
-  name: string;
-  description: string;
-  element?: string;
-  rarity?: string;
-  image?: string;
-  power?: number;
-  // System Ascendant rune fields
-  effect_description?: string;
-  rune_type?: string;
-  rune_category?: string;
-  rune_level?: number;
-  effect_type?: string;
-  activation_action?: string;
-  uses_per_rest?: string;
-  recharge?: string;
-  range?: string;
-  duration?: string;
-  higher_levels?: string;
-  lore?: string;
-  discovery_lore?: string;
-  tags?: string[];
-  requires_level?: number;
+	id?: string;
+	name: string;
+	description: string;
+	element?: string;
+	rarity?: string;
+	image?: string;
+	power?: number;
+	// System Ascendant rune fields
+	effect_description?: string;
+	rune_type?: string;
+	rune_category?: string;
+	rune_level?: number;
+	effect_type?: string;
+	activation_action?: string;
+	uses_per_rest?: string;
+	recharge?: string;
+	range?: string;
+	duration?: string;
+	higher_levels?: string;
+	lore?: string;
+	discovery_lore?: string;
+	tags?: string[];
+	requires_level?: number;
 };
 
 type StaticBackgroundSource = {
-  id?: string;
-  name: string;
-  description: string;
-  skills?: string[];
-  image?: string;
-  rank?: string;
-  // Full 5e template fields
-  skillProficiencies?: string[];
-  toolProficiencies?: string[];
-  languages?: string[];
-  equipment?: string[];
-  features?: Array<{ name: string; description: string } | string>;
-  personalityTraits?: string[];
-  ideals?: string[];
-  bonds?: string[];
-  flaws?: string[];
-  dangers?: string[];
-  abilities?: string[];
-  source?: string;
-  suggestedCharacteristics?: {
-    personality?: string[];
-    ideal?: string[];
-    bond?: string[];
-    flaw?: string[];
-  };
+	id?: string;
+	name: string;
+	description: string;
+	skills?: string[];
+	image?: string;
+	rank?: string;
+	// Full 5e template fields
+	skillProficiencies?: string[];
+	toolProficiencies?: string[];
+	languages?: string[];
+	equipment?: string[];
+	features?: Array<{ name: string; description: string } | string>;
+	personalityTraits?: string[];
+	ideals?: string[];
+	bonds?: string[];
+	flaws?: string[];
+	dangers?: string[];
+	abilities?: string[];
+	source?: string;
+	suggestedCharacteristics?: {
+		personality?: string[];
+		ideal?: string[];
+		bond?: string[];
+		flaw?: string[];
+	};
 };
 
 type StaticMonarchSource = {
-  id?: string;
-  name: string;
-  description: string;
-  title?: string;
-  theme?: string;
-  rank?: string;
-  image?: string;
-  type?: string;
-  tags?: string[];
-  source_book?: string;
-  requirements?: {
-    quest_completion?: string;
-    dm_verification?: boolean;
-    prerequisite_job?: string;
-    power_level?: number;
-  };
-  abilities?: Array<{
-    name: string;
-    description: string;
-    type: string;
-    frequency?: string;
-    dc?: number;
-    spell_slot?: number;
-    power_level?: number;
-  }>;
-  features?: Array<{
-    name: string;
-    description: string;
-    power_level?: number;
-  }>;
-  mechanics?: {
-    stat_bonuses?: Record<string, number>;
-    special_abilities?: string[];
-    restrictions?: string[];
-    progression?: Record<string, string[]>;
-  };
+	id?: string;
+	name: string;
+	description: string;
+	title?: string;
+	theme?: string;
+	rank?: string;
+	image?: string;
+	type?: string;
+	tags?: string[];
+	source_book?: string;
+	requirements?: {
+		quest_completion?: string;
+		dm_verification?: boolean;
+		prerequisite_job?: string;
+		power_level?: number;
+	};
+	abilities?: Array<{
+		name: string;
+		description: string;
+		type: string;
+		frequency?: string;
+		dc?: number;
+		spell_slot?: number;
+		power_level?: number;
+	}>;
+	features?: Array<{
+		name: string;
+		description: string;
+		power_level?: number;
+	}>;
+	mechanics?: {
+		stat_bonuses?: Record<string, number>;
+		special_abilities?: string[];
+		restrictions?: string[];
+		progression?: Record<string, string[]>;
+	};
 };
 
 // Transform static data to match UI interface
 function transformMonster(monster: StaticMonsterSource): StaticCompendiumEntry {
-  const rawRank = typeof monster.rank === 'string' ? monster.rank : undefined;
-  const rank = rawRank && rawRank.length > 0 ? rawRank : undefined;
+	const rawRank = typeof monster.rank === "string" ? monster.rank : undefined;
+	const rank = rawRank && rawRank.length > 0 ? rawRank : undefined;
 
-  const statsObj = (monster.stats && typeof monster.stats === 'object') ? (monster.stats as Record<string, unknown>) : null;
-  const abilityScores = (statsObj && statsObj.abilityScores && typeof statsObj.abilityScores === 'object')
-    ? (statsObj.abilityScores as Record<string, unknown>)
-    : null;
+	const statsObj =
+		monster.stats && typeof monster.stats === "object"
+			? (monster.stats as Record<string, unknown>)
+			: null;
+	const abilityScores =
+		statsObj &&
+		statsObj.abilityScores &&
+		typeof statsObj.abilityScores === "object"
+			? (statsObj.abilityScores as Record<string, unknown>)
+			: null;
 
-  const armorClass = typeof statsObj?.armorClass === 'number' ? (statsObj.armorClass as number) : null;
-  const hitPoints = typeof statsObj?.hitPoints === 'number' ? (statsObj.hitPoints as number) : null;
-  const speed = typeof statsObj?.speed === 'number' ? (statsObj.speed as number) : null;
-  const crNumber = typeof statsObj?.challengeRating === 'number' ? (statsObj.challengeRating as number) : null;
-  const proficiencyBonus = typeof statsObj?.proficiencyBonus === 'number' ? (statsObj.proficiencyBonus as number) : null;
-  const savingThrows = (statsObj && statsObj.savingThrows && typeof statsObj.savingThrows === 'object')
-    ? (statsObj.savingThrows as Record<string, unknown>)
-    : null;
+	const armorClass =
+		typeof statsObj?.armorClass === "number"
+			? (statsObj.armorClass as number)
+			: null;
+	const hitPoints =
+		typeof statsObj?.hitPoints === "number"
+			? (statsObj.hitPoints as number)
+			: null;
+	const speed =
+		typeof statsObj?.speed === "number" ? (statsObj.speed as number) : null;
+	const crNumber =
+		typeof statsObj?.challengeRating === "number"
+			? (statsObj.challengeRating as number)
+			: null;
+	const proficiencyBonus =
+		typeof statsObj?.proficiencyBonus === "number"
+			? (statsObj.proficiencyBonus as number)
+			: null;
+	const savingThrows =
+		statsObj &&
+		statsObj.savingThrows &&
+		typeof statsObj.savingThrows === "object"
+			? (statsObj.savingThrows as Record<string, unknown>)
+			: null;
 
-  const normalizeStringArray = (value: unknown): string[] | null => {
-    if (Array.isArray(value)) {
-      return value.map((v) => String(v)).filter((s) => s.trim().length > 0);
-    }
-    if (typeof value === 'string' && value.trim().length > 0) {
-      return value.split(',').map((s) => s.trim()).filter(Boolean);
-    }
-    return null;
-  };
+	const normalizeStringArray = (value: unknown): string[] | null => {
+		if (Array.isArray(value)) {
+			return value.map((v) => String(v)).filter((s) => s.trim().length > 0);
+		}
+		if (typeof value === "string" && value.trim().length > 0) {
+			return value
+				.split(",")
+				.map((s) => s.trim())
+				.filter(Boolean);
+		}
+		return null;
+	};
 
-  const traits = Array.isArray(monster.traits)
-    ? (monster.traits as Record<string, unknown>[])
-    : null;
-  const actions = Array.isArray(monster.actions)
-    ? (monster.actions as Record<string, unknown>[])
-    : null;
+	const traits = Array.isArray(monster.traits)
+		? (monster.traits as Record<string, unknown>[])
+		: null;
+	const actions = Array.isArray(monster.actions)
+		? (monster.actions as Record<string, unknown>[])
+		: null;
 
-  const skillNames = normalizeStringArray(monster.skills);
-  const skillMap = skillNames
-    ? Object.fromEntries(skillNames.map((name) => [name, proficiencyBonus ?? 0]))
-    : null;
+	const skillNames = normalizeStringArray(monster.skills);
+	const skillMap = skillNames
+		? Object.fromEntries(
+				skillNames.map((name) => [name, proficiencyBonus ?? 0]),
+			)
+		: null;
 
-  return {
-    id: monster.id || monster.name.toLowerCase().replace(/\s+/g, '-'),
-    name: monster.name,
-    display_name: monster.name,
-    description: monster.description,
-    created_at: new Date().toISOString(),
-    tags: [monster.type, rank].filter(Boolean) as string[],
-    source_book: 'System Ascendant Homebrew',
-    image_url: monster.image,
-    cr: crNumber !== null ? String(crNumber) : (rank ?? null),
-    gate_rank: rank ?? null,
-    is_boss: rank === 'S' || rank === 'A',
-    rarity: rank === 'S' ? 'legendary' :
-      rank === 'A' ? 'epic' :
-        rank === 'B' ? 'rare' :
-          rank === 'C' ? 'uncommon' : 'common',
+	return {
+		id: monster.id || monster.name.toLowerCase().replace(/\s+/g, "-"),
+		name: monster.name,
+		display_name: monster.name,
+		description: monster.description,
+		created_at: new Date().toISOString(),
+		tags: [monster.type, rank].filter(Boolean) as string[],
+		source_book: "System Ascendant Homebrew",
+		image_url: monster.image,
+		cr: crNumber !== null ? String(crNumber) : (rank ?? null),
+		gate_rank: rank ?? null,
+		is_boss: rank === "S" || rank === "A",
+		rarity:
+			rank === "S"
+				? "legendary"
+				: rank === "A"
+					? "epic"
+					: rank === "B"
+						? "rare"
+						: rank === "C"
+							? "uncommon"
+							: "common",
 
-    size: typeof monster.size === 'string' ? monster.size : 'Medium',
-    creature_type: monster.type ?? null,
-    alignment: typeof monster.alignment === 'string' ? monster.alignment : null,
-    armor_class: armorClass,
-    hit_points_average: hitPoints,
-    hit_points_formula: null,
-    speed_walk: speed,
-    str: typeof abilityScores?.strength === 'number' ? (abilityScores.strength as number) : null,
-    agi: typeof abilityScores?.dexterity === 'number' ? (abilityScores.dexterity as number) : null,
-    vit: typeof abilityScores?.constitution === 'number' ? (abilityScores.constitution as number) : null,
-    int: typeof abilityScores?.intelligence === 'number' ? (abilityScores.intelligence as number) : null,
-    sense: typeof abilityScores?.wisdom === 'number' ? (abilityScores.wisdom as number) : null,
-    pre: typeof abilityScores?.charisma === 'number' ? (abilityScores.charisma as number) : null,
-    saving_throws: savingThrows
-      ? (Object.fromEntries(
-        Object.entries(savingThrows)
-          .filter(([, v]) => typeof v === 'number')
-          .map(([k, v]) => [k, v as number]),
-      ) as Record<string, number>)
-      : null,
-    skills: skillMap,
-    damage_resistances: normalizeStringArray(monster.damageResistances) ?? null,
-    damage_immunities: normalizeStringArray(monster.damageImmunities) ?? null,
-    damage_vulnerabilities: normalizeStringArray(monster.damageVulnerabilities) ?? null,
-    condition_immunities: normalizeStringArray(monster.conditionImmunities) ?? null,
-    senses: typeof monster.senses === 'string'
-      ? { text: monster.senses }
-      : null,
-    languages: normalizeStringArray(monster.languages) ?? null,
-    xp: typeof monster.xp === 'number' ? monster.xp : null,
-    monster_traits: traits,
-    monster_actions: actions,
-  };
+		size: typeof monster.size === "string" ? monster.size : "Medium",
+		creature_type: monster.type ?? null,
+		alignment: typeof monster.alignment === "string" ? monster.alignment : null,
+		armor_class: armorClass,
+		hit_points_average: hitPoints,
+		hit_points_formula: null,
+		speed_walk: speed,
+		str:
+			typeof abilityScores?.strength === "number"
+				? (abilityScores.strength as number)
+				: null,
+		agi:
+			typeof abilityScores?.dexterity === "number"
+				? (abilityScores.dexterity as number)
+				: null,
+		vit:
+			typeof abilityScores?.constitution === "number"
+				? (abilityScores.constitution as number)
+				: null,
+		int:
+			typeof abilityScores?.intelligence === "number"
+				? (abilityScores.intelligence as number)
+				: null,
+		sense:
+			typeof abilityScores?.wisdom === "number"
+				? (abilityScores.wisdom as number)
+				: null,
+		pre:
+			typeof abilityScores?.charisma === "number"
+				? (abilityScores.charisma as number)
+				: null,
+		saving_throws: savingThrows
+			? (Object.fromEntries(
+					Object.entries(savingThrows)
+						.filter(([, v]) => typeof v === "number")
+						.map(([k, v]) => [k, v as number]),
+				) as Record<string, number>)
+			: null,
+		skills: skillMap,
+		damage_resistances: normalizeStringArray(monster.damageResistances) ?? null,
+		damage_immunities: normalizeStringArray(monster.damageImmunities) ?? null,
+		damage_vulnerabilities:
+			normalizeStringArray(monster.damageVulnerabilities) ?? null,
+		condition_immunities:
+			normalizeStringArray(monster.conditionImmunities) ?? null,
+		senses:
+			typeof monster.senses === "string" ? { text: monster.senses } : null,
+		languages: normalizeStringArray(monster.languages) ?? null,
+		xp: typeof monster.xp === "number" ? monster.xp : null,
+		monster_traits: traits,
+		monster_actions: actions,
+	};
 }
 
-function deriveItemProperties(item: StaticItemSource): Record<string, unknown> | null {
-  if (item.properties) return item.properties as Record<string, unknown>;
-  const stats = item.stats as Record<string, unknown> | undefined;
-  const t = (item.type ?? '').toLowerCase();
+function deriveItemProperties(
+	item: StaticItemSource,
+): Record<string, unknown> | null {
+	if (item.properties) return item.properties as Record<string, unknown>;
+	const stats = item.stats as Record<string, unknown> | undefined;
+	const t = (item.type ?? "").toLowerCase();
 
-  if (t === 'weapon') {
-    return {
-      weapon: { damage: '1d6', damageType: 'slashing', versatile: null, finesse: false },
-      magical: stats ? { bonus: { attack: 0, damage: 0 } } : undefined,
-    };
-  }
-  if (t === 'armor') {
-    const def = typeof stats?.defense === 'number' ? stats.defense : 0;
-    const acBonus = def > 100 ? 3 : def > 50 ? 2 : def > 0 ? 1 : 0;
-    return {
-      armor: { baseAC: 10 + acBonus, type: acBonus >= 3 ? 'heavy' : acBonus >= 2 ? 'medium' : 'light' },
-      magical: acBonus > 0 ? { bonus: { armorClass: acBonus } } : undefined,
-    };
-  }
-  if (t === 'consumable') {
-    return { consumable: { uses: 1, action: 'action' } };
-  }
-  if (t === 'accessory' || t === 'wondrous') {
-    return { wondrous: { slot: 'any' } };
-  }
-  return null;
+	if (t === "weapon") {
+		return {
+			weapon: {
+				damage: "1d6",
+				damageType: "slashing",
+				versatile: null,
+				finesse: false,
+			},
+			magical: stats ? { bonus: { attack: 0, damage: 0 } } : undefined,
+		};
+	}
+	if (t === "armor") {
+		const def = typeof stats?.defense === "number" ? stats.defense : 0;
+		const acBonus = def > 100 ? 3 : def > 50 ? 2 : def > 0 ? 1 : 0;
+		return {
+			armor: {
+				baseAC: 10 + acBonus,
+				type: acBonus >= 3 ? "heavy" : acBonus >= 2 ? "medium" : "light",
+			},
+			magical: acBonus > 0 ? { bonus: { armorClass: acBonus } } : undefined,
+		};
+	}
+	if (t === "consumable") {
+		return { consumable: { uses: 1, action: "action" } };
+	}
+	if (t === "accessory" || t === "wondrous") {
+		return { wondrous: { slot: "any" } };
+	}
+	return null;
 }
 
 function transformItem(item: StaticItemSource): StaticCompendiumEntry {
-  return {
-    id: item.id || item.name.toLowerCase().replace(/\s+/g, '-'),
-    name: item.name,
-    display_name: item.name,
-    description: item.description,
-    created_at: new Date().toISOString(),
-    tags: [item.type, item.rarity].filter(Boolean) as string[],
-    source_book: 'System Ascendant Homebrew',
-    image_url: item.image,
-    equipment_type: item.type,
-    item_type: item.type,
-    requirements: item.requirements ?? null,
-    properties: deriveItemProperties(item),
-    effects: item.effects ?? null,
-    attunement: item.attunement ?? null,
-    cursed: item.cursed ?? null,
-    charges: item.charges ?? null,
-    stats: item.stats,
-    effect: item.effect,
-    value: item.value,
-    weight: item.weight,
-    source: item.source,
-    rarity: item.rarity,
-    level: undefined
-  };
+	return {
+		id: item.id || item.name.toLowerCase().replace(/\s+/g, "-"),
+		name: item.name,
+		display_name: item.name,
+		description: item.description,
+		created_at: new Date().toISOString(),
+		tags: [item.type, item.rarity].filter(Boolean) as string[],
+		source_book: "System Ascendant Homebrew",
+		image_url: item.image,
+		equipment_type: item.type,
+		item_type: item.type,
+		requirements: item.requirements ?? null,
+		properties: deriveItemProperties(item),
+		effects: item.effects ?? null,
+		attunement: item.attunement ?? null,
+		cursed: item.cursed ?? null,
+		charges: item.charges ?? null,
+		stats: item.stats,
+		effect: item.effect,
+		value: item.value,
+		weight: item.weight,
+		source: item.source,
+		rarity: item.rarity,
+		level: undefined,
+	};
 }
 
 function transformJob(job: StaticJobSource): StaticCompendiumEntry {
-  // Parse hit die number from string like "1d10"
-  const hitDieNumber = job.hitDie ? parseInt(job.hitDie.replace(/\D/g, '').slice(-2) || '0', 10) : null;
-  // Skill choice count: 5e standard is 2 for most jobs, 4 for Assassin
-  const skillChoiceCount = job.skillChoices ? (job.name === 'Assassin' ? 4 : 2) : null;
+	// Parse hit die number from string like "1d10"
+	const hitDieNumber = job.hitDie
+		? parseInt(job.hitDie.replace(/\D/g, "").slice(-2) || "0", 10)
+		: null;
+	// Skill choice count: 5e standard is 2 for most jobs, 4 for Assassin
+	const skillChoiceCount = job.skillChoices
+		? job.name === "Assassin"
+			? 4
+			: 2
+		: null;
 
-  return {
-    id: job.id || job.name.toLowerCase().replace(/\s+/g, '-'),
-    name: job.name,
-    display_name: job.name,
-    description: job.description,
-    created_at: new Date().toISOString(),
-    tags: job.primary_abilities || [],
-    source_book: job.source || 'System Ascendant Canon',
-    image_url: job.image,
-    rank: job.rank || null,
-    rarity: job.rank === 'S' ? 'legendary' :
-      job.rank === 'A' ? 'epic' :
-        job.rank === 'B' ? 'rare' :
-          job.rank === 'C' ? 'uncommon' : 'common',
-    // Job-specific fields for JobDetail.tsx
-    hit_die: hitDieNumber,
-    primary_abilities: job.primary_abilities || (job.primaryAbility ? [job.primaryAbility] : null),
-    saving_throw_proficiencies: job.savingThrows || null,
-    armor_proficiencies: job.armorProficiencies || null,
-    weapon_proficiencies: job.weaponProficiencies || null,
-    tool_proficiencies: job.toolProficiencies || null,
-    skill_choices: job.skillChoices || null,
-    skill_choice_count: skillChoiceCount,
-    starting_equipment: job.startingEquipment || null,
-    hit_points_at_first_level: job.hitPointsAtFirstLevel || null,
-    hit_points_at_higher_levels: job.hitPointsAtHigherLevels || null,
-    regent_prerequisites: null,
-    spellcasting_ability: job.spellcasting?.ability || null,
-    spellcasting_focus: job.spellcasting?.focus || null,
-    awakening_features: job.awakeningFeatures || null,
-    job_traits: job.jobTraits || null,
-    ability_score_improvements: job.abilityScoreImprovements || null,
-    class_features: job.classFeatures || null,
-    spellcasting: job.spellcasting || null,
-    level: undefined
-  };
+	return {
+		id: job.id || job.name.toLowerCase().replace(/\s+/g, "-"),
+		name: job.name,
+		display_name: job.name,
+		description: job.description,
+		created_at: new Date().toISOString(),
+		tags: job.primary_abilities || [],
+		source_book: job.source || "System Ascendant Canon",
+		image_url: job.image,
+		rank: job.rank || null,
+		rarity:
+			job.rank === "S"
+				? "legendary"
+				: job.rank === "A"
+					? "epic"
+					: job.rank === "B"
+						? "rare"
+						: job.rank === "C"
+							? "uncommon"
+							: "common",
+		// Job-specific fields for JobDetail.tsx
+		hit_die: hitDieNumber,
+		primary_abilities:
+			job.primary_abilities ||
+			(job.primaryAbility ? [job.primaryAbility] : null),
+		saving_throw_proficiencies: job.savingThrows || null,
+		armor_proficiencies: job.armorProficiencies || null,
+		weapon_proficiencies: job.weaponProficiencies || null,
+		tool_proficiencies: job.toolProficiencies || null,
+		skill_choices: job.skillChoices || null,
+		skill_choice_count: skillChoiceCount,
+		starting_equipment: job.startingEquipment || null,
+		hit_points_at_first_level: job.hitPointsAtFirstLevel || null,
+		hit_points_at_higher_levels: job.hitPointsAtHigherLevels || null,
+		regent_prerequisites: null,
+		spellcasting_ability: job.spellcasting?.ability || null,
+		spellcasting_focus: job.spellcasting?.focus || null,
+		awakening_features: job.awakeningFeatures || null,
+		job_traits: job.jobTraits || null,
+		ability_score_improvements: job.abilityScoreImprovements || null,
+		class_features: job.classFeatures || null,
+		spellcasting: job.spellcasting || null,
+		level: undefined,
+	};
 }
 
 function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
-  const rangeValue = typeof spell.range === 'number'
-    ? spell.range
-    : typeof spell.range === 'string'
-      ? { type: spell.range, distance: spell.range }
-      : (spell.range && typeof spell.range === 'object' ? (spell.range as Record<string, unknown>) : null);
-  const rankValue = typeof spell.rank === 'string' ? spell.rank : null;
-  const primaryEffect = typeof spell.effect === 'string' ? spell.effect : '';
+	const rangeValue =
+		typeof spell.range === "number"
+			? spell.range
+			: typeof spell.range === "string"
+				? { type: spell.range, distance: spell.range }
+				: spell.range && typeof spell.range === "object"
+					? (spell.range as Record<string, unknown>)
+					: null;
+	const rankValue = typeof spell.rank === "string" ? spell.rank : null;
+	const primaryEffect = typeof spell.effect === "string" ? spell.effect : "";
 
-  // Derive missing 5e fields
-  const school = deriveSchool(spell);
-  const castingTime = deriveCastingTime(spell);
-  const spellLevel = deriveLevel(spell);
-  const concentration = deriveConcentration(spell);
-  const ritual = deriveRitual(spell);
-  const classes = deriveClasses(spell);
+	// Derive missing 5e fields
+	const school = deriveSchool(spell);
+	const castingTime = deriveCastingTime(spell);
+	const spellLevel = deriveLevel(spell);
+	const concentration = deriveConcentration(spell);
+	const ritual = deriveRitual(spell);
+	const classes = deriveClasses(spell);
 
-  const derivedActivation = { type: castingTime.includes('bonus') ? 'bonus_action' : castingTime.includes('reaction') ? 'reaction' : 'action', cost: 1 };
-  const derivedDuration = concentration ? { type: 'concentration', time: '1 minute' } : { type: 'instantaneous' };
-  const derivedComponents = { verbal: true, somatic: true, material: false };
-  const derivedEffects = { primary: primaryEffect };
+	const derivedActivation = {
+		type: castingTime.includes("bonus")
+			? "bonus_action"
+			: castingTime.includes("reaction")
+				? "reaction"
+				: "action",
+		cost: 1,
+	};
+	const derivedDuration = concentration
+		? { type: "concentration", time: "1 minute" }
+		: { type: "instantaneous" };
+	const derivedComponents = { verbal: true, somatic: true, material: false };
+	const derivedEffects = { primary: primaryEffect };
 
-  return {
-    id: spell.id || spell.name.toLowerCase().replace(/\s+/g, '-'),
-    name: spell.name,
-    display_name: spell.name,
-    description: spell.description,
-    created_at: new Date().toISOString(),
-    tags: [spell.type, spell.rank, school, ...classes].filter(Boolean) as string[],
-    source_book: 'System Ascendant Homebrew',
-    image_url: spell.image,
-    spell_type: spell.type,
-    rank: rankValue,
-    level: spellLevel,
-    effect: spell.effect,
-    range: rangeValue,
-    school: school,
-    activation:
-      (spell.activation && typeof spell.activation === 'object' ? spell.activation : derivedActivation) as Record<string, unknown>,
-    duration:
-      (spell.duration && typeof spell.duration === 'object' ? spell.duration : derivedDuration) as Record<string, unknown>,
-    components:
-      (spell.components && typeof spell.components === 'object' ? spell.components : derivedComponents) as Record<string, unknown>,
-    effects:
-      (spell.effects && typeof spell.effects === 'object' ? spell.effects : derivedEffects) as Record<string, unknown>,
-    mechanics:
-      (spell.mechanics && typeof spell.mechanics === 'object'
-        ? spell.mechanics
-        : (spell as Record<string, any>).spellAttack
-          ? { attack: (spell as Record<string, any>).spellAttack }
-          : { saving_throw: { ability: 'dexterity', effect: 'half damage' } }) as Record<string, unknown>,
-    limitations:
-      (spell.limitations && typeof spell.limitations === 'object'
-        ? { ...spell.limitations, concentration, ritual, casting_time: castingTime, spell_classes: classes }
-        : { concentration, ritual, casting_time: castingTime, spell_classes: classes }) as Record<string, unknown>,
-    flavor: typeof spell.flavor === 'string' ? spell.flavor : (spell.description || ''),
-    higher_levels: spell.higher_levels || spell.atHigherLevels || null,
-    atHigherLevels: spell.atHigherLevels || spell.higher_levels || null,
-    rarity: spell.rank === 'S' ? 'legendary' :
-      spell.rank === 'A' ? 'epic' :
-        spell.rank === 'B' ? 'rare' :
-          spell.rank === 'C' ? 'uncommon' : 'common'
-  };
+	return {
+		id: spell.id || spell.name.toLowerCase().replace(/\s+/g, "-"),
+		name: spell.name,
+		display_name: spell.name,
+		description: spell.description,
+		created_at: new Date().toISOString(),
+		tags: [spell.type, spell.rank, school, ...classes].filter(
+			Boolean,
+		) as string[],
+		source_book: "System Ascendant Homebrew",
+		image_url: spell.image,
+		spell_type: spell.type,
+		rank: rankValue,
+		level: spellLevel,
+		effect: spell.effect,
+		range: rangeValue,
+		school: school,
+		activation: (spell.activation && typeof spell.activation === "object"
+			? spell.activation
+			: derivedActivation) as Record<string, unknown>,
+		duration: (spell.duration && typeof spell.duration === "object"
+			? spell.duration
+			: derivedDuration) as Record<string, unknown>,
+		components: (spell.components && typeof spell.components === "object"
+			? spell.components
+			: derivedComponents) as Record<string, unknown>,
+		effects: (spell.effects && typeof spell.effects === "object"
+			? spell.effects
+			: derivedEffects) as Record<string, unknown>,
+		mechanics: (spell.mechanics && typeof spell.mechanics === "object"
+			? spell.mechanics
+			: (spell as Record<string, any>).spellAttack
+				? { attack: (spell as Record<string, any>).spellAttack }
+				: {
+						saving_throw: { ability: "dexterity", effect: "half damage" },
+					}) as Record<string, unknown>,
+		limitations: (spell.limitations && typeof spell.limitations === "object"
+			? {
+					...spell.limitations,
+					concentration,
+					ritual,
+					casting_time: castingTime,
+					spell_classes: classes,
+				}
+			: {
+					concentration,
+					ritual,
+					casting_time: castingTime,
+					spell_classes: classes,
+				}) as Record<string, unknown>,
+		flavor:
+			typeof spell.flavor === "string" ? spell.flavor : spell.description || "",
+		higher_levels: spell.higher_levels || spell.atHigherLevels || null,
+		atHigherLevels: spell.atHigherLevels || spell.higher_levels || null,
+		rarity:
+			spell.rank === "S"
+				? "legendary"
+				: spell.rank === "A"
+					? "epic"
+					: spell.rank === "B"
+						? "rare"
+						: spell.rank === "C"
+							? "uncommon"
+							: "common",
+	};
 }
 
-function transformLocation(location: StaticLocationSource): StaticCompendiumEntry {
-  return {
-    id: location.id || location.name.toLowerCase().replace(/\s+/g, '-'),
-    name: location.name,
-    display_name: location.name,
-    description: location.description,
-    created_at: new Date().toISOString(),
-    tags: [location.type, location.rank].filter(Boolean) as string[],
-    source_book: 'System Ascendant Homebrew',
-    image_url: location.image,
-    location_type: location.type,
-    rank: location.rank,
-    encounters: location.encounters,
-    treasures: location.treasures,
-    rarity: location.rank === 'S' ? 'legendary' :
-      location.rank === 'A' ? 'epic' :
-        location.rank === 'B' ? 'rare' :
-          location.rank === 'C' ? 'uncommon' : 'common'
-  };
+function transformLocation(
+	location: StaticLocationSource,
+): StaticCompendiumEntry {
+	return {
+		id: location.id || location.name.toLowerCase().replace(/\s+/g, "-"),
+		name: location.name,
+		display_name: location.name,
+		description: location.description,
+		created_at: new Date().toISOString(),
+		tags: [location.type, location.rank].filter(Boolean) as string[],
+		source_book: "System Ascendant Homebrew",
+		image_url: location.image,
+		location_type: location.type,
+		rank: location.rank,
+		encounters: location.encounters,
+		treasures: location.treasures,
+		rarity:
+			location.rank === "S"
+				? "legendary"
+				: location.rank === "A"
+					? "epic"
+					: location.rank === "B"
+						? "rare"
+						: location.rank === "C"
+							? "uncommon"
+							: "common",
+	};
 }
 
 function transformRune(rune: StaticRuneSource): StaticCompendiumEntry {
-  return {
-    id: rune.id || rune.name.toLowerCase().replace(/\s+/g, '-'),
-    name: rune.name,
-    display_name: rune.name,
-    description: rune.effect_description || rune.description,
-    created_at: new Date().toISOString(),
-    tags: (rune.tags || [rune.element || rune.rune_type, rune.rarity]).filter(Boolean) as string[],
-    source_book: 'System Ascendant Canon',
-    image_url: rune.image,
-    rune_type: rune.rune_type || rune.element || null,
-    rune_category: rune.rune_category || rune.element || null,
-    rune_level: rune.rune_level ?? rune.power ?? undefined,
-    rarity: rune.rarity,
-    level: rune.requires_level ?? rune.rune_level ?? rune.power ?? undefined,
-    effect: rune.effect_description || null,
-    activation: rune.activation_action ? { type: rune.activation_action } as Record<string, unknown> : null,
-    duration: rune.duration ? { type: rune.duration } as Record<string, unknown> : null,
-    flavor: rune.lore || null,
-    lore: rune.lore ? { origin: rune.lore, discovery: rune.discovery_lore } as Record<string, unknown> : null,
-  };
+	return {
+		id: rune.id || rune.name.toLowerCase().replace(/\s+/g, "-"),
+		name: rune.name,
+		display_name: rune.name,
+		description: rune.effect_description || rune.description,
+		created_at: new Date().toISOString(),
+		tags: (rune.tags || [rune.element || rune.rune_type, rune.rarity]).filter(
+			Boolean,
+		) as string[],
+		source_book: "System Ascendant Canon",
+		image_url: rune.image,
+		rune_type: rune.rune_type || rune.element || null,
+		rune_category: rune.rune_category || rune.element || null,
+		rune_level: rune.rune_level ?? rune.power ?? undefined,
+		rarity: rune.rarity,
+		level: rune.requires_level ?? rune.rune_level ?? rune.power ?? undefined,
+		effect: rune.effect_description || null,
+		activation: rune.activation_action
+			? ({ type: rune.activation_action } as Record<string, unknown>)
+			: null,
+		duration: rune.duration
+			? ({ type: rune.duration } as Record<string, unknown>)
+			: null,
+		flavor: rune.lore || null,
+		lore: rune.lore
+			? ({ origin: rune.lore, discovery: rune.discovery_lore } as Record<
+					string,
+					unknown
+				>)
+			: null,
+	};
 }
 
-function transformBackground(background: StaticBackgroundSource): StaticCompendiumEntry {
-  // Resolve skill proficiencies from either new or legacy field
-  const skillProfs = background.skillProficiencies || background.skills || [];
+function transformBackground(
+	background: StaticBackgroundSource,
+): StaticCompendiumEntry {
+	// Resolve skill proficiencies from either new or legacy field
+	const skillProfs = background.skillProficiencies || background.skills || [];
 
-  // Resolve structured features into feature_name/feature_description (primary feature)
-  const structuredFeatures: Array<{ name: string; description: string }> = [];
-  if (Array.isArray(background.features)) {
-    for (const f of background.features) {
-      if (typeof f === 'object' && f !== null && 'name' in f) {
-        structuredFeatures.push(f as { name: string; description: string });
-      }
-    }
-  }
-  const primaryFeature = structuredFeatures[0] || null;
+	// Resolve structured features into feature_name/feature_description (primary feature)
+	const structuredFeatures: Array<{ name: string; description: string }> = [];
+	if (Array.isArray(background.features)) {
+		for (const f of background.features) {
+			if (typeof f === "object" && f !== null && "name" in f) {
+				structuredFeatures.push(f as { name: string; description: string });
+			}
+		}
+	}
+	const primaryFeature = structuredFeatures[0] || null;
 
-  // Build equipment string from array
-  const equipmentStr = Array.isArray(background.equipment) && background.equipment.length > 0
-    ? background.equipment.join(', ')
-    : null;
+	// Build equipment string from array
+	const equipmentStr =
+		Array.isArray(background.equipment) && background.equipment.length > 0
+			? background.equipment.join(", ")
+			: null;
 
-  // Resolve personality traits from direct fields or suggestedCharacteristics
-  const personalityTraits = background.personalityTraits || background.suggestedCharacteristics?.personality || [];
-  const ideals = background.ideals || background.suggestedCharacteristics?.ideal || [];
-  const bonds = background.bonds || background.suggestedCharacteristics?.bond || [];
-  const flaws = background.flaws || background.suggestedCharacteristics?.flaw || [];
+	// Resolve personality traits from direct fields or suggestedCharacteristics
+	const personalityTraits =
+		background.personalityTraits ||
+		background.suggestedCharacteristics?.personality ||
+		[];
+	const ideals =
+		background.ideals || background.suggestedCharacteristics?.ideal || [];
+	const bonds =
+		background.bonds || background.suggestedCharacteristics?.bond || [];
+	const flaws =
+		background.flaws || background.suggestedCharacteristics?.flaw || [];
 
-  return {
-    id: background.id || background.name.toLowerCase().replace(/\s+/g, '-'),
-    name: background.name,
-    display_name: background.name,
-    description: background.description,
-    created_at: new Date().toISOString(),
-    tags: skillProfs,
-    source_book: background.source || 'System Ascendant Canon',
-    image_url: background.image,
-    rarity: background.rank?.toLowerCase() || 'uncommon',
-    rank: background.rank || null,
-    // Background-specific fields for BackgroundDetail.tsx
-    skill_proficiencies: skillProfs.length > 0 ? skillProfs : null,
-    tool_proficiencies: background.toolProficiencies && background.toolProficiencies.length > 0 ? background.toolProficiencies : null,
-    language_count: background.languages ? background.languages.length : null,
-    languages: background.languages || null,
-    starting_equipment: equipmentStr,
-    feature_name: primaryFeature?.name || null,
-    feature_description: primaryFeature?.description || null,
-    personality_traits: personalityTraits.length > 0 ? personalityTraits : null,
-    ideals: ideals.length > 0 ? ideals : null,
-    bonds: bonds.length > 0 ? bonds : null,
-    flaws: flaws.length > 0 ? flaws : null,
-    background_features: structuredFeatures.length > 0 ? structuredFeatures : null,
-  };
+	return {
+		id: background.id || background.name.toLowerCase().replace(/\s+/g, "-"),
+		name: background.name,
+		display_name: background.name,
+		description: background.description,
+		created_at: new Date().toISOString(),
+		tags: skillProfs,
+		source_book: background.source || "System Ascendant Canon",
+		image_url: background.image,
+		rarity: background.rank?.toLowerCase() || "uncommon",
+		rank: background.rank || null,
+		// Background-specific fields for BackgroundDetail.tsx
+		skill_proficiencies: skillProfs.length > 0 ? skillProfs : null,
+		tool_proficiencies:
+			background.toolProficiencies && background.toolProficiencies.length > 0
+				? background.toolProficiencies
+				: null,
+		language_count: background.languages ? background.languages.length : null,
+		languages: background.languages || null,
+		starting_equipment: equipmentStr,
+		feature_name: primaryFeature?.name || null,
+		feature_description: primaryFeature?.description || null,
+		personality_traits: personalityTraits.length > 0 ? personalityTraits : null,
+		ideals: ideals.length > 0 ? ideals : null,
+		bonds: bonds.length > 0 ? bonds : null,
+		flaws: flaws.length > 0 ? flaws : null,
+		background_features:
+			structuredFeatures.length > 0 ? structuredFeatures : null,
+	};
 }
 
 // Derive class_features for regents that only have features[] + abilities[] with power_level
-function deriveMonarchClassFeatures(monarch: StaticMonarchSource): Array<{ level: number; name: string; description: string }> | null {
-  // If the monarch already has class_features (like Umbral Regent), use them
-  const raw = (monarch as MonarchExtended).class_features;
-  if (Array.isArray(raw) && raw.length > 0) return raw as Array<{ level: number; name: string; description: string }>;
+function deriveMonarchClassFeatures(
+	monarch: StaticMonarchSource,
+): Array<{ level: number; name: string; description: string }> | null {
+	// If the monarch already has class_features (like Umbral Regent), use them
+	const raw = (monarch as MonarchExtended).class_features;
+	if (Array.isArray(raw) && raw.length > 0)
+		return raw as Array<{ level: number; name: string; description: string }>;
 
-  const features = (monarch as MonarchExtended).features as Array<{ name: string; description: string; power_level?: number }> | undefined;
-  const abilities = monarch.abilities as Array<{ name: string; description: string; power_level?: number; type?: string; frequency?: string }> | undefined;
-  if (!features && !abilities) return null;
+	const features = (monarch as MonarchExtended).features as
+		| Array<{ name: string; description: string; power_level?: number }>
+		| undefined;
+	const abilities = monarch.abilities as
+		| Array<{
+				name: string;
+				description: string;
+				power_level?: number;
+				type?: string;
+				frequency?: string;
+		  }>
+		| undefined;
+	if (!features && !abilities) return null;
 
-  // Power level → character level mapping (regent power 1-10 → character level 1-20)
-  const powerToLevel: Record<number, number> = { 1: 1, 2: 3, 3: 5, 4: 7, 5: 9, 6: 11, 7: 13, 8: 15, 9: 17, 10: 20 };
-  const result: Array<{ level: number; name: string; description: string }> = [];
+	// Power level → character level mapping (regent power 1-10 → character level 1-20)
+	const powerToLevel: Record<number, number> = {
+		1: 1,
+		2: 3,
+		3: 5,
+		4: 7,
+		5: 9,
+		6: 11,
+		7: 13,
+		8: 15,
+		9: 17,
+		10: 20,
+	};
+	const result: Array<{ level: number; name: string; description: string }> =
+		[];
 
-  for (const f of features ?? []) {
-    const pl = f.power_level ?? 1;
-    result.push({ level: powerToLevel[pl] ?? pl * 2 - 1, name: f.name, description: f.description });
-  }
-  for (const a of abilities ?? []) {
-    const pl = a.power_level ?? 1;
-    const suffix = a.frequency ? ` (${a.frequency.replace(/-/g, ' ')})` : '';
-    result.push({ level: powerToLevel[pl] ?? pl * 2 - 1, name: a.name, description: a.description + suffix });
-  }
+	for (const f of features ?? []) {
+		const pl = f.power_level ?? 1;
+		result.push({
+			level: powerToLevel[pl] ?? pl * 2 - 1,
+			name: f.name,
+			description: f.description,
+		});
+	}
+	for (const a of abilities ?? []) {
+		const pl = a.power_level ?? 1;
+		const suffix = a.frequency ? ` (${a.frequency.replace(/-/g, " ")})` : "";
+		result.push({
+			level: powerToLevel[pl] ?? pl * 2 - 1,
+			name: a.name,
+			description: a.description + suffix,
+		});
+	}
 
-  result.sort((a, b) => a.level - b.level);
-  return result.length > 0 ? result : null;
+	result.sort((a, b) => a.level - b.level);
+	return result.length > 0 ? result : null;
 }
 
 function transformMonarch(monarch: StaticMonarchSource): StaticCompendiumEntry {
-  const classFeatures = deriveMonarchClassFeatures(monarch);
+	const classFeatures = deriveMonarchClassFeatures(monarch);
 
-  return {
-    id: monarch.id || monarch.name.toLowerCase().replace(/\s+/g, '-'),
-    name: monarch.name,
-    display_name: monarch.name,
-    description: monarch.description,
-    created_at: new Date().toISOString(),
-    tags: monarch.tags || ['monarch', monarch.theme].filter(Boolean) as string[],
-    source_book: monarch.source_book || 'System Ascendant Canon',
-    image_url: monarch.image,
-    title: monarch.title,
-    theme: monarch.theme,
-    rank: monarch.rank || null,
-    rarity: monarch.rank === 'S' ? 'legendary' :
-      monarch.rank === 'A' ? 'epic' :
-        monarch.rank === 'B' ? 'rare' :
-          monarch.rank === 'C' ? 'uncommon' : 'common',
-    // Monarch-specific fields for MonarchDetail.tsx
-    monarch_title: monarch.title || null,
-    monarch_theme: monarch.theme || null,
-    monarch_abilities: monarch.abilities as Array<Record<string, unknown>> || null,
-    monarch_features: monarch.features as Array<Record<string, unknown>> || null,
-    monarch_mechanics: monarch.mechanics as Record<string, unknown> || null,
-    monarch_requirements: monarch.requirements as Record<string, unknown> || null,
-    // Derived 5e-style class features for all regents
-    class_features: classFeatures,
-  };
+	return {
+		id: monarch.id || monarch.name.toLowerCase().replace(/\s+/g, "-"),
+		name: monarch.name,
+		display_name: monarch.name,
+		description: monarch.description,
+		created_at: new Date().toISOString(),
+		tags:
+			monarch.tags || (["monarch", monarch.theme].filter(Boolean) as string[]),
+		source_book: monarch.source_book || "System Ascendant Canon",
+		image_url: monarch.image,
+		title: monarch.title,
+		theme: monarch.theme,
+		rank: monarch.rank || null,
+		rarity:
+			monarch.rank === "S"
+				? "legendary"
+				: monarch.rank === "A"
+					? "epic"
+					: monarch.rank === "B"
+						? "rare"
+						: monarch.rank === "C"
+							? "uncommon"
+							: "common",
+		// Monarch-specific fields for MonarchDetail.tsx
+		monarch_title: monarch.title || null,
+		monarch_theme: monarch.theme || null,
+		monarch_abilities:
+			(monarch.abilities as Array<Record<string, unknown>>) || null,
+		monarch_features:
+			(monarch.features as Array<Record<string, unknown>>) || null,
+		monarch_mechanics: (monarch.mechanics as Record<string, unknown>) || null,
+		monarch_requirements:
+			(monarch.requirements as Record<string, unknown>) || null,
+		// Derived 5e-style class features for all regents
+		class_features: classFeatures,
+	};
 }
 
 // Create the provider
 export const staticDataProvider: StaticDataProvider = {
-  getJobs: async (search?: string) => {
-    const jobs = await loadData<StaticJobSource>('jobs');
-    const filtered = filterBySearch(jobs, search, ['name', 'description']);
-    return filtered.map(transformJob);
-  },
+	getJobs: async (search?: string) => {
+		const jobs = await loadData<StaticJobSource>("jobs");
+		const filtered = filterBySearch(jobs, search, ["name", "description"]);
+		return filtered.map(transformJob);
+	},
 
-  getPaths: async (search?: string) => {
-    const paths = await loadData<
-      {
-        id: string;
-        name: string;
-        description: string;
-        jobId: string;
-        jobName: string;
-        tier: number;
-        source: string;
-        image?: string;
-        requirements: { level?: number; prerequisites?: string[]; skills?: string[] };
-      }
-    >('paths');
-    const filtered = filterBySearch(paths, search, ['name', 'description']);
-    return filtered.map(path => ({
-      id: path.id,
-      name: path.name,
-      display_name: path.name,
-      description: path.description,
-      created_at: new Date().toISOString(),
-      tags: [path.jobId, `tier-${path.tier}`, ...(path.requirements.skills || [])].filter(Boolean) as string[],
-      source_book: path.source,
-      image_url: path.image,
-      level: path.requirements.level,
-      path_level: path.requirements.level,
-      job_id: path.jobId,
-      job_name: path.jobName,
-      path_tier: path.tier,
-      prerequisites: path.requirements.prerequisites?.join(', '),
-      rarity: path.tier === 3 ? 'legendary' : path.tier === 2 ? 'very_rare' : 'rare',
-      jobId: path.jobId,
-      jobName: path.jobName,
-      tier: path.tier
-    }));
-  },
+	getPaths: async (search?: string) => {
+		const paths = await loadData<{
+			id: string;
+			name: string;
+			description: string;
+			jobId: string;
+			jobName: string;
+			tier: number;
+			source: string;
+			image?: string;
+			requirements: {
+				level?: number;
+				prerequisites?: string[];
+				skills?: string[];
+			};
+		}>("paths");
+		const filtered = filterBySearch(paths, search, ["name", "description"]);
+		return filtered.map((path) => ({
+			id: path.id,
+			name: path.name,
+			display_name: path.name,
+			description: path.description,
+			created_at: new Date().toISOString(),
+			tags: [
+				path.jobId,
+				`tier-${path.tier}`,
+				...(path.requirements.skills || []),
+			].filter(Boolean) as string[],
+			source_book: path.source,
+			image_url: path.image,
+			level: path.requirements.level,
+			path_level: path.requirements.level,
+			job_id: path.jobId,
+			job_name: path.jobName,
+			path_tier: path.tier,
+			prerequisites: path.requirements.prerequisites?.join(", "),
+			rarity:
+				path.tier === 3 ? "legendary" : path.tier === 2 ? "very_rare" : "rare",
+			jobId: path.jobId,
+			jobName: path.jobName,
+			tier: path.tier,
+		}));
+	},
 
-  getMonsters: async (search?: string) => {
-    const monsters = await loadData<StaticMonsterSource>('monsters');
-    const filtered = filterBySearch(monsters, search, ['name', 'description', 'type', 'rank']);
-    return filtered.map(transformMonster);
-  },
+	getMonsters: async (search?: string) => {
+		const monsters = await loadData<StaticMonsterSource>("monsters");
+		const filtered = filterBySearch(monsters, search, [
+			"name",
+			"description",
+			"type",
+			"rank",
+		]);
+		return filtered.map(transformMonster);
+	},
 
-  getItems: async (search?: string) => {
-    const items = await loadData<StaticItemSource>('items');
-    const filtered = filterBySearch(items, search, ['name', 'description', 'type', 'rarity']);
-    return filtered.map(transformItem);
-  },
+	getItems: async (search?: string) => {
+		const items = await loadData<StaticItemSource>("items");
+		const filtered = filterBySearch(items, search, [
+			"name",
+			"description",
+			"type",
+			"rarity",
+		]);
+		return filtered.map(transformItem);
+	},
 
-  getSpells: async (search?: string) => {
-    const spells = await loadData<StaticSpellSource>('spells');
-    const filtered = filterBySearch(spells, search, ['name', 'description', 'type']);
-    return filtered.map(transformSpell);
-  },
+	getSpells: async (search?: string) => {
+		const spells = await loadData<StaticSpellSource>("spells");
+		const filtered = filterBySearch(spells, search, [
+			"name",
+			"description",
+			"type",
+		]);
+		return filtered.map(transformSpell);
+	},
 
-  getLocations: async (search?: string) => {
-    const locations = await loadData<StaticLocationSource>('locations');
-    const filtered = filterBySearch(locations, search, ['name', 'description', 'type']);
-    return filtered.map(transformLocation);
-  },
+	getLocations: async (search?: string) => {
+		const locations = await loadData<StaticLocationSource>("locations");
+		const filtered = filterBySearch(locations, search, [
+			"name",
+			"description",
+			"type",
+		]);
+		return filtered.map(transformLocation);
+	},
 
-  getRunes: async (search?: string) => {
-    const [legacyRunes, slRunes] = await Promise.all([
-      loadData<StaticRuneSource>('runesCompendium'),
-      loadData<StaticRuneSource>('systemAscendantRunes'),
-    ]);
-    const combined = [...slRunes, ...legacyRunes];
-    const filtered = filterBySearch(combined, search, ['name', 'description']);
-    return filtered.map(transformRune);
-  },
+	getRunes: async (search?: string) => {
+		const [legacyRunes, slRunes] = await Promise.all([
+			loadData<StaticRuneSource>("runesCompendium"),
+			loadData<StaticRuneSource>("systemAscendantRunes"),
+		]);
+		const combined = [...slRunes, ...legacyRunes];
+		const filtered = filterBySearch(combined, search, ["name", "description"]);
+		return filtered.map(transformRune);
+	},
 
-  getBackgrounds: async (search?: string) => {
-    const backgrounds = await loadData<StaticBackgroundSource>('backgrounds');
-    const filtered = filterBySearch(backgrounds, search, ['name', 'description']);
-    return filtered.map(transformBackground);
-  },
+	getBackgrounds: async (search?: string) => {
+		const backgrounds = await loadData<StaticBackgroundSource>("backgrounds");
+		const filtered = filterBySearch(backgrounds, search, [
+			"name",
+			"description",
+		]);
+		return filtered.map(transformBackground);
+	},
 
-  getRelics: async (search?: string) => {
-    const comprehensiveRelics = await loadData<
-      {
-        id: string;
-        name: string;
-        description: string;
-        type?: string;
-        rarity?: string;
-        attunement?: boolean;
-        requirements?: Record<string, unknown> | null;
-        properties?: Record<string, unknown> | null;
-        abilities?: Record<string, unknown> | null;
-        lore?: Record<string, unknown> | null;
-        mechanics?: Record<string, unknown> | null;
-        source?: string;
-        image?: string;
-      }
-    >('comprehensiveRelics');
-    const filtered = filterBySearch(comprehensiveRelics, search, ['name', 'description', 'type']);
-    return filtered.map(relic => ({
-      id: relic.id,
-      name: relic.name,
-      display_name: relic.name,
-      description: relic.description,
-      created_at: new Date().toISOString(),
-      tags: [relic.type, relic.rarity].filter(Boolean) as string[],
-      source_book: relic.source,
-      image_url: relic.image,
-      rarity: relic.rarity,
-      item_type: relic.type,
-      equipment_type: relic.type,
-      attunement: relic.attunement ?? null,
-      requirements: relic.requirements ?? null,
-      properties: relic.properties ?? null,
-      abilities: relic.abilities ?? null,
-      lore: relic.lore ?? null,
-      mechanics: relic.mechanics ?? null,
-    }));
-  },
+	getRelics: async (search?: string) => {
+		const comprehensiveRelics = await loadData<{
+			id: string;
+			name: string;
+			description: string;
+			type?: string;
+			rarity?: string;
+			attunement?: boolean;
+			requirements?: Record<string, unknown> | null;
+			properties?: Record<string, unknown> | null;
+			abilities?: Record<string, unknown> | null;
+			lore?: Record<string, unknown> | null;
+			mechanics?: Record<string, unknown> | null;
+			source?: string;
+			image?: string;
+		}>("comprehensiveRelics");
+		const filtered = filterBySearch(comprehensiveRelics, search, [
+			"name",
+			"description",
+			"type",
+		]);
+		return filtered.map((relic) => ({
+			id: relic.id,
+			name: relic.name,
+			display_name: relic.name,
+			description: relic.description,
+			created_at: new Date().toISOString(),
+			tags: [relic.type, relic.rarity].filter(Boolean) as string[],
+			source_book: relic.source,
+			image_url: relic.image,
+			rarity: relic.rarity,
+			item_type: relic.type,
+			equipment_type: relic.type,
+			attunement: relic.attunement ?? null,
+			requirements: relic.requirements ?? null,
+			properties: relic.properties ?? null,
+			abilities: relic.abilities ?? null,
+			lore: relic.lore ?? null,
+			mechanics: relic.mechanics ?? null,
+		}));
+	},
 
-  getConditions: async (search?: string) => {
-    const conditions = await loadData<
-      {
-        id: string;
-        name: string;
-        description: string;
-        type?: string;
-        effects?: string[];
-        duration?: string;
-        removal?: string[];
-        save?: {
-          type?: string;
-          dc?: number;
-          description?: string;
-        };
-        source?: string;
-        image?: string;
-      }
-    >('conditions');
-    const filtered = filterBySearch(conditions, search, ['name', 'description', 'type']);
-    return filtered.map(condition => ({
-      id: condition.id,
-      name: condition.name,
-      display_name: condition.name,
-      description: condition.description,
-      created_at: new Date().toISOString(),
-      tags: [condition.type, 'condition'].filter(Boolean) as string[],
-      source_book: condition.source,
-      image_url: condition.image,
-      condition_effects: Array.isArray(condition.effects) ? condition.effects : undefined,
-      condition_duration: typeof condition.duration === 'string' ? condition.duration : undefined,
-      condition_removal: Array.isArray(condition.removal) ? condition.removal : undefined,
-      condition_save: condition.save && typeof condition.save === 'object' ? condition.save : undefined,
-    }));
-  },
+	getConditions: async (search?: string) => {
+		const conditions = await loadData<{
+			id: string;
+			name: string;
+			description: string;
+			type?: string;
+			effects?: string[];
+			duration?: string;
+			removal?: string[];
+			save?: {
+				type?: string;
+				dc?: number;
+				description?: string;
+			};
+			source?: string;
+			image?: string;
+		}>("conditions");
+		const filtered = filterBySearch(conditions, search, [
+			"name",
+			"description",
+			"type",
+		]);
+		return filtered.map((condition) => ({
+			id: condition.id,
+			name: condition.name,
+			display_name: condition.name,
+			description: condition.description,
+			created_at: new Date().toISOString(),
+			tags: [condition.type, "condition"].filter(Boolean) as string[],
+			source_book: condition.source,
+			image_url: condition.image,
+			condition_effects: Array.isArray(condition.effects)
+				? condition.effects
+				: undefined,
+			condition_duration:
+				typeof condition.duration === "string" ? condition.duration : undefined,
+			condition_removal: Array.isArray(condition.removal)
+				? condition.removal
+				: undefined,
+			condition_save:
+				condition.save && typeof condition.save === "object"
+					? condition.save
+					: undefined,
+		}));
+	},
 
-  getRegents: async (search?: string) => {
-    const regents = await loadData<StaticMonarchSource>('regents');
-    const filtered = filterBySearch(regents, search, ['name', 'description', 'title', 'theme']);
-    return filtered.map(transformMonarch);
-  },
+	getRegents: async (search?: string) => {
+		const regents = await loadData<StaticMonarchSource>("regents");
+		const filtered = filterBySearch(regents, search, [
+			"name",
+			"description",
+			"title",
+			"theme",
+		]);
+		return filtered.map(transformMonarch);
+	},
 
-  getMonarchs: async (search?: string) => {
-    const monarchs = await loadData<StaticMonarchSource>('monarchs');
-    const filtered = filterBySearch(monarchs, search, ['name', 'description', 'title', 'theme']);
-    return filtered.map(transformMonarch);
-  },
+	getMonarchs: async (search?: string) => {
+		const monarchs = await loadData<StaticMonarchSource>("monarchs");
+		const filtered = filterBySearch(monarchs, search, [
+			"name",
+			"description",
+			"title",
+			"theme",
+		]);
+		return filtered.map(transformMonarch);
+	},
 
-  getFeats: async (search?: string) => {
-    const comprehensiveFeats = await loadData<
-      {
-        id: string;
-        name: string;
-        description: string;
-        benefits?: string;
-        prerequisites?: string | Record<string, string | number | boolean>;
-        source?: string;
-      }
-    >('comprehensiveFeats');
-    const filtered = filterBySearch(comprehensiveFeats, search, ['name', 'description', 'benefits']);
-    return filtered.map(feat => ({
-      id: feat.id,
-      name: feat.name,
-      display_name: feat.name,
-      description: feat.description,
-      created_at: new Date().toISOString(),
-      tags: [
-        'feat',
-        'ability',
-        ...((typeof feat.prerequisites !== 'string' && Array.isArray((feat.prerequisites as Record<string, any>).feats))
-          ? ((feat.prerequisites as Record<string, any>).feats as string[])
-          : []),
-      ].filter(Boolean) as string[],
-      source_book: feat.source,
-      prerequisites: feat.prerequisites ?
-        (typeof feat.prerequisites === 'string' ? feat.prerequisites :
-          Object.entries(feat.prerequisites).map(([key, value]) => `${key}: ${value}`).join(', ')) : undefined,
-      benefits: feat.benefits ? [feat.benefits] : null,
-    }));
-  },
+	getFeats: async (search?: string) => {
+		const comprehensiveFeats = await loadData<{
+			id: string;
+			name: string;
+			description: string;
+			benefits?: string;
+			prerequisites?: string | Record<string, string | number | boolean>;
+			source?: string;
+		}>("comprehensiveFeats");
+		const filtered = filterBySearch(comprehensiveFeats, search, [
+			"name",
+			"description",
+			"benefits",
+		]);
+		return filtered.map((feat) => ({
+			id: feat.id,
+			name: feat.name,
+			display_name: feat.name,
+			description: feat.description,
+			created_at: new Date().toISOString(),
+			tags: [
+				"feat",
+				"ability",
+				...(typeof feat.prerequisites !== "string" &&
+				Array.isArray((feat.prerequisites as Record<string, any>).feats)
+					? ((feat.prerequisites as Record<string, any>).feats as string[])
+					: []),
+			].filter(Boolean) as string[],
+			source_book: feat.source,
+			prerequisites: feat.prerequisites
+				? typeof feat.prerequisites === "string"
+					? feat.prerequisites
+					: Object.entries(feat.prerequisites)
+							.map(([key, value]) => `${key}: ${value}`)
+							.join(", ")
+				: undefined,
+			benefits: feat.benefits ? [feat.benefits] : null,
+		}));
+	},
 
-  getSkills: async (search?: string) => {
-    const comprehensiveSkills = await loadData<
-      { id: string; name: string; description: string; type?: string; ability?: string; source?: string }
-    >('comprehensiveSkills');
-    const filtered = filterBySearch(comprehensiveSkills, search, ['name', 'description', 'type']);
-    return filtered.map(skill => ({
-      id: skill.id,
-      name: skill.name,
-      display_name: skill.name,
-      description: skill.description,
-      created_at: new Date().toISOString(),
-      tags: [skill.type, 'skill', skill.ability].filter(Boolean) as string[],
-      source_book: skill.source,
-      ability: skill.ability
-    }));
-  },
+	getSkills: async (search?: string) => {
+		const comprehensiveSkills = await loadData<{
+			id: string;
+			name: string;
+			description: string;
+			type?: string;
+			ability?: string;
+			source?: string;
+		}>("comprehensiveSkills");
+		const filtered = filterBySearch(comprehensiveSkills, search, [
+			"name",
+			"description",
+			"type",
+		]);
+		return filtered.map((skill) => ({
+			id: skill.id,
+			name: skill.name,
+			display_name: skill.name,
+			description: skill.description,
+			created_at: new Date().toISOString(),
+			tags: [skill.type, "skill", skill.ability].filter(Boolean) as string[],
+			source_book: skill.source,
+			ability: skill.ability,
+		}));
+	},
 
-  getPowers: async (search?: string) => {
-    const powers = await loadData<
-      {
-        id: string;
-        name: string;
-        description: string;
-        type?: string;
-        rarity?: string;
-        image?: string;
-        requirements?: { level?: number; class?: string; job?: string; ability?: string; score?: number } | null;
-        source?: string;
-        activation?: { type?: string; time?: string } | null;
-        duration?: { type?: string; time?: string } | null;
-        range?: { type?: string; distance?: number } | null;
-        components?: { verbal?: boolean; somatic?: boolean; material?: boolean; material_desc?: string } | null;
-        effects?: { primary?: string; secondary?: string; tertiary?: string } | null;
-        limitations?: { uses?: string; cooldown?: string; conditions?: string[] } | null;
-        flavor?: string;
-      }
-    >('powers');
-    const filtered = filterBySearch(powers, search, ['name', 'description', 'type']);
-    return filtered.map(power => ({
-      id: power.id,
-      name: power.name,
-      display_name: power.name,
-      description: power.description,
-      created_at: new Date().toISOString(),
-      tags: ['power', power.type, power.rarity].filter(Boolean) as string[],
-      source_book: power.source,
-      image_url: power.image,
-      power_level: power.type === 'divine' ? 10 : power.type === 'monstrous' ? 8 : 5,
-      school: power.type,
-      title: power.type,
-      theme: power.type,
-      prerequisites: power.requirements ? JSON.stringify(power.requirements) : null,
-      rarity: power.rarity,
-      level: power.requirements?.level,
-      // Rich fields for detail views
-      activation: power.activation || null,
-      duration: power.duration || null,
-      range: power.range || null,
-      components: power.components || null,
-      effects: power.effects || null,
-      limitations: power.limitations || null,
-      flavor: power.flavor || null,
-    }));
-  },
+	getPowers: async (search?: string) => {
+		const powers = await loadData<{
+			id: string;
+			name: string;
+			description: string;
+			type?: string;
+			rarity?: string;
+			image?: string;
+			requirements?: {
+				level?: number;
+				class?: string;
+				job?: string;
+				ability?: string;
+				score?: number;
+			} | null;
+			source?: string;
+			activation?: { type?: string; time?: string } | null;
+			duration?: { type?: string; time?: string } | null;
+			range?: { type?: string; distance?: number } | null;
+			components?: {
+				verbal?: boolean;
+				somatic?: boolean;
+				material?: boolean;
+				material_desc?: string;
+			} | null;
+			effects?: {
+				primary?: string;
+				secondary?: string;
+				tertiary?: string;
+			} | null;
+			limitations?: {
+				uses?: string;
+				cooldown?: string;
+				conditions?: string[];
+			} | null;
+			flavor?: string;
+		}>("powers");
+		const filtered = filterBySearch(powers, search, [
+			"name",
+			"description",
+			"type",
+		]);
+		return filtered.map((power) => ({
+			id: power.id,
+			name: power.name,
+			display_name: power.name,
+			description: power.description,
+			created_at: new Date().toISOString(),
+			tags: ["power", power.type, power.rarity].filter(Boolean) as string[],
+			source_book: power.source,
+			image_url: power.image,
+			power_level:
+				power.type === "divine" ? 10 : power.type === "monstrous" ? 8 : 5,
+			school: power.type,
+			title: power.type,
+			theme: power.type,
+			prerequisites: power.requirements
+				? JSON.stringify(power.requirements)
+				: null,
+			rarity: power.rarity,
+			level: power.requirements?.level,
+			// Rich fields for detail views
+			activation: power.activation || null,
+			duration: power.duration || null,
+			range: power.range || null,
+			components: power.components || null,
+			effects: power.effects || null,
+			limitations: power.limitations || null,
+			flavor: power.flavor || null,
+		}));
+	},
 
-  getTechniques: async (search?: string) => {
-    const techniques = await loadData<
-      {
-        id: string;
-        name: string;
-        description: string;
-        type?: string;
-        style?: string;
-        image?: string;
-        source?: string;
-        prerequisites?: { level?: number } | null;
-        activation?: Record<string, unknown> | null;
-        duration?: Record<string, unknown> | null;
-        range?: Record<string, unknown> | null;
-        components?: Record<string, unknown> | null;
-        effects?: Record<string, unknown> | null;
-        mechanics?: Record<string, unknown> | null;
-        limitations?: Record<string, unknown> | null;
-        flavor?: string | null;
-      }
-    >('techniques');
-    const filtered = filterBySearch(techniques, search, ['name', 'description', 'type', 'style']);
-    return filtered.map(technique => ({
-      id: technique.id,
-      name: technique.name,
-      display_name: technique.name,
-      description: technique.description,
-      created_at: new Date().toISOString(),
-      tags: ['technique', technique.type, technique.style].filter(Boolean) as string[],
-      source_book: technique.source,
-      image_url: technique.image,
-      technique_type: technique.type,
-      style: technique.style,
-      prerequisites: technique.prerequisites || null,
-      activation: technique.activation || null,
-      duration: technique.duration || null,
-      range: technique.range || null,
-      components: technique.components || null,
-      effects: technique.effects || null,
-      mechanics: technique.mechanics || null,
-      limitations: technique.limitations || null,
-      flavor: technique.flavor,
-      source: technique.source,
-      power_level: technique.type === 'finishing' ? 9 : technique.type === 'offensive' ? 7 : 5,
-      school: technique.type,
-      title: technique.type,
-      theme: technique.style,
-      rarity: technique.type === 'finishing' ? 'legendary' : technique.type === 'offensive' ? 'rare' : 'uncommon',
-      level: technique.prerequisites?.level
-    }));
-  },
+	getTechniques: async (search?: string) => {
+		const techniques = await loadData<{
+			id: string;
+			name: string;
+			description: string;
+			type?: string;
+			style?: string;
+			image?: string;
+			source?: string;
+			prerequisites?: { level?: number } | null;
+			activation?: Record<string, unknown> | null;
+			duration?: Record<string, unknown> | null;
+			range?: Record<string, unknown> | null;
+			components?: Record<string, unknown> | null;
+			effects?: Record<string, unknown> | null;
+			mechanics?: Record<string, unknown> | null;
+			limitations?: Record<string, unknown> | null;
+			flavor?: string | null;
+		}>("techniques");
+		const filtered = filterBySearch(techniques, search, [
+			"name",
+			"description",
+			"type",
+			"style",
+		]);
+		return filtered.map((technique) => ({
+			id: technique.id,
+			name: technique.name,
+			display_name: technique.name,
+			description: technique.description,
+			created_at: new Date().toISOString(),
+			tags: ["technique", technique.type, technique.style].filter(
+				Boolean,
+			) as string[],
+			source_book: technique.source,
+			image_url: technique.image,
+			technique_type: technique.type,
+			style: technique.style,
+			prerequisites: technique.prerequisites || null,
+			activation: technique.activation || null,
+			duration: technique.duration || null,
+			range: technique.range || null,
+			components: technique.components || null,
+			effects: technique.effects || null,
+			mechanics: technique.mechanics || null,
+			limitations: technique.limitations || null,
+			flavor: technique.flavor,
+			source: technique.source,
+			power_level:
+				technique.type === "finishing"
+					? 9
+					: technique.type === "offensive"
+						? 7
+						: 5,
+			school: technique.type,
+			title: technique.type,
+			theme: technique.style,
+			rarity:
+				technique.type === "finishing"
+					? "legendary"
+					: technique.type === "offensive"
+						? "rare"
+						: "uncommon",
+			level: technique.prerequisites?.level,
+		}));
+	},
 
-  getArtifacts: async (search?: string) => {
-    const artifacts = await loadData<
-      {
-        id: string;
-        name: string;
-        description: string;
-        type?: string;
-        rarity?: string;
-        source?: string;
-        image?: string;
-        attunement?: boolean | null;
-        requirements?: Record<string, unknown> | null;
-        properties?: Record<string, unknown> | null;
-        abilities?: Record<string, unknown> | null;
-        lore?: Record<string, unknown> | null;
-        mechanics?: Record<string, unknown> | null;
-      }
-    >('artifacts');
-    const filtered = filterBySearch(artifacts, search, ['name', 'description', 'type', 'rarity']);
-    return filtered.map(artifact => ({
-      id: artifact.id,
-      name: artifact.name,
-      display_name: artifact.name,
-      description: artifact.description,
-      created_at: new Date().toISOString(),
-      tags: ['artifact', artifact.type, artifact.rarity].filter(Boolean) as string[],
-      source_book: artifact.source,
-      image_url: artifact.image,
-      artifact_type: artifact.type,
-      attunement: artifact.attunement,
-      requirements: artifact.requirements || null,
-      properties: artifact.properties || null,
-      abilities: artifact.abilities || null,
-      lore: artifact.lore || null,
-      mechanics: artifact.mechanics || null,
-      source: artifact.source,
-      power_level: artifact.rarity === 'divine' ? 10 : artifact.rarity === 'mythic' ? 9 : 8,
-      school: artifact.type,
-      title: artifact.type,
-      theme: artifact.rarity,
-      rarity: artifact.rarity,
-      level: typeof (artifact.requirements as Record<string, any>)?.level === 'number' ? ((artifact.requirements as Record<string, any>).level as number) : undefined
-    }));
-  },
+	getArtifacts: async (search?: string) => {
+		const artifacts = await loadData<{
+			id: string;
+			name: string;
+			description: string;
+			type?: string;
+			rarity?: string;
+			source?: string;
+			image?: string;
+			attunement?: boolean | null;
+			requirements?: Record<string, unknown> | null;
+			properties?: Record<string, unknown> | null;
+			abilities?: Record<string, unknown> | null;
+			lore?: Record<string, unknown> | null;
+			mechanics?: Record<string, unknown> | null;
+		}>("artifacts");
+		const filtered = filterBySearch(artifacts, search, [
+			"name",
+			"description",
+			"type",
+			"rarity",
+		]);
+		return filtered.map((artifact) => ({
+			id: artifact.id,
+			name: artifact.name,
+			display_name: artifact.name,
+			description: artifact.description,
+			created_at: new Date().toISOString(),
+			tags: ["artifact", artifact.type, artifact.rarity].filter(
+				Boolean,
+			) as string[],
+			source_book: artifact.source,
+			image_url: artifact.image,
+			artifact_type: artifact.type,
+			attunement: artifact.attunement,
+			requirements: artifact.requirements || null,
+			properties: artifact.properties || null,
+			abilities: artifact.abilities || null,
+			lore: artifact.lore || null,
+			mechanics: artifact.mechanics || null,
+			source: artifact.source,
+			power_level:
+				artifact.rarity === "divine"
+					? 10
+					: artifact.rarity === "mythic"
+						? 9
+						: 8,
+			school: artifact.type,
+			title: artifact.type,
+			theme: artifact.rarity,
+			rarity: artifact.rarity,
+			level:
+				typeof (artifact.requirements as Record<string, any>)?.level ===
+				"number"
+					? ((artifact.requirements as Record<string, any>).level as number)
+					: undefined,
+		}));
+	},
 
-  getShadowSoldiers: async (search?: string) => {
-    const shadowSoldiers = [
-      {
-        id: 'tank-soldier',
-        name: 'Umbral Tank',
-        description: 'Heavy armored legionnaire specialized in defense and crowd control.',
-        rank: 'A',
-        role: 'Tank'
-      },
-      {
-        id: 'assassin-soldier',
-        name: 'Umbral Assassin',
-        description: 'Stealthy legionnaire specialized in assassination and reconnaissance.',
-        rank: 'A',
-        role: 'Assassin'
-      },
-      {
-        id: 'mage-soldier',
-        name: 'Umbral Mage',
-        description: 'Magic-wielding legionnaire capable of casting umbral spells.',
-        rank: 'B',
-        role: 'Mage'
-      },
-      {
-        id: 'archer-soldier',
-        name: 'Umbral Archer',
-        description: 'Ranged legionnaire specialized in precise long-range attacks.',
-        rank: 'B',
-        role: 'Archer'
-      },
-      {
-        id: 'warrior-soldier',
-        name: 'Umbral Warrior',
-        description: 'Versatile melee legionnaire balanced in offense and defense.',
-        rank: 'C',
-        role: 'Destroyer'
-      },
-      {
-        id: 'scout-soldier',
-        name: 'Umbral Scout',
-        description: 'Fast and agile legionnaire specialized in reconnaissance and scouting.',
-        rank: 'C',
-        role: 'Scout'
-      }
-    ];
+	getShadowSoldiers: async (search?: string) => {
+		const shadowSoldiers = [
+			{
+				id: "tank-soldier",
+				name: "Umbral Tank",
+				description:
+					"Heavy armored legionnaire specialized in defense and crowd control.",
+				rank: "A",
+				role: "Tank",
+			},
+			{
+				id: "assassin-soldier",
+				name: "Umbral Assassin",
+				description:
+					"Stealthy legionnaire specialized in assassination and reconnaissance.",
+				rank: "A",
+				role: "Assassin",
+			},
+			{
+				id: "mage-soldier",
+				name: "Umbral Mage",
+				description:
+					"Magic-wielding legionnaire capable of casting umbral spells.",
+				rank: "B",
+				role: "Mage",
+			},
+			{
+				id: "archer-soldier",
+				name: "Umbral Archer",
+				description:
+					"Ranged legionnaire specialized in precise long-range attacks.",
+				rank: "B",
+				role: "Archer",
+			},
+			{
+				id: "warrior-soldier",
+				name: "Umbral Warrior",
+				description:
+					"Versatile melee legionnaire balanced in offense and defense.",
+				rank: "C",
+				role: "Destroyer",
+			},
+			{
+				id: "scout-soldier",
+				name: "Umbral Scout",
+				description:
+					"Fast and agile legionnaire specialized in reconnaissance and scouting.",
+				rank: "C",
+				role: "Scout",
+			},
+		];
 
-    const filtered = filterBySearch(shadowSoldiers, search, ['name', 'description', 'role']);
-    return filtered.map(item => ({
-      id: item.id,
-      name: item.name,
-      display_name: item.name,
-      description: item.description,
-      created_at: new Date().toISOString(),
-      tags: ['umbral-legion', 'umbral', 'minion'],
-      source_book: 'System Ascendant Canon',
-      role: item.role,
-      gate_rank: item.rank,
-      rarity: item.rank === 'A' ? 'very_rare' :
-        item.rank === 'B' ? 'rare' : 'uncommon',
-      level: undefined
-    }));
-  },
+		const filtered = filterBySearch(shadowSoldiers, search, [
+			"name",
+			"description",
+			"role",
+		]);
+		return filtered.map((item) => ({
+			id: item.id,
+			name: item.name,
+			display_name: item.name,
+			description: item.description,
+			created_at: new Date().toISOString(),
+			tags: ["umbral-legion", "umbral", "minion"],
+			source_book: "System Ascendant Canon",
+			role: item.role,
+			gate_rank: item.rank,
+			rarity:
+				item.rank === "A"
+					? "very_rare"
+					: item.rank === "B"
+						? "rare"
+						: "uncommon",
+			level: undefined,
+		}));
+	},
 };
 
 // Export a hook to check if we should use static data
 export const useStaticDataFallback = () => {
-  // Use static data when Supabase is not configured or fails
-  return !(window as unknown as Record<string, unknown>).supabaseConfigured || false;
+	// Use static data when Supabase is not configured or fails
+	return (
+		!(window as unknown as Record<string, unknown>).supabaseConfigured || false
+	);
 };
-
-
-

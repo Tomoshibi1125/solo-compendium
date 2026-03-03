@@ -7,35 +7,35 @@
 
 // ─── Types ──────────────────────────────────────────────────
 export interface MapPing {
-    id: string;
-    x: number;           // grid x
-    y: number;           // grid y
-    color: string;
-    createdBy: string;
-    createdByName: string;
-    createdAt: number;    // Date.now()
-    durationMs: number;   // how long the ping lasts
-    type: 'alert' | 'look' | 'move' | 'danger';
+	id: string;
+	x: number; // grid x
+	y: number; // grid y
+	color: string;
+	createdBy: string;
+	createdByName: string;
+	createdAt: number; // Date.now()
+	durationMs: number; // how long the ping lasts
+	type: "alert" | "look" | "move" | "danger";
 }
 
 export interface PingConfig {
-    defaultDurationMs: number;
-    maxPings: number;       // max simultaneous pings
-    cooldownMs: number;     // minimum time between pings from same user
+	defaultDurationMs: number;
+	maxPings: number; // max simultaneous pings
+	cooldownMs: number; // minimum time between pings from same user
 }
 
 // ─── Defaults ───────────────────────────────────────────────
 export const DEFAULT_PING_CONFIG: PingConfig = {
-    defaultDurationMs: 3000,
-    maxPings: 10,
-    cooldownMs: 500,
+	defaultDurationMs: 3000,
+	maxPings: 10,
+	cooldownMs: 500,
 };
 
-const PING_COLORS: Record<MapPing['type'], string> = {
-    alert: '#ef4444',   // red
-    look: '#3b82f6',    // blue
-    move: '#22c55e',    // green
-    danger: '#f59e0b',  // amber
+const PING_COLORS: Record<MapPing["type"], string> = {
+	alert: "#ef4444", // red
+	look: "#3b82f6", // blue
+	move: "#22c55e", // green
+	danger: "#f59e0b", // amber
 };
 
 // ─── Ping Management ────────────────────────────────────────
@@ -44,50 +44,55 @@ const PING_COLORS: Record<MapPing['type'], string> = {
  * Create a new map ping
  */
 export function createPing(
-    x: number,
-    y: number,
-    createdBy: string,
-    createdByName: string,
-    type: MapPing['type'] = 'look',
-    durationMs: number = DEFAULT_PING_CONFIG.defaultDurationMs,
+	x: number,
+	y: number,
+	createdBy: string,
+	createdByName: string,
+	type: MapPing["type"] = "look",
+	durationMs: number = DEFAULT_PING_CONFIG.defaultDurationMs,
 ): MapPing {
-    return {
-        id: `ping-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
-        x,
-        y,
-        color: PING_COLORS[type],
-        createdBy,
-        createdByName,
-        createdAt: Date.now(),
-        durationMs,
-        type,
-    };
+	return {
+		id: `ping-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+		x,
+		y,
+		color: PING_COLORS[type],
+		createdBy,
+		createdByName,
+		createdAt: Date.now(),
+		durationMs,
+		type,
+	};
 }
 
 /**
  * Remove expired pings from the active list
  */
-export function pruneExpiredPings(pings: MapPing[], now: number = Date.now()): MapPing[] {
-    return pings.filter((p) => now - p.createdAt < p.durationMs);
+export function pruneExpiredPings(
+	pings: MapPing[],
+	now: number = Date.now(),
+): MapPing[] {
+	return pings.filter((p) => now - p.createdAt < p.durationMs);
 }
 
 /**
  * Check if a user is within cooldown period
  */
 export function isOnCooldown(
-    pings: MapPing[],
-    userId: string,
-    cooldownMs: number = DEFAULT_PING_CONFIG.cooldownMs,
+	pings: MapPing[],
+	userId: string,
+	cooldownMs: number = DEFAULT_PING_CONFIG.cooldownMs,
 ): boolean {
-    const now = Date.now();
-    return pings.some((p) => p.createdBy === userId && now - p.createdAt < cooldownMs);
+	const now = Date.now();
+	return pings.some(
+		(p) => p.createdBy === userId && now - p.createdAt < cooldownMs,
+	);
 }
 
 /**
  * Get CSS animation keyframes for a ping (ripple effect)
  */
 export function getPingAnimationCSS(): string {
-    return `
+	return `
     @keyframes vtt-ping-ripple {
       0% {
         transform: scale(0.3);

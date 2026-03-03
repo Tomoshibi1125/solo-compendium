@@ -1,170 +1,181 @@
-﻿import { useState, useEffect } from 'react';
-import { User } from '@supabase/supabase-js';
-import { supabase } from '@/integrations/supabase/client';
-import { logger } from '@/lib/logger';
-import { toast } from '@/hooks/use-toast';
-import { isSafeNextPath } from '@/lib/campaignInviteUtils';
+﻿import type { User } from "@supabase/supabase-js";
+import { useEffect, useState } from "react";
+import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { isSafeNextPath } from "@/lib/campaignInviteUtils";
+import { logger } from "@/lib/logger";
 
 export interface OAuthProvider {
-  id: 'google' | 'apple';
-  name: string;
-  icon: string;
-  color: string;
+	id: "google" | "apple";
+	name: string;
+	icon: string;
+	color: string;
 }
 
-const PROVIDER_OPTIONS: Record<OAuthProvider['id'], { queryParams?: Record<string, string>; scopes?: string }> = {
-  google: {
-    queryParams: {
-      access_type: 'offline',
-      prompt: 'consent',
-    },
-    scopes: 'email profile',
-  },
-  apple: {
-    scopes: 'name email',
-  },
+const PROVIDER_OPTIONS: Record<
+	OAuthProvider["id"],
+	{ queryParams?: Record<string, string>; scopes?: string }
+> = {
+	google: {
+		queryParams: {
+			access_type: "offline",
+			prompt: "consent",
+		},
+		scopes: "email profile",
+	},
+	apple: {
+		scopes: "name email",
+	},
 };
 
 export const OAUTH_PROVIDERS: OAuthProvider[] = [
-  {
-    id: 'google',
-    name: 'Google',
-    icon: 'G',
-    color: 'bg-blue-500 hover:bg-blue-600',
-  },
-  {
-    id: 'apple',
-    name: 'Apple',
-    icon: 'A',
-    color: 'bg-gray-800 hover:bg-gray-900',
-  },
+	{
+		id: "google",
+		name: "Google",
+		icon: "G",
+		color: "bg-blue-500 hover:bg-blue-600",
+	},
+	{
+		id: "apple",
+		name: "Apple",
+		icon: "A",
+		color: "bg-gray-800 hover:bg-gray-900",
+	},
 ];
 
 export interface UseOAuthReturn {
-  isLoading: boolean;
-  signInWithProvider: (provider: OAuthProvider) => Promise<void>;
-  signOut: () => Promise<void>;
-  user: User | null;
-  error: string | null;
+	isLoading: boolean;
+	signInWithProvider: (provider: OAuthProvider) => Promise<void>;
+	signOut: () => Promise<void>;
+	user: User | null;
+	error: string | null;
 }
 
 export function useOAuth(): UseOAuthReturn {
-  const [isLoading, setIsLoading] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
-  const [error, setError] = useState<string | null>(null);
+	const [isLoading, setIsLoading] = useState(false);
+	const [user, setUser] = useState<User | null>(null);
+	const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    // Get initial user session
-    const getUser = async () => {
-      try {
-        const { data: { user } } = await supabase.auth.getUser();
-        setUser(user);
-      } catch (error) {
-        logger.error('Error getting user:', error);
-      }
-    };
+	useEffect(() => {
+		// Get initial user session
+		const getUser = async () => {
+			try {
+				const {
+					data: { user },
+				} = await supabase.auth.getUser();
+				setUser(user);
+			} catch (error) {
+				logger.error("Error getting user:", error);
+			}
+		};
 
-    getUser();
+		getUser();
 
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        if (event === 'SIGNED_IN' && session?.user) {
-          setUser(session.user);
-          setError(null);
-          
-          // Show welcome message for OAuth sign-ins
-          const provider = session.user.app_metadata?.provider;
-          if (provider && provider !== 'email') {
-            const providerName = OAUTH_PROVIDERS.find(p => p.id === provider)?.name || provider;
-            toast({
-              title: `Welcome, Ascendant!`,
-              description: `You've successfully signed in with ${providerName}`,
-            });
-          }
-        } else if (event === 'SIGNED_OUT') {
-          setUser(null);
-          setError(null);
-        }
-      }
-    );
+		// Listen for auth changes
+		const {
+			data: { subscription },
+		} = supabase.auth.onAuthStateChange(async (event, session) => {
+			if (event === "SIGNED_IN" && session?.user) {
+				setUser(session.user);
+				setError(null);
 
-    return () => subscription.unsubscribe();
-  }, []);
+				// Show welcome message for OAuth sign-ins
+				const provider = session.user.app_metadata?.provider;
+				if (provider && provider !== "email") {
+					const providerName =
+						OAUTH_PROVIDERS.find((p) => p.id === provider)?.name || provider;
+					toast({
+						title: `Welcome, Ascendant!`,
+						description: `You've successfully signed in with ${providerName}`,
+					});
+				}
+			} else if (event === "SIGNED_OUT") {
+				setUser(null);
+				setError(null);
+			}
+		});
 
-  const signInWithProvider = async (provider: OAuthProvider) => {
-    setIsLoading(true);
-    setError(null);
+		return () => subscription.unsubscribe();
+	}, []);
 
-    try {
-      const providerOptions = PROVIDER_OPTIONS[provider.id];
-      const pendingNext =
-        typeof window !== 'undefined' ? window.localStorage.getItem('pending-auth-next') : null;
-      const safeNext = isSafeNextPath(pendingNext) ? pendingNext : null;
-      const redirectUrl = new URL(`${window.location.origin}/auth/callback`);
-      if (safeNext) {
-        redirectUrl.searchParams.set('next', safeNext);
-      }
+	const signInWithProvider = async (provider: OAuthProvider) => {
+		setIsLoading(true);
+		setError(null);
 
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: provider.id,
-        options: {
-          redirectTo: redirectUrl.toString(),
-          ...(providerOptions?.queryParams ? { queryParams: providerOptions.queryParams } : {}),
-          ...(providerOptions?.scopes ? { scopes: providerOptions.scopes } : {}),
-        },
-      });
+		try {
+			const providerOptions = PROVIDER_OPTIONS[provider.id];
+			const pendingNext =
+				typeof window !== "undefined"
+					? window.localStorage.getItem("pending-auth-next")
+					: null;
+			const safeNext = isSafeNextPath(pendingNext) ? pendingNext : null;
+			const redirectUrl = new URL(`${window.location.origin}/auth/callback`);
+			if (safeNext) {
+				redirectUrl.searchParams.set("next", safeNext);
+			}
 
-      if (error) {
-        throw error;
-      }
+			const { error } = await supabase.auth.signInWithOAuth({
+				provider: provider.id,
+				options: {
+					redirectTo: redirectUrl.toString(),
+					...(providerOptions?.queryParams
+						? { queryParams: providerOptions.queryParams }
+						: {}),
+					...(providerOptions?.scopes
+						? { scopes: providerOptions.scopes }
+						: {}),
+				},
+			});
 
-      // The redirect will happen automatically
-    } catch (error) {
-      logger.error('OAuth sign in error:', error);
-      setError(error instanceof Error ? error.message : 'Failed to sign in');
-      toast({
-        title: 'Sign In Failed',
-        description: `Failed to sign in with ${provider.name}. Please try again.`,
-        variant: 'destructive',
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+			if (error) {
+				throw error;
+			}
 
-  const signOut = async () => {
-    setIsLoading(true);
+			// The redirect will happen automatically
+		} catch (error) {
+			logger.error("OAuth sign in error:", error);
+			setError(error instanceof Error ? error.message : "Failed to sign in");
+			toast({
+				title: "Sign In Failed",
+				description: `Failed to sign in with ${provider.name}. Please try again.`,
+				variant: "destructive",
+			});
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
-    try {
-      const { error } = await supabase.auth.signOut();
-      
-      if (error) {
-        throw error;
-      }
+	const signOut = async () => {
+		setIsLoading(true);
 
-      toast({
-        title: 'Signed Out',
-        description: 'You have been successfully signed out.',
-      });
-    } catch (error) {
-      logger.error('Sign out error:', error);
-      toast({
-        title: 'Sign Out Failed',
-        description: 'Failed to sign out. Please try again.',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+		try {
+			const { error } = await supabase.auth.signOut();
 
-  return {
-    isLoading,
-    signInWithProvider,
-    signOut,
-    user,
-    error,
-  };
+			if (error) {
+				throw error;
+			}
+
+			toast({
+				title: "Signed Out",
+				description: "You have been successfully signed out.",
+			});
+		} catch (error) {
+			logger.error("Sign out error:", error);
+			toast({
+				title: "Sign Out Failed",
+				description: "Failed to sign out. Please try again.",
+				variant: "destructive",
+			});
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	return {
+		isLoading,
+		signInWithProvider,
+		signOut,
+		user,
+		error,
+	};
 }
-

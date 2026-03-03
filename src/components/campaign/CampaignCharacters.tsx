@@ -1,180 +1,212 @@
-import { useState } from 'react';
-import { Share2, EyeOff, ExternalLink, Loader2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { SystemWindow } from '@/components/ui/SystemWindow';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { ExternalLink, EyeOff, Loader2, Share2 } from "lucide-react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { useCampaignSharedCharacters, useShareCharacter, useUnshareCharacter } from '@/hooks/useCampaignCharacters';
-import { useCharacters } from '@/hooks/useCharacters';
-import { useSendCampaignMessage } from '@/hooks/useCampaignChat';
-import { Link } from 'react-router-dom';
-import { formatMonarchVernacular } from '@/lib/vernacular';
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from "@/components/ui/dialog";
+import { SystemWindow } from "@/components/ui/SystemWindow";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
+import {
+	useCampaignSharedCharacters,
+	useShareCharacter,
+	useUnshareCharacter,
+} from "@/hooks/useCampaignCharacters";
+import { useSendCampaignMessage } from "@/hooks/useCampaignChat";
+import { useCharacters } from "@/hooks/useCharacters";
+import { formatMonarchVernacular } from "@/lib/vernacular";
 
 interface CampaignCharactersProps {
-  campaignId: string;
+	campaignId: string;
 }
 
 export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
-  const [shareDialogOpen, setShareDialogOpen] = useState(false);
-  const [selectedCharacter, setSelectedCharacter] = useState('');
+	const [shareDialogOpen, setShareDialogOpen] = useState(false);
+	const [selectedCharacter, setSelectedCharacter] = useState("");
 
-  const { data: sharedCharacters = [], isLoading: loadingShared } = useCampaignSharedCharacters(campaignId);
-  const { data: myCharacters = [] } = useCharacters();
-  const shareCharacter = useShareCharacter();
-  const unshareCharacter = useUnshareCharacter();
-  const sendMessage = useSendCampaignMessage();
+	const { data: sharedCharacters = [], isLoading: loadingShared } =
+		useCampaignSharedCharacters(campaignId);
+	const { data: myCharacters = [] } = useCharacters();
+	const shareCharacter = useShareCharacter();
+	const unshareCharacter = useUnshareCharacter();
+	const sendMessage = useSendCampaignMessage();
 
-  const sharedCharacterIds = new Set(sharedCharacters.map(sc => sc.character_id));
-  const availableCharacters = myCharacters.filter(c => !sharedCharacterIds.has(c.id));
+	const sharedCharacterIds = new Set(
+		sharedCharacters.map((sc) => sc.character_id),
+	);
+	const availableCharacters = myCharacters.filter(
+		(c) => !sharedCharacterIds.has(c.id),
+	);
 
-  const handleShare = async () => {
-    if (!selectedCharacter) return;
-    const char = availableCharacters.find(c => c.id === selectedCharacter);
-    await shareCharacter.mutateAsync({ campaignId, characterId: selectedCharacter });
+	const handleShare = async () => {
+		if (!selectedCharacter) return;
+		const char = availableCharacters.find((c) => c.id === selectedCharacter);
+		await shareCharacter.mutateAsync({
+			campaignId,
+			characterId: selectedCharacter,
+		});
 
-    if (char) {
-      // System broadcast when sharing
-      await sendMessage.mutateAsync({
-        campaignId,
-        content: `**System**: ${char.name} has joined the campaign.`
-      });
-    }
+		if (char) {
+			// System broadcast when sharing
+			await sendMessage.mutateAsync({
+				campaignId,
+				content: `**System**: ${char.name} has joined the campaign.`,
+			});
+		}
 
-    setShareDialogOpen(false);
-    setSelectedCharacter('');
-  };
+		setShareDialogOpen(false);
+		setSelectedCharacter("");
+	};
 
-  const handleUnshare = async (characterId: string) => {
-    if (confirm('Stop sharing this character with the campaign?')) {
-      const char = sharedCharacters.find(sc => sc.character_id === characterId)?.characters;
-      await unshareCharacter.mutateAsync({ campaignId, characterId });
+	const handleUnshare = async (characterId: string) => {
+		if (confirm("Stop sharing this character with the campaign?")) {
+			const char = sharedCharacters.find(
+				(sc) => sc.character_id === characterId,
+			)?.characters;
+			await unshareCharacter.mutateAsync({ campaignId, characterId });
 
-      if (char) {
-        // System broadcast when unsharing
-        await sendMessage.mutateAsync({
-          campaignId,
-          content: `**System**: ${char.name} has left the campaign.`
-        });
-      }
-    }
-  };
+			if (char) {
+				// System broadcast when unsharing
+				await sendMessage.mutateAsync({
+					campaignId,
+					content: `**System**: ${char.name} has left the campaign.`,
+				});
+			}
+		}
+	};
 
-  return (
-    <>
-      <SystemWindow title="SHARED ASCENDANTS" className="h-[400px] flex flex-col">
-        <div className="flex justify-between items-center mb-4">
-          <p className="text-sm text-muted-foreground">
-            Characters visible to all campaign members
-          </p>
-          <Button size="sm" onClick={() => setShareDialogOpen(true)} disabled={availableCharacters.length === 0}>
-            <Share2 className="w-4 h-4 mr-2" />
-            Share Character
-          </Button>
-        </div>
-        <div className="flex-1 overflow-y-auto space-y-2">
-          {loadingShared ? (
-            <div className="flex items-center justify-center py-8">
-              <Loader2 className="w-6 h-6 animate-spin text-primary" />
-            </div>
-          ) : sharedCharacters.length === 0 ? (
-            <p className="text-center text-muted-foreground py-8">
-              No characters shared yet. Share one to get started!
-            </p>
-          ) : (
-            sharedCharacters.map((share) => (
-              <div
-                key={share.id}
-                className="flex items-center justify-between p-3 bg-muted/50 rounded-lg border border-border hover:border-primary/30 transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <div>
-                    <p className="font-heading font-semibold">
-                      {share.characters?.name || 'Unknown Character'}
-                    </p>
-                    {share.characters && (
-                      <p className="text-xs text-muted-foreground">
-                        Level {share.characters.level} {formatMonarchVernacular(share.characters.job)}
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  {share.characters && (
-                    <Link to={`/characters/${share.characters.id}`}>
-                      <Button variant="outline" size="sm">
-                        <ExternalLink className="w-3 h-3 mr-1" />
-                        View
-                      </Button>
-                    </Link>
-                  )}
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-8 w-8"
-                    onClick={() => handleUnshare(share.character_id)}
-                  >
-                    <EyeOff className="w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-      </SystemWindow>
+	return (
+		<>
+			<SystemWindow
+				title="SHARED ASCENDANTS"
+				className="h-[400px] flex flex-col"
+			>
+				<div className="flex justify-between items-center mb-4">
+					<p className="text-sm text-muted-foreground">
+						Characters visible to all campaign members
+					</p>
+					<Button
+						size="sm"
+						onClick={() => setShareDialogOpen(true)}
+						disabled={availableCharacters.length === 0}
+					>
+						<Share2 className="w-4 h-4 mr-2" />
+						Share Character
+					</Button>
+				</div>
+				<div className="flex-1 overflow-y-auto space-y-2">
+					{loadingShared ? (
+						<div className="flex items-center justify-center py-8">
+							<Loader2 className="w-6 h-6 animate-spin text-primary" />
+						</div>
+					) : sharedCharacters.length === 0 ? (
+						<p className="text-center text-muted-foreground py-8">
+							No characters shared yet. Share one to get started!
+						</p>
+					) : (
+						sharedCharacters.map((share) => (
+							<div
+								key={share.id}
+								className="flex items-center justify-between p-3 bg-muted/50 rounded-lg border border-border hover:border-primary/30 transition-colors"
+							>
+								<div className="flex items-center gap-3">
+									<div>
+										<p className="font-heading font-semibold">
+											{share.characters?.name || "Unknown Character"}
+										</p>
+										{share.characters && (
+											<p className="text-xs text-muted-foreground">
+												Level {share.characters.level}{" "}
+												{formatMonarchVernacular(share.characters.job)}
+											</p>
+										)}
+									</div>
+								</div>
+								<div className="flex items-center gap-2">
+									{share.characters && (
+										<Link to={`/characters/${share.characters.id}`}>
+											<Button variant="outline" size="sm">
+												<ExternalLink className="w-3 h-3 mr-1" />
+												View
+											</Button>
+										</Link>
+									)}
+									<Button
+										variant="ghost"
+										size="icon"
+										className="h-8 w-8"
+										onClick={() => handleUnshare(share.character_id)}
+									>
+										<EyeOff className="w-4 h-4" />
+									</Button>
+								</div>
+							</div>
+						))
+					)}
+				</div>
+			</SystemWindow>
 
-      <Dialog open={shareDialogOpen} onOpenChange={setShareDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Share Ascendant</DialogTitle>
-            <DialogDescription>
-              Select an Ascendant to share with all campaign members. They'll be able to view the Ascendant's sheet.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="py-4">
-            <Select value={selectedCharacter} onValueChange={setSelectedCharacter}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select an Ascendant" />
-              </SelectTrigger>
-              <SelectContent>
-                {availableCharacters.map((char) => (
-                  <SelectItem key={char.id} value={char.id}>
-                    {char.name} - Level {char.level} {formatMonarchVernacular(char.job ?? '')}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShareDialogOpen(false)}>
-              Cancel
-            </Button>
-            <Button
-              onClick={handleShare}
-              disabled={!selectedCharacter || shareCharacter.isPending}
-            >
-              {shareCharacter.isPending ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Sharing...
-                </>
-              ) : (
-                <>
-                  <Share2 className="w-4 h-4 mr-2" />
-                  Share
-                </>
-              )}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </>
-  );
+			<Dialog open={shareDialogOpen} onOpenChange={setShareDialogOpen}>
+				<DialogContent>
+					<DialogHeader>
+						<DialogTitle>Share Ascendant</DialogTitle>
+						<DialogDescription>
+							Select an Ascendant to share with all campaign members. They'll be
+							able to view the Ascendant's sheet.
+						</DialogDescription>
+					</DialogHeader>
+					<div className="py-4">
+						<Select
+							value={selectedCharacter}
+							onValueChange={setSelectedCharacter}
+						>
+							<SelectTrigger>
+								<SelectValue placeholder="Select an Ascendant" />
+							</SelectTrigger>
+							<SelectContent>
+								{availableCharacters.map((char) => (
+									<SelectItem key={char.id} value={char.id}>
+										{char.name} - Level {char.level}{" "}
+										{formatMonarchVernacular(char.job ?? "")}
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
+					</div>
+					<DialogFooter>
+						<Button variant="outline" onClick={() => setShareDialogOpen(false)}>
+							Cancel
+						</Button>
+						<Button
+							onClick={handleShare}
+							disabled={!selectedCharacter || shareCharacter.isPending}
+						>
+							{shareCharacter.isPending ? (
+								<>
+									<Loader2 className="w-4 h-4 mr-2 animate-spin" />
+									Sharing...
+								</>
+							) : (
+								<>
+									<Share2 className="w-4 h-4 mr-2" />
+									Share
+								</>
+							)}
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
+		</>
+	);
 }
-
