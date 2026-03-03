@@ -1,8 +1,0 @@
-
-> vite_react_shadcn_ts@0.0.0 build:vercel
-> node scripts/write-runtime-env.mjs && vite build
-
-[dotenv@17.3.1] injecting env (4) from .env -- tip: ⚙️  override existing env vars with { override: true }
-[36mvite v7.3.1 [32mbuilding client environment for production...[36m[39m
-transforming...
-[32m✓[39m 3850 modules transformed.
