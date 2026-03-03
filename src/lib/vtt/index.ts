@@ -130,6 +130,7 @@ export {
     PROP_ASSETS,
     EFFECT_ASSETS,
     AUDIO_ASSETS,
+    MUSIC_ASSETS,
     ALL_ASSETS,
     getAssetsByCategory,
     searchAssets,
@@ -140,3 +141,20 @@ export {
     type VTTAsset,
     type AssetCategory,
 } from './vttAssetManifest';
+
+// Particle effects library (102+ presets)
+export {
+    PARTICLE_PRESETS,
+    getPreset as getParticlePreset,
+    listPresets as listParticlePresets,
+    listCategories as listParticleCategories,
+    type ParticlePreset,
+    type ParticleCategory,
+} from './particlePresets';
+
+// Procedural ambient music engine (20 moods, zero copyright)
+export {
+    VttMusicEngine,
+    type MusicMood,
+} from './vttMusicEngine';
+

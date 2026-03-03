@@ -60,14 +60,15 @@ export function Pagination({
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6">
       {itemsPerPage && totalItems && (
-        <div className="text-sm text-muted-foreground">
-          Showing {startItem} to {endItem} of {totalItems} results
+        <div className="text-sm text-primary/70 font-system tracking-wide">
+          DATA <span className="text-primary">[{startItem} - {endItem}]</span> OF <span className="text-primary">{totalItems}</span>
         </div>
       )}
       <div className="flex items-center gap-2">
         <Button
           variant="outline"
           size="icon"
+          className="border-primary/40 hover:border-primary hover:bg-primary/20 text-primary data-[disabled]:opacity-40 rounded-[2px]"
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
           aria-label="Previous page"
@@ -78,7 +79,7 @@ export function Pagination({
           {getPageNumbers().map((page, index) => {
             if (page === '...') {
               return (
-                <span key={`ellipsis-${currentPage}-${index}`} className="px-2 text-muted-foreground">
+                <span key={`ellipsis-${currentPage}-${index}`} className="px-2 text-primary/50 tracking-widest font-mono">
                   ...
                 </span>
               );
@@ -90,8 +91,10 @@ export function Pagination({
                 size="icon"
                 onClick={() => onPageChange(page as number)}
                 className={cn(
-                  'min-w-[2.5rem]',
-                  currentPage === page && 'bg-primary text-primary-foreground'
+                  'min-w-[2.5rem] font-mono rounded-[2px]',
+                  currentPage === page
+                    ? 'bg-primary text-primary-foreground shadow-[0_0_10px_hsl(var(--primary)/0.6)]'
+                    : 'border-primary/40 hover:border-primary hover:bg-primary/20 text-foreground'
                 )}
                 aria-label={`Go to page ${page}`}
                 aria-current={currentPage === page ? 'page' : undefined}
@@ -104,6 +107,7 @@ export function Pagination({
         <Button
           variant="outline"
           size="icon"
+          className="border-primary/40 hover:border-primary hover:bg-primary/20 text-primary data-[disabled]:opacity-40 rounded-[2px]"
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
           aria-label="Next page"

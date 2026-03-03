@@ -727,15 +727,15 @@ const Compendium = () => {
         {/* Search and Controls */}
         <section className="flex flex-col gap-4 mb-6" aria-label="Search and filters">
           <div className="flex flex-col sm:flex-row gap-4">
-            <div className="relative flex-1 flex items-center gap-2">
+            <div className="relative flex-1 flex items-center gap-2 group">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" aria-hidden="true" />
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 font-mono text-primary font-bold animate-pulse" aria-hidden="true">{'>_'}</div>
                 <Input
-                  placeholder="Search... (e.g., fire damage, type:power, level:>3)"
+                  placeholder="[ QUERY_TERMINAL ] awaiting input... (e.g., type:power, level:>3)"
                   aria-label="Search compendium"
                   value={searchQuery || ''}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 bg-card border-border focus:ring-2 focus:ring-primary"
+                  className="pl-12 h-14 bg-black/80 border-primary/50 text-primary font-mono tracking-widest focus:ring-1 focus:ring-primary focus:shadow-[0_0_15px_hsl(var(--primary)/0.2),inset_0_0_10px_hsl(var(--primary)/0.1)] rounded-[2px] transition-all duration-300 placeholder:text-primary/40 placeholder:font-system"
                   autoComplete="off"
                   spellCheck="false"
                   title="Advanced search: type:jobs, level:>3, rarity:rare, school:evocation, cr:>5, tag:boss, source:core"

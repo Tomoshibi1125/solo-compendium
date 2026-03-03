@@ -11,6 +11,10 @@ import { cn } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
 import type { CampaignMessage } from '@/hooks/useCampaignChat';
 import { getLocalUserId } from '@/lib/guestStore';
+import { Sparkles, Brain } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
+import { narrateCombatEvent } from '@/lib/ai/protocolWarden';
 
 interface CampaignChatProps {
   campaignId: string;
@@ -19,6 +23,8 @@ interface CampaignChatProps {
 export function CampaignChat({ campaignId }: CampaignChatProps) {
   const [message, setMessage] = useState('');
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const [isAutoNarrating, setIsAutoNarrating] = useState(false);
+  const [isNarratingMsg, setIsNarratingMsg] = useState<string | null>(null);
   const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== 'false';
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
@@ -41,18 +47,22 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
   }, [guestEnabled]);
 
   // Real-time updates handler
-  const handleNewMessage = useRef<(message: CampaignMessage) => void>(() => {});
+  const handleNewMessage = useRef<(message: CampaignMessage) => void>(() => { });
 
   useEffect(() => {
     handleNewMessage.current = (newMessage: CampaignMessage) => {
       queryClient.setQueryData(['campaigns', campaignId, 'messages'], (old: CampaignMessage[] | undefined) => {
         if (!old) return [newMessage];
-        // Check if message already exists
         if (old.some(m => m.id === newMessage.id)) return old;
         return [...old, newMessage];
       });
+
+      if (isAutoNarrating && ['roll', 'system'].includes(newMessage.message_type) && newMessage.user_id === currentUserId) {
+        // Automatically narrate incoming mechanics if toggle is enabled
+        handleManualNarration(newMessage);
+      }
     };
-  }, [campaignId, queryClient]);
+  }, [campaignId, queryClient, isAutoNarrating, currentUserId]);
 
   useCampaignMessagesRealtime(campaignId, (msg) => handleNewMessage.current(msg));
 
@@ -75,8 +85,37 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
     }
   };
 
+  const handleManualNarration = async (msg: CampaignMessage) => {
+    if (isNarratingMsg) return;
+    try {
+      setIsNarratingMsg(msg.id);
+      const narration = await narrateCombatEvent(msg.content);
+
+      await sendMessage.mutateAsync({
+        campaignId,
+        content: `Protocol Warden: ${narration}`,
+        messageType: 'whisper', // Use whisper type to visually distinguish AI flavor text
+      });
+    } catch (error) {
+      console.error("Narration failed", error);
+    } finally {
+      setIsNarratingMsg(null);
+    }
+  };
+
   return (
     <SystemWindow title="CAMPAIGN CHAT" className="h-[500px] flex flex-col">
+      <div className="flex items-center justify-between p-2 border-b bg-muted/50 mb-2">
+        <div className="flex items-center space-x-2">
+          <Brain className="w-4 h-4 text-purple-500" />
+          <Label htmlFor="auto-narrate" className="text-xs font-medium cursor-pointer">AI Protocol Warden (Auto-Narrate)</Label>
+        </div>
+        <Switch
+          id="auto-narrate"
+          checked={isAutoNarrating}
+          onCheckedChange={setIsAutoNarrating}
+        />
+      </div>
       <ScrollArea className="flex-1 pr-4">
         <div className="space-y-2">
           {isLoading ? (
@@ -114,16 +153,31 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
                       )}>
                         {formatDistanceToNow(new Date(msg.created_at), { addSuffix: true })}
                       </span>
-                      {isOwn && (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-5 w-5 opacity-0 group-hover:opacity-100 transition-opacity"
-                          onClick={() => handleDelete(msg.id)}
-                        >
-                          <Trash2 className="w-3 h-3" />
-                        </Button>
-                      )}
+                      <div className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        {['roll', 'system'].includes(msg.message_type) && (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-5 w-5 mr-1 text-purple-500 hover:text-purple-400"
+                            onClick={() => handleManualNarration(msg)}
+                            disabled={isNarratingMsg === msg.id}
+                            title="Generate AI Narration"
+                          >
+                            {isNarratingMsg === msg.id ? <Loader2 className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3" />}
+                          </Button>
+                        )}
+                        {isOwn && (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-5 w-5"
+                            onClick={() => handleDelete(msg.id)}
+                            title="Delete Message"
+                          >
+                            <Trash2 className="w-3 h-3" />
+                          </Button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>

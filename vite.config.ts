@@ -163,8 +163,8 @@ export default defineConfig(({ mode: _mode }) => {
       injectRegister: null,
       registerType: 'autoUpdate',
       workbox: {
-        maximumFileSizeToCacheInBytes: 20 * 1024 * 1024,
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,webmanifest,wasm}'],
+        maximumFileSizeToCacheInBytes: 50 * 1024 * 1024, // Increased to 50MB to account for 3D dice collision models
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,webmanifest,wasm,glb,gltf,mp3,wav}'],
         globIgnores: ['**/generated/**'],
         runtimeCaching: [
           {
@@ -277,10 +277,8 @@ export default defineConfig(({ mode: _mode }) => {
           manualChunks(id, { getModuleInfo }) {
             // Split vendor chunks for better caching while avoiding circular deps.
             const normalizedId = normalizeId(id);
-            if (normalizedId.includes('/src/components/dice/Dice3DScene')) {
-              return 'dice-3d-scene';
-            }
             if (
+              normalizedId.includes('/src/components/dice/Dice3DScene') ||
               normalizedId.includes('/src/components/dice/Dice3D') ||
               normalizedId.includes('/src/components/dice/diceGeometry') ||
               normalizedId.includes('/src/lib/dice/audio')
@@ -330,7 +328,19 @@ export default defineConfig(({ mode: _mode }) => {
               if (normalizedId.includes('/node_modules/embla-carousel-react/')) return 'carousel-vendor';
               if (normalizedId.includes('/node_modules/lucide-react/')) return 'icons-vendor';
               if (normalizedId.includes('/node_modules/dompurify/')) return 'sanitize-vendor';
-              if (normalizedId.includes('/@radix-ui/')) return 'ui-vendor';
+              if (
+                normalizedId.includes('/@radix-ui/') ||
+                normalizedId.includes('/@floating-ui/') ||
+                normalizedId.includes('/react-remove-scroll') ||
+                normalizedId.includes('/react-dismissable-layer') ||
+                normalizedId.includes('/aria-hidden') ||
+                normalizedId.includes('/react-style-singleton') ||
+                normalizedId.includes('/use-callback-ref') ||
+                normalizedId.includes('/use-sidecar') ||
+                normalizedId.includes('/use-sync-external-store') ||
+                normalizedId.includes('/node_modules/cmdk/') ||
+                normalizedId.includes('/node_modules/vaul/')
+              ) return 'ui-vendor';
               if (normalizedId.includes('/node_modules/@tsparticles/')) return 'particles-vendor';
               if (normalizedId.includes('/node_modules/pixi.js/') || normalizedId.includes('/node_modules/pixi-filters/')) {
                 return 'pixi-vendor';

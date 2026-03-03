@@ -580,21 +580,7 @@ CREATE POLICY "daily_quest_instances_delete" ON public.daily_quest_instances
     EXISTS (SELECT 1 FROM public.characters c WHERE c.id = character_id AND c.user_id = (select auth.uid()))
   );
 
--- ============================================================
--- 27. entity_assets  (multiple permissive SELECT)
---     FOR ALL (authenticated) overlaps with FOR SELECT (public).
--- ============================================================
-DROP POLICY IF EXISTS "Authenticated users can manage entity assets" ON public.entity_assets;
-DROP POLICY IF EXISTS "Entity assets are publicly readable"          ON public.entity_assets;
 
-CREATE POLICY "entity_assets_select" ON public.entity_assets
-  FOR SELECT USING (true);
-CREATE POLICY "entity_assets_insert" ON public.entity_assets
-  FOR INSERT WITH CHECK ((select auth.uid()) IS NOT NULL);
-CREATE POLICY "entity_assets_update" ON public.entity_assets
-  FOR UPDATE USING ((select auth.uid()) IS NOT NULL);
-CREATE POLICY "entity_assets_delete" ON public.entity_assets
-  FOR DELETE USING ((select auth.uid()) IS NOT NULL);
 
 -- ============================================================
 -- 28. profiles  (multiple permissive SELECT)

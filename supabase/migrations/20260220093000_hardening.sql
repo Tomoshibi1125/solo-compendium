@@ -180,13 +180,13 @@ BEGIN
     FOR SELECT USING (is_public = TRUE);
   DROP POLICY IF EXISTS "Users can create their own sovereigns" ON public.saved_sovereigns;
   CREATE POLICY "Users can create their own sovereigns" ON public.saved_sovereigns
-    FOR INSERT WITH CHECK ((SELECT auth.uid()) IS NOT NULL AND owner_id = (SELECT auth.uid()));
+    FOR INSERT WITH CHECK ((SELECT auth.uid()) IS NOT NULL AND created_by = (SELECT auth.uid()));
   DROP POLICY IF EXISTS "Users can delete their own sovereigns" ON public.saved_sovereigns;
   CREATE POLICY "Users can delete their own sovereigns" ON public.saved_sovereigns
-    FOR DELETE USING ((SELECT auth.uid()) IS NOT NULL AND owner_id = (SELECT auth.uid()));
+    FOR DELETE USING ((SELECT auth.uid()) IS NOT NULL AND created_by = (SELECT auth.uid()));
   DROP POLICY IF EXISTS "Users can update their own sovereigns" ON public.saved_sovereigns;
   CREATE POLICY "Users can update their own sovereigns" ON public.saved_sovereigns
-    FOR UPDATE USING ((SELECT auth.uid()) IS NOT NULL AND owner_id = (SELECT auth.uid()));
+    FOR UPDATE USING ((SELECT auth.uid()) IS NOT NULL AND created_by = (SELECT auth.uid()));
 
   -- character_monarch_unlocks (initplan)
   DROP POLICY IF EXISTS "Users can create monarch unlocks for their own characters" ON public.character_monarch_unlocks;
@@ -393,8 +393,6 @@ BEGIN
   CREATE INDEX IF NOT EXISTS idx_character_shadow_soldiers_soldier_id ON public.character_shadow_soldiers(soldier_id);
 
   -- characters
-  CREATE INDEX IF NOT EXISTS idx_characters_active_sovereign_id ON public.characters(active_sovereign_id);
-  CREATE INDEX IF NOT EXISTS idx_characters_sovereign_id ON public.characters(sovereign_id);
 
   -- combat_participants
   CREATE INDEX IF NOT EXISTS idx_combat_participants_character_id ON public.combat_participants(character_id);

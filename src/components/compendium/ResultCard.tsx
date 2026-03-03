@@ -48,8 +48,8 @@ function ResultCardComponent({
       <Link
         to={`/compendium/${entry.type}/${entry.id}`}
         className={cn(
-          "glass-card border hover:border-primary/30 transition-all duration-200 group relative p-4",
-          "hover:shadow-lg hover:shadow-primary/10 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
+          "rounded-[2px] border-l-4 border-y border-r bg-black/60 transition-all duration-300 group relative p-4",
+          "hover:shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_0_15px_currentColor] focus:outline-none focus:ring-1 focus:ring-primary focus:ring-offset-1",
           getRarityOrRankColor(entry)
         )}
         aria-label={`View ${displayName} details`}
@@ -70,10 +70,10 @@ function ResultCardComponent({
 
         <div className="flex items-start justify-between mb-2">
           <span className={cn(
-            "text-xs font-display uppercase",
+            "text-xs font-system font-bold uppercase tracking-widest px-2 py-0.5 border rounded-[2px] bg-background/50",
             getRarityOrRankColor(entry)
           )}>
-            {getRarityOrRankLabel(entry)}
+            [{getRarityOrRankLabel(entry)}]
           </span>
           <div className="flex items-center gap-2">
             {displaySourceBook && (
@@ -81,15 +81,15 @@ function ResultCardComponent({
                 {displaySourceBook}
               </Badge>
             )}
-            <span className="text-xs text-muted-foreground capitalize">
+            <span className="text-xs font-mono uppercase tracking-wider opacity-70">
               {displayType}
             </span>
           </div>
         </div>
-        <h3 className="font-heading text-lg font-semibold mb-2 group-hover:text-primary transition-colors line-clamp-1">
+        <h3 className="font-system text-lg tracking-wider uppercase font-semibold mb-2 drop-shadow-[0_0_8px_currentColor] line-clamp-1 truncate">
           {highlightText(entry.name, searchQuery)}
         </h3>
-        <p className="text-sm text-muted-foreground line-clamp-2">
+        <p className="text-sm font-mono tracking-wide text-gray-400 line-clamp-2">
           {highlightText(entry.description, searchQuery)}
         </p>
         <div className="flex items-center gap-2 mt-2 flex-wrap">
@@ -125,8 +125,8 @@ function ResultCardComponent({
     <Link
       to={`/compendium/${entry.type}/${entry.id}`}
       className={cn(
-        "glass-card border hover:border-primary/30 transition-all duration-200 group relative p-3 flex items-center gap-4",
-        "hover:shadow-lg hover:shadow-primary/10 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
+        "rounded-[2px] border-l-4 border-y border-r bg-black/60 transition-all duration-300 group relative p-3 flex items-center gap-4",
+        "hover:shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_0_15px_currentColor] focus:outline-none focus:ring-1 focus:ring-primary focus:ring-offset-1",
         getRarityOrRankColor(entry)
       )}
       aria-label={`View ${displayName} details`}
@@ -146,16 +146,16 @@ function ResultCardComponent({
       </button>
 
       <span className={cn(
-        "text-xs font-display uppercase w-24 flex-shrink-0",
+        "text-xs font-system font-bold uppercase tracking-widest px-2 py-0.5 border rounded-[2px] bg-background/50 text-center w-28 flex-shrink-0",
         getRarityOrRankColor(entry)
       )}>
-        {getRarityOrRankLabel(entry)}
+        [{getRarityOrRankLabel(entry)}]
       </span>
       <div className="flex-1 min-w-0">
-        <h3 className="font-heading font-semibold group-hover:text-primary transition-colors">
+        <h3 className="font-system tracking-wider uppercase font-semibold drop-shadow-[0_0_8px_currentColor] truncate">
           {highlightText(entry.name, searchQuery)}
         </h3>
-        <p className="text-sm text-muted-foreground line-clamp-1 mt-1">
+        <p className="text-sm font-mono tracking-wide text-gray-400 line-clamp-1 mt-1">
           {highlightText(entry.description, searchQuery)}
         </p>
       </div>

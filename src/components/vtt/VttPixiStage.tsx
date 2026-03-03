@@ -78,6 +78,8 @@ type VttPixiStageProps = {
   drawMode?: 'none' | 'ruler' | 'cone' | 'sphere' | 'cube' | 'wall';
   onWallCreated?: (x1: number, y1: number, x2: number, y2: number) => void;
   weather?: 'none' | 'rain' | 'snow' | 'embers' | 'gas';
+  /** Called when the PixiJS stage is ready, exposing the app and effects container for particle effects */
+  onStageReady?: (app: Application, effectsContainer: Container) => void;
 };
 
 const SIZE_VALUES: Record<PlacedToken['size'], number> = {
@@ -111,6 +113,7 @@ export function VttPixiStage({
   drawMode = 'none',
   onWallCreated,
   weather = 'none',
+  onStageReady,
 }: VttPixiStageProps) {
   const canvasHostRef = useRef<HTMLDivElement | null>(null);
   const appRef = useRef<Application | null>(null);
@@ -219,6 +222,7 @@ export function VttPixiStage({
 
     const bg = new Container();
     const weatherLayer = new Container();
+    const effectsLayer = new Container(); // Spell/combat particle effects
     const grid = new Container();
     const wallsLayer = new Container();
     const drawings = new Container();
@@ -227,11 +231,15 @@ export function VttPixiStage({
 
     root.addChild(bg);
     root.addChild(weatherLayer);
+    root.addChild(effectsLayer);
     root.addChild(grid);
     root.addChild(wallsLayer);
     root.addChild(drawings);
     root.addChild(tokenLayer);
     root.addChild(fog);
+
+    // Expose the app + effects container so parent components can trigger particle presets
+    onStageReady?.(app, effectsLayer);
 
     // Persist drawing graphics instance outside of render loops
     if (!drawingGraphicsRef.current) {

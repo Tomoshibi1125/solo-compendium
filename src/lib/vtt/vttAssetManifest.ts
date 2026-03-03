@@ -20,7 +20,8 @@ export type AssetCategory =
     | 'item'
     | 'spell'
     | 'rune'
-    | 'audio';
+    | 'audio'
+    | 'music';
 
 export interface VTTAsset {
     id: string;
@@ -175,6 +176,19 @@ export const AUDIO_ASSETS: VTTAsset[] = [
     { id: 'audio-library', name: 'Ancient Library', category: 'audio', path: 'https://sounds.tabletopaudio.com/library.mp3', tags: ['library', 'study', 'quiet', 'arcane'], format: 'stream', attribution: 'Tabletop Audio / CC BY-NC 4.0' },
 ];
 
+// ─── Downloaded CC0 Music Tracks (local, no external dependency) ────
+// All tracks are CC0 / Public Domain from OpenGameArt.org.
+// Served from /audio/music/ — no streaming, no external requests.
+
+export const MUSIC_ASSETS: VTTAsset[] = [
+    { id: 'music-dark-cavern-1', name: 'Dark Cavern Ambient (Fade)', category: 'music', path: '/audio/music/dark-cavern-ambient-1.ogg', tags: ['dungeon', 'cave', 'dark', 'ambient', 'horror'], format: 'ogg', attribution: 'Paul Wortmann / CC0' },
+    { id: 'music-dark-cavern-2', name: 'Dark Cavern Ambient (Loop)', category: 'music', path: '/audio/music/dark-cavern-ambient-2.ogg', tags: ['dungeon', 'cave', 'dark', 'ambient', 'loop'], format: 'ogg', attribution: 'Paul Wortmann / CC0' },
+    { id: 'music-town-theme', name: 'Town Theme RPG', category: 'music', path: '/audio/music/town-theme-rpg.mp3', tags: ['town', 'peaceful', 'harp', 'tavern', 'social'], format: 'mp3', attribution: 'cynicmusic / CC0' },
+    { id: 'music-cold-silence', name: 'Cold Silence', category: 'music', path: '/audio/music/cold-silence.ogg', tags: ['horror', 'dark', 'unsettling', 'ambient', 'scary'], format: 'ogg', attribution: 'Eponasoft / CC0' },
+    { id: 'music-bleeding-out', name: 'Bleeding Out', category: 'music', path: '/audio/music/bleeding-out.ogg', tags: ['sad', 'dark', 'ambient', 'violin', 'loss', 'death'], format: 'ogg', attribution: 'HaelDB / CC0' },
+    { id: 'music-dungeon-ambience', name: 'Dungeon Ambience', category: 'music', path: '/audio/music/dungeon-ambience.ogg', tags: ['dungeon', 'ambient', 'dark', 'exploration'], format: 'ogg', attribution: 'yd / CC0' },
+];
+
 // ─── Helpers ─────────────────────────────────────────────────
 
 /** Get all assets of a given category */
@@ -213,6 +227,7 @@ export const ALL_ASSETS: VTTAsset[] = [
     ...PROP_ASSETS,
     ...EFFECT_ASSETS,
     ...AUDIO_ASSETS,
+    ...MUSIC_ASSETS,
 ];
 
 /** Asset count summary for DM dashboard */

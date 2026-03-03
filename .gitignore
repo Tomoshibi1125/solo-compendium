@@ -38,6 +38,8 @@ vitest_utf8.log
 typecheck.log
 git_status.json
 .git_status.txt
+supabase_start_error*.txt
+test_report*.txt
 
 # Downloaded Node binary
 node-v*/
@@ -65,3 +67,6 @@ __pycache__/
 src/pages/CharacterSheet.tsx.bak
 src/pages/CharacterSheet.tsx.broken
 src/pages/CharacterSheet.tsx.stable_anchor
+
+.vercel
+.env*.local

@@ -1526,142 +1526,167 @@ const CharacterSheet = () => {
         )}
 
         {/* SA Hunter Profile Header */}
-        <div className="sa-hunter-header flex flex-col sm:flex-row items-start gap-4 mb-6">
-          {character.portrait_url ? (
-            <OptimizedImage
-              src={character.portrait_url}
-              alt={character.name}
-              className="w-20 h-20 sm:w-24 sm:h-24 rounded-lg object-cover border-2 border-purple-500/40 flex-shrink-0 shadow-[0_0_15px_rgba(139,92,246,0.2)]"
-              size="small"
-            />
-          ) : (
-            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-lg border-2 border-purple-500/30 flex-shrink-0 bg-gradient-to-br from-purple-900/40 to-indigo-900/40 flex items-center justify-center">
-              <User className="w-8 h-8 sm:w-10 sm:h-10 text-purple-400/60" />
-            </div>
-          )}
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-3">
-              <h1 className="font-display text-2xl sm:text-3xl font-bold truncate text-white">{character.name}</h1>
-              {/* Hunter Rank Badge */}
-              <span className={cn(
-                'sa-rank-badge px-2',
-                character.level >= 17 ? 'sa-rank-badge--s' :
-                  character.level >= 13 ? 'sa-rank-badge--a' :
-                    character.level >= 9 ? 'sa-rank-badge--b' :
-                      character.level >= 5 ? 'sa-rank-badge--c' :
-                        character.level >= 2 ? 'sa-rank-badge--d' :
-                          'sa-rank-badge--e'
-              )}>
-                {character.level >= 17 ? 'S' :
-                  character.level >= 13 ? 'A' :
-                    character.level >= 9 ? 'B' :
-                      character.level >= 5 ? 'C' :
-                        character.level >= 2 ? 'D' : 'E'}
-              </span>
-            </div>
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-sm">
-              <span className="font-heading text-purple-300">Lv. <span className="text-white font-bold text-base">{character.level}</span></span>
-              <span className="text-purple-500/50">|</span>
-              <span className="font-heading text-cyan-300">{jobDisplayName || 'Unawakened'}</span>
-              {pathDisplayName && (
-                <>
-                  <span className="text-purple-500/50">|</span>
-                  <span className="font-heading text-purple-200/80">{pathDisplayName}</span>
-                </>
-              )}
-              {backgroundDisplayName && (
-                <>
-                  <span className="text-purple-500/50">|</span>
-                  <span className="font-heading text-purple-200/60">{backgroundDisplayName}</span>
-                </>
-              )}
-            </div>
-            {/* XP Progress Bar */}
-            {character.experience !== undefined && character.experience !== null && (
-              <div className="mt-2 flex items-center gap-2">
-                <div className="flex-1 h-1.5 rounded-full bg-purple-900/40 overflow-hidden">
-                  <progress
-                    className="character-sheet-xp-progress"
-                    value={Math.min(100, ((character.experience || 0) % 1000) / 10)}
-                    max={100}
-                    aria-label="XP progress"
-                  />
+        <div className="mb-6 rounded-[2px] border border-primary/40 bg-black/80 shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_0_15px_hsl(var(--primary)/0.15)] relative overflow-hidden backdrop-blur-md">
+          <div className="absolute top-0 left-0 w-full h-[2px] bg-primary/40 shadow-[0_0_10px_hsl(var(--primary)/0.5)]" />
+          <div className="flex flex-col md:flex-row items-stretch">
+            {/* PORTRAIT CELL */}
+            <div className="p-4 border-b md:border-b-0 md:border-r border-primary/20 bg-primary/5 flex items-center justify-center shrink-0">
+              {character.portrait_url ? (
+                <OptimizedImage
+                  src={character.portrait_url}
+                  alt={character.name}
+                  className="w-20 h-20 sm:w-28 sm:h-28 rounded-[2px] object-cover border border-primary/40 shadow-[0_0_15px_hsl(var(--primary)/0.2)]"
+                  size="small"
+                />
+              ) : (
+                <div className="w-20 h-20 sm:w-28 sm:h-28 rounded-[2px] border border-primary/30 flex-shrink-0 bg-black/60 flex items-center justify-center shadow-[inset_0_0_15px_hsl(var(--primary)/0.1)]">
+                  <User className="w-8 h-8 sm:w-10 sm:h-10 text-primary/40" />
                 </div>
-                <span className="text-[10px] font-mono text-purple-300/60">{character.experience || 0} XP</span>
-              </div>
-            )}
-            {/* Quick Actions Row */}
-            <div className="flex flex-wrap gap-2 mt-3">
-              <ShortRestDialog
-                hitDiceAvailable={character.hit_dice_current}
-                hitDiceMax={character.hit_dice_max}
-                hitDieSize={character.hit_dice_size}
-                vitScore={finalAbilities?.VIT ?? character.abilities.VIT}
-                hpCurrent={character.hp_current}
-                hpMax={character.hp_max}
-                onFinishRest={async (totalRecovered, hitDiceSpent) => {
-                  if (totalRecovered > 0) {
-                    const newHP = Math.min(character.hp_current + totalRecovered, character.hp_max);
-                    await updateCharacter.mutateAsync({ id: character.id, data: { hp_current: newHP } });
-                  }
-                  if (hitDiceSpent > 0) {
-                    await handleResourceAdjust('hit_dice_current', -hitDiceSpent);
-                  }
-
-                  // Broadcast Short Rest completion
-                  playerTools.trackConditionChange(character.id, 'Short Rest', 'add').catch(console.error);
-
-                  await handleShortRest();
-                }}
-                onHitDieSpent={(result) => {
-                  const scope = campaignId && isCampaignConnected ? 'campaign' : 'local';
-                  const totalRoll = result.roll + result.vitModifier;
-                  recordRoll.mutate({
-                    dice_formula: `1d${result.hitDieSize}`,
-                    result: totalRoll,
-                    rolls: [result.roll],
-                    roll_type: 'healing',
-                    context: `Hit Die Spent (+${result.hpRecovered} HP)`,
-                    modifiers: { modifier: result.vitModifier },
-                    campaign_id: campaignId ?? null,
-                    character_id: character.id,
-                  });
-
-                  if (scope === 'campaign') {
-                    broadcastDiceRoll(`1d${result.hitDieSize}`, totalRoll, {
-                      characterName: character.name,
-                      rollType: 'healing',
-                      context: `Hit Die Spent (+${result.hpRecovered} HP)`,
-                      rolls: [result.roll],
-                    });
-                  }
-                }}
-              />
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleLongRest}
-                className="gap-1.5 h-8"
-                disabled={updateCharacter.isPending}
-              >
-                <Sun className="w-3.5 h-3.5" />
-                Long Rest
-              </Button>
-              {character.level < 20 && !isReadOnly && (
-                <Button
-                  variant="default"
-                  size="sm"
-                  onClick={() => navigate(`/characters/${character.id}/level-up`)}
-                  className="gap-1.5 h-8"
-                >
-                  <Zap className="w-3.5 h-3.5" />
-                  Level Up
-                </Button>
               )}
+            </div>
+
+            {/* STATUS GRID CELLS */}
+            <div className="flex-1 flex flex-col min-w-0">
+              <div className="p-4 border-b border-primary/20 flex flex-wrap gap-4 items-center justify-between bg-black/40">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-mono text-primary/50 uppercase tracking-widest hidden sm:inline">NAMED_ENTITY:</span>
+                  <h1 className="font-system tracking-widest uppercase text-2xl sm:text-3xl font-bold truncate text-white drop-shadow-[0_0_8px_currentColor]">{character.name}</h1>
+                </div>
+
+                {/* Hunter Rank Badge */}
+                <div className={cn(
+                  'font-system tracking-widest font-bold uppercase px-3 py-1 rounded-[2px] border flex items-center gap-2 bg-background/80 backdrop-blur-sm',
+                  character.level >= 17 ? 'border-gate-s/50 text-gate-s shadow-[0_0_10px_hsl(var(--gate-s)/0.4)]' :
+                    character.level >= 13 ? 'border-gate-a/50 text-gate-a shadow-[0_0_10px_hsl(var(--gate-a)/0.4)]' :
+                      character.level >= 9 ? 'border-gate-b/50 text-gate-b shadow-[0_0_8px_hsl(var(--gate-b)/0.3)]' :
+                        character.level >= 5 ? 'border-gate-c/50 text-gate-c shadow-[0_0_8px_hsl(var(--gate-c)/0.3)]' :
+                          character.level >= 2 ? 'border-gate-d/50 text-gate-d shadow-[0_0_8px_hsl(var(--gate-d)/0.3)]' :
+                            'border-gate-e/50 text-gate-e shadow-[0_0_8px_hsl(var(--gate-e)/0.3)]'
+                )}>
+                  <span className="text-[10px] text-muted-foreground">RANK</span>
+                  <span>
+                    {character.level >= 17 ? 'S' :
+                      character.level >= 13 ? 'A' :
+                        character.level >= 9 ? 'B' :
+                          character.level >= 5 ? 'C' :
+                            character.level >= 2 ? 'D' : 'E'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Data Rows */}
+              <div className="flex flex-col sm:flex-row flex-1">
+                <div className="p-4 border-b sm:border-b-0 sm:border-r border-primary/20 flex-1 flex flex-col justify-center gap-2 bg-black/20">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-mono text-primary/50 uppercase tracking-widest w-12">CLASS:</span>
+                    <span className="font-system text-primary font-bold uppercase tracking-wider text-sm drop-shadow-[0_0_5px_currentColor]">{jobDisplayName || 'Unawakened'}</span>
+                  </div>
+                  {(pathDisplayName || backgroundDisplayName) && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-mono text-primary/50 uppercase tracking-widest w-12">PATH:</span>
+                      <span className="font-system text-primary/80 uppercase tracking-wider text-xs">{pathDisplayName || 'None'}</span>
+                      {backgroundDisplayName && <><span className="text-primary/30 mx-1">|</span> <span className="font-system text-primary/60 uppercase tracking-wider text-xs">{backgroundDisplayName}</span></>}
+                    </div>
+                  )}
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="text-xs font-mono text-primary/50 uppercase tracking-widest w-12">LEVEL:</span>
+                    <span className="font-system text-white font-bold text-xl drop-shadow-[0_0_5px_currentColor]">{character.level}</span>
+                  </div>
+                </div>
+
+                <div className="p-4 flex-1 flex flex-col justify-center bg-black/20">
+                  {/* XP Progress Bar */}
+                  {character.experience !== undefined && character.experience !== null && (
+                    <div className="w-full">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-xs font-mono text-primary/60 uppercase tracking-widest">EXPERIENCE DATA</span>
+                        <span className="text-[10px] font-mono text-primary font-bold tracking-widest">{character.experience || 0} XP</span>
+                      </div>
+                      <div className="h-2 rounded-[2px] bg-black border border-primary/30 overflow-hidden relative shadow-[inset_0_0_8px_rgba(0,0,0,0.8)]">
+                        <div
+                          className="h-full bg-primary relative"
+                          style={{ width: `${Math.min(100, ((character.experience || 0) % 1000) / 10)}%` }}
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-white/10 animate-[shimmer_2s_infinite]" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
+        {/* Quick Actions Row */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          <ShortRestDialog
+            hitDiceAvailable={character.hit_dice_current}
+            hitDiceMax={character.hit_dice_max}
+            hitDieSize={character.hit_dice_size}
+            vitScore={finalAbilities?.VIT ?? character.abilities.VIT}
+            hpCurrent={character.hp_current}
+            hpMax={character.hp_max}
+            onFinishRest={async (totalRecovered, hitDiceSpent) => {
+              if (totalRecovered > 0) {
+                const newHP = Math.min(character.hp_current + totalRecovered, character.hp_max);
+                await updateCharacter.mutateAsync({ id: character.id, data: { hp_current: newHP } });
+              }
+              if (hitDiceSpent > 0) {
+                await handleResourceAdjust('hit_dice_current', -hitDiceSpent);
+              }
+
+              // Broadcast Short Rest completion
+              playerTools.trackConditionChange(character.id, 'Short Rest', 'add').catch(console.error);
+
+              await handleShortRest();
+            }}
+            onHitDieSpent={(result) => {
+              const scope = campaignId && isCampaignConnected ? 'campaign' : 'local';
+              const totalRoll = result.roll + result.vitModifier;
+              recordRoll.mutate({
+                dice_formula: `1d${result.hitDieSize}`,
+                result: totalRoll,
+                rolls: [result.roll],
+                roll_type: 'healing',
+                context: `Hit Die Spent (+${result.hpRecovered} HP)`,
+                modifiers: { modifier: result.vitModifier },
+                campaign_id: campaignId ?? null,
+                character_id: character.id,
+              });
+
+              if (scope === 'campaign') {
+                broadcastDiceRoll(`1d${result.hitDieSize}`, totalRoll, {
+                  characterName: character.name,
+                  rollType: 'healing',
+                  context: `Hit Die Spent (+${result.hpRecovered} HP)`,
+                  rolls: [result.roll],
+                });
+              }
+            }}
+          />
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleLongRest}
+            className="gap-1.5 h-8"
+            disabled={updateCharacter.isPending}
+          >
+            <Sun className="w-3.5 h-3.5" />
+            Long Rest
+          </Button>
+          {character.level < 20 && !isReadOnly && (
+            <Button
+              variant="default"
+              size="sm"
+              onClick={() => navigate(`/characters/${character.id}/level-up`)}
+              className="gap-1.5 h-8"
+            >
+              <Zap className="w-3.5 h-3.5" />
+              Level Up
+            </Button>
+          )}
+        </div>
         {/* Concentration Banner */}
         <ConcentrationBanner
           isConcentrating={concentration.state.isConcentrating}
@@ -1680,31 +1705,33 @@ const CharacterSheet = () => {
         />
 
         {/* Persistent Condition Badge Bar (always visible above tabs) */}
-        {((character.conditions && character.conditions.length > 0) || character.exhaustion_level > 0) && !isReadOnly && (
-          <ConditionBadgeBar
-            conditions={character.conditions || []}
-            exhaustionLevel={character.exhaustion_level}
-            onClearExhaustion={() => handleExhaustionChange(-character.exhaustion_level)}
-            onAddCondition={(condition) => {
-              const current = character.conditions || [];
-              if (!current.some(c => c.toLowerCase() === condition.toLowerCase())) {
+        {
+          ((character.conditions && character.conditions.length > 0) || character.exhaustion_level > 0) && !isReadOnly && (
+            <ConditionBadgeBar
+              conditions={character.conditions || []}
+              exhaustionLevel={character.exhaustion_level}
+              onClearExhaustion={() => handleExhaustionChange(-character.exhaustion_level)}
+              onAddCondition={(condition) => {
+                const current = character.conditions || [];
+                if (!current.some(c => c.toLowerCase() === condition.toLowerCase())) {
+                  updateCharacter.mutate({
+                    id: character.id,
+                    data: { conditions: [...current, condition] },
+                  });
+                  playerTools.trackConditionChange(character.id, condition, 'add').catch(console.error);
+                }
+              }}
+              onRemoveCondition={(condition) => {
+                const current = character.conditions || [];
                 updateCharacter.mutate({
                   id: character.id,
-                  data: { conditions: [...current, condition] },
+                  data: { conditions: current.filter(c => c.toLowerCase() !== condition.toLowerCase()) },
                 });
-                playerTools.trackConditionChange(character.id, condition, 'add').catch(console.error);
-              }
-            }}
-            onRemoveCondition={(condition) => {
-              const current = character.conditions || [];
-              updateCharacter.mutate({
-                id: character.id,
-                data: { conditions: current.filter(c => c.toLowerCase() !== condition.toLowerCase()) },
-              });
-              playerTools.trackConditionChange(character.id, condition, 'remove').catch(console.error);
-            }}
-          />
-        )}
+                playerTools.trackConditionChange(character.id, condition, 'remove').catch(console.error);
+              }}
+            />
+          )
+        }
 
         {/* D&D Beyond Style Tabbed Content */}
         <Tabs defaultValue="overview" className="space-y-4 sm:space-y-6">
@@ -2873,7 +2900,7 @@ const CharacterSheet = () => {
           </TabsContent>
         </Tabs>
 
-      </div>
+      </div >
 
       {/* â”€â”€ Dialogs (rendered outside scroll content) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
 
@@ -2975,52 +3002,54 @@ const CharacterSheet = () => {
         </DialogContent>
       </Dialog>
 
-      {character && (
-        <>
-          <ShortRestDialog
-            open={shortRestOpen}
-            onOpenChange={setShortRestOpen}
-            characterId={character.id}
-            hitDiceMax={character.hit_dice_max}
-            hitDiceAvailable={character.hit_dice_current}
-            hitDieSize={character.hit_dice_size || 8}
-            vitScore={character.abilities.VIT}
-            hpCurrent={character.hp_current}
-            hpMax={character.hp_max}
-            onHitDieSpent={(result) => {
-              handleResourceAdjust('hit_dice_current', -1);
-            }}
-            onFinishRest={(totalRecovered, hitDiceSpent) => {
-              updateCharacter.mutate({
-                id: character.id,
-                data: {
-                  hp_current: Math.min(character.hp_max, character.hp_current + totalRecovered),
-                  hit_dice_current: Math.max(0, character.hit_dice_current - hitDiceSpent),
-                }
-              });
-              setShortRestOpen(false);
-            }}
-          />
-          <LongRestDialog
-            open={longRestOpen}
-            onOpenChange={setLongRestOpen}
-            characterId={character.id}
-            onConfirmRest={() => {
-              const nextHitDice = Math.min(character.hit_dice_max, character.hit_dice_current + Math.max(1, Math.floor(character.hit_dice_max / 2)));
-              updateCharacter.mutate({
-                id: character.id,
-                data: { hp_current: character.hp_max, hit_dice_current: nextHitDice, exhaustion_level: Math.max(0, character.exhaustion_level - 1) }
-              });
+      {
+        character && (
+          <>
+            <ShortRestDialog
+              open={shortRestOpen}
+              onOpenChange={setShortRestOpen}
+              characterId={character.id}
+              hitDiceMax={character.hit_dice_max}
+              hitDiceAvailable={character.hit_dice_current}
+              hitDieSize={character.hit_dice_size || 8}
+              vitScore={character.abilities.VIT}
+              hpCurrent={character.hp_current}
+              hpMax={character.hp_max}
+              onHitDieSpent={(result) => {
+                handleResourceAdjust('hit_dice_current', -1);
+              }}
+              onFinishRest={(totalRecovered, hitDiceSpent) => {
+                updateCharacter.mutate({
+                  id: character.id,
+                  data: {
+                    hp_current: Math.min(character.hp_max, character.hp_current + totalRecovered),
+                    hit_dice_current: Math.max(0, character.hit_dice_current - hitDiceSpent),
+                  }
+                });
+                setShortRestOpen(false);
+              }}
+            />
+            <LongRestDialog
+              open={longRestOpen}
+              onOpenChange={setLongRestOpen}
+              characterId={character.id}
+              onConfirmRest={() => {
+                const nextHitDice = Math.min(character.hit_dice_max, character.hit_dice_current + Math.max(1, Math.floor(character.hit_dice_max / 2)));
+                updateCharacter.mutate({
+                  id: character.id,
+                  data: { hp_current: character.hp_max, hit_dice_current: nextHitDice, exhaustion_level: Math.max(0, character.exhaustion_level - 1) }
+                });
 
-              // Broadcast Long Rest completion
-              playerTools.trackConditionChange(character.id, 'Long Rest', 'add').catch(console.error);
-              playerTools.trackHealthChange(character.id, character.hp_max, 'healing').catch(console.error);
+                // Broadcast Long Rest completion
+                playerTools.trackConditionChange(character.id, 'Long Rest', 'add').catch(console.error);
+                playerTools.trackHealthChange(character.id, character.hp_max, 'healing').catch(console.error);
 
-              setLongRestOpen(false);
-            }}
-          />
-        </>
-      )}
+                setLongRestOpen(false);
+              }}
+            />
+          </>
+        )
+      }
 
       {/* Character Edit Dialog */}
       <CharacterEditDialog
@@ -3035,15 +3064,17 @@ const CharacterSheet = () => {
       />
 
       {/* Mobile FAB */}
-      {!isReadOnly && (
-        <CharacterFAB
-          characterId={character.id}
-          campaignId={campaignId ?? undefined}
-          onShortRest={() => setShortRestOpen(true)}
-          onLongRest={() => setLongRestOpen(true)}
-        />
-      )}
-    </Layout>
+      {
+        !isReadOnly && (
+          <CharacterFAB
+            characterId={character.id}
+            campaignId={campaignId ?? undefined}
+            onShortRest={() => setShortRestOpen(true)}
+            onLongRest={() => setLongRestOpen(true)}
+          />
+        )
+      }
+    </Layout >
   );
 };
 

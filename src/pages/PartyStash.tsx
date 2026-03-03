@@ -122,15 +122,15 @@ export default function PartyStash() {
                         <p className="text-muted-foreground p-4">Counting coins...</p>
                     ) : (
                         <div className="space-y-4">
-                            <div className="grid grid-cols-5 gap-4 bg-muted/30 p-4 rounded-lg border border-border">
+                            <div className="grid grid-cols-5 gap-4 bg-black/40 p-4 rounded-[2px] border border-primary/20 shadow-[inset_0_0_15px_rgba(0,0,0,0.8)]">
                                 {(['pp', 'gp', 'ep', 'sp', 'cp'] as const).map(coin => (
                                     <div key={coin} className="flex flex-col items-center gap-2">
-                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs border
-                                            ${coin === 'pp' ? 'bg-slate-200 text-slate-800 border-slate-400' : ''}
-                                            ${coin === 'gp' ? 'bg-yellow-400 text-yellow-900 border-yellow-600' : ''}
-                                            ${coin === 'ep' ? 'bg-blue-200 text-blue-900 border-blue-400' : ''}
-                                            ${coin === 'sp' ? 'bg-gray-300 text-gray-800 border-gray-500' : ''}
-                                            ${coin === 'cp' ? 'bg-amber-700 text-amber-100 border-amber-900' : ''}
+                                        <div className={`w-10 h-10 rounded-[2px] flex items-center justify-center font-system font-bold tracking-widest text-xs border bg-black/80 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]
+                                            ${coin === 'pp' ? 'text-slate-300 border-slate-500 shadow-[0_0_8px_rgba(203,213,225,0.3)]' : ''}
+                                            ${coin === 'gp' ? 'text-yellow-400 border-yellow-600 shadow-[0_0_8px_rgba(250,204,21,0.3)]' : ''}
+                                            ${coin === 'ep' ? 'text-blue-300 border-blue-500 shadow-[0_0_8px_rgba(147,197,253,0.3)]' : ''}
+                                            ${coin === 'sp' ? 'text-gray-300 border-gray-500 shadow-[0_0_8px_rgba(209,213,219,0.3)]' : ''}
+                                            ${coin === 'cp' ? 'text-amber-500 border-amber-700 shadow-[0_0_8px_rgba(245,158,11,0.3)]' : ''}
                                         `}>
                                             {coin.toUpperCase()}
                                         </div>
@@ -139,10 +139,10 @@ export default function PartyStash() {
                                                 type="number"
                                                 value={goldEdits[coin]}
                                                 onChange={e => setGoldEdits(prev => ({ ...prev, [coin]: parseInt(e.target.value) || 0 }))}
-                                                className="w-full text-center"
+                                                className="w-full text-center font-mono mt-2"
                                             />
                                         ) : (
-                                            <span className="text-xl font-bold">{partyGold[coin]}</span>
+                                            <span className="text-xl font-system font-bold drop-shadow-[0_0_5px_currentColor] mt-2 block w-full text-center">{partyGold[coin]}</span>
                                         )}
                                     </div>
                                 ))}
@@ -175,9 +175,9 @@ export default function PartyStash() {
                     ) : (
                         <div className="space-y-2">
                             {inventory.map((item) => (
-                                <div key={item.id} className="flex items-center justify-between p-3 bg-muted/30 border border-border rounded-lg">
+                                <div key={item.id} className="flex items-center justify-between p-3 bg-black/60 border-l-2 border-y border-r border-primary/30 border-l-primary rounded-[2px] shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] hover:shadow-[0_0_10px_rgba(0,0,0,0.5),inset_0_0_8px_hsl(var(--primary)/0.2)] transition-all">
                                     <div>
-                                        <span className="font-semibold text-lg">{item.name}</span>
+                                        <span className="font-system font-bold text-lg tracking-widest uppercase drop-shadow-[0_0_5px_currentColor] text-primary/90">{item.name}</span>
                                     </div>
                                     <div className="flex items-center gap-4">
                                         <div className="flex items-center gap-2">

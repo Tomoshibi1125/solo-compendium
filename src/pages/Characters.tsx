@@ -160,10 +160,9 @@ const Characters = () => {
                   <div
                     key={character.id}
                     className={cn(
-                      "glass-card p-6 transition-all duration-300 group relative overflow-hidden",
-                      "hover:border-arise/50 hover:shadow-xl hover:shadow-arise/10",
-                      "border-l-4",
-                      isSelected && "ring-2 ring-primary ring-offset-2",
+                      "rounded-[2px] border-l-4 border-y border-r bg-black/60 transition-all duration-300 group relative p-6 backdrop-blur-md overflow-hidden",
+                      "hover:shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_0_15px_currentColor] focus:outline-none focus:ring-1 focus:ring-primary focus:ring-offset-1",
+                      isSelected && "ring-2 ring-primary ring-offset-2 shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_0_20px_hsl(var(--primary)/0.3)]",
                       rankInfo.border
                     )}
                   >
@@ -185,10 +184,10 @@ const Characters = () => {
                     </div>
                     {/* Rank badge */}
                     <div className={cn(
-                      "absolute top-3 right-3 w-10 h-10 rounded-full flex items-center justify-center font-arise text-lg font-bold",
+                      "absolute top-3 right-3 w-10 h-10 rounded-[2px] flex items-center justify-center font-system font-bold text-lg",
                       rankInfo.bg,
                       rankInfo.color,
-                      "ring-2 ring-offset-2 ring-offset-background",
+                      "ring-1 ring-offset-1 ring-offset-background shadow-[0_0_10px_currentColor]",
                       rankInfo.border
                     )}>
                       {rankInfo.rank}
@@ -250,10 +249,10 @@ const Characters = () => {
                     </div>
 
                     <Link to={`/characters/${character.id}`} data-testid="character-card" className="block">
-                      <h3 className="font-arise text-xl font-semibold mb-1 group-hover:text-arise transition-colors tracking-wide">
+                      <h3 className="font-system text-xl font-bold uppercase tracking-widest mb-1 group-hover:text-arise transition-colors drop-shadow-[0_0_8px_currentColor]">
                         {character.name}
                       </h3>
-                      <p className="text-sm text-muted-foreground mb-4 font-heading">
+                      <p className="text-xs font-mono tracking-wider text-muted-foreground mb-4 uppercase">
                         {formatMonarchVernacular(character.job || 'Unawakened')}
                         {character.path && ` - ${formatMonarchVernacular(character.path)}`}
                       </p>
@@ -261,46 +260,48 @@ const Characters = () => {
                       {/* HP Bar */}
                       <div className="mb-4">
                         <div className="flex justify-between items-center mb-1">
-                          <span className="text-xs text-muted-foreground flex items-center gap-1">
+                          <span className="text-xs text-muted-foreground flex items-center gap-1 font-mono uppercase tracking-widest">
                             <Heart className="w-3 h-3" /> HP
                           </span>
                           <span className={cn(
-                            "text-xs font-arise",
+                            "text-[10px] font-system font-bold tracking-widest",
                             hpPercent < 25 ? "text-destructive" :
                               hpPercent < 50 ? "text-orange-400" : "text-green-400"
                           )}>
                             {character.hp_current}/{character.hp_max}
                           </span>
                         </div>
-                        <div className="h-2 bg-muted rounded-full overflow-hidden">
+                        <div className="h-2 rounded-[2px] bg-black border border-primary/30 overflow-hidden relative shadow-[inset_0_0_8px_rgba(0,0,0,0.8)]">
                           <div
                             className={cn(
-                              "h-full transition-all duration-300 rounded-full",
-                              hpPercent < 25 ? "bg-gradient-to-r from-destructive to-red-600" :
-                                hpPercent < 50 ? "bg-gradient-to-r from-orange-500 to-amber-500" :
-                                  "bg-gradient-to-r from-green-500 to-emerald-400"
+                              "h-full transition-all duration-300 relative",
+                              hpPercent < 25 ? "bg-destructive" :
+                                hpPercent < 50 ? "bg-orange-500" :
+                                  "bg-green-500"
                             )}
                             ref={(el) => { if (el) el.style.width = `${hpPercent}%`; }}
-                          />
+                          >
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-white/10 animate-[shimmer_2s_infinite]" />
+                          </div>
                         </div>
                       </div>
 
                       {/* Quick Stats */}
                       <div className="grid grid-cols-3 gap-2">
-                        <div className="text-center p-2 rounded bg-arise/5 border border-arise/20">
-                          <Shield className="w-3 h-3 mx-auto mb-1 text-blue-400" />
-                          <span className="font-arise font-bold text-lg">{character.armor_class}</span>
-                          <span className="text-[10px] text-muted-foreground block">AC</span>
+                        <div className="text-center p-2 rounded-[2px] bg-black/40 border border-primary/20 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] group/stat">
+                          <Shield className="w-3 h-3 mx-auto mb-1 text-blue-400 opacity-80 group-hover/stat:text-blue-300 transition-colors" />
+                          <span className="font-system font-bold text-lg text-white drop-shadow-[0_0_5px_currentColor]">{character.armor_class}</span>
+                          <span className="text-[10px] font-mono tracking-widest text-muted-foreground block uppercase mt-1">AC</span>
                         </div>
-                        <div className="text-center p-2 rounded bg-arise/5 border border-arise/20">
-                          <Zap className="w-3 h-3 mx-auto mb-1 text-yellow-400" />
-                          <span className="font-arise font-bold text-lg">+{character.initiative}</span>
-                          <span className="text-[10px] text-muted-foreground block">INIT</span>
+                        <div className="text-center p-2 rounded-[2px] bg-black/40 border border-primary/20 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] group/stat">
+                          <Zap className="w-3 h-3 mx-auto mb-1 text-yellow-400 opacity-80 group-hover/stat:text-yellow-300 transition-colors" />
+                          <span className="font-system font-bold text-lg text-white drop-shadow-[0_0_5px_currentColor]">+{character.initiative}</span>
+                          <span className="text-[10px] font-mono tracking-widest text-muted-foreground block uppercase mt-1">INIT</span>
                         </div>
-                        <div className="text-center p-2 rounded bg-arise/5 border border-arise/20">
-                          <Crown className="w-3 h-3 mx-auto mb-1 text-arise" />
-                          <span className="font-arise font-bold text-lg">{character.proficiency_bonus}</span>
-                          <span className="text-[10px] text-muted-foreground block">PROF</span>
+                        <div className="text-center p-2 rounded-[2px] bg-black/40 border border-primary/20 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] group/stat">
+                          <Crown className="w-3 h-3 mx-auto mb-1 text-arise opacity-80 group-hover/stat:text-arise-light transition-colors" />
+                          <span className="font-system font-bold text-lg text-white drop-shadow-[0_0_5px_currentColor]">{character.proficiency_bonus}</span>
+                          <span className="text-[10px] font-mono tracking-widest text-muted-foreground block uppercase mt-1">PROF</span>
                         </div>
                       </div>
                     </Link>
@@ -313,22 +314,23 @@ const Characters = () => {
                 to="/characters/new"
                 data-testid="create-character"
                 className={cn(
-                  "glass-card p-6 border-dashed border-2 border-arise/30",
-                  "hover:border-arise/50 hover:bg-arise/5 transition-all duration-300",
-                  "flex flex-col items-center justify-center min-h-[280px] group"
+                  "rounded-[2px] border-dashed border-2 border-arise/50 bg-black/40 shadow-[inset_0_0_20px_hsl(var(--arise)/0.1)] p-6",
+                  "hover:border-arise hover:bg-arise/10 hover:shadow-[0_0_30px_hsl(var(--arise)/0.2),inset_0_0_20px_hsl(var(--arise)/0.2)] transition-all duration-300",
+                  "flex flex-col items-center justify-center min-h-[280px] group relative overflow-hidden backdrop-blur-md"
                 )}
               >
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-arise/5 pointer-events-none" />
                 <div className={cn(
-                  "w-16 h-16 rounded-full border-2 border-dashed border-muted-foreground/30",
-                  "flex items-center justify-center mb-4",
-                  "group-hover:border-arise/50 group-hover:bg-arise/10 transition-all duration-300"
+                  "w-16 h-16 rounded-[2px] border-2 border-dashed border-arise/40 bg-black/60",
+                  "flex items-center justify-center mb-4 relative",
+                  "group-hover:border-arise group-hover:bg-arise/20 group-hover:shadow-[0_0_15px_hsl(var(--arise)/0.5)] transition-all duration-300"
                 )}>
-                  <Plus className="w-8 h-8 text-muted-foreground group-hover:text-arise transition-colors" />
+                  <Plus className="w-8 h-8 text-arise/60 group-hover:text-arise transition-colors" />
                 </div>
-                <p className="font-arise text-lg text-muted-foreground group-hover:text-arise transition-colors tracking-wide">
+                <p className="font-system font-bold text-lg text-arise/70 tracking-widest uppercase group-hover:text-arise group-hover:drop-shadow-[0_0_8px_currentColor] transition-all">
                   AWAKEN ASCENDANT
                 </p>
-                <p className="text-xs text-muted-foreground mt-1">
+                <p className="text-xs font-mono tracking-widest text-arise/40 mt-2 uppercase">
                   Begin your journey
                 </p>
               </Link>

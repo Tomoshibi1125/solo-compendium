@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Shield, Sword } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -10,8 +11,39 @@ import { RiftStatusIndicator } from '@/components/ui/RiftStatusIndicator';
 import { SovereignAuthorityDisplay } from '@/components/ui/SovereignAuthorityDisplay';
 
 const Landing = () => {
+  const [isInitializing, setIsInitializing] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsInitializing(false);
+    }, 2500); // 2.5s boot sequence
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="relative min-h-screen overflow-hidden bg-black text-white">
+    <div className="relative min-h-screen overflow-hidden bg-black text-white selection:bg-primary/30 selection:text-primary">
+      {/* System Initialization Overlay */}
+      {isInitializing && (
+        <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black">
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(155,109,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(155,109,255,0.05)_1px,transparent_1px)] bg-[size:20px_20px]" />
+          <div className="relative z-10 font-system tracking-widest text-primary drop-shadow-[0_0_10px_currentColor] animate-pulse">
+            <h1 className="text-4xl uppercase mb-4 text-center">System Integration</h1>
+            <div className="h-1 w-64 bg-primary/20 rounded-full overflow-hidden border border-primary/40 relative">
+              <div className="absolute top-0 bottom-0 left-0 bg-primary animate-[shimmer_2s_ease-out_forwards] w-full" style={{ transformOrigin: 'left', animationName: 'progress' }} />
+            </div>
+            <style>{`
+              @keyframes progress {
+                0% { transform: scaleX(0); }
+                40% { transform: scaleX(0.4); }
+                60% { transform: scaleX(0.4); }
+                100% { transform: scaleX(1); }
+              }
+            `}</style>
+            <p className="mt-4 text-xs font-mono text-center opacity-70 animate-pulse">Synchronizing magical cores...</p>
+          </div>
+        </div>
+      )}
+
       {/* System Ascendant Cosmic Background */}
       <CosmicBackground variant="gate" intensity="medium" animated />
 
@@ -68,13 +100,13 @@ const Landing = () => {
             </SystemText>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <Link to="/login">
-                <Button variant="arise" size="lg" className="font-semibold">
+                <Button variant="arise" size="lg" className="font-system tracking-widest uppercase font-bold text-base h-12 hover:shadow-[0_0_40px_hsl(var(--arise-violet)/0.8)] shadow-[0_0_15px_hsl(var(--arise-violet)/0.4)]">
                   Enter System
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
               <Link to="/compendium">
-                <Button variant="gate-s" size="lg" className="border-gate-s/60 text-gate-s hover:border-gate-s">
+                <Button variant="outline" size="lg" className="h-12 border-primary/50 text-primary font-system uppercase tracking-wider backdrop-blur-sm hover:bg-primary/20 hover:text-white shadow-[inset_0_0_10px_hsl(var(--primary)/0.2)]">
                   Browse Compendium
                 </Button>
               </Link>
@@ -86,20 +118,21 @@ const Landing = () => {
               <SystemHologram
                 variant="sovereign"
                 title="SYSTEM CORE"
-                className="mb-6"
+                className="mb-8 relative shadow-[0_0_50px_hsl(var(--primary)/0.2)] group"
               >
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <SystemText variant="system" size="sm">Rift Stability</SystemText>
-                    <SystemText variant="gate" size="sm">98.7%</SystemText>
+                <div className="absolute -inset-1 bg-gradient-to-r from-primary/0 via-primary/30 to-primary/0 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
+                <div className="space-y-4 font-mono">
+                  <div className="flex justify-between items-center border-b border-primary/20 pb-2">
+                    <SystemText variant="system" size="sm" className="uppercase tracking-widest text-primary/70">Rift Stability</SystemText>
+                    <SystemText variant="gate" size="sm" className="font-bold drop-shadow-[0_0_5px_currentColor]">98.7%</SystemText>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <SystemText variant="system" size="sm">Authority Level</SystemText>
-                    <SystemText variant="sovereign" size="sm">MONARCH</SystemText>
+                  <div className="flex justify-between items-center border-b border-primary/20 pb-2">
+                    <SystemText variant="system" size="sm" className="uppercase tracking-widest text-primary/70">Authority Level</SystemText>
+                    <SystemText variant="sovereign" size="sm" className="font-system font-bold tracking-widest drop-shadow-[0_0_8px_currentColor]">MONARCH</SystemText>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <SystemText variant="system" size="sm">Active Ascendants</SystemText>
-                    <SystemText variant="rift" size="sm">1,247</SystemText>
+                  <div className="flex justify-between items-center border-b border-primary/20 pb-2">
+                    <SystemText variant="system" size="sm" className="uppercase tracking-widest text-primary/70">Active Ascendants</SystemText>
+                    <SystemText variant="rift" size="sm" className="font-bold drop-shadow-[0_0_5px_currentColor]">1,247</SystemText>
                   </div>
                 </div>
               </SystemHologram>
@@ -126,7 +159,7 @@ const Landing = () => {
               description="Complete System Ascendant compendium with monsters, items, spells, and more."
               icon={<Sword className="h-6 w-6" />}
               interactive
-              onClick={() => {/* Navigate to compendium */}}
+              onClick={() => {/* Navigate to compendium */ }}
               className="hover:scale-[1.03] transition-all duration-300"
             />
             <EnhancedCard
@@ -135,7 +168,7 @@ const Landing = () => {
               description="Create and manage your ascendants with full character sheets and progression."
               icon={<Shield className="h-6 w-6" />}
               interactive
-              onClick={() => {/* Navigate to characters */}}
+              onClick={() => {/* Navigate to characters */ }}
               className="hover:scale-[1.03] transition-all duration-300"
             />
             <EnhancedCard
@@ -144,7 +177,7 @@ const Landing = () => {
               description="Explore dangerous rifts and track your conquests in the shadow realm."
               icon={<Zap className="h-6 w-6" />}
               interactive
-              onClick={() => {/* Navigate to campaigns */}}
+              onClick={() => {/* Navigate to campaigns */ }}
               className="hover:scale-[1.03] transition-all duration-300"
             />
           </div>

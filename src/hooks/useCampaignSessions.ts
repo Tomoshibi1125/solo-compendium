@@ -3,6 +3,7 @@ import { isSupabaseConfigured, supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { AppError } from '@/lib/appError';
 import { enqueueOfflineSync } from '@/lib/offlineSync';
+import { useOptimisticMutation } from '@/lib/optimisticUpdates';
 
 export type CampaignSessionStatus = 'planned' | 'in_progress' | 'completed' | 'cancelled';
 export type CampaignSessionLogType = 'session' | 'recap' | 'loot' | 'event' | 'note';
@@ -141,181 +142,174 @@ export const useUpsertCampaignSession = () => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
-  return useMutation({
-    mutationFn: async (input: UpsertSessionInput): Promise<{ queued: boolean; sessionId: string | null }> => {
+  return useOptimisticMutation<
+    { queued: boolean; sessionId: string | null },
+    UpsertSessionInput,
+    { previousData: CampaignSessionRecord[] | undefined; mutationKey: any }
+  >(
+    (variables) => [...KEY, variables.campaignId],
+    async (input: UpsertSessionInput) => {
       if (!isSupabaseConfigured) {
         throw new AppError('Supabase not configured', 'CONFIG');
       }
       await ensureAuthenticatedUser();
 
-      try {
-        const { data, error } = await supabase.rpc('upsert_campaign_session', {
-          p_campaign_id: input.campaignId,
-          p_session_id: input.sessionId ?? undefined,
-          p_title: input.title ?? undefined,
-          p_description: input.description ?? undefined,
-          p_scheduled_for: input.scheduledFor ?? undefined,
-          p_status: input.status ?? undefined,
-          p_location: input.location ?? undefined,
-        } as any);
+      const { data, error } = await supabase.rpc('upsert_campaign_session', {
+        p_campaign_id: input.campaignId,
+        p_session_id: input.sessionId ?? undefined,
+        p_title: input.title ?? undefined,
+        p_description: input.description ?? undefined,
+        p_scheduled_for: input.scheduledFor ?? undefined,
+        p_status: input.status ?? undefined,
+        p_location: input.location ?? undefined,
+      } as any);
 
-        if (error) throw error;
-        return {
-          queued: false,
-          sessionId: (data as string) ?? null,
-        };
-      } catch (error) {
-        if (!isOfflineError(error)) {
-          throw error;
-        }
+      if (error) throw error;
+      return {
+        queued: false,
+        sessionId: (data as string) ?? null,
+      };
+    },
+    // Optimistic calculation
+    (oldData: CampaignSessionRecord[] | undefined, input) => {
+      if (!oldData) return oldData;
 
-        enqueueOfflineSync('campaign_session', input.sessionId ? 'update' : 'create', {
-          mode: 'session',
-          campaign_id: input.campaignId,
-          session_id: input.sessionId ?? null,
-          title: input.title ?? null,
-          description: input.description ?? null,
-          scheduled_for: input.scheduledFor ?? null,
-          status: input.status ?? null,
-          location: input.location ?? null,
-        });
+      const sessionIndex = oldData.findIndex(s => s.id === input.sessionId);
+      const newSession: CampaignSessionRecord = {
+        id: input.sessionId || `temp-${Date.now()}`,
+        campaign_id: input.campaignId,
+        title: input.title || 'New Session',
+        description: input.description || null,
+        scheduled_for: input.scheduledFor || null,
+        status: input.status || 'planned',
+        location: input.location || null,
+        created_by: 'local-user', // Will be overwritten by DB
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
 
-        return {
-          queued: true,
-          sessionId: input.sessionId ?? null,
-        };
+      if (sessionIndex >= 0) {
+        // Update existing loosely
+        const updatedQueue = [...oldData];
+        updatedQueue[sessionIndex] = { ...updatedQueue[sessionIndex], ...newSession };
+        return updatedQueue;
+      } else {
+        // Prepend new session loosely
+        return [newSession, ...oldData];
       }
     },
-    onSuccess: (result, variables) => {
-      queryClient.invalidateQueries({ queryKey: [...KEY, variables.campaignId] });
-      toast({
-        title: result.queued ? 'Session queued offline' : 'Session saved',
-        description: result.queued
-          ? 'Session update will sync when connection returns.'
-          : 'Campaign session schedule updated.',
+    (input) => {
+      enqueueOfflineSync('campaign_session', input.sessionId ? 'update' : 'create', {
+        mode: 'session',
+        campaign_id: input.campaignId,
+        session_id: input.sessionId ?? null,
+        title: input.title ?? null,
+        description: input.description ?? null,
+        scheduled_for: input.scheduledFor ?? null,
+        status: input.status ?? null,
+        location: input.location ?? null,
       });
-    },
-    onError: (error: Error) => {
-      toast({
-        title: 'Failed to save session',
-        description: error.message,
-        variant: 'destructive',
-      });
-    },
-  });
+    }
+  );
 };
 
 export const useDeleteCampaignSession = () => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
-  return useMutation({
-    mutationFn: async ({ campaignId, sessionId }: { campaignId: string; sessionId: string }): Promise<{ queued: boolean }> => {
+  return useOptimisticMutation<
+    { queued: boolean },
+    { campaignId: string; sessionId: string },
+    { previousData: CampaignSessionRecord[] | undefined; mutationKey: any }
+  >(
+    (variables) => [...KEY, variables.campaignId],
+    async ({ campaignId, sessionId }: { campaignId: string; sessionId: string }) => {
       if (!isSupabaseConfigured) {
         throw new AppError('Supabase not configured', 'CONFIG');
       }
       await ensureAuthenticatedUser();
 
-      try {
-        const { error } = await supabase.from('campaign_sessions').delete().eq('id', sessionId);
-        if (error) throw error;
-        return { queued: false };
-      } catch (error) {
-        if (!isOfflineError(error)) {
-          throw error;
-        }
-
-        enqueueOfflineSync('campaign_session', 'delete', {
-          mode: 'session',
-          campaign_id: campaignId,
-          session_id: sessionId,
-        });
-        return { queued: true };
-      }
+      const { error } = await supabase.from('campaign_sessions').delete().eq('id', sessionId);
+      if (error) throw error;
+      return { queued: false };
     },
-    onSuccess: (result, variables) => {
-      queryClient.invalidateQueries({ queryKey: [...KEY, variables.campaignId] });
-      toast({
-        title: result.queued ? 'Delete queued offline' : 'Session deleted',
-        description: result.queued
-          ? 'Session deletion will sync when connection returns.'
-          : 'Campaign session removed.',
+    (oldData: CampaignSessionRecord[] | undefined, { sessionId }) => {
+      if (!oldData) return oldData;
+      return oldData.filter(s => s.id !== sessionId);
+    },
+    (variables) => {
+      enqueueOfflineSync('campaign_session', 'delete', {
+        mode: 'session',
+        campaign_id: variables.campaignId,
+        session_id: variables.sessionId,
       });
-    },
-    onError: (error: Error) => {
-      toast({
-        title: 'Failed to delete session',
-        description: error.message,
-        variant: 'destructive',
-      });
-    },
-  });
+    }
+  );
 };
 
 export const useAddCampaignSessionLog = () => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
-  return useMutation({
-    mutationFn: async (input: CreateSessionLogInput): Promise<{ queued: boolean; logId: string | null }> => {
+  return useOptimisticMutation<
+    { queued: boolean; logId: string | null },
+    CreateSessionLogInput,
+    { previousData: CampaignSessionLogRecord[] | undefined; mutationKey: any }
+  >(
+    (variables) => [...KEY, variables.campaignId, 'logs', variables.sessionId ?? 'all'],
+    async (input: CreateSessionLogInput) => {
       if (!isSupabaseConfigured) {
         throw new AppError('Supabase not configured', 'CONFIG');
       }
       await ensureAuthenticatedUser();
 
-      try {
-        const { data, error } = await supabase.rpc('add_campaign_session_log', {
-          p_campaign_id: input.campaignId,
-          p_session_id: input.sessionId ?? undefined,
-          p_log_type: input.logType ?? 'session',
-          p_title: input.title,
-          p_content: input.content,
-          p_metadata: input.metadata as any ?? {},
-          p_is_player_visible: input.isPlayerVisible ?? true,
-        } as any);
+      const { data, error } = await supabase.rpc('add_campaign_session_log', {
+        p_campaign_id: input.campaignId,
+        p_session_id: input.sessionId ?? undefined,
+        p_log_type: input.logType ?? 'session',
+        p_title: input.title,
+        p_content: input.content,
+        p_metadata: input.metadata as any ?? {},
+        p_is_player_visible: input.isPlayerVisible ?? true,
+      } as any);
 
-        if (error) throw error;
-        return {
-          queued: false,
-          logId: (data as string) ?? null,
-        };
-      } catch (error) {
-        if (!isOfflineError(error)) {
-          throw error;
-        }
-
-        enqueueOfflineSync('campaign_session', 'create', {
-          mode: 'log',
-          campaign_id: input.campaignId,
-          session_id: input.sessionId ?? null,
-          log_type: input.logType ?? 'session',
-          title: input.title,
-          content: input.content,
-          metadata: input.metadata ?? {},
-          is_player_visible: input.isPlayerVisible ?? true,
-        });
-
-        return {
-          queued: true,
-          logId: null,
-        };
-      }
+      if (error) throw error;
+      return {
+        queued: false,
+        logId: (data as string) ?? null,
+      };
     },
-    onSuccess: (result, variables) => {
-      queryClient.invalidateQueries({ queryKey: [...KEY, variables.campaignId, 'logs'] });
-      toast({
-        title: result.queued ? 'Log queued offline' : 'Session log added',
-        description: result.queued
-          ? 'Session log will sync when connection returns.'
-          : 'Campaign log entry recorded.',
+    // Optimistic Calculation
+    (oldData: CampaignSessionLogRecord[] | undefined, input) => {
+      if (!oldData) return oldData;
+      const newLog: CampaignSessionLogRecord = {
+        id: `temp-${Date.now()}`,
+        campaign_id: input.campaignId,
+        session_id: input.sessionId ?? null,
+        author_id: 'local-user', // DB overwrites this
+        log_type: input.logType ?? 'session',
+        title: input.title,
+        content: input.content,
+        metadata: input.metadata ?? {},
+        is_player_visible: input.isPlayerVisible ?? true,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
+
+      // Prepend to top
+      return [newLog, ...oldData];
+    },
+    (input) => {
+      enqueueOfflineSync('campaign_session', 'create', {
+        mode: 'log',
+        campaign_id: input.campaignId,
+        session_id: input.sessionId ?? null,
+        log_type: input.logType ?? 'session',
+        title: input.title,
+        content: input.content,
+        metadata: input.metadata ?? {},
+        is_player_visible: input.isPlayerVisible ?? true,
       });
-    },
-    onError: (error: Error) => {
-      toast({
-        title: 'Failed to add session log',
-        description: error.message,
-        variant: 'destructive',
-      });
-    },
-  });
+    }
+  );
 };

@@ -1,4 +1,4 @@
-type DiceAudioEvent = 'roll' | 'impact' | 'critical' | 'fumble';
+type DiceAudioEvent = 'roll' | 'impact' | 'critical' | 'fumble' | 'spell' | 'shield' | 'heal' | 'death' | 'coin' | 'arrow' | 'explosion' | 'miss' | 'levelUp' | 'trap' | 'intimidate';
 
 type DiceAudioOptions = {
   masterVolume?: number;
@@ -81,6 +81,111 @@ export class DiceAudioEngine {
       case 'fumble': {
         this.playTone(ctx, now, 240, 0.3, 0.2 * volume, 'sawtooth');
         this.playTone(ctx, now + 0.08, 180, 0.35, 0.22 * volume, 'triangle');
+        break;
+      }
+      case 'spell': {
+        // Shimmering ascending tones — arcane cast
+        this.playTone(ctx, now, 660, 0.15, 0.15 * volume, 'sine');
+        this.playTone(ctx, now + 0.06, 990, 0.15, 0.12 * volume, 'sine');
+        this.playTone(ctx, now + 0.12, 1320, 0.2, 0.1 * volume, 'sine');
+        break;
+      }
+      case 'shield': {
+        // Metallic clang — block
+        const shieldNoise = this.createNoise(ctx, 0.08, 0.3 * volume);
+        const shieldFilter = ctx.createBiquadFilter();
+        shieldFilter.type = 'bandpass';
+        shieldFilter.frequency.value = 2000;
+        shieldFilter.Q.value = 3;
+        shieldNoise.connect(shieldFilter).connect(this.master as GainNode);
+        shieldNoise.start(now);
+        shieldNoise.stop(now + 0.08);
+        this.playTone(ctx, now, 400, 0.12, 0.18 * volume, 'square');
+        break;
+      }
+      case 'heal': {
+        // Soft warm ascending tones — restoration
+        this.playTone(ctx, now, 440, 0.2, 0.12 * volume, 'sine');
+        this.playTone(ctx, now + 0.1, 550, 0.2, 0.12 * volume, 'sine');
+        this.playTone(ctx, now + 0.2, 660, 0.25, 0.14 * volume, 'sine');
+        break;
+      }
+      case 'death': {
+        // Low ominous descending
+        this.playTone(ctx, now, 200, 0.4, 0.22 * volume, 'sawtooth');
+        this.playTone(ctx, now + 0.1, 140, 0.5, 0.2 * volume, 'sawtooth');
+        this.playTone(ctx, now + 0.25, 80, 0.6, 0.15 * volume, 'triangle');
+        break;
+      }
+      case 'coin': {
+        // Quick bright metallic jingle — loot pickup
+        this.playTone(ctx, now, 2200, 0.06, 0.12 * volume, 'sine');
+        this.playTone(ctx, now + 0.04, 2800, 0.06, 0.1 * volume, 'sine');
+        this.playTone(ctx, now + 0.08, 3400, 0.08, 0.08 * volume, 'sine');
+        break;
+      }
+      case 'arrow': {
+        // Bow release twang + whoosh
+        this.playTone(ctx, now, 180, 0.06, 0.15 * volume, 'sawtooth');
+        this.playTone(ctx, now + 0.02, 1400, 0.08, 0.08 * volume, 'sine');
+        const arrowNoise = this.createNoise(ctx, 0.15, 0.1 * volume);
+        const arrowFilter = ctx.createBiquadFilter();
+        arrowFilter.type = 'bandpass';
+        arrowFilter.frequency.value = 3000;
+        arrowFilter.Q.value = 1.5;
+        arrowNoise.connect(arrowFilter).connect(this.master as GainNode);
+        arrowNoise.start(now + 0.04);
+        arrowNoise.stop(now + 0.19);
+        break;
+      }
+      case 'explosion': {
+        // Deep boom + rumble
+        this.playTone(ctx, now, 60, 0.5, 0.3 * volume, 'sine');
+        this.playTone(ctx, now, 90, 0.4, 0.2 * volume, 'triangle');
+        const boomNoise = this.createNoise(ctx, 0.3, 0.25 * volume);
+        const boomFilter = ctx.createBiquadFilter();
+        boomFilter.type = 'lowpass';
+        boomFilter.frequency.value = 400;
+        boomFilter.Q.value = 0.5;
+        boomNoise.connect(boomFilter).connect(this.master as GainNode);
+        boomNoise.start(now);
+        boomNoise.stop(now + 0.3);
+        break;
+      }
+      case 'miss': {
+        // Air whoosh — swing and miss
+        const missNoise = this.createNoise(ctx, 0.2, 0.12 * volume);
+        const missFilter = ctx.createBiquadFilter();
+        missFilter.type = 'bandpass';
+        missFilter.frequency.value = 2500;
+        missFilter.Q.value = 0.8;
+        missNoise.connect(missFilter).connect(this.master as GainNode);
+        missNoise.start(now);
+        missNoise.stop(now + 0.2);
+        break;
+      }
+      case 'levelUp': {
+        // Triumphant ascending fanfare
+        this.playTone(ctx, now, 523, 0.15, 0.15 * volume, 'sine');
+        this.playTone(ctx, now + 0.12, 659, 0.15, 0.15 * volume, 'sine');
+        this.playTone(ctx, now + 0.24, 784, 0.15, 0.15 * volume, 'sine');
+        this.playTone(ctx, now + 0.36, 1047, 0.3, 0.18 * volume, 'sine');
+        break;
+      }
+      case 'trap': {
+        // Mechanical snap / click
+        this.playTone(ctx, now, 300, 0.04, 0.2 * volume, 'square');
+        this.playTone(ctx, now + 0.03, 150, 0.06, 0.18 * volume, 'square');
+        const trapNoise = this.createNoise(ctx, 0.06, 0.15 * volume);
+        trapNoise.connect(this.master as GainNode);
+        trapNoise.start(now + 0.05);
+        trapNoise.stop(now + 0.11);
+        break;
+      }
+      case 'intimidate': {
+        // Low ominous rumble
+        this.playTone(ctx, now, 70, 0.5, 0.2 * volume, 'sawtooth');
+        this.playTone(ctx, now + 0.1, 55, 0.5, 0.18 * volume, 'triangle');
         break;
       }
       default:

@@ -37,6 +37,7 @@ import { type HexGridConfig, snapToHexCenter } from '@/lib/vtt';
 import { type VTTDrawing, createDrawing, measureDistance, type DrawingPoint } from '@/lib/vtt';
 import { type TerrainZone, type WeatherType, getWeatherCSSAnimation, WEATHER_PRESETS } from '@/lib/vtt';
 import { type AmbientSoundZone, AMBIENT_SOUND_PRESETS } from '@/lib/vtt';
+import { VttMusicEngine, type MusicMood } from '@/lib/vtt';
 
 import {
   DEFAULT_TOKENS,
@@ -239,6 +240,7 @@ const VTTEnhanced = () => {
   const suppressNextMapActionRef = useRef(false);
   const pixiDraggingTokenIdRef = useRef<string | null>(null);
   const currentSceneRef = useRef<Scene | null>(null);
+  const musicEngineRef = useRef<VttMusicEngine | null>(null);
   const [zoom, setZoom] = useState(1);
   const [showGrid, setShowGrid] = useState(true);
   const [fogOfWar, setFogOfWar] = useState(false);
@@ -2217,11 +2219,20 @@ const VTTEnhanced = () => {
                       });
                     }}
                     onMusicChange={(musicId) => {
-                      // Change background music
-                      toast({
-                        title: "Music Changed",
-                        description: `Switched to ${musicId} music`,
-                      });
+                      // Use procedural ambient music engine
+                      if (!musicEngineRef.current) {
+                        musicEngineRef.current = new VttMusicEngine();
+                      }
+                      if (musicId === 'stop') {
+                        musicEngineRef.current.stop();
+                        toast({ title: 'Music Stopped' });
+                      } else {
+                        musicEngineRef.current.play(musicId as MusicMood);
+                        toast({
+                          title: 'Music Changed',
+                          description: `Playing ${musicId} ambient music`,
+                        });
+                      }
                     }}
                   />
                 )}

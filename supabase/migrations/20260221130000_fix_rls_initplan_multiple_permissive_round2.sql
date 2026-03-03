@@ -379,21 +379,7 @@ CREATE POLICY "art_assets_update" ON public.art_assets
 CREATE POLICY "art_assets_delete" ON public.art_assets
   FOR DELETE USING ((select auth.uid()) IS NOT NULL);
 
--- ============================================================
--- 16. assets  (multiple permissive SELECT)
---     FOR ALL (authenticated manage) overlaps with FOR SELECT (public).
--- ============================================================
-DROP POLICY IF EXISTS "Assets are publicly readable"              ON public.assets;
-DROP POLICY IF EXISTS "Authenticated users can manage assets"     ON public.assets;
 
-CREATE POLICY "assets_select" ON public.assets
-  FOR SELECT USING (true);
-CREATE POLICY "assets_insert" ON public.assets
-  FOR INSERT WITH CHECK ((select auth.uid()) IS NOT NULL);
-CREATE POLICY "assets_update" ON public.assets
-  FOR UPDATE USING ((select auth.uid()) IS NOT NULL);
-CREATE POLICY "assets_delete" ON public.assets
-  FOR DELETE USING ((select auth.uid()) IS NOT NULL);
 
 -- ============================================================
 -- 17. campaign_content  (multiple permissive SELECT)

@@ -98,6 +98,19 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: 'Invalid or expired access token' });
   }
 
+  // Parse body and extract parameters BEFORE using them
+  const body = readJsonBody(req);
+  const campaignId = typeof body.campaignId === 'string' ? body.campaignId : '';
+  const role = body.role === 'co-system' ? 'co-system' : 'hunter';
+  const expiresAt = typeof body.expiresAt === 'string' && body.expiresAt.length > 0 ? body.expiresAt : null;
+  const maxUsesRaw = Number(body.maxUses ?? 1);
+  const maxUses = Number.isFinite(maxUsesRaw) ? Math.max(1, Math.floor(maxUsesRaw)) : 1;
+  const inviteEmail = typeof body.inviteEmail === 'string' ? body.inviteEmail.trim().toLowerCase() : '';
+
+  if (!campaignId) {
+    return res.status(400).json({ error: 'campaignId is required' });
+  }
+
   // Require requester to be the campaign DM
   const requesterId = tokenUserData.user.id;
   const { data: dmRows, error: dmError } = await userClient
@@ -112,18 +125,6 @@ export default async function handler(req, res) {
   const campaignRow = dmRows?.[0];
   if (!campaignRow || campaignRow.dm_id !== requesterId) {
     return res.status(403).json({ error: 'Only the campaign DM can create invites' });
-  }
-
-  const body = readJsonBody(req);
-  const campaignId = typeof body.campaignId === 'string' ? body.campaignId : '';
-  const role = body.role === 'co-system' ? 'co-system' : 'hunter';
-  const expiresAt = typeof body.expiresAt === 'string' && body.expiresAt.length > 0 ? body.expiresAt : null;
-  const maxUsesRaw = Number(body.maxUses ?? 1);
-  const maxUses = Number.isFinite(maxUsesRaw) ? Math.max(1, Math.floor(maxUsesRaw)) : 1;
-  const inviteEmail = typeof body.inviteEmail === 'string' ? body.inviteEmail.trim().toLowerCase() : '';
-
-  if (!campaignId) {
-    return res.status(400).json({ error: 'campaignId is required' });
   }
 
   let { data: inviteRows, error: inviteError } = await userClient.rpc('create_campaign_invite', {

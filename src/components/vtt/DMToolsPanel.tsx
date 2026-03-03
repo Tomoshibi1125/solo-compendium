@@ -124,12 +124,24 @@ export const DMToolsPanel: React.FC<DMToolsPanelProps> = ({
     { id: 'monster-roar', name: 'Monster Roar', icon: '👹' },
   ];
 
-  // Quick music moods
+  // Quick music moods — populated from VttMusicEngine presets
   const quickMusic = [
-    { id: 'combat-epic', name: 'Epic Combat', mood: 'tense' },
-    { id: 'explore-dungeon', name: 'Dungeon Explore', mood: 'mysterious' },
-    { id: 'social-tavern', name: 'Tavern Social', mood: 'peaceful' },
-    { id: 'horror-dread', name: 'Horror Dread', mood: 'scary' },
+    { id: 'stop', name: '⏹ Stop Music', mood: 'stop' },
+    { id: 'tavern-calm', name: '🍺 Tavern', mood: 'calm' },
+    { id: 'dungeon-exploration', name: '🏰 Dungeon', mood: 'mysterious' },
+    { id: 'combat-tension', name: '⚔️ Combat', mood: 'tense' },
+    { id: 'boss-epic', name: '👑 Boss', mood: 'epic' },
+    { id: 'forest-peaceful', name: '🌲 Forest', mood: 'peaceful' },
+    { id: 'ocean-ambient', name: '🌊 Ocean', mood: 'calm' },
+    { id: 'mystical-wonder', name: '✨ Mystical', mood: 'wonder' },
+    { id: 'horror-dread', name: '💀 Horror', mood: 'scary' },
+    { id: 'stealth-suspense', name: '🤫 Stealth', mood: 'suspense' },
+    { id: 'victory-triumph', name: '🎉 Victory', mood: 'triumph' },
+    { id: 'sadness-loss', name: '😢 Sadness', mood: 'loss' },
+    { id: 'gate-resonance', name: '🌀 Gate', mood: 'sa' },
+    { id: 'monarch-presence', name: '👁️ Monarch', mood: 'sa' },
+    { id: 'shadow-realm', name: '🌑 Shadow', mood: 'sa' },
+    { id: 'system-awakening', name: '⚡ Awakening', mood: 'sa' },
   ];
 
   return (
@@ -181,20 +193,20 @@ export const DMToolsPanel: React.FC<DMToolsPanelProps> = ({
           </div>
         </div>
 
-        {/* Quick Music */}
+        {/* Quick Music (Procedural Ambient — Zero Copyright) */}
         <div className="space-y-2 pt-2 border-t border-border/50">
-          <Label className="text-xs">Quick Music</Label>
-          <div className="grid grid-cols-2 gap-1">
+          <Label className="text-xs">Ambient Music (Procedural)</Label>
+          <div className="grid grid-cols-4 gap-1 max-h-32 overflow-y-auto">
             {quickMusic.map((music) => (
               <Button
                 key={music.id}
                 size="sm"
-                variant="outline"
+                variant={music.id === 'stop' ? 'destructive' : 'outline'}
                 onClick={() => {
                   onMusicChange?.(music.id);
                   logDMMacro('Music Change', music.name);
                 }}
-                className="h-8 text-xs"
+                className="h-7 text-[10px] px-1"
               >
                 {music.name}
               </Button>

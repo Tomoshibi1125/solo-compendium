@@ -11,6 +11,7 @@ DROP POLICY IF EXISTS "active_sessions_select" ON public.active_sessions;
 DROP POLICY IF EXISTS "active_sessions_update" ON public.active_sessions;
 DROP POLICY IF EXISTS "active_sessions_delete" ON public.active_sessions;
 
+DROP POLICY IF EXISTS "active_sessions_select" ON public.active_sessions;
 CREATE POLICY "active_sessions_select" ON public.active_sessions
   FOR SELECT USING (
     campaign_id IN (
@@ -23,6 +24,7 @@ CREATE POLICY "active_sessions_select" ON public.active_sessions
     )
   );
 
+DROP POLICY IF EXISTS "active_sessions_update" ON public.active_sessions;
 CREATE POLICY "active_sessions_update" ON public.active_sessions
   FOR UPDATE USING (
     campaign_id IN (
@@ -30,6 +32,7 @@ CREATE POLICY "active_sessions_update" ON public.active_sessions
     )
   );
 
+DROP POLICY IF EXISTS "active_sessions_delete" ON public.active_sessions;
 CREATE POLICY "active_sessions_delete" ON public.active_sessions
   FOR DELETE USING (
     campaign_id IN (
@@ -44,12 +47,14 @@ CREATE POLICY "active_sessions_delete" ON public.active_sessions
 DROP POLICY IF EXISTS "ai_generated_content_update" ON public.ai_generated_content;
 DROP POLICY IF EXISTS "ai_generated_content_delete" ON public.ai_generated_content;
 
+DROP POLICY IF EXISTS "ai_generated_content_update" ON public.ai_generated_content;
 CREATE POLICY "ai_generated_content_update" ON public.ai_generated_content
   FOR UPDATE USING (
     (select auth.uid()) IS NOT NULL
     OR public.is_dm_or_admin((select auth.uid()))
   );
 
+DROP POLICY IF EXISTS "ai_generated_content_delete" ON public.ai_generated_content;
 CREATE POLICY "ai_generated_content_delete" ON public.ai_generated_content
   FOR DELETE USING (
     (select auth.uid()) IS NOT NULL
@@ -61,6 +66,7 @@ CREATE POLICY "ai_generated_content_delete" ON public.ai_generated_content
 -- ============================================================
 DROP POLICY IF EXISTS "ai_usage_logs_select" ON public.ai_usage_logs;
 
+DROP POLICY IF EXISTS "ai_usage_logs_select" ON public.ai_usage_logs;
 CREATE POLICY "ai_usage_logs_select" ON public.ai_usage_logs
   FOR SELECT USING (
     user_id = (select auth.uid())
@@ -75,16 +81,19 @@ DROP POLICY IF EXISTS "audio_playlists_select" ON public.audio_playlists;
 DROP POLICY IF EXISTS "audio_playlists_update" ON public.audio_playlists;
 DROP POLICY IF EXISTS "audio_playlists_delete" ON public.audio_playlists;
 
+DROP POLICY IF EXISTS "audio_playlists_select" ON public.audio_playlists;
 CREATE POLICY "audio_playlists_select" ON public.audio_playlists
   FOR SELECT USING (
     user_id = (select auth.uid())
   );
 
+DROP POLICY IF EXISTS "audio_playlists_update" ON public.audio_playlists;
 CREATE POLICY "audio_playlists_update" ON public.audio_playlists
   FOR UPDATE USING (
     user_id = (select auth.uid())
   );
 
+DROP POLICY IF EXISTS "audio_playlists_delete" ON public.audio_playlists;
 CREATE POLICY "audio_playlists_delete" ON public.audio_playlists
   FOR DELETE USING (
     user_id = (select auth.uid())
@@ -95,6 +104,7 @@ CREATE POLICY "audio_playlists_delete" ON public.audio_playlists
 -- ============================================================
 DROP POLICY IF EXISTS "campaign_combat_sessions_select" ON public.campaign_combat_sessions;
 
+DROP POLICY IF EXISTS "campaign_combat_sessions_select" ON public.campaign_combat_sessions;
 CREATE POLICY "campaign_combat_sessions_select" ON public.campaign_combat_sessions
   FOR SELECT USING (
     campaign_id IN (
@@ -112,6 +122,7 @@ CREATE POLICY "campaign_combat_sessions_select" ON public.campaign_combat_sessio
 -- ============================================================
 DROP POLICY IF EXISTS "campaign_combatants_select" ON public.campaign_combatants;
 
+DROP POLICY IF EXISTS "campaign_combatants_select" ON public.campaign_combatants;
 CREATE POLICY "campaign_combatants_select" ON public.campaign_combatants
   FOR SELECT USING (
     session_id IN (
@@ -134,17 +145,20 @@ DROP POLICY IF EXISTS "character_backups_select" ON public.character_backups;
 DROP POLICY IF EXISTS "character_backups_update" ON public.character_backups;
 DROP POLICY IF EXISTS "character_backups_delete" ON public.character_backups;
 
+DROP POLICY IF EXISTS "character_backups_select" ON public.character_backups;
 CREATE POLICY "character_backups_select" ON public.character_backups
   FOR SELECT USING (
     user_id = (select auth.uid())
     OR public.is_dm_or_admin((select auth.uid()))
   );
 
+DROP POLICY IF EXISTS "character_backups_update" ON public.character_backups;
 CREATE POLICY "character_backups_update" ON public.character_backups
   FOR UPDATE USING (
     user_id = (select auth.uid())
   );
 
+DROP POLICY IF EXISTS "character_backups_delete" ON public.character_backups;
 CREATE POLICY "character_backups_delete" ON public.character_backups
   FOR DELETE USING (
     user_id = (select auth.uid())
@@ -156,12 +170,14 @@ CREATE POLICY "character_backups_delete" ON public.character_backups
 DROP POLICY IF EXISTS "user_sourcebook_entitlements_update" ON public.user_sourcebook_entitlements;
 DROP POLICY IF EXISTS "user_sourcebook_entitlements_delete" ON public.user_sourcebook_entitlements;
 
+DROP POLICY IF EXISTS "user_sourcebook_entitlements_update" ON public.user_sourcebook_entitlements;
 CREATE POLICY "user_sourcebook_entitlements_update" ON public.user_sourcebook_entitlements
   FOR UPDATE USING (
     user_id = (select auth.uid())
     OR public.is_dm_or_admin((select auth.uid()))
   );
 
+DROP POLICY IF EXISTS "user_sourcebook_entitlements_delete" ON public.user_sourcebook_entitlements;
 CREATE POLICY "user_sourcebook_entitlements_delete" ON public.user_sourcebook_entitlements
   FOR DELETE USING (
     user_id = (select auth.uid())
@@ -174,11 +190,13 @@ CREATE POLICY "user_sourcebook_entitlements_delete" ON public.user_sourcebook_en
 DROP POLICY IF EXISTS "user_tool_states_update" ON public.user_tool_states;
 DROP POLICY IF EXISTS "user_tool_states_delete" ON public.user_tool_states;
 
+DROP POLICY IF EXISTS "user_tool_states_update" ON public.user_tool_states;
 CREATE POLICY "user_tool_states_update" ON public.user_tool_states
   FOR UPDATE USING (
     user_id = (select auth.uid())
   );
 
+DROP POLICY IF EXISTS "user_tool_states_delete" ON public.user_tool_states;
 CREATE POLICY "user_tool_states_delete" ON public.user_tool_states
   FOR DELETE USING (
     user_id = (select auth.uid())
@@ -190,12 +208,14 @@ CREATE POLICY "user_tool_states_delete" ON public.user_tool_states
 DROP POLICY IF EXISTS "marketplace_downloads_update" ON public.marketplace_downloads;
 DROP POLICY IF EXISTS "marketplace_downloads_delete" ON public.marketplace_downloads;
 
+DROP POLICY IF EXISTS "marketplace_downloads_update" ON public.marketplace_downloads;
 CREATE POLICY "marketplace_downloads_update" ON public.marketplace_downloads
   FOR UPDATE USING (
     user_id = (select auth.uid())
     OR public.is_dm_or_admin((select auth.uid()))
   );
 
+DROP POLICY IF EXISTS "marketplace_downloads_delete" ON public.marketplace_downloads;
 CREATE POLICY "marketplace_downloads_delete" ON public.marketplace_downloads
   FOR DELETE USING (
     user_id = (select auth.uid())
@@ -208,12 +228,14 @@ CREATE POLICY "marketplace_downloads_delete" ON public.marketplace_downloads
 DROP POLICY IF EXISTS "marketplace_reviews_update" ON public.marketplace_reviews;
 DROP POLICY IF EXISTS "marketplace_reviews_delete" ON public.marketplace_reviews;
 
+DROP POLICY IF EXISTS "marketplace_reviews_update" ON public.marketplace_reviews;
 CREATE POLICY "marketplace_reviews_update" ON public.marketplace_reviews
   FOR UPDATE USING (
     user_id = (select auth.uid())
     OR public.is_dm_or_admin((select auth.uid()))
   );
 
+DROP POLICY IF EXISTS "marketplace_reviews_delete" ON public.marketplace_reviews;
 CREATE POLICY "marketplace_reviews_delete" ON public.marketplace_reviews
   FOR DELETE USING (
     user_id = (select auth.uid())
@@ -226,6 +248,7 @@ CREATE POLICY "marketplace_reviews_delete" ON public.marketplace_reviews
 DROP POLICY IF EXISTS "roll_history_update" ON public.roll_history;
 DROP POLICY IF EXISTS "roll_history_delete" ON public.roll_history;
 
+DROP POLICY IF EXISTS "roll_history_update" ON public.roll_history;
 CREATE POLICY "roll_history_update" ON public.roll_history
   FOR UPDATE USING (
     user_id = (select auth.uid())
@@ -236,6 +259,7 @@ CREATE POLICY "roll_history_update" ON public.roll_history
     )
   );
 
+DROP POLICY IF EXISTS "roll_history_delete" ON public.roll_history;
 CREATE POLICY "roll_history_delete" ON public.roll_history
   FOR DELETE USING (
     user_id = (select auth.uid())
@@ -252,11 +276,13 @@ CREATE POLICY "roll_history_delete" ON public.roll_history
 DROP POLICY IF EXISTS "saved_searches_update" ON public.saved_searches;
 DROP POLICY IF EXISTS "saved_searches_delete" ON public.saved_searches;
 
+DROP POLICY IF EXISTS "saved_searches_update" ON public.saved_searches;
 CREATE POLICY "saved_searches_update" ON public.saved_searches
   FOR UPDATE USING (
     user_id = (select auth.uid())
   );
 
+DROP POLICY IF EXISTS "saved_searches_delete" ON public.saved_searches;
 CREATE POLICY "saved_searches_delete" ON public.saved_searches
   FOR DELETE USING (
     user_id = (select auth.uid())

@@ -2,11 +2,15 @@ import { create } from 'zustand';
 import type { DiceTheme } from '@/components/dice/diceThemes';
 import type { Dice3DState } from '@/components/vtt/DigitalDiceOverlay';
 
+let rollSessionCounter = 0;
+
 export interface GlobalDiceStore {
     dice: Dice3DState[];
     isRolling: boolean;
     isVisible: boolean;
     theme: DiceTheme;
+    /** Current roll session ID — used to prevent concurrent roll collisions */
+    _rollSessionId: number;
     triggerGlobalRoll: (
         formula: string,
         results: number[],
@@ -16,16 +20,26 @@ export interface GlobalDiceStore {
     setTheme: (theme: DiceTheme) => void;
 }
 
-export const useGlobalDice = create<GlobalDiceStore>((set) => ({
+export const useGlobalDice = create<GlobalDiceStore>((set, get) => ({
     dice: [],
     isRolling: false,
     isVisible: false,
     theme: 'umbral-ascendant', // SA default theme
+    _rollSessionId: 0,
 
     triggerGlobalRoll: (formula, results, options) => {
+        // ╔════════════════════════════════════════════════════════════════╗
+        // ║  LOCAL-ONLY by design. The 3D dice physics render ONLY on    ║
+        // ║  the rolling player's screen. Remote players see results     ║
+        // ║  via broadcastDiceRoll → chat messages (no 3D overhead).     ║
+        // ║  Do NOT wire this to Supabase broadcast receivers.           ║
+        // ╚════════════════════════════════════════════════════════════════╝
         // Parse dice formula like "1d20+5" into an array of dice to render
         const parsed = formula.match(/(\d+)d(\d+)/g);
         if (!parsed) return;
+
+        // Assign a unique session ID so overlapping rolls don't corrupt each other
+        const sessionId = ++rollSessionCounter;
 
         const newDice: Dice3DState[] = [];
 
@@ -50,12 +64,17 @@ export const useGlobalDice = create<GlobalDiceStore>((set) => ({
             isRolling: true,
             isVisible: true,
             theme: options?.theme || state.theme,
+            _rollSessionId: sessionId,
         }));
 
         // Start rolling animation briefly before setting final results
         setTimeout(() => {
+            // Guard: only settle if this session is still the active one
+            if (get()._rollSessionId !== sessionId) return;
+
             let rollIndex = 0;
             set((state) => {
+                if (state._rollSessionId !== sessionId) return state;
                 const updatedDice = [...state.dice];
 
                 for (let i = 0; i < updatedDice.length; i++) {
@@ -78,8 +97,9 @@ export const useGlobalDice = create<GlobalDiceStore>((set) => ({
                 return { dice: updatedDice };
             });
 
-            // Auto hide after setting
+            // Auto hide after setting — only if still the active session
             setTimeout(() => {
+                if (get()._rollSessionId !== sessionId) return;
                 set({ isVisible: false, isRolling: false });
             }, options?.displayDuration || 6000);
 
@@ -90,3 +110,4 @@ export const useGlobalDice = create<GlobalDiceStore>((set) => ({
 
     setTheme: (theme) => set({ theme }),
 }));
+

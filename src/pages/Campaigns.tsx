@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { 
-  Plus, 
-  Users, 
-  Copy, 
-  ExternalLink, 
+import {
+  Plus,
+  Users,
+  Copy,
+  ExternalLink,
   Loader2,
   Crown,
   UserPlus,
@@ -18,7 +18,7 @@ import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { 
+import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -93,7 +93,7 @@ const Campaigns = () => {
               Create or join guilds to hunt with others across the System's domain
             </p>
           </div>
-          <Button 
+          <Button
             onClick={() => setCreateDialogOpen(true)}
             className="gap-2 font-heading bg-gradient-to-r from-arise to-shadow-purple hover:shadow-arise/30 hover:shadow-lg transition-all min-h-[44px] px-4 sm:px-6"
           >
@@ -132,13 +132,17 @@ const Campaigns = () => {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               {myCampaigns.map((campaign) => (
-                <div 
-                  key={campaign.id} 
-                  className="glass-card p-4 sm:p-5 hover:border-amber-500/50 transition-all duration-300 border-l-4 border-l-amber-500/50 group relative overflow-hidden"
+                <div
+                  key={campaign.id}
+                  className={cn(
+                    "rounded-[2px] p-5 transition-all duration-300 group relative overflow-hidden backdrop-blur-md",
+                    "border-l-4 border-y border-r border-amber-500/30 border-l-amber-500 bg-black/60",
+                    "hover:border-amber-500/50 hover:shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_0_15px_hsl(var(--amber-500)/0.2)] focus:outline-none"
+                  )}
                 >
                   {/* Background glow */}
                   <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-amber-500/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                  
+
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 relative gap-2">
                     <div className="flex items-center gap-2">
                       <Crown className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
@@ -150,14 +154,14 @@ const Campaigns = () => {
                       GUILD MASTER
                     </span>
                   </div>
-                  
+
                   <p className="text-xs sm:text-sm text-muted-foreground mb-4 min-h-[2.5rem] sm:min-h-[3rem] relative leading-relaxed">
                     {campaign.description || 'No description provided.'}
                   </p>
-                  
+
                   <div className="space-y-3 relative">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 bg-gradient-to-r from-amber-500/10 to-transparent rounded-lg border border-amber-500/20 gap-2">
-                      <span className="text-xs font-arise text-muted-foreground tracking-wide">SHARE CODE</span>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 bg-black/40 rounded-[2px] border border-amber-500/20 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] gap-2">
+                      <span className="text-xs font-mono text-muted-foreground uppercase tracking-widest">SHARE CODE</span>
                       <span className="font-mono font-bold text-lg sm:text-xl text-amber-400 tracking-widest text-center sm:text-right">{campaign.share_code}</span>
                     </div>
                     <div className="flex gap-2">
@@ -217,13 +221,17 @@ const Campaigns = () => {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               {joinedCampaigns.map((campaign) => (
-                <div 
-                  key={campaign.id} 
-                  className="glass-card p-4 sm:p-5 hover:border-arise/50 transition-all duration-300 border-l-4 border-l-arise/50 group relative overflow-hidden"
+                <div
+                  key={campaign.id}
+                  className={cn(
+                    "rounded-[2px] p-5 transition-all duration-300 group relative overflow-hidden backdrop-blur-md",
+                    "border-l-4 border-y border-r border-arise/30 border-l-arise bg-black/60",
+                    "hover:border-arise/50 hover:shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_0_15px_hsl(var(--arise)/0.2)] focus:outline-none"
+                  )}
                 >
                   {/* Background glow */}
                   <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-arise/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                  
+
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 relative gap-2">
                     <div className="flex items-center gap-2">
                       <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-arise" />
@@ -232,18 +240,18 @@ const Campaigns = () => {
                       </h3>
                     </div>
                   </div>
-                  
+
                   <p className="text-xs sm:text-sm text-muted-foreground mb-4 min-h-[2.5rem] sm:min-h-[3rem] relative leading-relaxed">
                     {campaign.description || 'No description provided.'}
                   </p>
-                  
+
                   <div className="space-y-3 relative">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 bg-gradient-to-r from-arise/10 to-transparent rounded-lg border border-arise/20 gap-2">
-                      <span className="text-xs font-arise text-muted-foreground tracking-wide">YOUR ROLE</span>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 bg-black/40 rounded-[2px] border border-arise/20 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] gap-2">
+                      <span className="text-xs font-mono text-muted-foreground uppercase tracking-widest">YOUR ROLE</span>
                       <span className={cn(
                         "font-heading font-semibold px-2 py-1 rounded text-sm",
-                        campaign.member_role === 'co-system' 
-                          ? "text-amber-400 bg-amber-500/10" 
+                        campaign.member_role === 'co-system'
+                          ? "text-amber-400 bg-amber-500/10"
                           : "text-arise bg-arise/10"
                       )}>
                         {campaign.member_role === 'co-system' ? 'Co-System' : 'Ascendant'}
@@ -314,8 +322,8 @@ const Campaigns = () => {
               <Button variant="outline" onClick={() => setCreateDialogOpen(false)} className="font-heading w-full sm:w-auto min-h-[44px]">
                 Cancel
               </Button>
-              <Button 
-                onClick={handleCreateCampaign} 
+              <Button
+                onClick={handleCreateCampaign}
                 disabled={createCampaign.isPending}
                 className="font-heading bg-gradient-to-r from-arise to-shadow-purple"
               >

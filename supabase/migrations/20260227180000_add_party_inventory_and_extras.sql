@@ -1,7 +1,6 @@
 -- Add columns to character_extras if missing
-ALTER TABLE public.character_extras 
-  ADD COLUMN IF NOT EXISTS ac INTEGER DEFAULT 10,
-  ADD COLUMN IF NOT EXISTS speed INTEGER DEFAULT 30;
+ALTER TABLE public.character_extras ADD COLUMN IF NOT EXISTS ac INTEGER DEFAULT 10;
+ALTER TABLE public.character_extras ADD COLUMN IF NOT EXISTS speed INTEGER DEFAULT 30;
 
 -- Create campaign_inventory table
 CREATE TABLE IF NOT EXISTS public.campaign_inventory (

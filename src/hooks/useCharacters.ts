@@ -5,6 +5,8 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import { useToast } from '@/hooks/use-toast';
 import { getErrorMessage, logErrorWithContext, isNotFoundError } from '@/lib/errorHandling';
 import { AppError } from '@/lib/appError';
+import { useOptimisticMutation } from '@/lib/optimisticUpdates';
+import { useBackgroundSync } from '@/hooks/useBackgroundSync';
 import {
   createLocalCharacter,
   deleteLocalCharacter,
@@ -231,9 +233,15 @@ export const useCreateCharacter = () => {
 export const useUpdateCharacter = () => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const { addToSyncQueue } = useBackgroundSync();
 
-  return useMutation({
-    mutationFn: async ({ id, data }: { id: string; data: CharacterUpdate }) => {
+  return useOptimisticMutation<
+    Character | NonNullable<ReturnType<typeof updateLocalCharacter>>,
+    { id: string; data: CharacterUpdate },
+    { previousData: any; mutationKey: any }
+  >(
+    (variables) => ['character', variables.id, undefined],
+    async ({ id, data }: { id: string; data: CharacterUpdate }) => {
       if (isLocalCharacterId(id)) {
         const updated = updateLocalCharacter(id, data);
         if (!updated) throw new AppError('Ascendant not found', 'NOT_FOUND');
@@ -257,19 +265,19 @@ export const useUpdateCharacter = () => {
       }
       return character;
     },
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['characters'] });
-      queryClient.invalidateQueries({ queryKey: ['character', variables.id] });
+    // Optimistic calculation: immediately patch the character's properties
+    (oldData, { data }) => {
+      if (!oldData) return oldData;
+      return {
+        ...oldData,
+        ...data,
+        updated_at: new Date().toISOString()
+      };
     },
-    onError: (error) => {
-      logErrorWithContext(error, 'useUpdateCharacter');
-      toast({
-        title: 'Failed to update Ascendant',
-        description: getErrorMessage(error),
-        variant: 'destructive',
-      });
-    },
-  });
+    (variables) => {
+      addToSyncQueue('character', 'update', { id: variables.id, ...variables.data });
+    }
+  );
 };
 
 // Delete character

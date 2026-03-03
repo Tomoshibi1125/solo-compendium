@@ -14,21 +14,21 @@
   /* ── Core UI tokens ──────────────────────────────────────── */
   --background: 262 45% 4%;
   /* True system void */
-  --foreground: 260 20% 92%;
-  /* Crisp lavender white */
+  --foreground: 43 20% 85%;
+  /* Soft pale bone/gold (complementary to amethyst) */
 
   --card: 262 35% 7%;
   /* Dark obsidian pane */
-  --card-foreground: 260 20% 92%;
+  --card-foreground: 43 20% 85%;
 
   --popover: 262 35% 10%;
   /* Hovering dark glass */
-  --popover-foreground: 260 20% 92%;
+  --popover-foreground: 43 20% 85%;
 
   --primary: 275 72% 59%;
   /* Vivid amethyst neon */
-  --primary-foreground: 0 0% 100%;
-  /* Pure white on purple */
+  --primary-foreground: 43 40% 95%;
+  /* Bright pale gold */
 
   --secondary: 262 30% 10%;
   /* Void charcoal */
@@ -44,11 +44,11 @@
 
   --destructive: 0 90% 58%;
   /* System error crimson */
-  --destructive-foreground: 0 0% 100%;
+  --destructive-foreground: 0 15% 95%;
 
   --success: 145 75% 45%;
   /* Gate-D hunter green */
-  --success-foreground: 0 0% 100%;
+  --success-foreground: 145 20% 95%;
 
   --warning: 43 96% 58%;
   /* Rank-S sovereign gold */
@@ -63,9 +63,9 @@
 
   /* ── Sidebar ─────────────────────────────────────────────── */
   --sidebar-background: 262 45% 4%;
-  --sidebar-foreground: 260 18% 82%;
+  --sidebar-foreground: 43 20% 85%;
   --sidebar-primary: 275 72% 59%;
-  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-primary-foreground: 43 40% 95%;
   --sidebar-accent: 190 100% 45%;
   --sidebar-accent-foreground: 190 10% 5%;
   --sidebar-border: 262 25% 12%;

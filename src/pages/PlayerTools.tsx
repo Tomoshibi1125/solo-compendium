@@ -5,9 +5,9 @@
 
 import React, { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { 
-  User, 
-  Shield, 
+import {
+  User,
+  Shield,
   BookOpen,
   Heart,
   Star,
@@ -221,7 +221,7 @@ const PlayerTools = () => {
   const filteredTools = useMemo(() => {
     return playerTools.filter(tool => {
       const matchesSearch = tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         tool.description.toLowerCase().includes(searchQuery.toLowerCase());
+        tool.description.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCategory = selectedCategory === 'all' || tool.category === selectedCategory;
       return matchesSearch && matchesCategory;
     });
@@ -230,7 +230,7 @@ const PlayerTools = () => {
   // Group tools by category
   const toolsByCategory = useMemo(() => {
     const grouped = categories.reduce((acc, category) => {
-      acc[category.id] = filteredTools.filter(tool => 
+      acc[category.id] = filteredTools.filter(tool =>
         category.id === 'all' || tool.category === category.id
       );
       return acc;
@@ -292,7 +292,7 @@ const PlayerTools = () => {
                 Manage your Ascendant's journey through the System
               </p>
             </div>
-            
+
             <div className="flex items-center gap-4">
               <Button variant="outline" size="sm" onClick={() => navigate('/compendium')}>
                 <HelpCircle className="w-4 h-4 mr-2" />
@@ -320,7 +320,7 @@ const PlayerTools = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-4">
                   <div className="stat-item">
                     <span className="stat-label">HP</span>
@@ -351,7 +351,7 @@ const PlayerTools = () => {
               className="border-0 focus:ring-0"
             />
           </div>
-          
+
           <div className="filter-controls">
             <Select value={selectedCategory} onValueChange={setSelectedCategory}>
               <SelectTrigger className="w-48">
@@ -371,7 +371,7 @@ const PlayerTools = () => {
                 })}
               </SelectContent>
             </Select>
-            
+
             <div className="view-toggle">
               <Button
                 variant={viewMode === 'grid' ? 'default' : 'outline'}
@@ -399,7 +399,7 @@ const PlayerTools = () => {
               {categories.filter(cat => cat.id !== 'all').map((category) => {
                 const categoryTools = toolsByCategory[category.id];
                 if (categoryTools.length === 0) return null;
-                
+
                 const Icon = category.icon;
                 return (
                   <div key={category.id} className="category-section">
@@ -410,7 +410,7 @@ const PlayerTools = () => {
                         <Badge variant="secondary">{categoryTools.length}</Badge>
                       </div>
                     </div>
-                    
+
                     <div className={cn(
                       "tools-grid",
                       viewMode === 'list' ? "tools-list" : "tools-grid"
@@ -478,72 +478,107 @@ const PlayerTools = () => {
 // Tool Card Component
 const ToolCard = ({ tool, viewMode }: { tool: typeof playerTools[0]; viewMode: 'grid' | 'list' }) => {
   const Icon = tool.icon;
-  
+
   if (viewMode === 'list') {
     return (
       <Link to={`/player-tools/${tool.id}`} className="block">
-        <Card className="tool-card-list">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className={cn("tool-icon-list", tool.iconColor)}>
-                  <Icon className="w-6 h-6" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="tool-title-list">{tool.name}</h3>
-                  <p className="tool-description-list">{tool.description}</p>
-                </div>
+        <div className={cn(
+          "rounded-[2px] p-4 transition-all duration-300 group relative overflow-hidden backdrop-blur-md",
+          "border-l-4 border-y border-r bg-black/60",
+          "hover:shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_0_15px_currentColor] focus:outline-none",
+          tool.color,
+          tool.glow
+        )}>
+          <div className="flex items-center justify-between relative z-10">
+            <div className="flex items-center gap-4">
+              <div className={cn(
+                "w-10 h-10 rounded-[2px] flex items-center justify-center shrink-0",
+                "bg-black/40 border border-current shadow-[inset_0_0_8px_rgba(0,0,0,0.5)]",
+                tool.iconColor
+              )}>
+                <Icon className="w-5 h-5" />
               </div>
-              <div className="flex items-center gap-2">
-                {tool.status === 'campaign-only' && (
-                  <Badge variant="outline">Campaign</Badge>
-                )}
-                {tool.status === 'high-level' && (
-                  <Badge variant="outline">High Level</Badge>
-                )}
-                <Button size="sm">
-                  <ChevronRight className="w-4 h-4" />
-                </Button>
+              <div className="flex-1">
+                <h3 className="font-system text-base font-bold uppercase tracking-widest mb-1 group-hover:text-white transition-colors drop-shadow-[0_0_8px_currentColor]">
+                  {tool.name}
+                </h3>
+                <p className="text-[10px] font-mono tracking-wider text-muted-foreground uppercase">
+                  {tool.description}
+                </p>
               </div>
             </div>
-          </CardContent>
-        </Card>
+            <div className="flex items-center gap-3">
+              {tool.status === 'campaign-only' && (
+                <Badge variant="outline" className="font-mono text-[10px] tracking-widest uppercase bg-black/50 border-primary/20 hidden sm:inline-flex">Campaign</Badge>
+              )}
+              {tool.status === 'high-level' && (
+                <Badge variant="outline" className="font-mono text-[10px] tracking-widest uppercase bg-black/50 border-primary/20 hidden sm:inline-flex">High Level</Badge>
+              )}
+              {tool.status === 'available' && (
+                <Badge variant="secondary" className="font-mono text-[10px] tracking-widest uppercase bg-black/50 border-primary/20 hidden sm:inline-flex">Available</Badge>
+              )}
+              <Button size="sm" className="font-system tracking-widest uppercase" variant="outline" asChild>
+                <span><ChevronRight className="w-3 h-3" /></span>
+              </Button>
+            </div>
+          </div>
+        </div>
       </Link>
     );
   }
-  
+
   return (
-    <Link to={`/player-tools/${tool.id}`} className="block">
-      <Card className={cn("tool-card", tool.color, tool.glow)}>
-        <CardHeader className="pb-3">
-          <div className={cn("tool-icon", tool.iconColor)}>
-            <Icon className="w-8 h-8" />
+    <Link to={`/player-tools/${tool.id}`} className="block h-full transition-transform">
+      <div className={cn(
+        "rounded-[2px] p-5 transition-all duration-300 group relative overflow-hidden backdrop-blur-md flex flex-col h-full",
+        "border-l-4 border-y border-r bg-black/60",
+        "hover:shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_0_15px_currentColor] focus:outline-none",
+        tool.color,
+        tool.glow
+      )}>
+        {/* Background glow */}
+        <div className={cn(
+          "absolute -bottom-10 -right-10 w-32 h-32 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity",
+          tool.color.split(' ')[0] // Uses the 'from-X' gradient class for the glow
+        )} />
+
+        <div className="flex-1 relative z-10">
+          <div className={cn(
+            "w-12 h-12 rounded-[2px] flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110",
+            "bg-black/40 border border-current shadow-[inset_0_0_8px_rgba(0,0,0,0.5)]",
+            tool.iconColor
+          )}>
+            <Icon className="w-6 h-6" />
           </div>
-          <CardTitle className="tool-title">{tool.name}</CardTitle>
-          <CardDescription className="tool-description">
+          <h3 className="font-system text-xl font-bold uppercase tracking-widest mb-2 group-hover:text-white transition-colors drop-shadow-[0_0_8px_currentColor]">
+            {tool.name}
+          </h3>
+          <p className="text-xs font-mono tracking-wider text-muted-foreground mb-6 uppercase leading-relaxed">
             {tool.description}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              {tool.status === 'campaign-only' && (
-                <Badge variant="outline" className="text-xs">Campaign</Badge>
-              )}
-              {tool.status === 'high-level' && (
-                <Badge variant="outline" className="text-xs">High Level</Badge>
-              )}
-              {tool.status === 'available' && (
-                <Badge variant="secondary" className="text-xs">Available</Badge>
-              )}
-            </div>
-            <Button size="sm" className="tool-action">
-              Launch
-              <ChevronRight className="w-4 h-4 ml-1" />
-            </Button>
+          </p>
+        </div>
+        <div className="flex items-center justify-between mt-auto relative z-10">
+          <div className="flex gap-2">
+            {tool.status === 'campaign-only' && (
+              <Badge variant="outline" className="font-mono text-[10px] tracking-widest uppercase bg-black/50 border-primary/20">Campaign</Badge>
+            )}
+            {tool.status === 'high-level' && (
+              <Badge variant="outline" className="font-mono text-[10px] tracking-widest uppercase bg-black/50 border-primary/20">High Level</Badge>
+            )}
+            {tool.status === 'available' && (
+              <Badge variant="secondary" className="font-mono text-[10px] tracking-widest uppercase bg-black/50 border-primary/20">Available</Badge>
+            )}
           </div>
-        </CardContent>
-      </Card>
+          <Button size="sm" className={cn(
+            "font-system tracking-widest uppercase gap-1",
+            tool.color.includes('amber') ? "bg-amber-500/20 text-amber-400 hover:bg-amber-500/40 border border-amber-500/50" :
+              tool.color.includes('red') ? "bg-red-500/20 text-red-400 hover:bg-red-500/40 border border-red-500/50" :
+                "bg-primary/20 text-primary hover:bg-primary/40 border border-primary/50"
+          )} asChild>
+            <span>Launch <ChevronRight className="w-3 h-3" /></span>
+          </Button>
+        </div>
+      </div>
     </Link>
   );
 };

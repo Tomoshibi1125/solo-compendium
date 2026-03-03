@@ -105,8 +105,6 @@ CREATE INDEX IF NOT EXISTS idx_character_shadow_army_shadow_soldier_id ON public
 -- character_shadow_soldiers
 CREATE INDEX IF NOT EXISTS idx_character_shadow_soldiers_soldier_id ON public.character_shadow_soldiers(soldier_id);
 
--- character_shares
-CREATE INDEX IF NOT EXISTS idx_character_shares_created_by ON public.character_shares(created_by);
 
 -- characters
 CREATE INDEX IF NOT EXISTS idx_characters_active_sovereign_id ON public.characters(active_sovereign_id);
