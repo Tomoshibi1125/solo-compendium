@@ -15,7 +15,7 @@ describe('5e Character Calculations', () => {
   const mockCharacterStats = {
     level: 5,
     abilities: { STR: 14, AGI: 16, VIT: 12, INT: 16, SENSE: 8, PRE: 8 },
-    savingThrowProficiencies: ['INT', 'SENSE'] as any,
+    savingThrowProficiencies: ['INT', 'SENSE'] as never,
     skillProficiencies: ['arcana', 'investigation', 'perception'],
     skillExpertise: [],
     armorClass: 15,

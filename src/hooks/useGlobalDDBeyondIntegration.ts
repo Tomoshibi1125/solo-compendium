@@ -80,7 +80,7 @@ export function useGlobalDDBeyondIntegration() {
         return characterRoll.rollSkillCheck(skill);
       },
       roll: async (rollKey, modifier, kind, label, campaignId, advantage) => {
-        return characterRoll.roll(rollKey, modifier, kind as any, label, campaignId, advantage);
+        return characterRoll.roll(rollKey, modifier, kind as never, label, campaignId, advantage);
       },
       quickRoll: async (formula: string) => {
         // Basic roll implementation
@@ -218,7 +218,7 @@ export function useGlobalDDBeyondIntegration() {
           .single();
 
         if (member?.campaign_id && user?.id) {
-          const charName = (member.characters as any)?.name || 'Someone';
+          const charName = (member.characters as Record<string, any>)?.name || 'Someone';
           await supabase.from('campaign_messages').insert({
             campaign_id: member.campaign_id,
             message_type: 'system',

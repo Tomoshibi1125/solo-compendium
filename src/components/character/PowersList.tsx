@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { SortableList } from '@/components/ui/SortableList';
+type Path = Record<string, any>;
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { usePowers } from '@/hooks/usePowers';
@@ -73,7 +74,7 @@ export function PowersList({
       // Static fallback
       const { staticDataProvider } = await import('@/data/compendium/staticDataProvider');
       const staticPowers = await staticDataProvider.getPowers('');
-      return staticPowers.map((p: any) => ({ id: p.id, name: p.name }));
+      return staticPowers.map((p: Path) => ({ id: p.id, name: p.name }));
     },
   });
 
@@ -404,7 +405,7 @@ export function PowersList({
               </div>
               <SortableList
                 items={levelPowers as { id: string }[]}
-                onReorder={(newOrder) => handleReorderGroup(level, newOrder as any)}
+                onReorder={(newOrder) => handleReorderGroup(level, newOrder as never)}
                 renderItem={(item) => {
                   const power = item as unknown as Power;
                   const displayName = formatMonarchVernacular(power.name);

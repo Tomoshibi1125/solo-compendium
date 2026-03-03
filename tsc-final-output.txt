@@ -1,2 +1,0 @@
-﻿src/components/CharacterSheet/ExhaustionTracker.tsx(42,26): error TS2304: Cannot find name 'handleChange'.
-src/components/CharacterSheet/ExhaustionTracker.tsx(72,26): error TS2304: Cannot find name 'handleChange'.

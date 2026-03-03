@@ -568,7 +568,7 @@ const EnhancedForm: React.FC<EnhancedFormProps> = ({
       <div className="space-y-4">
         {React.Children.map(children, (child, index) => {
           if (React.isValidElement(child)) {
-            const childProps = child.props as any;
+            const childProps = child.props as Record<string, any>;
             return React.cloneElement(child as React.ReactElement<any>, {
               key: index,
               error: (errors as Record<string, any>)[childProps.name || ''],

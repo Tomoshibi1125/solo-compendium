@@ -438,8 +438,8 @@ const VTTEnhanced = () => {
     if (!members) return map;
     for (const member of members) {
       const chars = member.characters;
-      if (chars && typeof chars === 'object' && 'id' in chars && typeof (chars as any).id === 'string') {
-        map.set((chars as any).id as string, member.user_id);
+      if (chars && typeof chars === 'object' && 'id' in chars && typeof (chars as Record<string, any>).id === 'string') {
+        map.set((chars as Record<string, any>).id as string, member.user_id);
       }
     }
     return map;
@@ -598,13 +598,13 @@ const VTTEnhanced = () => {
 
     const publish = async () => {
       try {
-        const { error } = await (supabase as any)
+        const { error } = await supabase
           .from('vtt_fog_state')
           .upsert(
             {
               campaign_id: campaignId,
               session_id: sessionId,
-              scene_id: fogPublishPayload.sceneId,
+              scene_id: fogPublishPayload.sceneId as string,
               fog_data: fogPublishPayload.fogData ?? [],
               tokens: fogPublishPayload.tokens ?? [],
               grid_size: fogPublishPayload.gridSize,
@@ -1311,7 +1311,7 @@ const VTTEnhanced = () => {
         if (typeof stats?.maxHp === 'number') maxHp = stats.maxHp;
         if (Array.isArray(combatant.conditions)) {
           // Merge token-local conditions with combat tracker conditions uniquely
-          conditions = Array.from(new Set([...conditions, ...(combatant.conditions as string[])]));
+          conditions = Array.from(new Set([...conditions, ...(combatant.conditions as any[])]));
         }
       } else if (token.characterId) {
         // 2. Fall back to resolvedCharacters if no combatData
@@ -1568,7 +1568,7 @@ const VTTEnhanced = () => {
                                   onClick={() => {
                                     const newName = window.prompt('Scene name:', scene.name);
                                     if (newName && newName !== scene.name) {
-                                      updateScene({ name: newName } as any);
+                                      updateScene({ name: newName } as never);
                                     }
                                   }}
                                   className="text-[9px] px-1 py-0.5 rounded hover:bg-muted"

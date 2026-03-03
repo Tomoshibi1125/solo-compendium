@@ -253,9 +253,9 @@ export function createLocalCharacter(data: Omit<CharacterInsert, 'user_id'>): Ch
     conditions: data.conditions ?? null,
     exhaustion_level: data.exhaustion_level ?? 0,
     monarch_overlays: data.monarch_overlays ?? null,
-    active_sovereign_id: (data as any).active_sovereign_id ?? null,
-    gemini_state: (data as any).gemini_state ?? null,
-    regent_overlays: (data as any).regent_overlays ?? null,
+    active_sovereign_id: (data as Record<string, any>).active_sovereign_id ?? null,
+    gemini_state: (data as Record<string, any>).gemini_state ?? null,
+    regent_overlays: (data as Record<string, any>).regent_overlays ?? null,
   };
 
   upsertLocalCharacter(character);
@@ -530,8 +530,8 @@ export function addLocalFeature(characterId: string, feature: Omit<FeatureInsert
     uses_current: feature.uses_current ?? null,
     uses_max: feature.uses_max ?? null,
     is_active: feature.is_active ?? true,
-    homebrew_id: (feature as any).homebrew_id ?? null,
-    modifiers: (feature as any).modifiers ?? null,
+    homebrew_id: (feature as Record<string, any>).homebrew_id ?? null,
+    modifiers: (feature as Record<string, any>).modifiers ?? null,
   };
 
   const state = loadGuestState();
@@ -693,5 +693,4 @@ export function addLocalRollHistory(
   saveGuestState(state);
   return record;
 }
-
 

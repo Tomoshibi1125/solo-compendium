@@ -37,7 +37,7 @@ export function DefensesModal({
     const handleShare = () => {
         const message = `Shared Defenses: AC ${acBreakdown.total}. ${resistances.length > 0 ? `Resistances: ${resistances.join(', ')}.` : ''} ${immunities.length > 0 ? `Immunities: ${immunities.join(', ')}.` : ''} ${vulnerabilities.length > 0 ? `Vulnerabilities: ${vulnerabilities.join(', ')}.` : ''}`;
 
-        playerTools.rollInCampaign(undefined as any, {
+        playerTools.rollInCampaign(undefined as never, {
             dice_formula: '0',
             result: acBreakdown.total,
             rolls: [],

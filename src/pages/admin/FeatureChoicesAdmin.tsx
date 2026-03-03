@@ -13,6 +13,11 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { cn } from '@/lib/utils';
 import { formatRegentVernacular, normalizeRegentSearch } from '@/lib/vernacular';
 
+const supabaseAny = supabase as unknown as {
+  from: (table: string) => any;
+  rpc: (fn: string, args?: Record<string, unknown>) => Promise<{ data: unknown; error: { message?: string } | null }>;
+};
+
 type JobRow = { id: string; name: string };
 
 type FeatureRow = {
@@ -104,8 +109,8 @@ export default function FeatureChoicesAdmin() {
     queryKey: ['admin-choice-groups', selectedFeatureId],
     queryFn: async () => {
       if (!selectedFeatureId) return [];
-      const { data } = await (supabase as any)
-        .from('compendium_feature_choice_groups')
+      const { data } = await supabase
+        .from('compendium_feature_choice_groups' as never)
         .select('*')
         .eq('feature_id', selectedFeatureId)
         .order('choice_key');
@@ -120,8 +125,8 @@ export default function FeatureChoicesAdmin() {
     queryKey: ['admin-choice-options', selectedGroupId],
     queryFn: async () => {
       if (!selectedGroupId) return [];
-      const { data } = await (supabase as any)
-        .from('compendium_feature_choice_options')
+      const { data } = await supabase
+        .from('compendium_feature_choice_options' as never)
         .select('*')
         .eq('group_id', selectedGroupId)
         .order('name');
@@ -179,8 +184,7 @@ export default function FeatureChoicesAdmin() {
       for (const feature of asiFeatures) {
         const choiceKey = 'asi_or_feat';
 
-        await (supabase as any)
-          .from('compendium_feature_choice_groups')
+        await (supabase as any).from('compendium_feature_choice_groups')
           .upsert(
             {
               feature_id: feature.id,
@@ -191,8 +195,7 @@ export default function FeatureChoicesAdmin() {
             { onConflict: 'feature_id,choice_key' }
           );
 
-        const { data: groupRow, error: groupError } = await (supabase as any)
-          .from('compendium_feature_choice_groups')
+        const { data: groupRow, error: groupError } = await (supabase as any).from('compendium_feature_choice_groups')
           .select('id')
           .eq('feature_id', feature.id)
           .eq('choice_key', choiceKey)
@@ -201,8 +204,7 @@ export default function FeatureChoicesAdmin() {
         if (!groupRow?.id) continue;
         const groupId = groupRow.id as string;
 
-        const { data: existingOptions } = await (supabase as any)
-          .from('compendium_feature_choice_options')
+        const { data: existingOptions } = await (supabase as any).from('compendium_feature_choice_options')
           .select('option_key')
           .eq('group_id', groupId);
         const existingKeys = new Set((existingOptions || []).map((o: any) => o.option_key));
@@ -265,7 +267,7 @@ export default function FeatureChoicesAdmin() {
           const chunkSize = 100;
           for (let i = 0; i < pending.length; i += chunkSize) {
             const chunk = pending.slice(i, i + chunkSize);
-            await (supabase as any).from('compendium_feature_choice_options').insert(chunk);
+            await (supabase as any).from('compendium_feature_choice_options' as never).insert(chunk);
             seededOptionCount += chunk.length;
           }
         }
@@ -308,7 +310,7 @@ export default function FeatureChoicesAdmin() {
     }
 
     try {
-      await (supabase as any).from('compendium_feature_choice_groups').insert({
+      await (supabase as any).from('compendium_feature_choice_groups' as never).insert({
         feature_id: selectedFeatureId,
         choice_key: choiceKey,
         choice_count: count,
@@ -354,7 +356,7 @@ export default function FeatureChoicesAdmin() {
     }
 
     try {
-      await (supabase as any).from('compendium_feature_choice_options').insert({
+      await (supabase as any).from('compendium_feature_choice_options' as never).insert({
         group_id: selectedGroupId,
         option_key: optionKey,
         name,

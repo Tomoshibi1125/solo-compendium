@@ -76,14 +76,14 @@ export function MonarchUnlocksPanel({ characterId, campaignId }: MonarchUnlocksP
     queryKey: ['all-regents', characterId, campaignId],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('compendium_regents' as any)
+        .from('compendium_regents' as never)
         .select('id, name, title, theme, source_book')
         .order('name');
 
       if (!error && data && data.length > 0) {
         return filterRowsBySourcebookAccess(
           data,
-          (regent) => (regent as any).source_book,
+          (regent) => (regent as Record<string, any>).source_book,
           { campaignId }
         );
       }
@@ -102,7 +102,7 @@ export function MonarchUnlocksPanel({ characterId, campaignId }: MonarchUnlocksP
   });
 
   const unlockedIds = new Set(unlocks.map((u: any) => u.regent_id));
-  const availableLockedRegents = allRegents.filter((r: any) => !unlockedIds.has(r.id));
+  const availableLockedRegents = allRegents.filter((r: Record<string, any>) => !unlockedIds.has(r.id));
   const hasJob = !!character?.job;
   const hasPath = !!character?.path;
   const canUnlockSovereign = hasJob && hasPath && unlocks.length >= 2;
@@ -145,7 +145,7 @@ export function MonarchUnlocksPanel({ characterId, campaignId }: MonarchUnlocksP
   const handleUnlock = () => {
     if (!selectedMonarchId || !questName.trim()) return;
 
-    const regent = allRegents.find((r: any) => r.id === selectedMonarchId) as any;
+    const regent = allRegents.find((r: Record<string, any>) => r.id === selectedMonarchId) as Record<string, any>;
     const regentName = regent ? formatRegentVernacular(regent.title || regent.name) : 'A Regent';
 
     unlockMonarch.mutate(
@@ -213,7 +213,7 @@ export function MonarchUnlocksPanel({ characterId, campaignId }: MonarchUnlocksP
 
             <div className="space-y-3">
               {unlocks.map((unlock: any, index: number) => {
-                const regent = (unlock as any).regent;
+                const regent = (unlock as Record<string, any>).regent;
                 if (!regent) return null;
 
                 const themeStyle = themeColors[regent.theme] || themeColors['Shadow'];

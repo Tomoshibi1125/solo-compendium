@@ -101,10 +101,10 @@ const PlayerMapView = ({ campaignId, sessionId }: { campaignId?: string; session
     if (!user?.id || !members) return null;
     const myMember = members.find((m: any) => m.user_id === user.id);
     if (!myMember) return null;
-    const chars = (myMember as any).characters;
-    if (chars && typeof chars === 'object' && 'id' in chars) return (chars as any).id as string;
+    const chars = (myMember as Record<string, any>).characters;
+    if (chars && typeof chars === 'object' && 'id' in chars) return (chars as Record<string, any>).id as string;
     // Also check character_id directly on the member
-    if ((myMember as any).character_id) return (myMember as any).character_id as string;
+    if ((myMember as Record<string, any>).character_id) return (myMember as Record<string, any>).character_id as string;
     return null;
   }, [members, user?.id]);
 
@@ -813,7 +813,7 @@ const PlayerMapView = ({ campaignId, sessionId }: { campaignId?: string; session
               <PlayerToolsPanel
                 characterId={myCharacterId || undefined}
                 onRollDice={(formula) => vttRealtime.rollAndBroadcast(formula)}
-                onSendMessage={(message, type) => vttRealtime.sendChatMessage(message, type as any)}
+                onSendMessage={(message, type) => vttRealtime.sendChatMessage(message, type as never)}
                 onUseAbility={(ability) => {
                   // Handle ability usage
                   vttRealtime.rollAndBroadcast(`1d20+${ability}`);

@@ -247,7 +247,7 @@ export function VttPixiStage({
 
       try {
         const texture = await Assets.load(scene.backgroundImage);
-        const sprite = Sprite.from(texture as any);
+        const sprite = Sprite.from(texture as never);
         sprite.x = (scene.backgroundOffsetX ?? 0) * zoom;
         sprite.y = (scene.backgroundOffsetY ?? 0) * zoom;
         const scale = scene.backgroundScale ?? 1;
@@ -362,7 +362,7 @@ export function VttPixiStage({
 
       if (config) {
         weatherEmitterRef.current = new Emitter(
-          weatherLayer as any,
+          weatherLayer as never,
           upgradeConfig(config, [texture])
         );
         weatherEmitterRef.current.emit = true;
@@ -600,7 +600,7 @@ export function VttPixiStage({
         if (token.imageUrl) {
           try {
             const texture = await Assets.load(token.imageUrl);
-            const sprite = Sprite.from(texture as any);
+            const sprite = Sprite.from(texture as never);
             sprite.width = size;
             sprite.height = size;
             sprite.anchor.set(0);
@@ -986,7 +986,7 @@ export function VttPixiStage({
 
     container.addEventListener('wheel', handleWheel, { passive: false });
     return () => {
-      container.removeEventListener('wheel', handleWheel as any);
+      container.removeEventListener('wheel', handleWheel as EventListener);
     };
   }, [containerRef, onRequestZoom, zoom]);
 

@@ -80,7 +80,7 @@ const isOfflineError = (error: unknown): boolean => {
 };
 
 const ensureAuthenticatedUser = async (): Promise<{ id: string }> => {
-  const { data } = await supabaseAny.auth.getUser();
+  const { data } = await supabase.auth.getUser();
   if (!data.user) {
     throw new AppError('Not authenticated', 'AUTH_REQUIRED');
   }
@@ -93,7 +93,7 @@ export const useCampaignSessions = (campaignId: string) => {
     queryFn: async (): Promise<CampaignSessionRecord[]> => {
       if (!isSupabaseConfigured || !campaignId) return [];
 
-      const { data } = await supabaseAny.auth.getUser();
+      const { data } = await supabase.auth.getUser();
       if (!data.user) {
         if (guestEnabled) return [];
         throw new AppError('Not authenticated', 'AUTH_REQUIRED');
@@ -121,7 +121,7 @@ export const useCampaignSessionLogs = (
     queryFn: async (): Promise<CampaignSessionLogRecord[]> => {
       if (!isSupabaseConfigured || !campaignId) return [];
 
-      const { data } = await supabaseAny.auth.getUser();
+      const { data } = await supabase.auth.getUser();
       if (!data.user) {
         if (guestEnabled) return [];
         throw new AppError('Not authenticated', 'AUTH_REQUIRED');
@@ -225,7 +225,7 @@ export const useDeleteCampaignSession = () => {
       await ensureAuthenticatedUser();
 
       try {
-        const { error } = await supabaseAny.from('campaign_sessions').delete().eq('id', sessionId);
+        const { error } = await supabase.from('campaign_sessions').delete().eq('id', sessionId);
         if (error) throw error;
         return { queued: false };
       } catch (error) {

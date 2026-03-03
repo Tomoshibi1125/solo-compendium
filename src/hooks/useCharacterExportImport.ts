@@ -42,7 +42,7 @@ export function useCharacterExport() {
       ]);
 
       const exportData = {
-        character: character as any, // Type cast to handle field differences
+        character: character as Record<string, any>, // Type cast to handle field differences
         abilities: abilitiesResult.data || [],
         equipment: equipmentResult.data || [],
         features: featuresResult.data || [],
@@ -90,7 +90,7 @@ export function useCharacterExport() {
       if (!jsonData) return null;
 
       const { character } = jsonData;
-      const char = character as any; // Type cast to access fields
+      const char = character as Record<string, any>; // Type cast to access fields
       
       // Create formatted text content
       const content = `

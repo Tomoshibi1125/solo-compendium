@@ -12,6 +12,7 @@ import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useCampaignMembers } from '@/hooks/useCampaigns';
 import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
+import type { CombatantStats } from '@/integrations/supabase/supabaseExtended';
 
 interface EncounterRewardsProps {
   campaignId: string;
@@ -62,8 +63,8 @@ export const EncounterRewards = ({ campaignId, sessionId, onComplete }: Encounte
         id: combatant.id,
         name: combatant.name,
         member_id: combatant.member_id,
-        xp_worth: (combatant.stats as any)?.xp_worth,
-        loot_worth: (combatant.stats as any)?.loot_worth,
+        xp_worth: (combatant.stats as Record<string, any>)?.xp_worth,
+        loot_worth: (combatant.stats as Record<string, any>)?.loot_worth,
       })) as Combatant[];
     },
     enabled: !!sessionId,

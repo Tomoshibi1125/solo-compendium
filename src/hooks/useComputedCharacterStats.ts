@@ -29,6 +29,7 @@ import {
 import type { AbilityScore } from '@/lib/5eRulesEngine';
 import type { Effect } from '@/lib/characterEngine';
 import { getErrorMessage, logErrorWithContext } from '@/lib/errorHandling';
+import type { CharacterExtended } from '@/integrations/supabase/supabaseExtended';
 
 // Imported bridgeEquipmentEffects from unifiedEffectSystem.ts
 
@@ -73,18 +74,18 @@ async function fetchCharacterBaseData(characterId: string): Promise<CharacterBas
   const equippedItems: EquipmentInstance[] = (equipment || []).map(item => ({
     id: item.id,
     name: item.name || 'Unknown Item',
-    type: (item as any).type || 'other',
+    type: (item as Record<string, any>).type || 'other',
     isEquipped: item.is_equipped || false,
     isAttuned: item.is_attuned || false,
     requiresAttunement: item.requires_attunement || false,
     weight: typeof item.weight === 'number' ? item.weight : 0,
     properties: Array.isArray(item.properties) ? item.properties : [],
-    acFormula: typeof (item as any).ac_formula === 'string' ? (item as any).ac_formula : undefined,
+    acFormula: typeof (item as Record<string, any>).ac_formula === 'string' ? (item as Record<string, any>).ac_formula : undefined,
     effects: bridgeEquipmentEffects(Array.isArray(item.properties) ? item.properties : []),
-    isActive: (item as any).is_active ?? true,
-    ignoreContentsWeight: (item as any).ignore_contents_weight ?? false,
-    isContainer: (item as any).is_container ?? false,
-    containerId: (item as any).container_id ?? null,
+    isActive: (item as Record<string, any>).is_active ?? true,
+    ignoreContentsWeight: (item as Record<string, any>).ignore_contents_weight ?? false,
+    isContainer: (item as Record<string, any>).is_container ?? false,
+    containerId: (item as Record<string, any>).container_id ?? null,
   }));
 
   // 4. Fetch conditions (stored in character.conditions array)
@@ -124,15 +125,15 @@ async function fetchCharacterBaseData(characterId: string): Promise<CharacterBas
     if (Array.isArray(spellRows)) {
       activeSpells = spellRows.map((s) => ({
         spellId: s.spell_id || s.id || `spell-${Date.now()}`,
-        spellName: s.spell_name || (s as any).name || 'Unknown',
+        spellName: s.spell_name || (s as Record<string, any>).name || 'Unknown',
         level: s.level ?? 0,
         castAt: s.cast_at ? new Date(s.cast_at) : new Date(),
         concentration: s.concentration ?? false,
         duration: s.duration_value ? {
-          type: s.duration_type as any || 'rounds',
+          type: s.duration_type as never || 'rounds',
           value: s.duration_value,
         } : undefined,
-        effects: Array.isArray(s.effects) ? (s.effects as any) : [],
+        effects: Array.isArray(s.effects) ? (s.effects as never) : [],
       }));
     }
   } catch {
@@ -145,8 +146,8 @@ async function fetchCharacterBaseData(characterId: string): Promise<CharacterBas
     jobs.push({
       job: character.job,
       path: character.path || undefined,
-      regent: (character as any).regent || undefined,
-      gemini: (character as any).gemini_state || undefined,
+      regent: (character as CharacterExtended).regent || undefined,
+      gemini: (character as CharacterExtended).gemini_state || undefined,
       level: character.level,
       hitDie: getHitDieForJob(character.job),
     });
@@ -189,8 +190,8 @@ async function fetchCharacterBaseData(characterId: string): Promise<CharacterBas
     activeSpells,
     features,
     exhaustionLevel: character.exhaustion_level || 0,
-    preparedSpells: Array.isArray((character as any).prepared_spells) ? (character as any).prepared_spells : undefined,
-    knownSpells: Array.isArray((character as any).known_spells) ? (character as any).known_spells : undefined,
+    preparedSpells: Array.isArray((character as CharacterExtended).prepared_spells) ? (character as CharacterExtended).prepared_spells : undefined,
+    knownSpells: Array.isArray((character as CharacterExtended).known_spells) ? (character as CharacterExtended).known_spells : undefined,
   };
 }
 

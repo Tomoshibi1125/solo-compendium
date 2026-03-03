@@ -78,12 +78,12 @@ export const useStartCombat = () => {
         throw new AppError('Supabase not configured', 'CONFIG');
       }
 
-      const { data } = await supabaseAny.auth.getUser();
+      const { data } = await supabase.auth.getUser();
       if (!data.user) {
         throw new AppError('Not authenticated', 'AUTH_REQUIRED');
       }
 
-      const { error } = await supabaseAny.rpc('start_session_combat', {
+      const { error } = await supabase.rpc('start_session_combat', {
         p_session_id: input.sessionId,
         p_participants: input.participants,
       });
@@ -117,7 +117,7 @@ export const useAdvanceCombatTurn = () => {
         throw new AppError('Supabase not configured', 'CONFIG');
       }
 
-      const { error } = await supabaseAny.rpc('advance_combat_turn', {
+      const { error } = await supabase.rpc('advance_combat_turn', {
         p_session_id: sessionId,
       });
 
@@ -187,7 +187,7 @@ export const useEndCombat = () => {
         throw new AppError('Supabase not configured', 'CONFIG');
       }
 
-      const { error } = await supabaseAny.rpc('end_session_combat', {
+      const { error } = await supabase.rpc('end_session_combat', {
         p_session_id: sessionId,
       });
 

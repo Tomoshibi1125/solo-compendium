@@ -155,7 +155,7 @@ export function useDeathSaves(
           death_save_successes: state.successes,
           death_save_failures: state.failures,
           stable: state.isStable,
-        } as any)
+        } as never)
         .eq('id', characterId);
     },
     [state]

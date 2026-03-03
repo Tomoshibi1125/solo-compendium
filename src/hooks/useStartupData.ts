@@ -402,15 +402,15 @@ export const useStartupData = () => {
         try {
           const { data: { user } } = await supabase.auth.getUser();
           if (user) {
-            const { data: entitlements } = await (supabase as any)
-              .from('user_marketplace_entitlements')
+            const { data: entitlements } = await supabase
+        .from('user_marketplace_entitlements')
               .select('item_id')
               .eq('user_id', user.id);
 
             if (entitlements && entitlements.length > 0) {
               const entitledIds = entitlements.map((e: { item_id: string }) => e.item_id);
-              const { data: marketplaceItems } = await (supabase as any)
-                .from('marketplace_items')
+              const { data: marketplaceItems } = await supabase
+        .from('marketplace_items')
                 .select('id, title, description, item_type, tags, content')
                 .in('id', entitledIds)
                 .eq('is_listed', true);

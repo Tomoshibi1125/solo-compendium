@@ -21,7 +21,7 @@ const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3
 let initialized = false;
 
 const ensureUserContext = async (): Promise<string> => {
-  const { data } = await supabaseAny.auth.getUser();
+  const { data } = await supabase.auth.getUser();
   if (!data.user) {
     throw new Error('AUTH_REQUIRED');
   }

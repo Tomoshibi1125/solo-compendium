@@ -39,7 +39,7 @@ export const useCampaignCombatRealtime = (campaignId: string | null, sessionId: 
           schema: 'public',
           table: 'campaign_combatants',
           filter: sessionId ? `session_id=eq.${sessionId}` : undefined,
-        } as any,
+        } as never,
         () => {
           queryClient.invalidateQueries({
             queryKey: ['campaigns', campaignId, 'combat-session', sessionId ?? 'active'],

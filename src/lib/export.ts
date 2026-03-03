@@ -131,7 +131,7 @@ export async function exportCompendiumEntries(
     const tableName = getTableName(entryType);
 
     const { data: entries } = await supabase
-      .from(tableName as any)
+      .from(tableName as never)
       .select('*')
       .in('id', entryIds);
 

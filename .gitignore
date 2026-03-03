@@ -27,6 +27,16 @@ qa-artifacts/
 eslint-report.json
 public/runtime-env.js
 
+# Build/debug artifacts
+ts_errors*.txt
+tsc_output.txt
+tsc_utf8.txt
+biome_errors.txt
+ts-prune-output.txt
+test_output.log
+vitest_utf8.log
+typecheck.log
+
 # Python
 __pycache__/
 *.py[cod]

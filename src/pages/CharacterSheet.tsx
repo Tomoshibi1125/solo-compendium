@@ -517,13 +517,13 @@ const CharacterSheet = () => {
     const customAbilityBonuses = ABILITY_KEYS.reduce((acc, ability) => {
       // Sum bonuses from custom modifiers and character features
       const bonus = sumCustomModifiers(customModifiers, 'ability', ability);
-      const featureBonus = sumCustomModifiers(customModifiers, 'ability_bonus' as any, ability);
+      const featureBonus = sumCustomModifiers(customModifiers, 'ability_bonus', ability);
       return acc + bonus + featureBonus;
     }, 0);
 
     ABILITY_KEYS.forEach((ability) => {
       const bonus = sumCustomModifiers(customModifiers, 'ability', ability) +
-        sumCustomModifiers(customModifiers, 'ability_bonus' as any, ability);
+        sumCustomModifiers(customModifiers, 'ability_bonus', ability);
       if (bonus !== 0) {
         finalAbilities[ability] = (finalAbilities[ability] || 0) + bonus;
       }
@@ -531,23 +531,23 @@ const CharacterSheet = () => {
 
     // Calculate initiative (AGI modifier + initiative bonuses)
     const initiativeAdvantage = resolveAdvantageFromCustomModifiers(customModifiers, ['initiative', 'initiative_advantage']);
-    const initiativeBonus = sumCustomModifiers(customModifiers, 'initiative_bonus' as any) +
+    const initiativeBonus = sumCustomModifiers(customModifiers, 'initiative_bonus') +
       sumCustomModifiers(customModifiers, 'initiative');
     const finalInitiative = getAbilityModifier(finalAbilities.AGI) + initiativeBonus;
 
     // HP calculation (with feature bonuses like Mana-Dense Physiology)
     const hpMaxBonus = sumCustomModifiers(customModifiers, 'hp-max') +
-      sumCustomModifiers(customModifiers, 'hp_max' as any);
+      sumCustomModifiers(customModifiers, 'hp_max');
     const finalHPMax = calculateHPMax(character.level, character.hit_dice_size || 8, getAbilityModifier(finalAbilities.VIT)) + hpMaxBonus;
 
     // Speed (with feature bonuses)
     const speedBonus = sumCustomModifiers(customModifiers, 'speed') +
-      sumCustomModifiers(customModifiers, 'speed_bonus' as any);
+      sumCustomModifiers(customModifiers, 'speed_bonus');
     let finalSpeed = (character.speed || 30) + speedBonus;
 
     // AC calculation
     const featureACBonus = sumCustomModifiers(customModifiers, 'ac_bonus');
-    const baseACValue = sumCustomModifiers(customModifiers, 'ac_base' as any);
+    const baseACValue = sumCustomModifiers(customModifiers, 'ac_base');
     let finalAC = baseStats.armorClass + featureACBonus;
     if (baseACValue > 0) {
       finalAC = Math.max(finalAC, baseACValue + getAbilityModifier(finalAbilities.AGI) + featureACBonus);
@@ -1958,7 +1958,7 @@ const CharacterSheet = () => {
                 <div className="pt-6 sm:pt-8 text-center relative">
                   <button
                     type="button"
-                    onClick={() => ddbEnhancements.roll('initiative', finalInitiative, 'ability', 'Initiative', campaignId || undefined, initiativeAdvantage as any)}
+                    onClick={() => ddbEnhancements.roll('initiative', finalInitiative, 'ability', 'Initiative', campaignId || undefined, initiativeAdvantage as 'advantage' | 'disadvantage' | 'normal')}
                     className="w-full hover:bg-white/5 rounded-lg py-1 transition-colors group/btn cursor-pointer"
                     aria-label="Roll Initiative"
                   >
@@ -2029,7 +2029,7 @@ const CharacterSheet = () => {
                 {ABILITY_KEYS.map((ability) => {
                   const baseScore = character.abilities[ability];
                   const equipmentBonus = equipmentMods.abilityModifiers[ability.toLowerCase() as keyof typeof equipmentMods.abilityModifiers] || 0;
-                  const customAbilityBonus = sumCustomModifiers(customModifiers, 'ability', ability) + sumCustomModifiers(customModifiers, 'ability_bonus' as any, ability);
+                  const customAbilityBonus = sumCustomModifiers(customModifiers, 'ability', ability) + sumCustomModifiers(customModifiers, 'ability_bonus', ability);
                   const bonusTotal = equipmentBonus + customAbilityBonus;
                   const totalScore = baseScore + bonusTotal;
                   const modifier = calculatedStats.abilityModifiers[ability];

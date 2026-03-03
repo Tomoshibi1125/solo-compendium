@@ -4,6 +4,11 @@ import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client';
 import { useAuth } from '@/lib/auth/authContext';
 import type { Database } from '@/integrations/supabase/types';
 
+const supabaseAny = supabase as unknown as {
+  from: (table: string) => any;
+  rpc: (fn: string, args?: Record<string, unknown>) => Promise<{ data: unknown; error: { message?: string } | null }>;
+};
+
 type CampaignCombatSession = Database['public']['Tables']['campaign_combat_sessions']['Row'];
 type CampaignCombatant = Database['public']['Tables']['campaign_combatants']['Row'];
 
@@ -53,18 +58,18 @@ export function useEncounterRewards() {
       }
 
       const combatants = session.campaign_combatants || [];
-      
+
       // Calculate XP based on combatant stats
       let xpTotal = 0;
       const combatantRewards: Array<{ id: string; name: string; xp: number }> = [];
 
       for (const combatant of combatants) {
         const stats = combatant.stats as any;
-        const conditions = combatant.conditions as any;
-        
+        const conditions = combatant.conditions as any[];
+
         // Check if combatant is defeated (has 'defeated' condition)
         const isDefeated = conditions && (
-          conditions.defeated === true || 
+          (conditions as any).defeated === true ||
           Array.isArray(conditions) && conditions.includes('defeated')
         );
 
@@ -73,7 +78,7 @@ export function useEncounterRewards() {
           const cr = parseFloat(stats?.challenge_rating || stats?.cr || '0');
           const xp = calculateXPByCR(cr);
           xpTotal += xp;
-          
+
           combatantRewards.push({
             id: combatant.id,
             name: combatant.name,
@@ -119,13 +124,13 @@ export function useEncounterRewards() {
         .eq('id', campaignId)
         .single();
 
-      const settings = campaign?.settings as any;
+      const settings = campaign?.settings as Record<string, any>;
       const isXPMode = settings?.leveling_mode === 'xp';
 
       // Distribute XP if in XP mode
       if (isXPMode && rewards.xpTotal > 0) {
         const xpDistribution: Record<string, number> = {};
-        
+
         if (xpSplitMode === 'equal') {
           const xpPerCharacter = Math.floor(rewards.xpTotal / selectedCharacters.length);
           selectedCharacters.forEach(charId => {
@@ -138,13 +143,13 @@ export function useEncounterRewards() {
         // Update character XP using RPC function
         for (const [characterId, xp] of Object.entries(xpDistribution)) {
           try {
-            const { data, error } = await supabase.rpc('update_character_xp' as any, {
+            const { data, error } = await supabaseAny.rpc('update_character_xp' as never, {
               character_id: characterId,
               xp_amount: xp,
               campaign_id: campaignId,
               reason: 'Encounter reward'
             });
-            
+
             if (error) {
               console.error('Failed to update XP for character', characterId, error);
               toast({
@@ -153,7 +158,7 @@ export function useEncounterRewards() {
                 variant: 'destructive'
               });
             } else if (data && Array.isArray(data) && data.length > 0) {
-              const result = data[0] as any;
+              const result = data[0] as Record<string, any>;
               if (result.success) {
                 toast({
                   title: 'XP Awarded',
@@ -252,17 +257,17 @@ function calculateXPByCR(cr: number): number {
     24: 62000,
     30: 155000
   };
-  
+
   return xpTable[cr] || 100;
 }
 
 // Generate loot based on encounter difficulty
 function generateLootForEncounter(combatants: any[], totalXP: number): Array<{ name: string; value: number; description?: string }> {
   const loot: Array<{ name: string; value: number; description?: string }> = [];
-  
+
   // Basic loot generation based on total XP
   const goldValue = Math.floor(totalXP * 0.1); // 10% of XP in gold value
-  
+
   if (goldValue > 0) {
     loot.push({
       name: 'Gold Pieces',

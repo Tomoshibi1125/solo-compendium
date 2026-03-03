@@ -62,7 +62,7 @@ export const useCampaignGold = (campaignId: string | null) => {
 
             const { data, error } = await supabase
                 .from('campaigns')
-                .update({ party_gold: newGold as unknown as any })
+                .update({ party_gold: newGold as unknown as number })
                 .eq('id', campaignId)
                 .select('party_gold')
                 .single();

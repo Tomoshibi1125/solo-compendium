@@ -8,6 +8,7 @@
  */
 
 import { normalizeRegentSearch } from '@/lib/vernacular';
+import type { MonarchExtended } from '@/integrations/supabase/supabaseExtended';
 
 type DataLoader<T> = () => Promise<T[]>;
 
@@ -764,8 +765,8 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
     mechanics:
       (spell.mechanics && typeof spell.mechanics === 'object'
         ? spell.mechanics
-        : (spell as any).spellAttack
-          ? { attack: (spell as any).spellAttack }
+        : (spell as Record<string, any>).spellAttack
+          ? { attack: (spell as Record<string, any>).spellAttack }
           : { saving_throw: { ability: 'dexterity', effect: 'half damage' } }) as Record<string, unknown>,
     limitations:
       (spell.limitations && typeof spell.limitations === 'object'
@@ -881,10 +882,10 @@ function transformBackground(background: StaticBackgroundSource): StaticCompendi
 // Derive class_features for regents that only have features[] + abilities[] with power_level
 function deriveMonarchClassFeatures(monarch: StaticMonarchSource): Array<{ level: number; name: string; description: string }> | null {
   // If the monarch already has class_features (like Umbral Regent), use them
-  const raw = (monarch as any).class_features;
-  if (Array.isArray(raw) && raw.length > 0) return raw;
+  const raw = (monarch as MonarchExtended).class_features;
+  if (Array.isArray(raw) && raw.length > 0) return raw as any;
 
-  const features = (monarch as any).features as Array<{ name: string; description: string; power_level?: number }> | undefined;
+  const features = (monarch as MonarchExtended).features as Array<{ name: string; description: string; power_level?: number }> | undefined;
   const abilities = monarch.abilities as Array<{ name: string; description: string; power_level?: number; type?: string; frequency?: string }> | undefined;
   if (!features && !abilities) return null;
 
@@ -1131,8 +1132,8 @@ export const staticDataProvider: StaticDataProvider = {
       tags: [
         'feat',
         'ability',
-        ...((typeof feat.prerequisites !== 'string' && Array.isArray((feat.prerequisites as any).feats))
-          ? ((feat.prerequisites as any).feats as string[])
+        ...((typeof feat.prerequisites !== 'string' && Array.isArray((feat.prerequisites as Record<string, any>).feats))
+          ? ((feat.prerequisites as Record<string, any>).feats as string[])
           : []),
       ].filter(Boolean) as string[],
       source_book: feat.source,
@@ -1301,7 +1302,7 @@ export const staticDataProvider: StaticDataProvider = {
       title: artifact.type,
       theme: artifact.rarity,
       rarity: artifact.rarity,
-      level: typeof (artifact.requirements as any)?.level === 'number' ? ((artifact.requirements as any).level as number) : undefined
+      level: typeof (artifact.requirements as Record<string, any>)?.level === 'number' ? ((artifact.requirements as Record<string, any>).level as number) : undefined
     }));
   },
 

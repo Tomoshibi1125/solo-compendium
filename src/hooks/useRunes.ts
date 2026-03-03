@@ -559,7 +559,7 @@ export function useAbsorbRune() {
 
       const { error: insertError } = await supabase
         .from('character_features')
-        .insert(featurePayload as any);
+        .insert(featurePayload as never);
       if (insertError) throw insertError;
 
       // Mark rune as absorbed in knowledge (mastery_level 5 = absorbed)

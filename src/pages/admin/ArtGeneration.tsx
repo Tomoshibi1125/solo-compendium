@@ -171,7 +171,7 @@ export default function ArtGenerationAdmin() {
               success: true,
               assetId: fallbackAsset.id,
               paths: pathValues,
-              metadata: fallbackAsset.metadata as any,
+              metadata: fallbackAsset.metadata as never,
               duration: Date.now() - startedAt,
             };
           } else if (result && typeof result.success === 'boolean') {

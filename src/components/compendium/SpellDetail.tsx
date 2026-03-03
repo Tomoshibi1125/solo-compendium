@@ -111,7 +111,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
   };
 
   const buildResolutionPayload = (): ActionResolutionPayload | null => {
-    const mechanicsAny = (data.mechanics ?? null) as any;
+    const mechanicsAny = (data.mechanics ?? null) as Record<string, any>;
 
     const id = crypto.randomUUID();
     const name = displayName;

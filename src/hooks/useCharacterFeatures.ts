@@ -154,7 +154,7 @@ export const useApplyHomebrewFeature = () => {
           description: params.description,
           action_type: 'passive',
           is_active: true,
-          modifiers: params.modifiers as any,
+          modifiers: params.modifiers as never,
           homebrew_id: params.homebrewId ?? null,
         })
         .select()

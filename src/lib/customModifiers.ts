@@ -21,7 +21,12 @@ export const CUSTOM_MODIFIER_TYPES = [
   'crit_die_count',
   'hp-regain',
   'hp-temp',
-  'bonus'
+  'bonus',
+  'ability_bonus',
+  'initiative_bonus',
+  'hp_max',
+  'speed_bonus',
+  'ac_base'
 ] as const;
 
 export type CustomModifierType = typeof CUSTOM_MODIFIER_TYPES[number];

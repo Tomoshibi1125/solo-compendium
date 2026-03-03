@@ -59,8 +59,7 @@ export const useCharacter = (characterId: string, shareToken?: string) => {
 
       // If share token provided, use it for read-only access
       if (shareToken) {
-        const { data: characters, error: charError } = await (supabase
-          .rpc as any)('get_character_by_share_token', {
+        const { data: characters, error: charError } = await (supabase.rpc as any)('get_character_by_share_token', {
             p_character_id: characterId,
             p_share_token: shareToken,
           });
@@ -306,7 +305,7 @@ export const useGenerateShareToken = () => {
         throw new AppError('Sharing requires a signed-in account', 'AUTH_REQUIRED');
       }
 
-      const { data, error } = await supabase.rpc('generate_character_share_token_for_character', {
+      const { data, error } = await (supabase.rpc as any)('generate_character_share_token_for_character', {
         p_character_id: characterId,
       });
 

@@ -38,7 +38,7 @@ export function resolveAdvantageForRoll(params: {
   const { conditions, exhaustionLevel, rollType, customModifiers, customTargets, uiOverride } = params;
 
   const condType = rollType === 'AGI_saves' || rollType === 'STR_saves' ? rollType : rollType;
-  const conditionMods = resolveRollModifiers(conditions, exhaustionLevel, condType as any);
+  const conditionMods = resolveRollModifiers(conditions, exhaustionLevel, condType as never);
   const featureAdv = resolveAdvantageFromCustomModifiers(customModifiers, [rollType, ...(customTargets ?? [])]);
 
   return combineAdvantageStates([conditionMods.advantageState, featureAdv, uiOverride ?? 'normal']);

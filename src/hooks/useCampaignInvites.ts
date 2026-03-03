@@ -402,7 +402,7 @@ export const useCampaignInviteByToken = (token: string) => {
     queryFn: async (): Promise<CampaignInviteSummary | null> => {
       const accessKey = normalizeInviteAccessKey(token);
       if (!accessKey || !isSupabaseConfigured) return null;
-      const { data, error } = await supabase.rpc('get_campaign_invite_by_token', { p_token: accessKey });
+      const { data, error } = await supabaseAny.rpc('get_campaign_invite_by_token', { p_token: accessKey });
       if (error) throw error;
       const invite = Array.isArray(data) ? data[0] : data;
       if (!invite) return null;
@@ -431,7 +431,7 @@ export const useRedeemCampaignInvite = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new AppError('Not authenticated', 'AUTH_REQUIRED');
 
-      const { data, error } = await supabase.rpc('redeem_campaign_invite', {
+      const { data, error } = await supabaseAny.rpc('redeem_campaign_invite', {
         p_token: accessKey,
         p_character_id: characterId ?? undefined,
       });

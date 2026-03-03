@@ -110,3 +110,10 @@ export const error = logger.error.bind(logger);
 export const warn = logger.warn.bind(logger);
 export const debug = logger.debug.bind(logger);
 
+
+
+export function logAndToastError(error: unknown, context: string, toast?: (opts: { title: string; description: string; variant?: string }) => void): void {
+  const msg = error instanceof Error ? error.message : String(error);
+  console.error(`[${context}]`, error);
+  toast?.({ title: context, description: msg, variant: 'destructive' });
+}

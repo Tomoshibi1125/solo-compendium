@@ -574,13 +574,13 @@ const CharacterNew = () => {
           ...(job.tool_proficiencies || []),
           ...(selectedBackgroundData.tool_proficiencies || []),
         ],
-        senses: jobSenses.length > 0 ? (jobSenses as any) : null,
-        damage_resistances: (staticJobData?.damageResistances as any) ?? null,
-        damage_immunities: (staticJobData?.damageImmunities as any) ?? null,
-        condition_immunities: (staticJobData?.conditionImmunities as any) ?? null,
+        senses: jobSenses.length > 0 ? (jobSenses as never) : null,
+        damage_resistances: (staticJobData?.damageResistances as never) ?? null,
+        damage_immunities: (staticJobData?.damageImmunities as never) ?? null,
+        condition_immunities: (staticJobData?.conditionImmunities as never) ?? null,
         conditions: [],
         exhaustion_level: 0,
-      } as any);
+      } as never);
 
       // Add level 1 features from compendium
       const {
@@ -639,8 +639,8 @@ const CharacterNew = () => {
 
         const featureIds = (level1Features || []).map((row) => row.id).filter(Boolean);
         if (featureIds.length > 0) {
-          const { data: groups } = await (supabase as any)
-            .from('compendium_feature_choice_groups')
+          const { data: groups } = await supabase
+        .from('compendium_feature_choice_groups' as never)
             .select('id')
             .in('feature_id', featureIds);
 
@@ -686,7 +686,7 @@ const CharacterNew = () => {
   // Calculate comprehensive total choices including awakening features and traits
   const totalChoices = useMemo(() => {
     const selectedPathRow = selectedPath && selectedPath !== 'none'
-      ? pathsAvailableAtCreation.find((p: any) => p.id === selectedPath)
+      ? pathsAvailableAtCreation.find((p: Path) => p.id === selectedPath)
       : null;
     const combinedJobData = jobData || staticJobData ? { ...jobData, ...staticJobData } : null;
     return calculateTotalChoices(combinedJobData, selectedPathRow, [], 1);
@@ -695,7 +695,7 @@ const CharacterNew = () => {
   // Get choice grant details for UI display
   const choiceGrantDetails = useMemo(() => {
     const selectedPathRow = selectedPath && selectedPath !== 'none'
-      ? pathsAvailableAtCreation.find((p: any) => p.id === selectedPath)
+      ? pathsAvailableAtCreation.find((p: Path) => p.id === selectedPath)
       : null;
     const combinedJobData = jobData || staticJobData ? { ...jobData, ...staticJobData } : null;
     return getChoiceGrantDetails(combinedJobData, selectedPathRow, [], 1);
@@ -1269,10 +1269,10 @@ const CharacterNew = () => {
                       {pathsAvailableAtCreation.map((path: Path) => (
                         <SelectItem key={path.id} value={path.id}>
                           {formatMonarchVernacular((path as { display_name?: string | null }).display_name || path.name)}
-                          {(path as any)._marketplace && (
+                          {(path as Record<string, any>)._marketplace && (
                             <Badge variant="outline" className="ml-2 text-xs">Marketplace</Badge>
                           )}
-                          {(path as any)._homebrew && (
+                          {(path as Record<string, any>)._homebrew && (
                             <Badge variant="outline" className="ml-2 text-xs">Homebrew</Badge>
                           )}
                         </SelectItem>

@@ -1,6 +1,8 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { Package, Plus, Shield, Zap, Gem, Heart, Coins, Weight, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { SortableList } from '@/components/ui/SortableList';
 import { useEquipment } from '@/hooks/useEquipment';

@@ -395,7 +395,7 @@ const getLabelTexture = (label: string, style: LabelStyle) => {
   }
   ctx.imageSmoothingEnabled = true;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- canvas optional API varies by browser
-  (ctx as any).imageSmoothingQuality = 'high';
+  (ctx as Record<string, any>).imageSmoothingQuality = 'high';
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   const center = canvas.width / 2;
   const plateRadius = canvasSize * 0.36;

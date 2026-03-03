@@ -142,7 +142,7 @@ export const LevelUpWizardModal = ({ isOpen, onClose, characterId }: LevelUpWiza
 
       // Filter feats by prerequisites (level-based)
       return accessible.filter((feat: any) => {
-        const prereqs = feat.prerequisites as any;
+        const prereqs = feat.prerequisites as Record<string, any>;
         if (!prereqs || !prereqs.level) return true;
         return prereqs.level <= newLevel;
       });
@@ -161,7 +161,7 @@ export const LevelUpWizardModal = ({ isOpen, onClose, characterId }: LevelUpWiza
     ? regents.find((m: any) => m.id === primaryRegentUnlock.regent_id)
     : null;
   const newRegentFeatures = regentData?.class_features?.filter(
-    (f: any) => f.level === newLevel
+    (f: Record<string, any>) => f.level === newLevel
   ) ?? [];
 
   // Fetch features for the new level (DB first, static fallback)
@@ -390,7 +390,7 @@ export const LevelUpWizardModal = ({ isOpen, onClose, characterId }: LevelUpWiza
       if (showFeatSelection && selectedFeats.length > 0) {
         // Add selected feats as character features
         const featFeatures = selectedFeats.map((featId, index) => {
-          const feat = availableFeats.find((f: any) => f.id === featId);
+          const feat = availableFeats.find((f: Record<string, any>) => f.id === featId);
           if (!feat) return null;
 
           return {
@@ -413,7 +413,7 @@ export const LevelUpWizardModal = ({ isOpen, onClose, characterId }: LevelUpWiza
         if (featFeatures.length > 0) {
           await supabase
             .from('character_features')
-            .insert(featFeatures as any[]);
+            .insert(featFeatures as never[]);
         }
       }
 
@@ -465,15 +465,15 @@ export const LevelUpWizardModal = ({ isOpen, onClose, characterId }: LevelUpWiza
       try {
         const featureIds = newFeatures.map((f) => f.id).filter(Boolean);
         if (featureIds.length > 0) {
-          const { data: groups } = await (supabase as any)
-            .from('compendium_feature_choice_groups')
+          const { data: groups } = await supabase
+        .from('compendium_feature_choice_groups' as never)
             .select('id')
             .in('feature_id', featureIds);
 
           const groupIds = ((groups || []) as Array<{ id: string }>).map((g) => g.id);
           if (groupIds.length > 0) {
-            const { data: chosen } = await (supabase as any)
-              .from('character_feature_choices')
+            const { data: chosen } = await supabase
+        .from('character_feature_choices' as never)
               .select('group_id')
               .eq('character_id', character.id)
               .in('group_id', groupIds);

@@ -57,7 +57,7 @@ const supabaseTableMap: Partial<Record<EntryType, keyof Database['public']['Tabl
   monsters: 'compendium_monsters',
   backgrounds: 'compendium_backgrounds',
   conditions: 'compendium_conditions',
-  regents: 'compendium_regents' as any,
+  regents: 'compendium_regents' as never,
   feats: 'compendium_feats',
   skills: 'compendium_skills',
   equipment: 'compendium_equipment',
@@ -192,7 +192,7 @@ export async function resolveRef(
   if (isSupabaseConfigured && tableName) {
     try {
       const { data, error } = await supabase
-        .from(tableName as any)
+        .from(tableName as never)
         .select('*')
         .eq('id', id)
         .maybeSingle();
@@ -341,8 +341,7 @@ export async function mergeHomebrewEntries(
 ): Promise<CompendiumEntity[]> {
   if (!isSupabaseConfigured || !userId) return [];
 
-  const supabaseAny = supabase as any;
-
+  
   // Map EntryType → homebrew content_type
   const homebrewContentType = Object.keys(homebrewTypeToEntryType).find(
     (key) => homebrewTypeToEntryType[key] === type,
@@ -362,19 +361,19 @@ export async function mergeHomebrewEntries(
         visibility_scope: 'campaign',
         status: 'published',
         campaign_id: campaignId,
-      } as any);
+      } as never);
     }
 
     const homebrewItems: any[] = [];
 
     for (const condition of visibilityConditions) {
-      const { data: items } = await supabaseAny
+      const { data: items } = await supabase
         .from('homebrew_content')
         .select('id, name, description, content, source_book')
         .eq('content_type', homebrewContentType)
         .eq('visibility_scope', condition.visibility_scope)
         .eq('status', condition.status)
-        .eq('user_id', (condition as any).user_id || (condition as any).campaign_id || '')
+        .eq('user_id', (condition as Record<string, any>).user_id || (condition as Record<string, any>).campaign_id || '')
         .neq('user_id', userId); // Don't include user's own content twice
 
       if (items) {

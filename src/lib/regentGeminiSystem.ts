@@ -606,7 +606,7 @@ export class RegentGeminiSystem {
       return character.abilities as unknown as Record<AbilityScore, number>;
     }
 
-    const scores = (character as any).abilityScores;
+    const scores = (character as Record<string, any>).abilityScores;
     return {
       STR: scores?.strength ?? 10,
       AGI: scores?.dexterity ?? scores?.agility ?? 10,

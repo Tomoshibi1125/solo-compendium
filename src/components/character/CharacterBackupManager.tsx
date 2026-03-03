@@ -202,7 +202,7 @@ export function CharacterBackupManager({ characterId, character }: CharacterBack
                 >
                   <div className="flex-1 min-w-0">
                     {(() => {
-                      const snapshot = backup.backup_data as any;
+                      const snapshot = backup.backup_data as Record<string, any>;
                       const level = snapshot?.level;
                       const hpCurrent = snapshot?.hp_current;
                       const hpMax = snapshot?.hp_max;

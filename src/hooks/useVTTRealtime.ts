@@ -555,7 +555,7 @@ export function useVTTRealtime({ campaignId, sessionId, isDM = false }: UseVTTRe
 
       // Persist to DB best-effort
       if (isSupabaseConfigured && campaignId) {
-        void (supabase as any)
+        void supabase
           .from('vtt_chat_messages')
           .insert({
             campaign_id: campaignId,
@@ -594,7 +594,7 @@ export function useVTTRealtime({ campaignId, sessionId, isDM = false }: UseVTTRe
       broadcast({ type: 'dice_roll', payload: msg });
 
       if (isSupabaseConfigured && campaignId) {
-        void (supabase as any)
+        void supabase
           .from('vtt_chat_messages')
           .insert({
             campaign_id: campaignId,
@@ -809,7 +809,7 @@ export function useVTTRealtime({ campaignId, sessionId, isDM = false }: UseVTTRe
       const ping = createPing(x, y, userId, userName, 'look');
       ping.color = userColor; // override with user color
       setPings((prev) => [...prev, ping].slice(-20));
-      broadcast({ type: 'ping', payload: ping as any });
+      broadcast({ type: 'ping', payload: ping as never });
       // Auto-remove after 3s
       setTimeout(() => {
         setPings((prev) => prev.filter((p) => p.createdAt !== ping.createdAt));
@@ -853,7 +853,7 @@ export function useVTTRealtime({ campaignId, sessionId, isDM = false }: UseVTTRe
             setInitiativeState(payload.payload as VTTInitiativeState);
             break;
           case 'ping': {
-            const ping = payload.payload as any; // VTTPing / MapPing mismatch typing bridging
+            const ping = payload.payload as MapPing; // VTTPing / MapPing mismatch typing bridging
             setPings((prev) => [...prev, ping].slice(-20));
             setTimeout(() => {
               setPings((prev) => prev.filter((p) => p.createdAt !== ping.createdAt));
@@ -927,7 +927,7 @@ export function useVTTRealtime({ campaignId, sessionId, isDM = false }: UseVTTRe
 
     // Load recent chat messages from DB
     if (isSupabaseConfigured) {
-      void (supabase as any)
+      void supabase
         .from('vtt_chat_messages')
         .select('*')
         .eq('campaign_id', campaignId)

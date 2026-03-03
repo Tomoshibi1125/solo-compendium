@@ -117,7 +117,7 @@ export function useCombatSessionManager() {
       const totalRounds = session?.round || 1;
       
       const defeatedCombatants = combatants?.filter(c => {
-        const conditions = c.conditions as any;
+        const conditions = c.conditions as Record<string, any>;
         return conditions && (
           conditions.defeated === true || 
           (Array.isArray(conditions) && conditions.includes('defeated'))
@@ -125,7 +125,7 @@ export function useCombatSessionManager() {
       }) || [];
 
       const survivingCombatants = combatants?.filter(c => {
-        const conditions = c.conditions as any;
+        const conditions = c.conditions as Record<string, any>;
         return !conditions || (
           conditions.defeated !== true && 
           (!Array.isArray(conditions) || !conditions.includes('defeated'))

@@ -106,7 +106,7 @@ const normalizeTags = (tags?: string[]): string[] => {
 };
 
 const ensureAuthenticatedUser = async (): Promise<{ id: string }> => {
-  const { data } = await supabaseAny.auth.getUser();
+  const { data } = await supabase.auth.getUser();
   if (!data.user) {
     throw new AppError('Not authenticated', 'AUTH_REQUIRED');
   }
@@ -275,7 +275,7 @@ export const useDeleteHomebrewContent = () => {
       await ensureAuthenticatedUser();
 
       try {
-        const { error } = await supabaseAny.from('homebrew_content').delete().eq('id', id);
+        const { error } = await supabase.from('homebrew_content').delete().eq('id', id);
         if (error) throw error;
         return { queued: false };
       } catch (error) {
@@ -471,7 +471,7 @@ export function useHomebrewCharacterIntegration() {
     }
 
     // Get all homebrew content from cache
-    const allHomebrew = queryClient.getQueryData(['homebrew', 'list']) as any;
+    const allHomebrew = queryClient.getQueryData(['homebrew', 'list']) as Record<string, any>;
     const homebrewRecords = allHomebrew?.pages?.flat() || [];
 
     const transformToCharacterOption = (record: HomebrewRecord): CharacterCreationOption => ({

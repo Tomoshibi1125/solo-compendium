@@ -111,7 +111,7 @@ const normalizeTags = (tags?: string[]): string[] => {
 };
 
 const getCurrentUserId = async (): Promise<string | null> => {
-  const { data } = await supabaseAny.auth.getUser();
+  const { data } = await supabase.auth.getUser();
   return data.user?.id ?? null;
 };
 
@@ -309,7 +309,7 @@ export const useDeleteMarketplaceItem = () => {
       await ensureAuthenticatedUser();
 
       try {
-        const { error } = await supabaseAny.from('marketplace_items').delete().eq('id', id);
+        const { error } = await supabase.from('marketplace_items').delete().eq('id', id);
         if (error) throw error;
         return { queued: false };
       } catch (error) {

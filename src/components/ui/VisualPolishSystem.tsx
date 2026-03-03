@@ -118,7 +118,7 @@ const VisualPolish: React.FC<VisualPolishProps> = ({
   const playSound = useCallback((type: 'success' | 'error' | 'warning' | 'click') => {
     if (!soundEnabled) return;
     
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const audioContext = new (window.AudioContext || (window as Record<string, any>).webkitAudioContext)();
     
     const sounds = {
       success: () => {

@@ -585,7 +585,7 @@ export const useJoinCampaign = () => {
       }
 
       if (characterId) {
-        const attachResult = await supabaseAny.rpc('add_player_character_to_campaign', {
+        const attachResult = await supabase.rpc('add_player_character_to_campaign', {
           p_campaign_id: campaignId,
           p_character_id: characterId,
         });

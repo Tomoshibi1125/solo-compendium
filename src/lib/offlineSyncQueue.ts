@@ -110,7 +110,7 @@ export const flushOfflineQueue = async () => {
                     user_id: payload.user_id,
                     message_type: 'roll',
                     content: `${payload.context || 'Roll'}: ${payload.dice_formula} = ${payload.result}`,
-                    metadata: { roll_data: payload as unknown as any },
+                    metadata: { roll_data: payload as any },
                 });
                 if (msgError) throw msgError;
 
@@ -121,7 +121,7 @@ export const flushOfflineQueue = async () => {
                     user_id: payload.user_id,
                     message_type: payload.message_type,
                     content: payload.content,
-                    metadata: payload.metadata as unknown as any,
+                    metadata: payload.metadata as any,
                     character_name: payload.character_name,
                 });
                 if (msgError) throw msgError;

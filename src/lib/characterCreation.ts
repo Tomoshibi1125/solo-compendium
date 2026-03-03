@@ -129,7 +129,7 @@ function buildItemProperties(item: (typeof staticItems)[number]): string[] {
   }
   if (item.range && item.range !== 'Melee') props.push(`Range ${item.range}`);
 
-  const passive = (item.effects as any)?.passive;
+  const passive = (item.effects as Record<string, any>)?.passive;
   if (Array.isArray(passive)) {
     for (const line of passive) {
       if (typeof line === 'string' && line.trim().length > 0) {
@@ -163,7 +163,7 @@ export async function autoUpdateFeatureUses(characterId: string): Promise<void> 
   if (!features) return;
 
   for (const feature of features) {
-    const usesFormula = (feature as any).uses_formula;
+    const usesFormula = (feature as Record<string, any>).uses_formula;
     if (usesFormula) {
       const newMax = calculateFeatureUses(
         usesFormula,
@@ -295,8 +295,8 @@ async function insertCharacterFeature(
       uses_current: payload.uses_current ?? null,
       recharge: payload.recharge ?? null,
       is_active: payload.is_active ?? true,
-      modifiers: (payload as any).modifiers ?? null,
-      homebrew_id: (payload as any).homebrew_id ?? null,
+      modifiers: (payload as Record<string, any>).modifiers ?? null,
+      homebrew_id: (payload as Record<string, any>).homebrew_id ?? null,
     });
     return;
   }
@@ -317,13 +317,13 @@ async function updateCharacterFeatureModifiersByName(
     const local = listLocalFeatures(characterId);
     const existing = local.find((f: { name?: string | null; id: string }) => f.name === name);
     if (!existing) return;
-    updateLocalFeature(existing.id, { modifiers: modifiers as any });
+    updateLocalFeature(existing.id, { modifiers: modifiers as never });
     return;
   }
 
   await supabase
     .from('character_features')
-    .update({ modifiers: modifiers as any })
+    .update({ modifiers: modifiers as never })
     .eq('character_id', characterId)
     .eq('name', name);
 }
@@ -555,7 +555,7 @@ function getJobAwakeningFeatureModifiers(jobName: string, featureName: string, l
   // 2. BERSERKER
   if (job === 'berserker') {
     if (feature === 'mana-dense physiology' || feature === 'mana-dense-physiology') {
-      return [{ type: 'hp-max', value: level, target: null as any, source: featureName }];
+      return [{ type: 'hp-max', value: level, target: null!, source: featureName }];
     }
     if (feature === 'toxin purge') {
       return [
@@ -639,7 +639,7 @@ function getJobAwakeningFeatureModifiers(jobName: string, featureName: string, l
   // 6. ESPER
   if (job === 'esper') {
     if (feature === 'mana-saturated body' || feature === 'mana-dense-physiology') {
-      return [{ type: 'hp-max', value: level, target: null as any, source: featureName }];
+      return [{ type: 'hp-max', value: level, target: null!, source: featureName }];
     }
     if (feature === 'unstable reactor') {
       return [{ type: 'mana_surge_on_cast', value: 1, target: 'self', source: featureName }];
@@ -900,7 +900,7 @@ function getPathFeatureModifiers(jobName: string, pathName: string, featureName:
   if (job === 'esper') {
     if (path === 'draconic bloodline' || path === 'path of the mana dragon') {
       if (feature === 'dragon hide') return [{ type: 'ac_base', value: 13, target: 'AGI', source: featureName }];
-      if (feature === 'draconic resilience') return [{ type: 'hp-max', value: level, target: null as any, source: featureName }];
+      if (feature === 'draconic resilience') return [{ type: 'hp-max', value: level, target: null!, source: featureName }];
     }
   }
 
@@ -1146,7 +1146,7 @@ export async function addJobAwakeningBenefitsForLevel(
       level_acquired: level,
       description: feature.description,
       is_active: true,
-      modifiers: modifiers.length > 0 ? (modifiers as any) : null,
+      modifiers: modifiers.length > 0 ? (modifiers as never) : null,
     });
   }
 
@@ -1166,7 +1166,7 @@ export async function addJobAwakeningBenefitsForLevel(
           level_acquired: level,
           description: feature.description,
           is_active: true,
-          modifiers: modifiers.length > 0 ? (modifiers as any) : null,
+          modifiers: modifiers.length > 0 ? (modifiers as never) : null,
         });
       }
     }
@@ -1189,7 +1189,7 @@ export async function addJobAwakeningBenefitsForLevel(
             level_acquired: level,
             description: feature.description,
             is_active: true,
-            modifiers: modifiers.length > 0 ? (modifiers as any) : null,
+            modifiers: modifiers.length > 0 ? (modifiers as never) : null,
           });
         }
       }
@@ -1208,7 +1208,7 @@ export async function addJobAwakeningBenefitsForLevel(
         level_acquired: 1,
         description: trait.description,
         is_active: isActiveByDefault,
-        modifiers: modifiers.length > 0 ? (modifiers as any) : null,
+        modifiers: modifiers.length > 0 ? (modifiers as never) : null,
       });
     }
   }

@@ -749,7 +749,7 @@ function aggregateGeminiFeatures(jobs: CharacterJob[]): FeatureInstance[] {
           sourceType: 'path' as const,
           sourceId: sovereignId,
           description: f.description,
-          effects: parseRegentFeatureEffects(f as any, charJob.level),
+          effects: parseRegentFeatureEffects(f as never, charJob.level),
         })));
       }
 
@@ -760,7 +760,7 @@ function aggregateGeminiFeatures(jobs: CharacterJob[]): FeatureInstance[] {
           sourceType: 'trait' as const,
           sourceId: sovereignId,
           description: t.description,
-          effects: parseRegentFeatureEffects(t as any, charJob.level),
+          effects: parseRegentFeatureEffects(t as never, charJob.level),
         })));
       }
 

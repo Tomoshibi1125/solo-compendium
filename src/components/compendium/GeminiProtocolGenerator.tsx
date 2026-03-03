@@ -110,8 +110,7 @@ export function GeminiProtocolGenerator() {
   const { data: regents = [], isLoading: regentsLoading } = useQuery<RegentOption[]>({
     queryKey: ['gemini-regents', campaignId],
     queryFn: async () => {
-      const supabaseAny = supabase as any;
-      const canonicalResult = await supabaseAny
+            const canonicalResult = await supabase
         .from('compendium_regents')
         .select('*')
         .order('name');
@@ -267,11 +266,11 @@ export function GeminiProtocolGenerator() {
       };
 
       try {
-        const sovereign = await generateSovereignWithAI(job, path, regentA as any, regentB as any);
+        const sovereign = await generateSovereignWithAI(job, path, regentA as never, regentB as never);
         setGeneratedSovereign(sovereign);
         broadcastGeneration(sovereign);
       } catch {
-        const sovereign = generateSovereign(job, path, regentA as any, regentB as any);
+        const sovereign = generateSovereign(job, path, regentA as never, regentB as never);
         setGeneratedSovereign(sovereign);
         broadcastGeneration(sovereign);
       } finally {
@@ -331,8 +330,8 @@ export function GeminiProtocolGenerator() {
       title: formatMonarchVernacular(generatedSovereign.title),
       jobName: formatMonarchVernacular(generatedSovereign.job.name),
       pathName: formatMonarchVernacular(generatedSovereign.path.name.replace('Path of the ', '')),
-      regentATheme: formatMonarchVernacular((generatedSovereign as any).regentA.theme),
-      regentBTheme: formatMonarchVernacular((generatedSovereign as any).regentB.theme),
+      regentATheme: formatMonarchVernacular((generatedSovereign as Record<string, any>).regentA.theme),
+      regentBTheme: formatMonarchVernacular((generatedSovereign as Record<string, any>).regentB.theme),
       fusionTheme: formatMonarchVernacular(generatedSovereign.fusion_theme),
       powerMultiplier: formatMonarchVernacular(generatedSovereign.power_multiplier),
       fusionStability: formatMonarchVernacular(generatedSovereign.fusion_stability),

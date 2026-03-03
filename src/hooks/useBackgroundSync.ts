@@ -171,11 +171,11 @@ export function useBackgroundSync() {
     
     switch (action) {
       case 'create':
-        await supabase.from('characters').insert([data] as any);
+        await supabase.from('characters').insert([data] as never[]);
         break;
       case 'update':
         const { id, ...updateData } = data;
-        await supabase.from('characters').update({ ...updateData } as any).eq('id', id);
+        await supabase.from('characters').update({ ...updateData } as never).eq('id', id);
         break;
       case 'delete':
         await supabase.from('characters').delete().eq('id', data.id);
@@ -189,11 +189,11 @@ export function useBackgroundSync() {
     
     switch (action) {
       case 'create':
-        await supabase.from('campaigns').insert([data] as any);
+        await supabase.from('campaigns').insert([data] as never[]);
         break;
       case 'update':
         const { id, ...updateData } = data;
-        await supabase.from('campaigns').update({ ...updateData } as any).eq('id', id);
+        await supabase.from('campaigns').update({ ...updateData } as never).eq('id', id);
         break;
       case 'delete':
         await supabase.from('campaigns').delete().eq('id', data.id);
@@ -207,11 +207,11 @@ export function useBackgroundSync() {
     
     switch (action) {
       case 'create':
-        await supabase.from('roll_history').insert(data as any);
+        await supabase.from('roll_history').insert(data as never);
         break;
       case 'update':
         const { id, ...updateData } = data;
-        await supabase.from('roll_history').update({ ...updateData } as any).eq('id', id);
+        await supabase.from('roll_history').update({ ...updateData } as never).eq('id', id);
         break;
       case 'delete':
         await supabase.from('roll_history').delete().eq('id', data.id);
@@ -225,11 +225,11 @@ export function useBackgroundSync() {
     
     switch (action) {
       case 'create':
-        await supabase.from('homebrew_content').insert([data] as any);
+        await supabase.from('homebrew_content').insert([data] as never[]);
         break;
       case 'update':
         const { id, ...updateData } = data;
-        await supabase.from('homebrew_content').update({ ...updateData } as any).eq('id', id);
+        await supabase.from('homebrew_content').update({ ...updateData } as never).eq('id', id);
         break;
       case 'delete':
         await supabase.from('homebrew_content').delete().eq('id', data.id);
@@ -243,11 +243,11 @@ export function useBackgroundSync() {
     
     switch (action) {
       case 'create':
-        await supabase.from('marketplace_items').insert([data] as any);
+        await supabase.from('marketplace_items').insert([data] as never[]);
         break;
       case 'update':
         const { id, ...updateData } = data;
-        await supabase.from('marketplace_items').update({ ...updateData } as any).eq('id', id);
+        await supabase.from('marketplace_items').update({ ...updateData } as never).eq('id', id);
         break;
       case 'delete':
         await supabase.from('marketplace_items').delete().eq('id', data.id);
@@ -279,7 +279,7 @@ export function useBackgroundSync() {
       navigator.serviceWorker.ready.then(registration => {
         // Register background sync
         if ('sync' in registration) {
-          const syncManager = (registration as any).sync;
+          const syncManager = (registration as Record<string, any>).sync;
           if (syncManager) {
             syncManager.register('offline-sync-queue');
           }

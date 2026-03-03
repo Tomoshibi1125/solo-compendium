@@ -96,29 +96,29 @@ export function useCampaignAnalytics() {
       const totalSessions = sessions?.length || 0;
       const totalCombatEncounters = combatSessions?.length || 0;
       const totalLootDistributed = lootDrops?.length || 0;
-      
+
       // Calculate playtime (assuming 4 hours per session as default)
       const totalPlaytime = totalSessions * 240; // minutes
       const averageSessionLength = totalSessions > 0 ? totalPlaytime / totalSessions : 0;
 
       // Member activity analysis
       const memberActivity = members?.map(member => {
-        const memberSessions = sessions?.filter(session => 
+        const memberSessions = sessions?.filter(session =>
           session.created_by === member.user_id
         ) || [];
-        
+
         return {
           member_id: member.id,
-          member_name: (member as any).user_profiles?.display_name || 'Unknown',
+          member_name: (member as Record<string, any>).user_profiles?.display_name || 'Unknown',
           sessions_participated: memberSessions.length,
-          last_active: memberSessions.length > 0 
-            ? memberSessions[0].created_at 
+          last_active: memberSessions.length > 0
+            ? memberSessions[0].created_at
             : member.joined_at
         };
       }) || [];
 
       // Level progression analysis
-      const levelProgression = characterProgression?.map((char: any) => {
+      const levelProgression = characterProgression?.map((char: Record<string, any>) => {
         // This would need to be enhanced with actual level tracking
         // For now, we'll provide basic structure
         return {
@@ -169,14 +169,14 @@ export function useCampaignAnalytics() {
 - Active Characters: ${analytics.activeCharacters}
 
 ## Member Activity
-${analytics.memberActivity.map(member => 
-  `- ${member.member_name}: ${member.sessions_participated} sessions, last active ${new Date(member.last_active).toLocaleDateString()}`
-).join('\n')}
+${analytics.memberActivity.map(member =>
+        `- ${member.member_name}: ${member.sessions_participated} sessions, last active ${new Date(member.last_active).toLocaleDateString()}`
+      ).join('\n')}
 
 ## Level Progression
-${analytics.levelProgression.map(char => 
-  `- ${char.character_name}: Level ${char.starting_level} → ${char.current_level} (${char.levels_gained} levels gained)`
-).join('\n')}
+${analytics.levelProgression.map(char =>
+        `- ${char.character_name}: Level ${char.starting_level} → ${char.current_level} (${char.levels_gained} levels gained)`
+      ).join('\n')}
 
 ## Session Statistics
 - Sessions per month: ${Math.round(analytics.totalSessions / Math.max(1, analytics.totalPlaytime / (60 * 24 * 30)))}

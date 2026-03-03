@@ -3,16 +3,16 @@ import { usePerformanceProfile } from '@/lib/performanceProfile';
 
 const runIdle = (callback: () => void) => {
   if (typeof window === 'undefined') return 0;
-  if (typeof (window as any).requestIdleCallback === 'function') {
-    return (window as any).requestIdleCallback(() => callback(), { timeout: 3500 }) as number;
+  if (typeof (window as Record<string, any>).requestIdleCallback === 'function') {
+    return (window as Record<string, any>).requestIdleCallback(() => callback(), { timeout: 3500 }) as number;
   }
   return window.setTimeout(callback, 1200);
 };
 
 const cancelIdle = (id: number) => {
   if (typeof window === 'undefined') return;
-  if (typeof (window as any).cancelIdleCallback === 'function') {
-    (window as any).cancelIdleCallback(id);
+  if (typeof (window as Record<string, any>).cancelIdleCallback === 'function') {
+    (window as Record<string, any>).cancelIdleCallback(id);
     return;
   }
   window.clearTimeout(id);

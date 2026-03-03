@@ -22,6 +22,7 @@ import { useCharacter } from '@/hooks/useCharacters';
 import { getCantripsKnownLimit, getSpellsKnownLimit } from '@/lib/characterCalculations';
 import { getMaxPowerLevelForJobAtLevel } from '@/lib/characterCreation';
 import { useGlobalDDBeyondIntegration } from '@/hooks/useGlobalDDBeyondIntegration';
+import type { CharacterExtended } from '@/integrations/supabase/supabaseExtended';
 
 export function AddPowerDialog({
   open,
@@ -55,15 +56,14 @@ export function AddPowerDialog({
     queryFn: async () => {
       if (!character?.job) return [];
 
-      const regentOverlayIds = Array.isArray((character as any).regent_overlays)
-        ? ((character as any).regent_overlays as string[])
-        : Array.isArray((character as any).monarch_overlays)
-          ? ((character as any).monarch_overlays as string[])
+      const regentOverlayIds = Array.isArray((character as CharacterExtended).regent_overlays)
+        ? ((character as CharacterExtended).regent_overlays as string[])
+        : Array.isArray((character as CharacterExtended).monarch_overlays)
+          ? ((character as CharacterExtended).monarch_overlays as string[])
           : [];
       let regentNames: string[] = [];
       if (regentOverlayIds.length > 0) {
-        const supabaseAny = supabase as any;
-        const canonicalResult = await supabaseAny
+                const canonicalResult = await supabase
           .from('compendium_regents')
           .select('name')
           .in('id', regentOverlayIds);

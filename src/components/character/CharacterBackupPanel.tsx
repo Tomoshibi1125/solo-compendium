@@ -95,7 +95,7 @@ export function CharacterBackupPanel({ characterId }: { characterId: string }) {
         try {
             const imported = await importBackupFromFile(file);
             // Re-import as a new named snapshot
-            await createBackup({ character: imported.backup_data as any, backupName: `Imported — ${file.name}` });
+            await createBackup({ character: imported.backup_data as never, backupName: `Imported — ${file.name}` });
         } catch {
             /* toast already shown inside hook */
         }

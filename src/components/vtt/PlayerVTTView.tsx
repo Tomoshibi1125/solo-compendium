@@ -147,7 +147,7 @@ export function PlayerVTTView({
         if (typeof stats?.hp === 'number') hp = stats.hp;
         if (typeof stats?.maxHp === 'number') maxHp = stats.maxHp;
         if (Array.isArray(combatant.conditions)) {
-          conditions = Array.from(new Set([...conditions, ...(combatant.conditions as string[])]));
+          conditions = Array.from(new Set([...conditions, ...(combatant.conditions as Record<string, any>[])]));
         }
       }
 
@@ -217,7 +217,7 @@ export function PlayerVTTView({
       if (payload.updatedBy === vttRealtime.userId) return;
       setCurrentScene(prev => {
         if (!prev) return prev;
-        const nextTokens = prev.tokens.map((token) => (token.id === payload.tokenId ? { ...token, ...(payload.updates as any) } : token));
+        const nextTokens = prev.tokens.map((token) => (token.id === payload.tokenId ? { ...token, ...(payload.updates as Record<string, any>) } : token));
         return { ...prev, tokens: nextTokens };
       });
     });
@@ -357,7 +357,7 @@ export function PlayerVTTView({
             onRequestZoom={setZoom}
             onTokenDragEnd={handleTokenDragEnd}
             drawMode={drawMode}
-            weather={currentScene.weather as any}
+            weather={currentScene.weather as never}
           />
         </div>
       </CardContent>
