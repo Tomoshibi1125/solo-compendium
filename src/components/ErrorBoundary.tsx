@@ -1,4 +1,5 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
+import { ErrorBoundary as ReactErrorBoundary, FallbackProps } from 'react-error-boundary';
 import { AlertTriangle } from 'lucide-react';
 import { Button } from './ui/button';
 import { SystemWindow } from './ui/SystemWindow';
@@ -10,89 +11,70 @@ interface Props {
   fallback?: ReactNode;
 }
 
-interface State {
-  hasError: boolean;
-  error: Error | null;
-}
-
-export class ErrorBoundary extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { hasError: false, error: null };
-  }
-
-  static getDerivedStateFromError(error: Error): State {
-    return { hasError: true, error };
-  }
-
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    // Log error for debugging
-    logError('ErrorBoundary caught an error:', error, errorInfo);
-    
-    // Report to Sentry
-    captureException(error, {
-      react: {
-        componentStack: errorInfo.componentStack,
-      },
-    });
-  }
-
-  handleReset = () => {
-    this.setState({ hasError: false, error: null });
-  };
-
-  render() {
-    if (this.state.hasError) {
-      if (this.props.fallback) {
-        return this.props.fallback;
-      }
-
-      return (
-        <div className="container mx-auto px-4 py-8 max-w-2xl">
-          <SystemWindow title="ERROR" variant="alert" className="text-center">
-            <AlertTriangle className="w-12 h-12 text-destructive mx-auto mb-4" />
-            <h2 className="font-display text-2xl font-bold mb-2 gradient-text-shadow">SYSTEM ERROR</h2>
-            <p className="text-muted-foreground mb-4">
-              The System has encountered an anomaly. Even under the Prime Architect's watch, 
-              reality sometimes glitches. Please try refreshing the page.
-            </p>
-            {this.state.error && (
-              <details className="text-left mb-4">
-                <summary className="cursor-pointer text-sm text-muted-foreground mb-2">
-                  Error details
-                </summary>
-                <pre className="text-xs bg-muted p-4 rounded overflow-auto">
-                  {this.state.error.toString()}
-                </pre>
-              </details>
-            )}
-            <div className="flex gap-4 justify-center flex-wrap">
-              <Button
-                onClick={this.handleReset}
-                variant="default"
-              >
-                Try Again
-              </Button>
-              <Button
-                onClick={() => window.location.reload()}
-                variant="outline"
-              >
-                Refresh Page
-              </Button>
-              <Button
-                onClick={() => (window.location.href = '/')}
-                variant="outline"
-              >
-                Go Home
-              </Button>
-            </div>
-          </SystemWindow>
+const DefaultErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
+  return (
+    <div className="container flex items-center justify-center min-h-[50vh] px-4 py-8 mx-auto max-w-2xl">
+      <SystemWindow title="SYSTEM ERROR" variant="alert" className="w-full text-center">
+        <AlertTriangle className="w-12 h-12 text-destructive mx-auto mb-4" />
+        <h2 className="font-display text-2xl font-bold mb-2 gradient-text-shadow">FATAL ANOMALY</h2>
+        <p className="text-muted-foreground mb-4">
+          The System has encountered an anomaly. Even under the Prime Architect's watch,
+          reality sometimes glitches. Please try resetting the view.
+        </p>
+        {error !== undefined && error !== null && (
+          <details className="text-left mb-4">
+            <summary className="cursor-pointer text-sm text-muted-foreground mb-2">
+              Error details
+            </summary>
+            <pre className="text-xs bg-muted p-4 rounded overflow-auto max-h-[200px]">
+              {String(error)}
+            </pre>
+          </details>
+        )}
+        <div className="flex gap-4 justify-center flex-wrap">
+          <Button
+            onClick={resetErrorBoundary}
+            variant="default"
+          >
+            Try Again
+          </Button>
+          <Button
+            onClick={() => window.location.reload()}
+            variant="outline"
+          >
+            Refresh Page
+          </Button>
+          <Button
+            onClick={() => (window.location.href = '/')}
+            variant="outline"
+          >
+            Go Home
+          </Button>
         </div>
-      );
-    }
+      </SystemWindow>
+    </div>
+  );
+};
 
-    return this.props.children;
-  }
-}
+const handleError = (error: any, info: React.ErrorInfo) => {
+  // Log error for debugging
+  logError('ErrorBoundary caught an error:', error, info);
 
+  // Report to Sentry
+  captureException(error, {
+    react: {
+      componentStack: info.componentStack,
+    },
+  });
+};
 
+export const ErrorBoundary = ({ children, fallback }: Props) => {
+  return (
+    <ReactErrorBoundary
+      FallbackComponent={fallback ? () => <>{fallback}</> : DefaultErrorFallback}
+      onError={handleError}
+    >
+      {children}
+    </ReactErrorBoundary>
+  );
+};

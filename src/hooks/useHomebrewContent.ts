@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { isSupabaseConfigured, supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/lib/auth/authContext';
 import { AppError } from '@/lib/appError';
@@ -74,15 +75,7 @@ export type HomebrewMutationResult = {
   record: HomebrewRecord | null;
 };
 
-type SupabaseAny = {
-  auth: {
-    getUser: () => Promise<{ data: { user: { id: string } | null } }>;
-  };
-  from: (table: string) => any;
-  rpc: (fn: string, args?: Record<string, unknown>) => Promise<{ data: unknown; error: { message?: string } | null }>;
-};
-
-const supabaseAny = supabase as unknown as SupabaseAny;
+// Supabase client natively extended
 const HOME_KEY = ['homebrew-content'] as const;
 
 const isOfflineError = (error: unknown): boolean => {
@@ -126,7 +119,7 @@ export const useHomebrewLibrary = ({
       if (!isSupabaseConfigured) return [];
 
       const user = await ensureAuthenticatedUser();
-      let query = supabaseAny
+      let query = supabase
         .from('homebrew_content')
         .select('*')
         .order('updated_at', { ascending: false });
@@ -160,7 +153,7 @@ export const useHomebrewVersions = (homebrewId: string | null) => {
       if (!isSupabaseConfigured || !homebrewId) return [];
       await ensureAuthenticatedUser();
 
-      const { data, error } = await supabaseAny
+      const { data, error } = await supabase
         .from('homebrew_content_versions')
         .select('*')
         .eq('homebrew_id', homebrewId)
@@ -198,9 +191,12 @@ export const useSaveHomebrewContent = () => {
 
       try {
         if (input.id) {
-          const { data, error } = await supabaseAny
+          const { data, error } = await supabase
             .from('homebrew_content')
-            .update(payload)
+            .update({
+              ...payload,
+              data: payload.data as any,
+            } as any as Database['public']['Tables']['homebrew_content']['Update'])
             .eq('id', input.id)
             .select('*')
             .single();
@@ -212,20 +208,20 @@ export const useSaveHomebrewContent = () => {
           };
         }
 
-        const { data, error } = await supabaseAny
+        const { data, error } = await supabase
           .from('homebrew_content')
           .insert({
             ...payload,
             user_id: user.id,
             status: 'draft',
-          })
+          } as any as Database['public']['Tables']['homebrew_content']['Insert'])
           .select('*')
           .single();
 
         if (error) throw error;
         return {
           queued: false,
-          record: data as HomebrewRecord,
+          record: data as any as HomebrewRecord,
         };
       } catch (error) {
         if (!isOfflineError(error)) {
@@ -332,27 +328,27 @@ export const usePublishedHomebrew = (
       const results: HomebrewRecord[] = [];
 
       // Own published
-      const { data: ownData } = await supabaseAny
+      const { data: ownData } = await supabase
         .from('homebrew_content')
         .select('*')
         .eq('user_id', userId)
         .eq('status', 'published')
         .in('content_type', types);
-      if (ownData) results.push(...(ownData as HomebrewRecord[]));
+      if (ownData) results.push(...(ownData as any as HomebrewRecord[]));
 
       // Public published (exclude own to avoid duplicates)
-      const { data: publicData } = await supabaseAny
+      const { data: publicData } = await supabase
         .from('homebrew_content')
         .select('*')
         .eq('status', 'published')
         .eq('visibility_scope', 'public')
         .neq('user_id', userId)
         .in('content_type', types);
-      if (publicData) results.push(...(publicData as HomebrewRecord[]));
+      if (publicData) results.push(...(publicData as any as HomebrewRecord[]));
 
       // Campaign-scoped published
       if (campaignId) {
-        const { data: campaignData } = await supabaseAny
+        const { data: campaignData } = await supabase
           .from('homebrew_content')
           .select('*')
           .eq('status', 'published')
@@ -360,7 +356,7 @@ export const usePublishedHomebrew = (
           .eq('campaign_id', campaignId)
           .neq('user_id', userId)
           .in('content_type', types);
-        if (campaignData) results.push(...(campaignData as HomebrewRecord[]));
+        if (campaignData) results.push(...(campaignData as any as HomebrewRecord[]));
       }
 
       // Deduplicate by id
@@ -397,16 +393,16 @@ export const useSetHomebrewStatus = () => {
       await ensureAuthenticatedUser();
 
       try {
-        const { error } = await supabaseAny.rpc('set_homebrew_content_status', {
+        const { error } = await supabase.rpc('set_homebrew_content_status', {
           p_homebrew_id: id,
           p_status: status,
           p_visibility_scope: visibilityScope ?? null,
           p_campaign_id: campaignId ?? null,
-        });
+        } as any);
 
         if (error) throw error;
 
-        const { data, error: fetchError } = await supabaseAny
+        const { data, error: fetchError } = await supabase
           .from('homebrew_content')
           .select('*')
           .eq('id', id)
@@ -416,7 +412,7 @@ export const useSetHomebrewStatus = () => {
 
         return {
           queued: false,
-          record: data as HomebrewRecord,
+          record: data as any as HomebrewRecord,
         };
       } catch (error) {
         if (!isOfflineError(error)) {

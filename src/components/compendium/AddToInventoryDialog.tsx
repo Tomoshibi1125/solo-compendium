@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import type { Json } from '@/integrations/supabase/types';
 import { useEquipment } from '@/hooks/useEquipment';
 import { useCampaignInventory } from '@/hooks/useCampaignInventory';
 import { useCharacterExtras } from '@/hooks/useCharacterExtras';
@@ -20,12 +21,12 @@ export interface CompendiumEntity {
     type?: string;
     item_type?: string;
     description?: string;
-    properties?: any;
-    effects?: any;
+    properties?: Json;
+    effects?: { passive?: string[] } & Record<string, unknown>;
     weight?: number;
     hp?: number;
     ac?: number;
-    stats?: any;
+    stats?: Json;
     speed?: number | string;
 }
 
@@ -82,15 +83,16 @@ export function AddToInventoryDialog({
         enabled: !!session?.user?.id && open,
     });
 
-    const ddbEnhance = async (action: () => Promise<any>) => {
+    const ddbEnhance = async (action: () => Promise<unknown>) => {
         try {
             setIsAdding(true);
             await action();
             toast({ title: 'Successfully Added', description: `${entity?.name} has been added.` });
             onOpenChange(false);
             setTargetId('');
-        } catch (err: any) {
-            toast({ title: 'Error', description: err.message, variant: 'destructive' });
+        } catch (err: unknown) {
+            const message = err instanceof Error ? err.message : 'An unknown error occurred';
+            toast({ title: 'Error', description: message, variant: 'destructive' });
         } finally {
             setIsAdding(false);
         }

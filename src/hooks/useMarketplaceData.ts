@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { isSupabaseConfigured, supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 import { useToast } from '@/hooks/use-toast';
 import { AppError } from '@/lib/appError';
 import { enqueueOfflineSync } from '@/lib/offlineSync';
@@ -79,15 +80,7 @@ type MutationResult = {
   record: MarketplaceItemRecord | null;
 };
 
-type SupabaseAny = {
-  auth: {
-    getUser: () => Promise<{ data: { user: { id: string } | null } }>;
-  };
-  from: (table: string) => any;
-  rpc: (fn: string, args?: Record<string, unknown>) => Promise<{ data: unknown; error: { message?: string } | null }>;
-};
-
-const supabaseAny = supabase as unknown as SupabaseAny;
+// Supabase client natively extended
 const KEY = ['marketplace'] as const;
 
 const isOfflineError = (error: unknown): boolean => {
@@ -138,7 +131,7 @@ export const useMarketplaceItems = ({
       if (!isSupabaseConfigured) return [];
 
       const userId = await getCurrentUserId();
-      let query = supabaseAny
+      let query = supabase
         .from('marketplace_items')
         .select('*')
         .order('updated_at', { ascending: false });
@@ -160,7 +153,7 @@ export const useMarketplaceItems = ({
       const { data, error } = await query;
       if (error) throw error;
 
-      const items = (data || []) as MarketplaceItemRecord[];
+      const items = (data || []) as any as MarketplaceItemRecord[];
       if (!userId) {
         return items.map((item) => ({
           ...item,
@@ -168,7 +161,7 @@ export const useMarketplaceItems = ({
         }));
       }
 
-      const { data: entitlementData, error: entitlementError } = await supabaseAny
+      const { data: entitlementData, error: entitlementError } = await supabase
         .from('user_marketplace_entitlements')
         .select('item_id')
         .eq('user_id', userId);
@@ -201,7 +194,7 @@ export const useMarketplaceReviews = (itemId: string | null) => {
     queryFn: async (): Promise<MarketplaceReviewRecord[]> => {
       if (!isSupabaseConfigured || !itemId) return [];
 
-      const { data, error } = await supabaseAny
+      const { data, error } = await supabase
         .from('marketplace_reviews')
         .select('*')
         .eq('item_id', itemId)
@@ -245,25 +238,36 @@ export const useSaveMarketplaceItem = () => {
 
       try {
         if (input.id) {
-          const { data, error } = await supabaseAny
+          const { data, error } = await supabase
             .from('marketplace_items')
-            .update(payload)
+            .update({
+              ...payload,
+              content: payload.content as any,
+              requirements: payload.requirements as any,
+              compatibility: payload.compatibility as any,
+            } as any as Database['public']['Tables']['marketplace_items']['Update'])
             .eq('id', input.id)
             .select('*')
             .single();
 
           if (error) throw error;
-          return { queued: false, record: data as MarketplaceItemRecord };
+          return { queued: false, record: data as any as MarketplaceItemRecord };
         }
 
-        const { data, error } = await supabaseAny
+        const { data, error } = await supabase
           .from('marketplace_items')
-          .insert({ ...payload, author_id: userId })
+          .insert({
+            ...payload,
+            author_id: userId,
+            content: payload.content as any,
+            requirements: payload.requirements as any,
+            compatibility: payload.compatibility as any,
+          } as any as Database['public']['Tables']['marketplace_items']['Insert'])
           .select('*')
           .single();
 
         if (error) throw error;
-        return { queued: false, record: data as MarketplaceItemRecord };
+        return { queued: false, record: data as any as MarketplaceItemRecord };
       } catch (error) {
         if (!isOfflineError(error)) {
           throw error;
@@ -351,10 +355,9 @@ export const useRecordMarketplaceDownload = () => {
       const userId = await ensureAuthenticatedUser();
 
       try {
-        const { error } = await supabaseAny.rpc('record_marketplace_download', {
+        const { error } = await supabase.rpc('record_marketplace_download', {
           p_item_id: itemId,
-          p_user_id: userId,
-        });
+        } as any);
         if (error) throw error;
         return { queued: false };
       } catch (error) {
@@ -409,12 +412,12 @@ export const useUpsertMarketplaceReview = () => {
       const userId = await ensureAuthenticatedUser();
 
       try {
-        const { error } = await supabaseAny.rpc('upsert_marketplace_review', {
+        const { error } = await supabase.rpc('upsert_marketplace_review', {
           p_item_id: itemId,
-          p_rating: rating,
-          p_comment: comment ?? null,
+          p_rating: Number.isFinite(rating) ? rating : 5,
+          p_comment: typeof comment === 'string' ? comment : null,
           p_user_id: userId,
-        });
+        } as any);
         if (error) throw error;
         return { queued: false };
       } catch (error) {

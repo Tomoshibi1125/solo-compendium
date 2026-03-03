@@ -9,7 +9,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import type { Json } from '@/integrations/supabase/types';
+import type { Database, Json } from '@/integrations/supabase/types';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { cn } from '@/lib/utils';
 import { formatRegentVernacular, normalizeRegentSearch } from '@/lib/vernacular';
@@ -44,6 +45,25 @@ type ChoiceOptionRow = {
   description: string | null;
   grants: unknown;
 };
+
+type ExtendedDatabase = Database & {
+  public: {
+    Tables: Database['public']['Tables'] & {
+      compendium_feature_choice_groups: {
+        Row: ChoiceGroupRow;
+        Insert: Omit<ChoiceGroupRow, 'id'>;
+        Update: Partial<ChoiceGroupRow>;
+      };
+      compendium_feature_choice_options: {
+        Row: ChoiceOptionRow;
+        Insert: Omit<ChoiceOptionRow, 'id'>;
+        Update: Partial<ChoiceOptionRow>;
+      };
+    };
+  };
+};
+
+const supabaseExtended = supabase as unknown as SupabaseClient<ExtendedDatabase>;
 
 function isChoicePointFeature(feature: FeatureRow): boolean {
   const blob = `${feature.name}\n${feature.description || ''}\n${feature.prerequisites || ''}`;
@@ -106,7 +126,7 @@ export default function FeatureChoicesAdmin() {
     queryKey: ['admin-choice-groups', selectedFeatureId],
     queryFn: async () => {
       if (!selectedFeatureId) return [];
-      const { data } = await supabase
+      const { data } = await supabaseExtended
         .from('compendium_feature_choice_groups')
         .select('*')
         .eq('feature_id', selectedFeatureId)
@@ -122,7 +142,7 @@ export default function FeatureChoicesAdmin() {
     queryKey: ['admin-choice-options', selectedGroupId],
     queryFn: async () => {
       if (!selectedGroupId) return [];
-      const { data } = await supabase
+      const { data } = await supabaseExtended
         .from('compendium_feature_choice_options')
         .select('*')
         .eq('group_id', selectedGroupId)
@@ -181,7 +201,7 @@ export default function FeatureChoicesAdmin() {
       for (const feature of asiFeatures) {
         const choiceKey = 'asi_or_feat';
 
-        await supabase.from('compendium_feature_choice_groups')
+        await supabaseExtended.from('compendium_feature_choice_groups')
           .upsert(
             {
               feature_id: feature.id,
@@ -192,7 +212,7 @@ export default function FeatureChoicesAdmin() {
             { onConflict: 'feature_id,choice_key' }
           );
 
-        const { data: groupRow, error: groupError } = await supabase.from('compendium_feature_choice_groups')
+        const { data: groupRow, error: groupError } = await supabaseExtended.from('compendium_feature_choice_groups')
           .select('id')
           .eq('feature_id', feature.id)
           .eq('choice_key', choiceKey)
@@ -201,7 +221,7 @@ export default function FeatureChoicesAdmin() {
         if (!groupRow?.id) continue;
         const groupId = groupRow.id as string;
 
-        const { data: existingOptions } = await supabase.from('compendium_feature_choice_options')
+        const { data: existingOptions } = await supabaseExtended.from('compendium_feature_choice_options')
           .select('option_key')
           .eq('group_id', groupId);
         const existingKeys = new Set((existingOptions || []).map((o: { option_key: string }) => o.option_key));
@@ -264,7 +284,7 @@ export default function FeatureChoicesAdmin() {
           const chunkSize = 100;
           for (let i = 0; i < pending.length; i += chunkSize) {
             const chunk = pending.slice(i, i + chunkSize);
-            await supabase.from('compendium_feature_choice_options').insert(chunk);
+            await supabaseExtended.from('compendium_feature_choice_options').insert(chunk as any);
             seededOptionCount += chunk.length;
           }
         }

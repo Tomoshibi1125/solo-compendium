@@ -3,6 +3,18 @@
 
 import { LocalAIIntegration } from './localAIIntegration';
 
+/** Minimal character shape for the regent system */
+interface RegentCharacterInput {
+  id?: string;
+  name: string;
+  level: number;
+  class?: string;
+  job?: string;
+  abilities?: Record<string, number>;
+  abilityScores?: Record<string, number>;
+  equipment?: unknown[];
+}
+
 // Simplified regent types
 export interface SimpleRegent {
   id: string;
@@ -195,16 +207,16 @@ export class SimpleRegentSystem {
   }
 
   // Generate regent choices using local AI
-  static async generateRegentChoices(character: any): Promise<any[]> {
+  static async generateRegentChoices(character: RegentCharacterInput): Promise<unknown[]> {
     const highestStat = this.getHighestStat(character);
-    const availableRegents = this.REGENT_DATABASE.filter(regent => 
+    const availableRegents = this.REGENT_DATABASE.filter(regent =>
       regent.requirements.level <= character.level &&
-      regent.requirements.statThreshold <= character.abilityScores[highestStat]
+      regent.requirements.statThreshold <= (character.abilityScores?.[highestStat] ?? 0)
     );
 
     // Use local AI for selection
     const choices = await LocalAIIntegration.generateRegentChoices(
-      character,
+      character as never,
       availableRegents,
       highestStat
     );
@@ -214,37 +226,37 @@ export class SimpleRegentSystem {
 
   // Create Gemini Protocol fusion using local AI
   static async createGeminiFusion(
-    character: any,
+    character: RegentCharacterInput,
     regent1: SimpleRegent,
     regent2: SimpleRegent
   ): Promise<SimpleGeminiSovereign> {
-    
+
     // NEW: Check if player already has a sovereign
     const playerId = character.id || character.name || 'unknown';
     if (this.PLAYER_SOVEREIGNS.has(playerId)) {
       throw new Error(`Player ${playerId} already has a sovereign. Only one sovereign per player is allowed and it is permanent.`);
     }
-    
+
     // Use local AI for fusion
     const fusion = await LocalAIIntegration.generateGeminiFusion(
-      character,
-      regent1,
-      regent2
+      character as never,
+      regent1 as never,
+      regent2 as never
     );
 
     const sovereign = fusion || this.generateFallbackFusion(character, regent1, regent2);
-    
+
     // NEW: Add permanent properties
     const permanentSovereign: SimpleGeminiSovereign = {
-      ...sovereign,
+      ...(sovereign as SimpleGeminiSovereign),
       isPermanent: true,
       createdAt: new Date(),
       playerId: playerId
     };
-    
+
     // NEW: Store the sovereign for this player
     this.PLAYER_SOVEREIGNS.set(playerId, permanentSovereign);
-    
+
     return permanentSovereign;
   }
 
@@ -269,7 +281,7 @@ export class SimpleRegentSystem {
   }
 
   // Private helper methods
-  private static getHighestStat(character: any): string {
+  private static getHighestStat(character: RegentCharacterInput): string {
     const abilities = character.abilityScores || character.abilities || {};
     const entries = Object.entries(abilities) as Array<[string, unknown]>;
     return entries.reduce((highest, [stat, value]) => {
@@ -282,24 +294,24 @@ export class SimpleRegentSystem {
   }
 
   // Fallback methods when AI is unavailable
-  private static generateFallbackChoices(character: any, availableRegents: SimpleRegent[], highestStat: string): any[] {
+  private static generateFallbackChoices(character: RegentCharacterInput, availableRegents: SimpleRegent[], highestStat: string): unknown[] {
     return availableRegents.slice(0, 3).map((regent, index) => ({
       regent,
       aiReasoning: `This regent aligns well with your ${highestStat} stat.`,
-      statAlignment: character.abilityScores[highestStat] - regent.requirements.statThreshold,
+      statAlignment: (character.abilityScores?.[highestStat] ?? 0) - regent.requirements.statThreshold,
       compatibilityScore: 85 - (index * 5)
     }));
   }
 
   private static generateFallbackFusion(
-    character: any,
+    character: RegentCharacterInput,
     regent1: SimpleRegent,
     regent2: SimpleRegent
   ): SimpleGeminiSovereign {
-    
+
     const fusionName = `${regent1.name.split(' ')[0]}-${regent2.name.split(' ')[0]} Sovereign`;
     const playerId = character.id || character.name || 'unknown';
-    
+
     return {
       id: `gemini_${regent1.id}_${regent2.id}`,
       name: fusionName,
@@ -356,12 +368,12 @@ export class SimpleRegentSystem {
   }
 
   // Generate quest recommendations using local AI
-  static async generateQuestRecommendations(character: any, availableQuests: any[]): Promise<any[]> {
-    return await LocalAIIntegration.generateQuestRecommendations(character, availableQuests);
+  static async generateQuestRecommendations(character: RegentCharacterInput, availableQuests: unknown[]): Promise<unknown[]> {
+    return await LocalAIIntegration.generateQuestRecommendations(character as never, availableQuests as never);
   }
 
   // Generate character optimization suggestions using local AI
-  static async generateOptimizationSuggestions(character: any): Promise<any> {
-    return await LocalAIIntegration.generateOptimizationSuggestions(character);
+  static async generateOptimizationSuggestions(character: RegentCharacterInput): Promise<unknown> {
+    return await LocalAIIntegration.generateOptimizationSuggestions(character as never);
   }
 }

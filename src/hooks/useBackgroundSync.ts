@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/lib/auth/authContext';
 import { enqueueOfflineSync } from '@/lib/offlineSync';
+import { supabase } from '@/integrations/supabase/client';
 
 interface BackgroundSyncManager {
   isOnline: boolean;
@@ -50,7 +51,7 @@ export function useBackgroundSync() {
     const checkSupport = () => {
       const supported = 'serviceWorker' in navigator && 'SyncManager' in window;
       setState(prev => ({ ...prev, isSupported: supported }));
-      
+
       if (supported) {
         // Register sync event listener
         navigator.serviceWorker.ready.then(registration => {
@@ -88,7 +89,7 @@ export function useBackgroundSync() {
   const processSyncQueue = useCallback(async () => {
     const queueData = localStorage.getItem('offlineSyncQueue') || '[]';
     const queue: OfflineSyncItem[] = JSON.parse(queueData);
-    
+
     if (queue.length === 0) return;
 
     const processedItems: string[] = [];
@@ -100,10 +101,10 @@ export function useBackgroundSync() {
         processedItems.push(item.id);
       } catch (error) {
         console.error(`Failed to sync item ${item.id}:`, error);
-        
+
         // Increment retry count
         const failedItem = { ...item, retryCount: item.retryCount + 1 };
-        
+
         // If retry count is less than 3, add back to queue
         if (failedItem.retryCount < 3) {
           failedItems.push(failedItem);
@@ -167,8 +168,7 @@ export function useBackgroundSync() {
 
   // Process character sync
   const processCharacterSync = async (action: string, data: any) => {
-    const { supabase } = await import('@/integrations/supabase/client');
-    
+
     switch (action) {
       case 'create':
         await supabase.from('characters').insert([data] as never[]);
@@ -185,8 +185,7 @@ export function useBackgroundSync() {
 
   // Process campaign sync
   const processCampaignSync = async (action: string, data: any) => {
-    const { supabase } = await import('@/integrations/supabase/client');
-    
+
     switch (action) {
       case 'create':
         await supabase.from('campaigns').insert([data] as never[]);
@@ -203,8 +202,7 @@ export function useBackgroundSync() {
 
   // Process roll sync
   const processRollSync = async (action: string, data: any) => {
-    const { supabase } = await import('@/integrations/supabase/client');
-    
+
     switch (action) {
       case 'create':
         await supabase.from('roll_history').insert(data as never);
@@ -221,8 +219,7 @@ export function useBackgroundSync() {
 
   // Process homebrew sync
   const processHomebrewSync = async (action: string, data: any) => {
-    const { supabase } = await import('@/integrations/supabase/client');
-    
+
     switch (action) {
       case 'create':
         await supabase.from('homebrew_content').insert([data] as never[]);
@@ -239,8 +236,7 @@ export function useBackgroundSync() {
 
   // Process marketplace sync
   const processMarketplaceSync = async (action: string, data: any) => {
-    const { supabase } = await import('@/integrations/supabase/client');
-    
+
     switch (action) {
       case 'create':
         await supabase.from('marketplace_items').insert([data] as never[]);
@@ -323,7 +319,7 @@ export function useBackgroundSync() {
   const getSyncStats = useCallback(() => {
     const queueData = localStorage.getItem('offlineSyncQueue') || '[]';
     const queue: OfflineSyncItem[] = JSON.parse(queueData);
-    
+
     return {
       totalItems: queue.length,
       pendingItems: queue.filter(item => item.retryCount < 3).length,

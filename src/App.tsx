@@ -34,6 +34,8 @@ import { useOfflineCacheWarmer } from "@/hooks/useOfflineCacheWarmer";
 import { useDomainEventQuerySync } from "@/hooks/useDomainEventQuerySync";
 import { useBackgroundSync } from "@/hooks/useBackgroundSync";
 import { usePushNotifications } from "@/hooks/usePushNotifications";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 const Login = lazy(() => import("./pages/Login"));
 const PlayerTools = lazy(() => import("./pages/PlayerTools"));
 const TestUserSetup = lazy(() => import("./pages/TestUserSetup"));
@@ -729,6 +731,8 @@ const App = () => {
                     syncQueueLength={queueLength}
                   />
                   <AnalyticsConsentBanner />
+                  <Analytics />
+                  <SpeedInsights />
                 </AuthProvider>
               </PerformanceProvider>
             </TooltipProvider>

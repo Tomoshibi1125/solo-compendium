@@ -3,6 +3,44 @@
 
 import { log, error as logError } from '@/lib/logger';
 
+/** Minimal character shape required by AI integration methods */
+interface AICharacterInput {
+  name: string;
+  level: number;
+  job: string;
+  abilities: Record<string, number>;
+  equipment?: unknown[];
+}
+
+/** Minimal regent shape required by AI integration methods */
+interface AIRegentInput {
+  id?: string;
+  name: string;
+  type: string;
+  description: string;
+  abilities: string[];
+  features?: unknown[];
+  spells?: unknown[];
+  requirements: { level: number; statThreshold: number };
+}
+
+/** Minimal quest shape required by AI integration methods */
+interface AIQuestInput {
+  id: string;
+  name: string;
+  description: string;
+  requirements: { level: number };
+}
+
+/** Optimization suggestion result shape */
+interface OptimizationSuggestions {
+  statPriorities: string[];
+  equipment: string[];
+  feats: string[];
+  abilities: string[];
+  levelUp: string[];
+}
+
 export class LocalAIIntegration {
   private static ollamaEndpoint = 'http://localhost:11434/api/generate';
   private static model = 'mixtral:8x7b'; // Best free model available
@@ -24,7 +62,7 @@ export class LocalAIIntegration {
       this.isAvailable = false;
       log('⚠️ Ollama not available, using fallback logic');
       return false;
-    } catch (error: any) {
+    } catch (error: unknown) {
       logError('AI initialization failed, using fallback:', error);
       this.isAvailable = false;
       return false;
@@ -33,10 +71,10 @@ export class LocalAIIntegration {
 
   // Generate regent choices using local AI
   static async generateRegentChoices(
-    character: any,
-    availableRegents: any[],
+    character: AICharacterInput,
+    availableRegents: AIRegentInput[],
     highestStat: string
-  ): Promise<any[]> {
+  ): Promise<unknown[]> {
 
     if (this.isAvailable) {
       try {
@@ -82,7 +120,8 @@ Focus on: stat synergy, class compatibility, and playstyle enhancement.
 `;
 
         const choices = await this.callLocalAI(prompt);
-        return this.parseAIResponse(choices);
+        const parsed = this.parseAIResponse(choices);
+        return Array.isArray(parsed) ? parsed : [];
 
       } catch (error: unknown) {
         logError('AI generation failed:', error);
@@ -95,10 +134,10 @@ Focus on: stat synergy, class compatibility, and playstyle enhancement.
 
   // Generate Gemini fusion using local AI
   static async generateGeminiFusion(
-    character: any,
-    regent1: any,
-    regent2: any
-  ): Promise<any> {
+    character: AICharacterInput,
+    regent1: AIRegentInput,
+    regent2: AIRegentInput
+  ): Promise<unknown> {
 
     if (this.isAvailable) {
       try {
@@ -159,7 +198,7 @@ Be creative! Features should include action types (action/bonus action/reaction/
         const fusion = await this.callLocalAI(prompt);
         return this.parseAIResponse(fusion);
 
-      } catch (error: any) {
+      } catch (error: unknown) {
         logError('Fusion generation failed:', error);
         return this.generateFallbackFusion(character, regent1, regent2);
       }
@@ -170,9 +209,9 @@ Be creative! Features should include action types (action/bonus action/reaction/
 
   // Generate quest recommendations using local AI
   static async generateQuestRecommendations(
-    character: any,
-    availableQuests: any[]
-  ): Promise<any[]> {
+    character: AICharacterInput,
+    availableQuests: AIQuestInput[]
+  ): Promise<unknown[]> {
 
     if (this.isAvailable) {
       try {
@@ -214,9 +253,10 @@ Focus on: level appropriateness, class synergy, and character strengths.
 `;
 
         const recommendations = await this.callLocalAI(prompt);
-        return this.parseAIResponse(recommendations);
+        const parsed = this.parseAIResponse(recommendations);
+        return Array.isArray(parsed) ? parsed : [];
 
-      } catch (error: any) {
+      } catch (error: unknown) {
         logError('Quest recommendations failed:', error);
         return this.generateFallbackQuests(character, availableQuests);
       }
@@ -252,14 +292,14 @@ Focus on: level appropriateness, class synergy, and character strengths.
       const data = await response.json();
       return data.response || data.content || '';
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       logError('Local AI call failed:', error);
       throw error;
     }
   }
 
   // Parse AI response
-  private static parseAIResponse(response: string): any {
+  private static parseAIResponse(response: string): unknown {
     try {
       // Try to extract JSON from response
       const jsonMatch = response.match(/\{[\s\S]*\}/);
@@ -269,7 +309,7 @@ Focus on: level appropriateness, class synergy, and character strengths.
 
       // Fallback: try to parse entire response
       return JSON.parse(response);
-    } catch (error: any) {
+    } catch (error: unknown) {
       logError('Failed to parse AI response:', error);
       return null;
     }
@@ -277,10 +317,10 @@ Focus on: level appropriateness, class synergy, and character strengths.
 
   // Fallback regent choices (when AI unavailable)
   private static generateFallbackChoices(
-    character: any,
-    availableRegents: any[],
+    character: AICharacterInput,
+    availableRegents: AIRegentInput[],
     highestStat: string
-  ): any[] {
+  ): unknown[] {
 
     return availableRegents.slice(0, 3).map((regent, index) => ({
       regent,
@@ -294,10 +334,10 @@ Focus on: level appropriateness, class synergy, and character strengths.
 
   // Fallback fusion (when AI unavailable)
   private static generateFallbackFusion(
-    character: any,
-    regent1: any,
-    regent2: any
-  ): any {
+    character: AICharacterInput,
+    regent1: AIRegentInput,
+    regent2: AIRegentInput
+  ): unknown {
 
     const fusionName = `${regent1.name.split(' ')[0]}-${regent2.name.split(' ')[0]} Sovereign`;
 
@@ -313,15 +353,15 @@ Focus on: level appropriateness, class synergy, and character strengths.
         `Dual ${regent1.name.split(' ')[0]} ${regent2.name.split(' ')[0]} Mastery`
       ],
       features: [
-        ...regent1.features,
-        ...regent2.features,
+        ...(regent1.features || []),
+        ...(regent2.features || []),
         {
           name: `Fusion Mastery: ${regent1.name.split(' ')[0]}-${regent2.name.split(' ')[0]}`,
           description: `Ultimate combination of both regents`,
           type: 'fusion'
         }
       ],
-      spells: [...regent1.spells, ...regent2.spells],
+      spells: [...(regent1.spells || []), ...(regent2.spells || [])],
       techniques: [
         `${regent1.name.split(' ')[0]}-${regent2.name.split(' ')[0]} Combination Attack`,
         `Dual ${regent1.name.split(' ')[0]} ${regent2.name.split(' ')[0]} Defense`
@@ -356,9 +396,9 @@ Focus on: level appropriateness, class synergy, and character strengths.
 
   // Fallback quest recommendations (when AI unavailable)
   private static generateFallbackQuests(
-    character: any,
-    availableQuests: any[]
-  ): any[] {
+    character: AICharacterInput,
+    availableQuests: AIQuestInput[]
+  ): unknown[] {
 
     return availableQuests
       .filter(quest => quest.requirements.level <= character.level)
@@ -402,8 +442,8 @@ Focus on: level appropriateness, class synergy, and character strengths.
 
   // Generate character optimization suggestions
   static async generateOptimizationSuggestions(
-    character: any
-  ): Promise<any> {
+    character: AICharacterInput
+  ): Promise<OptimizationSuggestions | null> {
 
     if (this.isAvailable) {
       try {
@@ -439,9 +479,9 @@ Focus on maximizing character effectiveness and synergy.
 `;
 
         const suggestions = await this.callLocalAI(prompt);
-        return this.parseAIResponse(suggestions);
+        return this.parseAIResponse(suggestions) as OptimizationSuggestions | null;
 
-      } catch (error: any) {
+      } catch (error: unknown) {
         logError('Optimization suggestions failed:', error);
         return this.generateFallbackOptimizations(character);
       }
@@ -451,7 +491,7 @@ Focus on maximizing character effectiveness and synergy.
   }
 
   // Fallback optimizations (when AI unavailable)
-  private static generateFallbackOptimizations(character: any): any {
+  private static generateFallbackOptimizations(character: AICharacterInput): OptimizationSuggestions {
     const abilities = character.abilities;
     const lowestStats = (Object.entries(abilities) as Array<[string, unknown]>)
       .sort(([, a], [, b]) => {

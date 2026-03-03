@@ -54,15 +54,7 @@ type CreateSessionLogInput = {
   isPlayerVisible?: boolean;
 };
 
-type SupabaseAny = {
-  auth: {
-    getUser: () => Promise<{ data: { user: { id: string } | null } }>;
-  };
-  from: (table: string) => any;
-  rpc: (fn: string, args?: Record<string, unknown>) => Promise<{ data: unknown; error: { message?: string } | null }>;
-};
-
-const supabaseAny = supabase as unknown as SupabaseAny;
+// Supabase client natively extended to support campaign sessions
 const KEY = ['campaigns', 'sessions'] as const;
 const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== 'false';
 
@@ -99,7 +91,7 @@ export const useCampaignSessions = (campaignId: string) => {
         throw new AppError('Not authenticated', 'AUTH_REQUIRED');
       }
 
-      const { data: rows, error } = await supabaseAny
+      const { data: rows, error } = await supabase
         .from('campaign_sessions')
         .select('*')
         .eq('campaign_id', campaignId)
@@ -127,7 +119,7 @@ export const useCampaignSessionLogs = (
         throw new AppError('Not authenticated', 'AUTH_REQUIRED');
       }
 
-      let query = supabaseAny
+      let query = supabase
         .from('campaign_session_logs')
         .select('*')
         .eq('campaign_id', campaignId)
@@ -139,7 +131,7 @@ export const useCampaignSessionLogs = (
 
       const { data: rows, error } = await query;
       if (error) throw error;
-      return (rows || []) as CampaignSessionLogRecord[];
+      return (rows || []) as any as CampaignSessionLogRecord[];
     },
     enabled: !!campaignId,
   });
@@ -157,15 +149,15 @@ export const useUpsertCampaignSession = () => {
       await ensureAuthenticatedUser();
 
       try {
-        const { data, error } = await supabaseAny.rpc('upsert_campaign_session', {
+        const { data, error } = await supabase.rpc('upsert_campaign_session', {
           p_campaign_id: input.campaignId,
-          p_session_id: input.sessionId ?? null,
-          p_title: input.title ?? null,
-          p_description: input.description ?? null,
-          p_scheduled_for: input.scheduledFor ?? null,
-          p_status: input.status ?? null,
-          p_location: input.location ?? null,
-        });
+          p_session_id: input.sessionId ?? undefined,
+          p_title: input.title ?? undefined,
+          p_description: input.description ?? undefined,
+          p_scheduled_for: input.scheduledFor ?? undefined,
+          p_status: input.status ?? undefined,
+          p_location: input.location ?? undefined,
+        } as any);
 
         if (error) throw error;
         return {
@@ -272,15 +264,15 @@ export const useAddCampaignSessionLog = () => {
       await ensureAuthenticatedUser();
 
       try {
-        const { data, error } = await supabaseAny.rpc('add_campaign_session_log', {
+        const { data, error } = await supabase.rpc('add_campaign_session_log', {
           p_campaign_id: input.campaignId,
-          p_session_id: input.sessionId ?? null,
+          p_session_id: input.sessionId ?? undefined,
           p_log_type: input.logType ?? 'session',
           p_title: input.title,
           p_content: input.content,
-          p_metadata: input.metadata ?? {},
+          p_metadata: input.metadata as any ?? {},
           p_is_player_visible: input.isPlayerVisible ?? true,
-        });
+        } as any);
 
         if (error) throw error;
         return {

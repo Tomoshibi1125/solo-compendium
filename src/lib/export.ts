@@ -6,6 +6,7 @@
 import type { Database } from '@/integrations/supabase/types';
 import { AppError } from '@/lib/appError';
 import { formatMonarchVernacular } from '@/lib/vernacular';
+import { supabase } from '@/integrations/supabase/client';
 
 type Character = Database['public']['Tables']['characters']['Row'];
 
@@ -24,8 +25,7 @@ export async function exportCharacter(
   characterId: string,
   options: ExportOptions = {}
 ): Promise<string> {
-  const { supabase } = await import('@/integrations/supabase/client');
-  
+
   const { data: character } = await supabase
     .from('characters')
     .select('*')
@@ -103,9 +103,9 @@ export function exportCharacterToMarkdown(character: Character): string {
 - **Initiative**: ${character.initiative >= 0 ? '+' : ''}${character.initiative}
 
 ## Conditions
-${character.conditions && character.conditions.length > 0 
-  ? character.conditions.map(c => `- ${c}`).join('\n')
-  : 'None'}
+${character.conditions && character.conditions.length > 0
+      ? character.conditions.map(c => `- ${c}`).join('\n')
+      : 'None'}
 
 ${character.notes ? `## Notes\n${character.notes}` : ''}
 `;
@@ -119,9 +119,8 @@ export async function exportCompendiumEntries(
   entryIds: string[],
   entryType: string
 ): Promise<string> {
-  const { supabase } = await import('@/integrations/supabase/client');
   const { getTableName, isValidEntryType, listStaticEntries } = await import('@/lib/compendiumResolver');
-  
+
   // Validate entry type
   if (!isValidEntryType(entryType)) {
     throw new AppError(`Unknown entry type: ${entryType}`, 'INVALID_INPUT');
@@ -181,7 +180,7 @@ export async function downloadCharacterJSON(character: Character): Promise<void>
 export function exportCharacterPDF(character: Character): void {
   const markdown = exportCharacterToMarkdown(character);
   downloadFile(markdown, `${character.name.replace(/[^a-z0-9]/gi, '_')}_character.md`, 'text/markdown');
-  
+
   // For actual PDF, you would use a library like jsPDF or pdfkit
   // For now, we export as markdown which can be converted to PDF
 }

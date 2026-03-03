@@ -836,8 +836,8 @@ const VTTEnhanced = () => {
     try {
       let publicUrl = '';
       if (isAuthed && isSupabaseConfigured) {
-        const asset = await uploadVTTAsset(campaignId || 'global', file, 'map');
-        if (asset && asset.imageUrl) {
+        const asset = await uploadVTTAsset(campaignId || 'global', file, 'map') as Record<string, unknown> | null;
+        if (asset && typeof asset.imageUrl === 'string') {
           publicUrl = asset.imageUrl;
         } else {
           throw new Error('Asset upload failed');

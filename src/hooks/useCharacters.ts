@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import { useToast } from '@/hooks/use-toast';
 import { getErrorMessage, logErrorWithContext, isNotFoundError } from '@/lib/errorHandling';
 import { AppError } from '@/lib/appError';
@@ -22,6 +23,23 @@ type AbilityScore = Database['public']['Enums']['ability_score'];
 export interface CharacterWithAbilities extends Character {
   abilities: Record<AbilityScore, number>;
 }
+
+type ExtendedDatabase = Database & {
+  public: {
+    Functions: Database['public']['Functions'] & {
+      get_character_by_share_token: {
+        Args: { p_character_id: string; p_share_token: string };
+        Returns: Character[];
+      };
+      generate_character_share_token_for_character: {
+        Args: { p_character_id: string };
+        Returns: string;
+      };
+    };
+  };
+};
+
+const supabaseExtended = supabase as unknown as SupabaseClient<ExtendedDatabase>;
 
 // Fetch all characters for current user
 export const useCharacters = () => {
@@ -59,8 +77,7 @@ export const useCharacter = (characterId: string, shareToken?: string) => {
 
       // If share token provided, use it for read-only access
       if (shareToken) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- RPC not in auto-generated types
-        const { data: characters, error: charError } = await (supabase.rpc as any)('get_character_by_share_token', {
+        const { data: characters, error: charError } = await supabaseExtended.rpc('get_character_by_share_token', {
           p_character_id: characterId,
           p_share_token: shareToken,
         });
@@ -306,8 +323,7 @@ export const useGenerateShareToken = () => {
         throw new AppError('Sharing requires a signed-in account', 'AUTH_REQUIRED');
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- RPC not in auto-generated types
-      const { data, error } = await (supabase.rpc as any)('generate_character_share_token_for_character', {
+      const { data, error } = await supabaseExtended.rpc('generate_character_share_token_for_character', {
         p_character_id: characterId,
       });
 

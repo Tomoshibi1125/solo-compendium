@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react';
 import { CheckCircle2, Loader2 } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import { Button } from '@/components/ui/button';
 import { SystemWindow } from '@/components/ui/SystemWindow';
 import { Label } from '@/components/ui/label';
@@ -30,6 +32,25 @@ type ChoiceOptionRow = {
   description: string | null;
   grants: unknown;
 };
+
+type ExtendedDatabase = Database & {
+  public: {
+    Tables: Database['public']['Tables'] & {
+      compendium_feature_choice_groups: {
+        Row: ChoiceGroupRow;
+        Insert: Omit<ChoiceGroupRow, 'id'>;
+        Update: Partial<ChoiceGroupRow>;
+      };
+      compendium_feature_choice_options: {
+        Row: ChoiceOptionRow;
+        Insert: Omit<ChoiceOptionRow, 'id'>;
+        Update: Partial<ChoiceOptionRow>;
+      };
+    };
+  };
+};
+
+const supabaseExtended = supabase as unknown as SupabaseClient<ExtendedDatabase>;
 
 type CharacterChoiceRow = {
   group_id: string;
@@ -149,7 +170,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
       const featureIds = (features || []).map((f: { id: string }) => f.id).filter(Boolean);
       if (featureIds.length === 0) return null;
 
-      const { data: groups } = await supabase
+      const { data: groups } = await supabaseExtended
         .from('compendium_feature_choice_groups')
         .select('*')
         .in('feature_id', featureIds);
@@ -159,7 +180,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 
       const groupIds = groupRows.map((g) => g.id);
 
-      const { data: options } = await supabase
+      const { data: options } = await supabaseExtended
         .from('compendium_feature_choice_options')
         .select('*')
         .in('group_id', groupIds)
