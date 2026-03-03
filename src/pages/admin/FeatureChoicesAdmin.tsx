@@ -9,14 +9,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import type { Json } from '@/integrations/supabase/types';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { cn } from '@/lib/utils';
 import { formatRegentVernacular, normalizeRegentSearch } from '@/lib/vernacular';
 
-const supabaseAny = supabase as unknown as {
-  from: (table: string) => any;
-  rpc: (fn: string, args?: Record<string, unknown>) => Promise<{ data: unknown; error: { message?: string } | null }>;
-};
 
 type JobRow = { id: string; name: string };
 
@@ -110,7 +107,7 @@ export default function FeatureChoicesAdmin() {
     queryFn: async () => {
       if (!selectedFeatureId) return [];
       const { data } = await supabase
-        .from('compendium_feature_choice_groups' as never)
+        .from('compendium_feature_choice_groups')
         .select('*')
         .eq('feature_id', selectedFeatureId)
         .order('choice_key');
@@ -126,7 +123,7 @@ export default function FeatureChoicesAdmin() {
     queryFn: async () => {
       if (!selectedGroupId) return [];
       const { data } = await supabase
-        .from('compendium_feature_choice_options' as never)
+        .from('compendium_feature_choice_options')
         .select('*')
         .eq('group_id', selectedGroupId)
         .order('name');
@@ -184,7 +181,7 @@ export default function FeatureChoicesAdmin() {
       for (const feature of asiFeatures) {
         const choiceKey = 'asi_or_feat';
 
-        await (supabase as any).from('compendium_feature_choice_groups')
+        await supabase.from('compendium_feature_choice_groups')
           .upsert(
             {
               feature_id: feature.id,
@@ -195,7 +192,7 @@ export default function FeatureChoicesAdmin() {
             { onConflict: 'feature_id,choice_key' }
           );
 
-        const { data: groupRow, error: groupError } = await (supabase as any).from('compendium_feature_choice_groups')
+        const { data: groupRow, error: groupError } = await supabase.from('compendium_feature_choice_groups')
           .select('id')
           .eq('feature_id', feature.id)
           .eq('choice_key', choiceKey)
@@ -204,17 +201,17 @@ export default function FeatureChoicesAdmin() {
         if (!groupRow?.id) continue;
         const groupId = groupRow.id as string;
 
-        const { data: existingOptions } = await (supabase as any).from('compendium_feature_choice_options')
+        const { data: existingOptions } = await supabase.from('compendium_feature_choice_options')
           .select('option_key')
           .eq('group_id', groupId);
-        const existingKeys = new Set((existingOptions || []).map((o: any) => o.option_key));
+        const existingKeys = new Set((existingOptions || []).map((o: { option_key: string }) => o.option_key));
 
         const pending: Array<{
           group_id: string;
           option_key: string;
           name: string;
           description: string | null;
-          grants: unknown;
+          grants: Json;
         }> = [];
 
         for (const a of abilities) {
@@ -225,7 +222,7 @@ export default function FeatureChoicesAdmin() {
               option_key: optionKey,
               name: `+2 ${a}`,
               description: null,
-              grants: [{ type: 'ability_increase', ability: a, amount: 2 }],
+              grants: [{ type: 'ability_increase', ability: a, amount: 2 }] as Json,
             });
           }
         }
@@ -244,7 +241,7 @@ export default function FeatureChoicesAdmin() {
                 grants: [
                   { type: 'ability_increase', ability: a, amount: 1 },
                   { type: 'ability_increase', ability: b, amount: 1 },
-                ],
+                ] as Json,
               });
             }
           }
@@ -258,7 +255,7 @@ export default function FeatureChoicesAdmin() {
               option_key: optionKey,
               name: `Feat: ${feat.name}`,
               description: null,
-              grants: [{ type: 'feat', name: feat.name }],
+              grants: [{ type: 'feat', name: feat.name }] as Json,
             });
           }
         }
@@ -267,7 +264,7 @@ export default function FeatureChoicesAdmin() {
           const chunkSize = 100;
           for (let i = 0; i < pending.length; i += chunkSize) {
             const chunk = pending.slice(i, i + chunkSize);
-            await (supabase as any).from('compendium_feature_choice_options' as never).insert(chunk);
+            await supabase.from('compendium_feature_choice_options').insert(chunk);
             seededOptionCount += chunk.length;
           }
         }
@@ -310,7 +307,7 @@ export default function FeatureChoicesAdmin() {
     }
 
     try {
-      await (supabase as any).from('compendium_feature_choice_groups' as never).insert({
+      await supabase.from('compendium_feature_choice_groups').insert({
         feature_id: selectedFeatureId,
         choice_key: choiceKey,
         choice_count: count,
@@ -347,7 +344,7 @@ export default function FeatureChoicesAdmin() {
       return;
     }
 
-    let grants: unknown;
+    let grants: Json;
     try {
       grants = JSON.parse(newOptionGrants);
     } catch {
@@ -356,7 +353,7 @@ export default function FeatureChoicesAdmin() {
     }
 
     try {
-      await (supabase as any).from('compendium_feature_choice_options' as never).insert({
+      await supabase.from('compendium_feature_choice_options').insert({
         group_id: selectedGroupId,
         option_key: optionKey,
         name,

@@ -59,18 +59,19 @@ export const useCharacter = (characterId: string, shareToken?: string) => {
 
       // If share token provided, use it for read-only access
       if (shareToken) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- RPC not in auto-generated types
         const { data: characters, error: charError } = await (supabase.rpc as any)('get_character_by_share_token', {
-            p_character_id: characterId,
-            p_share_token: shareToken,
-          });
+          p_character_id: characterId,
+          p_share_token: shareToken,
+        });
 
-      if (charError) {
-        logErrorWithContext(charError, 'useCharacter (share token)');
-        if (isNotFoundError(charError)) return null;
-        throw charError;
-      }
-      if (!characters || characters.length === 0) return null;
-        
+        if (charError) {
+          logErrorWithContext(charError, 'useCharacter (share token)');
+          if (isNotFoundError(charError)) return null;
+          throw charError;
+        }
+        if (!characters || characters.length === 0) return null;
+
         const char = characters[0] as Character;
 
         // Fetch abilities for shared character
@@ -305,6 +306,7 @@ export const useGenerateShareToken = () => {
         throw new AppError('Sharing requires a signed-in account', 'AUTH_REQUIRED');
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- RPC not in auto-generated types
       const { data, error } = await (supabase.rpc as any)('generate_character_share_token_for_character', {
         p_character_id: characterId,
       });

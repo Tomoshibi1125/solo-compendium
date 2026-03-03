@@ -146,11 +146,11 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
         .eq('job_id', jobRow.id)
         .lte('level', characterLevel);
 
-      const featureIds = (features || []).map((f: Record<string, any>) => f.id).filter(Boolean);
+      const featureIds = (features || []).map((f: { id: string }) => f.id).filter(Boolean);
       if (featureIds.length === 0) return null;
 
       const { data: groups } = await supabase
-        .from('compendium_feature_choice_groups' as never)
+        .from('compendium_feature_choice_groups')
         .select('*')
         .in('feature_id', featureIds);
 
@@ -160,7 +160,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
       const groupIds = groupRows.map((g) => g.id);
 
       const { data: options } = await supabase
-        .from('compendium_feature_choice_options' as never)
+        .from('compendium_feature_choice_options')
         .select('*')
         .in('group_id', groupIds)
         .order('name');
@@ -172,17 +172,19 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
       });
 
       const { data: existingChoices } = await supabase
-        .from('character_feature_choices' as any)
+        .from('character_feature_choices')
         .select('group_id, option_id')
         .eq('character_id', characterId);
 
-      const existing = (existingChoices || []) as any as CharacterChoiceRow[];
+      const existing = (existingChoices || []) as unknown as CharacterChoiceRow[];
       const chosenGroupIds = new Set(existing.map((row) => row.group_id));
 
       const pendingGroups = groupRows.filter((g) => !chosenGroupIds.has(g.id));
       if (pendingGroups.length === 0) return null;
 
-      const featureById = new Map<string, Record<string, any>>((features || []).map((f: Record<string, any>) => [f.id, f]));
+      const featureById = new Map<string, { id: string; name: string; description: string; level: number }>(
+        (features || []).map((f: { id: string; name: string; description: string; level: number }) => [f.id, f])
+      );
 
       return {
         features: features || [],
@@ -299,7 +301,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
           '5e'
         ).catch(console.error);
 
-        await supabase.from('character_feature_choices' as any).upsert({
+        await supabase.from('character_feature_choices').upsert({
           character_id: characterId,
           feature_id: group.feature_id,
           group_id: group.id,
@@ -711,7 +713,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
         </div>
 
         {pendingGroups.map((group) => {
-          const feature = (choiceData.featureById.get(group.feature_id) as any) || null;
+          const feature = choiceData.featureById.get(group.feature_id) || null;
           const groupOptions = optionsByGroupId.get(group.id) || [];
           const label = group.prompt || feature?.name || group.choice_key;
 
